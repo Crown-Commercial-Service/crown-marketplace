@@ -32,7 +32,6 @@
   <%= csp_meta_tag %>
 
   <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= javascript_include_tag 'application' %>
 </head>
 
 <body class="govuk-template__body ">
@@ -92,6 +91,7 @@
   </footer>
 
   <%= javascript_include_tag 'govuk-frontend/all' %>
+  <%= javascript_include_tag 'application' %>
   <script>
     window.GOVUKFrontend.initAll()
 
