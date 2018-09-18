@@ -1,5 +1,7 @@
 {
   "name": "marketplace",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "govuk-frontend": "^2.0.0"
+  }
 }
