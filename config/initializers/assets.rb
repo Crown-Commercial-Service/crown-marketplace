@@ -14,4 +14,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w(
   govuk-frontend/all.css
   govuk-frontend/all-ie8.css
+  html5shiv/dist/html5shiv.js
 )
