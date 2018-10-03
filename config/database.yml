@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: marketplace_production
-  username: marketplace
-  password: <%= ENV['MARKETPLACE_DATABASE_PASSWORD'] %>
+  host: <%= ENV['CCS_DEFAULT_DB_HOST'] %>
+  port: <%= ENV['CCS_DEFAULT_DB_PORT'] %>
+  database: <%= ENV['CCS_DEFAULT_DB_NAME'] %>
+  username: <%= ENV['CCS_DEFAULT_DB_USER'] %>
+  password: <%= ENV['CCS_DEFAULT_DB_PASSWORD'] %>
