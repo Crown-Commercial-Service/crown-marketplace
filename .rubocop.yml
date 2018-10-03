@@ -1,0 +1,67 @@
+---
+AllCops:
+    TargetRubyVersion: 2.5
+    Exclude:
+        - 'db/migrate/**/*'
+        - 'db/schema.rb'
+        - 'db/seeds.rb'
+        - 'bin/**/*'
+
+Rails:
+    Enabled: true
+
+Bundler/OrderedGems:
+    Enabled: false
+
+Style/Alias:
+    Enabled: false
+
+Style/FrozenStringLiteralComment:
+    Enabled: false
+
+Style/NumericLiterals:
+    Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+    Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+    Enabled: false
+
+Style/TrailingCommaInArguments:
+    Enabled: false
+
+Style/Documentation:
+    Enabled: false
+
+Style/DoubleNegation:
+    Enabled: false
+
+Style/WordArray:
+    Enabled: false
+
+Style/ClassAndModuleChildren:
+    Enabled: false
+
+Layout/TrailingBlankLines:
+    Enabled: true
+
+Metrics/ClassLength:
+    Enabled: false
+
+Metrics/MethodLength:
+    Max: 50
+    Exclude:
+
+Metrics/AbcSize:
+    Max: 25 # TODO: Restore to '20'
+    Exclude:
+        - 'spec/**/*'
+
+Metrics/LineLength:
+    Max: 120
+
+Metrics/BlockLength:
+    Max: 40
+    Exclude:
+        - 'spec/**/*'
