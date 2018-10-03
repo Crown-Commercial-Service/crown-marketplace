@@ -25,22 +25,44 @@ ARG CCS_VERSION
 LABEL ccs_version=$CCS_VERSION
 ENV CCS_VERSION=$CCS_VERSION
 
-ENV BUILD_PACKAGES curl-dev ruby-dev sqlite-dev build-base
+ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata
 
 # Update and install base packages
 RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs
 
-# throw errors if Gemfile has been modified since Gemfile.lock
+# Install yarn to manage Node.js dependencies
+RUN npm install yarn -g
+
+# Throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
 
 # Create app directory
 WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+
+# Install Gem dependencies
+RUN bundle install --deployment --without development test
+
+# Install Node.js dependencies
+RUN yarn install
 
 COPY . .
 
+# Run app in production environment
+ENV RAILS_ENV=production
+
+# Configure Rails to serve the assets
+ENV RAILS_SERVE_STATIC_FILES=true
+
+# Compile assets
+RUN GOOGLE_GEOCODING_API_KEY=dummy SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
+
+# Run the web app on port 8080
+ENV PORT=8080
 EXPOSE 8080
 
-CMD ["ruby", "bin/rails", "server"]
+# Ensure our entry point script is executable
+RUN chmod +x ./bin/docker-entrypoint.sh
+
+ENTRYPOINT ./bin/docker-entrypoint.sh
