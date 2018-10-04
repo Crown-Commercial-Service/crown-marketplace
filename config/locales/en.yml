@@ -1,2 +1,5 @@
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      messages:
+        invalid_postcode: 'is not a valid postcode'

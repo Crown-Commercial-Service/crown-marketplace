@@ -11,4 +11,17 @@ RSpec.describe Branch, type: :model do
     branch.postcode = ''
     expect(branch).not_to be_valid
   end
+
+  context 'when postcode is nonsense' do
+    before do
+      branch.postcode = 'nonsense'
+    end
+
+    it { is_expected.not_to be_valid }
+
+    it 'has a sensible error message' do
+      branch.validate
+      expect(branch.errors).to include(postcode: include('is not a valid postcode'))
+    end
+  end
 end
