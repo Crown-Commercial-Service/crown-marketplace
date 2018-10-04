@@ -31,6 +31,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder'
+gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
 
 group :development, :test do
