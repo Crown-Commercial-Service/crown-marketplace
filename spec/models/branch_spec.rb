@@ -47,11 +47,11 @@ RSpec.describe Branch, type: :model do
     let(:shoreditch) { point_factory.point(51.5255, -0.0587) }
 
     it 'includes nearby branches' do
-      expect(Branch.near(shoreditch, within_metres: 3000)).to include(london_1, london_2)
+      expect(Branch.near(shoreditch, within_metres: 10000)).to include(london_1, london_2)
     end
 
     it 'excludes far away branches' do
-      expect(Branch.near(shoreditch, within_metres: 3000)).not_to include(edinburgh)
+      expect(Branch.near(shoreditch, within_metres: 10000)).not_to include(edinburgh)
     end
   end
 end
