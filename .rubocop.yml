@@ -7,6 +7,7 @@ AllCops:
         - 'db/schema.rb'
         - 'db/seeds.rb'
         - 'bin/**/*'
+        - 'vendor/**/*'
 
 Rails:
     Enabled: true
