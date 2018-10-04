@@ -1,5 +1,20 @@
 # GOV.UK Rails skeleton
 
+## Prerequisites
+
+### Ubuntu
+
+```
+sudo apt install postgresql
+sudo apt install postgresql-{postgresql-version}-postgis-{postgis-version}
+```
+
+### MacOS
+
+```
+brew install postgis
+```
+
 ## Set up
 
 To create the (unused but required) database:
