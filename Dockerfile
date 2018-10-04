@@ -55,6 +55,9 @@ ENV RAILS_ENV=production
 # Configure Rails to serve the assets
 ENV RAILS_SERVE_STATIC_FILES=true
 
+# Send logs to STDOUT so that they can be sent to CloudWatch
+ENV RAILS_LOG_TO_STDOUT=true
+
 # Compile assets
 RUN GOOGLE_GEOCODING_API_KEY=dummy SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
 
