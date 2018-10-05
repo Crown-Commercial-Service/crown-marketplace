@@ -41,13 +41,13 @@ WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile.lock ./
 
+COPY . .
+
 # Install Gem dependencies
 RUN bundle install --deployment --without development test
 
 # Install Node.js dependencies
 RUN yarn install
-
-COPY . .
 
 # Run app in production environment
 ENV RAILS_ENV=production
