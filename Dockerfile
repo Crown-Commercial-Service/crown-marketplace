@@ -45,7 +45,8 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install --deployment --without development test
 
 # Install Node.js dependencies
-RUN yarn install
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile --production --no-cache
 
 COPY . .
 
