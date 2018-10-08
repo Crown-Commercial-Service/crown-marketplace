@@ -1,0 +1,5 @@
+<ol>
+  <% @branches.each do |branch| %>
+    <li><%= branch.supplier.name %> <%= branch.postcode %></li>
+  <% end %>
+</ol>
