@@ -2,23 +2,28 @@ class UploadsController < ApplicationController
   def create
     suppliers = JSON.parse(request.body.read)
 
-    error = nil
-    Supplier.transaction do
-      begin
-        results = suppliers.map do |supplier_data|
-          create_supplier(supplier_data)
-        end
-      rescue ActiveRecord::RecordInvalid => e
-        error = e
-        raise ActiveRecord::Rollback
+    error, results = all_or_none(Supplier) do
+      suppliers.map do |supplier_data|
+        create_supplier(supplier_data)
       end
-
-      errors = results.select { |r| r.is_a?(Failure) }.map(&:id)
-
-      render json: { errors: errors }, status: :created
     end
 
     raise error if error
+
+    errors = results.select { |r| r.is_a?(Failure) }.map(&:id)
+
+    render json: { errors: errors }, status: :created
+  end
+
+  def all_or_none(transaction_class)
+    error = results = nil
+    transaction_class.transaction do
+      results = yield
+    rescue ActiveRecord::RecordInvalid => e
+      error = e
+      raise ActiveRecord::Rollback
+    end
+    [error, results]
   end
 
   Success = Class.new
