@@ -10,7 +10,7 @@ class UploadsController < ApplicationController
 
     raise error if error
 
-    render json: { errors: failure_ids(results) }, status: :created
+    render json: { errors: skipped_ids(results) }, status: :created
   end
 
   def all_or_none(transaction_class)
@@ -24,17 +24,17 @@ class UploadsController < ApplicationController
     [error, results]
   end
 
-  def failure_ids(results)
-    results.select { |r| r.is_a?(Failure) }.map(&:id)
+  def skipped_ids(results)
+    results.select { |r| r.is_a?(Skipped) }.map(&:id)
   end
 
   Success = Class.new
-  Failure = Struct.new(:id)
+  Skipped = Struct.new(:id)
 
   def create_supplier(data)
     supplier_id = data['supplier_id']
     supplier = Supplier.find_by(id: supplier_id)
-    return Failure.new(supplier_id) if supplier.present?
+    return Skipped.new(supplier_id) if supplier.present?
 
     s = Supplier.create!(id: supplier_id, name: data['supplier_name'])
     data['branches'].each do |branch|
