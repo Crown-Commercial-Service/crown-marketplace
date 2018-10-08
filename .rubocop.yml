@@ -81,5 +81,5 @@ RSpec/MultipleExpectations:
         - 'spec/features/**/*'
 
 RSpec/ExampleLength:
-      Exclude:
-          - 'spec/features/**/*'
+    Exclude:
+        - 'spec/features/**/*'
