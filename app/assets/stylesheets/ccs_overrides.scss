@@ -1,0 +1,26 @@
+@import './shared/colors.scss';
+
+.govuk-header {
+  background-color: $ccs_header;
+}
+
+.govuk-header__container {
+  border-bottom: none;
+  padding: 15px 0;
+}
+
+.govuk-header__logotype img {
+  width: 110px;
+  height: 90px;
+}
+
+@media (min-width: 641px) {
+  .govuk-header__container {
+    padding: 30px 0;
+  }
+
+  .govuk-header__logotype img {
+    width: 140px;
+    height: 113px;
+  }
+}
