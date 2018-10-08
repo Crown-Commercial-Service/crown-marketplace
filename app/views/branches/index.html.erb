@@ -1,5 +1,14 @@
-<ol>
-  <% @branches.each do |branch| %>
-    <li><%= branch.supplier.name %> <%= branch.postcode %></li>
-  <% end %>
-</ol>
+<div class="govuk-body">
+  <h1 class="govuk-heading-xl">Supplier list</h1>
+
+  <p>
+    <span class="govuk-body-l"><%= @branches.count %></span>
+    <%= 'result'.pluralize(@branches.count) %> found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @postcode %></strong>
+  </p>
+
+  <ol>
+    <% @branches.each do |branch| %>
+      <li><%= branch.supplier.name %> <%= branch.postcode %></li>
+    <% end %>
+  </ol>
+</div>

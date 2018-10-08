@@ -1,4 +1,6 @@
 class Branch < ApplicationRecord
+  DEFAULT_SEARCH_RANGE_IN_MILES = 25
+
   belongs_to :supplier
 
   validates :postcode, presence: true, postcode: true
