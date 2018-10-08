@@ -1,0 +1,9 @@
+div .branch {
+    border-bottom: 1px solid #bfc1c3;
+    padding-bottom: 20px;
+    margin-bottom: 20px
+}
+
+div .markup {
+    text-align: right;
+}

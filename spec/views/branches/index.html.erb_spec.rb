@@ -17,16 +17,10 @@ RSpec.describe 'branches/index' do
     render
 
     page = Capybara.string(rendered)
-    expect(page).to have_css('ol li', count: 3)
 
-    expect(page).to have_css('ol li:nth-child(1)', text: /First Supplier/)
-    expect(page).to have_css('ol li:nth-child(1)', text: /TN33 0PQ/)
-
-    expect(page).to have_css('ol li:nth-child(2)', text: /First Supplier/)
-    expect(page).to have_css('ol li:nth-child(2)', text: /LU7 0JL/)
-
-    expect(page).to have_css('ol li:nth-child(3)', text: /Second Supplier/)
-    expect(page).to have_css('ol li:nth-child(3)', text: /LS15 8GB/)
+    expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/)
+    expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/)
+    expect(page).to have_css('h2.govuk-heading-l', text: /Second Supplier/)
   end
   # rubocop:enable RSpec/ExampleLength,RSpec/MultipleExpectations
 end

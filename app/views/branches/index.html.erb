@@ -1,14 +1,54 @@
-<div class="govuk-body">
-  <h1 class="govuk-heading-xl">Supplier list</h1>
-
-  <p>
-    <span class="govuk-body-l"><%= @branches.count %></span>
-    <%= 'result'.pluralize(@branches.count) %> found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @postcode %></strong>
-  </p>
-
-  <ol>
-    <% @branches.each do |branch| %>
-      <li><%= branch.supplier.name %> <%= branch.postcode %></li>
-    <% end %>
-  </ol>
+<div class="govuk-width-container">
+  <div class="govuk-phase-banner">
+    <p class="govuk-phase-banner__content">
+      <strong class="govuk-tag govuk-phase-banner__content__tag ">
+        beta
+      </strong>
+      <span class="govuk-phase-banner__text">
+        This is a new service – your
+        <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+      </span>
+    </p>
+  </div>
+  <a href="#" class="govuk-back-link">Back</a>
+  <main class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <div class="govuk-grid-row">
+          <h1 class="govuk-heading-xl">Suppliers List</h1>
+          <p class="govuk-body"><span class="govuk-body-l"><%= @branches.count %></span> results found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @postcode %></strong></p>
+        </div>
+        <% @branches.each do |branch| %>
+        <div class="govuk-grid-row branch">
+          <h2 class="govuk-heading-l"><%= branch.supplier.name %></h2>
+          <div class="govuk-grid-column-one-quarter">
+            <ul class="govuk-list">
+              <li><b>Branch:</b> branch-location</li>
+              <li><b>Accreditation Body:</b> accreditation-body</li>
+            </ul>
+          </div>
+          <div class="govuk-grid-column-one-quarter">
+            <p class="govuk-body">
+              supplier-contact<br />
+              supplier-contact-number<br />
+              <a href="mailto:supplier@example.com">supplier@example.com</a>
+            </p>
+          </div>
+          <div class="govuk-grid-column-one-quarter markup">
+            <p class="govuk-body govuk-!-font-size-48">
+              50%
+            </p>
+            <p class="govuk-body-s">Agency Markup</p>
+          </div>
+          <div class="govuk-grid-column-one-quarter">
+            <p class="govuk-body govuk-!-font-size-48">
+              7.2
+            </p>
+            <p class="govuk-body-s">miles</p>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </main>
 </div>
