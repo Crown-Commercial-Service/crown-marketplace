@@ -1,0 +1,9 @@
+<%= form_tag '/branches', method: :get do %>
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="postcode">
+      Postcode of your school
+    </label>
+    <%= text_field_tag :postcode, '', class: 'govuk-input' %>
+  </div>
+  <%= submit_tag 'Continue', class: "govuk-button" %>
+<% end %>

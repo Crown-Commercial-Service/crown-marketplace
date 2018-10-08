@@ -71,3 +71,15 @@ Metrics/BlockLength:
 RSpec/DescribeClass:
     Exclude:
         - 'spec/views/**/*'
+
+Capybara/FeatureMethods:
+    Exclude:
+        - 'spec/features/**/*'
+
+RSpec/MultipleExpectations:
+    Exclude:
+        - 'spec/features/**/*'
+
+RSpec/ExampleLength:
+      Exclude:
+          - 'spec/features/**/*'
