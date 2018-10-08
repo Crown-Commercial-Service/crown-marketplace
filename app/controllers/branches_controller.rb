@@ -1,6 +1,11 @@
 class BranchesController < ApplicationController
   def index
-    @postcode = UKPostcode.parse(params.fetch(:postcode, ''))
+    if params[:postcode].nil?
+      @branches = Branch.all
+      return
+    end
+
+    @postcode = UKPostcode.parse(params[:postcode])
 
     unless @postcode.valid?
       flash[:error] = 'Postcode is invalid'
