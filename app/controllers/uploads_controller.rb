@@ -39,7 +39,7 @@ class UploadsController < ApplicationController
 
     s = Supplier.create!(id: supplier_id, name: data['supplier_name'])
     branches.each do |branch|
-      s.branches.create(postcode: branch['postcode'])
+      s.branches.create!(postcode: branch['postcode'])
     end
     Success.new
   end
