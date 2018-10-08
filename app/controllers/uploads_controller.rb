@@ -10,9 +10,7 @@ class UploadsController < ApplicationController
 
     raise error if error
 
-    errors = results.select { |r| r.is_a?(Failure) }.map(&:id)
-
-    render json: { errors: errors }, status: :created
+    render json: { errors: failure_ids(results) }, status: :created
   end
 
   def all_or_none(transaction_class)
@@ -24,6 +22,10 @@ class UploadsController < ApplicationController
       raise ActiveRecord::Rollback
     end
     [error, results]
+  end
+
+  def failure_ids(results)
+    results.select { |r| r.is_a?(Failure) }.map(&:id)
   end
 
   Success = Class.new
