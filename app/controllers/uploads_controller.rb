@@ -5,8 +5,8 @@ class UploadsController < ApplicationController
     error = nil
     Supplier.transaction do
       begin
-        results = suppliers.map do |supplier_json|
-          find_or_create_supplier_from_parsed_json(supplier_json)
+        results = suppliers.map do |supplier_data|
+          create_supplier(supplier_data)
         end
       rescue ActiveRecord::RecordInvalid => e
         error = e
@@ -24,13 +24,13 @@ class UploadsController < ApplicationController
   Success = Class.new
   Failure = Struct.new(:id)
 
-  def find_or_create_supplier_from_parsed_json(json)
-    supplier_id = json['supplier_id']
+  def create_supplier(data)
+    supplier_id = data['supplier_id']
     supplier = Supplier.find_by(id: supplier_id)
     return Failure.new(supplier_id) if supplier.present?
 
-    s = Supplier.create!(id: supplier_id, name: json['supplier_name'])
-    json['branches'].each do |branch|
+    s = Supplier.create!(id: supplier_id, name: data['supplier_name'])
+    data['branches'].each do |branch|
       s.branches.create(postcode: branch['postcode'])
     end
     Success.new
