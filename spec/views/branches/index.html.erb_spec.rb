@@ -10,17 +10,28 @@ RSpec.describe 'branches/index' do
 
   let(:branches) { [first_branch, second_branch, third_branch] }
 
-  # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-  it 'displays list of all branches' do
+  before do
     assign(:branches, branches)
 
     render
+  end
 
+  # rubocop:disable RSpec/MultipleExpectations
+  it 'displays list of all branches' do
     page = Capybara.string(rendered)
 
     expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/)
     expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/)
     expect(page).to have_css('h2.govuk-heading-l', text: /Second Supplier/)
   end
-  # rubocop:enable RSpec/ExampleLength,RSpec/MultipleExpectations
+  # rubocop:enable RSpec/MultipleExpectations
+
+  context 'when there are no branches' do
+    let(:branches) { [] }
+
+    it 'does not display empty list' do
+      page = Capybara.string(rendered)
+      expect(page).not_to have_css('ol')
+    end
+  end
 end
