@@ -26,10 +26,6 @@ RSpec.describe UploadsController, type: :controller do
 
     let(:valid_postcode) { instance_double(UKPostcode::GeographicPostcode, valid?: true) }
 
-    before do
-      allow(UKPostcode).to receive(:parse).and_return(valid_postcode)
-    end
-
     context 'when JSON is invalid' do
       it 'raises error' do
         expect do
@@ -49,6 +45,10 @@ RSpec.describe UploadsController, type: :controller do
     end
 
     context 'when supplier does not exist' do
+      before do
+        allow(UKPostcode).to receive(:parse).and_return(valid_postcode)
+      end
+
       it 'creates supplier' do
         expect do
           post :create, body: suppliers.to_json
@@ -149,6 +149,35 @@ RSpec.describe UploadsController, type: :controller do
           },
           {
             supplier_name: '',
+          }
+        ]
+      end
+
+      it 'raises ActiveRecord::RecordInvalid exception' do
+        expect do
+          post :create, body: suppliers.to_json
+        end.to raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it 'does not create any suppliers' do
+        expect do
+          ignoring_exception(ActiveRecord::RecordInvalid) do
+            post :create, body: suppliers.to_json
+          end
+        end.not_to change(Supplier, :count)
+      end
+    end
+
+    context 'when data for one suppliers branch is invalid' do
+      let(:suppliers) do
+        [
+          {
+            supplier_name: unique_supplier_name,
+            branches: [{ postcode: 'SW1AA 1AA' }]
+          },
+          {
+            supplier_name: 'Another name',
+            branches: [{ postcode: 'NOT A POSTCODE' }]
           }
         ]
       end
