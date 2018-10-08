@@ -18,35 +18,37 @@
           <h1 class="govuk-heading-xl">Suppliers List</h1>
           <p class="govuk-body"><span class="govuk-body-l"><%= @branches.count %></span> results found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @postcode %></strong></p>
         </div>
-        <% @branches.each do |branch| %>
-        <div class="govuk-grid-row branch">
-          <h2 class="govuk-heading-l"><%= branch.supplier.name %></h2>
-          <div class="govuk-grid-column-one-quarter">
-            <ul class="govuk-list">
-              <li><b>Branch:</b> branch-location</li>
-              <li><b>Accreditation Body:</b> accreditation-body</li>
-            </ul>
+        <% if @branches.any? %>
+          <% @branches.each do |branch| %>
+          <div class="govuk-grid-row branch">
+            <h2 class="govuk-heading-l"><%= branch.supplier.name %></h2>
+            <div class="govuk-grid-column-one-quarter">
+              <ul class="govuk-list">
+                <li><b>Branch:</b> branch-location</li>
+                <li><b>Accreditation Body:</b> accreditation-body</li>
+              </ul>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <p class="govuk-body">
+                supplier-contact<br />
+                supplier-contact-number<br />
+                <a href="mailto:supplier@example.com">supplier@example.com</a>
+              </p>
+            </div>
+            <div class="govuk-grid-column-one-quarter markup">
+              <p class="govuk-body govuk-!-font-size-48">
+                50%
+              </p>
+              <p class="govuk-body-s">Agency Markup</p>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <p class="govuk-body govuk-!-font-size-48">
+                7.2
+              </p>
+              <p class="govuk-body-s">miles</p>
+            </div>
           </div>
-          <div class="govuk-grid-column-one-quarter">
-            <p class="govuk-body">
-              supplier-contact<br />
-              supplier-contact-number<br />
-              <a href="mailto:supplier@example.com">supplier@example.com</a>
-            </p>
-          </div>
-          <div class="govuk-grid-column-one-quarter markup">
-            <p class="govuk-body govuk-!-font-size-48">
-              50%
-            </p>
-            <p class="govuk-body-s">Agency Markup</p>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <p class="govuk-body govuk-!-font-size-48">
-              7.2
-            </p>
-            <p class="govuk-body-s">miles</p>
-          </div>
-        </div>
+          <% end %>
         <% end %>
       </div>
     </div>
