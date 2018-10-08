@@ -83,6 +83,16 @@ RSpec.describe UploadsController, type: :controller do
         expect(branch.postcode).to eq(unique_postcode)
       end
 
+      context 'and supplier has no branches' do
+        let(:branches) { [] }
+
+        it 'creates a supplier anyway' do
+          expect do
+            post :create, body: suppliers.to_json
+          end.to change(Supplier, :count).by(1)
+        end
+      end
+
       context 'and supplier has multiple branches' do
         let(:another_unique_postcode) { rand(36**8).to_s(36) }
         let(:branches) do
@@ -136,11 +146,9 @@ RSpec.describe UploadsController, type: :controller do
         [
           {
             supplier_name: unique_supplier_name,
-            branches: []
           },
           {
             supplier_name: '',
-            branches: []
           }
         ]
       end

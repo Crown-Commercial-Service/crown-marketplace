@@ -33,11 +33,12 @@ class UploadsController < ApplicationController
 
   def create_supplier(data)
     supplier_id = data['supplier_id']
+    branches = data.fetch('branches', [])
     supplier = Supplier.find_by(id: supplier_id)
     return Skipped.new(supplier_id) if supplier.present?
 
     s = Supplier.create!(id: supplier_id, name: data['supplier_name'])
-    data['branches'].each do |branch|
+    branches.each do |branch|
       s.branches.create(postcode: branch['postcode'])
     end
     Success.new
