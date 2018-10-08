@@ -1,4 +1,4 @@
-# GOV.UK Rails skeleton
+# Crown Marketplace
 
 ## Prerequisites
 
