@@ -26,6 +26,10 @@ RSpec.describe 'branches/index' do
   end
   # rubocop:enable RSpec/MultipleExpectations
 
+  it 'displays number of results' do
+    expect(rendered).to have_content('3 results')
+  end
+
   context 'when there are no branches' do
     let(:branches) { [] }
 
