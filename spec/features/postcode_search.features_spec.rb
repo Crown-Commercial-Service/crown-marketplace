@@ -35,9 +35,10 @@ RSpec.feature 'PostcodeSearch.features', type: :feature do
     fill_in 'postcode', with: 'WC2B 6TE'
     click_button 'Continue'
 
-    expect(page).to have_text('2 results found')
-    expect(page).to have_text('holborn')
-    expect(page).to have_text('westminster')
+    holborn_branch = page.find('h2', text: 'holborn').ancestor('.branch')
+    expect(holborn_branch).to have_css('.distance', text: '0.0')
+    westminster_branch = page.find('h2', text: 'westminster').ancestor('.branch')
+    expect(westminster_branch).to have_css('.distance', text: '1.1')
     expect(page).not_to have_text('liverpool')
   end
 
