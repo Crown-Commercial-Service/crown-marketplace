@@ -50,7 +50,7 @@
             <div class="govuk-grid-column-one-quarter">
               <% if @point %>
                 <p class="govuk-body govuk-!-font-size-48 distance">
-                  <%= number_with_precision(@point.distance(branch.location) / 1609.34, precision: 1) %>
+                  <%= number_with_precision(metres_to_miles(@point.distance(branch.location)), precision: 1) %>
                 </p>
                 <p class="govuk-body-s">miles</p>
               <% end %>

@@ -21,6 +21,6 @@ class BranchesController < ApplicationController
       return
     end
 
-    @branches = Branch.near(@point, within_metres: 1609.34 * Branch::DEFAULT_SEARCH_RANGE_IN_MILES)
+    @branches = Branch.near(@point, within_metres: helpers.miles_to_metres(Branch::DEFAULT_SEARCH_RANGE_IN_MILES))
   end
 end
