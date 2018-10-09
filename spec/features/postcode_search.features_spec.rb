@@ -25,4 +25,17 @@ RSpec.feature 'PostcodeSearch.features', type: :feature do
     expect(page).to have_text('westminster')
     expect(page).not_to have_text('liverpool')
   end
+
+  scenario 'Postcode is not recognised' do
+    Geocoder::Lookup::Test.add_stub(
+      'SE99 1AA', [{ 'coordinates' => nil }]
+    )
+
+    visit '/search'
+
+    fill_in 'postcode', with: 'SE99 1AA'
+    click_button 'Continue'
+
+    expect(page).to have_text("Couldn't find that postcode")
+  end
 end
