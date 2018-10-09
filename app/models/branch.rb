@@ -32,6 +32,6 @@ class Branch < ApplicationRecord
   def geocode
     return unless location.nil?
 
-    GeocodingJob.perform_later(self)
+    GeocodingJob.perform_now(self)
   end
 end
