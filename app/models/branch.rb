@@ -8,7 +8,7 @@ class Branch < ApplicationRecord
   validates :contact_email, presence: true
 
   before_save :clear_geocoding
-  after_save :geocode
+  after_commit :geocode
 
   def self.near(point, within_metres:)
     where(
