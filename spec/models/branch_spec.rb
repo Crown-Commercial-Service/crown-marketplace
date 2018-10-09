@@ -98,26 +98,26 @@ RSpec.describe Branch, type: :model do
 
     it 'geocodes the initial postcode' do
       branch.save!
-      expect(westminster.distance(branch.location)).to be < 0.1
+      expect(westminster.distance(branch.reload.location)).to be < 0.1
     end
 
     it 'geocodes an updated postcode' do
       branch.save!
       branch.update! postcode: 'L3 9PP'
-      expect(liverpool.distance(branch.location)).to be < 0.1
+      expect(liverpool.distance(branch.reload.location)).to be < 0.1
     end
 
     it 'does not geocode an initially-supplied location' do
       initial_location = point_factory.point(-3.1953, 55.9619)
       branch.location = initial_location
       branch.save!
-      expect(initial_location.distance(branch.location)).to be < 0.1
+      expect(initial_location.distance(branch.reload.location)).to be < 0.1
     end
 
     it 'does not geocode a postcode it cannot find' do
       branch.postcode = 'SE99 1AA'
       branch.save!
-      expect(branch.location).to be_nil
+      expect(branch.reload.location).to be_nil
     end
   end
 end
