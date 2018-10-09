@@ -5,9 +5,9 @@ RSpec.describe Geocoding do
 
   it 'returns longitude and latitude for postcode' do
     Geocoder::Lookup::Test.add_stub(
-      'TS14 6RD', [{ 'coordinates' => [-1.04577, 54.541098] }]
+      'TS14 6RD', [{ 'coordinates' => [54.541098, -1.04577] }]
     )
     coordinates = geocoding.coordinates(postcode: 'TS14 6RD')
-    expect(coordinates).to eq([-1.04577, 54.541098])
+    expect(coordinates).to eq([54.541098, -1.04577])
   end
 end
