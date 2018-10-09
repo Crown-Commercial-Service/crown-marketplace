@@ -29,23 +29,14 @@
           <div class="govuk-grid-row branch">
             <h2 class="govuk-heading-l"><%= branch.supplier.name %></h2>
             <div class="govuk-grid-column-one-quarter">
-              <ul class="govuk-list">
-                <li><b>Branch:</b> branch-location</li>
-                <li><b>Accreditation Body:</b> accreditation-body</li>
-              </ul>
             </div>
             <div class="govuk-grid-column-one-quarter">
               <p class="govuk-body">
-                supplier-contact<br />
-                supplier-contact-number<br />
-                <a href="mailto:supplier@example.com">supplier@example.com</a>
+                <%= branch.contact_name %><br />
+                <%= mail_to(branch.contact_email) %>
               </p>
             </div>
             <div class="govuk-grid-column-one-quarter markup">
-              <p class="govuk-body govuk-!-font-size-48">
-                50%
-              </p>
-              <p class="govuk-body-s">Agency Markup</p>
             </div>
             <div class="govuk-grid-column-one-quarter">
               <% if @point %>
