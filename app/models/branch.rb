@@ -4,6 +4,8 @@ class Branch < ApplicationRecord
   belongs_to :supplier
 
   validates :postcode, presence: true, postcode: true
+  validates :contact_name, presence: true
+  validates :contact_email, presence: true
 
   def self.near(point, within_metres:)
     where(
