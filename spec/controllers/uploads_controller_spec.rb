@@ -9,7 +9,13 @@ RSpec.describe UploadsController, type: :controller do
     let(:branches) do
       [
         {
-          postcode: unique_postcode
+          postcode: unique_postcode,
+          contacts: [
+            {
+              name: 'Joe Bloggs',
+              email: 'joe.bloggs@example.com',
+            }
+          ]
         }
       ]
     end
@@ -81,6 +87,8 @@ RSpec.describe UploadsController, type: :controller do
         supplier = Supplier.last
         branch = supplier.branches.first
         expect(branch.postcode).to eq(unique_postcode)
+        expect(branch.contact_name).to eq('Joe Bloggs')
+        expect(branch.contact_email).to eq('joe.bloggs@example.com')
       end
 
       context 'and supplier has no branches' do
@@ -98,10 +106,22 @@ RSpec.describe UploadsController, type: :controller do
         let(:branches) do
           [
             {
-              postcode: unique_postcode
+              postcode: unique_postcode,
+              contacts: [
+                {
+                  name: 'Colin Warden',
+                  email: 'colin.warden@example.com'
+                }
+              ]
             },
             {
-              postcode: another_unique_postcode
+              postcode: another_unique_postcode,
+              contacts: [
+                {
+                  name: 'Colin Warden',
+                  email: 'colin.warden@example.com'
+                }
+              ]
             }
           ]
         end

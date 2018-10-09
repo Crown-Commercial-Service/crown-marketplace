@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_04_130412) do
+ActiveRecord::Schema.define(version: 2018_10_09_104806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2018_10_04_130412) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.text "contact_name"
+    t.text "contact_email"
     t.index ["supplier_id"], name: "index_branches_on_supplier_id"
   end
 

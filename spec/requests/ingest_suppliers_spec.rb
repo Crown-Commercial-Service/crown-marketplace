@@ -9,10 +9,22 @@ RSpec.describe 'Ingest suppliers', type: :request do
           supplier_name: 'First Supplier',
           branches: [
             {
-              postcode: 'TN33 0PQ'
+              postcode: 'TN33 0PQ',
+              contacts: [
+                {
+                  name: 'Emma Flynn',
+                  email: 'emma.flynn@example.com'
+                }
+              ]
             },
             {
-              postcode: 'LU7 0JL'
+              postcode: 'LU7 0JL',
+              contacts: [
+                {
+                  name: 'Jimmy Kent',
+                  email: 'jimmy.kent@example.com'
+                }
+              ]
             }
           ]
         },
@@ -20,14 +32,19 @@ RSpec.describe 'Ingest suppliers', type: :request do
           supplier_name: 'Second Supplier',
           branches: [
             {
-              postcode: 'LS15 8GB'
+              postcode: 'LS15 8GB',
+              contacts: [
+                {
+                  name: 'Jodie Edwards',
+                  email: 'jodie.edwards@example.com'
+                }
+              ]
             }
           ]
         }
       ]
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
     it 'ingests suppliers' do
       post uploads_path, params: suppliers.to_json, headers: headers
       expect(response).to have_http_status(:created)
@@ -36,6 +53,5 @@ RSpec.describe 'Ingest suppliers', type: :request do
       page = Capybara.string(response.body)
       expect(page).to have_content('3 results'), response.body
     end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 end

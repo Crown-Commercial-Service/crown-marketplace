@@ -16,7 +16,6 @@ RSpec.describe 'branches/index' do
     render
   end
 
-  # rubocop:disable RSpec/MultipleExpectations
   it 'displays list of all branches' do
     page = Capybara.string(rendered)
 
@@ -24,7 +23,6 @@ RSpec.describe 'branches/index' do
     expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/)
     expect(page).to have_css('h2.govuk-heading-l', text: /Second Supplier/)
   end
-  # rubocop:enable RSpec/MultipleExpectations
 
   it 'displays number of results' do
     expect(rendered).to have_content('3 results')

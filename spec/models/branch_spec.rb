@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Branch, type: :model do
-  subject(:branch) { supplier.branches.build(postcode: 'SW1A 1AA') }
+  subject(:branch) do
+    supplier.branches.build(
+      postcode: 'SW1A 1AA',
+      contact_name: 'Joe Bloggs',
+      contact_email: 'joe.bloggs@example.com'
+    )
+  end
 
   let(:supplier) { Supplier.create!(name: 'Supplier') }
 
@@ -9,6 +15,16 @@ RSpec.describe Branch, type: :model do
 
   it 'is not valid if postcode is blank' do
     branch.postcode = ''
+    expect(branch).not_to be_valid
+  end
+
+  it 'is not valid if contact_name is blank' do
+    branch.contact_name = ''
+    expect(branch).not_to be_valid
+  end
+
+  it 'is not valid if contact_email is blank' do
+    branch.contact_email = ''
     expect(branch).not_to be_valid
   end
 
@@ -30,17 +46,26 @@ RSpec.describe Branch, type: :model do
 
     let!(:london_1) do
       supplier.branches.create!(
-        postcode: 'E1 6EA', location: point_factory.point(51.5201, -0.0759)
+        postcode: 'E1 6EA',
+        contact_name: 'John Smiths',
+        contact_email: 'john.smith@example.com',
+        location: point_factory.point(51.5201, -0.0759)
       )
     end
     let!(:london_2) do
       supplier.branches.create!(
-        postcode: 'EC1V 9HE', location: point_factory.point(51.5263, -0.0858)
+        postcode: 'EC1V 9HE',
+        contact_name: 'Ann Jones',
+        contact_email: 'ann.jones@example.com',
+        location: point_factory.point(51.5263, -0.0858)
       )
     end
     let!(:edinburgh) do
       supplier.branches.create!(
-        postcode: 'EH7 4DX', location: point_factory.point(55.9619, -3.1953)
+        postcode: 'EH7 4DX',
+        contact_name: 'Clare Francis',
+        contact_email: 'clare.francis@example.com',
+        location: point_factory.point(55.9619, -3.1953)
       )
     end
 
