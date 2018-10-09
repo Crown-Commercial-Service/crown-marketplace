@@ -22,7 +22,7 @@ class BranchesController < ApplicationController
     end
 
     point_factory = RGeo::Geographic.spherical_factory(srid: 4326)
-    point = point_factory.point(*lat_lng)
+    point = point_factory.point(lat_lng[1], lat_lng[0])
     @branches = Branch.near(point, within_metres: 1609.34 * Branch::DEFAULT_SEARCH_RANGE_IN_MILES)
   end
 end
