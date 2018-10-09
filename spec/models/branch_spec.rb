@@ -11,6 +11,8 @@ RSpec.describe Branch, type: :model do
 
   let(:supplier) { Supplier.create!(name: 'Supplier') }
 
+  let(:point_factory) { RGeo::Geographic.spherical_factory(srid: 4326) }
+
   it { is_expected.to be_valid }
 
   it 'is not valid if postcode is blank' do
@@ -42,8 +44,6 @@ RSpec.describe Branch, type: :model do
   end
 
   context 'when three branches exist in different locations' do
-    let(:point_factory) { RGeo::Geographic.spherical_factory(srid: 4326) }
-
     let!(:london_1) do
       supplier.branches.create!(
         postcode: 'E1 6EA',
@@ -77,6 +77,47 @@ RSpec.describe Branch, type: :model do
 
     it 'excludes far away branches' do
       expect(Branch.near(shoreditch, within_metres: 10000)).not_to include(edinburgh)
+    end
+  end
+
+  context 'when saving' do
+    let(:westminster) { point_factory.point(-0.14189, 51.501364) }
+    let(:liverpool) { point_factory.point(-2.9946932, 53.409189) }
+
+    before do
+      Geocoder::Lookup::Test.add_stub(
+        'SW1A 1AA', [{ 'coordinates' => [westminster.latitude, westminster.longitude] }]
+      )
+      Geocoder::Lookup::Test.add_stub(
+        'L3 9PP', [{ 'coordinates' => [liverpool.latitude, liverpool.longitude] }]
+      )
+      Geocoder::Lookup::Test.add_stub(
+        'SE99 1AA', [{ 'coordinates' => nil }]
+      )
+    end
+
+    it 'geocodes the initial postcode' do
+      branch.save!
+      expect(westminster.distance(branch.location)).to be < 0.1
+    end
+
+    it 'geocodes an updated postcode' do
+      branch.save!
+      branch.update! postcode: 'L3 9PP'
+      expect(liverpool.distance(branch.location)).to be < 0.1
+    end
+
+    it 'does not geocode an initially-supplied location' do
+      initial_location = point_factory.point(-3.1953, 55.9619)
+      branch.location = initial_location
+      branch.save!
+      expect(initial_location.distance(branch.location)).to be < 0.1
+    end
+
+    it 'does not geocode a postcode it cannot find' do
+      branch.postcode = 'SE99 1AA'
+      branch.save!
+      expect(branch.location).to be_nil
     end
   end
 end

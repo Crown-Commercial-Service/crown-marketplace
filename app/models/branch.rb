@@ -7,6 +7,9 @@ class Branch < ApplicationRecord
   validates :contact_name, presence: true
   validates :contact_email, presence: true
 
+  before_save :clear_geocoding
+  after_save :geocode
+
   def self.near(point, within_metres:)
     where(
       [
@@ -14,5 +17,21 @@ class Branch < ApplicationRecord
         point: point, within_metres: within_metres
       ]
     )
+  end
+
+  private
+
+  def clear_geocoding
+    return if new_record?
+
+    return unless attribute_changed?(:postcode)
+
+    self.location = nil
+  end
+
+  def geocode
+    return unless location.nil?
+
+    GeocodingJob.perform_now(self)
   end
 end
