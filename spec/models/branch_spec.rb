@@ -49,7 +49,7 @@ RSpec.describe Branch, type: :model do
         postcode: 'E1 6EA',
         contact_name: 'John Smiths',
         contact_email: 'john.smith@example.com',
-        location: point_factory.point(51.5201, -0.0759)
+        location: point_factory.point(-0.0759, 51.5201)
       )
     end
     let!(:london_2) do
@@ -57,7 +57,7 @@ RSpec.describe Branch, type: :model do
         postcode: 'EC1V 9HE',
         contact_name: 'Ann Jones',
         contact_email: 'ann.jones@example.com',
-        location: point_factory.point(51.5263, -0.0858)
+        location: point_factory.point(-0.0858, 51.5263)
       )
     end
     let!(:edinburgh) do
@@ -65,11 +65,11 @@ RSpec.describe Branch, type: :model do
         postcode: 'EH7 4DX',
         contact_name: 'Clare Francis',
         contact_email: 'clare.francis@example.com',
-        location: point_factory.point(55.9619, -3.1953)
+        location: point_factory.point(-3.1953, 55.9619)
       )
     end
 
-    let(:shoreditch) { point_factory.point(51.5255, -0.0587) }
+    let(:shoreditch) { point_factory.point(-0.0587, 51.5255) }
 
     it 'includes nearby branches' do
       expect(Branch.near(shoreditch, within_metres: 10000)).to include(london_1, london_2)
