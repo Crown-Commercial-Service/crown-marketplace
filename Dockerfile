@@ -25,6 +25,8 @@ ARG CCS_VERSION
 LABEL ccs_version=$CCS_VERSION
 ENV CCS_VERSION=$CCS_VERSION
 
+##_PARAMETER_STORE_MARKER_##
+
 ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata
 
 # Update and install base packages
