@@ -32,6 +32,13 @@ To create the database:
   * You can obtain an API key for development [from Google][geocoding-key]
   * Add it to your `.env.local` file which is ignored by git
 
+#### Production environments
+
+Credentials for HTTP Basic Authentication:
+
+* `HTTP_BASIC_AUTH_NAME`
+* `HTTP_BASIC_AUTH_PASSWORD`
+
 ## Run
 
     $ rails s
