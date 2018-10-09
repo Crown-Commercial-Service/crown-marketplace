@@ -68,4 +68,14 @@ The Dockerfile configures the Rails app to run in production.
 
 NOTE. You can set `CCS_DEFAULT_DB_HOST` to `docker.for.mac.localhost` to connect to a database running on your host machine.
 
+## Importing data
+
+### Supply teacher data
+
+```
+$ git clone git@github.com:Crown-Commercial-Service/cmp-supply-teacher-data.git
+$ cd cmp-supply-teacher-data
+$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @json/data.json http://$HOST/uploads
+```
+
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
