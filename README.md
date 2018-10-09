@@ -17,14 +17,14 @@ brew install postgis
 
 ## Set up
 
-To create the (unused but required) database:
-
-    $ rake db:create
-
 To install dependencies:
 
     $ yarn install
     $ bundle
+
+To create the database:
+
+    $ rake db:create
 
 ### Environment variables
 
