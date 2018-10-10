@@ -9,7 +9,7 @@ class BranchesController < ApplicationController
 
     unless @postcode.valid?
       flash[:error] = 'Postcode is invalid'
-      redirect_to search_path
+      redirect_to search_path(params.permit(:nominated_worker, :postcode))
       return
     end
 
@@ -17,7 +17,7 @@ class BranchesController < ApplicationController
 
     unless @point
       flash[:error] = "Couldn't find that postcode"
-      redirect_to search_path
+      redirect_to search_path(params.permit(:nominated_worker, :postcode))
       return
     end
 

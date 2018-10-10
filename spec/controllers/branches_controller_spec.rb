@@ -23,7 +23,7 @@ RSpec.describe BranchesController, type: :controller do
     context 'when postcode is blank' do
       it 'redirects to search' do
         get :index, params: { postcode: '' }
-        expect(response).to redirect_to(search_path)
+        expect(response).to redirect_to(/#{search_path}/)
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       it 'redirects to search' do
-        expect(response).to redirect_to(search_path)
+        expect(response).to redirect_to(/#{search_path}/)
       end
 
       it 'sets a flash error message' do
@@ -50,7 +50,7 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       it 'redirects to search' do
-        expect(response).to redirect_to(search_path)
+        expect(response).to redirect_to(/#{search_path}/)
       end
 
       it 'sets a flash error message' do
