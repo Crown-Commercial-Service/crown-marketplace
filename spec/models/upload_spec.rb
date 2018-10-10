@@ -7,31 +7,27 @@ RSpec.describe Upload, type: :model do
     let(:unique_postcode) { rand(36**8).to_s(36) }
 
     let(:branches) do
-      jsonify(
-        [
-          {
-            postcode: unique_postcode,
-            contacts: [
-              {
-                name: 'Joe Bloggs',
-                email: 'joe.bloggs@example.com',
-              }
-            ]
-          }
-        ]
-      )
+      [
+        {
+          'postcode' => unique_postcode,
+          'contacts' => [
+            {
+              'name' => 'Joe Bloggs',
+              'email' => 'joe.bloggs@example.com',
+            }
+          ]
+        }
+      ]
     end
 
     let(:suppliers) do
-      jsonify(
-        [
-          {
-            supplier_name: unique_supplier_name,
-            supplier_id: unique_supplier_id,
-            branches: branches
-          }
-        ]
-      )
+      [
+        {
+          'supplier_name' => unique_supplier_name,
+          'supplier_id' => unique_supplier_id,
+          'branches' => branches
+        }
+      ]
     end
 
     let(:valid_postcode) { instance_double(UKPostcode::GeographicPostcode, valid?: true) }
@@ -100,28 +96,26 @@ RSpec.describe Upload, type: :model do
       context 'and supplier has multiple branches' do
         let(:another_unique_postcode) { rand(36**8).to_s(36) }
         let(:branches) do
-          jsonify(
-            [
-              {
-                postcode: unique_postcode,
-                contacts: [
-                  {
-                    name: 'Colin Warden',
-                    email: 'colin.warden@example.com'
-                  }
-                ]
-              },
-              {
-                postcode: another_unique_postcode,
-                contacts: [
-                  {
-                    name: 'Colin Warden',
-                    email: 'colin.warden@example.com'
-                  }
-                ]
-              }
-            ]
-          )
+          [
+            {
+              'postcode' => unique_postcode,
+              'contacts' => [
+                {
+                  'name' => 'Colin Warden',
+                  'email' => 'colin.warden@example.com'
+                }
+              ]
+            },
+            {
+              'postcode' => another_unique_postcode,
+              'contacts' => [
+                {
+                  'name' => 'Colin Warden',
+                  'email' => 'colin.warden@example.com'
+                }
+              ]
+            }
+          ]
         end
 
         it 'creates two branches associated with supplier' do
@@ -162,13 +156,11 @@ RSpec.describe Upload, type: :model do
 
       context 'and data for one supplier is invalid' do
         let(:suppliers) do
-          jsonify(
-            [
-              {
-                supplier_name: '',
-              }
-            ]
-          )
+          [
+            {
+              'supplier_name' => '',
+            }
+          ]
         end
 
         it 'leaves existing data intact' do
@@ -184,16 +176,14 @@ RSpec.describe Upload, type: :model do
 
     context 'when data for one supplier is invalid' do
       let(:suppliers) do
-        jsonify(
-          [
-            {
-              supplier_name: unique_supplier_name,
-            },
-            {
-              supplier_name: '',
-            }
-          ]
-        )
+        [
+          {
+            'supplier_name' => unique_supplier_name,
+          },
+          {
+            'supplier_name' => '',
+          }
+        ]
       end
 
       it 'raises ActiveRecord::RecordInvalid exception' do
@@ -213,18 +203,16 @@ RSpec.describe Upload, type: :model do
 
     context 'when data for one suppliers branch is invalid' do
       let(:suppliers) do
-        jsonify(
-          [
-            {
-              supplier_name: unique_supplier_name,
-              branches: [{ postcode: 'SW1AA 1AA' }]
-            },
-            {
-              supplier_name: 'Another name',
-              branches: [{ postcode: 'NOT A POSTCODE' }]
-            }
-          ]
-        )
+        [
+          {
+            'supplier_name' => unique_supplier_name,
+            'branches' => [{ 'postcode' => 'SW1AA 1AA' }]
+          },
+          {
+            'supplier_name' => 'Another name',
+            'branches' => [{ 'postcode' => 'NOT A POSTCODE' }]
+          }
+        ]
       end
 
       it 'raises ActiveRecord::RecordInvalid exception' do
@@ -249,9 +237,5 @@ RSpec.describe Upload, type: :model do
     yield
   rescue klass
     nil
-  end
-
-  def jsonify(data)
-    JSON.parse(data.to_json)
   end
 end
