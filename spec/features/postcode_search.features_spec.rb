@@ -30,7 +30,8 @@ RSpec.feature 'PostcodeSearch.features', type: :feature do
       location: point_factory.point(-2.9946932, 53.409189)
     )
 
-    visit '/search'
+    visit '/'
+    click_on 'Start now'
 
     fill_in 'postcode', with: 'WC2B 6TE'
     click_button 'Continue'
@@ -47,7 +48,8 @@ RSpec.feature 'PostcodeSearch.features', type: :feature do
       'SE99 1AA', [{ 'coordinates' => nil }]
     )
 
-    visit '/search'
+    visit '/'
+    click_on 'Start now'
 
     fill_in 'postcode', with: 'SE99 1AA'
     click_button 'Continue'
