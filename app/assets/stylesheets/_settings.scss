@@ -1,0 +1,14 @@
+// Override any GOVUK settings here
+
+// use Rails asset helpers
+$govuk-font-url-function: 'font-url';
+$govuk-image-url-function: 'image-url';
+
+// tell GOVUK to apply base styles to <p> and <a> so we don't have to add the
+// classes
+$govuk-global-styles: true;
+
+// Disable compatibilty with old GOVUK kits as we do not need it
+$govuk-compatibility-govukfrontendtoolkit: false;
+$govuk-compatibility-govuktemplate: false;
+$govuk-compatibility-govukelements: false;
