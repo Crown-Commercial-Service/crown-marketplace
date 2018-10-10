@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'branches/index' do
+RSpec.describe 'branches/index.html.erb' do
   let(:first_supplier) { Supplier.new(name: 'First Supplier') }
   let(:second_supplier) { Supplier.new(name: 'Second Supplier') }
 
