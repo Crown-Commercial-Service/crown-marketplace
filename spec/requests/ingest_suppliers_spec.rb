@@ -45,13 +45,28 @@ RSpec.describe 'Ingest suppliers', type: :request do
       ]
     end
 
-    it 'ingests suppliers' do
-      post uploads_path, params: suppliers.to_json, headers: headers
-      expect(response).to have_http_status(:created)
-
-      get branches_path
-      page = Capybara.string(response.body)
+    it 'ingests suppliers and their branches' do
+      ingest(suppliers)
+      page = all_branches_page
       expect(page).to have_content('3 results'), response.body
     end
+
+    it 'destroys all suppliers and their branches before ingesting' do
+      2.times { ingest(suppliers) }
+      page = all_branches_page
+      expect(page).to have_content('3 results'), response.body
+    end
+  end
+
+  private
+
+  def ingest(suppliers)
+    post uploads_path, params: suppliers.to_json, headers: headers
+    expect(response).to have_http_status(:created)
+  end
+
+  def all_branches_page
+    get branches_path
+    Capybara.string(response.body)
   end
 end
