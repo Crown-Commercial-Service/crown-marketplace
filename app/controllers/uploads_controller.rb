@@ -14,7 +14,7 @@ class UploadsController < ApplicationController
 
     raise error if error
 
-    render json: { errors: [] }, status: :created
+    render json: {}, status: :created
   end
 
   def all_or_none(transaction_class)
