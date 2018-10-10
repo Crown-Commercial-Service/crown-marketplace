@@ -12,3 +12,38 @@ $govuk-global-styles: true;
 $govuk-compatibility-govukfrontendtoolkit: false;
 $govuk-compatibility-govuktemplate: false;
 $govuk-compatibility-govukelements: false;
+
+@import './shared/colors.scss';
+
+$govuk-colours: (
+  "purple": #2e358b,
+  "light-purple": #6f72af,
+  "bright-purple": #912b88,
+  "pink": #d53880,
+  "light-pink": #f499be,
+  "red": #b10e1e,
+  "bright-red": #df3034,
+  "orange": #f47738,
+  "brown": #b58840,
+  "yellow": #ffbf47,
+  "light-green": #85994b,
+  "green": #006435,
+  "turquoise": #28a197,
+  "light-blue": #2b8cc4,
+  "blue": #005ea5,
+
+  "black": #0b0c0c,
+  "grey-1": #6f777b,
+  "grey-2": #bfc1c3,
+  "grey-3": #dee0e2,
+  "grey-4": #f8f8f8,
+  "white": #ffffff,
+
+  "link": $ccs_link,
+  "link-hover": $ccs_link_hover,
+  "link-visited": $ccs_link_visited,
+
+  "failure": #B10E1E,
+  "warning": #DE8F1A,
+  "success": #0EB163
+);
