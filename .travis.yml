@@ -5,6 +5,7 @@ cache:
   directories:
     - node_modules
     - public/assets
+    - /home/travis/.rvm/gems
 env:
   - RAILS_ENV=test
 services:
@@ -15,6 +16,7 @@ addons:
     packages:
       - postgresql-9.6-postgis-2.3
 script:
+  - gem install --force --conservative -v 1.16.6 bundler
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
   - bundle exec rake
