@@ -15,23 +15,7 @@
         </div>
         <% if @branches.any? %>
           <% @branches.each do |branch| %>
-          <div class="govuk-grid-row branch">
-            <h2 class="govuk-heading-l"><%= branch.supplier.name %></h2>
-            <div class="govuk-grid-column-one-half">
-              <p class="govuk-body">
-                <%= branch.contact_name %><br />
-                <%= mail_to(branch.contact_email) %>
-              </p>
-            </div>
-            <div class="govuk-grid-column-one-half">
-              <% if @point %>
-                <p class="govuk-body govuk-!-font-size-48 distance">
-                  <%= number_with_precision(metres_to_miles(@point.distance(branch.location)), precision: 1) %>
-                </p>
-                <p class="govuk-body-s">miles</p>
-              <% end %>
-            </div>
-          </div>
+            <%= render branch %>
           <% end %>
         <% end %>
       </div>
