@@ -42,18 +42,4 @@ RSpec.feature 'Nominated workers', type: :feature do
     expect(westminster_branch).to have_css('.distance', text: '1.1')
     expect(page).not_to have_text('liverpool')
   end
-
-  scenario 'Postcode is not recognised' do
-    Geocoder::Lookup::Test.add_stub(
-      'SE99 1AA', [{ 'coordinates' => nil }]
-    )
-
-    visit '/'
-    click_on 'Start now'
-
-    fill_in 'postcode', with: 'SE99 1AA'
-    click_on 'Continue'
-
-    expect(page).to have_text("Couldn't find that postcode")
-  end
 end
