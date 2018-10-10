@@ -4,9 +4,7 @@ class UploadsController < ApplicationController
   def create
     suppliers = JSON.parse(request.body.read)
 
-    error = Upload.create(suppliers)
-
-    raise error if error
+    Upload.create!(suppliers)
 
     render json: {}, status: :created
   end
