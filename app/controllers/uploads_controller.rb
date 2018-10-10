@@ -8,7 +8,7 @@ class UploadsController < ApplicationController
       Supplier.destroy_all
 
       suppliers.map do |supplier_data|
-        create_supplier(supplier_data)
+        create_supplier!(supplier_data)
       end
     end
 
@@ -28,7 +28,7 @@ class UploadsController < ApplicationController
     error
   end
 
-  def create_supplier(data)
+  def create_supplier!(data)
     s = Supplier.create!(id: data['supplier_id'], name: data['supplier_name'])
     branches = data.fetch('branches', [])
     branches.each do |branch|
