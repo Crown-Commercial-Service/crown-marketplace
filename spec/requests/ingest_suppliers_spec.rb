@@ -6,37 +6,37 @@ RSpec.describe 'Ingest suppliers', type: :request do
     let(:suppliers) do
       [
         {
-          supplier_name: 'First Supplier',
-          branches: [
+          'supplier_name' => 'First Supplier',
+          'branches' => [
             {
-              postcode: 'TN33 0PQ',
-              contacts: [
+              'postcode' => 'TN33 0PQ',
+              'contacts' => [
                 {
-                  name: 'Emma Flynn',
-                  email: 'emma.flynn@example.com'
+                  'name' => 'Emma Flynn',
+                  'email' => 'emma.flynn@example.com'
                 }
               ]
             },
             {
-              postcode: 'LU7 0JL',
-              contacts: [
+              'postcode' => 'LU7 0JL',
+              'contacts' => [
                 {
-                  name: 'Jimmy Kent',
-                  email: 'jimmy.kent@example.com'
+                  'name' => 'Jimmy Kent',
+                  'email' => 'jimmy.kent@example.com'
                 }
               ]
             }
           ]
         },
         {
-          supplier_name: 'Second Supplier',
-          branches: [
+          'supplier_name' => 'Second Supplier',
+          'branches' => [
             {
-              postcode: 'LS15 8GB',
-              contacts: [
+              'postcode' => 'LS15 8GB',
+              'contacts' => [
                 {
-                  name: 'Jodie Edwards',
-                  email: 'jodie.edwards@example.com'
+                  'name' => 'Jodie Edwards',
+                  'email' => 'jodie.edwards@example.com'
                 }
               ]
             }
