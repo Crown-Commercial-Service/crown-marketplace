@@ -29,9 +29,8 @@ class UploadsController < ApplicationController
   end
 
   def create_supplier(data)
-    branches = data.fetch('branches', [])
-
     s = Supplier.create!(id: data['supplier_id'], name: data['supplier_name'])
+    branches = data.fetch('branches', [])
     branches.each do |branch|
       contact_name = branch.dig('contacts', 0, 'name')
       contact_email = branch.dig('contacts', 0, 'email')
