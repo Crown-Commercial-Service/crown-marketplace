@@ -14,14 +14,6 @@
   <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
   <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
 
-  <!--[if !IE 8]><!-->
-    <%= stylesheet_link_tag 'govuk-frontend/all' %>
-  <!--<![endif]-->
-
-  <!--[if IE 8]>
-    <%= stylesheet_link_tag 'govuk-frontend/all-ie8' %>
-  <![endif]-->
-
   <!--[if lt IE 9]>
     <%= javascript_include_tag 'html5shiv/dist/html5shiv' %>
   <![endif]-->
@@ -31,7 +23,7 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
 </head>
 
 <body class="govuk-template__body ">
@@ -85,7 +77,6 @@
     </div>
   </footer>
 
-  <%= javascript_include_tag 'govuk-frontend/all' %>
   <%= javascript_include_tag 'application' %>
   <script>
     window.GOVUKFrontend.initAll()
