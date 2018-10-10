@@ -43,6 +43,10 @@ RSpec.describe 'branches/index.html.erb' do
     expect(rendered).to have_content('3 results found')
   end
 
+  it 'has a link to print the page' do
+    expect(rendered).to have_link('Print this page')
+  end
+
   context 'when there are no branches' do
     let(:branches) { [] }
 
