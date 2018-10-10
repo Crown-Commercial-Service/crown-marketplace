@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.feature 'PostcodeSearch.features', type: :feature do
-  scenario 'User finds suppliers within search range' do
+RSpec.feature 'Nominated workers', type: :feature do
+  scenario 'Buyer finds suppliers within search range' do
     Geocoder::Lookup::Test.add_stub(
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
     )
