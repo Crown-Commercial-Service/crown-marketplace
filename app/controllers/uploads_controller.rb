@@ -17,6 +17,8 @@ class UploadsController < ApplicationController
     render json: {}, status: :created
   end
 
+  private
+
   def all_or_none(transaction_class)
     error = nil
     transaction_class.transaction do
