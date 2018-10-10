@@ -142,6 +142,27 @@ RSpec.describe UploadsController, type: :controller do
       end
     end
 
+    context 'when suppliers already exist' do
+      before do
+        allow(UKPostcode).to receive(:parse).and_return(valid_postcode)
+      end
+
+      let!(:first_supplier) do
+        Supplier.create!(id: SecureRandom.uuid, name: 'first-supplier')
+      end
+
+      let!(:second_supplier) do
+        Supplier.create!(id: SecureRandom.uuid, name: 'second-supplier')
+      end
+
+      it 'destroys all existing suppliers' do
+        post :create, body: suppliers.to_json
+
+        expect(Supplier.find_by(id: first_supplier.id)).to be_nil
+        expect(Supplier.find_by(id: second_supplier.id)).to be_nil
+      end
+    end
+
     context 'when data for one supplier is invalid' do
       let(:suppliers) do
         [
