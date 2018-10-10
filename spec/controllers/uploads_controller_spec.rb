@@ -142,25 +142,6 @@ RSpec.describe UploadsController, type: :controller do
       end
     end
 
-    context 'when supplier does exist' do
-      before do
-        Supplier.create!(id: unique_supplier_id, name: unique_supplier_name)
-      end
-
-      it 'does not create supplier' do
-        expect do
-          post :create, body: suppliers.to_json
-        end.not_to change(Supplier, :count)
-      end
-
-      it 'reports an error in the response' do
-        post :create, body: suppliers.to_json
-
-        result = JSON.parse(response.body)
-        expect(result['errors']).to include(unique_supplier_id)
-      end
-    end
-
     context 'when data for one supplier is invalid' do
       let(:suppliers) do
         [
