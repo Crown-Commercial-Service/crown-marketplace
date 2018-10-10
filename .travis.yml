@@ -15,8 +15,9 @@ addons:
   apt:
     packages:
       - postgresql-9.6-postgis-2.3
-script:
+before_install:
   - gem install --force --conservative -v 1.16.6 bundler
+script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
   - bundle exec rake
