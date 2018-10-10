@@ -18,6 +18,7 @@ RSpec.describe Supplier, type: :model do
     let!(:first_branch) do
       supplier.branches.create!(
         postcode: 'SW1A 1AA',
+        telephone_number: '020 7946 0001',
         contact_name: 'George Henry',
         contact_email: 'george.henry@example.com'
       )
@@ -26,6 +27,7 @@ RSpec.describe Supplier, type: :model do
     let!(:second_branch) do
       supplier.branches.create!(
         postcode: 'E1 6EA',
+        telephone_number: '020 7946 0002',
         contact_name: 'Fred Rogers',
         contact_email: 'fred.rogers@example.com'
       )

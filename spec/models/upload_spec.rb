@@ -5,11 +5,13 @@ RSpec.describe Upload, type: :model do
     let(:unique_supplier_name) { "Acme Teachers Ltd #{Time.current}" }
     let(:unique_supplier_id) { SecureRandom.uuid }
     let(:unique_postcode) { rand(36**8).to_s(36) }
+    let(:phone_number) { '020 7946 0000' }
 
     let(:branches) do
       [
         {
           'postcode' => unique_postcode,
+          'telephone' => phone_number,
           'contacts' => [
             {
               'name' => 'Joe Bloggs',
@@ -79,6 +81,14 @@ RSpec.describe Upload, type: :model do
         supplier = Supplier.last
         branch = supplier.branches.first
         expect(branch.postcode).to eq(unique_postcode)
+        expect(branch.telephone_number).to eq(phone_number)
+      end
+
+      it 'assigns contact-related attributes to the branch' do
+        described_class.create!(suppliers)
+
+        supplier = Supplier.last
+        branch = supplier.branches.first
         expect(branch.contact_name).to eq('Joe Bloggs')
         expect(branch.contact_email).to eq('joe.bloggs@example.com')
       end
@@ -99,6 +109,7 @@ RSpec.describe Upload, type: :model do
           [
             {
               'postcode' => unique_postcode,
+              'telephone' => phone_number,
               'contacts' => [
                 {
                   'name' => 'Colin Warden',
@@ -108,6 +119,7 @@ RSpec.describe Upload, type: :model do
             },
             {
               'postcode' => another_unique_postcode,
+              'telephone' => phone_number,
               'contacts' => [
                 {
                   'name' => 'Colin Warden',
