@@ -4,9 +4,9 @@ class UploadsController < ApplicationController
   def create
     suppliers = JSON.parse(request.body.read)
 
-    Supplier.destroy_all
-
     error = all_or_none(Supplier) do
+      Supplier.destroy_all
+
       suppliers.map do |supplier_data|
         create_supplier(supplier_data)
       end

@@ -161,6 +161,25 @@ RSpec.describe UploadsController, type: :controller do
         expect(Supplier.find_by(id: first_supplier.id)).to be_nil
         expect(Supplier.find_by(id: second_supplier.id)).to be_nil
       end
+
+      context 'and data for one supplier is invalid' do
+        let(:suppliers) do
+          [
+            {
+              supplier_name: '',
+            }
+          ]
+        end
+
+        it 'leaves existing data intact' do
+          ignoring_exception(ActiveRecord::RecordInvalid) do
+            post :create, body: suppliers.to_json
+          end
+
+          expect(Supplier.find_by(id: first_supplier.id)).to eq(first_supplier)
+          expect(Supplier.find_by(id: second_supplier.id)).to eq(second_supplier)
+        end
+      end
     end
 
     context 'when data for one supplier is invalid' do
