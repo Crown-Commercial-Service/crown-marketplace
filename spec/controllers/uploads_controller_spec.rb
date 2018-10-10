@@ -53,7 +53,6 @@ RSpec.describe UploadsController, type: :controller do
     context 'when supplier does not exist' do
       before do
         allow(UKPostcode).to receive(:parse).and_return(valid_postcode)
-        allow(Geocoder).to receive(:coordinates).and_return(51.0, -0.01)
       end
 
       it 'creates supplier' do

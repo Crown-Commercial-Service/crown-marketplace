@@ -2,18 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Ingest suppliers', type: :request do
   describe 'POST /uploads' do
-    before do
-      Geocoder::Lookup::Test.add_stub(
-        'TN33 0PQ', [{ 'coordinates' => [0, 51] }]
-      )
-      Geocoder::Lookup::Test.add_stub(
-        'LU7 0JL', [{ 'coordinates' => [-3, 53] }]
-      )
-      Geocoder::Lookup::Test.add_stub(
-        'LS15 8GB', [{ 'coordinates' => nil }]
-      )
-    end
-
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:suppliers) do
       [
