@@ -34,7 +34,7 @@ RSpec.feature 'PostcodeSearch.features', type: :feature do
     click_on 'Start now'
 
     fill_in 'postcode', with: 'WC2B 6TE'
-    click_button 'Continue'
+    click_on 'Continue'
 
     holborn_branch = page.find('h2', text: 'holborn').ancestor('.branch')
     expect(holborn_branch).to have_css('.distance', text: '0.0')
@@ -52,7 +52,7 @@ RSpec.feature 'PostcodeSearch.features', type: :feature do
     click_on 'Start now'
 
     fill_in 'postcode', with: 'SE99 1AA'
-    click_button 'Continue'
+    click_on 'Continue'
 
     expect(page).to have_text("Couldn't find that postcode")
   end
