@@ -7,6 +7,7 @@ cache:
   directories:
     - node_modules
     - /home/travis/.rvm/
+    - public/assets
 env:
   - RAILS_ENV=test
 services:
@@ -20,3 +21,4 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
   - bundle exec rake
+  - rm public/assets/.sprockets-manifest-*.json
