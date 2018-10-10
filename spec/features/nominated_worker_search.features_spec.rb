@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 RSpec.feature 'Nominated workers', type: :feature do
+  scenario 'Buyer is not looking for a nominated worker' do
+    visit '/'
+    click_on 'Start now'
+
+    choose 'No'
+    click_on 'Continue'
+
+    expect(page).to have_text('This system only allows you to search for nominated workers at the moment')
+  end
+
   scenario 'Buyer finds suppliers within search range' do
     Geocoder::Lookup::Test.add_stub(
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
@@ -35,6 +45,9 @@ RSpec.feature 'Nominated workers', type: :feature do
 
     visit '/'
     click_on 'Start now'
+
+    choose 'Yes'
+    click_on 'Continue'
 
     fill_in 'postcode', with: 'WC2B 6TE'
     click_on 'Continue'
