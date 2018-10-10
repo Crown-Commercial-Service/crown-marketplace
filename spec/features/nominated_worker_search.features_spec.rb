@@ -11,6 +11,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     holborn = Supplier.create!(name: 'holborn')
     holborn.branches.create!(
       postcode: 'WC2B 6TE',
+      telephone_number: '020 7946 0001',
       contact_name: 'Bruce Waynne',
       contact_email: 'bruce.waynne@example.com',
       location: point_factory.point(-0.119098, 51.5149666)
@@ -18,6 +19,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     westminster = Supplier.create!(name: 'westminster')
     westminster.branches.create!(
       postcode: 'W1A 1AA',
+      telephone_number: '020 7946 0002',
       contact_name: 'George Staunton',
       contact_email: 'george.staunton@example.com',
       location: point_factory.point(-0.1437991, 51.5185614)
@@ -25,6 +27,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     liverpool = Supplier.create!(name: 'liverpool')
     liverpool.branches.create!(
       postcode: 'L3 9PP',
+      telephone_number: '020 7946 0003',
       contact_name: 'Emily Groves',
       contact_email: 'emily.groves@example.com',
       location: point_factory.point(-2.9946932, 53.409189)
