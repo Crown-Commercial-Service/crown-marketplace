@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-point_factory = RGeo::Geographic.spherical_factory(srid: 4326)
+point_factory = Geocoding.point_factory
 
 holborn = Supplier.create!(name: 'Holborn')
 holborn.branches.create!(

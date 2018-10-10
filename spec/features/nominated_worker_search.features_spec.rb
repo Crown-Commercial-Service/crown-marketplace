@@ -16,7 +16,7 @@ RSpec.feature 'Nominated workers', type: :feature do
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
     )
 
-    point_factory = RGeo::Geographic.spherical_factory(srid: 4326)
+    point_factory = Geocoding.point_factory
 
     holborn = Supplier.create!(name: 'holborn')
     holborn.branches.create!(

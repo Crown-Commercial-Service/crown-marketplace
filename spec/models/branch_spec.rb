@@ -48,7 +48,7 @@ RSpec.describe Branch, type: :model do
   end
 
   context 'when three branches exist in different locations' do
-    let(:point_factory) { RGeo::Geographic.spherical_factory(srid: 4326) }
+    let(:point_factory) { Geocoding.point_factory }
 
     let!(:london_1) do
       supplier.branches.create!(
