@@ -8,11 +8,13 @@ RSpec.describe 'branches/_branch.html.erb' do
       accreditation_body: accreditation_body
     )
   end
+  let(:branch_name) { 'Head Office' }
   let(:telephone_number) { '020 7946 0001' }
   let(:contact_name) { 'Henrietta Crouch' }
   let(:contact_email) { 'henrietta.crouch@example.com' }
   let(:branch) do
     supplier.branches.build(
+      name: branch_name,
       telephone_number: telephone_number,
       contact_name: contact_name,
       contact_email: contact_email
@@ -21,6 +23,10 @@ RSpec.describe 'branches/_branch.html.erb' do
 
   before do
     render partial: branch
+  end
+
+  it 'displays branch name' do
+    expect(rendered).to have_content(branch_name)
   end
 
   it 'displays accreditation body' do
