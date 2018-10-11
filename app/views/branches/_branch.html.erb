@@ -2,8 +2,8 @@
   <h2 class="govuk-heading-l"><%= branch.supplier.name %></h2>
   <div class="govuk-grid-column-one-third">
     <ul class="govuk-list">
-      <% if branch.name.present? %>
-        <li><b>Branch:</b> <%= branch.name %></li>
+      <% if display_name_for_branch(branch).present? %>
+        <li><b>Branch:</b> <%= display_name_for_branch(branch) %></li>
       <% end %>
       <% if branch.supplier.accreditation_body.present? %>
         <li><b>Accreditation Body:</b> <%= branch.supplier.accreditation_body %></li>

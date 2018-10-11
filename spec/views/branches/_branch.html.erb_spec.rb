@@ -9,12 +9,14 @@ RSpec.describe 'branches/_branch.html.erb' do
     )
   end
   let(:branch_name) { 'Head Office' }
+  let(:branch_town) { 'Guildford' }
   let(:telephone_number) { '020 7946 0001' }
   let(:contact_name) { 'Henrietta Crouch' }
   let(:contact_email) { 'henrietta.crouch@example.com' }
   let(:branch) do
     supplier.branches.build(
       name: branch_name,
+      town: branch_town,
       telephone_number: telephone_number,
       contact_name: contact_name,
       contact_email: contact_email
@@ -48,7 +50,16 @@ RSpec.describe 'branches/_branch.html.erb' do
   context 'when branch name is blank' do
     let(:branch_name) { nil }
 
-    it 'does not display branch name or its label' do
+    it 'displays town as branch name' do
+      expect(rendered).to have_content("Branch: #{branch_town}")
+    end
+  end
+
+  context 'when branch name and town are blank' do
+    let(:branch_name) { nil }
+    let(:branch_town) { nil }
+
+    it 'does not display branch or its label' do
       expect(rendered).not_to have_content('Branch:')
     end
   end

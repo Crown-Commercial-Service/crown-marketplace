@@ -12,6 +12,9 @@ AllCops:
 Rails:
     Enabled: true
 
+Rails/Presence:
+    Enabled: false
+
 Bundler/OrderedGems:
     Enabled: false
 
