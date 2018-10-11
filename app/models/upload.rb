@@ -33,6 +33,7 @@ class Upload
       contact_email = branch.dig('contacts', 0, 'email')
       s.branches.create!(
         name: branch['branch_name'],
+        town: branch['town'],
         postcode: branch['postcode'],
         location: Geocoding.point(
           latitude: branch['lat'],
