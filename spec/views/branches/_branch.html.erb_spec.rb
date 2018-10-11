@@ -2,13 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'branches/_branch.html.erb' do
   let(:accreditation_body) { 'REC' }
-  let(:supplier) do
-    build(
-      :supplier,
-      name: 'Supplier',
-      accreditation_body: accreditation_body
-    )
-  end
+  let(:supplier) { build(:supplier, accreditation_body: accreditation_body) }
   let(:branch_name) { 'Head Office' }
   let(:branch_town) { 'Guildford' }
   let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
