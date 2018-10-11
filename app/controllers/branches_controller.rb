@@ -32,7 +32,7 @@ class BranchesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xlsx { render xlsx: @branches.to_xlsx }
+      format.xlsx { render xlsx: @branches, filename: 'branches' }
     end
   end
 
