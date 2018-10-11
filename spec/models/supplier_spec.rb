@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Supplier, type: :model do
-  subject(:supplier) { described_class.new(name: 'supplier-name') }
+  subject(:supplier) { build(:supplier) }
 
   it { is_expected.to be_valid }
 
@@ -15,25 +15,8 @@ RSpec.describe Supplier, type: :model do
       supplier.save!
     end
 
-    let!(:first_branch) do
-      supplier.branches.create!(
-        postcode: 'SW1A 1AA',
-        location: Geocoding.point(latitude: 50.0, longitude: 1.0),
-        telephone_number: '020 7946 0001',
-        contact_name: 'George Henry',
-        contact_email: 'george.henry@example.com'
-      )
-    end
-
-    let!(:second_branch) do
-      supplier.branches.create!(
-        postcode: 'E1 6EA',
-        location: Geocoding.point(latitude: 50.0, longitude: 1.0),
-        telephone_number: '020 7946 0002',
-        contact_name: 'Fred Rogers',
-        contact_email: 'fred.rogers@example.com'
-      )
-    end
+    let!(:first_branch) { create(:branch, supplier: supplier) }
+    let!(:second_branch) { create(:branch, supplier: supplier) }
 
     it 'destroys all its branches when it is destroyed' do
       supplier.destroy!

@@ -159,13 +159,8 @@ RSpec.describe Upload, type: :model do
         allow(UKPostcode).to receive(:parse).and_return(valid_postcode)
       end
 
-      let!(:first_supplier) do
-        Supplier.create!(id: SecureRandom.uuid, name: 'first-supplier')
-      end
-
-      let!(:second_supplier) do
-        Supplier.create!(id: SecureRandom.uuid, name: 'second-supplier')
-      end
+      let!(:first_supplier) { create(:supplier) }
+      let!(:second_supplier) { create(:supplier) }
 
       it 'destroys all existing suppliers' do
         described_class.create!(suppliers)
