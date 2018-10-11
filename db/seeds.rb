@@ -11,7 +11,8 @@ holborn.branches.create!(
   postcode: 'WC2B 6TE',
   location: Geocoding.point(latitude: 51.5149666, longitude: -0.119098),
   contact_name: 'Lucija Bidzina',
-  contact_email: 'lucija.bidzina@example.com'
+  contact_email: 'lucija.bidzina@example.com',
+  telephone_number: '03069 990000'
 )
 
 westminster = Supplier.create!(name: 'Westminster')
@@ -19,7 +20,8 @@ westminster.branches.create!(
   postcode: 'W1A 1AA',
   location: Geocoding.point(latitude: 51.5185614, longitude: -0.1437991),
   contact_name: 'Hefina Neophytos',
-  contact_email: 'hefina.neophytos@example.com'
+  contact_email: 'hefina.neophytos@example.com',
+  telephone_number: '03069 990001'
 )
 
 liverpool = Supplier.create!(name: 'Liverpool')
@@ -27,5 +29,6 @@ liverpool.branches.create!(
   postcode: 'L3 9PP',
   location: Geocoding.point(latitude: 53.409189, longitude: -2.9946932),
   contact_name: 'Rona Severinus',
-  contact_email: 'rona.severinus@example.com'
+  contact_email: 'rona.severinus@example.com',
+  telephone_number: '03069 990001'
 )
