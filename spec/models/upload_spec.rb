@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Upload, type: :model do
   describe 'create' do
-    let(:branch_name) { 'Guildford' }
+    let(:branch_name) { 'Head Office' }
+    let(:branch_town) { 'Guildford' }
     let(:unique_supplier_name) { "Acme Teachers Ltd #{Time.current}" }
     let(:unique_supplier_id) { SecureRandom.uuid }
     let(:unique_postcode) { rand(36**8).to_s(36) }
@@ -13,6 +14,7 @@ RSpec.describe Upload, type: :model do
       [
         {
           'branch_name' => branch_name,
+          'town' => branch_town,
           'postcode' => unique_postcode,
           'lat' => 50.0,
           'lon' => 1.0,
@@ -90,12 +92,20 @@ RSpec.describe Upload, type: :model do
         expect(branch.name).to eq(branch_name)
       end
 
+      it 'assigns address-related attributes to the branch' do
+        described_class.create!(suppliers)
+
+        supplier = Supplier.last
+        branch = supplier.branches.first
+        expect(branch.town).to eq(branch_town)
+        expect(branch.postcode).to eq(unique_postcode)
+      end
+
       it 'assigns geography-related attributes to the branch' do
         described_class.create!(suppliers)
 
         supplier = Supplier.last
         branch = supplier.branches.first
-        expect(branch.postcode).to eq(unique_postcode)
         expect(branch.location.latitude).to be_within(1e-6).of(50.0)
         expect(branch.location.longitude).to be_within(1e-6).of(1.0)
       end
