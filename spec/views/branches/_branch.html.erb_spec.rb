@@ -52,4 +52,12 @@ RSpec.describe 'branches/_branch.html.erb' do
       expect(rendered).not_to have_content('Branch:')
     end
   end
+
+  context 'when accreditation body is blank' do
+    let(:accreditation_body) { nil }
+
+    it 'does not display accreditation body or its label' do
+      expect(rendered).not_to have_content('Accreditation Body:')
+    end
+  end
 end

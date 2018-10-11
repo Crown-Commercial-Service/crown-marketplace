@@ -5,7 +5,9 @@
       <% if branch.name.present? %>
         <li><b>Branch:</b> <%= branch.name %></li>
       <% end %>
-      <li><b>Accreditation Body:</b> <%= branch.supplier.accreditation_body %></li>
+      <% if branch.supplier.accreditation_body.present? %>
+        <li><b>Accreditation Body:</b> <%= branch.supplier.accreditation_body %></li>
+      <% end %>
     </ul>
   </div>
   <div class="govuk-grid-column-one-third">
