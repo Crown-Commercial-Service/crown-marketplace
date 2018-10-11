@@ -22,7 +22,11 @@ class Upload
   end
 
   def self.create_supplier!(data)
-    s = Supplier.create!(id: data['supplier_id'], name: data['supplier_name'])
+    s = Supplier.create!(
+      id: data['supplier_id'],
+      name: data['supplier_name'],
+      accreditation_body: data['accreditation']
+    )
     branches = data.fetch('branches', [])
     branches.each do |branch|
       contact_name = branch.dig('contacts', 0, 'name')
