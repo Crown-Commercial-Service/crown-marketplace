@@ -7,6 +7,7 @@ RSpec.describe BranchesController, type: :controller do
 
       before do
         allow(Branch).to receive(:all).and_return(branches)
+        allow(Branch).to receive(:includes).and_return(Branch)
       end
 
       it 'assigns all branches to @branches' do
