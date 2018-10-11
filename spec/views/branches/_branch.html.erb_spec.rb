@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'branches/_branch.html.erb' do
-  let(:supplier) { Supplier.new(name: 'Supplier') }
+  let(:accreditation_body) { 'REC' }
+  let(:supplier) do
+    Supplier.new(
+      name: 'Supplier',
+      accreditation_body: accreditation_body
+    )
+  end
   let(:telephone_number) { '020 7946 0001' }
   let(:contact_name) { 'Henrietta Crouch' }
   let(:contact_email) { 'henrietta.crouch@example.com' }
@@ -15,6 +21,10 @@ RSpec.describe 'branches/_branch.html.erb' do
 
   before do
     render partial: branch
+  end
+
+  it 'displays accreditation body' do
+    expect(rendered).to have_content(accreditation_body)
   end
 
   it 'displays contact name' do
