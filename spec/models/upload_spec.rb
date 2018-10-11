@@ -4,9 +4,9 @@ RSpec.describe Upload, type: :model do
   describe 'create' do
     let(:branch_name) { 'Head Office' }
     let(:branch_town) { 'Guildford' }
-    let(:unique_supplier_name) { "Acme Teachers Ltd #{Time.current}" }
-    let(:unique_supplier_id) { SecureRandom.uuid }
-    let(:unique_postcode) { rand(36**8).to_s(36) }
+    let(:supplier_name) { "Acme Teachers Ltd #{Time.current}" }
+    let(:supplier_id) { SecureRandom.uuid }
+    let(:postcode) { rand(36**8).to_s(36) }
     let(:phone_number) { '020 7946 0000' }
     let(:accreditation_body) { 'REC' }
 
@@ -15,7 +15,7 @@ RSpec.describe Upload, type: :model do
         {
           'branch_name' => branch_name,
           'town' => branch_town,
-          'postcode' => unique_postcode,
+          'postcode' => postcode,
           'lat' => 50.0,
           'lon' => 1.0,
           'telephone' => phone_number,
@@ -32,8 +32,8 @@ RSpec.describe Upload, type: :model do
     let(:suppliers) do
       [
         {
-          'supplier_name' => unique_supplier_name,
-          'supplier_id' => unique_supplier_id,
+          'supplier_name' => supplier_name,
+          'supplier_id' => supplier_id,
           'accreditation' => accreditation_body,
           'branches' => branches
         }
@@ -67,14 +67,14 @@ RSpec.describe Upload, type: :model do
         described_class.create!(suppliers)
 
         supplier = Supplier.last
-        expect(supplier.id).to eq(unique_supplier_id)
+        expect(supplier.id).to eq(supplier_id)
       end
 
       it 'assigns attributes to supplier' do
         described_class.create!(suppliers)
 
         supplier = Supplier.last
-        expect(supplier.name).to eq(unique_supplier_name)
+        expect(supplier.name).to eq(supplier_name)
         expect(supplier.accreditation_body).to eq(accreditation_body)
       end
 
@@ -98,7 +98,7 @@ RSpec.describe Upload, type: :model do
         supplier = Supplier.last
         branch = supplier.branches.first
         expect(branch.town).to eq(branch_town)
-        expect(branch.postcode).to eq(unique_postcode)
+        expect(branch.postcode).to eq(postcode)
       end
 
       it 'assigns geography-related attributes to the branch' do
@@ -131,11 +131,11 @@ RSpec.describe Upload, type: :model do
       end
 
       context 'and supplier has multiple branches' do
-        let(:another_unique_postcode) { rand(36**8).to_s(36) }
+        let(:another_postcode) { rand(36**8).to_s(36) }
         let(:branches) do
           [
             {
-              'postcode' => unique_postcode,
+              'postcode' => postcode,
               'lat' => 50.0,
               'lon' => 1.0,
               'telephone' => phone_number,
@@ -147,7 +147,7 @@ RSpec.describe Upload, type: :model do
               ]
             },
             {
-              'postcode' => another_unique_postcode,
+              'postcode' => another_postcode,
               'lat' => 50.0,
               'lon' => 1.0,
               'telephone' => phone_number,
@@ -172,7 +172,7 @@ RSpec.describe Upload, type: :model do
 
           supplier = Supplier.last
           branches = supplier.branches
-          expect(branches.map(&:postcode)).to include(unique_postcode, another_unique_postcode)
+          expect(branches.map(&:postcode)).to include(postcode, another_postcode)
         end
       end
     end
@@ -216,7 +216,7 @@ RSpec.describe Upload, type: :model do
       let(:suppliers) do
         [
           {
-            'supplier_name' => unique_supplier_name,
+            'supplier_name' => supplier_name,
           },
           {
             'supplier_name' => '',
@@ -243,7 +243,7 @@ RSpec.describe Upload, type: :model do
       let(:suppliers) do
         [
           {
-            'supplier_name' => unique_supplier_name,
+            'supplier_name' => supplier_name,
             'branches' => [{ 'postcode' => 'SW1AA 1AA' }]
           },
           {
