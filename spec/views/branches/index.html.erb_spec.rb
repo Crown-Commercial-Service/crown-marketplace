@@ -5,13 +5,13 @@ RSpec.describe 'branches/index.html.erb' do
   let(:second_supplier) { build(:supplier, name: 'Second Supplier') }
 
   let(:first_branch) do
-    build(:branch, supplier: first_supplier)
+    build(:branch, supplier: first_supplier, name: 'First Branch')
   end
   let(:second_branch) do
-    build(:branch, supplier: first_supplier)
+    build(:branch, supplier: first_supplier, name: 'Second Branch')
   end
   let(:third_branch) do
-    build(:branch, supplier: second_supplier)
+    build(:branch, supplier: second_supplier, name: 'Third Branch')
   end
 
   let(:branches) { [first_branch, second_branch, third_branch] }
@@ -26,12 +26,17 @@ RSpec.describe 'branches/index.html.erb' do
     render
   end
 
-  it 'displays list of all branches' do
+  it 'displays headings for suppliers for each branch' do
     page = Capybara.string(rendered)
 
-    expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/)
-    expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/)
+    expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/, count: 2)
     expect(page).to have_css('h2.govuk-heading-l', text: /Second Supplier/)
+  end
+
+  it 'displays list of all branches' do
+    expect(rendered).to have_content('First Branch')
+    expect(rendered).to have_content('Second Branch')
+    expect(rendered).to have_content('Third Branch')
   end
 
   it 'displays number of results' do
