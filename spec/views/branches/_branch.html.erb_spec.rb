@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe 'branches/_branch.html.erb' do
   let(:accreditation_body) { 'REC' }
   let(:supplier) do
-    Supplier.new(
+    build(
+      :supplier,
       name: 'Supplier',
       accreditation_body: accreditation_body
     )
@@ -14,7 +15,9 @@ RSpec.describe 'branches/_branch.html.erb' do
   let(:contact_name) { 'Henrietta Crouch' }
   let(:contact_email) { 'henrietta.crouch@example.com' }
   let(:branch) do
-    supplier.branches.build(
+    build(
+      :branch,
+      supplier: supplier,
       name: branch_name,
       town: branch_town,
       telephone_number: telephone_number,

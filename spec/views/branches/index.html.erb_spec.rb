@@ -1,12 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe 'branches/index.html.erb' do
-  let(:first_supplier) { Supplier.new(name: 'First Supplier') }
-  let(:second_supplier) { Supplier.new(name: 'Second Supplier') }
+  let(:first_supplier) { build(:supplier, name: 'First Supplier') }
+  let(:second_supplier) { build(:supplier, name: 'Second Supplier') }
 
-  let(:first_branch) { first_supplier.branches.build(postcode: 'TN33 0PQ') }
-  let(:second_branch) { first_supplier.branches.build(postcode: 'LU7 0JL') }
-  let(:third_branch) { second_supplier.branches.build(postcode: 'LS15 8GB') }
+  let(:first_branch) do
+    build(:branch, supplier: first_supplier, postcode: 'TN33 0PQ')
+  end
+  let(:second_branch) do
+    build(:branch, supplier: first_supplier, postcode: 'LU7 0JL')
+  end
+  let(:third_branch) do
+    build(:branch, supplier: second_supplier, postcode: 'LS15 8GB')
+  end
 
   let(:branches) { [first_branch, second_branch, third_branch] }
   let(:point) { nil }
