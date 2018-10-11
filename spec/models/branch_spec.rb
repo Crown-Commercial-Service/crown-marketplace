@@ -48,15 +48,13 @@ RSpec.describe Branch, type: :model do
   end
 
   context 'when three branches exist in different locations' do
-    let(:point_factory) { Geocoding.point_factory }
-
     let!(:london_1) do
       supplier.branches.create!(
         postcode: 'E1 6EA',
         telephone_number: '020 7946 0001',
         contact_name: 'John Smiths',
         contact_email: 'john.smith@example.com',
-        location: point_factory.point(-0.0759, 51.5201)
+        location: Geocoding.point(latitude: 51.5201, longitude: -0.0759)
       )
     end
     let!(:london_2) do
@@ -65,7 +63,7 @@ RSpec.describe Branch, type: :model do
         telephone_number: '020 7946 0002',
         contact_name: 'Ann Jones',
         contact_email: 'ann.jones@example.com',
-        location: point_factory.point(-0.0858, 51.5263)
+        location: Geocoding.point(latitude: 51.5263, longitude: -0.0858)
       )
     end
     let!(:edinburgh) do
@@ -74,11 +72,11 @@ RSpec.describe Branch, type: :model do
         telephone_number: '020 7946 0003',
         contact_name: 'Clare Francis',
         contact_email: 'clare.francis@example.com',
-        location: point_factory.point(-3.1953, 55.9619)
+        location: Geocoding.point(latitude: 55.9619, longitude: -3.1953)
       )
     end
 
-    let(:shoreditch) { point_factory.point(-0.0587, 51.5255) }
+    let(:shoreditch) { Geocoding.point(latitude: 51.5255, longitude: -0.0587) }
 
     it 'includes nearby branches' do
       expect(Branch.near(shoreditch, within_metres: 10000)).to include(london_1, london_2)
