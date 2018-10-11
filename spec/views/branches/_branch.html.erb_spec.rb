@@ -11,9 +11,9 @@ RSpec.describe 'branches/_branch.html.erb' do
   end
   let(:branch_name) { 'Head Office' }
   let(:branch_town) { 'Guildford' }
-  let(:telephone_number) { '020 7946 0001' }
-  let(:contact_name) { 'Henrietta Crouch' }
-  let(:contact_email) { 'henrietta.crouch@example.com' }
+  let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
+  let(:contact_name) { Faker::Name.unique.name }
+  let(:contact_email) { Faker::Internet.unique.email }
   let(:branch) do
     build(
       :branch,

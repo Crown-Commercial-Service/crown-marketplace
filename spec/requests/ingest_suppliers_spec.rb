@@ -6,46 +6,46 @@ RSpec.describe 'Ingest suppliers', type: :request do
     let(:suppliers) do
       [
         {
-          'supplier_name' => 'First Supplier',
+          'supplier_name' => Faker::Company.unique.name,
           'branches' => [
             {
-              'postcode' => 'TN33 0PQ',
-              'lat' => 50.0,
-              'lon' => 1.0,
-              'telephone' => '020 7946 0001',
+              'postcode' => Faker::Address.unique.postcode,
+              'lat' => Faker::Address.unique.latitude,
+              'lon' => Faker::Address.unique.longitude,
+              'telephone' => Faker::PhoneNumber.unique.phone_number,
               'contacts' => [
                 {
-                  'name' => 'Emma Flynn',
-                  'email' => 'emma.flynn@example.com'
+                  'name' => Faker::Name.unique.name,
+                  'email' => Faker::Internet.unique.email
                 }
               ]
             },
             {
-              'postcode' => 'LU7 0JL',
-              'lat' => 50.0,
-              'lon' => 1.0,
-              'telephone' => '020 7946 0002',
+              'postcode' => Faker::Address.unique.postcode,
+              'lat' => Faker::Address.unique.latitude,
+              'lon' => Faker::Address.unique.longitude,
+              'telephone' => Faker::PhoneNumber.unique.phone_number,
               'contacts' => [
                 {
-                  'name' => 'Jimmy Kent',
-                  'email' => 'jimmy.kent@example.com'
+                  'name' => Faker::Name.unique.name,
+                  'email' => Faker::Internet.unique.email
                 }
               ]
             }
           ]
         },
         {
-          'supplier_name' => 'Second Supplier',
+          'supplier_name' => Faker::Company.unique.name,
           'branches' => [
             {
-              'postcode' => 'LS15 8GB',
-              'lat' => 50.0,
-              'lon' => 1.0,
-              'telephone' => '020 7946 0003',
+              'postcode' => Faker::Address.unique.postcode,
+              'lat' => Faker::Address.unique.latitude,
+              'lon' => Faker::Address.unique.longitude,
+              'telephone' => Faker::PhoneNumber.unique.phone_number,
               'contacts' => [
                 {
-                  'name' => 'Jodie Edwards',
-                  'email' => 'jodie.edwards@example.com'
+                  'name' => Faker::Name.unique.name,
+                  'email' => Faker::Internet.unique.email
                 }
               ]
             }

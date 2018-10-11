@@ -4,11 +4,15 @@ RSpec.describe Upload, type: :model do
   describe 'create' do
     let(:branch_name) { 'Head Office' }
     let(:branch_town) { 'Guildford' }
-    let(:supplier_name) { "Acme Teachers Ltd #{Time.current}" }
+    let(:supplier_name) { Faker::Company.unique.name }
     let(:supplier_id) { SecureRandom.uuid }
-    let(:postcode) { rand(36**8).to_s(36) }
-    let(:phone_number) { '020 7946 0000' }
+    let(:postcode) { Faker::Address.unique.postcode }
+    let(:phone_number) { Faker::PhoneNumber.unique.phone_number }
     let(:accreditation_body) { 'REC' }
+    let(:latitude) { Faker::Address.unique.latitude }
+    let(:longitude) { Faker::Address.unique.longitude }
+    let(:contact_name) { Faker::Name.unique.name }
+    let(:contact_email) { Faker::Internet.unique.email }
 
     let(:branches) do
       [
@@ -16,13 +20,13 @@ RSpec.describe Upload, type: :model do
           'branch_name' => branch_name,
           'town' => branch_town,
           'postcode' => postcode,
-          'lat' => 50.0,
-          'lon' => 1.0,
+          'lat' => latitude,
+          'lon' => longitude,
           'telephone' => phone_number,
           'contacts' => [
             {
-              'name' => 'Joe Bloggs',
-              'email' => 'joe.bloggs@example.com',
+              'name' => contact_name,
+              'email' => contact_email,
             }
           ]
         }
@@ -106,8 +110,8 @@ RSpec.describe Upload, type: :model do
 
         supplier = Supplier.last
         branch = supplier.branches.first
-        expect(branch.location.latitude).to be_within(1e-6).of(50.0)
-        expect(branch.location.longitude).to be_within(1e-6).of(1.0)
+        expect(branch.location.latitude).to be_within(1e-6).of(latitude)
+        expect(branch.location.longitude).to be_within(1e-6).of(longitude)
       end
 
       it 'assigns contact-related attributes to the branch' do
@@ -116,8 +120,8 @@ RSpec.describe Upload, type: :model do
         supplier = Supplier.last
         branch = supplier.branches.first
         expect(branch.telephone_number).to eq(phone_number)
-        expect(branch.contact_name).to eq('Joe Bloggs')
-        expect(branch.contact_email).to eq('joe.bloggs@example.com')
+        expect(branch.contact_name).to eq(contact_name)
+        expect(branch.contact_email).to eq(contact_email)
       end
 
       context 'and supplier has no branches' do
@@ -131,30 +135,30 @@ RSpec.describe Upload, type: :model do
       end
 
       context 'and supplier has multiple branches' do
-        let(:another_postcode) { rand(36**8).to_s(36) }
+        let(:another_postcode) { Faker::Address.unique.postcode }
         let(:branches) do
           [
             {
               'postcode' => postcode,
-              'lat' => 50.0,
-              'lon' => 1.0,
+              'lat' => latitude,
+              'lon' => longitude,
               'telephone' => phone_number,
               'contacts' => [
                 {
-                  'name' => 'Colin Warden',
-                  'email' => 'colin.warden@example.com'
+                  'name' => contact_name,
+                  'email' => contact_email,
                 }
               ]
             },
             {
               'postcode' => another_postcode,
-              'lat' => 50.0,
-              'lon' => 1.0,
+              'lat' => latitude,
+              'lon' => longitude,
               'telephone' => phone_number,
               'contacts' => [
                 {
-                  'name' => 'Colin Warden',
-                  'email' => 'colin.warden@example.com'
+                  'name' => contact_name,
+                  'email' => contact_email,
                 }
               ]
             }
@@ -244,10 +248,10 @@ RSpec.describe Upload, type: :model do
         [
           {
             'supplier_name' => supplier_name,
-            'branches' => [{ 'postcode' => 'SW1AA 1AA' }]
+            'branches' => [{ 'postcode' => postcode }]
           },
           {
-            'supplier_name' => 'Another name',
+            'supplier_name' => Faker::Company.unique.name,
             'branches' => [{ 'postcode' => 'NOT A POSTCODE' }]
           }
         ]
