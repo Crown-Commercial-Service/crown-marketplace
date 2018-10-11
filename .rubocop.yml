@@ -70,6 +70,7 @@ Metrics/BlockLength:
 
 RSpec/DescribeClass:
     Exclude:
+        - 'spec/models/db_seeds_spec.rb'
         - 'spec/views/**/*'
 
 Capybara/FeatureMethods:
