@@ -3,3 +3,8 @@ en:
     errors:
       messages:
         invalid_postcode: 'is not a valid postcode'
+  faker:
+    company:
+      suffix: [Ltd, plc, LLP]
+      name:
+        - "#{Name.last_name} #{suffix}"

@@ -40,6 +40,7 @@ group :development, :test do
   gem 'capybara'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rubocop'
