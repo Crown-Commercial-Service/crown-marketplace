@@ -6,6 +6,7 @@ RSpec.describe Upload, type: :model do
     let(:unique_supplier_id) { SecureRandom.uuid }
     let(:unique_postcode) { rand(36**8).to_s(36) }
     let(:phone_number) { '020 7946 0000' }
+    let(:accreditation_body) { 'REC' }
 
     let(:branches) do
       [
@@ -29,6 +30,7 @@ RSpec.describe Upload, type: :model do
         {
           'supplier_name' => unique_supplier_name,
           'supplier_id' => unique_supplier_id,
+          'accreditation' => accreditation_body,
           'branches' => branches
         }
       ]
@@ -64,11 +66,12 @@ RSpec.describe Upload, type: :model do
         expect(supplier.id).to eq(unique_supplier_id)
       end
 
-      it 'assigns name to supplier' do
+      it 'assigns attributes to supplier' do
         described_class.create!(suppliers)
 
         supplier = Supplier.last
         expect(supplier.name).to eq(unique_supplier_name)
+        expect(supplier.accreditation_body).to eq(accreditation_body)
       end
 
       it 'creates a branch associated with supplier' do
