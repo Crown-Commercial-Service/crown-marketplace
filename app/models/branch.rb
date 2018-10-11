@@ -17,4 +17,14 @@ class Branch < ApplicationRecord
       ]
     )
   end
+
+  def self.to_xlsx
+    # wb = xlsx_package.workbook
+    # wb.add_worksheet(name: 'Suppliers') do |sheet|
+    #   sheet.add_row ['Supplier name', 'Contact name', 'Contact email']
+    #   @branches.each do |branch|
+    #     sheet.add_row [branch.supplier.name, branch.contact_name, branch.contact_email]
+    #   end
+    # end
+  end
 end

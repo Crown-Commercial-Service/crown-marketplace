@@ -29,6 +29,11 @@ class BranchesController < ApplicationController
                             .joins(supplier: [:rates])
                             .merge(Rate.nominated_worker)
                             .order('rates.mark_up')
+
+    respond_to do |format|
+      format.html
+      format.xlsx { render xlsx: @branches.to_xlsx }
+    end
   end
 
   private

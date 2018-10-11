@@ -33,6 +33,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'geocoder'
 gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
+# gem 'axlsx'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
