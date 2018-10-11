@@ -43,11 +43,13 @@ RSpec.describe BranchesController, type: :controller do
     end
 
     context 'when postcode geocoding fails' do
+      let(:postcode) { Faker::Address.unique.postcode }
+
       before do
         Geocoder::Lookup::Test.add_stub(
-          'WC2B 6TE', [{ 'coordinates' => nil }]
+          postcode, [{ 'coordinates' => nil }]
         )
-        get :index, params: { postcode: 'WC2B 6TE' }
+        get :index, params: { postcode: postcode }
       end
 
       it 'redirects to search' do
