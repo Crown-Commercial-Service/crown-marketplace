@@ -44,4 +44,12 @@ RSpec.describe 'branches/_branch.html.erb' do
   it 'displays contact email' do
     expect(rendered).to have_content(contact_email)
   end
+
+  context 'when branch name is blank' do
+    let(:branch_name) { nil }
+
+    it 'does not display branch name or its label' do
+      expect(rendered).not_to have_content('Branch:')
+    end
+  end
 end
