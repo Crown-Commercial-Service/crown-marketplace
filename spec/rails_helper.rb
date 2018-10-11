@@ -63,3 +63,5 @@ RSpec.configure do |config|
 end
 
 Geocoder.configure(lookup: :test)
+
+Faker::Config.locale = 'en-GB'

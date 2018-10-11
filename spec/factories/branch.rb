@@ -1,9 +1,14 @@
 FactoryBot.define do
   factory :branch do
-    postcode { 'SW1A 1AA' }
-    location { Geocoding.point(latitude: 50.0, longitude: 1.0) }
-    telephone_number { '020 7946 0001' }
-    contact_name { 'George Henry' }
-    contact_email { 'george.henry@example.com' }
+    postcode { Faker::Address.unique.postcode }
+    location do
+      Geocoding.point(
+        latitude: Faker::Address.unique.latitude,
+        longitude: Faker::Address.unique.longitude
+      )
+    end
+    telephone_number { Faker::PhoneNumber.unique.phone_number }
+    contact_name { Faker::Name.unique.name }
+    contact_email { Faker::Internet.unique.email }
   end
 end
