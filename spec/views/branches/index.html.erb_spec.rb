@@ -5,13 +5,13 @@ RSpec.describe 'branches/index.html.erb' do
   let(:second_supplier) { build(:supplier, name: 'Second Supplier') }
 
   let(:first_branch) do
-    build(:branch, supplier: first_supplier, postcode: 'TN33 0PQ')
+    build(:branch, supplier: first_supplier)
   end
   let(:second_branch) do
-    build(:branch, supplier: first_supplier, postcode: 'LU7 0JL')
+    build(:branch, supplier: first_supplier)
   end
   let(:third_branch) do
-    build(:branch, supplier: second_supplier, postcode: 'LS15 8GB')
+    build(:branch, supplier: second_supplier)
   end
 
   let(:branches) { [first_branch, second_branch, third_branch] }
