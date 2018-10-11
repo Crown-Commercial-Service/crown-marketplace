@@ -10,6 +10,8 @@ RSpec.describe 'Ingest suppliers', type: :request do
           'branches' => [
             {
               'postcode' => 'TN33 0PQ',
+              'lat' => 50.0,
+              'lon' => 1.0,
               'telephone' => '020 7946 0001',
               'contacts' => [
                 {
@@ -20,6 +22,8 @@ RSpec.describe 'Ingest suppliers', type: :request do
             },
             {
               'postcode' => 'LU7 0JL',
+              'lat' => 50.0,
+              'lon' => 1.0,
               'telephone' => '020 7946 0002',
               'contacts' => [
                 {
@@ -35,6 +39,8 @@ RSpec.describe 'Ingest suppliers', type: :request do
           'branches' => [
             {
               'postcode' => 'LS15 8GB',
+              'lat' => 50.0,
+              'lon' => 1.0,
               'telephone' => '020 7946 0003',
               'contacts' => [
                 {
