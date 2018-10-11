@@ -16,15 +16,13 @@ RSpec.feature 'Nominated workers', type: :feature do
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
     )
 
-    point_factory = Geocoding.point_factory
-
     holborn = Supplier.create!(name: 'holborn')
     holborn.branches.create!(
       postcode: 'WC2B 6TE',
       telephone_number: '020 7946 0001',
       contact_name: 'Bruce Waynne',
       contact_email: 'bruce.waynne@example.com',
-      location: point_factory.point(-0.119098, 51.5149666)
+      location: Geocoding.point(latitude: 51.5149666, longitude: -0.119098)
     )
     westminster = Supplier.create!(name: 'westminster')
     westminster.branches.create!(
@@ -32,7 +30,7 @@ RSpec.feature 'Nominated workers', type: :feature do
       telephone_number: '020 7946 0002',
       contact_name: 'George Staunton',
       contact_email: 'george.staunton@example.com',
-      location: point_factory.point(-0.1437991, 51.5185614)
+      location: Geocoding.point(latitude: 51.5185614, longitude: -0.1437991)
     )
     liverpool = Supplier.create!(name: 'liverpool')
     liverpool.branches.create!(
@@ -40,7 +38,7 @@ RSpec.feature 'Nominated workers', type: :feature do
       telephone_number: '020 7946 0003',
       contact_name: 'Emily Groves',
       contact_email: 'emily.groves@example.com',
-      location: point_factory.point(-2.9946932, 53.409189)
+      location: Geocoding.point(latitude: 53.409189, longitude: -2.9946932)
     )
 
     visit '/'
