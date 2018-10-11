@@ -11,6 +11,8 @@ RSpec.describe Upload, type: :model do
       [
         {
           'postcode' => unique_postcode,
+          'lat' => 50.0,
+          'lon' => 1.0,
           'telephone' => phone_number,
           'contacts' => [
             {
@@ -75,13 +77,14 @@ RSpec.describe Upload, type: :model do
         end.to change(Branch, :count).by(1)
       end
 
-      it 'assigns attributes to the branch' do
+      it 'assigns geography-related attributes to the branch' do
         described_class.create!(suppliers)
 
         supplier = Supplier.last
         branch = supplier.branches.first
         expect(branch.postcode).to eq(unique_postcode)
-        expect(branch.telephone_number).to eq(phone_number)
+        expect(branch.location.latitude).to be_within(1e-6).of(50.0)
+        expect(branch.location.longitude).to be_within(1e-6).of(1.0)
       end
 
       it 'assigns contact-related attributes to the branch' do
@@ -89,6 +92,7 @@ RSpec.describe Upload, type: :model do
 
         supplier = Supplier.last
         branch = supplier.branches.first
+        expect(branch.telephone_number).to eq(phone_number)
         expect(branch.contact_name).to eq('Joe Bloggs')
         expect(branch.contact_email).to eq('joe.bloggs@example.com')
       end
@@ -109,6 +113,8 @@ RSpec.describe Upload, type: :model do
           [
             {
               'postcode' => unique_postcode,
+              'lat' => 50.0,
+              'lon' => 1.0,
               'telephone' => phone_number,
               'contacts' => [
                 {
@@ -119,6 +125,8 @@ RSpec.describe Upload, type: :model do
             },
             {
               'postcode' => another_unique_postcode,
+              'lat' => 50.0,
+              'lon' => 1.0,
               'telephone' => phone_number,
               'contacts' => [
                 {

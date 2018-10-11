@@ -4,6 +4,7 @@ RSpec.describe Branch, type: :model do
   subject(:branch) do
     supplier.branches.build(
       postcode: 'SW1A 1AA',
+      location: Geocoding.point(latitude: 50.0, longitude: 1.0),
       telephone_number: '020 7946 0000',
       contact_name: 'Joe Bloggs',
       contact_email: 'joe.bloggs@example.com'
@@ -16,6 +17,11 @@ RSpec.describe Branch, type: :model do
 
   it 'is not valid if postcode is blank' do
     branch.postcode = ''
+    expect(branch).not_to be_valid
+  end
+
+  it 'is not valid if location is blank' do
+    branch.location = nil
     expect(branch).not_to be_valid
   end
 
