@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Nominated workers', type: :feature do
+RSpec.feature 'Workers on school payroll', type: :feature do
   scenario 'Buyer finds suppliers within search range' do
     Geocoder::Lookup::Test.add_stub(
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
@@ -33,6 +33,9 @@ RSpec.feature 'Nominated workers', type: :feature do
 
     visit '/'
     click_on 'Start now'
+
+    choose 'No'
+    click_on 'Continue'
 
     choose 'Yes'
     click_on 'Continue'
