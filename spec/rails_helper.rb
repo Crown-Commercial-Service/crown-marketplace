@@ -65,3 +65,8 @@ end
 Geocoder.configure(lookup: :test)
 
 Faker::Config.locale = 'en-GB'
+
+def valid_fake_postcode
+  possibly_invalid_postcode = Faker::Address.unique.postcode
+  UKPostcode.parse(possibly_invalid_postcode).to_s
+end

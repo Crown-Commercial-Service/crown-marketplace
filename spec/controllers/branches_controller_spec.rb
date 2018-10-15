@@ -43,7 +43,7 @@ RSpec.describe BranchesController, type: :controller do
     end
 
     context 'when postcode geocoding fails' do
-      let(:postcode) { Faker::Address.unique.postcode }
+      let(:postcode) { valid_fake_postcode }
 
       before do
         Geocoder::Lookup::Test.add_stub(
