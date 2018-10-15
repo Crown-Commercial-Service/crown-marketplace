@@ -16,7 +16,7 @@ class SearchController < ApplicationController
   def school_postcode_question; end
 
   def school_postcode_answer
-    redirect_to branches_path(params.permit(:postcode))
+    redirect_to branches_path(params.permit(:postcode, :nominated_worker))
   end
 
   def non_nominated_worker_outcome; end

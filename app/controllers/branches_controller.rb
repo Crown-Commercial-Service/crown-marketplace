@@ -30,7 +30,9 @@ class BranchesController < ApplicationController
   private
 
   def display_error(message)
-    path = school_postcode_question_path(params.permit(:postcode))
+    path = school_postcode_question_path(
+      params.permit(:postcode, :nominated_worker)
+    )
     redirect_to path, flash: { error: message }
   end
 end
