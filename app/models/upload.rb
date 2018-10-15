@@ -44,5 +44,18 @@ class Upload
         contact_email: contact_email
       )
     end
+    rates = data.fetch('pricing', [])
+    create_supplier_rates!(s, rates)
+  end
+
+  def self.create_supplier_rates!(supplier, rates)
+    rates.each do |rate|
+      next unless rate['job_type'] == 'nominated'
+
+      supplier.rates.create!(
+        job_type: rate['job_type'],
+        mark_up: rate['fee'].to_f
+      )
+    end
   end
 end

@@ -14,6 +14,8 @@ RSpec.describe Upload, type: :model do
     let(:contact_name) { Faker::Name.unique.name }
     let(:contact_email) { Faker::Internet.unique.email }
 
+    let(:pricing) { [] }
+
     let(:branches) do
       [
         {
@@ -39,7 +41,8 @@ RSpec.describe Upload, type: :model do
           'supplier_name' => supplier_name,
           'supplier_id' => supplier_id,
           'accreditation' => accreditation_body,
-          'branches' => branches
+          'branches' => branches,
+          'pricing' => pricing
         }
       ]
     end
@@ -177,6 +180,33 @@ RSpec.describe Upload, type: :model do
           supplier = Supplier.last
           branches = supplier.branches
           expect(branches.map(&:postcode)).to include(postcode, another_postcode)
+        end
+      end
+
+      context 'and supplier has pricing information' do
+        let(:pricing) do
+          [
+            {
+              'job_type' => 'nominated',
+              'line_no' => 1,
+              'fee' => 0.35
+            },
+            {
+              'job_type' => 'qt',
+              'line_no' => 2,
+              'fee' => 0.40
+            }
+          ]
+        end
+
+        it 'only adds nominated worker rates to supplier' do
+          described_class.create!(suppliers)
+
+          supplier = Supplier.last
+          expect(supplier.rates.length).to eq(1)
+          rate = supplier.rates.first
+          expect(rate.job_type).to eq('nominated')
+          expect(rate.mark_up).to eq(0.35)
         end
       end
     end
