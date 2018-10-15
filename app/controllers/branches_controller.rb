@@ -31,6 +31,6 @@ class BranchesController < ApplicationController
 
   def display_error(message)
     flash[:error] = message
-    redirect_to search_path(params.permit(:nominated_worker, :postcode))
+    redirect_to school_postcode_question_path(params.permit(:postcode))
   end
 end

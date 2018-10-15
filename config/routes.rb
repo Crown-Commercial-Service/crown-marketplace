@@ -4,5 +4,14 @@ Rails.application.routes.draw do
   resources :branches, only: :index
   resources :uploads, only: :create
 
-  get '/search', to: 'search#index'
+  get '/nominated_worker_question',
+      to: 'search#nominated_worker_question'
+  get '/nominated_worker_answer',
+      to: 'search#nominated_worker_answer'
+  get '/school_postcode_question',
+      to: 'search#school_postcode_question'
+  get '/school_postcode_answer',
+      to: 'search#school_postcode_answer'
+  get '/non_nominated_worker_outcome',
+      to: 'search#non_nominated_worker_outcome'
 end
