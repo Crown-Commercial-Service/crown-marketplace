@@ -6,7 +6,7 @@
     <label class="govuk-label" for="postcode">
       What is your school's postcode?
     </label>
-    <%= text_field_tag :postcode, '', class: 'govuk-input' %>
+    <%= text_field_tag :postcode, params[:postcode], class: 'govuk-input' %>
   </div>
   <%= submit_tag 'Continue', class: "govuk-button" %>
 <% end %>

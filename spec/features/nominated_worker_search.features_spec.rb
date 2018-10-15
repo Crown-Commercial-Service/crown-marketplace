@@ -110,4 +110,23 @@ RSpec.feature 'Nominated workers', type: :feature do
 
     expect(page).not_to have_text('liverpool')
   end
+
+  scenario 'Buyer changes mind about postcode' do
+    Geocoder::Lookup::Test.add_stub(
+      'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
+    )
+
+    visit '/'
+    click_on 'Start now'
+
+    choose 'Yes'
+    click_on 'Continue'
+
+    fill_in 'postcode', with: 'WC2B 6TE'
+    click_on 'Continue'
+
+    click_on 'Back'
+
+    expect(page).to have_field('postcode', with: 'WC2B 6TE')
+  end
 end
