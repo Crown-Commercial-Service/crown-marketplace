@@ -129,4 +129,18 @@ RSpec.feature 'Nominated workers', type: :feature do
 
     expect(page).to have_field('postcode', with: 'WC2B 6TE')
   end
+
+  scenario 'Buyer enters invalid postcode' do
+    visit '/'
+    click_on 'Start now'
+
+    choose 'Yes'
+    click_on 'Continue'
+
+    fill_in 'postcode', with: 'XY1 2AB'
+    click_on 'Continue'
+
+    expect(page).to have_text('Postcode is invalid')
+    expect(page).to have_field('postcode', with: 'XY1 2AB')
+  end
 end
