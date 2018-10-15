@@ -21,13 +21,6 @@ RSpec.describe BranchesController, type: :controller do
       end
     end
 
-    context 'when postcode is blank' do
-      it 'redirects to school postcode question' do
-        get :index, params: { postcode: '' }
-        expect(response).to redirect_to(/#{school_postcode_question_path}/)
-      end
-    end
-
     context 'when postcode parsing fails' do
       before do
         get :index, params: { postcode: 'nonsense' }
