@@ -25,4 +25,29 @@ RSpec.describe Supplier, type: :model do
       expect(Branch.find_by(id: second_branch.id)).to be_nil
     end
   end
+
+  context 'when supplier with rates is destroyed' do
+    before do
+      supplier.save!
+    end
+
+    let!(:rate) { create(:rate, supplier: supplier) }
+
+    it 'destroys all its rates when it is destroyed' do
+      supplier.destroy!
+
+      expect(Rate.find_by(id: rate.id)).to be_nil
+    end
+  end
+
+  describe '#nominated_worker_rate' do
+    it 'returns rate if available' do
+      create(:rate, supplier: supplier, job_type: 'nominated', mark_up: 0.1)
+      expect(supplier.nominated_worker_rate).to eq(0.1)
+    end
+
+    it 'returns nil if unavailable' do
+      expect(supplier.nominated_worker_rate).to be_nil
+    end
+  end
 end

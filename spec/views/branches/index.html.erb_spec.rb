@@ -14,6 +14,8 @@ RSpec.describe 'branches/index.html.erb' do
     build(:branch, supplier: second_supplier, name: 'Third Branch')
   end
 
+  let(:nominated_worker_rate) { nil }
+
   let(:branches) { [first_branch, second_branch, third_branch] }
   let(:point) { nil }
   let(:postcode) { nil }
@@ -22,6 +24,9 @@ RSpec.describe 'branches/index.html.erb' do
     assign(:branches, branches)
     assign(:point, point)
     assign(:postcode, postcode)
+
+    allow(first_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
+    allow(second_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
 
     render
   end
@@ -59,6 +64,8 @@ RSpec.describe 'branches/index.html.erb' do
   context 'when displaying branches near the buyers location' do
     let(:point) { instance_double('RGeo::Geographic::SphericalPointImpl', distance: 1) }
     let(:postcode) { 'W1A 1AA' }
+    let(:rates) { [build(:rate, job_type: 'nominated')] }
+    let(:nominated_worker_rate) { 1 }
 
     it 'adds location context to the number of results' do
       expect(rendered).to have_content('3 results found within 25 miles of W1A 1AA')
