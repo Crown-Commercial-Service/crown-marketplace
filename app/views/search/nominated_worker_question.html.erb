@@ -1,6 +1,6 @@
-<%= link_to 'Back', homepage_path, class: 'govuk-back-link' %>
+<%= link_to 'Back', @back_path, class: 'govuk-back-link' %>
 
-<%= form_tag nominated_worker_answer_path, method: :get do %>
+<%= form_tag @form_path, method: :get do %>
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
