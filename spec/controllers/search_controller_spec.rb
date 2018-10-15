@@ -39,6 +39,10 @@ RSpec.describe SearchController, type: :controller do
       it 'redirects to nominated worker question' do
         expect(response).to redirect_to(nominated_worker_question_path)
       end
+
+      it 'sets a flash error message' do
+        expect(flash[:error]).to eq 'Please choose an option'
+      end
     end
   end
 
