@@ -14,4 +14,10 @@ RSpec.describe Rate, type: :model do
     rate.mark_up = nil
     expect(rate).not_to be_valid
   end
+
+  it 'is not valid if another rate for this job type from this supplier already exists' do
+    rate.save!
+    new_rate = build(:rate, supplier: rate.supplier, job_type: rate.job_type)
+    expect(new_rate).not_to be_valid
+  end
 end
