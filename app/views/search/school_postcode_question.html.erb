@@ -1,4 +1,6 @@
-<%= form_tag '/branches', method: :get do %>
+<%= link_to 'Back', nominated_worker_question_path, class: 'govuk-back-link' %>
+
+<%= form_tag school_postcode_answer_path, method: :get do %>
   <%= hidden_field_tag :nominated_worker, :yes %>
   <div class="govuk-form-group">
     <label class="govuk-label" for="postcode">
