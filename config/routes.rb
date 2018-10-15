@@ -4,17 +4,17 @@ Rails.application.routes.draw do
   resources :branches, only: :index
   resources :uploads, only: :create
 
-  get '/nominated_worker',
+  get '/nominated-worker',
       to: 'search#nominated_worker_question',
       as: 'nominated_worker_question'
   get '/nominated_worker_answer',
       to: 'search#nominated_worker_answer'
-  get '/school_postcode',
+  get '/school-postcode',
       to: 'search#school_postcode_question',
       as: 'school_postcode_question'
   get '/school_postcode_answer',
       to: 'search#school_postcode_answer'
-  get '/non_nominated_worker',
+  get '/non-nominated-worker',
       to: 'search#non_nominated_worker_outcome',
       as: 'non_nominated_worker_outcome'
 end
