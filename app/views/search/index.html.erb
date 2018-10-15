@@ -1,43 +1,11 @@
 <% if params[:nominated_worker].blank? %>
   <%= link_to 'Back', homepage_path, class: 'govuk-back-link' %>
-
-  <%= form_tag '/search', method: :get do %>
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h1 class="govuk-fieldset__heading">
-            Do you know the name of the person you want to hire (a nominated worker)?
-          </h1>
-        </legend>
-        <div class="govuk-radios">
-          <div class="govuk-radios__item">
-            <%= radio_button_tag :nominated_worker, :yes, false, class: 'govuk-radios__input' %>
-            <%= label_tag :nominated_worker_yes, 'Yes', class: 'govuk-label govuk-radios__label' %>
-          </div>
-          <div class="govuk-radios__item">
-            <%= radio_button_tag :nominated_worker, :no, false, class: 'govuk-radios__input' %>
-            <%= label_tag :nominated_worker_no, 'No', class: 'govuk-label govuk-radios__label' %>
-          </div>
-        </div>
-      </fieldset>
-    </div>
-    <%= submit_tag 'Continue', class: "govuk-button" %>
-  <% end %>
+  <%= render partial: 'nominated_worker_question' %>
 <% else %>
   <%= link_to 'Back', search_path, class: 'govuk-back-link' %>
   <% if params[:nominated_worker] == 'yes' %>
-    <%= form_tag '/branches', method: :get do %>
-      <%= hidden_field_tag :nominated_worker, :yes %>
-      <div class="govuk-form-group">
-        <label class="govuk-label" for="postcode">
-          What is your school's postcode?
-        </label>
-        <%= text_field_tag :postcode, '', class: 'govuk-input' %>
-      </div>
-      <%= submit_tag 'Continue', class: "govuk-button" %>
-    <% end %>
+    <%= render partial: 'school_postcode_question' %>
   <% else %>
-    <p>This system only allows you to search for nominated workers at the moment</p>
+    <%= render partial: 'non_nominated_worker_outcome' %>
   <% end %>
-
 <% end %>
