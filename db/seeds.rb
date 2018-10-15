@@ -14,6 +14,10 @@ holborn.branches.create!(
   contact_email: 'lucija.bidzina@example.com',
   telephone_number: '03069 990000'
 )
+holborn.rates.create!(
+  job_type: 'nominated',
+  mark_up: 0.35
+)
 
 westminster = Supplier.create!(name: 'Westminster')
 westminster.branches.create!(
@@ -23,6 +27,10 @@ westminster.branches.create!(
   contact_email: 'hefina.neophytos@example.com',
   telephone_number: '03069 990001'
 )
+westminster.rates.create!(
+  job_type: 'nominated',
+  mark_up: 0.30
+)
 
 liverpool = Supplier.create!(name: 'Liverpool')
 liverpool.branches.create!(
@@ -31,4 +39,8 @@ liverpool.branches.create!(
   contact_name: 'Rona Severinus',
   contact_email: 'rona.severinus@example.com',
   telephone_number: '03069 990001'
+)
+liverpool.rates.create!(
+  job_type: 'nominated',
+  mark_up: 0.25
 )
