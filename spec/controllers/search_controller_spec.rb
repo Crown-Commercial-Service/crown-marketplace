@@ -44,6 +44,18 @@ RSpec.describe SearchController, type: :controller do
         expect(flash[:error]).to eq 'Please choose an option'
       end
     end
+
+    context 'when nominated worker is unknown' do
+      let(:nominated_worker) { 'blahblah' }
+
+      it 'redirects to nominated worker question' do
+        expect(response).to redirect_to(nominated_worker_question_path)
+      end
+
+      it 'sets a flash error message' do
+        expect(flash[:error]).to eq 'Please choose an option'
+      end
+    end
   end
 
   describe 'GET school_postcode_question' do

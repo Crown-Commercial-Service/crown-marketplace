@@ -5,16 +5,14 @@ class SearchController < ApplicationController
   end
 
   def nominated_worker_answer
-    if params[:nominated_worker].present?
-      if params[:nominated_worker] == 'yes'
-        redirect_to school_postcode_question_path(
-          params.permit(:nominated_worker)
-        )
-      else
-        redirect_to non_nominated_worker_outcome_path(
-          params.permit(:nominated_worker)
-        )
-      end
+    if params[:nominated_worker] == 'yes'
+      redirect_to school_postcode_question_path(
+        params.permit(:nominated_worker)
+      )
+    elsif params[:nominated_worker] == 'no'
+      redirect_to non_nominated_worker_outcome_path(
+        params.permit(:nominated_worker)
+      )
     else
       redirect_to nominated_worker_question_path, flash: {
         error: 'Please choose an option'
