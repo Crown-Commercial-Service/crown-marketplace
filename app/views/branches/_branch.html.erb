@@ -1,6 +1,6 @@
 <div class="govuk-grid-row branch">
   <h2 class="govuk-heading-l"><%= branch.supplier.name %></h2>
-  <div class="govuk-grid-column-one-third">
+  <div class="govuk-grid-column-one-quarter">
     <ul class="govuk-list">
       <% if display_name_for_branch(branch).present? %>
         <li><b>Branch:</b> <%= display_name_for_branch(branch) %></li>
@@ -10,14 +10,22 @@
       <% end %>
     </ul>
   </div>
-  <div class="govuk-grid-column-one-third">
+  <div class="govuk-grid-column-one-quarter">
     <p class="govuk-body">
       <%= branch.contact_name %><br />
       <%= branch.telephone_number %><br />
       <%= mail_to(branch.contact_email) %>
     </p>
   </div>
-  <div class="govuk-grid-column-one-third">
+  <div class="govuk-grid-column-one-quarter">
+    <% if @point %>
+      <p class="govuk-body govuk-!-font-size-48 markup_rate">
+        <%= number_to_percentage(branch.supplier.nominated_worker_rate * 100, precision: 1) %>
+      </p>
+      <p class="govuk-body-s">Mark-up</p>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
     <% if @point %>
       <p class="govuk-body govuk-!-font-size-48 distance">
         <%= number_with_precision(metres_to_miles(@point.distance(branch.location)), precision: 1) %>

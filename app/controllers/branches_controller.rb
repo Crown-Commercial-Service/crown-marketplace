@@ -22,6 +22,8 @@ class BranchesController < ApplicationController
     end
 
     @branches = search_scope.near(@point, within_metres: helpers.miles_to_metres(Branch::DEFAULT_SEARCH_RANGE_IN_MILES))
+                            .joins(supplier: [:rates])
+                            .merge(Rate.nominated_worker)
   end
 
   private
