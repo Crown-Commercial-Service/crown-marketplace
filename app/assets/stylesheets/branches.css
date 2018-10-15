@@ -7,3 +7,25 @@ div .branch {
 div .markup {
     text-align: right;
 }
+
+@media print {
+  div.branch {
+    page-break-inside: avoid;
+  }
+
+  div.branch h2 {
+    font-size: 0.8rem;
+  }
+
+  div.branch p, div.branch li, div.branch .distance {
+    font-size: 0.8rem !important;
+  }
+
+  div.branch p.distance {
+    display: inline;
+  }
+
+  div.branch p.distance-units {
+    display: inline;
+  }
+}

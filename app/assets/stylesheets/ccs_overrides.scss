@@ -61,4 +61,8 @@
   .ccs-no-print {
     display: none;
   }
+
+  .govuk-header__logotype img {
+    filter: invert(100%);
+  }
 }
