@@ -17,7 +17,9 @@ RSpec.describe SearchController, type: :controller do
       let(:nominated_worker) { 'yes' }
 
       it 'redirects to non nominated worker outcome' do
-        expect(response).to redirect_to(school_postcode_question_path)
+        expect(response).to redirect_to(
+          school_postcode_question_path(nominated_worker: 'yes')
+        )
       end
     end
 
@@ -25,7 +27,9 @@ RSpec.describe SearchController, type: :controller do
       let(:nominated_worker) { 'no' }
 
       it 'redirects to non nominated worker outcome' do
-        expect(response).to redirect_to(non_nominated_worker_outcome_path)
+        expect(response).to redirect_to(
+          non_nominated_worker_outcome_path(nominated_worker: 'no')
+        )
       end
     end
 

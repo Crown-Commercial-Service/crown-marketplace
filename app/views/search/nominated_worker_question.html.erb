@@ -10,11 +10,11 @@
       </legend>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
-          <%= radio_button_tag :nominated_worker, :yes, false, class: 'govuk-radios__input' %>
+          <%= radio_button_tag :nominated_worker, :yes, checked?(params[:nominated_worker], 'yes'), class: 'govuk-radios__input' %>
           <%= label_tag :nominated_worker_yes, 'Yes', class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :nominated_worker, :no, false, class: 'govuk-radios__input' %>
+          <%= radio_button_tag :nominated_worker, :no, checked?(params[:nominated_worker], 'no'), class: 'govuk-radios__input' %>
           <%= label_tag :nominated_worker_no, 'No', class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
