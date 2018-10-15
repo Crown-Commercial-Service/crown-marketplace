@@ -20,4 +20,9 @@ RSpec.describe Rate, type: :model do
     new_rate = build(:rate, supplier: rate.supplier, job_type: rate.job_type)
     expect(new_rate).not_to be_valid
   end
+
+  it 'is not valid if job type is not in the list of acceptable types' do
+    rate.job_type = 'made-up-job-type'
+    expect(rate).not_to be_valid
+  end
 end
