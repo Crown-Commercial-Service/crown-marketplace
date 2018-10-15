@@ -27,7 +27,9 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       it 'redirects to school postcode question' do
-        expect(response).to redirect_to(/#{school_postcode_question_path}/)
+        expect(response).to redirect_to(
+          school_postcode_question_path(postcode: 'nonsense')
+        )
       end
 
       it 'sets a flash error message' do
@@ -46,7 +48,9 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       it 'redirects to school postcode question' do
-        expect(response).to redirect_to(/#{school_postcode_question_path}/)
+        expect(response).to redirect_to(
+          school_postcode_question_path(postcode: postcode)
+        )
       end
 
       it 'sets a flash error message' do
