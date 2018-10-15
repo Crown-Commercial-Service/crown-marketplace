@@ -1,4 +1,4 @@
-<%= link_to 'Back', nominated_worker_question_path, class: 'govuk-back-link' %>
+<%= link_to 'Back', nominated_worker_question_path(params.permit(:nominated_worker)), class: 'govuk-back-link' %>
 
 <%= form_tag school_postcode_answer_path, method: :get do %>
   <%= hidden_field_tag :nominated_worker, :yes %>
