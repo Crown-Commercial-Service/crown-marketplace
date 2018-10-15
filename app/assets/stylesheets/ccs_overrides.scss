@@ -56,3 +56,9 @@
     padding: 30px 0;
   }
 }
+
+@media print {
+  .ccs-no-print {
+    display: none;
+  }
+}
