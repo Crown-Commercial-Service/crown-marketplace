@@ -23,12 +23,18 @@ RSpec.describe BranchesController, type: :controller do
 
     context 'when postcode parsing fails' do
       before do
-        get :index, params: { postcode: 'nonsense' }
+        get :index, params: {
+          postcode: 'nonsense',
+          nominated_worker: 'yes'
+        }
       end
 
       it 'redirects to school postcode question' do
         expect(response).to redirect_to(
-          school_postcode_question_path(postcode: 'nonsense')
+          school_postcode_question_path(
+            postcode: 'nonsense',
+            nominated_worker: 'yes'
+          )
         )
       end
 
@@ -44,12 +50,18 @@ RSpec.describe BranchesController, type: :controller do
         Geocoder::Lookup::Test.add_stub(
           postcode, [{ 'coordinates' => nil }]
         )
-        get :index, params: { postcode: postcode }
+        get :index, params: {
+          postcode: postcode,
+          nominated_worker: 'yes'
+        }
       end
 
       it 'redirects to school postcode question' do
         expect(response).to redirect_to(
-          school_postcode_question_path(postcode: postcode)
+          school_postcode_question_path(
+            postcode: postcode,
+            nominated_worker: 'yes'
+          )
         )
       end
 

@@ -52,9 +52,17 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET school_postcode_answer' do
     let(:postcode) { Faker::Address.unique.postcode }
 
-    it 'redirects to branches with postcode filter' do
-      get :school_postcode_answer, params: { postcode: postcode }
-      expect(response).to redirect_to(branches_path(postcode: postcode))
+    it 'redirects to branches with postcode and nominated_worker' do
+      get :school_postcode_answer, params: {
+        postcode: postcode,
+        nominated_worker: 'yes'
+      }
+      expect(response).to redirect_to(
+        branches_path(
+          postcode: postcode,
+          nominated_worker: 'yes'
+        )
+      )
     end
   end
 
