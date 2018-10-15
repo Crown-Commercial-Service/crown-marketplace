@@ -16,7 +16,9 @@ class SearchController < ApplicationController
         )
       end
     else
-      redirect_to nominated_worker_question_path
+      redirect_to nominated_worker_question_path, flash: {
+        error: 'Please choose an option'
+      }
     end
   end
 
