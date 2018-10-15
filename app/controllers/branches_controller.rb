@@ -1,5 +1,9 @@
 class BranchesController < ApplicationController
   def index
+    @back_path = school_postcode_question_path(
+      params.permit(:postcode, :nominated_worker)
+    )
+
     search_scope = Branch.includes(:supplier)
 
     if params[:postcode].nil?
