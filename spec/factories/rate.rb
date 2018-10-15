@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :rate do
     supplier
-    job_type { 'job-type' }
+    job_type { 'nominated' }
     mark_up { 0.5 }
   end
 end
