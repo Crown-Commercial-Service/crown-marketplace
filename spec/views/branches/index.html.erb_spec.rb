@@ -17,12 +17,10 @@ RSpec.describe 'branches/index.html.erb' do
   let(:nominated_worker_rate) { nil }
 
   let(:branches) { [first_branch, second_branch, third_branch] }
-  let(:location) { instance_double('Location', postcode: nil) }
-  let(:point) { nil }
+  let(:location) { nil }
 
   before do
     assign(:branches, branches)
-    assign(:point, point)
     assign(:location, location)
 
     allow(first_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
@@ -62,8 +60,11 @@ RSpec.describe 'branches/index.html.erb' do
   end
 
   context 'when displaying branches near the buyers location' do
-    let(:point) { instance_double('RGeo::Geographic::SphericalPointImpl', distance: 1) }
-    let(:location) { instance_double('Location', postcode: 'W1A 1AA') }
+    let(:location) do
+      instance_double('Location',
+                      postcode: 'W1A 1AA',
+                      point: instance_double('RGeo::Geographic::SphericalPointImpl', distance: 1))
+    end
     let(:rates) { [build(:rate, job_type: 'nominated')] }
     let(:nominated_worker_rate) { 1 }
 
