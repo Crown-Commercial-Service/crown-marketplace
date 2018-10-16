@@ -189,21 +189,40 @@ RSpec.describe Upload, type: :model do
               'fee' => 0.35
             },
             {
-              'job_type' => 'qt',
+              'job_type' => 'fixed_term',
               'line_no' => 2,
+              'fee' => 0.36
+            },
+            {
+              'job_type' => 'qt',
+              'line_no' => 3,
               'fee' => 0.40
             }
           ]
         end
 
-        it 'only adds nominated worker rates to supplier' do
+        it 'adds nominated worker rates to supplier' do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          expect(supplier.rates.length).to eq(1)
-          rate = supplier.rates.first
-          expect(rate.job_type).to eq('nominated')
+          rate = supplier.rates.find_by(job_type: 'nominated')
           expect(rate.mark_up).to eq(0.35)
+        end
+
+        it 'adds fixed term rates to supplier' do
+          described_class.create!(suppliers)
+
+          supplier = Supplier.last
+          rate = supplier.rates.find_by(job_type: 'fixed_term')
+          expect(rate.mark_up).to eq(0.36)
+        end
+
+        it 'does not add other rates to supplier' do
+          described_class.create!(suppliers)
+
+          supplier = Supplier.last
+          rate = supplier.rates.find_by(job_type: 'qt')
+          expect(rate).to be_nil
         end
       end
     end

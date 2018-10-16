@@ -49,7 +49,7 @@ class Upload
 
   def self.create_supplier_rates!(supplier, rates)
     rates.each do |rate|
-      next unless rate['job_type'] == 'nominated'
+      next unless ['nominated', 'fixed_term'].include?(rate['job_type'])
 
       supplier.rates.create!(
         job_type: rate['job_type'],
