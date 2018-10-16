@@ -22,4 +22,8 @@ class Rate < ApplicationRecord
   def self.nominated_worker
     where(job_type: 'nominated')
   end
+
+  def self.fixed_term
+    where(job_type: 'fixed_term')
+  end
 end

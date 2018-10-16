@@ -125,6 +125,34 @@ RSpec.describe Branch, type: :model do
       end
     end
 
+    context 'when there are suppliers with fixed term rates' do
+      let!(:branch_with_fixed_term_rates) do
+        supplier = create(:supplier)
+        create(:rate, job_type: 'fixed_term', supplier: supplier)
+        create(:branch,
+               supplier: supplier,
+               location: Geocoding.point(latitude: 0, longitude: 0))
+      end
+      let!(:branch_with_no_fixed_term_rates) do
+        supplier = create(:supplier)
+        create(:branch,
+               supplier: supplier,
+               location: Geocoding.point(latitude: 0, longitude: 0))
+      end
+      let(:results) do
+        point = Geocoding.point(latitude: 0, longitude: 0)
+        Branch.search(point, fixed_term: true).to_a
+      end
+
+      it 'includes suppliers that have fixed term rates' do
+        expect(results).to include(branch_with_fixed_term_rates)
+      end
+
+      it "excludes suppliers that don't have fixed term rates" do
+        expect(results).not_to include(branch_with_no_fixed_term_rates)
+      end
+    end
+
     context 'when there are suppliers with different nominated worker rates' do
       let!(:branch_of_cheaper_supplier) do
         supplier = create(:supplier)
