@@ -10,14 +10,13 @@ class BranchesController < ApplicationController
     end
 
     @location = Location.new(params[:postcode])
-    @point = @location.point
 
     unless @location.valid?
       display_error(@location.error)
       return
     end
 
-    @branches = Branch.search(@point)
+    @branches = Branch.search(@location.point)
   end
 
   private

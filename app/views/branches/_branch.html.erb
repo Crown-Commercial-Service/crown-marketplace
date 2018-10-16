@@ -26,9 +26,9 @@
     <% end %>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <% if @point %>
+    <% if @location %>
       <p class="govuk-body govuk-!-font-size-48 distance">
-        <%= number_with_precision(metres_to_miles(@point.distance(branch.location)), precision: 1) %>
+        <%= number_with_precision(metres_to_miles(@location.point.distance(branch.location)), precision: 1) %>
       </p>
       <p class="govuk-body-s distance-units">miles</p>
     <% end %>
