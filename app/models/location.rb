@@ -5,4 +5,8 @@ class Location
     @postcode = UKPostcode.parse(postcode)
     @point = Geocoding.new.point(postcode: @postcode.to_s) if @postcode.valid?
   end
+
+  def valid?
+    @postcode.valid?
+  end
 end
