@@ -1,9 +1,11 @@
 ---
-require: rubocop-rspec
+require:
+  - rubocop-rspec
+  - './lib/cop/all'
+
 AllCops:
     TargetRubyVersion: 2.5
     Exclude:
-        - 'db/migrate/**/*'
         - 'db/schema.rb'
         - 'db/seeds.rb'
         - 'bin/**/*'
