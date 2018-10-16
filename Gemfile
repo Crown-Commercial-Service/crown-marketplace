@@ -33,6 +33,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'geocoder'
 gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
+gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -46,6 +47,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'rubyXL'
 end
 
 group :development do
