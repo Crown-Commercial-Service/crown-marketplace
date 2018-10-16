@@ -9,14 +9,14 @@ class BranchesController < ApplicationController
       return
     end
 
-    @postcode = UKPostcode.parse(params[:postcode])
+    location = Location.new(params[:postcode])
+    @postcode = location.postcode
+    @point = location.point
 
     unless @postcode.valid?
       display_error('Postcode is invalid')
       return
     end
-
-    @point = Geocoding.new.point(postcode: @postcode.to_s)
 
     unless @point
       display_error("Couldn't find that postcode")
