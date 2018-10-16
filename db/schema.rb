@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_101044) do
+ActiveRecord::Schema.define(version: 2018_10_16_161033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 2018_10_15_101044) do
     t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "accreditation_body"
   end
 
   add_foreign_key "branches", "suppliers"
