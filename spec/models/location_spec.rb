@@ -17,8 +17,19 @@ RSpec.describe Location do
     expect(location).to respond_to(:point)
   end
 
-  it 'sets point to nil when the postcode is invalid' do
-    invalid_location = described_class.new('invalid-postcode')
-    expect(invalid_location.point).to be_nil
+  it 'is valid when the postcode is valid' do
+    expect(location.valid?).to be true
+  end
+
+  context 'with an invalid postcode' do
+    let(:location) { described_class.new('invalid-postcode') }
+
+    it 'sets point to nil' do
+      expect(location.point).to be_nil
+    end
+
+    it 'is invalid' do
+      expect(location.valid?).to be false
+    end
   end
 end

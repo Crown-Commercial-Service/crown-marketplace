@@ -13,7 +13,7 @@ class BranchesController < ApplicationController
     @postcode = location.postcode
     @point = location.point
 
-    unless @postcode.valid?
+    unless location.valid?
       display_error('Postcode is invalid')
       return
     end
