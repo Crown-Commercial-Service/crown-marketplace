@@ -1,6 +1,7 @@
 <%= link_to 'Back', @back_path, class: 'govuk-back-link' %>
 
 <%= form_tag @form_path, method: :get do %>
+  <%= hidden_field_tag :hire_via_agency, params[:hire_via_agency] %>
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">

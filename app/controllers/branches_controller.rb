@@ -1,7 +1,7 @@
 class BranchesController < ApplicationController
   def index
     @back_path = school_postcode_question_path(
-      params.permit(:postcode, :nominated_worker)
+      params.permit(:postcode, :nominated_worker, :hire_via_agency)
     )
 
     search_scope = Branch.includes(:supplier)
@@ -35,7 +35,7 @@ class BranchesController < ApplicationController
 
   def display_error(message)
     path = school_postcode_question_path(
-      params.permit(:postcode, :nominated_worker)
+      params.permit(:postcode, :nominated_worker, :hire_via_agency)
     )
     redirect_to path, flash: { error: message }
   end

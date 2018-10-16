@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature 'Nominated workers', type: :feature do
-  scenario 'Buyer choice should not be pre-selected' do
+  scenario 'Nominated worker choice should not be pre-selected' do
     visit '/'
     click_on 'Start now'
+
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
 
     expect(page).not_to have_checked_field('Yes')
     expect(page).not_to have_checked_field('No')
@@ -12,6 +15,9 @@ RSpec.feature 'Nominated workers', type: :feature do
   scenario 'Buyer is not looking for a nominated worker' do
     visit '/'
     click_on 'Start now'
+
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
 
     choose 'No'
     click_on 'Continue'
@@ -22,6 +28,9 @@ RSpec.feature 'Nominated workers', type: :feature do
   scenario 'Buyer was looking for a nominated worker but changed mind' do
     visit '/'
     click_on 'Start now'
+
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
 
     choose 'Yes'
     click_on 'Continue'
@@ -34,6 +43,9 @@ RSpec.feature 'Nominated workers', type: :feature do
   scenario 'Buyer was not looking for a nominated worker but changed mind' do
     visit '/'
     click_on 'Start now'
+
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
 
     choose 'No'
     click_on 'Continue'
@@ -88,6 +100,9 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
+
     choose 'Yes'
     click_on 'Continue'
 
@@ -119,6 +134,9 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
+
     choose 'Yes'
     click_on 'Continue'
 
@@ -138,6 +156,9 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
+
     choose 'Yes'
     click_on 'Continue'
 
@@ -150,9 +171,36 @@ RSpec.feature 'Nominated workers', type: :feature do
     expect(page).to have_checked_field('Yes')
   end
 
+  scenario 'Buyer changes mind about postcode, nominated worker & hire via agency' do
+    Geocoder::Lookup::Test.add_stub(
+      'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
+    )
+
+    visit '/'
+    click_on 'Start now'
+
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
+
+    choose 'Yes'
+    click_on 'Continue'
+
+    fill_in 'postcode', with: 'WC2B 6TE'
+    click_on 'Continue'
+
+    click_on 'Back'
+    click_on 'Back'
+    click_on 'Back'
+
+    expect(page).to have_checked_field('Hire a worker via an agency')
+  end
+
   scenario 'Buyer enters invalid postcode' do
     visit '/'
     click_on 'Start now'
+
+    choose 'Hire a worker via an agency'
+    click_on 'Continue'
 
     choose 'Yes'
     click_on 'Continue'

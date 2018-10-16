@@ -25,7 +25,8 @@ RSpec.describe BranchesController, type: :controller do
       before do
         get :index, params: {
           postcode: 'nonsense',
-          nominated_worker: 'yes'
+          nominated_worker: 'yes',
+          hire_via_agency: 'yes'
         }
       end
 
@@ -33,7 +34,8 @@ RSpec.describe BranchesController, type: :controller do
         expect(response).to redirect_to(
           school_postcode_question_path(
             postcode: 'nonsense',
-            nominated_worker: 'yes'
+            nominated_worker: 'yes',
+            hire_via_agency: 'yes'
           )
         )
       end
@@ -52,7 +54,8 @@ RSpec.describe BranchesController, type: :controller do
         )
         get :index, params: {
           postcode: postcode,
-          nominated_worker: 'yes'
+          nominated_worker: 'yes',
+          hire_via_agency: 'yes'
         }
       end
 
@@ -60,7 +63,8 @@ RSpec.describe BranchesController, type: :controller do
         expect(response).to redirect_to(
           school_postcode_question_path(
             postcode: postcode,
-            nominated_worker: 'yes'
+            nominated_worker: 'yes',
+            hire_via_agency: 'yes'
           )
         )
       end
