@@ -21,6 +21,23 @@ RSpec.describe Location do
     expect(location.valid?).to be true
   end
 
+  context 'with a valid postcode that could not be found' do
+    before do
+      Geocoder::Lookup::Test.add_stub(
+        'W1A 1AA', [{ 'coordinates' => [] }]
+      )
+    end
+
+    it 'is invalid' do
+      expect(location.valid?).to be false
+    end
+
+    it 'sets an appropriate error message' do
+      location.valid?
+      expect(location.error).to eq "Couldn't find that postcode"
+    end
+  end
+
   context 'with an invalid postcode' do
     let(:location) { described_class.new('invalid-postcode') }
 
