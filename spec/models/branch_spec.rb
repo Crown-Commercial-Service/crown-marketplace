@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Branch, type: :model do
-  subject(:branch) { build(:branch, supplier: supplier) }
-
-  let(:supplier) { create(:supplier) }
+  subject(:branch) { build(:branch) }
 
   it { is_expected.to be_valid }
 
@@ -49,21 +47,18 @@ RSpec.describe Branch, type: :model do
     let!(:london_1) do
       create(
         :branch,
-        supplier: supplier,
         location: Geocoding.point(latitude: 51.5201, longitude: -0.0759)
       )
     end
     let!(:london_2) do
       create(
         :branch,
-        supplier: supplier,
         location: Geocoding.point(latitude: 51.5263, longitude: -0.0858)
       )
     end
     let!(:edinburgh) do
       create(
         :branch,
-        supplier: supplier,
         location: Geocoding.point(latitude: 55.9619, longitude: -3.1953)
       )
     end
