@@ -31,7 +31,11 @@ Rails.application.routes.draw do
   get '/neutral-vendor-managed-service',
       to: 'search#neutral_vendor_managed_service_outcome',
       as: 'neutral_vendor_managed_service_outcome'
-  get '/non-nominated-worker',
-      to: 'search#non_nominated_worker_outcome',
-      as: 'non_nominated_worker_outcome'
+  get '/school-payroll',
+      to: 'search#school_payroll_question',
+      as: 'school_payroll_question'
+  get '/school_payroll_answer',
+      to: 'search#school_payroll_answer'
+  get '/agency_payroll_outcome',
+      to: 'search#agency_payroll_outcome'
 end

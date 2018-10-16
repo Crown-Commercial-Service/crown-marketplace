@@ -11,7 +11,8 @@ RSpec.describe BranchesController, type: :controller do
       let(:request_params) do
         { postcode: postcode,
           nominated_worker: 'yes',
-          hire_via_agency: 'yes' }
+          hire_via_agency: 'no',
+          school_payroll: 'yes' }
       end
 
       before do
