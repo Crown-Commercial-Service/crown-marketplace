@@ -75,4 +75,72 @@ RSpec.describe Branch, type: :model do
       end
     end
   end
+
+  describe '.search' do
+    context 'when there are branches outside of the search area' do
+      let(:supplier) do
+        create(:supplier).tap do |s|
+          create(:rate, job_type: 'nominated', supplier: s)
+        end
+      end
+      let!(:branch_within_search_area) do
+        create(:branch, supplier: supplier, location: Geocoding.point(latitude: 51.5172265, longitude: -0.1275961))
+      end
+      let!(:branch_outside_search_area) do
+        create(:branch, supplier: supplier, location: Geocoding.point(latitude: 50.7230521, longitude: -2.0430911))
+      end
+      let(:results) { Branch.search(Geocoding.point(latitude: 51.5, longitude: 0)).to_a }
+
+      it 'includes branches within 25 miles' do
+        expect(results).to include(branch_within_search_area)
+      end
+
+      it 'excludes branches outside 25 miles' do
+        expect(results).not_to include(branch_outside_search_area)
+      end
+    end
+
+    context 'when there are suppliers without nominated worker rates' do
+      let!(:branch_with_nominated_worker_rates) do
+        supplier = create(:supplier)
+        create(:rate, job_type: 'nominated', supplier: supplier)
+        create(:branch,
+               supplier: supplier,
+               location: Geocoding.point(latitude: 0, longitude: 0))
+      end
+      let!(:branch_with_no_nominated_worker_rates) do
+        supplier = create(:supplier)
+        create(:branch,
+               supplier: supplier,
+               location: Geocoding.point(latitude: 0, longitude: 0))
+      end
+      let(:results) { Branch.search(Geocoding.point(latitude: 0, longitude: 0)).to_a }
+
+      it 'includes suppliers that have nominated worker rates' do
+        expect(results).to include(branch_with_nominated_worker_rates)
+      end
+
+      it "excludes suppliers that don't have nominated worker rates" do
+        expect(results).not_to include(branch_with_no_nominated_worker_rates)
+      end
+    end
+
+    context 'when there are suppliers with different nominated worker rates' do
+      let!(:branch_of_cheaper_supplier) do
+        supplier = create(:supplier)
+        create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
+        create(:branch, supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
+      end
+      let!(:branch_of_costlier_supplier) do
+        supplier = create(:supplier)
+        create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.9)
+        create(:branch, supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
+      end
+
+      it 'orders branches by markup rate in ascending order' do
+        results = Branch.search(Geocoding.point(latitude: 0, longitude: 0)).to_a
+        expect(results).to eq([branch_of_cheaper_supplier, branch_of_costlier_supplier])
+      end
+    end
+  end
 end

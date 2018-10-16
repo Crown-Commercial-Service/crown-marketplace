@@ -4,10 +4,8 @@ class BranchesController < ApplicationController
       params.permit(:postcode, :nominated_worker, :hire_via_agency)
     )
 
-    search_scope = Branch.includes(:supplier)
-
     if params[:postcode].nil?
-      @branches = search_scope.all
+      @branches = Branch.includes(:supplier).all
       return
     end
 
@@ -25,10 +23,7 @@ class BranchesController < ApplicationController
       return
     end
 
-    @branches = search_scope.near(@point, within_metres: helpers.miles_to_metres(Branch::DEFAULT_SEARCH_RANGE_IN_MILES))
-                            .joins(supplier: [:rates])
-                            .merge(Rate.nominated_worker)
-                            .order('rates.mark_up')
+    @branches = Branch.search(@point)
   end
 
   private
