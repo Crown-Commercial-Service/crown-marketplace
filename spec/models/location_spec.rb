@@ -31,5 +31,10 @@ RSpec.describe Location do
     it 'is invalid' do
       expect(location.valid?).to be false
     end
+
+    it 'sets an appropriate error message' do
+      location.valid?
+      expect(location.error).to eq 'Postcode is invalid'
+    end
   end
 end

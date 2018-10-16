@@ -1,5 +1,5 @@
 class Location
-  attr_reader :postcode, :point
+  attr_reader :postcode, :point, :error
 
   def initialize(postcode)
     @postcode = UKPostcode.parse(postcode)
@@ -7,6 +7,7 @@ class Location
   end
 
   def valid?
-    @postcode.valid?
+    @error = 'Postcode is invalid' unless @postcode.valid?
+    !@error
   end
 end
