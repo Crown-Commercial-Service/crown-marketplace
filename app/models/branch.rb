@@ -18,11 +18,12 @@ class Branch < ApplicationRecord
     )
   end
 
-  def self.search(point)
+  def self.search(point, fixed_term: false)
+    rates_clause = fixed_term ? Rate.fixed_term : Rate.nominated_worker
     metres = DistanceConvertor.miles_to_metres(Branch::DEFAULT_SEARCH_RANGE_IN_MILES)
     Branch.near(point, within_metres: metres)
           .joins(supplier: [:rates])
-          .merge(Rate.nominated_worker)
+          .merge(rates_clause)
           .order('rates.mark_up')
   end
 end
