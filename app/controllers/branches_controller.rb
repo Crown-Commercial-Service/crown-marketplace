@@ -17,6 +17,11 @@ class BranchesController < ApplicationController
     end
 
     @branches = Branch.search(@location.point)
+
+    respond_to do |format|
+      format.html
+      format.xlsx { render xlsx: Spreadsheet.new(@branches).to_xlsx, filename: 'branches' }
+    end
   end
 
   private
