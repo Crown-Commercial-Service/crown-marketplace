@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :branch do
+    supplier
     postcode { Faker::Address.unique.postcode }
     location do
       Geocoding.point(
