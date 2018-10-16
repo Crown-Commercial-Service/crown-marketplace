@@ -9,12 +9,11 @@ class BranchesController < ApplicationController
       return
     end
 
-    location = Location.new(params[:postcode])
-    @postcode = location.postcode
-    @point = location.point
+    @location = Location.new(params[:postcode])
+    @point = @location.point
 
-    unless location.valid?
-      display_error(location.error)
+    unless @location.valid?
+      display_error(@location.error)
       return
     end
 

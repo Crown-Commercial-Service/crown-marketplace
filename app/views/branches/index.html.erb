@@ -7,7 +7,7 @@
           <h1 class="govuk-heading-xl">Suppliers List</h1>
           <p class="govuk-body">
             <% if @point %>
-            <span class="govuk-body-l"><%= @branches.count %></span> results found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @postcode %></strong>
+            <span class="govuk-body-l"><%= @branches.count %></span> results found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @location.postcode %></strong>
             <% else %>
             <span class="govuk-body-l"><%= @branches.count %></span> results found
             <% end %>
