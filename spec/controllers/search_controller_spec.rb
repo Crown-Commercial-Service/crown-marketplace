@@ -1,6 +1,51 @@
 require 'rails_helper'
 
 RSpec.describe SearchController, type: :controller do
+  describe 'GET hire_via_agency_question' do
+    it 'renders template' do
+      get :hire_via_agency_question
+      expect(response).to render_template('hire_via_agency_question')
+    end
+  end
+
+  describe 'GET hire_via_agency_answer' do
+    before do
+      get :hire_via_agency_answer, params: { hire_via_agency: hire_via_agency }
+    end
+
+    context 'when hire via agency is yes' do
+      let(:hire_via_agency) { 'yes' }
+
+      it 'redirects to nominated worker question' do
+        expect(response).to redirect_to(
+          nominated_worker_question_path(hire_via_agency: 'yes')
+        )
+      end
+    end
+
+    context 'when hire via agency is no' do
+      let(:hire_via_agency) { 'no' }
+
+      it 'redirects to managed service providers outcome' do
+        expect(response).to redirect_to(
+          managed_service_providers_outcome_path(hire_via_agency: 'no')
+        )
+      end
+    end
+
+    context 'when hire via agency is blank' do
+      let(:hire_via_agency) { '' }
+
+      it 'redirects to hire via agency question' do
+        expect(response).to redirect_to(hire_via_agency_question_path)
+      end
+
+      it 'sets a flash error message' do
+        expect(flash[:error]).to eq 'Please choose an option'
+      end
+    end
+  end
+
   describe 'GET nominated_worker_question' do
     it 'renders template' do
       get :nominated_worker_question
@@ -79,6 +124,13 @@ RSpec.describe SearchController, type: :controller do
           nominated_worker: 'yes'
         )
       )
+    end
+  end
+
+  describe 'GET managed_service_providers_outcome' do
+    it 'renders template' do
+      get :managed_service_providers_outcome
+      expect(response).to render_template('managed_service_providers_outcome')
     end
   end
 
