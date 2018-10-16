@@ -50,6 +50,10 @@ RSpec.describe 'branches/index.html.erb' do
     expect(rendered).to have_link('Print this page')
   end
 
+  it 'has a link to download a spreadsheet' do
+    expect(rendered).to have_link('download as a spreadsheet')
+  end
+
   context 'when there are no branches' do
     let(:branches) { [] }
 
