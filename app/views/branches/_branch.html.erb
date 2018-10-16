@@ -5,9 +5,6 @@
       <% if display_name_for_branch(branch).present? %>
         <li><b>Branch:</b> <%= display_name_for_branch(branch) %></li>
       <% end %>
-      <% if branch.supplier.accreditation_body.present? %>
-        <li><b>Accreditation Body:</b> <%= branch.supplier.accreditation_body %></li>
-      <% end %>
     </ul>
   </div>
   <div class="govuk-grid-column-one-quarter">

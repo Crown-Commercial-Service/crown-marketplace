@@ -8,7 +8,6 @@ RSpec.describe Upload, type: :model do
     let(:supplier_id) { SecureRandom.uuid }
     let(:postcode) { Faker::Address.unique.postcode }
     let(:phone_number) { Faker::PhoneNumber.unique.phone_number }
-    let(:accreditation_body) { 'REC' }
     let(:latitude) { Faker::Address.unique.latitude }
     let(:longitude) { Faker::Address.unique.longitude }
     let(:contact_name) { Faker::Name.unique.name }
@@ -40,7 +39,6 @@ RSpec.describe Upload, type: :model do
         {
           'supplier_name' => supplier_name,
           'supplier_id' => supplier_id,
-          'accreditation' => accreditation_body,
           'branches' => branches,
           'pricing' => pricing
         }
@@ -82,7 +80,6 @@ RSpec.describe Upload, type: :model do
 
         supplier = Supplier.last
         expect(supplier.name).to eq(supplier_name)
-        expect(supplier.accreditation_body).to eq(accreditation_body)
       end
 
       it 'creates a branch associated with supplier' do
