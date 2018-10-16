@@ -24,8 +24,7 @@ class Upload
   def self.create_supplier!(data)
     s = Supplier.create!(
       id: data['supplier_id'],
-      name: data['supplier_name'],
-      accreditation_body: data['accreditation']
+      name: data['supplier_name']
     )
     branches = data.fetch('branches', [])
     branches.each do |branch|

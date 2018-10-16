@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'branches/_branch.html.erb' do
-  let(:accreditation_body) { 'REC' }
-  let(:supplier) { build(:supplier, accreditation_body: accreditation_body) }
+  let(:supplier) { build(:supplier) }
   let(:branch_name) { 'Head Office' }
   let(:branch_town) { 'Guildford' }
   let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
@@ -26,10 +25,6 @@ RSpec.describe 'branches/_branch.html.erb' do
 
   it 'displays branch name' do
     expect(rendered).to have_content(branch_name)
-  end
-
-  it 'displays accreditation body' do
-    expect(rendered).to have_content(accreditation_body)
   end
 
   it 'displays contact name' do
@@ -58,14 +53,6 @@ RSpec.describe 'branches/_branch.html.erb' do
 
     it 'does not display branch or its label' do
       expect(rendered).not_to have_content('Branch:')
-    end
-  end
-
-  context 'when accreditation body is blank' do
-    let(:accreditation_body) { nil }
-
-    it 'does not display accreditation body or its label' do
-      expect(rendered).not_to have_content('Accreditation Body:')
     end
   end
 end
