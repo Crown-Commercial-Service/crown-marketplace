@@ -139,9 +139,9 @@ RSpec.describe SearchController, type: :controller do
     context 'when nominated worker is no' do
       let(:nominated_worker) { 'no' }
 
-      it 'redirects to non nominated worker outcome' do
+      it 'redirects to school payroll question path' do
         expect(response).to redirect_to(
-          non_nominated_worker_outcome_path(params)
+          school_payroll_question_path(params)
         )
       end
     end
@@ -198,16 +198,27 @@ RSpec.describe SearchController, type: :controller do
       get :school_postcode_question, params: params
       expect(assigns(:form_path)).to eq(school_postcode_answer_path)
     end
+
+    it 'sets back path to school payroll question if employing worker on school payroll' do
+      params = {
+        hire_via_agency: 'yes',
+        nominated_worker: 'no',
+        school_payroll: 'yes'
+      }
+      get :school_postcode_question, params: params
+      expect(assigns(:back_path)).to eq(school_payroll_question_path(params))
+    end
   end
 
   describe 'GET school_postcode_answer' do
     let(:postcode) { Faker::Address.unique.postcode }
 
-    it 'redirects to branches with postcode and nominated_worker' do
+    it 'redirects to branches path' do
       params = {
         hire_via_agency: 'yes',
         nominated_worker: 'no',
-        postcode: 'postcode'
+        school_payroll: 'yes',
+        postcode: postcode
       }
       get :school_postcode_answer, params: params
       expect(response).to redirect_to(branches_path(params))
@@ -228,10 +239,79 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET non_nominated_worker_outcome' do
-    it 'renders template' do
-      get :non_nominated_worker_outcome
-      expect(response).to render_template('non_nominated_worker_outcome')
+  describe 'GET school_payroll_question' do
+    it 'sets the form path to school payroll answer' do
+      get :school_payroll_question
+      expect(assigns(:form_path)).to eq(school_payroll_answer_path)
+    end
+
+    it 'sets the back path to the nominated worker question' do
+      params = {
+        hire_via_agency: 'yes',
+        nominated_worker: 'no'
+      }
+      get :school_payroll_question, params: params
+      expect(assigns(:back_path)).to eq(nominated_worker_question_path(params))
+    end
+  end
+
+  describe 'GET school_payroll_answer' do
+    context 'when the answer is yes' do
+      it 'redirects to postcode form' do
+        params = {
+          hire_via_agency: 'yes',
+          nominated_worker: 'no',
+          school_payroll: 'yes'
+        }
+        get :school_payroll_answer, params: params
+        expect(response).to redirect_to(school_postcode_question_path(params))
+      end
+    end
+
+    context 'when the answer is no' do
+      it 'redirects to agency payroll outcome' do
+        params = {
+          hire_via_agency: 'yes',
+          nominated_worker: 'no',
+          school_payroll: 'no'
+        }
+        get :school_payroll_answer, params: params
+        expect(response).to redirect_to(agency_payroll_outcome_path(params))
+      end
+    end
+
+    context 'when the answer is blank' do
+      let(:params) do
+        {
+          hire_via_agency: 'yes',
+          nominated_worker: 'no',
+          school_payroll: ''
+        }
+      end
+
+      before do
+        get :school_payroll_answer, params: params
+      end
+
+      it 'redirects to school payroll question' do
+        expect(response).to redirect_to(school_payroll_question_path(params))
+      end
+
+      it 'sets a flash error message' do
+        expect(flash[:error]).to eq 'Please choose an option'
+      end
+    end
+  end
+
+  describe 'GET agency_payroll_outcome' do
+    it 'sets the back link to the school payroll question' do
+      params = {
+        hire_via_agency: 'yes',
+        nominated_worker: 'no',
+        school_payroll: 'no'
+      }
+      get :agency_payroll_outcome, params: params
+      expect(assigns(:back_path)).to eq(school_payroll_question_path(params))
     end
   end
 end

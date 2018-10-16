@@ -1,7 +1,7 @@
 class BranchesController < ApplicationController
   def index
     @back_path = school_postcode_question_path(
-      params.permit(:postcode, :nominated_worker, :hire_via_agency)
+      params.permit(:postcode, :nominated_worker, :hire_via_agency, :school_payroll)
     )
 
     if params[:postcode].nil?
@@ -26,9 +26,13 @@ class BranchesController < ApplicationController
   private
 
   def branch_results_near(point)
-    Branch.search(point).map do |branch|
+    Branch.search(point, fixed_term: params[:school_payroll] == 'yes').map do |branch|
       search_result_for(branch).tap do |result|
-        result.rate = branch.supplier.nominated_worker_rate
+        if params[:nominated_worker] == 'yes'
+          result.rate = branch.supplier.nominated_worker_rate
+        elsif params[:school_payroll] == 'yes'
+          result.rate = branch.supplier.fixed_term_rate
+        end
         result.distance = point.distance(branch.location)
       end
     end
