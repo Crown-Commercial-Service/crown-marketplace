@@ -38,8 +38,8 @@
 
       <div class="govuk-header__logo">
         <a href="/" class="govuk-header__link govuk-header__link--homepage">
-          <span class="govuk-header__logotype">
-            <%= image_tag('ccs_logotype_med.png', alt: 'Crown Commercial Service') %>
+          <span class="ccs-logotype">
+            <%= render partial: '/layouts/logotype' %>
           </span>
         </a>
       </div>
@@ -72,8 +72,8 @@
     <div class="govuk-footer__container govuk-width-container ">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-third">
-          <span class="govuk-footer__logotype">
-            <%= image_tag('ccs_logotype_med.png', alt: '') %>
+          <span class="ccs-logotype">
+            <%= render partial: '/layouts/logotype' %>
           </span>
         </div>
 
