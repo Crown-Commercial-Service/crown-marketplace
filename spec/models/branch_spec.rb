@@ -43,34 +43,36 @@ RSpec.describe Branch, type: :model do
     end
   end
 
-  context 'when three branches exist in different locations' do
-    let!(:london_1) do
-      create(
-        :branch,
-        location: Geocoding.point(latitude: 51.5201, longitude: -0.0759)
-      )
-    end
-    let!(:london_2) do
-      create(
-        :branch,
-        location: Geocoding.point(latitude: 51.5263, longitude: -0.0858)
-      )
-    end
-    let!(:edinburgh) do
-      create(
-        :branch,
-        location: Geocoding.point(latitude: 55.9619, longitude: -3.1953)
-      )
-    end
+  describe '.near' do
+    context 'when three branches exist in different locations' do
+      let!(:london_1) do
+        create(
+          :branch,
+          location: Geocoding.point(latitude: 51.5201, longitude: -0.0759)
+        )
+      end
+      let!(:london_2) do
+        create(
+          :branch,
+          location: Geocoding.point(latitude: 51.5263, longitude: -0.0858)
+        )
+      end
+      let!(:edinburgh) do
+        create(
+          :branch,
+          location: Geocoding.point(latitude: 55.9619, longitude: -3.1953)
+        )
+      end
 
-    let(:shoreditch) { Geocoding.point(latitude: 51.5255, longitude: -0.0587) }
+      let(:shoreditch) { Geocoding.point(latitude: 51.5255, longitude: -0.0587) }
 
-    it 'includes nearby branches' do
-      expect(Branch.near(shoreditch, within_metres: 10000)).to include(london_1, london_2)
-    end
+      it 'includes nearby branches' do
+        expect(Branch.near(shoreditch, within_metres: 10000)).to include(london_1, london_2)
+      end
 
-    it 'excludes far away branches' do
-      expect(Branch.near(shoreditch, within_metres: 10000)).not_to include(edinburgh)
+      it 'excludes far away branches' do
+        expect(Branch.near(shoreditch, within_metres: 10000)).not_to include(edinburgh)
+      end
     end
   end
 end
