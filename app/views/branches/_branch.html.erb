@@ -18,7 +18,7 @@
     </p>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <% if @point %>
+    <% if params[:nominated_worker] %>
       <p class="govuk-body govuk-!-font-size-48 markup_rate">
         <%= number_to_percentage(branch.supplier.nominated_worker_rate * 100, precision: 1) %>
       </p>
