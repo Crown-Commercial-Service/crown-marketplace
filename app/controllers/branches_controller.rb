@@ -18,11 +18,6 @@ class BranchesController < ApplicationController
       return
     end
 
-    unless @point
-      display_error("Couldn't find that postcode")
-      return
-    end
-
     @branches = Branch.search(@point)
   end
 

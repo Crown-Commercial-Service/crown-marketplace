@@ -7,7 +7,12 @@ class Location
   end
 
   def valid?
-    @error = 'Postcode is invalid' unless @postcode.valid?
+    if !@postcode.valid?
+      @error = 'Postcode is invalid'
+    elsif !@point
+      @error = "Couldn't find that postcode"
+    end
+
     !@error
   end
 end
