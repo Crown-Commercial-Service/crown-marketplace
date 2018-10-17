@@ -15,10 +15,18 @@ RSpec.describe Rate, type: :model do
     expect(rate).not_to be_valid
   end
 
-  it 'is not valid if another rate for this job type from this supplier already exists' do
+  it 'is not valid if supplier has another rate for this job type and term' do
+    rate.term = 'one_week'
     rate.save!
-    new_rate = build(:rate, supplier: rate.supplier, job_type: rate.job_type)
+    new_rate = build(:rate, supplier: rate.supplier, job_type: rate.job_type, term: 'one_week')
     expect(new_rate).not_to be_valid
+  end
+
+  it 'is valid if supplier has another rate for this job type but different term' do
+    rate.term = 'one_week'
+    rate.save!
+    new_rate = build(:rate, supplier: rate.supplier, job_type: rate.job_type, term: 'one_month')
+    expect(new_rate).to be_valid
   end
 
   it 'is not valid if job type is not in the list of acceptable types' do

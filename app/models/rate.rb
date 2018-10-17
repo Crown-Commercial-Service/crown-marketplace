@@ -15,7 +15,7 @@ class Rate < ApplicationRecord
   belongs_to :supplier
 
   validates :job_type, presence: true,
-                       uniqueness: { scope: :supplier },
+                       uniqueness: { scope: %i[supplier term] },
                        inclusion: { in: JOB_TYPES.keys }
   validates :mark_up, presence: true
 
