@@ -16,10 +16,10 @@
   </div>
   <div class="govuk-grid-column-one-quarter">
     <% if params[:nominated_worker] %>
-      <p class="govuk-body govuk-!-font-size-48 markup_rate">
+      <p class="govuk-body govuk-!-font-size-48 markup-rate">
         <%= number_to_percentage(branch.supplier.nominated_worker_rate * 100, precision: 1) %>
       </p>
-      <p class="govuk-body-s">Mark-up</p>
+      <p class="govuk-body-s markup-rate-units">Mark-up</p>
     <% end %>
   </div>
   <div class="govuk-grid-column-one-quarter">
