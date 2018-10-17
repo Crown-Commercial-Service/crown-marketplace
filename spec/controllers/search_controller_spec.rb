@@ -28,7 +28,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to managed service providers outcome' do
         expect(response).to redirect_to(
-          managed_service_providers_outcome_path(hire_via_agency: 'no')
+          managed_service_provider_question_path(hire_via_agency: 'no')
         )
       end
     end
@@ -39,6 +39,65 @@ RSpec.describe SearchController, type: :controller do
       it 'redirects to hire via agency question' do
         expect(response).to redirect_to(
           hire_via_agency_question_path(hire_via_agency: '')
+        )
+      end
+
+      it 'sets a flash error message' do
+        expect(flash[:error]).to eq 'Please choose an option'
+      end
+    end
+  end
+
+  describe 'GET managed_service_provider_question' do
+    it 'renders template' do
+      get :managed_service_provider_question
+      expect(response).to render_template('managed_service_provider_question')
+    end
+  end
+
+  describe 'GET managed_service_provider_answer' do
+    before do
+      get :managed_service_provider_answer, params: {
+        master_vendor: master_vendor,
+        hire_via_agency: 'no'
+      }
+    end
+
+    context 'when master vendor is yes' do
+      let(:master_vendor) { 'yes' }
+
+      it 'redirects to master vendor managed service outcome' do
+        expect(response).to redirect_to(
+          master_vendor_managed_service_outcome_path(
+            master_vendor: master_vendor,
+            hire_via_agency: 'no'
+          )
+        )
+      end
+    end
+
+    context 'when master vendor is no' do
+      let(:master_vendor) { 'no' }
+
+      it 'redirects to neutral vendor managed service outcome' do
+        expect(response).to redirect_to(
+          neutral_vendor_managed_service_outcome_path(
+            master_vendor: master_vendor,
+            hire_via_agency: 'no'
+          )
+        )
+      end
+    end
+
+    context 'when master vendor is blank' do
+      let(:master_vendor) { '' }
+
+      it 'redirects to managed service provider question' do
+        expect(response).to redirect_to(
+          managed_service_provider_question_path(
+            master_vendor: '',
+            hire_via_agency: 'no'
+          )
         )
       end
 
@@ -133,10 +192,17 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET managed_service_providers_outcome' do
+  describe 'GET master_vendor_managed_service_outcome' do
     it 'renders template' do
-      get :managed_service_providers_outcome
-      expect(response).to render_template('managed_service_providers_outcome')
+      get :master_vendor_managed_service_outcome
+      expect(response).to render_template('master_vendor_managed_service_outcome')
+    end
+  end
+
+  describe 'GET neutral_vendor_managed_service_outcome' do
+    it 'renders template' do
+      get :neutral_vendor_managed_service_outcome
+      expect(response).to render_template('neutral_vendor_managed_service_outcome')
     end
   end
 

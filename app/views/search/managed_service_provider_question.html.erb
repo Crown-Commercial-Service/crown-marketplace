@@ -1,0 +1,35 @@
+<%= link_to 'Back', @back_path, class: 'govuk-back-link' %>
+
+<p>Managed service providers</p>
+
+<p>There are 2 kinds of managed service provider to choose from.</p>
+
+<p><strong>A master vendor</strong> managed service supplies whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.</p>
+
+<p>You will then need to contact all the suppliers who meet your requirements and run a further competition.</p>
+
+<p><strong>A neutral vendor</strong> managed service only provides candidates from other suppliers - they have no candidates of their own.</p>
+
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_field_tag :hire_via_agency, params[:hire_via_agency] %>
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading">
+          What are you looking for?
+        </h1>
+      </legend>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :master_vendor, :yes, checked?(params[:master_vendor], 'yes'), class: 'govuk-radios__input' %>
+          <%= label_tag :master_vendor_yes, 'Master vendor managed service', class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :master_vendor, :no, checked?(params[:master_vendor], 'no'), class: 'govuk-radios__input' %>
+          <%= label_tag :master_vendor_no, 'Neutral vendor managed service', class: 'govuk-label govuk-radios__label' %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <%= submit_tag 'Continue', class: "govuk-button" %>
+<% end %>

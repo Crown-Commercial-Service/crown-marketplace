@@ -10,12 +10,35 @@ class SearchController < ApplicationController
         params.permit(:hire_via_agency)
       )
     elsif params[:hire_via_agency] == 'no'
-      redirect_to managed_service_providers_outcome_path(
+      redirect_to managed_service_provider_question_path(
         params.permit(:hire_via_agency)
       )
     else
       redirect_to hire_via_agency_question_path(
         params.permit(:hire_via_agency)
+      ), flash: {
+        error: 'Please choose an option'
+      }
+    end
+  end
+
+  def managed_service_provider_question
+    @back_path = hire_via_agency_question_path(params.permit(:hire_via_agency))
+    @form_path = managed_service_provider_answer_path
+  end
+
+  def managed_service_provider_answer
+    if params[:master_vendor] == 'yes'
+      redirect_to master_vendor_managed_service_outcome_path(
+        params.permit(:hire_via_agency, :master_vendor)
+      )
+    elsif params[:master_vendor] == 'no'
+      redirect_to neutral_vendor_managed_service_outcome_path(
+        params.permit(:hire_via_agency, :master_vendor)
+      )
+    else
+      redirect_to managed_service_provider_question_path(
+        params.permit(:hire_via_agency, :master_vendor)
       ), flash: {
         error: 'Please choose an option'
       }
@@ -54,8 +77,12 @@ class SearchController < ApplicationController
     redirect_to branches_path(params.permit(:postcode, :nominated_worker, :hire_via_agency))
   end
 
-  def managed_service_providers_outcome
-    @back_path = hire_via_agency_question_path(params.permit(:hire_via_agency))
+  def master_vendor_managed_service_outcome
+    @back_path = managed_service_provider_question_path(params.permit(:hire_via_agency, :master_vendor))
+  end
+
+  def neutral_vendor_managed_service_outcome
+    @back_path = managed_service_provider_question_path(params.permit(:hire_via_agency, :master_vendor))
   end
 
   def non_nominated_worker_outcome
