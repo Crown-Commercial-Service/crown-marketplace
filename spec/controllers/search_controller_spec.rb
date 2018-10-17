@@ -115,8 +115,15 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET nominated_worker_answer' do
+    let(:params) do
+      {
+        hire_via_agency: 'yes',
+        nominated_worker: nominated_worker
+      }
+    end
+
     before do
-      get :nominated_worker_answer, params: { nominated_worker: nominated_worker }
+      get :nominated_worker_answer, params: params
     end
 
     context 'when nominated worker is yes' do
@@ -124,7 +131,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to non nominated worker outcome' do
         expect(response).to redirect_to(
-          school_postcode_question_path(nominated_worker: 'yes')
+          school_postcode_question_path(params)
         )
       end
     end
@@ -134,7 +141,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to non nominated worker outcome' do
         expect(response).to redirect_to(
-          non_nominated_worker_outcome_path(nominated_worker: 'no')
+          non_nominated_worker_outcome_path(params)
         )
       end
     end
@@ -144,7 +151,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to nominated worker question' do
         expect(response).to redirect_to(
-          nominated_worker_question_path(nominated_worker: '')
+          nominated_worker_question_path(params)
         )
       end
 
@@ -158,7 +165,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to nominated worker question' do
         expect(response).to redirect_to(
-          nominated_worker_question_path(nominated_worker: 'blahblah')
+          nominated_worker_question_path(params)
         )
       end
 
@@ -173,22 +180,37 @@ RSpec.describe SearchController, type: :controller do
       get :school_postcode_question
       expect(response).to render_template('school_postcode_question')
     end
+
+    it 'sets back_path to nominated worker question including params' do
+      params = {
+        hire_via_agency: 'yes',
+        nominated_worker: 'yes'
+      }
+      get :school_postcode_question, params: params
+      expect(assigns(:back_path)).to eq(nominated_worker_question_path(params))
+    end
+
+    it 'sets form_path to school postcode answer path' do
+      params = {
+        hire_via_agency: 'yes',
+        nominated_worker: 'yes'
+      }
+      get :school_postcode_question, params: params
+      expect(assigns(:form_path)).to eq(school_postcode_answer_path)
+    end
   end
 
   describe 'GET school_postcode_answer' do
     let(:postcode) { Faker::Address.unique.postcode }
 
     it 'redirects to branches with postcode and nominated_worker' do
-      get :school_postcode_answer, params: {
-        postcode: postcode,
-        nominated_worker: 'yes'
+      params = {
+        hire_via_agency: 'yes',
+        nominated_worker: 'no',
+        postcode: 'postcode'
       }
-      expect(response).to redirect_to(
-        branches_path(
-          postcode: postcode,
-          nominated_worker: 'yes'
-        )
-      )
+      get :school_postcode_answer, params: params
+      expect(response).to redirect_to(branches_path(params))
     end
   end
 
