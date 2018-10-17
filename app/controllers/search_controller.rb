@@ -6,13 +6,9 @@ class SearchController < ApplicationController
 
   def hire_via_agency_answer
     if params[:hire_via_agency] == 'yes'
-      redirect_to nominated_worker_question_path(
-        hire_via_agency_params
-      )
+      redirect_to nominated_worker_question_path(hire_via_agency_params)
     elsif params[:hire_via_agency] == 'no'
-      redirect_to managed_service_provider_question_path(
-        hire_via_agency_params
-      )
+      redirect_to managed_service_provider_question_path(hire_via_agency_params)
     else
       redirect_to hire_via_agency_question_path(
         hire_via_agency_params
@@ -29,13 +25,9 @@ class SearchController < ApplicationController
 
   def managed_service_provider_answer
     if params[:master_vendor] == 'yes'
-      redirect_to master_vendor_managed_service_outcome_path(
-        managed_service_provider_params
-      )
+      redirect_to master_vendor_managed_service_outcome_path(managed_service_provider_params)
     elsif params[:master_vendor] == 'no'
-      redirect_to neutral_vendor_managed_service_outcome_path(
-        managed_service_provider_params
-      )
+      redirect_to neutral_vendor_managed_service_outcome_path(managed_service_provider_params)
     else
       redirect_to managed_service_provider_question_path(
         managed_service_provider_params
@@ -52,13 +44,9 @@ class SearchController < ApplicationController
 
   def nominated_worker_answer
     if params[:nominated_worker] == 'yes'
-      redirect_to school_postcode_question_path(
-        nominated_worker_params
-      )
+      redirect_to school_postcode_question_path(nominated_worker_params)
     elsif params[:nominated_worker] == 'no'
-      redirect_to non_nominated_worker_outcome_path(
-        nominated_worker_params
-      )
+      redirect_to non_nominated_worker_outcome_path(nominated_worker_params)
     else
       redirect_to nominated_worker_question_path(
         nominated_worker_params
