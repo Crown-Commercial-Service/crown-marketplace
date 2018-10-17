@@ -53,15 +53,15 @@ class SearchController < ApplicationController
   def nominated_worker_answer
     if params[:nominated_worker] == 'yes'
       redirect_to school_postcode_question_path(
-        params.permit(:nominated_worker, :hire_via_agency)
+        nominated_worker_params
       )
     elsif params[:nominated_worker] == 'no'
       redirect_to non_nominated_worker_outcome_path(
-        params.permit(:nominated_worker, :hire_via_agency)
+        nominated_worker_params
       )
     else
       redirect_to nominated_worker_question_path(
-        params.permit(:nominated_worker, :hire_via_agency)
+        nominated_worker_params
       ), flash: {
         error: 'Please choose an option'
       }
@@ -69,7 +69,7 @@ class SearchController < ApplicationController
   end
 
   def school_postcode_question
-    @back_path = nominated_worker_question_path(params.permit(:nominated_worker, :hire_via_agency))
+    @back_path = nominated_worker_question_path(nominated_worker_params)
     @form_path = school_postcode_answer_path
   end
 
@@ -86,7 +86,7 @@ class SearchController < ApplicationController
   end
 
   def non_nominated_worker_outcome
-    @back_path = nominated_worker_question_path(params.permit(:nominated_worker, :hire_via_agency))
+    @back_path = nominated_worker_question_path(nominated_worker_params)
   end
 
   private
@@ -97,5 +97,9 @@ class SearchController < ApplicationController
 
   def managed_service_provider_params
     params.permit(:hire_via_agency, :master_vendor)
+  end
+
+  def nominated_worker_params
+    params.permit(:hire_via_agency, :nominated_worker)
   end
 end
