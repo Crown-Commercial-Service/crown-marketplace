@@ -19,28 +19,25 @@ class Spreadsheet
     def style(workbook, sheet); end
   end
 
-  class Shortlist
+  class Shortlist < DataDownload
     def sheet_name
       'Supplier shortlist'
     end
 
     def headers
-      ['Supplier name', 'Branch name', 'Contact name',
-       'Contact email', 'Telephone number', 'Rate',
-       'Daily quote',
-       'Costs of the worker', 'Supplier fee']
+      extra_headers =
+        ['Mark-up', 'Daily quote', 'Costs of the worker', 'Supplier fee']
+      super + extra_headers
     end
 
-    def row(branch, row_num)
-      [branch.supplier_name,
-       branch.name,
-       branch.contact_name,
-       branch.contact_email,
-       branch.telephone_number,
-       branch.rate,
-       '',
-       "=G#{row_num}/(1+F#{row_num})",
-       "=G#{row_num}-H#{row_num}"]
+    def row(branch, row)
+      extra_fields =
+        [branch.rate, '', formula(row, 'G#/(1+F#)'), formula(row, 'G#-H#')]
+      super + extra_fields
+    end
+
+    def formula(row_num, formula)
+      "=#{formula.gsub('#', row_num.to_s)}"
     end
 
     def style(workbook, sheet)
