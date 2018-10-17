@@ -6,17 +6,16 @@ class BranchesController < ApplicationController
 
     if params[:postcode].nil?
       @branches = Branch.includes(:supplier).all
-      return
+    else
+      @location = Location.new(params[:postcode])
+
+      unless @location.valid?
+        display_error(@location.error)
+        return
+      end
+
+      @branches = Branch.search(@location.point)
     end
-
-    @location = Location.new(params[:postcode])
-
-    unless @location.valid?
-      display_error(@location.error)
-      return
-    end
-
-    @branches = Branch.search(@location.point)
 
     respond_to do |format|
       format.html
