@@ -10,6 +10,7 @@ AllCops:
         - 'db/seeds.rb'
         - 'bin/**/*'
         - 'vendor/**/*'
+        - 'tmp/**/*'
 
 Rails:
     Enabled: true
