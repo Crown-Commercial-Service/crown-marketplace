@@ -10,7 +10,7 @@
   <div class="govuk-grid-column-one-quarter">
     <p class="govuk-body">
       <%= branch.contact_name %><br />
-      <%= branch.telephone_number %><br />
+      <%= link_to branch.telephone_number, tel_scheme_url(branch.telephone_number) %><br />
       <%= mail_to(branch.contact_email) %>
     </p>
   </div>
