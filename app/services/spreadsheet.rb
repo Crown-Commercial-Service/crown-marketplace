@@ -17,9 +17,9 @@ class Spreadsheet
     end
   end
 
-  def initialize(branches)
+  def initialize(branches, format = DataDownload.new)
     @branches = branches
-    @format = DataDownload.new
+    @format = format
   end
 
   def spreadsheet(name)
