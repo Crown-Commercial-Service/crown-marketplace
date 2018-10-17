@@ -51,6 +51,7 @@ class Upload
     rates.each do |rate|
       supplier.rates.create!(
         job_type: rate['job_type'],
+        term: rate['term'],
         mark_up: rate['fee'].to_f
       )
     end

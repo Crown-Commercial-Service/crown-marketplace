@@ -196,6 +196,7 @@ RSpec.describe Upload, type: :model do
             {
               'job_type' => 'qt',
               'line_no' => 3,
+              'term' => 'one_week',
               'fee' => 0.40
             }
           ]
@@ -232,6 +233,7 @@ RSpec.describe Upload, type: :model do
           expect(supplier.rates).to include(
             an_object_having_attributes(
               job_type: 'qt',
+              term: 'one_week',
               mark_up: a_value_within(1e-6).of(0.4)
             )
           )
