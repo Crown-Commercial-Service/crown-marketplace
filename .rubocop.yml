@@ -77,6 +77,10 @@ Migration/RequireUUIDPrimaryKeys:
     Include:
         - 'db/migrate/*.rb'
 
+Migration/RequireLimitOnString:
+    Include:
+        - 'db/migrate/*.rb'
+
 RSpec/DescribeClass:
     Exclude:
         - 'spec/models/db_seeds_spec.rb'
