@@ -8,6 +8,36 @@ div .markup {
     text-align: right;
 }
 
+a.file-download {
+  display: inline-block;
+  position: relative;
+  min-height: 33px;
+  padding-left: 50px;
+}
+
+a.file-download:before {
+    position: absolute;
+    left: 0px;
+    top: -6px;
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    background: #777777 image-url('corner-curl.png') 100% -1px no-repeat;
+    color: #FFF;
+    background-size: 9px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 2.45;
+    text-transform: uppercase;
+    font-weight: 600;
+    content: "";
+}
+
+a.file-download[href*='format=xlsx']:before {
+    background-color: #007831;
+    content: ".XLSX";
+}
+
 @media print {
   div.branch {
     page-break-inside: avoid;

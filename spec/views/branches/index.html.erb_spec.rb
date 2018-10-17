@@ -51,7 +51,7 @@ RSpec.describe 'branches/index.html.erb' do
   end
 
   it 'has a link to download a spreadsheet' do
-    expect(rendered).to have_link('download as a spreadsheet')
+    expect(rendered).to have_link('Download shortlist of suppliers')
   end
 
   context 'when there are no branches' do
