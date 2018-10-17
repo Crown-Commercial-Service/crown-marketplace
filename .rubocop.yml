@@ -73,6 +73,10 @@ Metrics/BlockLength:
     Exclude:
         - 'spec/**/*'
 
+Migration/RequireUUIDPrimaryKeys:
+    Include:
+        - 'db/migrate/*.rb'
+
 RSpec/DescribeClass:
     Exclude:
         - 'spec/models/db_seeds_spec.rb'
