@@ -2,9 +2,12 @@ require 'rails_helper'
 
 RSpec.describe BranchesController, type: :controller do
   describe 'GET index' do
+    let(:first_branch) { build(:branch) }
+    let(:second_branch) { build(:branch) }
+    let(:branches) { [first_branch, second_branch] }
+
     context 'with a valid postcode' do
       let(:postcode) { 'W1A 1AA' }
-      let(:branches) { %i[first_branch second_branch] }
       let(:request_params) do
         { postcode: postcode,
           nominated_worker: 'yes',
@@ -24,8 +27,12 @@ RSpec.describe BranchesController, type: :controller do
         expect(assigns(:back_path)).to eq(school_postcode_question_path(request_params))
       end
 
-      it 'assigns branches to @branches' do
-        expect(assigns(:branches)).to eq(branches)
+      it 'assigns BranchSearchResults to @branches' do
+        expect(assigns(:branches).map(&:class).uniq).to eq([BranchSearchResult])
+      end
+
+      it 'expects branches to be assigned to @branches' do
+        expect(assigns(:branches).map(&:name)).to eq([first_branch.name, second_branch.name])
       end
 
       it 'responds to html' do
@@ -42,16 +49,19 @@ RSpec.describe BranchesController, type: :controller do
     end
 
     context 'when postcode is missing' do
-      let(:branches) { %i[first_branch second_branch] }
-
       before do
         allow(Branch).to receive(:all).and_return(branches)
         allow(Branch).to receive(:includes).and_return(Branch)
       end
 
-      it 'assigns all branches to @branches' do
+      it 'assigns to @branches' do
         get :index
-        expect(assigns(:branches)).to eq(branches)
+        expect(assigns(:branches).map(&:class).uniq).to eq([BranchSearchResult])
+      end
+
+      it 'expects branches to be assigned to @branches' do
+        get :index
+        expect(assigns(:branches).map(&:name)).to eq([first_branch.name, second_branch.name])
       end
 
       it 'renders the index template' do

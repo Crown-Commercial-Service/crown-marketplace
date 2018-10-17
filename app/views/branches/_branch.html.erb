@@ -1,9 +1,9 @@
 <div class="govuk-grid-row branch">
-  <h2 class="govuk-heading-l"><%= branch.supplier.name %></h2>
+  <h2 class="govuk-heading-l"><%= branch.supplier_name %></h2>
   <div class="govuk-grid-column-one-quarter">
     <ul class="govuk-list">
-      <% if display_name_for_branch(branch).present? %>
-        <li><b>Branch:</b> <%= display_name_for_branch(branch) %></li>
+      <% if branch.name.present? %>
+        <li><b>Branch:</b> <%= branch.name %></li>
       <% end %>
     </ul>
   </div>
@@ -15,17 +15,17 @@
     </p>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <% if params[:nominated_worker] %>
+    <% if branch.rate %>
       <p class="govuk-body govuk-!-font-size-48 markup-rate">
-        <%= number_to_percentage(branch.supplier.nominated_worker_rate * 100, precision: 1) %>
+        <%= number_to_percentage(branch.rate * 100, precision: 1) %>
       </p>
       <p class="govuk-body-s markup-rate-units">Mark-up</p>
     <% end %>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <% if @location %>
+    <% if branch.distance %>
       <p class="govuk-body govuk-!-font-size-48 distance">
-        <%= number_with_precision(metres_to_miles(@location.point.distance(branch.location)), precision: 1) %>
+        <%= number_with_precision(metres_to_miles(branch.distance), precision: 1) %>
       </p>
       <p class="govuk-body-s distance-units">miles</p>
     <% end %>
