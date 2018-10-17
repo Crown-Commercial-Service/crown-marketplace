@@ -30,7 +30,7 @@ ENV CCS_VERSION=$CCS_VERSION
 ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata
 
 # Update and install base packages
-RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs
+RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs git
 
 # Install yarn to manage Node.js dependencies
 RUN npm install yarn -g
