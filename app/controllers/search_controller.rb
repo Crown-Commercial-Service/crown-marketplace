@@ -62,7 +62,7 @@ class SearchController < ApplicationController
   end
 
   def school_postcode_answer
-    redirect_to branches_path(params.permit(:postcode, :nominated_worker, :hire_via_agency))
+    redirect_to branches_path(school_postcode_params)
   end
 
   def master_vendor_managed_service_outcome
@@ -89,5 +89,9 @@ class SearchController < ApplicationController
 
   def nominated_worker_params
     params.permit(:hire_via_agency, :nominated_worker)
+  end
+
+  def school_postcode_params
+    params.permit(:hire_via_agency, :nominated_worker, :postcode)
   end
 end
