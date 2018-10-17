@@ -117,11 +117,11 @@ RSpec.feature 'Nominated workers', type: :feature do
 
     expect(cheaper_branch.find('h2').text).to eq('westminster')
     expect(cheaper_branch).to have_css('.distance', text: '1.1')
-    expect(cheaper_branch).to have_css('.markup_rate', text: '30.0%')
+    expect(cheaper_branch).to have_css('.markup-rate', text: '30.0%')
 
     expect(costlier_branch.find('h2').text).to eq('holborn')
     expect(costlier_branch).to have_css('.distance', text: '0.0')
-    expect(costlier_branch).to have_css('.markup_rate', text: '35.0%')
+    expect(costlier_branch).to have_css('.markup-rate', text: '35.0%')
 
     expect(page).not_to have_text('liverpool')
   end
