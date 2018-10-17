@@ -225,13 +225,14 @@ RSpec.describe Upload, type: :model do
           )
         end
 
-        it 'does not add other rates to supplier' do
+        it 'imports non-nominated rate data' do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          expect(supplier.rates).not_to include(
+          expect(supplier.rates).to include(
             an_object_having_attributes(
-              job_type: 'qt'
+              job_type: 'qt',
+              mark_up: a_value_within(1e-6).of(0.4)
             )
           )
         end
