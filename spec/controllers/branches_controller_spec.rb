@@ -59,6 +59,14 @@ RSpec.describe BranchesController, type: :controller do
         get :index
         expect(response.content_type).to eq 'text/html'
       end
+
+      it 'responds to requests for spreadsheets' do
+        allow(Spreadsheet).to receive(:new).and_return(instance_double('Spreadsheet', to_xlsx: 'spreadsheet-data'))
+
+        get :index, params: { format: 'xlsx' }
+
+        expect(response.content_type).to eq 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      end
     end
 
     context 'when postcode parsing fails' do
