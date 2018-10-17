@@ -50,4 +50,15 @@ RSpec.describe Supplier, type: :model do
       expect(supplier.nominated_worker_rate).to be_nil
     end
   end
+
+  describe '#fixed_term_rate' do
+    it 'returns rate if available' do
+      create(:rate, supplier: supplier, job_type: 'fixed_term', mark_up: 0.1)
+      expect(supplier.fixed_term_rate).to eq(0.1)
+    end
+
+    it 'returns nil if unavailable' do
+      expect(supplier.fixed_term_rate).to be_nil
+    end
+  end
 end
