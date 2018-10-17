@@ -6,6 +6,7 @@ cache:
     - node_modules
     - public/assets
     - /home/travis/.rvm/gems
+    - /home/travis/.cache/rubocop_cache
 env:
   - RAILS_ENV=test
 services:
