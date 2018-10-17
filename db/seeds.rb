@@ -22,6 +22,7 @@ holborn.rates.create!(
 westminster = Supplier.create!(name: 'Westminster')
 westminster.branches.create!(
   postcode: 'W1A 1AA',
+  name: 'Head office',
   location: Geocoding.point(latitude: 51.5185614, longitude: -0.1437991),
   contact_name: 'Hefina Neophytos',
   contact_email: 'hefina.neophytos@example.com',
@@ -35,6 +36,7 @@ westminster.rates.create!(
 liverpool = Supplier.create!(name: 'Liverpool')
 liverpool.branches.create!(
   postcode: 'L3 9PP',
+  name: 'North-West',
   location: Geocoding.point(latitude: 53.409189, longitude: -2.9946932),
   contact_name: 'Rona Severinus',
   contact_email: 'rona.severinus@example.com',
