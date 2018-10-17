@@ -14,7 +14,9 @@ class SearchController < ApplicationController
         params.permit(:hire_via_agency)
       )
     else
-      redirect_to hire_via_agency_question_path, flash: {
+      redirect_to hire_via_agency_question_path(
+        params.permit(:hire_via_agency)
+      ), flash: {
         error: 'Please choose an option'
       }
     end
@@ -35,7 +37,9 @@ class SearchController < ApplicationController
         params.permit(:nominated_worker, :hire_via_agency)
       )
     else
-      redirect_to nominated_worker_question_path, flash: {
+      redirect_to nominated_worker_question_path(
+        params.permit(:nominated_worker, :hire_via_agency)
+      ), flash: {
         error: 'Please choose an option'
       }
     end

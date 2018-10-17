@@ -37,7 +37,9 @@ RSpec.describe SearchController, type: :controller do
       let(:hire_via_agency) { '' }
 
       it 'redirects to hire via agency question' do
-        expect(response).to redirect_to(hire_via_agency_question_path)
+        expect(response).to redirect_to(
+          hire_via_agency_question_path(hire_via_agency: '')
+        )
       end
 
       it 'sets a flash error message' do
@@ -82,7 +84,9 @@ RSpec.describe SearchController, type: :controller do
       let(:nominated_worker) { '' }
 
       it 'redirects to nominated worker question' do
-        expect(response).to redirect_to(nominated_worker_question_path)
+        expect(response).to redirect_to(
+          nominated_worker_question_path(nominated_worker: '')
+        )
       end
 
       it 'sets a flash error message' do
@@ -94,7 +98,9 @@ RSpec.describe SearchController, type: :controller do
       let(:nominated_worker) { 'blahblah' }
 
       it 'redirects to nominated worker question' do
-        expect(response).to redirect_to(nominated_worker_question_path)
+        expect(response).to redirect_to(
+          nominated_worker_question_path(nominated_worker: 'blahblah')
+        )
       end
 
       it 'sets a flash error message' do
