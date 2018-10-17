@@ -20,6 +20,10 @@ RSpec.describe BranchesController, type: :controller do
         get :index, params: request_params
       end
 
+      it 'assigns back_path to postcode search path' do
+        expect(assigns(:back_path)).to eq(school_postcode_question_path(request_params))
+      end
+
       it 'assigns branches to @branches' do
         expect(assigns(:branches)).to eq(branches)
       end
