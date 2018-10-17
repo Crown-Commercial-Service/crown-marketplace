@@ -10,6 +10,11 @@ Rails.application.routes.draw do
       as: 'hire_via_agency_question'
   get '/hire_via_agency_answer',
       to: 'search#hire_via_agency_answer'
+  get '/managed-service-provider',
+      to: 'search#managed_service_provider_question',
+      as: 'managed_service_provider_question'
+  get '/managed_service_provider_answer',
+      to: 'search#managed_service_provider_answer'
   get '/nominated-worker',
       to: 'search#nominated_worker_question',
       as: 'nominated_worker_question'
@@ -20,9 +25,12 @@ Rails.application.routes.draw do
       as: 'school_postcode_question'
   get '/school_postcode_answer',
       to: 'search#school_postcode_answer'
-  get '/managed-service-providers',
-      to: 'search#managed_service_providers_outcome',
-      as: 'managed_service_providers_outcome'
+  get '/master-vendor-managed-service',
+      to: 'search#master_vendor_managed_service_outcome',
+      as: 'master_vendor_managed_service_outcome'
+  get '/neutral-vendor-managed-service',
+      to: 'search#neutral_vendor_managed_service_outcome',
+      as: 'neutral_vendor_managed_service_outcome'
   get '/non-nominated-worker',
       to: 'search#non_nominated_worker_outcome',
       as: 'non_nominated_worker_outcome'
