@@ -1,6 +1,25 @@
 class Spreadsheet
+  class DataDownload
+    def sheet_name
+      'Suppliers'
+    end
+
+    def headers
+      ['Supplier name', 'Branch name', 'Contact name', 'Contact email', 'Telephone number']
+    end
+
+    def row(branch)
+      [branch.supplier_name,
+       branch.name,
+       branch.contact_name,
+       branch.contact_email,
+       branch.telephone_number]
+    end
+  end
+
   def initialize(branches)
     @branches = branches
+    @format = DataDownload.new
   end
 
   def spreadsheet(name)
@@ -13,14 +32,10 @@ class Spreadsheet
   end
 
   def to_xlsx
-    spreadsheet('Suppliers') do |sheet|
-      sheet.add_row ['Supplier name', 'Branch name', 'Contact name', 'Contact email', 'Telephone number']
+    spreadsheet(@format.sheet_name) do |sheet|
+      sheet.add_row @format.headers
       @branches.each do |branch|
-        sheet.add_row [branch.supplier_name,
-                       branch.name,
-                       branch.contact_name,
-                       branch.contact_email,
-                       branch.telephone_number]
+        sheet.add_row @format.row(branch)
       end
     end
   end
