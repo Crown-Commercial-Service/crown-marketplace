@@ -17,15 +17,18 @@ div .markup {
     font-size: 0.8rem;
   }
 
-  div.branch p, div.branch li, div.branch .distance {
+  div.branch p,
+  div.branch li,
+  div.branch .distance,
+  div.branch .markup-rate {
     font-size: 0.8rem !important;
   }
 
-  div.branch p.distance {
+  div.branch p.distance,
+  div.branch p.distance-units,
+  div.branch p.markup-rate-units,
+  div.branch p.markup-rate {
     display: inline;
   }
 
-  div.branch p.distance-units {
-    display: inline;
-  }
 }
