@@ -14,9 +14,7 @@
           </p>
         </div>
         <% if @branches.any? %>
-          <% @branches.each do |branch| %>
-            <%= render branch %>
-          <% end %>
+          <%= render partial: 'branch', collection: @branches %>
         <% end %>
       </div>
     </div>

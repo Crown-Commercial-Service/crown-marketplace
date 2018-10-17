@@ -8,11 +8,9 @@ RSpec.describe 'branches/_branch.html.erb' do
   let(:contact_name) { Faker::Name.unique.name }
   let(:contact_email) { Faker::Internet.unique.email }
   let(:branch) do
-    build(
-      :branch,
-      supplier: supplier,
+    BranchSearchResult.new(
+      supplier_name: supplier.name,
       name: branch_name,
-      town: branch_town,
       telephone_number: telephone_number,
       contact_name: contact_name,
       contact_email: contact_email
@@ -20,7 +18,7 @@ RSpec.describe 'branches/_branch.html.erb' do
   end
 
   before do
-    render partial: branch
+    render 'branches/branch', branch: branch
   end
 
   it 'displays branch name' do
@@ -41,15 +39,6 @@ RSpec.describe 'branches/_branch.html.erb' do
 
   context 'when branch name is blank' do
     let(:branch_name) { nil }
-
-    it 'displays town as branch name' do
-      expect(rendered).to have_content("Branch: #{branch_town}")
-    end
-  end
-
-  context 'when branch name and town are blank' do
-    let(:branch_name) { nil }
-    let(:branch_town) { nil }
 
     it 'does not display branch or its label' do
       expect(rendered).not_to have_content('Branch:')

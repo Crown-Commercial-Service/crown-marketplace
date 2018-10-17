@@ -16,7 +16,7 @@ class Spreadsheet
     spreadsheet('Suppliers') do |sheet|
       sheet.add_row ['Supplier name', 'Branch name', 'Contact name', 'Contact email', 'Telephone number']
       @branches.each do |branch|
-        sheet.add_row [branch.supplier.name,
+        sheet.add_row [branch.supplier_name,
                        branch.name,
                        branch.contact_name,
                        branch.contact_email,
