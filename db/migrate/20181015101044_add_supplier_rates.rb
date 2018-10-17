@@ -1,3 +1,4 @@
+# rubocop:disable Migration/RequireLimitOnString
 class AddSupplierRates < ActiveRecord::Migration[5.2]
   def change
     create_table :rates, id: :uuid do |t|
@@ -8,3 +9,4 @@ class AddSupplierRates < ActiveRecord::Migration[5.2]
     end
   end
 end
+# rubocop:enable Migration/RequireLimitOnString
