@@ -205,24 +205,35 @@ RSpec.describe Upload, type: :model do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          rate = supplier.rates.find_by(job_type: 'nominated')
-          expect(rate.mark_up).to eq(0.35)
+          expect(supplier.rates).to include(
+            an_object_having_attributes(
+              job_type: 'nominated',
+              mark_up: a_value_within(1e-6).of(0.35)
+            )
+          )
         end
 
         it 'adds fixed term rates to supplier' do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          rate = supplier.rates.find_by(job_type: 'fixed_term')
-          expect(rate.mark_up).to eq(0.36)
+          expect(supplier.rates).to include(
+            an_object_having_attributes(
+              job_type: 'fixed_term',
+              mark_up: a_value_within(1e-6).of(0.36)
+            )
+          )
         end
 
         it 'does not add other rates to supplier' do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          rate = supplier.rates.find_by(job_type: 'qt')
-          expect(rate).to be_nil
+          expect(supplier.rates).not_to include(
+            an_object_having_attributes(
+              job_type: 'qt'
+            )
+          )
         end
       end
     end
