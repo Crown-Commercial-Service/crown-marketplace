@@ -18,6 +18,7 @@ RSpec.describe 'branches/index.html.erb' do
 
   let(:branches) { [first_branch, second_branch, third_branch] }
   let(:location) { nil }
+  let(:link_to_calculator) { true }
 
   before do
     assign(:branches, branches)
@@ -32,6 +33,7 @@ RSpec.describe 'branches/index.html.erb' do
     end
     allow(first_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
     allow(second_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
+    allow(view).to receive(:link_to_calculator?).and_return(link_to_calculator)
 
     render
   end
@@ -57,6 +59,18 @@ RSpec.describe 'branches/index.html.erb' do
 
   it 'has a link to download a spreadsheet' do
     expect(rendered).to have_link('Download shortlist of suppliers')
+  end
+
+  it 'has a link to download the calculator' do
+    expect(rendered).to have_link('Download shortlist (with markup calculator)')
+  end
+
+  context 'when shortlisting for teachers on school payroll' do
+    let(:link_to_calculator) { false }
+
+    it 'does not have a link to download the calculator' do
+      expect(rendered).not_to have_link('Download shortlist (with markup calculator)')
+    end
   end
 
   context 'when displaying branches near the buyers location' do
