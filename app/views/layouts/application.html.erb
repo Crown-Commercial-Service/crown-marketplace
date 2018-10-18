@@ -54,7 +54,11 @@
         </strong>
         <span class="govuk-phase-banner__text">
           This is a new service – your
-          <%= feedback_mail_to('feedback', class: 'govuk-link') %>
+          <% if Marketplace.feedback_email_address.present? %>
+            <%= mail_to(Marketplace.feedback_email_address, 'feedback', class: 'govuk-link') %>
+          <% else %>
+            feedback
+          <% end %>
           will help us to improve it.
         </span>
       </p>
@@ -70,6 +74,18 @@
   </div>
 
   <footer class="govuk-footer" role="contentinfo">
+    <% if Marketplace.feedback_email_address.present? %>
+      <div class="govuk-footer__container govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            Having problems using this service? Email
+            <%= mail_to(Marketplace.feedback_email_address, nil, class: 'govuk-link') %>
+            for support.
+          </div>
+        </div>
+      </div>
+    <% end %>
+
     <div class="govuk-footer__container govuk-width-container">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-third">

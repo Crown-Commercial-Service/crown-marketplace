@@ -33,6 +33,8 @@ To create the database:
 * `GOOGLE_GEOCODING_API_KEY`
   * You can obtain an API key for development [from Google][geocoding-key]
   * Add it to your `.env.local` file which is ignored by git
+* `FEEDBACK_EMAIL_ADDRESS` (optional)
+  * Used to generate feedback links in beta banner & footer
 
 #### Production environments
 

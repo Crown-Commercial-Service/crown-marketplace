@@ -1,1 +1,1 @@
-Marketplace.feedback_email_address = ENV.fetch('FEEDBACK_EMAIL_ADDRESS', '#')
+Marketplace.feedback_email_address = ENV['FEEDBACK_EMAIL_ADDRESS']
