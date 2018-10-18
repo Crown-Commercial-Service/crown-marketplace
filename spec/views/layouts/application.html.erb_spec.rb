@@ -28,10 +28,10 @@ RSpec.describe 'layouts/application.html.erb' do
         expect(rendered).to have_css(".govuk-phase-banner #{mail_to_link_selector}")
       end
 
-      it 'displays link to feedback email address in footer' do
+      it 'displays link to feedback email address above footer' do
         render
 
-        expect(rendered).to have_css(".govuk-footer #{mail_to_link_selector}")
+        expect(rendered).to have_css(".footer-feedback #{mail_to_link_selector}")
       end
     end
 
