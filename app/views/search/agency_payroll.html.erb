@@ -1,1 +1,31 @@
-<p>This system only allows you to search for nominated workers and workers on school payroll at the moment</p>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_field_tag :nominated_worker, params[:nominated_worker] %>
+  <%= hidden_field_tag :hire_via_agency, params[:hire_via_agency] %>
+  <%= hidden_field_tag :school_payroll, params[:school_payroll] %>
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="postcode">
+      What is your school's postcode?
+    </label>
+    <%= text_field_tag :postcode, params[:postcode], class: 'govuk-input' %>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="job_type">
+      What type of worker do you need?
+    </label>
+    <select class="govuk-select" id="job_type" name="job_type">
+      <%= options_from_collection_for_select(JobType.all, :code, :description, params[:job_type]) %>
+    </select>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="term">
+      How long do you need the worker for?
+    </label>
+    <select class="govuk-select" id="term" name="term">
+      <%= options_from_collection_for_select(Term.all, :code, :description, params[:term]) %>
+    </select>
+  </div>
+
+  <%= submit_tag 'Continue', class: "govuk-button" %>
+<% end %>
