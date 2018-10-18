@@ -26,6 +26,14 @@ $ccs_footer_fg: govuk-colour("white");
   height: 90px;
 }
 
+.govuk-template {
+  background-color: govuk-colour("dark-grey");
+}
+
+.footer-feedback {
+  background-color: govuk-colour("grey-3");
+}
+
 @media (min-width: 641px) {
 
   .govuk-footer__logotype svg {
