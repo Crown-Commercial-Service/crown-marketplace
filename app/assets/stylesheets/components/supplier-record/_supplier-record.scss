@@ -1,0 +1,80 @@
+.supplier-record {
+    padding-bottom: 20px;
+}
+
+.supplier-record__supplier-name {
+    margin-bottom: 5px;
+}
+
+.supplier-record__branch {
+  margin-bottom: 0;
+}
+
+.supplier-record__branch-name {
+  font-weight: $govuk-font-weight-regular;
+}
+
+.supplier-record__header-group {
+    margin-bottom: 20px
+}
+
+.supplier-record__markup-rate,
+.supplier-record__distance {
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+a.file-download {
+  display: inline-block;
+  position: relative;
+  min-height: 33px;
+  padding-left: 50px;
+}
+
+a.file-download:before {
+    position: absolute;
+    left: 0px;
+    top: -6px;
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    background: #777777 image-url('corner-curl.png') 100% -1px no-repeat;
+    color: #FFF;
+    background-size: 9px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 2.45;
+    text-transform: uppercase;
+    font-weight: 600;
+    content: "";
+}
+
+a.file-download[href*='format=xlsx']:before {
+    background-color: #007831;
+    content: ".XLSX";
+}
+
+@media print {
+  .supplier-record {
+    page-break-inside: avoid;
+  }
+
+  .supplier-record .supplier-record__supplier-name {
+    /*font-size: 0.8rem;*/
+  }
+
+  .supplier-record p,
+  .supplier-record li,
+  .supplier-record .supplier-record__distance,
+  .supplier-record .supplier-record__markup-rate {
+    /*font-size: 0.8rem !important;*/
+  }
+
+  .supplier-record__distance,
+  .supplier-record__distance-units,
+  .supplier-record__markup-rate-units,
+  .supplier-record__markup-rate {
+    display: inline;
+  }
+
+}
