@@ -30,4 +30,6 @@ module Marketplace
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
+
+  mattr_accessor :feedback_email_address
 end
