@@ -61,15 +61,6 @@ RSpec.describe 'branches/index.html.erb' do
     expect(rendered).to have_link('Download shortlist of suppliers')
   end
 
-  context 'when there are no branches' do
-    let(:branches) { [] }
-
-    it 'does not display empty list' do
-      page = Capybara.string(rendered)
-      expect(page).not_to have_css('ol')
-    end
-  end
-
   context 'when displaying branches near the buyers location' do
     let(:location) do
       instance_double('Location',
