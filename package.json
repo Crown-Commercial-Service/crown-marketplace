@@ -6,7 +6,8 @@
     "html5shiv": "^3.7.3"
   },
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "jest-puppeteer": "^3.4.0"
   },
   "scripts": {
     "test": "jest"
