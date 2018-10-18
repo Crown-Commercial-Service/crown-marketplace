@@ -73,19 +73,23 @@
     </main>
   </div>
 
-  <footer class="govuk-footer" role="contentinfo">
-    <% if Marketplace.feedback_email_address.present? %>
-      <div class="govuk-footer__container govuk-width-container">
+  <% if Marketplace.feedback_email_address.present? %>
+    <div class="footer-feedback govuk-!-padding-1">
+      <div class="govuk-width-container">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
-            Having problems using this service? Email
-            <%= mail_to(Marketplace.feedback_email_address, nil, class: 'govuk-link') %>
-            for support.
+            <p class="govuk-!-margin-bottom-0">
+              Having problems using this service? Email
+              <%= mail_to(Marketplace.feedback_email_address, nil, class: 'govuk-link') %>
+              for support.
+            </p>
           </div>
         </div>
       </div>
-    <% end %>
+    </div>
+  <% end %>
 
+  <footer class="govuk-footer" role="contentinfo">
     <div class="govuk-footer__container govuk-width-container">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-third">
