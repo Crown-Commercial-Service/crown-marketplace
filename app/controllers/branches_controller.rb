@@ -17,7 +17,10 @@ class BranchesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xlsx { render xlsx: Spreadsheet.new(@branches).to_xlsx, filename: 'branches' }
+      format.xlsx do
+        spreadsheet = Spreadsheet.new(@branches, with_calculations: params[:calculations].present?)
+        render xlsx: spreadsheet.to_xlsx, filename: 'branches'
+      end
     end
   end
 

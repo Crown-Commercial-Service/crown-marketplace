@@ -25,6 +25,7 @@
         </p>
         <p class="govuk-body">
           <%= link_to 'Download shortlist of suppliers', branches_path(safe_params.merge(format: :xlsx)), { class: 'file-download' } %>
+          <%= link_to 'Download shortlist (with markup calculator)', branches_path(safe_params.merge(format: :xlsx, calculations: 'yes')), { class: 'file-download' } %>
         </p>
       </div>
     </div>

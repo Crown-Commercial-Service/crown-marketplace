@@ -53,9 +53,9 @@ class Spreadsheet
     end
   end
 
-  def initialize(branches, format = DataDownload.new)
+  def initialize(branches, with_calculations: false)
     @branches = branches
-    @format = format
+    @format = with_calculations ? Shortlist.new : DataDownload.new
   end
 
   def spreadsheet(name)
