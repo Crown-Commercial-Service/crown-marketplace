@@ -5,9 +5,8 @@ RSpec.describe 'layouts/application.html.erb' do
     flash[:error] = 'error-message'
 
     render
-    page = Capybara.string(rendered)
 
-    expect(page).to have_text('error-message')
+    expect(rendered).to have_text('error-message')
   end
 
   describe 'feedback links' do

@@ -37,10 +37,8 @@ RSpec.describe 'branches/index.html.erb' do
   end
 
   it 'displays headings for suppliers for each branch' do
-    page = Capybara.string(rendered)
-
-    expect(page).to have_css('h2.govuk-heading-l', text: /First Supplier/, count: 2)
-    expect(page).to have_css('h2.govuk-heading-l', text: /Second Supplier/)
+    expect(rendered).to have_css('h2.govuk-heading-l', text: /First Supplier/, count: 2)
+    expect(rendered).to have_css('h2.govuk-heading-l', text: /Second Supplier/)
   end
 
   it 'displays list of all branches' do
