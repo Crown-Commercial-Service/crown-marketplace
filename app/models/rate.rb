@@ -1,4 +1,10 @@
 class Rate < ApplicationRecord
+  LOT_NUMBERS = {
+    1 => 'Direct provision',
+    2 => 'Master vendor',
+    3 => 'Neutral vendor'
+  }.freeze
+
   JOB_TYPES = {
     'qt' => 'Qualified Teacher - Non-SEN',
     'qt_sen' => 'Qualified Teacher - SEN',
@@ -14,9 +20,14 @@ class Rate < ApplicationRecord
 
   belongs_to :supplier
 
+  validates :lot_number, presence: true,
+                         uniqueness: { scope: %i[supplier term job_type] },
+                         inclusion: { in: LOT_NUMBERS.keys }
+
   validates :job_type, presence: true,
-                       uniqueness: { scope: %i[supplier term] },
+                       uniqueness: { scope: %i[supplier term lot_number] },
                        inclusion: { in: JOB_TYPES.keys }
+
   validates :mark_up, presence: true
 
   def self.nominated_worker
