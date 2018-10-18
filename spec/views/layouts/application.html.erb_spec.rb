@@ -10,10 +10,46 @@ RSpec.describe 'layouts/application.html.erb' do
     expect(page).to have_text('error-message')
   end
 
-  it 'displays link to feedback email address' do
-    render
+  describe 'feedback links' do
+    let(:mail_to_link_selector) do
+      %(a[href="mailto:#{feedback_email_address}"])
+    end
 
-    email = Marketplace.feedback_email_address
-    expect(rendered).to have_link(href: "mailto:#{email}")
+    before do
+      allow(Marketplace).to receive(:feedback_email_address)
+        .and_return(feedback_email_address)
+    end
+
+    context 'when feedback email address is present' do
+      let(:feedback_email_address) { 'feedback@example.com' }
+
+      it 'displays link to feedback email address in beta banner' do
+        render
+
+        expect(rendered).to have_css(".govuk-phase-banner #{mail_to_link_selector}")
+      end
+
+      it 'displays link to feedback email address in footer' do
+        render
+
+        expect(rendered).to have_css(".govuk-footer #{mail_to_link_selector}")
+      end
+    end
+
+    context 'when feedback email address is not present' do
+      let(:feedback_email_address) { nil }
+
+      it 'does not display link to feedback email address in beta banner' do
+        render
+
+        expect(rendered).not_to have_css(".govuk-phase-banner #{mail_to_link_selector}")
+      end
+
+      it 'does not display link to feedback email address in footer' do
+        render
+
+        expect(rendered).not_to have_css(".govuk-footer #{mail_to_link_selector}")
+      end
+    end
   end
 end
