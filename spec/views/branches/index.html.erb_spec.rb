@@ -22,7 +22,14 @@ RSpec.describe 'branches/index.html.erb' do
   before do
     assign(:branches, branches)
     assign(:location, location)
+    controller.singleton_class.class_eval do
+      protected
 
+      def safe_params
+        params.permit!
+      end
+      helper_method :safe_params
+    end
     allow(first_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
     allow(second_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
 

@@ -1,8 +1,6 @@
 class BranchesController < ApplicationController
   def index
-    @back_path = school_postcode_question_path(
-      params.permit(:postcode, :nominated_worker, :hire_via_agency, :school_payroll)
-    )
+    @back_path = school_postcode_question_path(safe_params)
 
     if params[:postcode].nil?
       @branches = all_branch_results
@@ -55,9 +53,12 @@ class BranchesController < ApplicationController
   end
 
   def display_error(message)
-    path = school_postcode_question_path(
-      params.permit(:postcode, :nominated_worker, :hire_via_agency)
-    )
+    path = school_postcode_question_path(safe_params)
     redirect_to path, flash: { error: message }
   end
+
+  def safe_params
+    params.permit(:postcode, :nominated_worker, :hire_via_agency, :school_payroll)
+  end
+  helper_method :safe_params
 end
