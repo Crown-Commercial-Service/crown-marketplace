@@ -170,5 +170,29 @@ RSpec.describe Branch, type: :model do
         expect(results).to eq([branch_of_cheaper_supplier, branch_of_costlier_supplier])
       end
     end
+
+    context 'when there are suppliers with different rates in different locations' do
+      let!(:branch_of_cheapest_supplier) do
+        supplier = create(:supplier)
+        create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.0)
+        create(:branch, name: 'cheapest', supplier: supplier, location: Geocoding.point(latitude: 0.2, longitude: 0.2))
+      end
+      let!(:branch_of_farthest_supplier) do
+        supplier = create(:supplier)
+        create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
+        create(:branch, name: 'farthest', supplier: supplier, location: Geocoding.point(latitude: 0.1, longitude: 0.1))
+      end
+      let!(:branch_of_closest_supplier) do
+        supplier = create(:supplier)
+        create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
+        create(:branch, name: 'closest', supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
+      end
+
+      it 'orders branches by mark up and then proximity in ascending order' do
+        results = Branch.search(Geocoding.point(latitude: 0, longitude: 0)).to_a
+        expected_order = [branch_of_cheapest_supplier, branch_of_closest_supplier, branch_of_farthest_supplier]
+        expect(results).to eq(expected_order)
+      end
+    end
   end
 end

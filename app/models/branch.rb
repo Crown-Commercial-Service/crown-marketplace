@@ -25,5 +25,6 @@ class Branch < ApplicationRecord
           .joins(supplier: [:rates])
           .merge(rates_clause)
           .order('rates.mark_up')
+          .order(Arel.sql("ST_Distance(location, '#{point}')"))
   end
 end
