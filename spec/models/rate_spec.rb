@@ -18,7 +18,7 @@ RSpec.describe Rate, type: :model do
   it 'is not valid if supplier has another rate for this job type and term' do
     rate.term = 'one_week'
     rate.save!
-    new_rate = build(:rate, supplier: rate.supplier, job_type: rate.job_type, term: 'one_week')
+    new_rate = build(:rate, supplier: rate.supplier, job_type: rate.job_type, term: rate.term)
     expect(new_rate).not_to be_valid
   end
 
