@@ -60,17 +60,17 @@ RSpec.feature 'Workers on school payroll', type: :feature do
 
     expect(page).not_to have_text('whitechapel'), 'suppliers without fixed term rates should not be displayed'
 
-    branches = page.all('.branch')
+    branches = page.all('.supplier-record')
     cheaper_branch = branches.first
     costlier_branch = branches.last
 
     expect(cheaper_branch.find('h2').text).to eq('westminster')
-    expect(cheaper_branch).to have_css('.distance', text: '1.1')
-    expect(cheaper_branch).to have_css('.markup-rate', text: '30.0%')
+    expect(cheaper_branch).to have_css('.supplier-record__distance', text: '1.1')
+    expect(cheaper_branch).to have_css('.supplier-record__markup-rate', text: '30.0%')
 
     expect(costlier_branch.find('h2').text).to eq('holborn')
-    expect(costlier_branch).to have_css('.distance', text: '0.0')
-    expect(costlier_branch).to have_css('.markup-rate', text: '35.0%')
+    expect(costlier_branch).to have_css('.supplier-record__distance', text: '0.0')
+    expect(costlier_branch).to have_css('.supplier-record__markup-rate', text: '35.0%')
 
     expect(page).not_to have_text('liverpool')
   end
