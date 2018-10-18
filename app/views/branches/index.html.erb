@@ -24,7 +24,7 @@
           <a href="javascript:window.print()" class="govuk-link">Print this page</a>
         </p>
         <p class="govuk-body">
-          <%= link_to 'Download shortlist of suppliers', branches_path(params.permit!.merge(format: :xlsx)), { class: 'file-download' } %>
+          <%= link_to 'Download shortlist of suppliers', branches_path(safe_params.merge(format: :xlsx)), { class: 'file-download' } %>
         </p>
       </div>
     </div>
