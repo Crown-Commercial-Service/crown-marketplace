@@ -55,4 +55,8 @@ class Rate < ApplicationRecord
   def self.neutral_vendor
     where(lot_number: 3)
   end
+
+  def self.rate_for(job_type:, term:)
+    where(job_type: job_type.code, term: term.rate_term)
+  end
 end
