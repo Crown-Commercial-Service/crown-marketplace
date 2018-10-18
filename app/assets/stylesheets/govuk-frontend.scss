@@ -11,3 +11,7 @@
 @import "components/all";
 @import "govuk-frontend/utilities/all";
 @import "govuk-frontend/overrides/all";
+
+.govuk-template {
+  background-color: govuk-colour("dark-grey");
+}
