@@ -91,4 +91,18 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+
+  config.around(:example, type: :feature) do |example|
+    stub_auth
+    example.run
+    unstub_auth
+  end
+
+  config.before(:example, type: :controller) do
+    ensure_logged_in
+  end
+
+  config.before(:example, type: :request) do
+    ensure_logged_in
+  end
 end

@@ -77,15 +77,40 @@ end
 
 def visit_supply_teachers_home
   visit '/'
+  click_on 'Log in with beta credentials'
   click_on I18n.t('home.index.supply_teachers_link')
 end
 
 def visit_facilities_management_home
   visit '/'
+  click_on 'Log in with beta credentials'
   click_on I18n.t('home.index.facilities_management_link')
 end
 
 def visit_management_consultancy_home
   visit '/'
+  click_on 'Log in with beta credentials'
   click_on I18n.t('home.index.management_consultancy_link')
+end
+
+# rubocop:disable RSpec/AnyInstance
+def ensure_logged_in
+  allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
+end
+
+def ensure_not_logged_in
+  allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(false)
+end
+# rubocop:enable RSpec/AnyInstance
+
+def stub_auth
+  OmniAuth.config.test_mode = true
+
+  OmniAuth.config.mock_auth[:cognito] = OmniAuth::AuthHash.new(
+    info: { email: 'user@example.com' }
+  )
+end
+
+def unstub_auth
+  OmniAuth.config.test_mode = false
 end
