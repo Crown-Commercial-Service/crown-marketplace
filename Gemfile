@@ -38,6 +38,11 @@ gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
 gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 
+# for cognito authentication
+gem 'omniauth'
+gem 'omniauth-oauth2'
+gem 'jwt'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
