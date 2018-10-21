@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  get '/', to: 'home#index', as: :homepage
+  get '/', to: 'home#gateway', as: :gateway
+  get '/start', to: 'home#index', as: :homepage
+
   get '/status', to: 'home#status'
 
   namespace 'supply_teachers', path: 'supply-teachers' do
@@ -23,6 +25,7 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
   end
 
+  get '/auth/cognito', as: :login
   get '/auth/cognito/callback' => 'auth#callback'
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
