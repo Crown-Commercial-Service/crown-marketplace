@@ -16,4 +16,17 @@ RSpec.feature 'Authentication', type: :feature do
 
     expect(page).to have_text('Find supply teachers')
   end
+
+  scenario 'Signed in users can sign out' do
+    allow(Cognito).to receive(:logout_path).and_return('/')
+
+    visit '/'
+
+    click_on 'Log in with beta credentials'
+
+    click_on 'Logout'
+
+    visit '/supply-teachers'
+    expect(page).to have_text('Log in with beta credentials')
+  end
 end
