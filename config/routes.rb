@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   get '/', to: 'home#index', as: :homepage
   get '/status', to: 'home#status'
@@ -42,4 +43,7 @@ Rails.application.routes.draw do
   get '/master-vendor-managed-service-providers',
       to: 'suppliers#master_vendor_managed_service_providers',
       as: 'master_vendor_managed_service_providers'
+
+  get 'auth/cognito/callback' => 'auth#callback'
 end
+# rubocop:enable Metrics/BlockLength
