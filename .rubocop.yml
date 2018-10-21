@@ -88,6 +88,10 @@ RSpec/DescribeClass:
         - 'spec/views/**/*'
         - 'spec/i18n_spec.rb'
 
+RSpec/FilePath:
+    Exclude:
+        - 'spec/lib/omniauth/strategies/cognito_spec.rb'
+
 Capybara/FeatureMethods:
     Exclude:
         - 'spec/features/**/*'
