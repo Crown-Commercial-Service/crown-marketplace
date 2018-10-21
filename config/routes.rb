@@ -1,6 +1,7 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  get '/', to: 'home#index', as: :homepage
+  get '/', to: 'home#gateway', as: :gateway
+  get '/start', to: 'home#index', as: :homepage
   get '/status', to: 'home#status'
 
   resources :branches, only: :index
@@ -45,5 +46,6 @@ Rails.application.routes.draw do
       as: 'master_vendor_managed_service_providers'
 
   get 'auth/cognito/callback' => 'auth#callback'
+  get 'auth/cognito', as: :login
 end
 # rubocop:enable Metrics/BlockLength
