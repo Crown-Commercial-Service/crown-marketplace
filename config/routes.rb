@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   get '/auth/cognito', as: :login
   get '/auth/cognito/callback' => 'auth#callback'
+  post '/auth/cognito/logout' => 'auth#logout', as: :logout
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
