@@ -44,6 +44,11 @@
             </span>
           </a>
         </div>
+        <% if logged_in? %>
+        <div>
+          <%= link_to "Logout", logout_path %>
+        </div>
+        <% end %>
       </div>
     </header>
 

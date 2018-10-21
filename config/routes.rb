@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       as: 'master_vendor_managed_service_providers'
 
   get 'auth/cognito/callback' => 'auth#callback'
+  get 'auth/cognito/logout' => 'auth#logout', as: :logout
   get 'auth/cognito', as: :login
 end
 # rubocop:enable Metrics/BlockLength
