@@ -2,6 +2,20 @@ require 'rails_helper'
 
 RSpec.describe JourneyController, type: :controller do
   describe 'GET #question for looking-for' do
+    context 'when not logged in' do
+      before do
+        ensure_not_logged_in
+      end
+
+      it 'redirects to gateway page' do
+        get :question, params: {
+          journey: 'supply-teachers',
+          slug: 'looking-for'
+        }
+        expect(response).to redirect_to(gateway_path)
+      end
+    end
+
     it 'renders template' do
       get :question, params: {
         journey: 'supply-teachers',

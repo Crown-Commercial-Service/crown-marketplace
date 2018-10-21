@@ -7,6 +7,16 @@ module SupplyTeachers
       let(:second_branch) { build(:branch) }
       let(:branches) { [first_branch, second_branch] }
 
+      context 'when not logged in' do
+        before do
+          ensure_not_logged_in
+        end
+
+        it 'redirects to gateway page' do
+          expect(get(:index)).to redirect_to(gateway_path)
+        end
+      end
+
       context 'with a valid postcode' do
         let(:postcode) { 'W1A 1AA' }
         let(:params) do
