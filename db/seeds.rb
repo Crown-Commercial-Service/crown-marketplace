@@ -15,6 +15,7 @@ holborn.branches.create!(
   telephone_number: '03069 990000'
 )
 holborn.rates.create!(
+  lot_number: 1,
   job_type: 'nominated',
   mark_up: 0.35
 )
@@ -29,6 +30,7 @@ westminster.branches.create!(
   telephone_number: '03069 990001'
 )
 westminster.rates.create!(
+  lot_number: 1,
   job_type: 'nominated',
   mark_up: 0.30
 )
@@ -43,6 +45,7 @@ liverpool.branches.create!(
   telephone_number: '03069 990001'
 )
 liverpool.rates.create!(
+  lot_number: 1,
   job_type: 'nominated',
   mark_up: 0.25
 )
