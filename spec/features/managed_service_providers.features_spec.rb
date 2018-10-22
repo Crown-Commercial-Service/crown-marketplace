@@ -13,7 +13,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a managed service provider'
+    choose 'Through a managed service provider'
     click_on 'Continue'
 
     choose 'Master vendor'
@@ -26,7 +26,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a managed service provider'
+    choose 'Through a managed service provider'
     click_on 'Continue'
 
     choose 'Neutral vendor'
@@ -39,7 +39,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a managed service provider'
+    choose 'Through a managed service provider'
     click_on 'Continue'
 
     choose 'Master vendor'
@@ -48,14 +48,14 @@ RSpec.feature 'Managed service providers', type: :feature do
     click_on 'Back'
     click_on 'Back'
 
-    expect(page).to have_checked_field('Hire a managed service provider')
+    expect(page).to have_checked_field('Through a managed service provider')
   end
 
   scenario 'Buyer changes mind about hiring a master vendor managed service' do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a managed service provider'
+    choose 'Through a managed service provider'
     click_on 'Continue'
 
     choose 'Master vendor'
@@ -70,7 +70,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a managed service provider'
+    choose 'Through a managed service provider'
     click_on 'Continue'
 
     choose 'Neutral vendor'
