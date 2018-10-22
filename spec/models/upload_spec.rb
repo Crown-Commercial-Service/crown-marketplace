@@ -208,9 +208,8 @@ RSpec.describe Upload, type: :model do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          expect(supplier.rates).to include(
+          expect(supplier.rates.direct_provision).to include(
             an_object_having_attributes(
-              lot_number: 1,
               job_type: 'nominated',
               mark_up: a_value_within(1e-6).of(0.35)
             )
@@ -221,9 +220,8 @@ RSpec.describe Upload, type: :model do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          expect(supplier.rates).to include(
+          expect(supplier.rates.direct_provision).to include(
             an_object_having_attributes(
-              lot_number: 1,
               job_type: 'fixed_term',
               mark_up: a_value_within(1e-6).of(0.36)
             )
@@ -234,9 +232,8 @@ RSpec.describe Upload, type: :model do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          expect(supplier.rates).to include(
+          expect(supplier.rates.direct_provision).to include(
             an_object_having_attributes(
-              lot_number: 1,
               job_type: 'qt',
               term: 'one_week',
               mark_up: a_value_within(1e-6).of(0.4)
@@ -271,9 +268,8 @@ RSpec.describe Upload, type: :model do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          expect(supplier.rates).to include(
+          expect(supplier.rates.master_vendor).to include(
             an_object_having_attributes(
-              lot_number: 2,
               job_type: 'nominated',
               mark_up: a_value_within(1e-6).of(0.35)
             )
@@ -284,9 +280,8 @@ RSpec.describe Upload, type: :model do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          expect(supplier.rates).to include(
+          expect(supplier.rates.master_vendor).to include(
             an_object_having_attributes(
-              lot_number: 2,
               job_type: 'fixed_term',
               mark_up: a_value_within(1e-6).of(0.36)
             )
@@ -297,9 +292,8 @@ RSpec.describe Upload, type: :model do
           described_class.create!(suppliers)
 
           supplier = Supplier.last
-          expect(supplier.rates).to include(
+          expect(supplier.rates.master_vendor).to include(
             an_object_having_attributes(
-              lot_number: 2,
               job_type: 'qt',
               term: 'one_week',
               mark_up: a_value_within(1e-6).of(0.4)
