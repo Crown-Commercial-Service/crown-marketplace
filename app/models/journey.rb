@@ -48,9 +48,5 @@ class Journey
   def invalid?
     current_step.invalid?
   end
-
-  def error
-    current_step.errors.full_messages.to_sentence
-  end
 end
 # rubocop:enable Rails/Delegate
