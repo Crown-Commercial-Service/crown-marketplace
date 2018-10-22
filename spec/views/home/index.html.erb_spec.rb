@@ -5,7 +5,7 @@ RSpec.describe 'home/index.html.erb' do
     render
 
     expect(rendered).to have_link(
-      'Start now', href: hire_via_agency_question_path
+      'Start now', href: search_question_path(slug: 'hire-via-agency')
     )
   end
 end

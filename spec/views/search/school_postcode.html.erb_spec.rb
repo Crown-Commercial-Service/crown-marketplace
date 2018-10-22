@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'search/school_postcode.html.erb' do
+  before do
+    @back_path = '/'
+    @form_path = '/'
+  end
+
   it 'stores answer to hire via agency question in hidden field' do
     params[:hire_via_agency] = 'hire-via-agency'
     render
