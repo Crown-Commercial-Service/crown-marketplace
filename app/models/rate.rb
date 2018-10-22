@@ -41,4 +41,8 @@ class Rate < ApplicationRecord
   def self.direct_provision
     where(lot_number: 1)
   end
+
+  def self.master_vendor
+    where(lot_number: 2)
+  end
 end
