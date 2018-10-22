@@ -121,6 +121,7 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
+    openssl (2.1.2)
     parallel (1.12.1)
     parser (2.5.1.2)
       ast (~> 2.4.0)
@@ -259,6 +260,7 @@ DEPENDENCIES
   geocoder
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
+  openssl (>= 2.1.2)
   pg (>= 0.18, < 2.0)
   pry-rails
   puma (~> 3.11)
