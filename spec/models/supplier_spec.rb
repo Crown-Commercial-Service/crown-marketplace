@@ -71,4 +71,28 @@ RSpec.describe Supplier, type: :model do
       expect(supplier.fixed_term_rate).to be_nil
     end
   end
+
+  describe '.with_master_vendor_rates' do
+    let!(:supplier_with_master_vendor_rate) do
+      create(:supplier).tap do |supplier|
+        create(:master_vendor_rate, supplier: supplier)
+      end
+    end
+
+    let!(:supplier_with_direct_provision_rate) do
+      create(:supplier).tap do |supplier|
+        create(:direct_provision_rate, supplier: supplier)
+      end
+    end
+
+    let(:suppliers) { Supplier.with_master_vendor_rates }
+
+    it 'returns suppliers with master vendor rates' do
+      expect(suppliers).to include(supplier_with_master_vendor_rate)
+    end
+
+    it 'does not return suppliers with direct provision rates' do
+      expect(suppliers).not_to include(supplier_with_direct_provision_rate)
+    end
+  end
 end
