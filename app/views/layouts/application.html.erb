@@ -31,46 +31,48 @@
 
   </script>
 
-  <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+  <div class="content-except-footer">
+    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
-  <header class="govuk-header" role="banner" data-module="header">
-    <div class="govuk-header__container govuk-width-container">
+    <header class="govuk-header" role="banner" data-module="header">
+      <div class="govuk-header__container govuk-width-container">
 
-      <div class="govuk-header__logo">
-        <a href="/" class="govuk-header__link govuk-header__link--homepage">
-          <span class="govuk-header__logotype">
-            <%= render partial: '/layouts/logotype' %>
-          </span>
-        </a>
+        <div class="govuk-header__logo">
+          <a href="/" class="govuk-header__link govuk-header__link--homepage">
+            <span class="govuk-header__logotype">
+              <%= render partial: '/layouts/logotype' %>
+            </span>
+          </a>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <div class="govuk-width-container">
-    <div class="govuk-phase-banner ccs-no-print">
-      <p class="govuk-phase-banner__content">
-        <strong class="govuk-tag govuk-phase-banner__content__tag">
-          beta
-        </strong>
-        <span class="govuk-phase-banner__text">
-          This is a new service – your
-          <% if Marketplace.feedback_email_address.present? %>
-            <%= mail_to(Marketplace.feedback_email_address, 'feedback', class: 'govuk-link') %>
-          <% else %>
-            feedback
-          <% end %>
-          will help us to improve it.
-        </span>
-      </p>
+    <div class="govuk-width-container">
+      <div class="govuk-phase-banner ccs-no-print">
+        <p class="govuk-phase-banner__content">
+          <strong class="govuk-tag govuk-phase-banner__content__tag">
+            beta
+          </strong>
+          <span class="govuk-phase-banner__text">
+            This is a new service – your
+            <% if Marketplace.feedback_email_address.present? %>
+              <%= mail_to(Marketplace.feedback_email_address, 'feedback', class: 'govuk-link') %>
+            <% else %>
+              feedback
+            <% end %>
+            will help us to improve it.
+          </span>
+        </p>
+      </div>
+      <main class="govuk-main-wrapper" id="main-content" role="main">
+        <% if flash.key?(:error) %>
+          <span class="govuk-error-message">
+            <%= flash[:error] %>
+          </span>
+        <% end %>
+        <%= yield %>
+      </main>
     </div>
-    <main class="govuk-main-wrapper" id="main-content" role="main">
-      <% if flash.key?(:error) %>
-        <span class="govuk-error-message">
-          <%= flash[:error] %>
-        </span>
-      <% end %>
-      <%= yield %>
-    </main>
   </div>
 
   <footer class="govuk-footer" role="contentinfo">
