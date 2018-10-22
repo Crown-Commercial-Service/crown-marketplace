@@ -5,14 +5,18 @@ class Supplier < ApplicationRecord
   validates :name, presence: true
 
   def nominated_worker_rate
-    return nil if rates.nominated_worker.first.blank?
+    return nil if scoped_rates.nominated_worker.first.blank?
 
-    rates.nominated_worker.first.mark_up
+    scoped_rates.nominated_worker.first.mark_up
   end
 
   def fixed_term_rate
-    return nil if rates.fixed_term.first.blank?
+    return nil if scoped_rates.fixed_term.first.blank?
 
-    rates.fixed_term.first.mark_up
+    scoped_rates.fixed_term.first.mark_up
+  end
+
+  def scoped_rates
+    rates.direct_provision
   end
 end
