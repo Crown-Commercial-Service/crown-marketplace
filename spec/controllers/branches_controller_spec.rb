@@ -25,7 +25,9 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       it 'assigns back_path to postcode search path' do
-        expect(assigns(:back_path)).to eq(school_postcode_question_path(request_params))
+        expect(assigns(:back_path)).to eq(
+          search_question_path(request_params.merge(slug: 'school-postcode'))
+        )
       end
 
       it 'assigns BranchSearchResults to @branches' do
@@ -85,21 +87,21 @@ RSpec.describe BranchesController, type: :controller do
     end
 
     context 'when postcode parsing fails' do
-      before do
-        get :index, params: {
+      let(:params) do
+        {
           postcode: 'nonsense',
           nominated_worker: 'yes',
           hire_via_agency: 'yes'
         }
       end
 
+      before do
+        get :index, params: params
+      end
+
       it 'redirects to school postcode question' do
         expect(response).to redirect_to(
-          school_postcode_question_path(
-            postcode: 'nonsense',
-            nominated_worker: 'yes',
-            hire_via_agency: 'yes'
-          )
+          search_question_path(params.merge(slug: 'school-postcode'))
         )
       end
 
@@ -124,7 +126,8 @@ RSpec.describe BranchesController, type: :controller do
 
       it 'redirects to school postcode question' do
         expect(response).to redirect_to(
-          school_postcode_question_path(
+          search_question_path(
+            slug: 'school-postcode',
             postcode: postcode,
             nominated_worker: 'yes',
             hire_via_agency: 'yes'

@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
   def index
-    @back_path = school_postcode_question_path(safe_params)
+    @back_path = search_question_path(slug: 'school-postcode', params: safe_params)
 
     if params[:postcode].nil?
       @branches = all_branch_results
@@ -56,7 +56,7 @@ class BranchesController < ApplicationController
   end
 
   def display_error(message)
-    path = school_postcode_question_path(safe_params)
+    path = search_question_path(slug: 'school-postcode', params: safe_params)
     redirect_to path, flash: { error: message }
   end
 
