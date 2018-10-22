@@ -1,22 +1,12 @@
 <%= link_to 'Back', @back_path, class: 'govuk-back-link' %>
 
-<h1 class="govuk-heading-xl">Find a managed service provider</h1>
-
-<p>There are 2 kinds of managed service provider to choose from.</p>
-
-<p><strong>A master vendor</strong> managed service provider supplies whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.</p>
-
-<p>You will then need to contact all the suppliers who meet your requirements and run a further competition.</p>
-
-<p><strong>A neutral vendor</strong> managed service provider only provides candidates from other suppliers - they have no candidates of their own.</p>
-
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_field_tag :hire_via_agency, params[:hire_via_agency] %>
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
-          What are you looking for?
+          What type of managed service do you want?
         </h1>
       </legend>
       <div class="govuk-radios">
