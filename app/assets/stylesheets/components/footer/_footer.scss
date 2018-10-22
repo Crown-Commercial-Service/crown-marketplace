@@ -4,7 +4,18 @@ $ccs_footer_bg: govuk-colour("dark-grey");
 $ccs_footer_fg: govuk-colour("white");
 
 .govuk-template {
-  background-color: govuk-colour("dark-grey");
+  background-color: govuk-colour("white");
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Avoid the IE 10-11 `min-height` bug. */
+}
+
+.content-except-footer {
+  flex: 1 0 auto; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
 }
 
 .govuk-footer {
@@ -12,6 +23,7 @@ $ccs_footer_fg: govuk-colour("white");
   color: $ccs_footer_fg;
   padding: 0;
   border-top: none;
+  flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
 }
 
 .govuk-footer__meta {
