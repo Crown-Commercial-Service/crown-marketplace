@@ -50,6 +50,7 @@ class Upload
   def self.create_supplier_rates!(supplier, rates)
     rates.each do |rate|
       supplier.rates.create!(
+        lot_number: 1,
         job_type: rate['job_type'],
         term: rate['term'],
         mark_up: rate['fee'].to_f
