@@ -1,8 +1,17 @@
 require 'rails_helper'
 
 RSpec.feature 'Workers on agency payroll', type: :feature do
+  before do
+    stub_auth
+  end
+
+  after do
+    unstub_auth
+  end
+
   scenario 'Buyer is looking for a worker on agency payroll' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'

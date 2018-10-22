@@ -75,6 +75,7 @@ RSpec.describe 'Ingest suppliers', type: :request do
   end
 
   def all_branches_page
+    ensure_logged_in
     get branches_path
     Capybara.string(response.body)
   end

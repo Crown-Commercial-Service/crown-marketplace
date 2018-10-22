@@ -2,7 +2,18 @@ require 'rails_helper'
 
 RSpec.describe SearchController, type: :controller do
   describe 'GET hire_via_agency_question' do
+    context 'when not logged in' do
+      before do
+        ensure_not_logged_in
+      end
+
+      it 'redirects to gateway page' do
+        expect(get(:hire_via_agency_answer)).to redirect_to(gateway_path)
+      end
+    end
+
     it 'renders template' do
+      ensure_logged_in
       get :hire_via_agency_question
       expect(response).to render_template('hire_via_agency_question')
     end
@@ -10,6 +21,7 @@ RSpec.describe SearchController, type: :controller do
 
   describe 'GET hire_via_agency_answer' do
     before do
+      ensure_logged_in
       get :hire_via_agency_answer, params: { hire_via_agency: hire_via_agency }
     end
 
@@ -50,6 +62,7 @@ RSpec.describe SearchController, type: :controller do
 
   describe 'GET managed_service_provider_question' do
     it 'renders template' do
+      ensure_logged_in
       get :managed_service_provider_question
       expect(response).to render_template('managed_service_provider_question')
     end
@@ -57,6 +70,7 @@ RSpec.describe SearchController, type: :controller do
 
   describe 'GET managed_service_provider_answer' do
     before do
+      ensure_logged_in
       get :managed_service_provider_answer, params: {
         master_vendor: master_vendor,
         hire_via_agency: 'no'
@@ -109,6 +123,7 @@ RSpec.describe SearchController, type: :controller do
 
   describe 'GET nominated_worker_question' do
     it 'renders template' do
+      ensure_logged_in
       get :nominated_worker_question
       expect(response).to render_template('nominated_worker_question')
     end
@@ -123,6 +138,7 @@ RSpec.describe SearchController, type: :controller do
     end
 
     before do
+      ensure_logged_in
       get :nominated_worker_answer, params: params
     end
 
@@ -176,6 +192,10 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET school_postcode_question' do
+    before do
+      ensure_logged_in
+    end
+
     it 'renders template' do
       get :school_postcode_question
       expect(response).to render_template('school_postcode_question')
@@ -213,6 +233,10 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET school_postcode_answer' do
     let(:postcode) { Faker::Address.unique.postcode }
 
+    before do
+      ensure_logged_in
+    end
+
     it 'redirects to branches path' do
       params = {
         hire_via_agency: 'yes',
@@ -226,6 +250,10 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET master_vendor_managed_service_outcome' do
+    before do
+      ensure_logged_in
+    end
+
     it 'redirects to master vendor managed service providers path' do
       params = {
         hire_via_agency: 'no',
@@ -237,6 +265,10 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET neutral_vendor_managed_service_outcome' do
+    before do
+      ensure_logged_in
+    end
+
     it 'renders template' do
       get :neutral_vendor_managed_service_outcome
       expect(response).to render_template('neutral_vendor_managed_service_outcome')
@@ -244,6 +276,10 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET school_payroll_question' do
+    before do
+      ensure_logged_in
+    end
+
     it 'sets the form path to school payroll answer' do
       get :school_payroll_question
       expect(assigns(:form_path)).to eq(school_payroll_answer_path)
@@ -260,6 +296,10 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET school_payroll_answer' do
+    before do
+      ensure_logged_in
+    end
+
     context 'when the answer is yes' do
       it 'redirects to postcode form' do
         params = {
@@ -308,6 +348,10 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET agency_payroll_outcome' do
+    before do
+      ensure_logged_in
+    end
+
     it 'sets the back link to the school payroll question' do
       params = {
         hire_via_agency: 'yes',

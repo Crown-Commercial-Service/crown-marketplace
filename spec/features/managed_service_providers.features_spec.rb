@@ -1,8 +1,17 @@
 require 'rails_helper'
 
 RSpec.feature 'Managed service providers', type: :feature do
+  before do
+    stub_auth
+  end
+
+  after do
+    unstub_auth
+  end
+
   scenario 'Hire via agency choice should not be pre-selected' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     expect(page).not_to have_checked_field('Yes')
@@ -11,6 +20,7 @@ RSpec.feature 'Managed service providers', type: :feature do
 
   scenario 'Buyer wants to hire a master vendor managed service' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through a managed service provider'
@@ -24,6 +34,7 @@ RSpec.feature 'Managed service providers', type: :feature do
 
   scenario 'Buyer wants to hire a neutral vendor managed service' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through a managed service provider'
@@ -37,6 +48,7 @@ RSpec.feature 'Managed service providers', type: :feature do
 
   scenario 'Buyer changes mind about hiring a managed service provider' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through a managed service provider'
@@ -53,6 +65,7 @@ RSpec.feature 'Managed service providers', type: :feature do
 
   scenario 'Buyer changes mind about hiring a master vendor managed service' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through a managed service provider'
@@ -68,6 +81,7 @@ RSpec.feature 'Managed service providers', type: :feature do
 
   scenario 'Buyer changes mind about hiring a neutral vendor managed service' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through a managed service provider'

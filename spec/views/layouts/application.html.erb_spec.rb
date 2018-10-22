@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'layouts/application.html.erb' do
+  before do
+    controller.singleton_class.class_eval do
+      def logged_in?
+        true
+      end
+      helper_method :logged_in?
+    end
+  end
+
   it 'displays flash error messages' do
     flash[:error] = 'error-message'
 

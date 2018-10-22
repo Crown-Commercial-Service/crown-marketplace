@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.feature 'Nominated workers', type: :feature do
+  before do
+    stub_auth
+  end
+
+  after do
+    unstub_auth
+  end
+
   scenario 'Buyer finds suppliers within search range' do
     Geocoder::Lookup::Test.add_stub(
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
@@ -46,6 +54,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     )
 
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'
@@ -80,6 +89,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     )
 
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'
@@ -102,6 +112,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     )
 
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'
@@ -125,6 +136,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     )
 
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'
@@ -145,6 +157,7 @@ RSpec.feature 'Nominated workers', type: :feature do
 
   scenario 'Buyer enters invalid postcode' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'

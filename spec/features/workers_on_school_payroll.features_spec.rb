@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.feature 'Workers on school payroll', type: :feature do
+  before do
+    stub_auth
+  end
+
+  after do
+    unstub_auth
+  end
+
   scenario 'Buyer finds suppliers within search range' do
     Geocoder::Lookup::Test.add_stub(
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
@@ -46,6 +54,7 @@ RSpec.feature 'Workers on school payroll', type: :feature do
     )
 
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'

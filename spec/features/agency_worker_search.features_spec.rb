@@ -1,8 +1,17 @@
 require 'rails_helper'
 
 RSpec.feature 'Agency workers', type: :feature do
+  before do
+    stub_auth
+  end
+
+  after do
+    unstub_auth
+  end
+
   scenario 'Nominated worker choice should not be pre-selected' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'
@@ -14,6 +23,7 @@ RSpec.feature 'Agency workers', type: :feature do
 
   scenario 'Buyer was looking for a nominated worker but changed mind' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'
@@ -29,6 +39,7 @@ RSpec.feature 'Agency workers', type: :feature do
 
   scenario 'Buyer was not looking for a nominated worker but changed mind' do
     visit '/'
+    click_on 'Log in with beta credentials'
     click_on 'Start now'
 
     choose 'Through an agency'

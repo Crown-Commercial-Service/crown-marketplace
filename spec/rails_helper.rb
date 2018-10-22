@@ -70,3 +70,25 @@ def valid_fake_postcode
   possibly_invalid_postcode = Faker::Address.unique.postcode
   UKPostcode.parse(possibly_invalid_postcode).to_s
 end
+
+# rubocop:disable RSpec/AnyInstance
+def ensure_logged_in
+  allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
+end
+
+def ensure_not_logged_in
+  allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(false)
+end
+# rubocop:enable RSpec/AnyInstance
+
+def stub_auth
+  OmniAuth.config.test_mode = true
+
+  OmniAuth.config.mock_auth[:cognito] = OmniAuth::AuthHash.new(
+    info: { email: 'user@example.com' }
+  )
+end
+
+def unstub_auth
+  OmniAuth.config.test_mode = false
+end

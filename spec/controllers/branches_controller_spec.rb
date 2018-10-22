@@ -6,6 +6,16 @@ RSpec.describe BranchesController, type: :controller do
     let(:second_branch) { build(:branch) }
     let(:branches) { [first_branch, second_branch] }
 
+    context 'when not logged in' do
+      before do
+        ensure_not_logged_in
+      end
+
+      it 'redirects to gateway page' do
+        expect(get(:index)).to redirect_to(gateway_path)
+      end
+    end
+
     context 'with a valid postcode' do
       let(:postcode) { 'W1A 1AA' }
       let(:request_params) do
@@ -16,6 +26,7 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       before do
+        ensure_logged_in
         allow(Branch).to receive(:search).and_return(branches)
 
         Geocoder::Lookup::Test.add_stub(
@@ -51,6 +62,7 @@ RSpec.describe BranchesController, type: :controller do
 
     context 'when postcode is missing' do
       before do
+        ensure_logged_in
         allow(Branch).to receive(:all).and_return(branches)
         allow(Branch).to receive(:includes).and_return(Branch)
       end
@@ -86,6 +98,7 @@ RSpec.describe BranchesController, type: :controller do
 
     context 'when postcode parsing fails' do
       before do
+        ensure_logged_in
         get :index, params: {
           postcode: 'nonsense',
           nominated_worker: 'yes',
@@ -112,6 +125,7 @@ RSpec.describe BranchesController, type: :controller do
       let(:postcode) { valid_fake_postcode }
 
       before do
+        ensure_logged_in
         Geocoder::Lookup::Test.add_stub(
           postcode, [{ 'coordinates' => nil }]
         )
