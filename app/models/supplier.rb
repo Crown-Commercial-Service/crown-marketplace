@@ -4,6 +4,10 @@ class Supplier < ApplicationRecord
 
   validates :name, presence: true
 
+  def self.with_master_vendor_rates
+    Rate.includes(:supplier).master_vendor.map(&:supplier).uniq
+  end
+
   def nominated_worker_rate
     return nil if scoped_rates.nominated_worker.first.blank?
 

@@ -11,7 +11,7 @@ FactoryBot.define do
     lot_number { 3 }
   end
 
-  factory :rate do
+  factory :rate, aliases: [:direct_provision_rate] do
     supplier
     direct_provision
     job_type { 'nominated' }
