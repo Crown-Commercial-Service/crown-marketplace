@@ -18,6 +18,12 @@ class Rate < ApplicationRecord
     'fixed_term' => 'Fixed Term workers'
   }.freeze
 
+  TERMS = {
+    'one_week' => 'Up to 1 week',
+    'twelve_weeks' => '1 week to 12 weeks',
+    'more_than_twelve_weeks' => 'Over 12 weeks'
+  }.freeze
+
   belongs_to :supplier
 
   validates :lot_number, presence: true,
