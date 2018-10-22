@@ -226,9 +226,13 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET master_vendor_managed_service_outcome' do
-    it 'renders template' do
-      get :master_vendor_managed_service_outcome
-      expect(response).to render_template('master_vendor_managed_service_outcome')
+    it 'redirects to master vendor managed service providers path' do
+      params = {
+        hire_via_agency: 'no',
+        master_vendor: 'yes'
+      }
+      get :master_vendor_managed_service_outcome, params: params
+      expect(response).to redirect_to(master_vendor_managed_service_providers_path(params))
     end
   end
 

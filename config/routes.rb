@@ -38,4 +38,8 @@ Rails.application.routes.draw do
       to: 'search#school_payroll_answer'
   get '/agency-payroll-outcome',
       to: 'search#agency_payroll_outcome'
+
+  get '/master-vendor-managed-service-providers',
+      to: 'suppliers#master_vendor_managed_service_providers',
+      as: 'master_vendor_managed_service_providers'
 end
