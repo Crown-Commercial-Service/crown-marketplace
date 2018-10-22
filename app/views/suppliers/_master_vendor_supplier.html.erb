@@ -1,0 +1,45 @@
+<div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-m govuk-!-font-size-27"><%= master_vendor_supplier.name %></h2>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <p><strong>Job Type:</strong></p>
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+      <p><strong>Supplier mark up:</strong></p>
+    </div>
+  </div>
+  <% master_vendor_supplier.master_vendor_rates_grouped_by_job_type.each do |job_type, rates| %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <p><%= Rate::JOB_TYPES[job_type] %></p>
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-grid-row">
+          <% if rates.length == 1 %>
+            <div class="govuk-grid-column-full">
+              <p class="govuk-body govuk-!-font-size-36">
+                <%= number_to_percentage(rates.first.mark_up * 100, precision: 1) %>
+              </p>
+            </div>
+          <% elsif rates.length == 3 %>
+            <% rates.each do |rate| %>
+              <div class="govuk-grid-column-one-third">
+                <p class="govuk-body govuk-!-font-size-36">
+                  <%= number_to_percentage(rate.mark_up * 100, precision: 1) %>
+                </p>
+                <p>
+                  <%= Rate::TERMS[rate.term] %>
+                </p>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  <% end %>
+</div>
