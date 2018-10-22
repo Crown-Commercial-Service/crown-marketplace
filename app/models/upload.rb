@@ -44,13 +44,13 @@ class Upload
       )
     end
     rates = data.fetch('pricing', [])
-    create_supplier_rates!(s, rates)
+    create_supplier_rates!(s, 1, rates)
   end
 
-  def self.create_supplier_rates!(supplier, rates)
+  def self.create_supplier_rates!(supplier, lot_number, rates)
     rates.each do |rate|
       supplier.rates.create!(
-        lot_number: 1,
+        lot_number: lot_number,
         job_type: rate['job_type'],
         term: rate['term'],
         mark_up: rate['fee'].to_f
