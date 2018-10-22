@@ -28,6 +28,7 @@ class Branch < ApplicationRecord
   end
 
   def self.rates_clause(fixed_term)
-    fixed_term ? Rate.fixed_term : Rate.nominated_worker
+    rates = Rate.direct_provision
+    fixed_term ? rates.fixed_term : rates.nominated_worker
   end
 end

@@ -114,6 +114,13 @@ RSpec.describe Branch, type: :model do
                supplier: supplier,
                location: Geocoding.point(latitude: 0, longitude: 0))
       end
+      let!(:branch_with_master_vendor_nominated_worker_rate) do
+        supplier = create(:supplier)
+        create(:master_vendor_rate, job_type: 'nominated', supplier: supplier)
+        create(:branch,
+               supplier: supplier,
+               location: Geocoding.point(latitude: 0, longitude: 0))
+      end
       let(:results) { Branch.search(Geocoding.point(latitude: 0, longitude: 0)).to_a }
 
       it 'includes suppliers that have nominated worker rates' do
@@ -122,6 +129,10 @@ RSpec.describe Branch, type: :model do
 
       it "excludes suppliers that don't have nominated worker rates" do
         expect(results).not_to include(branch_with_no_nominated_worker_rates)
+      end
+
+      it "excludes suppliers that don't have nominated worker rates for direct provision" do
+        expect(results).not_to include(branch_with_master_vendor_nominated_worker_rate)
       end
     end
 
@@ -139,6 +150,13 @@ RSpec.describe Branch, type: :model do
                supplier: supplier,
                location: Geocoding.point(latitude: 0, longitude: 0))
       end
+      let!(:branch_with_master_vendor_fixed_term_rate) do
+        supplier = create(:supplier)
+        create(:master_vendor_rate, job_type: 'fixed_term', supplier: supplier)
+        create(:branch,
+               supplier: supplier,
+               location: Geocoding.point(latitude: 0, longitude: 0))
+      end
       let(:results) do
         point = Geocoding.point(latitude: 0, longitude: 0)
         Branch.search(point, fixed_term: true).to_a
@@ -150,6 +168,10 @@ RSpec.describe Branch, type: :model do
 
       it "excludes suppliers that don't have fixed term rates" do
         expect(results).not_to include(branch_with_no_fixed_term_rates)
+      end
+
+      it "excludes suppliers that don't have fixed term rates for direct provision" do
+        expect(results).not_to include(branch_with_master_vendor_fixed_term_rate)
       end
     end
 
