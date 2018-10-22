@@ -7,6 +7,7 @@ $ccs_footer_fg: govuk-colour("white");
   background-color: $ccs_footer_bg;
   color: $ccs_footer_fg;
   padding: 0;
+  border-top: none;
 }
 
 .govuk-footer__meta {
