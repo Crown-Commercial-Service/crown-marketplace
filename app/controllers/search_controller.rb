@@ -70,7 +70,7 @@ class SearchController < ApplicationController
   end
 
   def master_vendor_managed_service_outcome
-    @back_path = managed_service_provider_question_path(managed_service_provider_params)
+    redirect_to master_vendor_managed_service_providers_path(managed_service_provider_params)
   end
 
   def neutral_vendor_managed_service_outcome
