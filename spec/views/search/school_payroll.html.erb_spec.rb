@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'search/school_postcode_question.html.erb' do
+RSpec.describe 'search/school_payroll.html.erb' do
   it 'stores answer to hire via agency question in hidden field' do
     params[:hire_via_agency] = 'hire-via-agency'
     render
@@ -13,9 +13,15 @@ RSpec.describe 'search/school_postcode_question.html.erb' do
     expect(rendered).to have_css('input[name="nominated_worker"][value="nominated-worker"]', visible: false)
   end
 
-  it 'stores answer to school payroll question in hidden field' do
-    params[:school_payroll] = 'school-payroll'
+  it 'selects "yes" if school payroll is "yes"' do
+    params[:school_payroll] = 'yes'
     render
-    expect(rendered).to have_css('input[name="school_payroll"][value="school-payroll"]', visible: false)
+    expect(rendered).to have_css('input[type="radio"][name="school_payroll"][value="yes"][checked]')
+  end
+
+  it 'selects "no" if school payroll is "no"' do
+    params[:school_payroll] = 'no'
+    render
+    expect(rendered).to have_css('input[type="radio"][name="school_payroll"][value="no"][checked]')
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'search/nominated_worker_question.html.erb' do
+RSpec.describe 'search/nominated_worker.html.erb' do
   it 'stores answer to hire via agency question in hidden field' do
     params[:hire_via_agency] = 'hire-via-agency'
     render
