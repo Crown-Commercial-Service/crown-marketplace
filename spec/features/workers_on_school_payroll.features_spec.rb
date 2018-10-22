@@ -48,7 +48,7 @@ RSpec.feature 'Workers on school payroll', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a worker via an agency'
+    choose 'Through an agency'
     click_on 'Continue'
 
     choose 'No'

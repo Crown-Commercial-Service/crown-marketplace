@@ -48,7 +48,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a worker via an agency'
+    choose 'Through an agency'
     click_on 'Continue'
 
     choose 'Yes'
@@ -82,7 +82,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a worker via an agency'
+    choose 'Through an agency'
     click_on 'Continue'
 
     choose 'Yes'
@@ -104,7 +104,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a worker via an agency'
+    choose 'Through an agency'
     click_on 'Continue'
 
     choose 'Yes'
@@ -127,7 +127,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a worker via an agency'
+    choose 'Through an agency'
     click_on 'Continue'
 
     choose 'Yes'
@@ -140,14 +140,14 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on 'Back'
     click_on 'Back'
 
-    expect(page).to have_checked_field('Hire a worker via an agency')
+    expect(page).to have_checked_field('Through an agency')
   end
 
   scenario 'Buyer enters invalid postcode' do
     visit '/'
     click_on 'Start now'
 
-    choose 'Hire a worker via an agency'
+    choose 'Through an agency'
     click_on 'Continue'
 
     choose 'Yes'
