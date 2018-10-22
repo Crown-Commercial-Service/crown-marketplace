@@ -10,6 +10,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     create(
       :rate,
       supplier: holborn,
+      lot_number: 1,
       job_type: 'nominated',
       mark_up: 0.35
     )
@@ -22,6 +23,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     create(
       :rate,
       supplier: westminster,
+      lot_number: 1,
       job_type: 'nominated',
       mark_up: 0.30
     )
