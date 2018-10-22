@@ -43,8 +43,12 @@ class Upload
         contact_email: contact_email
       )
     end
+
     rates = data.fetch('pricing', [])
     create_supplier_rates!(s, 1, rates)
+
+    master_vendor_rates = data.fetch('master_vendor_pricing', [])
+    create_supplier_rates!(s, 2, master_vendor_rates)
   end
 
   def self.create_supplier_rates!(supplier, lot_number, rates)

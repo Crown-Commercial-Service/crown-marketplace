@@ -14,6 +14,7 @@ RSpec.describe Upload, type: :model do
     let(:contact_email) { Faker::Internet.unique.email }
 
     let(:pricing) { [] }
+    let(:master_vendor_pricing) { [] }
 
     let(:branches) do
       [
@@ -40,7 +41,8 @@ RSpec.describe Upload, type: :model do
           'supplier_name' => supplier_name,
           'supplier_id' => supplier_id,
           'branches' => branches,
-          'pricing' => pricing
+          'pricing' => pricing,
+          'master_vendor_pricing' => master_vendor_pricing
         }
       ]
     end
@@ -235,6 +237,69 @@ RSpec.describe Upload, type: :model do
           expect(supplier.rates).to include(
             an_object_having_attributes(
               lot_number: 1,
+              job_type: 'qt',
+              term: 'one_week',
+              mark_up: a_value_within(1e-6).of(0.4)
+            )
+          )
+        end
+      end
+
+      context 'and supplier has master vendor pricing information' do
+        let(:master_vendor_pricing) do
+          [
+            {
+              'job_type' => 'nominated',
+              'line_no' => 1,
+              'fee' => 0.35
+            },
+            {
+              'job_type' => 'fixed_term',
+              'line_no' => 2,
+              'fee' => 0.36
+            },
+            {
+              'job_type' => 'qt',
+              'line_no' => 3,
+              'term' => 'one_week',
+              'fee' => 0.40
+            }
+          ]
+        end
+
+        it 'adds nominated worker rates to supplier' do
+          described_class.create!(suppliers)
+
+          supplier = Supplier.last
+          expect(supplier.rates).to include(
+            an_object_having_attributes(
+              lot_number: 2,
+              job_type: 'nominated',
+              mark_up: a_value_within(1e-6).of(0.35)
+            )
+          )
+        end
+
+        it 'adds fixed term rates to supplier' do
+          described_class.create!(suppliers)
+
+          supplier = Supplier.last
+          expect(supplier.rates).to include(
+            an_object_having_attributes(
+              lot_number: 2,
+              job_type: 'fixed_term',
+              mark_up: a_value_within(1e-6).of(0.36)
+            )
+          )
+        end
+
+        it 'imports non-nominated rate data' do
+          described_class.create!(suppliers)
+
+          supplier = Supplier.last
+          expect(supplier.rates).to include(
+            an_object_having_attributes(
+              lot_number: 2,
               job_type: 'qt',
               term: 'one_week',
               mark_up: a_value_within(1e-6).of(0.4)
