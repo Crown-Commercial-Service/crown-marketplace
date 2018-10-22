@@ -37,4 +37,8 @@ class Rate < ApplicationRecord
   def self.fixed_term
     where(job_type: 'fixed_term')
   end
+
+  def self.direct_provision
+    where(lot_number: 1)
+  end
 end
