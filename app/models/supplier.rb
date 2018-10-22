@@ -20,6 +20,10 @@ class Supplier < ApplicationRecord
     scoped_rates.fixed_term.first.mark_up
   end
 
+  def master_vendor_rates_grouped_by_job_type
+    rates.master_vendor.group_by(&:job_type)
+  end
+
   def scoped_rates
     rates.direct_provision
   end

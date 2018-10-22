@@ -95,4 +95,32 @@ RSpec.describe Supplier, type: :model do
       expect(suppliers).not_to include(supplier_with_direct_provision_rate)
     end
   end
+
+  describe '.master_vendor_rates_grouped_by_job_type' do
+    let!(:rate_qt_one_week) do
+      create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'one_week')
+    end
+    let!(:rate_qt_twelve_weeks) do
+      create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'twelve_weeks')
+    end
+
+    let!(:rate_qt_sen_one_week) do
+      create(:master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'one_week')
+    end
+    let!(:rate_qt_sen_twelve_weeks) do
+      create(:master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'twelve_weeks')
+    end
+
+    it 'returns rates grouped by job type' do
+      job_types_vs_rates = supplier.master_vendor_rates_grouped_by_job_type
+      expect(job_types_vs_rates['qt']).to include(
+        rate_qt_one_week,
+        rate_qt_twelve_weeks
+      )
+      expect(job_types_vs_rates['qt_sen']).to include(
+        rate_qt_sen_one_week,
+        rate_qt_sen_twelve_weeks
+      )
+    end
+  end
 end
