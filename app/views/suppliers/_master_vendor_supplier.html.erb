@@ -1,4 +1,4 @@
-<div>
+<div class="master-vendor-record">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h2 class="govuk-heading-m govuk-!-font-size-27"><%= master_vendor_supplier.name %></h2>
@@ -21,14 +21,14 @@
         <div class="govuk-grid-row">
           <% if rates.length == 1 %>
             <div class="govuk-grid-column-full">
-              <p class="govuk-body govuk-!-font-size-36">
+              <p class="govuk-body govuk-!-font-size-36 master-vendor-record__markup-rate">
                 <%= number_to_percentage(rates.first.mark_up * 100, precision: 1) %>
               </p>
             </div>
           <% elsif rates.length == 3 %>
             <% rates.each do |rate| %>
               <div class="govuk-grid-column-one-third">
-                <p class="govuk-body govuk-!-font-size-36">
+                <p class="govuk-body govuk-!-font-size-36 master-vendor-record__markup-rate">
                   <%= number_to_percentage(rate.mark_up * 100, precision: 1) %>
                 </p>
                 <p>
