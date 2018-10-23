@@ -9,6 +9,9 @@
       <label class="govuk-label govuk-label--m" for="postcode">
         What is your school's postcode?
       </label>
+      <span id="postcode-hint" class="govuk-hint">
+        We use this to find agencies near to your school
+      </span>
     </h1>
     <%= text_field_tag :postcode, params[:postcode], class: 'govuk-input' %>
   </div>
