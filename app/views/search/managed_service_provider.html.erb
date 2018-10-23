@@ -4,20 +4,20 @@
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
-          What type of managed service do you want?
+          <%= t('.question') %>
         </h1>
       </legend>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :master_vendor, :yes, checked?(params[:master_vendor], 'yes'), class: 'govuk-radios__input' %>
-          <%= label_tag :master_vendor_yes, 'Master vendor managed service', class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :master_vendor_yes, t('.answer_yes'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :master_vendor, :no, checked?(params[:master_vendor], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :master_vendor_no, 'Neutral vendor managed service', class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :master_vendor_no, t('.answer_no'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     </fieldset>
   </div>
-  <%= submit_tag 'Continue', class: "govuk-button" %>
+  <%= submit_tag t('.submit'), class: "govuk-button" %>
 <% end %>

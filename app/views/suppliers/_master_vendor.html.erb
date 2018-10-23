@@ -6,10 +6,10 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <p><strong>Job Type:</strong></p>
+      <p><strong><%= t('suppliers.master_vendors.column1') %>:</strong></p>
     </div>
     <div class="govuk-grid-column-two-thirds">
-      <p><strong>Supplier mark up:</strong></p>
+      <p><strong><%= t('suppliers.master_vendors.column2') %>:</strong></p>
     </div>
   </div>
   <% master_vendor.master_vendor_rates_grouped_by_job_type.each do |job_type, rates| %>

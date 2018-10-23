@@ -4,20 +4,20 @@
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
-          Do you want an agency to supply the worker?
+          <%= t('.question') %>
         </h1>
       </legend>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :nominated_worker, :no, checked?(params[:nominated_worker], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :nominated_worker_no, 'Yes', class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :nominated_worker_no, t('.answer1'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :nominated_worker, :yes, checked?(params[:nominated_worker], 'yes'), class: 'govuk-radios__input' %>
-          <%= label_tag :nominated_worker_yes, "No, I have a worker I want the agency to manage (a 'nominated worker')", class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :nominated_worker_yes, t('.answer2'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     </fieldset>
   </div>
-  <%= submit_tag 'Continue', class: "govuk-button" %>
+  <%= submit_tag t('.submit'), class: "govuk-button" %>
 <% end %>
