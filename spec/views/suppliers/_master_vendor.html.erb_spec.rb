@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'suppliers/_master_vendor_supplier.html.erb' do
+RSpec.describe 'suppliers/_master_vendor.html.erb' do
   let(:supplier) { build(:supplier) }
   let(:job_types_vs_rates) { {} }
 
   before do
     allow(supplier).to receive(:master_vendor_rates_grouped_by_job_type).and_return(job_types_vs_rates)
 
-    render 'suppliers/master_vendor_supplier', master_vendor_supplier: supplier
+    render 'suppliers/master_vendor', master_vendor: supplier
   end
 
   it 'displays supplier name' do
