@@ -8,6 +8,10 @@ class Supplier < ApplicationRecord
     Rate.includes(:supplier).master_vendor.map(&:supplier).uniq
   end
 
+  def self.with_neutral_vendor_rates
+    Rate.includes(:supplier).neutral_vendor.map(&:supplier).uniq
+  end
+
   def nominated_worker_rate
     return nil if scoped_rates.nominated_worker.first.blank?
 

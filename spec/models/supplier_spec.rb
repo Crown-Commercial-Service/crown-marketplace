@@ -123,4 +123,28 @@ RSpec.describe Supplier, type: :model do
       )
     end
   end
+
+  describe '.with_neutral_vendor_rates' do
+    let!(:supplier_with_neutral_vendor_rate) do
+      create(:supplier).tap do |supplier|
+        create(:neutral_vendor_rate, supplier: supplier)
+      end
+    end
+
+    let!(:supplier_with_direct_provision_rate) do
+      create(:supplier).tap do |supplier|
+        create(:direct_provision_rate, supplier: supplier)
+      end
+    end
+
+    let(:suppliers) { Supplier.with_neutral_vendor_rates }
+
+    it 'returns suppliers with neutral vendor rates' do
+      expect(suppliers).to include(supplier_with_neutral_vendor_rate)
+    end
+
+    it 'does not return suppliers with direct provision rates' do
+      expect(suppliers).not_to include(supplier_with_direct_provision_rate)
+    end
+  end
 end
