@@ -1,5 +1,3 @@
-<%= link_to 'Back', @back_path, class: 'govuk-back-link' %>
-
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_field_tag :nominated_worker, params[:nominated_worker] %>
   <%= hidden_field_tag :hire_via_agency, params[:hire_via_agency] %>

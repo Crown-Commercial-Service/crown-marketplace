@@ -64,6 +64,9 @@
           </span>
         </p>
       </div>
+      <% if @back_path.present? %>
+        <%= link_to 'Back', @back_path, class: 'govuk-back-link' %>
+      <% end %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <% if flash.key?(:error) %>
           <span class="govuk-error-message">
