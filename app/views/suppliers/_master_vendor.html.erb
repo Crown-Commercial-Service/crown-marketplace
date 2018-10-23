@@ -1,7 +1,7 @@
 <div class="master-vendor-record">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h2 class="govuk-heading-m govuk-!-font-size-27"><%= master_vendor_supplier.name %></h2>
+      <h2 class="govuk-heading-m govuk-!-font-size-27"><%= master_vendor.name %></h2>
     </div>
   </div>
   <div class="govuk-grid-row">
@@ -12,7 +12,7 @@
       <p><strong>Supplier mark up:</strong></p>
     </div>
   </div>
-  <% master_vendor_supplier.master_vendor_rates_grouped_by_job_type.each do |job_type, rates| %>
+  <% master_vendor.master_vendor_rates_grouped_by_job_type.each do |job_type, rates| %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-third">
         <p><%= Rate::JOB_TYPES[job_type] %></p>
