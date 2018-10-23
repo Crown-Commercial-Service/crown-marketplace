@@ -75,9 +75,9 @@ RSpec.describe SearchController, type: :controller do
     context 'when master vendor is yes' do
       let(:master_vendor) { 'yes' }
 
-      it 'redirects to master vendor managed service providers path' do
+      it 'redirects to master vendors path' do
         expect(response).to redirect_to(
-          master_vendor_managed_service_providers_path(
+          master_vendors_path(
             master_vendor: master_vendor,
             hire_via_agency: 'no'
           )
