@@ -51,4 +51,8 @@ class Rate < ApplicationRecord
   def self.master_vendor
     where(lot_number: 2)
   end
+
+  def self.neutral_vendor
+    where(lot_number: 3)
+  end
 end

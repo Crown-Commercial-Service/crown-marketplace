@@ -15,6 +15,7 @@ RSpec.describe Upload, type: :model do
 
     let(:pricing) { [] }
     let(:master_vendor_pricing) { [] }
+    let(:neutral_vendor_pricing) { [] }
 
     let(:branches) do
       [
@@ -42,7 +43,8 @@ RSpec.describe Upload, type: :model do
           'supplier_id' => supplier_id,
           'branches' => branches,
           'pricing' => pricing,
-          'master_vendor_pricing' => master_vendor_pricing
+          'master_vendor_pricing' => master_vendor_pricing,
+          'neutral_vendor_pricing' => neutral_vendor_pricing
         }
       ]
     end
@@ -297,6 +299,30 @@ RSpec.describe Upload, type: :model do
               job_type: 'qt',
               term: 'one_week',
               mark_up: a_value_within(1e-6).of(0.4)
+            )
+          )
+        end
+      end
+
+      context 'and supplier has neutral vendor pricing information' do
+        let(:neutral_vendor_pricing) do
+          [
+            {
+              'job_type' => 'nominated',
+              'line_no' => 1,
+              'fee' => 0.35
+            }
+          ]
+        end
+
+        it 'adds nominated worker rates to supplier' do
+          described_class.create!(suppliers)
+
+          supplier = Supplier.last
+          expect(supplier.rates.neutral_vendor).to include(
+            an_object_having_attributes(
+              job_type: 'nominated',
+              mark_up: a_value_within(1e-6).of(0.35)
             )
           )
         end
