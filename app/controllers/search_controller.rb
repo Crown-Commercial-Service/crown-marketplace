@@ -30,6 +30,7 @@ class SearchController < ApplicationController
   end
 
   def journey
-    @journey ||= Journey.new(Steps::HireViaAgency, params[:slug], params)
+    first_step_class = Steps::HireViaAgency
+    @journey ||= Journey.new(first_step_class, params[:slug], params)
   end
 end
