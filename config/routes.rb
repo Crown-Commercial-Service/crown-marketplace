@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   resources :branches, only: :index
   resources :uploads, only: :create
 
-  get '/master-vendor-managed-service-providers',
-      to: 'suppliers#master_vendor_managed_service_providers',
-      as: 'master_vendor_managed_service_providers'
+  get '/master-vendors',
+      to: 'suppliers#master_vendors',
+      as: 'master_vendors'
 
   get '/:slug', to: 'search#question', as: 'search_question'
   get '/:slug/answer', to: 'search#answer', as: 'search_answer'

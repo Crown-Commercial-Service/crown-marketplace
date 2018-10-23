@@ -1,5 +1,5 @@
 class SuppliersController < ApplicationController
-  def master_vendor_managed_service_providers
+  def master_vendors
     @back_path = search_question_path(
       slug: 'managed-service-provider',
       params: managed_service_provider_params
