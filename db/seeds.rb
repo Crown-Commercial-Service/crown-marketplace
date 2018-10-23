@@ -19,6 +19,18 @@ holborn.rates.create!(
   job_type: 'nominated',
   mark_up: 0.35
 )
+holborn.rates.create!(
+  lot_number: 1,
+  job_type: 'qt',
+  term: 'one_week',
+  mark_up: 0.40
+)
+holborn.rates.create!(
+  lot_number: 1,
+  job_type: 'qt',
+  term: 'twelve_weeks',
+  mark_up: 0.38
+)
 
 westminster = Supplier.create!(name: 'Westminster')
 westminster.branches.create!(
@@ -34,6 +46,18 @@ westminster.rates.create!(
   job_type: 'nominated',
   mark_up: 0.30
 )
+westminster.rates.create!(
+  lot_number: 1,
+  job_type: 'qt',
+  term: 'one_week',
+  mark_up: 0.42
+)
+westminster.rates.create!(
+  lot_number: 1,
+  job_type: 'qt',
+  term: 'twelve_weeks',
+  mark_up: 0.35
+)
 
 liverpool = Supplier.create!(name: 'Liverpool')
 liverpool.branches.create!(
@@ -48,4 +72,16 @@ liverpool.rates.create!(
   lot_number: 1,
   job_type: 'nominated',
   mark_up: 0.25
+)
+liverpool.rates.create!(
+  lot_number: 1,
+  job_type: 'qt',
+  term: 'one_week',
+  mark_up: 0.35
+)
+liverpool.rates.create!(
+  lot_number: 1,
+  job_type: 'qt',
+  term: 'twelve_weeks',
+  mark_up: 0.32
 )
