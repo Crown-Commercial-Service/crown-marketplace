@@ -42,6 +42,10 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer wants to hire a neutral vendor managed service' do
+    supplier = create(:supplier, name: 'neutral-vendor-supplier')
+
+    create(:neutral_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.30)
+
     visit '/'
     click_on 'Start now'
 
@@ -51,7 +55,10 @@ RSpec.feature 'Managed service providers', type: :feature do
     choose 'Neutral vendor'
     click_on 'Continue'
 
-    expect(page).to have_text('Neutral vendor managed service')
+    expect(page).to have_css('h1', text: 'Neutral vendor managed service')
+    expect(page).to have_css('h2', text: 'neutral-vendor-supplier')
+
+    expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0], with_terms: false)
   end
 
   scenario 'Buyer changes mind about hiring a managed service provider' do
