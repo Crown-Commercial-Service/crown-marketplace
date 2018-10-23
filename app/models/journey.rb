@@ -1,4 +1,3 @@
-# rubocop:disable Rails/Delegate
 class Journey
   attr_reader :steps, :params
 
@@ -29,24 +28,9 @@ class Journey
     current_step.next_step_class&.new
   end
 
-  def current_slug
-    current_step.slug
-  end
+  delegate :slug, to: :current_step, prefix: :current, allow_nil: true
+  delegate :slug, to: :previous_step, prefix: :previous, allow_nil: true
+  delegate :slug, to: :next_step, prefix: :next, allow_nil: true
 
-  def previous_slug
-    previous_step&.slug
-  end
-
-  def next_slug
-    next_step&.slug
-  end
-
-  def template
-    current_step.template
-  end
-
-  def invalid?
-    current_step.invalid?
-  end
+  delegate :template, :invalid?, to: :current_step
 end
-# rubocop:enable Rails/Delegate
