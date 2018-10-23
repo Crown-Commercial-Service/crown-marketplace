@@ -49,6 +49,9 @@ class Upload
 
     master_vendor_rates = data.fetch('master_vendor_pricing', [])
     create_supplier_rates!(s, 2, master_vendor_rates)
+
+    neutral_vendor_rates = data.fetch('neutral_vendor_pricing', [])
+    create_supplier_rates!(s, 3, neutral_vendor_rates)
   end
 
   def self.create_supplier_rates!(supplier, lot_number, rates)
