@@ -1,7 +1,7 @@
 module Steps
   class AgencyPayroll < JourneyStep
     attribute :postcode
-    validates :postcode, presence: true
+    validates :postcode, postcode: true
 
     attribute :term
     validates :term, presence: true
