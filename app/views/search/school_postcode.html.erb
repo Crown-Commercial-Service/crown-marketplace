@@ -5,13 +5,13 @@
   <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
       <label class="govuk-label govuk-label--m" for="postcode">
-        What is your school's postcode?
+        <%= t('.question') %>
       </label>
       <span id="postcode-hint" class="govuk-hint">
-        We use this to find agencies near to your school
+        <%= t('.question_hint') %>
       </span>
     </h1>
     <%= text_field_tag :postcode, params[:postcode], class: 'govuk-input' %>
   </div>
-  <%= submit_tag 'Continue', class: "govuk-button" %>
+  <%= submit_tag t('.submit'), class: "govuk-button" %>
 <% end %>

@@ -5,17 +5,17 @@
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">
-              What are you looking for?
+              <%= t('.question') %>
             </h1>
           </legend>
           <div class="govuk-radios">
             <div class="govuk-radios__item">
               <%= radio_button_tag :hire_via_agency, :yes, checked?(params[:hire_via_agency], 'yes'), class: 'govuk-radios__input' %>
-              <%= label_tag :hire_via_agency_yes, 'An individual worker', class: 'govuk-label govuk-radios__label' %>
+              <%= label_tag :hire_via_agency_yes, t('.answer_yes'), class: 'govuk-label govuk-radios__label' %>
             </div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :hire_via_agency, :no, checked?(params[:hire_via_agency], 'no'), class: 'govuk-radios__input' %>
-              <%= label_tag :hire_via_agency_no, 'A managed service provider', class: 'govuk-label govuk-radios__label' %>
+              <%= label_tag :hire_via_agency_no, t('.answer_no'), class: 'govuk-label govuk-radios__label' %>
             </div>
           </div>
         </fieldset>

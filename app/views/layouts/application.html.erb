@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Crown Commercial Service</title>
+  <title><%= t('.title') %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0c0c" />
 
@@ -32,7 +32,7 @@
   </script>
 
   <div class="content-except-footer">
-    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+    <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
 
     <header class="govuk-header" role="banner" data-module="header">
       <div class="govuk-header__container govuk-width-container">
@@ -51,15 +51,15 @@
       <div class="govuk-phase-banner ccs-no-print">
         <p class="govuk-phase-banner__content">
           <strong class="govuk-tag govuk-phase-banner__content__tag">
-            beta
+            <%= t('.beta') %>
           </strong>
           <span class="govuk-phase-banner__text">
-            This is a new service – your <%= feedback_email_link %> will help us to improve it.
+            <%= t('.feedback_html', link: feedback_email_link) %>
           </span>
         </p>
       </div>
       <% if @back_path.present? %>
-        <%= link_to 'Back', @back_path, class: 'govuk-back-link' %>
+        <%= link_to t('.back'), @back_path, class: 'govuk-back-link' %>
       <% end %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <% if flash.key?(:error) %>
@@ -79,9 +79,7 @@
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
               <p class="govuk-!-margin-bottom-0 govuk-body-s">
-                <span class="govuk-!-font-weight-bold">Having problems using this service?</span> Email
-                <%= mail_to(Marketplace.feedback_email_address, nil, class: 'govuk-link') %>
-                for support.
+                <span class="govuk-!-font-weight-bold"><%= t('.having_problems') %></span> <%= t('.support_email_html', link: mail_to(Marketplace.feedback_email_address, nil, class: 'govuk-link')) %>
               </p>
             </div>
           </div>
