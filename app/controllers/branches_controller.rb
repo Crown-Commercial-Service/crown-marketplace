@@ -26,8 +26,16 @@ class BranchesController < ApplicationController
 
   private
 
+  def rates
+    if params[:nominated_worker] == 'yes'
+      Rate.direct_provision.nominated_worker
+    elsif params[:school_payroll] == 'yes'
+      Rate.direct_provision.fixed_term
+    end
+  end
+
   def branch_results_near(point)
-    Branch.search(point, fixed_term: params[:school_payroll] == 'yes').map do |branch|
+    Branch.search(point, rates: rates).map do |branch|
       search_result_for(branch).tap do |result|
         if params[:nominated_worker] == 'yes'
           result.rate = branch.supplier.nominated_worker_rate

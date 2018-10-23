@@ -18,17 +18,12 @@ class Branch < ApplicationRecord
     )
   end
 
-  def self.search(point, fixed_term: false)
+  def self.search(point, rates:)
     metres = DistanceConvertor.miles_to_metres(Branch::DEFAULT_SEARCH_RANGE_IN_MILES)
     Branch.near(point, within_metres: metres)
           .joins(supplier: [:rates])
-          .merge(rates_clause(fixed_term))
+          .merge(rates)
           .order('rates.mark_up')
           .order(Arel.sql("ST_Distance(location, '#{point}')"))
-  end
-
-  def self.rates_clause(fixed_term)
-    rates = Rate.direct_provision
-    fixed_term ? rates.fixed_term : rates.nominated_worker
   end
 end
