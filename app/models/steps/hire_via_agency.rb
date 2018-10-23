@@ -1,7 +1,7 @@
 module Steps
   class HireViaAgency < JourneyStep
     attribute :hire_via_agency
-    validates :hire_via_agency, inclusion: { in: %w[yes no] }
+    validates :hire_via_agency, yes_no: true
 
     def next_step_class
       case hire_via_agency

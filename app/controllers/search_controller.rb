@@ -9,7 +9,7 @@ class SearchController < ApplicationController
     if journey.invalid?
       redirect_to(
         search_question_path(slug: journey.current_slug, params: journey.params),
-        flash: { error: 'Please choose an option' }
+        flash: { error: journey.error }
       )
     else
       redirect_to next_step_path
