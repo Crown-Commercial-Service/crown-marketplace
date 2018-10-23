@@ -1,7 +1,11 @@
 class SearchController < ApplicationController
   def question
     @form_path = search_answer_path(slug: journey.current_slug)
-    @back_path = search_question_path(slug: journey.previous_slug, params: journey.params) if journey.previous_slug
+    @back_path = if journey.previous_slug.present?
+                   search_question_path(slug: journey.previous_slug, params: journey.params)
+                 else
+                   homepage_path
+                 end
     render journey.template
   end
 
