@@ -51,7 +51,7 @@ RSpec.feature 'Workers on school payroll', type: :feature do
     choose 'An individual worker'
     click_on 'Continue'
 
-    choose 'No'
+    choose 'Yes'
     click_on 'Continue'
 
     choose 'Yes'
