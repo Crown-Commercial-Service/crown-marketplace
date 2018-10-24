@@ -45,6 +45,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     supplier = create(:supplier, name: 'neutral-vendor-supplier')
 
     create(:neutral_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.30)
+    create(:neutral_vendor_rate, supplier: supplier, job_type: 'daily_fee', daily_fee: 1.23, mark_up: nil)
 
     visit '/'
     click_on 'Start now'
@@ -59,6 +60,8 @@ RSpec.feature 'Managed service providers', type: :feature do
     expect(page).to have_css('h2', text: 'neutral-vendor-supplier')
 
     expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0], with_terms: false)
+    expect(page).to have_rates(job_type: 'Neutral vendor managed service provider fee (per day)',
+                               percentages: [], amount: 1.23, with_terms: false)
   end
 
   scenario 'Buyer changes mind about hiring a managed service provider' do
@@ -109,14 +112,22 @@ RSpec.feature 'Managed service providers', type: :feature do
 
   private
 
-  def have_rates(job_type:, percentages:, with_terms: true)
-    rate_patterns = percentages.map { |p| rate_pattern(p) }
+  def have_rates(job_type:, percentages:, amount: nil, with_terms: true)
+    rate_patterns = if percentages.any?
+                      percentages.map { |p| rate_pattern(p) }
+                    else
+                      [daily_fee_pattern(amount)]
+                    end
     rate_patterns = rate_patterns.dup.zip(Rate::TERMS.values) if with_terms
-    combined_pattern = [job_type, *rate_patterns].join('\s+')
+    combined_pattern = [Regexp.escape(job_type), *rate_patterns].join('\s+')
     have_text(Regexp.new(combined_pattern))
   end
 
   def rate_pattern(percentage)
     format('%.1f%%', percentage).sub('.', Regexp.escape('.'))
+  end
+
+  def daily_fee_pattern(amount)
+    "£#{amount}".sub('.', Regexp.escape('.'))
   end
 end
