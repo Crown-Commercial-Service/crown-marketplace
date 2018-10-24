@@ -67,18 +67,18 @@ RSpec.describe SearchController, type: :controller do
     before do
       get :answer, params: {
         slug: 'managed-service-provider',
-        master_vendor: master_vendor,
+        managed_service_provider: managed_service_provider,
         looking_for: 'managed_service_provider'
       }
     end
 
     context 'when master vendor is yes' do
-      let(:master_vendor) { 'yes' }
+      let(:managed_service_provider) { 'master_vendor' }
 
       it 'redirects to master vendors path' do
         expect(response).to redirect_to(
           master_vendors_path(
-            master_vendor: master_vendor,
+            managed_service_provider: managed_service_provider,
             looking_for: 'managed_service_provider'
           )
         )
@@ -86,12 +86,12 @@ RSpec.describe SearchController, type: :controller do
     end
 
     context 'when master vendor is no' do
-      let(:master_vendor) { 'no' }
+      let(:managed_service_provider) { 'neutral_vendor' }
 
       it 'redirects to neutral vendors path' do
         expect(response).to redirect_to(
           neutral_vendors_path(
-            master_vendor: master_vendor,
+            managed_service_provider: managed_service_provider,
             looking_for: 'managed_service_provider'
           )
         )
@@ -99,13 +99,13 @@ RSpec.describe SearchController, type: :controller do
     end
 
     context 'when master vendor is blank' do
-      let(:master_vendor) { '' }
+      let(:managed_service_provider) { '' }
 
       it 'redirects to managed service provider question' do
         expect(response).to redirect_to(
           search_question_path(
             slug: 'managed-service-provider',
-            master_vendor: '',
+            managed_service_provider: '',
             looking_for: 'managed_service_provider'
           )
         )
