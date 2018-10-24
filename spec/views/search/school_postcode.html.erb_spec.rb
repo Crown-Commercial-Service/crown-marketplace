@@ -7,9 +7,9 @@ RSpec.describe 'search/school_postcode.html.erb' do
   end
 
   it 'stores answer to hire via agency question in hidden field' do
-    params[:hire_via_agency] = 'hire-via-agency'
+    params[:looking_for] = 'looking-for'
     render
-    expect(rendered).to have_css('input[name="hire_via_agency"][value="hire-via-agency"]', visible: false)
+    expect(rendered).to have_css('input[name="looking_for"][value="looking-for"]', visible: false)
   end
 
   it 'stores answer to nominated worker question in hidden field' do
