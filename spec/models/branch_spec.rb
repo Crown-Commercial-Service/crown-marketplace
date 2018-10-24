@@ -39,7 +39,7 @@ RSpec.describe Branch, type: :model do
 
     it 'has a sensible error message' do
       branch.validate
-      expect(branch.errors).to include(postcode: include('This is not a valid postcode'))
+      expect(branch.errors).to include(postcode: include('Invalid postcode'))
     end
   end
 
