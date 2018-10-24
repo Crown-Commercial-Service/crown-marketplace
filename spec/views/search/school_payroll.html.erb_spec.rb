@@ -18,15 +18,15 @@ RSpec.describe 'search/school_payroll.html.erb' do
     expect(rendered).to have_css('input[name="worker_type"][value="worker-type"]', visible: false)
   end
 
-  it 'selects "yes" if school payroll is "yes"' do
-    params[:school_payroll] = 'yes'
+  it 'selects "school" if payroll provider is "school"' do
+    params[:payroll_provider] = 'school'
     render
-    expect(rendered).to have_css('input[type="radio"][name="school_payroll"][value="yes"][checked]')
+    expect(rendered).to have_css('input[type="radio"][name="payroll_provider"][value="school"][checked]')
   end
 
-  it 'selects "no" if school payroll is "no"' do
-    params[:school_payroll] = 'no'
+  it 'selects "agency" if payroll provider is "agency"' do
+    params[:payroll_provider] = 'agency'
     render
-    expect(rendered).to have_css('input[type="radio"][name="school_payroll"][value="no"][checked]')
+    expect(rendered).to have_css('input[type="radio"][name="payroll_provider"][value="agency"][checked]')
   end
 end

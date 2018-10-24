@@ -10,12 +10,12 @@
       </legend>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
-          <%= radio_button_tag :school_payroll, :yes, checked?(params[:school_payroll], 'yes'), class: 'govuk-radios__input' %>
-          <%= label_tag :school_payroll_yes, 'Yes', class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :payroll_provider, :school, checked?(params[:payroll_provider], 'school'), class: 'govuk-radios__input' %>
+          <%= label_tag :payroll_provider_school, 'Yes', class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :school_payroll, :no, checked?(params[:school_payroll], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :school_payroll_no, 'No, I want the agency to deal with payroll', class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :payroll_provider, :agency, checked?(params[:payroll_provider], 'agency'), class: 'govuk-radios__input' %>
+          <%= label_tag :payroll_provider_agency, 'No, I want the agency to deal with payroll', class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     </fieldset>

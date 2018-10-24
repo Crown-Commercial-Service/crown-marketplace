@@ -27,7 +27,7 @@ class BranchesController < ApplicationController
   private
 
   def back_path
-    if params[:worker_type] == 'nominated' || params[:school_payroll] == 'yes'
+    if params[:worker_type] == 'nominated' || params[:payroll_provider] == 'school'
       search_question_path(slug: 'school-postcode', params: safe_params)
     else
       search_question_path(slug: 'agency-payroll', params: safe_params)
@@ -45,9 +45,9 @@ class BranchesController < ApplicationController
   def rates
     if params[:worker_type] == 'nominated'
       Rate.direct_provision.nominated_worker
-    elsif params[:school_payroll] == 'yes'
+    elsif params[:payroll_provider] == 'school'
       Rate.direct_provision.fixed_term
-    elsif params[:school_payroll] == 'no'
+    elsif params[:payroll_provider] == 'agency'
       Rate.direct_provision.rate_for(job_type: job_type, term: term)
     end
   end
@@ -57,9 +57,9 @@ class BranchesController < ApplicationController
       search_result_for(branch).tap do |result|
         if params[:worker_type] == 'nominated'
           result.rate = branch.supplier.nominated_worker_rate
-        elsif params[:school_payroll] == 'yes'
+        elsif params[:payroll_provider] == 'school'
           result.rate = branch.supplier.fixed_term_rate
-        elsif params[:school_payroll] == 'no'
+        elsif params[:payroll_provider] == 'agency'
           result.rate = branch.supplier.rate_for(job_type: job_type, term: term)
         end
         result.distance = point.distance(branch.location)
@@ -90,7 +90,7 @@ class BranchesController < ApplicationController
 
   def safe_params
     params.permit(
-      :postcode, :worker_type, :looking_for, :school_payroll, :term,
+      :postcode, :worker_type, :looking_for, :payroll_provider, :term,
       :job_type
     )
   end

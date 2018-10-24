@@ -12,7 +12,7 @@ RSpec.describe BranchesController, type: :controller do
         { postcode: postcode,
           worker_type: 'nominated',
           looking_for: 'managed_service_provider',
-          school_payroll: 'yes' }
+          payroll_provider: 'school' }
       end
 
       before do

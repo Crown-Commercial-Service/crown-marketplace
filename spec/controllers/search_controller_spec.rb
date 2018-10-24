@@ -224,7 +224,7 @@ RSpec.describe SearchController, type: :controller do
       params = {
         looking_for: 'worker',
         worker_type: 'agency_supplied',
-        school_payroll: 'yes'
+        payroll_provider: 'school'
       }
       get :question, params: params.merge(slug: 'school-postcode')
       expect(assigns(:back_path)).to eq(
@@ -240,7 +240,7 @@ RSpec.describe SearchController, type: :controller do
       params = {
         looking_for: 'worker',
         worker_type: 'agency_supplied',
-        school_payroll: 'yes',
+        payroll_provider: 'school',
         postcode: postcode
       }
       get :answer, params: params.merge(slug: 'school-postcode')
@@ -278,7 +278,7 @@ RSpec.describe SearchController, type: :controller do
         params = {
           looking_for: 'worker',
           worker_type: 'agency_supplied',
-          school_payroll: 'yes'
+          payroll_provider: 'school'
         }
         get :answer, params: params.merge(slug: 'school-payroll')
         expect(response).to redirect_to(
@@ -292,7 +292,7 @@ RSpec.describe SearchController, type: :controller do
         params = {
           looking_for: 'worker',
           worker_type: 'agency_supplied',
-          school_payroll: 'no'
+          payroll_provider: 'agency'
         }
         get :answer, params: params.merge(slug: 'school-payroll')
         expect(response).to redirect_to(
@@ -306,7 +306,7 @@ RSpec.describe SearchController, type: :controller do
         {
           looking_for: 'worker',
           worker_type: 'agency_supplied',
-          school_payroll: ''
+          payroll_provider: ''
         }
       end
 
@@ -331,7 +331,7 @@ RSpec.describe SearchController, type: :controller do
       params = {
         looking_for: 'worker',
         worker_type: 'agency_supplied',
-        school_payroll: 'no'
+        payroll_provider: 'agency'
       }
       get :question, params: params.merge(slug: 'agency-payroll')
       expect(assigns(:back_path)).to eq(
