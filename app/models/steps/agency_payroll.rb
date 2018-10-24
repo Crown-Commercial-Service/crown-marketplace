@@ -10,7 +10,7 @@ module Steps
     validates :job_type, presence: true
 
     def next_step_class
-      Results
+      AgencyPayrollResults
     end
   end
 end
