@@ -10,7 +10,7 @@ RSpec.describe BranchesController, type: :controller do
       let(:postcode) { 'W1A 1AA' }
       let(:request_params) do
         { postcode: postcode,
-          nominated_worker: 'yes',
+          worker_type: 'nominated',
           looking_for: 'managed_service_provider',
           school_payroll: 'yes' }
       end
@@ -90,7 +90,7 @@ RSpec.describe BranchesController, type: :controller do
       let(:params) do
         {
           postcode: 'nonsense',
-          nominated_worker: 'yes',
+          worker_type: 'nominated',
           looking_for: 'worker'
         }
       end
@@ -119,7 +119,7 @@ RSpec.describe BranchesController, type: :controller do
         )
         get :index, params: {
           postcode: postcode,
-          nominated_worker: 'yes',
+          worker_type: 'nominated',
           looking_for: 'worker'
         }
       end
@@ -129,7 +129,7 @@ RSpec.describe BranchesController, type: :controller do
           search_question_path(
             slug: 'school-postcode',
             postcode: postcode,
-            nominated_worker: 'yes',
+            worker_type: 'nominated',
             looking_for: 'worker'
           )
         )
