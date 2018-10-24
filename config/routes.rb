@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :uploads, only: :create
 
   get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
+  get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
 
   get '/:slug', to: 'search#question', as: 'search_question'
   get '/:slug/answer', to: 'search#answer', as: 'search_answer'
