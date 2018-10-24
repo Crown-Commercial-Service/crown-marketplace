@@ -55,13 +55,18 @@ class Upload
   end
 
   def self.create_supplier_rates!(supplier, lot_number, rates)
-    rates.each do |rate|
-      supplier.rates.create!(
+    rates.each do |rate_data|
+      rate = supplier.rates.build(
         lot_number: lot_number,
-        job_type: rate['job_type'],
-        term: rate['term'],
-        mark_up: rate['fee'].to_f
+        job_type: rate_data['job_type'],
+        term: rate_data['term']
       )
+      if rate.daily_fee?
+        rate.daily_fee = rate_data['fee']
+      else
+        rate.mark_up = rate_data['fee'].to_f
+      end
+      rate.save!
     end
   end
 end
