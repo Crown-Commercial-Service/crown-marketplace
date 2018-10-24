@@ -18,5 +18,11 @@ RSpec.describe SuppliersController, type: :controller do
       get :master_vendors
       expect(assigns(:suppliers)).to eq(suppliers)
     end
+
+    it 'sets the back path to the managed service provider question' do
+      get :master_vendors
+      expected_path = search_question_path(slug: 'managed-service-provider')
+      expect(assigns(:back_path)).to eq(expected_path)
+    end
   end
 end
