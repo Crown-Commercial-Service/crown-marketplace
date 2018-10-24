@@ -1,14 +1,11 @@
 module Steps
   module Results
     include BranchesHelper
+    include Steps::Geolocatable
 
     def self.included(base)
       base.send :attribute, :postcode
       base.send :validates, :location, location: true
-    end
-
-    def location
-      @location ||= Location.new(postcode)
     end
 
     def branches
