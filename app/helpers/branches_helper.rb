@@ -4,7 +4,7 @@ module BranchesHelper
   end
 
   def link_to_calculator?
-    params[:school_payroll] != 'yes'
+    params[:payroll_provider] != 'school'
   end
 
   def default_search_range

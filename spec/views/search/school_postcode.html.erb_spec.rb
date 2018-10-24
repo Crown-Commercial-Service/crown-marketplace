@@ -19,8 +19,8 @@ RSpec.describe 'search/school_postcode.html.erb' do
   end
 
   it 'stores answer to school payroll question in hidden field' do
-    params[:school_payroll] = 'school-payroll'
+    params[:payroll_provider] = 'payroll-provider'
     render
-    expect(rendered).to have_css('input[name="school_payroll"][value="school-payroll"]', visible: false)
+    expect(rendered).to have_css('input[name="payroll_provider"][value="payroll-provider"]', visible: false)
   end
 end
