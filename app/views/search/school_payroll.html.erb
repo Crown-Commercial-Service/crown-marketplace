@@ -1,6 +1,6 @@
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_field_tag :looking_for, params[:looking_for] %>
-  <%= hidden_field_tag :nominated_worker, params[:nominated_worker] %>
+  <%= hidden_field_tag :worker_type, params[:worker_type] %>
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">

@@ -1,13 +1,17 @@
 module Steps
   class NominatedWorker < JourneyStep
-    attribute :nominated_worker
-    validates :nominated_worker, yes_no: true
+    attribute :worker_type
+    validates :worker_type,
+              inclusion: {
+                in: ['nominated', 'agency_supplied'],
+                message: 'Please choose an option'
+              }
 
     def next_step_class
-      case nominated_worker
-      when 'yes'
+      case worker_type
+      when 'nominated'
         SchoolPostcode
-      when 'no'
+      when 'agency_supplied'
         SchoolPayroll
       end
     end
