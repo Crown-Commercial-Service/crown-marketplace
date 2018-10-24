@@ -28,6 +28,8 @@ class SearchController < ApplicationController
       branches_path(params: journey.params)
     when 'master-vendor-managed-service'
       master_vendors_path(journey.params)
+    when 'neutral-vendor-managed-service'
+      neutral_vendors_path(journey.params)
     else
       search_question_path(slug: journey.next_slug, params: journey.params)
     end
