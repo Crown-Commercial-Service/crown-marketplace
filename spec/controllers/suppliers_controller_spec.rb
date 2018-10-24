@@ -25,4 +25,29 @@ RSpec.describe SuppliersController, type: :controller do
       expect(assigns(:back_path)).to eq(expected_path)
     end
   end
+
+  describe 'GET neutral_vendors' do
+    let(:supplier) { build(:supplier) }
+    let(:suppliers) { [supplier] }
+
+    before do
+      allow(Supplier).to receive(:with_neutral_vendor_rates).and_return(suppliers)
+    end
+
+    it 'renders the neutral_vendors template' do
+      get :neutral_vendors
+      expect(response).to render_template('neutral_vendors')
+    end
+
+    it 'assigns suppliers with neutral vendor rates to suppliers' do
+      get :neutral_vendors
+      expect(assigns(:suppliers)).to eq(suppliers)
+    end
+
+    it 'sets the back path to the managed service provider question' do
+      get :neutral_vendors
+      expected_path = search_question_path(slug: 'managed-service-provider')
+      expect(assigns(:back_path)).to eq(expected_path)
+    end
+  end
 end
