@@ -13,9 +13,9 @@ RSpec.describe 'search/school_postcode.html.erb' do
   end
 
   it 'stores answer to nominated worker question in hidden field' do
-    params[:nominated_worker] = 'nominated-worker'
+    params[:worker_type] = 'worker-type'
     render
-    expect(rendered).to have_css('input[name="nominated_worker"][value="nominated-worker"]', visible: false)
+    expect(rendered).to have_css('input[name="worker_type"][value="worker-type"]', visible: false)
   end
 
   it 'stores answer to school payroll question in hidden field' do

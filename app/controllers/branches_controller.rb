@@ -27,7 +27,7 @@ class BranchesController < ApplicationController
   private
 
   def back_path
-    if params[:nominated_worker] == 'yes' || params[:school_payroll] == 'yes'
+    if params[:worker_type] == 'nominated' || params[:school_payroll] == 'yes'
       search_question_path(slug: 'school-postcode', params: safe_params)
     else
       search_question_path(slug: 'agency-payroll', params: safe_params)
@@ -43,7 +43,7 @@ class BranchesController < ApplicationController
   end
 
   def rates
-    if params[:nominated_worker] == 'yes'
+    if params[:worker_type] == 'nominated'
       Rate.direct_provision.nominated_worker
     elsif params[:school_payroll] == 'yes'
       Rate.direct_provision.fixed_term
@@ -55,7 +55,7 @@ class BranchesController < ApplicationController
   def branch_results_near(point)
     Branch.search(point, rates: rates).map do |branch|
       search_result_for(branch).tap do |result|
-        if params[:nominated_worker] == 'yes'
+        if params[:worker_type] == 'nominated'
           result.rate = branch.supplier.nominated_worker_rate
         elsif params[:school_payroll] == 'yes'
           result.rate = branch.supplier.fixed_term_rate
@@ -90,7 +90,7 @@ class BranchesController < ApplicationController
 
   def safe_params
     params.permit(
-      :postcode, :nominated_worker, :looking_for, :school_payroll, :term,
+      :postcode, :worker_type, :looking_for, :school_payroll, :term,
       :job_type
     )
   end
