@@ -54,13 +54,7 @@
             beta
           </strong>
           <span class="govuk-phase-banner__text">
-            This is a new service – your
-            <% if Marketplace.feedback_email_address.present? %>
-              <%= mail_to(Marketplace.feedback_email_address, 'feedback', class: 'govuk-link') %>
-            <% else %>
-              feedback
-            <% end %>
-            will help us to improve it.
+            This is a new service – your <%= feedback_email_link %> will help us to improve it.
           </span>
         </p>
       </div>
