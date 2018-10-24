@@ -90,7 +90,7 @@ class BranchesController < ApplicationController
 
   def safe_params
     params.permit(
-      :postcode, :nominated_worker, :hire_via_agency, :school_payroll, :term,
+      :postcode, :nominated_worker, :looking_for, :school_payroll, :term,
       :job_type
     )
   end

@@ -11,7 +11,7 @@ RSpec.describe BranchesController, type: :controller do
       let(:request_params) do
         { postcode: postcode,
           nominated_worker: 'yes',
-          hire_via_agency: 'no',
+          looking_for: 'managed_service_provider',
           school_payroll: 'yes' }
       end
 
@@ -91,7 +91,7 @@ RSpec.describe BranchesController, type: :controller do
         {
           postcode: 'nonsense',
           nominated_worker: 'yes',
-          hire_via_agency: 'yes'
+          looking_for: 'worker'
         }
       end
 
@@ -120,7 +120,7 @@ RSpec.describe BranchesController, type: :controller do
         get :index, params: {
           postcode: postcode,
           nominated_worker: 'yes',
-          hire_via_agency: 'yes'
+          looking_for: 'worker'
         }
       end
 
@@ -130,7 +130,7 @@ RSpec.describe BranchesController, type: :controller do
             slug: 'school-postcode',
             postcode: postcode,
             nominated_worker: 'yes',
-            hire_via_agency: 'yes'
+            looking_for: 'worker'
           )
         )
       end
