@@ -88,10 +88,9 @@ RSpec.describe SearchController, type: :controller do
     context 'when master vendor is no' do
       let(:master_vendor) { 'no' }
 
-      it 'redirects to neutral vendor managed service outcome' do
+      it 'redirects to neutral vendors path' do
         expect(response).to redirect_to(
-          search_question_path(
-            slug: 'neutral-vendor-managed-service',
+          neutral_vendors_path(
             master_vendor: master_vendor,
             hire_via_agency: 'no'
           )
@@ -246,17 +245,6 @@ RSpec.describe SearchController, type: :controller do
       }
       get :answer, params: params.merge(slug: 'school-postcode')
       expect(response).to redirect_to(branches_path(params))
-    end
-  end
-
-  describe 'GET neutral_vendor_managed_service_outcome' do
-    it 'renders template' do
-      get :question, params: {
-        slug: 'neutral-vendor-managed-service',
-        master_vendor: 'no',
-        hire_via_agency: 'no'
-      }
-      expect(response).to render_template('neutral_vendor_managed_service')
     end
   end
 

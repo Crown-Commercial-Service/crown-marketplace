@@ -15,7 +15,8 @@ class Rate < ApplicationRecord
     'senior' => 'Senior leadership staff',
     'admin' => 'Clerical staff',
     'nominated' => 'Nominated workers',
-    'fixed_term' => 'Fixed Term workers'
+    'fixed_term' => 'Fixed Term workers',
+    'daily_fee' => 'Neutral vendor managed service provider fee (per day)'
   }.freeze
 
   TERMS = {
@@ -34,7 +35,13 @@ class Rate < ApplicationRecord
                        uniqueness: { scope: %i[supplier term lot_number] },
                        inclusion: { in: JOB_TYPES.keys }
 
-  validates :mark_up, presence: true
+  validates :mark_up,
+            presence: { if: :percentage_mark_up? },
+            absence: { unless: :percentage_mark_up? }
+
+  validates :daily_fee,
+            presence: { if: :daily_fee? },
+            absence: { unless: :daily_fee? }
 
   def self.nominated_worker
     where(job_type: 'nominated')
@@ -58,5 +65,13 @@ class Rate < ApplicationRecord
 
   def self.rate_for(job_type:, term:)
     where(job_type: job_type.code, term: term.rate_term)
+  end
+
+  def daily_fee?
+    job_type == 'daily_fee'
+  end
+
+  def percentage_mark_up?
+    !daily_fee?
   end
 end

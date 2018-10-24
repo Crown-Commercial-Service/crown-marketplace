@@ -1,33 +1,29 @@
-<div class="govuk-width-container">
-  <main class="govuk-main-wrapper">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <h1 class="govuk-heading-xl cmp-page-heading">Suppliers list</h1>
-        <p class="govuk-body">
-          <% if @location %>
-          <span class="govuk-body-l"><%= @branches.count %></span> results found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @location.postcode %></strong>
-          <% else %>
-          <span class="govuk-body-l"><%= @branches.count %></span> results found
-          <% end %>
-        </p>
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-        <% if @branches.any? %>
-          <%= render partial: 'branch', collection: @branches %>
-        <% end %>
-      </div>
-    </div>
-    <div class="govuk-grid-row ccs-no-print">
-      <div class="govuk-grid-column-full">
-        <p class="govuk-body">
-          <a href="javascript:window.print()" class="govuk-link">Print this page</a>
-        </p>
-        <p class="govuk-body">
-          <%= link_to 'Download shortlist of suppliers', branches_path(safe_params.merge(format: :xlsx)), { class: 'file-download' } %>
-          <% if link_to_calculator? %>
-          <%= link_to 'Download shortlist (with markup calculator)', branches_path(safe_params.merge(format: :xlsx, calculations: 'yes')), { class: 'file-download' } %>
-          <% end %>
-        </p>
-      </div>
-    </div>
-  </main>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl cmp-page-heading">Suppliers list</h1>
+    <p class="govuk-body">
+      <% if @location %>
+      <span class="govuk-body-l"><%= @branches.count %></span> results found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @location.postcode %></strong>
+      <% else %>
+      <span class="govuk-body-l"><%= @branches.count %></span> results found
+      <% end %>
+    </p>
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    <% if @branches.any? %>
+      <%= render partial: 'branch', collection: @branches %>
+    <% end %>
+  </div>
+</div>
+<div class="govuk-grid-row ccs-no-print">
+  <div class="govuk-grid-column-full">
+    <p class="govuk-body">
+      <a href="javascript:window.print()" class="govuk-link">Print this page</a>
+    </p>
+    <p class="govuk-body">
+      <%= link_to 'Download shortlist of suppliers', branches_path(safe_params.merge(format: :xlsx)), { class: 'file-download' } %>
+      <% if link_to_calculator? %>
+      <%= link_to 'Download shortlist (with markup calculator)', branches_path(safe_params.merge(format: :xlsx, calculations: 'yes')), { class: 'file-download' } %>
+      <% end %>
+    </p>
+  </div>
 </div>

@@ -55,10 +55,10 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Through an agency'
+    choose 'An individual worker'
     click_on 'Continue'
 
-    choose 'No'
+    choose 'Yes'
     click_on 'Continue'
 
     choose 'No'

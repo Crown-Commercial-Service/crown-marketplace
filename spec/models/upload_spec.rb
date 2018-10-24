@@ -311,6 +311,11 @@ RSpec.describe Upload, type: :model do
               'job_type' => 'nominated',
               'line_no' => 1,
               'fee' => 0.35
+            },
+            {
+              'job_type' => 'daily_fee',
+              'line_no' => 1,
+              'fee' => 1.23
             }
           ]
         end
@@ -323,6 +328,18 @@ RSpec.describe Upload, type: :model do
             an_object_having_attributes(
               job_type: 'nominated',
               mark_up: a_value_within(1e-6).of(0.35)
+            )
+          )
+        end
+
+        it 'adds daily fee rates to supplier' do
+          described_class.create!(suppliers)
+
+          supplier = Supplier.last
+          expect(supplier.rates.neutral_vendor).to include(
+            an_object_having_attributes(
+              job_type: 'daily_fee',
+              daily_fee: 1.23
             )
           )
         end

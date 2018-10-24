@@ -6,7 +6,11 @@
       <% supplier.rates.each do |rate| %>
         <p>
           <%= Rate::JOB_TYPES[rate.job_type] %>
-          <%= number_to_percentage(rate.mark_up * 100, precision: 1) %>
+          <% if rate.percentage_mark_up? %>
+            <%= number_to_percentage(rate.mark_up * 100, precision: 1) %>
+          <% else %>
+            <%= number_to_currency(rate.daily_fee, unit: '£') %>
+          <% end %>
         </p>
       <% end %>
     <% end %>

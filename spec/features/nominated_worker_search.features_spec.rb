@@ -48,10 +48,10 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Through an agency'
+    choose 'An individual worker'
     click_on 'Continue'
 
-    choose 'Yes'
+    choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
     click_on 'Continue'
 
     fill_in 'postcode', with: 'WC2B 6TE'
@@ -82,10 +82,10 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Through an agency'
+    choose 'An individual worker'
     click_on 'Continue'
 
-    choose 'Yes'
+    choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
     click_on 'Continue'
 
     fill_in 'postcode', with: 'WC2B 6TE'
@@ -104,10 +104,10 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Through an agency'
+    choose 'An individual worker'
     click_on 'Continue'
 
-    choose 'Yes'
+    choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
     click_on 'Continue'
 
     fill_in 'postcode', with: 'WC2B 6TE'
@@ -116,7 +116,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on 'Back'
     click_on 'Back'
 
-    expect(page).to have_checked_field('Yes')
+    expect(page).to have_checked_field("No, I have a worker I want the agency to manage (a 'nominated worker')")
   end
 
   scenario 'Buyer changes mind about postcode, nominated worker & hire via agency' do
@@ -127,10 +127,10 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit '/'
     click_on 'Start now'
 
-    choose 'Through an agency'
+    choose 'An individual worker'
     click_on 'Continue'
 
-    choose 'Yes'
+    choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
     click_on 'Continue'
 
     fill_in 'postcode', with: 'WC2B 6TE'
@@ -140,17 +140,17 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on 'Back'
     click_on 'Back'
 
-    expect(page).to have_checked_field('Through an agency')
+    expect(page).to have_checked_field('An individual worker')
   end
 
   scenario 'Buyer enters invalid postcode' do
     visit '/'
     click_on 'Start now'
 
-    choose 'Through an agency'
+    choose 'An individual worker'
     click_on 'Continue'
 
-    choose 'Yes'
+    choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
     click_on 'Continue'
 
     fill_in 'postcode', with: 'XY1 2AB'
