@@ -18,6 +18,6 @@ class SuppliersController < ApplicationController
   private
 
   def managed_service_provider_params
-    params.permit(:looking_for, :master_vendor)
+    params.permit(:looking_for, :managed_service_provider)
   end
 end
