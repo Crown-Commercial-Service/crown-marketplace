@@ -15,9 +15,56 @@ RSpec.describe Rate, type: :model do
     expect(rate).not_to be_valid
   end
 
-  it 'is not valid if mark_up is blank' do
-    rate.mark_up = nil
-    expect(rate).not_to be_valid
+  context "when it's a percentage mark up" do
+    before do
+      rate.job_type = 'nominated'
+      rate.mark_up = 1
+    end
+
+    it '#daily_fee? is false' do
+      expect(rate).not_to be_daily_fee
+    end
+
+    it '#percentage_mark_up? is true' do
+      expect(rate).to be_percentage_mark_up
+    end
+
+    it 'is not valid if mark_up is blank' do
+      rate.mark_up = nil
+      expect(rate).not_to be_valid
+      expect(rate.errors[:mark_up]).to include("can't be blank")
+    end
+
+    it 'is not valid if daily_fee is present' do
+      rate.daily_fee = 1
+      expect(rate).not_to be_valid
+    end
+  end
+
+  context "when it's a daily fee" do
+    before do
+      rate.job_type = 'daily_fee'
+      rate.daily_fee = 1
+    end
+
+    it '#daily_fee? is true' do
+      expect(rate).to be_daily_fee
+    end
+
+    it '#percentage_mark_up? is false' do
+      expect(rate).not_to be_percentage_mark_up
+    end
+
+    it 'is not valid if daily_fee is blank' do
+      rate.daily_fee = nil
+      expect(rate).not_to be_valid
+      expect(rate.errors[:daily_fee]).to include("can't be blank")
+    end
+
+    it 'is not valid if mark_up is present' do
+      rate.mark_up = 1
+      expect(rate).not_to be_valid
+    end
   end
 
   it 'is not valid if supplier has another rate for this job type, lot_number and term' do
