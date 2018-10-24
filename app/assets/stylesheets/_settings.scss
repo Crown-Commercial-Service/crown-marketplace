@@ -52,14 +52,15 @@ $govuk-colours: (
 
 );
 
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700');
 
 $govuk-font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
 $govuk-font-family-print: sans-serif;
 
-$govuk-font-weight-light: 200;
+$govuk-font-weight-light: 300;
 $govuk-font-weight-regular: 400;
-$govuk-font-weight-bold: 600;
+$govuk-font-weight-semi-bold: 600;
+$govuk-font-weight-bold: 700;
 
 $govuk-heading-xl: 48px;
 $govuk-heading-l: 27px;
