@@ -1,6 +1,6 @@
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_field_tag :looking_for, params[:looking_for] %>
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if flash[:error] %>">
+  <%= govuk_form_group_with_optional_error do %>
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
@@ -19,6 +19,6 @@
         </div>
       </div>
     </fieldset>
-  </div>
+  <% end %>
   <%= submit_tag t('.submit'), class: "govuk-button" %>
 <% end %>

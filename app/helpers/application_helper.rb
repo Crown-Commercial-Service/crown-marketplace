@@ -15,6 +15,15 @@ module ApplicationHelper
     end
   end
 
+  def govuk_form_group_with_optional_error
+    css_classes = ['govuk-form-group']
+    css_classes += ['govuk-form-group--error'] if flash[:error]
+
+    content_tag :div, class: css_classes.join(' ') do
+      yield
+    end
+  end
+
   def display_flash_error
     return unless flash[:error]
 
