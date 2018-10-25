@@ -1,0 +1,7 @@
+@import "govuk-frontend/components/tag/tag";
+
+.govuk-tag {
+    line-height: 1em;
+    background-color:  govuk-colour("blue");
+    padding: 3px 8px 4px;
+}
