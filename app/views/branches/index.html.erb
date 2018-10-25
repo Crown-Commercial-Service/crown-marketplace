@@ -3,7 +3,7 @@
     <h1 class="govuk-heading-xl cmp-page-heading">Suppliers list</h1>
     <p class="govuk-body">
       <% if @location %>
-      <span class="govuk-body-l"><%= @branches.count %></span> results found within <strong><%= Branch::DEFAULT_SEARCH_RANGE_IN_MILES %> miles</strong> of <strong><%= @location.postcode %></strong>
+      <span class="govuk-body-l"><%= @branches.count %></span> results found within <strong><%= default_search_range %></strong> of <strong><%= @location.postcode %></strong>
       <% else %>
       <span class="govuk-body-l"><%= @branches.count %></span> results found
       <% end %>

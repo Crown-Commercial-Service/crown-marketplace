@@ -6,4 +6,8 @@ module BranchesHelper
   def link_to_calculator?
     params[:school_payroll] != 'yes'
   end
+
+  def default_search_range
+    "#{Branch::DEFAULT_SEARCH_RANGE_IN_MILES} miles"
+  end
 end
