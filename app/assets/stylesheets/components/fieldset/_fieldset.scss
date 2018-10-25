@@ -1,5 +1,5 @@
 @import "govuk-frontend/components/fieldset/fieldset";
 
 .govuk-fieldset__legend--m {
-	line-height: 2;
+	font-weight: $govuk-font-weight-semi-bold;
 }
