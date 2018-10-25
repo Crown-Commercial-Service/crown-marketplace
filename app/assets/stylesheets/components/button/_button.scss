@@ -6,13 +6,15 @@ $govuk-button-shadow-colour: darken($govuk-button-colour, 15%);
 $govuk-button-text-colour: govuk-colour("white");
 $govuk-button-radius: 3px !default;
 
-$button-shadow-size: $govuk-border-width-form-element;
+$button-shadow-size: 3px;
 
 .govuk-button {
   border-radius: $govuk-button-radius;
   color: $govuk-button-text-colour;
   background-color: $govuk-button-colour;
-
+  font-weight: $govuk-font-weight-semi-bold;
+  -webkit-box-shadow: 0 $button-shadow-size 0 $govuk-button-shadow-colour;
+  box-shadow: 0 $button-shadow-size 0 $govuk-button-shadow-colour; // s0
 
   // Ensure that any global link styles are overridden
   &:link,
@@ -50,5 +52,17 @@ $button-shadow-size: $govuk-border-width-form-element;
     @include govuk-if-ie8 {
       border-bottom: $button-shadow-size solid $govuk-button-shadow-colour; // s0
     }
+  }
+}
+
+.govuk-button--start {
+  background-image: image-url("icon-pointer.png");
+  background-repeat: no-repeat;
+  background-size: 30px 19px;
+  background-position: 100% 56%;
+
+  @include govuk-device-pixel-ratio {
+    background-image: image-url("icon-pointer-2x.png");
+    background-size: 29px 18px;
   }
 }
