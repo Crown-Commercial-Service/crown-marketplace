@@ -3,7 +3,6 @@ en:
     format: "%{message}"
     messages:
       invalid_postcode: 'This is not a valid postcode'
-      yes_no: 'Please choose an option'
       inclusion: 'Please choose an option'
   faker:
     company:
