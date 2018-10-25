@@ -18,7 +18,7 @@ RSpec.describe SearchController, type: :controller do
       }
     end
 
-    context 'when hire_via_agency is yes' do
+    context 'when looking to hire a worker via an agency' do
       let(:hire_via_agency) { 'yes' }
 
       it 'redirects to nominated worker question' do
@@ -28,7 +28,7 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when hire_via_agency is no' do
+    context 'when looking to hire a managed service provider' do
       let(:hire_via_agency) { 'no' }
 
       it 'redirects to managed service providers outcome' do
@@ -38,10 +38,10 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when hire via agency is blank' do
+    context 'when answer is blank' do
       let(:hire_via_agency) { '' }
 
-      it 'redirects to hire via agency question' do
+      it 'redirects to hire-via-agency question' do
         expect(response).to redirect_to(
           search_question_path(slug: 'hire-via-agency', hire_via_agency: '')
         )
@@ -72,7 +72,7 @@ RSpec.describe SearchController, type: :controller do
       }
     end
 
-    context 'when master vendor is yes' do
+    context 'when looking for a master vendor' do
       let(:master_vendor) { 'yes' }
 
       it 'redirects to master vendors path' do
@@ -85,7 +85,7 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when master vendor is no' do
+    context 'when looking for a neutral vendor' do
       let(:master_vendor) { 'no' }
 
       it 'redirects to neutral vendors path' do
@@ -98,10 +98,10 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when master vendor is blank' do
+    context 'when answer is blank' do
       let(:master_vendor) { '' }
 
-      it 'redirects to managed service provider question' do
+      it 'redirects to managed-service-provider question' do
         expect(response).to redirect_to(
           search_question_path(
             slug: 'managed-service-provider',
@@ -139,7 +139,7 @@ RSpec.describe SearchController, type: :controller do
       get :answer, params: params.merge(slug: 'nominated-worker')
     end
 
-    context 'when nominated worker is yes' do
+    context 'when looking for a nominated worker' do
       let(:nominated_worker) { 'yes' }
 
       it 'redirects to non nominated worker outcome' do
@@ -149,7 +149,7 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when nominated worker is no' do
+    context 'when looking for an agency supplied worker' do
       let(:nominated_worker) { 'no' }
 
       it 'redirects to school payroll question path' do
@@ -159,7 +159,7 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when nominated worker is blank' do
+    context 'when answer is blank' do
       let(:nominated_worker) { '' }
 
       it 'redirects to nominated worker question' do
@@ -173,10 +173,10 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when nominated worker is unknown' do
+    context 'when answer is unknown' do
       let(:nominated_worker) { 'blahblah' }
 
-      it 'redirects to nominated worker question' do
+      it 'redirects to nominated-worker question' do
         expect(response).to redirect_to(
           search_question_path(params.merge(slug: 'nominated-worker'))
         )
@@ -198,7 +198,7 @@ RSpec.describe SearchController, type: :controller do
       expect(response).to render_template('school_postcode')
     end
 
-    it 'sets back_path to nominated worker question including params' do
+    it 'sets back_path to nominated-worker question including params' do
       params = {
         hire_via_agency: 'yes',
         nominated_worker: 'yes'
@@ -209,7 +209,7 @@ RSpec.describe SearchController, type: :controller do
       )
     end
 
-    it 'sets form_path to school postcode answer path' do
+    it 'sets form_path to school-postcode answer path' do
       params = {
         hire_via_agency: 'yes',
         nominated_worker: 'yes'
@@ -220,7 +220,7 @@ RSpec.describe SearchController, type: :controller do
       )
     end
 
-    it 'sets back path to school payroll question if employing worker on school payroll' do
+    it 'sets back path to school-payroll question if employing worker on school payroll' do
       params = {
         hire_via_agency: 'yes',
         nominated_worker: 'no',
@@ -249,7 +249,7 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET #question for school-payroll' do
-    it 'sets the form path to school payroll answer' do
+    it 'sets the form path to school-payroll answer' do
       params = {
         hire_via_agency: 'yes',
         nominated_worker: 'no'
@@ -260,7 +260,7 @@ RSpec.describe SearchController, type: :controller do
       )
     end
 
-    it 'sets the back path to the nominated worker question' do
+    it 'sets the back path to the nominated-worker question' do
       params = {
         hire_via_agency: 'yes',
         nominated_worker: 'no'
@@ -273,7 +273,7 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET #answer for school-payroll' do
-    context 'when the answer is yes' do
+    context 'when looking for the school to provide payroll' do
       it 'redirects to postcode form' do
         params = {
           hire_via_agency: 'yes',
@@ -287,7 +287,7 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when the answer is no' do
+    context 'when looking for the agency to provide payroll' do
       it 'redirects to agency payroll outcome' do
         params = {
           hire_via_agency: 'yes',
@@ -314,7 +314,7 @@ RSpec.describe SearchController, type: :controller do
         get :answer, params: params.merge(slug: 'school-payroll')
       end
 
-      it 'redirects to school payroll question' do
+      it 'redirects to school-payroll question' do
         expect(response).to redirect_to(
           search_question_path(params.merge(slug: 'school-payroll'))
         )
@@ -327,7 +327,7 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET #question for agency-payroll' do
-    it 'sets the back link to the school payroll question' do
+    it 'sets the back link to the school-payroll question' do
       params = {
         hire_via_agency: 'yes',
         nominated_worker: 'no',
