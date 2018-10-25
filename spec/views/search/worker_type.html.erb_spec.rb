@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'search/nominated_worker.html.erb' do
+RSpec.describe 'search/worker_type.html.erb' do
   it 'stores answer to hire via agency question in hidden field' do
     @back_path = '/'
     @form_path = '/'

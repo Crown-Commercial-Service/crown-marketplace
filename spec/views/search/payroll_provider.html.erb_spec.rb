@@ -12,7 +12,7 @@ RSpec.describe 'search/payroll_provider.html.erb' do
     expect(rendered).to have_css('input[name="looking_for"][value="looking-for"]', visible: false)
   end
 
-  it 'stores answer to nominated worker question in hidden field' do
+  it 'stores answer to worker-type question in hidden field' do
     params[:worker_type] = 'worker-type'
     render
     expect(rendered).to have_css('input[name="worker_type"][value="worker-type"]', visible: false)

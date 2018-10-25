@@ -6,7 +6,7 @@ module Steps
     def next_step_class
       case looking_for
       when 'worker'
-        NominatedWorker
+        WorkerType
       when 'managed_service_provider'
         ManagedServiceProvider
       end

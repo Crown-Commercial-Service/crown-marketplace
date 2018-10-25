@@ -1,5 +1,5 @@
 module Steps
-  class NominatedWorker < JourneyStep
+  class WorkerType < JourneyStep
     attribute :worker_type
     validates :worker_type, inclusion: ['nominated', 'agency_supplied']
 

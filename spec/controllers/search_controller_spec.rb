@@ -21,9 +21,9 @@ RSpec.describe SearchController, type: :controller do
     context 'when looking to hire a worker via an agency' do
       let(:looking_for) { 'worker' }
 
-      it 'redirects to nominated worker question' do
+      it 'redirects to worker-type question' do
         expect(response).to redirect_to(
-          search_question_path(slug: 'nominated-worker', looking_for: 'worker')
+          search_question_path(slug: 'worker-type', looking_for: 'worker')
         )
       end
     end
@@ -117,17 +117,17 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET #question for nominated-worker' do
+  describe 'GET #question for worker-type' do
     it 'renders template' do
       get :question, params: {
-        slug: 'nominated-worker',
+        slug: 'worker-type',
         looking_for: 'worker'
       }
-      expect(response).to render_template('nominated_worker')
+      expect(response).to render_template('worker_type')
     end
   end
 
-  describe 'GET #answer for nominated-worker' do
+  describe 'GET #answer for worker-type' do
     let(:params) do
       {
         looking_for: 'worker',
@@ -136,13 +136,13 @@ RSpec.describe SearchController, type: :controller do
     end
 
     before do
-      get :answer, params: params.merge(slug: 'nominated-worker')
+      get :answer, params: params.merge(slug: 'worker-type')
     end
 
-    context 'when looking for a nominated worker' do
+    context 'when looking for a worker-type' do
       let(:worker_type) { 'nominated' }
 
-      it 'redirects to non nominated worker outcome' do
+      it 'redirects to non worker-type outcome' do
         expect(response).to redirect_to(
           search_question_path(params.merge(slug: 'school-postcode'))
         )
@@ -162,9 +162,9 @@ RSpec.describe SearchController, type: :controller do
     context 'when answer is blank' do
       let(:worker_type) { '' }
 
-      it 'redirects to nominated worker question' do
+      it 'redirects to worker-type question' do
         expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'nominated-worker'))
+          search_question_path(params.merge(slug: 'worker-type'))
         )
       end
 
@@ -176,9 +176,9 @@ RSpec.describe SearchController, type: :controller do
     context 'when answer is unknown' do
       let(:worker_type) { 'blahblah' }
 
-      it 'redirects to nominated-worker question' do
+      it 'redirects to worker-type question' do
         expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'nominated-worker'))
+          search_question_path(params.merge(slug: 'worker-type'))
         )
       end
 
@@ -198,14 +198,14 @@ RSpec.describe SearchController, type: :controller do
       expect(response).to render_template('school_postcode')
     end
 
-    it 'sets back_path to nominated-worker question including params' do
+    it 'sets back_path to worker-type question including params' do
       params = {
         looking_for: 'worker',
         worker_type: 'nominated'
       }
       get :question, params: params.merge(slug: 'school-postcode')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(slug: 'nominated-worker'))
+        search_question_path(params.merge(slug: 'worker-type'))
       )
     end
 
@@ -260,14 +260,14 @@ RSpec.describe SearchController, type: :controller do
       )
     end
 
-    it 'sets the back path to the nominated-worker question' do
+    it 'sets the back path to the worker-type question' do
       params = {
         looking_for: 'worker',
         worker_type: 'agency_supplied'
       }
       get :question, params: params.merge(slug: 'payroll-provider')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(slug: 'nominated-worker'))
+        search_question_path(params.merge(slug: 'worker-type'))
       )
     end
   end
