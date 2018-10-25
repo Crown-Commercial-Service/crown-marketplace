@@ -8,7 +8,7 @@ module Steps
       when 'nominated'
         SchoolPostcode
       when 'agency_supplied'
-        SchoolPayroll
+        PayrollProvider
       end
     end
   end

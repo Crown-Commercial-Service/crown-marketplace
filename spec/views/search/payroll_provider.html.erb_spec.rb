@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'search/school_payroll.html.erb' do
+RSpec.describe 'search/payroll_provider.html.erb' do
   before do
     @back_path = '/'
     @form_path = '/'

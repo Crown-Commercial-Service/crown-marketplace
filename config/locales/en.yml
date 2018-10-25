@@ -50,7 +50,7 @@ en:
       answer_agency_supplied: 'Yes'
       answer_nominated_worker: No, I have a worker I want the agency to manage (a 'nominated worker')
       submit: Continue
-    school_payroll:
+    payroll_provider:
       question: Do you want to put the worker on the school's payroll?
       answer_school_payroll: 'Yes'
       answer_agency_payroll: No, I want the agency to deal with payroll
