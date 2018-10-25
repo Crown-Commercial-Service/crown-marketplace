@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'search/worker_type.html.erb' do
-  it 'stores answer to hire via agency question in hidden field' do
+  it 'stores answer to looking-for question in hidden field' do
     @back_path = '/'
     @form_path = '/'
     params[:looking_for] = 'looking-for'
