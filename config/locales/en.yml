@@ -3,9 +3,78 @@ en:
     format: "%{message}"
     messages:
       invalid_postcode: 'This is not a valid postcode'
-      yes_no: 'Please choose an option'
+      inclusion: 'Please choose an option'
   faker:
     company:
       suffix: [Ltd, plc, LLP]
       name:
         - "#{Name.last_name} #{suffix}"
+  layouts:
+    application:
+      title: Crown Commercial Service
+      skip: Skip to main content
+      beta: beta
+      feedback_html: "This is a new service – your %{link} will help us to improve it."
+      back: Back
+      having_problems: Having problems using this service?
+      support_email_html: "Email %{link} for support."
+  branches:
+    index:
+      header: Suppliers list
+      print: Print this page
+      download: Download shortlist of suppliers
+      download_with_calculator: Download shortlist (with markup calculator)
+      results_found_with_location_html: "results found within <strong>%{range}</strong> of <strong>%{postcode}</strong>"
+      results_found: results found
+    _branch:
+      branch: Branch
+      markup: Mark-up
+      miles: Miles
+  search:
+    agency_payroll:
+      postcode_question: What is your school's postcode?
+      worker_type_question: What type of worker do you need?
+      worker_term_question: How long do you need the worker for?
+      submit: Continue
+    hire_via_agency:
+      question: What are you looking for?
+      answer_yes: An individual worker
+      answer_no: A managed service provider
+    managed_service_provider:
+      question: What type of managed service do you want?
+      answer_yes: Master vendor managed service
+      answer_no: Neutral vendor managed service
+      submit: Continue
+    nominated_worker:
+      question: Do you want an agency to supply the worker?
+      answer1: 'Yes'
+      answer2: No, I have a worker I want the agency to manage (a 'nominated worker')
+      submit: Continue
+    school_payroll:
+      question: Do you want to put the worker on the school's payroll?
+      answer_yes: 'Yes'
+      answer_no: No, I want the agency to deal with payroll
+      submit: Continue
+    school_postcode:
+      question: What is your school's postcode?
+      question_hint: We use this to find agencies near to your school
+      submit: Continue
+    managed_service_providers_explanation:
+      header: Managed service providers
+      introduction: 'You will need to choose either:'
+      option1_header: A master vendor
+      option1_body_html: |
+        These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
+        <br>
+        You will then need to contact all the suppliers and run a further competition.
+      option_separator: or
+      option2_header: A neutral vendor
+      option2_body_html: |
+        A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
+  suppliers:
+    neutral_vendors:
+      header: Neutral vendor managed service providers
+    master_vendors:
+      header: Master vendor managed service providers
+      column1: Job Type
+      column2: Supplier mark up

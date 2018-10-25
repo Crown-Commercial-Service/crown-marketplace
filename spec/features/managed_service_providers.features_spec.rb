@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Managed service providers', type: :feature do
-  scenario 'Hire via agency choice should not be pre-selected' do
-    visit '/'
+  scenario 'Answers should not be pre-selected' do
+    visit_home
     click_on 'Start now'
 
     expect(page).not_to have_checked_field('Yes')
@@ -23,7 +23,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     create(:master_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.30)
     create(:master_vendor_rate, supplier: supplier, job_type: 'fixed_term', mark_up: 0.40)
 
-    visit '/'
+    visit_home
     click_on 'Start now'
 
     choose 'A managed service provider'
@@ -47,7 +47,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     create(:neutral_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.30)
     create(:neutral_vendor_rate, supplier: supplier, job_type: 'daily_fee', daily_fee: 1.23, mark_up: nil)
 
-    visit '/'
+    visit_home
     click_on 'Start now'
 
     choose 'A managed service provider'
@@ -65,7 +65,7 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer changes mind about hiring a managed service provider' do
-    visit '/'
+    visit_home
     click_on 'Start now'
 
     choose 'A managed service provider'
@@ -81,7 +81,7 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer changes mind about hiring a master vendor managed service' do
-    visit '/'
+    visit_home
     click_on 'Start now'
 
     choose 'A managed service provider'
@@ -96,7 +96,7 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer changes mind about hiring a neutral vendor managed service' do
-    visit '/'
+    visit_home
     click_on 'Start now'
 
     choose 'A managed service provider'

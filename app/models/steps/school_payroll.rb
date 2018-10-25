@@ -1,13 +1,13 @@
 module Steps
   class SchoolPayroll < JourneyStep
-    attribute :school_payroll
-    validates :school_payroll, yes_no: true
+    attribute :payroll_provider
+    validates :payroll_provider, inclusion: ['school', 'agency']
 
     def next_step_class
-      case school_payroll
-      when 'yes'
+      case payroll_provider
+      when 'school'
         SchoolPostcode
-      when 'no'
+      when 'agency'
         AgencyPayroll
       end
     end
