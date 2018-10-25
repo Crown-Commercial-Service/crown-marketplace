@@ -236,7 +236,13 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #answer for school-postcode' do
     let(:postcode) { Faker::Address.unique.postcode }
 
-    it 'redirects to branches path' do
+    before do
+      Geocoder::Lookup::Test.add_stub(
+        postcode, [{ 'coordinates' => [51.5149666, -0.119098] }]
+      )
+    end
+
+    it 'redirects to fixed term results path' do
       params = {
         looking_for: 'worker',
         worker_type: 'agency_supplied',
@@ -244,7 +250,7 @@ RSpec.describe SearchController, type: :controller do
         postcode: postcode
       }
       get :answer, params: params.merge(slug: 'school-postcode')
-      expect(response).to redirect_to(branches_path(params))
+      expect(response).to redirect_to(fixed_term_results_path(params))
     end
   end
 

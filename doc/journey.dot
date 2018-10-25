@@ -1,0 +1,13 @@
+digraph {
+  AgencyPayroll -> AgencyPayrollResults;
+  LookingFor -> WorkerType [label="looking_for = worker"];
+  LookingFor -> ManagedServiceProvider [label="looking_for = managed_service_provider"];
+  ManagedServiceProvider -> MasterVendorManagedService [label="managed_service_provider = master_vendor"];
+  ManagedServiceProvider -> NeutralVendorManagedService [label="managed_service_provider = neutral_vendor"];
+  WorkerType -> SchoolPostcode [label="worker_type = nominated"];
+  WorkerType -> PayrollProvider [label="worker_type = agency_supplied"];
+  PayrollProvider -> SchoolPostcode [label="payroll_provider = school"];
+  PayrollProvider -> AgencyPayroll [label="payroll_provider = agency"];
+  SchoolPostcode -> NominatedWorkerResults [label="worker_type = nominated"];
+  SchoolPostcode -> FixedTermResults [label="worker_type = agency_supplied"];
+}
