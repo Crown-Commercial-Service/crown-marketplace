@@ -24,7 +24,7 @@ RSpec.describe BranchesController, type: :controller do
         get :index, params: request_params
       end
 
-      it 'assigns back_path to postcode search path' do
+      it 'assigns back_path to school-postcode question path' do
         expect(assigns(:back_path)).to eq(
           search_question_path(request_params.merge(slug: 'school-postcode'))
         )
@@ -99,7 +99,7 @@ RSpec.describe BranchesController, type: :controller do
         get :index, params: params
       end
 
-      it 'redirects to school postcode question' do
+      it 'redirects to school-postcode question' do
         expect(response).to redirect_to(
           search_question_path(params.merge(slug: 'school-postcode'))
         )
@@ -124,7 +124,7 @@ RSpec.describe BranchesController, type: :controller do
         }
       end
 
-      it 'redirects to school postcode question' do
+      it 'redirects to school-postcode question' do
         expect(response).to redirect_to(
           search_question_path(
             slug: 'school-postcode',
