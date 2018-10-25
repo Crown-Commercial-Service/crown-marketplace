@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe SearchController, type: :controller do
-  describe 'GET #question for hire-via-agency' do
+  describe 'GET #question for looking-for' do
     it 'renders template' do
       get :question, params: {
-        slug: 'hire-via-agency'
+        slug: 'looking-for'
       }
-      expect(response).to render_template('hire_via_agency')
+      expect(response).to render_template('looking_for')
     end
   end
 
-  describe 'GET #answer for hire-via-agency' do
+  describe 'GET #answer for looking-for' do
     before do
       get :answer, params: {
-        slug: 'hire-via-agency',
+        slug: 'looking-for',
         looking_for: looking_for
       }
     end
@@ -41,9 +41,9 @@ RSpec.describe SearchController, type: :controller do
     context 'when answer is blank' do
       let(:looking_for) { '' }
 
-      it 'redirects to hire-via-agency question' do
+      it 'redirects to looking-for question' do
         expect(response).to redirect_to(
-          search_question_path(slug: 'hire-via-agency', looking_for: '')
+          search_question_path(slug: 'looking-for', looking_for: '')
         )
       end
 

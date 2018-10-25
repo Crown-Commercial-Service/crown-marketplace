@@ -1,5 +1,5 @@
 module Steps
-  class HireViaAgency < JourneyStep
+  class LookingFor < JourneyStep
     attribute :looking_for
     validates :looking_for, inclusion: ['worker', 'managed_service_provider']
 

@@ -6,7 +6,7 @@ RSpec.describe 'search/payroll_provider.html.erb' do
     @form_path = '/'
   end
 
-  it 'stores answer to hire via agency question in hidden field' do
+  it 'stores answer to looking-for question in hidden field' do
     params[:looking_for] = 'looking-for'
     render
     expect(rendered).to have_css('input[name="looking_for"][value="looking-for"]', visible: false)

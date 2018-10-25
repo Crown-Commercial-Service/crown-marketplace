@@ -36,7 +36,7 @@ en:
       worker_type_question: What type of worker do you need?
       worker_term_question: How long do you need the worker for?
       submit: Continue
-    hire_via_agency:
+    looking_for:
       question: What are you looking for?
       answer_worker: An individual worker
       answer_managed_service_provider: A managed service provider
