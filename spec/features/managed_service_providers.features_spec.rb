@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Managed service providers', type: :feature do
-  scenario 'Hire via agency choice should not be pre-selected' do
+  scenario 'Answers should not be pre-selected' do
     visit '/'
     click_on 'Start now'
 

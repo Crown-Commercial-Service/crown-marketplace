@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Agency workers', type: :feature do
-  scenario 'Nominated worker choice should not be pre-selected' do
+  scenario 'Answers should not be pre-selected' do
     visit '/'
     click_on 'Start now'
 
@@ -27,7 +27,7 @@ RSpec.feature 'Agency workers', type: :feature do
     expect(page).to have_checked_field('Yes')
   end
 
-  scenario 'Buyer was not looking for a nominated worker but changed mind' do
+  scenario 'Buyer was looking for an agency supplied worker but changed mind' do
     visit '/'
     click_on 'Start now'
 
