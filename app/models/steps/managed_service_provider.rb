@@ -1,13 +1,13 @@
 module Steps
   class ManagedServiceProvider < JourneyStep
-    attribute :master_vendor
-    validates :master_vendor, yes_no: true
+    attribute :managed_service_provider
+    validates :managed_service_provider, inclusion: ['master_vendor', 'neutral_vendor']
 
     def next_step_class
-      case master_vendor
-      when 'yes'
+      case managed_service_provider
+      when 'master_vendor'
         MasterVendorManagedService
-      when 'no'
+      when 'neutral_vendor'
         NeutralVendorManagedService
       end
     end

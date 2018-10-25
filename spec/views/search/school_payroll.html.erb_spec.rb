@@ -7,26 +7,26 @@ RSpec.describe 'search/school_payroll.html.erb' do
   end
 
   it 'stores answer to hire via agency question in hidden field' do
-    params[:hire_via_agency] = 'hire-via-agency'
+    params[:looking_for] = 'looking-for'
     render
-    expect(rendered).to have_css('input[name="hire_via_agency"][value="hire-via-agency"]', visible: false)
+    expect(rendered).to have_css('input[name="looking_for"][value="looking-for"]', visible: false)
   end
 
   it 'stores answer to nominated worker question in hidden field' do
-    params[:nominated_worker] = 'nominated-worker'
+    params[:worker_type] = 'worker-type'
     render
-    expect(rendered).to have_css('input[name="nominated_worker"][value="nominated-worker"]', visible: false)
+    expect(rendered).to have_css('input[name="worker_type"][value="worker-type"]', visible: false)
   end
 
-  it 'selects "yes" if school payroll is "yes"' do
-    params[:school_payroll] = 'yes'
+  it 'selects "school" if payroll provider is "school"' do
+    params[:payroll_provider] = 'school'
     render
-    expect(rendered).to have_css('input[type="radio"][name="school_payroll"][value="yes"][checked]')
+    expect(rendered).to have_css('input[type="radio"][name="payroll_provider"][value="school"][checked]')
   end
 
-  it 'selects "no" if school payroll is "no"' do
-    params[:school_payroll] = 'no'
+  it 'selects "agency" if payroll provider is "agency"' do
+    params[:payroll_provider] = 'agency'
     render
-    expect(rendered).to have_css('input[type="radio"][name="school_payroll"][value="no"][checked]')
+    expect(rendered).to have_css('input[type="radio"][name="payroll_provider"][value="agency"][checked]')
   end
 end

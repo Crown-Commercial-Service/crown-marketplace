@@ -5,17 +5,17 @@
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">
-              What are you looking for?
+              <%= t('.question') %>
             </h1>
           </legend>
           <div class="govuk-radios">
             <div class="govuk-radios__item">
-              <%= radio_button_tag :hire_via_agency, :yes, checked?(params[:hire_via_agency], 'yes'), class: 'govuk-radios__input' %>
-              <%= label_tag :hire_via_agency_yes, 'An individual worker', class: 'govuk-label govuk-radios__label' %>
+              <%= radio_button_tag :looking_for, :worker, checked?(params[:looking_for], 'worker'), class: 'govuk-radios__input' %>
+              <%= label_tag :looking_for_worker, t('.answer_yes'), class: 'govuk-label govuk-radios__label' %>
             </div>
             <div class="govuk-radios__item">
-              <%= radio_button_tag :hire_via_agency, :no, checked?(params[:hire_via_agency], 'no'), class: 'govuk-radios__input' %>
-              <%= label_tag :hire_via_agency_no, 'A managed service provider', class: 'govuk-label govuk-radios__label' %>
+              <%= radio_button_tag :looking_for, :managed_service_provider, checked?(params[:looking_for], 'managed_service_provider'), class: 'govuk-radios__input' %>
+              <%= label_tag :looking_for_managed_service_provider, t('.answer_no'), class: 'govuk-label govuk-radios__label' %>
             </div>
           </div>
         </fieldset>
@@ -24,24 +24,8 @@
     <% end %>
   </div>
   <div class="govuk-grid-column-one-third">
-
     <aside class="cmp-sidebar" role="complementary">
-      <h2 class="govuk-heading-m" id="subsection-title">
-        Managed service providers
-      </h2>
-      <p class="govuk-body">You will need to choose either:</p>
-      <h4 class="govuk-heading-s">A master vendor</h4>
-      <p class="govuk-body">
-        These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
-        <br>
-        You will then need to contact all the suppliers and run a further competition.
-      </p>
-      <p class="govuk-body">or</p>
-      <h4 class="govuk-heading-s">A neutral vendor</h4>
-      <p class="govuk-body">
-        A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
-      </p>
+      <%= render partial: 'managed_service_providers_explanation' %>
     </aside>
-
   </div>
 </div>

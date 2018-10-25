@@ -1,13 +1,13 @@
 module Steps
   class HireViaAgency < JourneyStep
-    attribute :hire_via_agency
-    validates :hire_via_agency, yes_no: true
+    attribute :looking_for
+    validates :looking_for, inclusion: ['worker', 'managed_service_provider']
 
     def next_step_class
-      case hire_via_agency
-      when 'yes'
+      case looking_for
+      when 'worker'
         NominatedWorker
-      when 'no'
+      when 'managed_service_provider'
         ManagedServiceProvider
       end
     end

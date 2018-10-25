@@ -70,3 +70,7 @@ def valid_fake_postcode
   possibly_invalid_postcode = Faker::Address.unique.postcode
   UKPostcode.parse(possibly_invalid_postcode).to_s
 end
+
+def visit_home
+  visit '/'
+end
