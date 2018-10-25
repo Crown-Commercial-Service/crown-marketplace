@@ -10,11 +10,11 @@
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :managed_service_provider, :master_vendor, checked?(params[:managed_service_provider], 'master_vendor'), class: 'govuk-radios__input' %>
-          <%= label_tag :managed_service_provider_master_vendor, t('.answer_yes'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :managed_service_provider_master_vendor, t('.answer_master_vendor'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :managed_service_provider, :neutral_vendor, checked?(params[:managed_service_provider], 'neutral_vendor'), class: 'govuk-radios__input' %>
-          <%= label_tag :managed_service_provider_neutral_vendor, t('.answer_no'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :managed_service_provider_neutral_vendor, t('.answer_neutral_vendor'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     </fieldset>

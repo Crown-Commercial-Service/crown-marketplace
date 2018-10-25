@@ -11,11 +11,11 @@
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :payroll_provider, :school, checked?(params[:payroll_provider], 'school'), class: 'govuk-radios__input' %>
-          <%= label_tag :payroll_provider_school, t('.answer_yes'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :payroll_provider_school, t('.answer_school_payroll'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :payroll_provider, :agency, checked?(params[:payroll_provider], 'agency'), class: 'govuk-radios__input' %>
-          <%= label_tag :payroll_provider_agency, t('.answer_no'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :payroll_provider_agency, t('.answer_agency_payroll'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     </fieldset>

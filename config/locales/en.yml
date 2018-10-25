@@ -38,22 +38,22 @@ en:
       submit: Continue
     hire_via_agency:
       question: What are you looking for?
-      answer_yes: An individual worker
-      answer_no: A managed service provider
+      answer_worker: An individual worker
+      answer_managed_service_provider: A managed service provider
     managed_service_provider:
       question: What type of managed service do you want?
-      answer_yes: Master vendor managed service
-      answer_no: Neutral vendor managed service
+      answer_master_vendor: Master vendor managed service
+      answer_neutral_vendor: Neutral vendor managed service
       submit: Continue
     nominated_worker:
       question: Do you want an agency to supply the worker?
-      answer1: 'Yes'
-      answer2: No, I have a worker I want the agency to manage (a 'nominated worker')
+      answer_agency_supplied: 'Yes'
+      answer_nominated_worker: No, I have a worker I want the agency to manage (a 'nominated worker')
       submit: Continue
     school_payroll:
       question: Do you want to put the worker on the school's payroll?
-      answer_yes: 'Yes'
-      answer_no: No, I want the agency to deal with payroll
+      answer_school_payroll: 'Yes'
+      answer_agency_payroll: No, I want the agency to deal with payroll
       submit: Continue
     school_postcode:
       question: What is your school's postcode?
