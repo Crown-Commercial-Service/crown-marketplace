@@ -55,11 +55,6 @@ en:
       answer_yes: 'Yes'
       answer_no: No, I want the agency to deal with payroll
       submit: Continue
-    school_payroll_question:
-      question: Do you want to put the worker on the school's payroll?
-      answer_yes: 'Yes'
-      answer_no: No, I want the agency to deal with payroll
-      submit: Continue
     school_postcode:
       question: What is your school's postcode?
       question_hint: We use this to find agencies near to your school
