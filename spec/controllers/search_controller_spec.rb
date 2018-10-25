@@ -152,9 +152,9 @@ RSpec.describe SearchController, type: :controller do
     context 'when looking for an agency supplied worker' do
       let(:worker_type) { 'agency_supplied' }
 
-      it 'redirects to school payroll question path' do
+      it 'redirects to payroll-provider question path' do
         expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'school-payroll'))
+          search_question_path(params.merge(slug: 'payroll-provider'))
         )
       end
     end
@@ -220,7 +220,7 @@ RSpec.describe SearchController, type: :controller do
       )
     end
 
-    it 'sets back path to school-payroll question if employing worker on school payroll' do
+    it 'sets back path to payroll-provider question if employing worker on school payroll' do
       params = {
         looking_for: 'worker',
         worker_type: 'agency_supplied',
@@ -228,7 +228,7 @@ RSpec.describe SearchController, type: :controller do
       }
       get :question, params: params.merge(slug: 'school-postcode')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(slug: 'school-payroll'))
+        search_question_path(params.merge(slug: 'payroll-provider'))
       )
     end
   end
@@ -248,15 +248,15 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET #question for school-payroll' do
-    it 'sets the form path to school-payroll answer' do
+  describe 'GET #question for payroll-provider' do
+    it 'sets the form path to payroll-provider answer' do
       params = {
         looking_for: 'worker',
         worker_type: 'agency_supplied'
       }
-      get :question, params: params.merge(slug: 'school-payroll')
+      get :question, params: params.merge(slug: 'payroll-provider')
       expect(assigns(:form_path)).to eq(
-        search_answer_path(slug: 'school-payroll')
+        search_answer_path(slug: 'payroll-provider')
       )
     end
 
@@ -265,14 +265,14 @@ RSpec.describe SearchController, type: :controller do
         looking_for: 'worker',
         worker_type: 'agency_supplied'
       }
-      get :question, params: params.merge(slug: 'school-payroll')
+      get :question, params: params.merge(slug: 'payroll-provider')
       expect(assigns(:back_path)).to eq(
         search_question_path(params.merge(slug: 'nominated-worker'))
       )
     end
   end
 
-  describe 'GET #answer for school-payroll' do
+  describe 'GET #answer for payroll-provider' do
     context 'when looking for the school to provide payroll' do
       it 'redirects to postcode form' do
         params = {
@@ -280,7 +280,7 @@ RSpec.describe SearchController, type: :controller do
           worker_type: 'agency_supplied',
           payroll_provider: 'school'
         }
-        get :answer, params: params.merge(slug: 'school-payroll')
+        get :answer, params: params.merge(slug: 'payroll-provider')
         expect(response).to redirect_to(
           search_question_path(params.merge(slug: 'school-postcode'))
         )
@@ -294,7 +294,7 @@ RSpec.describe SearchController, type: :controller do
           worker_type: 'agency_supplied',
           payroll_provider: 'agency'
         }
-        get :answer, params: params.merge(slug: 'school-payroll')
+        get :answer, params: params.merge(slug: 'payroll-provider')
         expect(response).to redirect_to(
           search_question_path(params.merge(slug: 'agency-payroll'))
         )
@@ -311,12 +311,12 @@ RSpec.describe SearchController, type: :controller do
       end
 
       before do
-        get :answer, params: params.merge(slug: 'school-payroll')
+        get :answer, params: params.merge(slug: 'payroll-provider')
       end
 
-      it 'redirects to school-payroll question' do
+      it 'redirects to payroll-provider question' do
         expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'school-payroll'))
+          search_question_path(params.merge(slug: 'payroll-provider'))
         )
       end
 
@@ -327,7 +327,7 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe 'GET #question for agency-payroll' do
-    it 'sets the back link to the school-payroll question' do
+    it 'sets the back link to the payroll-provider question' do
       params = {
         looking_for: 'worker',
         worker_type: 'agency_supplied',
@@ -335,7 +335,7 @@ RSpec.describe SearchController, type: :controller do
       }
       get :question, params: params.merge(slug: 'agency-payroll')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(slug: 'school-payroll'))
+        search_question_path(params.merge(slug: 'payroll-provider'))
       )
     end
   end
