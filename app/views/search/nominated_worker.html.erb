@@ -10,11 +10,11 @@
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :worker_type, :agency_supplied, checked?(params[:worker_type], 'agency_supplied'), class: 'govuk-radios__input' %>
-          <%= label_tag :worker_type_agency_supplied, t('.answer1'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :worker_type_agency_supplied, t('.answer_agency_supplied'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :worker_type, :nominated, checked?(params[:worker_type], 'nominated'), class: 'govuk-radios__input' %>
-          <%= label_tag :worker_type_nominated, t('.answer2'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :worker_type_nominated, t('.answer_nominated_worker'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     </fieldset>
