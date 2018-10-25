@@ -1,12 +1,17 @@
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_field_tag :looking_for, params[:looking_for] %>
-  <div class="govuk-form-group">
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if flash[:error] %>">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
           <%= t('.question') %>
         </h1>
       </legend>
+      <% if flash[:error] %>
+        <span class="govuk-error-message">
+          <%= flash[:error] %>
+        </span>
+      <% end %>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :worker_type, :agency_supplied, checked?(params[:worker_type], 'agency_supplied'), class: 'govuk-radios__input' %>
