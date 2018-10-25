@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SearchController, type: :controller do
-  describe 'GET hire_via_agency_question' do
+  describe 'GET #question for hire-via-agency' do
     it 'renders template' do
       get :question, params: {
         slug: 'hire-via-agency'
@@ -10,7 +10,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET hire_via_agency_answer' do
+  describe 'GET #answer for hire-via-agency' do
     before do
       get :answer, params: {
         slug: 'hire-via-agency',
@@ -18,7 +18,7 @@ RSpec.describe SearchController, type: :controller do
       }
     end
 
-    context 'when hire via agency is yes' do
+    context 'when hire_via_agency is yes' do
       let(:hire_via_agency) { 'yes' }
 
       it 'redirects to nominated worker question' do
@@ -28,7 +28,7 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'when hire via agency is no' do
+    context 'when hire_via_agency is no' do
       let(:hire_via_agency) { 'no' }
 
       it 'redirects to managed service providers outcome' do
@@ -53,7 +53,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET managed_service_provider_question' do
+  describe 'GET #question for managed-service-provider' do
     it 'renders template' do
       get :question, params: {
         slug: 'managed-service-provider',
@@ -63,7 +63,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET managed_service_provider_answer' do
+  describe 'GET #answer for managed-service-provider' do
     before do
       get :answer, params: {
         slug: 'managed-service-provider',
@@ -117,7 +117,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET nominated_worker_question' do
+  describe 'GET #question for nominated-worker' do
     it 'renders template' do
       get :question, params: {
         slug: 'nominated-worker',
@@ -127,7 +127,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET nominated_worker_answer' do
+  describe 'GET #answer for nominated-worker' do
     let(:params) do
       {
         hire_via_agency: 'yes',
@@ -188,7 +188,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET school_postcode_question' do
+  describe 'GET #question for school-postcode' do
     it 'renders template' do
       get :question, params: {
         slug: 'school-postcode',
@@ -233,7 +233,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET school_postcode_answer' do
+  describe 'GET #answer for school-postcode' do
     let(:postcode) { Faker::Address.unique.postcode }
 
     it 'redirects to branches path' do
@@ -248,7 +248,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET school_payroll_question' do
+  describe 'GET #question for school-payroll' do
     it 'sets the form path to school payroll answer' do
       params = {
         hire_via_agency: 'yes',
@@ -272,7 +272,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET school_payroll_answer' do
+  describe 'GET #answer for school-payroll' do
     context 'when the answer is yes' do
       it 'redirects to postcode form' do
         params = {
@@ -326,7 +326,7 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe 'GET agency_payroll_outcome' do
+  describe 'GET #question for agency-payroll' do
     it 'sets the back link to the school payroll question' do
       params = {
         hire_via_agency: 'yes',
