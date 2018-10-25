@@ -8,11 +8,7 @@
           <%= t('.question') %>
         </h1>
       </legend>
-      <% if flash[:error] %>
-        <span class="govuk-error-message">
-          <%= flash[:error] %>
-        </span>
-      <% end %>
+      <%= display_flash_error %>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :payroll_provider, :school, checked?(params[:payroll_provider], 'school'), class: 'govuk-radios__input' %>

@@ -14,4 +14,12 @@ module ApplicationHelper
       'feedback'
     end
   end
+
+  def display_flash_error
+    return unless flash[:error]
+
+    content_tag :span, class: 'govuk-error-message' do
+      flash[:error]
+    end
+  end
 end
