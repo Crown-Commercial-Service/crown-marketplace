@@ -1,6 +1,5 @@
 /* Import from Govuk frontend, refer to govuk-frontend/components/_all.scss */
 @import "govuk-frontend/components/skip-link/skip-link";
-@import "govuk-frontend/components/back-link/back-link";
 @import "govuk-frontend/components/breadcrumbs/breadcrumbs";
 @import "govuk-frontend/components/checkboxes/checkboxes";
 @import "govuk-frontend/components/date-input/date-input";
@@ -32,3 +31,4 @@
 @import "master-vendor-record/master-vendor-record";
 @import "typography/typography";
 @import "tag/tag";
+@import "back-link/back-link";
