@@ -1,14 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'layouts/application.html.erb' do
-  it 'displays flash error messages' do
-    flash[:error] = 'error-message'
-
-    render
-
-    expect(rendered).to have_text('error-message')
-  end
-
   describe 'feedback links' do
     let(:mail_to_link_selector) do
       %(a[href="mailto:#{feedback_email_address}"])

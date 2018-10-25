@@ -62,11 +62,6 @@
         <%= link_to t('.back'), @back_path, class: 'govuk-back-link' %>
       <% end %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
-        <% if flash.key?(:error) %>
-          <span class="govuk-error-message">
-            <%= flash[:error] %>
-          </span>
-        <% end %>
         <%= yield %>
       </main>
     </div>
