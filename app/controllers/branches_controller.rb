@@ -1,19 +1,24 @@
 class BranchesController < ApplicationController
   def index
-    @back_path = back_path
+    @back_path = search_question_path(slug: journey.previous_slug, params: journey.params)
 
-    if params[:postcode].nil?
-      @branches = all_branch_results
-    else
-      @location = Location.new(params[:postcode])
-
-      unless @location.valid?
-        display_error(@location.error)
-        return
-      end
-
-      @branches = branch_results_near(@location.point)
+    if journey.invalid?
+      redirect_to(
+        search_question_path(slug: journey.current_slug, params: journey.params),
+        flash: { error: journey.error }
+      )
+      return
     end
+
+    render_branches
+  end
+
+  private
+
+  def render_branches
+    step = journey.current_step
+    @location = step.location
+    @branches = step.branches
 
     respond_to do |format|
       format.html
@@ -24,75 +29,13 @@ class BranchesController < ApplicationController
     end
   end
 
-  private
-
-  def back_path
-    if params[:worker_type] == 'nominated' || params[:payroll_provider] == 'school'
-      search_question_path(slug: 'school-postcode', params: safe_params)
-    else
-      search_question_path(slug: 'agency-payroll', params: safe_params)
-    end
-  end
-
-  def job_type
-    JobType.find_by(code: params[:job_type])
-  end
-
-  def term
-    Term.find_by(code: params[:term])
-  end
-
-  def rates
-    if params[:worker_type] == 'nominated'
-      Rate.direct_provision.nominated_worker
-    elsif params[:payroll_provider] == 'school'
-      Rate.direct_provision.fixed_term
-    elsif params[:payroll_provider] == 'agency'
-      Rate.direct_provision.rate_for(job_type: job_type, term: term)
-    end
-  end
-
-  def branch_results_near(point)
-    Branch.search(point, rates: rates).map do |branch|
-      search_result_for(branch).tap do |result|
-        if params[:worker_type] == 'nominated'
-          result.rate = branch.supplier.nominated_worker_rate
-        elsif params[:payroll_provider] == 'school'
-          result.rate = branch.supplier.fixed_term_rate
-        elsif params[:payroll_provider] == 'agency'
-          result.rate = branch.supplier.rate_for(job_type: job_type, term: term)
-        end
-        result.distance = point.distance(branch.location)
-      end
-    end
-  end
-
-  def all_branch_results
-    Branch.includes(:supplier).all.map do |branch|
-      search_result_for(branch)
-    end
-  end
-
-  def search_result_for(branch)
-    BranchSearchResult.new(
-      supplier_name: branch.supplier.name,
-      name: helpers.display_name_for_branch(branch),
-      contact_name: branch.contact_name,
-      telephone_number: branch.telephone_number,
-      contact_email: branch.contact_email
-    )
-  end
-
-  def display_error(message)
-    path = search_question_path(slug: 'school-postcode', params: safe_params)
-    redirect_to path, flash: { error: message }
+  def journey
+    first_step_class = Steps::LookingFor
+    @journey ||= Journey.new(first_step_class, params[:slug], params)
   end
 
   def safe_params
-    params.permit(
-      :postcode, :worker_type, :looking_for, :payroll_provider, :term,
-      :job_type
-    )
+    journey.params
   end
   helper_method :safe_params
 end

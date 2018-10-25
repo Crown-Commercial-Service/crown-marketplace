@@ -1,7 +1,9 @@
 module Steps
   class AgencyPayroll < JourneyStep
+    include Steps::Geolocatable
+
     attribute :postcode
-    validates :postcode, postcode: true
+    validates :location, location: true
 
     attribute :term
     validates :term, presence: true
@@ -10,7 +12,7 @@ module Steps
     validates :job_type, presence: true
 
     def next_step_class
-      Results
+      AgencyPayrollResults
     end
   end
 end
