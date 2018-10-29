@@ -2,33 +2,18 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Find supply teachers and non-teaching staff</h1>
+      <h1 class="govuk-heading-xl">Crown Marketplace</h1>
 
       <p>Use this service to:</p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>find and hire a worker, using an agency</li>
-        <li>hire a specific person (a 'nominated worker')</li>
-        <li>find a managed service provider, who can take on all your temporary staff needs</li>
-        <li>create a shortlist of suppliers based on your needs and download or save it</li>
+        <li>
+        <%= link_to "Find supply teachers and non-teaching staff", :supply_teachers %>
+        </li>
+        <li>
+        <%= link_to "Find a facilities management supplier", :facilities_management %>
+        </li>
       </ul>
-
-      <%= link_to 'Start now', search_question_path(slug: 'looking-for'), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
-
-      <h2 class="govuk-heading-m">Before you start</h2>
-
-      <p>To use the service, you will need to register for an account and get login details.</p>
-
-      <p>You will also need to have:</p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>your school’s postcode</li>
-        <li>details of how long you will want the worker</li>
-      </ul>
-
-      <p>You can’t use this service if you’re an independent school, unless you have charitable status.</p>
-
-      <p>To find permanent teaching staff, use the <a href="https://teaching-jobs.service.gov.uk/">Teaching Jobs</a> service.</p>
     </div>
   </div>
 </div>
