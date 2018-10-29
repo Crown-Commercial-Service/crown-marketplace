@@ -1,9 +1,9 @@
 class SearchController < ApplicationController
   def question
     @journey = TeacherSupplyJourney.new(params[:slug], params)
-    @form_path = search_answer_path(slug: @journey.current_slug)
+    @form_path = @journey.form_path
     @back_path = if @journey.previous_slug.present?
-                   search_question_path(slug: @journey.previous_slug, params: @journey.params)
+                   @journey.back_path
                  else
                    homepage_path
                  end
@@ -13,9 +13,9 @@ class SearchController < ApplicationController
   def answer
     @journey = TeacherSupplyJourney.new(params[:slug], params)
     if @journey.invalid?
-      @form_path = search_answer_path(slug: @journey.current_slug)
+      @form_path = @journey.form_path
       @back_path = if @journey.previous_slug.present?
-                     search_question_path(slug: @journey.previous_slug, params: @journey.params)
+                     @journey.back_path
                    else
                      homepage_path
                    end
