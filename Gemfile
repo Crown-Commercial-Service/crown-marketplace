@@ -52,6 +52,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'rubyXL'
+  gem 'i18n-tasks'
 end
 
 group :development do
