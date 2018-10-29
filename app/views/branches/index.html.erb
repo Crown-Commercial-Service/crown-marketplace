@@ -20,9 +20,9 @@
       <a href="javascript:window.print()" class="govuk-link"><%= t('.print') %></a>
     </p>
     <p class="govuk-body">
-      <%= link_to t('.download'), branches_path(safe_params.merge(format: :xlsx)), { class: 'file-download' } %>
+      <%= link_to t('.download'), branches_path(@journey.params.merge(format: :xlsx)), { class: 'file-download' } %>
       <% if link_to_calculator? %>
-      <%= link_to t('.download_with_calculator'), branches_path(safe_params.merge(format: :xlsx, calculations: 'yes')), { class: 'file-download' } %>
+      <%= link_to t('.download_with_calculator'), branches_path(@journey.params.merge(format: :xlsx, calculations: 'yes')), { class: 'file-download' } %>
       <% end %>
     </p>
   </div>

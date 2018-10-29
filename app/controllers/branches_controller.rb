@@ -30,9 +30,4 @@ class BranchesController < ApplicationController
   def build_journey
     TeacherSupplyJourney.new(params[:slug], params)
   end
-
-  def safe_params
-    @journey.params
-  end
-  helper_method :safe_params
 end
