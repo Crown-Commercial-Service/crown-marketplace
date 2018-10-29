@@ -86,6 +86,7 @@ RSpec/DescribeClass:
     Exclude:
         - 'spec/models/db_seeds_spec.rb'
         - 'spec/views/**/*'
+        - 'spec/i18n_spec.rb'
 
 Capybara/FeatureMethods:
     Exclude:
