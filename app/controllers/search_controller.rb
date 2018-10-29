@@ -11,10 +11,14 @@ class SearchController < ApplicationController
 
   def answer
     if journey.invalid?
-      redirect_to(
-        search_question_path(slug: journey.current_slug, params: journey.params),
-        flash: { error: journey.error }
-      )
+      @form_path = search_answer_path(slug: journey.current_slug)
+      @back_path = if journey.previous_slug.present?
+                     search_question_path(slug: journey.previous_slug, params: journey.params)
+                   else
+                     homepage_path
+                   end
+      flash.now[:error] = journey.error
+      render journey.template
     else
       redirect_to next_step_path
     end
