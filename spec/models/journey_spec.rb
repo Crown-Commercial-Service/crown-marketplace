@@ -11,12 +11,12 @@ RSpec.describe Journey, type: :model do
       Journey.new(Steps::LookingFor, slug, ActionController::Parameters.new(params))
     end
 
-    let(:params) { {} }
-
     context 'when on the Looking For page' do
       let(:slug) { 'looking-for' }
 
       context 'with no parameters' do
+        let(:params) { {} }
+
         it { is_expected.to have_attributes(current_slug: slug) }
         it { is_expected.to have_attributes(previous_slug: nil) }
         it { is_expected.to have_attributes(next_slug: nil) }
