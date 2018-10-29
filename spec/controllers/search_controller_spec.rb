@@ -52,10 +52,6 @@ RSpec.describe SearchController, type: :controller do
       it 'sets back_path' do
         expect(assigns(:back_path)).to eq(homepage_path)
       end
-
-      it 'sets a flash error message' do
-        expect(flash[:error]).to eq 'Please choose an option'
-      end
     end
   end
 
@@ -122,10 +118,6 @@ RSpec.describe SearchController, type: :controller do
           )
         )
       end
-
-      it 'sets a flash error message' do
-        expect(flash[:error]).to eq 'Please choose an option'
-      end
     end
   end
 
@@ -177,10 +169,6 @@ RSpec.describe SearchController, type: :controller do
       it 'renders worker-type question' do
         expect(response).to render_template('worker_type')
       end
-
-      it 'sets a flash error message' do
-        expect(flash[:error]).to eq 'Please choose an option'
-      end
     end
 
     context 'when answer is unknown' do
@@ -188,10 +176,6 @@ RSpec.describe SearchController, type: :controller do
 
       it 'renders worker-type question' do
         expect(response).to render_template('worker_type')
-      end
-
-      it 'sets a flash error message' do
-        expect(flash[:error]).to eq 'Please choose an option'
       end
     end
   end
@@ -330,10 +314,6 @@ RSpec.describe SearchController, type: :controller do
 
       it 'renders payroll-provider question' do
         expect(response).to render_template('payroll_provider')
-      end
-
-      it 'sets a flash error message' do
-        expect(flash[:error]).to eq 'Please choose an option'
       end
     end
   end

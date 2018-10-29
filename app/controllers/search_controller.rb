@@ -19,7 +19,6 @@ class SearchController < ApplicationController
                    else
                      homepage_path
                    end
-      flash.now[:error] = @journey.error
       render @journey.template
     else
       redirect_to next_step_path

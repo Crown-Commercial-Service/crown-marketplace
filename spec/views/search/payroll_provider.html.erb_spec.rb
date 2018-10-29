@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'search/payroll_provider.html.erb' do
+  let(:error) { nil }
+  let(:journey) { instance_double('Journey', error: error) }
+
   before do
+    assign(:journey, journey)
     assign(:back_path, '/')
     assign(:form_path, '/')
   end
@@ -36,9 +40,10 @@ RSpec.describe 'search/payroll_provider.html.erb' do
     expect(rendered).not_to have_css('.govuk-error-message')
   end
 
-  context 'when the flash contains an error' do
+  context 'when the journey has an error' do
+    let(:error) { 'error-message' }
+
     before do
-      flash[:error] = 'error-message'
       render
     end
 

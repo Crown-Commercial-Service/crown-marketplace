@@ -1,14 +1,14 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_tag @form_path, method: :get do %>
-      <%= govuk_form_group_with_optional_error do %>
+      <%= govuk_form_group_with_optional_error(@journey) do %>
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">
               <%= t('.question') %>
             </h1>
           </legend>
-          <%= display_flash_error %>
+          <%= display_flash_error(@journey) %>
           <div class="govuk-radios">
             <div class="govuk-radios__item">
               <%= radio_button_tag :looking_for, :worker, checked?(params[:looking_for], 'worker'), class: 'govuk-radios__input' %>
