@@ -1,10 +1,11 @@
 class BranchesController < ApplicationController
   def index
-    @back_path = search_question_path(slug: journey.previous_slug, params: journey.params)
+    @journey = build_journey
+    @back_path = search_question_path(slug: @journey.previous_slug, params: @journey.params)
 
-    if journey.invalid?
+    if @journey.invalid?
       @form_path = search_answer_path(slug: @journey.current_slug)
-      render "search/#{journey.template}"
+      render "search/#{@journey.template}"
     else
       render_branches
     end
@@ -13,7 +14,7 @@ class BranchesController < ApplicationController
   private
 
   def render_branches
-    step = journey.current_step
+    step = @journey.current_step
     @location = step.location
     @branches = step.branches
 
@@ -26,12 +27,12 @@ class BranchesController < ApplicationController
     end
   end
 
-  def journey
-    @journey ||= TeacherSupplyJourney.new(params[:slug], params)
+  def build_journey
+    TeacherSupplyJourney.new(params[:slug], params)
   end
 
   def safe_params
-    journey.params
+    @journey.params
   end
   helper_method :safe_params
 end
