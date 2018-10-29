@@ -17,18 +17,19 @@ module ApplicationHelper
 
   def govuk_form_group_with_optional_error(journey)
     css_classes = ['govuk-form-group']
-    css_classes += ['govuk-form-group--error'] if journey.error.present?
+    css_classes += ['govuk-form-group--error'] if journey.errors.any?
 
     content_tag :div, class: css_classes.join(' ') do
       yield
     end
   end
 
-  def display_error(journey)
-    return if journey.error.blank?
+  def display_error(journey, attribute)
+    error = journey.errors[attribute].first
+    return if error.blank?
 
     content_tag :span, class: 'govuk-error-message' do
-      journey.error
+      error
     end
   end
 end

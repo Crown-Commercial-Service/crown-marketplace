@@ -7,7 +7,7 @@
           <%= t('.question') %>
         </h1>
       </legend>
-      <%= display_error(@journey) %>
+      <%= display_error(@journey, :managed_service_provider) %>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :managed_service_provider, :master_vendor, checked?(params[:managed_service_provider], 'master_vendor'), class: 'govuk-radios__input' %>

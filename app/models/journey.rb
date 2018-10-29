@@ -32,9 +32,5 @@ class Journey
   delegate :slug, to: :previous_step, prefix: :previous, allow_nil: true
   delegate :slug, to: :next_step, prefix: :next, allow_nil: true
 
-  delegate :template, :valid?, :invalid?, to: :current_step
-
-  def error
-    current_step.errors.full_messages.to_sentence
-  end
+  delegate :template, :valid?, :invalid?, :errors, to: :current_step
 end

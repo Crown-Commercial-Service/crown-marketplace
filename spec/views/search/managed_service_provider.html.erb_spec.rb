@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'search/managed_service_provider.html.erb' do
-  let(:error) { nil }
-  let(:journey) { instance_double('Journey', error: error) }
+  let(:step) { Steps::ManagedServiceProvider.new }
+  let(:errors) { ActiveModel::Errors.new(step) }
+  let(:journey) { instance_double('Journey', errors: errors) }
 
   before do
     assign(:journey, journey)
@@ -16,9 +17,8 @@ RSpec.describe 'search/managed_service_provider.html.erb' do
   end
 
   context 'when the journey has an error' do
-    let(:error) { 'error-message' }
-
     before do
+      errors.add(:managed_service_provider, 'error-message')
       render
     end
 
