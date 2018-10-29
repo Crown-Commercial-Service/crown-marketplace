@@ -18,7 +18,7 @@ RSpec.describe 'search/agency_payroll.html.erb' do
 
   context 'when the journey has an error' do
     before do
-      errors.add(:postcode, 'error-message')
+      errors.add(:location, 'error-message')
       render
     end
 
