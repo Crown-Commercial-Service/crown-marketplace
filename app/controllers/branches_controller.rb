@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
   def index
-    @journey = TeacherSupplyJourney.new(params[:slug], params)
+    @journey = build_journey
     @back_path = @journey.back_path
 
     if @journey.invalid?
@@ -24,6 +24,15 @@ class BranchesController < ApplicationController
         spreadsheet = Spreadsheet.new(@branches, with_calculations: params[:calculations].present?)
         render xlsx: spreadsheet.to_xlsx, filename: 'branches'
       end
+    end
+  end
+
+  def build_journey
+    case params[:journey]
+    when TeacherSupplyJourney.journey_name
+      TeacherSupplyJourney.new(params[:slug], params)
+    else
+      raise ActionController::RoutingError
     end
   end
 end

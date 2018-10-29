@@ -10,6 +10,7 @@ RSpec.describe BranchesController, type: :controller do
       let(:postcode) { 'W1A 1AA' }
       let(:params) do
         {
+          journey: 'teacher-supply',
           looking_for: 'worker',
           worker_type: 'nominated',
           postcode: postcode,
@@ -56,6 +57,7 @@ RSpec.describe BranchesController, type: :controller do
     context 'when postcode parsing fails' do
       let(:params) do
         {
+          journey: 'teacher-supply',
           postcode: 'nonsense',
           worker_type: 'nominated',
           looking_for: 'worker'
@@ -79,6 +81,7 @@ RSpec.describe BranchesController, type: :controller do
           postcode, [{ 'coordinates' => nil }]
         )
         get :index, params: {
+          journey: 'teacher-supply',
           postcode: postcode,
           worker_type: 'nominated',
           looking_for: 'worker'
