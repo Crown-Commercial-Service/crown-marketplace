@@ -7,10 +7,9 @@ class BranchesController < ApplicationController
         search_question_path(slug: journey.current_slug, params: journey.params),
         flash: { error: journey.error }
       )
-      return
+    else
+      render_branches
     end
-
-    render_branches
   end
 
   private
