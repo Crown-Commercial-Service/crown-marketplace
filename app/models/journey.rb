@@ -18,6 +18,10 @@ class Journey
     end
   end
 
+  def first_step_path
+    journey_question_path(journey: self.class.journey_name, slug: steps[0].slug)
+  end
+
   def current_step
     steps.last
   end
