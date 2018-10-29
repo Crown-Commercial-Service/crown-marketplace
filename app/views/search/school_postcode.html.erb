@@ -11,7 +11,7 @@
         <%= t('.question_hint') %>
       </span>
     </h1>
-    <%= display_flash_error(@journey) %>
+    <%= display_error(@journey) %>
     <%= text_field_tag :postcode, params[:postcode], class: 'govuk-input' %>
   <% end %>
   <%= submit_tag t('.submit'), class: "govuk-button" %>
