@@ -5,6 +5,11 @@ RSpec.describe Branch, type: :model do
 
   it { is_expected.to be_valid }
 
+  it 'is not valid if postcode is nil' do
+    branch.postcode = nil
+    expect(branch).not_to be_valid
+  end
+
   it 'is not valid if postcode is blank' do
     branch.postcode = ''
     expect(branch).not_to be_valid
