@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SearchController, type: :controller do
+RSpec.describe JourneyController, type: :controller do
   describe 'GET #question for looking-for' do
     it 'renders template' do
       get :question, params: {
@@ -25,7 +25,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to worker-type question' do
         expect(response).to redirect_to(
-          search_question_path(slug: 'worker-type', looking_for: 'worker')
+          journey_question_path(slug: 'worker-type', looking_for: 'worker')
         )
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to managed service providers outcome' do
         expect(response).to redirect_to(
-          search_question_path(slug: 'managed-service-provider', looking_for: 'managed_service_provider')
+          journey_question_path(slug: 'managed-service-provider', looking_for: 'managed_service_provider')
         )
       end
     end
@@ -48,7 +48,7 @@ RSpec.describe SearchController, type: :controller do
       end
 
       it 'sets form_path' do
-        expect(assigns(:form_path)).to eq(search_answer_path(slug: 'looking-for'))
+        expect(assigns(:form_path)).to eq(journey_answer_path(slug: 'looking-for'))
       end
 
       it 'sets back_path' do
@@ -115,7 +115,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'sets back_path' do
         expect(assigns(:back_path)).to eq(
-          search_question_path(
+          journey_question_path(
             journey: 'teacher-supply',
             slug: 'looking-for',
             params: {
@@ -156,7 +156,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to non worker-type outcome' do
         expect(response).to redirect_to(
-          search_question_path(journey: 'teacher-supply', slug: 'school-postcode', params: params)
+          journey_question_path(journey: 'teacher-supply', slug: 'school-postcode', params: params)
         )
       end
     end
@@ -166,7 +166,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to payroll-provider question path' do
         expect(response).to redirect_to(
-          search_question_path(journey: 'teacher-supply', slug: 'payroll-provider', params: params)
+          journey_question_path(journey: 'teacher-supply', slug: 'payroll-provider', params: params)
         )
       end
     end
@@ -206,7 +206,7 @@ RSpec.describe SearchController, type: :controller do
       }
       get :question, params: params.merge(journey: 'teacher-supply', slug: 'school-postcode')
       expect(assigns(:back_path)).to eq(
-        search_question_path(journey: 'teacher-supply', slug: 'worker-type', params: params)
+        journey_question_path(journey: 'teacher-supply', slug: 'worker-type', params: params)
       )
     end
 
@@ -217,7 +217,7 @@ RSpec.describe SearchController, type: :controller do
       }
       get :question, params: params.merge(journey: 'teacher-supply', slug: 'school-postcode')
       expect(assigns(:form_path)).to eq(
-        search_answer_path(journey: 'teacher-supply', slug: 'school-postcode')
+        journey_answer_path(journey: 'teacher-supply', slug: 'school-postcode')
       )
     end
 
@@ -229,7 +229,7 @@ RSpec.describe SearchController, type: :controller do
       }
       get :question, params: params.merge(journey: 'teacher-supply', slug: 'school-postcode')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(journey: 'teacher-supply', slug: 'payroll-provider'))
+        journey_question_path(params.merge(journey: 'teacher-supply', slug: 'payroll-provider'))
       )
     end
   end
@@ -264,7 +264,7 @@ RSpec.describe SearchController, type: :controller do
       }
       get :question, params: params.merge(journey: 'teacher-supply', slug: 'payroll-provider')
       expect(assigns(:form_path)).to eq(
-        search_answer_path(journey: 'teacher-supply', slug: 'payroll-provider')
+        journey_answer_path(journey: 'teacher-supply', slug: 'payroll-provider')
       )
     end
 
@@ -276,7 +276,7 @@ RSpec.describe SearchController, type: :controller do
       }
       get :question, params: params.merge(slug: 'payroll-provider')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(slug: 'worker-type'))
+        journey_question_path(params.merge(slug: 'worker-type'))
       )
     end
   end
@@ -292,7 +292,7 @@ RSpec.describe SearchController, type: :controller do
         }
         get :answer, params: params.merge(slug: 'payroll-provider')
         expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'school-postcode'))
+          journey_question_path(params.merge(slug: 'school-postcode'))
         )
       end
     end
@@ -307,7 +307,7 @@ RSpec.describe SearchController, type: :controller do
         }
         get :answer, params: params.merge(slug: 'payroll-provider')
         expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'agency-payroll'))
+          journey_question_path(params.merge(slug: 'agency-payroll'))
         )
       end
     end
@@ -342,7 +342,7 @@ RSpec.describe SearchController, type: :controller do
       }
       get :question, params: params.merge(slug: 'agency-payroll')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(slug: 'payroll-provider'))
+        journey_question_path(params.merge(slug: 'payroll-provider'))
       )
     end
   end

@@ -1,6 +1,6 @@
 class SuppliersController < ApplicationController
   def master_vendors
-    @back_path = search_question_path(
+    @back_path = journey_question_path(
       journey: TeacherSupplyJourney.journey_name,
       slug: 'managed-service-provider',
       params: managed_service_provider_params
@@ -9,7 +9,7 @@ class SuppliersController < ApplicationController
   end
 
   def neutral_vendors
-    @back_path = search_question_path(
+    @back_path = journey_question_path(
       journey: TeacherSupplyJourney.journey_name,
       slug: 'managed-service-provider',
       params: managed_service_provider_params

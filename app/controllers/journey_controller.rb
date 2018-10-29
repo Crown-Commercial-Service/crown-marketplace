@@ -1,4 +1,4 @@
-class SearchController < ApplicationController
+class JourneyController < ApplicationController
   def question
     @journey = build_journey
     render_form

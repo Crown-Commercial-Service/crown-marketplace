@@ -24,6 +24,6 @@ Rails.application.routes.draw do
       to: 'branches#index',
       slug: 'nominated-worker-results'
 
-  get '/:journey/:slug', to: 'search#question', as: 'search_question'
-  get '/:journey/:slug/answer', to: 'search#answer', as: 'search_answer'
+  get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
+  get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 end

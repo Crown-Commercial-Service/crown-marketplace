@@ -29,7 +29,7 @@ RSpec.describe BranchesController, type: :controller do
 
       it 'assigns back_path to school-postcode question path' do
         expect(assigns(:back_path)).to eq(
-          search_question_path(params.merge(slug: 'school-postcode'))
+          journey_question_path(params.merge(slug: 'school-postcode'))
         )
       end
 
@@ -69,7 +69,7 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       it 'renders school-postcode question' do
-        expect(response).to render_template('search/school_postcode')
+        expect(response).to render_template('journey/school_postcode')
       end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       it 'renders school-postcode question' do
-        expect(response).to render_template('search/school_postcode')
+        expect(response).to render_template('journey/school_postcode')
       end
     end
   end
