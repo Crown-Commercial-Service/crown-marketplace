@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'search/agency_payroll.html.erb' do
   before do
-    @form_path = '/'
+    assign(:form_path, '/')
   end
 
   it 'does not include any error message classes' do

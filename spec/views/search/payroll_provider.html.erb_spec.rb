@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'search/payroll_provider.html.erb' do
   before do
-    @back_path = '/'
-    @form_path = '/'
+    assign(:back_path, '/')
+    assign(:form_path, '/')
   end
 
   it 'stores answer to looking-for question in hidden field' do
