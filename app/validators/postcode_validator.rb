@@ -3,6 +3,6 @@ class PostcodeValidator < ActiveModel::EachValidator
     postcode = UKPostcode.parse(value || '')
     return if postcode.valid?
 
-    record.errors.add attribute, :invalid_postcode, options
+    record.errors.add attribute, :invalid_postcode
   end
 end
