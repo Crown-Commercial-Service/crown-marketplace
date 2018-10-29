@@ -2,6 +2,7 @@ class JourneyStep
   include ActiveModel::Attributes
   include ActiveModel::Model
   include ActiveModel::Validations
+  extend ActiveModel::Translation
 
   def self.attribute(name)
     params << name
