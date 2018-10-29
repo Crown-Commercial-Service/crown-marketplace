@@ -1,10 +1,10 @@
 class BranchesController < ApplicationController
   def index
     @journey = TeacherSupplyJourney.new(params[:slug], params)
-    @back_path = search_question_path(slug: @journey.previous_slug, params: @journey.params)
+    @back_path = @journey.back_path
 
     if @journey.invalid?
-      @form_path = search_answer_path(slug: @journey.current_slug)
+      @form_path = @journey.form_path
       render "search/#{@journey.template}"
     else
       render_branches

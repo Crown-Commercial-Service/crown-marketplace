@@ -6,6 +6,18 @@ class TeacherSupplyJourney < Journey
     super(first_step_class, slug, params)
   end
 
+  def form_path
+    search_answer_path(slug: current_slug)
+  end
+
+  def current_question_path
+    search_question_path(slug: current_slug, params: params)
+  end
+
+  def back_path
+    search_question_path(slug: previous_slug, params: params)
+  end
+
   def next_step_path
     case next_slug
     when 'results'
