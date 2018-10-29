@@ -47,7 +47,7 @@ RSpec.feature 'Agency workers', type: :feature do
   end
 
   def continue
-    I18n.t('search.looking_for.submit')
+    I18n.t('common.submit')
   end
 
   def an_individual_worker
