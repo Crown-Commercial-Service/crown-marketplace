@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/NestedGroups
 RSpec.describe Journey, type: :model do
   Geocoder::Lookup::Test.add_stub(
     'W1A 1AA', [{ 'coordinates' => [51.5149666, -0.119098] }]
@@ -208,3 +209,4 @@ RSpec.describe Journey, type: :model do
     end
   end
 end
+# rubocop:enable RSpec/NestedGroups
