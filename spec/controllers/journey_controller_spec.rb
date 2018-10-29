@@ -52,7 +52,7 @@ RSpec.describe JourneyController, type: :controller do
       end
 
       it 'sets back_path' do
-        expect(assigns(:back_path)).to eq(homepage_path)
+        expect(assigns(:back_path)).to eq(supply_teachers_path)
       end
     end
   end

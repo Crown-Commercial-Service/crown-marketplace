@@ -1,4 +1,8 @@
 class JourneyController < ApplicationController
+  def index
+    redirect_to build_journey.first_step_path
+  end
+
   def question
     @journey = build_journey
     render_form
@@ -13,22 +17,28 @@ class JourneyController < ApplicationController
     end
   end
 
+  private
+
   def render_form
     @form_path = @journey.form_path
     @back_path = if @journey.previous_slug.present?
                    @journey.back_path
                  else
-                   homepage_path
+                   @journey.start_path
                  end
     render @journey.template
   end
 
-  def build_journey
+  def journey_class
     case params[:journey]
     when TeacherSupplyJourney.journey_name
-      TeacherSupplyJourney.new(params[:slug], params)
+      TeacherSupplyJourney
     else
       raise ActionController::RoutingError
     end
+  end
+
+  def build_journey
+    journey_class.new(params[:slug], params)
   end
 end

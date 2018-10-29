@@ -8,6 +8,10 @@ class TeacherSupplyJourney < Journey
     'teacher-supply'
   end
 
+  def start_path
+    supply_teachers_path
+  end
+
   def next_step_path
     case next_slug
     when 'results'
