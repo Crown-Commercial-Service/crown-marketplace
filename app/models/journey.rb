@@ -1,4 +1,6 @@
 class Journey
+  include Rails.application.routes.url_helpers
+
   attr_reader :steps, :params
 
   def initialize(first_step_class, slug, params)
@@ -26,6 +28,22 @@ class Journey
 
   def next_step
     current_step.next_step_class&.new
+  end
+
+  def form_path
+    journey_answer_path(journey: self.class.journey_name, slug: current_slug)
+  end
+
+  def current_question_path
+    journey_question_path(journey: self.class.journey_name, slug: current_slug, params: params)
+  end
+
+  def back_path
+    journey_question_path(journey: self.class.journey_name, slug: previous_slug, params: params)
+  end
+
+  def next_step_path
+    journey_question_path(journey: self.class.journey_name, slug: next_slug, params: params)
   end
 
   delegate :slug, to: :current_step, prefix: :current, allow_nil: true
