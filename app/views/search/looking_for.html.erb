@@ -8,7 +8,7 @@
               <%= t('.question') %>
             </h1>
           </legend>
-          <%= display_flash_error(@journey) %>
+          <%= display_error(@journey) %>
           <div class="govuk-radios">
             <div class="govuk-radios__item">
               <%= radio_button_tag :looking_for, :worker, checked?(params[:looking_for], 'worker'), class: 'govuk-radios__input' %>

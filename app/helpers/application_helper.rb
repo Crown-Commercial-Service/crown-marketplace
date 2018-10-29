@@ -24,7 +24,7 @@ module ApplicationHelper
     end
   end
 
-  def display_flash_error(journey)
+  def display_error(journey)
     return if journey.error.blank?
 
     content_tag :span, class: 'govuk-error-message' do
