@@ -41,10 +41,16 @@ RSpec.describe SearchController, type: :controller do
     context 'when answer is blank' do
       let(:looking_for) { '' }
 
-      it 'redirects to looking-for question' do
-        expect(response).to redirect_to(
-          search_question_path(slug: 'looking-for', looking_for: '')
-        )
+      it 'renders looking-for question' do
+        expect(response).to render_template('looking_for')
+      end
+
+      it 'sets form_path' do
+        expect(assigns(:form_path)).to eq(search_answer_path(slug: 'looking-for'))
+      end
+
+      it 'sets back_path' do
+        expect(assigns(:back_path)).to eq(homepage_path)
       end
 
       it 'sets a flash error message' do
@@ -101,12 +107,18 @@ RSpec.describe SearchController, type: :controller do
     context 'when answer is blank' do
       let(:managed_service_provider) { '' }
 
-      it 'redirects to managed-service-provider question' do
-        expect(response).to redirect_to(
+      it 'renders managed-service-provider question' do
+        expect(response).to render_template('managed_service_provider')
+      end
+
+      it 'sets back_path' do
+        expect(assigns(:back_path)).to eq(
           search_question_path(
-            slug: 'managed-service-provider',
-            managed_service_provider: '',
-            looking_for: 'managed_service_provider'
+            slug: 'looking-for',
+            params: {
+              looking_for: 'managed_service_provider',
+              managed_service_provider: ''
+            }
           )
         )
       end
@@ -162,10 +174,8 @@ RSpec.describe SearchController, type: :controller do
     context 'when answer is blank' do
       let(:worker_type) { '' }
 
-      it 'redirects to worker-type question' do
-        expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'worker-type'))
-        )
+      it 'renders worker-type question' do
+        expect(response).to render_template('worker_type')
       end
 
       it 'sets a flash error message' do
@@ -176,10 +186,8 @@ RSpec.describe SearchController, type: :controller do
     context 'when answer is unknown' do
       let(:worker_type) { 'blahblah' }
 
-      it 'redirects to worker-type question' do
-        expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'worker-type'))
-        )
+      it 'renders worker-type question' do
+        expect(response).to render_template('worker_type')
       end
 
       it 'sets a flash error message' do
@@ -320,10 +328,8 @@ RSpec.describe SearchController, type: :controller do
         get :answer, params: params.merge(slug: 'payroll-provider')
       end
 
-      it 'redirects to payroll-provider question' do
-        expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'payroll-provider'))
-        )
+      it 'renders payroll-provider question' do
+        expect(response).to render_template('payroll_provider')
       end
 
       it 'sets a flash error message' do
