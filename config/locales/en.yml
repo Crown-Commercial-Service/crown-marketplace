@@ -23,7 +23,7 @@ en:
   home:
     index:
       service_title: Crown Marketplace
-      intro_paragraph: Use this service to:
+      intro_paragraph: "Use this service to:"
       teacher_supply_link: Find supply teachers and non-teaching staff
       facilities_management_link: Find a facilities management supplier
   branches:
