@@ -5,7 +5,7 @@ class BranchesController < ApplicationController
 
     if @journey.invalid?
       @form_path = @journey.form_path
-      render "search/#{@journey.template}"
+      render "journey/#{@journey.template}"
     else
       render_branches
     end

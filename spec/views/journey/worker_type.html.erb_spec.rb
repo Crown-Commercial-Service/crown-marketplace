@@ -1,13 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe 'search/agency_payroll.html.erb' do
-  let(:step) { Steps::AgencyPayroll.new }
+RSpec.describe 'journey/worker_type.html.erb' do
+  let(:step) { Steps::WorkerType.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors) }
 
   before do
     assign(:journey, journey)
     assign(:form_path, '/')
+  end
+
+  it 'stores answer to looking-for question in hidden field' do
+    assign(:back_path, '/')
+    params[:looking_for] = 'looking-for'
+    render
+    expect(rendered).to have_css('input[name="looking_for"][value="looking-for"]', visible: false)
   end
 
   it 'does not include any error message classes' do
@@ -18,7 +25,7 @@ RSpec.describe 'search/agency_payroll.html.erb' do
 
   context 'when the journey has an error' do
     before do
-      errors.add(:location, 'error-message')
+      errors.add(:worker_type, 'error-message')
       render
     end
 

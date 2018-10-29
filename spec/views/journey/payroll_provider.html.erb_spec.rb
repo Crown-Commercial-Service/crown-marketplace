@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'search/school_postcode.html.erb' do
-  let(:step) { Steps::SchoolPostcode.new }
+RSpec.describe 'journey/payroll_provider.html.erb' do
+  let(:step) { Steps::PayrollProvider.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors) }
 
@@ -23,10 +23,16 @@ RSpec.describe 'search/school_postcode.html.erb' do
     expect(rendered).to have_css('input[name="worker_type"][value="worker-type"]', visible: false)
   end
 
-  it 'stores answer to payroll-provider question in hidden field' do
-    params[:payroll_provider] = 'payroll-provider'
+  it 'selects "school" if payroll provider is "school"' do
+    params[:payroll_provider] = 'school'
     render
-    expect(rendered).to have_css('input[name="payroll_provider"][value="payroll-provider"]', visible: false)
+    expect(rendered).to have_css('input[type="radio"][name="payroll_provider"][value="school"][checked]')
+  end
+
+  it 'selects "agency" if payroll provider is "agency"' do
+    params[:payroll_provider] = 'agency'
+    render
+    expect(rendered).to have_css('input[type="radio"][name="payroll_provider"][value="agency"][checked]')
   end
 
   it 'does not include any error message classes' do
@@ -37,7 +43,7 @@ RSpec.describe 'search/school_postcode.html.erb' do
 
   context 'when the journey has an error' do
     before do
-      errors.add(:location, 'error-message')
+      errors.add(:payroll_provider, 'error-message')
       render
     end
 

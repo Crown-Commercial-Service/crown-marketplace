@@ -21,7 +21,7 @@ RSpec.describe SuppliersController, type: :controller do
 
     it 'sets the back path to the managed-service-provider question' do
       get :master_vendors, params: { journey: 'teacher-supply' }
-      expected_path = search_question_path(journey: 'teacher-supply', slug: 'managed-service-provider')
+      expected_path = journey_question_path(journey: 'teacher-supply', slug: 'managed-service-provider')
       expect(assigns(:back_path)).to eq(expected_path)
     end
   end
@@ -46,7 +46,7 @@ RSpec.describe SuppliersController, type: :controller do
 
     it 'sets the back path to the managed-service-provider question' do
       get :neutral_vendors, params: { journey: 'teacher-supply' }
-      expected_path = search_question_path(journey: 'teacher-supply', slug: 'managed-service-provider')
+      expected_path = journey_question_path(journey: 'teacher-supply', slug: 'managed-service-provider')
       expect(assigns(:back_path)).to eq(expected_path)
     end
   end

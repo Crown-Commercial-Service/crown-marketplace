@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'search/looking_for.html.erb' do
-  let(:step) { Steps::LookingFor.new }
+RSpec.describe 'journey/managed_service_provider.html.erb' do
+  let(:step) { Steps::ManagedServiceProvider.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors) }
 
@@ -18,7 +18,7 @@ RSpec.describe 'search/looking_for.html.erb' do
 
   context 'when the journey has an error' do
     before do
-      errors.add(:looking_for, 'error-message')
+      errors.add(:managed_service_provider, 'error-message')
       render
     end
 

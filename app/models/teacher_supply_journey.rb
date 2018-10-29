@@ -11,15 +11,15 @@ class TeacherSupplyJourney < Journey
   end
 
   def form_path
-    search_answer_path(journey: self.class.journey_name, slug: current_slug)
+    journey_answer_path(journey: self.class.journey_name, slug: current_slug)
   end
 
   def current_question_path
-    search_question_path(journey: self.class.journey_name, slug: current_slug, params: params)
+    journey_question_path(journey: self.class.journey_name, slug: current_slug, params: params)
   end
 
   def back_path
-    search_question_path(journey: self.class.journey_name, slug: previous_slug, params: params)
+    journey_question_path(journey: self.class.journey_name, slug: previous_slug, params: params)
   end
 
   def next_step_path
@@ -31,7 +31,7 @@ class TeacherSupplyJourney < Journey
     when 'neutral-vendor-managed-service'
       neutral_vendors_path(journey: self.class.journey_name, params: params)
     else
-      search_question_path(journey: self.class.journey_name, slug: next_slug, params: params)
+      journey_question_path(journey: self.class.journey_name, slug: next_slug, params: params)
     end
   end
 end
