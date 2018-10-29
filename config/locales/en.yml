@@ -20,7 +20,6 @@ en:
       inclusion: Please choose an option
       invalid_location: Couldn’t find that postcode
       invalid_postcode: Invalid postcode
-      yes_no: Please choose an option
   faker:
     company:
       name:
