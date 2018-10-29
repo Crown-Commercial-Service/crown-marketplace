@@ -20,6 +20,12 @@ en:
       back: Back
       having_problems: Having problems using this service?
       support_email_html: "Email %{link} for support."
+  home:
+    index:
+      service_title: Crown Marketplace
+      intro_paragraph: Use this service to
+      teacher_supply_link: Find supply teachers and non-teaching staff
+      facilities_management_link: Find a facilities management supplier
   branches:
     index:
       header: Suppliers list

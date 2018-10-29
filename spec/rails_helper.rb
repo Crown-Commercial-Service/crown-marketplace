@@ -73,5 +73,5 @@ end
 
 def visit_home
   visit '/'
-  click_on 'Find supply teachers and non-teaching staff'
+  click_on I18n.t('home.index.teacher_supply_link')
 end
