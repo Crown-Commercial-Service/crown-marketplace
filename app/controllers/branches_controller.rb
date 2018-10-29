@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
   def index
-    @journey = build_journey
+    @journey = TeacherSupplyJourney.new(params[:slug], params)
     @back_path = search_question_path(slug: @journey.previous_slug, params: @journey.params)
 
     if @journey.invalid?
@@ -25,9 +25,5 @@ class BranchesController < ApplicationController
         render xlsx: spreadsheet.to_xlsx, filename: 'branches'
       end
     end
-  end
-
-  def build_journey
-    TeacherSupplyJourney.new(params[:slug], params)
   end
 end
