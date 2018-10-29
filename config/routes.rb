@@ -10,19 +10,20 @@ Rails.application.routes.draw do
   resources :branches, only: :index
   resources :uploads, only: :create
 
-  get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
-  get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
+  get '/:journey/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
+  get '/:journey/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
 
-  get '/agency-payroll-results',
+  get '/:journey/agency-payroll-results',
       to: 'branches#index',
       slug: 'agency-payroll-results'
-  get '/fixed-term-results',
+  get '/:journey/fixed-term-results',
       to: 'branches#index',
-      slug: 'fixed-term-results'
-  get '/nominated-worker-results',
+      slug: 'fixed-term-results',
+      as: 'fixed_term_results'
+  get '/:journey/nominated-worker-results',
       to: 'branches#index',
       slug: 'nominated-worker-results'
 
-  get '/:slug', to: 'search#question', as: 'search_question'
-  get '/:slug/answer', to: 'search#answer', as: 'search_answer'
+  get '/:journey/:slug', to: 'search#question', as: 'search_question'
+  get '/:journey/:slug/answer', to: 'search#answer', as: 'search_answer'
 end

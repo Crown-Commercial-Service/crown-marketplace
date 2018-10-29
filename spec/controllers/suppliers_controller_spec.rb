@@ -10,18 +10,18 @@ RSpec.describe SuppliersController, type: :controller do
     end
 
     it 'renders the master_vendors template' do
-      get :master_vendors
+      get :master_vendors, params: { journey: 'teacher-supply' }
       expect(response).to render_template('master_vendors')
     end
 
     it 'assigns suppliers with master vendor rates to suppliers' do
-      get :master_vendors
+      get :master_vendors, params: { journey: 'teacher-supply' }
       expect(assigns(:suppliers)).to eq(suppliers)
     end
 
     it 'sets the back path to the managed-service-provider question' do
-      get :master_vendors
-      expected_path = search_question_path(slug: 'managed-service-provider')
+      get :master_vendors, params: { journey: 'teacher-supply' }
+      expected_path = search_question_path(journey: 'teacher-supply', slug: 'managed-service-provider')
       expect(assigns(:back_path)).to eq(expected_path)
     end
   end
@@ -35,18 +35,18 @@ RSpec.describe SuppliersController, type: :controller do
     end
 
     it 'renders the neutral_vendors template' do
-      get :neutral_vendors
+      get :neutral_vendors, params: { journey: 'teacher-supply' }
       expect(response).to render_template('neutral_vendors')
     end
 
     it 'assigns suppliers with neutral vendor rates to suppliers' do
-      get :neutral_vendors
+      get :neutral_vendors, params: { journey: 'teacher-supply' }
       expect(assigns(:suppliers)).to eq(suppliers)
     end
 
     it 'sets the back path to the managed-service-provider question' do
-      get :neutral_vendors
-      expected_path = search_question_path(slug: 'managed-service-provider')
+      get :neutral_vendors, params: { journey: 'teacher-supply' }
+      expected_path = search_question_path(journey: 'teacher-supply', slug: 'managed-service-provider')
       expect(assigns(:back_path)).to eq(expected_path)
     end
   end

@@ -6,16 +6,20 @@ class TeacherSupplyJourney < Journey
     super(first_step_class, slug, params)
   end
 
+  def self.journey_name
+    'teacher-supply'
+  end
+
   def form_path
-    search_answer_path(slug: current_slug)
+    search_answer_path(journey: self.class.journey_name, slug: current_slug)
   end
 
   def current_question_path
-    search_question_path(slug: current_slug, params: params)
+    search_question_path(journey: self.class.journey_name, slug: current_slug, params: params)
   end
 
   def back_path
-    search_question_path(slug: previous_slug, params: params)
+    search_question_path(journey: self.class.journey_name, slug: previous_slug, params: params)
   end
 
   def next_step_path
@@ -23,11 +27,11 @@ class TeacherSupplyJourney < Journey
     when 'results'
       branches_path(params: params)
     when 'master-vendor-managed-service'
-      master_vendors_path(params)
+      master_vendors_path(journey: self.class.journey_name, params: params)
     when 'neutral-vendor-managed-service'
-      neutral_vendors_path(params)
+      neutral_vendors_path(journey: self.class.journey_name, params: params)
     else
-      search_question_path(slug: next_slug, params: params)
+      search_question_path(journey: self.class.journey_name, slug: next_slug, params: params)
     end
   end
 end

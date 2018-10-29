@@ -4,6 +4,7 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #question for looking-for' do
     it 'renders template' do
       get :question, params: {
+        journey: 'teacher-supply',
         slug: 'looking-for'
       }
       expect(response).to render_template('looking_for')
@@ -13,6 +14,7 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #answer for looking-for' do
     before do
       get :answer, params: {
+        journey: 'teacher-supply',
         slug: 'looking-for',
         looking_for: looking_for
       }
@@ -58,6 +60,7 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #question for managed-service-provider' do
     it 'renders template' do
       get :question, params: {
+        journey: 'teacher-supply',
         slug: 'managed-service-provider',
         looking_for: 'managed_service_provider'
       }
@@ -68,6 +71,7 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #answer for managed-service-provider' do
     before do
       get :answer, params: {
+        journey: 'teacher-supply',
         slug: 'managed-service-provider',
         managed_service_provider: managed_service_provider,
         looking_for: 'managed_service_provider'
@@ -80,6 +84,7 @@ RSpec.describe SearchController, type: :controller do
       it 'redirects to master vendors path' do
         expect(response).to redirect_to(
           master_vendors_path(
+            journey: 'teacher-supply',
             managed_service_provider: managed_service_provider,
             looking_for: 'managed_service_provider'
           )
@@ -93,6 +98,7 @@ RSpec.describe SearchController, type: :controller do
       it 'redirects to neutral vendors path' do
         expect(response).to redirect_to(
           neutral_vendors_path(
+            journey: 'teacher-supply',
             managed_service_provider: managed_service_provider,
             looking_for: 'managed_service_provider'
           )
@@ -110,6 +116,7 @@ RSpec.describe SearchController, type: :controller do
       it 'sets back_path' do
         expect(assigns(:back_path)).to eq(
           search_question_path(
+            journey: 'teacher-supply',
             slug: 'looking-for',
             params: {
               looking_for: 'managed_service_provider',
@@ -124,6 +131,7 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #question for worker-type' do
     it 'renders template' do
       get :question, params: {
+        journey: 'teacher-supply',
         slug: 'worker-type',
         looking_for: 'worker'
       }
@@ -140,7 +148,7 @@ RSpec.describe SearchController, type: :controller do
     end
 
     before do
-      get :answer, params: params.merge(slug: 'worker-type')
+      get :answer, params: params.merge(journey: 'teacher-supply', slug: 'worker-type')
     end
 
     context 'when looking for a worker-type' do
@@ -148,7 +156,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to non worker-type outcome' do
         expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'school-postcode'))
+          search_question_path(journey: 'teacher-supply', slug: 'school-postcode', params: params)
         )
       end
     end
@@ -158,7 +166,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'redirects to payroll-provider question path' do
         expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'payroll-provider'))
+          search_question_path(journey: 'teacher-supply', slug: 'payroll-provider', params: params)
         )
       end
     end
@@ -183,6 +191,7 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #question for school-postcode' do
     it 'renders template' do
       get :question, params: {
+        journey: 'teacher-supply',
         slug: 'school-postcode',
         looking_for: 'worker',
         worker_type: 'nominated'
@@ -195,9 +204,9 @@ RSpec.describe SearchController, type: :controller do
         looking_for: 'worker',
         worker_type: 'nominated'
       }
-      get :question, params: params.merge(slug: 'school-postcode')
+      get :question, params: params.merge(journey: 'teacher-supply', slug: 'school-postcode')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(slug: 'worker-type'))
+        search_question_path(journey: 'teacher-supply', slug: 'worker-type', params: params)
       )
     end
 
@@ -206,9 +215,9 @@ RSpec.describe SearchController, type: :controller do
         looking_for: 'worker',
         worker_type: 'nominated'
       }
-      get :question, params: params.merge(slug: 'school-postcode')
+      get :question, params: params.merge(journey: 'teacher-supply', slug: 'school-postcode')
       expect(assigns(:form_path)).to eq(
-        search_answer_path(slug: 'school-postcode')
+        search_answer_path(journey: 'teacher-supply', slug: 'school-postcode')
       )
     end
 
@@ -218,9 +227,9 @@ RSpec.describe SearchController, type: :controller do
         worker_type: 'agency_supplied',
         payroll_provider: 'school'
       }
-      get :question, params: params.merge(slug: 'school-postcode')
+      get :question, params: params.merge(journey: 'teacher-supply', slug: 'school-postcode')
       expect(assigns(:back_path)).to eq(
-        search_question_path(params.merge(slug: 'payroll-provider'))
+        search_question_path(params.merge(journey: 'teacher-supply', slug: 'payroll-provider'))
       )
     end
   end
@@ -241,7 +250,7 @@ RSpec.describe SearchController, type: :controller do
         payroll_provider: 'school',
         postcode: postcode
       }
-      get :answer, params: params.merge(slug: 'school-postcode')
+      get :answer, params: params.merge(journey: 'teacher-supply', slug: 'school-postcode')
       expect(response).to redirect_to(fixed_term_results_path(params))
     end
   end
@@ -249,17 +258,19 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #question for payroll-provider' do
     it 'sets the form path to payroll-provider answer' do
       params = {
+        journey: 'teacher-supply',
         looking_for: 'worker',
         worker_type: 'agency_supplied'
       }
-      get :question, params: params.merge(slug: 'payroll-provider')
+      get :question, params: params.merge(journey: 'teacher-supply', slug: 'payroll-provider')
       expect(assigns(:form_path)).to eq(
-        search_answer_path(slug: 'payroll-provider')
+        search_answer_path(journey: 'teacher-supply', slug: 'payroll-provider')
       )
     end
 
     it 'sets the back path to the worker-type question' do
       params = {
+        journey: 'teacher-supply',
         looking_for: 'worker',
         worker_type: 'agency_supplied'
       }
@@ -274,6 +285,7 @@ RSpec.describe SearchController, type: :controller do
     context 'when looking for the school to provide payroll' do
       it 'redirects to postcode form' do
         params = {
+          journey: 'teacher-supply',
           looking_for: 'worker',
           worker_type: 'agency_supplied',
           payroll_provider: 'school'
@@ -288,6 +300,7 @@ RSpec.describe SearchController, type: :controller do
     context 'when looking for the agency to provide payroll' do
       it 'redirects to agency payroll outcome' do
         params = {
+          journey: 'teacher-supply',
           looking_for: 'worker',
           worker_type: 'agency_supplied',
           payroll_provider: 'agency'
@@ -302,6 +315,7 @@ RSpec.describe SearchController, type: :controller do
     context 'when the answer is blank' do
       let(:params) do
         {
+          journey: 'teacher-supply',
           looking_for: 'worker',
           worker_type: 'agency_supplied',
           payroll_provider: ''
@@ -321,6 +335,7 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #question for agency-payroll' do
     it 'sets the back link to the payroll-provider question' do
       params = {
+        journey: 'teacher-supply',
         looking_for: 'worker',
         worker_type: 'agency_supplied',
         payroll_provider: 'agency'
