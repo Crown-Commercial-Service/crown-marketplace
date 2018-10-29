@@ -1,7 +1,7 @@
 ---
 en:
   branches:
-    _branch:
+    branch:
       branch: Branch
       markup: Mark-up
       miles: Miles
