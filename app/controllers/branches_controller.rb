@@ -3,10 +3,8 @@ class BranchesController < ApplicationController
     @back_path = search_question_path(slug: journey.previous_slug, params: journey.params)
 
     if journey.invalid?
-      redirect_to(
-        search_question_path(slug: journey.current_slug, params: journey.params),
-        flash: { error: journey.error }
-      )
+      @form_path = search_answer_path(slug: @journey.current_slug)
+      render "search/#{journey.template}"
     else
       render_branches
     end

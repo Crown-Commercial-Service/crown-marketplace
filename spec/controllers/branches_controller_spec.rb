@@ -66,14 +66,8 @@ RSpec.describe BranchesController, type: :controller do
         get :index, params: params
       end
 
-      it 'redirects to school-postcode question' do
-        expect(response).to redirect_to(
-          search_question_path(params.merge(slug: 'school-postcode'))
-        )
-      end
-
-      it 'sets a flash error message' do
-        expect(flash[:error]).to eq 'Couldn’t find that postcode'
+      it 'renders school-postcode question' do
+        expect(response).to render_template('search/school_postcode')
       end
     end
 
@@ -91,19 +85,8 @@ RSpec.describe BranchesController, type: :controller do
         }
       end
 
-      it 'redirects to school-postcode question' do
-        expect(response).to redirect_to(
-          search_question_path(
-            slug: 'school-postcode',
-            postcode: postcode,
-            worker_type: 'nominated',
-            looking_for: 'worker'
-          )
-        )
-      end
-
-      it 'sets a flash error message' do
-        expect(flash[:error]).to eq 'Couldn’t find that postcode'
+      it 'renders school-postcode question' do
+        expect(response).to render_template('search/school_postcode')
       end
     end
   end
