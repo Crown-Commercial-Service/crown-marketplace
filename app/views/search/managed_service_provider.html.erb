@@ -1,13 +1,13 @@
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_field_tag :looking_for, params[:looking_for] %>
-  <%= govuk_form_group_with_optional_error do %>
+  <%= govuk_form_group_with_optional_error(@journey) do %>
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
           <%= t('.question') %>
         </h1>
       </legend>
-      <%= display_flash_error %>
+      <%= display_flash_error(@journey) %>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :managed_service_provider, :master_vendor, checked?(params[:managed_service_provider], 'master_vendor'), class: 'govuk-radios__input' %>

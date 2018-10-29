@@ -2,7 +2,7 @@
   <%= hidden_field_tag :worker_type, params[:worker_type] %>
   <%= hidden_field_tag :looking_for, params[:looking_for] %>
   <%= hidden_field_tag :payroll_provider, params[:payroll_provider] %>
-  <%= govuk_form_group_with_optional_error do %>
+  <%= govuk_form_group_with_optional_error(@journey) do %>
     <h1 class="govuk-label-wrapper">
       <label class="govuk-label govuk-label--m" for="postcode">
         <%= t('.question') %>
@@ -11,7 +11,7 @@
         <%= t('.question_hint') %>
       </span>
     </h1>
-    <%= display_flash_error %>
+    <%= display_flash_error(@journey) %>
     <%= text_field_tag :postcode, params[:postcode], class: 'govuk-input' %>
   <% end %>
   <%= submit_tag t('.submit'), class: "govuk-button" %>

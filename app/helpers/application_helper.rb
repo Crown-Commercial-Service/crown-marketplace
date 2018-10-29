@@ -15,20 +15,20 @@ module ApplicationHelper
     end
   end
 
-  def govuk_form_group_with_optional_error
+  def govuk_form_group_with_optional_error(journey)
     css_classes = ['govuk-form-group']
-    css_classes += ['govuk-form-group--error'] if flash[:error]
+    css_classes += ['govuk-form-group--error'] if journey.error.present?
 
     content_tag :div, class: css_classes.join(' ') do
       yield
     end
   end
 
-  def display_flash_error
-    return unless flash[:error]
+  def display_flash_error(journey)
+    return if journey.error.blank?
 
     content_tag :span, class: 'govuk-error-message' do
-      flash[:error]
+      journey.error
     end
   end
 end
