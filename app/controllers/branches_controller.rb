@@ -30,8 +30,7 @@ class BranchesController < ApplicationController
   end
 
   def journey
-    first_step_class = Steps::LookingFor
-    @journey ||= Journey.new(first_step_class, params[:slug], params)
+    @journey ||= TeacherSupplyJourney.new(params[:slug], params)
   end
 
   def safe_params
