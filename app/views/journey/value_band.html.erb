@@ -13,19 +13,19 @@
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :value_band, :under1_5m, checked?(params[:value_band], 'under1_5m'), class: 'govuk-radios__input' %>
-          <%= label_tag :value_band, t('.answer_under1_5m'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :value_band_under1_5m, t('.answer_under1_5m'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :value_band, :under7m, checked?(params[:value_band], 'under7m'), class: 'govuk-radios__input' %>
-          <%= label_tag :value_band, t('.answer_under7m'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :value_band_under7m, t('.answer_under7m'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :value_band, :under50m, checked?(params[:value_band], 'under50m'), class: 'govuk-radios__input' %>
-          <%= label_tag :value_band, t('.answer_under50m'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :value_band_under50m, t('.answer_under50m'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :value_band, :over50m, checked?(params[:value_band], 'over50m'), class: 'govuk-radios__input' %>
-          <%= label_tag :value_band, t('.answer_over50m'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :value_band_over50m, t('.answer_over50m'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     </fieldset>
