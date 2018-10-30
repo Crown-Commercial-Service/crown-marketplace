@@ -27,6 +27,10 @@ RSpec.describe BranchesController, type: :controller do
         get :index, params: params
       end
 
+      after do
+        Geocoder::Lookup::Test.reset
+      end
+
       it 'assigns back_path to school-postcode question path' do
         expect(assigns(:back_path)).to eq(
           journey_question_path(params.merge(slug: 'school-postcode'))
@@ -86,6 +90,10 @@ RSpec.describe BranchesController, type: :controller do
           worker_type: 'nominated',
           looking_for: 'worker'
         }
+      end
+
+      after do
+        Geocoder::Lookup::Test.reset
       end
 
       it 'renders school-postcode question' do

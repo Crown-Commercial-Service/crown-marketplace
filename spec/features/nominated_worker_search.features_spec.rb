@@ -1,11 +1,17 @@
 require 'rails_helper'
 
 RSpec.feature 'Nominated workers', type: :feature do
-  scenario 'Buyer finds suppliers within search range' do
+  before do
     Geocoder::Lookup::Test.add_stub(
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
     )
+  end
 
+  after do
+    Geocoder::Lookup::Test.reset
+  end
+
+  scenario 'Buyer finds suppliers within search range' do
     holborn = create(:supplier, name: 'holborn')
     create(
       :rate,
@@ -75,10 +81,6 @@ RSpec.feature 'Nominated workers', type: :feature do
   end
 
   scenario 'Buyer changes mind about postcode' do
-    Geocoder::Lookup::Test.add_stub(
-      'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
-    )
-
     visit_home
     click_on 'Start now'
 
@@ -97,10 +99,6 @@ RSpec.feature 'Nominated workers', type: :feature do
   end
 
   scenario 'Buyer changes mind about postcode and nominated worker' do
-    Geocoder::Lookup::Test.add_stub(
-      'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
-    )
-
     visit_home
     click_on 'Start now'
 
@@ -120,10 +118,6 @@ RSpec.feature 'Nominated workers', type: :feature do
   end
 
   scenario 'Buyer changes mind about postcode, nominated worker & hire via agency' do
-    Geocoder::Lookup::Test.add_stub(
-      'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
-    )
-
     visit_home
     click_on 'Start now'
 
