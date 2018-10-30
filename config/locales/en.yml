@@ -63,6 +63,7 @@ en:
   journey:
     agency_payroll:
       postcode_question: What is your school's postcode?
+      question_hint: We use this to find agencies near to your school
       worker_term_question: How long do you need the worker for?
       worker_type_question: What type of worker do you need?
     looking_for:

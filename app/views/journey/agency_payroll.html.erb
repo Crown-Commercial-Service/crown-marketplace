@@ -7,6 +7,9 @@
     <label class="govuk-label govuk-label--m" for="postcode">
       <%= t('.postcode_question') %>
     </label>
+    <span class="govuk-hint">
+      <%= t('.question_hint') %>
+    </span>
     <%= display_error(@journey, :location) %>
     <%= text_field_tag :postcode, params[:postcode], class: css_classes_for_input(@journey, :location) %>
   <% end %>
