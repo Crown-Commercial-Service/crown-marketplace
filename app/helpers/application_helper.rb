@@ -35,10 +35,10 @@ module ApplicationHelper
     end
   end
 
-  def css_classes_for_input(journey, attribute)
+  def css_classes_for_input(journey, attribute, extra_classes = [])
     error = journey.errors[attribute].first
 
-    css_classes = ['govuk-input']
+    css_classes = ['govuk-input'] + extra_classes
     css_classes += ['govuk-input--error'] if error.present?
     css_classes
   end
