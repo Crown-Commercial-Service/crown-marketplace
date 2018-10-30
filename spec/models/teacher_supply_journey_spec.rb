@@ -28,7 +28,7 @@ RSpec.describe TeacherSupplyJourney, type: :model do
         it { is_expected.to have_attributes(next_slug: nil) }
         it { is_expected.to have_attributes(params: {}) }
         it { is_expected.to have_attributes(template: 'looking_for') }
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
       end
 
       context 'with invalid parameters' do
@@ -38,7 +38,7 @@ RSpec.describe TeacherSupplyJourney, type: :model do
         it { is_expected.to have_attributes(previous_slug: nil) }
         it { is_expected.to have_attributes(next_slug: nil) }
         it { is_expected.to have_attributes(template: 'looking_for') }
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
 
         it 'collects the supplied parameters' do
           expect(journey.params).to eq(params)

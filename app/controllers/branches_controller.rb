@@ -3,11 +3,11 @@ class BranchesController < ApplicationController
     @journey = TeacherSupplyJourney.new(params[:slug], params)
     @back_path = @journey.previous_step_path
 
-    if @journey.invalid?
+    if @journey.valid?
+      render_branches
+    else
       @form_path = @journey.form_path
       render "journey/#{@journey.template}"
-    else
-      render_branches
     end
   end
 

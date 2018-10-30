@@ -10,10 +10,10 @@ class JourneyController < ApplicationController
 
   def answer
     @journey = build_journey
-    if @journey.invalid?
-      render_form
-    else
+    if @journey.valid?
       redirect_to @journey.next_step_path
+    else
+      render_form
     end
   end
 
