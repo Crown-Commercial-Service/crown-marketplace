@@ -1,4 +1,6 @@
 class TeacherSupplyJourney < Journey
+  include Rails.application.routes.url_helpers
+
   def initialize(slug, params)
     super(self.class.journey_name, self.class.first_step_class, slug, params)
   end

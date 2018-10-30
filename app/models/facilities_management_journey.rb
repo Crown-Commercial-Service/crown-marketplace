@@ -1,4 +1,6 @@
 class FacilitiesManagementJourney < Journey
+  include Rails.application.routes.url_helpers
+
   def initialize(slug, params)
     first_step_class = Steps::ValueBand
     super(self.class.journey_name, first_step_class, slug, params)
