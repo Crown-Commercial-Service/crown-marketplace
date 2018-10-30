@@ -32,4 +32,12 @@ module ApplicationHelper
       error
     end
   end
+
+  def css_classes_for_input(journey, attribute)
+    error = journey.errors[attribute].first
+
+    css_classes = ['govuk-input']
+    css_classes += ['govuk-input--error'] if error.present?
+    css_classes
+  end
 end

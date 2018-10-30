@@ -12,7 +12,7 @@
       </span>
     </h1>
     <%= display_error(@journey, :location) %>
-    <%= text_field_tag :postcode, params[:postcode], class: 'govuk-input' %>
+    <%= text_field_tag :postcode, params[:postcode], class: css_classes_for_input(@journey, :location) %>
   <% end %>
   <%= submit_tag t('common.submit'), class: "govuk-button" %>
 <% end %>
