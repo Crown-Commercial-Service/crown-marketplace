@@ -65,5 +65,5 @@ class Journey
   delegate :slug, to: :previous_step, prefix: :previous, allow_nil: true
   delegate :slug, to: :next_step, prefix: :next, allow_nil: true
 
-  delegate :template, :valid?, :invalid?, :errors, to: :current_step
+  delegate :template, :valid?, :errors, to: :current_step
 end
