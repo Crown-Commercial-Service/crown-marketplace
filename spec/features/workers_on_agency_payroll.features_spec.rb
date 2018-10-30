@@ -58,7 +58,7 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
       location: Geocoding.point(latitude: 53.409189, longitude: -2.9946932)
     )
 
-    visit_home
+    visit_teacher_home
     click_on 'Start now'
 
     choose 'An individual worker'
