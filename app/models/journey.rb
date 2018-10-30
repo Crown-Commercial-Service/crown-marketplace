@@ -3,9 +3,10 @@ class Journey
 
   attr_reader :steps, :params
 
-  def initialize(first_step_class, slug, params)
+  def initialize(journey_name, first_step_class, slug, params)
     @steps = []
     @params = {}
+    @journey_name = journey_name
 
     klass = first_step_class
     loop do
@@ -36,17 +37,17 @@ class Journey
 
   def question_path_for_slug(slug, params = nil)
     if params
-      journey_question_path(journey: self.class.journey_name,
+      journey_question_path(journey: @journey_name,
                             slug: slug,
                             params: params)
     else
-      journey_question_path(journey: self.class.journey_name,
+      journey_question_path(journey: @journey_name,
                             slug: slug)
     end
   end
 
   def answer_path_for_slug(slug)
-    journey_answer_path(journey: self.class.journey_name, slug: slug)
+    journey_answer_path(journey: @journey_name, slug: slug)
   end
 
   def first_step_path
@@ -71,6 +72,10 @@ class Journey
 
   def form_path
     answer_path_for_slug current_slug
+  end
+
+  def start_path
+    homepage_path
   end
 
   delegate :slug, to: :current_step, prefix: :current, allow_nil: true
