@@ -21,11 +21,7 @@ class JourneyController < ApplicationController
 
   def render_form
     @form_path = @journey.form_path
-    @back_path = if @journey.previous_slug.present?
-                   @journey.back_path
-                 else
-                   @journey.start_path
-                 end
+    @back_path = @journey.back_path
     render @journey.template
   end
 
