@@ -21,7 +21,7 @@ module ApplicationHelper
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if error.present?
 
-    content_tag :div, class: css_classes.join(' ') do
+    content_tag :div, class: css_classes do
       yield
     end
   end
