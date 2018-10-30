@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Agency workers', type: :feature do
   scenario 'Answers should not be pre-selected' do
-    visit_home
+    visit_teacher_home
     click_on 'Start now'
 
     choose a_managed_service_provider
@@ -13,7 +13,7 @@ RSpec.feature 'Agency workers', type: :feature do
   end
 
   scenario 'Buyer was looking for a nominated worker but changed mind' do
-    visit_home
+    visit_teacher_home
     click_on 'Start now'
 
     choose an_individual_worker
@@ -28,7 +28,7 @@ RSpec.feature 'Agency workers', type: :feature do
   end
 
   scenario 'Buyer was looking for an agency supplied worker but changed mind' do
-    visit_home
+    visit_teacher_home
     click_on 'Start now'
 
     choose an_individual_worker
