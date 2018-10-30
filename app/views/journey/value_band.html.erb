@@ -1,6 +1,6 @@
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
-  <%= govuk_form_group_with_optional_error(@journey) do %>
+  <%= govuk_form_group_with_optional_error(@journey, :value_band) do %>
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">

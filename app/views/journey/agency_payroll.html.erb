@@ -3,7 +3,7 @@
   <%= hidden_field_tag :worker_type, params[:worker_type] %>
   <%= hidden_field_tag :looking_for, params[:looking_for] %>
   <%= hidden_field_tag :payroll_provider, params[:payroll_provider] %>
-  <%= govuk_form_group_with_optional_error(@journey) do %>
+  <%= govuk_form_group_with_optional_error(@journey, :location) do %>
     <label class="govuk-label" for="postcode">
       <%= t('.postcode_question') %>
     </label>
@@ -11,23 +11,23 @@
     <%= text_field_tag :postcode, params[:postcode], class: css_classes_for_input(@journey, :location) %>
   <% end %>
 
-  <div class="govuk-form-group">
+  <%= govuk_form_group_with_optional_error(@journey, :job_type) do %>
     <label class="govuk-label" for="job_type">
       <%= t('.worker_type_question') %>
     </label>
     <select class="govuk-select" id="job_type" name="job_type">
       <%= options_from_collection_for_select(JobType.all, :code, :description, params[:job_type]) %>
     </select>
-  </div>
+  <% end %>
 
-  <div class="govuk-form-group">
+  <%= govuk_form_group_with_optional_error(@journey, :term) do %>
     <label class="govuk-label" for="term">
       <%= t('.worker_term_question') %>
     </label>
     <select class="govuk-select" id="term" name="term">
       <%= options_from_collection_for_select(Term.all, :code, :description, params[:term]) %>
     </select>
-  </div>
+  <% end %>
 
   <%= submit_tag t('common.submit'), class: "govuk-button" %>
 <% end %>
