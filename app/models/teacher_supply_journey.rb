@@ -1,11 +1,14 @@
 class TeacherSupplyJourney < Journey
   def initialize(slug, params)
-    first_step_class = Steps::LookingFor
-    super(first_step_class, slug, params)
+    super(self.class.journey_name, self.class.first_step_class, slug, params)
   end
 
   def self.journey_name
     'teacher-supply'
+  end
+
+  def self.first_step_class
+    Steps::LookingFor
   end
 
   def start_path
