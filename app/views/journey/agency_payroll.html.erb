@@ -4,7 +4,7 @@
   <%= hidden_field_tag :looking_for, params[:looking_for] %>
   <%= hidden_field_tag :payroll_provider, params[:payroll_provider] %>
   <%= govuk_form_group_with_optional_error(@journey, :location) do %>
-    <label class="govuk-label" for="postcode">
+    <label class="govuk-label govuk-label--m" for="postcode">
       <%= t('.postcode_question') %>
     </label>
     <%= display_error(@journey, :location) %>
@@ -12,7 +12,7 @@
   <% end %>
 
   <%= govuk_form_group_with_optional_error(@journey, :job_type) do %>
-    <label class="govuk-label" for="job_type">
+    <label class="govuk-label govuk-label--m" for="job_type">
       <%= t('.worker_type_question') %>
     </label>
     <select class="govuk-select" id="job_type" name="job_type">
@@ -21,7 +21,7 @@
   <% end %>
 
   <%= govuk_form_group_with_optional_error(@journey, :term) do %>
-    <label class="govuk-label" for="term">
+    <label class="govuk-label govuk-label--m" for="term">
       <%= t('.worker_term_question') %>
     </label>
     <select class="govuk-select" id="term" name="term">
