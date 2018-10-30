@@ -1,0 +1,35 @@
+<%= form_tag @form_path, method: :get do %>
+  <%= govuk_form_group_with_optional_error(@journey) do %>
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.question') %>
+        </h1>
+      </legend>
+      <span class="govuk-hint">
+        <%= t('.question_hint') %>
+      </span>
+      <%= display_error(@journey, :value_band) %>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :value_band, :under1_5m, checked?(params[:value_band], 'under1_5m'), class: 'govuk-radios__input' %>
+          <%= label_tag :value_band, t('.answer_under1_5m'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :value_band, :under7m, checked?(params[:value_band], 'under7m'), class: 'govuk-radios__input' %>
+          <%= label_tag :value_band, t('.answer_under7m'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :value_band, :under50m, checked?(params[:value_band], 'under50m'), class: 'govuk-radios__input' %>
+          <%= label_tag :value_band, t('.answer_under50m'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :value_band, :over50m, checked?(params[:value_band], 'over50m'), class: 'govuk-radios__input' %>
+          <%= label_tag :value_band, t('.answer_over50m'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+  <%= submit_tag t('.submit'), class: "govuk-button" %>
+<% end %>
+<p><%= t('.direct_award') %></p>
