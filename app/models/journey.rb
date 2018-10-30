@@ -54,11 +54,11 @@ class Journey
     question_path_for_slug first_step.slug
   end
 
-  def current_question_path
+  def current_step_path
     question_path_for_slug current_slug, params
   end
 
-  def back_path
+  def previous_step_path
     if previous_slug.present?
       question_path_for_slug previous_slug, params
     else

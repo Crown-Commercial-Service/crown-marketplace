@@ -21,7 +21,7 @@ class JourneyController < ApplicationController
 
   def render_form
     @form_path = @journey.form_path
-    @back_path = @journey.back_path
+    @back_path = @journey.previous_step_path
     render @journey.template
   end
 
