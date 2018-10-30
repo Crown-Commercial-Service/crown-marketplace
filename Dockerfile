@@ -1,4 +1,4 @@
-FROM ruby:2.5.1-alpine
+FROM ruby:2.5.3-alpine
 
 # Build information
 ARG GIT_OWNER
@@ -30,7 +30,7 @@ ENV CCS_VERSION=$CCS_VERSION
 ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata
 
 # Update and install base packages
-RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs git
+RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs-current-npm git
 
 # Install yarn to manage Node.js dependencies
 RUN npm install yarn -g
