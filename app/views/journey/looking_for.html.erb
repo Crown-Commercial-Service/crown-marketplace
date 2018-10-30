@@ -3,7 +3,7 @@
     <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
     <%= form_tag @form_path, method: :get do %>
       <%= govuk_form_group_with_optional_error(@journey, :looking_for) do %>
-        <fieldset class="govuk-fieldset">
+        <%= govuk_fieldset_with_optional_error(@journey, :looking_for) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">
               <%= t('.question') %>
@@ -20,7 +20,7 @@
               <%= label_tag :looking_for_managed_service_provider, t('.answer_managed_service_provider'), class: 'govuk-label govuk-radios__label' %>
             </div>
           </div>
-        </fieldset>
+        <% end %>
       <% end %>
       <%= submit_tag t('common.submit'), class: "govuk-button" %>
     <% end %>

@@ -2,7 +2,7 @@
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_field_tag :looking_for, params[:looking_for] %>
   <%= govuk_form_group_with_optional_error(@journey, :worker_type) do %>
-    <fieldset class="govuk-fieldset">
+    <%= govuk_fieldset_with_optional_error(@journey, :worker_type) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
           <%= t('.question') %>
@@ -19,7 +19,7 @@
           <%= label_tag :worker_type_nominated, t('.answer_nominated_worker'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
-    </fieldset>
+    <% end %>
   <% end %>
   <%= submit_tag t('common.submit'), class: "govuk-button" %>
 <% end %>

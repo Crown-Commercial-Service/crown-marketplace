@@ -10,6 +10,11 @@ RSpec.describe 'journey/value_band.html.erb' do
     assign(:form_path, '/')
   end
 
+  it 'does not include aria-describedby attribute' do
+    render
+    expect(rendered).not_to have_css('fieldset[aria-describedby]')
+  end
+
   it 'does not display the error summary' do
     render
     expect(rendered).not_to have_css('.govuk-error-summary')
@@ -25,6 +30,10 @@ RSpec.describe 'journey/value_band.html.erb' do
     before do
       errors.add(:value_band, 'error-message')
       render
+    end
+
+    it 'links the fieldset to the error message' do
+      expect(rendered).to have_css('fieldset[aria-describedby="value_band-error"]')
     end
 
     it 'displays the error summary' do

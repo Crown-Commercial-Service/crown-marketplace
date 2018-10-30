@@ -17,6 +17,11 @@ RSpec.describe 'journey/worker_type.html.erb' do
     expect(rendered).to have_css('input[name="looking_for"][value="looking-for"]', visible: false)
   end
 
+  it 'does not include aria-describedby attribute' do
+    render
+    expect(rendered).not_to have_css('fieldset[aria-describedby]')
+  end
+
   it 'does not display the error summary' do
     render
     expect(rendered).not_to have_css('.govuk-error-summary')
@@ -32,6 +37,10 @@ RSpec.describe 'journey/worker_type.html.erb' do
     before do
       errors.add(:worker_type, 'error-message')
       render
+    end
+
+    it 'links the fieldset to the error message' do
+      expect(rendered).to have_css('fieldset[aria-describedby="worker_type-error"]')
     end
 
     it 'displays the error summary' do
