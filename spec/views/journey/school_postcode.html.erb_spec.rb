@@ -29,6 +29,11 @@ RSpec.describe 'journey/school_postcode.html.erb' do
     expect(rendered).to have_css('input[name="payroll_provider"][value="payroll-provider"]', visible: false)
   end
 
+  it 'does not display the error summary' do
+    render
+    expect(rendered).not_to have_css('.govuk-error-summary')
+  end
+
   it 'does not include any error message classes' do
     render
     expect(rendered).not_to have_css('.govuk-form-group--error')
@@ -42,12 +47,16 @@ RSpec.describe 'journey/school_postcode.html.erb' do
       render
     end
 
+    it 'displays the error summary' do
+      expect(rendered).to have_css('.govuk-error-summary')
+    end
+
     it 'adds the form group error class' do
       expect(rendered).to have_css('.govuk-form-group.govuk-form-group--error')
     end
 
     it 'adds the message to the field with the error' do
-      expect(rendered).to have_css('.govuk-error-message', text: 'error-message')
+      expect(rendered).to have_css('#location-error.govuk-error-message', text: 'error-message')
     end
 
     it 'adds the error class to the postcode input' do

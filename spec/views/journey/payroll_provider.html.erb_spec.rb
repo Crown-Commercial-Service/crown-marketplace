@@ -35,6 +35,11 @@ RSpec.describe 'journey/payroll_provider.html.erb' do
     expect(rendered).to have_css('input[type="radio"][name="payroll_provider"][value="agency"][checked]')
   end
 
+  it 'does not display the error summary' do
+    render
+    expect(rendered).not_to have_css('.govuk-error-summary')
+  end
+
   it 'does not include any error message classes' do
     render
     expect(rendered).not_to have_css('.govuk-form-group--error')
@@ -47,12 +52,16 @@ RSpec.describe 'journey/payroll_provider.html.erb' do
       render
     end
 
+    it 'displays the error summary' do
+      expect(rendered).to have_css('.govuk-error-summary')
+    end
+
     it 'adds the form group error class' do
       expect(rendered).to have_css('.govuk-form-group.govuk-form-group--error')
     end
 
     it 'adds the message to the field with the error' do
-      expect(rendered).to have_css('.govuk-error-message', text: 'error-message')
+      expect(rendered).to have_css('#payroll_provider-error.govuk-error-message', text: 'error-message')
     end
   end
 end

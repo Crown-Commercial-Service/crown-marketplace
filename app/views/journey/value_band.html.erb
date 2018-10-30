@@ -1,3 +1,4 @@
+<%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= govuk_form_group_with_optional_error(@journey) do %>
     <fieldset class="govuk-fieldset">
