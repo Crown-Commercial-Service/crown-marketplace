@@ -15,9 +15,11 @@ module ApplicationHelper
     end
   end
 
-  def govuk_form_group_with_optional_error(journey)
+  def govuk_form_group_with_optional_error(journey, attribute)
+    error = journey.errors[attribute].first
+
     css_classes = ['govuk-form-group']
-    css_classes += ['govuk-form-group--error'] if journey.errors.any?
+    css_classes += ['govuk-form-group--error'] if error.present?
 
     content_tag :div, class: css_classes.join(' ') do
       yield
