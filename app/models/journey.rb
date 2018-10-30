@@ -1,12 +1,37 @@
 class Journey
-  include Rails.application.routes.url_helpers
+  class JourneyPaths
+    include Rails.application.routes.url_helpers
+
+    def initialize(journey_name)
+      @journey_name = journey_name
+    end
+
+    def home
+      homepage_path
+    end
+
+    def question(slug, params = nil)
+      if params
+        journey_question_path(journey: @journey_name,
+                              slug: slug,
+                              params: params)
+      else
+        journey_question_path(journey: @journey_name,
+                              slug: slug)
+      end
+    end
+
+    def answer(slug)
+      journey_answer_path(journey: @journey_name, slug: slug)
+    end
+  end
 
   attr_reader :steps, :params
 
   def initialize(journey_name, first_step_class, slug, params)
     @steps = []
     @params = {}
-    @journey_name = journey_name
+    @paths = JourneyPaths.new(journey_name)
 
     klass = first_step_class
     loop do
@@ -35,47 +60,32 @@ class Journey
     current_step.next_step_class&.new
   end
 
-  def question_path_for_slug(slug, params = nil)
-    if params
-      journey_question_path(journey: @journey_name,
-                            slug: slug,
-                            params: params)
-    else
-      journey_question_path(journey: @journey_name,
-                            slug: slug)
-    end
-  end
-
-  def answer_path_for_slug(slug)
-    journey_answer_path(journey: @journey_name, slug: slug)
-  end
-
   def first_step_path
-    question_path_for_slug first_step.slug
+    @paths.question first_step.slug
   end
 
   def current_step_path
-    question_path_for_slug current_slug, params
+    @paths.question current_slug, params
   end
 
   def previous_step_path
     if previous_slug.present?
-      question_path_for_slug previous_slug, params
+      @paths.question previous_slug, params
     else
       start_path
     end
   end
 
   def next_step_path
-    question_path_for_slug next_slug, params
+    @paths.question next_slug, params
   end
 
   def form_path
-    answer_path_for_slug current_slug
+    @paths.answer current_slug
   end
 
   def start_path
-    homepage_path
+    @paths.home
   end
 
   delegate :slug, to: :current_step, prefix: :current, allow_nil: true
