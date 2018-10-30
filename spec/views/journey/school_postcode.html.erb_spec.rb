@@ -33,6 +33,7 @@ RSpec.describe 'journey/school_postcode.html.erb' do
     render
     expect(rendered).not_to have_css('.govuk-form-group--error')
     expect(rendered).not_to have_css('.govuk-error-message')
+    expect(rendered).not_to have_css('.govuk-input--error')
   end
 
   context 'when the journey has an error' do
@@ -47,6 +48,10 @@ RSpec.describe 'journey/school_postcode.html.erb' do
 
     it 'adds the message to the field with the error' do
       expect(rendered).to have_css('.govuk-error-message', text: 'error-message')
+    end
+
+    it 'adds the error class to the postcode input' do
+      expect(rendered).to have_css('input[name=postcode][type=text].govuk-input--error')
     end
   end
 end
