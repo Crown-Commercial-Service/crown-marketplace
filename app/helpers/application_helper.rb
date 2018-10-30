@@ -26,6 +26,17 @@ module ApplicationHelper
     end
   end
 
+  def govuk_fieldset_with_optional_error(journey, attribute)
+    error = journey.errors[attribute].first
+
+    options = { class: 'govuk-fieldset' }
+    options['aria-describedby'] = "#{attribute}-error" if error.present?
+
+    content_tag :fieldset, options do
+      yield
+    end
+  end
+
   def display_error(journey, attribute)
     error = journey.errors[attribute].first
     return if error.blank?

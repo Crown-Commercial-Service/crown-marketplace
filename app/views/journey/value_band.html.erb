@@ -1,7 +1,7 @@
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= govuk_form_group_with_optional_error(@journey, :value_band) do %>
-    <fieldset class="govuk-fieldset">
+    <%= govuk_fieldset_with_optional_error(@journey, :value_band) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
           <%= t('.question') %>
@@ -29,7 +29,7 @@
           <%= label_tag :value_band_over50m, t('.answer_over50m'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
-    </fieldset>
+    <% end %>
   <% end %>
   <%= submit_tag t('.submit'), class: "govuk-button" %>
 <% end %>
