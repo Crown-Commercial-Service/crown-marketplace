@@ -18,8 +18,8 @@ class Journey
     end
   end
 
-  def first_step_path
-    journey_question_path(journey: self.class.journey_name, slug: steps[0].slug)
+  def first_step
+    steps.first
   end
 
   def current_step
@@ -34,20 +34,43 @@ class Journey
     current_step.next_step_class&.new
   end
 
-  def form_path
-    journey_answer_path(journey: self.class.journey_name, slug: current_slug)
+  def question_path_for_slug(slug, params = nil)
+    if params
+      journey_question_path(journey: self.class.journey_name,
+                            slug: slug,
+                            params: params)
+    else
+      journey_question_path(journey: self.class.journey_name,
+                            slug: slug)
+    end
+  end
+
+  def answer_path_for_slug(slug)
+    journey_answer_path(journey: self.class.journey_name, slug: slug)
+  end
+
+  def first_step_path
+    question_path_for_slug first_step.slug
   end
 
   def current_question_path
-    journey_question_path(journey: self.class.journey_name, slug: current_slug, params: params)
+    question_path_for_slug current_slug, params
   end
 
   def back_path
-    journey_question_path(journey: self.class.journey_name, slug: previous_slug, params: params)
+    if previous_slug.present?
+      question_path_for_slug previous_slug, params
+    else
+      start_path
+    end
   end
 
   def next_step_path
-    journey_question_path(journey: self.class.journey_name, slug: next_slug, params: params)
+    question_path_for_slug next_slug, params
+  end
+
+  def form_path
+    answer_path_for_slug current_slug
   end
 
   delegate :slug, to: :current_step, prefix: :current, allow_nil: true
