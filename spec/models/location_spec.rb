@@ -10,6 +10,10 @@ RSpec.describe Location do
       )
     end
 
+    after do
+      Geocoder::Lookup::Test.reset
+    end
+
     it { is_expected.to be_found }
 
     it { is_expected.to respond_to(:postcode) }
@@ -22,6 +26,10 @@ RSpec.describe Location do
       Geocoder::Lookup::Test.add_stub(
         'W1A 1AA', [{ 'coordinates' => [] }]
       )
+    end
+
+    after do
+      Geocoder::Lookup::Test.reset
     end
 
     it { is_expected.not_to be_found }

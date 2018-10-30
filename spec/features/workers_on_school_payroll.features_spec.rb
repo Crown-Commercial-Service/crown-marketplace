@@ -1,11 +1,17 @@
 require 'rails_helper'
 
 RSpec.feature 'Workers on school payroll', type: :feature do
-  scenario 'Buyer finds suppliers within search range' do
+  before do
     Geocoder::Lookup::Test.add_stub(
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]
     )
+  end
 
+  after do
+    Geocoder::Lookup::Test.reset
+  end
+
+  scenario 'Buyer finds suppliers within search range' do
     holborn = create(:supplier, name: 'holborn')
     create(
       :rate,

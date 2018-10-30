@@ -8,6 +8,10 @@ RSpec.describe TeacherSupplyJourney, type: :model do
     )
   end
 
+  after do
+    Geocoder::Lookup::Test.reset
+  end
+
   context 'when following the school journey' do
     subject(:journey) do
       TeacherSupplyJourney.new(slug, ActionController::Parameters.new(params))

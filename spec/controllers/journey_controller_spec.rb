@@ -243,6 +243,10 @@ RSpec.describe JourneyController, type: :controller do
       )
     end
 
+    after do
+      Geocoder::Lookup::Test.reset
+    end
+
     it 'redirects to fixed term results path' do
       params = {
         looking_for: 'worker',

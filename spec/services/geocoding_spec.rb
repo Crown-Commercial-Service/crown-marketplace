@@ -17,6 +17,10 @@ RSpec.describe Geocoding do
         )
       end
 
+      after do
+        Geocoder::Lookup::Test.reset
+      end
+
       it { is_expected.to have_attributes(longitude: longitude, latitude: latitude) }
     end
 
@@ -27,6 +31,10 @@ RSpec.describe Geocoding do
         Geocoder::Lookup::Test.add_stub(
           postcode, [{ 'coordinates' => nil }]
         )
+      end
+
+      after do
+        Geocoder::Lookup::Test.reset
       end
 
       it { is_expected.to be_nil }
