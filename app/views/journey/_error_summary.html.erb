@@ -7,7 +7,7 @@
       <ul class="govuk-list govuk-error-summary__list">
         <% errors.keys.each do |attribute| %>
           <li>
-            <a href="<%= "##{attribute}-error" %>"><%= errors[attribute].first %></a>
+            <a href="#<%= error_id(attribute) %>"><%= errors[attribute].first %></a>
           </li>
         <% end %>
       </ul>

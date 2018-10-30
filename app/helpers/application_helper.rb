@@ -30,7 +30,7 @@ module ApplicationHelper
     error = journey.errors[attribute].first
 
     options = { class: 'govuk-fieldset' }
-    options['aria-describedby'] = "#{attribute}-error" if error.present?
+    options['aria-describedby'] = error_id(attribute) if error.present?
 
     content_tag :fieldset, options do
       yield
@@ -41,7 +41,7 @@ module ApplicationHelper
     error = journey.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: "#{attribute}-error", class: 'govuk-error-message' do
+    content_tag :span, id: error_id(attribute), class: 'govuk-error-message' do
       error
     end
   end
@@ -52,5 +52,9 @@ module ApplicationHelper
     css_classes = ['govuk-input'] + extra_classes
     css_classes += ['govuk-input--error'] if error.present?
     css_classes
+  end
+
+  def error_id(attribute)
+    "#{attribute}-error"
   end
 end
