@@ -19,20 +19,30 @@ RSpec.describe StaticRecord, type: :model do
       klass.all << c
     end
 
-    it 'returns all records' do
-      expect(klass.all).to eq([a, b, c])
+    describe 'all' do
+      it 'returns all records' do
+        expect(klass.all).to eq([a, b, c])
+      end
     end
 
-    it 'finds records by one key' do
-      expect(klass.find_by(id: '1')).to eq(a)
+    describe 'find_by' do
+      it 'finds record by one key' do
+        expect(klass.find_by(id: '1')).to eq(a)
+      end
+
+      it 'finds record by two keys' do
+        expect(klass.find_by(id: '2', name: 'b')).to eq(b)
+      end
+
+      it 'does not find non-matching records' do
+        expect(klass.find_by(id: '3', name: 'c')).to be_nil
+      end
     end
 
-    it 'finds records by two keys' do
-      expect(klass.find_by(id: '2', name: 'b')).to eq(b)
-    end
-
-    it 'does not find non-matching records' do
-      expect(klass.find_by(id: '3', name: 'c')).to be_nil
+    describe 'where' do
+      it 'returns all matching records' do
+        expect(klass.where(name: 'b')).to eq([b, c])
+      end
     end
   end
 
