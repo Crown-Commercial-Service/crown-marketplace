@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_191820) do
+ActiveRecord::Schema.define(version: 2018_10_31_200527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 2018_10_31_191820) do
     t.text "name"
     t.text "town"
     t.index ["supplier_id"], name: "index_branches_on_supplier_id"
+  end
+
+  create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_supplier_id", null: false
+    t.text "lot_number", null: false
+    t.text "nuts2_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_supplier_id"], name: "index_fm_regional_availabilities_on_fm_supplier_id"
   end
 
   create_table "facilities_management_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -59,5 +68,6 @@ ActiveRecord::Schema.define(version: 2018_10_31_191820) do
   end
 
   add_foreign_key "branches", "suppliers"
+  add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "rates", "suppliers"
 end
