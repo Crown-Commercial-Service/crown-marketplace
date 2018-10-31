@@ -5,8 +5,9 @@ module StaticRecord
   end
 
   module ClassMethods
-    def define(keys, entries)
-      entries.each do |entry|
+    def define(*entries)
+      keys = entries.first
+      entries.drop(1).each do |entry|
         all << new(
           keys.zip(entry).to_h
         ).freeze
