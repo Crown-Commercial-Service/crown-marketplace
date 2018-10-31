@@ -4,12 +4,14 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
   describe 'create' do
     let(:supplier_name) { Faker::Company.unique.name }
     let(:supplier_id) { SecureRandom.uuid }
+    let(:contact_name) { Faker::Name.unique.name }
 
     let(:suppliers) do
       [
         {
           'supplier_name' => supplier_name,
-          'supplier_id' => supplier_id
+          'supplier_id' => supplier_id,
+          'contact_name' => contact_name
         }
       ]
     end
@@ -43,6 +45,7 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
 
         supplier = FacilitiesManagementSupplier.last
         expect(supplier.name).to eq(supplier_name)
+        expect(supplier.contact_name).to eq(contact_name)
       end
     end
 
@@ -62,6 +65,7 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
           [
             {
               'supplier_name' => '',
+              'contact_name' => '',
             }
           ]
         end
@@ -82,9 +86,11 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
         [
           {
             'supplier_name' => supplier_name,
+            'contact_name' => contact_name,
           },
           {
             'supplier_name' => '',
+            'contact_name' => '',
           }
         ]
       end

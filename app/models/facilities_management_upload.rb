@@ -24,7 +24,8 @@ class FacilitiesManagementUpload
   def self.create_supplier!(data)
     FacilitiesManagementSupplier.create!(
       id: data['supplier_id'],
-      name: data['supplier_name']
+      name: data['supplier_name'],
+      contact_name: data['contact_name']
     )
   end
 end
