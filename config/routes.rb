@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get '/status', to: 'home#status'
 
   resources :branches, only: :index
+
   resources :uploads, only: :create
+  resources :facilities_management_uploads, only: :create
 
   get '/:journey/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
   get '/:journey/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'

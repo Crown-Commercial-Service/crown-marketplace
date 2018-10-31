@@ -81,5 +81,12 @@ $ git clone git@github.com:Crown-Commercial-Service/cmp-supply-teacher-data.git
 $ cd cmp-supply-teacher-data/supply-teachers
 $ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @json/data.json http://$HOST/uploads
 ```
+### Facilities management data
+
+```
+$ git clone git@github.com:Crown-Commercial-Service/cmp-supply-teacher-data.git
+$ cd cmp-supply-teacher-data/facilities-management
+$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @json/data.json http://$HOST/facilities_management_uploads
+```
 
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
