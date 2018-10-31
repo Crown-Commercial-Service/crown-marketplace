@@ -112,6 +112,7 @@ en:
     application:
       back: Back
       beta: beta
+      error_prefix: Error
       feedback_html: This is a new service – your %{link} will help us to improve it.
       having_problems: Having problems using this service?
       skip: Skip to main content
