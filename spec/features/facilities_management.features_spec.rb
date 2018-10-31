@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Facilities Managment', type: :feature do
   scenario 'Answers should not be pre-selected' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     expect(page).not_to have_checked_field(I18n.t('journey.value_band.answer_under1_5m'))
@@ -13,8 +12,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
   end
 
   scenario 'Buyer wants to buy from lot 1a' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under1_5m')
@@ -24,8 +22,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
   end
 
   scenario 'Buyer changes mind about buying from lot 1a' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under1_5m')
@@ -37,8 +34,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
   end
 
   scenario 'Buyer wants to buy from lot 1a, under 7m' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under7m')
@@ -48,8 +44,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
   end
 
   scenario 'Buyer changes mind about buying from lot 1a, under 7m' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under7m')
@@ -61,8 +56,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
   end
 
   scenario 'Buyer wants to buy from lot 1b' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under50m')
@@ -72,8 +66,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
   end
 
   scenario 'Buyer changes mind about buying from lot 1b' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under50m')
@@ -85,8 +78,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
   end
 
   scenario 'Buyer wants to buy from lot 1c' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_over50m')
@@ -96,8 +88,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
   end
 
   scenario 'Buyer changes mind about buying from lot 1c' do
-    visit '/'
-    click_on I18n.t('home.index.facilities_management_link')
+    visit_fm_home
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_over50m')
