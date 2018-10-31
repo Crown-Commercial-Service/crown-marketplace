@@ -1,6 +1,4 @@
-<% content_for(:page_title_prefix) do %>
-  <%= t('layouts.application.error_prefix') if @journey.errors.any? %>
-<% end %>
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
