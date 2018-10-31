@@ -6,6 +6,7 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
     let(:supplier_id) { SecureRandom.uuid }
     let(:contact_name) { Faker::Name.unique.name }
     let(:contact_email) { Faker::Internet.unique.email }
+    let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
 
     let(:suppliers) do
       [
@@ -13,7 +14,8 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
           'supplier_name' => supplier_name,
           'supplier_id' => supplier_id,
           'contact_name' => contact_name,
-          'contact_email' => contact_email
+          'contact_email' => contact_email,
+          'contact_phone' => telephone_number
         }
       ]
     end
@@ -47,8 +49,15 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
 
         supplier = FacilitiesManagementSupplier.last
         expect(supplier.name).to eq(supplier_name)
+      end
+
+      it 'assigns contact-related attributes to supplier' do
+        described_class.create!(suppliers)
+
+        supplier = FacilitiesManagementSupplier.last
         expect(supplier.contact_name).to eq(contact_name)
         expect(supplier.contact_email).to eq(contact_email)
+        expect(supplier.telephone_number).to eq(telephone_number)
       end
     end
 
@@ -70,6 +79,7 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
               'supplier_name' => '',
               'contact_name' => '',
               'contact_email' => '',
+              'contact_phone' => '',
             }
           ]
         end
@@ -92,11 +102,12 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
             'supplier_name' => supplier_name,
             'contact_name' => contact_name,
             'contact_email' => contact_email,
+            'contact_phone' => telephone_number,
           },
           {
             'supplier_name' => '',
             'contact_name' => '',
-            'contact_email' => '',
+            'contact_phone' => '',
           }
         ]
       end
