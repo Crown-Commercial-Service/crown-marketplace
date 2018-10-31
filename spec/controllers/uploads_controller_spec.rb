@@ -8,7 +8,7 @@ RSpec.describe UploadsController, type: :controller do
       allow(Upload).to receive(:create!)
     end
 
-    it 'creates suppliers and their branches from JSON' do
+    it 'creates suppliers and their associated data from JSON' do
       post :create, body: suppliers.to_json
 
       expect(Upload).to have_received(:create!).with(suppliers)
