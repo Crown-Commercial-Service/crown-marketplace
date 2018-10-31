@@ -1,6 +1,4 @@
-<% content_for(:page_title_prefix) do %>
-  <%= t('layouts.application.error_prefix') if @journey.errors.any? %>
-<% end %>
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
