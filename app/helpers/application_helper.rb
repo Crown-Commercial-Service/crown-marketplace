@@ -57,4 +57,9 @@ module ApplicationHelper
   def error_id(attribute)
     "#{attribute}-error"
   end
+
+  def page_title
+    optional_prefix = content_for(:page_title_prefix)
+    [optional_prefix, t('layouts.application.title')].compact.map(&:strip).reject(&:blank?).join(': ')
+  end
 end

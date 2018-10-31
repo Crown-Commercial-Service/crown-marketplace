@@ -51,6 +51,11 @@ RSpec.describe 'journey/payroll_provider.html.erb' do
     expect(rendered).not_to have_css('.govuk-error-message')
   end
 
+  it 'does not set the page title prefix' do
+    render
+    expect(view.content_for(:page_title_prefix)).to be_nil
+  end
+
   context 'when the journey has an error' do
     before do
       errors.add(:payroll_provider, 'error-message')
@@ -71,6 +76,11 @@ RSpec.describe 'journey/payroll_provider.html.erb' do
 
     it 'adds the message to the field with the error' do
       expect(rendered).to have_css('#payroll_provider-error.govuk-error-message', text: 'error-message')
+    end
+
+    it 'adds an error prefix to the page title' do
+      render
+      expect(view.content_for(:page_title_prefix)).to match(t('layouts.application.error_prefix'))
     end
   end
 end

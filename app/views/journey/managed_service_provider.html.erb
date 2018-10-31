@@ -1,3 +1,7 @@
+<% content_for(:page_title_prefix) do %>
+  <%= t('layouts.application.error_prefix') if @journey.errors.any? %>
+<% end %>
+
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_field_tag :looking_for, params[:looking_for] %>

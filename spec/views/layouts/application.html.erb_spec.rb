@@ -43,4 +43,17 @@ RSpec.describe 'layouts/application.html.erb' do
       end
     end
   end
+
+  it 'renders the page title stored in the locale file' do
+    render
+    expected = t('layouts.application.title')
+    expect(rendered).to have_css('title', text: expected, visible: false)
+  end
+
+  it 'adds an optional prefix to the page title' do
+    view.content_for(:page_title_prefix) { 'Prefix' }
+    render
+    expected = 'Prefix: ' + t('layouts.application.title')
+    expect(rendered).to have_css('title', text: expected, visible: false)
+  end
 end
