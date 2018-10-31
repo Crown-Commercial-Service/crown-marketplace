@@ -25,7 +25,8 @@ class FacilitiesManagementUpload
     FacilitiesManagementSupplier.create!(
       id: data['supplier_id'],
       name: data['supplier_name'],
-      contact_name: data['contact_name']
+      contact_name: data['contact_name'],
+      contact_email: data['contact_email']
     )
   end
 end

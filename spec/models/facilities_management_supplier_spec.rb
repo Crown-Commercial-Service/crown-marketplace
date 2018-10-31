@@ -14,4 +14,9 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
     supplier.contact_name = ''
     expect(supplier).not_to be_valid
   end
+
+  it 'is not valid if contact_email is blank' do
+    supplier.contact_email = ''
+    expect(supplier).not_to be_valid
+  end
 end
