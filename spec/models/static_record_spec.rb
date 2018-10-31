@@ -38,7 +38,7 @@ RSpec.describe StaticRecord, type: :model do
 
   context 'when defining records en masse' do
     before do
-      klass.define(%i[id name], [['1', 'one'], ['2', 'two']])
+      klass.define(['id', 'name'], ['1', 'one'], ['2', 'two'])
     end
 
     it 'stores all defined records' do
