@@ -4,5 +4,4 @@ class Term
   attr_accessor :code, :description, :rate_term
 end
 
-require 'csv'
-Term.define(*CSV.read(Rails.root.join('data', 'terms.csv')))
+Term.load_csv('terms.csv')
