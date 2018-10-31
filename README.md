@@ -78,7 +78,7 @@ NOTE. You can set `CCS_DEFAULT_DB_HOST` to `docker.for.mac.localhost` to connect
 
 ```
 $ git clone git@github.com:Crown-Commercial-Service/cmp-supply-teacher-data.git
-$ cd cmp-supply-teacher-data
+$ cd cmp-supply-teacher-data/supply-teachers
 $ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @json/data.json http://$HOST/uploads
 ```
 
