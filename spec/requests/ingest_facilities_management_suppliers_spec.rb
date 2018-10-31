@@ -7,9 +7,11 @@ RSpec.describe 'Ingest facilities management suppliers', type: :request do
       [
         {
           'supplier_name' => Faker::Company.unique.name,
+          'contact_name' => Faker::Name.unique.name,
         },
         {
           'supplier_name' => Faker::Company.unique.name,
+          'contact_name' => Faker::Name.unique.name,
         }
       ]
     end
