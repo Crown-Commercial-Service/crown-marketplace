@@ -16,6 +16,18 @@ RSpec.describe FacilitiesManagementRegion, type: :model do
         .to have_attributes(code: 'UKD3', name: 'Greater Manchester')
     end
 
+    it { is_expected.to be_nuts2 }
+    it { is_expected.not_to be_nuts3 }
+
+    it 'has a NUTS 1 code' do
+      expect(region.nuts1_code).to eq('UKD')
+    end
+
+    it 'has a NUTS 1 region' do
+      expect(region.nuts1_region)
+        .to have_attributes(code: 'UKD', name: 'North West (England)')
+    end
+
     it 'has a NUTS 2 code' do
       expect(region.nuts2_code).to eq('UKD3')
     end
@@ -40,6 +52,18 @@ RSpec.describe FacilitiesManagementRegion, type: :model do
     it 'has a code and a name' do
       expect(region)
         .to have_attributes(code: 'UKM65', name: 'Orkney Islands')
+    end
+
+    it { is_expected.not_to be_nuts2 }
+    it { is_expected.to be_nuts3 }
+
+    it 'has a NUTS 1 code' do
+      expect(region.nuts1_code).to eq('UKM')
+    end
+
+    it 'has a NUTS 1 region' do
+      expect(region.nuts1_region)
+        .to have_attributes(code: 'UKM', name: 'Scotland')
     end
 
     it 'has a NUTS 2 code' do
