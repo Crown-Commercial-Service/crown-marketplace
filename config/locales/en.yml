@@ -94,6 +94,22 @@ en:
     school_postcode:
       question: What is your school's postcode?
       question_hint: We use this to find agencies near to your school
+    supplier_region:
+      nuts1:
+        OS0: International
+        UKC: North East England
+        UKD: North West England
+        UKE: Yorkshire and The Humber
+        UKF: East Midlands (England)
+        UKG: West Midlands (England)
+        UKH: East of England
+        UKI: London
+        UKJ: South East England
+        UKK: South West England
+        UKL: Wales
+        UKM: Scotland
+        UKN: Northern Ireland
+      question: Which regions do you need the service in?
     value_band:
       answer_over50m: Over £50 million
       answer_under1_5m: Up to £1.5 million
