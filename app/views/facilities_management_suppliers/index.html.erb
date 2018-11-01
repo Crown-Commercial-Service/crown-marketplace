@@ -10,9 +10,6 @@
     <%= mail_to(supplier.contact_email) %>
   </p>
   <% end %>
-  <p>
-    <a href="<%= @url %>" title="View suppliers">See a list of suppliers without pricing information</a>
-  </p>
   <% if @lot == '1a' %>
   <p>Direct award to a single supplier may be an option if your maximum spend is under £1.5 million.</p>
   <% end %>
