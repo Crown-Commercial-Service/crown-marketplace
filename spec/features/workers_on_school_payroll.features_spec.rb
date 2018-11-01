@@ -55,16 +55,16 @@ RSpec.feature 'Workers on school payroll', type: :feature do
     click_on 'Start now'
 
     choose 'An individual worker'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose 'Yes'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose 'Yes'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).not_to have_text('whitechapel'), 'suppliers without fixed term rates should not be displayed'
 

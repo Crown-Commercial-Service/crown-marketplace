@@ -62,18 +62,18 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
     click_on 'Start now'
 
     choose 'An individual worker'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose 'Yes'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose 'No'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
     select '4 weeks to 8 weeks', from: 'term'
     select 'Qualified teacher: SEN roles', from: 'job_type'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).not_to have_text('whitechapel'), 'suppliers without appropriate rates should not be displayed'
 

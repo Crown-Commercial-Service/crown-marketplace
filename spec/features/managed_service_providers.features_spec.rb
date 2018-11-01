@@ -26,11 +26,11 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit_teacher_home
     click_on 'Start now'
 
-    choose 'A managed service provider'
-    click_on 'Continue'
+    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    click_on I18n.t('common.submit')
 
     choose 'Master vendor'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Master vendor managed service')
     expect(page).to have_css('h2', text: supplier.name)
@@ -50,11 +50,11 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit_teacher_home
     click_on 'Start now'
 
-    choose 'A managed service provider'
-    click_on 'Continue'
+    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    click_on I18n.t('common.submit')
 
     choose 'Neutral vendor'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Neutral vendor managed service')
     expect(page).to have_css('h2', text: 'neutral-vendor-supplier')
@@ -68,29 +68,29 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit_teacher_home
     click_on 'Start now'
 
-    choose 'A managed service provider'
-    click_on 'Continue'
+    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    click_on I18n.t('common.submit')
 
     choose 'Master vendor'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
+    click_on I18n.t('layouts.application.back')
 
-    expect(page).to have_checked_field('A managed service provider')
+    expect(page).to have_checked_field(I18n.t('journey.looking_for.answer_managed_service_provider'))
   end
 
   scenario 'Buyer changes mind about hiring a master vendor managed service' do
     visit_teacher_home
     click_on 'Start now'
 
-    choose 'A managed service provider'
-    click_on 'Continue'
+    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    click_on I18n.t('common.submit')
 
     choose 'Master vendor'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field('Master vendor')
   end
@@ -99,13 +99,13 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit_teacher_home
     click_on 'Start now'
 
-    choose 'A managed service provider'
-    click_on 'Continue'
+    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    click_on I18n.t('common.submit')
 
     choose 'Neutral vendor'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field('Neutral vendor')
   end
