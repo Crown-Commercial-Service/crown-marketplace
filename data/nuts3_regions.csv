@@ -144,6 +144,22 @@ UKL21,UKL2,Monmouthshire and Newport
 UKL22,UKL2,Cardiff and Vale of Glamorgan
 UKL23,UKL2,Flintshire and Wrexham
 UKL24,UKL2,Powys
+UKM21,UKM2,Angus and Dundee City
+UKM22,UKM2,Clackmannanshire and Fife
+UKM23,UKM2,East Lothian and Midlothian
+UKM24,UKM2,Scottish Borders
+UKM25,UKM2,"Edinburgh, City of"
+UKM26,UKM2,Falkirk
+UKM27,UKM2,Perth & Kinross and Stirling
+UKM28,UKM2,West Lothian
+UKM31,UKM3,"East Dunbartonshire, West Dunbartonshire and Helensburgh & Lomond"
+UKM32,UKM3,Dumfries & Galloway
+UKM33,UKM3,East Ayrshire and North Ayrshire mainland
+UKM34,UKM3,Glasgow City
+UKM35,UKM3,"Inverclyde, East Renfrewshire and Renfrewshire"
+UKM36,UKM3,North Lanarkshire
+UKM37,UKM3,South Ayrshire
+UKM38,UKM3,South Lanarkshire
 UKM50,UKM5,Aberdeen City and Aberdeenshire
 UKM61,UKM6,Caithness & Sutherland and Ross & Cromarty
 UKM62,UKM6,"Inverness & Nairn and Moray, Badenoch & Strathspey"
@@ -151,30 +167,8 @@ UKM63,UKM6,"Lochaber, Skye & Lochalsh, Arran & Cumbrae and Argyll & Bute"
 UKM64,UKM6,Eilean Siar (Western Isles)
 UKM65,UKM6,Orkney Islands
 UKM66,UKM6,Shetland Islands
-UKM71,UKM7,Angus and Dundee City
-UKM72,UKM7,Clackmannanshire and Fife
-UKM73,UKM7,East Lothian and Midlothian
-UKM75,UKM7,"Edinburgh, City of"
-UKM76,UKM7,Falkirk
-UKM77,UKM7,Perth & Kinross and Stirling
-UKM78,UKM7,West Lothian
-UKM81,UKM8,"East Dunbartonshire, West Dunbartonshire and Helensburgh & Lomond"
-UKM82,UKM8,Glasgow City
-UKM83,UKM8,"Inverclyde, East Renfrewshire and Renfrewshire"
-UKM84,UKM8,North Lanarkshire
-UKM91,UKM9,Scottish Borders
-UKM92,UKM9,Dumfries & Galloway
-UKM93,UKM9,East Ayrshire and North Ayrshire mainland
-UKM94,UKM9,South Ayrshire
-UKM95,UKM9,South Lanarkshire
-UKN06,UKN0,Belfast
-UKN07,UKN0,"Armagh City, Banbridge and Craigavon"
-UKN08,UKN0,"Newry, Mourne and Down"
-UKN09,UKN0,Ards and North Down
-UKN10,UKN0,Derry City and Strabane
-UKN11,UKN0,Mid Ulster
-UKN12,UKN0,Causeway Coast and Glens
-UKN13,UKN0,Antrim and Newtownabbey
-UKN14,UKN0,Lisburn and Castlereagh
-UKN15,UKN0,Mid and East Antrim
-UKN16,UKN0,Fermanagh and Omagh
+UKN01,UKN0,Belfast
+UKN02,UKN0,Outer Belfast
+UKN03,UKN0,East of Northern Ireland
+UKN04,UKN0,North of Northern Ireland
+UKN05,UKN0,West and South of Northern Ireland
