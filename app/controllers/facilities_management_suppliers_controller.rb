@@ -5,15 +5,25 @@ class FacilitiesManagementSuppliersController < ApplicationController
 
     case params[:value_band]
     when 'under1_5m'
-      @lot = '1a'
+      small_lot
     when 'under7m'
-      @lot = '1a'
+      small_lot
     when 'under50m'
-      @lot = '1b'
+      big_lot '1b'
     when 'over50m'
-      @lot = '1c'
+      big_lot '1c'
     end
+  end
 
+  private
+
+  def small_lot
+    @lot = '1a'
+    @suppliers = FacilitiesManagementSupplier.available_in_lot_and_regions(@lot, params[:region_codes])
+  end
+
+  def big_lot(lot)
+    @lot = lot
     @suppliers = FacilitiesManagementSupplier.available_in_lot(@lot)
   end
 end

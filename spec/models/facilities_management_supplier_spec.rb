@@ -57,4 +57,23 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
       expect(described_class.available_in_lot('1c')).to contain_exactly(supplier2)
     end
   end
+
+  describe '.available_in_lot_and_regions' do
+    let(:supplier1) { create(:facilities_management_supplier, name: 'Supplier 1') }
+    let(:supplier2) { create(:facilities_management_supplier, name: 'Supplier 2') }
+
+    before do
+      supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC1')
+      supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC2')
+      supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKD1')
+
+      supplier2.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC1')
+      supplier2.regional_availabilities.create!(lot_number: '1b', region_code: 'UKC2')
+    end
+
+    it 'returns suppliers with availability in lot and all specified regions' do
+      expect(described_class.available_in_lot_and_regions('1a', ['UKC1', 'UKD1']))
+        .to contain_exactly(supplier1)
+    end
+  end
 end
