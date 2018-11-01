@@ -23,6 +23,19 @@ Rails.application.routes.draw do
       to: 'branches#index',
       slug: 'nominated-worker-results'
 
+  get '/:journey/lot1a-suppliers',
+      to: 'facilities_management_suppliers#lot1a_suppliers',
+      slug: 'lot1a-suppliers',
+      as: 'facilities_management_lot1a_suppliers'
+  get '/:journey/lot1b-suppliers',
+      to: 'facilities_management_suppliers#lot1b_suppliers',
+      slug: 'lot1b-suppliers',
+      as: 'facilities_management_lot1b_suppliers'
+  get '/:journey/lot1c-suppliers',
+      to: 'facilities_management_suppliers#lot1c_suppliers',
+      slug: 'lot1c-suppliers',
+      as: 'facilities_management_lot1c_suppliers'
+
   get '/:journey', to: 'journey#index', as: 'journey_start'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
   get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'
