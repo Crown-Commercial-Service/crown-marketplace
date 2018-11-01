@@ -16,4 +16,12 @@ class FacilitiesManagementSupplier < ApplicationRecord
       .map(&:supplier)
       .uniq
   end
+
+  def self.available_in_lot_and_regions(lot_number, region_codes)
+    all.select { |s| s.serves_all?(lot_number, region_codes) }
+  end
+
+  def serves_all?(lot_number, region_codes)
+    (region_codes - regional_availabilities.where(lot_number: lot_number).map(&:region_code)).empty?
+  end
 end
