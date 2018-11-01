@@ -11,9 +11,9 @@ module Steps
     def next_step_class
       case value_band
       when 'under1_5m'
-        Suppliers
+        SupplierRegion
       when 'under7m'
-        Suppliers
+        SupplierRegion
       when 'under50m'
         Suppliers
       when 'over50m'
