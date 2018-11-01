@@ -8,6 +8,8 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
     let(:contact_email) { Faker::Internet.unique.email }
     let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
 
+    let(:lots) { [] }
+
     let(:suppliers) do
       [
         {
@@ -15,7 +17,8 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
           'supplier_id' => supplier_id,
           'contact_name' => contact_name,
           'contact_email' => contact_email,
-          'contact_phone' => telephone_number
+          'contact_phone' => telephone_number,
+          'lots' => lots
         }
       ]
     end
@@ -58,6 +61,57 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
         expect(supplier.contact_name).to eq(contact_name)
         expect(supplier.contact_email).to eq(contact_email)
         expect(supplier.telephone_number).to eq(telephone_number)
+      end
+
+      context 'and supplier has lots with regions' do
+        let(:lots) do
+          [
+            {
+              'lot_number' => '1a',
+              'regions' => %w[UKC1 UKC2]
+            },
+            {
+              'lot_number' => '1b',
+              'regions' => %w[UKD1]
+            },
+          ]
+        end
+
+        let(:supplier) { FacilitiesManagementSupplier.last }
+
+        let(:regional_availabilities) do
+          supplier.regional_availabilities.order(:lot_number, :region_code)
+        end
+
+        it 'creates regional availabilities associated with supplier' do
+          expect do
+            described_class.create!(suppliers)
+          end.to change(FacilitiesManagementRegionalAvailability, :count).by(3)
+        end
+
+        it 'assigns attributes to first regional availability' do
+          described_class.create!(suppliers)
+
+          availability = regional_availabilities.first
+          expect(availability.lot_number).to eq('1a')
+          expect(availability.region_code).to eq('UKC1')
+        end
+
+        it 'assigns attributes to second regional availability' do
+          described_class.create!(suppliers)
+
+          availability = regional_availabilities.second
+          expect(availability.lot_number).to eq('1a')
+          expect(availability.region_code).to eq('UKC2')
+        end
+
+        it 'assigns attributes to third regional availability' do
+          described_class.create!(suppliers)
+
+          availability = regional_availabilities.third
+          expect(availability.lot_number).to eq('1b')
+          expect(availability.region_code).to eq('UKD1')
+        end
       end
     end
 
@@ -109,6 +163,64 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
             'contact_name' => '',
             'contact_phone' => '',
           }
+        ]
+      end
+
+      it 'raises ActiveRecord::RecordInvalid exception' do
+        expect do
+          described_class.create!(suppliers)
+        end.to raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it 'does not create any suppliers' do
+        expect do
+          ignoring_exception(ActiveRecord::RecordInvalid) do
+            described_class.create!(suppliers)
+          end
+        end.not_to change(FacilitiesManagementSupplier, :count)
+      end
+    end
+
+    context 'when data for one lot is invalid' do
+      let(:lots) do
+        [
+          {
+            'lot_number' => '1a',
+            'regions' => %w[UKC1 UKC2]
+          },
+          {
+            'lot_number' => '',
+            'regions' => %w[UKD1]
+          },
+        ]
+      end
+
+      it 'raises ActiveRecord::RecordInvalid exception' do
+        expect do
+          described_class.create!(suppliers)
+        end.to raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it 'does not create any suppliers' do
+        expect do
+          ignoring_exception(ActiveRecord::RecordInvalid) do
+            described_class.create!(suppliers)
+          end
+        end.not_to change(FacilitiesManagementSupplier, :count)
+      end
+    end
+
+    context 'when data for one region is invalid' do
+      let(:lots) do
+        [
+          {
+            'lot_number' => '1a',
+            'regions' => %w[UKC1 UKC2]
+          },
+          {
+            'lot_number' => '1b',
+            'regions' => ['']
+          },
         ]
       end
 
