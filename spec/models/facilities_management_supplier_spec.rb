@@ -30,4 +30,31 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
     availability2 = supplier.regional_availabilities.build
     expect(supplier.regional_availabilities).to eq([availability1, availability2])
   end
+
+  describe '.available_in_lot' do
+    let(:supplier1) { create(:facilities_management_supplier, name: 'Supplier 1') }
+    let(:supplier2) { create(:facilities_management_supplier, name: 'Supplier 2') }
+
+    before do
+      supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC1')
+      supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC2')
+      supplier1.regional_availabilities.create!(lot_number: '1b', region_code: 'UKD1')
+
+      supplier2.regional_availabilities.create!(lot_number: '1b', region_code: 'UKC2')
+      supplier2.regional_availabilities.create!(lot_number: '1b', region_code: 'UKD1')
+      supplier2.regional_availabilities.create!(lot_number: '1c', region_code: 'UKD3')
+    end
+
+    it 'returns suppliers with availability in lot 1a' do
+      expect(described_class.available_in_lot('1a')).to contain_exactly(supplier1)
+    end
+
+    it 'returns suppliers with availability in lot 1b' do
+      expect(described_class.available_in_lot('1b')).to contain_exactly(supplier1, supplier2)
+    end
+
+    it 'returns suppliers with availability in lot 1c' do
+      expect(described_class.available_in_lot('1c')).to contain_exactly(supplier2)
+    end
+  end
 end
