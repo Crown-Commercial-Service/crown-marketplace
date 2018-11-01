@@ -2,6 +2,14 @@
   <h2>Lot <%= @lot %> suppliers</h2>
   <p>Total contract value up to &pound;7M</p>
   <p><%= pluralize(@suppliers.count, 'supplier') %></p>
+  <% @suppliers.each do |supplier| %>
+  <h2><%= supplier.name %></h2>
+  <p>
+    <strong><%= supplier.contact_name %></strong><br />
+    <%= supplier.telephone_number %><br />
+    <%= mail_to(supplier.contact_email) %>
+  </p>
+  <% end %>
   <p>
     <a href="<%= @url %>" title="View suppliers">See a list of suppliers without pricing information</a>
   </p>
