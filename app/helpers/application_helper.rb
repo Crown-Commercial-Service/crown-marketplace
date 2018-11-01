@@ -60,7 +60,7 @@ module ApplicationHelper
 
   def page_title
     optional_prefix = content_for(:page_title_prefix)
-    [optional_prefix, t('layouts.application.title')].compact.map(&:strip).reject(&:blank?).join(': ')
+    [optional_prefix, t('layouts.application.title')].reject(&:blank?).map(&:strip).join(': ')
   end
 
   def add_optional_error_prefix_to_page_title(errors)
