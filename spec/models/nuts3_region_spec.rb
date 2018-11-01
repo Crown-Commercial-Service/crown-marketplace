@@ -10,7 +10,7 @@ RSpec.describe Nuts3Region, type: :model do
 
   it 'belongs to a NUTS 2 region' do
     expect(region.nuts2_region)
-      .to have_attributes(code: 'UKL1', name: 'West Wales')
+      .to have_attributes(code: 'UKL1', name: 'West Wales and The Valleys')
   end
 
   it 'belongs to a NUTS 1 region' do

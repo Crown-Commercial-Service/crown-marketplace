@@ -10,6 +10,6 @@ RSpec.describe Nuts1Region, type: :model do
 
   it 'has many NUTS 2 regions' do
     expect(region.nuts2_regions)
-      .to have_attributes(length: 5)
+      .to have_attributes(length: 4)
   end
 end
