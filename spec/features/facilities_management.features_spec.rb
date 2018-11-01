@@ -18,6 +18,12 @@ RSpec.feature 'Facilities Managment', type: :feature do
     choose I18n.t('journey.value_band.answer_under1_5m')
     click_on I18n.t('common.submit')
 
+    expect(page).to have_css('h1', text: 'Which regions do you need the service in?')
+
+    check 'Cumbria'
+    check 'Cheshire'
+    click_on I18n.t('common.submit')
+
     expect(page).to have_css('h2', text: 'Lot 1a suppliers')
   end
 
@@ -38,6 +44,12 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under7m')
+    click_on I18n.t('common.submit')
+
+    expect(page).to have_css('h1', text: 'Which regions do you need the service in?')
+
+    check 'Cumbria'
+    check 'Cheshire'
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 1a suppliers')
