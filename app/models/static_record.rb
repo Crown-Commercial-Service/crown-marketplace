@@ -26,7 +26,9 @@ module StaticRecord
     end
 
     def where(arg)
-      all.select { |term| arg.all? { |k, v| term.public_send(k) == v } }
+      all.select do |term|
+        arg.all? { |k, v| [*v].include?(term.public_send(k)) }
+      end
     end
 
     def load_csv(filename)
