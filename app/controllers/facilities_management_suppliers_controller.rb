@@ -1,5 +1,8 @@
 class FacilitiesManagementSuppliersController < ApplicationController
   def index
+    @journey = FacilitiesManagementJourney.new(params[:slug], params)
+    @back_path = @journey.previous_step_path
+
     case params[:value_band]
     when 'under1_5m'
       @lot = '1a'
@@ -12,16 +15,5 @@ class FacilitiesManagementSuppliersController < ApplicationController
     end
 
     @suppliers = FacilitiesManagementSupplier.available_in_lot(@lot)
-    @back_path = source_journey.current_step_path
-  end
-
-  private
-
-  def source_journey
-    FacilitiesManagementJourney.new('value-band', value_band_params)
-  end
-
-  def value_band_params
-    params.permit(:value_band)
   end
 end
