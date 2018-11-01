@@ -16,7 +16,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under1_5m')
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 1a suppliers')
   end
@@ -26,9 +26,9 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under1_5m')
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field(I18n.t('journey.value_band.answer_under1_5m'))
   end
@@ -38,7 +38,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under7m')
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 1a suppliers')
   end
@@ -48,9 +48,9 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under7m')
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field(I18n.t('journey.value_band.answer_under7m'))
   end
@@ -60,7 +60,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under50m')
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 1b suppliers')
   end
@@ -70,9 +70,9 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_under50m')
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field(I18n.t('journey.value_band.answer_under50m'))
   end
@@ -82,7 +82,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_over50m')
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 1c suppliers')
   end
@@ -92,9 +92,9 @@ RSpec.feature 'Facilities Managment', type: :feature do
     click_on 'Start now'
 
     choose I18n.t('journey.value_band.answer_over50m')
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field(I18n.t('journey.value_band.answer_over50m'))
   end

@@ -55,13 +55,13 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on 'Start now'
 
     choose 'An individual worker'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).not_to have_text('whitechapel'), 'suppliers without nominated worker rates should not be displayed'
 
@@ -85,15 +85,15 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on 'Start now'
 
     choose 'An individual worker'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_field('postcode', with: 'WC2B 6TE')
   end
@@ -103,16 +103,16 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on 'Start now'
 
     choose 'An individual worker'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field("No, I have a worker I want the agency to manage (a 'nominated worker')")
   end
@@ -122,17 +122,17 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on 'Start now'
 
     choose 'An individual worker'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
-    click_on 'Back'
-    click_on 'Back'
-    click_on 'Back'
+    click_on I18n.t('layouts.application.back')
+    click_on I18n.t('layouts.application.back')
+    click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field('An individual worker')
   end
@@ -142,13 +142,13 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on 'Start now'
 
     choose 'An individual worker'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     choose "No, I have a worker I want the agency to manage (a 'nominated worker')"
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'XY1 2AB'
-    click_on 'Continue'
+    click_on I18n.t('common.submit')
 
     expect(page).to have_text('Enter a valid postcode')
     expect(page).to have_field('postcode', with: 'XY1 2AB')
