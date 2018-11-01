@@ -1,7 +1,5 @@
 module Steps
-  class Lot1aSuppliers < JourneyStep; end
-  class Lot1bSuppliers < JourneyStep; end
-  class Lot1cSuppliers < JourneyStep; end
+  class Suppliers < JourneyStep; end
 
   class ValueBand < JourneyStep
     attribute :value_band
@@ -13,13 +11,13 @@ module Steps
     def next_step_class
       case value_band
       when 'under1_5m'
-        Lot1aSuppliers
+        Suppliers
       when 'under7m'
-        Lot1aSuppliers
+        Suppliers
       when 'under50m'
-        Lot1bSuppliers
+        Suppliers
       when 'over50m'
-        Lot1cSuppliers
+        Suppliers
       end
     end
   end
