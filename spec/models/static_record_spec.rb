@@ -40,8 +40,12 @@ RSpec.describe StaticRecord, type: :model do
     end
 
     describe 'where' do
-      it 'returns all matching records' do
+      it 'returns all matching records for a single value' do
         expect(klass.where(name: 'b')).to eq([b, c])
+      end
+
+      it 'returns all matching records for multiple values' do
+        expect(klass.where(id: ['1', '3'])).to eq([a, c])
       end
     end
   end
