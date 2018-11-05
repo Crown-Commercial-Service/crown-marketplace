@@ -112,4 +112,37 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
       expect(described_class.count).to eq(0)
     end
   end
+
+  describe '#services_by_work_package_in_lot' do
+    let(:supplier) { create(:facilities_management_supplier, name: 'Supplier 1') }
+
+    let(:service_a1) { FacilitiesManagementService.find_by(code: 'A.1') }
+    let(:service_a2) { FacilitiesManagementService.find_by(code: 'A.2') }
+    let(:service_b1) { FacilitiesManagementService.find_by(code: 'B.1') }
+
+    let(:work_package_a) { FacilitiesManagementWorkPackage.find_by(code: 'A') }
+    let(:work_package_b) { FacilitiesManagementWorkPackage.find_by(code: 'B') }
+    let(:work_package_c) { FacilitiesManagementWorkPackage.find_by(code: 'C') }
+
+    let(:lot) { '1a' }
+    let(:another_lot) { '1b' }
+
+    let(:services) { supplier.services_by_work_package_in_lot(lot) }
+
+    before do
+      supplier.service_offerings.create!(lot_number: lot, service_code: 'A.1')
+      supplier.service_offerings.create!(lot_number: lot, service_code: 'A.2')
+      supplier.service_offerings.create!(lot_number: lot, service_code: 'B.1')
+      supplier.service_offerings.create!(lot_number: another_lot, service_code: 'C.1')
+    end
+
+    it 'returns services grouped by work package' do
+      expect(services[work_package_a]).to contain_exactly(service_a1, service_a2)
+      expect(services[work_package_b]).to contain_exactly(service_b1)
+    end
+
+    it 'only includes service offerings in the specified lot' do
+      expect(services.keys).to contain_exactly(work_package_a, work_package_b)
+    end
+  end
 end

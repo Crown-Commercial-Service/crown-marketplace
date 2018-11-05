@@ -33,4 +33,8 @@ class FacilitiesManagementSupplier < ApplicationRecord
   def serves_all?(lot_number, region_codes)
     (region_codes - regional_availabilities.for_lot(lot_number).map(&:region_code)).empty?
   end
+
+  def services_by_work_package_in_lot(lot_number)
+    service_offerings.for_lot(lot_number).map(&:service).group_by(&:work_package)
+  end
 end
