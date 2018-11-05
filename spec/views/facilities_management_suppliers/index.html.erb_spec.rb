@@ -25,20 +25,4 @@ RSpec.describe 'facilities_management_suppliers/index.html.erb' do
   it 'displays the number of suppliers in the lot' do
     expect(rendered).to have_text('2 suppliers')
   end
-
-  it 'displays the supplier name' do
-    expect(rendered).to have_text(supplier1.name)
-  end
-
-  it 'displays the supplier contact name' do
-    expect(rendered).to have_text(supplier1.contact_name)
-  end
-
-  it 'displays the supplier contact email' do
-    expect(rendered).to have_text(supplier1.contact_email)
-  end
-
-  it 'displays the supplier telephone number' do
-    expect(rendered).to have_text(supplier1.telephone_number)
-  end
 end
