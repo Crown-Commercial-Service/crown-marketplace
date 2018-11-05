@@ -3,4 +3,17 @@
   <strong><%= supplier.contact_name %></strong><br />
   <%= supplier.telephone_number %><br />
   <%= mail_to(supplier.contact_email) %>
+
+  <ul>
+    <% supplier.services_by_work_package_in_lot(lot_number).each do |work_package, services| %>
+      <li>
+        <%= work_package.name %>
+        <ul>
+          <% services.each do |service| %>
+            <li><%= service.name %></li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
 </p>
