@@ -40,6 +40,13 @@ class FacilitiesManagementUpload
           region_code: region
         )
       end
+      services = lot.fetch('services', [])
+      services.each do |service|
+        supplier.service_offerings.create!(
+          lot_number: lot_number,
+          service_code: service
+        )
+      end
     end
   end
 end
