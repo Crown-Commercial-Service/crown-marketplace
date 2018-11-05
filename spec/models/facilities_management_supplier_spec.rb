@@ -82,4 +82,34 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
         .to contain_exactly(supplier1)
     end
   end
+
+  describe '.delete_all_with_dependents' do
+    let(:supplier1) { create(:facilities_management_supplier, name: 'Supplier 1') }
+    let(:supplier2) { create(:facilities_management_supplier, name: 'Supplier 2') }
+
+    before do
+      supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC1')
+      supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC2')
+
+      supplier2.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC1')
+    end
+
+    it 'deletes all regional availabilities' do
+      described_class.delete_all_with_dependents
+
+      expect(FacilitiesManagementRegionalAvailability.count).to eq(0)
+    end
+
+    it 'deletes all service offerings' do
+      described_class.delete_all_with_dependents
+
+      expect(FacilitiesManagementServiceOffering.count).to eq(0)
+    end
+
+    it 'deletes all suppliers' do
+      described_class.delete_all_with_dependents
+
+      expect(described_class.count).to eq(0)
+    end
+  end
 end

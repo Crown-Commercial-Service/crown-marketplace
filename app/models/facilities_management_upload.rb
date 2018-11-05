@@ -1,7 +1,7 @@
 class FacilitiesManagementUpload
   def self.create!(suppliers)
     error = all_or_none(FacilitiesManagementSupplier) do
-      FacilitiesManagementSupplier.destroy_all
+      FacilitiesManagementSupplier.delete_all_with_dependents
 
       suppliers.map do |supplier_data|
         create_supplier!(supplier_data)
