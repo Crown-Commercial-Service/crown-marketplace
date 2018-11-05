@@ -3,7 +3,7 @@
   <p><%= contract_value_range_text(@lot.number) %></p>
   <p><%= pluralize(@suppliers.count, 'supplier') %></p>
   <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
-  <% if @lot.number == '1a' %>
+  <% if @lot.direct_award_possible? %>
     <p>Direct award to a single supplier may be an option if your maximum spend is under £1.5 million.</p>
   <% end %>
 </div>
