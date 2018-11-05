@@ -1,6 +1,6 @@
 module Steps
   class SchoolPostcode < JourneyStep
-    include Steps::Geolocatable
+    include Geolocatable
 
     attribute :worker_type
     attribute :postcode

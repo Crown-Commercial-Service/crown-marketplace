@@ -2,7 +2,7 @@ module Steps
   module Results
     extend ActiveSupport::Concern
     include BranchesHelper
-    include Steps::Geolocatable
+    include Geolocatable
 
     included do
       attribute :postcode
