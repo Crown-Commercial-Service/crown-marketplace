@@ -31,6 +31,12 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
     expect(supplier.regional_availabilities).to eq([availability1, availability2])
   end
 
+  it 'can be associated with many facilities management service offerings' do
+    offering1 = supplier.service_offerings.build
+    offering2 = supplier.service_offerings.build
+    expect(supplier.service_offerings).to eq([offering1, offering2])
+  end
+
   describe '.available_in_lot' do
     let(:supplier1) { create(:facilities_management_supplier, name: 'Supplier 1') }
     let(:supplier2) { create(:facilities_management_supplier, name: 'Supplier 2') }

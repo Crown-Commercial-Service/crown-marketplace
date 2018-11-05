@@ -4,6 +4,11 @@ class FacilitiesManagementSupplier < ApplicationRecord
            inverse_of: :supplier,
            dependent: :destroy
 
+  has_many :service_offerings,
+           class_name: 'FacilitiesManagementServiceOffering',
+           inverse_of: :supplier,
+           dependent: :destroy
+
   validates :name, presence: true
   validates :contact_name, presence: true
   validates :contact_email, presence: true
