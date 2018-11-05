@@ -113,6 +113,57 @@ RSpec.describe FacilitiesManagementUpload, type: :model do
           expect(availability.region_code).to eq('UKD1')
         end
       end
+
+      context 'and supplier has lots with services' do
+        let(:lots) do
+          [
+            {
+              'lot_number' => '1a',
+              'services' => %w[A.1 A.2]
+            },
+            {
+              'lot_number' => '1b',
+              'services' => %w[A.3]
+            },
+          ]
+        end
+
+        let(:supplier) { FacilitiesManagementSupplier.last }
+
+        let(:service_offerings) do
+          supplier.service_offerings.order(:lot_number, :service_code)
+        end
+
+        it 'creates service offerings associated with supplier' do
+          expect do
+            described_class.create!(suppliers)
+          end.to change(FacilitiesManagementServiceOffering, :count).by(3)
+        end
+
+        it 'assigns attributes to first service offering' do
+          described_class.create!(suppliers)
+
+          offering = service_offerings.first
+          expect(offering.lot_number).to eq('1a')
+          expect(offering.service_code).to eq('A.1')
+        end
+
+        it 'assigns attributes to second service offering' do
+          described_class.create!(suppliers)
+
+          offering = service_offerings.second
+          expect(offering.lot_number).to eq('1a')
+          expect(offering.service_code).to eq('A.2')
+        end
+
+        it 'assigns attributes to third service offering' do
+          described_class.create!(suppliers)
+
+          offering = service_offerings.third
+          expect(offering.lot_number).to eq('1b')
+          expect(offering.service_code).to eq('A.3')
+        end
+      end
     end
 
     context 'when suppliers already exist' do
