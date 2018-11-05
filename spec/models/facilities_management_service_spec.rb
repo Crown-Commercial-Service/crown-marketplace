@@ -14,4 +14,10 @@ RSpec.describe FacilitiesManagementService, type: :model do
     expect(first_service.name).to eq('Accessibility Services')
     expect(first_service.work_package_code).to eq('A')
   end
+
+  it 'looks up work package based on its code' do
+    work_package = first_service.work_package
+    expect(work_package.code).to eq('A')
+    expect(work_package.name).to eq('Contract Management')
+  end
 end
