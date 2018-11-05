@@ -24,7 +24,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
     check 'Cheshire'
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h2', text: 'Lot 1a suppliers')
+    expect(page).to have_css('h1', text: 'Lot 1a suppliers')
   end
 
   scenario 'Buyer changes mind about buying from lot 1a' do
@@ -52,7 +52,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
     check 'Cheshire'
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h2', text: 'Lot 1a suppliers')
+    expect(page).to have_css('h1', text: 'Lot 1a suppliers')
   end
 
   scenario 'Buyer changes mind about buying from lot 1a, under 7m' do
@@ -74,7 +74,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
     choose I18n.t('journey.value_band.answer_under50m')
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h2', text: 'Lot 1b suppliers')
+    expect(page).to have_css('h1', text: 'Lot 1b suppliers')
   end
 
   scenario 'Buyer changes mind about buying from lot 1b' do
@@ -96,7 +96,7 @@ RSpec.feature 'Facilities Managment', type: :feature do
     choose I18n.t('journey.value_band.answer_over50m')
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h2', text: 'Lot 1c suppliers')
+    expect(page).to have_css('h1', text: 'Lot 1c suppliers')
   end
 
   scenario 'Buyer changes mind about buying from lot 1c' do
