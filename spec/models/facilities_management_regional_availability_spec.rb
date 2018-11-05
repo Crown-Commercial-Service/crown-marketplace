@@ -14,4 +14,10 @@ RSpec.describe FacilitiesManagementRegionalAvailability, type: :model do
     regional_availability.region_code = ''
     expect(regional_availability).not_to be_valid
   end
+
+  it 'can be associated with one facilities management supplier' do
+    supplier = build(:facilities_management_supplier)
+    availability = supplier.regional_availabilities.build
+    expect(availability.supplier).to eq(supplier)
+  end
 end
