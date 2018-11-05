@@ -12,7 +12,7 @@ class FacilitiesManagementSupplier < ApplicationRecord
   def self.available_in_lot(lot_number)
     FacilitiesManagementRegionalAvailability
       .includes(:supplier)
-      .where(lot_number: lot_number)
+      .merge(FacilitiesManagementRegionalAvailability.for_lot(lot_number))
       .map(&:supplier)
       .uniq
   end
@@ -22,6 +22,6 @@ class FacilitiesManagementSupplier < ApplicationRecord
   end
 
   def serves_all?(lot_number, region_codes)
-    (region_codes - regional_availabilities.where(lot_number: lot_number).map(&:region_code)).empty?
+    (region_codes - regional_availabilities.for_lot(lot_number).map(&:region_code)).empty?
   end
 end
