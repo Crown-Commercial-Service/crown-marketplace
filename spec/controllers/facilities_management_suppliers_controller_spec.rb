@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
   let(:supplier) { build(:facilities_management_supplier) }
   let(:suppliers) { [supplier] }
+  let(:lot) { FacilitiesManagementLot.find_by(number: lot_number) }
 
   before do
     allow(FacilitiesManagementSupplier).to receive(:available_in_lot)
@@ -37,7 +38,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
       end
 
       it 'assigns lot to the correct lot' do
-        expect(assigns(:lot)).to eq(lot_number)
+        expect(assigns(:lot)).to eq(lot)
       end
 
       it 'sets the back path to the supplier region question' do
@@ -64,7 +65,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
       end
 
       it 'assigns lot to the correct lot' do
-        expect(assigns(:lot)).to eq(lot_number)
+        expect(assigns(:lot)).to eq(lot)
       end
 
       it 'sets the back path to the supplier region question' do
@@ -90,7 +91,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
       end
 
       it 'assigns lot to the correct lot' do
-        expect(assigns(:lot)).to eq(lot_number)
+        expect(assigns(:lot)).to eq(lot)
       end
 
       it 'sets the back path to the value band question' do
@@ -115,7 +116,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
       end
 
       it 'assigns lot to the correct lot' do
-        expect(assigns(:lot)).to eq(lot_number)
+        expect(assigns(:lot)).to eq(lot)
       end
 
       it 'sets the back path to the value band question' do

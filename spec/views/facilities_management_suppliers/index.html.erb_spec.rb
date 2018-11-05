@@ -5,12 +5,13 @@ RSpec.describe 'facilities_management_suppliers/index.html.erb' do
   let(:supplier2) { build(:facilities_management_supplier) }
   let(:suppliers) { [supplier1, supplier2] }
   let(:lot_number) { '1a' }
+  let(:lot) { FacilitiesManagementLot.find_by(number: lot_number) }
 
   before do
     allow(view).to receive(:contract_value_range_text)
       .with(lot_number).and_return('contract-value-range-text')
     assign(:suppliers, suppliers)
-    assign(:lot, lot_number)
+    assign(:lot, lot)
     render
   end
 
