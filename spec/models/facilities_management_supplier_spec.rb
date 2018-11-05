@@ -20,11 +20,6 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
     expect(supplier).not_to be_valid
   end
 
-  it 'is not valid if telephone_number is blank' do
-    supplier.telephone_number = ''
-    expect(supplier).not_to be_valid
-  end
-
   it 'can be associated with many facilities management regional availabilities' do
     availability1 = supplier.regional_availabilities.build
     availability2 = supplier.regional_availabilities.build
