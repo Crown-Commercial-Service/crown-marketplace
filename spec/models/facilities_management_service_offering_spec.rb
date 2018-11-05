@@ -20,4 +20,10 @@ RSpec.describe FacilitiesManagementServiceOffering, type: :model do
     offering = supplier.service_offerings.build
     expect(offering.supplier).to eq(supplier)
   end
+
+  it 'looks up service based on its code' do
+    offering = build(:facilities_management_service_offering, service_code: 'C.20')
+    expect(offering.service).to be_instance_of(FacilitiesManagementService)
+    expect(offering.service.code).to eq('C.20')
+  end
 end
