@@ -10,8 +10,6 @@ class FacilitiesManagementSupplier < ApplicationRecord
            dependent: :destroy
 
   validates :name, presence: true
-  validates :contact_name, presence: true
-  validates :contact_email, presence: true
 
   def self.available_in_lot(lot_number)
     joins(:regional_availabilities)
