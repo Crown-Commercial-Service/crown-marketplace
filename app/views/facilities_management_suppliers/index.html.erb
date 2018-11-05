@@ -1,6 +1,6 @@
 <div>
   <h2>Lot <%= @lot %> suppliers</h2>
-  <p>Total contract value up to &pound;7M</p>
+  <p><%= contract_value_range_text(@lot) %></p>
   <p><%= pluralize(@suppliers.count, 'supplier') %></p>
   <% @suppliers.each do |supplier| %>
   <h2><%= supplier.name %></h2>
