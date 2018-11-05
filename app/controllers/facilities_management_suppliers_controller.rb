@@ -18,12 +18,12 @@ class FacilitiesManagementSuppliersController < ApplicationController
   private
 
   def small_lot
-    @lot = '1a'
-    @suppliers = FacilitiesManagementSupplier.available_in_lot_and_regions(@lot, params[:region_codes])
+    @lot = FacilitiesManagementLot.find_by(number: '1a')
+    @suppliers = FacilitiesManagementSupplier.available_in_lot_and_regions(@lot.number, params[:region_codes])
   end
 
-  def big_lot(lot)
-    @lot = lot
-    @suppliers = FacilitiesManagementSupplier.available_in_lot(@lot)
+  def big_lot(lot_number)
+    @lot = FacilitiesManagementLot.find_by(number: lot_number)
+    @suppliers = FacilitiesManagementSupplier.available_in_lot(@lot.number)
   end
 end
