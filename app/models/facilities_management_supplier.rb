@@ -24,11 +24,26 @@ class FacilitiesManagementSupplier < ApplicationRecord
   end
 
   def self.available_in_lot_and_regions(lot_number, region_codes)
-    all.select { |s| s.serves_all?(lot_number, region_codes) }
-  end
+    query = <<~SQL
+      SELECT facilities_management_supplier_id AS id
+      FROM facilities_management_regional_availabilities
+      WHERE lot_number = :lot_number
+      AND region_code IN (:region_codes)
+      GROUP BY facilities_management_supplier_id
+      HAVING count(region_code) = :region_code_count
+    SQL
+    query_params = {
+      lot_number: lot_number,
+      region_codes: region_codes,
+      region_code_count: region_codes.length
+    }
 
-  def serves_all?(lot_number, region_codes)
-    (region_codes - regional_availabilities.for_lot(lot_number).map(&:region_code)).empty?
+    ids = find_by_sql([query, query_params]).map(&:id)
+
+    where(id: ids)
+      .joins(:regional_availabilities)
+      .merge(FacilitiesManagementRegionalAvailability.for_lot_and_regions(lot_number, region_codes))
+      .uniq
   end
 
   def services_by_work_package_in_lot(lot_number)
