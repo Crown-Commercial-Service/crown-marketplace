@@ -1,12 +1,10 @@
 require 'csv'
 
 module StaticRecord
-  def self.included(base)
-    base.send :include, ActiveModel::Model
-    base.extend ClassMethods
-  end
+  extend ActiveSupport::Concern
+  include ActiveModel::Model
 
-  module ClassMethods
+  class_methods do
     def define(*entries)
       keys = entries.first
       entries.drop(1).each do |entry|
