@@ -6,4 +6,8 @@ class FacilitiesManagementServiceOffering < ApplicationRecord
 
   validates :lot_number, presence: true
   validates :service_code, presence: true
+
+  def service
+    FacilitiesManagementService.find_by(code: service_code)
+  end
 end
