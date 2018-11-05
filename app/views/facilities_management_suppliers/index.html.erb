@@ -3,14 +3,14 @@
   <p><%= contract_value_range_text(@lot) %></p>
   <p><%= pluralize(@suppliers.count, 'supplier') %></p>
   <% @suppliers.each do |supplier| %>
-  <h2><%= supplier.name %></h2>
-  <p>
-    <strong><%= supplier.contact_name %></strong><br />
-    <%= supplier.telephone_number %><br />
-    <%= mail_to(supplier.contact_email) %>
-  </p>
+    <h2><%= supplier.name %></h2>
+    <p>
+      <strong><%= supplier.contact_name %></strong><br />
+      <%= supplier.telephone_number %><br />
+      <%= mail_to(supplier.contact_email) %>
+    </p>
   <% end %>
   <% if @lot == '1a' %>
-  <p>Direct award to a single supplier may be an option if your maximum spend is under £1.5 million.</p>
+    <p>Direct award to a single supplier may be an option if your maximum spend is under £1.5 million.</p>
   <% end %>
 </div>
