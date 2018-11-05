@@ -15,30 +15,30 @@ RSpec.describe 'facilities_management_suppliers/index.html.erb' do
   end
 
   it 'displays the lot number' do
-    expect(rendered).to include('Lot 1a suppliers')
+    expect(rendered).to have_text('Lot 1a suppliers')
   end
 
   it 'displays the contract value range' do
-    expect(rendered).to include('contract-value-range-text')
+    expect(rendered).to have_text('contract-value-range-text')
   end
 
   it 'displays the number of suppliers in the lot' do
-    expect(rendered).to include('2 suppliers')
+    expect(rendered).to have_text('2 suppliers')
   end
 
   it 'displays the supplier name' do
-    expect(rendered).to include(supplier1.name)
+    expect(rendered).to have_text(supplier1.name)
   end
 
   it 'displays the supplier contact name' do
-    expect(rendered).to include(supplier1.contact_name)
+    expect(rendered).to have_text(supplier1.contact_name)
   end
 
   it 'displays the supplier contact email' do
-    expect(rendered).to include(supplier1.contact_email)
+    expect(rendered).to have_text(supplier1.contact_email)
   end
 
   it 'displays the supplier telephone number' do
-    expect(rendered).to include(supplier1.telephone_number)
+    expect(rendered).to have_text(supplier1.telephone_number)
   end
 end
