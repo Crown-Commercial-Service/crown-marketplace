@@ -1,7 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
-  let(:supplier) { build(:facilities_management_supplier) }
+  let(:contact_name) { 'contact-name' }
+  let(:contact_email) { 'contact@example.com' }
+
+  let(:supplier) do
+    build(
+      :facilities_management_supplier,
+      contact_name: contact_name,
+      contact_email: contact_email
+    )
+  end
+
   let(:services) { {} }
 
   before do
@@ -14,11 +24,27 @@ RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
   end
 
   it 'displays the supplier contact name' do
-    expect(rendered).to have_text(supplier.contact_name)
+    expect(rendered).to have_text(contact_name)
   end
 
   it 'displays the supplier contact email' do
-    expect(rendered).to have_text(supplier.contact_email)
+    expect(rendered).to have_text(contact_email)
+  end
+
+  context 'when supplier contact name is not available' do
+    let(:contact_name) { nil }
+
+    it 'displays message explaining absence of contact name' do
+      expect(rendered).to have_text('Contact name not available')
+    end
+  end
+
+  context 'when supplier contact email is not available' do
+    let(:contact_email) { nil }
+
+    it 'displays message explaining absence of contact email' do
+      expect(rendered).to have_text('Contact email not available')
+    end
   end
 
   context 'when supplier has multiple services in one work package' do

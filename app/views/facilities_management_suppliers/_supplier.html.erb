@@ -1,7 +1,7 @@
 <h2><%= supplier.name %></h2>
 <p>
-  <strong><%= supplier.contact_name %></strong><br />
-  <%= mail_to(supplier.contact_email) %>
+  <strong><%= supplier.contact_name.present? ? supplier.contact_name : 'Contact name not available' %></strong><br />
+  <%= supplier.contact_email.present? ? mail_to(supplier.contact_email) : 'Contact email not available' %>
 
   <ul>
     <% supplier.services_by_work_package_in_lot(lot_number).each do |work_package, services| %>
