@@ -10,10 +10,8 @@ class FacilitiesManagementSupplier < ApplicationRecord
   validates :telephone_number, presence: true
 
   def self.available_in_lot(lot_number)
-    FacilitiesManagementRegionalAvailability
-      .includes(:supplier)
+    joins(:regional_availabilities)
       .merge(FacilitiesManagementRegionalAvailability.for_lot(lot_number))
-      .map(&:supplier)
       .uniq
   end
 
