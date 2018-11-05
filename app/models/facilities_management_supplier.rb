@@ -20,6 +20,12 @@ class FacilitiesManagementSupplier < ApplicationRecord
       .uniq
   end
 
+  def self.delete_all_with_dependents
+    FacilitiesManagementRegionalAvailability.delete_all
+    FacilitiesManagementServiceOffering.delete_all
+    delete_all
+  end
+
   def self.available_in_lot_and_regions(lot_number, region_codes)
     all.select { |s| s.serves_all?(lot_number, region_codes) }
   end
