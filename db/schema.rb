@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_200527) do
+ActiveRecord::Schema.define(version: 2018_11_05_142503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_200527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_supplier_id"], name: "index_fm_regional_availabilities_on_fm_supplier_id"
+    t.index ["lot_number"], name: "index_fm_regional_availabilities_on_lot_number"
   end
 
   create_table "facilities_management_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
