@@ -16,4 +16,8 @@ class FacilitiesManagementRegionalAvailability < ApplicationRecord
   def self.for_lot(lot_number)
     where(lot_number: lot_number)
   end
+
+  def self.for_lot_and_regions(lot_number, region_codes)
+    where(lot_number: lot_number, region_code: region_codes)
+  end
 end
