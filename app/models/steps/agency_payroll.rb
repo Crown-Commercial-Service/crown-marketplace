@@ -1,6 +1,6 @@
 module Steps
   class AgencyPayroll < JourneyStep
-    include Steps::Geolocatable
+    include Geolocatable
 
     attribute :postcode
     validates :location, location: true
