@@ -21,10 +21,6 @@ RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
     expect(rendered).to have_text(supplier.contact_email)
   end
 
-  it 'displays the supplier telephone number' do
-    expect(rendered).to have_text(supplier.telephone_number)
-  end
-
   context 'when supplier has multiple services in one work package' do
     let(:work_package) { FacilitiesManagementWorkPackage.new(name: 'work-package') }
     let(:service1) { FacilitiesManagementService.new(name: 'service-1') }
