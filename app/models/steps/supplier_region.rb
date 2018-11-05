@@ -2,9 +2,9 @@ module Steps
   class SupplierRegion < JourneyStep
     attribute :region_codes, Array
 
-    # TODO: use attribute types instead. Virtus?
-    def region_codes
-      @region_codes || []
+    def initialize(*)
+      self.region_codes = []
+      super
     end
 
     def regions
