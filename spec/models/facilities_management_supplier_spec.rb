@@ -98,7 +98,7 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
     it 'deletes all service offerings' do
       described_class.delete_all_with_dependents
 
-      expect(FacilitiesManagementServiceOffering.count).to eq(0)
+      expect(FacilitiesManagement::ServiceOffering.count).to eq(0)
     end
 
     it 'deletes all suppliers' do

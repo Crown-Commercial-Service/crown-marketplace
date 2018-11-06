@@ -5,7 +5,7 @@ class FacilitiesManagementSupplier < ApplicationRecord
            dependent: :destroy
 
   has_many :service_offerings,
-           class_name: 'FacilitiesManagementServiceOffering',
+           class_name: 'FacilitiesManagement::ServiceOffering',
            inverse_of: :supplier,
            dependent: :destroy
 
@@ -20,7 +20,7 @@ class FacilitiesManagementSupplier < ApplicationRecord
 
   def self.delete_all_with_dependents
     FacilitiesManagement::RegionalAvailability.delete_all
-    FacilitiesManagementServiceOffering.delete_all
+    FacilitiesManagement::ServiceOffering.delete_all
     delete_all
   end
 
