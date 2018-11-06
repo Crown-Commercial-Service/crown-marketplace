@@ -51,6 +51,12 @@ module RuboCop
           check_spelling const_name, node
         end
 
+        def on_sym(node)
+          sym_symbol = node.children[1]
+          sym_name = sym_symbol.to_s
+          check_spelling sym_name, node
+        end
+
         def dictionary
           @dictionary ||= Dictionary.new(
             '/usr/share/dict/words',
