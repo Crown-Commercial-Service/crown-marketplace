@@ -19,6 +19,7 @@
 
 
 /* Override with my own components */
+@import "back-link/back-link";
 @import "button/button";
 @import "details/details";
 @import "header/header";
@@ -26,10 +27,9 @@
 @import "fieldset/fieldset";
 @import "fm-supplier-record/fm-supplier-record";
 @import "label/label";
+@import "master-vendor-record/master-vendor-record";
 @import "phase-banner/phase-banner";
 @import "sidebar/sidebar";
 @import "supplier-record/supplier-record";
-@import "master-vendor-record/master-vendor-record";
-@import "typography/typography";
 @import "tag/tag";
-@import "back-link/back-link";
+@import "typography/typography";
