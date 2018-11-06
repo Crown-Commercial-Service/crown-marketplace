@@ -5,10 +5,12 @@ module RuboCop
         MSG = 'Misspelt or unknown word (check words.txt)'.freeze
 
         def check_spelling(text, node)
+          return if dictionary.include?(text)
+
           words = text.reverse.scan(/[a-z]+[A-Z]?|[A-Z]+/)
-                      .map { |w| w.reverse.downcase }
+                      .map(&:reverse)
                       .select { |w| w.length >= 2 }
-          return if words.all? { |w| known_words.include?(w) }
+          return if words.all? { |w| dictionary.include?(w) }
 
           add_offense(node, location: :expression)
         end
@@ -49,13 +51,24 @@ module RuboCop
           check_spelling const_name, node
         end
 
-        def known_words
-          @known_words ||= determine_known_words
+        def dictionary
+          @dictionary ||= Dictionary.new(
+            '/usr/share/dict/words',
+            File.expand_path('words.txt', __dir__)
+          )
         end
 
-        def determine_known_words
-          text = File.read(File.expand_path('words.txt', __dir__))
-          Set.new(text.downcase.split("\n"))
+        class Dictionary
+          def initialize(*paths)
+            @known = Set.new
+            paths.each do |path|
+              @known += File.read(path).downcase.split(/\n/)
+            end
+          end
+
+          def include?(word)
+            @known.include?(word.downcase)
+          end
         end
       end
     end
