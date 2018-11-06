@@ -1,15 +1,17 @@
-class FacilitiesManagement::Service
-  include StaticRecord
+module FacilitiesManagement
+  class Service
+    include StaticRecord
 
-  attr_accessor :code, :name, :work_package_code, :mandatory
+    attr_accessor :code, :name, :work_package_code, :mandatory
 
-  def work_package
-    FacilitiesManagement::WorkPackage.find_by(code: work_package_code)
+    def work_package
+      WorkPackage.find_by(code: work_package_code)
+    end
+
+    def mandatory?
+      mandatory == 'true'
+    end
   end
 
-  def mandatory?
-    mandatory == 'true'
-  end
+  Service.load_csv('facilities_management/services.csv')
 end
-
-FacilitiesManagement::Service.load_csv('facilities_management/services.csv')

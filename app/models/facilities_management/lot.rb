@@ -1,11 +1,13 @@
-class FacilitiesManagement::Lot
-  include StaticRecord
+module FacilitiesManagement
+  class Lot
+    include StaticRecord
 
-  attr_accessor :number, :description
+    attr_accessor :number, :description
 
-  def direct_award_possible?
-    number == '1a'
+    def direct_award_possible?
+      number == '1a'
+    end
   end
-end
 
-FacilitiesManagement::Lot.load_csv('facilities_management/lots.csv')
+  Lot.load_csv('facilities_management/lots.csv')
+end
