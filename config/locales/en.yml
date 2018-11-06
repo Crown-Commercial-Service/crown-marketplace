@@ -27,6 +27,10 @@ en:
           attributes:
             region_codes:
               too_short: Select at least one region
+        steps/value_band:
+          attributes:
+            value_band:
+              inclusion: Select a value band to see a list of suppliers
         steps/worker_type:
           attributes:
             worker_type:
@@ -123,7 +127,6 @@ en:
       question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
       question_hint: This can be current costs, or estimated annual costs.
       submit: Continue
-      validation_error: Select a value band to see a list of suppliers
     worker_type:
       answer_agency_supplied: 'Yes'
       answer_nominated_worker: No, I have a worker I want the agency to manage (a 'nominated worker')
