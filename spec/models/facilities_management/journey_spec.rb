@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # rubocop:disable RSpec/NestedGroups
-RSpec.describe FacilitiesManagementJourney, type: :model do
+RSpec.describe FacilitiesManagement::Journey, type: :model do
   context 'when following the facilities management journey' do
     subject(:journey) do
       described_class.new(slug, ActionController::Parameters.new(params))
