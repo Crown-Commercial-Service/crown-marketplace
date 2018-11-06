@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
   let(:supplier) { build(:facilities_management_supplier) }
   let(:suppliers) { [supplier] }
-  let(:lot) { FacilitiesManagementLot.find_by(number: lot_number) }
+  let(:lot) { FacilitiesManagement::Lot.find_by(number: lot_number) }
 
   before do
     allow(FacilitiesManagementSupplier).to receive(:available_in_lot)
