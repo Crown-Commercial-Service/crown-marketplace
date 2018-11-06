@@ -4,7 +4,7 @@ class FacilitiesManagementUploadsController < ApplicationController
   def create
     suppliers = JSON.parse(request.body.read)
 
-    FacilitiesManagementUpload.create!(suppliers)
+    FacilitiesManagement::Upload.create!(suppliers)
 
     render json: {}, status: :created
   end

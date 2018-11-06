@@ -5,13 +5,13 @@ RSpec.describe FacilitiesManagementUploadsController, type: :controller do
     let(:suppliers) { [] }
 
     before do
-      allow(FacilitiesManagementUpload).to receive(:create!)
+      allow(FacilitiesManagement::Upload).to receive(:create!)
     end
 
     it 'creates suppliers and their associated data from JSON' do
       post :create, body: suppliers.to_json
 
-      expect(FacilitiesManagementUpload).to have_received(:create!).with(suppliers)
+      expect(FacilitiesManagement::Upload).to have_received(:create!).with(suppliers)
     end
 
     it 'responds with HTTP created status' do
@@ -22,7 +22,7 @@ RSpec.describe FacilitiesManagementUploadsController, type: :controller do
 
     context 'when model validation error occurs' do
       before do
-        allow(FacilitiesManagementUpload).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
+        allow(FacilitiesManagement::Upload).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
       end
 
       it 'raises ActiveRecord::RecordInvalid' do
