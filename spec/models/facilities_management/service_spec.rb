@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementService, type: :model do
+RSpec.describe FacilitiesManagement::Service, type: :model do
   subject(:services) { described_class.all }
 
   let(:first_service) { services.first }
