@@ -12,6 +12,6 @@ class FacilitiesManagementServiceOffering < ApplicationRecord
   end
 
   def service
-    FacilitiesManagementService.find_by(code: service_code)
+    FacilitiesManagement::Service.find_by(code: service_code)
   end
 end

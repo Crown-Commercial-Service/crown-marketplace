@@ -30,11 +30,11 @@ RSpec.describe FacilitiesManagementSuppliersHelper, type: :helper do
   end
 
   describe '#grouped_by_mandatory' do
-    let(:mandatory_service1) { FacilitiesManagementService.new(mandatory: 'true') }
-    let(:mandatory_service2) { FacilitiesManagementService.new(mandatory: 'true') }
+    let(:mandatory_service1) { FacilitiesManagement::Service.new(mandatory: 'true') }
+    let(:mandatory_service2) { FacilitiesManagement::Service.new(mandatory: 'true') }
 
-    let(:non_mandatory_service1) { FacilitiesManagementService.new(mandatory: 'false') }
-    let(:non_mandatory_service2) { FacilitiesManagementService.new(mandatory: 'false') }
+    let(:non_mandatory_service1) { FacilitiesManagement::Service.new(mandatory: 'false') }
+    let(:non_mandatory_service2) { FacilitiesManagement::Service.new(mandatory: 'false') }
 
     let(:services) do
       [

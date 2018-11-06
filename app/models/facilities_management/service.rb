@@ -1,4 +1,4 @@
-class FacilitiesManagementService
+class FacilitiesManagement::Service
   include StaticRecord
 
   attr_accessor :code, :name, :work_package_code, :mandatory
@@ -12,4 +12,4 @@ class FacilitiesManagementService
   end
 end
 
-FacilitiesManagementService.load_csv('facilities_management_services.csv')
+FacilitiesManagement::Service.load_csv('facilities_management_services.csv')
