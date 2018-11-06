@@ -23,6 +23,10 @@ en:
           attributes:
             location:
               invalid_location: Enter a valid postcode
+        steps/supplier_region:
+          attributes:
+            region_codes:
+              too_short: Select at least one region
         steps/worker_type:
           attributes:
             worker_type:

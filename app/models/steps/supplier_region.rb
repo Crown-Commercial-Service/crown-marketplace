@@ -3,6 +3,7 @@ module Steps
     include JourneyStep
 
     attribute :region_codes, Array
+    validates :region_codes, length: { minimum: 1 }
 
     def initialize(*)
       self.region_codes = []
