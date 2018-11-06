@@ -1,6 +1,6 @@
 class FacilitiesManagementSupplier < ApplicationRecord
   has_many :regional_availabilities,
-           class_name: 'FacilitiesManagementRegionalAvailability',
+           class_name: 'FacilitiesManagement::RegionalAvailability',
            inverse_of: :supplier,
            dependent: :destroy
 
@@ -13,22 +13,22 @@ class FacilitiesManagementSupplier < ApplicationRecord
 
   def self.available_in_lot(lot_number)
     joins(:regional_availabilities)
-      .merge(FacilitiesManagementRegionalAvailability.for_lot(lot_number))
+      .merge(FacilitiesManagement::RegionalAvailability.for_lot(lot_number))
       .includes(:service_offerings)
       .uniq
   end
 
   def self.delete_all_with_dependents
-    FacilitiesManagementRegionalAvailability.delete_all
+    FacilitiesManagement::RegionalAvailability.delete_all
     FacilitiesManagementServiceOffering.delete_all
     delete_all
   end
 
   def self.available_in_lot_and_regions(lot_number, region_codes)
-    where(id: FacilitiesManagementRegionalAvailability
+    where(id: FacilitiesManagement::RegionalAvailability
                 .supplier_ids_for_lot_and_regions(lot_number, region_codes))
       .joins(:regional_availabilities)
-      .merge(FacilitiesManagementRegionalAvailability
+      .merge(FacilitiesManagement::RegionalAvailability
                .for_lot_and_regions(lot_number, region_codes))
       .includes(:service_offerings)
       .uniq
