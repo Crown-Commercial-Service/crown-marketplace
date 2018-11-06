@@ -8,8 +8,7 @@ module Steps
 
     attribute :value_band
     validates :value_band, inclusion: {
-      in: ['under1_5m', 'under7m', 'under50m', 'over50m'],
-      message: I18n.t('journey.value_band.validation_error')
+      in: ['under1_5m', 'under7m', 'under50m', 'over50m']
     }
 
     def next_step_class
