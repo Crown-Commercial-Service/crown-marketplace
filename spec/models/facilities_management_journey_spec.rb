@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagementJourney, type: :model do
   context 'when following the facilities management journey' do
     subject(:journey) do
-      FacilitiesManagementJourney.new(slug, ActionController::Parameters.new(params))
+      described_class.new(slug, ActionController::Parameters.new(params))
     end
 
     context 'when on the value band page' do
