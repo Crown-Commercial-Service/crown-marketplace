@@ -8,4 +8,4 @@ class FacilitiesManagement::Lot
   end
 end
 
-FacilitiesManagement::Lot.load_csv('facilities_management_lots.csv')
+FacilitiesManagement::Lot.load_csv('facilities_management/lots.csv')

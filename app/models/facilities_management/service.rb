@@ -12,4 +12,4 @@ class FacilitiesManagement::Service
   end
 end
 
-FacilitiesManagement::Service.load_csv('facilities_management_services.csv')
+FacilitiesManagement::Service.load_csv('facilities_management/services.csv')

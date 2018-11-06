@@ -4,4 +4,4 @@ class FacilitiesManagement::WorkPackage
   attr_accessor :code, :name
 end
 
-FacilitiesManagement::WorkPackage.load_csv('facilities_management_work_packages.csv')
+FacilitiesManagement::WorkPackage.load_csv('facilities_management/work_packages.csv')
