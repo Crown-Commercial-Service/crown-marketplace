@@ -51,6 +51,11 @@ Style/WordArray:
 Style/ClassAndModuleChildren:
     Enabled: false
 
+Style/Spelling:
+    Enabled: true
+    Exclude:
+        - 'lib/cop/**/*'
+
 Layout/TrailingBlankLines:
     Enabled: true
 
