@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementRegion, type: :model do
+RSpec.describe FacilitiesManagement::Region, type: :model do
   describe 'all' do
     it 'has 74 regions' do
       expect(described_class.all)

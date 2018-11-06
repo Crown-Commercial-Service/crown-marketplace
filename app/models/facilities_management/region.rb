@@ -1,4 +1,4 @@
-class FacilitiesManagementRegion
+class FacilitiesManagement::Region
   include StaticRecord
 
   attr_accessor :code, :name
@@ -36,4 +36,4 @@ class FacilitiesManagementRegion
   end
 end
 
-FacilitiesManagementRegion.load_csv('facilities_management_regions.csv')
+FacilitiesManagement::Region.load_csv('facilities_management_regions.csv')
