@@ -1,5 +1,6 @@
 module Steps
-  class AgencyPayroll < JourneyStep
+  class AgencyPayroll
+    include JourneyStep
     include Geolocatable
 
     attribute :postcode

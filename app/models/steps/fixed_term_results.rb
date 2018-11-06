@@ -1,5 +1,6 @@
 module Steps
-  class FixedTermResults < JourneyStep
+  class FixedTermResults
+    include JourneyStep
     include Results
 
     def rates

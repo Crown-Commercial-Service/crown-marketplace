@@ -1,4 +1,5 @@
 module Steps
-  class MasterVendorManagedService < JourneyStep
+  class MasterVendorManagedService
+    include JourneyStep
   end
 end

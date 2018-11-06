@@ -1,5 +1,6 @@
 module Steps
-  class NominatedWorkerResults < JourneyStep
+  class NominatedWorkerResults
+    include JourneyStep
     include Results
 
     def rates
