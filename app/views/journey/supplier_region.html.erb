@@ -9,6 +9,7 @@
         <h1 class="govuk-fieldset__heading">
           <%= t('.question') %>
         </h1>
+        <%= display_error(@journey, :region_codes) %>
       </legend>
       <% FacilitiesManagementRegion.all.group_by(&:nuts1_code).each do |parent_region_code, regions| %>
         <h3 class="govuk-heading-m"><%= t(".nuts1.#{parent_region_code}") %></h3>
