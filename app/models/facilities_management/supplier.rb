@@ -1,13 +1,11 @@
 module FacilitiesManagement
   class Supplier < ApplicationRecord
     has_many :regional_availabilities,
-             class_name: 'FacilitiesManagement::RegionalAvailability',
              foreign_key: :facilities_management_supplier_id,
              inverse_of: :supplier,
              dependent: :destroy
 
     has_many :service_offerings,
-             class_name: 'FacilitiesManagement::ServiceOffering',
              foreign_key: :facilities_management_supplier_id,
              inverse_of: :supplier,
              dependent: :destroy

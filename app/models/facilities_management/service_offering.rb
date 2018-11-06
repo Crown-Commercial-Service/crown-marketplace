@@ -1,7 +1,6 @@
 module FacilitiesManagement
   class ServiceOffering < ApplicationRecord
     belongs_to :supplier,
-               class_name: 'FacilitiesManagement::Supplier',
                foreign_key: :facilities_management_supplier_id,
                inverse_of: :service_offerings
 
