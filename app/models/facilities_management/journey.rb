@@ -1,4 +1,4 @@
-class FacilitiesManagementJourney < Journey
+class FacilitiesManagement::Journey < Journey
   include Rails.application.routes.url_helpers
 
   def initialize(slug, params)

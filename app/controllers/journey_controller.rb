@@ -29,8 +29,8 @@ class JourneyController < ApplicationController
     case params[:journey]
     when TeacherSupplyJourney.journey_name
       TeacherSupplyJourney
-    when FacilitiesManagementJourney.journey_name
-      FacilitiesManagementJourney
+    when FacilitiesManagement::Journey.journey_name
+      FacilitiesManagement::Journey
     else
       raise ActionController::RoutingError
     end

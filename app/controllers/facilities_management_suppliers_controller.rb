@@ -1,6 +1,6 @@
 class FacilitiesManagementSuppliersController < ApplicationController
   def index
-    @journey = FacilitiesManagementJourney.new(params[:slug], params)
+    @journey = FacilitiesManagement::Journey.new(params[:slug], params)
     @back_path = @journey.previous_step_path
 
     case params[:value_band]
