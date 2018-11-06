@@ -137,7 +137,7 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
         it 'creates service offerings associated with supplier' do
           expect do
             described_class.create!(suppliers)
-          end.to change(FacilitiesManagementServiceOffering, :count).by(3)
+          end.to change(FacilitiesManagement::ServiceOffering, :count).by(3)
         end
 
         it 'assigns attributes to first service offering' do
