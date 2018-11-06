@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementWorkPackage, type: :model do
+RSpec.describe FacilitiesManagement::WorkPackage, type: :model do
   subject(:packages) { described_class.all }
 
   let(:first_package) { packages.first }

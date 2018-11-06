@@ -115,9 +115,9 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
     let(:service_a2) { FacilitiesManagement::Service.find_by(code: 'A.2') }
     let(:service_b1) { FacilitiesManagement::Service.find_by(code: 'B.1') }
 
-    let(:work_package_a) { FacilitiesManagementWorkPackage.find_by(code: 'A') }
-    let(:work_package_b) { FacilitiesManagementWorkPackage.find_by(code: 'B') }
-    let(:work_package_c) { FacilitiesManagementWorkPackage.find_by(code: 'C') }
+    let(:work_package_a) { FacilitiesManagement::WorkPackage.find_by(code: 'A') }
+    let(:work_package_b) { FacilitiesManagement::WorkPackage.find_by(code: 'B') }
+    let(:work_package_c) { FacilitiesManagement::WorkPackage.find_by(code: 'C') }
 
     let(:lot) { '1a' }
     let(:another_lot) { '1b' }

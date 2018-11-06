@@ -4,7 +4,7 @@ class FacilitiesManagement::Service
   attr_accessor :code, :name, :work_package_code, :mandatory
 
   def work_package
-    FacilitiesManagementWorkPackage.find_by(code: work_package_code)
+    FacilitiesManagement::WorkPackage.find_by(code: work_package_code)
   end
 
   def mandatory?
