@@ -28,4 +28,49 @@ RSpec.describe FacilitiesManagementSuppliersHelper, type: :helper do
       end
     end
   end
+
+  describe '#grouped_by_mandatory' do
+    let(:mandatory_service1) { FacilitiesManagementService.new(mandatory: 'true') }
+    let(:mandatory_service2) { FacilitiesManagementService.new(mandatory: 'true') }
+
+    let(:non_mandatory_service1) { FacilitiesManagementService.new(mandatory: 'false') }
+    let(:non_mandatory_service2) { FacilitiesManagementService.new(mandatory: 'false') }
+
+    let(:services) do
+      [
+        mandatory_service1,
+        non_mandatory_service1,
+        mandatory_service2,
+        non_mandatory_service2
+      ]
+    end
+
+    let(:result) { helper.grouped_by_mandatory(services) }
+
+    it 'groups mandatory services together' do
+      expect(Hash[result][true]).to contain_exactly(
+        mandatory_service1, mandatory_service2
+      )
+    end
+
+    it 'groups non-mandatory services together' do
+      expect(Hash[result][false]).to contain_exactly(
+        non_mandatory_service1, non_mandatory_service2
+      )
+    end
+
+    it 'orders mandatory services before non-mandatory services' do
+      expect(result.map(&:first)).to eq([true, false])
+    end
+  end
+
+  describe '#service_type' do
+    it 'returns "Basic services" when mandatory' do
+      expect(helper.service_type(true)).to eq('Basic services')
+    end
+
+    it 'returns "Extra services" when not mandatory' do
+      expect(helper.service_type(false)).to eq('Extra services')
+    end
+  end
 end
