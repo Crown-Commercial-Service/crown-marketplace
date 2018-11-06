@@ -1,136 +1,136 @@
-code,name,work_package_code
-A.7,Accessibility Services,A
-A.12,Business Continuity and Disaster Recovery (“BCDR”) Plans,A
-A.9,Customer Satisfaction,A
-A.5,Fire Safety,A
-A.2,Health and Safety,A
-A.1,Integration,A
-A.3,Management Services,A
-A.11,Performance Self-Monitoring,A
-A.6,Permit to Work,A
-A.16,Property Information Mapping Service (EPIMS),A
-A.13,Quality Management System         ,A
-A.10,Reporting,A
-A.8,Risk Management,A
-A.15,Selection and Management of Sub-Contractors,A
-A.4,Service Delivery Plans,A
-A.18,Social Value,A
-A.14,Staff and Training,A
-A.17,Sustainability,A
-B.1,Contract Mobilisation,B
-C.21,Airport and Aerodrome Maintenance Services,C
-C.15,Audio Visual (AV) Equipment Maintenance,C
-C.10,Automated Barrier Control System Maintenance,C
-C.11,Building Management System (BMS) Maintenance,C
-C.14,Catering Equipment Maintenance,C
-C.3,Environmental Cleaning Service,C
-C.4,Fire Detection and Firefighting Systems Maintenance,C
-C.13,High Voltage (HV) and Switchgear Maintenance,C
-C.7,Internal & External Building Fabric Maintenance,C
-C.5,"Lifts, Hoists & Conveyance Systems Maintenance",C
-C.20,Locksmith Services,C
-C.17,Mail Room Equipment Maintenance,C
-C.1,Mechanical and Electrical Engineering Maintenance,C
-C.18,Office Machinery Servicing and Maintenance,C
-C.9,Planned / Group Re-Lamping Service,C
-C.8,Reactive Maintenance Services,C
-C.6,"Security, Access and Intruder Systems Maintenance",C
-C.22,Specialist Maintenance Services,C
-C.12,Standby Power System Maintenance,C
-C.16,Television Cabling Maintenance,C
-C.2,Ventilation and Air Conditioning System Maintenance,C
-C.19,Voice Announcement System Maintenance,C
-D.6,Cut Flowers and Christmas Trees,D
-D.1,Grounds Maintenance Services,D
-D.5,Internal Planting,D
-D.3,Professional Snow & Ice Clearance,D
-D.4,"Reservoirs, Ponds, River Walls and Water Features Maintenance",D
-D.2,Tree Surgery (Arboriculture),D
-E.1,Asbestos Management,E
-E.9,Building Information Modelling and Government Soft Landings,E
-E.5,"Compliance Plans, Specialist Surveys and Audits",E
-E.6,Conditions Survey,E
-E.7,Electrical Testing,E
-E.8,Fire Risk Assessments,E
-E.4,Portable Appliance Testing,E
-E.3,Statutory Inspections,E
-E.2,Water Hygiene Maintenance,E
-F.1,Chilled Potable Water,F
-F.2,Retail Services / Convenience Store,F
-F.3,Deli/Coffee Bar,F
-F.4,Events and Functions,F
-F.5,Full Service Restaurant,F
-F.6,Hospitality and Meetings,F
-F.7,Outside Catering,F
-F.8,Trolley Service,F
-F.9,Vending Services (Food & Beverage),F
-F.10,Residential Catering Services,F
-G.8,Cleaning of Communications and Equipment Rooms,G
-G.13,Cleaning of Curtains and Window Blinds,G
-G.5,Cleaning of External Areas,G
-G.2,Cleaning of Integral Barrier Mats,G
-G.4,Deep (Periodic) Cleaning,G
-G.10,Housekeeping,G
-G.11,IT Equipment Cleaning,G
-G.16,Linen and Laundry Services,G
-G.14,Medical and Clinical Cleaning,G
-G.3,Mobile Cleaning Services,G
-G.15,Pest Control Services,G
-G.9,Reactive Cleaning (outside cleaning operational hours),G
-G.1,Routine Cleaning,G
-G.12,Specialist Cleaning,G
-G.7,Window Cleaning (External),G
-G.6,Window Cleaning (Internal),G
-H.16,Administrative Support Services,H
-H.9,Archiving (on-site),H
-H.12,Cable Management,H
-H.7,Clocks,H
-H.3,Courier Booking and External Distribution,H
-H.10,Furniture Management,H
-H.4,Handyman Services,H
-H.2,Internal Messenger Service,H
-H.1,Mail Services,H
-H.5,Move and Space Management - Internal Moves,H
-H.15,Portable Washroom Solutions,H
-H.6,Porterage,H
-H.13,Reprographics Service,H
-H.8,Signage,H
-H.11,Space Management,H
-H.14,Stores Management,H
-I.3,Car Park Management and Booking,I
-I.1,Reception Service,I
-I.2,Taxi Booking Service,I
-I.4,Voice Announcement System Operation,I
-J.8,Additional Security Services,J
-J.2,CCTV / Alarm Monitoring,J
-J.3,Control of Access and Security Passes,J
-J.4,Emergency Response,J
-J.9,Enhanced Security Requirements,J
-J.10,Key Holding,J
-J.11,Lock Up / Open Up of Buyer Premises,J
-J.6,Management of Visitors and Passes,J
-J.1,Manned Guarding Service,J
-J.5,Patrols (Fixed or Static Guarding),J
-J.12,Patrols (Mobile via a Specific Visiting Vehicle),J
-J.7,Reactive Guarding,J
-K.1,Classified Waste,K
-K.5,Clinical Waste,K
-K.7,Feminine Hygiene Waste,K
-K.2,General Waste,K
-K.4,Hazardous Waste,K
-K.6,Medical Waste,K
-K.3,Recycled Waste,K
-L.1,Childcare Facility,L
-L.2,Sports and Leisure,L
-L.3,Driver and Vehicle Service,L
-L.4,First Aid and Medical Service,L
-L.5,Flag Flying Service,L
-L.6,"Journal, Magazine and Newspaper Supply",L
-L.7,Hairdressing Services,L
-L.8,Footwear Cobbling Services,L
-L.9,Provision of Chaplaincy Support Services,L
-L.10,Housing and Residential Accommodation Management,L
-L.11,Training Establishment Management and Booking Service,L
-M.1,CAFM System,M
-N.1,Helpdesk Services,N
-O.1,Management of Billable Works,O
+code,name,work_package_code,mandatory
+A.7,Accessibility Services,A,true
+A.12,Business Continuity and Disaster Recovery (“BCDR”) Plans,A,true
+A.9,Customer Satisfaction,A,true
+A.5,Fire Safety,A,true
+A.2,Health and Safety,A,true
+A.1,Integration,A,true
+A.3,Management Services,A,false
+A.11,Performance Self-Monitoring,A,true
+A.6,Permit to Work,A,true
+A.16,Property Information Mapping Service (EPIMS),A,true
+A.13,Quality Management System         ,A,true
+A.10,Reporting,A,true
+A.8,Risk Management,A,true
+A.15,Selection and Management of Sub-Contractors,A,true
+A.4,Service Delivery Plans,A,false
+A.18,Social Value,A,true
+A.14,Staff and Training,A,true
+A.17,Sustainability,A,true
+B.1,Contract Mobilisation,B,true
+C.21,Airport and Aerodrome Maintenance Services,C,false
+C.15,Audio Visual (AV) Equipment Maintenance,C,false
+C.10,Automated Barrier Control System Maintenance,C,false
+C.11,Building Management System (BMS) Maintenance,C,true
+C.14,Catering Equipment Maintenance,C,true
+C.3,Environmental Cleaning Service,C,true
+C.4,Fire Detection and Firefighting Systems Maintenance,C,true
+C.13,High Voltage (HV) and Switchgear Maintenance,C,true
+C.7,Internal & External Building Fabric Maintenance,C,true
+C.5,"Lifts, Hoists & Conveyance Systems Maintenance",C,true
+C.20,Locksmith Services,C,false
+C.17,Mail Room Equipment Maintenance,C,false
+C.1,Mechanical and Electrical Engineering Maintenance,C,true
+C.18,Office Machinery Servicing and Maintenance,C,false
+C.9,Planned / Group Re-Lamping Service,C,false
+C.8,Reactive Maintenance Services,C,true
+C.6,"Security, Access and Intruder Systems Maintenance",C,true
+C.22,Specialist Maintenance Services,C,false
+C.12,Standby Power System Maintenance,C,true
+C.16,Television Cabling Maintenance,C,false
+C.2,Ventilation and Air Conditioning System Maintenance,C,true
+C.19,Voice Announcement System Maintenance,C,false
+D.6,Cut Flowers and Christmas Trees,D,false
+D.1,Grounds Maintenance Services,D,false
+D.5,Internal Planting,D,false
+D.3,Professional Snow & Ice Clearance,D,false
+D.4,"Reservoirs, Ponds, River Walls and Water Features Maintenance",D,false
+D.2,Tree Surgery (Arboriculture),D,false
+E.1,Asbestos Management,E,true
+E.9,Building Information Modelling and Government Soft Landings,E,false
+E.5,"Compliance Plans, Specialist Surveys and Audits",E,true
+E.6,Conditions Survey,E,false
+E.7,Electrical Testing,E,true
+E.8,Fire Risk Assessments,E,true
+E.4,Portable Appliance Testing,E,true
+E.3,Statutory Inspections,E,true
+E.2,Water Hygiene Maintenance,E,true
+F.1,Chilled Potable Water,F,false
+F.2,Retail Services / Convenience Store,F,false
+F.3,Deli/Coffee Bar,F,false
+F.4,Events and Functions,F,false
+F.5,Full Service Restaurant,F,false
+F.6,Hospitality and Meetings,F,false
+F.7,Outside Catering,F,false
+F.8,Trolley Service,F,false
+F.9,Vending Services (Food & Beverage),F,false
+F.10,Residential Catering Services,F,false
+G.8,Cleaning of Communications and Equipment Rooms,G,false
+G.13,Cleaning of Curtains and Window Blinds,G,false
+G.5,Cleaning of External Areas,G,true
+G.2,Cleaning of Integral Barrier Mats,G,true
+G.4,Deep (Periodic) Cleaning,G,true
+G.10,Housekeeping,G,false
+G.11,IT Equipment Cleaning,G,false
+G.16,Linen and Laundry Services,G,false
+G.14,Medical and Clinical Cleaning,G,false
+G.3,Mobile Cleaning Services,G,true
+G.15,Pest Control Services,G,true
+G.9,Reactive Cleaning (outside cleaning operational hours),G,true
+G.1,Routine Cleaning,G,true
+G.12,Specialist Cleaning,G,false
+G.7,Window Cleaning (External),G,true
+G.6,Window Cleaning (Internal),G,true
+H.16,Administrative Support Services,H,false
+H.9,Archiving (on-site),H,false
+H.12,Cable Management,H,false
+H.7,Clocks,H,true
+H.3,Courier Booking and External Distribution,H,true
+H.10,Furniture Management,H,false
+H.4,Handyman Services,H,true
+H.2,Internal Messenger Service,H,true
+H.1,Mail Services,H,true
+H.5,Move and Space Management - Internal Moves,H,true
+H.15,Portable Washroom Solutions,H,false
+H.6,Porterage,H,true
+H.13,Reprographics Service,H,false
+H.8,Signage,H,true
+H.11,Space Management,H,false
+H.14,Stores Management,H,false
+I.3,Car Park Management and Booking,I,true
+I.1,Reception Service,I,true
+I.2,Taxi Booking Service,I,true
+I.4,Voice Announcement System Operation,I,true
+J.8,Additional Security Services,J,false
+J.2,CCTV / Alarm Monitoring,J,true
+J.3,Control of Access and Security Passes,J,true
+J.4,Emergency Response,J,true
+J.9,Enhanced Security Requirements,J,false
+J.10,Key Holding,J,false
+J.11,Lock Up / Open Up of Buyer Premises,J,false
+J.6,Management of Visitors and Passes,J,true
+J.1,Manned Guarding Service,J,true
+J.5,Patrols (Fixed or Static Guarding),J,true
+J.12,Patrols (Mobile via a Specific Visiting Vehicle),J,false
+J.7,Reactive Guarding,J,true
+K.1,Classified Waste,K,true
+K.5,Clinical Waste,K,false
+K.7,Feminine Hygiene Waste,K,true
+K.2,General Waste,K,true
+K.4,Hazardous Waste,K,false
+K.6,Medical Waste,K,false
+K.3,Recycled Waste,K,true
+L.1,Childcare Facility,L,false
+L.2,Sports and Leisure,L,false
+L.3,Driver and Vehicle Service,L,false
+L.4,First Aid and Medical Service,L,false
+L.5,Flag Flying Service,L,false
+L.6,"Journal, Magazine and Newspaper Supply",L,false
+L.7,Hairdressing Services,L,false
+L.8,Footwear Cobbling Services,L,false
+L.9,Provision of Chaplaincy Support Services,L,false
+L.10,Housing and Residential Accommodation Management,L,false
+L.11,Training Establishment Management and Booking Service,L,false
+M.1,CAFM System,M,true
+N.1,Helpdesk Services,N,true
+O.1,Management of Billable Works,O,true
