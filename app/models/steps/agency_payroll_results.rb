@@ -1,5 +1,6 @@
 module Steps
-  class AgencyPayrollResults < JourneyStep
+  class AgencyPayrollResults
+    include JourneyStep
     include Results
 
     attribute :job_type

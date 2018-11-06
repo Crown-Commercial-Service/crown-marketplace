@@ -1,4 +1,5 @@
 module Steps
-  class NeutralVendorManagedService < JourneyStep
+  class NeutralVendorManagedService
+    include JourneyStep
   end
 end

@@ -1,5 +1,7 @@
 module Steps
-  class ManagedServiceProvider < JourneyStep
+  class ManagedServiceProvider
+    include JourneyStep
+
     attribute :managed_service_provider
     validates :managed_service_provider, inclusion: ['master_vendor', 'neutral_vendor']
 

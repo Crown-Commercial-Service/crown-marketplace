@@ -1,5 +1,7 @@
 module Steps
-  class SupplierRegion < JourneyStep
+  class SupplierRegion
+    include JourneyStep
+
     attribute :region_codes, Array
 
     def initialize(*)

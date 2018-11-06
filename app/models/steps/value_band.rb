@@ -1,7 +1,11 @@
 module Steps
-  class Suppliers < JourneyStep; end
+  class Suppliers
+    include JourneyStep
+  end
 
-  class ValueBand < JourneyStep
+  class ValueBand
+    include JourneyStep
+
     attribute :value_band
     validates :value_band, inclusion: {
       in: ['under1_5m', 'under7m', 'under50m', 'over50m'],

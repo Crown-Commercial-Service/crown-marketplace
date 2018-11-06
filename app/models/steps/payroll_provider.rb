@@ -1,5 +1,7 @@
 module Steps
-  class PayrollProvider < JourneyStep
+  class PayrollProvider
+    include JourneyStep
+
     attribute :payroll_provider
     validates :payroll_provider, inclusion: ['school', 'agency']
 
