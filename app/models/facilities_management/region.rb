@@ -36,4 +36,4 @@ class FacilitiesManagement::Region
   end
 end
 
-FacilitiesManagement::Region.load_csv('facilities_management_regions.csv')
+FacilitiesManagement::Region.load_csv('facilities_management/regions.csv')
