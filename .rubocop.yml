@@ -111,3 +111,7 @@ RSpec/ContextWording:
       - with
       - without
       - and
+
+Metrics/ModuleLength:
+    Exclude:
+        - 'spec/models/**/*'
