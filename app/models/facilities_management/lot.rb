@@ -1,4 +1,4 @@
-class FacilitiesManagementLot
+class FacilitiesManagement::Lot
   include StaticRecord
 
   attr_accessor :number, :description
@@ -8,4 +8,4 @@ class FacilitiesManagementLot
   end
 end
 
-FacilitiesManagementLot.load_csv('facilities_management_lots.csv')
+FacilitiesManagement::Lot.load_csv('facilities_management_lots.csv')

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementLot, type: :model do
+RSpec.describe FacilitiesManagement::Lot, type: :model do
   subject(:lots) { described_class.all }
 
   let(:first_lot) { lots.first }
