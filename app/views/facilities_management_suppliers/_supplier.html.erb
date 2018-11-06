@@ -21,8 +21,15 @@
               </summary>
               <div class="govuk-details__text">
                 <ul>
-                  <% services.each do |service| %>
-                    <li><%= service.name %></li>
+                  <% grouped_by_mandatory(services).each do |mandatory, services| %>
+                    <h4 class="govuk-heading-s fm-supplier-record__services-title">
+                      <%= service_type(mandatory) %>
+                    </h4>
+                    <ul>
+                      <% services.each do |service| %>
+                        <li><%= service.name %></li>
+                      <% end %>
+                    </ul>
                   <% end %>
                 </ul>
               </div>

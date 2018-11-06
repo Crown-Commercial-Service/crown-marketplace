@@ -49,8 +49,12 @@ RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
 
   context 'when supplier has multiple services in one work package' do
     let(:work_package) { FacilitiesManagementWorkPackage.new(name: 'work-package') }
-    let(:service1) { FacilitiesManagementService.new(name: 'service-1') }
-    let(:service2) { FacilitiesManagementService.new(name: 'service-2') }
+    let(:service1) do
+      FacilitiesManagementService.new(name: 'service-1', mandatory: 'true')
+    end
+    let(:service2) do
+      FacilitiesManagementService.new(name: 'service-2', mandatory: 'false')
+    end
 
     let(:services) do
       {
@@ -58,16 +62,22 @@ RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
       }
     end
 
-    it 'displays both services within the work package' do
-      expect(rendered).to have_text(/work-package\s+service-1\s+service-2/)
+    it 'displays both services within the work package grouped by type' do
+      expect(rendered).to have_text(
+        /work-package\s+Basic services\s+service-1\s+Extra services\s+service-2/
+      )
     end
   end
 
   context 'when supplier has one service in two different work packages' do
     let(:work_package1) { FacilitiesManagementWorkPackage.new(name: 'work-package-1') }
     let(:work_package2) { FacilitiesManagementWorkPackage.new(name: 'work-package-2') }
-    let(:service1) { FacilitiesManagementService.new(name: 'service-1') }
-    let(:service2) { FacilitiesManagementService.new(name: 'service-2') }
+    let(:service1) do
+      FacilitiesManagementService.new(name: 'service-1', mandatory: 'true')
+    end
+    let(:service2) do
+      FacilitiesManagementService.new(name: 'service-2', mandatory: 'false')
+    end
 
     let(:services) do
       {
@@ -76,8 +86,10 @@ RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
       }
     end
 
-    it 'displays each service within the its work package' do
-      expect(rendered).to have_text(/work-package-1\s+service-1\s+work-package-2\s+service-2/)
+    it 'displays each service within the its work package grouped by type' do
+      expect(rendered).to have_text(
+        /work-package-1\s+Basic services\s+service-1\s+work-package-2\s+Extra services\s+service-2/
+      )
     end
   end
 end
