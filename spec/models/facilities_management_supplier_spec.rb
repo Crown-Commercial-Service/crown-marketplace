@@ -47,6 +47,11 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
     it 'returns suppliers with availability in lot 1c' do
       expect(described_class.available_in_lot('1c')).to contain_exactly(supplier2)
     end
+
+    it 'eagerly loads service offerings to reduce number of queries' do
+      suppliers = described_class.available_in_lot('1a')
+      expect(suppliers.first.service_offerings).to be_loaded
+    end
   end
 
   describe '.available_in_lot_and_regions' do
@@ -65,6 +70,11 @@ RSpec.describe FacilitiesManagementSupplier, type: :model do
     it 'returns suppliers with availability in lot and all specified regions' do
       expect(described_class.available_in_lot_and_regions('1a', ['UKC1', 'UKD1']))
         .to contain_exactly(supplier1)
+    end
+
+    it 'eagerly loads service offerings to reduce number of queries' do
+      suppliers = described_class.available_in_lot_and_regions('1a', ['UKC1', 'UKD1'])
+      expect(suppliers.first.service_offerings).to be_loaded
     end
   end
 

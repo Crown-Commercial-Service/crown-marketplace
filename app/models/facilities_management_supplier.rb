@@ -14,6 +14,7 @@ class FacilitiesManagementSupplier < ApplicationRecord
   def self.available_in_lot(lot_number)
     joins(:regional_availabilities)
       .merge(FacilitiesManagementRegionalAvailability.for_lot(lot_number))
+      .includes(:service_offerings)
       .uniq
   end
 
@@ -29,10 +30,15 @@ class FacilitiesManagementSupplier < ApplicationRecord
       .joins(:regional_availabilities)
       .merge(FacilitiesManagementRegionalAvailability
                .for_lot_and_regions(lot_number, region_codes))
+      .includes(:service_offerings)
       .uniq
   end
 
   def services_by_work_package_in_lot(lot_number)
-    service_offerings.for_lot(lot_number).map(&:service).group_by(&:work_package)
+    service_offerings_in_lot(lot_number).map(&:service).group_by(&:work_package)
+  end
+
+  def service_offerings_in_lot(lot_number)
+    service_offerings.select { |so| so.lot_number == lot_number }
   end
 end
