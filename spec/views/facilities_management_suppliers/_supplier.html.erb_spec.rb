@@ -48,7 +48,7 @@ RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
   end
 
   context 'when supplier has multiple services in one work package' do
-    let(:work_package) { FacilitiesManagementWorkPackage.new(name: 'work-package') }
+    let(:work_package) { FacilitiesManagement::WorkPackage.new(name: 'work-package') }
     let(:service1) do
       FacilitiesManagement::Service.new(name: 'service-1', mandatory: 'true')
     end
@@ -70,8 +70,8 @@ RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
   end
 
   context 'when supplier has one service in two different work packages' do
-    let(:work_package1) { FacilitiesManagementWorkPackage.new(name: 'work-package-1') }
-    let(:work_package2) { FacilitiesManagementWorkPackage.new(name: 'work-package-2') }
+    let(:work_package1) { FacilitiesManagement::WorkPackage.new(name: 'work-package-1') }
+    let(:work_package2) { FacilitiesManagement::WorkPackage.new(name: 'work-package-2') }
     let(:service1) do
       FacilitiesManagement::Service.new(name: 'service-1', mandatory: 'true')
     end
