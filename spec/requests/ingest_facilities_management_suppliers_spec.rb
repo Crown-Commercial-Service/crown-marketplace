@@ -22,12 +22,12 @@ RSpec.describe 'Ingest facilities management suppliers', type: :request do
 
     it 'ingests suppliers' do
       ingest(suppliers)
-      expect(FacilitiesManagementSupplier.count).to eq(2)
+      expect(FacilitiesManagement::Supplier.count).to eq(2)
     end
 
     it 'destroys all suppliers before ingesting' do
       2.times { ingest(suppliers) }
-      expect(FacilitiesManagementSupplier.count).to eq(2)
+      expect(FacilitiesManagement::Supplier.count).to eq(2)
     end
   end
 

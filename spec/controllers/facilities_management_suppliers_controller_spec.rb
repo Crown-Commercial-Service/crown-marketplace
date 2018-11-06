@@ -6,9 +6,9 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
   let(:lot) { FacilitiesManagement::Lot.find_by(number: lot_number) }
 
   before do
-    allow(FacilitiesManagementSupplier).to receive(:available_in_lot)
+    allow(FacilitiesManagement::Supplier).to receive(:available_in_lot)
       .with(lot_number).and_return(suppliers)
-    allow(FacilitiesManagementSupplier).to receive(:available_in_lot_and_regions)
+    allow(FacilitiesManagement::Supplier).to receive(:available_in_lot_and_regions)
       .with(lot_number, ['UKK4']).and_return(suppliers)
   end
 
