@@ -6,37 +6,31 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
+      <h3 class="govuk-heading-s fm-supplier-record__contact-name"><%= supplier.contact_name.present? ? supplier.contact_name : 'Contact name not available' %></h3>
       <p class="govuk-body">
-        <h3 class="govuk-heading-s fm-supplier-record__contact-name"><%= supplier.contact_name.present? ? supplier.contact_name : 'Contact name not available' %></h3>
         <%= supplier.contact_email.present? ? mail_to(supplier.contact_email) : 'Contact email not available' %>
       </p>
     </div>
     <div class="govuk-grid-column-one-half">
-      <ul class="govuk-list">
-        <% supplier.services_by_work_package_in_lot(lot_number).each do |work_package, services| %>
-          <li>
-            <details class="govuk-details">
-              <summary class="govuk-details__summary">
-                <%= work_package.name %>
-              </summary>
-              <div class="govuk-details__text">
+      <% supplier.services_by_work_package_in_lot(lot_number).each do |work_package, services| %>
+        <details class="govuk-details">
+          <summary class="govuk-details__summary">
+            <%= work_package.name %>
+          </summary>
+          <div class="govuk-details__text">
+              <% grouped_by_mandatory(services).each do |mandatory, services| %>
+                <h4 class="govuk-heading-s fm-supplier-record__services-title">
+                  <%= service_type(mandatory) %>
+                </h4>
                 <ul>
-                  <% grouped_by_mandatory(services).each do |mandatory, services| %>
-                    <h4 class="govuk-heading-s fm-supplier-record__services-title">
-                      <%= service_type(mandatory) %>
-                    </h4>
-                    <ul>
-                      <% services.each do |service| %>
-                        <li><%= service.name %></li>
-                      <% end %>
-                    </ul>
+                  <% services.each do |service| %>
+                    <li><%= service.name %></li>
                   <% end %>
                 </ul>
-              </div>
-            </details>
-          </li>
-        <% end %>
-      </ul>
+              <% end %>
+          </div>
+        </details>
+      <% end %>
     </div>
   </div>
   <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
