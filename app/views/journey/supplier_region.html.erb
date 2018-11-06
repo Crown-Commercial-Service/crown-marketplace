@@ -10,25 +10,28 @@
           <%= t('.question') %>
         </h1>
       </legend>
-      <div class="govuk-checkboxes">
-        <% FacilitiesManagementRegion.all.group_by(&:nuts1_code).each do |parent_region_code, regions| %>
-          <h2 class="govuk-heading-m"><%= t(".nuts1.#{parent_region_code}") %></h2>
-          <% regions.each do |region| %>
-            <div class="govuk-checkboxes__item">
-              <%= check_box_tag(
-                "region_codes[]",
-                region.code,
-                @journey.current_step.region_codes.include?(region.code),
-                class: "govuk-checkboxes__input",
-                id: "region_#{region.code}"
-              ) %>
-              <label class="govuk-label govuk-checkboxes__label" for="region_<%= region.code %>">
-                <%= region.name %>
-              </label>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+      <% FacilitiesManagementRegion.all.group_by(&:nuts1_code).each do |parent_region_code, regions| %>
+        <h3 class="govuk-heading-m"><%= t(".nuts1.#{parent_region_code}") %></h3>
+
+        <div class="govuk-form-group">
+          <div class="govuk-checkboxes">
+            <% regions.each do |region| %>
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag(
+                  "region_codes[]",
+                  region.code,
+                  @journey.current_step.region_codes.include?(region.code),
+                  class: "govuk-checkboxes__input",
+                  id: "region_#{region.code}"
+                ) %>
+                <label class="govuk-label govuk-checkboxes__label" for="region_<%= region.code %>">
+                  <%= region.name %>
+                </label>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
   <%= submit_tag t('common.submit'), class: "govuk-button" %>
