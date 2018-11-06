@@ -11,7 +11,7 @@ module Steps
     end
 
     def regions
-      FacilitiesManagementRegion.where(code: region_codes)
+      FacilitiesManagement::Region.where(code: region_codes)
     end
 
     def next_step_class
