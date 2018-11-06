@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementUpload, type: :model do
+RSpec.describe FacilitiesManagement::Upload, type: :model do
   describe 'create' do
     let(:supplier_name) { Faker::Company.unique.name }
     let(:supplier_id) { SecureRandom.uuid }

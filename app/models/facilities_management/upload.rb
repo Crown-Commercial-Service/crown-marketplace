@@ -1,4 +1,4 @@
-class FacilitiesManagementUpload
+class FacilitiesManagement::Upload
   def self.create!(suppliers)
     error = all_or_none(FacilitiesManagementSupplier) do
       FacilitiesManagementSupplier.delete_all_with_dependents
