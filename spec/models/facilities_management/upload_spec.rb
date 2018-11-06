@@ -29,7 +29,7 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
       it 'does not create any suppliers' do
         expect do
           described_class.create!(suppliers)
-        end.not_to change(FacilitiesManagementSupplier, :count)
+        end.not_to change(FacilitiesManagement::Supplier, :count)
       end
     end
 
@@ -37,27 +37,27 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
       it 'creates supplier' do
         expect do
           described_class.create!(suppliers)
-        end.to change(FacilitiesManagementSupplier, :count).by(1)
+        end.to change(FacilitiesManagement::Supplier, :count).by(1)
       end
 
       it 'assigns ID to supplier' do
         described_class.create!(suppliers)
 
-        supplier = FacilitiesManagementSupplier.last
+        supplier = FacilitiesManagement::Supplier.last
         expect(supplier.id).to eq(supplier_id)
       end
 
       it 'assigns attributes to supplier' do
         described_class.create!(suppliers)
 
-        supplier = FacilitiesManagementSupplier.last
+        supplier = FacilitiesManagement::Supplier.last
         expect(supplier.name).to eq(supplier_name)
       end
 
       it 'assigns contact-related attributes to supplier' do
         described_class.create!(suppliers)
 
-        supplier = FacilitiesManagementSupplier.last
+        supplier = FacilitiesManagement::Supplier.last
         expect(supplier.contact_name).to eq(contact_name)
         expect(supplier.contact_email).to eq(contact_email)
         expect(supplier.telephone_number).to eq(telephone_number)
@@ -77,7 +77,7 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
           ]
         end
 
-        let(:supplier) { FacilitiesManagementSupplier.last }
+        let(:supplier) { FacilitiesManagement::Supplier.last }
 
         let(:regional_availabilities) do
           supplier.regional_availabilities.order(:lot_number, :region_code)
@@ -128,7 +128,7 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
           ]
         end
 
-        let(:supplier) { FacilitiesManagementSupplier.last }
+        let(:supplier) { FacilitiesManagement::Supplier.last }
 
         let(:service_offerings) do
           supplier.service_offerings.order(:lot_number, :service_code)
@@ -173,8 +173,8 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
       it 'destroys all existing suppliers' do
         described_class.create!(suppliers)
 
-        expect(FacilitiesManagementSupplier.find_by(id: first_supplier.id)).to be_nil
-        expect(FacilitiesManagementSupplier.find_by(id: second_supplier.id)).to be_nil
+        expect(FacilitiesManagement::Supplier.find_by(id: first_supplier.id)).to be_nil
+        expect(FacilitiesManagement::Supplier.find_by(id: second_supplier.id)).to be_nil
       end
 
       context 'and data for one supplier is invalid' do
@@ -194,8 +194,8 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
             described_class.create!(suppliers)
           end
 
-          expect(FacilitiesManagementSupplier.find_by(id: first_supplier.id)).to eq(first_supplier)
-          expect(FacilitiesManagementSupplier.find_by(id: second_supplier.id)).to eq(second_supplier)
+          expect(FacilitiesManagement::Supplier.find_by(id: first_supplier.id)).to eq(first_supplier)
+          expect(FacilitiesManagement::Supplier.find_by(id: second_supplier.id)).to eq(second_supplier)
         end
       end
     end
@@ -228,7 +228,7 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
           ignoring_exception(ActiveRecord::RecordInvalid) do
             described_class.create!(suppliers)
           end
-        end.not_to change(FacilitiesManagementSupplier, :count)
+        end.not_to change(FacilitiesManagement::Supplier, :count)
       end
     end
 
@@ -257,7 +257,7 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
           ignoring_exception(ActiveRecord::RecordInvalid) do
             described_class.create!(suppliers)
           end
-        end.not_to change(FacilitiesManagementSupplier, :count)
+        end.not_to change(FacilitiesManagement::Supplier, :count)
       end
     end
 
@@ -286,7 +286,7 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
           ignoring_exception(ActiveRecord::RecordInvalid) do
             described_class.create!(suppliers)
           end
-        end.not_to change(FacilitiesManagementSupplier, :count)
+        end.not_to change(FacilitiesManagement::Supplier, :count)
       end
     end
   end

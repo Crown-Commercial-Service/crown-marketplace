@@ -1,6 +1,6 @@
 class FacilitiesManagement::RegionalAvailability < ApplicationRecord
   belongs_to :supplier,
-             class_name: 'FacilitiesManagementSupplier',
+             class_name: 'FacilitiesManagement::Supplier',
              foreign_key: :facilities_management_supplier_id,
              inverse_of: :regional_availabilities
 

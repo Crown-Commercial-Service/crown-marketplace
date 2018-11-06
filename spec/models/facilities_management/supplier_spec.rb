@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementSupplier, type: :model do
+RSpec.describe FacilitiesManagement::Supplier, type: :model do
   subject(:supplier) { build(:facilities_management_supplier) }
 
   it { is_expected.to be_valid }

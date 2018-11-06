@@ -1,4 +1,4 @@
-class FacilitiesManagementSupplier < ApplicationRecord
+class FacilitiesManagement::Supplier < ApplicationRecord
   has_many :regional_availabilities,
            class_name: 'FacilitiesManagement::RegionalAvailability',
            foreign_key: :facilities_management_supplier_id,

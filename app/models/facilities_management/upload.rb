@@ -1,7 +1,7 @@
 class FacilitiesManagement::Upload
   def self.create!(suppliers)
-    error = all_or_none(FacilitiesManagementSupplier) do
-      FacilitiesManagementSupplier.delete_all_with_dependents
+    error = all_or_none(FacilitiesManagement::Supplier) do
+      FacilitiesManagement::Supplier.delete_all_with_dependents
 
       suppliers.map do |supplier_data|
         create_supplier!(supplier_data)
@@ -22,7 +22,7 @@ class FacilitiesManagement::Upload
   end
 
   def self.create_supplier!(data)
-    supplier = FacilitiesManagementSupplier.create!(
+    supplier = FacilitiesManagement::Supplier.create!(
       id: data['supplier_id'],
       name: data['supplier_name'],
       contact_name: data['contact_name'],
