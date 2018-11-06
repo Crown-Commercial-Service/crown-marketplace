@@ -3,7 +3,6 @@
 @import "govuk-frontend/components/breadcrumbs/breadcrumbs";
 @import "govuk-frontend/components/checkboxes/checkboxes";
 @import "govuk-frontend/components/date-input/date-input";
-@import "govuk-frontend/components/details/details";
 @import "govuk-frontend/components/error-message/error-message";
 @import "govuk-frontend/components/error-summary/error-summary";
 @import "govuk-frontend/components/file-upload/file-upload";
@@ -21,9 +20,11 @@
 
 /* Override with my own components */
 @import "button/button";
+@import "details/details";
 @import "header/header";
 @import "footer/footer";
 @import "fieldset/fieldset";
+@import "fm-supplier-record/fm-supplier-record";
 @import "label/label";
 @import "phase-banner/phase-banner";
 @import "sidebar/sidebar";

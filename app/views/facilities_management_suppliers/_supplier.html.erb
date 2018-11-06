@@ -1,18 +1,36 @@
-<h2><%= supplier.name %></h2>
-<p>
-  <strong><%= supplier.contact_name.present? ? supplier.contact_name : 'Contact name not available' %></strong><br />
-  <%= supplier.contact_email.present? ? mail_to(supplier.contact_email) : 'Contact email not available' %>
-
-  <ul>
-    <% supplier.services_by_work_package_in_lot(lot_number).each do |work_package, services| %>
-      <li>
-        <%= work_package.name %>
-        <ul>
-          <% services.each do |service| %>
-            <li><%= service.name %></li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
-</p>
+<div class="fm-supplier-record">
+  <div class="govuk-grid-row supplier-record__header-group">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-m govuk-!-font-size-27 fm-supplier-record__supplier-name"><%= supplier.name %></h2>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <p class="govuk-body">
+        <h3 class="govuk-heading-s fm-supplier-record__contact-name"><%= supplier.contact_name.present? ? supplier.contact_name : 'Contact name not available' %></h3>
+        <%= supplier.contact_email.present? ? mail_to(supplier.contact_email) : 'Contact email not available' %>
+      </p>
+    </div>
+    <div class="govuk-grid-column-one-half">
+      <ul class="govuk-list">
+        <% supplier.services_by_work_package_in_lot(lot_number).each do |work_package, services| %>
+          <li>
+            <details class="govuk-details">
+              <summary class="govuk-details__summary">
+                <%= work_package.name %>
+              </summary>
+              <div class="govuk-details__text">
+                <ul>
+                  <% services.each do |service| %>
+                    <li><%= service.name %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </details>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+</div>
