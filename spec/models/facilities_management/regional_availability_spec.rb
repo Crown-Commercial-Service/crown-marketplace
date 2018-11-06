@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementRegionalAvailability, type: :model do
+RSpec.describe FacilitiesManagement::RegionalAvailability, type: :model do
   subject(:regional_availability) { build(:facilities_management_regional_availability) }
 
   it { is_expected.to be_valid }

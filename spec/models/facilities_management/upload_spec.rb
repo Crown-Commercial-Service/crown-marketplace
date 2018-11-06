@@ -86,7 +86,7 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
         it 'creates regional availabilities associated with supplier' do
           expect do
             described_class.create!(suppliers)
-          end.to change(FacilitiesManagementRegionalAvailability, :count).by(3)
+          end.to change(FacilitiesManagement::RegionalAvailability, :count).by(3)
         end
 
         it 'assigns attributes to first regional availability' do
