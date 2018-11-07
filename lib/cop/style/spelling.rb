@@ -2,7 +2,7 @@ module RuboCop
   module Cop
     module Style
       class Spelling < Cop
-        MSG = 'Misspelt or unknown word (check words.txt)'.freeze
+        MSG = 'Misspelt or unknown word "%s" (check words.txt)'.freeze
 
         def check_spelling(text, node)
           return if dictionary.include?(text)
@@ -10,9 +10,12 @@ module RuboCop
           words = text.reverse.scan(/[a-z]+[A-Z]?|[A-Z]+/)
                       .map(&:reverse)
                       .select { |w| w.length >= 2 }
-          return if words.all? { |w| dictionary.include?(w) }
 
-          add_offense(node, location: :expression)
+          words.each do |word|
+            next if dictionary.include?(word)
+
+            add_offense(node, message: format(MSG, word))
+          end
         end
 
         def on_lvasgn(node)
