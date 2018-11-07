@@ -49,7 +49,7 @@ a.file-download:before {
     content: "";
 }
 
-a.file-download[href*='format=xlsx']:before {
+a.file-download[href*='.xlsx']:before {
     background-color: #007831;
     content: ".XLSX";
 }
