@@ -35,11 +35,17 @@ module OmniAuth
       def validated_id_token
         return nil unless id_token
 
-        @validated_id_token ||= JWT.decode(
-          id_token,
-          nil,
-          false
-        ).first
+        @validated_id_token ||= TokenDecoder.new(id_token).decode
+      end
+
+      class TokenDecoder
+        def initialize(token)
+          @token = token
+        end
+
+        def decode
+          JWT.decode(@token, nil, false).first
+        end
       end
     end
   end

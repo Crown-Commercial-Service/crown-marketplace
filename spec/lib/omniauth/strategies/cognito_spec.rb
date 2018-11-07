@@ -22,11 +22,15 @@ RSpec.describe OmniAuth::Strategies::Cognito do
     expect(strategy.info[:email]).to eq('email-of-authenticated-user')
   end
 
-  it 'does not verify token' do
-    allow(strategy).to receive(:id_token).and_return('id-token')
-    allow(JWT).to receive(:decode).with('id-token', nil, false).and_return(['decoded-payload', 'decoded-header'])
-
-    token = strategy.send(:validated_id_token)
-    expect(token).to eq('decoded-payload')
+  describe OmniAuth::Strategies::Cognito::TokenDecoder do
+    describe '#decode' do
+      it 'does not verify token' do
+        allow(JWT).to receive(:decode)
+          .with('token', nil, false)
+          .and_return(['decoded-payload', 'decoded-header'])
+        decoder = described_class.new('token')
+        expect(decoder.decode).to eq('decoded-payload')
+      end
+    end
   end
 end
