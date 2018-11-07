@@ -32,7 +32,7 @@ class JourneyController < ApplicationController
     when FacilitiesManagement::Journey.journey_name
       FacilitiesManagement::Journey
     else
-      raise ActionController::RoutingError
+      raise ActionController::RoutingError.new(nil)
     end
   end
 
