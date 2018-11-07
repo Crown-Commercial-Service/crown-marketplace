@@ -60,6 +60,10 @@ module RuboCop
           check_spelling sym_name, node
         end
 
+        def on_send(node)
+          check_spelling node.children[1].to_s, node
+        end
+
         def dictionary
           @dictionary ||= Dictionary.new(
             '/usr/share/dict/words',
