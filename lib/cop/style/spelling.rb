@@ -73,6 +73,8 @@ module RuboCop
 
         class Dictionary
           def initialize(*paths)
+            return unless paths.all? { |p| File.exist?(p) }
+
             @known = Set.new
             paths.each do |path|
               @known += File.read(path).downcase.split(/\n/)
@@ -80,7 +82,7 @@ module RuboCop
           end
 
           def include?(word)
-            @known.include?(word.downcase)
+            @known.nil? || @known.include?(word.downcase)
           end
         end
       end
