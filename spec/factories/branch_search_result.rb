@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :branch_search_result do
+  factory :branch_search_result, class: SupplyTeachers::BranchSearchResult do
     name { Faker::Company.unique.name }
     supplier_name { Faker::Company.unique.name }
     telephone_number { Faker::PhoneNumber.unique.phone_number }

@@ -38,7 +38,9 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       it 'assigns BranchSearchResults to @branches' do
-        expect(assigns(:branches).map(&:class).uniq).to eq([BranchSearchResult])
+        expect(assigns(:branches).map(&:class).uniq).to eq(
+          [SupplyTeachers::BranchSearchResult]
+        )
       end
 
       it 'expects branches to be assigned to @branches' do

@@ -8,7 +8,7 @@ RSpec.describe 'branches/_branch.html.erb' do
   let(:contact_name) { Faker::Name.unique.name }
   let(:contact_email) { Faker::Internet.unique.email }
   let(:branch) do
-    BranchSearchResult.new(
+    SupplyTeachers::BranchSearchResult.new(
       supplier_name: supplier.name,
       name: branch_name,
       telephone_number: telephone_number,

@@ -1,4 +1,4 @@
-class BranchSearchResult
+class SupplyTeachers::BranchSearchResult
   attr_reader :supplier_name
   attr_reader :name
   attr_reader :contact_name
