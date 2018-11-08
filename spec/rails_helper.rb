@@ -73,7 +73,7 @@ end
 
 def visit_teacher_home
   visit '/'
-  click_on I18n.t('home.index.teacher_supply_link')
+  click_on I18n.t('home.index.supply_teachers_link')
 end
 
 def visit_fm_home
