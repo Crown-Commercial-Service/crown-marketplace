@@ -30,7 +30,7 @@
       <%= t('.worker_term_question') %>
     </label>
     <select class="govuk-select" id="term" name="term">
-      <%= options_from_collection_for_select(Term.all, :code, :description, params[:term]) %>
+      <%= options_from_collection_for_select(SupplyTeachers::Term.all, :code, :description, params[:term]) %>
     </select>
   <% end %>
 
