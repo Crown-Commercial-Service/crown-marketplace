@@ -15,7 +15,11 @@ module Cognito
     end
 
     def keys_url
-      "https://cognito-idp.#{@region}.amazonaws.com/#{@pool_id}/.well-known/jwks.json"
+      "#{idp_url}/.well-known/jwks.json"
+    end
+
+    def idp_url
+      "https://cognito-idp.#{@region}.amazonaws.com/#{@pool_id}"
     end
   end
 end
