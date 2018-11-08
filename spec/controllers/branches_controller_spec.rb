@@ -19,7 +19,7 @@ RSpec.describe BranchesController, type: :controller do
       end
 
       before do
-        allow(Branch).to receive(:search).and_return(branches)
+        allow(SupplyTeachers::Branch).to receive(:search).and_return(branches)
 
         Geocoder::Lookup::Test.add_stub(
           postcode, [{ 'coordinates' => [51.5149666, -0.119098] }]

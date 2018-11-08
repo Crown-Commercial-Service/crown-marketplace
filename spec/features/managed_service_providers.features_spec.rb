@@ -118,7 +118,7 @@ RSpec.feature 'Managed service providers', type: :feature do
                     else
                       [daily_fee_pattern(amount)]
                     end
-    rate_patterns = rate_patterns.dup.zip(Rate::TERMS.values) if with_terms
+    rate_patterns = rate_patterns.dup.zip(SupplyTeachers::Rate::TERMS.values) if with_terms
     combined_pattern = [Regexp.escape(job_type), *rate_patterns].join('\s+')
     have_text(Regexp.new(combined_pattern))
   end

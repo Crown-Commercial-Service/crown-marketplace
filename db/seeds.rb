@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-holborn = Supplier.create!(name: 'Holborn')
+holborn = SupplyTeachers::Supplier.create!(name: 'Holborn')
 holborn.branches.create!(
   postcode: 'WC2B 6TE',
   location: Geocoding.point(latitude: 51.5149666, longitude: -0.119098),
@@ -32,7 +32,7 @@ holborn.rates.create!(
   mark_up: 0.38
 )
 
-westminster = Supplier.create!(name: 'Westminster')
+westminster = SupplyTeachers::Supplier.create!(name: 'Westminster')
 westminster.branches.create!(
   postcode: 'W1A 1AA',
   name: 'Head office',
@@ -59,7 +59,7 @@ westminster.rates.create!(
   mark_up: 0.35
 )
 
-liverpool = Supplier.create!(name: 'Liverpool')
+liverpool = SupplyTeachers::Supplier.create!(name: 'Liverpool')
 liverpool.branches.create!(
   postcode: 'L3 9PP',
   name: 'North-West',
