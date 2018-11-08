@@ -18,8 +18,23 @@ RSpec.describe Cognito::EncodedToken do
       token = described_class.new('encoded-token')
       allow(token).to receive(:key_id).and_return('key-id')
 
+      allow(JSON::JWT).to receive(:decode)
+
+      token.decode(user_pool)
+
+      expect(JSON::JWT).to have_received(:decode).with('encoded-token', 'key')
+    end
+
+    it 'returns a cognito token' do
+      user_pool = instance_double('Cognito::UserPool', find_key: 'key')
+
+      token = described_class.new('encoded-token')
+      allow(token).to receive(:key_id).and_return('key-id')
+
       allow(JSON::JWT).to receive(:decode).with('encoded-token', 'key').and_return('decoded-token')
-      expect(token.decode(user_pool)).to eq('decoded-token')
+
+      allow(Cognito::Token).to receive(:new).with('decoded-token').and_return('token')
+      expect(token.decode(user_pool)).to eq('token')
     end
   end
 end
