@@ -16,4 +16,12 @@ RSpec.describe Cognito::Token do
       expect { token.verify!(user_pool) }.to raise_error(Cognito::Token::VerificationFailure, 'issuer is invalid')
     end
   end
+
+  describe '#subject' do
+    it 'returns the subject of the token' do
+      jwt = JSON::JWT.new(sub: 'token-subject')
+      token = described_class.new(jwt)
+      expect(token.subject).to eq('token-subject')
+    end
+  end
 end
