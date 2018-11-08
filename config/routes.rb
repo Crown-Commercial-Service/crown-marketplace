@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get '/', to: 'home#index', as: :homepage
   get '/supply-teachers', to: 'home#supply_teachers'
   get '/facilities-management', to: 'home#facilities_management'
+  get '/management-consultancy', to: 'home#management_consultancy'
   get '/status', to: 'home#status'
 
   resources :branches, only: :index

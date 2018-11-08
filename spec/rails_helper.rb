@@ -80,3 +80,8 @@ def visit_facilities_management_home
   visit '/'
   click_on I18n.t('home.index.facilities_management_link')
 end
+
+def visit_management_consultancy_home
+  visit '/'
+  click_on I18n.t('home.index.management_consultancy_link')
+end
