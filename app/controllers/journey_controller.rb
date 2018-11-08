@@ -27,8 +27,8 @@ class JourneyController < ApplicationController
 
   def journey_class
     case params[:journey]
-    when TeacherSupplyJourney.journey_name
-      TeacherSupplyJourney
+    when SupplyTeachersJourney.journey_name
+      SupplyTeachersJourney
     when FacilitiesManagement::Journey.journey_name
       FacilitiesManagement::Journey
     else
