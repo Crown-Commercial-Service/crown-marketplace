@@ -12,7 +12,7 @@ class SuppliersController < ApplicationController
   private
 
   def source_journey
-    SupplyTeachersJourney.new('managed-service-provider', managed_service_provider_params)
+    SupplyTeachers::Journey.new('managed-service-provider', managed_service_provider_params)
   end
 
   def managed_service_provider_params

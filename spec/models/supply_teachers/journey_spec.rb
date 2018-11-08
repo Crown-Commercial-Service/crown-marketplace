@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # rubocop:disable RSpec/NestedGroups
-RSpec.describe SupplyTeachersJourney, type: :model do
+RSpec.describe SupplyTeachers::Journey, type: :model do
   before do
     Geocoder::Lookup::Test.add_stub(
       'W1A 1AA', [{ 'coordinates' => [51.5149666, -0.119098] }]
@@ -14,7 +14,7 @@ RSpec.describe SupplyTeachersJourney, type: :model do
 
   context 'when following the school journey' do
     subject(:journey) do
-      SupplyTeachersJourney.new(slug, ActionController::Parameters.new(params))
+      SupplyTeachers::Journey.new(slug, ActionController::Parameters.new(params))
     end
 
     context 'when on the Looking For page' do

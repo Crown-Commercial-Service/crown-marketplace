@@ -1,4 +1,4 @@
-class SupplyTeachersJourney < Journey
+class SupplyTeachers::Journey < Journey
   include Rails.application.routes.url_helpers
 
   def initialize(slug, params)
