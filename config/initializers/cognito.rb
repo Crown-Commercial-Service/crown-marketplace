@@ -7,7 +7,9 @@ cognito_options = {
     site: ENV.fetch('COGNITO_USER_POOL_SITE')
   },
   callback_path: '/auth/cognito/callback',
-  scope: 'email openid'
+  scope: 'email openid',
+  region: ENV.fetch('COGNITO_AWS_REGION'),
+  user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID')
 }
 
 Rails.application.config.middleware.use OmniAuth::Strategies::Cognito, client_id, client_secret, cognito_options
