@@ -12,7 +12,7 @@ module FacilitiesManagement
       end
 
       def regions
-        FacilitiesManagement::Region.where(code: region_codes)
+        Region.where(code: region_codes)
       end
 
       def next_step_class
