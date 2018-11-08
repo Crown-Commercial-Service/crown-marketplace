@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
   def index
-    @journey = SupplyTeachersJourney.new(params[:slug], params)
+    @journey = SupplyTeachers::Journey.new(params[:slug], params)
     @back_path = @journey.previous_step_path
 
     if @journey.valid?
