@@ -76,7 +76,7 @@ def visit_supply_teachers_home
   click_on I18n.t('home.index.supply_teachers_link')
 end
 
-def visit_fm_home
+def visit_facilities_management_home
   visit '/'
   click_on I18n.t('home.index.facilities_management_link')
 end
