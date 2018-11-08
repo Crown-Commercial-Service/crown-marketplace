@@ -1,4 +1,4 @@
-module Steps
+module SupplyTeachers::Steps
   module Results
     extend ActiveSupport::Concern
     include BranchesHelper

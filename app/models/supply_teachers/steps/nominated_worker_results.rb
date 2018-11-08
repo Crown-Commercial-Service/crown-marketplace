@@ -1,4 +1,4 @@
-module Steps
+module SupplyTeachers::Steps
   class NominatedWorkerResults
     include JourneyStep
     include Results

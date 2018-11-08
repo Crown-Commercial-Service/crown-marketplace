@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'journey/agency_payroll.html.erb' do
-  let(:step) { Steps::AgencyPayroll.new }
+  let(:step) { SupplyTeachers::Steps::AgencyPayroll.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors) }
 

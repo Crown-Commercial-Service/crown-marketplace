@@ -11,27 +11,27 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
-        steps/agency_payroll:
+        supply_teachers/steps/agency_payroll:
           attributes:
             location:
               invalid_location: Enter a valid postcode
-        steps/looking_for:
+        supply_teachers/steps/looking_for:
           attributes:
             looking_for:
               inclusion: Select individual worker or managed service provider
-        steps/managed_service_provider:
+        supply_teachers/steps/managed_service_provider:
           attributes:
             managed_service_provider:
               inclusion: Select master vendor or neutral vendor managed service
-        steps/payroll_provider:
+        supply_teachers/steps/payroll_provider:
           attributes:
             payroll_provider:
               inclusion: Select yes if you want to put the worker on the school's payroll
-        steps/school_postcode:
+        supply_teachers/steps/school_postcode:
           attributes:
             location:
               invalid_location: Enter a valid postcode
-        steps/worker_type:
+        supply_teachers/steps/worker_type:
           attributes:
             worker_type:
               inclusion: Select yes if you want an agency to supply the worker

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Steps::PayrollProvider, type: :model do
+RSpec.describe SupplyTeachers::Steps::PayrollProvider, type: :model do
   subject(:step) { described_class.new(payroll_provider: 'school') }
 
-  let(:model_key) { 'activemodel.errors.models.steps/payroll_provider' }
+  let(:model_key) { 'activemodel.errors.models.supply_teachers/steps/payroll_provider' }
 
   it { is_expected.to be_valid }
 

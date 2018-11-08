@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'journey/worker_type.html.erb' do
-  let(:step) { Steps::WorkerType.new }
+  let(:step) { SupplyTeachers::Steps::WorkerType.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors) }
 

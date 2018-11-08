@@ -1,4 +1,4 @@
-module Steps
+module SupplyTeachers::Steps
   class SchoolPostcode
     include JourneyStep
     include Geolocatable

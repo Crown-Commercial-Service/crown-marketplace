@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'journey/school_postcode.html.erb' do
-  let(:step) { Steps::SchoolPostcode.new }
+  let(:step) { SupplyTeachers::Steps::SchoolPostcode.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors) }
 

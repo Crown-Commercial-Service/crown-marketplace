@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Steps::LookingFor, type: :model do
+RSpec.describe SupplyTeachers::Steps::LookingFor, type: :model do
   subject(:step) { described_class.new(looking_for: 'worker') }
 
-  let(:model_key) { 'activemodel.errors.models.steps/looking_for' }
+  let(:model_key) { 'activemodel.errors.models.supply_teachers/steps/looking_for' }
 
   it { is_expected.to be_valid }
 

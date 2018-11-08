@@ -1,4 +1,4 @@
-module Steps
+module SupplyTeachers::Steps
   class AgencyPayrollResults
     include JourneyStep
     include Results
