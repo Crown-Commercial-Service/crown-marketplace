@@ -71,12 +71,14 @@ RSpec.describe Branch, type: :model do
 
       let(:shoreditch) { Geocoding.point(latitude: 51.5255, longitude: -0.0587) }
 
+      let(:nearby_branches) { described_class.near(shoreditch, within_metres: 10000) }
+
       it 'includes nearby branches' do
-        expect(Branch.near(shoreditch, within_metres: 10000)).to include(london_1, london_2)
+        expect(nearby_branches).to include(london_1, london_2)
       end
 
       it 'excludes far away branches' do
-        expect(Branch.near(shoreditch, within_metres: 10000)).not_to include(edinburgh)
+        expect(nearby_branches).not_to include(edinburgh)
       end
     end
   end
@@ -95,7 +97,7 @@ RSpec.describe Branch, type: :model do
         create(:branch, supplier: supplier, location: Geocoding.point(latitude: 50.7230521, longitude: -2.0430911))
       end
       let(:results) do
-        Branch.search(
+        described_class.search(
           Geocoding.point(latitude: 51.5, longitude: 0),
           rates: Rate.direct_provision.nominated_worker
         ).to_a
@@ -132,7 +134,7 @@ RSpec.describe Branch, type: :model do
                location: Geocoding.point(latitude: 0, longitude: 0))
       end
       let(:results) do
-        Branch.search(
+        described_class.search(
           Geocoding.point(latitude: 0, longitude: 0),
           rates: Rate.direct_provision.nominated_worker
         ).to_a
@@ -174,7 +176,7 @@ RSpec.describe Branch, type: :model do
       end
       let(:results) do
         point = Geocoding.point(latitude: 0, longitude: 0)
-        Branch.search(point, rates: Rate.direct_provision.fixed_term).to_a
+        described_class.search(point, rates: Rate.direct_provision.fixed_term).to_a
       end
 
       it 'includes suppliers that have fixed term rates' do
@@ -203,7 +205,7 @@ RSpec.describe Branch, type: :model do
       end
 
       it 'orders branches by markup rate in ascending order' do
-        results = Branch.search(
+        results = described_class.search(
           Geocoding.point(latitude: 0, longitude: 0),
           rates: Rate.direct_provision.nominated_worker
         ).to_a
@@ -229,7 +231,7 @@ RSpec.describe Branch, type: :model do
       end
 
       it 'orders branches by mark up and then proximity in ascending order' do
-        results = Branch.search(
+        results = described_class.search(
           Geocoding.point(latitude: 0, longitude: 0),
           rates: Rate.direct_provision.nominated_worker
         ).to_a
