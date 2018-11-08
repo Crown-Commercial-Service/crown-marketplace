@@ -50,13 +50,33 @@ RSpec.describe 'Cognito authorisation', type: :request do
       }
     end
 
-    let(:cognito_id_token) do
-      JSON::JWT.new(cognito_jwt_payload).to_s
+    let(:signed_cognito_id_token) do
+      key_and_id = cognito_public_keys.sample
+      token = JSON::JWT.new(cognito_jwt_payload)
+      token.kid = key_and_id[:id]
+      token.alg = cognito_key_algorithm
+      token.sign(key_and_id[:key], cognito_key_algorithm).to_s
+    end
+
+    let(:cognito_key_algorithm) { 'RS256' }
+
+    let(:cognito_public_keys) do
+      [
+        { id: SecureRandom.uuid, key: OpenSSL::PKey::RSA.generate(2048) },
+        { id: SecureRandom.uuid, key: OpenSSL::PKey::RSA.generate(2048) }
+      ]
+    end
+
+    let(:cognito_public_keys_as_jwks) do
+      jwks = cognito_public_keys.map do |key_and_id|
+        key_and_id[:key].public_key.to_jwk(alg: cognito_key_algorithm, kid: key_and_id[:id])
+      end
+      JSON::JWK::Set.new(jwks)
     end
 
     let(:cognito_oauth2_token_response) do
       {
-        id_token: cognito_id_token,
+        id_token: signed_cognito_id_token,
         access_token: 'access-token',
         refresh_token: 'refresh-token',
         expires_in: 3600,
@@ -67,6 +87,13 @@ RSpec.describe 'Cognito authorisation', type: :request do
     before do
       stub_request(:post, "#{ENV['COGNITO_USER_POOL_SITE']}/oauth2/token")
         .to_return(status: 200, body: cognito_oauth2_token_response, headers: { 'Content-Type' => 'application/json' })
+
+      region = ENV.fetch('COGNITO_AWS_REGION')
+      user_pool_id = ENV.fetch('COGNITO_USER_POOL_ID')
+      stub_request(:get, "https://cognito-idp.#{region}.amazonaws.com/#{user_pool_id}/.well-known/jwks.json")
+        .to_return(status: 200,
+                   body: cognito_public_keys_as_jwks.to_json,
+                   headers: { 'Content-Type' => 'application/json' })
     end
 
     it 'logs the user in and redirects to the home page' do
