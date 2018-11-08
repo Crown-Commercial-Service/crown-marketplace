@@ -10,7 +10,8 @@ module Cognito
 
     def decode(user_pool)
       key = user_pool.find_key(key_id)
-      JSON::JWT.decode(@encoded_token, key)
+      decoded_token = JSON::JWT.decode(@encoded_token, key)
+      Token.new(decoded_token)
     end
   end
 end
