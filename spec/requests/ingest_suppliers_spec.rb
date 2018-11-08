@@ -56,12 +56,12 @@ RSpec.describe 'Ingest suppliers', type: :request do
 
     it 'ingests suppliers and their branches' do
       ingest(suppliers)
-      expect(Branch.count).to eq(3)
+      expect(SupplyTeachers::Branch.count).to eq(3)
     end
 
     it 'destroys all suppliers and their branches before ingesting' do
       2.times { ingest(suppliers) }
-      expect(Branch.count).to eq(3)
+      expect(SupplyTeachers::Branch.count).to eq(3)
     end
   end
 

@@ -1,12 +1,12 @@
 class SuppliersController < ApplicationController
   def master_vendors
     @back_path = source_journey.current_step_path
-    @suppliers = Supplier.with_master_vendor_rates
+    @suppliers = SupplyTeachers::Supplier.with_master_vendor_rates
   end
 
   def neutral_vendors
     @back_path = source_journey.current_step_path
-    @suppliers = Supplier.with_neutral_vendor_rates
+    @suppliers = SupplyTeachers::Supplier.with_neutral_vendor_rates
   end
 
   private

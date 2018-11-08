@@ -8,6 +8,6 @@ module BranchesHelper
   end
 
   def default_search_range
-    "#{Branch::DEFAULT_SEARCH_RANGE_IN_MILES} miles"
+    "#{SupplyTeachers::Branch::DEFAULT_SEARCH_RANGE_IN_MILES} miles"
   end
 end

@@ -1,11 +1,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
-    <% Supplier.with_neutral_vendor_rates.each do |supplier| %>
+    <% SupplyTeachers::Supplier.with_neutral_vendor_rates.each do |supplier| %>
       <h2 class="govuk-heading-m"><%= supplier.name %></h2>
       <% supplier.rates.each do |rate| %>
         <p>
-          <%= Rate::JOB_TYPES[rate.job_type] %>
+          <%= SupplyTeachers::Rate::JOB_TYPES[rate.job_type] %>
           <% if rate.percentage_mark_up? %>
             <%= number_to_percentage(rate.mark_up * 100, precision: 1) %>
           <% else %>

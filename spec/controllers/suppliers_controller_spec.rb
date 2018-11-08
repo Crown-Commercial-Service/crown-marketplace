@@ -6,7 +6,7 @@ RSpec.describe SuppliersController, type: :controller do
     let(:suppliers) { [supplier] }
 
     before do
-      allow(Supplier).to receive(:with_master_vendor_rates).and_return(suppliers)
+      allow(SupplyTeachers::Supplier).to receive(:with_master_vendor_rates).and_return(suppliers)
       get :master_vendors, params: {
         journey: 'teacher-supply',
         looking_for: 'managed_service_provider',
@@ -38,7 +38,7 @@ RSpec.describe SuppliersController, type: :controller do
     let(:suppliers) { [supplier] }
 
     before do
-      allow(Supplier).to receive(:with_neutral_vendor_rates).and_return(suppliers)
+      allow(SupplyTeachers::Supplier).to receive(:with_neutral_vendor_rates).and_return(suppliers)
       get :neutral_vendors, params: {
         journey: 'teacher-supply',
         looking_for: 'managed_service_provider',
