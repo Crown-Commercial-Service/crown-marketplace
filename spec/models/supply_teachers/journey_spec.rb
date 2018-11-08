@@ -14,7 +14,7 @@ module SupplyTeachers
 
     context 'when following the school journey' do
       subject(:journey) do
-        SupplyTeachers::Journey.new(slug, ActionController::Parameters.new(params))
+        Journey.new(slug, ActionController::Parameters.new(params))
       end
 
       context 'when on the Looking For page' do
