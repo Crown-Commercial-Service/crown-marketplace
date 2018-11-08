@@ -5,6 +5,8 @@ class HomeController < ApplicationController
 
   def facilities_management; end
 
+  def management_consultancy; end
+
   def status
     render layout: false
   end
