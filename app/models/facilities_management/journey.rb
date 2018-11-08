@@ -1,3 +1,5 @@
+require 'facilities_management/steps/value_band'
+
 module FacilitiesManagement
   class Journey < ::Journey
     include Rails.application.routes.url_helpers
