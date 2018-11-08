@@ -24,4 +24,12 @@ RSpec.describe Cognito::Token do
       expect(token.subject).to eq('token-subject')
     end
   end
+
+  describe '#email' do
+    it 'returns the email of the token' do
+      jwt = JSON::JWT.new(email: 'user-email')
+      token = described_class.new(jwt)
+      expect(token.email).to eq('user-email')
+    end
+  end
 end
