@@ -44,7 +44,7 @@ module OmniAuth
         end
 
         def decode
-          JWT.decode(@token, nil, false).first
+          JSON::JWT.decode(@token, :skip_verification)
         end
       end
     end
