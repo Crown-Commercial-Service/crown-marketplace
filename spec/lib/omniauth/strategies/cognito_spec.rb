@@ -25,9 +25,9 @@ RSpec.describe OmniAuth::Strategies::Cognito do
   describe OmniAuth::Strategies::Cognito::TokenDecoder do
     describe '#decode' do
       it 'does not verify token' do
-        allow(JWT).to receive(:decode)
-          .with('token', nil, false)
-          .and_return(['decoded-payload', 'decoded-header'])
+        allow(JSON::JWT).to receive(:decode)
+          .with('token', :skip_verification)
+          .and_return('decoded-payload')
         decoder = described_class.new('token')
         expect(decoder.decode).to eq('decoded-payload')
       end
