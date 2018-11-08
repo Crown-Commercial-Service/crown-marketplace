@@ -4,7 +4,7 @@ class UploadsController < ApplicationController
   def create
     suppliers = JSON.parse(request.body.read)
 
-    Upload.create!(suppliers)
+    SupplyTeachers::Upload.create!(suppliers)
 
     render json: {}, status: :created
   end

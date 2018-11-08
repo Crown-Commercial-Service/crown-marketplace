@@ -1,4 +1,4 @@
-class Upload
+class SupplyTeachers::Upload
   def self.create!(suppliers)
     error = all_or_none(Supplier) do
       Supplier.destroy_all

@@ -5,13 +5,13 @@ RSpec.describe UploadsController, type: :controller do
     let(:suppliers) { [] }
 
     before do
-      allow(Upload).to receive(:create!)
+      allow(SupplyTeachers::Upload).to receive(:create!)
     end
 
     it 'creates suppliers and their associated data from JSON' do
       post :create, body: suppliers.to_json
 
-      expect(Upload).to have_received(:create!).with(suppliers)
+      expect(SupplyTeachers::Upload).to have_received(:create!).with(suppliers)
     end
 
     it 'responds with HTTP created status' do
@@ -22,7 +22,7 @@ RSpec.describe UploadsController, type: :controller do
 
     context 'when model validation error occurs' do
       before do
-        allow(Upload).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
+        allow(SupplyTeachers::Upload).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
       end
 
       it 'raises ActiveRecord::RecordInvalid' do
