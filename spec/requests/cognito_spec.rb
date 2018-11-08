@@ -51,7 +51,7 @@ RSpec.describe 'Cognito authorisation', type: :request do
     end
 
     let(:cognito_id_token) do
-      JWT.encode cognito_jwt_payload, nil, 'none'
+      JSON::JWT.new(cognito_jwt_payload).to_s
     end
 
     let(:cognito_oauth2_token_response) do
