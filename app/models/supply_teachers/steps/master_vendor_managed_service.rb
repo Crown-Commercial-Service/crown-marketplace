@@ -1,5 +1,7 @@
-module SupplyTeachers::Steps
-  class MasterVendorManagedService
-    include JourneyStep
+module SupplyTeachers
+  module Steps
+    class MasterVendorManagedService
+      include JourneyStep
+    end
   end
 end

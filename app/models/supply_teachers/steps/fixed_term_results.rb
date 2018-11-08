@@ -1,14 +1,16 @@
-module SupplyTeachers::Steps
-  class FixedTermResults
-    include JourneyStep
-    include Results
+module SupplyTeachers
+  module Steps
+    class FixedTermResults
+      include JourneyStep
+      include Results
 
-    def rates
-      Rate.direct_provision.fixed_term
-    end
+      def rates
+        Rate.direct_provision.fixed_term
+      end
 
-    def rate(branch)
-      branch.supplier.fixed_term_rate
+      def rate(branch)
+        branch.supplier.fixed_term_rate
+      end
     end
   end
 end

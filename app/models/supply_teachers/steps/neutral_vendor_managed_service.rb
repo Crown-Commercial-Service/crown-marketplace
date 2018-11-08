@@ -1,5 +1,7 @@
-module SupplyTeachers::Steps
-  class NeutralVendorManagedService
-    include JourneyStep
+module SupplyTeachers
+  module Steps
+    class NeutralVendorManagedService
+      include JourneyStep
+    end
   end
 end
