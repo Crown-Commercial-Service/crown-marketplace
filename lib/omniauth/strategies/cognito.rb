@@ -13,13 +13,13 @@ module OmniAuth
              user_pool_id: nil
 
       uid do
-        validated_id_token['sub'] if validated_id_token
+        validated_id_token.subject
       end
 
       info do
         if validated_id_token
           {
-            email: validated_id_token['email'],
+            email: validated_id_token.email
           }
         end
       end
