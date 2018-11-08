@@ -30,15 +30,6 @@ module OmniAuth
 
       private
 
-      def jwk_url
-        "https://cognito-idp.#{options.region}.amazonaws.com/#{options.user_pool_id}/.well-known/jwks.json"
-      end
-
-      def jwks
-        response = Faraday.get(jwk_url)
-        JSON::JWK::Set.new(JSON.parse(response.body))
-      end
-
       def id_token
         access_token['id_token']
       end
@@ -47,24 +38,9 @@ module OmniAuth
         return nil unless id_token
 
         @validated_id_token ||= begin
-          decoder = TokenDecoder.new(id_token)
-          key_id = decoder.unverified_header['kid']
-          decoder.decode(jwks, key_id)
-        end
-      end
-
-      class TokenDecoder
-        def initialize(token)
-          @token = token
-        end
-
-        def unverified_header
-          JSON::JWT.decode(@token, :skip_verification).header
-        end
-
-        def decode(jwks, key_id)
-          jwk = jwks.find { |jwk_attrs| jwk_attrs['kid'] == key_id }
-          JSON::JWT.decode(@token, jwk.to_key)
+          user_pool = ::Cognito::UserPool.new(options.region, options.user_pool_id)
+          token = ::Cognito::EncodedToken.new(id_token)
+          token.decode(user_pool)
         end
       end
     end
