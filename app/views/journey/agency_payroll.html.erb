@@ -21,7 +21,7 @@
       <%= t('.worker_type_question') %>
     </label>
     <select class="govuk-select" id="job_type" name="job_type">
-      <%= options_from_collection_for_select(JobType.all, :code, :description, params[:job_type]) %>
+      <%= options_from_collection_for_select(SupplyTeachers::JobType.all, :code, :description, params[:job_type]) %>
     </select>
   <% end %>
 
