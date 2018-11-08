@@ -71,7 +71,7 @@ def valid_fake_postcode
   UKPostcode.parse(possibly_invalid_postcode).to_s
 end
 
-def visit_teacher_home
+def visit_supply_teachers_home
   visit '/'
   click_on I18n.t('home.index.supply_teachers_link')
 end
