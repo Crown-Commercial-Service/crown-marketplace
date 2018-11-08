@@ -1,4 +1,4 @@
-module Steps
+module SupplyTeachers::Steps
   class FixedTermResults
     include JourneyStep
     include Results

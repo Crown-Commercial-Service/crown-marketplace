@@ -1,9 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Steps::SchoolPostcode, type: :model do
-  subject(:step) { described_class.new(postcode: postcode) }
+RSpec.describe SupplyTeachers::Steps::AgencyPayroll, type: :model do
+  subject(:step) do
+    described_class.new(
+      postcode: postcode,
+      term: Term.all.first,
+      job_type: JobType.all.first
+    )
+  end
 
-  let(:model_key) { 'activemodel.errors.models.steps/school_postcode' }
+  let(:model_key) { 'activemodel.errors.models.supply_teachers/steps/agency_payroll' }
 
   let(:postcode) { Faker::Address.unique.postcode }
 
@@ -19,7 +25,7 @@ RSpec.describe Steps::SchoolPostcode, type: :model do
 
   it { is_expected.to be_valid }
 
-  context 'when postcode is not valid' do
+  context 'when location is not valid' do
     before do
       step.postcode = 'XY1 2AB'
     end

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Steps::WorkerType, type: :model do
+RSpec.describe SupplyTeachers::Steps::WorkerType, type: :model do
   subject(:step) { described_class.new(worker_type: 'nominated') }
 
-  let(:model_key) { 'activemodel.errors.models.steps/worker_type' }
+  let(:model_key) { 'activemodel.errors.models.supply_teachers/steps/worker_type' }
 
   it { is_expected.to be_valid }
 
