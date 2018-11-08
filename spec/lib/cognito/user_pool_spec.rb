@@ -47,4 +47,12 @@ RSpec.describe Cognito::UserPool do
       expect(key).to eq('key-2')
     end
   end
+
+  describe '#idp_url' do
+    let(:user_pool) { described_class.new('aws-region', 'user-pool-id') }
+
+    it 'returns the idp url of the cognito user pool' do
+      expect(user_pool.idp_url).to eq('https://cognito-idp.aws-region.amazonaws.com/user-pool-id')
+    end
+  end
 end
