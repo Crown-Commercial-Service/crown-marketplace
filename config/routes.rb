@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   get '/:journey/suppliers', to: 'facilities_management_suppliers#index', as: 'facilities_management_suppliers'
 
-  get '/:journey', to: 'journey#index', as: 'journey_start'
+  get '/:journey/start', to: 'journey#start', as: 'journey_start'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
   get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 end

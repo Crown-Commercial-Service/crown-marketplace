@@ -1,5 +1,5 @@
 class JourneyController < ApplicationController
-  def index
+  def start
     redirect_to build_journey.first_step_path
   end
 
