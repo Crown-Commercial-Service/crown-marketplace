@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
 
       let(:params) do
         {
-          journey: 'fm',
+          journey: 'facilities-management',
           value_band: value_band,
           region_codes: ['UKK4']
         }
@@ -43,7 +43,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
 
       it 'sets the back path to the supplier region question' do
         expected_path = journey_question_path(
-          journey: 'fm',
+          journey: 'facilities-management',
           slug: 'supplier-region',
           value_band: value_band,
           region_codes: ['UKK4']
@@ -58,7 +58,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
 
       let(:params) do
         {
-          journey: 'fm',
+          journey: 'facilities-management',
           value_band: value_band,
           region_codes: ['UKK4']
         }
@@ -70,7 +70,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
 
       it 'sets the back path to the supplier region question' do
         expected_path = journey_question_path(
-          journey: 'fm',
+          journey: 'facilities-management',
           slug: 'supplier-region',
           value_band: value_band,
           region_codes: ['UKK4']
@@ -85,7 +85,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
 
       let(:params) do
         {
-          journey: 'fm',
+          journey: 'facilities-management',
           value_band: value_band
         }
       end
@@ -96,7 +96,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
 
       it 'sets the back path to the value band question' do
         expected_path = journey_question_path(
-          journey: 'fm',
+          journey: 'facilities-management',
           slug: 'value-band',
           value_band: value_band
         )
@@ -110,7 +110,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
 
       let(:params) do
         {
-          journey: 'fm',
+          journey: 'facilities-management',
           value_band: value_band
         }
       end
@@ -121,7 +121,7 @@ RSpec.describe FacilitiesManagementSuppliersController, type: :controller do
 
       it 'sets the back path to the value band question' do
         expected_path = journey_question_path(
-          journey: 'fm',
+          journey: 'facilities-management',
           slug: 'value-band',
           value_band: value_band
         )
