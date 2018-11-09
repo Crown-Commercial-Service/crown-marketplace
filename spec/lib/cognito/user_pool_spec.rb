@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Cognito::UserPool do
   describe '#keys_url' do
-    let(:user_pool) { described_class.new('aws-region', 'user-pool-id') }
+    let(:user_pool) { described_class.new('aws-region', 'user-pool-id', 'app-client-id') }
 
     it 'returns the url of the cognito user pool public keys' do
       expected_key_url = 'https://cognito-idp.aws-region.amazonaws.com/user-pool-id/.well-known/jwks.json'
@@ -13,7 +13,7 @@ RSpec.describe Cognito::UserPool do
   describe '#json_web_keys' do
     let(:region) { 'aws-region' }
     let(:user_pool_id) { 'user-pool-id' }
-    let(:user_pool) { described_class.new(region, user_pool_id) }
+    let(:user_pool) { described_class.new(region, user_pool_id, 'app-client-id') }
     let(:key_1) { { kid: '1234example=', alg: 'RS256', kty: 'RSA', e: 'AQAB', n: '1234567890', use: 'sig' } }
     let(:key_2) { { kid: '5678example=', alg: 'RS256', kty: 'RSA', e: 'AQAB', n: '987654321', use: 'sig' } }
     let(:jwks) { { keys: [key_1, key_2] } }
@@ -31,7 +31,7 @@ RSpec.describe Cognito::UserPool do
   end
 
   describe '#find_key' do
-    let(:user_pool) { described_class.new('aws-region', 'user-pool-id') }
+    let(:user_pool) { described_class.new('aws-region', 'user-pool-id', 'app-client-id') }
     let(:key_1) { JSON::JWK.new(kid: 'key-1-id') }
     let(:key_2) { JSON::JWK.new(kid: 'key-2-id') }
 
@@ -49,7 +49,7 @@ RSpec.describe Cognito::UserPool do
   end
 
   describe '#idp_url' do
-    let(:user_pool) { described_class.new('aws-region', 'user-pool-id') }
+    let(:user_pool) { described_class.new('aws-region', 'user-pool-id', 'app-client-id') }
 
     it 'returns the idp url of the cognito user pool' do
       expect(user_pool.idp_url).to eq('https://cognito-idp.aws-region.amazonaws.com/user-pool-id')

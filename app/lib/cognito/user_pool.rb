@@ -1,8 +1,11 @@
 module Cognito
   class UserPool
-    def initialize(region, pool_id)
+    attr_reader :app_client_id
+
+    def initialize(region, pool_id, app_client_id)
       @region = region
       @pool_id = pool_id
+      @app_client_id = app_client_id
     end
 
     def find_key(key_id)
