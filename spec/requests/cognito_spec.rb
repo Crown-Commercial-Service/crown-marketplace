@@ -44,7 +44,7 @@ RSpec.describe 'Cognito authorisation', type: :request do
         aud: ENV['COGNITO_CLIENT_ID'],
         token_use: 'id',
         iss: "https://cognito-idp.#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['COGNITO_USER_POOL_ID']}",
-        exp: 1541437718,
+        exp: 5.minutes.from_now.to_i,
         iat: 1541434118,
         email: 'email-address-of-cognito-user'
       }
