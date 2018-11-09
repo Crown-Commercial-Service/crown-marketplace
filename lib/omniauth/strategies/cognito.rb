@@ -38,7 +38,7 @@ module OmniAuth
         return nil unless id_token
 
         @validated_id_token ||= begin
-          user_pool = ::Cognito::UserPool.new(options.region, options.user_pool_id)
+          user_pool = ::Cognito::UserPool.new(options.region, options.user_pool_id, options.client_id)
           token = ::Cognito::EncodedToken.new(id_token)
           token.decode(user_pool).verify!(user_pool)
         end

@@ -2,8 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Cognito::Token do
   describe '#verify!' do
-    let(:user_pool) { Cognito::UserPool.new('aws-region', 'user-pool-id') }
-    let(:valid_jwt) { JSON::JWT.new(iss: user_pool.idp_url, exp: 5.minutes.from_now.to_i) }
+    let(:user_pool) { Cognito::UserPool.new('aws-region', 'user-pool-id', 'app-client-id') }
+    let(:valid_jwt) do
+      JSON::JWT.new(
+        iss: user_pool.idp_url,
+        exp: 5.minutes.from_now.to_i,
+        aud: user_pool.app_client_id
+      )
+    end
 
     it 'returns self when the token is valid' do
       token = described_class.new(valid_jwt)
@@ -22,6 +28,13 @@ RSpec.describe Cognito::Token do
       jwt[:exp] = 5.minutes.ago.to_i
       token = described_class.new(jwt)
       expect { token.verify!(user_pool) }.to raise_error(Cognito::Token::VerificationFailure, 'token has expired')
+    end
+
+    it 'raises exception when audience does not match user pool client id' do
+      jwt = valid_jwt
+      jwt[:aud] = 'made-up-audience'
+      token = described_class.new(jwt)
+      expect { token.verify!(user_pool) }.to raise_error(Cognito::Token::VerificationFailure, 'audience is invalid')
     end
   end
 
