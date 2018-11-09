@@ -11,7 +11,7 @@ module FacilitiesManagement
     end
 
     def self.journey_name
-      'fm'
+      'facilities-management'
     end
 
     def start_path
