@@ -8,7 +8,7 @@ module SupplyTeachers
     end
 
     def self.journey_name
-      'teacher-supply'
+      'supply-teachers'
     end
 
     def self.first_step_class

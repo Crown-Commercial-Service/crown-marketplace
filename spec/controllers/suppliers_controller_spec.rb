@@ -8,7 +8,7 @@ RSpec.describe SuppliersController, type: :controller do
     before do
       allow(SupplyTeachers::Supplier).to receive(:with_master_vendor_rates).and_return(suppliers)
       get :master_vendors, params: {
-        journey: 'teacher-supply',
+        journey: 'supply-teachers',
         looking_for: 'managed_service_provider',
         managed_service_provider: 'master_vendor'
       }
@@ -24,7 +24,7 @@ RSpec.describe SuppliersController, type: :controller do
 
     it 'sets the back path to the managed-service-provider question' do
       expected_path = journey_question_path(
-        journey: 'teacher-supply',
+        journey: 'supply-teachers',
         slug: 'managed-service-provider',
         looking_for: 'managed_service_provider',
         managed_service_provider: 'master_vendor'
@@ -40,7 +40,7 @@ RSpec.describe SuppliersController, type: :controller do
     before do
       allow(SupplyTeachers::Supplier).to receive(:with_neutral_vendor_rates).and_return(suppliers)
       get :neutral_vendors, params: {
-        journey: 'teacher-supply',
+        journey: 'supply-teachers',
         looking_for: 'managed_service_provider',
         managed_service_provider: 'neutral_vendor'
       }
@@ -56,7 +56,7 @@ RSpec.describe SuppliersController, type: :controller do
 
     it 'sets the back path to the managed-service-provider question' do
       expected_path = journey_question_path(
-        journey: 'teacher-supply',
+        journey: 'supply-teachers',
         slug: 'managed-service-provider',
         looking_for: 'managed_service_provider',
         managed_service_provider: 'neutral_vendor'
