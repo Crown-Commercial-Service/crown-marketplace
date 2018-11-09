@@ -12,7 +12,7 @@ RSpec.describe Cognito::EncodedToken do
 
   describe '#decode' do
     it 'verifies the message signature using the key from the user pool' do
-      user_pool = Cognito::UserPool.new('aws-region', 'pool-id')
+      user_pool = Cognito::UserPool.new('aws-region', 'pool-id', 'app-client-id')
       allow(user_pool).to receive(:find_key).with('key-id').and_return('key')
 
       token = described_class.new('encoded-token')
