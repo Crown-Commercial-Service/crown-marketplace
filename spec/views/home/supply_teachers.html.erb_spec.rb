@@ -5,7 +5,7 @@ RSpec.describe 'home/supply_teachers.html.erb' do
     render
 
     expect(rendered).to have_link(
-      'Start now', href: journey_start_url(journey: 'teacher-supply')
+      'Start now', href: journey_start_url(journey: 'supply-teachers')
     )
   end
 end
