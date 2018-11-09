@@ -59,3 +59,11 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
+
+if ENV['COGNITO_USER_POOL_SITE'].blank?
+  OmniAuth.config.test_mode = true
+
+  OmniAuth.config.mock_auth[:cognito] = OmniAuth::AuthHash.new(
+    info: { email: 'user@example.com' }
+  )
+end
