@@ -255,7 +255,7 @@ RSpec.describe JourneyController, type: :controller do
         postcode: postcode
       }
       get :answer, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode')
-      expect(response).to redirect_to(fixed_term_results_path(params))
+      expect(response).to redirect_to(supply_teachers_fixed_term_results_path(params))
     end
   end
 
