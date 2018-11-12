@@ -1,4 +1,4 @@
-module FacilitiesManagementSuppliersHelper
+module FacilitiesManagement::SuppliersHelper
   def contract_value_range_text(lot_number)
     FacilitiesManagement::Lot.find_by(number: lot_number).description
   end
