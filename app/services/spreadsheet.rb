@@ -58,15 +58,6 @@ class Spreadsheet
     @format = with_calculations ? Shortlist.new : DataDownload.new
   end
 
-  def spreadsheet(name)
-    package = Axlsx::Package.new
-    workbook = package.workbook
-    workbook.add_worksheet(name: name) do |sheet|
-      yield workbook, sheet
-    end
-    package.to_stream.read
-  end
-
   def to_xlsx
     spreadsheet(@format.sheet_name) do |workbook, sheet|
       sheet.add_row @format.headers
@@ -75,5 +66,16 @@ class Spreadsheet
       end
       @format.style(workbook, sheet)
     end
+  end
+
+  private
+
+  def spreadsheet(name)
+    package = Axlsx::Package.new
+    workbook = package.workbook
+    workbook.add_worksheet(name: name) do |sheet|
+      yield workbook, sheet
+    end
+    package.to_stream.read
   end
 end
