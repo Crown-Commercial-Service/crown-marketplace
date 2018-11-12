@@ -24,14 +24,14 @@
     margin-bottom: 0;
 }
 
-a.file-download {
+.supplier-record__file-download {
   display: inline-block;
   position: relative;
   min-height: 33px;
   padding-left: 50px;
 }
 
-a.file-download:before {
+.supplier-record__file-download:before {
     position: absolute;
     left: 0px;
     top: -6px;
@@ -49,9 +49,12 @@ a.file-download:before {
     content: "";
 }
 
-a.file-download[href*='.xlsx']:before {
+.supplier-record__file-download[href*='.xlsx']:before {
     background-color: #007831;
     content: ".XLSX";
+}
+.supplier-record__print-option {
+    min-height: 35px;
 }
 
 @media print {
