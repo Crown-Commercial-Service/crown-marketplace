@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UploadsController, type: :controller do
+RSpec.describe SupplyTeachers::UploadsController, type: :controller do
   describe 'POST create' do
     let(:suppliers) { [] }
 

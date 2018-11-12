@@ -68,7 +68,7 @@ RSpec.describe 'Ingest suppliers', type: :request do
   private
 
   def ingest(suppliers)
-    post uploads_path, params: suppliers.to_json, headers: headers
+    post supply_teachers_uploads_path, params: suppliers.to_json, headers: headers
     expect(response).to have_http_status(:created)
   end
 end
