@@ -6,6 +6,16 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
     get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
+    get '/agency-payroll-results',
+        to: 'branches#index',
+        slug: 'agency-payroll-results'
+    get '/fixed-term-results',
+        to: 'branches#index',
+        slug: 'fixed-term-results',
+        as: 'fixed_term_results'
+    get '/nominated-worker-results',
+        to: 'branches#index',
+        slug: 'nominated-worker-results'
     resources :branches, only: :index
     resources :uploads, only: :create
   end
@@ -16,17 +26,6 @@ Rails.application.routes.draw do
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
   end
-
-  get '/:journey/agency-payroll-results',
-      to: 'supply_teachers/branches#index',
-      slug: 'agency-payroll-results'
-  get '/:journey/fixed-term-results',
-      to: 'supply_teachers/branches#index',
-      slug: 'fixed-term-results',
-      as: 'fixed_term_results'
-  get '/:journey/nominated-worker-results',
-      to: 'supply_teachers/branches#index',
-      slug: 'nominated-worker-results'
 
   get '/:journey/suppliers', to: 'facilities_management_suppliers#index', as: 'facilities_management_suppliers'
 
