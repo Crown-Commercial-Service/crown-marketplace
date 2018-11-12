@@ -1,3 +1,5 @@
-class SupplyTeachers::HomeController < ApplicationController
-  def index; end
+module SupplyTeachers
+  class HomeController < ApplicationController
+    def index; end
+  end
 end

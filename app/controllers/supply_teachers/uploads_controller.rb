@@ -1,11 +1,13 @@
-class SupplyTeachers::UploadsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :create
+module SupplyTeachers
+  class UploadsController < ApplicationController
+    skip_before_action :verify_authenticity_token, only: :create
 
-  def create
-    suppliers = JSON.parse(request.body.read)
+    def create
+      suppliers = JSON.parse(request.body.read)
 
-    SupplyTeachers::Upload.create!(suppliers)
+      Upload.create!(suppliers)
 
-    render json: {}, status: :created
+      render json: {}, status: :created
+    end
   end
 end
