@@ -12,11 +12,13 @@ Rails.application.routes.draw do
     resources :branches, only: :index
     resources :uploads, only: :create
   end
+
   namespace 'facilities_management', path: 'facilities_management' do
     get '/', to: 'home#index'
     get '/suppliers', to: 'suppliers#index'
     resources :uploads, only: :create
   end
+
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
   end
