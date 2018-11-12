@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get '/', to: 'home#index', as: :homepage
-  get '/management-consultancy', to: 'home#management_consultancy'
   get '/status', to: 'home#status'
 
   resources :branches, only: :index
@@ -12,6 +11,9 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities_management' do
     get '/', to: 'home#facilities_management'
     resources :uploads, only: :create
+  end
+  namespace 'management_consultancy', path: 'management-consultancy' do
+    get '/', to: 'home#management_consultancy'
   end
 
   get '/:journey/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
