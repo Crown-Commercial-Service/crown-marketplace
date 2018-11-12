@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'branches/_branch.html.erb' do
+RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
   let(:supplier) { build(:supplier) }
   let(:branch_name) { 'Head Office' }
   let(:branch_town) { 'Guildford' }
@@ -18,7 +18,7 @@ RSpec.describe 'branches/_branch.html.erb' do
   end
 
   before do
-    render 'branches/branch', branch: branch
+    render 'supply_teachers/branches/branch', branch: branch
   end
 
   it 'displays branch name' do

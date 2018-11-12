@@ -1,4 +1,4 @@
-class BranchesController < ApplicationController
+class SupplyTeachers::BranchesController < ApplicationController
   def index
     @journey = SupplyTeachers::Journey.new(params[:slug], params)
     @back_path = @journey.previous_step_path

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'branches/index.html.erb' do
+RSpec.describe 'supply_teachers/branches/index.html.erb' do
   let(:journey) { instance_double('Journey', params: {}) }
   let(:first_supplier) { build(:supplier, name: 'First Supplier') }
   let(:second_supplier) { build(:supplier, name: 'Second Supplier') }
