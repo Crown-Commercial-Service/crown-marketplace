@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   resources :branches, only: :index
 
-  resources :uploads, only: :create
+  namespace 'supply_teachers', path: 'supply-teachers' do
+    resources :uploads, only: :create
+  end
   resources :facilities_management_uploads, only: :create
 
   get '/:journey/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'

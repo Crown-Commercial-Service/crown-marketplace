@@ -1,4 +1,4 @@
-class UploadsController < ApplicationController
+class SupplyTeachers::UploadsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :create
 
   def create

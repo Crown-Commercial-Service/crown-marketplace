@@ -79,7 +79,7 @@ NOTE. You can set `CCS_DEFAULT_DB_HOST` to `docker.for.mac.localhost` to connect
 ```
 $ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
 $ cd crown-marketplace-data/supply-teachers
-$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @json/data.json http://$HOST/uploads
+$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @json/data.json http://$HOST/supply-teachers/uploads
 ```
 ### Facilities management data
 
