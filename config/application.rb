@@ -29,6 +29,8 @@ module Marketplace
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.action_controller.include_all_helpers = false
   end
 
   mattr_accessor :feedback_email_address
