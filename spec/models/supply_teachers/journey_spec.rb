@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'supply_teachers/journey'
 
 module SupplyTeachers
   RSpec.describe Journey, type: :model do

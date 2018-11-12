@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'facilities_management/journey'
 
 module FacilitiesManagement
   RSpec.describe Journey, type: :model do
