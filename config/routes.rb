@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   namespace 'supply_teachers', path: 'supply-teachers' do
     resources :uploads, only: :create
   end
-  resources :facilities_management_uploads, only: :create
+  namespace 'facilities_management', path: 'facilities_management' do
+    resources :uploads, only: :create
+  end
 
   get '/:journey/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
   get '/:journey/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
