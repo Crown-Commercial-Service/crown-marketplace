@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SearchHelper, type: :helper do
+RSpec.describe JourneyHelper, type: :helper do
   describe '#checked?' do
     let(:checked) { helper.checked?(actual, expected) }
 
