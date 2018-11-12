@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
+RSpec.describe 'facilities_management/suppliers/_supplier.html.erb' do
   let(:contact_name) { 'contact-name' }
   let(:contact_email) { 'contact@example.com' }
 
@@ -16,7 +16,7 @@ RSpec.describe 'facilities_management_suppliers/_supplier.html.erb' do
 
   before do
     allow(supplier).to receive(:services_by_work_package_in_lot).and_return(services)
-    render 'facilities_management_suppliers/supplier', supplier: supplier, lot_number: '1a'
+    render 'facilities_management/suppliers/supplier', supplier: supplier, lot_number: '1a'
   end
 
   it 'displays the supplier name' do

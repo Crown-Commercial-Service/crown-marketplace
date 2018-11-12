@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'facilities_management_suppliers/index.html.erb' do
+RSpec.describe 'facilities_management/suppliers/index.html.erb' do
   let(:supplier1) { build(:facilities_management_supplier) }
   let(:supplier2) { build(:facilities_management_supplier) }
   let(:suppliers) { [supplier1, supplier2] }
