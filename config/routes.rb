@@ -2,10 +2,9 @@ Rails.application.routes.draw do
   get '/', to: 'home#index', as: :homepage
   get '/status', to: 'home#status'
 
-  resources :branches, only: :index
-
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
+    resources :branches, only: :index
     resources :uploads, only: :create
   end
   namespace 'facilities_management', path: 'facilities_management' do
@@ -20,14 +19,14 @@ Rails.application.routes.draw do
   get '/:journey/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
 
   get '/:journey/agency-payroll-results',
-      to: 'branches#index',
+      to: 'supply_teachers/branches#index',
       slug: 'agency-payroll-results'
   get '/:journey/fixed-term-results',
-      to: 'branches#index',
+      to: 'supply_teachers/branches#index',
       slug: 'fixed-term-results',
       as: 'fixed_term_results'
   get '/:journey/nominated-worker-results',
-      to: 'branches#index',
+      to: 'supply_teachers/branches#index',
       slug: 'nominated-worker-results'
 
   get '/:journey/suppliers', to: 'facilities_management_suppliers#index', as: 'facilities_management_suppliers'

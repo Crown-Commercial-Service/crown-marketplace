@@ -35,18 +35,6 @@ en:
           attributes:
             worker_type:
               inclusion: Select yes if you want an agency to supply the worker
-  branches:
-    branch:
-      branch: Branch
-      markup: Mark-up
-      miles: Miles
-    index:
-      download: Download shortlist of suppliers
-      download_with_calculator: Download shortlist (with markup calculator)
-      header: Suppliers list
-      print: Print this page
-      results_found: results found
-      results_found_with_location_html: results found within <strong>%{range}</strong> of <strong>%{postcode}</strong>
   common:
     submit: Continue
   errors:
@@ -149,3 +137,16 @@ en:
       header: Master vendor managed service providers
     neutral_vendors:
       header: Neutral vendor managed service providers
+  supply_teachers:
+    branches:
+      branch:
+        branch: Branch
+        markup: Mark-up
+        miles: Miles
+      index:
+        download: Download shortlist of suppliers
+        download_with_calculator: Download shortlist (with markup calculator)
+        header: Suppliers list
+        print: Print this page
+        results_found: results found
+        results_found_with_location_html: results found within <strong>%{range}</strong> of <strong>%{postcode}</strong>

@@ -22,7 +22,7 @@ module SupplyTeachers
     def next_step_path
       case next_slug
       when 'results'
-        branches_path(params: params)
+        supply_teachers_branches_path(params: params)
       when 'master-vendor-managed-service'
         master_vendors_path(journey: self.class.journey_name, params: params)
       when 'neutral-vendor-managed-service'
