@@ -4,5 +4,4 @@ if Rails.env.development? || Rails.env.test?
   RuboCop::RakeTask.new(:rubocop)
 
   task(:default).clear.enhance(%i[rubocop spec])
-  task(:default).comment = 'Run rubocop checks'
 end
