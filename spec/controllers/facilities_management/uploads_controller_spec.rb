@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementUploadsController, type: :controller do
+RSpec.describe FacilitiesManagement::UploadsController, type: :controller do
   describe 'POST create' do
     let(:suppliers) { [] }
 
