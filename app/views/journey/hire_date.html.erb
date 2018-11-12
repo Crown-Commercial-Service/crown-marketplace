@@ -1,0 +1,50 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
+    <%= form_tag @form_path, method: :get do %>
+      <%= hidden_fields_for_previous_steps_and_responses(@journey, 'hire_date_day', 'hire_date_month', 'hire_date_year') %>
+      <%= govuk_form_group_with_optional_error(@journey, :hire_date) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :hire_date) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.question') %>
+            </h1>
+          </legend>
+          <%= display_error(@journey, :hire_date) %>
+          <span id="contract-start-hint" class="govuk-hint">
+            For example, 31 3 1980
+          </span>
+          <div class="govuk-date-input" id="contract-start">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="hire_date_day">
+                  Day
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="hire_date_day" name="hire_date_day" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="hire_date_month">
+                  Month
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="hire_date_month" name="hire_date_month" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="hire_date_year">
+                  Year
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="hire_date_year" name="hire_date_year" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
