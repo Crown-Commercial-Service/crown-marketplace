@@ -1,4 +1,4 @@
-class Spreadsheet
+class SupplyTeachers::Spreadsheet
   class DataDownload
     def sheet_name
       'Suppliers'

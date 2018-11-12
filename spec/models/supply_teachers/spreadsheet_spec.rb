@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Spreadsheet do
+RSpec.describe SupplyTeachers::Spreadsheet do
   subject(:spreadsheet) { described_class.new([branch1, branch2]) }
 
   let(:branch1) { build(:branch_search_result) }
