@@ -1,0 +1,12 @@
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        <%= t('.header') %>
+      </h1>
+      <div class="govuk-panel__body">
+        <%= t('.panel_body') %>
+        <br><strong><%= number_to_currency(@fee, unit: '£') %></strong>
+      </div>
+    </div>
+  </div>

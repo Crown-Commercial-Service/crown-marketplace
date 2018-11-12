@@ -1,0 +1,19 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey, 'day_rate') %>
+  <%= govuk_form_group_with_optional_error(@journey, :day_rate) do %>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        <%= t('.question') %>
+      </h1>
+    </legend>
+    <%= display_error(@journey, :day_rate) %>
+    <span class="govuk-hint">
+      <%= t('.question-hint') %>
+    </span>
+    <%= text_field_tag :day_rate, params[:day_rate], class: css_classes_for_input(@journey, :day_rate, ['govuk-input--width-10']) %>
+  <% end %>
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+<% end %>

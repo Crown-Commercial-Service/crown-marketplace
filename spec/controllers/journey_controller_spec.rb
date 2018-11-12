@@ -1,6 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe JourneyController, type: :controller do
+  describe 'GET #start for temp-to-perm-calculator' do
+    it 'redirects to the first step in the journey' do
+      get :start, params: {
+        journey: 'temp-to-perm-calculator'
+      }
+
+      expect(response).to redirect_to(
+        journey_question_path(slug: 'contract-start')
+      )
+    end
+  end
+
   describe 'GET #question for looking-for' do
     context 'when not logged in' do
       before do

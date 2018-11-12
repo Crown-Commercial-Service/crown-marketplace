@@ -1,0 +1,19 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey, 'school_holidays') %>
+  <%= govuk_form_group_with_optional_error(@journey, :school_holidays) do %>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        <%= t('.question') %>
+      </h1>
+    </legend>
+    <%= display_error(@journey, :school_holidays) %>
+    <span class="govuk-hint">
+      <%= t('.question-hint') %>
+    </span>
+    <%= text_field_tag :school_holidays, params[:school_holidays], class: css_classes_for_input(@journey, :school_holidays, ['govuk-input--width-10']) %>
+  <% end %>
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+<% end %>
