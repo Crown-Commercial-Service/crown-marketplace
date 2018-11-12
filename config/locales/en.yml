@@ -131,9 +131,10 @@ en:
       support_email_html: Email %{link} for support.
       title: Crown Commercial Service
   suppliers:
-    master_vendors:
+    master_vendor:
       column1: Job Type
       column2: Supplier mark up
+    master_vendors:
       header: Master vendor managed service providers
     neutral_vendors:
       header: Neutral vendor managed service providers
