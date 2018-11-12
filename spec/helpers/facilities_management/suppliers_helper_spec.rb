@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagementSuppliersHelper, type: :helper do
+RSpec.describe FacilitiesManagement::SuppliersHelper, type: :helper do
   describe '#contract_value_range_text' do
     let(:text) { helper.contract_value_range_text(lot_number) }
 
