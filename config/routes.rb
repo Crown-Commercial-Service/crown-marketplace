@@ -5,15 +5,15 @@ Rails.application.routes.draw do
   resources :branches, only: :index
 
   namespace 'supply_teachers', path: 'supply-teachers' do
-    get '/', to: 'home#supply_teachers'
+    get '/', to: 'home#index'
     resources :uploads, only: :create
   end
   namespace 'facilities_management', path: 'facilities_management' do
-    get '/', to: 'home#facilities_management'
+    get '/', to: 'home#index'
     resources :uploads, only: :create
   end
   namespace 'management_consultancy', path: 'management-consultancy' do
-    get '/', to: 'home#management_consultancy'
+    get '/', to: 'home#index'
   end
 
   get '/:journey/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'

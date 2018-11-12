@@ -1,3 +1,3 @@
 class SupplyTeachers::HomeController < ApplicationController
-  def supply_teachers; end
+  def index; end
 end

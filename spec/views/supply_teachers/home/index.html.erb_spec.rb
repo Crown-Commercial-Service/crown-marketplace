@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'supply_teachers/home/supply_teachers.html.erb' do
+RSpec.describe 'supply_teachers/home/index.html.erb' do
   it 'displays start button link' do
     render
 
