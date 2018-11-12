@@ -1,3 +1,3 @@
 class FacilitiesManagement::HomeController < ApplicationController
-  def facilities_management; end
+  def index; end
 end

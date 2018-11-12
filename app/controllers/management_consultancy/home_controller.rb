@@ -1,3 +1,3 @@
 class ManagementConsultancy::HomeController < ApplicationController
-  def management_consultancy; end
+  def index; end
 end
