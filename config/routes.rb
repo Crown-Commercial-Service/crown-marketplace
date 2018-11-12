@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get '/', to: 'home#index', as: :homepage
-  get '/facilities-management', to: 'home#facilities_management'
   get '/management-consultancy', to: 'home#management_consultancy'
   get '/status', to: 'home#status'
 
@@ -11,6 +10,7 @@ Rails.application.routes.draw do
     resources :uploads, only: :create
   end
   namespace 'facilities_management', path: 'facilities_management' do
+    get '/', to: 'home#facilities_management'
     resources :uploads, only: :create
   end
 
