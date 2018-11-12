@@ -5,5 +5,5 @@ module SupplyTeachers
     attr_accessor :code, :description
   end
 
-  JobType.load_csv('job_types.csv')
+  JobType.load_csv('supply_teachers/job_types.csv')
 end
