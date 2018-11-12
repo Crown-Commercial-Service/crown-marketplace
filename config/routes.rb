@@ -21,13 +21,12 @@ Rails.application.routes.draw do
   end
   namespace 'facilities_management', path: 'facilities_management' do
     get '/', to: 'home#index'
+    get '/suppliers', to: 'suppliers#index'
     resources :uploads, only: :create
   end
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
   end
-
-  get '/:journey/suppliers', to: 'facilities_management_suppliers#index', as: 'facilities_management_suppliers'
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'

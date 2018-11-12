@@ -1,4 +1,4 @@
-class FacilitiesManagementSuppliersController < ApplicationController
+class FacilitiesManagement::SuppliersController < ApplicationController
   def index
     @journey = FacilitiesManagement::Journey.new(params[:slug], params)
     @back_path = @journey.previous_step_path
