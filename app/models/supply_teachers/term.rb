@@ -5,5 +5,5 @@ module SupplyTeachers
     attr_accessor :code, :description, :rate_term
   end
 
-  Term.load_csv('terms.csv')
+  Term.load_csv('supply_teachers/terms.csv')
 end
