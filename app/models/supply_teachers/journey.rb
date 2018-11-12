@@ -24,9 +24,9 @@ module SupplyTeachers
       when 'results'
         supply_teachers_branches_path(params: params)
       when 'master-vendor-managed-service'
-        master_vendors_path(journey: self.class.journey_name, params: params)
+        supply_teachers_master_vendors_path(journey: self.class.journey_name, params: params)
       when 'neutral-vendor-managed-service'
-        neutral_vendors_path(journey: self.class.journey_name, params: params)
+        supply_teachers_neutral_vendors_path(journey: self.class.journey_name, params: params)
       else
         super
       end

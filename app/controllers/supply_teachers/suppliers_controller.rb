@@ -1,4 +1,4 @@
-class SuppliersController < ApplicationController
+class SupplyTeachers::SuppliersController < ApplicationController
   def master_vendors
     @back_path = source_journey.current_step_path
     @suppliers = SupplyTeachers::Supplier.with_master_vendor_rates

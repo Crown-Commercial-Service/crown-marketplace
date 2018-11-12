@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SuppliersController, type: :controller do
+RSpec.describe SupplyTeachers::SuppliersController, type: :controller do
   describe 'GET master_vendors' do
     let(:supplier) { build(:supplier) }
     let(:suppliers) { [supplier] }

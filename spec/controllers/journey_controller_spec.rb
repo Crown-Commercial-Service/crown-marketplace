@@ -83,7 +83,7 @@ RSpec.describe JourneyController, type: :controller do
 
       it 'redirects to master vendors path' do
         expect(response).to redirect_to(
-          master_vendors_path(
+          supply_teachers_master_vendors_path(
             journey: 'supply-teachers',
             managed_service_provider: managed_service_provider,
             looking_for: 'managed_service_provider'
@@ -97,7 +97,7 @@ RSpec.describe JourneyController, type: :controller do
 
       it 'redirects to neutral vendors path' do
         expect(response).to redirect_to(
-          neutral_vendors_path(
+          supply_teachers_neutral_vendors_path(
             journey: 'supply-teachers',
             managed_service_provider: managed_service_provider,
             looking_for: 'managed_service_provider'
