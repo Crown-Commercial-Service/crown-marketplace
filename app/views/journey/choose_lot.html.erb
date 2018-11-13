@@ -16,19 +16,19 @@
       <div class="govuk-radios">
         <div class="govuk-radios__item">
           <%= radio_button_tag :lot, :lot1, checked?(params[:lot], 'lot1'), class: 'govuk-radios__input' %>
-          <%= label_tag :lot_lot1, t('.answer_lot1'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :lot_lot1, ManagementConsultancy::Lot['1'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :lot, :lot2, checked?(params[:lot], 'lot2'), class: 'govuk-radios__input' %>
-          <%= label_tag :lot_lot2, t('.answer_lot2'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :lot_lot2, ManagementConsultancy::Lot['2'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :lot, :lot3, checked?(params[:lot], 'lot3'), class: 'govuk-radios__input' %>
-          <%= label_tag :lot_lot3, t('.answer_lot3'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :lot_lot3, ManagementConsultancy::Lot['3'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= radio_button_tag :lot, :lot4, checked?(params[:lot], 'lot4'), class: 'govuk-radios__input' %>
-          <%= label_tag :lot_lot4, t('.answer_lot4'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :lot_lot4, ManagementConsultancy::Lot['4'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     <% end %>

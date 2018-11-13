@@ -26,7 +26,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     visit_management_consultancy_home
 
     click_on 'Start now'
-    choose I18n.t('journey.choose_lot.answer_lot1')
+    choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 1 - business services')
@@ -38,7 +38,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     visit_management_consultancy_home
 
     click_on 'Start now'
-    choose I18n.t('journey.choose_lot.answer_lot2')
+    choose 'Lot 2 - procurement, supply chain and commercial services'
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 2 - procurement, supply chain and commercial services')
@@ -50,7 +50,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     visit_management_consultancy_home
 
     click_on 'Start now'
-    choose I18n.t('journey.choose_lot.answer_lot3')
+    choose 'Lot 3 - complex and transformation services'
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 3 - complex and transformation services')
@@ -62,7 +62,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     visit_management_consultancy_home
 
     click_on 'Start now'
-    choose I18n.t('journey.choose_lot.answer_lot4')
+    choose 'Lot 4 - strategic services'
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h2', text: 'Lot 4 - strategic services')
