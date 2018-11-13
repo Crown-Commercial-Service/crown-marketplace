@@ -1,0 +1,37 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.question') %>
+        </h1>
+      </legend>
+      <span class="govuk-hint">
+        <%= t('.question_hint') %>
+      </span>
+      <%= display_error(@journey, :lot) %>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :lot, :lot1, checked?(params[:lot], 'lot1'), class: 'govuk-radios__input' %>
+          <%= label_tag :lot_lot1, t('.answer_lot1'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :lot, :lot2, checked?(params[:lot], 'lot2'), class: 'govuk-radios__input' %>
+          <%= label_tag :lot_lot2, t('.answer_lot2'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :lot, :lot3, checked?(params[:lot], 'lot3'), class: 'govuk-radios__input' %>
+          <%= label_tag :lot_lot3, t('.answer_lot3'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :lot, :lot4, checked?(params[:lot], 'lot4'), class: 'govuk-radios__input' %>
+          <%= label_tag :lot_lot4, t('.answer_lot4'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= submit_tag t('.submit'), class: "govuk-button" %>
+<% end %>

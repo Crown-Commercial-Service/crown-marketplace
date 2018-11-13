@@ -11,6 +11,10 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        management_consultancy/steps/choose_lot:
+          attributes:
+            lot:
+              inclusion: Please choose a lot for the services you require
         supply_teachers/steps/agency_payroll:
           attributes:
             location:
@@ -63,6 +67,14 @@ en:
       question_hint: We use this to find agencies near to your school
       worker_term_question: How long do you need the worker for?
       worker_type_question: What type of worker do you need?
+    choose_lot:
+      answer_lot1: Lot 1 - business services
+      answer_lot2: Lot 2 - procurement, supply chain and commercial services
+      answer_lot3: Lot 3 - complex and transformation services
+      answer_lot4: Lot 4 - strategic services
+      question: What kind of management consultancy do you want to procure?
+      question_hint: The lot you choose here will affect the services offered and the suppliers presented.
+      submit: Continue
     looking_for:
       answer_managed_service_provider: A managed service provider
       answer_worker: An individual worker
