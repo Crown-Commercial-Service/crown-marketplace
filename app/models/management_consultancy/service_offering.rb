@@ -6,5 +6,9 @@ module ManagementConsultancy
 
     validates :lot_number, presence: true
     validates :service_code, presence: true
+
+    def self.for_lot(lot_number)
+      where(lot_number: lot_number)
+    end
   end
 end
