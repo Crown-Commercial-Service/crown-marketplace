@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :uploads, only: :create
   end
 
-  namespace 'facilities_management', path: 'facilities_management' do
+  namespace 'facilities_management', path: 'facilities-management' do
     get '/', to: 'home#index'
     get '/suppliers', to: 'suppliers#index'
     resources :uploads, only: :create
