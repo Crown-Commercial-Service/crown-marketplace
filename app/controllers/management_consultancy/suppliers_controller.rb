@@ -5,6 +5,9 @@ module ManagementConsultancy
     def index
       @journey = Journey.new(params[:slug], params)
       @back_path = @journey.previous_step_path
+
+      lot_number = /lot(\d)/.match(params[:lot])[1]
+      @suppliers = Supplier.available_in_lot(lot_number)
     end
   end
 end
