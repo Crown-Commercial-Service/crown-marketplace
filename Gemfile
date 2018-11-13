@@ -34,6 +34,7 @@ gem 'geocoder'
 gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
 gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
+gem 'phonejack'
 
 # for cognito authentication
 gem 'omniauth'
