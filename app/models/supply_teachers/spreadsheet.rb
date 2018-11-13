@@ -1,5 +1,7 @@
 class SupplyTeachers::Spreadsheet
   class DataDownload
+    include TelephoneNumberHelper
+
     def sheet_name
       'Suppliers'
     end
@@ -17,7 +19,7 @@ class SupplyTeachers::Spreadsheet
        branch.name,
        branch.contact_name,
        branch.contact_email,
-       branch.telephone_number]
+       format_telephone_number(branch.telephone_number)]
     end
 
     def style(workbook, sheet); end

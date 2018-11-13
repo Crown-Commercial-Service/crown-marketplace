@@ -52,9 +52,9 @@ RSpec.describe SupplyTeachers::Spreadsheet do
     context 'when the phone number is valid' do
       let(:telephone_number) { '01214960123' }
 
-      it 'does not become a number' do
+      it 'is formatted' do
         expect(worksheet[1].cells.map(&:value)[4])
-          .to eq(telephone_number)
+          .to eq('0121 496 0123')
       end
     end
 
