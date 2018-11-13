@@ -12,7 +12,7 @@ module FacilitiesManagement
 
     it 'populates attributes of first work package' do
       expect(first_package.code).to eq('A')
-      expect(first_package.name).to eq('Contract Management')
+      expect(first_package.name).to eq('Contract management')
     end
   end
 end
