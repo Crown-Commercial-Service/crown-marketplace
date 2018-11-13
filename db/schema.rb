@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_13_133921) do
+ActiveRecord::Schema.define(version: 2018_11_13_140044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -60,6 +60,15 @@ ActiveRecord::Schema.define(version: 2018_11_13_133921) do
     t.text "telephone_number"
   end
 
+  create_table "management_consultancy_service_offerings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "management_consultancy_supplier_id", null: false
+    t.text "lot_number", null: false
+    t.text "service_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["management_consultancy_supplier_id"], name: "index_mc_service_offerings_on_mc_supplier_id"
+  end
+
   create_table "management_consultancy_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "name", null: false
     t.datetime "created_at", null: false
@@ -87,5 +96,6 @@ ActiveRecord::Schema.define(version: 2018_11_13_133921) do
   add_foreign_key "branches", "suppliers"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
+  add_foreign_key "management_consultancy_service_offerings", "management_consultancy_suppliers"
   add_foreign_key "rates", "suppliers"
 end
