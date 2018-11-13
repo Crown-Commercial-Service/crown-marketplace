@@ -11,7 +11,7 @@
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body">
         <strong><%= branch.contact_name %></strong><br />
-        <%= branch.telephone_number %><br />
+        <%= format_telephone_number(branch.telephone_number) %><br />
         <%= mail_to(branch.contact_email) %>
       </p>
     </div>

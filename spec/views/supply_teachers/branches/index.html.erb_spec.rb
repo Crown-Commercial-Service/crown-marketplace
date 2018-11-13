@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'supply_teachers/branches/index.html.erb' do
+  helper(TelephoneNumberHelper)
+
   let(:journey) { instance_double('Journey', params: {}) }
   let(:first_supplier) { build(:supplier, name: 'First Supplier') }
   let(:second_supplier) { build(:supplier, name: 'Second Supplier') }
