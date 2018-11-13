@@ -2,7 +2,9 @@ module SupplyTeachers
   class Branch < ApplicationRecord
     DEFAULT_SEARCH_RANGE_IN_MILES = 25
 
-    belongs_to :supplier
+    belongs_to :supplier,
+               foreign_key: :supply_teachers_supplier_id,
+               inverse_of: :branches
 
     validates :postcode, presence: true, postcode: true
     validates :location, presence: true
@@ -24,7 +26,7 @@ module SupplyTeachers
       Branch.near(point, within_metres: metres)
             .joins(supplier: [:rates])
             .merge(rates)
-            .order('rates.mark_up')
+            .order('supply_teachers_rates.mark_up')
             .order(Arel.sql("ST_Distance(location, '#{point}')"))
     end
   end

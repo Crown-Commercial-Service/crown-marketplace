@@ -26,7 +26,9 @@ module SupplyTeachers
       'more_than_twelve_weeks' => 'Over 12 weeks'
     }.freeze
 
-    belongs_to :supplier
+    belongs_to :supplier,
+               foreign_key: :supply_teachers_supplier_id,
+               inverse_of: :branches
 
     validates :lot_number, presence: true,
                            uniqueness: { scope: %i[supplier term job_type] },
