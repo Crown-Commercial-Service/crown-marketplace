@@ -15,5 +15,14 @@ module ManagementConsultancy
     def start_path
       management_consultancy_path
     end
+
+    def next_step_path
+      case next_slug
+      when 'suppliers'
+        management_consultancy_suppliers_path(journey: self.class.journey_name, params: params)
+      else
+        super
+      end
+    end
   end
 end

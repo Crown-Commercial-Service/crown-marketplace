@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
+    get '/suppliers', to: 'suppliers#index'
     resources :uploads, only: :create
   end
 
