@@ -4,5 +4,19 @@
       <h2 class="govuk-heading-m govuk-!-font-size-27 mc-supplier-record__supplier-name"><%= supplier.name %></h2>
     </div>
   </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+    </div>
+    <div class="govuk-grid-column-one-half">
+      <h4 class="govuk-heading-s mc-supplier-record__services-title">
+        Services
+      </h4>
+      <ul>
+        <% supplier.services_in_lot(lot_number).each do |service| %>
+          <li><%= service.name %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
   <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 </div>
