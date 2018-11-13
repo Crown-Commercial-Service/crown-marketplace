@@ -12,7 +12,7 @@ module FacilitiesManagement
 
     it 'populates attributes of first service' do
       expect(first_service.code).to eq('A.7')
-      expect(first_service.name).to eq('Accessibility Services')
+      expect(first_service.name).to eq('Accessibility services')
       expect(first_service.work_package_code).to eq('A')
     end
 
@@ -23,7 +23,7 @@ module FacilitiesManagement
     it 'looks up work package based on its code' do
       work_package = first_service.work_package
       expect(work_package.code).to eq('A')
-      expect(work_package.name).to eq('Contract Management')
+      expect(work_package.name).to eq('Contract management')
     end
 
     describe '#mandatory?' do
