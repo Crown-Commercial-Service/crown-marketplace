@@ -1,14 +1,8 @@
-<h1>Management Consultancy Framework</h1>
-<h2><%= @lot.full_description %></h2>
-
-<p>
-  <%= pluralize(@suppliers.count, 'supplier') %>
-</p>
-
-<ul>
-  <% @suppliers.each do |supplier| %>
-    <li>
-      <%= supplier.name %>
-    </li>
-  <% end %>
-</ul>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl cmp-page-heading"><%= @lot.full_description %></h1>
+    <p class="govuk-body"><%= pluralize(@suppliers.count, 'supplier') %></p>
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
+  </div>
+</div>
