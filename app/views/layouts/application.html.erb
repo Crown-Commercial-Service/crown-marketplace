@@ -44,6 +44,17 @@
             </span>
           </a>
         </div>
+        <div class="govuk-header__content">
+          <nav>
+            <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+              <li class="govuk-header__navigation-item">
+                <% if logged_in? %>
+                  <%= button_to "Sign out", logout_path, class: 'ccs-header__signout' %>
+                <% end %>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
 
@@ -61,11 +72,6 @@
             </p>
           </div>
           <div class="govuk-grid-column-one-third">
-            <% if logged_in? %>
-            <div>
-              <%= button_to "Logout", logout_path, class: 'govuk-button govuk-!-margin-0' %>
-            </div>
-            <% end %>
           </div>
         </div>
       </div>
