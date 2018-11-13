@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
+    resources :uploads, only: :create
   end
 
   get '/auth/cognito', as: :login

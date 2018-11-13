@@ -89,4 +89,12 @@ $ cd crown-marketplace-data/facilities-management
 $ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @json/data.json http://$HOST/facilities_management/uploads
 ```
 
+### Management consultancy data
+
+```
+$ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
+$ cd crown-marketplace-data/management-consultancy
+$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @json/data.json http://$HOST/management-consultancy/uploads
+```
+
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
