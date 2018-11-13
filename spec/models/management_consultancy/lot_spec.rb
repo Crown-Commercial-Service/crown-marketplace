@@ -12,7 +12,7 @@ module ManagementConsultancy
 
     it 'populates attributes of first lot' do
       expect(first_lot.number).to eq('1')
-      expect(first_lot.description).to eq('Business Consultancy')
+      expect(first_lot.description).to eq('business services')
     end
   end
 end
