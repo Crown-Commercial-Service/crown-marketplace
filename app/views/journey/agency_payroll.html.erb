@@ -2,9 +2,9 @@
 
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
-  <%= hidden_field_tag :worker_type, params[:worker_type] %>
-  <%= hidden_field_tag :looking_for, params[:looking_for] %>
-  <%= hidden_field_tag :payroll_provider, params[:payroll_provider] %>
+  <% @journey.params.each do |(key, value)| %>
+    <%= hidden_field_tag key, value %>
+  <% end %>
   <%= govuk_form_group_with_optional_error(@journey, :location) do %>
     <label class="govuk-label govuk-label--m" for="postcode">
       <%= t('.postcode_question') %>
