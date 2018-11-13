@@ -21,6 +21,25 @@ $ccs_header_fg: govuk-colour("white");
   height: 90px;
 }
 
+.govuk-header__navigation  {
+  text-align: right;
+}
+
+.ccs-header__signout {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  font-family: $govuk-font-family;
+  font-size: 19px;
+  font-weight: $govuk-font-weight-regular;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.ccs-header__signout:hover {
+  text-decoration: underline;
+}
+
 @media (min-width: 641px) {
   .govuk-header__logotype svg {
     width: 140px;

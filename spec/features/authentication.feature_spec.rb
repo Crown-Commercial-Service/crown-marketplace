@@ -24,7 +24,7 @@ RSpec.feature 'Authentication', type: :feature do
 
     click_on 'Log in with beta credentials'
 
-    click_on 'Logout'
+    click_on 'Sign out'
 
     visit '/supply-teachers'
     expect(page).to have_text('Log in with beta credentials')
