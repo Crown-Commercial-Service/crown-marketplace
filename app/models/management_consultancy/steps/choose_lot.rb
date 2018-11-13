@@ -1,6 +1,6 @@
 module ManagementConsultancy
   module Steps
-    class Lot
+    class Suppliers
       include JourneyStep
     end
 
@@ -13,7 +13,7 @@ module ManagementConsultancy
       }
 
       def next_step_class
-        Lot
+        Suppliers
       end
     end
   end
