@@ -1,0 +1,17 @@
+<%
+links = {
+  'lot1' => 'https://ccs-agreements.cabinetoffice.gov.uk/suppliers?sm_field_contract_id="RM6008%3A1"',
+  'lot2' => 'https://ccs-agreements.cabinetoffice.gov.uk/suppliers?sm_field_contract_id="RM6008%3A2"',
+  'lot3' => 'https://ccs-agreements.cabinetoffice.gov.uk/suppliers?sm_field_contract_id="RM6008%3A3"',
+  'lot4' => 'https://ccs-agreements.cabinetoffice.gov.uk/suppliers?sm_field_contract_id="RM6008%3A4"',
+}
+titles = {
+  'lot1' => 'Lot 1 - business services',
+  'lot2' => 'Lot 2 - procurement, supply chain and commercial services',
+  'lot3' => 'Lot 3 - complex and transformation services',
+  'lot4' => 'Lot 4 - strategic services'
+}
+%>
+<h1>Management Consultancy Framework</h1>
+<h2><%= titles[params[:lot]] %></h2>
+<p><a href="<%= links[params[:lot]] %>">View a list of suppliers</a></p>

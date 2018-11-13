@@ -31,6 +31,8 @@ class JourneyController < ApplicationController
       SupplyTeachers::Journey
     when FacilitiesManagement::Journey.journey_name
       FacilitiesManagement::Journey
+    when ManagementConsultancy::Journey.journey_name
+      ManagementConsultancy::Journey
     else
       raise ActionController::RoutingError, nil
     end
