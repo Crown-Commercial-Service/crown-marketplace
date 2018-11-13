@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe SupplyTeachers::Spreadsheet do
   subject(:spreadsheet) { described_class.new([branch1, branch2]) }
 
-  let(:branch1) { build(:branch_search_result) }
+  let(:telephone_number) { '0121 496 0123' }
+  let(:branch1) { build(:branch_search_result, telephone_number: telephone_number) }
   let(:branch2) { build(:branch_search_result) }
 
   describe 'the generated worksheet' do
@@ -46,6 +47,24 @@ RSpec.describe SupplyTeachers::Spreadsheet do
         branch2.contact_email,
         branch2.telephone_number
       ]
+    end
+
+    context 'when the phone number is valid' do
+      let(:telephone_number) { '01214960123' }
+
+      it 'does not become a number' do
+        expect(worksheet[1].cells.map(&:value)[4])
+          .to eq(telephone_number)
+      end
+    end
+
+    context 'when the phone number is invalid' do
+      let(:telephone_number) { '0111111111111' }
+
+      it 'does not become a number' do
+        expect(worksheet[1].cells.map(&:value)[4])
+          .to eq(telephone_number)
+      end
     end
   end
 end
