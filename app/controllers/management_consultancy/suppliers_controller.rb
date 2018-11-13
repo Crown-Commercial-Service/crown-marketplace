@@ -7,7 +7,8 @@ module ManagementConsultancy
       @back_path = @journey.previous_step_path
 
       lot_number = /lot(\d)/.match(params[:lot])[1]
-      @suppliers = Supplier.available_in_lot(lot_number)
+      @lot = Lot.find_by(number: lot_number)
+      @suppliers = Supplier.available_in_lot(@lot.number)
     end
   end
 end

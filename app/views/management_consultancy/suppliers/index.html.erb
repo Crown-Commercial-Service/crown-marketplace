@@ -1,13 +1,5 @@
-<%
-titles = {
-  'lot1' => 'Lot 1 - business services',
-  'lot2' => 'Lot 2 - procurement, supply chain and commercial services',
-  'lot3' => 'Lot 3 - complex and transformation services',
-  'lot4' => 'Lot 4 - strategic services'
-}
-%>
 <h1>Management Consultancy Framework</h1>
-<h2><%= titles[params[:lot]] %></h2>
+<h2><%= @lot.description %></h2>
 
 <p>
   <%= pluralize(@suppliers.count, 'supplier') %>
