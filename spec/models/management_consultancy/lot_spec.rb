@@ -14,5 +14,11 @@ module ManagementConsultancy
       expect(first_lot.number).to eq('1')
       expect(first_lot.description).to eq('business services')
     end
+
+    describe '.[]' do
+      it 'looks up lot by number' do
+        expect(described_class['1'].number).to eq('1')
+      end
+    end
   end
 end
