@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
+  helper(TelephoneNumberHelper)
+
   let(:supplier) { build(:supplier) }
   let(:branch_name) { 'Head Office' }
   let(:branch_town) { 'Guildford' }
-  let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
+  let(:telephone_number) { '01214960123' }
   let(:contact_name) { Faker::Name.unique.name }
   let(:contact_email) { Faker::Internet.unique.email }
   let(:branch) do
@@ -29,8 +31,8 @@ RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
     expect(rendered).to have_content(contact_name)
   end
 
-  it 'displays telephone number' do
-    expect(rendered).to have_content(telephone_number)
+  it 'formats and displays telephone number' do
+    expect(rendered).to have_content('0121 496 0123')
   end
 
   it 'displays contact email' do

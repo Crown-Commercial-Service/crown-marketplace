@@ -2,6 +2,8 @@ require 'supply_teachers/journey'
 
 module SupplyTeachers
   class BranchesController < ApplicationController
+    helper :telephone_number
+
     def index
       @journey = Journey.new(params[:slug], params)
       @back_path = @journey.previous_step_path
