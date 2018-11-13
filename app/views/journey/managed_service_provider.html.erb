@@ -2,7 +2,9 @@
 
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
-  <%= hidden_field_tag :looking_for, params[:looking_for] %>
+  <% @journey.params.each do |(key, value)| %>
+    <%= hidden_field_tag key, value %>
+  <% end %>
   <%= govuk_form_group_with_optional_error(@journey, :managed_service_provider) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :managed_service_provider) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
