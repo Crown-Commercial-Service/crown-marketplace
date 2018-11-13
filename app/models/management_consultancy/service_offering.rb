@@ -10,5 +10,9 @@ module ManagementConsultancy
     def self.for_lot(lot_number)
       where(lot_number: lot_number)
     end
+
+    def service
+      Service.find_by(code: service_code)
+    end
   end
 end

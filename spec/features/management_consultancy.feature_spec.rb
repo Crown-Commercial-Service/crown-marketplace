@@ -31,7 +31,8 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     expect(page).to have_css('h1', text: 'Lot 1 - business services')
     expect(page).to have_text('2 suppliers')
-    expect(page).to have_text(/Aardvark Ltd.*\n.*Mega Group PLC/)
+    expect(page).to have_text(/Aardvark Ltd/)
+    expect(page).to have_text(/Mega Group PLC/)
   end
 
   scenario 'Buyer wants to buy procurement, supply chain and commercial services (Lot 2)' do
@@ -43,7 +44,8 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     expect(page).to have_css('h1', text: 'Lot 2 - procurement, supply chain and commercial services')
     expect(page).to have_text('2 suppliers')
-    expect(page).to have_text(/Mega Group PLC.*\n.*Johnson LLP/)
+    expect(page).to have_text(/Mega Group PLC/)
+    expect(page).to have_text(/Johnson LLP/)
   end
 
   scenario 'Buyer wants to buy complex & transformation services (Lot 3)' do
@@ -55,7 +57,8 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     expect(page).to have_css('h1', text: 'Lot 3 - complex and transformation services')
     expect(page).to have_text('2 suppliers')
-    expect(page).to have_text(/Johnson LLP.*\n.*Pi Consulting/)
+    expect(page).to have_text(/Johnson LLP/)
+    expect(page).to have_text(/Pi Consulting/)
   end
 
   scenario 'Buyer wants to buy strategic services (Lot 4)' do
@@ -67,6 +70,7 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     expect(page).to have_css('h1', text: 'Lot 4 - strategic services')
     expect(page).to have_text('2 suppliers')
-    expect(page).to have_text(/Aardvark Ltd.*\n.*Pi Consulting/)
+    expect(page).to have_text(/Aardvark Ltd/)
+    expect(page).to have_text(/Pi Consulting/)
   end
 end

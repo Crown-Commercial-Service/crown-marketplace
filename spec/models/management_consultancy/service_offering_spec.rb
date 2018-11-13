@@ -21,5 +21,11 @@ module ManagementConsultancy
       offering = supplier.service_offerings.build
       expect(offering.supplier).to eq(supplier)
     end
+
+    it 'looks up service based on its code' do
+      offering = build(:management_consultancy_service_offering, service_code: '1.1')
+      expect(offering.service).to be_instance_of(Service)
+      expect(offering.service.code).to eq('1.1')
+    end
   end
 end
