@@ -86,7 +86,7 @@ $ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --h
 ```
 $ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
 $ cd crown-marketplace-data/facilities-management
-$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @output/data.json http://$HOST/facilities_management/uploads
+$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @output/data.json http://$HOST/facilities-management/uploads
 ```
 
 ### Management consultancy data
