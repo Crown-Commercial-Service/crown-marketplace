@@ -1,7 +1,13 @@
 module SupplyTeachers
   class Supplier < ApplicationRecord
-    has_many :branches, dependent: :destroy
-    has_many :rates, dependent: :destroy
+    has_many :branches,
+             foreign_key: :supply_teachers_supplier_id,
+             inverse_of: :supplier,
+             dependent: :destroy
+    has_many :rates,
+             foreign_key: :supply_teachers_supplier_id,
+             inverse_of: :supplier,
+             dependent: :destroy
 
     validates :name, presence: true
 
