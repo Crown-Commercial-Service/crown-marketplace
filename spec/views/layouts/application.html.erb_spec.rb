@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'layouts/application.html.erb' do
   before do
+    view.extend(ApplicationHelper)
     controller.singleton_class.class_eval do
       def logged_in?
         true

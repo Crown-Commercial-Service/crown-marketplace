@@ -4,6 +4,10 @@ RSpec.describe 'journey/_error_summary.html.erb' do
   let(:step) { instance_double('JourneyStep') }
   let(:errors) { ActiveModel::Errors.new(step) }
 
+  before do
+    view.extend(ApplicationHelper)
+  end
+
   context 'when errors are empty' do
     before do
       render partial: 'error_summary', locals: { errors: errors }

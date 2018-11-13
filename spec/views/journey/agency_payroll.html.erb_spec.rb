@@ -6,6 +6,7 @@ RSpec.describe 'journey/agency_payroll.html.erb' do
   let(:journey) { instance_double('Journey', errors: errors) }
 
   before do
+    view.extend(ApplicationHelper)
     assign(:journey, journey)
     assign(:form_path, '/')
   end
