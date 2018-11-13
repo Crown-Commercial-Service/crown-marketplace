@@ -29,9 +29,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h2', text: 'Lot 1 - business services')
+    expect(page).to have_css('h1', text: 'Lot 1 - business services')
     expect(page).to have_text('2 suppliers')
-    expect(page).to have_text(/Aardvark Ltd.*Mega Group PLC/)
+    expect(page).to have_text(/Aardvark Ltd.*\n.*Mega Group PLC/)
   end
 
   scenario 'Buyer wants to buy procurement, supply chain and commercial services (Lot 2)' do
@@ -41,9 +41,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     choose 'Lot 2 - procurement, supply chain and commercial services'
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h2', text: 'Lot 2 - procurement, supply chain and commercial services')
+    expect(page).to have_css('h1', text: 'Lot 2 - procurement, supply chain and commercial services')
     expect(page).to have_text('2 suppliers')
-    expect(page).to have_text(/Mega Group PLC.*Johnson LLP/)
+    expect(page).to have_text(/Mega Group PLC.*\n.*Johnson LLP/)
   end
 
   scenario 'Buyer wants to buy complex & transformation services (Lot 3)' do
@@ -53,9 +53,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     choose 'Lot 3 - complex and transformation services'
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h2', text: 'Lot 3 - complex and transformation services')
+    expect(page).to have_css('h1', text: 'Lot 3 - complex and transformation services')
     expect(page).to have_text('2 suppliers')
-    expect(page).to have_text(/Johnson LLP.*Pi Consulting/)
+    expect(page).to have_text(/Johnson LLP.*\n.*Pi Consulting/)
   end
 
   scenario 'Buyer wants to buy strategic services (Lot 4)' do
@@ -65,8 +65,8 @@ RSpec.feature 'Management consultancy', type: :feature do
     choose 'Lot 4 - strategic services'
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h2', text: 'Lot 4 - strategic services')
+    expect(page).to have_css('h1', text: 'Lot 4 - strategic services')
     expect(page).to have_text('2 suppliers')
-    expect(page).to have_text(/Aardvark Ltd.*Pi Consulting/)
+    expect(page).to have_text(/Aardvark Ltd.*\n.*Pi Consulting/)
   end
 end
