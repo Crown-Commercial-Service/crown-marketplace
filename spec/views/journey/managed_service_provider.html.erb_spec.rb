@@ -3,12 +3,23 @@ require 'rails_helper'
 RSpec.describe 'journey/managed_service_provider.html.erb' do
   let(:step) { SupplyTeachers::Steps::ManagedServiceProvider.new }
   let(:errors) { ActiveModel::Errors.new(step) }
-  let(:journey) { instance_double('Journey', errors: errors) }
+  let(:journey) { instance_double('Journey', errors: errors, params: params) }
 
   before do
     view.extend(ApplicationHelper)
     assign(:journey, journey)
     assign(:form_path, '/')
+  end
+
+  context 'when there are previous questions/answers stored in the params' do
+    before do
+      params[:question] = 'answer'
+    end
+
+    it 'stores them in hidden fields' do
+      render
+      expect(rendered).to have_css('input[type="hidden"][name="question"][value="answer"]', visible: false)
+    end
   end
 
   it 'does not display the error summary' do
