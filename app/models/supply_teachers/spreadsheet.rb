@@ -8,6 +8,10 @@ class SupplyTeachers::Spreadsheet
       ['Supplier name', 'Branch name', 'Contact name', 'Contact email', 'Telephone number']
     end
 
+    def types
+      %i[string string string string string]
+    end
+
     def row(branch, _row_num)
       [branch.supplier_name,
        branch.name,
@@ -28,6 +32,10 @@ class SupplyTeachers::Spreadsheet
       extra_headers =
         ['Mark-up', 'Daily quote', 'Costs of the worker', 'Supplier fee']
       super + extra_headers
+    end
+
+    def types
+      super + [:float, nil, nil, nil]
     end
 
     def row(branch, row)
@@ -62,7 +70,7 @@ class SupplyTeachers::Spreadsheet
     spreadsheet(@format.sheet_name) do |workbook, sheet|
       sheet.add_row @format.headers
       @branches.each.with_index(2) do |branch, i|
-        sheet.add_row @format.row(branch, i)
+        sheet.add_row @format.row(branch, i), types: @format.types
       end
       @format.style(workbook, sheet)
     end
