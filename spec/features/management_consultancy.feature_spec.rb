@@ -29,6 +29,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     choose I18n.t('journey.choose_lot.answer_lot1')
     click_on I18n.t('common.submit')
 
+    expect(page).to have_css('h2', text: 'Lot 1 - business services')
     expect(page).to have_text('2 suppliers')
     expect(page).to have_text(/Aardvark Ltd.*Mega Group PLC/)
   end
@@ -40,6 +41,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     choose I18n.t('journey.choose_lot.answer_lot2')
     click_on I18n.t('common.submit')
 
+    expect(page).to have_css('h2', text: 'Lot 2 - procurement, supply chain and commercial services')
     expect(page).to have_text('2 suppliers')
     expect(page).to have_text(/Mega Group PLC.*Johnson LLP/)
   end
@@ -51,6 +53,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     choose I18n.t('journey.choose_lot.answer_lot3')
     click_on I18n.t('common.submit')
 
+    expect(page).to have_css('h2', text: 'Lot 3 - complex and transformation services')
     expect(page).to have_text('2 suppliers')
     expect(page).to have_text(/Johnson LLP.*Pi Consulting/)
   end
@@ -62,6 +65,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     choose I18n.t('journey.choose_lot.answer_lot4')
     click_on I18n.t('common.submit')
 
+    expect(page).to have_css('h2', text: 'Lot 4 - strategic services')
     expect(page).to have_text('2 suppliers')
     expect(page).to have_text(/Aardvark Ltd.*Pi Consulting/)
   end
