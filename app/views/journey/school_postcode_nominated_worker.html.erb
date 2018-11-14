@@ -2,7 +2,7 @@
 
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
-  <%= hidden_fields_for_previous_steps_and_responses(@journey, 'postcode') %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
   <%= govuk_form_group_with_optional_error(@journey, :location) do %>
     <h1 class="govuk-label-wrapper">
       <label class="govuk-label govuk-label--m" for="postcode">
