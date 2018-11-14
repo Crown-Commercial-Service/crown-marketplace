@@ -24,7 +24,6 @@ module TempToPermCalculator
       it { is_expected.to have_attributes(next_slug: 'hire-date') }
       it { is_expected.to have_attributes(params: {}) }
       it { is_expected.to have_attributes(template: 'contract_start') }
-      it { is_expected.to be_valid }
     end
   end
 end
