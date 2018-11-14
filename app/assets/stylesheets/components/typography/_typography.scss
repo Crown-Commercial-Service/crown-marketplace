@@ -1,7 +1,15 @@
 @import "govuk-frontend/core/typography";
 
+strong {
+	font-weight: $govuk-font-weight-semi-bold;	
+}
 .govuk-heading-xl {
 	font-weight: $govuk-font-weight-light;
 	margin-bottom: 36px;
 	line-height: 1.15;
+}
+.govuk-heading-l,
+.govuk-heading-m,
+.govuk-heading-s {
+	font-weight: $govuk-font-weight-semi-bold;
 }
