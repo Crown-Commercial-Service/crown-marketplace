@@ -3,7 +3,7 @@ class Journey
 
   def initialize(first_step_class, slug, params, paths)
     @steps = []
-    @params = {}
+    @params = HashWithIndifferentAccess.new
     @paths = paths
 
     klass = first_step_class
@@ -59,6 +59,10 @@ class Journey
 
   def start_path
     @paths.home
+  end
+
+  def previous_questions_and_answers
+    params.except(*current_step.class.attributes)
   end
 
   delegate :slug, to: :current_step, prefix: :current, allow_nil: true

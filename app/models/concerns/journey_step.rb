@@ -19,6 +19,10 @@ module JourneyStep
       single_params + [array_params.map { |k| [k, []] }.to_h]
     end
 
+    def attributes
+      single_params + array_params
+    end
+
     def single_params
       @single_params ||= []
     end
