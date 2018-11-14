@@ -48,10 +48,10 @@ module TempToPermCalculator
       end
       # rubocop:enable RSpec/ExampleLength
 
-      it 'assigns fee to the view' do
+      it 'assigns the calculator to the view' do
         request
 
-        expect(assigns(:fee)).to be_truthy
+        expect(assigns(:calculator)).to be_truthy
       end
 
       it 'renders the template' do
