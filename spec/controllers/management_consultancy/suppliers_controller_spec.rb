@@ -16,7 +16,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
     end
 
     context 'when the lot answer is lot1' do
-      let(:lot_answer) { 'lot1' }
+      let(:lot_answer) { '1' }
       let(:lot_number) { '1' }
 
       let(:params) do
@@ -49,7 +49,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
     end
 
     context 'when the lot answer is lot2' do
-      let(:lot_answer) { 'lot2' }
+      let(:lot_answer) { '2' }
       let(:lot_number) { '2' }
 
       let(:params) do

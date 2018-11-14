@@ -15,20 +15,20 @@
       <%= display_error(@journey, :lot) %>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, :lot1, checked?(params[:lot], 'lot1'), class: 'govuk-radios__input' %>
-          <%= label_tag :lot_lot1, ManagementConsultancy::Lot['1'].full_description, class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :lot, '1', checked?(params[:lot], '1'), class: 'govuk-radios__input' %>
+          <%= label_tag :lot_1, ManagementConsultancy::Lot['1'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, :lot2, checked?(params[:lot], 'lot2'), class: 'govuk-radios__input' %>
-          <%= label_tag :lot_lot2, ManagementConsultancy::Lot['2'].full_description, class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :lot, '2', checked?(params[:lot], '2'), class: 'govuk-radios__input' %>
+          <%= label_tag :lot_2, ManagementConsultancy::Lot['2'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, :lot3, checked?(params[:lot], 'lot3'), class: 'govuk-radios__input' %>
-          <%= label_tag :lot_lot3, ManagementConsultancy::Lot['3'].full_description, class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :lot, '3', checked?(params[:lot], '3'), class: 'govuk-radios__input' %>
+          <%= label_tag :lot_3, ManagementConsultancy::Lot['3'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, :lot4, checked?(params[:lot], 'lot4'), class: 'govuk-radios__input' %>
-          <%= label_tag :lot_lot4, ManagementConsultancy::Lot['4'].full_description, class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :lot, '4', checked?(params[:lot], '4'), class: 'govuk-radios__input' %>
+          <%= label_tag :lot_4, ManagementConsultancy::Lot['4'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     <% end %>
