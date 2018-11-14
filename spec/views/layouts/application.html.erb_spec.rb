@@ -22,7 +22,7 @@ RSpec.describe 'layouts/application.html.erb' do
     end
 
     context 'when feedback email address is present' do
-      let(:feedback_email_address) { 'feedback@example.com' }
+      let(:feedback_email_address) { 'cmp-support@crowncommercial.gov.uk' }
 
       it 'displays link to feedback email address in beta banner' do
         render

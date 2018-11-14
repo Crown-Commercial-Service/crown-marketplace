@@ -234,7 +234,7 @@ module SupplyTeachers
           create(:branch, name: 'closest', supplier: supplier, location: location)
         end
 
-        it 'orders branches by mark up and then proximity in ascending order' do
+        it 'orders branches by mark-up and then proximity in ascending order' do
           results = described_class.search(
             Geocoding.point(latitude: 0, longitude: 0),
             rates: Rate.direct_provision.nominated_worker
