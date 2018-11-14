@@ -82,10 +82,10 @@ en:
     managed_service_providers_explanation:
       header: Managed service providers
       introduction: 'You will need to choose either:'
-      option1_body_html: |
-        These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
-        <br>
-        You will then need to contact all the suppliers and run a further competition.
+      option1_body_html1: 'These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
+
+'
+      option1_body_html2: You will then need to contact all the suppliers and run a further competition.
       option1_header: A master vendor
       option2_body_html: 'A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
 

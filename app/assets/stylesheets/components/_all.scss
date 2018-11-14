@@ -3,8 +3,6 @@
 @import "govuk-frontend/components/breadcrumbs/breadcrumbs";
 @import "govuk-frontend/components/checkboxes/checkboxes";
 @import "govuk-frontend/components/date-input/date-input";
-@import "govuk-frontend/components/error-message/error-message";
-@import "govuk-frontend/components/error-summary/error-summary";
 @import "govuk-frontend/components/file-upload/file-upload";
 @import "govuk-frontend/components/hint/hint";
 @import "govuk-frontend/components/input/input";
@@ -22,6 +20,8 @@
 @import "back-link/back-link";
 @import "button/button";
 @import "details/details";
+@import "error-message/error-message";
+@import "error-summary/error-summary";
 @import "header/header";
 @import "footer/footer";
 @import "fieldset/fieldset";

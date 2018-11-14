@@ -20,7 +20,7 @@
 
 .supplier-record__markup-rate,
 .supplier-record__distance {
-    font-weight: 600;
+    font-weight: $govuk-font-weight-semi-bold;;
     margin-bottom: 0;
 }
 
@@ -45,7 +45,7 @@
     text-align: center;
     line-height: 2.45;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: $govuk-font-weight-semi-bold;;
     content: "";
 }
 
