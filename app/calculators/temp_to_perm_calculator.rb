@@ -2,6 +2,8 @@ require 'holidays'
 
 module TempToPermCalculator
   class Calculator
+    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate
+
     # rubocop:disable Metrics/ParameterLists
     def initialize(
       day_rate:,
