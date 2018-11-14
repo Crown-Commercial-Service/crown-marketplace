@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe 'journey/worker_type.html.erb' do
   let(:step) { SupplyTeachers::Steps::WorkerType.new }
   let(:errors) { ActiveModel::Errors.new(step) }
-  let(:journey) { instance_double('Journey', errors: errors, params: params) }
+  let(:journey_params) { {} }
+  let(:journey) { instance_double('Journey', errors: errors, params: journey_params) }
 
   before do
     view.extend(ApplicationHelper)
@@ -12,8 +13,8 @@ RSpec.describe 'journey/worker_type.html.erb' do
   end
 
   context 'when there are previous questions/answers stored in the params' do
-    before do
-      params[:question] = 'answer'
+    let(:journey_params) do
+      { 'question' => 'answer' }
     end
 
     it 'stores them in hidden fields' do
@@ -23,8 +24,8 @@ RSpec.describe 'journey/worker_type.html.erb' do
   end
 
   context 'when the current question/answer is stored in the params' do
-    before do
-      params[:worker_type] = 'worker-type'
+    let(:journey_params) do
+      { 'worker_type' => 'worker-type' }
     end
 
     it 'does not store it in a hidden field' do

@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe 'journey/agency_payroll.html.erb' do
   let(:step) { SupplyTeachers::Steps::AgencyPayroll.new }
   let(:errors) { ActiveModel::Errors.new(step) }
-  let(:journey) { instance_double('Journey', errors: errors, params: params) }
+  let(:journey_params) { {} }
+  let(:journey) { instance_double('Journey', errors: errors, params: journey_params) }
 
   before do
     view.extend(ApplicationHelper)
@@ -12,8 +13,8 @@ RSpec.describe 'journey/agency_payroll.html.erb' do
   end
 
   context 'when there are previous questions/answers stored in the params' do
-    before do
-      params[:question] = 'answer'
+    let(:journey_params) do
+      { 'question' => 'answer' }
     end
 
     it 'stores them in hidden fields' do
@@ -23,10 +24,12 @@ RSpec.describe 'journey/agency_payroll.html.erb' do
   end
 
   context 'when the current questions/answers are stored in the params' do
-    before do
-      params[:postcode] = 'postcode'
-      params[:job_type] = 'job-type'
-      params[:term] = 'term'
+    let(:journey_params) do
+      {
+        'postcode' => 'postcode',
+        'job_type' => 'job-type',
+        'term' => 'term'
+      }
     end
 
     it 'does not store the postcode answer in a hidden field' do
