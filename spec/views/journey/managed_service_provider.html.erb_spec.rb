@@ -22,6 +22,17 @@ RSpec.describe 'journey/managed_service_provider.html.erb' do
     end
   end
 
+  context 'when the current question/answer is stored in the params' do
+    before do
+      params[:managed_service_provider] = 'managed-service-provider'
+    end
+
+    it 'does not store it in a hidden field' do
+      render
+      expect(rendered).not_to have_css('input[type="hidden"][name="managed_service_provider"]', visible: false)
+    end
+  end
+
   it 'does not display the error summary' do
     render
     expect(rendered).not_to have_css('.govuk-error-summary')

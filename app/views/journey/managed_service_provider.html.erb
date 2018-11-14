@@ -3,7 +3,7 @@
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <% @journey.params.each do |(key, value)| %>
-    <%= hidden_field_tag key, value %>
+    <%= hidden_field_tag(key, value) unless key == 'managed_service_provider' %>
   <% end %>
   <%= govuk_form_group_with_optional_error(@journey, :managed_service_provider) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :managed_service_provider) do %>
