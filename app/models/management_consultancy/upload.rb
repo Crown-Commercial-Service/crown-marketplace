@@ -25,7 +25,10 @@ module ManagementConsultancy
     def self.create_supplier!(data)
       supplier = Supplier.create!(
         id: data['supplier_id'],
-        name: data['supplier_name']
+        name: data['supplier_name'],
+        contact_name: data['contact_name'],
+        contact_email: data['contact_email'],
+        telephone_number: data['contact_phone']
       )
 
       lots = data.fetch('lots', [])
