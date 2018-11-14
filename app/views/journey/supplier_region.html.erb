@@ -3,7 +3,7 @@
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <% @journey.params.each do |(key, value)| %>
-    <%= hidden_field_tag key, value %>
+    <%= hidden_field_tag(key, value) unless key == 'region_codes' %>
   <% end %>
   <%= govuk_form_group_with_optional_error(@journey, :region_codes) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :region_codes) do %>

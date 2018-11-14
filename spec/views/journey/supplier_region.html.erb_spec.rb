@@ -22,6 +22,17 @@ RSpec.describe 'journey/supplier_region.html.erb' do
     end
   end
 
+  context 'when the current question/answer is stored in the params' do
+    before do
+      params[:region_codes] = 'region-codes'
+    end
+
+    it 'does not store it in a hidden field' do
+      render
+      expect(rendered).not_to have_css('input[type="hidden"][name="region_codes"]', visible: false)
+    end
+  end
+
   it 'does not include aria-describedby attribute' do
     render
     expect(rendered).not_to have_css('fieldset[aria-describedby]')
