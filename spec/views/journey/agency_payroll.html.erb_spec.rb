@@ -22,6 +22,27 @@ RSpec.describe 'journey/agency_payroll.html.erb' do
     end
   end
 
+  context 'when the current questions/answers are stored in the params' do
+    before do
+      params[:postcode] = 'postcode'
+      params[:job_type] = 'job-type'
+      params[:term] = 'term'
+    end
+
+    it 'does not store the postcode answer in a hidden field' do
+      render
+      expect(rendered).not_to have_css('input[type="hidden"][name="postcode"]', visible: false)
+    end
+
+    it 'does not store the job_type answer in a hidden field' do
+      expect(rendered).not_to have_css('input[type="hidden"][name="job_type"]', visible: false)
+    end
+
+    it 'does not store the term answer in a hidden field' do
+      expect(rendered).not_to have_css('input[type="hidden"][name="term"]', visible: false)
+    end
+  end
+
   it 'does not display the error summary' do
     render
     expect(rendered).not_to have_css('.govuk-error-summary')
