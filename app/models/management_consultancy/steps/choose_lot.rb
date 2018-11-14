@@ -9,7 +9,7 @@ module ManagementConsultancy
 
       attribute :lot
       validates :lot, inclusion: {
-        in: ['lot1', 'lot2', 'lot3', 'lot4']
+        in: ['1', '2', '3', '4']
       }
 
       def next_step_class
