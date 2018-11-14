@@ -23,6 +23,17 @@ RSpec.describe 'journey/school_postcode.html.erb' do
     end
   end
 
+  context 'when the current question/answer is stored in the params' do
+    before do
+      params[:postcode] = 'postcode'
+    end
+
+    it 'does not store it in a hidden field' do
+      render
+      expect(rendered).not_to have_css('input[type="hidden"][name="postcode"]', visible: false)
+    end
+  end
+
   it 'does not display the error summary' do
     render
     expect(rendered).not_to have_css('.govuk-error-summary')
