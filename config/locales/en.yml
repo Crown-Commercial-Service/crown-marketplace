@@ -61,6 +61,7 @@ en:
       management_consultancy_link: Find management consultancy services
       service_title: Crown Marketplace
       supply_teachers_link: Find supply teachers and non-teaching staff
+      temp_to_perm_calculator_link: Calculate the fee you have to pay when recruiting a supply teacher
   journey:
     agency_payroll:
       postcode_question: What is your school's postcode?
@@ -71,6 +72,16 @@ en:
       question: What kind of management consultancy do you want to procure?
       question_hint: The lot you choose here will affect the services offered and the suppliers presented.
       submit: Continue
+    contract_start:
+      question: What date was the worker first supplied to you on their current contract?
+    day_rate:
+      question: What is the supplier's total day rate for the worker?
+      question-hint: An amount in pounds. For example, 500
+    days_per_week:
+      question: How many days per week is the worker contracted to work?
+      question-hint: For example, 5
+    hire_date:
+      question: What date do you want to hire them from?
     looking_for:
       answer_managed_service_provider: A managed service provider
       answer_worker: An individual worker
@@ -92,10 +103,16 @@ en:
 '
       option2_header: A neutral vendor
       option_separator: or
+    markup_rate:
+      question: What mark-up does the supplier charge for the worker?
+      question-hint: This is the percentage fee you agreed with the supplier. For example, 40
     payroll_provider:
       answer_agency_payroll: No, I want the agency to deal with payroll
       answer_school_payroll: 'Yes'
       question: Do you want to put the worker on the school's payroll?
+    school_holidays:
+      question: How many school holidays were there between the contract start date and the proposed hire date?
+      question-hint: This is the number of non-working days not including bank holidays or weekends. For example, 10
     school_postcode:
       question: What is your school's postcode?
       question_hint: We use this to find agencies near to your school
@@ -159,3 +176,8 @@ en:
         header: Master vendor managed service providers
       neutral_vendors:
         header: Neutral vendor managed service providers
+  temp_to_perm_calculator:
+    home:
+      fee:
+        header: Temp to Perm Fee
+        panel_body: Based on the information provided you could be charged

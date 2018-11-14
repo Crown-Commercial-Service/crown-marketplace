@@ -81,6 +81,12 @@ def visit_supply_teachers_home
   click_on I18n.t('home.index.supply_teachers_link')
 end
 
+def visit_temp_to_perm_calculator_home
+  visit '/'
+  click_on 'Log in with beta credentials'
+  click_on I18n.t('home.index.temp_to_perm_calculator_link')
+end
+
 def visit_facilities_management_home
   visit '/'
   click_on 'Log in with beta credentials'
