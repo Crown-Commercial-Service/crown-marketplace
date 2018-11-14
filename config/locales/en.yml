@@ -147,14 +147,14 @@ en:
       index:
         download: Download shortlist of suppliers
         download_with_calculator: Download shortlist (with markup calculator)
-        header: Suppliers list
+        header: Supplier list
         print: Print this page
         results_found: results found
         results_found_with_location_html: results found within <strong>%{range}</strong> of <strong>%{postcode}</strong>
     suppliers:
       master_vendor:
-        column1: Job Type
-        column2: Supplier mark up
+        column1: Job type
+        column2: Supplier mark-up
       master_vendors:
         header: Master vendor managed service providers
       neutral_vendors:
