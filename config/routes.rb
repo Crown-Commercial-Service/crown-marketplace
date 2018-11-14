@@ -27,6 +27,11 @@ Rails.application.routes.draw do
     resources :uploads, only: :create
   end
 
+  namespace 'temp_to_perm_calculator', path: 'temp-to-perm-calculator' do
+    get '/', to: 'home#index'
+    get '/fee', to: 'home#fee'
+  end
+
   get '/auth/cognito', as: :login
   get '/auth/cognito/callback' => 'auth#callback'
   post '/auth/cognito/logout' => 'auth#logout', as: :logout
