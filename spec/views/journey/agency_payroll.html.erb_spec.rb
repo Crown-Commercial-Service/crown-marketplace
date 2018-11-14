@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe 'journey/agency_payroll.html.erb' do
   let(:step) { SupplyTeachers::Steps::AgencyPayroll.new }
   let(:errors) { ActiveModel::Errors.new(step) }
-  let(:journey_params) { {} }
-  let(:journey) { instance_double('Journey', errors: errors, params: journey_params) }
+  let(:journey) { instance_double('Journey', errors: errors, previous_questions_and_answers: {}) }
 
   before do
     view.extend(ApplicationHelper)
@@ -12,38 +11,10 @@ RSpec.describe 'journey/agency_payroll.html.erb' do
     assign(:form_path, '/')
   end
 
-  context 'when there are previous questions/answers stored in the params' do
-    let(:journey_params) do
-      { 'question' => 'answer' }
-    end
-
-    it 'stores them in hidden fields' do
-      render
-      expect(rendered).to have_css('input[type="hidden"][name="question"][value="answer"]', visible: false)
-    end
-  end
-
-  context 'when the current questions/answers are stored in the params' do
-    let(:journey_params) do
-      {
-        'postcode' => 'postcode',
-        'job_type' => 'job-type',
-        'term' => 'term'
-      }
-    end
-
-    it 'does not store the postcode answer in a hidden field' do
-      render
-      expect(rendered).not_to have_css('input[type="hidden"][name="postcode"]', visible: false)
-    end
-
-    it 'does not store the job_type answer in a hidden field' do
-      expect(rendered).not_to have_css('input[type="hidden"][name="job_type"]', visible: false)
-    end
-
-    it 'does not store the term answer in a hidden field' do
-      expect(rendered).not_to have_css('input[type="hidden"][name="term"]', visible: false)
-    end
+  it 'renders hidden fields containing previous questions and answers' do
+    allow(view).to receive(:hidden_fields_for_previous_steps_and_responses).with(journey).and_return('hidden-fields')
+    render
+    expect(rendered).to have_text('hidden-fields')
   end
 
   it 'does not display the error summary' do

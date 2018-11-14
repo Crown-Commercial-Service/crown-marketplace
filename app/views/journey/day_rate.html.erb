@@ -2,7 +2,7 @@
 
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
-  <%= hidden_fields_for_previous_steps_and_responses(@journey, 'day_rate') %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
   <%= govuk_form_group_with_optional_error(@journey, :day_rate) do %>
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
       <h1 class="govuk-fieldset__heading">

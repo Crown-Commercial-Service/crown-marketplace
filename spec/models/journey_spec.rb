@@ -308,4 +308,36 @@ RSpec.describe Journey, type: :model do
       end
     end
   end
+
+  class FirstStepWithAttributes
+    include JourneyStep
+    attribute :first_question
+    def next_step_class
+      SecondStepWithAttributes
+    end
+  end
+
+  class SecondStepWithAttributes
+    include JourneyStep
+    attribute :second_question
+  end
+
+  context 'when there are multiple steps with attributes' do
+    let(:first_step_class) { FirstStepWithAttributes }
+    let(:slug) { SecondStepWithAttributes.new.slug }
+    let(:params) do
+      ActionController::Parameters.new(
+        first_question: 'first-answer',
+        second_question: 'second-answer'
+      )
+    end
+
+    it 'includes previous questions and answers' do
+      expect(journey.previous_questions_and_answers).to include('first_question' => 'first-answer')
+    end
+
+    it 'does not include current questions and answers' do
+      expect(journey.previous_questions_and_answers).not_to include('second_question' => 'second-answer')
+    end
+  end
 end
