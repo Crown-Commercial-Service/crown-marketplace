@@ -23,6 +23,17 @@ RSpec.describe 'journey/payroll_provider.html.erb' do
     end
   end
 
+  context 'when the current question/answer is stored in the params' do
+    before do
+      params[:payroll_provider] = 'payroll-provider'
+    end
+
+    it 'does not store it in a hidden field' do
+      render
+      expect(rendered).not_to have_css('input[type="hidden"][name="payroll_provider"]', visible: false)
+    end
+  end
+
   it 'selects "school" if payroll provider is "school"' do
     params[:payroll_provider] = 'school'
     render
