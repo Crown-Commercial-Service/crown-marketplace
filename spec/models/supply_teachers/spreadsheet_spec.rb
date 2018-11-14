@@ -5,7 +5,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
 
   let(:telephone_number) { '0121 496 0123' }
   let(:branch1) { build(:branch_search_result, telephone_number: telephone_number) }
-  let(:branch2) { build(:branch_search_result) }
+  let(:branch2) { build(:branch_search_result, telephone_number: '029 2018 0999') }
 
   describe 'the generated worksheet' do
     let(:worksheet) { workbook.worksheets.first }
