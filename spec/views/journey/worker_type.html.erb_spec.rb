@@ -22,6 +22,17 @@ RSpec.describe 'journey/worker_type.html.erb' do
     end
   end
 
+  context 'when the current question/answer is stored in the params' do
+    before do
+      params[:worker_type] = 'worker-type'
+    end
+
+    it 'does not store it in a hidden field' do
+      render
+      expect(rendered).not_to have_css('input[type="hidden"][name="worker_type"]', visible: false)
+    end
+  end
+
   it 'does not include aria-describedby attribute' do
     render
     expect(rendered).not_to have_css('fieldset[aria-describedby]')
