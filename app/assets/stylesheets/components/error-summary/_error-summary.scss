@@ -1,0 +1,9 @@
+@import "govuk-frontend/components/error-summary/error-summary";
+
+.govuk-error-summary__title {
+	font-weight: $govuk-font-weight-semi-bold;
+}
+
+.govuk-error-summary__list a {
+	font-weight: $govuk-font-weight-semi-bold;	
+}
