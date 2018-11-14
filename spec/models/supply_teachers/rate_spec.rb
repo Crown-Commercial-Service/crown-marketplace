@@ -16,7 +16,7 @@ module SupplyTeachers
       expect(rate).not_to be_valid
     end
 
-    context "when it's a percentage mark up" do
+    context "when it's a percentage mark-up" do
       before do
         rate.job_type = 'nominated'
         rate.mark_up = 1
