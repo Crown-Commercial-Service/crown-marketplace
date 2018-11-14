@@ -108,6 +108,8 @@ RSpec/ExampleLength:
 
 RSpec/NestedGroups:
     Max: 4
+    Exclude:
+        - 'spec/**/journey_spec.rb'
 
 RSpec/ContextWording:
     Prefixes:
