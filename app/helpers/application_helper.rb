@@ -68,4 +68,14 @@ module ApplicationHelper
 
     content_for(:page_title_prefix) { t('layouts.application.error_prefix') }
   end
+
+  def hidden_fields_for_previous_steps_and_responses(journey, *fields_to_ignore)
+    html = ActiveSupport::SafeBuffer.new
+    journey.params.each do |(key, value)|
+      next if fields_to_ignore.include?(key)
+
+      html += hidden_field_tag(key, value)
+    end
+    html
+  end
 end
