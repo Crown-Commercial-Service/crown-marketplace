@@ -1,7 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe 'management_consultancy/suppliers/_supplier.html.erb' do
-  let(:supplier) { build(:management_consultancy_supplier) }
+  helper(TelephoneNumberHelper)
+
+  let(:contact_name) { 'contact-name' }
+  let(:contact_email) { 'contact@example.com' }
+  let(:telephone_number) { '01214960123' }
+
+  let(:supplier) do
+    build(
+      :management_consultancy_supplier,
+      contact_name: contact_name,
+      contact_email: contact_email,
+      telephone_number: telephone_number
+    )
+  end
   let(:services) { [] }
 
   before do
@@ -11,6 +24,18 @@ RSpec.describe 'management_consultancy/suppliers/_supplier.html.erb' do
 
   it 'displays the supplier name' do
     expect(rendered).to have_text(supplier.name)
+  end
+
+  it 'displays the supplier contact name' do
+    expect(rendered).to have_text(contact_name)
+  end
+
+  it 'displays the supplier contact email' do
+    expect(rendered).to have_text(contact_email)
+  end
+
+  it 'displays the formatted supplier telephone number' do
+    expect(rendered).to have_text('0121 496 0123')
   end
 
   context 'when supplier has multiple services' do

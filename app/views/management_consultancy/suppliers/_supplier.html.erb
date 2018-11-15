@@ -6,6 +6,15 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
+      <h3 class="govuk-heading-s fm-supplier-record__contact-name">
+        <%= supplier.contact_name %>
+      </h3>
+      <p class="govuk-body">
+        <%= supplier.contact_email %>
+      </p>
+      <p class="govuk-body">
+        <%= format_telephone_number(supplier.telephone_number) %>
+      </p>
     </div>
     <div class="govuk-grid-column-one-half">
       <h4 class="govuk-heading-s mc-supplier-record__services-title">
