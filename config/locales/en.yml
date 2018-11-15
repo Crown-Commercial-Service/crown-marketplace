@@ -15,6 +15,10 @@ en:
           attributes:
             lot:
               inclusion: Please choose a lot for the services you require
+        management_consultancy/steps/choose_services:
+          attributes:
+            services:
+              too_short: Please choose the services you require
         supply_teachers/steps/agency_payroll:
           attributes:
             location:
@@ -76,6 +80,8 @@ en:
       question: What kind of management consultancy do you want to procure?
       question_hint: The lot you choose here will affect the services offered and the suppliers presented.
       submit: Continue
+    choose_services:
+      question: What services will you require?
     contract_start:
       question: What date was the worker first supplied to you on their current contract?
     day_rate:
