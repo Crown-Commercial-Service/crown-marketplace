@@ -13,7 +13,7 @@ module ManagementConsultancy
       }
 
       def next_step_class
-        Suppliers
+        ChooseServices
       end
     end
   end
