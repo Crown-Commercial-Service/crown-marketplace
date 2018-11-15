@@ -33,12 +33,12 @@ RSpec.feature 'Managed service providers', type: :feature do
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Master vendor managed service')
-    expect(page).to have_css('h2', text: supplier.name)
+    expect(page).to have_css('caption', text: supplier.name)
 
     expect(page).to have_rates(job_type: 'Qualified Teacher - Non-SEN', percentages: [11.0, 12.0, 13.0])
     expect(page).to have_rates(job_type: 'Qualified Teacher - SEN', percentages: [21.0, 22.0, 23.0])
-    expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0], with_terms: false)
-    expect(page).to have_rates(job_type: 'Fixed Term workers', percentages: [40.0], with_terms: false)
+    expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0, 30.0, 30.0])
+    expect(page).to have_rates(job_type: 'Fixed Term workers', percentages: [40.0, 40.0, 40.0])
   end
 
   scenario 'Buyer wants to hire a neutral vendor managed service' do
@@ -59,9 +59,9 @@ RSpec.feature 'Managed service providers', type: :feature do
     expect(page).to have_css('h1', text: 'Neutral vendor managed service')
     expect(page).to have_css('h2', text: 'neutral-vendor-supplier')
 
-    expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0], with_terms: false)
+    expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0])
     expect(page).to have_rates(job_type: 'Neutral vendor managed service provider fee (per day)',
-                               percentages: [], amount: 1.23, with_terms: false)
+                               percentages: [], amount: 1.23)
   end
 
   scenario 'Buyer changes mind about hiring a managed service provider' do
@@ -112,13 +112,12 @@ RSpec.feature 'Managed service providers', type: :feature do
 
   private
 
-  def have_rates(job_type:, percentages:, amount: nil, with_terms: true)
+  def have_rates(job_type:, percentages:, amount: nil)
     rate_patterns = if percentages.any?
                       percentages.map { |p| rate_pattern(p) }
                     else
                       [daily_fee_pattern(amount)]
                     end
-    rate_patterns = rate_patterns.dup.zip(SupplyTeachers::Rate::TERMS.values) if with_terms
     combined_pattern = [Regexp.escape(job_type), *rate_patterns].join('\s+')
     have_text(Regexp.new(combined_pattern))
   end

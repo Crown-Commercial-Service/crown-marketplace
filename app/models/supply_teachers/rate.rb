@@ -22,7 +22,7 @@ module SupplyTeachers
 
     TERMS = {
       'one_week' => 'Up to 1 week',
-      'twelve_weeks' => '1 week to 12 weeks',
+      'twelve_weeks' => '1 to 12 weeks',
       'more_than_twelve_weeks' => 'Over 12 weeks'
     }.freeze
 

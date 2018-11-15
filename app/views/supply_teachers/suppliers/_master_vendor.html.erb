@@ -1,45 +1,36 @@
 <div class="master-vendor-record">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <h2 class="govuk-heading-m govuk-!-font-size-27"><%= master_vendor.name %></h2>
-    </div>
-  </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-third">
-      <p><strong><%= t('.column1') %>:</strong></p>
-    </div>
-    <div class="govuk-grid-column-two-thirds">
-      <p><strong><%= t('.column2') %>:</strong></p>
-    </div>
-  </div>
-  <% master_vendor.master_vendor_rates_grouped_by_job_type.each do |job_type, rates| %>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-third">
-        <p><%= SupplyTeachers::Rate::JOB_TYPES[job_type] %></p>
-      </div>
-      <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-grid-row">
+
+  <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-!-font-size-27"><%= master_vendor.name %></caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col"><strong><%= t('.column1') %></strong></th>
+        <th class="govuk-table__header govuk-table__cell--numeric" scope="col" colspan="3"><strong><%= t('.column2') %></strong></th>
+      </tr>
+    </thead>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col"></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['one_week'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['twelve_weeks'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['more_than_twelve_weeks'] %></strong></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% master_vendor.master_vendor_rates_grouped_by_job_type.each do |job_type, rates| %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row"><%= SupplyTeachers::Rate::JOB_TYPES[job_type] %></th>
           <% if rates.length == 1 %>
-            <div class="govuk-grid-column-full">
-              <p class="govuk-body govuk-!-font-size-36 master-vendor-record__markup-rate">
-                <%= number_to_percentage(rates.first.mark_up * 100, precision: 1) %>
-              </p>
-            </div>
+            <% 3.times do %>
+              <td class="govuk-table__cell govuk-table__cell--numeric master-vendor-record__markup-column"><%= number_to_percentage(rates.first.mark_up * 100, precision: 1) %></td>
+            <% end %>          
           <% elsif rates.length == 3 %>
             <% rates.each do |rate| %>
-              <div class="govuk-grid-column-one-third">
-                <p class="govuk-body govuk-!-font-size-36 master-vendor-record__markup-rate">
-                  <%= number_to_percentage(rate.mark_up * 100, precision: 1) %>
-                </p>
-                <p>
-                  <%= SupplyTeachers::Rate::TERMS[rate.term] %>
-                </p>
-              </div>
+              <td class="govuk-table__cell govuk-table__cell--numeric"><%= number_to_percentage(rate.mark_up * 100, precision: 1) %></td>
             <% end %>
           <% end %>
-        </div>
-      </div>
-    </div>
-    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-  <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
