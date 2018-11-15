@@ -5,18 +5,18 @@
     </div>
   </div>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-      <h3 class="govuk-heading-s fm-supplier-record__contact-name">
+    <div class="govuk-grid-column-one-half mc-supplier-record__contact-details">
+      <h3 class="govuk-heading-s mc-supplier-record__contact-name mc-supplier-record__contact-item">
         <%= supplier.contact_name.present? ?
               supplier.contact_name :
               t('.contact_name_missing') %>
       </h3>
-      <p class="govuk-body">
+      <p class="govuk-body mc-supplier-record__contact-item">
         <%= supplier.contact_email.present? ?
               mail_to(supplier.contact_email) :
               t('.contact_email_missing') %>
       </p>
-      <p class="govuk-body">
+      <p class="govuk-body mc-supplier-record__contact-item">
         <%= supplier.telephone_number.present? ?
               format_telephone_number(supplier.telephone_number) :
               t('.telephone_number_missing') %>
@@ -26,7 +26,7 @@
       <h4 class="govuk-heading-s mc-supplier-record__services-title">
         Services
       </h4>
-      <ul>
+      <ul class="govuk-list govuk-list--bullet">
         <% supplier.services_in_lot(lot_number).each do |service| %>
           <li><%= service.name %></li>
         <% end %>
