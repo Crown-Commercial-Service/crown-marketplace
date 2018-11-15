@@ -31,7 +31,11 @@ en:
           attributes:
             payroll_provider:
               inclusion: Select yes if you want to put the worker on the school's payroll
-        supply_teachers/steps/school_postcode:
+        supply_teachers/steps/school_postcode_agency_supplied_worker:
+          attributes:
+            location:
+              invalid_location: Enter a valid postcode
+        supply_teachers/steps/school_postcode_nominated_worker:
           attributes:
             location:
               invalid_location: Enter a valid postcode
@@ -113,7 +117,10 @@ en:
     school_holidays:
       question: How many school holidays were there between the contract start date and the proposed hire date?
       question-hint: This is the number of non-working days not including bank holidays or weekends. For example, 10
-    school_postcode:
+    school_postcode_agency_supplied_worker:
+      question: What is your school's postcode?
+      question_hint: We use this to find agencies near to your school
+    school_postcode_nominated_worker:
       question: What is your school's postcode?
       question_hint: We use this to find agencies near to your school
     supplier_region:
