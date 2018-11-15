@@ -26,9 +26,9 @@ RSpec.describe 'supply_teachers/suppliers/_master_vendor.html.erb' do
     end
 
     it 'displays rates for each term' do
-      expect(rendered).to have_text(/11\.0%\s+Up to 1 week/)
-      expect(rendered).to have_text(/12\.0%\s+1 week to 12 weeks/)
-      expect(rendered).to have_text(/13\.0%\s+Over 12 weeks/)
+      expect(rendered).to have_text(/11\.0%\s/)
+      expect(rendered).to have_text(/12\.0%\s/)
+      expect(rendered).to have_text(/13\.0%\s/)
     end
   end
 
