@@ -54,6 +54,11 @@ en:
     messages:
       invalid_location: Couldn’t find that postcode
       invalid_postcode: Invalid postcode
+  facilities_management:
+    suppliers:
+      supplier:
+        contact_email_missing: Contact email not available
+        contact_name_missing: Contact name not available
   faker:
     company:
       name:
@@ -168,6 +173,12 @@ en:
       skip: Skip to main content
       support_email_html: Email %{link} for support.
       title: Crown Commercial Service
+  management_consultancy:
+    suppliers:
+      supplier:
+        contact_email_missing: Contact email not available
+        contact_name_missing: Contact name not available
+        telephone_number_missing: Telephone number not available
   supply_teachers:
     branches:
       branch:
