@@ -1,19 +1,14 @@
 module SupplyTeachers
   module Steps
-    class SchoolPostcode
+    class SchoolPostcodeNominatedWorker
       include JourneyStep
       include Geolocatable
 
-      attribute :worker_type
       attribute :postcode
       validates :location, location: true
 
       def next_step_class
-        if worker_type == 'nominated'
-          NominatedWorkerResults
-        else
-          FixedTermResults
-        end
+        NominatedWorkerResults
       end
     end
   end

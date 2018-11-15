@@ -182,7 +182,7 @@ RSpec.describe JourneyController, type: :controller do
 
       it 'redirects to non worker-type outcome' do
         expect(response).to redirect_to(
-          journey_question_path(journey: 'supply-teachers', slug: 'school-postcode', params: params)
+          journey_question_path(journey: 'supply-teachers', slug: 'school-postcode-nominated-worker', params: params)
         )
       end
     end
@@ -214,15 +214,15 @@ RSpec.describe JourneyController, type: :controller do
     end
   end
 
-  describe 'GET #question for school-postcode' do
+  describe 'GET #question for school-postcode-nominated-worker' do
     it 'renders template' do
       get :question, params: {
         journey: 'supply-teachers',
-        slug: 'school-postcode',
+        slug: 'school-postcode-nominated-worker',
         looking_for: 'worker',
         worker_type: 'nominated'
       }
-      expect(response).to render_template('school_postcode')
+      expect(response).to render_template('school_postcode_nominated_worker')
     end
 
     it 'sets back_path to worker-type question including params' do
@@ -230,20 +230,20 @@ RSpec.describe JourneyController, type: :controller do
         looking_for: 'worker',
         worker_type: 'nominated'
       }
-      get :question, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode')
+      get :question, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode-nominated-worker')
       expect(assigns(:back_path)).to eq(
         journey_question_path(journey: 'supply-teachers', slug: 'worker-type', params: params)
       )
     end
 
-    it 'sets form_path to school-postcode answer path' do
+    it 'sets form_path to school-postcode-nominated-worker answer path' do
       params = {
         looking_for: 'worker',
         worker_type: 'nominated'
       }
-      get :question, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode')
+      get :question, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode-nominated-worker')
       expect(assigns(:form_path)).to eq(
-        journey_answer_path(journey: 'supply-teachers', slug: 'school-postcode')
+        journey_answer_path(journey: 'supply-teachers', slug: 'school-postcode-nominated-worker')
       )
     end
 
@@ -253,7 +253,7 @@ RSpec.describe JourneyController, type: :controller do
         worker_type: 'agency_supplied',
         payroll_provider: 'school'
       }
-      get :question, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode')
+      get :question, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode-agency-supplied-worker')
       expect(assigns(:back_path)).to eq(
         journey_question_path(params.merge(journey: 'supply-teachers', slug: 'payroll-provider'))
       )
@@ -280,7 +280,7 @@ RSpec.describe JourneyController, type: :controller do
         payroll_provider: 'school',
         postcode: postcode
       }
-      get :answer, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode')
+      get :answer, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode-agency-supplied-worker')
       expect(response).to redirect_to(supply_teachers_fixed_term_results_path(params))
     end
   end
@@ -322,7 +322,7 @@ RSpec.describe JourneyController, type: :controller do
         }
         get :answer, params: params.merge(slug: 'payroll-provider')
         expect(response).to redirect_to(
-          journey_question_path(params.merge(slug: 'school-postcode'))
+          journey_question_path(params.merge(slug: 'school-postcode-agency-supplied-worker'))
         )
       end
     end

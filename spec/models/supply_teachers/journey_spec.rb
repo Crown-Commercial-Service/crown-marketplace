@@ -72,7 +72,7 @@ RSpec.describe SupplyTeachers::Journey, type: :model do
 
         it { is_expected.to have_attributes(current_slug: slug) }
         it { is_expected.to have_attributes(previous_slug: 'looking-for') }
-        it { is_expected.to have_attributes(next_slug: 'school-postcode') }
+        it { is_expected.to have_attributes(next_slug: 'school-postcode-nominated-worker') }
         it { is_expected.to be_valid }
 
         it 'collects the supplied parameters' do
@@ -80,7 +80,7 @@ RSpec.describe SupplyTeachers::Journey, type: :model do
         end
 
         context 'when entering a postcode' do
-          let(:slug) { 'school-postcode' }
+          let(:slug) { 'school-postcode-nominated-worker' }
           let(:params) { super().merge('postcode' => 'W1A 1AA') }
 
           it { is_expected.to have_attributes(current_slug: slug) }
@@ -113,7 +113,7 @@ RSpec.describe SupplyTeachers::Journey, type: :model do
 
           it { is_expected.to have_attributes(current_slug: slug) }
           it { is_expected.to have_attributes(previous_slug: 'worker-type') }
-          it { is_expected.to have_attributes(next_slug: 'school-postcode') }
+          it { is_expected.to have_attributes(next_slug: 'school-postcode-agency-supplied-worker') }
           it { is_expected.to be_valid }
 
           it 'collects the supplied parameters' do
@@ -121,7 +121,7 @@ RSpec.describe SupplyTeachers::Journey, type: :model do
           end
 
           context 'when entering a postcode' do
-            let(:slug) { 'school-postcode' }
+            let(:slug) { 'school-postcode-agency-supplied-worker' }
             let(:params) { super().merge('postcode' => 'W1A 1AA') }
 
             it { is_expected.to have_attributes(current_slug: slug) }

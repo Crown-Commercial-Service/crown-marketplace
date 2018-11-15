@@ -9,7 +9,7 @@ module SupplyTeachers
       def next_step_class
         case worker_type
         when 'nominated'
-          SchoolPostcode
+          SchoolPostcodeNominatedWorker
         when 'agency_supplied'
           PayrollProvider
         end

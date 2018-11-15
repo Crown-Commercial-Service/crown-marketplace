@@ -41,9 +41,9 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller do
         Geocoder::Lookup::Test.reset
       end
 
-      it 'assigns back_path to school-postcode question path' do
+      it 'assigns back_path to school-postcode-nominated-worker question path' do
         expect(assigns(:back_path)).to eq(
-          journey_question_path(params.merge(slug: 'school-postcode'))
+          journey_question_path(params.merge(slug: 'school-postcode-nominated-worker'))
         )
       end
 
@@ -88,8 +88,8 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller do
         get :index, params: params
       end
 
-      it 'renders school-postcode question' do
-        expect(response).to render_template('journey/school_postcode')
+      it 'renders school-postcode-nominated-worker question' do
+        expect(response).to render_template('journey/school_postcode_nominated_worker')
       end
     end
 
@@ -112,8 +112,8 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller do
         Geocoder::Lookup::Test.reset
       end
 
-      it 'renders school-postcode question' do
-        expect(response).to render_template('journey/school_postcode')
+      it 'renders school-postcode-nominated-worker question' do
+        expect(response).to render_template('journey/school_postcode_nominated_worker')
       end
     end
   end
