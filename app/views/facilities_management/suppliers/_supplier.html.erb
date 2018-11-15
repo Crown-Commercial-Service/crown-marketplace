@@ -6,9 +6,15 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <h3 class="govuk-heading-s fm-supplier-record__contact-name"><%= supplier.contact_name.present? ? supplier.contact_name : 'Contact name not available' %></h3>
+      <h3 class="govuk-heading-s fm-supplier-record__contact-name">
+        <%= supplier.contact_name.present? ?
+              supplier.contact_name :
+              t('.contact_name_missing') %>
+      </h3>
       <p class="govuk-body">
-        <%= supplier.contact_email.present? ? mail_to(supplier.contact_email) : 'Contact email not available' %>
+        <%= supplier.contact_email.present? ?
+              mail_to(supplier.contact_email) :
+              t('.contact_email_missing') %>
       </p>
     </div>
     <div class="govuk-grid-column-one-half">
