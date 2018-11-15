@@ -11,8 +11,19 @@ module ManagementConsultancy
       where(lot_number: lot_number)
     end
 
+    def self.for_service_code(service_code)
+      where(service_code: service_code)
+    end
+
     def service
       Service.find_by(code: service_code)
+    end
+
+    def self.supplier_ids_for_service_codes(service_codes)
+      for_service_code(service_codes)
+        .group(:management_consultancy_supplier_id)
+        .having("COUNT(service_code) = #{service_codes.count}")
+        .pluck(:management_consultancy_supplier_id)
     end
   end
 end

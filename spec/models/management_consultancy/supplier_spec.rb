@@ -37,6 +37,36 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
     end
   end
 
+  describe '.offering_services' do
+    let(:supplier1) { create(:management_consultancy_supplier, name: 'Supplier 1') }
+    let(:supplier2) { create(:management_consultancy_supplier, name: 'Supplier 2') }
+
+    before do
+      supplier1.service_offerings.create!(lot_number: '1', service_code: '1.1')
+      supplier1.service_offerings.create!(lot_number: '1', service_code: '1.2')
+      supplier1.service_offerings.create!(lot_number: '2', service_code: '2.1')
+
+      supplier2.service_offerings.create!(lot_number: '2', service_code: '2.2')
+      supplier2.service_offerings.create!(lot_number: '2', service_code: '2.3')
+      supplier2.service_offerings.create!(lot_number: '3', service_code: '3.1')
+    end
+
+    it 'returns suppliers with availability in lot 1' do
+      expect(described_class.offering_services('1', ['1.2'])).to contain_exactly(supplier1)
+      expect(described_class.offering_services('1', ['1.1', '1.2'])).to contain_exactly(supplier1)
+    end
+
+    it 'only returns suppliers that offer all services' do
+      expect(described_class.offering_services('1', ['1.3'])).to be_empty
+      expect(described_class.offering_services('1', ['1.1', '1.3'])).to be_empty
+    end
+
+    it 'ignores services when there is a lot mismatch' do
+      expect(described_class.offering_services('1', ['1.1'])).to contain_exactly(supplier1)
+      expect(described_class.offering_services('2', ['1.1'])).to be_empty
+    end
+  end
+
   describe '#services_in_lot' do
     let(:supplier) { create(:management_consultancy_supplier, name: 'Supplier 1') }
 
