@@ -1,0 +1,18 @@
+@import "govuk-frontend/components/table/table";
+
+.govuk-table__caption {
+  font-weight: $govuk-font-weight-semi-bold;
+  margin-bottom: 10px;	
+}
+
+.govuk-table__header {
+  font-weight: $govuk-font-weight-semi-bold;
+}
+
+.govuk-table__cell--numeric {
+  font-family: $govuk-font-family;
+}
+
+.govuk-table__header, .govuk-table__cell {
+	padding-right: 0;
+}
