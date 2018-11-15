@@ -7,13 +7,19 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half mc-supplier-record__contact-details">
       <h3 class="govuk-heading-s mc-supplier-record__contact-name mc-supplier-record__contact-item">
-        <%= supplier.contact_name %>
+        <%= supplier.contact_name.present? ?
+              supplier.contact_name :
+              t('.contact_name_missing') %>
       </h3>
       <p class="govuk-body mc-supplier-record__contact-item">
-        <%= supplier.contact_email %>
+        <%= supplier.contact_email.present? ?
+              mail_to(supplier.contact_email) :
+              t('.contact_email_missing') %>
       </p>
       <p class="govuk-body mc-supplier-record__contact-item">
-        <%= format_telephone_number(supplier.telephone_number) %>
+        <%= supplier.telephone_number.present? ?
+              format_telephone_number(supplier.telephone_number) :
+              t('.telephone_number_missing') %>
       </p>
     </div>
     <div class="govuk-grid-column-one-half">

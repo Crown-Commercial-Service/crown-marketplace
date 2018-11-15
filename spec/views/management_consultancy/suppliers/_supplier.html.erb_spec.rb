@@ -38,6 +38,30 @@ RSpec.describe 'management_consultancy/suppliers/_supplier.html.erb' do
     expect(rendered).to have_text('0121 496 0123')
   end
 
+  context 'when supplier contact name is not available' do
+    let(:contact_name) { nil }
+
+    it 'displays message explaining absence of contact name' do
+      expect(rendered).to have_text('Contact name not available')
+    end
+  end
+
+  context 'when supplier contact email is not available' do
+    let(:contact_email) { nil }
+
+    it 'displays message explaining absence of contact email' do
+      expect(rendered).to have_text('Contact email not available')
+    end
+  end
+
+  context 'when supplier telephone number is not available' do
+    let(:telephone_number) { nil }
+
+    it 'displays message explaining absence of telephone number' do
+      expect(rendered).to have_text('Telephone number not available')
+    end
+  end
+
   context 'when supplier has multiple services' do
     let(:service1) { ManagementConsultancy::Service.new(name: 'service-1') }
     let(:service2) { ManagementConsultancy::Service.new(name: 'service-2') }
