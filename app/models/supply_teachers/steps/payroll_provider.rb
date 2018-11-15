@@ -9,7 +9,7 @@ module SupplyTeachers
       def next_step_class
         case payroll_provider
         when 'school'
-          SchoolPostcode
+          SchoolPostcodeAgencySuppliedWorker
         when 'agency'
           AgencyPayroll
         end
