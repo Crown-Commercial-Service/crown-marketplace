@@ -60,4 +60,16 @@ RSpec.describe 'journey/choose_regions.html.erb' do
       expect(view.content_for(:page_title_prefix)).to match(t('layouts.application.error_prefix'))
     end
   end
+
+  context 'when regions were previously selected' do
+    before do
+      step.region_codes = %w[UKC1 UKC2]
+    end
+
+    it 'marks the checkboxes for those regions as checked' do
+      render
+      expect(rendered).to have_checked_field('region_UKC1')
+      expect(rendered).to have_checked_field('region_UKC2')
+    end
+  end
 end
