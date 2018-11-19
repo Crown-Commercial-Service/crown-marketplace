@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'temp_to_perm_calculator'
 
 module TempToPermCalculator
   RSpec.describe Calculator do

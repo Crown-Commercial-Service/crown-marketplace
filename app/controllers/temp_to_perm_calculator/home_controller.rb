@@ -1,5 +1,3 @@
-require 'temp_to_perm_calculator'
-
 module TempToPermCalculator
   class HomeController < ApplicationController
     def index; end
