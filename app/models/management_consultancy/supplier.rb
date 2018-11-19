@@ -26,6 +26,15 @@ module ManagementConsultancy
       where(id: ids)
     end
 
+    def self.supplying_regions(lot_number, region_codes)
+      ids = RegionalAvailability.supplier_ids_for_region_codes(lot_number, region_codes)
+      where(id: ids)
+    end
+
+    def self.offering_services_in_regions(lot_number, service_codes, region_codes)
+      offering_services(lot_number, service_codes).supplying_regions(lot_number, region_codes)
+    end
+
     def services_in_lot(lot_number)
       service_offerings.select { |so| so.lot_number == lot_number }.map(&:service)
     end

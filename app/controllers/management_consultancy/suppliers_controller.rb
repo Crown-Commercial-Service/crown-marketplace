@@ -9,7 +9,11 @@ module ManagementConsultancy
       @back_path = @journey.previous_step_path
 
       @lot = Lot.find_by(number: params[:lot])
-      @suppliers = Supplier.offering_services(params[:lot], params[:services])
+      @suppliers = Supplier.offering_services_in_regions(
+        params[:lot],
+        params[:services],
+        params[:region_codes]
+      )
     end
   end
 end

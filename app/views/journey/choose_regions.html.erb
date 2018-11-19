@@ -1,0 +1,39 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_field_tag :lot, params[:lot] %>
+  <% params[:services].each do |service| %>
+    <input type="hidden" name="services[]" value="<%= service %>" />
+  <% end %>
+
+  <%= govuk_form_group_with_optional_error(@journey, :regions) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :regions) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.question') %>
+        </h1>
+        <%= display_error(@journey, :regions) %>
+      </legend>
+        <div class="govuk-form-group">
+          <div class="govuk-checkboxes">
+            <% Nuts2Region.all.each do |region| %>
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag(
+                  "region_codes[]",
+                  region.code,
+                  @journey.current_step.regions.include?(region.code),
+                  class: "govuk-checkboxes__input",
+                  id: "region_#{region.code}"
+                ) %>
+                <label class="govuk-label govuk-checkboxes__label" for="region_<%= region.code %>">
+                  <%= region.name %>
+                </label>
+              </div>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+  <% end %>
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+<% end %>

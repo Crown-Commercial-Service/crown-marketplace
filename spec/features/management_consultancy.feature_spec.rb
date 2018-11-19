@@ -6,6 +6,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     supplier2 = create(:management_consultancy_supplier, name: 'Mega Group PLC')
     supplier3 = create(:management_consultancy_supplier, name: 'Johnson LLP')
     supplier4 = create(:management_consultancy_supplier, name: 'Pi Consulting')
+    supplier5 = create(:management_consultancy_supplier, name: 'Nowhere Consulting')
 
     supplier1.service_offerings.create!(lot_number: '1', service_code: '1.1')
     supplier1.service_offerings.create!(lot_number: '1', service_code: '1.2')
@@ -20,18 +21,31 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     supplier4.service_offerings.create!(lot_number: '3', service_code: '3.2')
     supplier4.service_offerings.create!(lot_number: '4', service_code: '4.2')
+
+    supplier5.service_offerings.create!(lot_number: '1', service_code: '1.1')
+    supplier5.service_offerings.create!(lot_number: '1', service_code: '1.2')
+    supplier5.service_offerings.create!(lot_number: '1', service_code: '1.3')
+
+    supplier1.regional_availabilities.create!(lot_number: '1', region_code: 'UKC1')
+    supplier2.regional_availabilities.create!(lot_number: '2', region_code: 'UKC2')
+    supplier3.regional_availabilities.create!(lot_number: '3', region_code: 'UKD1')
+    supplier1.regional_availabilities.create!(lot_number: '4', region_code: 'UKD3')
   end
 
   scenario 'Buyer wants to buy business services (Lot 1)' do
     visit_management_consultancy_home
 
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
+    required_region = Nuts2Region.find_by(code: 'UKC1')
 
     click_on 'Start now'
     choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
 
     check required_service.name
+    click_on I18n.t('common.submit')
+
+    check required_region.name
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Lot 1 - business services')
@@ -43,12 +57,16 @@ RSpec.feature 'Management consultancy', type: :feature do
     visit_management_consultancy_home
 
     required_service = ManagementConsultancy::Service.where(code: '2.1').first
+    required_region = Nuts2Region.find_by(code: 'UKC2')
 
     click_on 'Start now'
     choose 'Lot 2 - procurement, supply chain and commercial services'
     click_on I18n.t('common.submit')
 
     check required_service.name
+    click_on I18n.t('common.submit')
+
+    check required_region.name
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Lot 2 - procurement, supply chain and commercial services')
@@ -60,12 +78,16 @@ RSpec.feature 'Management consultancy', type: :feature do
     visit_management_consultancy_home
 
     required_service = ManagementConsultancy::Service.where(code: '3.1').first
+    required_region = Nuts2Region.find_by(code: 'UKD1')
 
     click_on 'Start now'
     choose 'Lot 3 - complex and transformation services'
     click_on I18n.t('common.submit')
 
     check required_service.name
+    click_on I18n.t('common.submit')
+
+    check required_region.name
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Lot 3 - complex and transformation services')
@@ -77,12 +99,16 @@ RSpec.feature 'Management consultancy', type: :feature do
     visit_management_consultancy_home
 
     required_service = ManagementConsultancy::Service.where(code: '4.1').first
+    required_region = Nuts2Region.find_by(code: 'UKD3')
 
     click_on 'Start now'
     choose 'Lot 4 - strategic services'
     click_on I18n.t('common.submit')
 
     check required_service.name
+    click_on I18n.t('common.submit')
+
+    check required_region.name
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Lot 4 - strategic services')

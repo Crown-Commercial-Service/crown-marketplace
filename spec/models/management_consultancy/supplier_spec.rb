@@ -97,4 +97,37 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
       expect(supplier.services_in_lot('2')).to contain_exactly(service_2_1)
     end
   end
+
+  describe '.supplying_regions' do
+    let(:supplier1) { create(:management_consultancy_supplier, name: 'Supplier 1') }
+    let(:supplier2) { create(:management_consultancy_supplier, name: 'Supplier 2') }
+    let(:supplier3) { create(:management_consultancy_supplier, name: 'Supplier 3') }
+
+    before do
+      supplier1.regional_availabilities.create!(lot_number: '1', region_code: 'UKC1')
+      supplier1.regional_availabilities.create!(lot_number: '1', region_code: 'UKC2')
+      supplier2.regional_availabilities.create!(lot_number: '2', region_code: 'UKC1')
+      supplier3.regional_availabilities.create!(lot_number: '1', region_code: 'UKC2')
+    end
+
+    it 'returns suppliers offering services in lot and regions' do
+      expect(described_class.supplying_regions('1', ['UKC1']))
+        .to contain_exactly(supplier1)
+    end
+
+    it 'does not include suppliers offering services in a different lot' do
+      expect(described_class.supplying_regions('1', ['UKC1']))
+        .not_to include(supplier2)
+    end
+
+    it 'only includes suppliers offering services in all specified regions' do
+      expect(described_class.supplying_regions('1', ['UKC1', 'UKC2']))
+        .to contain_exactly(supplier1)
+    end
+
+    it 'returns multiple matching suppliers' do
+      expect(described_class.supplying_regions('1', ['UKC2']))
+        .to contain_exactly(supplier1, supplier3)
+    end
+  end
 end
