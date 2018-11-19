@@ -1,0 +1,5 @@
+digraph {
+  SupplierRegion -> Suppliers;
+  ValueBand -> SupplierRegion [label="value_band = under1_5m, under7m"];
+  ValueBand -> Suppliers [label="value_band = under50m, over50m"];
+}
