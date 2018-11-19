@@ -41,5 +41,14 @@ module TempToPermCalculator
           Holidays.on(day, :gb_eng).empty?
       end.count - @school_holidays
     end
+
+    def fee_for_lack_of_notice?
+      working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
+        day.on_weekday? && Holidays.on(day, :gb_eng).empty?
+      end
+      fortieth_working_day = working_days_from_contract_start.take(40).last
+
+      @hire_date > fortieth_working_day
+    end
   end
 end
