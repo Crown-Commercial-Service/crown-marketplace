@@ -7,14 +7,14 @@ module SupplyTeachers
     }.freeze
 
     JOB_TYPES = {
-      'qt' => 'Qualified Teacher - Non-SEN',
-      'qt_sen' => 'Qualified Teacher - SEN',
-      'uqt' => 'Unqualified Teacher - Non-SEN',
-      'uqt_sen' => 'Unqualified Teacher - SEN',
-      'support' => 'Support staff - Non-SEN',
-      'support_sen' => 'Support staff - SEN',
-      'senior' => 'Senior leadership staff',
-      'admin' => 'Clerical staff',
+      'qt' => 'Qualified teacher: non-SEN roles',
+      'qt_sen' => 'Qualified teacher: SEN roles',
+      'uqt' => 'Unqualified teacher: non-SEN roles',
+      'uqt_sen' => 'Unqualified teacher: SEN roles',
+      'support' => 'Educational support staff: non-SEN roles (including cover supervisor and teaching assistant)',
+      'support_sen' => 'Educational support staff: SEN roles (including cover supervisor and teaching assistant)',
+      'senior' => 'Headteacher and senior leadership positions',
+      'admin' => 'Administrative and clerical staff, IT staff, finance staff and cleaners',
       'nominated' => 'Nominated workers',
       'fixed_term' => 'Fixed Term workers',
       'daily_fee' => 'Neutral vendor managed service provider fee (per day)'
