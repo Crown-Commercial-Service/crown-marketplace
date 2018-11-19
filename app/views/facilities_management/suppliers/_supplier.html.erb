@@ -13,13 +13,13 @@
       </h3>
       <p class="govuk-body">
         <%= supplier.contact_email.present? ?
-              mail_to(supplier.contact_email) :
+              mail_to(supplier.contact_email, supplier.contact_email, 'aria-label': "Email #{supplier.contact_name} from #{supplier.name}") :
               t('.contact_email_missing') %>
       </p>
     </div>
     <div class="govuk-grid-column-one-half">
       <% supplier.services_by_work_package_in_lot(lot_number).each do |work_package, services| %>
-        <details class="govuk-details">
+        <details class="govuk-details" aria-label='<%= "Services for #{work_package.name}"%>'>
           <summary class="govuk-details__summary">
             <%= work_package.name %>
           </summary>

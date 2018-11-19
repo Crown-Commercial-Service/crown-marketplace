@@ -9,7 +9,10 @@ module ApplicationHelper
 
   def feedback_email_link
     if Marketplace.feedback_email_address.present?
-      mail_to(Marketplace.feedback_email_address, 'feedback', class: 'govuk-link')
+      mail_to(
+        Marketplace.feedback_email_address, 'feedback',
+        class: 'govuk-link', 'aria-label': t('layouts.application.feedback_aria_label')
+      )
     else
       'feedback'
     end

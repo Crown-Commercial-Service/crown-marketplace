@@ -68,6 +68,9 @@ en:
       - plc
       - LLP
   home:
+    gateway:
+      cmp_support_aria_label: Email us for support with this service
+      cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     index:
       facilities_management_link: Find a facilities management supplier
       intro_paragraph: 'Use this service to:'
@@ -168,9 +171,11 @@ en:
       back: Back
       beta: beta
       error_prefix: Error
+      feedback_aria_label: Email your feedback on this service
       feedback_html: This is a new service – your %{link} will help us to improve it.
       having_problems: Having problems using this service?
       skip: Skip to main content
+      support_aria_label: Email us for support with this service
       support_email_html: Email %{link} for support.
       title: Crown Commercial Service
   management_consultancy:
@@ -187,7 +192,9 @@ en:
         miles: Miles
       index:
         download: Download shortlist of suppliers
+        download_aria_label: Download shortlist as Microsoft Excel file
         download_with_calculator: Download shortlist (with markup calculator)
+        download_with_calculator_aria_label: Download shortlist (with markup calculator) as Microsoft Excel file
         header: Supplier list
         print: Print this page
         results_found: results found

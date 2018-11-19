@@ -12,7 +12,7 @@
       <p class="govuk-body">
         <strong><%= branch.contact_name %></strong><br />
         <%= format_telephone_number(branch.telephone_number) %><br />
-        <%= mail_to(branch.contact_email) %>
+        <%= mail_to(branch.contact_email, branch.contact_email, 'aria-label': "Email #{branch.contact_name} from #{branch.supplier_name}") %>
       </p>
     </div>
     <div class="govuk-grid-column-one-third">

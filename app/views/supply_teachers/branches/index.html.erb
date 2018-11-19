@@ -20,11 +20,11 @@
       <a href="javascript:window.print()" class="govuk-link"><%= t('.print') %></a>
     </p>
     <p class="govuk-body supplier-record__print-option">
-      <%= link_to t('.download'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx)), { class: 'supplier-record__file-download' } %>
+      <%= link_to t('.download'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx)), { class: 'supplier-record__file-download', 'aria-label': t('.download_aria_label') } %>
     </p>
     <p class="govuk-body supplier-record__print-option">
       <% if link_to_calculator? %>
-      <%= link_to t('.download_with_calculator'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx, calculations: 'yes')), { class: 'supplier-record__file-download' } %>
+      <%= link_to t('.download_with_calculator'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx, calculations: 'yes')), { class: 'supplier-record__file-download', 'aria-label': t('.download_with_calculator_aria_label') } %>
       <% end %>
     </p>
   </div>
