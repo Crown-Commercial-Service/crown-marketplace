@@ -13,7 +13,7 @@
       </h3>
       <p class="govuk-body mc-supplier-record__contact-item">
         <%= supplier.contact_email.present? ?
-              mail_to(supplier.contact_email) :
+              mail_to(supplier.contact_email, supplier.contact_email, 'aria-label': "Email #{supplier.contact_name} from #{supplier.name}") :
               t('.contact_email_missing') %>
       </p>
       <p class="govuk-body mc-supplier-record__contact-item">
