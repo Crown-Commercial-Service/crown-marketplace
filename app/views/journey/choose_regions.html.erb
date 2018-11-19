@@ -22,7 +22,7 @@
                 <%= check_box_tag(
                   "region_codes[]",
                   region.code,
-                  @journey.current_step.regions.include?(region.code),
+                  @journey.current_step.regions.include?(region),
                   class: "govuk-checkboxes__input",
                   id: "region_#{region.code}"
                 ) %>
