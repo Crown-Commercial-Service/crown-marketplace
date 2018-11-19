@@ -68,6 +68,8 @@ Metrics/AbcSize:
 
 Metrics/LineLength:
     Max: 120
+    IgnoredPatterns:
+        - 'it .* do$'
 
 Metrics/BlockLength:
     Max: 40
