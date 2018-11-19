@@ -70,4 +70,5 @@ class Journey
   delegate :slug, to: :next_step, prefix: :next, allow_nil: true
 
   delegate :template, :valid?, :errors, to: :current_step
+  delegate :inputs, to: :current_step
 end

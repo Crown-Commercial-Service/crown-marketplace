@@ -3,7 +3,15 @@ require 'rails_helper'
 RSpec.describe 'supply_teachers/branches/index.html.erb' do
   helper(TelephoneNumberHelper)
 
-  let(:journey) { instance_double('Journey', params: {}) }
+  let(:inputs) do
+    {
+      looking_for: 'Individual worker',
+      worker_type: 'Nominated',
+      postcode: 'SW1A 1AA'
+    }
+  end
+
+  let(:journey) { instance_double('Journey', params: {}, inputs: inputs) }
   let(:first_supplier) { build(:supplier, name: 'First Supplier') }
   let(:second_supplier) { build(:supplier, name: 'Second Supplier') }
 
@@ -33,6 +41,18 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
     allow(view).to receive(:link_to_calculator?).and_return(link_to_calculator)
 
     render
+  end
+
+  it 'displays the inputs to the list' do
+    expect(rendered).to have_css('.inputs td', text: /Individual worker/)
+    expect(rendered).to have_css('.inputs td', text: /Nominated/)
+    expect(rendered).to have_css('.inputs td', text: /SW1A 1AA/)
+  end
+
+  it 'displays headings for the inputs' do
+    expect(rendered).to have_css('.inputs th', text: /Looking for/)
+    expect(rendered).to have_css('.inputs th', text: /Worker type/)
+    expect(rendered).to have_css('.inputs th', text: /Postcode/)
   end
 
   it 'displays headings for suppliers for each branch' do
