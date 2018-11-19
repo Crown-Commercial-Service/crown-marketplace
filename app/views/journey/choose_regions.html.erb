@@ -7,13 +7,13 @@
     <input type="hidden" name="services[]" value="<%= service %>" />
   <% end %>
 
-  <%= govuk_form_group_with_optional_error(@journey, :regions) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :regions) do %>
+  <%= govuk_form_group_with_optional_error(@journey, :region_codes) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :region_codes) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
           <%= t('.question') %>
         </h1>
-        <%= display_error(@journey, :regions) %>
+        <%= display_error(@journey, :region_codes) %>
       </legend>
         <div class="govuk-form-group">
           <div class="govuk-checkboxes">
