@@ -63,6 +63,57 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
         expect(supplier.telephone_number).to eq(telephone_number)
       end
 
+      context 'and supplier has lots with regions' do
+        let(:lots) do
+          [
+            {
+              'lot_number' => '1',
+              'regions' => { 'UKC1' => 'provided', 'UKC2' => 'provided_if_expenses' }
+            },
+            {
+              'lot_number' => '2',
+              'regions' => { 'UKD1' => 'provided' }
+            },
+          ]
+        end
+
+        let(:supplier) { ManagementConsultancy::Supplier.last }
+
+        let(:regional_availabilities) do
+          supplier.regional_availabilities.order(:lot_number, :region_code)
+        end
+
+        it 'creates regional availabilities associated with supplier' do
+          expect do
+            described_class.create!(suppliers)
+          end.to change(ManagementConsultancy::RegionalAvailability, :count).by(3)
+        end
+
+        it 'assigns attributes to first regional availability' do
+          described_class.create!(suppliers)
+
+          availability = regional_availabilities.first
+          expect(availability.lot_number).to eq('1')
+          expect(availability.region_code).to eq('UKC1')
+        end
+
+        it 'assigns attributes to second regional availability' do
+          described_class.create!(suppliers)
+
+          availability = regional_availabilities.second
+          expect(availability.lot_number).to eq('1')
+          expect(availability.region_code).to eq('UKC2')
+        end
+
+        it 'assigns attributes to third regional availability' do
+          described_class.create!(suppliers)
+
+          availability = regional_availabilities.third
+          expect(availability.lot_number).to eq('2')
+          expect(availability.region_code).to eq('UKD1')
+        end
+      end
+
       context 'and supplier has lots with services' do
         let(:lots) do
           [
