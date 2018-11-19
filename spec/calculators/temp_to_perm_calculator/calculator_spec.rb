@@ -55,15 +55,24 @@ RSpec.describe TempToPermCalculator::Calculator do
   end
 
   describe '#fee' do
-    it 'calculates the total fee' do
-      expect(calculator.fee).to be_within(1e-6).of(calculator.daily_supplier_fee * calculator.working_days)
-    end
+    context 'when the school hires the worker within the first 40 days of the contract' do
+      let(:calculator) do
+        described_class.new(
+          day_rate: 200,
+          days_per_week: 5,
+          contract_start_date: Date.parse('Mon 4 Feb, 2019'),
+          hire_date: Date.parse('Mon 11 Feb, 2019'),
+          markup_rate: 0.16,
+          school_holidays: 0
+        )
+      end
 
-    context 'when the worker works two days per week' do
-      let(:days_per_week) { 2 }
+      it 'calculates the fee as the number of chargeable working days between hire date and 60 working days from start of contract' do
+        working_days_between_contract_start_and_hire_date = 5
+        chargeable_working_days = 60 - working_days_between_contract_start_and_hire_date
+        supplier_rate_per_day = 200 - (200 / (1 + 0.16))
+        expected_fee = chargeable_working_days * supplier_rate_per_day
 
-      it 'calculates a pro-rata total fee' do
-        expected_fee = (calculator.daily_supplier_fee * calculator.working_days) * (days_per_week / 5.0)
         expect(calculator.fee).to be_within(1e-6).of(expected_fee)
       end
     end
