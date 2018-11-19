@@ -1,9 +1,5 @@
 module ManagementConsultancy
   module Steps
-    class Suppliers
-      include JourneyStep
-    end
-
     class ChooseLot
       include JourneyStep
 
