@@ -77,4 +77,49 @@ RSpec.describe TempToPermCalculator::Calculator do
       end
     end
   end
+
+  describe '#fee_for_lack_of_notice?' do
+    let(:calculator) do
+      described_class.new(
+        day_rate: 200,
+        days_per_week: 5,
+        contract_start_date: Date.parse('Mon 7 Jan, 2019'),
+        hire_date: hire_date,
+        markup_rate: 0.16,
+        school_holidays: 0
+      )
+    end
+
+    context 'when the school hires the worker within the first 40 working days of the contract' do
+      let(:hire_date) { Date.parse('Tue 8 Jan, 2019') }
+
+      it 'is false' do
+        expect(calculator.fee_for_lack_of_notice?).to be false
+      end
+    end
+
+    context 'when the school hires the worker on the 40th working day of the contract' do
+      let(:hire_date) { Date.parse('Fri 1 Mar, 2019') }
+
+      it 'is true' do
+        expect(calculator.fee_for_lack_of_notice?).to be false
+      end
+    end
+
+    context 'when the school hires the worker on the 41st working day of the contract' do
+      let(:hire_date) { Date.parse('Mon 4 Mar, 2019') }
+
+      it 'is true' do
+        expect(calculator.fee_for_lack_of_notice?).to be true
+      end
+    end
+
+    context 'when the school hires the worker after the 41st working day of the contract' do
+      let(:hire_date) { Date.parse('Mon 29 Mar, 2019') }
+
+      it 'is true' do
+        expect(calculator.fee_for_lack_of_notice?).to be true
+      end
+    end
+  end
 end
