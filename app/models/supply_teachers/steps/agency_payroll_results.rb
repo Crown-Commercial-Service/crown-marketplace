@@ -22,6 +22,17 @@ module SupplyTeachers
       def term
         Term.find_by(code: @term)
       end
+
+      def inputs
+        {
+          looking_for: translate_input('supply_teachers.looking_for.worker'),
+          worker_type: translate_input('supply_teachers.worker_type.agency_supplied'),
+          payroll_provider: translate_input('supply_teachers.payroll_provider.agency'),
+          postcode: postcode,
+          job_type: job_type.description,
+          term: term.description,
+        }
+      end
     end
   end
 end
