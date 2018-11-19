@@ -16,7 +16,7 @@ module ManagementConsultancy
       end
 
       def next_step_class
-        Suppliers
+        ChooseRegions
       end
     end
   end
