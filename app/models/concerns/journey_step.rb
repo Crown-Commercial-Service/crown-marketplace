@@ -51,4 +51,8 @@ module JourneyStep
   def final?
     next_step_class.nil?
   end
+
+  def translate_input(key)
+    I18n.t(key, scope: 'journey_step')
+  end
 end

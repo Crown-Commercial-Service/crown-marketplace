@@ -101,6 +101,7 @@ ignore_unused:
   - errors.*
   - faker.*
   - activemodel.errors.models.*
+  - journey_step.supply_teachers.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
 # - 'simple_form.{yes,no}'

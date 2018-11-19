@@ -166,6 +166,20 @@ en:
       answer_agency_supplied: 'Yes'
       answer_nominated_worker: No, I have a worker I want the agency to manage (a 'nominated worker')
       question: Do you want an agency to supply the worker?
+  journey_step:
+    supply_teachers:
+      looking_for:
+        managed_service_provider: Managed service provider
+        worker: Individual worker
+      managed_service_provider:
+        master_vendor: Master vendor
+        neutral_vendor: Neutral vendor
+      payroll_provider:
+        agency: Agency
+        school: School
+      worker_type:
+        agency_supplied: Supplied by agency
+        nominated: Nominated
   layouts:
     application:
       back: Back
