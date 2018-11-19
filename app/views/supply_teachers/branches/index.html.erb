@@ -1,6 +1,18 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
+
+    <table class="govuk-table inputs">
+      <caption class="govuk-table__caption"><%= t('.inputs_header') %></caption>
+      <tbody class="govuk-table__body">
+        <% @journey.inputs.each do |question_key, answer| %>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row"><%= t(".inputs.#{question_key}") %></th>
+            <td class="govuk-table__cell"><%= answer %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
     <p class="govuk-body">
       <% if @location %>
       <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found_with_location_html', range: default_search_range, postcode: @location.postcode) %>

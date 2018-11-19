@@ -210,6 +210,15 @@ en:
         download_with_calculator: Download shortlist (with markup calculator)
         download_with_calculator_aria_label: Download shortlist (with markup calculator) as Microsoft Excel file
         header: Supplier list
+        inputs:
+          job_type: Job type
+          looking_for: Looking for
+          managed_service_provider: Managed service provider type
+          payroll_provider: Payroll provider
+          postcode: Postcode
+          term: Term
+          worker_type: Worker type
+        inputs_header: Choices used to generate this list
         print: Print this page
         results_found: results found
         results_found_with_location_html: results found within <strong>%{range}</strong> of <strong>%{postcode}</strong>
