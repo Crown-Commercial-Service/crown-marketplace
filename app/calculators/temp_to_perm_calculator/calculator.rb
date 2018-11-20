@@ -53,5 +53,14 @@ module TempToPermCalculator
 
       @hire_date > fortieth_working_day
     end
+
+    def fee_for_early_hire?
+      working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
+        day.on_weekday? && Holidays.on(day, :gb_eng).empty?
+      end
+      sixtieth_working_day = working_days_from_contract_start.take(60).last
+
+      @hire_date <= sixtieth_working_day
+    end
   end
 end
