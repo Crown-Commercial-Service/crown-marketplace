@@ -239,5 +239,5 @@ en:
   temp_to_perm_calculator:
     home:
       fee:
-        header: Temp to Perm Fee
+        header: Early Hire Fee
         panel_body: Based on the information provided you could be charged
