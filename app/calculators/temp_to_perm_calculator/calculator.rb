@@ -23,7 +23,10 @@ module TempToPermCalculator
     # rubocop:enable Metrics/ParameterLists
 
     def fee
-      daily_supplier_fee * chargeable_working_days * (@days_per_week / 5.0)
+      [
+        daily_supplier_fee * chargeable_working_days * (@days_per_week / 5.0),
+        0
+      ].max
     end
 
     def chargeable_working_days
