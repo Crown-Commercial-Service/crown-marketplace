@@ -57,7 +57,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Neutral vendor managed service')
-    expect(page).to have_css('h2', text: 'neutral-vendor-supplier')
+    expect(page).to have_css('caption', text: 'neutral-vendor-supplier')
 
     expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0])
     expect(page).to have_rates(job_type: 'Neutral vendor managed service provider fee (per day)',

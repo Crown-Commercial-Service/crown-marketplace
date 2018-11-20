@@ -232,6 +232,8 @@ en:
       master_vendors:
         header: Master vendor managed service providers
       neutral_vendors:
+        column1: Job type
+        column2: Supplier mark-up
         header: Neutral vendor managed service providers
   temp_to_perm_calculator:
     home:
