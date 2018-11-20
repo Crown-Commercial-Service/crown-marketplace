@@ -93,8 +93,8 @@ en:
       worker_term_question: How long do you need the worker for?
       worker_type_question: What type of worker do you need?
     choose_expenses:
-      answer_expenses_not_paid: Expenses are not paid
-      answer_expenses_paid: Expenses are paid
+      answer_expenses_not_paid: We will not pay expenses
+      answer_expenses_paid: We will pay expenses
       question: Do you pay expenses?
     choose_lot:
       question: What kind of management consultancy do you want to procure?
