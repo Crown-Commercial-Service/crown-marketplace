@@ -12,7 +12,7 @@ module SupplyTeachers
         render_branches
       else
         @form_path = @journey.form_path
-        render "journey/#{@journey.template}"
+        render @journey.template
       end
     end
 
