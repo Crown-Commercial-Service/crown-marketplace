@@ -3,6 +3,9 @@ module TempToPermCalculator
     def index; end
 
     def fee
+      journey = Journey.new(params[:slug], params)
+      @back_path = journey.previous_step_path
+
       @calculator = TempToPermCalculator::Calculator.new(
         day_rate: params[:day_rate].to_i,
         days_per_week: params[:days_per_week].to_i,
