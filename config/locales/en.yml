@@ -63,6 +63,32 @@ en:
       invalid_location: Couldn’t find that postcode
       invalid_postcode: Invalid postcode
   facilities_management:
+    journey:
+      supplier_region:
+        nuts1:
+          OS0: International
+          UKC: North East England
+          UKD: North West England
+          UKE: Yorkshire and The Humber
+          UKF: East Midlands (England)
+          UKG: West Midlands (England)
+          UKH: East of England
+          UKI: London
+          UKJ: South East England
+          UKK: South West England
+          UKL: Wales
+          UKM: Scotland
+          UKN: Northern Ireland
+        question: Which regions do you need the service in?
+      value_band:
+        answer_over50m: Over £50 million
+        answer_under1_5m: Up to £1.5 million
+        answer_under50m: "£7 million – £50 million"
+        answer_under7m: "£1.5 million – £7 million"
+        direct_award: Direct award to a supplier is only an option for the first of these spending bands.
+        question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
+        question_hint: This can be current costs, or estimated annual costs.
+        submit: Continue
     suppliers:
       supplier:
         contact_email_missing: Contact email not available
@@ -144,31 +170,6 @@ en:
     school_postcode_nominated_worker:
       question: What is your school’s postcode?
       question_hint: We use this to find agencies near to your school
-    supplier_region:
-      nuts1:
-        OS0: International
-        UKC: North East England
-        UKD: North West England
-        UKE: Yorkshire and The Humber
-        UKF: East Midlands (England)
-        UKG: West Midlands (England)
-        UKH: East of England
-        UKI: London
-        UKJ: South East England
-        UKK: South West England
-        UKL: Wales
-        UKM: Scotland
-        UKN: Northern Ireland
-      question: Which regions do you need the service in?
-    value_band:
-      answer_over50m: Over £50 million
-      answer_under1_5m: Up to £1.5 million
-      answer_under50m: "£7 million – £50 million"
-      answer_under7m: "£1.5 million – £7 million"
-      direct_award: Direct award to a supplier is only an option for the first of these spending bands.
-      question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
-      question_hint: This can be current costs, or estimated annual costs.
-      submit: Continue
     worker_type:
       answer_agency_supplied: 'Yes'
       answer_nominated_worker: No, I have a worker I want the agency to manage (a ‘nominated worker’)

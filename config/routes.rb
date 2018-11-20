@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/suppliers', to: 'suppliers#index'
     resources :uploads, only: :create
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace 'management_consultancy', path: 'management-consultancy' do
