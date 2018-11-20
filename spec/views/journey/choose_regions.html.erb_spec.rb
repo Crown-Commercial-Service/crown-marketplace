@@ -3,7 +3,14 @@ require 'rails_helper'
 RSpec.describe 'journey/choose_regions.html.erb' do
   let(:step) { ManagementConsultancy::Steps::ChooseRegions.new }
   let(:errors) { ActiveModel::Errors.new(step) }
-  let(:journey) { instance_double('Journey', errors: errors, current_step: step) }
+  let(:journey) do
+    instance_double(
+      'Journey',
+      errors: errors,
+      current_step: step,
+      previous_questions_and_answers: {}
+    )
+  end
 
   before do
     view.extend(ApplicationHelper)

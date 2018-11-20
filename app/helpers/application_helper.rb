@@ -75,7 +75,13 @@ module ApplicationHelper
   def hidden_fields_for_previous_steps_and_responses(journey)
     html = ActiveSupport::SafeBuffer.new
     journey.previous_questions_and_answers.each do |(key, value)|
-      html += hidden_field_tag(key, value)
+      if value.is_a? Array
+        value.each do |v|
+          html += hidden_field_tag("#{key}[]", v, id: nil)
+        end
+      else
+        html += hidden_field_tag(key, value)
+      end
     end
     html
   end
