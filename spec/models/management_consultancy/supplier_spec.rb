@@ -130,4 +130,35 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
         .to contain_exactly(supplier1, supplier3)
     end
   end
+
+  describe '.delete_all_with_dependents' do
+    let(:supplier1) { create(:management_consultancy_supplier, name: 'Supplier 1') }
+    let(:supplier2) { create(:management_consultancy_supplier, name: 'Supplier 2') }
+
+    before do
+      supplier1.regional_availabilities.create!(lot_number: '1', region_code: 'UKC1')
+      supplier1.service_offerings.create!(lot_number: '1', service_code: '1.1')
+
+      supplier2.regional_availabilities.create!(lot_number: '2', region_code: 'UKC2')
+      supplier2.service_offerings.create!(lot_number: '2', service_code: '2.1')
+    end
+
+    it 'deletes all regional availabilities' do
+      described_class.delete_all_with_dependents
+
+      expect(ManagementConsultancy::RegionalAvailability.count).to eq(0)
+    end
+
+    it 'deletes all service offerings' do
+      described_class.delete_all_with_dependents
+
+      expect(ManagementConsultancy::ServiceOffering.count).to eq(0)
+    end
+
+    it 'deletes all suppliers' do
+      described_class.delete_all_with_dependents
+
+      expect(described_class.count).to eq(0)
+    end
+  end
 end
