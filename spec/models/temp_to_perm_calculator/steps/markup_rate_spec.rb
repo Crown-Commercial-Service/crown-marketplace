@@ -12,8 +12,8 @@ RSpec.describe TempToPermCalculator::Steps::MarkupRate, type: :model do
   it { is_expected.to be_valid }
 
   describe '#next_step_class' do
-    it 'is SchoolHolidays' do
-      expect(step.next_step_class).to eq(TempToPermCalculator::Steps::SchoolHolidays)
+    it 'is Fee' do
+      expect(step.next_step_class).to eq(TempToPermCalculator::Steps::Fee)
     end
   end
 

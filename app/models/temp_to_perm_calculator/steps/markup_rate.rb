@@ -9,7 +9,7 @@ module TempToPermCalculator
                 numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
       def next_step_class
-        SchoolHolidays
+        Fee
       end
     end
   end
