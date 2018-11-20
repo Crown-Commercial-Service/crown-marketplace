@@ -2,6 +2,9 @@ require 'holidays'
 
 module TempToPermCalculator
   class Calculator
+    WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED = 60
+    WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED = 40
+
     attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate
 
     def initialize(
@@ -26,7 +29,7 @@ module TempToPermCalculator
     end
 
     def chargeable_working_days
-      60 - working_days
+      WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED - working_days
     end
 
     def daily_supplier_fee
@@ -42,19 +45,19 @@ module TempToPermCalculator
     end
 
     def fee_for_lack_of_notice?
-      @hire_date > nth_working_day(40)
+      @hire_date > nth_working_day(WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED)
     end
 
     def fee_for_early_hire?
-      @hire_date <= nth_working_day(60)
+      @hire_date <= nth_working_day(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED)
     end
 
     def ideal_hire_date
-      nth_working_day(61)
+      nth_working_day(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED + 1)
     end
 
     def ideal_notice_date
-      nth_working_day(41)
+      nth_working_day(WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED + 1)
     end
 
     private
