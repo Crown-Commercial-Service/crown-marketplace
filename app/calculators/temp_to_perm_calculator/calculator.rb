@@ -4,23 +4,19 @@ module TempToPermCalculator
   class Calculator
     attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate
 
-    # rubocop:disable Metrics/ParameterLists
     def initialize(
       day_rate:,
       days_per_week:,
       contract_start_date:,
       hire_date:,
-      markup_rate:,
-      school_holidays:
+      markup_rate:
     )
       @day_rate = day_rate
       @days_per_week = days_per_week
       @contract_start_date = contract_start_date
       @hire_date = hire_date
       @markup_rate = markup_rate
-      @school_holidays = school_holidays
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def early_hire_fee
       [
@@ -42,7 +38,7 @@ module TempToPermCalculator
         day != @hire_date &&
           day.on_weekday? &&
           Holidays.on(day, :gb_eng).empty?
-      end.count - @school_holidays
+      end.count
     end
 
     def fee_for_lack_of_notice?
