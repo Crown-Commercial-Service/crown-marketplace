@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::Journey, type: :model do
         it { is_expected.to have_attributes(previous_slug: nil) }
         it { is_expected.to have_attributes(next_slug: nil) }
         it { is_expected.to have_attributes(params: {}) }
-        it { is_expected.to have_attributes(template: 'journey/value_band') }
+        it { is_expected.to have_attributes(template: 'facilities_management/journey/value_band') }
         it { is_expected.not_to be_valid }
       end
 
@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::Journey, type: :model do
         it { is_expected.to have_attributes(current_slug: slug) }
         it { is_expected.to have_attributes(previous_slug: nil) }
         it { is_expected.to have_attributes(next_slug: nil) }
-        it { is_expected.to have_attributes(template: 'journey/value_band') }
+        it { is_expected.to have_attributes(template: 'facilities_management/journey/value_band') }
         it { is_expected.not_to be_valid }
       end
 
