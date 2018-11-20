@@ -84,9 +84,10 @@ RSpec.describe FacilitiesManagement::Supplier, type: :model do
 
     before do
       supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC1')
-      supplier1.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC2')
+      supplier1.service_offerings.create!(lot_number: '1a', service_code: 'A.1')
 
-      supplier2.regional_availabilities.create!(lot_number: '1a', region_code: 'UKC1')
+      supplier2.regional_availabilities.create!(lot_number: '1b', region_code: 'UKC2')
+      supplier2.service_offerings.create!(lot_number: '1b', service_code: 'B.1')
     end
 
     it 'deletes all regional availabilities' do
