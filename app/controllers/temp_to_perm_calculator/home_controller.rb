@@ -8,8 +8,7 @@ module TempToPermCalculator
         days_per_week: params[:days_per_week].to_i,
         contract_start_date: contract_start_date,
         hire_date: hire_date,
-        markup_rate: params[:markup_rate].to_i / 100.0,
-        school_holidays: params[:school_holidays].to_i
+        markup_rate: params[:markup_rate].to_i / 100.0
       )
     end
 

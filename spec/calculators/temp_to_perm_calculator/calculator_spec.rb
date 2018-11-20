@@ -4,7 +4,6 @@ RSpec.describe TempToPermCalculator::Calculator do
   let(:days_per_week) { 5 }
   let(:contract_start_date) { Date.parse('Monday, 5th November 2018') }
   let(:hire_date) { Date.parse('Monday, 12th November 2018') }
-  let(:school_holidays) { 0 }
 
   let(:calculator) do
     described_class.new(
@@ -12,8 +11,7 @@ RSpec.describe TempToPermCalculator::Calculator do
       days_per_week: days_per_week,
       contract_start_date: contract_start_date,
       hire_date: hire_date,
-      markup_rate: 0.15,
-      school_holidays: school_holidays
+      markup_rate: 0.15
     )
   end
   let(:subject) { calculator }
@@ -38,14 +36,6 @@ RSpec.describe TempToPermCalculator::Calculator do
         expect(calculator.working_days).to eq(4)
       end
     end
-
-    context 'when the working period includes a school holiday' do
-      let(:school_holidays) { 1 }
-
-      it 'excludes the school holiday in the calculation' do
-        expect(calculator.working_days).to eq(4)
-      end
-    end
   end
 
   describe '#daily_supplier_fee' do
@@ -62,8 +52,7 @@ RSpec.describe TempToPermCalculator::Calculator do
           days_per_week: 5,
           contract_start_date: Date.parse('Mon 4 Feb, 2019'),
           hire_date: Date.parse('Mon 11 Feb, 2019'),
-          markup_rate: 0.16,
-          school_holidays: 0
+          markup_rate: 0.16
         )
       end
 
@@ -84,8 +73,7 @@ RSpec.describe TempToPermCalculator::Calculator do
           days_per_week: 5,
           contract_start_date: Date.parse('Mon 7 Jan, 2019'),
           hire_date: Date.parse('Mon 1 Apr, 2019'),
-          markup_rate: 0.16,
-          school_holidays: 0
+          markup_rate: 0.16
         )
       end
 
@@ -101,8 +89,7 @@ RSpec.describe TempToPermCalculator::Calculator do
           days_per_week: 5,
           contract_start_date: Date.parse('Mon 7 Jan, 2019'),
           hire_date: Date.parse('Mon 29 Apr, 2019'),
-          markup_rate: 0.16,
-          school_holidays: 0
+          markup_rate: 0.16
         )
       end
 
@@ -119,8 +106,7 @@ RSpec.describe TempToPermCalculator::Calculator do
         days_per_week: 5,
         contract_start_date: Date.parse('Mon 7 Jan, 2019'),
         hire_date: hire_date,
-        markup_rate: 0.16,
-        school_holidays: 0
+        markup_rate: 0.16
       )
     end
 
@@ -164,8 +150,7 @@ RSpec.describe TempToPermCalculator::Calculator do
         days_per_week: 5,
         contract_start_date: Date.parse('Mon 7 Jan, 2019'),
         hire_date: hire_date,
-        markup_rate: 0.16,
-        school_holidays: 0
+        markup_rate: 0.16
       )
     end
 
@@ -209,8 +194,7 @@ RSpec.describe TempToPermCalculator::Calculator do
         days_per_week: 5,
         contract_start_date: Date.parse('Mon 7 Jan, 2019'),
         hire_date: Date.parse('Tue 8 Jan, 2019'),
-        markup_rate: 0.16,
-        school_holidays: 0
+        markup_rate: 0.16
       )
     end
 
@@ -226,8 +210,7 @@ RSpec.describe TempToPermCalculator::Calculator do
         days_per_week: 5,
         contract_start_date: Date.parse('Mon 7 Jan, 2019'),
         hire_date: Date.parse('Tue 8 Jan, 2019'),
-        markup_rate: 0.16,
-        school_holidays: 0
+        markup_rate: 0.16
       )
     end
 
