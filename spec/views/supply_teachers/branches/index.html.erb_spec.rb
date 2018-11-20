@@ -43,16 +43,10 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
     render
   end
 
-  it 'displays the inputs to the list' do
-    expect(rendered).to have_css('.inputs td', text: /Individual worker/)
-    expect(rendered).to have_css('.inputs td', text: /Nominated/)
-    expect(rendered).to have_css('.inputs td', text: /SW1A 1AA/)
-  end
-
-  it 'displays headings for the inputs' do
-    expect(rendered).to have_css('.inputs th', text: /Looking for/)
-    expect(rendered).to have_css('.inputs th', text: /Worker type/)
-    expect(rendered).to have_css('.inputs th', text: /Postcode/)
+  it 'displays the buyers selection' do
+    expect(rendered).to have_css('.govuk-inset-text li', text: /Looking for\: Individual worker/)
+    expect(rendered).to have_css('.govuk-inset-text li', text: /Worker type\: Nominated/)
+    expect(rendered).to have_css('.govuk-inset-text li', text: /Postcode\: SW1A 1AA/)
   end
 
   it 'displays headings for suppliers for each branch' do
