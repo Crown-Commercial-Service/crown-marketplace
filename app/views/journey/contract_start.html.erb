@@ -2,7 +2,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
+    <%= render partial: 'journey/error_summary', locals: { errors: @journey.errors } %>
     <%= form_tag @form_path, method: :get do %>
       <%= govuk_form_group_with_optional_error(@journey, :contract_start) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :contract_start) do %>

@@ -1,6 +1,6 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
-<%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
+<%= render partial: 'journey/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
   <%= govuk_form_group_with_optional_error(@journey, :days_per_week) do %>
