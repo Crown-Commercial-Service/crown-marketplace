@@ -42,7 +42,7 @@ en:
         supply_teachers/steps/payroll_provider:
           attributes:
             payroll_provider:
-              inclusion: Select yes if you want to put the worker on the school's payroll
+              inclusion: Select yes if you want to put the worker on the school’s payroll
         supply_teachers/steps/school_postcode_agency_supplied_worker:
           attributes:
             location:
@@ -88,7 +88,7 @@ en:
       temp_to_perm_calculator_link: Calculate the fee you have to pay when recruiting a supply teacher
   journey:
     agency_payroll:
-      postcode_question: What is your school's postcode?
+      postcode_question: What is your school’s postcode?
       question_hint: We use this to find agencies near to your school
       worker_term_question: How long do you need the worker for?
       worker_type_question: What type of worker do you need?
@@ -107,7 +107,7 @@ en:
     contract_start:
       question: What date was the worker first supplied to you on their current contract?
     day_rate:
-      question: What is the supplier's total day rate for the worker?
+      question: What is the supplier’s total day rate for the worker?
       question-hint: An amount in pounds. For example, 500
     days_per_week:
       question: How many days per week is the worker contracted to work?
@@ -125,14 +125,10 @@ en:
     managed_service_providers_explanation:
       header: Managed service providers
       introduction: 'You will need to choose either:'
-      option1_body_html1: 'These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
-
-'
+      option1_body_html1: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
       option1_body_html2: You will then need to contact all the suppliers and run a further competition.
       option1_header: A master vendor
-      option2_body_html: 'A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
-
-'
+      option2_body_html: A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
       option2_header: A neutral vendor
       option_separator: or
     markup_rate:
@@ -141,12 +137,12 @@ en:
     payroll_provider:
       answer_agency_payroll: No, I want the agency to deal with payroll
       answer_school_payroll: 'Yes'
-      question: Do you want to put the worker on the school's payroll?
+      question: Do you want to put the worker on the school’s payroll?
     school_postcode_agency_supplied_worker:
-      question: What is your school's postcode?
+      question: What is your school’s postcode?
       question_hint: We use this to find agencies near to your school
     school_postcode_nominated_worker:
-      question: What is your school's postcode?
+      question: What is your school’s postcode?
       question_hint: We use this to find agencies near to your school
     supplier_region:
       nuts1:
@@ -175,7 +171,7 @@ en:
       submit: Continue
     worker_type:
       answer_agency_supplied: 'Yes'
-      answer_nominated_worker: No, I have a worker I want the agency to manage (a 'nominated worker')
+      answer_nominated_worker: No, I have a worker I want the agency to manage (a ‘nominated worker’)
       question: Do you want an agency to supply the worker?
   journey_step:
     supply_teachers:
