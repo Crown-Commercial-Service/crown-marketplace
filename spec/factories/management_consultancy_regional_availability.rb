@@ -3,5 +3,6 @@ FactoryBot.define do
     association :supplier, factory: :management_consultancy_supplier
     lot_number { ManagementConsultancy::Lot.all.map(&:number).sample }
     region_code { 'UKC1' }
+    expenses_required { false }
   end
 end

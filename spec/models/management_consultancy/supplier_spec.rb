@@ -104,10 +104,18 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
     let(:supplier3) { create(:management_consultancy_supplier, name: 'Supplier 3') }
 
     before do
-      supplier1.regional_availabilities.create!(lot_number: '1', region_code: 'UKC1')
-      supplier1.regional_availabilities.create!(lot_number: '1', region_code: 'UKC2')
-      supplier2.regional_availabilities.create!(lot_number: '2', region_code: 'UKC1')
-      supplier3.regional_availabilities.create!(lot_number: '1', region_code: 'UKC2')
+      supplier1.regional_availabilities.create!(
+        lot_number: '1', region_code: 'UKC1', expenses_required: false
+      )
+      supplier1.regional_availabilities.create!(
+        lot_number: '1', region_code: 'UKC2', expenses_required: false
+      )
+      supplier2.regional_availabilities.create!(
+        lot_number: '2', region_code: 'UKC1', expenses_required: false
+      )
+      supplier3.regional_availabilities.create!(
+        lot_number: '1', region_code: 'UKC2', expenses_required: false
+      )
     end
 
     it 'returns suppliers offering services in lot and regions' do
@@ -136,10 +144,14 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
     let(:supplier2) { create(:management_consultancy_supplier, name: 'Supplier 2') }
 
     before do
-      supplier1.regional_availabilities.create!(lot_number: '1', region_code: 'UKC1')
+      supplier1.regional_availabilities.create!(
+        lot_number: '1', region_code: 'UKC1', expenses_required: false
+      )
       supplier1.service_offerings.create!(lot_number: '1', service_code: '1.1')
 
-      supplier2.regional_availabilities.create!(lot_number: '2', region_code: 'UKC2')
+      supplier2.regional_availabilities.create!(
+        lot_number: '2', region_code: 'UKC2', expenses_required: false
+      )
       supplier2.service_offerings.create!(lot_number: '2', service_code: '2.1')
     end
 
