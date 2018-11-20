@@ -10,7 +10,7 @@ RSpec.describe 'journey/_error_summary.html.erb' do
 
   context 'when errors are empty' do
     before do
-      render partial: 'error_summary', locals: { errors: errors }
+      render partial: 'journey/error_summary', locals: { errors: errors }
     end
 
     it 'does not render error summary' do
@@ -21,7 +21,7 @@ RSpec.describe 'journey/_error_summary.html.erb' do
   context 'when errors are present' do
     before do
       errors.add(:attribute_name, 'error-message')
-      render partial: 'error_summary', locals: { errors: errors }
+      render partial: 'journey/error_summary', locals: { errors: errors }
     end
 
     it 'displays the error summary' do
@@ -37,7 +37,7 @@ RSpec.describe 'journey/_error_summary.html.erb' do
     before do
       errors.add(:attribute_name, 'error-message-1')
       errors.add(:attribute_name, 'error-message-2')
-      render partial: 'error_summary', locals: { errors: errors }
+      render partial: 'journey/error_summary', locals: { errors: errors }
     end
 
     it 'displays the first error message in the summary' do
