@@ -28,7 +28,7 @@ RSpec.describe TempToPermCalculator::HomeController, type: :controller do
     # rubocop:disable RSpec/ExampleLength
     it 'calls the calculator with the correct parameters' do
       calculator = instance_double('TempToPermCalculator::Calculator')
-      allow(calculator).to receive(:fee).and_return(500)
+      allow(calculator).to receive(:early_hire_fee).and_return(500)
       allow(TempToPermCalculator::Calculator)
         .to receive(:new)
         .and_return(calculator)
