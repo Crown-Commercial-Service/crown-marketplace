@@ -18,6 +18,8 @@
       <% if @calculator.fee_for_lack_of_notice? %>
         <p>You're going to be hiring a worker after the 41st working day of a contract. This means that you might be charged a fee for lack of notice, although the total fee (including any Early Hire Fee) cannot exceed <%= number_to_currency(@calculator.daily_supplier_fee * 20, unit: '£') %>.</p>
       <% end %>
+      <h2>Avoid paying fees</h2>
+      <p>If you hire the worker on <%= @calculator.ideal_hire_date.to_formatted_s(:long) %> and give notice on <%= @calculator.ideal_notice_date.to_formatted_s(:long) %> then you can avoid paying any fees to the agency.</p>
     </div>
   </div>
 </div>
