@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'temp_to_perm_calculator/home/fee.html.erb' do
   let(:calculator) do
     options = {
-      fee: 0,
+      early_hire_fee: 0,
       daily_supplier_fee: 0,
       markup_rate: 0,
       day_rate: 0,
