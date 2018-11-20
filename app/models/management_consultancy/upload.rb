@@ -2,7 +2,7 @@ module ManagementConsultancy
   class Upload
     def self.create!(suppliers)
       error = all_or_none(Supplier) do
-        Supplier.destroy_all
+        Supplier.delete_all_with_dependents
 
         suppliers.map do |supplier_data|
           create_supplier!(supplier_data)

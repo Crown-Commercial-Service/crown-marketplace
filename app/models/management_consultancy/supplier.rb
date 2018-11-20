@@ -35,6 +35,12 @@ module ManagementConsultancy
       offering_services(lot_number, service_codes).supplying_regions(lot_number, region_codes)
     end
 
+    def self.delete_all_with_dependents
+      RegionalAvailability.delete_all
+      ServiceOffering.delete_all
+      delete_all
+    end
+
     def services_in_lot(lot_number)
       service_offerings.select { |so| so.lot_number == lot_number }.map(&:service)
     end
