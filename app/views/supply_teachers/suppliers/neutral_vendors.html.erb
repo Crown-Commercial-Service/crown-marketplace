@@ -2,6 +2,48 @@
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
     <% SupplyTeachers::Supplier.with_neutral_vendor_rates.each do |supplier| %>
+      <div class="neutral-vendor-record">
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-!-font-size-27"><%= supplier.name %></caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="col"><strong><%= t('.column1') %></strong></th>
+              <th class="govuk-table__header govuk-table__cell--numeric" scope="col" colspan="3"><strong><%= t('.column2') %></strong></th>
+            </tr>
+          </thead>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="col"></th>
+              <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['one_week'] %></strong></th>
+              <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['twelve_weeks'] %></strong></th>
+              <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['more_than_twelve_weeks'] %></strong></th>
+            </tr>
+          </thead>
+          <% supplier.rates.each do |rate| %>
+          <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= SupplyTeachers::Rate::JOB_TYPES[rate.job_type] %></th>
+                <% 3.times do %>
+                <td class="govuk-table__cell govuk-table__cell--numeric master-vendor-record__markup-column">
+                  <% if rate.percentage_mark_up? %>
+                    <%= number_to_percentage(rate.mark_up * 100, precision: 1) %>
+                  <% else %>
+                    <%= number_to_currency(rate.daily_fee, unit: '£') %>
+                  <% end %>
+                </td>
+                <% end %>          
+               </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+
+<!--
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
+    <% SupplyTeachers::Supplier.with_neutral_vendor_rates.each do |supplier| %>
       <h2 class="govuk-heading-m"><%= supplier.name %></h2>
       <% supplier.rates.each do |rate| %>
         <p>
@@ -15,4 +57,5 @@
       <% end %>
     <% end %>
   </div>
+-->
 </div>
