@@ -67,6 +67,50 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
     end
   end
 
+  describe '.offering_services_in_regions' do
+    let(:supplier1) do
+      create(:management_consultancy_supplier, name: 'Supplier 1')
+    end
+    let(:supplier2) do
+      create(:management_consultancy_supplier, name: 'Supplier 2')
+    end
+    let(:supplier3) do
+      create(:management_consultancy_supplier, name: 'Supplier 3')
+    end
+
+    before do
+      supplier1.service_offerings.create!(
+        lot_number: '1', service_code: '1.1'
+      )
+      supplier1.service_offerings.create!(
+        lot_number: '1', service_code: '1.2'
+      )
+      supplier1.service_offerings.create!(
+        lot_number: '2', service_code: '2.1'
+      )
+      supplier2.service_offerings.create!(
+        lot_number: '1', service_code: '1.2'
+      )
+      supplier3.service_offerings.create!(
+        lot_number: '2', service_code: '2.1'
+      )
+      supplier1.regional_availabilities.create!(
+        lot_number: '1', region_code: 'UKC1', expenses_required: false
+      )
+      supplier2.regional_availabilities.create!(
+        lot_number: '2', region_code: 'UKC2', expenses_required: false
+      )
+      supplier3.regional_availabilities.create!(
+        lot_number: '1', region_code: 'UKC1', expenses_required: false
+      )
+    end
+
+    it 'returns suppliers with availability in lot and regions' do
+      expect(described_class.offering_services_in_regions('1', ['1.2'], ['UKC1']))
+        .to contain_exactly(supplier1)
+    end
+  end
+
   describe '#services_in_lot' do
     let(:supplier) { create(:management_consultancy_supplier, name: 'Supplier 1') }
 
