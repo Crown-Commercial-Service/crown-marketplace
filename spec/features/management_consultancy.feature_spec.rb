@@ -26,10 +26,18 @@ RSpec.feature 'Management consultancy', type: :feature do
     supplier5.service_offerings.create!(lot_number: '1', service_code: '1.2')
     supplier5.service_offerings.create!(lot_number: '1', service_code: '1.3')
 
-    supplier1.regional_availabilities.create!(lot_number: '1', region_code: 'UKC1')
-    supplier2.regional_availabilities.create!(lot_number: '2', region_code: 'UKC2')
-    supplier3.regional_availabilities.create!(lot_number: '3', region_code: 'UKD1')
-    supplier1.regional_availabilities.create!(lot_number: '4', region_code: 'UKD3')
+    supplier1.regional_availabilities.create!(
+      lot_number: '1', region_code: 'UKC1', expenses_required: false
+    )
+    supplier2.regional_availabilities.create!(
+      lot_number: '2', region_code: 'UKC2', expenses_required: false
+    )
+    supplier3.regional_availabilities.create!(
+      lot_number: '3', region_code: 'UKD1', expenses_required: false
+    )
+    supplier1.regional_availabilities.create!(
+      lot_number: '4', region_code: 'UKD3', expenses_required: false
+    )
   end
 
   scenario 'Buyer wants to buy business services (Lot 1)' do

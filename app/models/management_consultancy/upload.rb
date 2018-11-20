@@ -35,10 +35,11 @@ module ManagementConsultancy
       lots.each do |lot|
         lot_number = lot['lot_number']
         regions = lot.fetch('regions', {})
-        regions.each do |region, _policy|
+        regions.each do |region, policy|
           supplier.regional_availabilities.create!(
             lot_number: lot_number,
-            region_code: region
+            region_code: region,
+            expenses_required: policy == 'provided_if_expenses'
           )
         end
         services = lot.fetch('services', [])

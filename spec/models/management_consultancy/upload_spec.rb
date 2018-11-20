@@ -95,6 +95,7 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
           availability = regional_availabilities.first
           expect(availability.lot_number).to eq('1')
           expect(availability.region_code).to eq('UKC1')
+          expect(availability).not_to be_expenses_required
         end
 
         it 'assigns attributes to second regional availability' do
@@ -103,6 +104,7 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
           availability = regional_availabilities.second
           expect(availability.lot_number).to eq('1')
           expect(availability.region_code).to eq('UKC2')
+          expect(availability).to be_expenses_required
         end
 
         it 'assigns attributes to third regional availability' do
@@ -111,6 +113,7 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
           availability = regional_availabilities.third
           expect(availability.lot_number).to eq('2')
           expect(availability.region_code).to eq('UKD1')
+          expect(availability).not_to be_expenses_required
         end
       end
 
