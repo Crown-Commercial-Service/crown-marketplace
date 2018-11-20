@@ -11,6 +11,10 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        management_consultancy/steps/choose_expenses:
+          attributes:
+            expenses:
+              inclusion: Please say whether you pay expenses
         management_consultancy/steps/choose_lot:
           attributes:
             lot:
@@ -88,6 +92,10 @@ en:
       question_hint: We use this to find agencies near to your school
       worker_term_question: How long do you need the worker for?
       worker_type_question: What type of worker do you need?
+    choose_expenses:
+      answer_expenses_not_paid: Expenses are not paid
+      answer_expenses_paid: Expenses are paid
+      question: Do you pay expenses?
     choose_lot:
       question: What kind of management consultancy do you want to procure?
       question_hint: The lot you choose here will affect the services offered and the suppliers presented.

@@ -12,7 +12,8 @@ module ManagementConsultancy
       @suppliers = Supplier.offering_services_in_regions(
         params[:lot],
         params[:services],
-        params[:region_codes]
+        params[:region_codes],
+        params[:expenses] == 'paid'
       )
     end
   end

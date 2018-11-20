@@ -9,7 +9,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
 
   before do
     allow(ManagementConsultancy::Supplier).to receive(:offering_services_in_regions)
-      .with(lot_number, services, region_codes).and_return(suppliers)
+      .with(lot_number, services, region_codes, true).and_return(suppliers)
   end
 
   describe 'GET index' do
@@ -25,6 +25,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           journey: 'management-consultancy',
           lot: lot_number,
           services: services,
+          expenses: 'paid',
           region_codes: region_codes
         }
       end
@@ -47,6 +48,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           slug: 'choose-regions',
           lot: lot_number,
           services: services,
+          expenses: 'paid',
           region_codes: region_codes
         )
         expect(assigns(:back_path)).to eq(expected_path)
@@ -61,6 +63,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           journey: 'management-consultancy',
           lot: lot_number,
           services: services,
+          expenses: 'paid',
           region_codes: region_codes
         }
       end
@@ -83,6 +86,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           slug: 'choose-regions',
           lot: lot_number,
           services: services,
+          expenses: 'paid',
           region_codes: region_codes
         )
         expect(assigns(:back_path)).to eq(expected_path)
