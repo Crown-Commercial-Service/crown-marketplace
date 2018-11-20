@@ -42,35 +42,28 @@ module TempToPermCalculator
     end
 
     def fee_for_lack_of_notice?
-      working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
-        day.on_weekday? && Holidays.on(day, :gb_eng).empty?
-      end
-      fortieth_working_day = working_days_from_contract_start.take(40).last
-
-      @hire_date > fortieth_working_day
+      @hire_date > nth_working_day(40)
     end
 
     def fee_for_early_hire?
-      working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
-        day.on_weekday? && Holidays.on(day, :gb_eng).empty?
-      end
-      sixtieth_working_day = working_days_from_contract_start.take(60).last
-
-      @hire_date <= sixtieth_working_day
+      @hire_date <= nth_working_day(60)
     end
 
     def ideal_hire_date
-      working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
-        day.on_weekday? && Holidays.on(day, :gb_eng).empty?
-      end
-      working_days_from_contract_start.take(61).last
+      nth_working_day(61)
     end
 
     def ideal_notice_date
+      nth_working_day(41)
+    end
+
+    private
+
+    def nth_working_day(number_of_days)
       working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
         day.on_weekday? && Holidays.on(day, :gb_eng).empty?
       end
-      working_days_from_contract_start.take(41).last
+      working_days_from_contract_start.take(number_of_days).last
     end
   end
 end
