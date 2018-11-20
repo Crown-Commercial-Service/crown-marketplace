@@ -201,4 +201,38 @@ RSpec.describe TempToPermCalculator::Calculator do
       end
     end
   end
+
+  describe '#ideal_hire_date' do
+    let(:calculator) do
+      described_class.new(
+        day_rate: 200,
+        days_per_week: 5,
+        contract_start_date: Date.parse('Mon 7 Jan, 2019'),
+        hire_date: Date.parse('Tue 8 Jan, 2019'),
+        markup_rate: 0.16,
+        school_holidays: 0
+      )
+    end
+
+    it 'is 61 working days from the contract start date to avoid paying early hire fee' do
+      expect(calculator.ideal_hire_date).to eq(Date.parse('Mon 1 Apr, 2019'))
+    end
+  end
+
+  describe '#ideal_notice_date' do
+    let(:calculator) do
+      described_class.new(
+        day_rate: 200,
+        days_per_week: 5,
+        contract_start_date: Date.parse('Mon 7 Jan, 2019'),
+        hire_date: Date.parse('Tue 8 Jan, 2019'),
+        markup_rate: 0.16,
+        school_holidays: 0
+      )
+    end
+
+    it 'is 41 working days from the contract start date to avoid paying lack of notice fee' do
+      expect(calculator.ideal_notice_date).to eq(Date.parse('Mon 4 Mar, 2019'))
+    end
+  end
 end

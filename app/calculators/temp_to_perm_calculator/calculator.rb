@@ -62,5 +62,19 @@ module TempToPermCalculator
 
       @hire_date <= sixtieth_working_day
     end
+
+    def ideal_hire_date
+      working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
+        day.on_weekday? && Holidays.on(day, :gb_eng).empty?
+      end
+      working_days_from_contract_start.take(61).last
+    end
+
+    def ideal_notice_date
+      working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
+        day.on_weekday? && Holidays.on(day, :gb_eng).empty?
+      end
+      working_days_from_contract_start.take(41).last
+    end
   end
 end

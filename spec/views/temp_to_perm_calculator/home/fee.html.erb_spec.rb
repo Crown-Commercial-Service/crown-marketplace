@@ -12,7 +12,9 @@ RSpec.describe 'temp_to_perm_calculator/home/fee.html.erb' do
       hire_date: Date.parse('2018-11-26'),
       days_per_week: 0,
       fee_for_early_hire?: nil,
-      fee_for_lack_of_notice?: nil
+      fee_for_lack_of_notice?: nil,
+      ideal_hire_date: Date.parse('2018-11-26'),
+      ideal_notice_date: Date.parse('2018-11-26')
     }
     instance_double(TempToPermCalculator::Calculator, options)
   end
