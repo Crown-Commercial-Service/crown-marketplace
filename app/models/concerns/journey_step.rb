@@ -41,7 +41,7 @@ module JourneyStep
   end
 
   def template
-    self.class.name.demodulize.underscore
+    ['journey', self.class.name.demodulize.underscore].join('/')
   end
 
   def next_step_class
