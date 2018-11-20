@@ -1,0 +1,31 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_field_tag :lot, params[:lot] %>
+  <% params[:services].each do |service| %>
+    <input type="hidden" name="services[]" value="<%= service %>" />
+  <% end %>
+
+  <%= govuk_form_group_with_optional_error(@journey, :region_codes) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :region_codes) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.question') %>
+        </h1>
+        <%= display_error(@journey, :region_codes) %>
+      </legend>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :expenses, :paid, checked?(params[:expenses], 'paid'), class: 'govuk-radios__input' %>
+          <%= label_tag :expenses_paid, t('.answer_expenses_paid'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :expenses, :not_paid, checked?(params[:expenses], 'not_paid'), class: 'govuk-radios__input' %>
+          <%= label_tag :expenses_not_paid, t('.answer_expenses_not_paid'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+<% end %>

@@ -27,7 +27,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     supplier5.service_offerings.create!(lot_number: '1', service_code: '1.3')
 
     supplier1.regional_availabilities.create!(
-      lot_number: '1', region_code: 'UKC1', expenses_required: false
+      lot_number: '1', region_code: 'UKC1', expenses_required: true
     )
     supplier2.regional_availabilities.create!(
       lot_number: '2', region_code: 'UKC2', expenses_required: false
@@ -40,7 +40,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     )
   end
 
-  scenario 'Buyer wants to buy business services (Lot 1)' do
+  scenario 'Buyer wants to buy business services (Lot 1) and pays expenses' do
     visit_management_consultancy_home
 
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
@@ -53,6 +53,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_service.name
     click_on I18n.t('common.submit')
 
+    choose I18n.t('journey.choose_expenses.answer_expenses_paid')
+    click_on I18n.t('common.submit')
+
     check required_region.name
     click_on I18n.t('common.submit')
 
@@ -61,6 +64,28 @@ RSpec.feature 'Management consultancy', type: :feature do
     expect(page).to have_text(/Aardvark Ltd/)
   end
 
+  scenario 'Buyer wants to buy business services (Lot 1) and does not pay expenses' do
+    visit_management_consultancy_home
+
+    required_service = ManagementConsultancy::Service.where(code: '1.1').first
+    required_region = Nuts2Region.find_by(code: 'UKC1')
+
+    click_on 'Start now'
+    choose 'Lot 1 - business services'
+    click_on I18n.t('common.submit')
+
+    check required_service.name
+    click_on I18n.t('common.submit')
+
+    choose I18n.t('journey.choose_expenses.answer_expenses_not_paid')
+    click_on I18n.t('common.submit')
+
+    check required_region.name
+    click_on I18n.t('common.submit')
+
+    expect(page).to have_css('h1', text: 'Lot 1 - business services')
+    expect(page).to have_text('0 suppliers')
+  end
   scenario 'Buyer wants to buy procurement, supply chain and commercial services (Lot 2)' do
     visit_management_consultancy_home
 
@@ -72,6 +97,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     click_on I18n.t('common.submit')
 
     check required_service.name
+    click_on I18n.t('common.submit')
+
+    choose I18n.t('journey.choose_expenses.answer_expenses_not_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
@@ -95,6 +123,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_service.name
     click_on I18n.t('common.submit')
 
+    choose I18n.t('journey.choose_expenses.answer_expenses_not_paid')
+    click_on I18n.t('common.submit')
+
     check required_region.name
     click_on I18n.t('common.submit')
 
@@ -114,6 +145,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     click_on I18n.t('common.submit')
 
     check required_service.name
+    click_on I18n.t('common.submit')
+
+    choose I18n.t('journey.choose_expenses.answer_expenses_not_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
