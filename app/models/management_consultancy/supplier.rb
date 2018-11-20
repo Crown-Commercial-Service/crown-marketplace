@@ -26,13 +26,13 @@ module ManagementConsultancy
       where(id: ids)
     end
 
-    def self.supplying_regions(lot_number, region_codes)
-      ids = RegionalAvailability.supplier_ids_for_region_codes(lot_number, region_codes)
+    def self.supplying_regions(lot_number, region_codes, expenses_paid = true)
+      ids = RegionalAvailability.supplier_ids_for_region_codes(lot_number, region_codes, expenses_paid)
       where(id: ids)
     end
 
-    def self.offering_services_in_regions(lot_number, service_codes, region_codes)
-      offering_services(lot_number, service_codes).supplying_regions(lot_number, region_codes)
+    def self.offering_services_in_regions(lot_number, service_codes, region_codes, expenses_paid = true)
+      offering_services(lot_number, service_codes).supplying_regions(lot_number, region_codes, expenses_paid)
     end
 
     def self.delete_all_with_dependents
