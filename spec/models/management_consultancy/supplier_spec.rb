@@ -77,6 +77,9 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
     let(:supplier3) do
       create(:management_consultancy_supplier, name: 'Supplier 3')
     end
+    let(:supplier4) do
+      create(:management_consultancy_supplier, name: 'Supplier 3')
+    end
 
     before do
       supplier1.service_offerings.create!(
@@ -94,6 +97,9 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
       supplier3.service_offerings.create!(
         lot_number: '2', service_code: '2.1'
       )
+      supplier4.service_offerings.create!(
+        lot_number: '1', service_code: '1.2'
+      )
       supplier1.regional_availabilities.create!(
         lot_number: '1', region_code: 'UKC1', expenses_required: false
       )
@@ -103,11 +109,23 @@ RSpec.describe ManagementConsultancy::Supplier, type: :model do
       supplier3.regional_availabilities.create!(
         lot_number: '1', region_code: 'UKC1', expenses_required: false
       )
+      supplier4.regional_availabilities.create!(
+        lot_number: '1', region_code: 'UKC1', expenses_required: true
+      )
     end
 
-    it 'returns suppliers with availability in lot and regions' do
-      expect(described_class.offering_services_in_regions('1', ['1.2'], ['UKC1']))
-        .to contain_exactly(supplier1)
+    context 'when expenses are paid' do
+      it 'returns suppliers with availability in lot and regions' do
+        expect(described_class.offering_services_in_regions('1', ['1.2'], ['UKC1']))
+          .to contain_exactly(supplier1, supplier4)
+      end
+    end
+
+    context 'when expenses are not paid' do
+      it 'excludes suppliers who require expenses' do
+        expect(described_class.offering_services_in_regions('1', ['1.2'], ['UKC1'], false))
+          .to contain_exactly(supplier1)
+      end
     end
   end
 
