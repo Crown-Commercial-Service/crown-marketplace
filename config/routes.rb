@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   get '/', to: 'home#gateway', as: :gateway
   get '/start', to: 'home#index', as: :homepage
@@ -13,6 +14,9 @@ Rails.application.routes.draw do
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
     resources :branches, only: :index
     resources :uploads, only: :create
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace 'facilities_management', path: 'facilities-management' do
@@ -46,3 +50,4 @@ Rails.application.routes.draw do
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
   get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 end
+# rubocop:enable Metrics/BlockLength

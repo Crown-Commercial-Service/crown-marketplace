@@ -1,12 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'journey/managed_service_provider.html.erb' do
-  let(:step) { SupplyTeachers::Steps::ManagedServiceProvider.new }
+RSpec.describe 'supply_teachers/journey/worker_type.html.erb' do
+  let(:step) { SupplyTeachers::Steps::WorkerType.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors, previous_questions_and_answers: {}) }
 
   before do
     view.extend(ApplicationHelper)
+    view.extend(JourneyHelper)
     assign(:journey, journey)
     assign(:form_path, '/')
   end
@@ -17,14 +18,14 @@ RSpec.describe 'journey/managed_service_provider.html.erb' do
     expect(rendered).to have_text('hidden-fields')
   end
 
-  it 'does not display the error summary' do
-    render
-    expect(rendered).not_to have_css('.govuk-error-summary')
-  end
-
   it 'does not include aria-describedby attribute' do
     render
     expect(rendered).not_to have_css('fieldset[aria-describedby]')
+  end
+
+  it 'does not display the error summary' do
+    render
+    expect(rendered).not_to have_css('.govuk-error-summary')
   end
 
   it 'does not include any error message classes' do
@@ -40,12 +41,12 @@ RSpec.describe 'journey/managed_service_provider.html.erb' do
 
   context 'when the journey has an error' do
     before do
-      errors.add(:managed_service_provider, 'error-message')
+      errors.add(:worker_type, 'error-message')
       render
     end
 
     it 'links the fieldset to the error message' do
-      expect(rendered).to have_css('fieldset[aria-describedby="managed_service_provider-error"]')
+      expect(rendered).to have_css('fieldset[aria-describedby="worker_type-error"]')
     end
 
     it 'displays the error summary' do
@@ -57,7 +58,7 @@ RSpec.describe 'journey/managed_service_provider.html.erb' do
     end
 
     it 'adds the message to the field with the error' do
-      expect(rendered).to have_css('#managed_service_provider-error.govuk-error-message', text: 'error-message')
+      expect(rendered).to have_css('#worker_type-error.govuk-error-message', text: 'error-message')
     end
 
     it 'adds an error prefix to the page title' do

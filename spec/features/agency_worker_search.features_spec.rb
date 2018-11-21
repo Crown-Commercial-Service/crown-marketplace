@@ -43,7 +43,7 @@ RSpec.feature 'Agency workers', type: :feature do
   end
 
   def a_managed_service_provider
-    I18n.t('journey.looking_for.answer_managed_service_provider')
+    I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
   end
 
   def continue
@@ -51,15 +51,15 @@ RSpec.feature 'Agency workers', type: :feature do
   end
 
   def an_individual_worker
-    I18n.t('journey.looking_for.answer_worker')
+    I18n.t('supply_teachers.journey.looking_for.answer_worker')
   end
 
   def a_managed_service_provider
-    I18n.t('journey.looking_for.answer_managed_service_provider')
+    I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
   end
 
   def yes
-    I18n.t('journey.worker_type.answer_agency_supplied')
+    I18n.t('supply_teachers.journey.worker_type.answer_agency_supplied')
   end
 
   def back
@@ -67,6 +67,6 @@ RSpec.feature 'Agency workers', type: :feature do
   end
 
   def no
-    I18n.t('journey.worker_type.answer_nominated_worker')
+    I18n.t('supply_teachers.journey.worker_type.answer_nominated_worker')
   end
 end

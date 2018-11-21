@@ -1,12 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'journey/looking_for.html.erb' do
+RSpec.describe 'supply_teachers/journey/looking_for.html.erb' do
   let(:step) { SupplyTeachers::Steps::LookingFor.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors) }
 
   before do
     view.extend(ApplicationHelper)
+    view.extend(JourneyHelper)
     assign(:journey, journey)
     assign(:form_path, '/')
   end
