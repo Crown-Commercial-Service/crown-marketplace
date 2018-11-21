@@ -26,7 +26,7 @@ RSpec.describe SupplyTeachers::Journey, type: :model do
         it { is_expected.to have_attributes(previous_slug: nil) }
         it { is_expected.to have_attributes(next_slug: nil) }
         it { is_expected.to have_attributes(params: {}) }
-        it { is_expected.to have_attributes(template: 'journey/looking_for') }
+        it { is_expected.to have_attributes(template: 'supply_teachers/journey/looking_for') }
         it { is_expected.not_to be_valid }
       end
 
@@ -36,7 +36,7 @@ RSpec.describe SupplyTeachers::Journey, type: :model do
         it { is_expected.to have_attributes(current_slug: slug) }
         it { is_expected.to have_attributes(previous_slug: nil) }
         it { is_expected.to have_attributes(next_slug: nil) }
-        it { is_expected.to have_attributes(template: 'journey/looking_for') }
+        it { is_expected.to have_attributes(template: 'supply_teachers/journey/looking_for') }
         it { is_expected.not_to be_valid }
 
         it 'collects the supplied parameters' do

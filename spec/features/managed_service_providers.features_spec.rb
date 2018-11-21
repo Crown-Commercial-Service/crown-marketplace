@@ -26,7 +26,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
 
     choose 'Master vendor'
@@ -50,7 +50,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
 
     choose 'Neutral vendor'
@@ -68,7 +68,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
 
     choose 'Master vendor'
@@ -77,14 +77,14 @@ RSpec.feature 'Managed service providers', type: :feature do
     click_on I18n.t('layouts.application.back')
     click_on I18n.t('layouts.application.back')
 
-    expect(page).to have_checked_field(I18n.t('journey.looking_for.answer_managed_service_provider'))
+    expect(page).to have_checked_field(I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider'))
   end
 
   scenario 'Buyer changes mind about hiring a master vendor managed service' do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
 
     choose 'Master vendor'
@@ -99,7 +99,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose I18n.t('journey.looking_for.answer_managed_service_provider')
+    choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
 
     choose 'Neutral vendor'

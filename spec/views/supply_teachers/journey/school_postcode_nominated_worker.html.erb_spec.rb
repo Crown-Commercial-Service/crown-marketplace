@@ -1,13 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe 'journey/agency_payroll.html.erb' do
-  let(:step) { SupplyTeachers::Steps::AgencyPayroll.new }
+RSpec.describe 'supply_teachers/journey/school_postcode_nominated_worker.html.erb' do
+  let(:step) { SupplyTeachers::Steps::SchoolPostcodeNominatedWorker.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors, previous_questions_and_answers: {}) }
 
   before do
     view.extend(ApplicationHelper)
     assign(:journey, journey)
+    assign(:back_path, '/')
     assign(:form_path, '/')
   end
 

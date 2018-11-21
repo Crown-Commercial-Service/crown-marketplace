@@ -113,11 +113,6 @@ en:
       supply_teachers_link: Find supply teachers and non-teaching staff
       temp_to_perm_calculator_link: Calculate the fee you have to pay when recruiting a supply teacher
   journey:
-    agency_payroll:
-      postcode_question: What is your school’s postcode?
-      question_hint: We use this to find agencies near to your school
-      worker_term_question: How long do you need the worker for?
-      worker_type_question: What type of worker do you need?
     contract_start:
       question: What date was the worker first supplied to you on their current contract?
     day_rate:
@@ -128,40 +123,9 @@ en:
       question-hint: For example, 5
     hire_date:
       question: What date do you want to hire them from?
-    looking_for:
-      answer_managed_service_provider: A managed service provider
-      answer_worker: An individual worker
-      question: What are you looking for?
-    managed_service_provider:
-      answer_master_vendor: Master vendor managed service
-      answer_neutral_vendor: Neutral vendor managed service
-      question: What type of managed service do you want?
-    managed_service_providers_explanation:
-      header: Managed service providers
-      introduction: 'You will need to choose either:'
-      option1_body_html1: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
-      option1_body_html2: You will then need to contact all the suppliers and run a further competition.
-      option1_header: A master vendor
-      option2_body_html: A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
-      option2_header: A neutral vendor
-      option_separator: or
     markup_rate:
       question: What mark-up does the supplier charge for the worker?
       question-hint: This is the percentage fee you agreed with the supplier. For example, 40
-    payroll_provider:
-      answer_agency_payroll: No, I want the agency to deal with payroll
-      answer_school_payroll: 'Yes'
-      question: Do you want to put the worker on the school’s payroll?
-    school_postcode_agency_supplied_worker:
-      question: What is your school’s postcode?
-      question_hint: We use this to find agencies near to your school
-    school_postcode_nominated_worker:
-      question: What is your school’s postcode?
-      question_hint: We use this to find agencies near to your school
-    worker_type:
-      answer_agency_supplied: 'Yes'
-      answer_nominated_worker: No, I have a worker I want the agency to manage (a ‘nominated worker’)
-      question: Do you want an agency to supply the worker?
   journey_step:
     supply_teachers:
       looking_for:
@@ -279,6 +243,43 @@ en:
         print: Print this page
         results_found: results found
         results_found_with_location_html: results found within <strong>%{range}</strong> of <strong>%{postcode}</strong>
+    journey:
+      agency_payroll:
+        postcode_question: What is your school’s postcode?
+        question_hint: We use this to find agencies near to your school
+        worker_term_question: How long do you need the worker for?
+        worker_type_question: What type of worker do you need?
+      looking_for:
+        answer_managed_service_provider: A managed service provider
+        answer_worker: An individual worker
+        question: What are you looking for?
+      managed_service_provider:
+        answer_master_vendor: Master vendor managed service
+        answer_neutral_vendor: Neutral vendor managed service
+        question: What type of managed service do you want?
+      managed_service_providers_explanation:
+        header: Managed service providers
+        introduction: 'You will need to choose either:'
+        option1_body_html1: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
+        option1_body_html2: You will then need to contact all the suppliers and run a further competition.
+        option1_header: A master vendor
+        option2_body_html: A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
+        option2_header: A neutral vendor
+        option_separator: or
+      payroll_provider:
+        answer_agency_payroll: No, I want the agency to deal with payroll
+        answer_school_payroll: 'Yes'
+        question: Do you want to put the worker on the school’s payroll?
+      school_postcode_agency_supplied_worker:
+        question: What is your school’s postcode?
+        question_hint: We use this to find agencies near to your school
+      school_postcode_nominated_worker:
+        question: What is your school’s postcode?
+        question_hint: We use this to find agencies near to your school
+      worker_type:
+        answer_agency_supplied: 'Yes'
+        answer_nominated_worker: No, I have a worker I want the agency to manage (a ‘nominated worker’)
+        question: Do you want an agency to supply the worker?
     suppliers:
       master_vendor:
         column1: Job type
