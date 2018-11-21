@@ -40,6 +40,9 @@ Rails.application.routes.draw do
   namespace 'temp_to_perm_calculator', path: 'temp-to-perm-calculator' do
     get '/', to: 'home#index'
     get '/fee', to: 'home#fee'
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   get '/auth/cognito', as: :login

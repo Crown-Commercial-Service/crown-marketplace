@@ -21,6 +21,6 @@ RSpec.describe TempToPermCalculator::Journey, type: :model do
     it { is_expected.to have_attributes(previous_slug: nil) }
     it { is_expected.to have_attributes(next_slug: 'hire-date') }
     it { is_expected.to have_attributes(params: {}) }
-    it { is_expected.to have_attributes(template: 'journey/contract_start') }
+    it { is_expected.to have_attributes(template: 'temp_to_perm_calculator/journey/contract_start') }
   end
 end
