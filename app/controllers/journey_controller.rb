@@ -26,18 +26,7 @@ class JourneyController < ApplicationController
   end
 
   def journey_class
-    case params[:journey]
-    when SupplyTeachers::Journey.journey_name
-      SupplyTeachers::Journey
-    when FacilitiesManagement::Journey.journey_name
-      FacilitiesManagement::Journey
-    when ManagementConsultancy::Journey.journey_name
-      ManagementConsultancy::Journey
-    when TempToPermCalculator::Journey.journey_name
-      TempToPermCalculator::Journey
-    else
-      raise ActionController::RoutingError, nil
-    end
+    raise ActionController::RoutingError, nil
   end
 
   def build_journey
