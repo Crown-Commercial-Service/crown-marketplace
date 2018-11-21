@@ -65,10 +65,14 @@ class Journey
     params.except(*current_step.class.attributes)
   end
 
+  def template
+    [self.class.journey_name.underscore, 'journey', current_step.template].join('/')
+  end
+
   delegate :slug, to: :current_step, prefix: :current, allow_nil: true
   delegate :slug, to: :previous_step, prefix: :previous, allow_nil: true
   delegate :slug, to: :next_step, prefix: :next, allow_nil: true
 
-  delegate :template, :valid?, :errors, to: :current_step
+  delegate :valid?, :errors, to: :current_step
   delegate :inputs, to: :current_step
 end
