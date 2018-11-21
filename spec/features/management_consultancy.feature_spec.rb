@@ -53,7 +53,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_service.name
     click_on I18n.t('common.submit')
 
-    choose I18n.t('journey.choose_expenses.answer_expenses_paid')
+    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
@@ -77,7 +77,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_service.name
     click_on I18n.t('common.submit')
 
-    choose I18n.t('journey.choose_expenses.answer_expenses_not_paid')
+    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_not_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
@@ -99,7 +99,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_service.name
     click_on I18n.t('common.submit')
 
-    choose I18n.t('journey.choose_expenses.answer_expenses_not_paid')
+    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_not_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
@@ -123,7 +123,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_service.name
     click_on I18n.t('common.submit')
 
-    choose I18n.t('journey.choose_expenses.answer_expenses_not_paid')
+    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_not_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
@@ -147,7 +147,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_service.name
     click_on I18n.t('common.submit')
 
-    choose I18n.t('journey.choose_expenses.answer_expenses_not_paid')
+    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_not_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
