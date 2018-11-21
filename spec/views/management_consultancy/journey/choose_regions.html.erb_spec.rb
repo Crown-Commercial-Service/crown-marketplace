@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'journey/choose_regions.html.erb' do
+RSpec.describe 'management_consultancy/journey/choose_regions.html.erb' do
   let(:step) { ManagementConsultancy::Steps::ChooseRegions.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) do

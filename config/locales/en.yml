@@ -118,18 +118,6 @@ en:
       question_hint: We use this to find agencies near to your school
       worker_term_question: How long do you need the worker for?
       worker_type_question: What type of worker do you need?
-    choose_expenses:
-      answer_expenses_not_paid: We will not pay expenses
-      answer_expenses_paid: We will pay expenses
-      question: Do you pay expenses?
-    choose_lot:
-      question: What kind of management consultancy do you want to procure?
-      question_hint: The lot you choose here will affect the services offered and the suppliers presented.
-      submit: Continue
-    choose_regions:
-      question: In which regions will you require the services?
-    choose_services:
-      question: What services will you require?
     contract_start:
       question: What date was the worker first supplied to you on their current contract?
     day_rate:
@@ -201,6 +189,19 @@ en:
       support_email_html: Email %{link} for support.
       title: Crown Commercial Service
   management_consultancy:
+    journey:
+      choose_expenses:
+        answer_expenses_not_paid: We will not pay expenses
+        answer_expenses_paid: We will pay expenses
+        question: Do you pay expenses?
+      choose_lot:
+        question: What kind of management consultancy do you want to procure?
+        question_hint: The lot you choose here will affect the services offered and the suppliers presented.
+        submit: Continue
+      choose_regions:
+        question: In which regions will you require the services?
+      choose_services:
+        question: What services will you require?
     suppliers:
       supplier:
         contact_email_missing: Contact email not available
