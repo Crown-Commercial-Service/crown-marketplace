@@ -8,7 +8,7 @@ RSpec.describe JourneyController, type: :controller do
       }
 
       expect(response).to redirect_to(
-        journey_question_path(slug: 'contract-start')
+        journey_question_path(journey: 'temp-to-perm-calculator', slug: 'contract-start')
       )
     end
   end
@@ -51,7 +51,7 @@ RSpec.describe JourneyController, type: :controller do
 
       it 'redirects to worker-type question' do
         expect(response).to redirect_to(
-          journey_question_path(slug: 'worker-type', looking_for: 'worker')
+          journey_question_path(journey: 'supply-teachers', slug: 'worker-type', looking_for: 'worker')
         )
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe JourneyController, type: :controller do
 
       it 'redirects to managed service providers outcome' do
         expect(response).to redirect_to(
-          journey_question_path(slug: 'managed-service-provider', looking_for: 'managed_service_provider')
+          journey_question_path(journey: 'supply-teachers', slug: 'managed-service-provider', looking_for: 'managed_service_provider')
         )
       end
     end
