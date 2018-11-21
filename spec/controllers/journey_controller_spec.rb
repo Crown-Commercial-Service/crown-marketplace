@@ -61,7 +61,11 @@ RSpec.describe JourneyController, type: :controller do
 
       it 'redirects to managed service providers outcome' do
         expect(response).to redirect_to(
-          journey_question_path(journey: 'supply-teachers', slug: 'managed-service-provider', looking_for: 'managed_service_provider')
+          journey_question_path(
+            journey: 'supply-teachers',
+            slug: 'managed-service-provider',
+            looking_for: 'managed_service_provider'
+          )
         )
       end
     end
@@ -74,7 +78,7 @@ RSpec.describe JourneyController, type: :controller do
       end
 
       it 'sets form_path' do
-        expect(assigns(:form_path)).to eq(journey_answer_path(slug: 'looking-for'))
+        expect(assigns(:form_path)).to eq(journey_answer_path(journey: 'supply-teachers', slug: 'looking-for'))
       end
 
       it 'sets back_path' do
