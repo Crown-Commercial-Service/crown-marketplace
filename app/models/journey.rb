@@ -67,7 +67,7 @@ class Journey
   end
 
   def template
-    [self.class.journey_name.underscore, 'journey', current_step.template].join('/')
+    [self.class.journey_name.underscore, current_step.template].join('/')
   end
 
   delegate :slug, to: :current_step, prefix: :current, allow_nil: true
