@@ -3,6 +3,7 @@ module SupplyTeachers
     class AgencyPayrollResults
       include JourneyStep
       include Results
+      include ActiveSupport::NumberHelper
 
       attribute :job_type
       attribute :term
@@ -29,6 +30,7 @@ module SupplyTeachers
           worker_type: translate_input('supply_teachers.worker_type.agency_supplied'),
           payroll_provider: translate_input('supply_teachers.payroll_provider.agency'),
           postcode: postcode,
+          radius: number_to_human(radius, units: :miles),
           job_type: job_type.description,
           term: term.description,
         }

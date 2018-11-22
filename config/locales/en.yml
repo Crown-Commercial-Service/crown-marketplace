@@ -223,6 +223,7 @@ en:
           managed_service_provider: Managed service provider type
           payroll_provider: Payroll provider
           postcode: Postcode
+          radius: Search distance
           term: Term
           worker_type: Worker type
         inputs_header: Choices used to generate this list
