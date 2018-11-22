@@ -6,17 +6,17 @@
       </h1>
       <div class="govuk-panel__body">
         <%= t('.panel_body') %>
-        <br><strong><%= number_to_currency(@calculator.early_hire_fee, unit: '£') %></strong>
+        <br><strong><%= number_to_currency(@calculator.early_hire_fee) %></strong>
       </div>
     </div>
 
     <div>
       <h2>Explanation</h2>
       <% if @calculator.fee_for_early_hire? %>
-        <p>The Early Hire Fee calculation is based on a daily supplier's fee of <%= number_to_currency(@calculator.daily_supplier_fee, unit: '£') %>. This fee is the supplier's proportion of the <%= number_to_percentage(@calculator.markup_rate * 100, precision: 1) %> mark-up on a <%= number_to_currency(@calculator.day_rate, unit: '£') %> daily rate. There were <%= @calculator.working_days %> working days between the date the worker started their contract <%= @calculator.contract_start_date.to_formatted_s(:long) %> and the date you intend to hire them, <%= @calculator.hire_date.to_formatted_s(:long) %>. The worker you wish to hire works <%= @calculator.days_per_week %> days per week and the total fee has been calculated on a pro-rata basis.</p>
+        <p>The Early Hire Fee calculation is based on a daily supplier's fee of <%= number_to_currency(@calculator.daily_supplier_fee) %>. This fee is the supplier's proportion of the <%= number_to_percentage(@calculator.markup_rate * 100, precision: 1) %> mark-up on a <%= number_to_currency(@calculator.day_rate) %> daily rate. There were <%= @calculator.working_days %> working days between the date the worker started their contract <%= @calculator.contract_start_date.to_formatted_s(:long) %> and the date you intend to hire them, <%= @calculator.hire_date.to_formatted_s(:long) %>. The worker you wish to hire works <%= @calculator.days_per_week %> days per week and the total fee has been calculated on a pro-rata basis.</p>
       <% end %>
       <% if @calculator.fee_for_lack_of_notice? %>
-        <p>You're going to be hiring a worker after the 41st working day of a contract. This means that you might be charged a fee for lack of notice, although the total fee (including any Early Hire Fee) cannot exceed <%= number_to_currency(@calculator.daily_supplier_fee * 20, unit: '£') %>.</p>
+        <p>You're going to be hiring a worker after the 41st working day of a contract. This means that you might be charged a fee for lack of notice, although the total fee (including any Early Hire Fee) cannot exceed <%= number_to_currency(@calculator.daily_supplier_fee * 20) %>.</p>
       <% end %>
       <h2>Avoid paying fees</h2>
       <p>If you hire the worker on <%= @calculator.ideal_hire_date.to_formatted_s(:long) %> and give notice on <%= @calculator.ideal_notice_date.to_formatted_s(:long) %> then you can avoid paying any fees to the agency.</p>
