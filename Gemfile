@@ -41,6 +41,7 @@ gem 'virtus'
 # for cognito authentication
 gem 'omniauth'
 gem 'omniauth-oauth2'
+gem 'omniauth_openid_connect'
 gem 'json-jwt'
 
 group :development, :test do
