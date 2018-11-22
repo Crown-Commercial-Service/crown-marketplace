@@ -61,7 +61,7 @@
     <div class="govuk-width-container">
       <div class="govuk-phase-banner ccs-no-print">
         <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-grid-column-full">
             <p class="govuk-phase-banner__content">
               <strong class="govuk-tag govuk-phase-banner__content__tag">
                 <%= t('.beta') %>
@@ -70,8 +70,6 @@
                 <%= t('.feedback_html', link: feedback_email_link) %>
               </span>
             </p>
-          </div>
-          <div class="govuk-grid-column-one-third">
           </div>
         </div>
       </div>
@@ -91,7 +89,7 @@
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
               <p class="govuk-!-margin-bottom-0 govuk-body-s">
-                <span class="govuk-!-font-weight-bold"><%= t('.having_problems') %></span> <%= t('.support_email_html', link: mail_to(Marketplace.feedback_email_address, nil, class: 'govuk-link', 'aria-label': t('.support_aria_label'))) %>
+                <span class="govuk-!-font-weight-bold"><%= t('.having_problems') %></span> <%= t('.support_email_html', link: govuk_email_link(Marketplace.feedback_email_address, t('.support_aria_label'))) %>
               </p>
             </div>
           </div>

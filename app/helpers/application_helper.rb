@@ -9,13 +9,17 @@ module ApplicationHelper
 
   def feedback_email_link
     if Marketplace.feedback_email_address.present?
-      mail_to(
-        Marketplace.feedback_email_address, 'feedback',
-        class: 'govuk-link', 'aria-label': t('layouts.application.feedback_aria_label')
+      govuk_email_link(
+        Marketplace.feedback_email_address,
+        t('layouts.application.feedback_aria_label')
       )
     else
       'feedback'
     end
+  end
+
+  def govuk_email_link(email_address, aria_label, css_class: 'govuk-link')
+    mail_to(email_address, email_address, class: css_class, 'aria-label': aria_label)
   end
 
   def govuk_form_group_with_optional_error(journey, attribute)
