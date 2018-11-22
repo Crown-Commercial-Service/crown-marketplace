@@ -63,7 +63,7 @@ class Journey
   end
 
   def previous_questions_and_answers
-    params.except(*current_step.class.attributes)
+    params.except(*current_step.class.permit_list)
   end
 
   def template
