@@ -4,9 +4,6 @@ module SupplyTeachers
       include JourneyStep
       include Geolocatable
 
-      attribute :postcode
-      validates :location, location: true
-
       attribute :term
       validates :term, presence: true
 

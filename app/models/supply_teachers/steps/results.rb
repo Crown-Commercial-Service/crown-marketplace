@@ -5,11 +5,6 @@ module SupplyTeachers
       include BranchesHelper
       include Geolocatable
 
-      included do
-        attribute :postcode
-        validates :location, location: true
-      end
-
       def branches
         point = location.point
         Branch.search(point, rates: rates).map do |branch|
