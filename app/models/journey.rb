@@ -8,8 +8,9 @@ class Journey
 
     klass = first_step_class
     loop do
-      step = klass.from_params(params)
-      @params.merge! params.permit(klass.params)
+      permitted = params.permit(klass.permit_list)
+      step = klass.new(permitted)
+      @params.merge! permitted
       @steps << step
       return if step.slug == slug || step.invalid? || step.final?
 

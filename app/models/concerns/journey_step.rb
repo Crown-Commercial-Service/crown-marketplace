@@ -15,7 +15,7 @@ module JourneyStep
       attr_accessor name
     end
 
-    def params
+    def permit_list
       single_params + [array_params.map { |k| [k, []] }.to_h]
     end
 
@@ -29,10 +29,6 @@ module JourneyStep
 
     def array_params
       @array_params ||= []
-    end
-
-    def from_params(raw)
-      new(raw.permit(*params))
     end
   end
 
