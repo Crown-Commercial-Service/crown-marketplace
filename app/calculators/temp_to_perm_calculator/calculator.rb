@@ -65,6 +65,16 @@ module TempToPermCalculator
       contract_start_date < DATE_NATIONAL_DEAL_BEGAN
     end
 
+    def notice_date_based_on_hire_date
+      return nil unless notice_period_required?
+
+      working_days_before(@hire_date, 20)
+    end
+
+    def notice_period_required?
+      hire_date >= late_notice_fee_can_be_charged_from
+    end
+
     private
 
     def working_day_supplier_fee

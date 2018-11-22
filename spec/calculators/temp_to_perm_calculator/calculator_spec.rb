@@ -246,4 +246,77 @@ RSpec.describe TempToPermCalculator::Calculator do
       end
     end
   end
+
+  describe '#notice_period_required?' do
+    let(:calculator) do
+      described_class.new(
+        day_rate: 200,
+        days_per_week: 5,
+        contract_start_date: Date.parse('Mon 3 Sep 2018'),
+        hire_date: hire_date,
+        markup_rate: 0.16
+      )
+    end
+
+    context 'when the hire date is less than 40 working days after the contract start date' do
+      let(:hire_date) { Date.parse('Thu 25 Oct 2018') }
+
+      it 'returns false' do
+        expect(calculator.notice_period_required?).to eq(false)
+      end
+    end
+
+    context 'when the hire date is 40 working days after the contract start date' do
+      let(:hire_date) { Date.parse('Fri 26 Oct 2018') }
+
+      it 'returns false' do
+        expect(calculator.notice_period_required?).to eq(false)
+      end
+    end
+
+    context 'when the hire date is more than 40 working days after the contract start date' do
+      let(:hire_date) { Date.parse('Mon 29 Oct 2018') }
+
+      it 'returns true' do
+        expect(calculator.notice_period_required?).to eq(true)
+      end
+    end
+  end
+
+  describe '#notice_date_based_on_hire_date' do
+    let(:calculator) do
+      described_class.new(
+        day_rate: 200,
+        days_per_week: 5,
+        contract_start_date: Date.parse('Mon 3 Sep 2018'),
+        hire_date: hire_date,
+        markup_rate: 0.16
+      )
+    end
+
+    context 'when the hire date is less than 40 working days after the contract start date' do
+      let(:hire_date) { Date.parse('Thu 25 Oct 2018') }
+
+      it 'returns nil' do
+        expect(calculator.notice_date_based_on_hire_date).to be_nil
+      end
+    end
+
+    context 'when the hire date is 40 working days after the contract start date' do
+      let(:hire_date) { Date.parse('Fri 26 Oct 2018') }
+
+      it 'returns nil' do
+        expect(calculator.notice_date_based_on_hire_date).to be_nil
+      end
+    end
+
+    context 'when the hire date is more than 40 working days after the contract start date' do
+      let(:hire_date) { Date.parse('Mon 29 Oct 2018') }
+
+      it 'returns 20 working days before the hire date' do
+        expected_notice_date = Date.parse('Mon 1 Oct 2018')
+        expect(calculator.notice_date_based_on_hire_date).to eq(expected_notice_date)
+      end
+    end
+  end
 end
