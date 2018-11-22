@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe SupplyTeachers::Steps::FixedTermResults, type: :model do
   subject(:results) do
     described_class.new(
-      postcode: 'SW1A 1AA'
+      postcode: 'SW1A 1AA',
+      radius: '5'
     )
   end
 
@@ -12,7 +13,8 @@ RSpec.describe SupplyTeachers::Steps::FixedTermResults, type: :model do
       looking_for: 'Individual worker',
       worker_type: 'Supplied by agency',
       payroll_provider: 'School',
-      postcode: 'SW1A 1AA'
+      postcode: 'SW1A 1AA',
+      radius: '5 miles'
     )
   end
 end
