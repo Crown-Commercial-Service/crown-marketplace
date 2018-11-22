@@ -36,22 +36,6 @@ RSpec.describe 'layouts/application.html.erb' do
         expect(rendered).to have_css(".footer-feedback #{mail_to_link_selector}")
       end
     end
-
-    context 'when feedback email address is not present' do
-      let(:feedback_email_address) { nil }
-
-      it 'does not display link to feedback email address in beta banner' do
-        render
-
-        expect(rendered).not_to have_css(".govuk-phase-banner #{mail_to_link_selector}")
-      end
-
-      it 'does not display link to feedback email address in footer' do
-        render
-
-        expect(rendered).not_to have_css(".govuk-footer #{mail_to_link_selector}")
-      end
-    end
   end
 
   it 'renders the page title stored in the locale file' do
