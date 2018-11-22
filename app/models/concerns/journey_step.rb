@@ -13,10 +13,6 @@ module JourneyStep
         attribute_set.partition { |a| a.type.primitive == Array }
       single_params.map(&:name) + [array_params.map { |a| [a.name, []] }.to_h]
     end
-
-    def attributes
-      attribute_set.map(&:name)
-    end
   end
 
   def slug
