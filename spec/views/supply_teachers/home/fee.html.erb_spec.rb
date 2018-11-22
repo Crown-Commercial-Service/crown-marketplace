@@ -15,13 +15,40 @@ RSpec.describe 'supply_teachers/home/fee.html.erb' do
       fee_for_lack_of_notice?: nil,
       before_national_deal_began?: nil,
       ideal_hire_date: Date.parse('2018-11-26'),
-      ideal_notice_date: Date.parse('2018-11-26')
+      ideal_notice_date: Date.parse('2018-11-26'),
+      notice_period_required?: nil,
+      notice_date_based_on_hire_date: Date.parse('2018-11-26')
     }
     instance_double(TempToPermCalculator::Calculator, options)
   end
 
   before do
     assign(:calculator, calculator)
+  end
+
+  describe 'notice period message' do
+    let(:notice_string) { /Provided you give notice on or before/ }
+
+    before do
+      allow(calculator).to receive(:notice_period_required?).and_return(notice_period_required)
+      render
+    end
+
+    context 'when notice period is required' do
+      let(:notice_period_required) { true }
+
+      it 'is displayed' do
+        expect(rendered).to match(notice_string)
+      end
+    end
+
+    context 'when notice period is not required' do
+      let(:notice_period_required) { false }
+
+      it 'is not displayed' do
+        expect(rendered).not_to match(notice_string)
+      end
+    end
   end
 
   it 'does not display explanatory text if school will not incur early hire fee' do
