@@ -2,11 +2,7 @@
 
 <%= render partial: 'error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
-  <%= hidden_field_tag :lot, params[:lot] %>
-  <% params[:services].each do |service| %>
-    <input type="hidden" name="services[]" value="<%= service %>" />
-  <% end %>
-
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
   <%= govuk_form_group_with_optional_error(@journey, :region_codes) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :region_codes) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
