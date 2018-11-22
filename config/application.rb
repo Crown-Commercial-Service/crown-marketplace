@@ -36,4 +36,8 @@ module Marketplace
   def self.feedback_email_address
     'cmp-feedback@crowncommercial.gov.uk'
   end
+
+  def self.support_email_address
+    'cmp-support@crowncommercial.gov.uk'
+  end
 end
