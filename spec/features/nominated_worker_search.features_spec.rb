@@ -78,6 +78,9 @@ RSpec.feature 'Nominated workers', type: :feature do
     expect(costlier_branch).to have_css('.supplier-record__markup-rate', text: '35.0%')
 
     expect(page).not_to have_text('liverpool')
+
+    click_on '1 mile'
+    expect(page.all('.supplier-record').length).to eq(1)
   end
 
   scenario 'Buyer changes mind about postcode' do

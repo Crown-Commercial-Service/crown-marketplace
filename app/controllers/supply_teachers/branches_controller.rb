@@ -22,6 +22,7 @@ module SupplyTeachers
       step = @journey.current_step
       @location = step.location
       @radius_in_miles = step.radius
+      @alternative_radiuses = [1, 5, 10, 25] - [@radius_in_miles]
       @branches = step.branches
 
       respond_to do |format|

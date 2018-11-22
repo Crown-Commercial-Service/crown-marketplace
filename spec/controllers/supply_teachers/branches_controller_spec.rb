@@ -58,6 +58,20 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller do
           .to eq([first_branch.name, second_branch.name])
       end
 
+      context 'when no radius is specified' do
+        it 'assigns radius_in_miles to the default radius' do
+          expect(assigns(:radius_in_miles)).to eq(25)
+        end
+      end
+
+      context 'when a radius is specified' do
+        let(:params) { super().merge(radius: '5') }
+
+        it 'assigns radius_in_miles to the given radius' do
+          expect(assigns(:radius_in_miles)).to eq(5)
+        end
+      end
+
       it 'responds to html' do
         expect(response.content_type).to eq 'text/html'
       end
