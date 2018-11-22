@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DistanceConvertor do
+RSpec.describe DistanceConverter do
   describe '.miles_to_metres' do
     it 'converts miles to metres' do
       expect(described_class.miles_to_metres(1)).to be(1609.34)

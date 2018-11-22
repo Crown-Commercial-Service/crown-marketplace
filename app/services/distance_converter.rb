@@ -1,4 +1,4 @@
-class DistanceConvertor
+class DistanceConverter
   ONE_MILE_IN_METRES = 1609.34
 
   def self.miles_to_metres(miles)
