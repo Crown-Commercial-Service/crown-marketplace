@@ -22,7 +22,7 @@ module SupplyTeachers
     end
 
     def self.search(point, rates:)
-      metres = DistanceConvertor.miles_to_metres(Branch::DEFAULT_SEARCH_RANGE_IN_MILES)
+      metres = DistanceConverter.miles_to_metres(Branch::DEFAULT_SEARCH_RANGE_IN_MILES)
       Branch.near(point, within_metres: metres)
             .joins(supplier: [:rates])
             .merge(rates)
