@@ -1,7 +1,5 @@
 module SupplyTeachers
   class Branch < ApplicationRecord
-    DEFAULT_SEARCH_RANGE_IN_MILES = 25
-
     belongs_to :supplier,
                foreign_key: :supply_teachers_supplier_id,
                inverse_of: :branches
@@ -21,8 +19,8 @@ module SupplyTeachers
       )
     end
 
-    def self.search(point, rates:)
-      metres = DistanceConverter.miles_to_metres(Branch::DEFAULT_SEARCH_RANGE_IN_MILES)
+    def self.search(point, rates:, radius:)
+      metres = DistanceConverter.miles_to_metres(radius)
       Branch.near(point, within_metres: metres)
             .joins(supplier: [:rates])
             .merge(rates)
