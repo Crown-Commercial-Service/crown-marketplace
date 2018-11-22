@@ -1,34 +1,21 @@
 module JourneyStep
   extend ActiveSupport::Concern
-  include ActiveModel::Attributes
-  include ActiveModel::Model
   include ActiveModel::Validations
   extend ActiveModel::Translation
 
-  class_methods do
-    def attribute(name, type = nil)
-      if type == Array
-        array_params << name
-      else
-        single_params << name
-      end
-      attr_accessor name
-    end
+  included do
+    include Virtus.model
+  end
 
+  class_methods do
     def permit_list
-      single_params + [array_params.map { |k| [k, []] }.to_h]
+      array_params, single_params =
+        attribute_set.partition { |a| a.type.primitive == Array }
+      single_params.map(&:name) + [array_params.map { |a| [a.name, []] }.to_h]
     end
 
     def attributes
-      single_params + array_params
-    end
-
-    def single_params
-      @single_params ||= []
-    end
-
-    def array_params
-      @array_params ||= []
+      attribute_set.map(&:name)
     end
   end
 

@@ -6,11 +6,6 @@ module FacilitiesManagement
       attribute :region_codes, Array
       validates :region_codes, length: { minimum: 1 }
 
-      def initialize(*)
-        self.region_codes = []
-        super
-      end
-
       def regions
         Region.where(code: region_codes)
       end

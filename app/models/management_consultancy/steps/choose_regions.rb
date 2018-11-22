@@ -6,11 +6,6 @@ module ManagementConsultancy
       attribute :region_codes, Array
       validates :region_codes, length: { minimum: 1 }
 
-      def initialize(*)
-        self.region_codes = []
-        super
-      end
-
       def regions
         Nuts2Region.where(code: region_codes)
       end
