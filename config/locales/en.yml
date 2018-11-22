@@ -205,6 +205,10 @@ en:
         contact_email_missing: Contact email not available
         contact_name_missing: Contact name not available
         telephone_number_missing: Telephone number not available
+  miles:
+    unit:
+      one: mile
+      other: miles
   number:
     currency:
       format:
