@@ -31,9 +31,5 @@ module SupplyTeachers
         super
       end
     end
-
-    def template
-      [self.class.journey_name.underscore, current_step.template].join('/')
-    end
   end
 end

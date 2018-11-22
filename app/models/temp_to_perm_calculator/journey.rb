@@ -12,9 +12,5 @@ module TempToPermCalculator
     def self.first_step_class
       Steps::ContractStart
     end
-
-    def template
-      [self.class.journey_name.underscore, current_step.template].join('/')
-    end
   end
 end
