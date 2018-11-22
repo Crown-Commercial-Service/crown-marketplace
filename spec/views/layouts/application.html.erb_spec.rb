@@ -12,28 +12,35 @@ RSpec.describe 'layouts/application.html.erb' do
   end
 
   describe 'feedback links' do
-    let(:mail_to_link_selector) do
+    let(:support_mail_to_link_selector) do
+      %(a[href="mailto:#{support_email_address}"])
+    end
+
+    let(:feedback_mail_to_link_selector) do
       %(a[href="mailto:#{feedback_email_address}"])
     end
 
     before do
       allow(Marketplace).to receive(:feedback_email_address)
         .and_return(feedback_email_address)
+      allow(Marketplace).to receive(:support_email_address)
+        .and_return(support_email_address)
     end
 
     context 'when feedback email address is present' do
-      let(:feedback_email_address) { 'cmp-support@crowncommercial.gov.uk' }
+      let(:feedback_email_address) { 'feedback@something.com' }
+      let(:support_email_address) { 'support@something.com' }
 
       it 'displays link to feedback email address in beta banner' do
         render
 
-        expect(rendered).to have_css(".govuk-phase-banner #{mail_to_link_selector}")
+        expect(rendered).to have_css(".govuk-phase-banner #{feedback_mail_to_link_selector}")
       end
 
-      it 'displays link to feedback email address above footer' do
+      it 'displays link to support email address above footer' do
         render
 
-        expect(rendered).to have_css(".footer-feedback #{mail_to_link_selector}")
+        expect(rendered).to have_css(".footer-feedback #{support_mail_to_link_selector}")
       end
     end
   end
