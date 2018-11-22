@@ -47,6 +47,10 @@ Rails.application.routes.draw do
 
   get '/auth/cognito', as: :cognito_sign_in
   get '/auth/cognito/callback' => 'auth#callback'
+  if DFE_SIGNIN_ENABLED
+    get '/auth/dfe', as: :dfe_sign_in
+    get '/auth/dfe/callback' => 'auth#callback'
+  end
   post '/sign-out' => 'auth#sign_out', as: :sign_out
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
