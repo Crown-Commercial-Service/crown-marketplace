@@ -13,9 +13,15 @@
 
     <p class="govuk-body">
       <% if @location %>
-      <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found_with_location_html', range: number_to_human(@radius_in_miles, units: :miles), postcode: @location.postcode) %>
+        <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found_with_location_html', range: number_to_human(@radius_in_miles, units: :miles), postcode: @location.postcode) %>
+        <% @alternative_radiuses.each do |radius| %>
+          <%= link_to(
+                number_to_human(radius, units: :miles),
+                supply_teachers_branches_path(@journey.params.merge(radius: radius))
+              ) %>
+        <% end %>
       <% else %>
-      <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found') %>
+        <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found') %>
       <% end %>
     </p>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">

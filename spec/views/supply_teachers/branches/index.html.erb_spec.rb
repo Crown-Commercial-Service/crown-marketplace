@@ -36,6 +36,7 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
     assign(:branches, branches)
     assign(:location, location)
     assign(:radius_in_miles, 26)
+    assign(:alternative_radiuses, [3, 17])
 
     allow(first_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
     allow(second_supplier).to receive(:nominated_worker_rate).and_return(nominated_worker_rate)
@@ -93,6 +94,11 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
 
     it 'adds location context to the number of results' do
       expect(rendered).to have_content('3 results found within 26 miles of W1A 1AA')
+    end
+
+    it 'offers alternative radiuses' do
+      expect(rendered).to have_link('3 miles')
+      expect(rendered).to have_link('17 miles')
     end
   end
 end
