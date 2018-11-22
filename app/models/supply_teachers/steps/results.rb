@@ -7,7 +7,7 @@ module SupplyTeachers
 
       def branches
         point = location.point
-        Branch.search(point, rates: rates).map do |branch|
+        Branch.search(point, rates: rates, radius: radius).map do |branch|
           search_result_for(branch).tap do |result|
             result.rate = rate(branch)
             result.distance = point.distance(branch.location)

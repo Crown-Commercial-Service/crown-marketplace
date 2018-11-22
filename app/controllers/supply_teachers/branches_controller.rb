@@ -21,6 +21,7 @@ module SupplyTeachers
     def render_branches
       step = @journey.current_step
       @location = step.location
+      @radius_in_miles = step.radius
       @branches = step.branches
 
       respond_to do |format|

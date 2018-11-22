@@ -99,7 +99,8 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       let(:results) do
         described_class.search(
           Geocoding.point(latitude: 51.5, longitude: 0),
-          rates: SupplyTeachers::Rate.direct_provision.nominated_worker
+          rates: SupplyTeachers::Rate.direct_provision.nominated_worker,
+          radius: 25
         ).to_a
       end
 
@@ -136,7 +137,8 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       let(:results) do
         described_class.search(
           Geocoding.point(latitude: 0, longitude: 0),
-          rates: SupplyTeachers::Rate.direct_provision.nominated_worker
+          rates: SupplyTeachers::Rate.direct_provision.nominated_worker,
+          radius: 25
         ).to_a
       end
 
@@ -177,7 +179,9 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       let(:results) do
         point = Geocoding.point(latitude: 0, longitude: 0)
         described_class.search(
-          point, rates: SupplyTeachers::Rate.direct_provision.fixed_term
+          point,
+          rates: SupplyTeachers::Rate.direct_provision.fixed_term,
+          radius: 25
         ).to_a
       end
 
@@ -209,7 +213,8 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       it 'orders branches by markup rate in ascending order' do
         results = described_class.search(
           Geocoding.point(latitude: 0, longitude: 0),
-          rates: SupplyTeachers::Rate.direct_provision.nominated_worker
+          rates: SupplyTeachers::Rate.direct_provision.nominated_worker,
+          radius: 25
         ).to_a
         expect(results).to eq([branch_of_cheaper_supplier, branch_of_costlier_supplier])
       end
@@ -238,7 +243,8 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       it 'orders branches by mark-up and then proximity in ascending order' do
         results = described_class.search(
           Geocoding.point(latitude: 0, longitude: 0),
-          rates: SupplyTeachers::Rate.direct_provision.nominated_worker
+          rates: SupplyTeachers::Rate.direct_provision.nominated_worker,
+          radius: 25
         ).to_a
         expected_order = [branch_of_cheapest_supplier, branch_of_closest_supplier, branch_of_farthest_supplier]
         expect(results).to eq(expected_order)

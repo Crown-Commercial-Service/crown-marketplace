@@ -13,7 +13,7 @@
 
     <p class="govuk-body">
       <% if @location %>
-      <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found_with_location_html', range: number_to_human(default_search_range, units: :miles), postcode: @location.postcode) %>
+      <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found_with_location_html', range: number_to_human(@radius_in_miles, units: :miles), postcode: @location.postcode) %>
       <% else %>
       <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found') %>
       <% end %>

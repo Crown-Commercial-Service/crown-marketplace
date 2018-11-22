@@ -6,8 +6,4 @@ module SupplyTeachers::BranchesHelper
   def link_to_calculator?
     params[:payroll_provider] != 'school'
   end
-
-  def default_search_range
-    SupplyTeachers::Branch::DEFAULT_SEARCH_RANGE_IN_MILES
-  end
 end
