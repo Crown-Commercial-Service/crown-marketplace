@@ -33,5 +33,7 @@ module Marketplace
     config.action_controller.include_all_helpers = false
   end
 
-  mattr_accessor :feedback_email_address
+  def self.feedback_email_address
+    'cmp-feedback@crowncommercial.gov.uk'
+  end
 end
