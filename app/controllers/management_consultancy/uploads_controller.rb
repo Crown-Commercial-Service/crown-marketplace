@@ -1,7 +1,7 @@
 module ManagementConsultancy
   class UploadsController < ApplicationController
     skip_before_action :verify_authenticity_token, only: :create
-    skip_before_action :require_login, only: :create
+    skip_before_action :require_sign_in, only: :create
 
     if Rails.env.production?
       http_basic_authenticate_with(

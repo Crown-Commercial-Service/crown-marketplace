@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :require_login, only: %i[gateway]
+  skip_before_action :require_sign_in, only: %i[gateway]
 
   def index; end
 
