@@ -36,7 +36,7 @@ RSpec.describe 'temp_to_perm_calculator/home/fee.html.erb' do
 
     render
 
-    expect(rendered).to have_text(/Early Hire Fee calculation/)
+    expect(rendered).to have_text(/The fee calculation is based/)
   end
 
   it 'does not display explanatory text if school will not incur fee for lack of notice' do
