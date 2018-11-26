@@ -1,12 +1,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl cmp-page-heading">Lot <%= @lot.number %> suppliers</h1>
+    <h1 class="govuk-heading-xl cmp-page-heading"><%= t(".header", lot: (@lot.number)) %></h1>
     <p class="govuk-body"><%= contract_value_range_text(@lot.number) %></p>
     <p class="govuk-body"><%= number_to_human(@suppliers.count, units: :suppliers) %></p>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
     <% if @lot.direct_award_possible? %>
-      <p class="govuk-body">Direct award to a single supplier may be an option if your maximum spend is under £1.5 million.</p>
+      <p class="govuk-body"><%= t(".direct_award_possible") %></p>
     <% end %>
   </div>
 </div>

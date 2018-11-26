@@ -90,6 +90,9 @@ en:
         question_hint: This can be current costs, or estimated annual costs.
         submit: Continue
     suppliers:
+      index:
+        direct_award_possible: Direct award to a single supplier may be an option if your maximum spend is under £1.5 million.
+        header: Lot %{lot} suppliers
       supplier:
         contact_email_missing: Contact email not available
         contact_name_missing: Contact name not available
@@ -112,6 +115,9 @@ en:
       service_title: Crown Marketplace
       supply_teachers_link: Find supply teachers and non-teaching staff
       temp_to_perm_calculator_link: Calculate the fee you have to pay when recruiting a supply teacher
+  journey:
+    error_summary:
+      there_is_a_problem: There is a problem
   journey_step:
     supply_teachers:
       looking_for:
@@ -130,6 +136,7 @@ en:
     application:
       back: Back
       beta: beta
+      crown_copyright: "© Crown copyright"
       error_prefix: Error
       feedback_aria_label: Email your feedback on this service
       feedback_html: This is a new service – your feedback (%{link}) will help us to improve it.
