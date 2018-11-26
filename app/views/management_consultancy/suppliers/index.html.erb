@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= @lot.full_description %></h1>
-    <p class="govuk-body"><%= pluralize(@suppliers.count, 'supplier') %></p>
+    <p class="govuk-body"><%= number_to_human(@suppliers.count, units: :suppliers) %></p>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
   </div>

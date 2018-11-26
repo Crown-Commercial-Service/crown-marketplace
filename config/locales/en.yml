@@ -209,6 +209,10 @@ en:
     unit:
       one: result
       other: results
+  suppliers:
+    unit:
+      one: supplier
+      other: suppliers
   supply_teachers:
     branches:
       branch:
