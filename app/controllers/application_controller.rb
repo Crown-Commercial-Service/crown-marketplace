@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  def require_login
+  def require_sign_in
     redirect_to :gateway unless logged_in?
   end
 
@@ -8,5 +8,5 @@ class ApplicationController < ActionController::Base
   end
   helper_method :logged_in?
 
-  before_action :require_login
+  before_action :require_sign_in
 end
