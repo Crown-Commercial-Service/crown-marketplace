@@ -18,4 +18,23 @@ if DFE_SIGNIN_ENABLED
     }
   }
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
+
+  class DfeSignIn
+    def initialize(app)
+      @app = app
+    end
+
+    def call(env)
+      request = Rack::Request.new(env)
+      if request.path == '/auth/dfe/callback' && request.params.empty? && !OmniAuth.config.test_mode
+        response = Rack::Response.new
+        response.redirect('/auth/dfe')
+        response.finish
+      else
+        @app.call(env)
+      end
+    end
+  end
+
+  Rails.application.config.middleware.insert_before OmniAuth::Strategies::OpenIDConnect, DfeSignIn
 end
