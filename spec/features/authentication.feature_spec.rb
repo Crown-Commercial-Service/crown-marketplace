@@ -4,13 +4,13 @@ RSpec.feature 'Authentication', type: :feature do
   scenario 'Unauthenticated users cannot access protected pages' do
     visit '/supply-teachers'
 
-    expect(page).to have_text('Log in with beta credentials')
+    expect(page).to have_text('Sign in with beta credentials')
   end
 
   scenario 'Users can sign in and access protected pages' do
     visit '/'
 
-    click_on 'Log in with beta credentials'
+    click_on 'Sign in with beta credentials'
 
     visit '/supply-teachers'
 
@@ -22,11 +22,11 @@ RSpec.feature 'Authentication', type: :feature do
 
     visit '/'
 
-    click_on 'Log in with beta credentials'
+    click_on 'Sign in with beta credentials'
 
     click_on 'Sign out'
 
     visit '/supply-teachers'
-    expect(page).to have_text('Log in with beta credentials')
+    expect(page).to have_text('Sign in with beta credentials')
   end
 end
