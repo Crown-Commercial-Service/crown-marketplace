@@ -7,7 +7,7 @@ if DFE_SIGNIN_ENABLED
     name: :dfe,
     discovery: true,
     response_type: :code,
-    scope: %i[openid email],
+    scope: %i[openid email organisation],
     client_options: {
       port: DFE_SIGNIN_URL.port,
       scheme: DFE_SIGNIN_URL.scheme,
