@@ -13,19 +13,29 @@
 
     <p class="govuk-body">
       <% if @location %>
-        <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found_with_location_html', range: number_to_human(@radius_in_miles, units: :miles), postcode: @location.postcode) %>
+        <%=
+          t('.results_found_with_location_html',
+            results: number_to_human(@branches.count, units: :results),
+            range: number_to_human(@radius_in_miles, units: :miles),
+            postcode: @location.postcode
+           )
+        %>
         <%= t('.other_radius_html') %>
         <% @alternative_radiuses.each do |radius| %>
-          <span class="st-supplier-page__radius-list-item">
-          <%= link_to(
-                number_to_human(radius, units: :miles),
-                supply_teachers_branches_path(@journey.params.merge(radius: radius)),
-                'aria-label' => t('.distance_aria_label_html', radius_setting:number_to_human(radius, units: :miles)) 
-              ) %>
-          </span>
+          <span class="st-supplier-page__radius-list-item"><%=
+            link_to(
+              number_to_human(radius, units: :miles),
+              supply_teachers_branches_path(@journey.params.merge(radius: radius)),
+              'aria-label' => t('.distance_aria_label_html', radius_setting:number_to_human(radius, units: :miles))
+            )
+          %></span>
         <% end %>
       <% else %>
-        <span class="govuk-body-l"><%= @branches.count %></span> <%= t('.results_found') %>
+        <%=
+          t('.results_found_html',
+            results: number_to_human(@branches.count, units: :results)
+           )
+        %>
       <% end %>
     </p>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">

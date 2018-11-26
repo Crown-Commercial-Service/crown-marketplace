@@ -104,6 +104,7 @@ ignore_unused:
   - journey_step.supply_teachers.*
   - number.*
   - miles.*
+  - results.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
 # - 'simple_form.{yes,no}'
