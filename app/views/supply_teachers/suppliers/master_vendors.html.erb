@@ -1,6 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
+    <p class="govuk-body"><%= number_to_human(@suppliers.count, units: :suppliers) %></p>
     <%= render partial: 'master_vendor', collection: @suppliers %>
   </div>
 </div>
