@@ -20,7 +20,7 @@ RSpec.describe TempToPermCalculator::HomeController, type: :controller do
         hire_date_year: '2018',
         hire_date_month: '12',
         hire_date_day: '10',
-        markup_rate: '30'
+        markup_rate: '30.5'
       }
     end
 
@@ -39,7 +39,7 @@ RSpec.describe TempToPermCalculator::HomeController, type: :controller do
         days_per_week: 5,
         contract_start_date: Date.new(2018, 12, 1),
         hire_date: Date.new(2018, 12, 10),
-        markup_rate: 0.30
+        markup_rate: 0.305
       )
     end
     # rubocop:enable RSpec/ExampleLength
