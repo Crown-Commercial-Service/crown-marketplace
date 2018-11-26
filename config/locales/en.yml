@@ -212,6 +212,7 @@ en:
         markup: Mark-up
         miles: Miles
       index:
+        distance_aria_label_html: Set the radius to %{radius_setting}
         download: Download shortlist of suppliers
         download_aria_label: Download shortlist as Microsoft Excel file
         download_with_calculator: Download shortlist (with markup calculator)
@@ -227,9 +228,10 @@ en:
           term: Term
           worker_type: Worker type
         inputs_header: Choices used to generate this list
+        other_radius_html: 'Change this distance to: '
         print: Print this page
         results_found: results found
-        results_found_with_location_html: results found within <strong>%{range}</strong> of <strong>%{postcode}</strong>
+        results_found_with_location_html: results found within <strong>%{range}</strong> of <strong>%{postcode}</strong> .
     journey:
       agency_payroll:
         postcode_question: What is your school’s postcode?
