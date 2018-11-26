@@ -24,7 +24,7 @@ module SupplyTeachers
       Branch.near(point, within_metres: metres)
             .joins(supplier: [:rates])
             .merge(rates)
-            .order('supply_teachers_rates.mark_up')
+            .order(Rate.arel_table[:mark_up].asc)
             .order(Arel.sql("ST_Distance(location, '#{point}')"))
     end
   end
