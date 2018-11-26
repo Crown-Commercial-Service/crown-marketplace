@@ -15,8 +15,8 @@ module SupplyTeachers
       'support_sen' => 'Educational support staff: SEN roles (including cover supervisor and teaching assistant)',
       'senior' => 'Headteacher and senior leadership positions',
       'admin' => 'Administrative and clerical staff, IT staff, finance staff and cleaners',
-      'nominated' => 'Nominated workers',
-      'fixed_term' => 'Fixed Term workers',
+      'nominated' => 'A specific person',
+      'fixed_term' => 'Employed directly',
       'daily_fee' => 'Neutral vendor managed service provider fee (per day)'
     }.freeze
 

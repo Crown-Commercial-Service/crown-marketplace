@@ -37,8 +37,8 @@ RSpec.feature 'Managed service providers', type: :feature do
 
     expect(page).to have_rates(job_type: 'Qualified teacher: non-SEN roles', percentages: [11.0, 12.0, 13.0])
     expect(page).to have_rates(job_type: 'Qualified teacher: SEN roles', percentages: [21.0, 22.0, 23.0])
-    expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0, 30.0, 30.0])
-    expect(page).to have_rates(job_type: 'Fixed Term workers', percentages: [40.0, 40.0, 40.0])
+    expect(page).to have_rates(job_type: 'A specific person', percentages: [30.0, 30.0, 30.0])
+    expect(page).to have_rates(job_type: 'Employed directly', percentages: [40.0, 40.0, 40.0])
   end
 
   scenario 'Buyer wants to hire a neutral vendor managed service' do
@@ -59,7 +59,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     expect(page).to have_css('h1', text: 'Neutral vendor managed service')
     expect(page).to have_css('caption', text: 'neutral-vendor-supplier')
 
-    expect(page).to have_rates(job_type: 'Nominated workers', percentages: [30.0])
+    expect(page).to have_rates(job_type: 'A specific person', percentages: [30.0])
     expect(page).to have_rates(job_type: 'Neutral vendor managed service provider fee (per day)',
                                percentages: [], amount: 1.23)
   end

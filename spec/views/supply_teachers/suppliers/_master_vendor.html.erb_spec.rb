@@ -59,8 +59,8 @@ RSpec.describe 'supply_teachers/suppliers/_master_vendor.html.erb' do
     end
 
     it 'displays rates for both job types' do
-      expect(rendered).to have_text(/Nominated workers\s+30\.0%/)
-      expect(rendered).to have_text(/Fixed Term workers\s+40\.0%/)
+      expect(rendered).to have_text(/A specific person\s+30\.0%/)
+      expect(rendered).to have_text(/Employed directly\s+40\.0%/)
     end
   end
 end
