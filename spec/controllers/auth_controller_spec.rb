@@ -18,15 +18,15 @@ RSpec.describe AuthController, type: :controller do
     end
   end
 
-  describe 'POST #logout' do
+  describe 'POST #sign_out' do
     it 'deletes the email from the session' do
       session[:userinfo] = 'user@example.com'
-      post :logout
+      post :sign_out
       expect(session[:userinfo]).to be_nil
     end
 
     it 'redirects to the Cognito logout path' do
-      post :logout
+      post :sign_out
       expect(response).to redirect_to(Cognito.logout_path(gateway_url))
     end
   end

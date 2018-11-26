@@ -6,7 +6,7 @@ class AuthController < ApplicationController
     redirect_to :homepage
   end
 
-  def logout
+  def sign_out
     session.delete :userinfo
     redirect_to Cognito.logout_path(gateway_url)
   end
