@@ -57,8 +57,7 @@ module TempToPermCalculator
     end
 
     def ideal_notice_date
-      nth_working_day(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED + 1 -
-        WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE)
+      working_days_before(ideal_hire_date, WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE)
     end
 
     def before_national_deal_began?
@@ -80,6 +79,15 @@ module TempToPermCalculator
         working_day?(day)
       end
       working_days_from_contract_start.take(number_of_days).last
+    end
+
+    def working_days_before(date, number_of_days)
+      working_days_count = 0
+      until working_days_count == number_of_days
+        date -= 1
+        working_days_count += 1 if working_day?(date)
+      end
+      date
     end
 
     def working_day?(date)
