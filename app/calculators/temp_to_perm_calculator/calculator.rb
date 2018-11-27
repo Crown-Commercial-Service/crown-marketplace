@@ -53,7 +53,7 @@ module TempToPermCalculator
     end
 
     def ideal_hire_date
-      working_days_after(@contract_start_date, WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED)
+      working_days_after(early_hire_fee_can_be_charged_until, 1)
     end
 
     def ideal_notice_date
