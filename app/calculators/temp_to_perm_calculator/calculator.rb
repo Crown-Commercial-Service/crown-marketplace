@@ -75,10 +75,13 @@ module TempToPermCalculator
     end
 
     def working_days_from_contract_start(number_of_days)
-      working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
-        working_day?(day)
+      date = @contract_start_date
+      working_days_count = 1
+      until working_days_count == number_of_days
+        date += 1
+        working_days_count += 1 if working_day?(date)
       end
-      working_days_from_contract_start.take(number_of_days).last
+      date
     end
 
     def working_days_before(date, number_of_days)
