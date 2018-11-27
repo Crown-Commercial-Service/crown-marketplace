@@ -4,6 +4,7 @@ module TempToPermCalculator
   class Calculator
     WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED = 60
     WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED = 40
+    DATE_NATIONAL_DEAL_BEGAN = Date.parse('23 Aug 2018')
 
     attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate
 
@@ -58,6 +59,10 @@ module TempToPermCalculator
 
     def ideal_notice_date
       nth_working_day(WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED + 1)
+    end
+
+    def before_national_deal_began?
+      contract_start_date < DATE_NATIONAL_DEAL_BEGAN
     end
 
     private

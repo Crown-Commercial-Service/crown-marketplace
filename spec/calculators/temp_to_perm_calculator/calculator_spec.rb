@@ -218,4 +218,32 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.ideal_notice_date).to eq(Date.parse('Mon 4 Mar, 2019'))
     end
   end
+
+  describe '#before_national_deal_began?' do
+    let(:calculator) do
+      described_class.new(
+        day_rate: 200,
+        days_per_week: 5,
+        contract_start_date: contract_start_date,
+        hire_date: Date.parse('Tue 8 Jan, 2019'),
+        markup_rate: 0.16
+      )
+    end
+
+    context 'when the contract start date is before 23 Aug 2018' do
+      let(:contract_start_date) { Date.parse('22 Aug 2018') }
+
+      it 'is true' do
+        expect(calculator.before_national_deal_began?).to be true
+      end
+    end
+
+    context 'when the contract start date is on or after 23 Aug 2018' do
+      let(:contract_start_date) { Date.parse('23 Aug 2018') }
+
+      it 'is false' do
+        expect(calculator.before_national_deal_began?).to be false
+      end
+    end
+  end
 end
