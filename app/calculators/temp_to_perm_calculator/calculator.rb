@@ -46,7 +46,7 @@ module TempToPermCalculator
     end
 
     def fee_for_lack_of_notice?
-      @hire_date > nth_working_day(WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED)
+      @hire_date >= earliest_date_late_notice_fee_can_be_charged
     end
 
     def fee_for_early_hire?
@@ -66,6 +66,10 @@ module TempToPermCalculator
     end
 
     private
+
+    def earliest_date_late_notice_fee_can_be_charged
+      nth_working_day(WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED + 1)
+    end
 
     def nth_working_day(number_of_days)
       working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
