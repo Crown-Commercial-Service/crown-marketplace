@@ -40,9 +40,7 @@ module TempToPermCalculator
 
     def working_days
       (@contract_start_date..@hire_date).select do |day|
-        day != @hire_date &&
-          day.on_weekday? &&
-          Holidays.on(day, :gb_eng).empty?
+        day != @hire_date && working_day?(day)
       end.count
     end
 
@@ -79,9 +77,13 @@ module TempToPermCalculator
 
     def nth_working_day(number_of_days)
       working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
-        day.on_weekday? && Holidays.on(day, :gb_eng).empty?
+        working_day?(day)
       end
       working_days_from_contract_start.take(number_of_days).last
+    end
+
+    def working_day?(date)
+      date.on_weekday? && Holidays.on(date, :gb_eng).empty?
     end
   end
 end
