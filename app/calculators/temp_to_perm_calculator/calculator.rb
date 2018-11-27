@@ -53,7 +53,7 @@ module TempToPermCalculator
     end
 
     def ideal_hire_date
-      nth_working_day(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED + 1)
+      working_days_from_contract_start(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED + 1)
     end
 
     def ideal_notice_date
@@ -67,14 +67,14 @@ module TempToPermCalculator
     private
 
     def earliest_date_late_notice_fee_can_be_charged
-      nth_working_day(WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED + 1)
+      working_days_from_contract_start(WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED + 1)
     end
 
     def latest_date_early_hire_fee_can_be_charged
-      nth_working_day(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED)
+      working_days_from_contract_start(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED)
     end
 
-    def nth_working_day(number_of_days)
+    def working_days_from_contract_start(number_of_days)
       working_days_from_contract_start = (@contract_start_date..1.year.from_now).select do |day|
         working_day?(day)
       end
