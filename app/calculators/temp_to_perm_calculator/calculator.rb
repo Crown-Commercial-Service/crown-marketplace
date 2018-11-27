@@ -25,7 +25,7 @@ module TempToPermCalculator
 
     def early_hire_fee
       [
-        daily_supplier_fee * chargeable_working_days * (@days_per_week / 5.0),
+        chargeable_working_days * working_day_supplier_fee,
         0
       ].max
     end
@@ -65,6 +65,10 @@ module TempToPermCalculator
     end
 
     private
+
+    def working_day_supplier_fee
+      daily_supplier_fee * (@days_per_week / 5.0)
+    end
 
     def late_notice_fee_can_be_charged_from
       working_days_after(@contract_start_date, WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED)
