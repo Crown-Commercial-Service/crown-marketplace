@@ -12,6 +12,9 @@
 
     <div>
       <h2>Explanation</h2>
+      <% if @calculator.before_national_deal_began? %>
+      <p>The contract start date you have given, <%= @calculator.contract_start_date.to_formatted_s(:long) %>, is before the National Deal was awarded. The terms of the deal may not apply to this worker, unless you have since agreed with the supplier that they should.</p>
+      <% end %>
       <% if @calculator.fee_for_early_hire? %>
         <p>The fee calculation is based on a daily supplier's fee of <%= number_to_currency(@calculator.daily_supplier_fee) %>. This fee is the supplier's proportion of the <%= number_to_percentage(@calculator.markup_rate * 100, precision: 1) %> mark-up on a <%= number_to_currency(@calculator.day_rate) %> daily rate. There were <%= @calculator.working_days %> working days between the date the worker started their contract <%= @calculator.contract_start_date.to_formatted_s(:long) %> and the date you intend to hire them, <%= @calculator.hire_date.to_formatted_s(:long) %>. The worker you wish to hire works <%= @calculator.days_per_week %> days per week and the total fee has been calculated on a pro-rata basis.</p>
       <% end %>

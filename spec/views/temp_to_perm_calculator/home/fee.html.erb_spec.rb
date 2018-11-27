@@ -13,6 +13,7 @@ RSpec.describe 'temp_to_perm_calculator/home/fee.html.erb' do
       days_per_week: 0,
       fee_for_early_hire?: nil,
       fee_for_lack_of_notice?: nil,
+      before_national_deal_began?: nil,
       ideal_hire_date: Date.parse('2018-11-26'),
       ideal_notice_date: Date.parse('2018-11-26')
     }
@@ -37,6 +38,22 @@ RSpec.describe 'temp_to_perm_calculator/home/fee.html.erb' do
     render
 
     expect(rendered).to have_text(/The fee calculation is based/)
+  end
+
+  it 'displays explanatory text if the contract start date is before the national deal began' do
+    allow(calculator).to receive(:before_national_deal_began?).and_return(true)
+
+    render
+
+    expect(rendered).to have_text(/before the National Deal was awarded/)
+  end
+
+  it 'does not display explanatory text if the contract start date is after the national deal began' do
+    allow(calculator).to receive(:before_national_deal_began?).and_return(false)
+
+    render
+
+    expect(rendered).not_to have_text(/before the National Deal was awarded/)
   end
 
   it 'does not display explanatory text if school will not incur fee for lack of notice' do
