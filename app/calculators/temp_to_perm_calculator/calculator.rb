@@ -75,7 +75,10 @@ module TempToPermCalculator
     end
 
     def working_days_from_contract_start(number_of_days)
-      date = @contract_start_date
+      working_days_after(@contract_start_date)
+    end
+
+    def working_days_after(date, number_of_days)
       working_days_count = 0
       until working_days_count == number_of_days
         date += 1
