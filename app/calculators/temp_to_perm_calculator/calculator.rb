@@ -50,7 +50,7 @@ module TempToPermCalculator
     end
 
     def fee_for_early_hire?
-      @hire_date <= nth_working_day(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED)
+      @hire_date <= latest_date_early_hire_fee_can_be_charged
     end
 
     def ideal_hire_date
@@ -69,6 +69,10 @@ module TempToPermCalculator
 
     def earliest_date_late_notice_fee_can_be_charged
       nth_working_day(WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED + 1)
+    end
+
+    def latest_date_early_hire_fee_can_be_charged
+      nth_working_day(WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED)
     end
 
     def nth_working_day(number_of_days)
