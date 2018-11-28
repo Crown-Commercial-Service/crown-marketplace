@@ -1,0 +1,38 @@
+id,name,non_profit
+01,Community school,true
+02,Voluntary aided school,true
+03,Voluntary controlled school,true
+05,Foundation school,true
+06,City technology college,false
+07,Community special school,true
+08,Non-maintained special school,true
+10,Other independent special school,false
+11,Other independent school,false
+12,Foundation special school,true
+14,Pupil referral unit,true
+15,Local authority nursery school,true
+18,Further education,true
+24,Secure units,true
+25,Offshore schools,true
+26,Service children's education,true
+27,Miscellaneous,true
+28,Academy sponsor led,true
+29,Higher education institutions,true
+30,Welsh establishment,true
+31,Sixth form centres,true
+32,Special post 16 institution,true
+33,Academy special sponsor led,true
+34,Academy converter,true
+35,Free schools,true
+36,Free schools special,true
+37,British schools overseas,true
+38,Free schools alternative provision,true
+39,Free schools 16 to 19,true
+40,University technical college,true
+41,Studio schools,true
+42,Academy alternative provision converter,true
+43,Academy alternative provision sponsor led,true
+44,Academy special converter,true
+45,Academy 16-19 converter,true
+46,Academy 16 to 19 sponsor led,true
+56,Institution funded by other government department,true
