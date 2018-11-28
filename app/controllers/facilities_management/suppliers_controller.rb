@@ -2,6 +2,8 @@ require 'facilities_management/journey'
 
 module FacilitiesManagement
   class SuppliersController < ApplicationController
+    before_action { require_framework_permission :facilities_management }
+
     def index
       @journey = Journey.new(params[:slug], params)
       @back_path = @journey.previous_step_path

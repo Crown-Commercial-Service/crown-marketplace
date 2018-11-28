@@ -10,6 +10,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
   before do
     allow(ManagementConsultancy::Supplier).to receive(:offering_services_in_regions)
       .with(lot_number, services, region_codes, true).and_return(suppliers)
+    permit_framework :management_consultancy
   end
 
   describe 'GET index' do

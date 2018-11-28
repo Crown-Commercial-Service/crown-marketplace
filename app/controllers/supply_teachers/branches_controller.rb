@@ -2,6 +2,8 @@ require 'supply_teachers/journey'
 
 module SupplyTeachers
   class BranchesController < ApplicationController
+    before_action { require_framework_permission :supply_teachers }
+
     helper :telephone_number
 
     def index

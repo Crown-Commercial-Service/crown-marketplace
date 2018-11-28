@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe SupplyTeachers::BranchesController, type: :controller do
+  before do
+    permit_framework :supply_teachers
+  end
+
   describe 'GET index' do
     let(:first_branch) { build(:branch) }
     let(:second_branch) { build(:branch) }

@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe TempToPermCalculator::HomeController, type: :controller do
+  before do
+    permit_framework :supply_teachers
+  end
+
   describe 'GET index' do
     it 'renders the index template' do
       get :index

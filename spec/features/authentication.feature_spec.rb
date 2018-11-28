@@ -49,4 +49,37 @@ RSpec.feature 'Authentication', type: :feature do
     visit '/supply-teachers'
     expect(page).to have_text('Sign in with beta credentials')
   end
+
+  scenario 'DfE users cannot see school pages if they are from a for-profit school' do
+    OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
+      'provider' => 'dfe',
+      'info' => { 'email' => 'dfe@example.com' },
+      'extra' => {
+        'raw_info' => {
+          'organisation' => {
+            'id' => '047F32E7-FDD5-46E9-89D4-2498C2E77364',
+            'name' => 'St Custard’s',
+            'urn' => '900002',
+            'ukprn' => '90000002',
+            'category' => {
+              'id' => '001',
+              'name' => 'Establishment'
+            },
+            'type' => {
+              'id' => '11',
+              'name' => 'Other independent school'
+            }
+          }
+        }
+      }
+    )
+
+    visit '/'
+
+    click_on 'Sign in with DfE Sign-in'
+
+    visit 'supply-teachers'
+
+    expect(page).to have_text('You don’t have permission to view this page')
+  end
 end
