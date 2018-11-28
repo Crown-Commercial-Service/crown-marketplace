@@ -262,16 +262,10 @@ en:
       managed_service_provider:
         answer_master_vendor: Master vendor managed service
         answer_neutral_vendor: Neutral vendor managed service
+        option1_hint: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
+        option2_hint: A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
         question: What type of managed service do you want?
-      managed_service_providers_explanation:
-        header: Managed service providers
-        introduction: 'You will need to choose either:'
-        option1_body_html1: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
-        option1_body_html2: You will then need to contact all the suppliers and run a further competition.
-        option1_header: A master vendor
-        option2_body_html: A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
-        option2_header: A neutral vendor
-        option_separator: or
+        question_hint: A managed service provider is a company that can manage all your temporary staff needs.
       payroll_provider:
         answer_agency_payroll: No, I want the agency to deal with payroll
         answer_school_payroll: 'Yes'
