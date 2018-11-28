@@ -145,6 +145,8 @@ en:
       support_aria_label: Email us for support with this service
       support_email_html: Email %{link} for support.
       title: Crown Commercial Service
+    header:
+      go_start_page_aria_label: Go to start page of %{service_name}
   management_consultancy:
     journey:
       choose_expenses:
