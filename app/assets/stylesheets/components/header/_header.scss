@@ -21,8 +21,21 @@ $ccs_header_fg: govuk-colour("white");
   height: 90px;
 }
 
+.govuk-header__content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.govuk-header__link--service-name {
+  font-weight: $govuk-font-weight-semi-bold;
+}
+
 .govuk-header__navigation  {
   text-align: right;
+}
+
+.govuk-header__navigation-item {
+  padding: 0;
 }
 
 .ccs-header__signout {
