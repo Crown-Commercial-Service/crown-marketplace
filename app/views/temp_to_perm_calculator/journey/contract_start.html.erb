@@ -5,11 +5,12 @@
     <%= render partial: 'journey/error_summary', locals: { errors: @journey.errors } %>
     <%= form_tag @form_path, method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+
       <%= govuk_form_group_with_optional_error(@journey, :contract_start) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :contract_start) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">
-              <%= t('.question') %>
+              <%= t('.contract_start_question') %>
             </h1>
           </legend>
           <%= display_error(@journey, :contract_start) %>
@@ -44,6 +45,86 @@
           </div>
         <% end %>
       <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :hire_date) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :hire_date) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.day_rate_question') %>
+            </h1>
+          </legend>
+          <%= display_error(@journey, :hire_date) %>
+          <span id="contract-start-hint" class="govuk-hint">
+            For example, 31 3 1980
+          </span>
+          <div class="govuk-date-input" id="contract-start">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="hire_date_day">
+                  Day
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="hire_date_day" name="hire_date_day" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="hire_date_month">
+                  Month
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="hire_date_month" name="hire_date_month" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="hire_date_year">
+                  Year
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="hire_date_year" name="hire_date_year" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :days_per_week) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.days_per_week_question') %>
+          </h1>
+        </legend>
+        <%= display_error(@journey, :days_per_week) %>
+        <span class="govuk-hint">
+          <%= t('.days_per_week_question-hint') %>
+        </span>
+        <%= text_field_tag :days_per_week, params[:days_per_week], class: css_classes_for_input(@journey, :days_per_week, ['govuk-input--width-10']) %>
+      <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :day_rate) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.day_rate_question') %>
+          </h1>
+        </legend>
+        <%= display_error(@journey, :day_rate) %>
+        <span class="govuk-hint">
+          <%= t('.day_rate_question-hint') %>
+        </span>
+        <%= text_field_tag :day_rate, params[:day_rate], class: css_classes_for_input(@journey, :day_rate, ['govuk-input--width-10']) %>
+      <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :markup_rate) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.markup_rate_question') %>
+          </h1>
+        </legend>
+        <%= display_error(@journey, :markup_rate) %>
+        <span class="govuk-hint">
+          <%= t('.markup_rate_question-hint') %>
+        </span>
+        <%= text_field_tag :markup_rate, params[:markup_rate], class: css_classes_for_input(@journey, :markup_rate, ['govuk-input--width-10']) %>
+      <% end %>
+
       <%= submit_tag t('common.submit'), class: "govuk-button" %>
     <% end %>
   </div>
