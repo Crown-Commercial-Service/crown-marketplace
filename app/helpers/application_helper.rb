@@ -85,4 +85,10 @@ module ApplicationHelper
     end
     html
   end
+
+  def link_to_service_start_page
+    return unless controller.class.parent_name
+
+    render partial: "#{controller.class.parent_name.underscore}/link_to_start_page"
+  end
 end
