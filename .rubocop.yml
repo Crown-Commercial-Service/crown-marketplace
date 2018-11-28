@@ -94,6 +94,10 @@ RSpec/FilePath:
     Exclude:
         - 'spec/lib/omniauth/strategies/cognito_spec.rb'
 
+RSpec/NamedSubject:
+    Exclude:
+      - 'spec/controllers/**/*' # Naming the implicit subject is impossible here
+
 Capybara/FeatureMethods:
     Exclude:
         - 'spec/features/**/*'
