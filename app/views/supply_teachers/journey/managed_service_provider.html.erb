@@ -1,27 +1,42 @@
-<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+  <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
-<%= render partial: 'journey/error_summary', locals: { errors: @journey.errors } %>
-<%= form_tag @form_path, method: :get do %>
-  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-  <%= govuk_form_group_with_optional_error(@journey, :managed_service_provider) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :managed_service_provider) do %>
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('.question') %>
-        </h1>
-      </legend>
-      <%= display_error(@journey, :managed_service_provider) %>
-      <div class="govuk-radios">
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :managed_service_provider, :master_vendor, checked?(params[:managed_service_provider], 'master_vendor'), class: 'govuk-radios__input' %>
-          <%= label_tag :managed_service_provider_master_vendor, t('.answer_master_vendor'), class: 'govuk-label govuk-radios__label' %>
+  <%= render partial: 'journey/error_summary', locals: { errors: @journey.errors } %>
+  <%= form_tag @form_path, method: :get do %>
+    <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+    <%= govuk_form_group_with_optional_error(@journey, :managed_service_provider) do %>
+      <%= govuk_fieldset_with_optional_error(@journey, :managed_service_provider) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.question') %>
+          </h1>
+        </legend>
+        <span class="govuk-hint">
+          <%= t('.question_hint') %>
+        </span>
+        <%= display_error(@journey, :managed_service_provider) %>
+        <div class="govuk-radios">
+          <div class="govuk-radios__item">
+            <%= radio_button_tag :managed_service_provider, :master_vendor, checked?(params[:managed_service_provider], 'master_vendor'), class: 'govuk-radios__input' %>
+            <%= label_tag :managed_service_provider_master_vendor, t('.answer_master_vendor'), class: 'govuk-label govuk-radios__label' %>
+            <span class="govuk-hint govuk-radios__hint">
+              <%= t('.option1_hint') %>
+            </span>
+          </div>
+          <div class="govuk-radios__item">
+            <%= radio_button_tag :managed_service_provider, :neutral_vendor, checked?(params[:managed_service_provider], 'neutral_vendor'), class: 'govuk-radios__input' %>
+            <%= label_tag :managed_service_provider_neutral_vendor, t('.answer_neutral_vendor'), class: 'govuk-label govuk-radios__label' %>
+            <span class="govuk-hint govuk-radios__hint">
+              <%= t('.option2_hint') %>
+            </span>
+          </div>
         </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :managed_service_provider, :neutral_vendor, checked?(params[:managed_service_provider], 'neutral_vendor'), class: 'govuk-radios__input' %>
-          <%= label_tag :managed_service_provider_neutral_vendor, t('.answer_neutral_vendor'), class: 'govuk-label govuk-radios__label' %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
+    <%= submit_tag t('common.submit'), class: "govuk-button" %>
   <% end %>
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
-<% end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+  </div>
+</div>
