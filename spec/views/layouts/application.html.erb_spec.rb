@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'layouts/application.html.erb' do
   before do
     view.extend(ApplicationHelper)
+    allow(view).to receive(:link_to_service_start_page).and_return('')
     controller.singleton_class.class_eval do
       def logged_in?
         true
