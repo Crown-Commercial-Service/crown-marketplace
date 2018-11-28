@@ -221,6 +221,10 @@ en:
     unit:
       one: result
       other: results
+  shared:
+    not_permitted:
+      details: You don’t have permission to view this page.
+      title: Not permitted
   suppliers:
     unit:
       one: supplier

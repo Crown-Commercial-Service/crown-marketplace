@@ -64,6 +64,7 @@ if ENV['COGNITO_USER_POOL_SITE'].blank?
   OmniAuth.config.test_mode = true
 
   OmniAuth.config.mock_auth[:cognito] = OmniAuth::AuthHash.new(
-    info: { email: 'user@example.com' }
+    'provider' => 'cognito',
+    'info' => { 'email' => 'cognito@example.com' }
   )
 end

@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::Base
+  Unauthorized = Class.new(StandardError)
+
+  rescue_from Unauthorized, with: :deny_access
+
   def current_login
     Login.from_session(session[:login])
   end
@@ -17,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   def require_framework_permission(framework)
     require_sign_in
-    raise 'not allowed' unless current_login.permit?(framework)
+    raise Unauthorized unless current_login.permit?(framework)
   end
 
   def logged_in?
@@ -26,4 +30,8 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in?
 
   before_action :require_sign_in
+
+  def deny_access
+    render template: 'shared/not_permitted', status: 403
+  end
 end

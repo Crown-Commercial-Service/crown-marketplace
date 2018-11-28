@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe SupplyTeachers::JourneyController, type: :controller do
+  before do
+    permit_framework :supply_teachers
+  end
+
   describe 'GET #question for looking-for' do
     context 'when not logged in' do
       before do

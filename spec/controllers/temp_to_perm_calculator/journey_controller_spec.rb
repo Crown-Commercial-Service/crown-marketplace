@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe TempToPermCalculator::JourneyController, type: :controller do
+  before do
+    permit_framework :supply_teachers
+  end
+
   describe 'GET #start for temp-to-perm-calculator' do
     it 'redirects to the first step in the journey' do
       get :start, params: {

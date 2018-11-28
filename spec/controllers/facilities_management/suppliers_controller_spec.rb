@@ -12,6 +12,7 @@ RSpec.describe FacilitiesManagement::SuppliersController, type: :controller do
     allow(FacilitiesManagement::Supplier)
       .to receive(:available_in_lot_and_regions)
       .with(lot_number, ['UKK4']).and_return(suppliers)
+    permit_framework :facilities_management
   end
 
   describe 'GET index' do
