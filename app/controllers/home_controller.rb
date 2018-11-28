@@ -9,7 +9,9 @@ class HomeController < ApplicationController
 
   def management_consultancy; end
 
-  def gateway; end
+  def gateway
+    redirect_to homepage_path if logged_in?
+  end
 
   def status
     render layout: false
