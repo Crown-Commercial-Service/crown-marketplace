@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::NominatedWorkerResults
-    include JourneyStep
+    include ::Journey::Step
     include Journey::Results
     include ActiveSupport::NumberHelper
 

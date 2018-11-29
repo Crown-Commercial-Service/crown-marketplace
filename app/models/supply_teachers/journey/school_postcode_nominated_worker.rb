@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::SchoolPostcodeNominatedWorker
-    include JourneyStep
+    include ::Journey::Step
     include Geolocatable
 
     def next_step_class

@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::FixedTermResults
-    include JourneyStep
+    include ::Journey::Step
     include Journey::Results
     include ActiveSupport::NumberHelper
 

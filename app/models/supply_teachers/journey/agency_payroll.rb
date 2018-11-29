@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::AgencyPayroll
-    include JourneyStep
+    include ::Journey::Step
     include Geolocatable
 
     attribute :term

@@ -1,5 +1,5 @@
 module TempToPermCalculator
   class Journey::Fee
-    include JourneyStep
+    include ::Journey::Step
   end
 end

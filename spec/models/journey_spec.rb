@@ -9,7 +9,7 @@ RSpec.describe Journey, type: :model do
   let(:paths) { instance_double('JourneyPaths') }
 
   class SingleStep
-    include JourneyStep
+    include ::Journey::Step
   end
 
   context 'when created with a single step journey' do
@@ -84,11 +84,11 @@ RSpec.describe Journey, type: :model do
   end
 
   class SecondStep
-    include JourneyStep
+    include ::Journey::Step
   end
 
   class FirstStep
-    include JourneyStep
+    include ::Journey::Step
 
     def next_step_class
       SecondStep
@@ -253,11 +253,11 @@ RSpec.describe Journey, type: :model do
   end
 
   class ThirdValidStep
-    include JourneyStep
+    include ::Journey::Step
   end
 
   class SecondInvalidStep
-    include JourneyStep
+    include ::Journey::Step
 
     def next_step_class
       ThirdValidStep
@@ -269,7 +269,7 @@ RSpec.describe Journey, type: :model do
   end
 
   class FirstValidStep
-    include JourneyStep
+    include ::Journey::Step
 
     def next_step_class
       SecondInvalidStep
@@ -310,7 +310,7 @@ RSpec.describe Journey, type: :model do
   end
 
   class FirstStepWithAttributes
-    include JourneyStep
+    include ::Journey::Step
     attribute :first_question
     def next_step_class
       SecondStepWithAttributes
@@ -318,7 +318,7 @@ RSpec.describe Journey, type: :model do
   end
 
   class SecondStepWithAttributes
-    include JourneyStep
+    include ::Journey::Step
     attribute :second_question
   end
 

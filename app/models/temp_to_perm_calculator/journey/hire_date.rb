@@ -1,6 +1,6 @@
 module TempToPermCalculator
   class Journey::HireDate
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :hire_date_day
     validates :hire_date_day,
