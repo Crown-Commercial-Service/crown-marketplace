@@ -60,7 +60,7 @@ RSpec.feature 'Workers on school payroll', type: :feature do
     choose 'Yes'
     click_on I18n.t('common.submit')
 
-    choose 'Yes'
+    choose 'No, I want to put the worker on our payroll'
     click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'

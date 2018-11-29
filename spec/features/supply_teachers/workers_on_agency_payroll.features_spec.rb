@@ -67,7 +67,7 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
     choose 'Yes'
     click_on I18n.t('common.submit')
 
-    choose 'No'
+    choose 'Yes'
     click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
