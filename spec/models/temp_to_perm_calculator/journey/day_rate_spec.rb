@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TempToPermCalculator::Steps::DayRate, type: :model do
+RSpec.describe TempToPermCalculator::Journey::DayRate, type: :model do
   subject(:step) do
     described_class.new(
       day_rate: day_rate
@@ -13,7 +13,7 @@ RSpec.describe TempToPermCalculator::Steps::DayRate, type: :model do
 
   describe '#next_step_class' do
     it 'is MarkupRate' do
-      expect(step.next_step_class).to eq(TempToPermCalculator::Steps::MarkupRate)
+      expect(step.next_step_class).to eq(TempToPermCalculator::Journey::MarkupRate)
     end
   end
 

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe TempToPermCalculator::Steps::HireDate, type: :model do
+RSpec.describe TempToPermCalculator::Journey::ContractStart, type: :model do
   subject(:step) do
     described_class.new(
-      hire_date_day: day,
-      hire_date_month: month,
-      hire_date_year: year
+      contract_start_day: day,
+      contract_start_month: month,
+      contract_start_year: year
     )
   end
 
@@ -17,7 +17,7 @@ RSpec.describe TempToPermCalculator::Steps::HireDate, type: :model do
 
   describe '#next_step_class' do
     it 'is HireDate' do
-      expect(step.next_step_class).to eq(TempToPermCalculator::Steps::DaysPerWeek)
+      expect(step.next_step_class).to eq(TempToPermCalculator::Journey::HireDate)
     end
   end
 
