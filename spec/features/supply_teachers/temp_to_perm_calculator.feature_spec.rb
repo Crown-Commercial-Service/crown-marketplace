@@ -17,9 +17,8 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in 'day_rate', with: 600
 
-    click_on I18n.t('common.submit')
-
     fill_in 'markup_rate', with: 30
+
     click_on I18n.t('common.submit')
 
     expect(page).to have_text('Based on the information provided you could be charged £7,615.38')

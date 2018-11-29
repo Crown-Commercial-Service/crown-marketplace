@@ -312,6 +312,5 @@ en:
         days_per_week_question_hint: For example, 5
         hire_date_question: What date do you want to hire them from?
         hire_date_question_hint: For example, 31 3 1980
-      markup_rate:
-        question: What mark-up does the supplier charge for the worker?
-        question_hint: This is the percentage fee you agreed with the supplier. For example, 40
+        markup_rate_question: What mark-up does the supplier charge for the worker?
+        markup_rate_question_hint: This is the percentage fee you agreed with the supplier. For example, 40

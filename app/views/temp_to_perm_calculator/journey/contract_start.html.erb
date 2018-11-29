@@ -115,6 +115,19 @@
         <%= text_field_tag :day_rate, params[:day_rate], class: css_classes_for_input(@journey, :day_rate, ['govuk-input--width-10']) %>
       <% end %>
 
+      <%= govuk_form_group_with_optional_error(@journey, :markup_rate) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.markup_rate_question') %>
+          </h1>
+        </legend>
+        <%= display_error(@journey, :markup_rate) %>
+        <span class="govuk-hint">
+          <%= t('.markup_rate_question_hint') %>
+        </span>
+        <%= text_field_tag :markup_rate, params[:markup_rate], class: css_classes_for_input(@journey, :markup_rate, ['govuk-input--width-10']) %>
+      <% end %>
+
       <%= submit_tag t('common.submit'), class: "govuk-button" %>
     <% end %>
   </div>
