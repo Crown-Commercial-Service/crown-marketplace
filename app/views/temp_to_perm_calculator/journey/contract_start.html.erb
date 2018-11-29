@@ -102,6 +102,19 @@
         <%= text_field_tag :days_per_week, params[:days_per_week], class: css_classes_for_input(@journey, :days_per_week, ['govuk-input--width-10']) %>
       <% end %>
 
+      <%= govuk_form_group_with_optional_error(@journey, :day_rate) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.day_rate_question') %>
+          </h1>
+        </legend>
+        <%= display_error(@journey, :day_rate) %>
+        <span class="govuk-hint">
+          <%= t('.day_rate_question_hint') %>
+        </span>
+        <%= text_field_tag :day_rate, params[:day_rate], class: css_classes_for_input(@journey, :day_rate, ['govuk-input--width-10']) %>
+      <% end %>
+
       <%= submit_tag t('common.submit'), class: "govuk-button" %>
     <% end %>
   </div>

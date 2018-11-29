@@ -32,8 +32,11 @@ module TempToPermCalculator
     attribute :days_per_week
     validates :days_per_week, presence: true, numericality: { only_integer: true }
 
+    attribute :day_rate
+    validates :day_rate, presence: true, numericality: { only_integer: true }
+
     def next_step_class
-      Journey::DayRate
+      Journey::MarkupRate
     end
   end
 end

@@ -15,9 +15,8 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in 'days_per_week', with: 5
 
-    click_on I18n.t('common.submit')
-
     fill_in 'day_rate', with: 600
+
     click_on I18n.t('common.submit')
 
     fill_in 'markup_rate', with: 30
