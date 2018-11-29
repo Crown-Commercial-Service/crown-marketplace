@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::Steps::FixedTermResults, type: :model do
+RSpec.describe SupplyTeachers::Journey::NominatedWorkerResults, type: :model do
   subject(:results) do
     described_class.new(
       postcode: 'SW1A 1AA',
@@ -11,8 +11,7 @@ RSpec.describe SupplyTeachers::Steps::FixedTermResults, type: :model do
   it 'describes its inputs' do
     expect(results.inputs).to eq(
       looking_for: 'Individual worker',
-      worker_type: 'Supplied by agency',
-      payroll_provider: 'School',
+      worker_type: 'Nominated',
       postcode: 'SW1A 1AA',
       radius: '5 miles'
     )
