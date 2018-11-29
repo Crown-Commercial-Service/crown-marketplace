@@ -1,5 +1,3 @@
-require 'supply_teachers/journey'
-
 module SupplyTeachers
   class SuppliersController < ApplicationController
     before_action { require_framework_permission :supply_teachers }
