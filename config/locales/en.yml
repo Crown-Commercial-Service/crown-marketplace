@@ -3,11 +3,11 @@ en:
   activemodel:
     errors:
       models:
-        facilities_management/steps/supplier_region:
+        facilities_management/journey/supplier_region:
           attributes:
             region_codes:
               too_short: Select at least one region
-        facilities_management/steps/value_band:
+        facilities_management/journey/value_band:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
