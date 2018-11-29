@@ -307,12 +307,12 @@ en:
         question: What date was the worker first supplied to you on their current contract?
       day_rate:
         question: What is the supplier’s total day rate for the worker?
-        question-hint: An amount in pounds. For example, 500
+        question_hint: An amount in pounds. For example, 500
       days_per_week:
         question: How many days per week is the worker contracted to work?
-        question-hint: For example, 5
+        question_hint: For example, 5
       hire_date:
         question: What date do you want to hire them from?
       markup_rate:
         question: What mark-up does the supplier charge for the worker?
-        question-hint: This is the percentage fee you agreed with the supplier. For example, 40
+        question_hint: This is the percentage fee you agreed with the supplier. For example, 40

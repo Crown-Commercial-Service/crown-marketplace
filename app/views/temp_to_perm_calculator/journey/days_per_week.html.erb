@@ -11,7 +11,7 @@
     </legend>
     <%= display_error(@journey, :days_per_week) %>
     <span class="govuk-hint">
-      <%= t('.question-hint') %>
+      <%= t('.question_hint') %>
     </span>
     <%= text_field_tag :days_per_week, params[:days_per_week], class: css_classes_for_input(@journey, :days_per_week, ['govuk-input--width-10']) %>
   <% end %>

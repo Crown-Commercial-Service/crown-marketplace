@@ -11,7 +11,7 @@
     </legend>
     <%= display_error(@journey, :day_rate) %>
     <span class="govuk-hint">
-      <%= t('.question-hint') %>
+      <%= t('.question_hint') %>
     </span>
     <%= text_field_tag :day_rate, params[:day_rate], class: css_classes_for_input(@journey, :day_rate, ['govuk-input--width-10']) %>
   <% end %>

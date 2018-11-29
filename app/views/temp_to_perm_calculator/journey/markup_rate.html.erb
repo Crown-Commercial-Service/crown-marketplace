@@ -11,7 +11,7 @@
     </legend>
     <%= display_error(@journey, :markup_rate) %>
     <span class="govuk-hint">
-      <%= t('.question-hint') %>
+      <%= t('.question_hint') %>
     </span>
     <%= text_field_tag :markup_rate, params[:markup_rate], class: css_classes_for_input(@journey, :markup_rate, ['govuk-input--width-10']) %>
   <% end %>
