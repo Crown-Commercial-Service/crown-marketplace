@@ -1,5 +1,3 @@
-require 'facilities_management/journey'
-
 module FacilitiesManagement
   class SuppliersController < ApplicationController
     before_action { require_framework_permission :facilities_management }
