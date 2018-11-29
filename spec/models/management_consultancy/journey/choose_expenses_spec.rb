@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe ManagementConsultancy::Steps::ChooseExpenses, type: :model do
+RSpec.describe ManagementConsultancy::Journey::ChooseExpenses, type: :model do
   subject(:step) { described_class.new(expenses: 'paid') }
 
-  let(:model_key) { 'activemodel.errors.models.management_consultancy/steps/choose_expenses' }
+  let(:model_key) { 'activemodel.errors.models.management_consultancy/journey/choose_expenses' }
 
   it { is_expected.to be_valid }
 

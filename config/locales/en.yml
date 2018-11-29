@@ -11,19 +11,19 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
-        management_consultancy/steps/choose_expenses:
+        management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
               inclusion: Please say whether you pay expenses
-        management_consultancy/steps/choose_lot:
+        management_consultancy/journey/choose_lot:
           attributes:
             lot:
               inclusion: Please choose a lot for the services you require
-        management_consultancy/steps/choose_regions:
+        management_consultancy/journey/choose_regions:
           attributes:
             region_codes:
               too_short: Select at least one region
-        management_consultancy/steps/choose_services:
+        management_consultancy/journey/choose_services:
           attributes:
             services:
               too_short: Please choose the services you require

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe ManagementConsultancy::Steps::ChooseRegions, type: :model do
+RSpec.describe ManagementConsultancy::Journey::ChooseRegions, type: :model do
   subject(:step) { described_class.new(region_codes: %w[UKC1]) }
 
-  let(:model_key) { 'activemodel.errors.models.management_consultancy/steps/choose_regions' }
+  let(:model_key) { 'activemodel.errors.models.management_consultancy/journey/choose_regions' }
 
   it { is_expected.to be_valid }
 
