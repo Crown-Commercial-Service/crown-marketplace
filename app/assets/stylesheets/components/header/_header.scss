@@ -47,10 +47,13 @@ $ccs_header_fg: govuk-colour("white");
   font-weight: $govuk-font-weight-regular;
   color: #FFF;
   cursor: pointer;
-}
-
-.ccs-header__signout:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
+  &:focus {
+    outline: 3px solid govuk-colour("yellow");
+    outline-offset: 0;
+  }
 }
 
 @media (min-width: 641px) {
