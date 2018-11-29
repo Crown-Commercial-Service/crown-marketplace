@@ -18,22 +18,22 @@ module ApplicationHelper
     mail_to(email_address, email_address, class: css_class, 'aria-label': aria_label)
   end
 
-  def govuk_form_group_with_optional_error(journey, attribute)
-    error = journey.errors[attribute].first
+  def govuk_form_group_with_optional_error(journey, *attributes)
+    attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
     css_classes = ['govuk-form-group']
-    css_classes += ['govuk-form-group--error'] if error.present?
+    css_classes += ['govuk-form-group--error'] if attributes_with_errors.any?
 
     content_tag :div, class: css_classes do
       yield
     end
   end
 
-  def govuk_fieldset_with_optional_error(journey, attribute)
-    error = journey.errors[attribute].first
+  def govuk_fieldset_with_optional_error(journey, *attributes)
+    attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
     options = { class: 'govuk-fieldset' }
-    options['aria-describedby'] = error_id(attribute) if error.present?
+    options['aria-describedby'] = attributes_with_errors.map { |a| error_id(a) } if attributes_with_errors.any?
 
     content_tag :fieldset, options do
       yield
