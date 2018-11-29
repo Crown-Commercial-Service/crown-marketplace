@@ -1,4 +1,4 @@
-module TempToPermCalculator
+module SupplyTeachers
   class Journey::ContractStart
     include ::Journey::Step
 

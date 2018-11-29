@@ -27,6 +27,8 @@ module SupplyTeachers
         supply_teachers_master_vendors_path(journey: self.class.journey_name, params: params)
       when 'neutral-vendor-managed-service'
         supply_teachers_neutral_vendors_path(journey: self.class.journey_name, params: params)
+      when 'calculate-temp-to-perm-fee'
+        supply_teachers_fee_path(journey: self.class.journey_name, params: params)
       else
         super
       end

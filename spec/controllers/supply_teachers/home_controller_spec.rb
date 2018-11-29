@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TempToPermCalculator::HomeController, type: :controller do
+RSpec.describe SupplyTeachers::HomeController, type: :controller do
   before do
     permit_framework :supply_teachers
   end
