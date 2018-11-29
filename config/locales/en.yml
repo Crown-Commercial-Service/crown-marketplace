@@ -274,9 +274,9 @@ en:
         question: What type of managed service do you want?
         question_hint: A managed service provider is a company that can manage all your temporary staff needs.
       payroll_provider:
-        answer_agency_payroll: No, I want the agency to deal with payroll
-        answer_school_payroll: 'Yes'
-        question: Do you want to put the worker on the school’s payroll?
+        answer_agency_payroll: 'Yes'
+        answer_school_payroll: No, I want to put the worker on our payroll
+        question: Do you want the agency to manage the worker's pay?
       school_postcode_agency_supplied_worker:
         question: What is your school’s postcode?
         question_hint: We use this to find agencies near to your school
