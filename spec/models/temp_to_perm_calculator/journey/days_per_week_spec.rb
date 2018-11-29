@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TempToPermCalculator::Steps::DaysPerWeek, type: :model do
+RSpec.describe TempToPermCalculator::Journey::DaysPerWeek, type: :model do
   subject(:step) do
     described_class.new(
       days_per_week: days_per_week
@@ -13,7 +13,7 @@ RSpec.describe TempToPermCalculator::Steps::DaysPerWeek, type: :model do
 
   describe '#next_step_class' do
     it 'is DayRate' do
-      expect(step.next_step_class).to eq(TempToPermCalculator::Steps::DayRate)
+      expect(step.next_step_class).to eq(TempToPermCalculator::Journey::DayRate)
     end
   end
 

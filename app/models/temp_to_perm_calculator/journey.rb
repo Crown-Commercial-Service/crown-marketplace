@@ -10,7 +10,7 @@ module TempToPermCalculator
     end
 
     def self.first_step_class
-      Steps::ContractStart
+      Journey::ContractStart
     end
   end
 end

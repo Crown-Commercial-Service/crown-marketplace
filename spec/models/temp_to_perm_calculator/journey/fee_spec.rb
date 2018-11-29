@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TempToPermCalculator::Steps::Fee, type: :model do
+RSpec.describe TempToPermCalculator::Journey::Fee, type: :model do
   subject(:step) { described_class.new }
 
   it 'is the final step' do

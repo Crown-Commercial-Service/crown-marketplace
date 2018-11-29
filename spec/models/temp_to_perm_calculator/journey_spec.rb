@@ -6,7 +6,7 @@ RSpec.describe TempToPermCalculator::Journey, type: :model do
   end
 
   it 'has a first step class' do
-    expect(described_class.first_step_class).to eq(TempToPermCalculator::Steps::ContractStart)
+    expect(described_class.first_step_class).to eq(TempToPermCalculator::Journey::ContractStart)
   end
 
   context 'when on the contract-start page' do
