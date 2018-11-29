@@ -55,6 +55,26 @@ en:
           attributes:
             worker_type:
               inclusion: Select yes if you want an agency to supply the worker
+        temp_to_perm_calculator/journey/contract_start:
+          attributes:
+            contract_start_day:
+              blank: Enter a valid day for the date the contract started
+            contract_start_month:
+              blank: Enter a valid month for the date the contract started
+            contract_start_year:
+              blank: Enter a valid year for the date the contract started
+            day_rate:
+              blank: Enter a valid number of pounds paid per day
+            days_per_week:
+              blank: Enter a valid number of days worked per week
+            hire_date_day:
+              blank: Enter a valid day for the date from which the worker will be hired
+            hire_date_month:
+              blank: Enter a valid month for the date from which the worker will be hired
+            hire_date_year:
+              blank: Enter a valid year for the date from which the worker will be hired
+            markup_rate:
+              blank: Enter a valid percentage mark-up rate
   common:
     submit: Continue
   errors:
