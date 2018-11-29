@@ -127,4 +127,37 @@ RSpec.describe 'temp_to_perm_calculator/journey/contract_start.html.erb' do
       expect(rendered).to have_css('#contract_start_year.govuk-input--error')
     end
   end
+
+  context 'when contract_start_day field was previously set' do
+    before do
+      step.contract_start_day = '01'
+    end
+
+    it 'sets the field to the previously entered value' do
+      render
+      expect(rendered).to have_field('contract_start_day', with: '01')
+    end
+  end
+
+  context 'when contract_start_month field was previously set' do
+    before do
+      step.contract_start_month = '06'
+    end
+
+    it 'sets the field to the previously entered value' do
+      render
+      expect(rendered).to have_field('contract_start_month', with: '06')
+    end
+  end
+
+  context 'when contract_start_year field was previously set' do
+    before do
+      step.contract_start_year = '2018'
+    end
+
+    it 'sets the field to the previously entered value' do
+      render
+      expect(rendered).to have_field('contract_start_year', with: '2018')
+    end
+  end
 end
