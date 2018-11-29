@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'supply_teachers/journey/managed_service_provider.html.erb' do
-  let(:step) { SupplyTeachers::Steps::ManagedServiceProvider.new }
+  let(:step) { SupplyTeachers::Journey::ManagedServiceProvider.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors, previous_questions_and_answers: {}) }
 

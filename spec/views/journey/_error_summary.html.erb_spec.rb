@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'journey/_error_summary.html.erb' do
-  let(:step) { instance_double('JourneyStep') }
+  let(:step) { instance_double('::Journey::Step') }
   let(:errors) { ActiveModel::Errors.new(step) }
 
   before do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'management_consultancy/journey/choose_regions.html.erb' do
-  let(:step) { ManagementConsultancy::Steps::ChooseRegions.new }
+  let(:step) { ManagementConsultancy::Journey::ChooseRegions.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) do
     instance_double(

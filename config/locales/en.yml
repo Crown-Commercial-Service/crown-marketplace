@@ -3,55 +3,55 @@ en:
   activemodel:
     errors:
       models:
-        facilities_management/steps/supplier_region:
+        facilities_management/journey/supplier_region:
           attributes:
             region_codes:
               too_short: Select at least one region
-        facilities_management/steps/value_band:
+        facilities_management/journey/value_band:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
-        management_consultancy/steps/choose_expenses:
+        management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
               inclusion: Please say whether you pay expenses
-        management_consultancy/steps/choose_lot:
+        management_consultancy/journey/choose_lot:
           attributes:
             lot:
               inclusion: Please choose a lot for the services you require
-        management_consultancy/steps/choose_regions:
+        management_consultancy/journey/choose_regions:
           attributes:
             region_codes:
               too_short: Select at least one region
-        management_consultancy/steps/choose_services:
+        management_consultancy/journey/choose_services:
           attributes:
             services:
               too_short: Please choose the services you require
-        supply_teachers/steps/agency_payroll:
+        supply_teachers/journey/agency_payroll:
           attributes:
             location:
               invalid_location: Enter a valid postcode
-        supply_teachers/steps/looking_for:
+        supply_teachers/journey/looking_for:
           attributes:
             looking_for:
               inclusion: Select individual worker or managed service provider
-        supply_teachers/steps/managed_service_provider:
+        supply_teachers/journey/managed_service_provider:
           attributes:
             managed_service_provider:
               inclusion: Select master vendor or neutral vendor managed service
-        supply_teachers/steps/payroll_provider:
+        supply_teachers/journey/payroll_provider:
           attributes:
             payroll_provider:
               inclusion: Select yes if you want to put the worker on the school’s payroll
-        supply_teachers/steps/school_postcode_agency_supplied_worker:
+        supply_teachers/journey/school_postcode_agency_supplied_worker:
           attributes:
             location:
               invalid_location: Enter a valid postcode
-        supply_teachers/steps/school_postcode_nominated_worker:
+        supply_teachers/journey/school_postcode_nominated_worker:
           attributes:
             location:
               invalid_location: Enter a valid postcode
-        supply_teachers/steps/worker_type:
+        supply_teachers/journey/worker_type:
           attributes:
             worker_type:
               inclusion: Select yes if you want an agency to supply the worker
