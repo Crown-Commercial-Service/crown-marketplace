@@ -12,7 +12,7 @@ module SupplyTeachers
     end
 
     def self.first_step_class
-      Steps::LookingFor
+      LookingFor
     end
 
     def start_path

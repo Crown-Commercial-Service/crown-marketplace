@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'facilities_management/journey/supplier_region.html.erb' do
-  let(:step) { FacilitiesManagement::Steps::SupplierRegion.new }
+  let(:step) { FacilitiesManagement::Journey::SupplierRegion.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors, current_step: step, previous_questions_and_answers: {}) }
 
