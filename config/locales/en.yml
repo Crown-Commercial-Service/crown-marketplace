@@ -283,8 +283,8 @@ en:
         worker_term_question: How long do you need the worker for?
         worker_type_question: What type of worker do you need?
       looking_for:
-        answer_managed_service_provider: A managed service provider
-        answer_worker: An individual worker
+        answer_managed_service_provider: An agency to manage all my needs - a ‘managed service provider’
+        answer_worker: An agency to supply an individual worker
         question: What are you looking for?
       managed_service_provider:
         answer_master_vendor: Master vendor managed service
