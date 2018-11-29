@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::MasterVendorManagedService
-    include JourneyStep
+    include ::Journey::Step
 
     def inputs
       {

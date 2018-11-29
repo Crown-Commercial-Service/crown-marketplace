@@ -1,6 +1,6 @@
 module TempToPermCalculator
   class Journey::DayRate
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :day_rate
     validates :day_rate, presence: true, numericality: { only_integer: true }

@@ -1,6 +1,6 @@
 module ManagementConsultancy
   class Journey::ChooseExpenses
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :expenses
     validates :expenses, inclusion: ['paid', 'not_paid']

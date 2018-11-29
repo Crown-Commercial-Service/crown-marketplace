@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::LookingFor
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :looking_for
     validates :looking_for, inclusion: ['worker', 'managed_service_provider']

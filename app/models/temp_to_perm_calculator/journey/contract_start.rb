@@ -1,6 +1,6 @@
 module TempToPermCalculator
   class Journey::ContractStart
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :contract_start_day
     validates :contract_start_day,

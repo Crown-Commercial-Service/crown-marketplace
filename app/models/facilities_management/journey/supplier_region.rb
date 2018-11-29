@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class Journey::SupplierRegion
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :region_codes, Array
     validates :region_codes, length: { minimum: 1 }

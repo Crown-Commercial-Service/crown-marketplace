@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class Journey::ValueBand
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :value_band
     validates :value_band, inclusion: {

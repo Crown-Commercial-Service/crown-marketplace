@@ -1,4 +1,4 @@
-module JourneyStep
+module Journey::Step
   extend ActiveSupport::Concern
   include ActiveModel::Validations
   extend ActiveModel::Translation

@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::ManagedServiceProvider
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :managed_service_provider
     validates :managed_service_provider, inclusion: ['master_vendor', 'neutral_vendor']

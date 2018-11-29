@@ -1,6 +1,6 @@
 module TempToPermCalculator
   class Journey::MarkupRate
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :markup_rate
     validates :markup_rate,

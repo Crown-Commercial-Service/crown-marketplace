@@ -1,6 +1,6 @@
 module ManagementConsultancy
   class Journey::ChooseRegions
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :region_codes, Array
     validates :region_codes, length: { minimum: 1 }

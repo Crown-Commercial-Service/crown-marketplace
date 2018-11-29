@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::PayrollProvider
-    include JourneyStep
+    include ::Journey::Step
 
     attribute :payroll_provider
     validates :payroll_provider, inclusion: ['school', 'agency']

@@ -1,5 +1,5 @@
 module ManagementConsultancy
   class Journey::Suppliers
-    include JourneyStep
+    include ::Journey::Step
   end
 end
