@@ -16,7 +16,7 @@ RSpec.describe TempToPermCalculator::Journey::HireDate, type: :model do
   it { is_expected.to be_valid }
 
   describe '#next_step_class' do
-    it 'is HireDate' do
+    it 'is DaysPerWeek' do
       expect(step.next_step_class).to eq(TempToPermCalculator::Journey::DaysPerWeek)
     end
   end
