@@ -5,6 +5,18 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller do
     permit_framework :supply_teachers
   end
 
+  describe 'GET #start' do
+    it 'redirects to the first step in the journey' do
+      get :start, params: {
+        journey: 'supply-teachers'
+      }
+
+      expect(response).to redirect_to(
+        journey_question_path(journey: 'supply-teachers', slug: 'looking-for')
+      )
+    end
+  end
+
   describe 'GET #question for looking-for' do
     context 'when not logged in' do
       before do

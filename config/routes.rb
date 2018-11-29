@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
+    get '/fee', to: 'home#fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
     get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
     get '/agency-payroll-results', to: 'branches#index', slug: 'agency-payroll-results'
@@ -33,14 +34,6 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/suppliers', to: 'suppliers#index'
     resources :uploads, only: :create
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
-  end
-
-  namespace 'temp_to_perm_calculator', path: 'temp-to-perm-calculator' do
-    get '/', to: 'home#index'
-    get '/fee', to: 'home#fee'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
