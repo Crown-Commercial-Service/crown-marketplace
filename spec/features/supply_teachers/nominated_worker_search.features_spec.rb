@@ -54,7 +54,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose 'An individual worker'
+    choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
     click_on I18n.t('common.submit')
 
     choose I18n.t('supply_teachers.journey.worker_type.answer_nominated_worker')
@@ -87,7 +87,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose 'An individual worker'
+    choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
     click_on I18n.t('common.submit')
 
     choose I18n.t('supply_teachers.journey.worker_type.answer_nominated_worker')
@@ -105,7 +105,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose 'An individual worker'
+    choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
     click_on I18n.t('common.submit')
 
     choose I18n.t('supply_teachers.journey.worker_type.answer_nominated_worker')
@@ -124,7 +124,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose 'An individual worker'
+    choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
     click_on I18n.t('common.submit')
 
     choose I18n.t('supply_teachers.journey.worker_type.answer_nominated_worker')
@@ -137,14 +137,14 @@ RSpec.feature 'Nominated workers', type: :feature do
     click_on I18n.t('layouts.application.back')
     click_on I18n.t('layouts.application.back')
 
-    expect(page).to have_checked_field('An individual worker')
+    expect(page).to have_checked_field(I18n.t('supply_teachers.journey.looking_for.answer_worker'))
   end
 
   scenario 'Buyer enters invalid postcode' do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose 'An individual worker'
+    choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
     click_on I18n.t('common.submit')
 
     choose I18n.t('supply_teachers.journey.worker_type.answer_nominated_worker')

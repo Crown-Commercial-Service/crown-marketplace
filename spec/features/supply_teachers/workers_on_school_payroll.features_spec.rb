@@ -54,7 +54,7 @@ RSpec.feature 'Workers on school payroll', type: :feature do
     visit_supply_teachers_home
     click_on 'Start now'
 
-    choose 'An individual worker'
+    choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
     click_on I18n.t('common.submit')
 
     choose 'Yes'
