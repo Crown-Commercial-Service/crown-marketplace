@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::Steps::MasterVendorManagedService, type: :model do
+RSpec.describe SupplyTeachers::Journey::NeutralVendorManagedService, type: :model do
   subject(:results) do
     described_class.new
   end
@@ -8,7 +8,7 @@ RSpec.describe SupplyTeachers::Steps::MasterVendorManagedService, type: :model d
   it 'describes its inputs' do
     expect(results.inputs).to eq(
       looking_for: 'Managed service provider',
-      managed_service_provider: 'Master vendor'
+      managed_service_provider: 'Neutral vendor'
     )
   end
 end

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::Steps::SchoolPostcodeAgencySuppliedWorker, type: :model do
+RSpec.describe SupplyTeachers::Journey::SchoolPostcodeAgencySuppliedWorker, type: :model do
   subject(:step) { described_class.new(postcode: postcode) }
 
-  let(:model_key) { 'activemodel.errors.models.supply_teachers/steps/school_postcode_agency_supplied_worker' }
+  let(:model_key) { 'activemodel.errors.models.supply_teachers/journey/school_postcode_agency_supplied_worker' }
 
   let(:postcode) { Faker::Address.unique.postcode }
 

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::Steps::ManagedServiceProvider, type: :model do
+RSpec.describe SupplyTeachers::Journey::ManagedServiceProvider, type: :model do
   subject(:step) { described_class.new(managed_service_provider: 'master_vendor') }
 
-  let(:model_key) { 'activemodel.errors.models.supply_teachers/steps/managed_service_provider' }
+  let(:model_key) { 'activemodel.errors.models.supply_teachers/journey/managed_service_provider' }
 
   it { is_expected.to be_valid }
 
