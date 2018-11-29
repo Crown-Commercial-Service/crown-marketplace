@@ -10,7 +10,8 @@ RSpec.describe TempToPermCalculator::Journey::ContractStart, type: :model do
       hire_date_month: hire_date_month,
       hire_date_year: hire_date_year,
       days_per_week: days_per_week,
-      day_rate: day_rate
+      day_rate: day_rate,
+      markup_rate: markup_rate
     )
   end
 
@@ -26,11 +27,13 @@ RSpec.describe TempToPermCalculator::Journey::ContractStart, type: :model do
 
   let(:day_rate) { 500 }
 
+  let(:markup_rate) { 40 }
+
   it { is_expected.to be_valid }
 
   describe '#next_step_class' do
-    it 'is MarkupRate' do
-      expect(step.next_step_class).to eq(TempToPermCalculator::Journey::MarkupRate)
+    it 'is Fee' do
+      expect(step.next_step_class).to eq(TempToPermCalculator::Journey::Fee)
     end
   end
 
@@ -150,6 +153,30 @@ RSpec.describe TempToPermCalculator::Journey::ContractStart, type: :model do
 
   context 'with a non-numeric day_rate' do
     let(:day_rate) { 'abc' }
+
+    it { is_expected.to be_invalid }
+  end
+
+  context 'with a missing markup_rate' do
+    let(:markup_rate) { nil }
+
+    it { is_expected.to be_invalid }
+  end
+
+  context 'with a non-numeric markup_rate' do
+    let(:markup_rate) { 'abc' }
+
+    it { is_expected.to be_invalid }
+  end
+
+  context 'with a markup_rate greater than 100' do
+    let(:markup_rate) { 110 }
+
+    it { is_expected.to be_invalid }
+  end
+
+  context 'with a markup_rate less than 0' do
+    let(:markup_rate) { -10 }
 
     it { is_expected.to be_invalid }
   end

@@ -19,7 +19,7 @@ RSpec.describe TempToPermCalculator::Journey, type: :model do
 
     it { is_expected.to have_attributes(current_slug: slug) }
     it { is_expected.to have_attributes(previous_slug: nil) }
-    it { is_expected.to have_attributes(next_slug: 'markup-rate') }
+    it { is_expected.to have_attributes(next_slug: 'fee') }
     it { is_expected.to have_attributes(params: {}) }
     it { is_expected.to have_attributes(template: 'temp_to_perm_calculator/journey/contract_start') }
   end
