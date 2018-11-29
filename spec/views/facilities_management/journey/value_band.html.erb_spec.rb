@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'facilities_management/journey/value_band.html.erb' do
-  let(:step) { FacilitiesManagement::Steps::ValueBand.new }
+  let(:step) { FacilitiesManagement::Journey::ValueBand.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) { instance_double('Journey', errors: errors, previous_questions_and_answers: {}) }
 

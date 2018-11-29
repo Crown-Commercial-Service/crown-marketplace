@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Steps::ValueBand, type: :model do
+RSpec.describe FacilitiesManagement::Journey::ValueBand, type: :model do
   subject(:step) { described_class.new(value_band: 'under1_5m') }
 
-  let(:model_key) { 'activemodel.errors.models.facilities_management/steps/value_band' }
+  let(:model_key) { 'activemodel.errors.models.facilities_management/journey/value_band' }
 
   it { is_expected.to be_valid }
 

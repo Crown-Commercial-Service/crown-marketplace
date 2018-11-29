@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Steps::SupplierRegion, type: :model do
+RSpec.describe FacilitiesManagement::Journey::SupplierRegion, type: :model do
   subject(:step) { described_class.new(region_codes: %w[UKC1]) }
 
-  let(:model_key) { 'activemodel.errors.models.facilities_management/steps/supplier_region' }
+  let(:model_key) { 'activemodel.errors.models.facilities_management/journey/supplier_region' }
 
   it { is_expected.to be_valid }
 

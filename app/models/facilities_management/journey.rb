@@ -1,12 +1,10 @@
-require 'facilities_management/steps/value_band'
-
 module FacilitiesManagement
   class Journey < ::Journey
     include Rails.application.routes.url_helpers
 
     def initialize(slug, params)
       paths = JourneyPaths.new(self.class.journey_name)
-      first_step_class = Steps::ValueBand
+      first_step_class = Journey::ValueBand
       super(first_step_class, slug, params, paths)
     end
 
