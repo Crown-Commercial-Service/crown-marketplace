@@ -9,7 +9,8 @@ RSpec.describe TempToPermCalculator::Journey::ContractStart, type: :model do
       hire_date_day: hire_date_day,
       hire_date_month: hire_date_month,
       hire_date_year: hire_date_year,
-      days_per_week: days_per_week
+      days_per_week: days_per_week,
+      day_rate: day_rate
     )
   end
 
@@ -23,11 +24,13 @@ RSpec.describe TempToPermCalculator::Journey::ContractStart, type: :model do
 
   let(:days_per_week) { 5 }
 
+  let(:day_rate) { 500 }
+
   it { is_expected.to be_valid }
 
   describe '#next_step_class' do
-    it 'is DayRate' do
-      expect(step.next_step_class).to eq(TempToPermCalculator::Journey::DayRate)
+    it 'is MarkupRate' do
+      expect(step.next_step_class).to eq(TempToPermCalculator::Journey::MarkupRate)
     end
   end
 
@@ -135,6 +138,18 @@ RSpec.describe TempToPermCalculator::Journey::ContractStart, type: :model do
 
   context 'with a non-numeric days_per_week' do
     let(:days_per_week) { 'abc' }
+
+    it { is_expected.to be_invalid }
+  end
+
+  context 'with a missing day_rate' do
+    let(:day_rate) { nil }
+
+    it { is_expected.to be_invalid }
+  end
+
+  context 'with a non-numeric day_rate' do
+    let(:day_rate) { 'abc' }
 
     it { is_expected.to be_invalid }
   end
