@@ -89,6 +89,19 @@
         <% end %>
       <% end %>
 
+      <%= govuk_form_group_with_optional_error(@journey, :days_per_week) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.days_per_week_question') %>
+          </h1>
+        </legend>
+        <%= display_error(@journey, :days_per_week) %>
+        <span class="govuk-hint">
+          <%= t('.days_per_week_question_hint') %>
+        </span>
+        <%= text_field_tag :days_per_week, params[:days_per_week], class: css_classes_for_input(@journey, :days_per_week, ['govuk-input--width-10']) %>
+      <% end %>
+
       <%= submit_tag t('common.submit'), class: "govuk-button" %>
     <% end %>
   </div>
