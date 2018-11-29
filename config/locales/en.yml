@@ -320,7 +320,7 @@ en:
   temp_to_perm_calculator:
     home:
       fee:
-        header: Fee
+        header: Temp-to-perm fee
         panel_body: Based on the information provided you could be charged
     journey:
       contract_start:
