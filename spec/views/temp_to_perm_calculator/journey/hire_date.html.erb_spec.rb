@@ -127,4 +127,37 @@ RSpec.describe 'temp_to_perm_calculator/journey/hire_date.html.erb' do
       expect(rendered).to have_css('#hire_date_year.govuk-input--error')
     end
   end
+
+  context 'when hire_date_day field was previously set' do
+    before do
+      step.hire_date_day = '01'
+    end
+
+    it 'sets the field to the previously entered value' do
+      render
+      expect(rendered).to have_field('hire_date_day', with: '01')
+    end
+  end
+
+  context 'when hire_date_month field was previously set' do
+    before do
+      step.hire_date_month = '06'
+    end
+
+    it 'sets the field to the previously entered value' do
+      render
+      expect(rendered).to have_field('hire_date_month', with: '06')
+    end
+  end
+
+  context 'when hire_date_year field was previously set' do
+    before do
+      step.hire_date_year = '2018'
+    end
+
+    it 'sets the field to the previously entered value' do
+      render
+      expect(rendered).to have_field('hire_date_year', with: '2018')
+    end
+  end
 end
