@@ -1,7 +1,10 @@
 DFE_SIGNIN_ENABLED = ENV['DFE_SIGNIN_URL'].present?
 
 if DFE_SIGNIN_ENABLED
-  DFE_SIGNIN_URL = URI.parse(ENV.fetch('DFE_SIGNIN_URL'))
+  DFE_SIGNIN_RAW_URL = ENV.fetch('DFE_SIGNIN_URL')
+  # Workaround for env var value including quotes in test environment
+  DFE_SIGNIN_URL = URI.parse(DFE_SIGNIN_RAW_URL.sub(/^\"/, '').sub(/\"$/, ''))
+
   DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES =
     ENV.fetch('DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', '').split(',')
 
