@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AuthController, type: :controller do
+  let(:current_login) { controller.instance_eval { current_login } }
+
   describe 'GET #callback' do
     before do
       request.env['omniauth.auth'] = {
@@ -13,7 +15,7 @@ RSpec.describe AuthController, type: :controller do
 
     it 'stores the email in the session' do
       get :callback
-      expect(subject.current_login.email).to eq('user@example.com')
+      expect(current_login.email).to eq('user@example.com')
     end
 
     it 'redirects to the homepage' do
@@ -24,7 +26,9 @@ RSpec.describe AuthController, type: :controller do
 
   describe 'POST #sign_out' do
     before do
-      subject.current_login = Login::CognitoLogin.new(email: 'user@example.com', extra: {})
+      controller.instance_eval do
+        self.current_login = Login::CognitoLogin.new(email: 'user@example.com', extra: {})
+      end
     end
 
     context 'when signed in using cognito' do
@@ -35,13 +39,15 @@ RSpec.describe AuthController, type: :controller do
 
       it 'deletes the login from the session' do
         post :sign_out
-        expect(subject.current_login).to be_nil
+        expect(current_login).to be_nil
       end
     end
 
     context 'when signed in using dfe signin' do
       before do
-        subject.current_login = Login::DfeLogin.new(email: 'user@example.com', extra: {})
+        controller.instance_eval do
+          self.current_login = Login::DfeLogin.new(email: 'user@example.com', extra: {})
+        end
       end
 
       it 'redirects to the home page' do
@@ -51,7 +57,7 @@ RSpec.describe AuthController, type: :controller do
 
       it 'deletes the login from the session' do
         post :sign_out
-        expect(subject.current_login).to be_nil
+        expect(current_login).to be_nil
       end
     end
   end
