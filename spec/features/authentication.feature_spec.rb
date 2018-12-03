@@ -50,6 +50,16 @@ RSpec.feature 'Authentication', type: :feature do
     expect(page).to have_text('Sign in with beta credentials')
   end
 
+  scenario 'DfE users cannot see other frameworks' do
+    visit '/'
+
+    click_on 'Sign in with DfE Sign-in'
+
+    visit '/management-consultancy'
+
+    expect(page).to have_text('You don’t have permission to view this page')
+  end
+
   scenario 'DfE users cannot see school pages if they are from a for-profit school' do
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       'provider' => 'dfe',
