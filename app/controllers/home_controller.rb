@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  skip_before_action :require_login, only: %i[gateway]
-  require_framework_permission :none
+  require_permission :none, only: :gateway
+  require_permission :login, except: :gateway
 
   def index; end
 

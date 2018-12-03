@@ -1,6 +1,6 @@
 module ManagementConsultancy
   class JourneyController < ::JourneyController
-    require_framework_permission :management_consultancy
+    require_permission :management_consultancy
 
     def journey_class
       Journey

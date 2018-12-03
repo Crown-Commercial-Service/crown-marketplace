@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SuppliersController < ApplicationController
-    require_framework_permission :facilities_management
+    require_permission :facilities_management
 
     def index
       @journey = Journey.new(params[:slug], params)

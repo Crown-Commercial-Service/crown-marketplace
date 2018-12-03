@@ -1,6 +1,5 @@
 class AuthController < ApplicationController
-  skip_before_action :require_login
-  require_framework_permission :none
+  require_permission :none
 
   def callback
     self.current_login = Login.from_omniauth(request.env['omniauth.auth'])

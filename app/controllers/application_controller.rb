@@ -1,13 +1,12 @@
 class ApplicationController < ActionController::Base
   Unauthorized = Class.new(StandardError)
 
-  def self.require_framework_permission(framework, **kwargs)
+  def self.require_permission(framework, **kwargs)
     prepend_before_action(**kwargs) do
       @permission_required = framework
     end
   end
 
-  before_action :require_login
   before_action :verify_permission
 
   rescue_from Unauthorized, with: :deny_access
@@ -26,15 +25,15 @@ class ApplicationController < ActionController::Base
     session.delete :login
   end
 
-  def require_login
-    redirect_to :gateway unless logged_in?
-  end
-
   def verify_permission
     raise 'please specify framework permission required' unless @permission_required
     return if @permission_required == :none
 
-    require_login
+    unless logged_in?
+      redirect_to :gateway
+      return
+    end
+
     return if @permission_required == :logged_in
 
     raise Unauthorized unless current_login.permit?(@permission_required)

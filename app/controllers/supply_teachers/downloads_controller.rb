@@ -2,7 +2,7 @@ require 'csv'
 
 module SupplyTeachers
   class DownloadsController < ApplicationController
-    require_framework_permission :supply_teachers
+    require_permission :supply_teachers
 
     def index
       respond_to do |format|

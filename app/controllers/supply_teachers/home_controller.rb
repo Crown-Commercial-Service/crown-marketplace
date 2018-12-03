@@ -1,6 +1,6 @@
 module SupplyTeachers
   class HomeController < ApplicationController
-    require_framework_permission :supply_teachers
+    require_permission :supply_teachers
 
     def index; end
 

@@ -1,6 +1,6 @@
 module SupplyTeachers
   class BranchesController < ApplicationController
-    require_framework_permission :supply_teachers
+    require_permission :supply_teachers
 
     helper :telephone_number
 
