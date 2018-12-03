@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  require_permission :none, only: :gateway
-  require_permission :login, except: :gateway
+  require_permission :none, only: %i[gateway status]
+  require_permission :login, except: %i[gateway status]
 
   def index; end
 
