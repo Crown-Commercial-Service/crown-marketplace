@@ -1,6 +1,6 @@
 module SupplyTeachers
   class SuppliersController < ApplicationController
-    before_action { require_framework_permission :supply_teachers }
+    require_framework_permission :supply_teachers
 
     def master_vendors
       @back_path = source_journey.current_step_path
