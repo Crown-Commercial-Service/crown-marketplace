@@ -3,19 +3,19 @@ module SpecSupport
     # rubocop:disable RSpec/AnyInstance
     def ensure_logged_in
       allow_any_instance_of(ApplicationController)
-        .to receive(:logged_in?)
-        .and_return(true)
+        .to receive(:current_login)
+        .and_return(Login::CognitoLogin.new(email: 'user@example.com', extra: {}))
     end
 
     def ensure_not_logged_in
       allow_any_instance_of(ApplicationController)
-        .to receive(:logged_in?)
-        .and_return(false)
+        .to receive(:current_login)
+        .and_return(nil)
     end
 
     def permit_framework(name)
-      allow_any_instance_of(ApplicationController)
-        .to receive(:require_framework_permission)
+      allow_any_instance_of(Login::BaseLogin)
+        .to receive(:permit?)
         .with(name)
         .and_return(true)
     end
@@ -27,7 +27,7 @@ RSpec.configure do |config|
   config.include SpecSupport::FakeLogin, type: :controller
   config.include SpecSupport::FakeLogin, type: :request
 
-  config.before(:example, type: :controller) do
+  config.before(:example, type: :controller, auth: true) do
     ensure_logged_in
   end
 

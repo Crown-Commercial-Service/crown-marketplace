@@ -2,12 +2,13 @@ class ApplicationController < ActionController::Base
   Unauthorized = Class.new(StandardError)
 
   def self.require_framework_permission(framework, **kwargs)
-    append_before_action(**kwargs) do
-      require_framework_permission framework
+    prepend_before_action(**kwargs) do
+      @permission_required = framework
     end
   end
 
   before_action :require_sign_in
+  before_action :verify_permission
 
   rescue_from Unauthorized, with: :deny_access
 
@@ -29,9 +30,14 @@ class ApplicationController < ActionController::Base
     redirect_to :gateway unless logged_in?
   end
 
-  def require_framework_permission(framework)
+  def verify_permission
+    raise 'please specify framework permission required' unless @permission_required
+    return if @permission_required == :none
+
     require_sign_in
-    raise Unauthorized unless current_login.permit?(framework)
+    return if @permission_required == :logged_in
+
+    raise Unauthorized unless current_login.permit?(@permission_required)
   end
 
   def logged_in?

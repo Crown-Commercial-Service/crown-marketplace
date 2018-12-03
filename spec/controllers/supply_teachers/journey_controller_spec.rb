@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::JourneyController, type: :controller do
+RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true do
   before do
     permit_framework :supply_teachers
   end

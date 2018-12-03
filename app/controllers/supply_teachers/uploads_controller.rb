@@ -2,6 +2,7 @@ module SupplyTeachers
   class UploadsController < ApplicationController
     skip_before_action :verify_authenticity_token, only: :create
     skip_before_action :require_sign_in, only: :create
+    require_framework_permission :none
 
     if Rails.env.production?
       http_basic_authenticate_with(
