@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Location do
-  subject(:location) { described_class.new('W1A 1AA') }
+  subject(:location) { described_class.new(postcode) }
+
+  let(:postcode) { 'W1A 1AA' }
 
   context 'when the postcode is found' do
     before do
       Geocoder::Lookup::Test.add_stub(
-        'W1A 1AA', [{ 'coordinates' => [51.5149666, -0.119098] }]
+        postcode, [{ 'coordinates' => [51.5149666, -0.119098] }]
       )
     end
 
@@ -24,7 +26,7 @@ RSpec.describe Location do
   context 'with a valid postcode that could not be found' do
     before do
       Geocoder::Lookup::Test.add_stub(
-        'W1A 1AA', [{ 'coordinates' => [] }]
+        postcode, [{ 'coordinates' => [] }]
       )
     end
 
