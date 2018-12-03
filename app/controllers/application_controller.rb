@@ -24,6 +24,12 @@ class ApplicationController < ActionController::Base
     raise Unauthorized unless current_login.permit?(framework)
   end
 
+  def self.require_framework_permission(framework, **kwargs)
+    append_before_action(**kwargs) do
+      require_framework_permission framework
+    end
+  end
+
   def logged_in?
     current_login.present?
   end

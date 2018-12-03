@@ -1,6 +1,6 @@
 module ManagementConsultancy
   class SuppliersController < ApplicationController
-    before_action { require_framework_permission :management_consultancy }
+    require_framework_permission :management_consultancy
 
     helper :telephone_number
 
