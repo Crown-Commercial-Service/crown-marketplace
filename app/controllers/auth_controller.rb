@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-  skip_before_action :require_sign_in
+  skip_before_action :require_login
   require_framework_permission :none
 
   def callback
