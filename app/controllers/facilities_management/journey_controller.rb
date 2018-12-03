@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class JourneyController < ::JourneyController
-    require_framework_permission :facilities_management
+    require_permission :facilities_management
 
     def journey_class
       Journey

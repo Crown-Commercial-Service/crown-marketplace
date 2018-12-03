@@ -1,6 +1,6 @@
 module SupplyTeachers
   class JourneyController < ::JourneyController
-    require_framework_permission :supply_teachers
+    require_permission :supply_teachers
 
     def journey_class
       Journey
