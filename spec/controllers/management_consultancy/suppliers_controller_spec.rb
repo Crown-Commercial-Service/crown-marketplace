@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
+RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, auth: true do
   let(:supplier) { build(:management_consultancy_supplier) }
   let(:suppliers) { [supplier] }
   let(:lot) { ManagementConsultancy::Lot.find_by(number: lot_number) }

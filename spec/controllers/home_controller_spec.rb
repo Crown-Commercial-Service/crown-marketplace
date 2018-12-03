@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe HomeController, type: :controller do
+RSpec.describe HomeController, type: :controller, auth: true do
   describe 'GET gateway' do
     context 'when not signed in' do
       it 'renders the gateway page' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::SuppliersController, type: :controller do
+RSpec.describe FacilitiesManagement::SuppliersController, type: :controller, auth: true do
   let(:supplier) { build(:facilities_management_supplier) }
   let(:suppliers) { [supplier] }
   let(:lot) { FacilitiesManagement::Lot.find_by(number: lot_number) }

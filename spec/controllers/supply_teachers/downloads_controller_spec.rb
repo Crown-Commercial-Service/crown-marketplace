@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::DownloadsController, type: :controller do
+RSpec.describe SupplyTeachers::DownloadsController, type: :controller, auth: true do
   describe 'GET index' do
     context 'when not logged in' do
       before do

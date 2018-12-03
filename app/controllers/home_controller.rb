@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   skip_before_action :require_sign_in, only: %i[gateway]
+  require_framework_permission :none
 
   def index; end
 
