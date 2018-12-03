@@ -38,6 +38,14 @@ RSpec.describe Login::DfeLogin, type: :model do
     }
   end
 
+  let(:whitelisted_email_addresses) { [email] }
+
+  before do
+    stub_const(
+      'DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', whitelisted_email_addresses
+    )
+  end
+
   it { is_expected.to be_a(described_class) }
 
   it { is_expected.to have_attributes(email: email) }
@@ -51,8 +59,20 @@ RSpec.describe Login::DfeLogin, type: :model do
         }
       end
 
-      it 'permits access' do
-        expect(login.permit?(:supply_teachers)).to be true
+      context 'and email address is white-listed' do
+        let(:whitelisted_email_addresses) { [email] }
+
+        it 'permits access' do
+          expect(login.permit?(:supply_teachers)).to be true
+        end
+      end
+
+      context 'and email address is not white-listed' do
+        let(:whitelisted_email_addresses) { [] }
+
+        it 'denies access' do
+          expect(login.permit?(:supply_teachers)).to be false
+        end
       end
     end
 
