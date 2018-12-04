@@ -135,9 +135,6 @@ en:
       management_consultancy_link: Find management consultancy services
       service_title: Crown Marketplace
       supply_teachers_link: Find supply teachers and agency workers
-  journey:
-    error_summary:
-      there_is_a_problem: There is a problem
   journey_step:
     supply_teachers:
       looking_for:
@@ -241,6 +238,8 @@ en:
       one: result
       other: results
   shared:
+    error_summary:
+      there_is_a_problem: There is a problem
     not_permitted:
       details: You don’t have permission to view this page.
       title: Not permitted
