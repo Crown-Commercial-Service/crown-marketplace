@@ -41,12 +41,11 @@ RSpec.feature 'Management consultancy', type: :feature do
   end
 
   scenario 'Buyer wants to buy business services (Lot 1) and pays expenses' do
-    visit_management_consultancy_home
+    visit_management_consultancy_start
 
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
     required_region = Nuts2Region.find_by(code: 'UKC1')
 
-    click_on 'Start now'
     choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
 
@@ -65,12 +64,11 @@ RSpec.feature 'Management consultancy', type: :feature do
   end
 
   scenario 'Buyer wants to buy business services (Lot 1) and does not pay expenses' do
-    visit_management_consultancy_home
+    visit_management_consultancy_start
 
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
     required_region = Nuts2Region.find_by(code: 'UKC1')
 
-    click_on 'Start now'
     choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
 
@@ -87,12 +85,11 @@ RSpec.feature 'Management consultancy', type: :feature do
     expect(page).to have_text('0 suppliers')
   end
   scenario 'Buyer wants to buy procurement, supply chain and commercial services (Lot 2)' do
-    visit_management_consultancy_home
+    visit_management_consultancy_start
 
     required_service = ManagementConsultancy::Service.where(code: '2.1').first
     required_region = Nuts2Region.find_by(code: 'UKC2')
 
-    click_on 'Start now'
     choose 'Lot 2 - procurement, supply chain and commercial services'
     click_on I18n.t('common.submit')
 
@@ -111,12 +108,11 @@ RSpec.feature 'Management consultancy', type: :feature do
   end
 
   scenario 'Buyer wants to buy complex & transformation services (Lot 3)' do
-    visit_management_consultancy_home
+    visit_management_consultancy_start
 
     required_service = ManagementConsultancy::Service.where(code: '3.1').first
     required_region = Nuts2Region.find_by(code: 'UKD1')
 
-    click_on 'Start now'
     choose 'Lot 3 - complex and transformation services'
     click_on I18n.t('common.submit')
 
@@ -135,12 +131,11 @@ RSpec.feature 'Management consultancy', type: :feature do
   end
 
   scenario 'Buyer wants to buy strategic services (Lot 4)' do
-    visit_management_consultancy_home
+    visit_management_consultancy_start
 
     required_service = ManagementConsultancy::Service.where(code: '4.1').first
     required_region = Nuts2Region.find_by(code: 'UKD3')
 
-    click_on 'Start now'
     choose 'Lot 4 - strategic services'
     click_on I18n.t('common.submit')
 

@@ -14,7 +14,7 @@ module Login
     end
 
     def logout_path(routable)
-      routable.homepage_path
+      routable.supply_teachers_gateway_path
     end
 
     def permit?(framework)

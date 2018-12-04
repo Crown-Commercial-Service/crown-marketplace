@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   PERMISSIONS = %i[
     none
-    logged_in
     facilities_management
     management_consultancy
     supply_teachers
@@ -24,6 +23,19 @@ class ApplicationController < ActionController::Base
 
   rescue_from Unauthorized, with: :deny_access
 
+  def gateway_path
+    case session[:last_visited_framework]
+    when 'supply_teachers'
+      supply_teachers_gateway_path
+    when 'management_consultancy'
+      management_consultancy_gateway_path
+    when 'facilities_management'
+      facilities_management_gateway_path
+    else
+      ccs_homepage_url
+    end
+  end
+
   private
 
   def current_login
@@ -43,11 +55,10 @@ class ApplicationController < ActionController::Base
     return if @permission_required == :none
 
     unless logged_in?
-      redirect_to :gateway
+      session[:requested_path] = request.path
+      redirect_to gateway_path
       return
     end
-
-    return if @permission_required == :logged_in
 
     raise Unauthorized unless current_login.permit?(@permission_required)
   end

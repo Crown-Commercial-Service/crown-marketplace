@@ -1,0 +1,14 @@
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">CCS Marketplace private beta</h1>
+
+      <p><%= t('.cmp_support_email_html', link: govuk_email_link(Marketplace.support_email_address, t('.cmp_support_aria_label'))) %></p>
+
+      <p>
+        <%= link_to 'Sign in with beta credentials', cognito_sign_in_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+      </p>
+    </div>
+  </div>
+</div>

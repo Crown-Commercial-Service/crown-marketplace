@@ -1,12 +1,5 @@
 class HomeController < ApplicationController
-  require_permission :none, only: %i[gateway status]
-  require_permission :logged_in, except: %i[gateway status]
-
-  def index; end
-
-  def gateway
-    redirect_to homepage_path if logged_in?
-  end
+  require_permission :none, only: :status
 
   def status
     render layout: false

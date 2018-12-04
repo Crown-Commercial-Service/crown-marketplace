@@ -1,5 +1,7 @@
 module SupplyTeachers
   class HomeController < FrameworkController
+    require_permission :none, only: :index
+
     def index; end
 
     def fee

@@ -9,7 +9,7 @@ module Login
     end
 
     def logout_path(routable)
-      ::Cognito.logout_path(routable.gateway_url)
+      ::Cognito.logout_path(routable.gateway_path)
     end
 
     def permit?(_framework)
