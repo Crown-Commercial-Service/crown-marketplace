@@ -1,5 +1,5 @@
 module ManagementConsultancy
-  class SuppliersController < ApplicationController
+  class SuppliersController < FrameworkController
     require_permission :management_consultancy
 
     helper :telephone_number

@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class UploadsController < ApplicationController
+  class UploadsController < FrameworkController
     skip_before_action :verify_authenticity_token, only: :create
     require_permission :none, only: :create
 

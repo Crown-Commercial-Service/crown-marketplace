@@ -1,5 +1,5 @@
 module ManagementConsultancy
-  class HomeController < ApplicationController
+  class HomeController < FrameworkController
     require_permission :management_consultancy
 
     def index; end

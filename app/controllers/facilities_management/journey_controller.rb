@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class JourneyController < ::ApplicationController
+  class JourneyController < FrameworkController
     include JourneyControllerActions
 
     require_permission :facilities_management
