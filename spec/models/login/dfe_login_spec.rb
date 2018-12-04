@@ -42,7 +42,7 @@ RSpec.describe Login::DfeLogin, type: :model do
 
   before do
     stub_const(
-      'DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', whitelisted_email_addresses
+      'DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', whitelisted_email_addresses.join(',')
     )
   end
 

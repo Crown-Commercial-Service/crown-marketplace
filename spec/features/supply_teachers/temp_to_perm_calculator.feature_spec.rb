@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   scenario 'Buyer completes the calculation' do
-    visit_supply_teachers_home
-    click_on 'Start now'
+    visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
     click_on I18n.t('common.submit')

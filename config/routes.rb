@@ -1,12 +1,10 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  get '/', to: 'home#gateway', as: :gateway
-  get '/start', to: 'home#index', as: :homepage
-
   get '/status', to: 'home#status'
 
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
+    get '/gateway', to: 'gateway#index'
     get '/fee', to: 'home#fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
     get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
@@ -23,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace 'facilities_management', path: 'facilities-management' do
     get '/', to: 'home#index'
+    get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
     resources :uploads, only: :create
     get '/start', to: 'journey#start', as: 'journey_start'
@@ -32,6 +31,7 @@ Rails.application.routes.draw do
 
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
+    get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
     resources :uploads, only: :create
     get '/start', to: 'journey#start', as: 'journey_start'

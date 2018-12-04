@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Cognito authorisation', type: :request do
+  before do
+    ensure_not_logged_in
+  end
+
   describe 'GET /auth/cognito' do
     let(:redirected_to) { URI.parse(response.location) }
     let(:query_params) { Rack::Utils.parse_query(redirected_to.query) }
@@ -96,10 +100,11 @@ RSpec.describe 'Cognito authorisation', type: :request do
                    headers: { 'Content-Type' => 'application/json' })
     end
 
-    it 'logs the user in and redirects to the home page' do
+    it 'logs the user in and redirects to the previously requested page' do
+      get '/management-consultancy/start'
       get '/auth/cognito/callback', params: { code: 'callback-code', state: state }
 
-      expect(response).to redirect_to(homepage_path)
+      expect(response).to redirect_to('/management-consultancy/start')
     end
   end
 end

@@ -89,6 +89,10 @@ en:
       invalid_location: Couldn’t find that postcode
       invalid_postcode: Invalid postcode
   facilities_management:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     journey:
       supplier_region:
         nuts1:
@@ -132,14 +136,9 @@ en:
       - plc
       - LLP
   home:
-    gateway:
-      cmp_support_aria_label: Email us for support with this service
-      cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     index:
       facilities_management_link: Find a facilities management supplier
-      intro_paragraph: 'Use this service to:'
       management_consultancy_link: Find management consultancy services
-      service_title: Crown Marketplace
       supply_teachers_link: Find supply teachers and agency workers
   journey_step:
     supply_teachers:
@@ -171,6 +170,10 @@ en:
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
   management_consultancy:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     journey:
       choose_expenses:
         answer_expenses_not_paid: We will not pay expenses
@@ -281,6 +284,10 @@ en:
         print: Print this page
         results_found_html: "<strong>%{results}</strong> found"
         results_found_with_location_html: "<strong>%{results}</strong> found within <strong>%{range}</strong> of <strong>%{postcode}</strong>."
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     home:
       fee:
         header: Temp-to-perm fee

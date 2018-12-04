@@ -51,8 +51,7 @@ RSpec.feature 'Workers on school payroll', type: :feature do
       location: Geocoding.point(latitude: 53.409189, longitude: -2.9946932)
     )
 
-    visit_supply_teachers_home
-    click_on 'Start now'
+    visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
     click_on I18n.t('common.submit')

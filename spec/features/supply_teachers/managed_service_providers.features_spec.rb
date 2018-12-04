@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Managed service providers', type: :feature do
   scenario 'Answers should not be pre-selected' do
-    visit_supply_teachers_home
-    click_on 'Start now'
+    visit_supply_teachers_start
 
     expect(page).not_to have_checked_field('Yes')
     expect(page).not_to have_checked_field('No')
@@ -23,8 +22,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     create(:master_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.30)
     create(:master_vendor_rate, supplier: supplier, job_type: 'fixed_term', mark_up: 0.40)
 
-    visit_supply_teachers_home
-    click_on 'Start now'
+    visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
@@ -47,8 +45,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     create(:neutral_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.30)
     create(:neutral_vendor_rate, supplier: supplier, job_type: 'daily_fee', daily_fee: 1.23, mark_up: nil)
 
-    visit_supply_teachers_home
-    click_on 'Start now'
+    visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
@@ -65,8 +62,7 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer changes mind about hiring a managed service provider' do
-    visit_supply_teachers_home
-    click_on 'Start now'
+    visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
@@ -81,8 +77,7 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer changes mind about hiring a master vendor managed service' do
-    visit_supply_teachers_home
-    click_on 'Start now'
+    visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
@@ -96,8 +91,7 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer changes mind about hiring a neutral vendor managed service' do
-    visit_supply_teachers_home
-    click_on 'Start now'
+    visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')

@@ -40,6 +40,10 @@ end
 RSpec.configure do |config|
   config.include SpecSupport::StubAuth, type: :feature
 
+  config.before(type: :feature) do
+    stub_const 'DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', 'dfe@example.com'
+  end
+
   config.around(:example, type: :feature) do |example|
     stub_auth
     example.run
