@@ -1,12 +1,22 @@
 class ApplicationController < ActionController::Base
   Unauthorized = Class.new(StandardError)
 
-  def self.require_permission(framework, **kwargs)
+  PERMISSIONS = %i[
+    none
+    logged_in
+    facilities_management
+    management_consultancy
+    supply_teachers
+  ].freeze
+
+  def self.require_permission(label, **kwargs)
+    raise "Invalid permission #{label.inspect}" unless PERMISSIONS.include?(label)
+
     prepend_before_action(**kwargs) do
       # We need to prepend so that it is set before verify_permission;
       # this means that subsequent, overriding calls will be inserted above,
       # so we use ||= to make the first value stick.
-      @permission_required ||= framework
+      @permission_required ||= label
     end
   end
 
