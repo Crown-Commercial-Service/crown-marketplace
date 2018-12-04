@@ -9,6 +9,11 @@ RSpec.describe 'layouts/application.html.erb' do
         true
       end
       helper_method :logged_in?
+
+      def ccs_homepage_url
+        'https://CCSHOMEPAGE'
+      end
+      helper_method :ccs_homepage_url
     end
   end
 
