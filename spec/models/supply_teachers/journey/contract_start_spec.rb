@@ -145,6 +145,12 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
     it { is_expected.to be_invalid }
   end
 
+  context 'with a non-integer days_per_week' do
+    let(:days_per_week) { '1.5' }
+
+    it { is_expected.to be_invalid }
+  end
+
   context 'with a missing day_rate' do
     let(:day_rate) { nil }
 
