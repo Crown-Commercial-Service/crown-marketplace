@@ -1,7 +1,5 @@
 module ManagementConsultancy
   class SuppliersController < FrameworkController
-    require_permission :management_consultancy
-
     helper :telephone_number
 
     def index

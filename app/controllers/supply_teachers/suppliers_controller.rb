@@ -1,7 +1,5 @@
 module SupplyTeachers
   class SuppliersController < FrameworkController
-    require_permission :supply_teachers
-
     def master_vendors
       @back_path = source_journey.current_step_path
       @suppliers = Supplier.with_master_vendor_rates

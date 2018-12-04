@@ -3,7 +3,10 @@ class ApplicationController < ActionController::Base
 
   def self.require_permission(framework, **kwargs)
     prepend_before_action(**kwargs) do
-      @permission_required = framework
+      # We need to prepend so that it is set before verify_permission;
+      # this means that subsequent, overriding calls will be inserted above,
+      # so we use ||= to make the first value stick.
+      @permission_required ||= framework
     end
   end
 
