@@ -1,7 +1,5 @@
 module SupplyTeachers
   class BranchesController < FrameworkController
-    require_permission :supply_teachers
-
     helper :telephone_number
 
     def index
