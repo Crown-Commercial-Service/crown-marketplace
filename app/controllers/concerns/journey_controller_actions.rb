@@ -1,4 +1,10 @@
-class JourneyController < ApplicationController
+module JourneyControllerActions
+  extend ActiveSupport::Concern
+
+  included do
+    helper :journey
+  end
+
   def start
     redirect_to build_journey.first_step_path
   end
@@ -23,10 +29,6 @@ class JourneyController < ApplicationController
     @form_path = @journey.form_path
     @back_path = @journey.previous_step_path
     render @journey.template
-  end
-
-  def journey_class
-    raise ActionController::RoutingError, nil
   end
 
   def build_journey
