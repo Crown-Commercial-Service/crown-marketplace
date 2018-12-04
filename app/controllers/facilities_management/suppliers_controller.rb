@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class SuppliersController < ApplicationController
+  class SuppliersController < FrameworkController
     require_permission :facilities_management
 
     def index

@@ -1,5 +1,5 @@
 module ManagementConsultancy
-  class JourneyController < ::ApplicationController
+  class JourneyController < FrameworkController
     include JourneyControllerActions
 
     require_permission :management_consultancy

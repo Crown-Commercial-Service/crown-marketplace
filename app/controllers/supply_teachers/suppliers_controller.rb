@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class SuppliersController < ApplicationController
+  class SuppliersController < FrameworkController
     require_permission :supply_teachers
 
     def master_vendors

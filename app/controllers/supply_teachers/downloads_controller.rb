@@ -1,7 +1,7 @@
 require 'csv'
 
 module SupplyTeachers
-  class DownloadsController < ApplicationController
+  class DownloadsController < FrameworkController
     require_permission :supply_teachers
 
     def index

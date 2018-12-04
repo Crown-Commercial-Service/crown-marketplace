@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class JourneyController < ::ApplicationController
+  class JourneyController < FrameworkController
     include JourneyControllerActions
 
     require_permission :supply_teachers
