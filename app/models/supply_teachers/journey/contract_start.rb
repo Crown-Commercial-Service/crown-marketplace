@@ -32,7 +32,7 @@ module SupplyTeachers
     attribute :days_per_week
     validates :days_per_week,
               presence: true,
-              numericality: { only_integer: true }
+              numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 7 }
 
     attribute :day_rate
     validates :day_rate, presence: true, numericality: { only_integer: true }
