@@ -35,7 +35,7 @@ RSpec.feature 'Authentication', type: :feature do
 
     click_on 'Sign in with DfE Sign-in'
 
-    visit 'supply-teachers'
+    visit '/supply-teachers'
 
     expect(page).to have_text('Find supply teachers')
   end
