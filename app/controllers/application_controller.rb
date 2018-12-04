@@ -60,4 +60,9 @@ class ApplicationController < ActionController::Base
   def deny_access
     render template: 'shared/not_permitted', status: 403
   end
+
+  def ccs_homepage_url
+    'https://www.crowncommercial.gov.uk/'
+  end
+  helper_method :ccs_homepage_url
 end
