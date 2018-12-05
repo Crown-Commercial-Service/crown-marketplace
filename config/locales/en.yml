@@ -47,6 +47,7 @@ en:
               blank: Enter the number of days worked per week
               greater_than: The number of days worked per week must be between 0 and 5
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
+              not_a_number: The number of days worked per week must be a number
             hire_date_day:
               blank: Enter a valid day for the date from which the worker will be hired
             hire_date_month:
