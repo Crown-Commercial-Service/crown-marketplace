@@ -145,10 +145,22 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
     it { is_expected.to be_invalid }
   end
 
-  context 'with a days_per_week less than 1' do
+  context 'with a negative days_per_week' do
+    let(:days_per_week) { '-1' }
+
+    it { is_expected.to be_invalid }
+  end
+
+  context 'with a zero days_per_week' do
     let(:days_per_week) { '0' }
 
     it { is_expected.to be_invalid }
+  end
+
+  context 'with a fractional days_per_week' do
+    let(:days_per_week) { '0.5' }
+
+    it { is_expected.to be_valid }
   end
 
   context 'with a days_per_week more than 5' do
