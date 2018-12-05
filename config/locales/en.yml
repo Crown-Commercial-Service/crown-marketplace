@@ -273,6 +273,7 @@ en:
           term: Term
           worker_type: Worker type
         inputs_header: Choices used to generate this list
+        mark-up_explanation_html: Results are sorted by mark-up from lowest to highest. Mark-up is the fee the supplier charges for their services. It's a percentage added to the worker's fee by the agency.
         other_radius_html: 'Change this distance to: '
         print: Print this page
         results_found_html: "<strong>%{results}</strong> found"
