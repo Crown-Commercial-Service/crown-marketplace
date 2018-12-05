@@ -1,11 +1,21 @@
 @import "govuk-frontend/components/inset-text/inset-text";
 
-$ccs_inset-text_bg: govuk-colour("grey-4");
-$ccs_inset-text_border: govuk-colour("grey-2");
+$ccs_inset-text_bg_grey: govuk-colour("grey-4");
+$ccs_inset-text_border_grey: govuk-colour("grey-2");
+$ccs_inset-text_bg_green: govuk-colour("green-2");
+$ccs_inset-text_border_green: govuk-colour("green-3");
 
-.govuk-inset-text {
-	background-color:$ccs_inset-text_bg; 
-	border-left:4px solid $ccs_inset-text_border;
+.cmp-inset-text--success {
+	background-color:$ccs_inset-text_bg_green; 
+	border-left:4px solid $ccs_inset-text_border_green;	
+}
+.cmp-inset-text--neutral {
+	background-color:$ccs_inset-text_bg_grey; 
+	border-left:0;
+}
+.cmp-inset-text__body--neutral {
+	font-size: 13px;
+	font-weight: 400;
 }
 .cmp-inset-text__list-item {
 	font-size: 16px;
