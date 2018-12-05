@@ -57,7 +57,7 @@
         <span class="govuk-hint">
           <%= t('.days_per_week_question_hint') %>
         </span>
-        <%= text_field_tag :days_per_week, params[:days_per_week], class: css_classes_for_input(@journey, :days_per_week, ['govuk-input--width-10']) %>
+        <%= text_field_tag :days_per_week, params[:days_per_week], class: css_classes_for_input(@journey, :days_per_week, ['govuk-input--width-3']) %>
       <% end %>
 
       <%= govuk_form_group_with_optional_error(@journey, :day_rate) do %>
