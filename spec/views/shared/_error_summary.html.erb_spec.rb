@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'shared/_error_summary.html.erb' do
-  let(:step) { instance_double('::Journey::Step') }
+  let(:step) { Class.new { include Steppable } }
   let(:errors) { ActiveModel::Errors.new(step) }
 
   before do

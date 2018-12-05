@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::LookingFor
-    include ::Journey::Step
+    include Steppable
 
     attribute :looking_for
     validates :looking_for, inclusion: %w[

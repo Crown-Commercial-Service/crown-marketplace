@@ -1,6 +1,6 @@
 module ManagementConsultancy
   class Journey::ChooseLot
-    include ::Journey::Step
+    include Steppable
 
     attribute :lot
     validates :lot, inclusion: {

@@ -1,4 +1,4 @@
-class Journey
+class GenericJourney
   attr_reader :steps, :params
 
   def initialize(first_step_class, slug, params, paths)

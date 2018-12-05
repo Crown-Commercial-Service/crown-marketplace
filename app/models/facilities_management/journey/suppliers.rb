@@ -1,5 +1,5 @@
 module FacilitiesManagement
   class Journey::Suppliers
-    include ::Journey::Step
+    include Steppable
   end
 end

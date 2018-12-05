@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::AgencyPayrollResults
-    include ::Journey::Step
+    include Steppable
     include Journey::Results
     include ActiveSupport::NumberHelper
 

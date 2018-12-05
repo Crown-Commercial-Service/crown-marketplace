@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class Journey < ::Journey
+  class Journey < GenericJourney
     include Rails.application.routes.url_helpers
 
     def initialize(slug, params)

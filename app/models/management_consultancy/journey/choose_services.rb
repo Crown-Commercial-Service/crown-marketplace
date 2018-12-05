@@ -1,6 +1,6 @@
 module ManagementConsultancy
   class Journey::ChooseServices
-    include ::Journey::Step
+    include Steppable
 
     attribute :services, Array
     validates :services, length: { minimum: 1 }

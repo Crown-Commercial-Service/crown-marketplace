@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::WorkerType
-    include ::Journey::Step
+    include Steppable
 
     attribute :worker_type
     validates :worker_type, inclusion: ['nominated', 'agency_supplied']

@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::ContractStart
-    include ::Journey::Step
+    include Steppable
 
     attribute :contract_start_day
     validates :contract_start_day,
