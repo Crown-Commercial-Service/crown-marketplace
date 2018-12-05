@@ -75,7 +75,7 @@
         </div>
       </div>
       <% if @back_path.present? %>
-        <%= link_to t('.back'), @back_path, class: 'govuk-back-link' %>
+        <%= link_to t('.back'), @back_path, class: 'govuk-back-link ccs-no-print' %>
       <% end %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= yield %>
