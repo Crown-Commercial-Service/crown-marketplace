@@ -5,6 +5,7 @@ module TempToPermCalculator
     WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED = 60
     WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED = 40
     WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE = 20
+    MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK = 5
     DATE_NATIONAL_DEAL_BEGAN = Date.parse('23 Aug 2018')
 
     attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate
@@ -67,7 +68,7 @@ module TempToPermCalculator
     private
 
     def working_day_supplier_fee
-      daily_supplier_fee * (@days_per_week / 5.0)
+      daily_supplier_fee * (@days_per_week / MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK.to_f)
     end
 
     def late_notice_fee_can_be_charged_from
