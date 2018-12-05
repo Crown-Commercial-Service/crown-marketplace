@@ -40,7 +40,7 @@ en:
             contract_start_year:
               blank: Enter a valid year for the date the contract started
             day_rate:
-              blank: Enter a valid number of pounds paid per day
+              blank: Enter the number of pounds charged per day
             days_per_week:
               blank: Enter the number of days worked per week
               greater_than: The number of days worked per week must be between 0 and 5
