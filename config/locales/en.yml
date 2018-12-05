@@ -43,7 +43,7 @@ en:
               blank: Enter a valid number of pounds paid per day
             days_per_week:
               blank: Enter a valid number of days worked per week
-              greater_than_or_equal_to: Enter a number of days between 0 and 5
+              greater_than: Enter a number of days between 0 and 5
               less_than_or_equal_to: Enter a number of days between 0 and 5
             hire_date_day:
               blank: Enter a valid day for the date from which the worker will be hired
