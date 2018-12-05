@@ -1,5 +1,6 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  get '/', to: 'home#index'
   get '/status', to: 'home#status'
 
   namespace 'supply_teachers', path: 'supply-teachers' do

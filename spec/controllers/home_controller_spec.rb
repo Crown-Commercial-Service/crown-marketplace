@@ -5,6 +5,13 @@ RSpec.describe HomeController, type: :controller do
     ensure_not_logged_in
   end
 
+  describe 'GET index' do
+    it 'redirects to the CCS home page' do
+      get :index
+      expect(response).to redirect_to('https://www.crowncommercial.gov.uk/')
+    end
+  end
+
   describe 'GET status' do
     it 'displays status information about the app' do
       get :status
