@@ -157,8 +157,8 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
     it { is_expected.to be_invalid }
   end
 
-  context 'with a days_per_week more than 7' do
-    let(:days_per_week) { '8' }
+  context 'with a days_per_week more than 5' do
+    let(:days_per_week) { '6' }
 
     it { is_expected.to be_invalid }
   end
