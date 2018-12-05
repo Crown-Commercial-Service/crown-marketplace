@@ -1,5 +1,7 @@
 module SupplyTeachers
   class BranchesController < FrameworkController
+    SEARCH_RADIUSES = [50, 25, 10, 5, 1].freeze
+
     helper :telephone_number
 
     def index
@@ -20,7 +22,7 @@ module SupplyTeachers
       step = @journey.current_step
       @location = step.location
       @radius_in_miles = step.radius
-      @alternative_radiuses = [25, 10, 5, 1] - [@radius_in_miles]
+      @alternative_radiuses = SEARCH_RADIUSES - [@radius_in_miles]
       @branches = step.branches
 
       respond_to do |format|
