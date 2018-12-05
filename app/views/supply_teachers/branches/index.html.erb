@@ -2,7 +2,7 @@
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
 
-    <div class="govuk-inset-text">
+    <div class="govuk-inset-text cmp-inset-text--success">
       <h2 class="govuk-heading-s"><%= t('.inputs_header') %></h2>
       <ul class="govuk-list govuk-list--bullet">
         <% @journey.inputs.each do |question_key, answer| %>
@@ -38,6 +38,11 @@
         %>
       <% end %>
     </p>
+
+    <div class="govuk-inset-text cmp-inset-text--neutral">
+      <p class="govuk-body cmp-inset-text__body--neutral"><%= t('.mark-up_explanation_html') %></p>
+    </div>
+
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <% if @branches.any? %>
       <%= render partial: 'branch', collection: @branches %>
