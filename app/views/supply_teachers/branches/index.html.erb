@@ -22,7 +22,7 @@
         %>
         <%= t('.other_radius_html') %>
         <% @alternative_radiuses.each do |radius| %>
-          <span class="st-supplier-page__radius-list-item"><%=
+          <span class="ccs-no-print st-supplier-page__radius-list-item"><%=
             link_to(
               number_to_human(radius, units: :miles),
               supply_teachers_branches_path(@journey.params.merge(radius: radius)),
