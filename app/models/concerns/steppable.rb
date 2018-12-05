@@ -1,4 +1,4 @@
-module Journey::Step
+module Steppable
   extend ActiveSupport::Concern
   include ActiveModel::Validations
   extend ActiveModel::Translation

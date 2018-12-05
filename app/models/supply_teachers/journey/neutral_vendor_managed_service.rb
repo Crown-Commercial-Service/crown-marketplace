@@ -1,6 +1,6 @@
 module SupplyTeachers
   class Journey::NeutralVendorManagedService
-    include ::Journey::Step
+    include Steppable
 
     def inputs
       {

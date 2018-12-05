@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Journey, type: :model do
+RSpec.describe GenericJourney, type: :model do
   subject :journey do
-    Journey.new(first_step_class, slug, params, paths)
+    described_class.new(first_step_class, slug, params, paths)
   end
 
   let(:params) { ActionController::Parameters.new }
   let(:paths) { instance_double('JourneyPaths') }
 
   class SingleStep
-    include ::Journey::Step
+    include Steppable
   end
 
   context 'when created with a single step journey' do
@@ -84,11 +84,11 @@ RSpec.describe Journey, type: :model do
   end
 
   class SecondStep
-    include ::Journey::Step
+    include Steppable
   end
 
   class FirstStep
-    include ::Journey::Step
+    include Steppable
 
     def next_step_class
       SecondStep
@@ -253,11 +253,11 @@ RSpec.describe Journey, type: :model do
   end
 
   class ThirdValidStep
-    include ::Journey::Step
+    include Steppable
   end
 
   class SecondInvalidStep
-    include ::Journey::Step
+    include Steppable
 
     def next_step_class
       ThirdValidStep
@@ -269,7 +269,7 @@ RSpec.describe Journey, type: :model do
   end
 
   class FirstValidStep
-    include ::Journey::Step
+    include Steppable
 
     def next_step_class
       SecondInvalidStep
@@ -310,7 +310,7 @@ RSpec.describe Journey, type: :model do
   end
 
   class FirstStepWithAttributes
-    include ::Journey::Step
+    include Steppable
     attribute :first_question
     def next_step_class
       SecondStepWithAttributes
@@ -318,7 +318,7 @@ RSpec.describe Journey, type: :model do
   end
 
   class SecondStepWithAttributes
-    include ::Journey::Step
+    include Steppable
     attribute :second_question
   end
 

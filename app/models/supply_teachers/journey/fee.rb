@@ -1,5 +1,5 @@
 module SupplyTeachers
   class Journey::Fee
-    include ::Journey::Step
+    include Steppable
   end
 end
