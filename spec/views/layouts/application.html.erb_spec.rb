@@ -51,6 +51,12 @@ RSpec.describe 'layouts/application.html.erb' do
     end
   end
 
+  it 'includes google analytics partial' do
+    stub_template 'shared/_google_analytics.html.erb' => 'GA GA GA GA'
+    render
+    expect(rendered).to match(/GA GA GA GA/)
+  end
+
   it 'renders the page title stored in the locale file' do
     render
     expected = t('layouts.application.title')
