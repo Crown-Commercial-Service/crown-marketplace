@@ -34,11 +34,11 @@ en:
         supply_teachers/journey/contract_start:
           attributes:
             contract_start_day:
-              blank: Enter a valid day for the date the contract started
+              blank: The contract start date must include a day
             contract_start_month:
-              blank: Enter a valid month for the date the contract started
+              blank: The contract start date must include a month
             contract_start_year:
-              blank: Enter a valid year for the date the contract started
+              blank: The contract start date must include a year
             day_rate:
               blank: Enter the number of pounds charged per day
               greater_than: The number of pounds charged per day must be more than 0
@@ -50,11 +50,11 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date_day:
-              blank: Enter a valid day for the date from which the worker will be hired
+              blank: The date the worker will be hired must include a day
             hire_date_month:
-              blank: Enter a valid month for the date from which the worker will be hired
+              blank: The date the worker will be hired must include a month
             hire_date_year:
-              blank: Enter a valid year for the date from which the worker will be hired
+              blank: The date the worker will be hired must include a year
             markup_rate:
               blank: Enter a valid percentage mark-up rate
         supply_teachers/journey/looking_for:
