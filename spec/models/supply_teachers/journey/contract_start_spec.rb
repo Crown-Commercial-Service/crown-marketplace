@@ -181,6 +181,18 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
     it { is_expected.to be_invalid }
   end
 
+  context 'with a negative day_rate' do
+    let(:day_rate) { '-100' }
+
+    it { is_expected.to be_invalid }
+  end
+
+  context 'with a zero day_rate' do
+    let(:day_rate) { '0' }
+
+    it { is_expected.to be_invalid }
+  end
+
   context 'with a non-integer day_rate' do
     let(:day_rate) { '123.50' }
 
