@@ -41,6 +41,7 @@ en:
               blank: Enter a valid year for the date the contract started
             day_rate:
               blank: Enter the number of pounds charged per day
+              greater_than: The number of pounds charged per day must be more than 0
               not_a_number: The number of pounds charged per day must be a number
               not_an_integer: The number of pounds charged per day must be a whole number
             days_per_week:

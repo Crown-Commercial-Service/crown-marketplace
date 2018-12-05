@@ -35,7 +35,7 @@ module SupplyTeachers
               numericality: { greater_than: 0, less_than_or_equal_to: 5 }
 
     attribute :day_rate
-    validates :day_rate, presence: true, numericality: { only_integer: true }
+    validates :day_rate, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
     attribute :markup_rate
     validates :markup_rate,
