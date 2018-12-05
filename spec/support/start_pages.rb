@@ -3,7 +3,7 @@ module SpecSupport
     def visit_supply_teachers_start
       visit '/supply-teachers'
       click_on 'Start now'
-      click_on 'Sign in with beta credentials'
+      click_on 'Sign in with DfE Sign-in'
     end
 
     def visit_facilities_management_start

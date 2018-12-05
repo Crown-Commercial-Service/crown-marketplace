@@ -2,27 +2,27 @@ require 'rails_helper'
 
 RSpec.feature 'Authentication', type: :feature do
   scenario 'Unauthenticated users cannot access protected pages' do
-    visit '/supply-teachers/start'
+    visit '/management-consultancy/start'
 
     expect(page).to have_text('Sign in with beta credentials')
   end
 
   scenario 'Users can sign in using AWS Cognito' do
-    visit '/supply-teachers/start'
+    visit '/management-consultancy/start'
     click_on 'Sign in with beta credentials'
 
     expect(page).not_to have_text('Not permitted')
-    expect(page).to have_text('Find supply teachers')
+    expect(page).to have_text('What kind of management consultancy do you want to procure?')
   end
 
   scenario 'Users signed in using AWS Cognito can sign out' do
-    allow(Cognito).to receive(:logout_path).and_return('/supply-teachers')
+    allow(Cognito).to receive(:logout_path).and_return('/management-consultancy')
 
-    visit '/supply-teachers/start'
+    visit '/management-consultancy/start'
     click_on 'Sign in with beta credentials'
     click_on 'Sign out'
 
-    visit '/supply-teachers/start'
+    visit '/management-consultancy/start'
 
     expect(page).to have_text('Sign in with beta credentials')
   end
