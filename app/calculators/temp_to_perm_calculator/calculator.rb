@@ -8,7 +8,7 @@ module TempToPermCalculator
     MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK = 5
     DATE_NATIONAL_DEAL_BEGAN = Date.parse('23 Aug 2018')
 
-    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate
+    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate, :notice_date
 
     # rubocop:disable Metrics/ParameterLists
     def initialize(

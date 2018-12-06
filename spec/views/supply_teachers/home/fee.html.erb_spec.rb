@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'supply_teachers/home/fee.html.erb' do
+  let(:notice_date) { nil }
+
   let(:calculator) do
     options = {
       fee: 0,
@@ -16,6 +18,7 @@ RSpec.describe 'supply_teachers/home/fee.html.erb' do
       before_national_deal_began?: nil,
       ideal_hire_date: Date.parse('2018-11-26'),
       ideal_notice_date: Date.parse('2018-11-26'),
+      notice_date: notice_date,
       notice_period_required?: nil,
       notice_date_based_on_hire_date: Date.parse('2018-11-26')
     }
@@ -37,8 +40,20 @@ RSpec.describe 'supply_teachers/home/fee.html.erb' do
     context 'when notice period is required' do
       let(:notice_period_required) { true }
 
-      it 'is displayed' do
-        expect(rendered).to match(notice_string)
+      context 'and notice date has not been entered' do
+        let(:notice_date) { nil }
+
+        it 'is displayed' do
+          expect(rendered).to match(notice_string)
+        end
+      end
+
+      context 'and notice date has been entered' do
+        let(:notice_date) { Date.parse('2018-11-26') }
+
+        it 'is not displayed' do
+          expect(rendered).not_to match(notice_string)
+        end
       end
     end
 
