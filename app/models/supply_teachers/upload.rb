@@ -23,26 +23,10 @@ module SupplyTeachers
     end
 
     def self.create_supplier!(data)
-      s = Supplier.create!(
-        id: data['supplier_id'],
-        name: data['supplier_name']
-      )
+      s = Supplier.create!(supplier_attributes(data))
       branches = data.fetch('branches', [])
       branches.each do |branch|
-        contact_name = branch.dig('contacts', 0, 'name')
-        contact_email = branch.dig('contacts', 0, 'email')
-        s.branches.create!(
-          name: branch['branch_name'],
-          town: branch['town'],
-          postcode: branch['postcode'],
-          location: Geocoding.point(
-            latitude: branch['lat'],
-            longitude: branch['lon']
-          ),
-          telephone_number: branch['telephone'],
-          contact_name: contact_name,
-          contact_email: contact_email
-        )
+        s.branches.create!(branch_attributes(branch))
       end
 
       rates = data.fetch('pricing', [])
@@ -53,6 +37,39 @@ module SupplyTeachers
 
       neutral_vendor_rates = data.fetch('neutral_vendor_pricing', [])
       create_supplier_rates!(s, 3, neutral_vendor_rates)
+    end
+
+    def self.supplier_attributes(data)
+      master_vendor_contact = data.fetch('master_vendor_contact', {})
+      neutral_vendor_contact = data.fetch('neutral_vendor_contact', {})
+
+      {
+        id: data['supplier_id'],
+        name: data['supplier_name'],
+        master_vendor_contact_name: master_vendor_contact['name'],
+        master_vendor_telephone_number: master_vendor_contact['telephone'],
+        master_vendor_contact_email: master_vendor_contact['email'],
+        neutral_vendor_contact_name: neutral_vendor_contact['name'],
+        neutral_vendor_telephone_number: neutral_vendor_contact['telephone'],
+        neutral_vendor_contact_email: neutral_vendor_contact['email']
+      }
+    end
+
+    def self.branch_attributes(branch)
+      contact_name = branch.dig('contacts', 0, 'name')
+      contact_email = branch.dig('contacts', 0, 'email')
+      {
+        name: branch['branch_name'],
+        town: branch['town'],
+        postcode: branch['postcode'],
+        location: Geocoding.point(
+          latitude: branch['lat'],
+          longitude: branch['lon']
+        ),
+        telephone_number: branch['telephone'],
+        contact_name: contact_name,
+        contact_email: contact_email
+      }
     end
 
     def self.create_supplier_rates!(supplier, lot_number, rates)

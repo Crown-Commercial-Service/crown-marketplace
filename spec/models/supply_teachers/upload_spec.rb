@@ -44,7 +44,17 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
           'branches' => branches,
           'pricing' => pricing,
           'master_vendor_pricing' => master_vendor_pricing,
-          'neutral_vendor_pricing' => neutral_vendor_pricing
+          'neutral_vendor_pricing' => neutral_vendor_pricing,
+          'master_vendor_contact' => {
+            'name' => 'Mr. Joelle Littel',
+            'telephone' => '0800 966090',
+            'email' => 'shawnna@ohara.biz'
+          },
+          'neutral_vendor_contact' => {
+            'name' => 'Ms. Retta Stehr',
+            'telephone' => '01677 32220',
+            'email' => 'tyree@hoppe.co'
+          }
         }
       ]
     end
@@ -84,6 +94,28 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
         supplier = SupplyTeachers::Supplier.last
         expect(supplier.name).to eq(supplier_name)
+      end
+
+      it 'assigns master vendor contact information' do
+        described_class.create!(suppliers)
+
+        supplier = SupplyTeachers::Supplier.last
+        expect(supplier).to have_attributes(
+          master_vendor_contact_name: 'Mr. Joelle Littel',
+          master_vendor_telephone_number: '0800 966090',
+          master_vendor_contact_email: 'shawnna@ohara.biz'
+        )
+      end
+
+      it 'assigns neutral vendor contact information' do
+        described_class.create!(suppliers)
+
+        supplier = SupplyTeachers::Supplier.last
+        expect(supplier).to have_attributes(
+          neutral_vendor_contact_name: 'Ms. Retta Stehr',
+          neutral_vendor_telephone_number: '01677 32220',
+          neutral_vendor_contact_email: 'tyree@hoppe.co'
+        )
       end
 
       it 'creates a branch associated with supplier' do
