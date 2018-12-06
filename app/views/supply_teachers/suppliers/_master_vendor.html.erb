@@ -5,15 +5,9 @@
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th class="govuk-table__header" scope="col"><strong><%= t('.column1') %></strong></th>
-        <th class="govuk-table__header govuk-table__cell--numeric" scope="col" colspan="3"><strong><%= t('.column2') %></strong></th>
-      </tr>
-    </thead>
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header" scope="col"></th>
-        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['one_week'] %></strong></th>
-        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['twelve_weeks'] %></strong></th>
-        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= SupplyTeachers::Rate::TERMS['more_than_twelve_weeks'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::Rate::TERMS['one_week'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::Rate::TERMS['twelve_weeks'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::Rate::TERMS['more_than_twelve_weeks'] %></strong></th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
