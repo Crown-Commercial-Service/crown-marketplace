@@ -14,7 +14,8 @@ module SupplyTeachers
         days_per_week: previous_step.days_per_week.to_i,
         contract_start_date: previous_step.contract_start_date,
         hire_date: previous_step.hire_date,
-        markup_rate: previous_step.markup_rate.to_f / 100.0
+        markup_rate: previous_step.markup_rate.to_f / 100.0,
+        notice_date: previous_step.notice_date
       )
     end
   end

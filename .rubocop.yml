@@ -70,6 +70,7 @@ Metrics/LineLength:
     Max: 120
     IgnoredPatterns:
         - 'it .* do$'
+        - 'context .* do$'
 
 Metrics/BlockLength:
     Max: 40

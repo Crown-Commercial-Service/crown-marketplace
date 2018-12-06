@@ -44,7 +44,8 @@ RSpec.describe SupplyTeachers::HomeController, type: :controller, auth: true do
         days_per_week: 5,
         contract_start_date: Date.new(2018, 12, 1),
         hire_date: Date.new(2018, 12, 10),
-        markup_rate: 0.305
+        markup_rate: 0.305,
+        notice_date: nil
       )
     end
     # rubocop:enable RSpec/ExampleLength

@@ -42,6 +42,20 @@ module SupplyTeachers
               presence: true,
               numericality: { only_integer: true }
 
+    attribute :notice_date_day
+    validates :notice_date_day,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31
+              }
+    attribute :notice_date_month
+    validates :notice_date_month,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
+              }
+    attribute :notice_date_year
+    validates :notice_date_year,
+              numericality: { allow_blank: true, only_integer: true }
+
     validate :ensure_hire_date_is_after_contract_start_date
 
     def next_step_class
@@ -56,6 +70,12 @@ module SupplyTeachers
 
     def hire_date
       Date.parse("#{hire_date_year}-#{hire_date_month}-#{hire_date_day}")
+    rescue ArgumentError
+      nil
+    end
+
+    def notice_date
+      Date.parse("#{notice_date_year}-#{notice_date_month}-#{notice_date_day}")
     rescue ArgumentError
       nil
     end

@@ -30,7 +30,7 @@ module TempToPermCalculator
 
     def early_hire_fee
       [
-        chargeable_working_days_based_on_early_hire * working_day_supplier_fee,
+        chargeable_working_days * working_day_supplier_fee,
         0
       ].max
     end

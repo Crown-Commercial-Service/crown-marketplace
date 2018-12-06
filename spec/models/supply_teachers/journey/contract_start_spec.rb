@@ -11,7 +11,10 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
       hire_date_year: hire_date_year,
       days_per_week: days_per_week,
       day_rate: day_rate,
-      markup_rate: markup_rate
+      markup_rate: markup_rate,
+      notice_date_day: notice_date_day,
+      notice_date_month: notice_date_month,
+      notice_date_year: notice_date_year
     )
   end
 
@@ -24,6 +27,10 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
   let(:hire_date_day) { 2 }
   let(:hire_date_month) { 1 }
   let(:hire_date_year) { 1970 }
+
+  let(:notice_date_day) { 3 }
+  let(:notice_date_month) { 1 }
+  let(:notice_date_year) { 1970 }
 
   let(:days_per_week) { 5 }
 
@@ -95,6 +102,36 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
 
       it 'returns nil' do
         expect(step.hire_date).to be_nil
+      end
+    end
+  end
+
+  describe '#notice_date' do
+    it 'returns date instance constructed from day, month & year' do
+      expect(step.notice_date).to eq(Date.parse('1970-01-03'))
+    end
+
+    context 'when day is missing' do
+      let(:notice_date_day) { nil }
+
+      it 'returns nil' do
+        expect(step.notice_date).to be_nil
+      end
+    end
+
+    context 'when month is missing' do
+      let(:notice_date_month) { nil }
+
+      it 'returns nil' do
+        expect(step.notice_date).to be_nil
+      end
+    end
+
+    context 'when year is missing' do
+      let(:notice_date_year) { nil }
+
+      it 'returns nil' do
+        expect(step.notice_date).to be_nil
       end
     end
   end
