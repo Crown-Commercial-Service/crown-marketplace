@@ -31,7 +31,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Master vendor managed service')
-    expect(page).to have_css('caption', text: supplier.name)
+    expect(page).to have_css('h2', text: supplier.name)
 
     expect(page).to have_rates(job_type: 'Qualified teacher: non-SEN roles', percentages: [11.0, 12.0, 13.0])
     expect(page).to have_rates(job_type: 'Qualified teacher: SEN roles', percentages: [21.0, 22.0, 23.0])
@@ -54,7 +54,7 @@ RSpec.feature 'Managed service providers', type: :feature do
     click_on I18n.t('common.submit')
 
     expect(page).to have_css('h1', text: 'Neutral vendor managed service')
-    expect(page).to have_css('caption', text: 'neutral-vendor-supplier')
+    expect(page).to have_css('h2', text: 'neutral-vendor-supplier')
 
     expect(page).to have_rates(job_type: 'A specific person', percentages: [30.0])
     expect(page).to have_rates(job_type: 'Neutral vendor managed service provider fee (per day)',

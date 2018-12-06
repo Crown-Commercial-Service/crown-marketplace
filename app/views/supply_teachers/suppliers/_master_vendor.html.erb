@@ -1,7 +1,17 @@
 <div class="master-vendor-record">
+  <h2 class="govuk-heading-m"><%= master_vendor.name %></h2>
+
+  <% if master_vendor.master_vendor_contact_name.present? %>
+    <p class="govuk-body">
+      <strong><%= master_vendor.master_vendor_contact_name %></strong><br />
+      <%= format_telephone_number(master_vendor.master_vendor_telephone_number) %><br />
+      <%= mail_to(master_vendor.master_vendor_contact_email,
+                  master_vendor.master_vendor_contact_email,
+                  'aria-label': "Email #{master_vendor.master_vendor_contact_name} from #{master_vendor.name}") %>
+    </p>
+  <% end %>
 
   <table class="govuk-table">
-    <caption class="govuk-table__caption govuk-!-font-size-27"><%= master_vendor.name %></caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th class="govuk-table__header" scope="col"><strong><%= t('.column1') %></strong></th>
