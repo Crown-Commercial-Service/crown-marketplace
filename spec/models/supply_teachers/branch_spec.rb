@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe SupplyTeachers::Branch, type: :model do
   subject(:branch) { build(:branch) }
 
+  let(:model_key) { 'activerecord.errors.models.supply_teachers/branch' }
+
   it { is_expected.to be_valid }
 
   it 'is not valid if postcode is nil' do
@@ -42,9 +44,11 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
 
     it { is_expected.not_to be_valid }
 
-    it 'has a sensible error message' do
-      branch.validate
-      expect(branch.errors).to include(postcode: include('Invalid postcode'))
+    it 'obtains the error message from an I18n translation' do
+      branch.valid?
+      expect(branch.errors[:postcode]).to include(
+        I18n.t("#{model_key}.attributes.postcode.invalid_postcode")
+      )
     end
   end
 

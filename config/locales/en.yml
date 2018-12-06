@@ -104,12 +104,17 @@ en:
           attributes:
             worker_type:
               inclusion: Select yes if you want an agency to supply the worker
+  activerecord:
+    errors:
+      models:
+        supply_teachers/branch:
+          attributes:
+            postcode:
+              invalid_postcode: Enter a valid postcode
   common:
     submit: Continue
   errors:
     format: "%{message}"
-    messages:
-      invalid_postcode: Invalid postcode
   facilities_management:
     gateway:
       index:
