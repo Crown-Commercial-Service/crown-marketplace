@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'supply_teachers/suppliers/_master_vendor.html.erb' do
+  helper TelephoneNumberHelper
+
   let(:supplier) { build(:supplier) }
   let(:job_types_vs_rates) { {} }
 

@@ -3,8 +3,19 @@
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
     <% SupplyTeachers::Supplier.with_neutral_vendor_rates.each do |supplier| %>
       <div class="neutral-vendor-record">
+        <h2 class="govuk-heading-m"><%= supplier.name %></h2>
+
+        <% if supplier.neutral_vendor_contact_name.present? %>
+          <p class="govuk-body">
+            <strong><%= supplier.neutral_vendor_contact_name %></strong><br />
+            <%= format_telephone_number(supplier.neutral_vendor_telephone_number) %><br />
+            <%= mail_to(supplier.neutral_vendor_contact_email,
+                        supplier.neutral_vendor_contact_email,
+                        'aria-label': "Email #{supplier.neutral_vendor_contact_name} from #{supplier.name}") %>
+          </p>
+        <% end %>
+
         <table class="govuk-table">
-          <caption class="govuk-table__caption govuk-!-font-size-27"><%= supplier.name %></caption>
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="col"><strong><%= t('.column1') %></strong></th>
