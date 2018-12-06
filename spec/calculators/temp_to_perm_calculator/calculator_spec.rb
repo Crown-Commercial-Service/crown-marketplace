@@ -58,9 +58,9 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the fee as the number of chargeable working days between hire date and 60 working days from start of contract' do
         working_days_between_contract_start_and_hire_date = 5
-        chargeable_working_days = 60 - working_days_between_contract_start_and_hire_date
+        chargeable_working_days_based_on_early_hire = 60 - working_days_between_contract_start_and_hire_date
         supplier_rate_per_day = 200 - (200 / (1 + 0.16))
-        expected_fee = chargeable_working_days * supplier_rate_per_day
+        expected_fee = chargeable_working_days_based_on_early_hire * supplier_rate_per_day
 
         expect(calculator.early_hire_fee).to be_within(1e-6).of(expected_fee)
       end
