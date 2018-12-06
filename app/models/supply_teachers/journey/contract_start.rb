@@ -42,6 +42,8 @@ module SupplyTeachers
               presence: true,
               numericality: { only_integer: true }
 
+    validate :ensure_hire_date_is_after_contract_start_date
+
     def next_step_class
       Journey::Fee
     end
@@ -56,6 +58,15 @@ module SupplyTeachers
       Date.parse("#{hire_date_year}-#{hire_date_month}-#{hire_date_day}")
     rescue ArgumentError
       nil
+    end
+
+    private
+
+    def ensure_hire_date_is_after_contract_start_date
+      return if hire_date.blank? || contract_start_date.blank?
+      return if hire_date > contract_start_date
+
+      errors.add(:hire_date, :after_contract_start_date)
     end
   end
 end
