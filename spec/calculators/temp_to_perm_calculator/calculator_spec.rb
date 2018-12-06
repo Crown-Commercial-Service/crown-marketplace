@@ -393,4 +393,52 @@ RSpec.describe TempToPermCalculator::Calculator do
       end
     end
   end
+
+  describe '#chargeable_working_days' do
+    let(:calculator) do
+      described_class.new(
+        day_rate: 200,
+        days_per_week: 5,
+        contract_start_date: Date.parse('Mon 3 Sep 2018'),
+        hire_date: hire_date,
+        markup_rate: 0.16,
+        notice_date: notice_date
+      )
+    end
+
+    context 'when the hire date is within the first 40 working days' do
+      context 'when there are 25 days owed for early hire and 20 days owed for lack of notice' do
+        let(:hire_date) { Date.parse('Mon 22 Oct') }
+        let(:notice_date) { hire_date }
+
+        it 'does not include any days due to lack of notice' do
+          expect(calculator.chargeable_working_days).to eq(25)
+        end
+      end
+    end
+
+    context 'when the hire date is after the first 40 working days' do
+      context 'and there are 5 days owed for early hire and 5 days owed for lack of notice' do
+        let(:hire_date) { Date.parse('Mon 19 Nov') }
+        let(:notice_date) { Date.parse('Mon 29 Oct') }
+
+        it 'adds the chargeable days for early hire fee and chargeable days for lack of notice' do
+          expect(calculator.chargeable_working_days_based_on_early_hire).to eq(5)
+          expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(5)
+          expect(calculator.chargeable_working_days).to eq(10)
+        end
+      end
+
+      context 'and there are 15 days owed for early hire and 15 days owed for lack of notice' do
+        let(:hire_date) { Date.parse('Mon 5 Nov') }
+        let(:notice_date) { Date.parse('Mon 29 Oct') }
+
+        it 'caps the chargeable days at 20' do
+          expect(calculator.chargeable_working_days_based_on_early_hire).to eq(15)
+          expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(15)
+          expect(calculator.chargeable_working_days).to eq(20)
+        end
+      end
+    end
+  end
 end
