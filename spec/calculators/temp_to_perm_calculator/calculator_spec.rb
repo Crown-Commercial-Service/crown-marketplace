@@ -1,13 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe TempToPermCalculator::Calculator do
+  let(:start_of_1st_week)  { Date.parse('Mon 3 Sep 2018') }
+  let(:start_of_2nd_week)  { Date.parse('Mon 10 Sep 2018') }
+  let(:start_of_3rd_week)  { Date.parse('Mon 17 Sep 2018') }
+  let(:start_of_4th_week)  { Date.parse('Mon 24 Sep 2018') }
+  let(:start_of_5th_week)  { Date.parse('Mon 1 Oct 2018') }
+  let(:start_of_6th_week)  { Date.parse('Mon 8 Oct 2018') }
+  let(:start_of_7th_week)  { Date.parse('Mon 15 Oct 2018') }
+  let(:start_of_8th_week)  { Date.parse('Mon 22 Oct 2018') }
+  let(:start_of_9th_week)  { Date.parse('Mon 29 Oct 2018') }
+  let(:start_of_10th_week) { Date.parse('Mon 5 Nov 2018') }
+  let(:start_of_11th_week) { Date.parse('Mon 12 Nov 2018') }
+  let(:start_of_12th_week) { Date.parse('Mon 19 Nov 2018') }
+  let(:start_of_13th_week) { Date.parse('Mon 26 Nov 2018') }
+
   context 'when the school hires the worker within the first 8 weeks (40 working days) of their contract' do
     let(:notice_date) { nil }
     let(:calculator) do
-      start_of_4th_week = Date.parse('Mon 24 Sep 2018')
-
       described_class.new(
-        contract_start_date: Date.parse('Mon 3 Sep 2018'),
+        contract_start_date: start_of_1st_week,
         days_per_week: 5,
         day_rate: 110,
         markup_rate: 0.10,
@@ -49,12 +61,10 @@ RSpec.describe TempToPermCalculator::Calculator do
     end
 
     it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
-      start_of_13th_week = Date.parse('Mon 26 Nov 2018')
       expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
     end
 
     it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
-      start_of_9th_week = Date.parse('Mon 29 Oct 2018')
       expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
     end
 
