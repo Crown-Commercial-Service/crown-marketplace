@@ -2,7 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
   var cssClassToClickPath = {
     'ga-crown-logo': 'crown_logo',
     'ga-feedback-mailto': 'feedback',
-    'ga-support-mailto': 'support'
+    'ga-support-mailto': 'support',
+    'ga-print-link': 'print',
+    'ga-download-shortlist': 'shortlist_download',
+    'ga-download-calculator': 'calculator_download'
   };
 
   if (window.gaTrackingId) {
