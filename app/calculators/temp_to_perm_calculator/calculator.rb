@@ -35,6 +35,17 @@ module TempToPermCalculator
       ].max
     end
 
+    def chargeable_working_days
+      if notice_period_required?
+        [
+          chargeable_working_days_based_on_early_hire + chargeable_working_days_based_on_lack_of_notice,
+          20
+        ].min
+      else
+        chargeable_working_days_based_on_early_hire
+      end
+    end
+
     def chargeable_working_days_based_on_early_hire
       WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED - working_days
     end
