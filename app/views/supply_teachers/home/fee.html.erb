@@ -8,7 +8,7 @@
         <div class="govuk-panel__body">
           <%= t('.panel_body') %>
           <br><strong><%= number_to_currency(@calculator.fee) %></strong>
-          <% if @calculator.notice_period_required? %>
+          <% if @calculator.notice_period_required? && @calculator.notice_date.blank? %>
             <br>
             Provided you give notice on or before <%= @calculator.notice_date_based_on_hire_date.to_formatted_s(:long) %>
           <% end %>
