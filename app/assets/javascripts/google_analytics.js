@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     'ga-crown-logo': 'crown_logo',
     'ga-feedback-mailto': 'feedback',
     'ga-support-mailto': 'support',
+    'ga-auth-cognito': 'cognito_login',
+    'ga-auth-dfe': 'dfe_login',
     'ga-print-link': 'print',
     'ga-download-shortlist': 'shortlist_download',
     'ga-download-calculator': 'calculator_download'
