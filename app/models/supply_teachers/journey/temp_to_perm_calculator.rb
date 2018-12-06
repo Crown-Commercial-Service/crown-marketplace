@@ -2,16 +2,16 @@ module SupplyTeachers
   class Journey::TempToPermCalculator
     include Steppable
 
-    attribute :contract_start_day
-    validates :contract_start_day,
+    attribute :contract_start_date_day
+    validates :contract_start_date_day,
               presence: true,
               numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31 }
-    attribute :contract_start_month
-    validates :contract_start_month,
+    attribute :contract_start_date_month
+    validates :contract_start_date_month,
               presence: true,
               numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12 }
-    attribute :contract_start_year
-    validates :contract_start_year,
+    attribute :contract_start_date_year
+    validates :contract_start_date_year,
               presence: true,
               numericality: { only_integer: true }
 
@@ -63,7 +63,7 @@ module SupplyTeachers
     end
 
     def contract_start_date
-      Date.parse("#{contract_start_year}-#{contract_start_month}-#{contract_start_day}")
+      Date.parse("#{contract_start_date_year}-#{contract_start_date_month}-#{contract_start_date_day}")
     rescue ArgumentError
       nil
     end

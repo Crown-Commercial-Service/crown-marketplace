@@ -39,14 +39,14 @@ RSpec.describe 'supply_teachers/journey/temp_to_perm_calculator.html.erb' do
     expect(view.content_for(:page_title_prefix)).to be_nil
   end
 
-  context 'when the journey has an error in contract_start_day' do
+  context 'when the journey has an error in contract_start_date_day' do
     before do
-      errors.add(:contract_start_day, 'error-message')
+      errors.add(:contract_start_date_day, 'error-message')
     end
 
     it 'links the fieldset to the error message' do
       render
-      expect(rendered).to have_css('fieldset[aria-describedby="contract_start_day-error"]')
+      expect(rendered).to have_css('fieldset[aria-describedby="contract_start_date_day-error"]')
     end
 
     it 'displays the error summary' do
@@ -61,12 +61,12 @@ RSpec.describe 'supply_teachers/journey/temp_to_perm_calculator.html.erb' do
 
     it 'adds the message to the field with the error' do
       render
-      expect(rendered).to have_css('#contract_start_day-error.govuk-error-message', text: 'error-message')
+      expect(rendered).to have_css('#contract_start_date_day-error.govuk-error-message', text: 'error-message')
     end
 
     it 'adds error class to the field in order to highlight it' do
       render
-      expect(rendered).to have_css('#contract_start_day.govuk-input--error')
+      expect(rendered).to have_css('#contract_start_date_day.govuk-input--error')
     end
 
     it 'adds an error prefix to the page title' do
@@ -74,57 +74,57 @@ RSpec.describe 'supply_teachers/journey/temp_to_perm_calculator.html.erb' do
       expect(view.content_for(:page_title_prefix)).to match(t('layouts.application.error_prefix'))
     end
 
-    context 'and the journey has an error in contract_start_month' do
+    context 'and the journey has an error in contract_start_date_month' do
       before do
-        errors.add(:contract_start_month, 'error-message')
+        errors.add(:contract_start_date_month, 'error-message')
       end
 
-      it 'still links the fieldset to the contract_start_day error message' do
+      it 'still links the fieldset to the contract_start_date_day error message' do
         render
-        expect(rendered).to have_css('fieldset[aria-describedby~="contract_start_day-error"]')
+        expect(rendered).to have_css('fieldset[aria-describedby~="contract_start_date_day-error"]')
       end
 
-      it 'also links the fieldset to the contract_start_month error message' do
+      it 'also links the fieldset to the contract_start_date_month error message' do
         render
-        expect(rendered).to have_css('fieldset[aria-describedby~="contract_start_month-error"]')
+        expect(rendered).to have_css('fieldset[aria-describedby~="contract_start_date_month-error"]')
       end
 
-      it 'adds the message to the contract_start_month field' do
+      it 'adds the message to the contract_start_date_month field' do
         render
-        expect(rendered).to have_css('#contract_start_month-error.govuk-error-message', text: 'error-message')
+        expect(rendered).to have_css('#contract_start_date_month-error.govuk-error-message', text: 'error-message')
       end
 
-      it 'still adds error class to the contract_start_day field to highlight it' do
+      it 'still adds error class to the contract_start_date_day field to highlight it' do
         render
-        expect(rendered).to have_css('#contract_start_day.govuk-input--error')
+        expect(rendered).to have_css('#contract_start_date_day.govuk-input--error')
       end
 
-      it 'also adds error class to the contract_start_month field to highlight it' do
+      it 'also adds error class to the contract_start_date_month field to highlight it' do
         render
-        expect(rendered).to have_css('#contract_start_month.govuk-input--error')
+        expect(rendered).to have_css('#contract_start_date_month.govuk-input--error')
       end
     end
   end
 
-  context 'when the journey has an error in contract_start_month' do
+  context 'when the journey has an error in contract_start_date_month' do
     before do
-      errors.add(:contract_start_month, 'error-message')
+      errors.add(:contract_start_date_month, 'error-message')
     end
 
-    it 'adds error class to the contract_start_month field to highlight it' do
+    it 'adds error class to the contract_start_date_month field to highlight it' do
       render
-      expect(rendered).to have_css('#contract_start_month.govuk-input--error')
+      expect(rendered).to have_css('#contract_start_date_month.govuk-input--error')
     end
   end
 
-  context 'when the journey has an error in contract_start_year' do
+  context 'when the journey has an error in contract_start_date_year' do
     before do
-      errors.add(:contract_start_year, 'error-message')
+      errors.add(:contract_start_date_year, 'error-message')
     end
 
-    it 'adds error class to the contract_start_year field to highlight it' do
+    it 'adds error class to the contract_start_date_year field to highlight it' do
       render
-      expect(rendered).to have_css('#contract_start_year.govuk-input--error')
+      expect(rendered).to have_css('#contract_start_date_year.govuk-input--error')
     end
   end
 
@@ -217,36 +217,36 @@ RSpec.describe 'supply_teachers/journey/temp_to_perm_calculator.html.erb' do
     end
   end
 
-  context 'when contract_start_day field was previously set' do
+  context 'when contract_start_date_day field was previously set' do
     before do
-      step.contract_start_day = '01'
+      step.contract_start_date_day = '01'
     end
 
     it 'sets the field to the previously entered value' do
       render
-      expect(rendered).to have_field('contract_start_day', with: '01')
+      expect(rendered).to have_field('contract_start_date_day', with: '01')
     end
   end
 
-  context 'when contract_start_month field was previously set' do
+  context 'when contract_start_date_month field was previously set' do
     before do
-      step.contract_start_month = '06'
+      step.contract_start_date_month = '06'
     end
 
     it 'sets the field to the previously entered value' do
       render
-      expect(rendered).to have_field('contract_start_month', with: '06')
+      expect(rendered).to have_field('contract_start_date_month', with: '06')
     end
   end
 
-  context 'when contract_start_year field was previously set' do
+  context 'when contract_start_date_year field was previously set' do
     before do
-      step.contract_start_year = '2018'
+      step.contract_start_date_year = '2018'
     end
 
     it 'sets the field to the previously entered value' do
       render
-      expect(rendered).to have_field('contract_start_year', with: '2018')
+      expect(rendered).to have_field('contract_start_date_year', with: '2018')
     end
   end
 
