@@ -17,7 +17,7 @@
           <% if rates.length == 1 %>
             <% 3.times do %>
               <td class="govuk-table__cell govuk-table__cell--numeric master-vendor-record__markup-column"><%= number_to_percentage(rates.first.mark_up * 100, precision: 1) %></td>
-            <% end %>          
+            <% end %>
           <% elsif rates.length == 3 %>
             <% rates.each do |rate| %>
               <td class="govuk-table__cell govuk-table__cell--numeric"><%= number_to_percentage(rate.mark_up * 100, precision: 1) %></td>
