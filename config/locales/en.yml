@@ -76,7 +76,7 @@ en:
               not_a_number: The year the worker will be hired must be a number
               not_an_integer: The year the worker will be hired must be a whole number
             markup_rate:
-              blank: Enter a valid percentage mark-up rate
+              blank: Enter a mark-up percentage
         supply_teachers/journey/looking_for:
           attributes:
             looking_for:
