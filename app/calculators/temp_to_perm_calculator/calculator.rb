@@ -28,7 +28,7 @@ module TempToPermCalculator
     end
     # rubocop:enable Metrics/ParameterLists
 
-    def early_hire_fee
+    def fee
       [
         chargeable_working_days * working_day_supplier_fee,
         0

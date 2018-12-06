@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'supply_teachers/home/fee.html.erb' do
   let(:calculator) do
     options = {
-      early_hire_fee: 0,
+      fee: 0,
       daily_supplier_fee: 0,
       markup_rate: 0,
       day_rate: 0,
