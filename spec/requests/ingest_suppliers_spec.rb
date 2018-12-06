@@ -9,7 +9,7 @@ RSpec.describe 'Ingest suppliers', type: :request do
           'supplier_name' => Faker::Company.unique.name,
           'branches' => [
             {
-              'postcode' => Faker::Address.unique.postcode,
+              'postcode' => valid_fake_postcode,
               'lat' => Faker::Address.unique.latitude,
               'lon' => Faker::Address.unique.longitude,
               'telephone' => Faker::PhoneNumber.unique.phone_number,
@@ -21,7 +21,7 @@ RSpec.describe 'Ingest suppliers', type: :request do
               ]
             },
             {
-              'postcode' => Faker::Address.unique.postcode,
+              'postcode' => valid_fake_postcode,
               'lat' => Faker::Address.unique.latitude,
               'lon' => Faker::Address.unique.longitude,
               'telephone' => Faker::PhoneNumber.unique.phone_number,
@@ -38,7 +38,7 @@ RSpec.describe 'Ingest suppliers', type: :request do
           'supplier_name' => Faker::Company.unique.name,
           'branches' => [
             {
-              'postcode' => Faker::Address.unique.postcode,
+              'postcode' => valid_fake_postcode,
               'lat' => Faker::Address.unique.latitude,
               'lon' => Faker::Address.unique.longitude,
               'telephone' => Faker::PhoneNumber.unique.phone_number,

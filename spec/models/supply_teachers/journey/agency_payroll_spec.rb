@@ -11,7 +11,7 @@ RSpec.describe SupplyTeachers::Journey::AgencyPayroll, type: :model do
 
   let(:model_key) { 'activemodel.errors.models.supply_teachers/journey/agency_payroll' }
 
-  let(:postcode) { Faker::Address.unique.postcode }
+  let(:postcode) { valid_fake_postcode }
 
   before do
     Geocoder::Lookup::Test.add_stub(
