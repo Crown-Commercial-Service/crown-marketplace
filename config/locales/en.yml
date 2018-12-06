@@ -329,7 +329,7 @@ en:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     home:
-      fee:
+      temp_to_perm_fee:
         header: Temp-to-perm fee
         panel_body: Based on the information provided you could be charged
     journey:

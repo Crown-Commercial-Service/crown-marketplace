@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
-    get '/fee', to: 'home#fee'
+    get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
     get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
     get '/agency-payroll-results', to: 'branches#index', slug: 'agency-payroll-results'

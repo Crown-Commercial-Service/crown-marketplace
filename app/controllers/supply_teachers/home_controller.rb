@@ -4,7 +4,7 @@ module SupplyTeachers
 
     def index; end
 
-    def fee
+    def temp_to_perm_fee
       journey = Journey.new(params[:slug], params)
       previous_step = journey.previous_step
       @back_path = journey.previous_step_path

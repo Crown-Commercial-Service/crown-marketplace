@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class Journey::Fee
+  class Journey::TempToPermFee
     include Steppable
   end
 end
