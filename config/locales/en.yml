@@ -321,6 +321,7 @@ en:
       contract_start:
         contract_start_question: When did the worker's current contract start?
         contract_start_question_hint: For example, 31 3 1980
+        day_rate_icon: "£"
         day_rate_question: What does the agency charge you per day for the worker?
         day_rate_question_hint: An amount in pounds. For example, 150
         days_per_week_question: How many days per week is the worker contracted for?
