@@ -7,9 +7,9 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
     click_on I18n.t('common.submit')
 
-    fill_in 'contract_start_day', with: 12
-    fill_in 'contract_start_month', with: 11
-    fill_in 'contract_start_year', with: 2018
+    fill_in 'contract_start_date_day', with: 12
+    fill_in 'contract_start_date_month', with: 11
+    fill_in 'contract_start_date_year', with: 2018
 
     fill_in 'hire_date_day', with: 19
     fill_in 'hire_date_month', with: 11
@@ -32,9 +32,9 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
     click_on I18n.t('common.submit')
 
-    fill_in 'contract_start_day', with: 3
-    fill_in 'contract_start_month', with: 9
-    fill_in 'contract_start_year', with: 2018
+    fill_in 'contract_start_date_day', with: 3
+    fill_in 'contract_start_date_month', with: 9
+    fill_in 'contract_start_date_year', with: 2018
 
     fill_in 'hire_date_day', with: 26
     fill_in 'hire_date_month', with: 11

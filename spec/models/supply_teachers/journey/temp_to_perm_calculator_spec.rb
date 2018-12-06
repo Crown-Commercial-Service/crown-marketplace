@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   subject(:step) do
     described_class.new(
-      contract_start_day: contract_start_day,
-      contract_start_month: contract_start_month,
-      contract_start_year: contract_start_year,
+      contract_start_date_day: contract_start_date_day,
+      contract_start_date_month: contract_start_date_month,
+      contract_start_date_year: contract_start_date_year,
       hire_date_day: hire_date_day,
       hire_date_month: hire_date_month,
       hire_date_year: hire_date_year,
@@ -20,9 +20,9 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
   let(:model_key) { 'activemodel.errors.models.supply_teachers/journey/temp_to_perm_calculator' }
 
-  let(:contract_start_day) { 1 }
-  let(:contract_start_month) { 1 }
-  let(:contract_start_year) { 1970 }
+  let(:contract_start_date_day) { 1 }
+  let(:contract_start_date_month) { 1 }
+  let(:contract_start_date_year) { 1970 }
 
   let(:hire_date_day) { 2 }
   let(:hire_date_month) { 1 }
@@ -52,7 +52,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     end
 
     context 'when day is missing' do
-      let(:contract_start_day) { nil }
+      let(:contract_start_date_day) { nil }
 
       it 'returns nil' do
         expect(step.contract_start_date).to be_nil
@@ -60,7 +60,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     end
 
     context 'when month is missing' do
-      let(:contract_start_month) { nil }
+      let(:contract_start_date_month) { nil }
 
       it 'returns nil' do
         expect(step.contract_start_date).to be_nil
@@ -68,7 +68,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     end
 
     context 'when day is missing' do
-      let(:contract_start_year) { nil }
+      let(:contract_start_date_year) { nil }
 
       it 'returns nil' do
         expect(step.contract_start_date).to be_nil
@@ -136,50 +136,50 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     end
   end
 
-  context 'with a missing contract_start_year' do
-    let(:contract_start_year) { nil }
+  context 'with a missing contract_start_date_year' do
+    let(:contract_start_date_year) { nil }
 
     it { is_expected.to be_invalid }
   end
 
-  context 'with a missing contract_start_month' do
-    let(:contract_start_month) { nil }
+  context 'with a missing contract_start_date_month' do
+    let(:contract_start_date_month) { nil }
 
     it { is_expected.to be_invalid }
   end
 
-  context 'with a missing contract_start_day' do
-    let(:contract_start_day) { nil }
+  context 'with a missing contract_start_date_day' do
+    let(:contract_start_date_day) { nil }
 
     it { is_expected.to be_invalid }
   end
 
-  context 'with a non-numeric contract_start_year' do
-    let(:contract_start_year) { 'abc' }
+  context 'with a non-numeric contract_start_date_year' do
+    let(:contract_start_date_year) { 'abc' }
 
     it { is_expected.to be_invalid }
   end
 
-  context 'with a non-numeric contract_start_month' do
-    let(:contract_start_month) { 'abc' }
+  context 'with a non-numeric contract_start_date_month' do
+    let(:contract_start_date_month) { 'abc' }
 
     it { is_expected.to be_invalid }
   end
 
-  context 'with a non-numeric contract_start_day' do
-    let(:contract_start_day) { 'abc' }
+  context 'with a non-numeric contract_start_date_day' do
+    let(:contract_start_date_day) { 'abc' }
 
     it { is_expected.to be_invalid }
   end
 
-  context 'with a nonsense contract_start_day' do
-    let(:contract_start_day) { 123 }
+  context 'with a nonsense contract_start_date_day' do
+    let(:contract_start_date_day) { 123 }
 
     it { is_expected.to be_invalid }
   end
 
-  context 'with a nonsense contract_start_month' do
-    let(:contract_start_month) { 13 }
+  context 'with a nonsense contract_start_date_month' do
+    let(:contract_start_date_month) { 13 }
 
     it { is_expected.to be_invalid }
   end
@@ -327,9 +327,9 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     let(:hire_date_month) { '1' }
     let(:hire_date_year) { '2018' }
 
-    let(:contract_start_day) { '10' }
-    let(:contract_start_month) { '1' }
-    let(:contract_start_year) { '2018' }
+    let(:contract_start_date_day) { '10' }
+    let(:contract_start_date_month) { '1' }
+    let(:contract_start_date_year) { '2018' }
 
     it { is_expected.to be_invalid }
 

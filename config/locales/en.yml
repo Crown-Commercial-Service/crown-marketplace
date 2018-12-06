@@ -53,19 +53,19 @@ en:
               invalid_location: Enter a valid postcode
         supply_teachers/journey/temp_to_perm_calculator:
           attributes:
-            contract_start_day:
+            contract_start_date_day:
               blank: The contract start date must include a day
               greater_than_or_equal_to: The day the contract started must be between 1 and 31
               less_than_or_equal_to: The day the contract started must be between 1 and 31
               not_a_number: The day the contract started must be a number
               not_an_integer: The day the contract started must be a whole number
-            contract_start_month:
+            contract_start_date_month:
               blank: The contract start date must include a month
               greater_than_or_equal_to: The month the contract started must be between 1 and 12
               less_than_or_equal_to: The month the contract started must be between 1 and 12
               not_a_number: The month the contract started must be a number
               not_an_integer: The month the contract started must be a whole number
-            contract_start_year:
+            contract_start_date_year:
               blank: The contract start date must include a year
               not_a_number: The year the contract started must be a number
               not_an_integer: The year the contract started must be a whole number
