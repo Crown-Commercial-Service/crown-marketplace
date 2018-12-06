@@ -70,7 +70,10 @@
         <span class="govuk-hint">
           <%= t('.day_rate_question_hint') %>
         </span>
-        <%= text_field_tag :day_rate, params[:day_rate], class: css_classes_for_input(@journey, :day_rate, ['govuk-input--width-10']) %>
+        <div class="calculator-form__day-rate">
+          <%= text_field_tag :day_rate, params[:day_rate], class: css_classes_for_input(@journey, :day_rate, ['govuk-input--width-10 calculator-form__day-rate-input']) %>
+          <i class="govuk-body calculator-form__day-rate-icon"><%= t('.day_rate_icon') %></i>
+        </div>
       <% end %>
 
       <%= govuk_form_group_with_optional_error(@journey, :markup_rate) do %>
