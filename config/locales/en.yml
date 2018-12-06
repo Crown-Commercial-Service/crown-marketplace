@@ -109,7 +109,6 @@ en:
   errors:
     format: "%{message}"
     messages:
-      invalid_location: Couldn’t find that postcode
       invalid_postcode: Invalid postcode
   facilities_management:
     gateway:
