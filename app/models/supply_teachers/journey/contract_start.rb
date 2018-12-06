@@ -45,5 +45,17 @@ module SupplyTeachers
     def next_step_class
       Journey::Fee
     end
+
+    def contract_start_date
+      Date.new(contract_start_year.to_i, contract_start_month.to_i, contract_start_day.to_i)
+    rescue ArgumentError
+      nil
+    end
+
+    def hire_date
+      Date.new(hire_date_year.to_i, hire_date_month.to_i, hire_date_day.to_i)
+    rescue ArgumentError
+      nil
+    end
   end
 end

@@ -16,6 +16,7 @@ RSpec.describe SupplyTeachers::HomeController, type: :controller, auth: true do
   describe 'GET fee' do
     def request
       get :fee, params: {
+        looking_for: 'calculate_temp_to_perm_fee',
         day_rate: '600',
         days_per_week: '5',
         contract_start_year: '2018',
