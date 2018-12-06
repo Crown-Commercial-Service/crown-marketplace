@@ -269,7 +269,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #answer for school-postcode' do
-    let(:postcode) { Faker::Address.unique.postcode }
+    let(:postcode) { valid_fake_postcode }
 
     before do
       Geocoder::Lookup::Test.add_stub(
