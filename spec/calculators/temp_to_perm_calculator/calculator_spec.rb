@@ -44,7 +44,7 @@ RSpec.describe TempToPermCalculator::Calculator do
     end
   end
 
-  describe '#early_hire_fee' do
+  describe '#fee' do
     context 'when the school hires the worker within the first 40 days of the contract' do
       let(:calculator) do
         described_class.new(
@@ -62,7 +62,7 @@ RSpec.describe TempToPermCalculator::Calculator do
         supplier_rate_per_day = 200 - (200 / (1 + 0.16))
         expected_fee = chargeable_working_days_based_on_early_hire * supplier_rate_per_day
 
-        expect(calculator.early_hire_fee).to be_within(1e-6).of(expected_fee)
+        expect(calculator.fee).to be_within(1e-6).of(expected_fee)
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the early hire fee based on early hire fee and lack of notice fee' do
         expect(calculator.chargeable_working_days).to eq(20)
-        expect(calculator.early_hire_fee).to be_within(1e-6).of(200)
+        expect(calculator.fee).to be_within(1e-6).of(200)
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe TempToPermCalculator::Calculator do
       end
 
       it 'calculates the early hire fee as 0' do
-        expect(calculator.early_hire_fee).to eq(0)
+        expect(calculator.fee).to eq(0)
       end
     end
 
@@ -112,7 +112,7 @@ RSpec.describe TempToPermCalculator::Calculator do
       end
 
       it 'calculates the early hire fee as 0' do
-        expect(calculator.early_hire_fee).to eq(0)
+        expect(calculator.fee).to eq(0)
       end
     end
   end
