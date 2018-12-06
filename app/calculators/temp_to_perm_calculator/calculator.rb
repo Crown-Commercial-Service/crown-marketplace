@@ -10,19 +10,23 @@ module TempToPermCalculator
 
     attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate
 
+    # rubocop:disable Metrics/ParameterLists
     def initialize(
       day_rate:,
       days_per_week:,
       contract_start_date:,
       hire_date:,
-      markup_rate:
+      markup_rate:,
+      notice_date: nil
     )
       @day_rate = day_rate
       @days_per_week = days_per_week
       @contract_start_date = contract_start_date
       @hire_date = hire_date
       @markup_rate = markup_rate
+      @notice_date = notice_date
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def early_hire_fee
       [
@@ -33,6 +37,15 @@ module TempToPermCalculator
 
     def chargeable_working_days_based_on_early_hire
       WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED - working_days
+    end
+
+    def chargeable_working_days_based_on_lack_of_notice
+      return 0 unless notice_period_required?
+      return 0 unless @notice_date
+      return 0 if @notice_date <= notice_date_based_on_hire_date
+      return 20 if @notice_date >= hire_date
+
+      working_days_between(notice_date_based_on_hire_date, @notice_date)
     end
 
     def daily_supplier_fee
@@ -105,6 +118,10 @@ module TempToPermCalculator
         working_days_count += 1 if working_day?(date)
       end
       date
+    end
+
+    def working_days_between(earlier_date, later_date)
+      (earlier_date...later_date).select { |date| working_day?(date) }.count
     end
 
     def working_day?(date)
