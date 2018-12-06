@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_20_114606) do
+ActiveRecord::Schema.define(version: 2018_12_06_152712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -104,6 +104,12 @@ ActiveRecord::Schema.define(version: 2018_11_20_114606) do
     t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "neutral_vendor_contact_name"
+    t.text "neutral_vendor_telephone_number"
+    t.text "neutral_vendor_contact_email"
+    t.text "master_vendor_contact_name"
+    t.text "master_vendor_telephone_number"
+    t.text "master_vendor_contact_email"
   end
 
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
