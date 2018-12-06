@@ -37,6 +37,66 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
     end
   end
 
+  describe '#contract_start_date' do
+    it 'returns date instance constructed from day, month & year' do
+      expect(step.contract_start_date).to eq(Date.parse('1970-01-01'))
+    end
+
+    context 'when day is missing' do
+      let(:contract_start_day) { nil }
+
+      it 'returns nil' do
+        expect(step.contract_start_date).to be_nil
+      end
+    end
+
+    context 'when month is missing' do
+      let(:contract_start_month) { nil }
+
+      it 'returns nil' do
+        expect(step.contract_start_date).to be_nil
+      end
+    end
+
+    context 'when day is missing' do
+      let(:contract_start_year) { nil }
+
+      it 'returns nil' do
+        expect(step.contract_start_date).to be_nil
+      end
+    end
+  end
+
+  describe '#hire_date' do
+    it 'returns date instance constructed from day, month & year' do
+      expect(step.hire_date).to eq(Date.parse('1970-01-01'))
+    end
+
+    context 'when day is missing' do
+      let(:hire_date_day) { nil }
+
+      it 'returns nil' do
+        expect(step.hire_date).to be_nil
+      end
+    end
+
+    context 'when month is missing' do
+      let(:hire_date_month) { nil }
+
+      it 'returns nil' do
+        expect(step.hire_date).to be_nil
+      end
+    end
+
+    context 'when day is missing' do
+      let(:hire_date_year) { nil }
+
+      it 'returns nil' do
+        expect(step.hire_date).to be_nil
+      end
+    end
+  end
+
   context 'with a missing contract_start_year' do
     let(:contract_start_year) { nil }
 
