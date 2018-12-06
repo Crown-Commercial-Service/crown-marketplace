@@ -14,13 +14,6 @@ RSpec.describe TempToPermCalculator::Calculator do
       markup_rate: 0.15
     )
   end
-  let(:subject) { calculator }
-
-  it { is_expected.to respond_to(:day_rate) }
-  it { is_expected.to respond_to(:days_per_week) }
-  it { is_expected.to respond_to(:contract_start_date) }
-  it { is_expected.to respond_to(:hire_date) }
-  it { is_expected.to respond_to(:markup_rate) }
 
   describe '#working_days' do
     it 'calculates the number of working days between start date and hire date' do
