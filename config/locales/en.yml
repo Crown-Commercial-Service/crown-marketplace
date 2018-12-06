@@ -85,7 +85,7 @@ en:
         supply_teachers/journey/looking_for:
           attributes:
             looking_for:
-              inclusion: Select individual worker or managed service provider
+              inclusion: Select individual worker, managed service provider, or calculate temp-to-perm fee
         supply_teachers/journey/managed_service_provider:
           attributes:
             managed_service_provider:
