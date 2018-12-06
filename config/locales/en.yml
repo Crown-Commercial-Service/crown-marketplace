@@ -31,7 +31,27 @@ en:
           attributes:
             location:
               invalid_location: Enter a valid postcode
-        supply_teachers/journey/contract_start:
+        supply_teachers/journey/looking_for:
+          attributes:
+            looking_for:
+              inclusion: Select individual worker, managed service provider, or calculate temp-to-perm fee
+        supply_teachers/journey/managed_service_provider:
+          attributes:
+            managed_service_provider:
+              inclusion: Select master vendor or neutral vendor managed service
+        supply_teachers/journey/payroll_provider:
+          attributes:
+            payroll_provider:
+              inclusion: Select yes if you want to put the worker on the school’s payroll
+        supply_teachers/journey/school_postcode_agency_supplied_worker:
+          attributes:
+            location:
+              invalid_location: Enter a valid postcode
+        supply_teachers/journey/school_postcode_nominated_worker:
+          attributes:
+            location:
+              invalid_location: Enter a valid postcode
+        supply_teachers/journey/temp_to_perm_calculator:
           attributes:
             contract_start_day:
               blank: The contract start date must include a day
@@ -95,26 +115,6 @@ en:
             notice_date_year:
               not_a_number: The year the agency were notified must be a number
               not_an_integer: The year the agency were notified must be a whole number
-        supply_teachers/journey/looking_for:
-          attributes:
-            looking_for:
-              inclusion: Select individual worker, managed service provider, or calculate temp-to-perm fee
-        supply_teachers/journey/managed_service_provider:
-          attributes:
-            managed_service_provider:
-              inclusion: Select master vendor or neutral vendor managed service
-        supply_teachers/journey/payroll_provider:
-          attributes:
-            payroll_provider:
-              inclusion: Select yes if you want to put the worker on the school’s payroll
-        supply_teachers/journey/school_postcode_agency_supplied_worker:
-          attributes:
-            location:
-              invalid_location: Enter a valid postcode
-        supply_teachers/journey/school_postcode_nominated_worker:
-          attributes:
-            location:
-              invalid_location: Enter a valid postcode
         supply_teachers/journey/worker_type:
           attributes:
             worker_type:
