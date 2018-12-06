@@ -66,6 +66,24 @@ RSpec.describe TempToPermCalculator::Calculator do
       end
     end
 
+    context 'when the school hires the worker after the 40th working day of the contract and does not give enough notice' do
+      let(:calculator) do
+        described_class.new(
+          day_rate: 110,
+          days_per_week: 5,
+          contract_start_date: Date.parse('Mon 3 Sep, 2018'),
+          hire_date: Date.parse('Mon 12 Nov, 2018'),
+          markup_rate: 0.10,
+          notice_date: Date.parse('Mon 5 Nov 2018')
+        )
+      end
+
+      it 'calculates the early hire fee based on early hire fee and lack of notice fee' do
+        expect(calculator.chargeable_working_days).to eq(20)
+        expect(calculator.early_hire_fee).to be_within(1e-6).of(200)
+      end
+    end
+
     context 'when the school hires the worker on the 61st working day from the start of the contract' do
       let(:calculator) do
         described_class.new(
