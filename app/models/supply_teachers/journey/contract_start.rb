@@ -47,13 +47,13 @@ module SupplyTeachers
     end
 
     def contract_start_date
-      Date.new(contract_start_year.to_i, contract_start_month.to_i, contract_start_day.to_i)
+      Date.parse("#{contract_start_year}-#{contract_start_month}-#{contract_start_day}")
     rescue ArgumentError
       nil
     end
 
     def hire_date
-      Date.new(hire_date_year.to_i, hire_date_month.to_i, hire_date_day.to_i)
+      Date.parse("#{hire_date_year}-#{hire_date_month}-#{hire_date_day}")
     rescue ArgumentError
       nil
     end
