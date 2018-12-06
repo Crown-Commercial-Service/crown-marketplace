@@ -47,6 +47,10 @@ module ApplicationHelper
     end
   end
 
+  def display_errors(journey, *attributes)
+    safe_join(attributes.map { |a| display_error(journey, a) })
+  end
+
   def display_error(journey, attribute)
     error = journey.errors[attribute].first
     return if error.blank?

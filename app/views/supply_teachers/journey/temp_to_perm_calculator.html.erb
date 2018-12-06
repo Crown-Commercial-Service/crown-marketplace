@@ -12,9 +12,7 @@
               <%= t('.contract_start_question') %>
             </h1>
           </legend>
-          <%= display_error(@journey, :contract_start_date_day) %>
-          <%= display_error(@journey, :contract_start_date_month) %>
-          <%= display_error(@journey, :contract_start_date_year) %>
+          <%= display_errors(@journey, :contract_start_date_day, :contract_start_date_month, :contract_start_date_year) %>
           <span id="contract-start-hint" class="govuk-hint">
             <%= t('.contract_start_question_hint') %>
           </span>
@@ -96,9 +94,7 @@
               <%= t('.hire_date_question') %>
             </h1>
           </legend>
-          <%= display_error(@journey, :hire_date_day) %>
-          <%= display_error(@journey, :hire_date_month) %>
-          <%= display_error(@journey, :hire_date_year) %>
+          <%= display_errors(@journey, :hire_date_day, :hire_date_month, :hire_date_year) %>
           <span id="hire-date-hint" class="govuk-hint">
             <%= t('.hire_date_question_hint') %>
           </span>
@@ -138,9 +134,7 @@
               <%= t('.notice_date_question') %>
             </h1>
           </legend>
-          <%= display_error(@journey, :notice_date_day) %>
-          <%= display_error(@journey, :notice_date_month) %>
-          <%= display_error(@journey, :notice_date_year) %>
+          <%= display_errors(@journey, :notice_date_day, :notice_date_month, :notice_date_year) %>
           <span id="notice-date-hint" class="govuk-hint">
             <%= t('.notice_date_question_hint') %>
           </span>
