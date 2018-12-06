@@ -1,21 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe TempToPermCalculator::Calculator do
-  let(:days_per_week) { 5 }
-  let(:contract_start_date) { Date.parse('Monday, 5th November 2018') }
-  let(:hire_date) { Date.parse('Monday, 12th November 2018') }
-
-  let(:calculator) do
-    described_class.new(
-      day_rate: 100,
-      days_per_week: days_per_week,
-      contract_start_date: contract_start_date,
-      hire_date: hire_date,
-      markup_rate: 0.15
-    )
-  end
-
   describe '#working_days' do
+    let(:days_per_week) { 5 }
+    let(:contract_start_date) { Date.parse('Monday, 5th November 2018') }
+    let(:hire_date) { Date.parse('Monday, 12th November 2018') }
+
+    let(:calculator) do
+      described_class.new(
+        day_rate: 100,
+        days_per_week: days_per_week,
+        contract_start_date: contract_start_date,
+        hire_date: hire_date,
+        markup_rate: 0.15
+      )
+    end
+
     it 'calculates the number of working days between start date and hire date' do
       expect(calculator.working_days).to eq(5)
     end
@@ -32,6 +32,20 @@ RSpec.describe TempToPermCalculator::Calculator do
   end
 
   describe '#daily_supplier_fee' do
+    let(:days_per_week) { 5 }
+    let(:contract_start_date) { Date.parse('Monday, 5th November 2018') }
+    let(:hire_date) { Date.parse('Monday, 12th November 2018') }
+
+    let(:calculator) do
+      described_class.new(
+        day_rate: 100,
+        days_per_week: days_per_week,
+        contract_start_date: contract_start_date,
+        hire_date: hire_date,
+        markup_rate: 0.15
+      )
+    end
+
     it 'calculates the daily supplier fee' do
       expect(calculator.daily_supplier_fee).to be_within(0.01).of(13.04)
     end
