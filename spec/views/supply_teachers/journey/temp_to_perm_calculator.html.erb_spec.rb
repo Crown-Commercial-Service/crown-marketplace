@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'supply_teachers/journey/contract_start.html.erb' do
-  let(:step) { SupplyTeachers::Journey::ContractStart.new }
+RSpec.describe 'supply_teachers/journey/temp_to_perm_calculator.html.erb' do
+  let(:step) { SupplyTeachers::Journey::TempToPermCalculator.new }
   let(:errors) { ActiveModel::Errors.new(step) }
   let(:journey) do
     instance_double(

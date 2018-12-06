@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class Journey::ContractStart
+  class Journey::TempToPermCalculator
     include Steppable
 
     attribute :contract_start_day

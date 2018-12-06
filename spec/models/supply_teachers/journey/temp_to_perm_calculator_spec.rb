@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
+RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   subject(:step) do
     described_class.new(
       contract_start_day: contract_start_day,
@@ -18,7 +18,7 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
     )
   end
 
-  let(:model_key) { 'activemodel.errors.models.supply_teachers/journey/contract_start' }
+  let(:model_key) { 'activemodel.errors.models.supply_teachers/journey/temp_to_perm_calculator' }
 
   let(:contract_start_day) { 1 }
   let(:contract_start_month) { 1 }
