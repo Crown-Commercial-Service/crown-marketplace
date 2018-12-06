@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
   var cssClassToClickPath = {
-    'ga-crown-logo': 'crown_logo'
+    'ga-crown-logo': 'crown_logo',
+    'ga-feedback-mailto': 'feedback',
+    'ga-support-mailto': 'support'
   };
 
   if (window.gaTrackingId) {
