@@ -85,13 +85,15 @@
   </div>
 
   <footer class="govuk-footer" role="contentinfo">
-    <% if Marketplace.feedback_email_address.present? %>
+    <% if Marketplace.support_email_address.present? %>
       <div class="footer-feedback govuk-!-padding-1">
         <div class="govuk-width-container">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
               <p class="govuk-!-margin-bottom-0 govuk-body-s">
-                <span class="govuk-!-font-weight-bold"><%= t('.having_problems') %></span> <%= t('.support_email_html', link: govuk_email_link(Marketplace.support_email_address, t('.support_aria_label'))) %>
+                <span class="govuk-!-font-weight-bold"><%= t('.having_problems') %></span> <%= 
+    email_link = support_email_link(t('.support_aria_label'))
+    t('.support_email_html', link: email_link) %>
               </p>
             </div>
           </div>
