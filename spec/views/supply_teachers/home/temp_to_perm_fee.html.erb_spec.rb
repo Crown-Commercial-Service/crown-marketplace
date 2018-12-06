@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'supply_teachers/home/fee.html.erb' do
+RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
   let(:notice_date) { nil }
 
   let(:calculator) do

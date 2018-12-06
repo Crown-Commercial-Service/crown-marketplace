@@ -13,9 +13,9 @@ RSpec.describe SupplyTeachers::HomeController, type: :controller, auth: true do
     end
   end
 
-  describe 'GET fee' do
+  describe 'GET temp_to_perm_fee' do
     def request
-      get :fee, params: {
+      get :temp_to_perm_fee, params: {
         looking_for: 'calculate_temp_to_perm_fee',
         day_rate: '600',
         days_per_week: '5',
@@ -59,7 +59,7 @@ RSpec.describe SupplyTeachers::HomeController, type: :controller, auth: true do
     it 'renders the template' do
       request
 
-      expect(response).to render_template(:fee)
+      expect(response).to render_template(:temp_to_perm_fee)
     end
   end
 end

@@ -59,7 +59,7 @@ module SupplyTeachers
     validate :ensure_hire_date_is_after_contract_start_date
 
     def next_step_class
-      Journey::Fee
+      Journey::TempToPermFee
     end
 
     def contract_start_date

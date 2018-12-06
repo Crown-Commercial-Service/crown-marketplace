@@ -42,7 +42,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
   describe '#next_step_class' do
     it 'is Fee' do
-      expect(step.next_step_class).to eq(SupplyTeachers::Journey::Fee)
+      expect(step.next_step_class).to eq(SupplyTeachers::Journey::TempToPermFee)
     end
   end
 
