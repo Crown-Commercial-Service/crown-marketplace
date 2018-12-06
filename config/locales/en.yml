@@ -113,8 +113,6 @@ en:
               invalid_postcode: Enter a valid postcode
   common:
     submit: Continue
-  errors:
-    format: "%{message}"
   facilities_management:
     gateway:
       index:
