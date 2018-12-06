@@ -338,20 +338,6 @@ en:
         question_hint: We use this to find agencies near to your school
         worker_term_question: How long do you need the worker for?
         worker_type_question: What type of worker do you need?
-      contract_start:
-        contract_start_question: When did the worker's current contract start?
-        contract_start_question_hint: For example, 31 3 1980
-        day_rate_icon: "£"
-        day_rate_question: What does the agency charge you per day for the worker?
-        day_rate_question_hint: An amount in pounds. For example, 150
-        days_per_week_question: How many days per week is the worker contracted for?
-        days_per_week_question_hint: For example, 5
-        hire_date_question: What date do you want to take the worker on permanently from?
-        hire_date_question_hint: For example, 31 3 1980
-        markup_rate_question: What mark-up does the agency charge for the worker?
-        markup_rate_question_hint: This is the percentage fee you agreed with the supplier. For example, 40
-        notice_date_question: What date did you notify the supplier that you wish to hire the worker?
-        notice_date_question_hint: Leave this blank if you haven't yet notified the supplier
       looking_for:
         answer_calculate_temp_to_perm_fee: To calculate the fee you'll be charged if you make an agency worker permanent
         answer_managed_service_provider: An agency to manage all my needs - a ‘managed service provider’
@@ -374,6 +360,20 @@ en:
       school_postcode_nominated_worker:
         question: What is your school’s postcode?
         question_hint: We use this to find agencies near to your school
+      temp_to_perm_calculator:
+        contract_start_question: When did the worker's current contract start?
+        contract_start_question_hint: For example, 31 3 1980
+        day_rate_icon: "£"
+        day_rate_question: What does the agency charge you per day for the worker?
+        day_rate_question_hint: An amount in pounds. For example, 150
+        days_per_week_question: How many days per week is the worker contracted for?
+        days_per_week_question_hint: For example, 5
+        hire_date_question: What date do you want to take the worker on permanently from?
+        hire_date_question_hint: For example, 31 3 1980
+        markup_rate_question: What mark-up does the agency charge for the worker?
+        markup_rate_question_hint: This is the percentage fee you agreed with the supplier. For example, 40
+        notice_date_question: What date did you notify the supplier that you wish to hire the worker?
+        notice_date_question_hint: Leave this blank if you haven't yet notified the supplier
       worker_type:
         answer_agency_supplied: 'Yes'
         answer_nominated_worker: No, I have a worker I want the agency to manage (a ‘nominated worker’)
