@@ -15,11 +15,13 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
     )
   end
 
+  let(:model_key) { 'activemodel.errors.models.supply_teachers/journey/contract_start' }
+
   let(:contract_start_day) { 1 }
   let(:contract_start_month) { 1 }
   let(:contract_start_year) { 1970 }
 
-  let(:hire_date_day) { 1 }
+  let(:hire_date_day) { 2 }
   let(:hire_date_month) { 1 }
   let(:hire_date_year) { 1970 }
 
@@ -69,7 +71,7 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
 
   describe '#hire_date' do
     it 'returns date instance constructed from day, month & year' do
-      expect(step.hire_date).to eq(Date.parse('1970-01-01'))
+      expect(step.hire_date).to eq(Date.parse('1970-01-02'))
     end
 
     context 'when day is missing' do
@@ -281,5 +283,43 @@ RSpec.describe SupplyTeachers::Journey::ContractStart, type: :model do
     let(:markup_rate) { -10 }
 
     it { is_expected.to be_invalid }
+  end
+
+  context 'with a hire_date on the contract_start_date' do
+    let(:hire_date_day) { '10' }
+    let(:hire_date_month) { '1' }
+    let(:hire_date_year) { '2018' }
+
+    let(:contract_start_day) { '10' }
+    let(:contract_start_month) { '1' }
+    let(:contract_start_year) { '2018' }
+
+    it { is_expected.to be_invalid }
+
+    it 'obtains the error message from an I18n translation' do
+      step.valid?
+      expect(step.errors[:hire_date]).to include(
+        I18n.t("#{model_key}.attributes.hire_date.after_contract_start_date")
+      )
+    end
+
+    context 'and hire_date is one day earlier' do
+      let(:hire_date_day) { '9' }
+
+      it { is_expected.to be_invalid }
+
+      it 'obtains the error message from an I18n translation' do
+        step.valid?
+        expect(step.errors[:hire_date]).to include(
+          I18n.t("#{model_key}.attributes.hire_date.after_contract_start_date")
+        )
+      end
+    end
+
+    context 'and hire_date is one day later' do
+      let(:hire_date_day) { '11' }
+
+      it { is_expected.to be_valid }
+    end
   end
 end
