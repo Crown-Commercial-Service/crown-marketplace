@@ -101,6 +101,7 @@ ignore_unused:
   - errors.*
   - faker.*
   - activemodel.errors.models.*
+  - activerecord.errors.models.*
   - journey_step.supply_teachers.*
   - number.*
   - miles.*
