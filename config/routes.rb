@@ -40,6 +40,11 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
+  get '/errors/404'
+  get '/errors/422'
+  get '/errors/500'
+  get '/errors/maintenance'
+
   get '/auth/cognito', as: :cognito_sign_in
   get '/auth/cognito/callback' => 'auth#callback'
   if DFE_SIGNIN_ENABLED

@@ -100,4 +100,17 @@ The application keeps a record of each *successful* upload in the database. So, 
 * `ManagementConsultancy::Upload.order(:created_at).last.created_at`
 * `SupplyTeachers::Upload.order(:created_at).last.created_at`
 
+### Regenerating Error Pages
+
+We use [juice](juice) to generate HTML error pages from the live service, inlining all css, images, webfonts, etc.
+
+A rake task makes this easier: 
+```
+$ rake 'error_pages[http://localhost:3000]'
+```
+
+This will pull down /errors/404.html, for example, and save an inlined copy in public/404.html
+
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
+[juice]: https://www.npmjs.com/package/juice
+
