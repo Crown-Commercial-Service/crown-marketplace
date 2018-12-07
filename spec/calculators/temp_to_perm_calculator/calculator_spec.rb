@@ -15,6 +15,46 @@ RSpec.describe TempToPermCalculator::Calculator do
   let(:start_of_12th_week) { Date.parse('Mon 19 Nov 2018') }
   let(:start_of_13th_week) { Date.parse('Mon 26 Nov 2018') }
 
+  describe 'initialization' do
+    let(:contract_start_date) { start_of_1st_week }
+    let(:hire_date) { start_of_1st_week }
+    let(:notice_date) { nil }
+    let(:calculator) do
+      described_class.new(
+        contract_start_date: contract_start_date,
+        days_per_week: 5,
+        day_rate: 110,
+        markup_rate: 0.10,
+        hire_date: hire_date,
+        notice_date: notice_date
+      )
+    end
+
+    context 'when hire date is earlier than contract start date' do
+      let(:hire_date) { 1.week.before(contract_start_date) }
+
+      it 'raises an ArgumentError' do
+        expect { calculator }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when notice date is later than hire date' do
+      let(:notice_date) { 1.week.after(hire_date) }
+
+      it 'raises an ArgumentError' do
+        expect { calculator }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when notice date is earlier than contract start date' do
+      let(:notice_date) { 1.week.before(contract_start_date) }
+
+      it 'raises an ArgumentError' do
+        expect { calculator }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
   describe 'irrespective of the hire date' do
     let(:calculator) do
       described_class.new(
@@ -405,31 +445,6 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'is false' do
         expect(calculator.before_national_deal_began?).to be false
-      end
-    end
-  end
-
-  describe '#chargeable_working_days_based_on_lack_of_notice' do
-    let(:calculator) do
-      described_class.new(
-        day_rate: 200,
-        days_per_week: 5,
-        contract_start_date: Date.parse('Mon 3 Sep 2018'),
-        hire_date: hire_date,
-        markup_rate: 0.16,
-        notice_date: notice_date
-      )
-    end
-
-    context 'when the hire date is after the first 40 working days' do
-      let(:hire_date) { Date.parse('Mon 26 Nov 2018') }
-
-      context 'when the notice date is later then the hire date' do
-        let(:notice_date) { Date.parse('Tue 27 Nov 2018') }
-
-        it 'returns 20' do
-          expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(20)
-        end
       end
     end
   end
