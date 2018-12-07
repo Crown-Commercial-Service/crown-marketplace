@@ -15,21 +15,22 @@ RSpec.describe TempToPermCalculator::Calculator do
   let(:start_of_12th_week) { Date.parse('Mon 19 Nov 2018') }
   let(:start_of_13th_week) { Date.parse('Mon 26 Nov 2018') }
 
-  describe 'initialization' do
-    let(:contract_start_date) { start_of_1st_week }
-    let(:hire_date) { start_of_1st_week }
-    let(:notice_date) { nil }
-    let(:calculator) do
-      described_class.new(
-        contract_start_date: contract_start_date,
-        days_per_week: 5,
-        day_rate: 110,
-        markup_rate: 0.10,
-        hire_date: hire_date,
-        notice_date: notice_date
-      )
-    end
+  let(:contract_start_date) { start_of_1st_week }
+  let(:hire_date) { start_of_1st_week }
+  let(:notice_date) { nil }
 
+  let(:calculator) do
+    described_class.new(
+      contract_start_date: contract_start_date,
+      days_per_week: 5,
+      day_rate: 110,
+      markup_rate: 0.10,
+      hire_date: hire_date,
+      notice_date: notice_date
+    )
+  end
+
+  describe 'initialization' do
     context 'when hire date is earlier than contract start date' do
       let(:hire_date) { 1.week.before(contract_start_date) }
 
@@ -56,16 +57,6 @@ RSpec.describe TempToPermCalculator::Calculator do
   end
 
   describe 'irrespective of the hire date' do
-    let(:calculator) do
-      described_class.new(
-        contract_start_date: start_of_1st_week,
-        days_per_week: 5,
-        day_rate: 110,
-        markup_rate: 0.10,
-        hire_date: start_of_1st_week
-      )
-    end
-
     it 'calculates the daily supplier fee based on day rate and markup rate' do
       expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
     end
@@ -80,17 +71,7 @@ RSpec.describe TempToPermCalculator::Calculator do
   end
 
   context 'when the school hires the worker within the first 8 weeks (40 working days) of their contract' do
-    let(:notice_date) { nil }
-    let(:calculator) do
-      described_class.new(
-        contract_start_date: start_of_1st_week,
-        days_per_week: 5,
-        day_rate: 110,
-        markup_rate: 0.10,
-        hire_date: start_of_4th_week,
-        notice_date: notice_date
-      )
-    end
+    let(:hire_date) { start_of_4th_week }
 
     it 'calculates the number of working days between the start date and hire date' do
       expect(calculator.working_days).to eq(15)
@@ -134,18 +115,7 @@ RSpec.describe TempToPermCalculator::Calculator do
   end
 
   context 'when the school hires the worker within the first 9 to 12 weeks (40 to 60 working days) of their contract' do
-    let(:notice_date) { nil }
-
-    let(:calculator) do
-      described_class.new(
-        contract_start_date: start_of_1st_week,
-        days_per_week: 5,
-        day_rate: 110,
-        markup_rate: 0.10,
-        hire_date: start_of_12th_week,
-        notice_date: notice_date
-      )
-    end
+    let(:hire_date) { start_of_12th_week }
 
     it 'calculates the number of working days between the start date and hire date' do
       expect(calculator.working_days).to eq(55)
@@ -265,18 +235,7 @@ RSpec.describe TempToPermCalculator::Calculator do
   end
 
   context 'when the school hires the worker after 12 weeks (60 working days) of their contract' do
-    let(:notice_date) { nil }
-
-    let(:calculator) do
-      described_class.new(
-        contract_start_date: start_of_1st_week,
-        days_per_week: 5,
-        day_rate: 110,
-        markup_rate: 0.10,
-        hire_date: start_of_13th_week,
-        notice_date: notice_date
-      )
-    end
+    let(:hire_date) { start_of_13th_week }
 
     it 'calculates the number of working days between the start date and hire date' do
       expect(calculator.working_days).to eq(60)
@@ -396,20 +355,6 @@ RSpec.describe TempToPermCalculator::Calculator do
   end
 
   describe '#working_days' do
-    let(:days_per_week) { 5 }
-    let(:contract_start_date) { Date.parse('Monday, 5th November 2018') }
-    let(:hire_date) { Date.parse('Monday, 12th November 2018') }
-
-    let(:calculator) do
-      described_class.new(
-        day_rate: 100,
-        days_per_week: days_per_week,
-        contract_start_date: contract_start_date,
-        hire_date: hire_date,
-        markup_rate: 0.15
-      )
-    end
-
     context 'when the working period includes a bank holiday in England' do
       let(:august_bank_holiday) { Date.parse('Monday, 27th August 2018') }
       let(:contract_start_date) { august_bank_holiday }
@@ -422,16 +367,6 @@ RSpec.describe TempToPermCalculator::Calculator do
   end
 
   describe '#before_national_deal_began?' do
-    let(:calculator) do
-      described_class.new(
-        day_rate: 200,
-        days_per_week: 5,
-        contract_start_date: contract_start_date,
-        hire_date: Date.parse('Tue 8 Jan, 2019'),
-        markup_rate: 0.16
-      )
-    end
-
     context 'when the contract start date is before 23 Aug 2018' do
       let(:contract_start_date) { Date.parse('22 Aug 2018') }
 
