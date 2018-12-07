@@ -19,6 +19,12 @@ module TempToPermCalculator
       markup_rate:,
       notice_date: nil
     )
+      raise(ArgumentError, 'Hire date cannot be earlier than contract start date') if hire_date < contract_start_date
+      raise(ArgumentError, 'Notice date cannot be later than hire date') if notice_date && notice_date > hire_date
+      if notice_date && notice_date < contract_start_date
+        raise(ArgumentError, 'Notice date cannot be earlier than contract start date')
+      end
+
       @day_rate = day_rate
       @days_per_week = days_per_week
       @contract_start_date = contract_start_date
@@ -54,7 +60,6 @@ module TempToPermCalculator
       return 0 unless notice_period_required?
       return 0 unless @notice_date
       return 0 if @notice_date <= notice_date_based_on_hire_date
-      return 20 if @notice_date >= hire_date
 
       working_days_between(notice_date_based_on_hire_date, @notice_date)
     end
