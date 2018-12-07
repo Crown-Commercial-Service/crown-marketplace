@@ -94,5 +94,17 @@ $ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
 $ cd crown-marketplace-data/management-consultancy
 $ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @output/data.json $SCHEME://$HOST/management-consultancy/uploads
 ```
+### Regenerating Error Pages
+
+We use [juice](juice) to generate HTML error pages from the live service, inlining all css, images, webfonts, etc.
+
+A rake task makes this easier: 
+```
+$ rake 'error_pages[http://localhost:3000]'
+```
+
+This will pull down /errors/404.html, for example, and save an inlined copy in public/404.html
 
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
+[juice]: https://www.npmjs.com/package/juice
+
