@@ -1,4 +1,6 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+<%= content_for :page_title, 'Do you want an agency to supply the worker?' %>
+<%= content_for :page_section, 'Find supply teachers and agency workers' %>
 
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
