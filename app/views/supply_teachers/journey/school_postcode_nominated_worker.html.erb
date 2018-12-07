@@ -1,6 +1,6 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
-<%= content_for :page_title, 'What is your school postcode?' %>
-<%= content_for :page_section, 'Find supply teachers and agency workers' %>
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('supply_teachers.page_section') %>
 
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>

@@ -1,5 +1,5 @@
-<%= content_for :page_title, 'What type of managed service do you want?' %>
-<%= content_for :page_section, 'Find supply teachers and agency workers' %>
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('supply_teachers.page_section') %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
   <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
