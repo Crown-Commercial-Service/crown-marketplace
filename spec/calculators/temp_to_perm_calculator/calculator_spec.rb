@@ -81,6 +81,149 @@ RSpec.describe TempToPermCalculator::Calculator do
     end
   end
 
+  context 'when the school hires the worker within the first 9 to 12 weeks (40 to 60 working days) of their contract' do
+    let(:notice_date) { nil }
+
+    let(:calculator) do
+      described_class.new(
+        contract_start_date: start_of_1st_week,
+        days_per_week: 5,
+        day_rate: 110,
+        markup_rate: 0.10,
+        hire_date: start_of_12th_week,
+        notice_date: notice_date
+      )
+    end
+
+    it 'calculates the number of working days between the start date and hire date' do
+      expect(calculator.working_days).to eq(55)
+    end
+
+    it 'calculates the number of chargeable working days due to early hire as the difference between the minimum of 60 (12 weeks) and the number of days worked' do
+      expect(calculator.chargeable_working_days_based_on_early_hire).to eq(5)
+    end
+
+    it 'returns 0 days for lack of notice' do
+      expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
+    end
+
+    it 'calculates the number of chargeable working days as the number of chargeable working days due to early hire' do
+      expect(calculator.chargeable_working_days).to eq(5)
+    end
+
+    it 'calculates the daily supplier fee based on day rate and markup rate' do
+      expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
+    end
+
+    it 'indicates that there is a fee for hiring within the first 12 weeks' do
+      expect(calculator.fee_for_early_hire?).to eq(true)
+    end
+
+    it 'indicates that there is a fee for not giving at least 4 weeks notice' do
+      expect(calculator.fee_for_lack_of_notice?).to eq(true)
+    end
+
+    it 'indicates that the school is required to give 4 weeks notice' do
+      expect(calculator.notice_period_required?).to eq(true)
+    end
+
+    it 'calculates the ideal notice date as 4 weeks before the hire date' do
+      expect(calculator.notice_date_based_on_hire_date).to eq(start_of_8th_week)
+    end
+
+    it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
+      expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
+    end
+
+    it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
+      expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
+    end
+
+    it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+      expect(calculator.fee).to be_within(1e-6).of(5 * 10)
+    end
+
+    context 'and they give 4 weeks notice' do
+      let(:notice_date) { start_of_8th_week }
+
+      it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
+        expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
+      end
+
+      it 'calculates the number of chargeable working days as those due to early hire plus those due to lack of notice but caps it at 20' do
+        expect(calculator.chargeable_working_days).to eq(5)
+      end
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(5 * 10)
+      end
+    end
+
+    context 'and they give 3 weeks notice' do
+      let(:notice_date) { start_of_9th_week }
+
+      it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
+        expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(5)
+      end
+
+      it 'calculates the number of chargeable working days as those due to early hire plus those due to lack of notice but caps it at 20' do
+        expect(calculator.chargeable_working_days).to eq(5 + 5)
+      end
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(10 * 10)
+      end
+    end
+
+    context 'and they give 2 weeks notice' do
+      let(:notice_date) { start_of_10th_week }
+
+      it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
+        expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(10)
+      end
+
+      it 'calculates the number of chargeable working days as those due to early hire plus those due to lack of notice but caps it at 20' do
+        expect(calculator.chargeable_working_days).to eq(10 + 5)
+      end
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(15 * 10)
+      end
+    end
+
+    context 'and they give 1 weeks notice' do
+      let(:notice_date) { start_of_11th_week }
+
+      it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
+        expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(15)
+      end
+
+      it 'calculates the number of chargeable working days as those due to early hire plus those due to lack of notice but caps it at 20' do
+        expect(calculator.chargeable_working_days).to eq(15 + 5)
+      end
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(20 * 10)
+      end
+    end
+
+    context 'and they give no notice' do
+      let(:notice_date) { start_of_12th_week }
+
+      it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
+        expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(20)
+      end
+
+      it 'calculates the number of chargeable working days as those due to early hire plus those due to lack of notice but caps it at 20' do
+        expect(calculator.chargeable_working_days).to eq(20)
+      end
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(20 * 10)
+      end
+    end
+  end
+
   describe '#working_days' do
     let(:days_per_week) { 5 }
     let(:contract_start_date) { Date.parse('Monday, 5th November 2018') }
