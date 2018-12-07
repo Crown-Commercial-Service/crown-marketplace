@@ -10,6 +10,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'when optional prefix is nil' do
       before do
+        allow(helper).to receive(:content_for).with(anything).and_return(nil)
         allow(helper).to receive(:content_for).with(:page_title_prefix).and_return(nil)
       end
 
@@ -20,6 +21,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'when optional prefix is an empty string' do
       before do
+        allow(helper).to receive(:content_for).with(anything).and_return(nil)
         allow(helper).to receive(:content_for).with(:page_title_prefix).and_return('')
       end
 
@@ -30,6 +32,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'when optional prefix contains a newline' do
       before do
+        allow(helper).to receive(:content_for).with(anything).and_return(nil)
         allow(helper).to receive(:content_for).with(:page_title_prefix).and_return("Error\n")
       end
 
@@ -41,11 +44,25 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'when optional prefix is set' do
       before do
+        allow(helper).to receive(:content_for).with(anything).and_return(nil)
         allow(helper).to receive(:content_for).with(:page_title_prefix).and_return('Error')
       end
 
       it 'returns title stored in locale file with prefix' do
         expected_title = 'Error: ' + t('layouts.application.title')
+        expect(helper.page_title).to eq(expected_title)
+      end
+    end
+
+    context 'when page_title and page_section are set' do
+      before do
+        allow(helper).to receive(:content_for).with(:page_title).and_return('page')
+        allow(helper).to receive(:content_for).with(:page_section).and_return('section')
+        allow(helper).to receive(:content_for).with(:page_title_prefix).and_return('prefix')
+      end
+
+      it 'returns fields joined by semi-colons' do
+        expected_title = 'prefix: page: section: ' + t('layouts.application.title')
         expect(helper.page_title).to eq(expected_title)
       end
     end
