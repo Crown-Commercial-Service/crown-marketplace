@@ -15,6 +15,30 @@ RSpec.describe TempToPermCalculator::Calculator do
   let(:start_of_12th_week) { Date.parse('Mon 19 Nov 2018') }
   let(:start_of_13th_week) { Date.parse('Mon 26 Nov 2018') }
 
+  describe 'irrespective of the hire date' do
+    let(:calculator) do
+      described_class.new(
+        contract_start_date: start_of_1st_week,
+        days_per_week: 5,
+        day_rate: 110,
+        markup_rate: 0.10,
+        hire_date: start_of_1st_week
+      )
+    end
+
+    it 'calculates the daily supplier fee based on day rate and markup rate' do
+      expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
+    end
+
+    it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
+      expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
+    end
+
+    it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
+      expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
+    end
+  end
+
   context 'when the school hires the worker within the first 8 weeks (40 working days) of their contract' do
     let(:notice_date) { nil }
     let(:calculator) do
@@ -36,10 +60,6 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.chargeable_working_days_based_on_early_hire).to eq(45)
     end
 
-    it 'calculates the daily supplier fee based on day rate and markup rate' do
-      expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
-    end
-
     it 'returns 0 days for lack of notice' do
       expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
     end
@@ -58,14 +78,6 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     it 'does not calculate an ideal notice date as notice is not required' do
       expect(calculator.notice_date_based_on_hire_date).to eq(nil)
-    end
-
-    it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
-      expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
-    end
-
-    it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
-      expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
     end
 
     it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
@@ -111,10 +123,6 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.chargeable_working_days).to eq(5)
     end
 
-    it 'calculates the daily supplier fee based on day rate and markup rate' do
-      expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
-    end
-
     it 'indicates that there is a fee for hiring within the first 12 weeks' do
       expect(calculator.fee_for_early_hire?).to eq(true)
     end
@@ -129,14 +137,6 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     it 'calculates the ideal notice date as 4 weeks before the hire date' do
       expect(calculator.notice_date_based_on_hire_date).to eq(start_of_8th_week)
-    end
-
-    it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
-      expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
-    end
-
-    it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
-      expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
     end
 
     it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
@@ -254,10 +254,6 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.chargeable_working_days).to eq(0)
     end
 
-    it 'calculates the daily supplier fee based on day rate and markup rate' do
-      expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
-    end
-
     it 'indicates that the fee for hiring within the first 12 weeks does not apply' do
       expect(calculator.fee_for_early_hire?).to eq(false)
     end
@@ -272,14 +268,6 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     it 'calculates the ideal notice date as 4 weeks before the hire date' do
       expect(calculator.notice_date_based_on_hire_date).to eq(start_of_9th_week)
-    end
-
-    it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
-      expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
-    end
-
-    it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
-      expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
     end
 
     it 'calculates the fee as zero' do
