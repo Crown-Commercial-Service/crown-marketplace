@@ -1,6 +1,76 @@
 require 'rails_helper'
 
 RSpec.describe TempToPermCalculator::Calculator do
+  context 'when the school hires the worker within the first 8 weeks (40 working days) of their contract' do
+    let(:notice_date) { nil }
+    let(:calculator) do
+      start_of_4th_week = Date.parse('Mon 24 Sep 2018')
+
+      described_class.new(
+        contract_start_date: Date.parse('Mon 3 Sep 2018'),
+        days_per_week: 5,
+        day_rate: 110,
+        markup_rate: 0.10,
+        hire_date: start_of_4th_week,
+        notice_date: notice_date
+      )
+    end
+
+    it 'calculates the number of working days between the start date and hire date' do
+      expect(calculator.working_days).to eq(15)
+    end
+
+    it 'calculates the number of chargeable working days due to early hire as the difference between the minimum of 60 (12 weeks) and the number of days worked' do
+      expect(calculator.chargeable_working_days_based_on_early_hire).to eq(45)
+    end
+
+    it 'calculates the daily supplier fee based on day rate and markup rate' do
+      expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
+    end
+
+    it 'returns 0 days for lack of notice' do
+      expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
+    end
+
+    it 'indicates that there is a fee for hiring within the first 12 weeks' do
+      expect(calculator.fee_for_early_hire?).to eq(true)
+    end
+
+    it 'indicates that there is no fee for not giving at least 4 weeks notice' do
+      expect(calculator.fee_for_lack_of_notice?).to eq(false)
+    end
+
+    it 'indicates that the school is not required to give any notice' do
+      expect(calculator.notice_period_required?).to eq(false)
+    end
+
+    it 'does not calculate an ideal notice date as notice is not required' do
+      expect(calculator.notice_date_based_on_hire_date).to eq(nil)
+    end
+
+    it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
+      start_of_13th_week = Date.parse('Mon 26 Nov 2018')
+      expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
+    end
+
+    it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
+      start_of_9th_week = Date.parse('Mon 29 Oct 2018')
+      expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
+    end
+
+    it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+      expect(calculator.fee).to be_within(1e-6).of(45 * 10)
+    end
+
+    context 'when the school gives less than 4 weeks notice' do
+      let(:notice_date) { Date.parse('Mon 17 Sep 2018') }
+
+      it 'returns 0 days for lack of notice as notice is not required within the first 8 weeks' do
+        expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
+      end
+    end
+  end
+
   describe '#working_days' do
     let(:days_per_week) { 5 }
     let(:contract_start_date) { Date.parse('Monday, 5th November 2018') }
