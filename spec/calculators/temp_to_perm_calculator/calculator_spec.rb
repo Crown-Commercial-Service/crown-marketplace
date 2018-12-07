@@ -14,10 +14,16 @@ RSpec.describe TempToPermCalculator::Calculator do
   let(:start_of_11th_week) { Date.parse('Mon 12 Nov 2018') }
   let(:start_of_12th_week) { Date.parse('Mon 19 Nov 2018') }
   let(:start_of_13th_week) { Date.parse('Mon 26 Nov 2018') }
+  let(:start_of_14th_week) { Date.parse('Mon 3 Dec 2018') }
+  let(:start_of_15th_week) { Date.parse('Mon 10 Dec 2018') }
 
   let(:contract_start_date) { start_of_1st_week }
   let(:hire_date) { start_of_1st_week }
   let(:notice_date) { nil }
+  let(:holiday_1_start_date) { nil }
+  let(:holiday_1_end_date) { nil }
+  let(:holiday_2_start_date) { nil }
+  let(:holiday_2_end_date) { nil }
 
   let(:calculator) do
     described_class.new(
@@ -26,7 +32,11 @@ RSpec.describe TempToPermCalculator::Calculator do
       day_rate: 110,
       markup_rate: 0.10,
       hire_date: hire_date,
-      notice_date: notice_date
+      notice_date: notice_date,
+      holiday_1_start_date: holiday_1_start_date,
+      holiday_1_end_date: holiday_1_end_date,
+      holiday_2_start_date: holiday_2_start_date,
+      holiday_2_end_date: holiday_2_end_date
     )
   end
 
@@ -67,6 +77,45 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
       expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
+    end
+  end
+
+  context 'when there are two weeks of school holidays between the start of the contract and the hire date' do
+    let(:holiday_1_start_date) { start_of_2nd_week }
+    let(:holiday_1_end_date) { start_of_2nd_week.end_of_week }
+    let(:holiday_2_start_date) { start_of_5th_week }
+    let(:holiday_2_end_date) { start_of_5th_week.end_of_week }
+
+    let(:hire_date) { start_of_13th_week }
+
+    it 'calculates the number of working days between the start date and hire date' do
+      expect(calculator.working_days).to eq(50)
+    end
+
+    it 'calculates the ideal hire date as the start of the 15th week to take school holidays into account in order to avoid paying an early hire fee' do
+      expect(calculator.ideal_hire_date).to eq(start_of_15th_week)
+    end
+
+    it 'calculates the ideal notice date as the start of the 11th week to avoid paying a lack of notice fee' do
+      expect(calculator.ideal_notice_date).to eq(start_of_11th_week)
+    end
+
+    context 'and when there is a holiday within four weeks of the ideal hire date' do
+      let(:holiday_2_start_date) { start_of_14th_week }
+      let(:holiday_2_end_date) { start_of_14th_week.end_of_week }
+
+      it 'calculates the ideal notice date as the start of the 10th week to avoid paying a lack of notice fee' do
+        expect(calculator.ideal_notice_date).to eq(start_of_10th_week)
+      end
+    end
+
+    context 'and when there is a holiday within four weeks of the hire date' do
+      let(:holiday_2_start_date) { start_of_12th_week }
+      let(:holiday_2_end_date) { start_of_12th_week.end_of_week }
+
+      it 'calculates the notice date based on hire date as the start of the 8th week to take the second holiday into account and avoid paying a lack of notice fee' do
+        expect(calculator.notice_date_based_on_hire_date).to eq(start_of_8th_week)
+      end
     end
   end
 

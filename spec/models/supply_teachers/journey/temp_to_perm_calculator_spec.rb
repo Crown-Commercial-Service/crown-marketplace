@@ -14,7 +14,19 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
       markup_rate: markup_rate,
       notice_date_day: notice_date_day,
       notice_date_month: notice_date_month,
-      notice_date_year: notice_date_year
+      notice_date_year: notice_date_year,
+      holiday_1_start_date_day: holiday_1_start_date_day,
+      holiday_1_start_date_month: holiday_1_start_date_month,
+      holiday_1_start_date_year: holiday_1_start_date_year,
+      holiday_1_end_date_day: holiday_1_end_date_day,
+      holiday_1_end_date_month: holiday_1_end_date_month,
+      holiday_1_end_date_year: holiday_1_end_date_year,
+      holiday_2_start_date_day: holiday_2_start_date_day,
+      holiday_2_start_date_month: holiday_2_start_date_month,
+      holiday_2_start_date_year: holiday_2_start_date_year,
+      holiday_2_end_date_day: holiday_2_end_date_day,
+      holiday_2_end_date_month: holiday_2_end_date_month,
+      holiday_2_end_date_year: holiday_2_end_date_year
     )
   end
 
@@ -31,6 +43,20 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   let(:notice_date_day) { 3 }
   let(:notice_date_month) { 1 }
   let(:notice_date_year) { 1970 }
+
+  let(:holiday_1_start_date_day) { 4 }
+  let(:holiday_1_start_date_month) { 1 }
+  let(:holiday_1_start_date_year) { 1970 }
+  let(:holiday_1_end_date_day) { 5 }
+  let(:holiday_1_end_date_month) { 1 }
+  let(:holiday_1_end_date_year) { 1970 }
+
+  let(:holiday_2_start_date_day) { 6 }
+  let(:holiday_2_start_date_month) { 1 }
+  let(:holiday_2_start_date_year) { 1970 }
+  let(:holiday_2_end_date_day) { 7 }
+  let(:holiday_2_end_date_month) { 1 }
+  let(:holiday_2_end_date_year) { 1970 }
 
   let(:days_per_week) { 5 }
 
@@ -132,6 +158,126 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
       it 'returns nil' do
         expect(step.notice_date).to be_nil
+      end
+    end
+  end
+
+  describe '#holiday_1_start_date' do
+    it 'returns date instance constructed from day, month & year' do
+      expect(step.holiday_1_start_date).to eq(Date.parse('1970-01-04'))
+    end
+
+    context 'when day is missing' do
+      let(:holiday_1_start_date_day) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_1_start_date).to be_nil
+      end
+    end
+
+    context 'when month is missing' do
+      let(:holiday_1_start_date_month) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_1_start_date).to be_nil
+      end
+    end
+
+    context 'when year is missing' do
+      let(:holiday_1_start_date_year) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_1_start_date).to be_nil
+      end
+    end
+  end
+
+  describe '#holiday_1_end_date' do
+    it 'returns date instance constructed from day, month & year' do
+      expect(step.holiday_1_end_date).to eq(Date.parse('1970-01-05'))
+    end
+
+    context 'when day is missing' do
+      let(:holiday_1_end_date_day) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_1_end_date).to be_nil
+      end
+    end
+
+    context 'when month is missing' do
+      let(:holiday_1_end_date_month) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_1_end_date).to be_nil
+      end
+    end
+
+    context 'when year is missing' do
+      let(:holiday_1_end_date_year) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_1_end_date).to be_nil
+      end
+    end
+  end
+
+  describe '#holiday_2_start_date' do
+    it 'returns date instance constructed from day, month & year' do
+      expect(step.holiday_2_start_date).to eq(Date.parse('1970-01-06'))
+    end
+
+    context 'when day is missing' do
+      let(:holiday_2_start_date_day) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_2_start_date).to be_nil
+      end
+    end
+
+    context 'when month is missing' do
+      let(:holiday_2_start_date_month) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_2_start_date).to be_nil
+      end
+    end
+
+    context 'when year is missing' do
+      let(:holiday_2_start_date_year) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_2_start_date).to be_nil
+      end
+    end
+  end
+
+  describe '#holiday_2_end_date' do
+    it 'returns date instance constructed from day, month & year' do
+      expect(step.holiday_2_end_date).to eq(Date.parse('1970-01-07'))
+    end
+
+    context 'when day is missing' do
+      let(:holiday_2_end_date_day) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_2_end_date).to be_nil
+      end
+    end
+
+    context 'when month is missing' do
+      let(:holiday_2_end_date_month) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_2_end_date).to be_nil
+      end
+    end
+
+    context 'when year is missing' do
+      let(:holiday_2_end_date_year) { nil }
+
+      it 'returns nil' do
+        expect(step.holiday_2_end_date).to be_nil
       end
     end
   end

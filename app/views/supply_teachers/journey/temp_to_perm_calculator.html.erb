@@ -127,6 +127,166 @@
         <% end %>
       <% end %>
 
+      <%= govuk_form_group_with_optional_error(@journey, :holiday_1_start_date_day, :holiday_1_start_date_month, :holiday_1_start_date_year) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :holiday_1_start_date_day, :holiday_1_start_date_month, :holiday_1_start_date_year) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.holiday_1_start_date_question') %>
+            </h1>
+          </legend>
+          <%= display_errors(@journey, :holiday_1_start_date_day, :holiday_1_start_date_month, :holiday_1_start_date_year) %>
+          <span id="holiday-1-start-date-hint" class="govuk-hint">
+            <%= t('.holiday_1_start_date_question_hint') %>
+          </span>
+          <div class="govuk-date-input" id="holiday-1-start-date">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_1_start_date_day">
+                  Day
+                </label>
+                <%= text_field_tag :holiday_1_start_date_day, @journey.current_step.holiday_1_start_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_1_start_date_day, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_1_start_date_month">
+                  Month
+                </label>
+                <%= text_field_tag :holiday_1_start_date_month, @journey.current_step.holiday_1_start_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_1_start_date_month, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_1_start_date_year">
+                  Year
+                </label>
+                <%= text_field_tag :holiday_1_start_date_year, @journey.current_step.holiday_1_start_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_1_start_date_year, %w[govuk-date-input__input govuk-input--width-4]) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :holiday_1_end_date_day, :holiday_1_end_date_month, :holiday_1_end_date_year) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :holiday_1_end_date_day, :holiday_1_end_date_month, :holiday_1_end_date_year) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.holiday_1_end_date_question') %>
+            </h1>
+          </legend>
+          <%= display_errors(@journey, :holiday_1_end_date_day, :holiday_1_end_date_month, :holiday_1_end_date_year) %>
+          <span id="holiday-1-end-date-hint" class="govuk-hint">
+            <%= t('.holiday_1_end_date_question_hint') %>
+          </span>
+          <div class="govuk-date-input" id="holiday-1-end-date">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_1_end_date_day">
+                  Day
+                </label>
+                <%= text_field_tag :holiday_1_end_date_day, @journey.current_step.holiday_1_end_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_1_end_date_day, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_1_end_date_month">
+                  Month
+                </label>
+                <%= text_field_tag :holiday_1_end_date_month, @journey.current_step.holiday_1_end_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_1_end_date_month, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_1_end_date_year">
+                  Year
+                </label>
+                <%= text_field_tag :holiday_1_end_date_year, @journey.current_step.holiday_1_end_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_1_end_date_year, %w[govuk-date-input__input govuk-input--width-4]) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :holiday_2_start_date_day, :holiday_2_start_date_month, :holiday_2_start_date_year) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :holiday_2_start_date_day, :holiday_2_start_date_month, :holiday_2_start_date_year) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.holiday_2_start_date_question') %>
+            </h1>
+          </legend>
+          <%= display_errors(@journey, :holiday_2_start_date_day, :holiday_2_start_date_month, :holiday_2_start_date_year) %>
+          <span id="holiday-2-start-date-hint" class="govuk-hint">
+            <%= t('.holiday_2_start_date_question_hint') %>
+          </span>
+          <div class="govuk-date-input" id="holiday-2-start-date">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_2_start_date_day">
+                  Day
+                </label>
+                <%= text_field_tag :holiday_2_start_date_day, @journey.current_step.holiday_2_start_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_2_start_date_day, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_2_start_date_month">
+                  Month
+                </label>
+                <%= text_field_tag :holiday_2_start_date_month, @journey.current_step.holiday_2_start_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_2_start_date_month, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_2_start_date_year">
+                  Year
+                </label>
+                <%= text_field_tag :holiday_2_start_date_year, @journey.current_step.holiday_2_start_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_2_start_date_year, %w[govuk-date-input__input govuk-input--width-4]) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :holiday_2_end_date_day, :holiday_2_end_date_month, :holiday_2_end_date_year) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :holiday_2_end_date_day, :holiday_2_end_date_month, :holiday_2_end_date_year) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.holiday_2_end_date_question') %>
+            </h1>
+          </legend>
+          <%= display_errors(@journey, :holiday_2_end_date_day, :holiday_2_end_date_month, :holiday_2_end_date_year) %>
+          <span id="holiday-2-end-date-hint" class="govuk-hint">
+            <%= t('.holiday_2_end_date_question_hint') %>
+          </span>
+          <div class="govuk-date-input" id="holiday-2-end-date">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_2_end_date_day">
+                  Day
+                </label>
+                <%= text_field_tag :holiday_2_end_date_day, @journey.current_step.holiday_2_end_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_2_end_date_day, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_2_end_date_month">
+                  Month
+                </label>
+                <%= text_field_tag :holiday_2_end_date_month, @journey.current_step.holiday_2_end_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_2_end_date_month, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="holiday_2_end_date_year">
+                  Year
+                </label>
+                <%= text_field_tag :holiday_2_end_date_year, @journey.current_step.holiday_2_end_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :holiday_2_end_date_year, %w[govuk-date-input__input govuk-input--width-4]) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
       <%= govuk_form_group_with_optional_error(@journey, :notice_date_day, :notice_date_month, :notice_date_year) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :notice_date_day, :notice_date_month, :notice_date_year) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
