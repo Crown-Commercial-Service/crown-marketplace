@@ -42,6 +42,62 @@ module SupplyTeachers
               presence: true,
               numericality: { only_integer: true }
 
+    attribute :holiday_1_start_date_day
+    validates :holiday_1_start_date_day,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31
+              }
+    attribute :holiday_1_start_date_month
+    validates :holiday_1_start_date_month,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
+              }
+    attribute :holiday_1_start_date_year
+    validates :holiday_1_start_date_year,
+              numericality: { allow_blank: true, only_integer: true }
+
+    attribute :holiday_1_end_date_day
+    validates :holiday_1_end_date_day,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31
+              }
+    attribute :holiday_1_end_date_month
+    validates :holiday_1_end_date_month,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
+              }
+    attribute :holiday_1_end_date_year
+    validates :holiday_1_end_date_year,
+              numericality: { allow_blank: true, only_integer: true }
+
+    attribute :holiday_2_start_date_day
+    validates :holiday_2_start_date_day,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31
+              }
+    attribute :holiday_2_start_date_month
+    validates :holiday_2_start_date_month,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
+              }
+    attribute :holiday_2_start_date_year
+    validates :holiday_2_start_date_year,
+              numericality: { allow_blank: true, only_integer: true }
+
+    attribute :holiday_2_end_date_day
+    validates :holiday_2_end_date_day,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31
+              }
+    attribute :holiday_2_end_date_month
+    validates :holiday_2_end_date_month,
+              numericality: {
+                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
+              }
+    attribute :holiday_2_end_date_year
+    validates :holiday_2_end_date_year,
+              numericality: { allow_blank: true, only_integer: true }
+
     attribute :notice_date_day
     validates :notice_date_day,
               numericality: {
@@ -76,6 +132,30 @@ module SupplyTeachers
 
     def notice_date
       Date.parse("#{notice_date_year}-#{notice_date_month}-#{notice_date_day}")
+    rescue ArgumentError
+      nil
+    end
+
+    def holiday_1_start_date
+      Date.parse("#{holiday_1_start_date_year}-#{holiday_1_start_date_month}-#{holiday_1_start_date_day}")
+    rescue ArgumentError
+      nil
+    end
+
+    def holiday_1_end_date
+      Date.parse("#{holiday_1_end_date_year}-#{holiday_1_end_date_month}-#{holiday_1_end_date_day}")
+    rescue ArgumentError
+      nil
+    end
+
+    def holiday_2_start_date
+      Date.parse("#{holiday_2_start_date_year}-#{holiday_2_start_date_month}-#{holiday_2_start_date_day}")
+    rescue ArgumentError
+      nil
+    end
+
+    def holiday_2_end_date
+      Date.parse("#{holiday_2_end_date_year}-#{holiday_2_end_date_month}-#{holiday_2_end_date_day}")
     rescue ArgumentError
       nil
     end

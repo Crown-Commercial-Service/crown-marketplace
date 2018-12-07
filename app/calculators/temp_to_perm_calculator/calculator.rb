@@ -17,7 +17,11 @@ module TempToPermCalculator
       contract_start_date:,
       hire_date:,
       markup_rate:,
-      notice_date: nil
+      notice_date: nil,
+      holiday_1_start_date: nil,
+      holiday_1_end_date: nil,
+      holiday_2_start_date: nil,
+      holiday_2_end_date: nil
     )
       raise(ArgumentError, 'Hire date cannot be earlier than contract start date') if hire_date < contract_start_date
       raise(ArgumentError, 'Notice date cannot be later than hire date') if notice_date && notice_date > hire_date
@@ -31,6 +35,10 @@ module TempToPermCalculator
       @hire_date = hire_date
       @markup_rate = markup_rate
       @notice_date = notice_date
+      @holiday_1_start_date = holiday_1_start_date
+      @holiday_1_end_date = holiday_1_end_date
+      @holiday_2_start_date = holiday_2_start_date
+      @holiday_2_end_date = holiday_2_end_date
     end
     # rubocop:enable Metrics/ParameterLists
 
@@ -141,7 +149,14 @@ module TempToPermCalculator
     end
 
     def working_day?(date)
-      date.on_weekday? && Holidays.on(date, :gb_eng).empty?
+      date.on_weekday? && Holidays.on(date, :gb_eng).empty? && !school_holidays.include?(date)
+    end
+
+    def school_holidays
+      holidays = []
+      holidays += (@holiday_1_start_date..@holiday_1_end_date).to_a if @holiday_1_start_date && @holiday_1_end_date
+      holidays += (@holiday_2_start_date..@holiday_2_end_date).to_a if @holiday_2_start_date && @holiday_2_end_date
+      holidays
     end
   end
 end

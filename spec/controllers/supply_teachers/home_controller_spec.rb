@@ -25,7 +25,19 @@ RSpec.describe SupplyTeachers::HomeController, type: :controller, auth: true do
         hire_date_year: '2018',
         hire_date_month: '12',
         hire_date_day: '10',
-        markup_rate: '30.5'
+        markup_rate: '30.5',
+        holiday_1_start_date_year: '2018',
+        holiday_1_start_date_month: '12',
+        holiday_1_start_date_day: '2',
+        holiday_1_end_date_year: '2018',
+        holiday_1_end_date_month: '12',
+        holiday_1_end_date_day: '3',
+        holiday_2_start_date_year: '2018',
+        holiday_2_start_date_month: '12',
+        holiday_2_start_date_day: '4',
+        holiday_2_end_date_year: '2018',
+        holiday_2_end_date_month: '12',
+        holiday_2_end_date_day: '5'
       }
     end
 
@@ -45,7 +57,11 @@ RSpec.describe SupplyTeachers::HomeController, type: :controller, auth: true do
         contract_start_date: Date.new(2018, 12, 1),
         hire_date: Date.new(2018, 12, 10),
         markup_rate: 0.305,
-        notice_date: nil
+        notice_date: nil,
+        holiday_1_start_date: Date.new(2018, 12, 2),
+        holiday_1_end_date: Date.new(2018, 12, 3),
+        holiday_2_start_date: Date.new(2018, 12, 4),
+        holiday_2_end_date: Date.new(2018, 12, 5)
       )
     end
     # rubocop:enable RSpec/ExampleLength

@@ -15,7 +15,11 @@ module SupplyTeachers
         contract_start_date: previous_step.contract_start_date,
         hire_date: previous_step.hire_date,
         markup_rate: previous_step.markup_rate.to_f / 100.0,
-        notice_date: previous_step.notice_date
+        notice_date: previous_step.notice_date,
+        holiday_1_start_date: previous_step.holiday_1_start_date,
+        holiday_1_end_date: previous_step.holiday_1_end_date,
+        holiday_2_start_date: previous_step.holiday_2_start_date,
+        holiday_2_end_date: previous_step.holiday_2_end_date
       )
     end
   end
