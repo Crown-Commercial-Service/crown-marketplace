@@ -42,6 +42,10 @@ To create the database:
 * `COGNITO_CLIENT_SECRET`
 * `COGNITO_AWS_REGION`
 
+#### Google Analytics
+
+* `GA_TRACKING_ID`
+
 #### Production environments
 
 Credentials for HTTP Basic Authentication:
