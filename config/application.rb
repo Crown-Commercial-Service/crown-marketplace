@@ -80,4 +80,8 @@ module Marketplace
   def self.google_analytics_tracking_id
     @google_analytics_tracking_id ||= ENV['GA_TRACKING_ID']
   end
+
+  def self.google_geocoding_api_key
+    @google_geocoding_api_key ||= ENV.fetch('GOOGLE_GEOCODING_API_KEY')
+  end
 end
