@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_06_152712) do
+ActiveRecord::Schema.define(version: 2018_12_10_112501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -110,6 +110,11 @@ ActiveRecord::Schema.define(version: 2018_12_06_152712) do
     t.text "master_vendor_contact_name"
     t.text "master_vendor_telephone_number"
     t.text "master_vendor_contact_email"
+  end
+
+  create_table "supply_teachers_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
