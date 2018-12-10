@@ -55,6 +55,11 @@ module SupplyTeachers
                 if: proc { |calculator| calculator.holiday_1_start_date.present? },
                 message: :blank_when_start_date_is_set
               }
+    validates :holiday_1_end_date,
+              absence: {
+                if: proc { |calculator| calculator.holiday_1_start_date.blank? },
+                message: :without_corresponding_start_date
+              }
     validate :ensure_holiday_1_end_date_is_after_start_date
 
     attribute :holiday_2_start_date_day
