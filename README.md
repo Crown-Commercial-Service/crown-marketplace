@@ -80,4 +80,12 @@ $ cd crown-marketplace-data/$FRAMEWORK_NAME
 $ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @output/data.json $SCHEME://$HOST/$FRAMEWORK_NAME/uploads
 ```
 
+### Audit trail
+
+The application keeps a record of each *successful* upload in the database. So, for example, the time of the most recent upload for a framework can be obtained using the Rails console with one of the following commands:
+
+* `FacilitiesManagement::Upload.order(:created_at).last.created_at`
+* `ManagementConsultancy::Upload.order(:created_at).last.created_at`
+* `SupplyTeachers::Upload.order(:created_at).last.created_at`
+
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
