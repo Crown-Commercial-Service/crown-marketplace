@@ -1,6 +1,6 @@
 Geocoder.configure(
   lookup: :google,
-  api_key: ENV.fetch('GOOGLE_GEOCODING_API_KEY'),
+  api_key: Marketplace.google_geocoding_api_key,
   units: :mi,
   distance: :spherical,
   always_raise: :all,
