@@ -57,9 +57,9 @@ To create the database:
 * `GA_TRACKING_ID`
   * Google Analytics is disabled if this is not set
 
-#### Production environments
+#### Credentials protecting data upload URLs
 
-Credentials for HTTP Basic Authentication:
+HTTP Basic Authentication credentials. Only needed in production environments.
 
 * `HTTP_BASIC_AUTH_NAME`
 * `HTTP_BASIC_AUTH_PASSWORD`
