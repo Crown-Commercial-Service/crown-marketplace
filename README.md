@@ -62,6 +62,7 @@ To create the database:
 #### Credentials protecting data upload URLs
 
 HTTP Basic Authentication credentials. Only needed in production environments.
+See the [Importing data section](#importing-data) below.
 
 * `HTTP_BASIC_AUTH_NAME`
 * `HTTP_BASIC_AUTH_PASSWORD`
