@@ -75,19 +75,8 @@ en:
               without_corresponding_start_date: The end date of the first school holiday cannot be set without a corresponding start date
             holiday_1_start_date:
               invalid: Enter the date the first school holiday started and include a day, month and year
-            holiday_2_end_date_day:
-              greater_than_or_equal_to: The day of the end of the second holiday must be between 1 and 31
-              less_than_or_equal_to: The day of the end of the second holiday must be between 1 and 31
-              not_a_number: The day of the end of the second holiday must be a number
-              not_an_integer: The day of the end of the second holiday must be a whole number
-            holiday_2_end_date_month:
-              greater_than_or_equal_to: The month of the end of the second holiday must be between 1 and 12
-              less_than_or_equal_to: The month of the end of the second holiday must be between 1 and 12
-              not_a_number: The month of the end of the second holiday must be a number
-              not_an_integer: The month of the end of the second holiday must be a whole number
-            holiday_2_end_date_year:
-              not_a_number: The year of the end of the second holiday must be a number
-              not_an_integer: The year of the end of the second holiday must be a whole number
+            holiday_2_end_date:
+              invalid: Enter the date the second school holiday ended and include a day, month and year
             holiday_2_start_date:
               invalid: Enter the date the second school holiday started and include a day, month and year
             markup_rate:
