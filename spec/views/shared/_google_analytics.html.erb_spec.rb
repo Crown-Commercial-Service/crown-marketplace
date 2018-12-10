@@ -18,7 +18,7 @@ RSpec.describe 'shared/_google_analytics.html.erb' do
   context 'when Google Analytics tracking ID is set' do
     let(:ga_tracking_id) { 'UA-999-9' }
 
-    it 'displays the error summary' do
+    it 'renders the Google Analytics tracking code' do
       render partial: 'shared/google_analytics'
 
       expect(rendered).to match(/script/)
