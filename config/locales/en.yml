@@ -81,19 +81,8 @@ en:
             holiday_1_end_date_year:
               not_a_number: The year of the end of the first holiday must be a number
               not_an_integer: The year of the end of the first holiday must be a whole number
-            holiday_1_start_date_day:
-              greater_than_or_equal_to: The day of the start of the first holiday must be between 1 and 31
-              less_than_or_equal_to: The day of the start of the first holiday must be between 1 and 31
-              not_a_number: The day of the start of the first holiday must be a number
-              not_an_integer: The day of the start of the first holiday must be a whole number
-            holiday_1_start_date_month:
-              greater_than_or_equal_to: The month of the start of the first holiday must be between 1 and 12
-              less_than_or_equal_to: The month of the start of the first holiday must be between 1 and 12
-              not_a_number: The month of the start of the first holiday must be a number
-              not_an_integer: The month of the start of the first holiday must be a whole number
-            holiday_1_start_date_year:
-              not_a_number: The year of the start of the first holiday must be a number
-              not_an_integer: The year of the start of the first holiday must be a whole number
+            holiday_1_start_date:
+              invalid: Enter the date the first school holiday started and include a day, month and year
             holiday_2_end_date_day:
               greater_than_or_equal_to: The day of the end of the second holiday must be between 1 and 31
               less_than_or_equal_to: The day of the end of the second holiday must be between 1 and 31
