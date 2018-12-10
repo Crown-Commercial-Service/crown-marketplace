@@ -87,19 +87,8 @@ en:
               greater_than_or_equal_to: The mark-up percentage must be between 0 and 100
               less_than_or_equal_to: The mark-up percentage must be between 0 and 100
               not_a_number: The mark-up percentage must be a number
-            notice_date_day:
-              greater_than_or_equal_to: The day the agency were notified must be between 1 and 31
-              less_than_or_equal_to: The day the agency were notified must be between 1 and 31
-              not_a_number: The day the agency were notified must be a number
-              not_an_integer: The day the agency were notified must be a whole number
-            notice_date_month:
-              greater_than_or_equal_to: The month the agency were notified must be between 1 and 12
-              less_than_or_equal_to: The month the agency were notified must be between 1 and 12
-              not_a_number: The month the agency were notified must be a number
-              not_an_integer: The month the agency were notified must be a whole number
-            notice_date_year:
-              not_a_number: The year the agency were notified must be a number
-              not_an_integer: The year the agency were notified must be a whole number
+            notice_date:
+              invalid: Enter the date you notified the supplier of your intention to hire the worker and include a day, month and year
         supply_teachers/journey/worker_type:
           attributes:
             worker_type:
