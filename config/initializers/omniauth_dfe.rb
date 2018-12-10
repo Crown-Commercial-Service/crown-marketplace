@@ -1,17 +1,13 @@
 if Marketplace.dfe_signin_enabled?
-  DFE_SIGNIN_RAW_URL = Marketplace.dfe_signin_url
-  # Workaround for env var value including quotes in test environment
-  DFE_SIGNIN_URL = URI.parse(DFE_SIGNIN_RAW_URL.sub(/^\"/, '').sub(/\"$/, ''))
-
   options = {
     name: :dfe,
     discovery: true,
     response_type: :code,
     scope: %i[openid email organisation],
     client_options: {
-      port: DFE_SIGNIN_URL.port,
-      scheme: DFE_SIGNIN_URL.scheme,
-      host: DFE_SIGNIN_URL.host,
+      port: Marketplace.dfe_signin_uri.port,
+      scheme: Marketplace.dfe_signin_uri.scheme,
+      host: Marketplace.dfe_signin_uri.host,
       identifier: Marketplace.dfe_signin_client_id,
       secret: Marketplace.dfe_signin_client_secret,
       redirect_uri: Marketplace.dfe_signin_redirect_uri
