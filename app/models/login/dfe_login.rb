@@ -28,7 +28,7 @@ module Login
     end
 
     def whitelisted?
-      DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES.include?(email)
+      Marketplace.dfe_signin_whitelisted_email_addresses.include?(email)
     end
 
     delegate :non_profit?, to: :school_type, allow_nil: true

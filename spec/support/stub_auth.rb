@@ -41,7 +41,8 @@ RSpec.configure do |config|
   config.include SpecSupport::StubAuth, type: :feature
 
   config.before(type: :feature) do
-    stub_const 'DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', 'dfe@example.com'
+    allow(Marketplace).to receive(:dfe_signin_whitelisted_email_addresses)
+      .and_return(['dfe@example.com'])
   end
 
   config.around(:example, type: :feature) do |example|

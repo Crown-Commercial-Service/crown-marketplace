@@ -84,4 +84,25 @@ module Marketplace
   def self.google_geocoding_api_key
     @google_geocoding_api_key ||= ENV.fetch('GOOGLE_GEOCODING_API_KEY')
   end
+
+  def self.dfe_signin_url
+    @dfe_signin_url ||= ENV['DFE_SIGNIN_URL']
+  end
+
+  def self.dfe_signin_client_id
+    @dfe_signin_client_id ||= ENV.fetch('DFE_SIGNIN_CLIENT_ID')
+  end
+
+  def self.dfe_signin_client_secret
+    @dfe_signin_client_secret ||= ENV.fetch('DFE_SIGNIN_CLIENT_SECRET')
+  end
+
+  def self.dfe_signin_redirect_uri
+    @dfe_signin_redirect_uri ||= ENV.fetch('DFE_SIGNIN_REDIRECT_URI')
+  end
+
+  def self.dfe_signin_whitelisted_email_addresses
+    @dfe_signin_whitelisted_email_addresses ||=
+      ENV.fetch('DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', '').split(',')
+  end
 end
