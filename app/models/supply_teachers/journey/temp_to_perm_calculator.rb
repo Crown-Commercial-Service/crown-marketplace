@@ -3,17 +3,9 @@ module SupplyTeachers
     include Steppable
 
     attribute :contract_start_date_day
-    validates :contract_start_date_day,
-              presence: true,
-              numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31 }
     attribute :contract_start_date_month
-    validates :contract_start_date_month,
-              presence: true,
-              numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12 }
     attribute :contract_start_date_year
-    validates :contract_start_date_year,
-              presence: true,
-              numericality: { only_integer: true }
+    validates :contract_start_date, presence: true
 
     attribute :days_per_week
     validates :days_per_week,
