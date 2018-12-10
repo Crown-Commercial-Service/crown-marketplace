@@ -72,8 +72,6 @@ class ApplicationController < ActionController::Base
     render template: 'shared/not_permitted', status: 403
   end
 
-  def ccs_homepage_url
-    'https://www.crowncommercial.gov.uk/'
-  end
+  delegate :ccs_homepage_url, to: Marketplace
   helper_method :ccs_homepage_url
 end

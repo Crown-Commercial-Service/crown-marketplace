@@ -44,4 +44,8 @@ module Marketplace
   def self.support_telephone_number
     '0345 410 2222'
   end
+
+  def self.ccs_homepage_url
+    'https://www.crowncommercial.gov.uk/'
+  end
 end
