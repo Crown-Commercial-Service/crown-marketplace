@@ -37,6 +37,8 @@ To create the database:
 #### Cognito
 
 * `COGNITO_USER_POOL_SITE`
+  * If this is not set in development, both Cognito & DfE Signin
+    are configured to use OmniAuth test mode.
 * `COGNITO_USER_POOL_ID`
 * `COGNITO_CLIENT_ID`
 * `COGNITO_CLIENT_SECRET`
