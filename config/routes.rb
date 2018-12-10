@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
   get '/auth/cognito', as: :cognito_sign_in
   get '/auth/cognito/callback' => 'auth#callback'
-  if DFE_SIGNIN_ENABLED
+  if Marketplace.dfe_signin_enabled?
     get '/auth/dfe', as: :dfe_sign_in
     get '/auth/dfe/callback' => 'auth#callback'
   end

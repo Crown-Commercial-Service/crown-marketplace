@@ -1,6 +1,4 @@
-DFE_SIGNIN_ENABLED = Marketplace.dfe_signin_url.present?
-
-if DFE_SIGNIN_ENABLED
+if Marketplace.dfe_signin_enabled?
   DFE_SIGNIN_RAW_URL = Marketplace.dfe_signin_url
   # Workaround for env var value including quotes in test environment
   DFE_SIGNIN_URL = URI.parse(DFE_SIGNIN_RAW_URL.sub(/^\"/, '').sub(/\"$/, ''))

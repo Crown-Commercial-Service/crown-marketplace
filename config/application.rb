@@ -89,6 +89,10 @@ module Marketplace
     @dfe_signin_url ||= ENV['DFE_SIGNIN_URL']
   end
 
+  def self.dfe_signin_enabled?
+    dfe_signin_url.present?
+  end
+
   def self.dfe_signin_client_id
     @dfe_signin_client_id ||= ENV.fetch('DFE_SIGNIN_CLIENT_ID')
   end
