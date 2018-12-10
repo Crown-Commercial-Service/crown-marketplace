@@ -76,4 +76,8 @@ module Marketplace
   def self.cognito_aws_region
     @cognito_aws_region ||= ENV.fetch('COGNITO_AWS_REGION')
   end
+
+  def self.ga_tracking_id
+    @ga_tracking_id ||= ENV['GA_TRACKING_ID']
+  end
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'shared/_google_analytics.html.erb' do
   context 'when GA_TRACKING_ID is missing' do
     before do
-      stub_const('ENV', {})
+      allow(Marketplace).to receive(:ga_tracking_id).and_return(nil)
       render partial: 'shared/google_analytics'
     end
 
@@ -14,7 +14,7 @@ RSpec.describe 'shared/_google_analytics.html.erb' do
 
   context 'when GA_TRACKING_ID is set' do
     before do
-      stub_const('ENV', 'GA_TRACKING_ID' => 'UA-999-9')
+      allow(Marketplace).to receive(:ga_tracking_id).and_return('UA-999-9')
       render partial: 'shared/google_analytics'
     end
 
