@@ -1,5 +1,5 @@
 module ManagementConsultancy
-  class Upload
+  class Upload < ApplicationRecord
     def self.upload!(suppliers)
       error = all_or_none(Supplier) do
         Supplier.delete_all_with_dependents
@@ -7,6 +7,7 @@ module ManagementConsultancy
         suppliers.map do |supplier_data|
           create_supplier!(supplier_data)
         end
+        create!
       end
       raise error if error
     end
