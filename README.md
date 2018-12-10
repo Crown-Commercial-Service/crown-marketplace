@@ -49,6 +49,8 @@ To create the database:
 * `DFE_SIGNIN_CLIENT_SECRET`
 * `DFE_SIGNIN_REDIRECT_URI`
 * `DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES`
+  * Comma-separated list of email addresses allowed access via DfE Signin
+  * Defaults to an empty list, i.e. nobody has access
 
 #### Google Analytics
 
