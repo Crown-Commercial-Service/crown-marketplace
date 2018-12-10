@@ -79,6 +79,7 @@ en:
               before_start_date: The end date of the second school holiday must be after the start date
               blank_when_start_date_is_set: The end date of the second school holiday must be set when a start date is entered
               invalid: Enter the date the second school holiday ended and include a day, month and year
+              without_corresponding_start_date: The end date of the second school holiday cannot be set without a corresponding start date
             holiday_2_start_date:
               invalid: Enter the date the second school holiday started and include a day, month and year
             markup_rate:
