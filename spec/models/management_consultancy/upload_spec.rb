@@ -34,6 +34,12 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
     end
 
     context 'when supplier does not exist' do
+      it 'creates record of successful upload' do
+        expect do
+          described_class.upload!(suppliers)
+        end.to change(ManagementConsultancy::Upload, :count).by(1)
+      end
+
       it 'creates supplier' do
         expect do
           described_class.upload!(suppliers)
@@ -189,6 +195,14 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
               'supplier_name' => ''
             }
           ]
+        end
+
+        it 'does not create record of unsuccessful upload' do
+          expect do
+            ignoring_exception(ActiveRecord::RecordInvalid) do
+              described_class.upload!(suppliers)
+            end
+          end.to change(ManagementConsultancy::Upload, :count).by(0)
         end
 
         it 'leaves existing data intact' do
