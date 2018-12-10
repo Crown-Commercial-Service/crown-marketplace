@@ -21,6 +21,10 @@ module ApplicationHelper
     )
   end
 
+  def support_telephone_number
+    Marketplace.support_telephone_number
+  end
+
   def govuk_email_link(email_address, aria_label, css_class: 'govuk-link')
     mail_to(email_address, email_address, class: css_class, 'aria-label': aria_label)
   end
