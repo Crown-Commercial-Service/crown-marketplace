@@ -90,14 +90,14 @@
         </div>
       <% end %>
 
-      <%= govuk_form_group_with_optional_error(@journey, :hire_date, :hire_date_day, :hire_date_month, :hire_date_year) do %>
-        <%= govuk_fieldset_with_optional_error(@journey, :hire_date, :hire_date_day, :hire_date_month, :hire_date_year) do %>
+      <%= govuk_form_group_with_optional_error(@journey, :hire_date) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :hire_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">
               <%= t('.hire_date_question') %>
             </h1>
           </legend>
-          <%= display_errors(@journey, :hire_date, :hire_date_day, :hire_date_month, :hire_date_year) %>
+          <%= display_errors(@journey, :hire_date) %>
           <span id="hire-date-hint" class="govuk-hint">
             <%= t('.hire_date_question_hint') %>
           </span>
@@ -107,7 +107,7 @@
                 <label class="govuk-label govuk-date-input__label" for="hire_date_day">
                   Day
                 </label>
-                <%= text_field_tag :hire_date_day, @journey.current_step.hire_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :hire_date_day, %w[govuk-date-input__input govuk-input--width-2]) %>
+                <%= text_field_tag :hire_date_day, @journey.current_step.hire_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :hire_date, %w[govuk-date-input__input govuk-input--width-2]) %>
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -115,7 +115,7 @@
                 <label class="govuk-label govuk-date-input__label" for="hire_date_month">
                   Month
                 </label>
-                <%= text_field_tag :hire_date_month, @journey.current_step.hire_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :hire_date_month, %w[govuk-date-input__input govuk-input--width-2]) %>
+                <%= text_field_tag :hire_date_month, @journey.current_step.hire_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :hire_date, %w[govuk-date-input__input govuk-input--width-2]) %>
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -123,7 +123,7 @@
                 <label class="govuk-label govuk-date-input__label" for="hire_date_year">
                   Year
                 </label>
-                <%= text_field_tag :hire_date_year, @journey.current_step.hire_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :hire_date_year, %w[govuk-date-input__input govuk-input--width-4]) %>
+                <%= text_field_tag :hire_date_year, @journey.current_step.hire_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :hire_date, %w[govuk-date-input__input govuk-input--width-4]) %>
               </div>
             </div>
           </div>

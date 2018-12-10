@@ -67,22 +67,7 @@ en:
               not_a_number: The number of days worked per week must be a number
             hire_date:
               after_contract_start_date: The date the worker will be hired must be after the date the contract started
-            hire_date_day:
-              blank: The date the worker will be hired must include a day
-              greater_than_or_equal_to: The day the worker will be hired must be between 1 and 31
-              less_than_or_equal_to: The day the worker will be hired must be between 1 and 31
-              not_a_number: The day the worker will be hired must be a number
-              not_an_integer: The day the worker will be hired must be a whole number
-            hire_date_month:
-              blank: The date the worker will be hired must include a month
-              greater_than_or_equal_to: The month the worker will be hired must be between 1 and 12
-              less_than_or_equal_to: The month the worker will be hired must be between 1 and 12
-              not_a_number: The month the worker will be hired must be a number
-              not_an_integer: The month the worker will be hired must be a whole number
-            hire_date_year:
-              blank: The date the worker will be hired must include a year
-              not_a_number: The year the worker will be hired must be a number
-              not_an_integer: The year the worker will be hired must be a whole number
+              blank: Enter the date you want to hire the worker and include a day, month and year
             holiday_1_end_date_day:
               greater_than_or_equal_to: The day of the end of the first holiday must be between 1 and 31
               less_than_or_equal_to: The day of the end of the first holiday must be between 1 and 31
