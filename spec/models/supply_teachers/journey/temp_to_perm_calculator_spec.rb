@@ -521,4 +521,22 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
       )
     end
   end
+
+  context 'when holiday_1_end_date is earlier than holiday_1_start_date' do
+    let(:holiday_1_start_date_day) { 2 }
+    let(:holiday_1_start_date_month) { 12 }
+    let(:holiday_1_start_date_year) { 2018 }
+    let(:holiday_1_end_date_day) { 1 }
+    let(:holiday_1_end_date_month) { 12 }
+    let(:holiday_1_end_date_year) { 2018 }
+
+    it { is_expected.to be_invalid }
+
+    it 'obtains the error message from an I18n translation' do
+      step.valid?
+      expect(step.errors[:holiday_1_end_date]).to include(
+        I18n.t("#{model_key}.attributes.holiday_1_end_date.before_start_date")
+      )
+    end
+  end
 end
