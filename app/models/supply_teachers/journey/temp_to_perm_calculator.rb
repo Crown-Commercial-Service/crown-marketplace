@@ -50,6 +50,7 @@ module SupplyTeachers
                 end,
                 message: :invalid
               }
+    validate :ensure_holiday_1_end_date_is_after_start_date
 
     attribute :holiday_2_start_date_day
     validates :holiday_2_start_date_day,
@@ -148,6 +149,13 @@ module SupplyTeachers
       return if hire_date > contract_start_date
 
       errors.add(:hire_date, :after_contract_start_date)
+    end
+
+    def ensure_holiday_1_end_date_is_after_start_date
+      return unless holiday_1_start_date.present? && holiday_1_end_date.present?
+      return if holiday_1_end_date >= holiday_1_start_date
+
+      errors.add(:holiday_1_end_date, :before_start_date)
     end
   end
 end

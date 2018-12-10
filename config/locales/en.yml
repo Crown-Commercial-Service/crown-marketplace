@@ -69,6 +69,7 @@ en:
               after_contract_start_date: The date the worker will be hired must be after the date the contract started
               blank: Enter the date you want to hire the worker and include a day, month and year
             holiday_1_end_date:
+              before_start_date: The end date of the first school holiday must be after the start date
               invalid: Enter the date the first school holiday ended and include a day, month and year
             holiday_1_start_date:
               invalid: Enter the date the first school holiday started and include a day, month and year
