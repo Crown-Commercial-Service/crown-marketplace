@@ -84,7 +84,10 @@
         <span class="govuk-hint">
           <%= t('.markup_rate_question_hint') %>
         </span>
-        <%= text_field_tag :markup_rate, params[:markup_rate], class: css_classes_for_input(@journey, :markup_rate, ['govuk-input--width-10']) %>
+        <div class="calculator-form__markup-rate">
+          <%= text_field_tag :markup_rate, params[:markup_rate], class: css_classes_for_input(@journey, :markup_rate, ['govuk-input--width-10 calculator-form__markup-rate-input']) %>
+          <i class="govuk-body calculator-form__markup-percentage-icon"><%= t('.markup_percentage_icon') %></i>
+        </div>
       <% end %>
 
       <%= govuk_form_group_with_optional_error(@journey, :hire_date, :hire_date_day, :hire_date_month, :hire_date_year) do %>
