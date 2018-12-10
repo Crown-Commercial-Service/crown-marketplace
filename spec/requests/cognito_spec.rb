@@ -14,7 +14,7 @@ RSpec.describe 'Cognito authorisation', type: :request do
     end
 
     it 'redirects to the URL of our AWS Cognito user pool' do
-      user_pool_site = URI.parse(ENV['COGNITO_USER_POOL_SITE'])
+      user_pool_site = URI.parse(Marketplace.cognito_user_pool_site)
       expect(redirected_to.host).to eq(user_pool_site.host)
     end
 
@@ -23,7 +23,7 @@ RSpec.describe 'Cognito authorisation', type: :request do
     end
 
     it 'includes our cognito client id in the querystring' do
-      expect(query_params['client_id']).to eq(ENV['COGNITO_CLIENT_ID'])
+      expect(query_params['client_id']).to eq(Marketplace.cognito_client_id)
     end
 
     it 'includes our callback URI in the querystring' do
@@ -45,9 +45,9 @@ RSpec.describe 'Cognito authorisation', type: :request do
 
     let(:cognito_jwt_payload) do
       {
-        aud: ENV['COGNITO_CLIENT_ID'],
+        aud: Marketplace.cognito_client_id,
         token_use: 'id',
-        iss: "https://cognito-idp.#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['COGNITO_USER_POOL_ID']}",
+        iss: "https://cognito-idp.#{Marketplace.cognito_aws_region}.amazonaws.com/#{Marketplace.cognito_user_pool_id}",
         exp: 5.minutes.from_now.to_i,
         iat: 1541434118,
         email: 'email-address-of-cognito-user'
@@ -89,11 +89,11 @@ RSpec.describe 'Cognito authorisation', type: :request do
     end
 
     before do
-      stub_request(:post, "#{ENV['COGNITO_USER_POOL_SITE']}/oauth2/token")
+      stub_request(:post, "#{Marketplace.cognito_user_pool_site}/oauth2/token")
         .to_return(status: 200, body: cognito_oauth2_token_response, headers: { 'Content-Type' => 'application/json' })
 
-      region = ENV.fetch('COGNITO_AWS_REGION')
-      user_pool_id = ENV.fetch('COGNITO_USER_POOL_ID')
+      region = Marketplace.cognito_aws_region
+      user_pool_id = Marketplace.cognito_user_pool_id
       stub_request(:get, "https://cognito-idp.#{region}.amazonaws.com/#{user_pool_id}/.well-known/jwks.json")
         .to_return(status: 200,
                    body: cognito_public_keys_as_jwks.to_json,

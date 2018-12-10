@@ -1,10 +1,10 @@
 module Cognito
   def self.pool_site
-    ENV.fetch('COGNITO_USER_POOL_SITE')
+    Marketplace.cognito_user_pool_site
   end
 
   def self.client_id
-    ENV.fetch('COGNITO_CLIENT_ID')
+    Marketplace.cognito_client_id
   end
 
   def self.logout_path(redirect)

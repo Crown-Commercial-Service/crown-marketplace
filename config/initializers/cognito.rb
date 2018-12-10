@@ -1,15 +1,15 @@
 require 'omniauth/strategies/cognito'
 
-client_id = ENV.fetch('COGNITO_CLIENT_ID')
-client_secret = ENV.fetch('COGNITO_CLIENT_SECRET')
+client_id = Marketplace.cognito_client_id
+client_secret = Marketplace.cognito_client_secret
 cognito_options = {
   client_options: {
-    site: ENV.fetch('COGNITO_USER_POOL_SITE')
+    site: Marketplace.cognito_user_pool_site
   },
   callback_path: '/auth/cognito/callback',
   scope: 'email openid',
-  region: ENV.fetch('COGNITO_AWS_REGION'),
-  user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID')
+  region: Marketplace.cognito_aws_region,
+  user_pool_id: Marketplace.cognito_user_pool_id
 }
 
 Rails.application.config.middleware.use OmniAuth::Strategies::Cognito, client_id, client_secret, cognito_options
