@@ -217,6 +217,22 @@ RSpec.describe 'supply_teachers/journey/temp_to_perm_calculator.html.erb' do
     end
   end
 
+  context 'when the journey has an error in hire_date' do
+    before do
+      errors.add(:hire_date, 'error-message')
+    end
+
+    it 'links the fieldset to the error message' do
+      render
+      expect(rendered).to have_css('fieldset[aria-describedby="hire_date-error"]')
+    end
+
+    it 'adds the message to the field with the error' do
+      render
+      expect(rendered).to have_css('#hire_date-error.govuk-error-message', text: 'error-message')
+    end
+  end
+
   context 'when contract_start_date_day field was previously set' do
     before do
       step.contract_start_date_day = '01'
