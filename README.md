@@ -72,27 +72,12 @@ NOTE. You can set `CCS_DEFAULT_DB_HOST` to `docker.for.mac.localhost` to connect
 
 ## Importing data
 
-### Supply teacher data
+You can import data for a given framework using the following command where `FRAMEWORK_NAME` is one of `supply-teachers`, `facilities-management` or `management-consultancy`; `SCHEME` is one of `http` (local development) or `https` (other environments); `HTTP_BASIC_AUTH_NAME` & `HTTP_BASIC_AUTH_PASSWORD` credentials (only needed for production environments):
 
 ```
 $ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
-$ cd crown-marketplace-data/supply-teachers
-$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @output/data.json $SCHEME://$HOST/supply-teachers/uploads
-```
-### Facilities management data
-
-```
-$ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
-$ cd crown-marketplace-data/facilities-management
-$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @output/data.json $SCHEME://$HOST/facilities-management/uploads
-```
-
-### Management consultancy data
-
-```
-$ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
-$ cd crown-marketplace-data/management-consultancy
-$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @output/data.json $SCHEME://$HOST/management-consultancy/uploads
+$ cd crown-marketplace-data/$FRAMEWORK_NAME
+$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST --header "Content-Type: application/json" --data @output/data.json $SCHEME://$HOST/$FRAMEWORK_NAME/uploads
 ```
 
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
