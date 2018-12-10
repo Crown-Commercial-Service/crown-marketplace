@@ -40,4 +40,8 @@ module Marketplace
   def self.support_email_address
     'info@crowncommercial.gov.uk'
   end
+
+  def self.support_telephone_number
+    '0345 410 2222'
+  end
 end
