@@ -41,9 +41,8 @@ RSpec.describe Login::DfeLogin, type: :model do
   let(:whitelisted_email_addresses) { [email] }
 
   before do
-    stub_const(
-      'DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', whitelisted_email_addresses.join(',')
-    )
+    allow(Marketplace).to receive(:dfe_signin_whitelisted_email_addresses)
+      .and_return(whitelisted_email_addresses)
   end
 
   it { is_expected.to be_a(described_class) }

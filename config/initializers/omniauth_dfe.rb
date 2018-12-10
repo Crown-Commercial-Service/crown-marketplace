@@ -1,12 +1,9 @@
-DFE_SIGNIN_ENABLED = ENV['DFE_SIGNIN_URL'].present?
+DFE_SIGNIN_ENABLED = Marketplace.dfe_signin_url.present?
 
 if DFE_SIGNIN_ENABLED
-  DFE_SIGNIN_RAW_URL = ENV.fetch('DFE_SIGNIN_URL')
+  DFE_SIGNIN_RAW_URL = Marketplace.dfe_signin_url
   # Workaround for env var value including quotes in test environment
   DFE_SIGNIN_URL = URI.parse(DFE_SIGNIN_RAW_URL.sub(/^\"/, '').sub(/\"$/, ''))
-
-  DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES =
-    ENV.fetch('DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', '').split(',')
 
   options = {
     name: :dfe,
@@ -17,9 +14,9 @@ if DFE_SIGNIN_ENABLED
       port: DFE_SIGNIN_URL.port,
       scheme: DFE_SIGNIN_URL.scheme,
       host: DFE_SIGNIN_URL.host,
-      identifier: ENV.fetch('DFE_SIGNIN_CLIENT_ID'),
-      secret: ENV.fetch('DFE_SIGNIN_CLIENT_SECRET'),
-      redirect_uri: ENV.fetch('DFE_SIGNIN_REDIRECT_URI')
+      identifier: Marketplace.dfe_signin_client_id,
+      secret: Marketplace.dfe_signin_client_secret,
+      redirect_uri: Marketplace.dfe_signin_redirect_uri
     }
   }
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
