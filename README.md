@@ -55,6 +55,7 @@ To create the database:
 #### Google Analytics
 
 * `GA_TRACKING_ID`
+  * Google Analytics is disabled if this is not set
 
 #### Production environments
 
