@@ -5,14 +5,14 @@
     <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
     <%= form_tag @form_path, method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-      <%= govuk_form_group_with_optional_error(@journey, :contract_start_date_day, :contract_start_date_month, :contract_start_date_year) do %>
-        <%= govuk_fieldset_with_optional_error(@journey, :contract_start_date_day, :contract_start_date_month, :contract_start_date_year) do %>
+      <%= govuk_form_group_with_optional_error(@journey, :contract_start_date) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :contract_start_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">
               <%= t('.contract_start_question') %>
             </h1>
           </legend>
-          <%= display_errors(@journey, :contract_start_date_day, :contract_start_date_month, :contract_start_date_year) %>
+          <%= display_errors(@journey, :contract_start_date) %>
           <span id="contract-start-hint" class="govuk-hint">
             <%= t('.contract_start_question_hint') %>
           </span>
@@ -22,7 +22,7 @@
                 <label class="govuk-label govuk-date-input__label" for="contract_start_date_day">
                   Day
                 </label>
-                <%= text_field_tag :contract_start_date_day, @journey.current_step.contract_start_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date_day, %w[govuk-date-input__input govuk-input--width-2]) %>
+                <%= text_field_tag :contract_start_date_day, @journey.current_step.contract_start_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date, %w[govuk-date-input__input govuk-input--width-2]) %>
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -30,7 +30,7 @@
                 <label class="govuk-label govuk-date-input__label" for="contract_start_date_month">
                   Month
                 </label>
-                <%= text_field_tag :contract_start_date_month, @journey.current_step.contract_start_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date_month, %w[govuk-date-input__input govuk-input--width-2]) %>
+                <%= text_field_tag :contract_start_date_month, @journey.current_step.contract_start_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date, %w[govuk-date-input__input govuk-input--width-2]) %>
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -38,7 +38,7 @@
                 <label class="govuk-label govuk-date-input__label" for="contract_start_date_year">
                   Year
                 </label>
-                <%= text_field_tag :contract_start_date_year, @journey.current_step.contract_start_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date_year, %w[govuk-date-input__input govuk-input--width-4]) %>
+                <%= text_field_tag :contract_start_date_year, @journey.current_step.contract_start_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date, %w[govuk-date-input__input govuk-input--width-4]) %>
               </div>
             </div>
           </div>
