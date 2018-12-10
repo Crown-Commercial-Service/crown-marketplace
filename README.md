@@ -42,6 +42,14 @@ To create the database:
 * `COGNITO_CLIENT_SECRET`
 * `COGNITO_AWS_REGION`
 
+#### DfE Signin
+
+* `DFE_SIGNIN_URL`
+* `DFE_SIGNIN_CLIENT_ID`
+* `DFE_SIGNIN_CLIENT_SECRET`
+* `DFE_SIGNIN_REDIRECT_URI`
+* `DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES`
+
 #### Google Analytics
 
 * `GA_TRACKING_ID`
@@ -104,7 +112,7 @@ The application keeps a record of each *successful* upload in the database. So, 
 
 We use [juice](juice) to generate HTML error pages from the live service, inlining all css, images, webfonts, etc.
 
-A rake task makes this easier: 
+A rake task makes this easier:
 ```
 $ rake 'error_pages[http://localhost:3000]'
 ```
@@ -113,4 +121,3 @@ This will pull down /errors/404.html, for example, and save an inlined copy in p
 
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
 [juice]: https://www.npmjs.com/package/juice
-
