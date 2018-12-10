@@ -67,6 +67,17 @@ See the [Importing data section](#importing-data) below.
 * `HTTP_BASIC_AUTH_NAME`
 * `HTTP_BASIC_AUTH_PASSWORD`
 
+#### Database
+
+The following are used to configure the database, but only in
+production environments:
+
+* `CCS_DEFAULT_DB_HOST`
+* `CCS_DEFAULT_DB_PORT`
+* `CCS_DEFAULT_DB_NAME`
+* `CCS_DEFAULT_DB_USER`
+* `CCS_DEFAULT_DB_PASSWORD`
+
 ## Run
 
     $ rails s
