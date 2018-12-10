@@ -5,8 +5,8 @@ module ManagementConsultancy
 
     if Rails.env.production?
       http_basic_authenticate_with(
-        name: ENV.fetch('HTTP_BASIC_AUTH_NAME'),
-        password: ENV.fetch('HTTP_BASIC_AUTH_PASSWORD')
+        name: Marketplace.http_basic_auth_name,
+        password: Marketplace.http_basic_auth_password
       )
     end
 

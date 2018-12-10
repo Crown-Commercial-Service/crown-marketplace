@@ -48,4 +48,12 @@ module Marketplace
   def self.ccs_homepage_url
     'https://www.crowncommercial.gov.uk/'
   end
+
+  def self.http_basic_auth_name
+    @http_basic_auth_name ||= ENV.fetch('HTTP_BASIC_AUTH_NAME')
+  end
+
+  def self.http_basic_auth_password
+    @http_basic_auth_password ||= ENV.fetch('HTTP_BASIC_AUTH_PASSWORD')
+  end
 end
