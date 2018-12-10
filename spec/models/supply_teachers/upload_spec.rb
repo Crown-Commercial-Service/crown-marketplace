@@ -66,7 +66,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
       it 'does not create any suppliers' do
         expect do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
         end.not_to change(SupplyTeachers::Supplier, :count)
       end
     end
@@ -78,26 +78,26 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
       it 'creates supplier' do
         expect do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
         end.to change(SupplyTeachers::Supplier, :count).by(1)
       end
 
       it 'assigns ID to supplier' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last
         expect(supplier.id).to eq(supplier_id)
       end
 
       it 'assigns attributes to supplier' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last
         expect(supplier.name).to eq(supplier_name)
       end
 
       it 'assigns master vendor contact information' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last
         expect(supplier).to have_attributes(
@@ -108,7 +108,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
       end
 
       it 'assigns neutral vendor contact information' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last
         expect(supplier).to have_attributes(
@@ -120,12 +120,12 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
       it 'creates a branch associated with supplier' do
         expect do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
         end.to change(SupplyTeachers::Branch, :count).by(1)
       end
 
       it 'assigns attributes to the branch' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last
         branch = supplier.branches.first
@@ -133,7 +133,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
       end
 
       it 'assigns address-related attributes to the branch' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last
         branch = supplier.branches.first
@@ -142,7 +142,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
       end
 
       it 'assigns geography-related attributes to the branch' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last
         branch = supplier.branches.first
@@ -151,7 +151,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
       end
 
       it 'assigns contact-related attributes to the branch' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last
         branch = supplier.branches.first
@@ -165,7 +165,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
         it 'creates a supplier anyway' do
           expect do
-            described_class.create!(suppliers)
+            described_class.upload!(suppliers)
           end.to change(SupplyTeachers::Supplier, :count).by(1)
         end
       end
@@ -203,12 +203,12 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
         it 'creates two branches associated with supplier' do
           expect do
-            described_class.create!(suppliers)
+            described_class.upload!(suppliers)
           end.to change(SupplyTeachers::Branch, :count).by(2)
         end
 
         it 'assigns attributes to the branches' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           branches = supplier.branches
@@ -239,7 +239,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         end
 
         it 'adds nominated worker rates to supplier' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           expect(supplier.rates.direct_provision).to include(
@@ -251,7 +251,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         end
 
         it 'adds fixed term rates to supplier' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           expect(supplier.rates.direct_provision).to include(
@@ -263,7 +263,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         end
 
         it 'imports non-nominated rate data' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           expect(supplier.rates.direct_provision).to include(
@@ -299,7 +299,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         end
 
         it 'adds nominated worker rates to supplier' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           expect(supplier.rates.master_vendor).to include(
@@ -311,7 +311,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         end
 
         it 'adds fixed term rates to supplier' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           expect(supplier.rates.master_vendor).to include(
@@ -323,7 +323,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         end
 
         it 'imports non-nominated rate data' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           expect(supplier.rates.master_vendor).to include(
@@ -353,7 +353,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         end
 
         it 'adds nominated worker rates to supplier' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           expect(supplier.rates.neutral_vendor).to include(
@@ -365,7 +365,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         end
 
         it 'adds daily fee rates to supplier' do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
 
           supplier = SupplyTeachers::Supplier.last
           expect(supplier.rates.neutral_vendor).to include(
@@ -387,7 +387,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
       let!(:second_supplier) { create(:supplier) }
 
       it 'destroys all existing suppliers' do
-        described_class.create!(suppliers)
+        described_class.upload!(suppliers)
 
         expect(SupplyTeachers::Supplier.find_by(id: first_supplier.id))
           .to be_nil
@@ -406,7 +406,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
         it 'leaves existing data intact' do
           ignoring_exception(ActiveRecord::RecordInvalid) do
-            described_class.create!(suppliers)
+            described_class.upload!(suppliers)
           end
 
           expect(SupplyTeachers::Supplier.find_by(id: first_supplier.id))
@@ -431,14 +431,14 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
       it 'raises ActiveRecord::RecordInvalid exception' do
         expect do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       it 'does not create any suppliers' do
         expect do
           ignoring_exception(ActiveRecord::RecordInvalid) do
-            described_class.create!(suppliers)
+            described_class.upload!(suppliers)
           end
         end.not_to change(SupplyTeachers::Supplier, :count)
       end
@@ -460,14 +460,14 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
       it 'raises ActiveRecord::RecordInvalid exception' do
         expect do
-          described_class.create!(suppliers)
+          described_class.upload!(suppliers)
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       it 'does not create any suppliers' do
         expect do
           ignoring_exception(ActiveRecord::RecordInvalid) do
-            described_class.create!(suppliers)
+            described_class.upload!(suppliers)
           end
         end.not_to change(SupplyTeachers::Supplier, :count)
       end
