@@ -58,7 +58,6 @@ RSpec.describe 'supply_teachers/journey/school_postcode_nominated_worker.html.er
     end
 
     it 'adds an error prefix to the page title' do
-      render
       expect(view.content_for(:page_title_prefix)).to match(t('layouts.application.error_prefix'))
     end
   end

@@ -62,7 +62,6 @@ RSpec.describe 'supply_teachers/journey/managed_service_provider.html.erb' do
     end
 
     it 'adds an error prefix to the page title' do
-      render
       expect(view.content_for(:page_title_prefix)).to match(t('layouts.application.error_prefix'))
     end
   end
