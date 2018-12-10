@@ -590,10 +590,13 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     it { is_expected.to be_valid }
   end
 
-  context 'when holiday_2_start_date is present and valid' do
+  context 'when holiday_2_start_date is present and earlier than holiday_2_end_date' do
     let(:holiday_2_start_date_day) { 1 }
     let(:holiday_2_start_date_month) { 12 }
     let(:holiday_2_start_date_year) { 2018 }
+    let(:holiday_2_end_date_day) { 2 }
+    let(:holiday_2_end_date_month) { 12 }
+    let(:holiday_2_end_date_year) { 2018 }
 
     it { is_expected.to be_valid }
   end
@@ -619,6 +622,24 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     let(:holiday_2_end_date_year) { nil }
 
     it { is_expected.to be_valid }
+  end
+
+  context 'when holiday_2_end_date is absent but holiday_2_start_date is present' do
+    let(:holiday_2_start_date_day) { 2018 }
+    let(:holiday_2_start_date_month) { 1 }
+    let(:holiday_2_start_date_year) { 1 }
+    let(:holiday_2_end_date_day) { nil }
+    let(:holiday_2_end_date_month) { nil }
+    let(:holiday_2_end_date_year) { nil }
+
+    it { is_expected.to be_invalid }
+
+    it 'obtains the error message from an I18n translation' do
+      step.valid?
+      expect(step.errors[:holiday_2_end_date]).to include(
+        I18n.t("#{model_key}.attributes.holiday_2_end_date.blank_when_start_date_is_set")
+      )
+    end
   end
 
   context 'when holiday_2_end_date is present and a real date' do

@@ -87,6 +87,11 @@ module SupplyTeachers
                 end,
                 message: :invalid
               }
+    validates :holiday_2_end_date,
+              presence: {
+                if: proc { |calculator| calculator.holiday_2_start_date.present? },
+                message: :blank_when_start_date_is_set
+              }
     validate :ensure_holiday_2_end_date_is_after_start_date
 
     attribute :notice_date_day
