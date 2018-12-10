@@ -490,4 +490,35 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
       )
     end
   end
+
+  context 'when holiday_1_end_date is absent' do
+    let(:holiday_1_end_date_day) { nil }
+    let(:holiday_1_end_date_month) { nil }
+    let(:holiday_1_end_date_year) { nil }
+
+    it { is_expected.to be_valid }
+  end
+
+  context 'when holiday_1_end_date is present and a real date' do
+    let(:holiday_1_end_date_day) { 1 }
+    let(:holiday_1_end_date_month) { 12 }
+    let(:holiday_1_end_date_year) { 2018 }
+
+    it { is_expected.to be_valid }
+  end
+
+  context 'when holiday_1_end_date is present but invalid' do
+    let(:holiday_1_end_date_day) { 40 }
+    let(:holiday_1_end_date_month) { 12 }
+    let(:holiday_1_end_date_year) { 2018 }
+
+    it { is_expected.to be_invalid }
+
+    it 'obtains the error message from an I18n translation' do
+      step.valid?
+      expect(step.errors[:holiday_1_end_date]).to include(
+        I18n.t("#{model_key}.attributes.holiday_1_end_date.invalid")
+      )
+    end
+  end
 end
