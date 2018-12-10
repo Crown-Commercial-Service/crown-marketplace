@@ -56,4 +56,24 @@ module Marketplace
   def self.http_basic_auth_password
     @http_basic_auth_password ||= ENV.fetch('HTTP_BASIC_AUTH_PASSWORD')
   end
+
+  def self.cognito_user_pool_site
+    @cognito_user_pool_site ||= ENV.fetch('COGNITO_USER_POOL_SITE')
+  end
+
+  def self.cognito_user_pool_id
+    @cognito_user_pool_id ||= ENV.fetch('COGNITO_USER_POOL_ID')
+  end
+
+  def self.cognito_client_id
+    @cognito_client_id ||= ENV.fetch('COGNITO_CLIENT_ID')
+  end
+
+  def self.cognito_client_secret
+    @cognito_client_secret ||= ENV.fetch('COGNITO_CLIENT_SECRET')
+  end
+
+  def self.cognito_aws_region
+    @cognito_aws_region ||= ENV.fetch('COGNITO_AWS_REGION')
+  end
 end

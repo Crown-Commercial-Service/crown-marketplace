@@ -60,7 +60,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
 
-if ENV['COGNITO_USER_POOL_SITE'].blank?
+if Marketplace.cognito_user_pool_site.blank?
   OmniAuth.config.test_mode = true
 
   OmniAuth.config.mock_auth[:cognito] = OmniAuth::AuthHash.new(
