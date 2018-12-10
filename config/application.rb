@@ -93,6 +93,13 @@ module Marketplace
     dfe_signin_url.present?
   end
 
+  def self.dfe_signin_uri
+    return unless dfe_signin_enabled?
+
+    # Workaround for env var value including quotes in test environment
+    URI.parse(dfe_signin_url.sub(/^\"/, '').sub(/\"$/, ''))
+  end
+
   def self.dfe_signin_client_id
     @dfe_signin_client_id ||= ENV.fetch('DFE_SIGNIN_CLIENT_ID')
   end
