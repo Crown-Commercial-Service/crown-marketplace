@@ -40,23 +40,23 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   let(:hire_date_month) { 1 }
   let(:hire_date_year) { 1970 }
 
-  let(:notice_date_day) { 3 }
-  let(:notice_date_month) { 1 }
-  let(:notice_date_year) { 1970 }
+  let(:notice_date_day) { nil }
+  let(:notice_date_month) { nil }
+  let(:notice_date_year) { nil }
 
-  let(:holiday_1_start_date_day) { 4 }
-  let(:holiday_1_start_date_month) { 1 }
-  let(:holiday_1_start_date_year) { 1970 }
-  let(:holiday_1_end_date_day) { 5 }
-  let(:holiday_1_end_date_month) { 1 }
-  let(:holiday_1_end_date_year) { 1970 }
+  let(:holiday_1_start_date_day) { nil }
+  let(:holiday_1_start_date_month) { nil }
+  let(:holiday_1_start_date_year) { nil }
+  let(:holiday_1_end_date_day) { nil }
+  let(:holiday_1_end_date_month) { nil }
+  let(:holiday_1_end_date_year) { nil }
 
-  let(:holiday_2_start_date_day) { 6 }
-  let(:holiday_2_start_date_month) { 1 }
-  let(:holiday_2_start_date_year) { 1970 }
-  let(:holiday_2_end_date_day) { 7 }
-  let(:holiday_2_end_date_month) { 1 }
-  let(:holiday_2_end_date_year) { 1970 }
+  let(:holiday_2_start_date_day) { nil }
+  let(:holiday_2_start_date_month) { nil }
+  let(:holiday_2_start_date_year) { nil }
+  let(:holiday_2_end_date_day) { nil }
+  let(:holiday_2_end_date_month) { nil }
+  let(:holiday_2_end_date_year) { nil }
 
   let(:days_per_week) { 5 }
 
@@ -133,6 +133,10 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#notice_date' do
+    let(:notice_date_day) { 3 }
+    let(:notice_date_month) { 1 }
+    let(:notice_date_year) { 1970 }
+
     it 'returns date instance constructed from day, month & year' do
       expect(step.notice_date).to eq(Date.parse('1970-01-03'))
     end
@@ -163,6 +167,10 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#holiday_1_start_date' do
+    let(:holiday_1_start_date_day) { 4 }
+    let(:holiday_1_start_date_month) { 1 }
+    let(:holiday_1_start_date_year) { 1970 }
+
     it 'returns date instance constructed from day, month & year' do
       expect(step.holiday_1_start_date).to eq(Date.parse('1970-01-04'))
     end
@@ -193,6 +201,10 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#holiday_1_end_date' do
+    let(:holiday_1_end_date_day) { 5 }
+    let(:holiday_1_end_date_month) { 1 }
+    let(:holiday_1_end_date_year) { 1970 }
+
     it 'returns date instance constructed from day, month & year' do
       expect(step.holiday_1_end_date).to eq(Date.parse('1970-01-05'))
     end
@@ -223,6 +235,10 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#holiday_2_start_date' do
+    let(:holiday_2_start_date_day) { 6 }
+    let(:holiday_2_start_date_month) { 1 }
+    let(:holiday_2_start_date_year) { 1970 }
+
     it 'returns date instance constructed from day, month & year' do
       expect(step.holiday_2_start_date).to eq(Date.parse('1970-01-06'))
     end
@@ -253,6 +269,10 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#holiday_2_end_date' do
+    let(:holiday_2_end_date_day) { 1970 }
+    let(:holiday_2_end_date_month) { 1 }
+    let(:holiday_2_end_date_year) { 7 }
+
     it 'returns date instance constructed from day, month & year' do
       expect(step.holiday_2_end_date).to eq(Date.parse('1970-01-07'))
     end
