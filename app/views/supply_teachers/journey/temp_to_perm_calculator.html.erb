@@ -87,14 +87,14 @@
         <%= text_field_tag :markup_rate, params[:markup_rate], class: css_classes_for_input(@journey, :markup_rate, ['govuk-input--width-10']) %>
       <% end %>
 
-      <%= govuk_form_group_with_optional_error(@journey, :hire_date_day, :hire_date_month, :hire_date_year) do %>
-        <%= govuk_fieldset_with_optional_error(@journey, :hire_date_day, :hire_date_month, :hire_date_year) do %>
+      <%= govuk_form_group_with_optional_error(@journey, :hire_date, :hire_date_day, :hire_date_month, :hire_date_year) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :hire_date, :hire_date_day, :hire_date_month, :hire_date_year) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">
               <%= t('.hire_date_question') %>
             </h1>
           </legend>
-          <%= display_errors(@journey, :hire_date_day, :hire_date_month, :hire_date_year) %>
+          <%= display_errors(@journey, :hire_date, :hire_date_day, :hire_date_month, :hire_date_year) %>
           <span id="hire-date-hint" class="govuk-hint">
             <%= t('.hire_date_question_hint') %>
           </span>
