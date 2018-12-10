@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class Upload
-    def self.create!(suppliers)
+    def self.upload!(suppliers)
       error = all_or_none(Supplier) do
         Supplier.delete_all_with_dependents
 
