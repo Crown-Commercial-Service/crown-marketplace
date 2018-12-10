@@ -34,6 +34,14 @@ To create the database:
   * You can obtain an API key for development [from Google][geocoding-key]
   * Add it to your `.env.local` file which is ignored by git
 
+#### Cognito
+
+* `COGNITO_USER_POOL_SITE`
+* `COGNITO_USER_POOL_ID`
+* `COGNITO_CLIENT_ID`
+* `COGNITO_CLIENT_SECRET`
+* `COGNITO_AWS_REGION`
+
 #### Production environments
 
 Credentials for HTTP Basic Authentication:
