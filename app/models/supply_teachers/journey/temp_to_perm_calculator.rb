@@ -63,18 +63,17 @@ module SupplyTeachers
     validate :ensure_holiday_1_end_date_is_after_start_date
 
     attribute :holiday_2_start_date_day
-    validates :holiday_2_start_date_day,
-              numericality: {
-                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31
-              }
     attribute :holiday_2_start_date_month
-    validates :holiday_2_start_date_month,
-              numericality: {
-                allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
-              }
     attribute :holiday_2_start_date_year
-    validates :holiday_2_start_date_year,
-              numericality: { allow_blank: true, only_integer: true }
+    validates :holiday_2_start_date,
+              presence: {
+                if: proc do |calculator|
+                  calculator.holiday_2_start_date_day.present? ||
+                    calculator.holiday_2_start_date_month.present? ||
+                    calculator.holiday_2_start_date_year.present?
+                end,
+                message: :invalid
+              }
 
     attribute :holiday_2_end_date_day
     validates :holiday_2_end_date_day,
