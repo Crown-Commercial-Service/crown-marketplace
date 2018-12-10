@@ -11,8 +11,18 @@
 	position: absolute;
 	top: 8px;
 }
-.calculator-form__day-rate-pound-sign {
-	bottom: 6px;
-	left: 8px;
+.calculator-form__markup-rate {
+	position: relative;
+	display: inline;
+}
+.calculator-form__markup-rate-input {
+	padding-right: 25px;
+	position: relative;
+}
+.calculator-form__markup-percentage-icon {
+	font-style: normal;
+	right: 12px;
+	margin-bottom: 0;
 	position: absolute;
+	top: -4px;
 }
