@@ -6,14 +6,14 @@ RSpec.describe ManagementConsultancy::UploadsController, type: :controller do
 
     before do
       allow(ManagementConsultancy::Upload)
-        .to receive(:create!)
+        .to receive(:upload!)
     end
 
     it 'creates suppliers and their associated data from JSON' do
       post :create, body: suppliers.to_json
 
       expect(ManagementConsultancy::Upload)
-        .to have_received(:create!)
+        .to have_received(:upload!)
         .with(suppliers)
     end
 
@@ -26,7 +26,7 @@ RSpec.describe ManagementConsultancy::UploadsController, type: :controller do
     context 'when model validation error occurs' do
       before do
         allow(ManagementConsultancy::Upload)
-          .to receive(:create!)
+          .to receive(:upload!)
           .and_raise(ActiveRecord::RecordInvalid)
       end
 
