@@ -26,6 +26,7 @@ RSpec.describe FacilitiesManagement::ServiceOffering, type: :model do
     )
     expect(new_offering).not_to be_valid
     expect(new_offering.errors[:lot_number]).to include('has already been taken')
+    expect(new_offering.errors[:service_code]).to include('has already been taken')
   end
 
   it 'is valid even if offering exists for same lot_number & service_code, but different supplier' do
