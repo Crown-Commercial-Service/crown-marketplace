@@ -84,4 +84,14 @@ RSpec.describe FacilitiesManagement::Region, type: :model do
         .to have_attributes(code: 'UKM65', name: 'Orkney Islands')
     end
   end
+
+  describe '.all_codes' do
+    let(:regions) { described_class.all }
+    let(:first_region) { regions.first }
+
+    it 'returns codes for all regions' do
+      expect(described_class.all_codes.count).to eq(regions.count)
+      expect(described_class.all_codes.first).to eq(first_region.code)
+    end
+  end
 end
