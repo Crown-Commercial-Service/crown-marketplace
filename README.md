@@ -30,6 +30,10 @@ To create the database:
 
 ### Environment variables
 
+The application uses the [`dotenv-rails` gem][dotenv-rails] to manage environment variables in `development` and `test` Rails environments which are stored in `.env.*` files in the project's root directory. See the gem's documentation for an explanation of the precedence of the various files.
+
+Environment variables for the `production` Rails environment are currently obtained from the [AWS Systems Manager Parameter Store][aws-parameter-store].
+
 * `GOOGLE_GEOCODING_API_KEY`
   * You can obtain an API key for development [from Google][geocoding-key]
   * Add it to your `.env.local` file which is ignored by git
@@ -115,3 +119,5 @@ This will pull down /errors/404.html, for example, and save an inlined copy in p
 
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
 [juice]: https://www.npmjs.com/package/juice
+[dotenv-rails]: https://github.com/bkeepers/dotenv
+[aws-parameter-store]: https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html
