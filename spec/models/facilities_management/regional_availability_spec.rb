@@ -10,6 +10,12 @@ RSpec.describe FacilitiesManagement::RegionalAvailability, type: :model do
     expect(regional_availability).not_to be_valid
   end
 
+  it 'is not valid if lot_number is not in list of all lot numbers' do
+    regional_availability.lot_number = 'invalid-number'
+    expect(regional_availability).not_to be_valid
+    expect(regional_availability.errors[:lot_number]).to include('is not included in the list')
+  end
+
   it 'is not valid if region_code is blank' do
     regional_availability.region_code = ''
     expect(regional_availability).not_to be_valid
