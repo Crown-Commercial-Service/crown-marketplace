@@ -3,6 +3,27 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
+
+    <details class="govuk-details govuk-!-margin-bottom-5">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= t('.do_next.header') %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            <%= t('.do_next.sign_form_html',
+                  form_url: 'https://ccs-agreements.cabinetoffice.gov.uk/sites/default/files/contracts/RM3826%20Supply%20Teachers%20-%20Order%20Form%20Template%20%28Full%20Version%29%20V1.docx',
+                  framework_url: 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm3826') %>
+          </li>
+          <li>
+            <%= t('.do_next.contact_supplier') %>
+          </li>
+        </ul>
+      </div>
+    </details>
+
     <% SupplyTeachers::Supplier.with_neutral_vendor_rates.each do |supplier| %>
       <div class="neutral-vendor-record">
         <h2 class="govuk-heading-m"><%= supplier.name %></h2>
