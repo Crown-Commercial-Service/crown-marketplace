@@ -14,4 +14,11 @@ RSpec.describe ManagementConsultancy::Service, type: :model do
     expect(first_service.name).to eq('Business case development')
     expect(first_service.lot_number).to eq('1')
   end
+
+  describe '.all_codes' do
+    it 'returns codes for all services' do
+      expect(described_class.all_codes.count).to eq(services.count)
+      expect(described_class.all_codes.first).to eq(first_service.code)
+    end
+  end
 end

@@ -21,6 +21,12 @@ RSpec.describe ManagementConsultancy::ServiceOffering, type: :model do
     expect(service_offering).not_to be_valid
   end
 
+  it 'is not valid if service_code is not in list of all service codes' do
+    service_offering.service_code = 'invalid-code'
+    expect(service_offering).not_to be_valid
+    expect(service_offering.errors[:service_code]).to include('is not included in the list')
+  end
+
   it 'can be associated with one management consultancy supplier' do
     supplier = build(:management_consultancy_supplier)
     offering = supplier.service_offerings.build
