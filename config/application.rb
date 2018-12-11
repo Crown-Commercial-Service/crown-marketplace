@@ -122,4 +122,8 @@ module Marketplace
     @dfe_signin_whitelisted_email_addresses ||=
       ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].split(',')
   end
+
+  def self.upload_privileges?
+    ENV['APP_HAS_UPLOAD_PRIVILEGES'].present?
+  end
 end
