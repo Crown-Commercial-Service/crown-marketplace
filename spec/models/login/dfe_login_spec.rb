@@ -38,9 +38,12 @@ RSpec.describe Login::DfeLogin, type: :model do
     }
   end
 
+  let(:whitelist_enabled) { true }
   let(:whitelisted_email_addresses) { [email] }
 
   before do
+    allow(Marketplace).to receive(:dfe_signin_whitelist_enabled?)
+      .and_return(whitelist_enabled)
     allow(Marketplace).to receive(:dfe_signin_whitelisted_email_addresses)
       .and_return(whitelisted_email_addresses)
   end
@@ -58,16 +61,26 @@ RSpec.describe Login::DfeLogin, type: :model do
         }
       end
 
+      context 'and email whitelisting is disabled' do
+        let(:whitelist_enabled) { false }
+
+        it 'permits access to any email address' do
+          expect(login.permit?(:supply_teachers)).to be true
+        end
+      end
+
       context 'and email address is white-listed' do
+        let(:whitelist_enabled) { true }
         let(:whitelisted_email_addresses) { [email] }
 
-        it 'permits access' do
+        it 'permits access to whitelisted email address' do
           expect(login.permit?(:supply_teachers)).to be true
         end
       end
 
       context 'and email address is not white-listed' do
-        let(:whitelisted_email_addresses) { [] }
+        let(:whitelist_enabled) { true }
+        let(:whitelisted_email_addresses) { ['another-user@example.com'] }
 
         it 'denies access' do
           expect(login.permit?(:supply_teachers)).to be false

@@ -112,8 +112,14 @@ module Marketplace
     @dfe_signin_redirect_uri ||= ENV.fetch('DFE_SIGNIN_REDIRECT_URI')
   end
 
+  def self.dfe_signin_whitelist_enabled?
+    ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].present?
+  end
+
   def self.dfe_signin_whitelisted_email_addresses
+    return unless dfe_signin_whitelist_enabled?
+
     @dfe_signin_whitelisted_email_addresses ||=
-      ENV.fetch('DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES', '').split(',')
+      ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].split(',')
   end
 end
