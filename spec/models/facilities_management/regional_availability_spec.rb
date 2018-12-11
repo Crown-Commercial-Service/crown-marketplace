@@ -16,6 +16,51 @@ RSpec.describe FacilitiesManagement::RegionalAvailability, type: :model do
     expect(regional_availability.errors[:lot_number]).to include('is not included in the list')
   end
 
+  it 'is not valid if availability exists for same lot_number, region_code & supplier' do
+    regional_availability.save!
+    new_availability = build(
+      :facilities_management_regional_availability,
+      supplier: regional_availability.supplier,
+      lot_number: regional_availability.lot_number,
+      region_code: regional_availability.region_code
+    )
+    expect(new_availability).not_to be_valid
+    expect(new_availability.errors[:lot_number]).to include('has already been taken')
+  end
+
+  it 'is valid even if availability exists for same lot_number & region_code, but different supplier' do
+    regional_availability.save!
+    new_availability = build(
+      :facilities_management_regional_availability,
+      supplier: build(:facilities_management_supplier),
+      lot_number: regional_availability.lot_number,
+      region_code: regional_availability.region_code
+    )
+    expect(new_availability).to be_valid
+  end
+
+  it 'is valid even if availability exists for same region_code & supplier, but different lot_number' do
+    regional_availability.save!
+    new_availability = build(
+      :facilities_management_regional_availability,
+      supplier: regional_availability.supplier,
+      lot_number: '1b',
+      region_code: regional_availability.region_code
+    )
+    expect(new_availability).to be_valid
+  end
+
+  it 'is valid even if availability exists for same lot_number & supplier, but different region_code' do
+    regional_availability.save!
+    new_availability = build(
+      :facilities_management_regional_availability,
+      supplier: regional_availability.supplier,
+      lot_number: regional_availability.lot_number,
+      region_code: 'UKC2'
+    )
+    expect(new_availability).to be_valid
+  end
+
   it 'is not valid if region_code is blank' do
     regional_availability.region_code = ''
     expect(regional_availability).not_to be_valid
