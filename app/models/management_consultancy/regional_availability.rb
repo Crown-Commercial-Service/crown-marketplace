@@ -4,7 +4,9 @@ module ManagementConsultancy
                foreign_key: :management_consultancy_supplier_id,
                inverse_of: :regional_availabilities
 
-    validates :lot_number, presence: true
+    validates :lot_number, presence: true,
+                           inclusion: { in: Lot.all_numbers }
+
     validates :region_code, presence: true
 
     def self.for_lot_and_regions(lot_number, region_codes, expenses_paid)
