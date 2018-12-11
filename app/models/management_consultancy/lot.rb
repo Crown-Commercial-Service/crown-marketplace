@@ -11,6 +11,10 @@ module ManagementConsultancy
     def full_description
       "Lot #{number} - #{description}"
     end
+
+    def self.all_numbers
+      all.map(&:number)
+    end
   end
 
   Lot.load_csv('management_consultancy/lots.csv')

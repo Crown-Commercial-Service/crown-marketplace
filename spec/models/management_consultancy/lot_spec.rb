@@ -19,4 +19,11 @@ RSpec.describe ManagementConsultancy::Lot, type: :model do
       expect(described_class['1'].number).to eq('1')
     end
   end
+
+  describe '.all_numbers' do
+    it 'returns numbers for all lots' do
+      expect(described_class.all_numbers.count).to eq(lots.count)
+      expect(described_class.all_numbers.first).to eq(first_lot.number)
+    end
+  end
 end
