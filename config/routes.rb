@@ -13,31 +13,31 @@ Rails.application.routes.draw do
     get '/fixed-term-results', to: 'branches#index', slug: 'fixed-term-results', as: 'fixed_term_results'
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
     resources :branches, only: :index
-    resources :uploads, only: :create
     resources :downloads, only: :index
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
   namespace 'facilities_management', path: 'facilities-management' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
-    resources :uploads, only: :create
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
-    resources :uploads, only: :create
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
   get '/errors/404'
