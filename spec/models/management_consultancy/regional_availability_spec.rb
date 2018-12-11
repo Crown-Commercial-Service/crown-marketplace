@@ -26,6 +26,7 @@ RSpec.describe ManagementConsultancy::RegionalAvailability, type: :model do
     )
     expect(new_availability).not_to be_valid
     expect(new_availability.errors[:lot_number]).to include('has already been taken')
+    expect(new_availability.errors[:region_code]).to include('has already been taken')
   end
 
   it 'is valid even if availability exists for same lot_number & region_code, but different supplier' do

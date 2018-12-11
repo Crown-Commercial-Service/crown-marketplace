@@ -9,6 +9,7 @@ module ManagementConsultancy
                            inclusion: { in: Lot.all_numbers }
 
     validates :region_code, presence: true,
+                            uniqueness: { scope: %i[supplier lot_number] },
                             inclusion: { in: Nuts2Region.all_codes }
 
     def self.for_lot_and_regions(lot_number, region_codes, expenses_paid)
