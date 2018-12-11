@@ -21,6 +21,12 @@ RSpec.describe FacilitiesManagement::RegionalAvailability, type: :model do
     expect(regional_availability).not_to be_valid
   end
 
+  it 'is not valid if region_code is not in list of all region codes' do
+    regional_availability.region_code = 'invalid-code'
+    expect(regional_availability).not_to be_valid
+    expect(regional_availability.errors[:region_code]).to include('is not included in the list')
+  end
+
   it 'can be associated with one facilities management supplier' do
     supplier = build(:facilities_management_supplier)
     availability = supplier.regional_availabilities.build

@@ -35,6 +35,10 @@ module FacilitiesManagement
     def nuts2?
       !nuts3?
     end
+
+    def self.all_codes
+      all.map(&:code)
+    end
   end
 
   Region.load_csv('facilities_management/regions.csv')
