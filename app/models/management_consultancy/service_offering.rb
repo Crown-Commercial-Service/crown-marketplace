@@ -5,6 +5,7 @@ module ManagementConsultancy
                inverse_of: :service_offerings
 
     validates :lot_number, presence: true,
+                           uniqueness: { scope: %i[supplier service_code] },
                            inclusion: { in: Lot.all_numbers }
 
     validates :service_code, presence: true,
