@@ -44,4 +44,11 @@ RSpec.describe FacilitiesManagement::Service, type: :model do
       end
     end
   end
+
+  describe '.all_codes' do
+    it 'returns codes for all services' do
+      expect(described_class.all_codes.count).to eq(services.count)
+      expect(described_class.all_codes.first).to eq(first_service.code)
+    end
+  end
 end
