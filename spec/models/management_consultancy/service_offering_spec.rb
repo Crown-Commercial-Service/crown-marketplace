@@ -10,6 +10,12 @@ RSpec.describe ManagementConsultancy::ServiceOffering, type: :model do
     expect(service_offering).not_to be_valid
   end
 
+  it 'is not valid if lot_number is not in list of all lot numbers' do
+    service_offering.lot_number = 'invalid-number'
+    expect(service_offering).not_to be_valid
+    expect(service_offering.errors[:lot_number]).to include('is not included in the list')
+  end
+
   it 'is not valid if service_code is blank' do
     service_offering.service_code = ''
     expect(service_offering).not_to be_valid
