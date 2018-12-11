@@ -282,7 +282,7 @@ en:
           contact_supplier: contact the supplier of your choice from this list to find a suitable, available worker
           different_supplier: If you use a different supplier later on, you will need to sign another short order form.
           header: What to do next
-          sign_form_html: sign the <a href="%{framework_url}">short order form</a> listed in the documents section of the CCS framework as ‘RM3826 Supply Teachers - Order Form Template (Short Form).docx’
+          sign_form_html: sign the <a href="%{form_url}">short order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Supply Teachers - Order Form Template (Short Form).docx’)
           sign_once: You only need to sign the form once to use this supplier for the duration of the framework (which runs until 29 August 2020).
         download: Download shortlist of suppliers
         download_aria_label: Download shortlist as Microsoft Excel file
