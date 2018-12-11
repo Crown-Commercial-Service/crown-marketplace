@@ -11,6 +11,10 @@ module FacilitiesManagement
     def mandatory?
       mandatory == 'true'
     end
+
+    def self.all_codes
+      all.map(&:code)
+    end
   end
 
   Service.load_csv('facilities_management/services.csv')

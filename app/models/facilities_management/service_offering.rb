@@ -7,7 +7,8 @@ module FacilitiesManagement
     validates :lot_number, presence: true,
                            inclusion: { in: Lot.all_numbers }
 
-    validates :service_code, presence: true
+    validates :service_code, presence: true,
+                             inclusion: { in: Service.all_codes }
 
     def self.for_lot(lot_number)
       where(lot_number: lot_number)
