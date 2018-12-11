@@ -278,6 +278,12 @@ en:
         miles: Miles
       index:
         distance_aria_label_html: Set the radius to %{radius_setting}
+        do_next:
+          contact_supplier: contact the supplier of your choice from this list to find a suitable, available worker
+          different_supplier: If you use a different supplier later on, you will need to sign another short order form.
+          header: What to do next
+          sign_form: sign the short order form listed in the documents section of the CCS framework as ‘RM3826 Supply Teachers - Order Form Template (Short Form).docx’
+          sign_once: You only need to sign the form once to use this supplier for the duration of the framework (which runs until 29 August 2020).
         download: Download shortlist of suppliers
         download_aria_label: Download shortlist as Microsoft Excel file
         download_with_calculator: Download shortlist (with markup calculator)

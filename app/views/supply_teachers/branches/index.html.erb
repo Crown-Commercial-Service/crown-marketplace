@@ -12,6 +12,30 @@
         <li class="cmp-inset-text__list-item"><%= t(".inputs.#{question_key}") %>: <%= answer %></li>
         <% end %>
       </ul>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            <%= t('.do_next.header') %>
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              <%= t('.do_next.contact_supplier') %>
+            </li>
+            <li>
+              <%= t('.do_next.sign_form') %>
+            </li>
+          </ul>
+          <p class="govuk-body">
+            <%= t('.do_next.sign_once') %>
+          </p>
+          <p class="govuk-body">
+            <%= t('.do_next.different_supplier') %>
+          </p>
+        </div>
+      </details>
     </div>
 
     <p class="govuk-body">
