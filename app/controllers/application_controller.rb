@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
     return if @permission_required == :none
 
     unless logged_in?
-      session[:requested_path] = request.path
+      session[:requested_path] = request.fullpath
       redirect_to gateway_path
       return
     end

@@ -27,6 +27,13 @@ RSpec.feature 'Authentication', type: :feature do
     expect(page).to have_text('Sign in with beta credentials')
   end
 
+  scenario 'Redirection to requested page after auth' do
+    path = '/supply-teachers/worker-type?looking_for=worker'
+    visit path
+    click_on 'Sign in with DfE Sign-in'
+    expect(page).to have_current_path(path)
+  end
+
   scenario 'Users can sign in using DfE sign-in' do
     visit '/supply-teachers/start'
     click_on 'Sign in with DfE Sign-in'
