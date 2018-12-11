@@ -7,7 +7,8 @@ module ManagementConsultancy
     validates :lot_number, presence: true,
                            inclusion: { in: Lot.all_numbers }
 
-    validates :region_code, presence: true
+    validates :region_code, presence: true,
+                            inclusion: { in: Nuts2Region.all_codes }
 
     def self.for_lot_and_regions(lot_number, region_codes, expenses_paid)
       condition = where(lot_number: lot_number, region_code: region_codes)
