@@ -4,7 +4,9 @@ module FacilitiesManagement
                foreign_key: :facilities_management_supplier_id,
                inverse_of: :service_offerings
 
-    validates :lot_number, presence: true
+    validates :lot_number, presence: true,
+                           inclusion: { in: Lot.all_numbers }
+
     validates :service_code, presence: true
 
     def self.for_lot(lot_number)
