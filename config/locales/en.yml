@@ -381,6 +381,12 @@ en:
         column1: Job type
         column2: Supplier mark-up
       master_vendors:
+        do_next:
+          competition_online: you can also do this run a competition fully online, using CCS’s esourcing tool
+          further_competition: run a further competition to select a supplier - there is advice from CCS on how to do this
+          header: What to do next
+          more_help: Contact supplyteachers@crowncommercial.gov.uk if you need more help running a further competition.
+          sign_form_html: select a supplier and sign the <a href="%{form_url}">full version order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Supply Teachers - Order Form Template (Full Version).docx’)
         header: Master vendor managed service providers
         page_title: Master vendor managed service providers
       neutral_vendors:
