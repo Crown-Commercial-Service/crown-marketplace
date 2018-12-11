@@ -1,8 +1,36 @@
 <%= content_for :page_title, t('.page_title') %>
 <%= content_for :page_section, t('supply_teachers.page_section') %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
+
+    <details class="govuk-details govuk-!-margin-bottom-5">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= t('.do_next.header') %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            <%= t('.do_next.further_competition') %>
+          </li>
+          <li>
+            <%= t('.do_next.competition_online') %>
+          </li>
+          <li>
+            <%= t('.do_next.sign_form_html',
+                  form_url: 'https://ccs-agreements.cabinetoffice.gov.uk/sites/default/files/contracts/RM3826%20Supply%20Teachers%20-%20Order%20Form%20Template%20%28Full%20Version%29%20V1.docx',
+                  framework_url: 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm3826') %>
+          </li>
+        </ul>
+        <p class="govuk-body">
+          <%= t('.do_next.more_help') %>
+        </p>
+      </div>
+    </details>
+
     <p class="govuk-body"><%= number_to_human(@suppliers.count, units: :suppliers) %></p>
     <%= render partial: 'master_vendor', collection: @suppliers %>
   </div>
