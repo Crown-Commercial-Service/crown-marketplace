@@ -55,7 +55,7 @@ Environment variables for the `production` Rails environment are currently obtai
 * `DFE_SIGNIN_REDIRECT_URI`
 * `DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES`
   * Comma-separated list of email addresses allowed access via DfE Signin
-  * Defaults to an empty list, i.e. nobody has access
+  * If this variable is not present, DfE Signin is not protected by whitelisting
 
 #### Google Analytics
 

@@ -28,6 +28,8 @@ module Login
     end
 
     def whitelisted?
+      return true unless Marketplace.dfe_signin_whitelist_enabled?
+
       Marketplace.dfe_signin_whitelisted_email_addresses.include?(email)
     end
 
