@@ -5,6 +5,7 @@ module FacilitiesManagement
                inverse_of: :regional_availabilities
 
     validates :lot_number, presence: true,
+                           uniqueness: { scope: %i[supplier region_code] },
                            inclusion: { in: Lot.all_numbers }
 
     validates :region_code, presence: true,
