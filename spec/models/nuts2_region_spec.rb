@@ -17,4 +17,14 @@ RSpec.describe Nuts2Region, type: :model do
     expect(region.nuts3_regions)
       .to have_attributes(length: 6)
   end
+
+  describe '.all_region_codes' do
+    let(:regions) { described_class.all }
+    let(:first_region) { regions.first }
+
+    it 'returns codes for all regions' do
+      expect(described_class.all_codes.count).to eq(regions.count)
+      expect(described_class.all_codes.first).to eq(first_region.code)
+    end
+  end
 end
