@@ -33,4 +33,11 @@ RSpec.describe FacilitiesManagement::Lot, type: :model do
       end
     end
   end
+
+  describe '.all_numbers' do
+    it 'returns numbers for all lots' do
+      expect(described_class.all_numbers.count).to eq(lots.count)
+      expect(described_class.all_numbers.first).to eq(first_lot.number)
+    end
+  end
 end

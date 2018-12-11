@@ -7,6 +7,10 @@ module FacilitiesManagement
     def direct_award_possible?
       number == '1a'
     end
+
+    def self.all_numbers
+      all.map(&:number)
+    end
   end
 
   Lot.load_csv('facilities_management/lots.csv')
