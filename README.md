@@ -50,9 +50,16 @@ Environment variables for the `production` Rails environment are currently obtai
 #### DfE Signin
 
 * `DFE_SIGNIN_URL`
+  * Obtained from DfE Sign-in. Should have just `/` as a path component, e.g.
+    `https://signin.example.com/`.
 * `DFE_SIGNIN_CLIENT_ID`
+  * Obtained from DfE Sign-in.
 * `DFE_SIGNIN_CLIENT_SECRET`
+  * Obtained from DfE Sign-in.
 * `DFE_SIGNIN_REDIRECT_URI`
+  * A link to the authentication callback in this application, i.e.
+    `https://marketplace.service.crowncommercial.gov.uk/auth/dfe/callback` for
+    the live service
 * `DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES`
   * Comma-separated list of email addresses allowed access via DfE Signin
   * If this variable is not present, DfE Signin is not protected by whitelisting
