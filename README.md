@@ -36,7 +36,6 @@ Environment variables for the `production` Rails environment are currently obtai
 
 * `GOOGLE_GEOCODING_API_KEY`
   * You can obtain an API key for development [from Google][geocoding-key]
-  * Add it to your `.env.local` file which is ignored by git
 
 #### Cognito
 
