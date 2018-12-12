@@ -35,16 +35,28 @@ RSpec.describe FacilitiesManagement::UploadsController, type: :controller do
       end
 
       context 'when model validation error occurs' do
+        let(:supplier) { build(:facilities_management_supplier) }
+
         before do
+          supplier.errors.add(:name, 'error-message')
           allow(FacilitiesManagement::Upload)
             .to receive(:upload!)
-            .and_raise(ActiveRecord::RecordInvalid)
+            .and_raise(ActiveRecord::RecordInvalid.new(supplier))
         end
 
-        it 'raises ActiveRecord::RecordInvalid' do
-          expect do
-            post :create, body: suppliers.to_json
-          end.to raise_error(ActiveRecord::RecordInvalid)
+        it 'responds with 422 Unprocessable Entity' do
+          post :create, body: suppliers.to_json
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'responds with JSON in body with details of the error' do
+          post :create, body: suppliers.to_json
+
+          body = JSON.parse(response.body)
+          expect(body['record']).to include('name' => supplier.name)
+          expect(body['record_class']).to eq('FacilitiesManagement::Supplier')
+          expect(body['errors']).to eq('name' => ['error-message'])
         end
       end
 

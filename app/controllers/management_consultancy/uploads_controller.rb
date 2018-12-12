@@ -16,6 +16,13 @@ module ManagementConsultancy
       Upload.upload!(suppliers)
 
       render json: {}, status: :created
+    rescue ActiveRecord::RecordInvalid => e
+      summary = {
+        record: e.record,
+        record_class: e.record.class.to_s,
+        errors: e.record.errors
+      }
+      render json: summary, status: :unprocessable_entity
     end
   end
 end
