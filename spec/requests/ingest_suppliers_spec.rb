@@ -78,6 +78,16 @@ RSpec.describe 'Ingest suppliers', type: :request do
     end
 
     context 'when upload privileges not set' do
+      before do
+        allow(Marketplace).to receive(:upload_privileges?).and_return(false)
+        Rails.application.reload_routes!
+      end
+
+      after do
+        allow(Marketplace).to receive(:upload_privileges?).and_call_original
+        Rails.application.reload_routes!
+      end
+
       it 'ingests suppliers and their branches' do
         expect do
           ingest(suppliers)
