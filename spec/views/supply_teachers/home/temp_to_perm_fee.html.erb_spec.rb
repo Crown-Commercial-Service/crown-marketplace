@@ -19,6 +19,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
   let(:chargeable_working_days_based_on_lack_of_notice) { 0 }
   let(:chargeable_working_days_based_on_early_hire) { nil }
+  let(:chargeable_working_days) { nil }
   let(:working_days) { nil }
   let(:daily_supplier_fee) { 0 }
   let(:fee) { 0 }
@@ -41,6 +42,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
       enough_notice?: enough_notice?,
       chargeable_working_days_based_on_lack_of_notice: chargeable_working_days_based_on_lack_of_notice,
       chargeable_working_days_based_on_early_hire: chargeable_working_days_based_on_early_hire,
+      chargeable_working_days: chargeable_working_days,
       working_days: working_days,
       daily_supplier_fee: daily_supplier_fee,
       fee: fee,
@@ -267,6 +269,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
       let(:days_notice_required) { 20 }
       let(:days_notice_given) { 15 }
       let(:chargeable_working_days_based_on_lack_of_notice) { 5 }
+      let(:chargeable_working_days) { 20 }
       let(:daily_supplier_fee) { 10 }
       let(:markup_rate) { 0.1 }
       let(:day_rate) { 110 }
@@ -317,6 +320,13 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
       it 'displays chargeable days for lack of notice' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: 5)
+        )
+      end
+
+      it 'displays total chargeable days' do
+        expect(rendered).to have_text(
+          I18n.t("#{i18n_key}.total_chargeable_days",
+                 days: 20)
         )
       end
 
