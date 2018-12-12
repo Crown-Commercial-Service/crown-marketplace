@@ -18,7 +18,7 @@ RSpec.describe Nuts2Region, type: :model do
       .to have_attributes(length: 6)
   end
 
-  describe '.all_region_codes' do
+  describe '.all_codes' do
     let(:regions) { described_class.all }
     let(:first_region) { regions.first }
 
