@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SupplyTeachers::Supplier, type: :model do
-  subject(:supplier) { build(:supplier) }
+  subject(:supplier) { build(:supply_teachers_supplier) }
 
   it { is_expected.to be_valid }
 
@@ -74,13 +74,13 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
 
   describe '.with_master_vendor_rates' do
     let!(:supplier_with_master_vendor_rate) do
-      create(:supplier).tap do |supplier|
+      create(:supply_teachers_supplier).tap do |supplier|
         create(:master_vendor_rate, supplier: supplier)
       end
     end
 
     let!(:supplier_with_direct_provision_rate) do
-      create(:supplier).tap do |supplier|
+      create(:supply_teachers_supplier).tap do |supplier|
         create(:direct_provision_rate, supplier: supplier)
       end
     end
@@ -126,13 +126,13 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
 
   describe '.with_neutral_vendor_rates' do
     let!(:supplier_with_neutral_vendor_rate) do
-      create(:supplier).tap do |supplier|
+      create(:supply_teachers_supplier).tap do |supplier|
         create(:neutral_vendor_rate, supplier: supplier)
       end
     end
 
     let!(:supplier_with_direct_provision_rate) do
-      create(:supplier).tap do |supplier|
+      create(:supply_teachers_supplier).tap do |supplier|
         create(:direct_provision_rate, supplier: supplier)
       end
     end

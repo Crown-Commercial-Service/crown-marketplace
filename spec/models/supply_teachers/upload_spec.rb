@@ -389,8 +389,8 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         allow(UKPostcode).to receive(:parse).and_return(valid_postcode)
       end
 
-      let!(:first_supplier) { create(:supplier) }
-      let!(:second_supplier) { create(:supplier) }
+      let!(:first_supplier) { create(:supply_teachers_supplier) }
+      let!(:second_supplier) { create(:supply_teachers_supplier) }
 
       it 'destroys all existing suppliers' do
         described_class.upload!(suppliers)

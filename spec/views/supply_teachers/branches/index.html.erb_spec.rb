@@ -12,8 +12,8 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
   end
 
   let(:journey) { instance_double('Journey', params: {}, inputs: inputs) }
-  let(:first_supplier) { build(:supplier, name: 'First Supplier') }
-  let(:second_supplier) { build(:supplier, name: 'Second Supplier') }
+  let(:first_supplier) { build(:supply_teachers_supplier, name: 'First Supplier') }
+  let(:second_supplier) { build(:supply_teachers_supplier, name: 'Second Supplier') }
 
   let(:first_branch) do
     build(:branch_search_result, name: 'First Branch', supplier_name: 'First Supplier')

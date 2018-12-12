@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
   helper(TelephoneNumberHelper)
 
-  let(:supplier) { build(:supplier) }
+  let(:supplier) { build(:supply_teachers_supplier) }
   let(:branch_name) { 'Head Office' }
   let(:branch_town) { 'Guildford' }
   let(:telephone_number) { '01214960123' }
