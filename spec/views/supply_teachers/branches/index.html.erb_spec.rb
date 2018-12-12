@@ -16,13 +16,13 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
   let(:second_supplier) { build(:supply_teachers_supplier, name: 'Second Supplier') }
 
   let(:first_branch) do
-    build(:branch_search_result, name: 'First Branch', supplier_name: 'First Supplier')
+    build(:supply_teachers_branch_search_result, name: 'First Branch', supplier_name: 'First Supplier')
   end
   let(:second_branch) do
-    build(:branch_search_result, supplier_name: first_supplier.name, name: 'Second Branch')
+    build(:supply_teachers_branch_search_result, supplier_name: first_supplier.name, name: 'Second Branch')
   end
   let(:third_branch) do
-    build(:branch_search_result, supplier_name: second_supplier.name, name: 'Third Branch')
+    build(:supply_teachers_branch_search_result, supplier_name: second_supplier.name, name: 'Third Branch')
   end
 
   let(:nominated_worker_rate) { nil }
