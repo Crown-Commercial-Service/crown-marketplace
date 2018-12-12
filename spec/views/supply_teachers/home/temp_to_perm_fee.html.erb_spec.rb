@@ -45,7 +45,6 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
       daily_supplier_fee: daily_supplier_fee,
       fee: fee,
       days_per_week: 0,
-      fee_for_lack_of_notice?: nil,
       before_national_deal_began?: nil,
       ideal_hire_date: Date.parse('2018-11-26'),
       ideal_notice_date: Date.parse('2018-11-26'),

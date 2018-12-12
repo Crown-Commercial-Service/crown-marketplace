@@ -119,10 +119,6 @@ module TempToPermCalculator
       end.count
     end
 
-    def fee_for_lack_of_notice?
-      @hire_date >= late_notice_fee_can_be_charged_from
-    end
-
     def ideal_hire_date
       working_days_after(early_hire_fee_can_be_charged_until, 1)
     end
