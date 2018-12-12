@@ -89,7 +89,7 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
   context 'when displaying branches near the buyers location' do
     let(:point) { instance_double('RGeo::Geographic::SphericalPointImpl', distance: 1) }
     let(:location) { instance_double('Location', postcode: 'W1A 1AA', point: point) }
-    let(:rates) { [build(:rate, job_type: 'nominated')] }
+    let(:rates) { [build(:supply_teachers_rate, job_type: 'nominated')] }
     let(:nominated_worker_rate) { 1 }
 
     it 'adds location context to the number of results' do

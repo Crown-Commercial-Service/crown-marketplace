@@ -6,7 +6,7 @@ RSpec.describe SupplyTeachers::AuditSpreadsheet do
   subject(:spreadsheet) { described_class.new }
 
   let!(:branch) { create(:supply_teachers_branch) }
-  let!(:rate) { create(:rate) }
+  let!(:rate) { create(:supply_teachers_rate) }
 
   describe 'the branch worksheet' do
     let(:worksheet) { workbook.worksheets.first }

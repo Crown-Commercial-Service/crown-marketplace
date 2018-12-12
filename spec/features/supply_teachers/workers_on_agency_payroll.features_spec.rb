@@ -14,7 +14,7 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
   scenario 'Buyer finds supplier within search range' do
     holborn = create(:supply_teachers_supplier, name: 'holborn')
     create(
-      :rate,
+      :supply_teachers_rate,
       supplier: holborn,
       job_type: 'qt_sen',
       term: 'twelve_weeks',
@@ -27,7 +27,7 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
     )
     westminster = create(:supply_teachers_supplier, name: 'westminster')
     create(
-      :rate,
+      :supply_teachers_rate,
       supplier: westminster,
       job_type: 'qt_sen',
       term: 'twelve_weeks',
@@ -45,7 +45,7 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
       location: Geocoding.point(latitude: 51.5106034, longitude: -0.0604652)
     )
     create(
-      :rate,
+      :supply_teachers_rate,
       supplier: whitechapel,
       job_type: 'senior',
       term: 'twelve_weeks',
