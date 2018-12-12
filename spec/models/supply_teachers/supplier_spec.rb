@@ -15,8 +15,8 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
       supplier.save!
     end
 
-    let!(:first_branch) { create(:branch, supplier: supplier) }
-    let!(:second_branch) { create(:branch, supplier: supplier) }
+    let!(:first_branch) { create(:supply_teachers_branch, supplier: supplier) }
+    let!(:second_branch) { create(:supply_teachers_branch, supplier: supplier) }
 
     it 'destroys all its branches when it is destroyed' do
       supplier.destroy!
