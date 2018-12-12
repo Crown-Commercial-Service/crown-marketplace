@@ -8,7 +8,7 @@ RSpec.describe SupplyTeachers::DownloadsController, type: :controller, auth: tru
       end
 
       it 'redirects to gateway page' do
-        expect(get(:index)).to redirect_to(supply_teachers_gateway_path)
+        expect(get(:index)).to redirect_to(supply_teachers_gateway_url)
       end
     end
   end

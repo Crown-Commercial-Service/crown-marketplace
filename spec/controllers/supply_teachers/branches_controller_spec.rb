@@ -16,7 +16,7 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller, auth: true
       end
 
       it 'redirects to gateway page' do
-        expect(get(:index)).to redirect_to(supply_teachers_gateway_path)
+        expect(get(:index)).to redirect_to(supply_teachers_gateway_url)
       end
     end
 
