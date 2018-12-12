@@ -2,6 +2,7 @@
 Rails.application.routes.draw do
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
+  get '/cookies', to: 'home#cookies'
 
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
