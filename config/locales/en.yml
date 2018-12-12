@@ -411,11 +411,14 @@ en:
         header: Master vendor managed service providers
         page_title: Master vendor managed service providers
       neutral_vendors:
-        column1: Job type
-        column2: Supplier mark-up
+        daily_fee_explanation_html: This is charged if the agency finds you a worker, or if they take on someone you have them to manage (a ‘nominated worker’).
+        daily_fee_html: A %{daily_fee} daily fee is charged each day in addition to this mark-up rate.
         do_next:
           contact_supplier: contact the supplier for this worker and for all your future temporary recruitment needs
           header: What to do next
           sign_form_html: sign the <a href="%{form_url}">full version order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Supply Teachers - Order Form Template (Full Version).docx’)
         header: Neutral vendor managed service providers
+        mark_up_explanation_html: The mark-up varies for all other workers. Contact the supplier to find out the mark-up rate for the type of worker you need.
+        mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
+        one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
