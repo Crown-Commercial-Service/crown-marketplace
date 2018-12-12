@@ -327,6 +327,7 @@ en:
         notice_period_given: 'Notice period given: %{days} working days between %{notice_date} and %{hire_date}'
         notice_period_required: 'Notice period required: %{days} working days'
         panel_body: Based on the information provided you could be charged
+        total_chargeable_days: 'Total chargeable days (capped at 4 weeks): %{days}'
         total_fee: 'Fee chargeable by supplier: %{fee}'
         within_first_8_weeks: You're taking the worker on permanently within the first 12 working weeks so you can be charged a fee for taking the worker on permanently.
         working_days: 'Working days between contract start (%{contract_start_date}) and hire date (%{hire_date}): %{days}'

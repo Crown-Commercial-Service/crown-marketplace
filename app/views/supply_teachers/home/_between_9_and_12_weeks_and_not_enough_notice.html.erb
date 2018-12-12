@@ -33,6 +33,10 @@
           days: calculator.chargeable_working_days_based_on_lack_of_notice) %>
   </li>
   <li>
+    <%= t('supply_teachers.home.temp_to_perm_fee.total_chargeable_days',
+          days: calculator.chargeable_working_days) %>
+  </li>
+  <li>
     <%= t('supply_teachers.home.temp_to_perm_fee.daily_supplier_fee',
           fee: number_to_currency(calculator.daily_supplier_fee),
           markup_rate: number_to_percentage(calculator.markup_rate * 100, precision: 1),
