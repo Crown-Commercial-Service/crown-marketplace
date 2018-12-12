@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe TempToPermCalculator::Calculator do
+  subject(:calculator) do
+    described_class.new(
+      contract_start_date: contract_start_date,
+      days_per_week: 5,
+      day_rate: 110,
+      markup_rate: 0.10,
+      hire_date: hire_date,
+      notice_date: notice_date,
+      holiday_1_start_date: holiday_1_start_date,
+      holiday_1_end_date: holiday_1_end_date,
+      holiday_2_start_date: holiday_2_start_date,
+      holiday_2_end_date: holiday_2_end_date
+    )
+  end
+
   let(:start_of_1st_week)  { Date.parse('Mon 3 Sep 2018') }
   let(:start_of_2nd_week)  { Date.parse('Mon 10 Sep 2018') }
   let(:start_of_3rd_week)  { Date.parse('Mon 17 Sep 2018') }
@@ -24,21 +39,6 @@ RSpec.describe TempToPermCalculator::Calculator do
   let(:holiday_1_end_date) { nil }
   let(:holiday_2_start_date) { nil }
   let(:holiday_2_end_date) { nil }
-
-  let(:calculator) do
-    described_class.new(
-      contract_start_date: contract_start_date,
-      days_per_week: 5,
-      day_rate: 110,
-      markup_rate: 0.10,
-      hire_date: hire_date,
-      notice_date: notice_date,
-      holiday_1_start_date: holiday_1_start_date,
-      holiday_1_end_date: holiday_1_end_date,
-      holiday_2_start_date: holiday_2_start_date,
-      holiday_2_end_date: holiday_2_end_date
-    )
-  end
 
   describe 'initialization' do
     context 'when hire date is earlier than contract start date' do
@@ -77,6 +77,16 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
       expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
+    end
+
+    it 'returns the number of days notice required' do
+      expect(calculator.days_notice_required).to eq(
+        TempToPermCalculator::Calculator::WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE
+      )
+    end
+
+    it 'calculates the maximum fee for lack of notice as 20 days of the daily supplier fee' do
+      expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 10)
     end
   end
 
@@ -122,6 +132,10 @@ RSpec.describe TempToPermCalculator::Calculator do
   context 'when the school hires the worker within the first 8 weeks (40 working days) of their contract' do
     let(:hire_date) { start_of_4th_week }
 
+    it { is_expected.to be_hiring_within_8_weeks }
+    it { is_expected.not_to be_hiring_between_9_and_12_weeks }
+    it { is_expected.not_to be_hiring_after_12_weeks }
+
     it 'calculates the number of working days between the start date and hire date' do
       expect(calculator.working_days).to eq(15)
     end
@@ -166,6 +180,10 @@ RSpec.describe TempToPermCalculator::Calculator do
   context 'when the school hires the worker within the first 9 to 12 weeks (40 to 60 working days) of their contract' do
     let(:hire_date) { start_of_12th_week }
 
+    it { is_expected.not_to be_hiring_within_8_weeks }
+    it { is_expected.to be_hiring_between_9_and_12_weeks }
+    it { is_expected.not_to be_hiring_after_12_weeks }
+
     it 'calculates the number of working days between the start date and hire date' do
       expect(calculator.working_days).to eq(55)
     end
@@ -205,6 +223,12 @@ RSpec.describe TempToPermCalculator::Calculator do
     context 'and they give 4 weeks notice' do
       let(:notice_date) { start_of_8th_week }
 
+      it { is_expected.to be_enough_notice }
+
+      it 'calculates the number of days notice given' do
+        expect(calculator.days_notice_given).to eq(20)
+      end
+
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
       end
@@ -220,6 +244,12 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     context 'and they give 3 weeks notice' do
       let(:notice_date) { start_of_9th_week }
+
+      it { is_expected.not_to be_enough_notice }
+
+      it 'calculates the number of days notice given' do
+        expect(calculator.days_notice_given).to eq(15)
+      end
 
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(5)
@@ -237,6 +267,12 @@ RSpec.describe TempToPermCalculator::Calculator do
     context 'and they give 2 weeks notice' do
       let(:notice_date) { start_of_10th_week }
 
+      it { is_expected.not_to be_enough_notice }
+
+      it 'calculates the number of days notice given' do
+        expect(calculator.days_notice_given).to eq(10)
+      end
+
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(10)
       end
@@ -252,6 +288,12 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     context 'and they give 1 weeks notice' do
       let(:notice_date) { start_of_11th_week }
+
+      it { is_expected.not_to be_enough_notice }
+
+      it 'calculates the number of days notice given' do
+        expect(calculator.days_notice_given).to eq(5)
+      end
 
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(15)
@@ -269,6 +311,12 @@ RSpec.describe TempToPermCalculator::Calculator do
     context 'and they give no notice' do
       let(:notice_date) { start_of_12th_week }
 
+      it { is_expected.not_to be_enough_notice }
+
+      it 'calculates the number of days notice given' do
+        expect(calculator.days_notice_given).to eq(0)
+      end
+
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(20)
       end
@@ -285,6 +333,10 @@ RSpec.describe TempToPermCalculator::Calculator do
 
   context 'when the school hires the worker after 12 weeks (60 working days) of their contract' do
     let(:hire_date) { start_of_13th_week }
+
+    it { is_expected.not_to be_hiring_within_8_weeks }
+    it { is_expected.not_to be_hiring_between_9_and_12_weeks }
+    it { is_expected.to be_hiring_after_12_weeks }
 
     it 'calculates the number of working days between the start date and hire date' do
       expect(calculator.working_days).to eq(60)
@@ -325,6 +377,8 @@ RSpec.describe TempToPermCalculator::Calculator do
     context 'and they give 4 weeks notice' do
       let(:notice_date) { start_of_9th_week }
 
+      it { is_expected.to be_enough_notice }
+
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
       end
@@ -340,6 +394,8 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     context 'and they give 3 weeks notice' do
       let(:notice_date) { start_of_10th_week }
+
+      it { is_expected.not_to be_enough_notice }
 
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(5)
@@ -357,6 +413,8 @@ RSpec.describe TempToPermCalculator::Calculator do
     context 'and they give 2 weeks notice' do
       let(:notice_date) { start_of_11th_week }
 
+      it { is_expected.not_to be_enough_notice }
+
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(10)
       end
@@ -373,6 +431,8 @@ RSpec.describe TempToPermCalculator::Calculator do
     context 'and they give 1 weeks notice' do
       let(:notice_date) { start_of_12th_week }
 
+      it { is_expected.not_to be_enough_notice }
+
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(15)
       end
@@ -388,6 +448,8 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     context 'and they give no notice' do
       let(:notice_date) { start_of_13th_week }
+
+      it { is_expected.not_to be_enough_notice }
 
       it 'calculates the number of chargeable working days due to lack of notice as the difference between the minimum of 40 (4 weeks) and the number of days notice given' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(20)

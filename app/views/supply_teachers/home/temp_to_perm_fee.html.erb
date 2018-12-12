@@ -8,10 +8,6 @@
         <div class="govuk-panel__body">
           <%= t('.panel_body') %>
           <br><strong><%= number_to_currency(@calculator.fee) %></strong>
-          <% if @calculator.notice_period_required? && @calculator.notice_date.blank? %>
-            <br>
-            Provided you give notice on or before <%= @calculator.notice_date_based_on_hire_date.to_formatted_s(:long) %>
-          <% end %>
         </div>
       </div>
     </div>
@@ -19,17 +15,42 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h2>Explanation</h2>
+
       <% if @calculator.before_national_deal_began? %>
-      <p>The contract start date you have given, <%= @calculator.contract_start_date.to_formatted_s(:long) %>, is before the National Deal was awarded. The terms of the deal may not apply to this worker, unless you have since agreed with the supplier that they should.</p>
+        <p>The contract start date you have given, <%= @calculator.contract_start_date.to_formatted_s(:long) %>, is before the National Deal was awarded. The terms of the deal may not apply to this worker, unless you have since agreed with the supplier that they should.</p>
       <% end %>
-      <% if @calculator.fee_for_early_hire? %>
-        <p>The fee calculation is based on a daily supplier’s fee of <%= number_to_currency(@calculator.daily_supplier_fee) %>. This fee is the supplier’s proportion of the <%= number_to_percentage(@calculator.markup_rate * 100, precision: 1) %> mark-up on a <%= number_to_currency(@calculator.day_rate) %> daily rate. There were <%= @calculator.working_days %> working days between the date the worker started their contract <%= @calculator.contract_start_date.to_formatted_s(:long) %> and the date you intend to hire them, <%= @calculator.hire_date.to_formatted_s(:long) %>. The worker you wish to hire works <%= @calculator.days_per_week %> days per week and the total fee has been calculated on a pro-rata basis.</p>
+
+      <p>The supplier can charge you a fee for making a temporary member of staff permanent if:<p>
+      <ul>
+        <li>you take the worker on permanently within the first 12 working weeks of their contract</li>
+        <li>you take the worker on permanently after 8 working weeks of their contract and don't give the supplier at least 4 weeks notice</li>
+      </ul>
+
+      <% if @calculator.hiring_after_12_weeks? %>
+        <% if @calculator.notice_date.present? && @calculator.enough_notice? %>
+          <%= render partial: 'after_12_weeks_and_enough_notice' %>
+        <% elsif @calculator.notice_date.present? && !@calculator.enough_notice? %>
+          <%= render partial: 'after_12_weeks_and_not_enough_notice',
+                     locals: { calculator: @calculator } %>
+        <% elsif @calculator.notice_date.blank? %>
+          <%= render partial: 'after_12_weeks_and_no_notice_date',
+                     locals: { calculator: @calculator } %>
+        <% end %>
+      <% elsif @calculator.hiring_between_9_and_12_weeks? %>
+        <% if @calculator.notice_date.present? && @calculator.enough_notice? %>
+          <%= render partial: 'between_9_and_12_weeks_and_enough_notice',
+                     locals: { calculator: @calculator } %>
+        <% elsif @calculator.notice_date.present? && !@calculator.enough_notice? %>
+          <%= render partial: 'between_9_and_12_weeks_and_not_enough_notice',
+                     locals: { calculator: @calculator } %>
+        <% elsif @calculator.notice_date.blank? %>
+          <%= render partial: 'between_9_and_12_weeks_and_no_notice_date',
+                     locals: { calculator: @calculator } %>
+        <% end %>
+      <% elsif @calculator.hiring_within_8_weeks? %>
+        <%= render partial: 'within_first_8_weeks',
+                   locals: { calculator: @calculator } %>
       <% end %>
-      <% if @calculator.fee_for_lack_of_notice? %>
-        <p>You’re going to be hiring a worker after the 41st working day of a contract. This means that you might be charged a fee for lack of notice, although the total fee cannot exceed <%= number_to_currency(@calculator.daily_supplier_fee * 20) %>.</p>
-      <% end %>
-      <h2>Avoid paying fees</h2>
-      <p>If you hire the worker on <%= @calculator.ideal_hire_date.to_formatted_s(:long) %> and give notice on <%= @calculator.ideal_notice_date.to_formatted_s(:long) %> then you can avoid paying any fees to the agency.</p>
     </div>
   </div>
 </div>
