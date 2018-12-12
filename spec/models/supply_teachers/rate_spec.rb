@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SupplyTeachers::Rate, type: :model do
-  subject(:rate) { build(:rate) }
+  subject(:rate) { build(:supply_teachers_rate) }
 
   it { is_expected.to be_valid }
 
@@ -93,7 +93,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     rate.term = 'one_week'
     rate.save!
     new_rate = build(
-      :rate,
+      :supply_teachers_rate,
       supplier: rate.supplier,
       job_type: rate.job_type,
       lot_number: rate.lot_number,
@@ -106,7 +106,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     rate.term = 'one_week'
     rate.save!
     new_rate = build(
-      :rate,
+      :supply_teachers_rate,
       supplier: rate.supplier,
       job_type: rate.job_type,
       lot_number: rate.lot_number,
@@ -119,7 +119,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     rate.term = 'one_week'
     rate.save!
     new_rate = build(
-      :rate,
+      :supply_teachers_rate,
       supplier: build(:supply_teachers_supplier),
       job_type: rate.job_type,
       lot_number: rate.lot_number,
@@ -132,7 +132,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     rate.term = 'one_week'
     rate.save!
     new_rate = build(
-      :rate,
+      :supply_teachers_rate,
       supplier: rate.supplier,
       job_type: rate.job_type,
       lot_number: rate.lot_number + 1,

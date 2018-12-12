@@ -11,18 +11,18 @@ FactoryBot.define do
     lot_number { 3 }
   end
 
-  factory :rate, aliases: [:direct_provision_rate], class: SupplyTeachers::Rate do
+  factory :supply_teachers_rate, aliases: [:direct_provision_rate], class: SupplyTeachers::Rate do
     association :supplier, factory: :supply_teachers_supplier
     direct_provision
     job_type { 'nominated' }
     mark_up { 0.5 }
   end
 
-  factory :master_vendor_rate, parent: :rate do
+  factory :master_vendor_rate, parent: :supply_teachers_rate do
     master_vendor
   end
 
-  factory :neutral_vendor_rate, parent: :rate do
+  factory :neutral_vendor_rate, parent: :supply_teachers_rate do
     neutral_vendor
   end
 end

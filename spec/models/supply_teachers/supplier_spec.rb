@@ -31,7 +31,7 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
       supplier.save!
     end
 
-    let!(:rate) { create(:rate, supplier: supplier) }
+    let!(:rate) { create(:supply_teachers_rate, supplier: supplier) }
 
     it 'destroys all its rates when it is destroyed' do
       supplier.destroy!
@@ -42,7 +42,7 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
 
   describe '#nominated_worker_rate' do
     it 'returns rate if available for direct provision' do
-      create(:rate, supplier: supplier, job_type: 'nominated', mark_up: 0.1)
+      create(:supply_teachers_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.1)
       expect(supplier.nominated_worker_rate).to eq(0.1)
     end
 
@@ -58,7 +58,7 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
 
   describe '#fixed_term_rate' do
     it 'returns rate if available for direct provision' do
-      create(:rate, supplier: supplier, job_type: 'fixed_term', mark_up: 0.1)
+      create(:supply_teachers_rate, supplier: supplier, job_type: 'fixed_term', mark_up: 0.1)
       expect(supplier.fixed_term_rate).to eq(0.1)
     end
 

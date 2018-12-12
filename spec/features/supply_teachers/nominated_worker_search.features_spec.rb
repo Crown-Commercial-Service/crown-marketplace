@@ -14,7 +14,7 @@ RSpec.feature 'Nominated workers', type: :feature do
   scenario 'Buyer finds suppliers within search range' do
     holborn = create(:supply_teachers_supplier, name: 'holborn')
     create(
-      :rate,
+      :supply_teachers_rate,
       supplier: holborn,
       lot_number: 1,
       job_type: 'nominated',
@@ -27,7 +27,7 @@ RSpec.feature 'Nominated workers', type: :feature do
     )
     westminster = create(:supply_teachers_supplier, name: 'westminster')
     create(
-      :rate,
+      :supply_teachers_rate,
       supplier: westminster,
       lot_number: 1,
       job_type: 'nominated',
