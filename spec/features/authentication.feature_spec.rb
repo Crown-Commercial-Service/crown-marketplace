@@ -16,7 +16,7 @@ RSpec.feature 'Authentication', type: :feature do
   end
 
   scenario 'Users signed in using AWS Cognito can sign out' do
-    allow(Cognito).to receive(:logout_path).and_return('/management-consultancy')
+    allow(Cognito).to receive(:logout_url).and_return('/management-consultancy')
 
     visit '/management-consultancy/start'
     click_on 'Sign in with beta credentials'

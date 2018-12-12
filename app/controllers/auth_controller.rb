@@ -7,7 +7,7 @@ class AuthController < ApplicationController
   end
 
   def sign_out
-    redirect_to current_login.logout_path(self)
+    redirect_to current_login.logout_url(self)
     delete_current_login
   end
 end

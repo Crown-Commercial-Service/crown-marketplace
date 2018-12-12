@@ -8,8 +8,8 @@ module Login
       :cognito
     end
 
-    def logout_path(routable)
-      ::Cognito.logout_path(routable.gateway_url)
+    def logout_url(routable)
+      ::Cognito.logout_url(routable.gateway_url)
     end
 
     def permit?(_framework)

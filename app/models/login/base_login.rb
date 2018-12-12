@@ -19,7 +19,7 @@ module Login
       raise 'not implemented'
     end
 
-    def logout_path(_routable)
+    def logout_url(_routable)
       raise 'not implemented'
     end
 
