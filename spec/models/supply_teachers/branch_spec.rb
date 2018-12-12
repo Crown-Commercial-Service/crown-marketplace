@@ -90,7 +90,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
   describe '.search' do
     context 'when there are branches outside of the search area' do
       let(:supplier) do
-        create(:supplier).tap do |s|
+        create(:supply_teachers_supplier).tap do |s|
           create(:rate, job_type: 'nominated', supplier: s)
         end
       end
@@ -119,20 +119,20 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
 
     context 'when there are suppliers without nominated worker rates' do
       let!(:branch_with_nominated_worker_rates) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier)
         create(:branch,
                supplier: supplier,
                location: Geocoding.point(latitude: 0, longitude: 0))
       end
       let!(:branch_with_no_nominated_worker_rates) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:branch,
                supplier: supplier,
                location: Geocoding.point(latitude: 0, longitude: 0))
       end
       let!(:branch_with_master_vendor_nominated_worker_rate) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:master_vendor_rate, job_type: 'nominated', supplier: supplier)
         create(:branch,
                supplier: supplier,
@@ -161,20 +161,20 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
 
     context 'when there are suppliers with fixed term rates' do
       let!(:branch_with_fixed_term_rates) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'fixed_term', supplier: supplier)
         create(:branch,
                supplier: supplier,
                location: Geocoding.point(latitude: 0, longitude: 0))
       end
       let!(:branch_with_no_fixed_term_rates) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:branch,
                supplier: supplier,
                location: Geocoding.point(latitude: 0, longitude: 0))
       end
       let!(:branch_with_master_vendor_fixed_term_rate) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:master_vendor_rate, job_type: 'fixed_term', supplier: supplier)
         create(:branch,
                supplier: supplier,
@@ -204,12 +204,12 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
 
     context 'when there are suppliers with different nominated worker rates' do
       let!(:branch_of_cheaper_supplier) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
         create(:branch, supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
       end
       let!(:branch_of_costlier_supplier) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.9)
         create(:branch, supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
       end
@@ -226,19 +226,19 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
 
     context 'when there are suppliers with different rates in different locations' do
       let!(:branch_of_cheapest_supplier) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.0)
         location = Geocoding.point(latitude: 0.2, longitude: 0.2)
         create(:branch, name: 'cheapest', supplier: supplier, location: location)
       end
       let!(:branch_of_farthest_supplier) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
         location = Geocoding.point(latitude: 0.1, longitude: 0.1)
         create(:branch, name: 'farthest', supplier: supplier, location: location)
       end
       let!(:branch_of_closest_supplier) do
-        supplier = create(:supplier)
+        supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
         location = Geocoding.point(latitude: 0, longitude: 0)
         create(:branch, name: 'closest', supplier: supplier, location: location)

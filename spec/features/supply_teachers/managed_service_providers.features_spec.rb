@@ -9,7 +9,7 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer wants to hire a master vendor managed service' do
-    supplier = create(:supplier)
+    supplier = create(:supply_teachers_supplier)
 
     create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'one_week', mark_up: 0.11)
     create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'twelve_weeks', mark_up: 0.12)
@@ -40,7 +40,7 @@ RSpec.feature 'Managed service providers', type: :feature do
   end
 
   scenario 'Buyer wants to hire a neutral vendor managed service' do
-    supplier = create(:supplier, name: 'neutral-vendor-supplier')
+    supplier = create(:supply_teachers_supplier, name: 'neutral-vendor-supplier')
 
     create(:neutral_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.30)
     create(:neutral_vendor_rate, supplier: supplier, job_type: 'daily_fee', daily_fee: 1.23, mark_up: nil)

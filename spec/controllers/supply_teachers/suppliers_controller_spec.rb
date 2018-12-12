@@ -6,7 +6,7 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
   end
 
   describe 'GET master_vendors' do
-    let(:supplier) { build(:supplier) }
+    let(:supplier) { build(:supply_teachers_supplier) }
     let(:suppliers) { [supplier] }
 
     before do
@@ -40,7 +40,7 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
   end
 
   describe 'GET neutral_vendors' do
-    let(:supplier) { build(:supplier) }
+    let(:supplier) { build(:supply_teachers_supplier) }
     let(:suppliers) { [supplier] }
 
     before do

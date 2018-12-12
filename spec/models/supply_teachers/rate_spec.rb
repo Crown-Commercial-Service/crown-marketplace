@@ -120,7 +120,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     rate.save!
     new_rate = build(
       :rate,
-      supplier: build(:supplier),
+      supplier: build(:supply_teachers_supplier),
       job_type: rate.job_type,
       lot_number: rate.lot_number,
       term: rate.term

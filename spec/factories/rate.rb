@@ -12,7 +12,7 @@ FactoryBot.define do
   end
 
   factory :rate, aliases: [:direct_provision_rate], class: SupplyTeachers::Rate do
-    supplier
+    association :supplier, factory: :supply_teachers_supplier
     direct_provision
     job_type { 'nominated' }
     mark_up { 0.5 }

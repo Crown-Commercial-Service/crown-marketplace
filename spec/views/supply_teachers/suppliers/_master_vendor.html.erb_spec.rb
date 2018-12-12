@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'supply_teachers/suppliers/_master_vendor.html.erb' do
   helper TelephoneNumberHelper
 
-  let(:supplier) { build(:supplier) }
+  let(:supplier) { build(:supply_teachers_supplier) }
   let(:job_types_vs_rates) { {} }
 
   before do
