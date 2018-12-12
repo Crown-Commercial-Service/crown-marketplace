@@ -123,10 +123,6 @@ module TempToPermCalculator
       @hire_date >= late_notice_fee_can_be_charged_from
     end
 
-    def fee_for_early_hire?
-      @hire_date <= early_hire_fee_can_be_charged_until
-    end
-
     def ideal_hire_date
       working_days_after(early_hire_fee_can_be_charged_until, 1)
     end
