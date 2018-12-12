@@ -13,7 +13,7 @@ module Login
       :dfe
     end
 
-    def logout_path(routable)
+    def logout_url(routable)
       routable.supply_teachers_gateway_url
     end
 
