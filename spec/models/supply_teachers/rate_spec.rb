@@ -21,6 +21,12 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     expect(rate).not_to be_valid
   end
 
+  it 'is not valid if job_type is not in list of all job types' do
+    rate.job_type = 'invalid-job-type'
+    expect(rate).not_to be_valid
+    expect(rate.errors[:job_type]).to include('is not included in the list')
+  end
+
   context "when it's a percentage mark up" do
     before do
       rate.job_type = 'nominated'
@@ -145,10 +151,5 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
       term: rate.term
     )
     expect(new_rate).to be_valid
-  end
-
-  it 'is not valid if job type is not in the list of acceptable types' do
-    rate.job_type = 'made-up-job-type'
-    expect(rate).not_to be_valid
   end
 end
