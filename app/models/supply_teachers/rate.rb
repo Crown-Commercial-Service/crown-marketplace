@@ -1,11 +1,5 @@
 module SupplyTeachers
   class Rate < ApplicationRecord
-    LOT_NUMBERS = {
-      1 => 'Direct provision',
-      2 => 'Master vendor',
-      3 => 'Neutral vendor'
-    }.freeze
-
     JOB_TYPES = {
       'qt' => 'Qualified teacher: non-SEN roles',
       'qt_sen' => 'Qualified teacher: SEN roles',
@@ -32,7 +26,7 @@ module SupplyTeachers
 
     validates :lot_number, presence: true,
                            uniqueness: { scope: %i[supplier term job_type] },
-                           inclusion: { in: LOT_NUMBERS.keys }
+                           inclusion: { in: Lot.all_numbers }
 
     validates :job_type, presence: true,
                          uniqueness: { scope: %i[supplier term lot_number] },
