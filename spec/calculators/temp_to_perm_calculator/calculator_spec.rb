@@ -148,10 +148,6 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
     end
 
-    it 'indicates that there is no fee for not giving at least 4 weeks notice' do
-      expect(calculator.fee_for_lack_of_notice?).to eq(false)
-    end
-
     it 'indicates that the school is not required to give any notice' do
       expect(calculator.notice_period_required?).to eq(false)
     end
@@ -194,10 +190,6 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     it 'calculates the number of chargeable working days as the number of chargeable working days due to early hire' do
       expect(calculator.chargeable_working_days).to eq(5)
-    end
-
-    it 'indicates that there is a fee for not giving at least 4 weeks notice' do
-      expect(calculator.fee_for_lack_of_notice?).to eq(true)
     end
 
     it 'indicates that the school is required to give 4 weeks notice' do
@@ -344,10 +336,6 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     it 'calculates the number of chargeable working days as zero' do
       expect(calculator.chargeable_working_days).to eq(0)
-    end
-
-    it 'indicates that there may be a fee for lack of notice' do
-      expect(calculator.fee_for_lack_of_notice?).to eq(true)
     end
 
     it 'indicates that the school is required to give 4 weeks notice' do
