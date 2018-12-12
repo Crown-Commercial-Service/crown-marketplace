@@ -127,7 +127,7 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
   describe '.with_neutral_vendor_rates' do
     let!(:supplier_with_neutral_vendor_rate) do
       create(:supply_teachers_supplier).tap do |supplier|
-        create(:neutral_vendor_rate, supplier: supplier)
+        create(:supply_teachers_neutral_vendor_rate, supplier: supplier)
       end
     end
 

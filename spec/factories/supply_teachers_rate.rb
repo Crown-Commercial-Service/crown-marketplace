@@ -22,7 +22,7 @@ FactoryBot.define do
     master_vendor
   end
 
-  factory :neutral_vendor_rate, parent: :supply_teachers_rate do
+  factory :supply_teachers_neutral_vendor_rate, parent: :supply_teachers_rate do
     neutral_vendor
   end
 end
