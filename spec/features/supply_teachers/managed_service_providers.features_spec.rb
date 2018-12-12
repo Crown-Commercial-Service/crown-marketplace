@@ -66,9 +66,8 @@ RSpec.feature 'Managed service providers', type: :feature do
     expect(page).to have_css('h1', text: 'Neutral vendor managed service')
     expect(page).to have_css('h2', text: 'neutral-vendor-supplier')
 
-    expect(page).to have_rates(job_type: 'A specific person', percentages: [30.0])
-    expect(page).to have_rates(job_type: 'Neutral vendor managed service provider fee (per day)',
-                               percentages: [], amount: 1.23)
+    expect(page).to have_text(/A 30.0% mark-up is charged/)
+    expect(page).to have_text(/A £1.23 daily fee is charged/)
   end
 
   scenario 'Buyer changes mind about hiring a managed service provider' do
