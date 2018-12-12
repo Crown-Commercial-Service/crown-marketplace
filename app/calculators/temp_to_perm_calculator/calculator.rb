@@ -42,6 +42,43 @@ module TempToPermCalculator
     end
     # rubocop:enable Metrics/ParameterLists
 
+    def maximum_fee_for_lack_of_notice
+      WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE * daily_supplier_fee
+    end
+
+    def days_notice_required
+      WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE
+    end
+
+    def days_notice_given
+      working_days_between(@notice_date, @hire_date)
+    end
+
+    def hiring_within_8_weeks?
+      end_of_8th_working_week = working_days_after(@contract_start_date,
+                                                   WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED - 1)
+      @hire_date <= end_of_8th_working_week
+    end
+
+    def hiring_between_9_and_12_weeks?
+      start_of_9th_working_week = working_days_after(@contract_start_date,
+                                                     WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED)
+      end_of_12th_working_week = working_days_after(@contract_start_date,
+                                                    WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED - 1)
+
+      (start_of_9th_working_week..end_of_12th_working_week).cover?(@hire_date)
+    end
+
+    def hiring_after_12_weeks?
+      start_of_13th_working_week = working_days_after(@contract_start_date,
+                                                      WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED)
+      @hire_date >= start_of_13th_working_week
+    end
+
+    def enough_notice?
+      chargeable_working_days_based_on_lack_of_notice.zero?
+    end
+
     def fee
       [
         chargeable_working_days * working_day_supplier_fee,

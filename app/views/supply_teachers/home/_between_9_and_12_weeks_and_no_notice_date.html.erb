@@ -1,0 +1,39 @@
+<p>
+  <%= t('supply_teachers.home.temp_to_perm_fee.between_9_and_12_weeks_and_no_notice_date') %>
+</p>
+
+<h2>Calculation</h2>
+
+<ul>
+  <li>
+    <%= t('supply_teachers.home.temp_to_perm_fee.working_days_required') %>
+  </li>
+  <li>
+    <%= t('supply_teachers.home.temp_to_perm_fee.working_days',
+          days: calculator.working_days,
+          contract_start_date: calculator.contract_start_date.to_s(:long_with_day),
+          hire_date: calculator.hire_date.to_s(:long_with_day)) %>
+  </li>
+  <li>
+    <%= t('supply_teachers.home.temp_to_perm_fee.early_hire_chargeable_days',
+          days: calculator.chargeable_working_days_based_on_early_hire) %>
+  </li>
+  <li>
+    <%= t('supply_teachers.home.temp_to_perm_fee.daily_supplier_fee',
+          fee: number_to_currency(calculator.daily_supplier_fee),
+          markup_rate: number_to_percentage(calculator.markup_rate * 100, precision: 1),
+          day_rate: number_to_currency(calculator.day_rate)) %>
+  </li>
+  <li>
+    <%= t('supply_teachers.home.temp_to_perm_fee.total_fee',
+          fee: number_to_currency(calculator.fee)) %>
+  </li>
+</ul>
+
+<p>
+  <%= t('supply_teachers.home.temp_to_perm_fee.notice_period_disclaimer',
+      max_fee: number_to_currency(calculator.maximum_fee_for_lack_of_notice),
+      latest_notice_date: calculator.notice_date_based_on_hire_date.to_s(:long_with_day)) %>
+</p>
+
+<%= render partial: 'avoid_paying_fees', locals: { calculator: calculator } %>

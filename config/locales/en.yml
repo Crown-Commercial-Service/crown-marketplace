@@ -311,8 +311,24 @@ en:
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     home:
       temp_to_perm_fee:
+        after_12_weeks_and_enough_notice: You're taking the worker on permanently after 12 working weeks and you're giving the supplier the required 4 weeks notice so you can't be charged a fee for taking the worker on permanently.
+        after_12_weeks_and_no_notice_date: You're taking the worker on permanently after 12 working weeks but you haven't said whether you're giving the supplier the required 4 weeks notice. If you don't notify the supplier by %{latest_notice_date} you might be charged a fee of up to %{max_fee} for taking the worker on permanently.
+        after_12_weeks_and_not_enough_notice: You're taking the worker on permanently after 12 working weeks but you're not giving the supplier the required 4 weeks notice so you can be charged a fee for taking the worker on permanently.
+        between_9_and_12_weeks_and_enough_notice: You're taking the worker on permanently within the first 12 working weeks of their contract so you can be charged a fee for taking the worker on permanently even though you're giving the supplier the 4 weeks notice they require.
+        between_9_and_12_weeks_and_no_notice_date: You're taking the worker on permanently within the first 12 working weeks so you can be charged a fee for taking the worker on permanently.
+        between_9_and_12_weeks_and_not_enough_notice: You're taking the worker on permanently within the first 12 working weeks and you're not giving the supplier the required 4 weeks notice so you can be charged a fee for taking the worker on permanently.
+        daily_supplier_fee: 'Supplier daily fee for the worker: %{fee} (based on the %{markup_rate} mark-up of the %{day_rate} daily cost for the worker)'
+        early_hire_chargeable_days: 'Days chargeable for early-hire: %{days}'
         header: Temp-to-perm fee
+        lack_of_notice_chargeable_days: 'Days chargeable for lack of notice: %{days}'
+        notice_period_disclaimer: You may be charged more than the fee displayed, up to a maximum of %{max_fee}, if you don't notify the supplier of your intention to make the worker permanent by %{latest_notice_date}.
+        notice_period_given: 'Notice period given: %{days} working days between %{notice_date} and %{hire_date}'
+        notice_period_required: 'Notice period required: %{days} working days'
         panel_body: Based on the information provided you could be charged
+        total_fee: 'Fee chargeable by supplier: %{fee}'
+        within_first_8_weeks: You're taking the worker on permanently within the first 12 working weeks so you can be charged a fee for taking the worker on permanently.
+        working_days: 'Working days between contract start (%{contract_start_date}) and hire date (%{hire_date}): %{days}'
+        working_days_required: 'Minimum contract required: 60 working days (12 weeks)'
     journey:
       agency_payroll:
         page_title: School postcode and worker requirements
