@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :branch, class: SupplyTeachers::Branch do
+  factory :supply_teachers_branch, class: SupplyTeachers::Branch do
     association :supplier, factory: :supply_teachers_supplier
     postcode { Faker::Address.unique.postcode }
     location do

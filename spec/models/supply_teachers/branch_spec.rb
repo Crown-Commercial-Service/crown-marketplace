@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SupplyTeachers::Branch, type: :model do
-  subject(:branch) { build(:branch) }
+  subject(:branch) { build(:supply_teachers_branch) }
 
   let(:model_key) { 'activerecord.errors.models.supply_teachers/branch' }
 
@@ -56,19 +56,21 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
     context 'when three branches exist in different locations' do
       let!(:london_1) do
         create(
-          :branch,
+          :supply_teachers_branch,
           location: Geocoding.point(latitude: 51.5201, longitude: -0.0759)
         )
       end
+
       let!(:london_2) do
         create(
-          :branch,
+          :supply_teachers_branch,
           location: Geocoding.point(latitude: 51.5263, longitude: -0.0858)
         )
       end
+
       let!(:edinburgh) do
         create(
-          :branch,
+          :supply_teachers_branch,
           location: Geocoding.point(latitude: 55.9619, longitude: -3.1953)
         )
       end
@@ -94,16 +96,18 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
           create(:rate, job_type: 'nominated', supplier: s)
         end
       end
+
       let!(:branch_within_search_area) do
         create(
-          :branch,
+          :supply_teachers_branch,
           supplier: supplier,
           location: Geocoding.point(latitude: 51.5172265, longitude: -0.1275961)
         )
       end
+
       let!(:branch_outside_search_area) do
         create(
-          :branch,
+          :supply_teachers_branch,
           supplier: supplier,
           location: Geocoding.point(latitude: 50.7230521, longitude: -2.0430911)
         )
@@ -130,7 +134,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier)
         create(
-          :branch,
+          :supply_teachers_branch,
           supplier: supplier,
           location: Geocoding.point(latitude: 0, longitude: 0)
         )
@@ -138,7 +142,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       let!(:branch_with_no_nominated_worker_rates) do
         supplier = create(:supply_teachers_supplier)
         create(
-          :branch,
+          :supply_teachers_branch,
           supplier: supplier,
           location: Geocoding.point(latitude: 0, longitude: 0)
         )
@@ -147,7 +151,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
         supplier = create(:supply_teachers_supplier)
         create(:master_vendor_rate, job_type: 'nominated', supplier: supplier)
         create(
-          :branch,
+          :supply_teachers_branch,
           supplier: supplier,
           location: Geocoding.point(latitude: 0, longitude: 0)
         )
@@ -178,7 +182,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'fixed_term', supplier: supplier)
         create(
-          :branch,
+          :supply_teachers_branch,
           supplier: supplier,
           location: Geocoding.point(latitude: 0, longitude: 0)
         )
@@ -186,7 +190,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       let!(:branch_with_no_fixed_term_rates) do
         supplier = create(:supply_teachers_supplier)
         create(
-          :branch,
+          :supply_teachers_branch,
           supplier: supplier,
           location: Geocoding.point(latitude: 0, longitude: 0)
         )
@@ -195,7 +199,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
         supplier = create(:supply_teachers_supplier)
         create(:master_vendor_rate, job_type: 'fixed_term', supplier: supplier)
         create(
-          :branch,
+          :supply_teachers_branch,
           supplier: supplier,
           location: Geocoding.point(latitude: 0, longitude: 0)
         )
@@ -226,12 +230,12 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       let!(:branch_of_cheaper_supplier) do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
-        create(:branch, supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
+        create(:supply_teachers_branch, supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
       end
       let!(:branch_of_costlier_supplier) do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.9)
-        create(:branch, supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
+        create(:supply_teachers_branch, supplier: supplier, location: Geocoding.point(latitude: 0, longitude: 0))
       end
 
       it 'orders branches by markup rate in ascending order' do
@@ -249,19 +253,19 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.0)
         location = Geocoding.point(latitude: 0.2, longitude: 0.2)
-        create(:branch, name: 'cheapest', supplier: supplier, location: location)
+        create(:supply_teachers_branch, name: 'cheapest', supplier: supplier, location: location)
       end
       let!(:branch_of_farthest_supplier) do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
         location = Geocoding.point(latitude: 0.1, longitude: 0.1)
-        create(:branch, name: 'farthest', supplier: supplier, location: location)
+        create(:supply_teachers_branch, name: 'farthest', supplier: supplier, location: location)
       end
       let!(:branch_of_closest_supplier) do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier, mark_up: 0.1)
         location = Geocoding.point(latitude: 0, longitude: 0)
-        create(:branch, name: 'closest', supplier: supplier, location: location)
+        create(:supply_teachers_branch, name: 'closest', supplier: supplier, location: location)
       end
 
       it 'orders branches by mark-up and then proximity in ascending order' do

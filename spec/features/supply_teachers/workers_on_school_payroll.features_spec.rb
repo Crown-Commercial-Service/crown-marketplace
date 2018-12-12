@@ -21,7 +21,7 @@ RSpec.feature 'Workers on school payroll', type: :feature do
       mark_up: 0.35
     )
     create(
-      :branch,
+      :supply_teachers_branch,
       supplier: holborn,
       location: Geocoding.point(latitude: 51.5149666, longitude: -0.119098)
     )
@@ -34,19 +34,19 @@ RSpec.feature 'Workers on school payroll', type: :feature do
       mark_up: 0.30
     )
     create(
-      :branch,
+      :supply_teachers_branch,
       supplier: westminster,
       location: Geocoding.point(latitude: 51.5185614, longitude: -0.1437991)
     )
     whitechapel = create(:supply_teachers_supplier, name: 'whitechapel')
     create(
-      :branch,
+      :supply_teachers_branch,
       supplier: whitechapel,
       location: Geocoding.point(latitude: 51.5106034, longitude: -0.0604652)
     )
     liverpool = create(:supply_teachers_supplier, name: 'liverpool')
     create(
-      :branch,
+      :supply_teachers_branch,
       supplier: liverpool,
       location: Geocoding.point(latitude: 53.409189, longitude: -2.9946932)
     )

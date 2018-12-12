@@ -6,8 +6,8 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller, auth: true
   end
 
   describe 'GET index' do
-    let(:first_branch) { build(:branch) }
-    let(:second_branch) { build(:branch) }
+    let(:first_branch) { build(:supply_teachers_branch) }
+    let(:second_branch) { build(:supply_teachers_branch) }
     let(:branches) { [first_branch, second_branch] }
 
     context 'when not logged in' do
