@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  require_permission :none, only: %i[status index]
+  require_permission :none, only: %i[status index cookies]
 
   def index
     redirect_to ccs_homepage_url
@@ -8,4 +8,6 @@ class HomeController < ApplicationController
   def status
     render layout: false
   end
+
+  def cookies; end
 end

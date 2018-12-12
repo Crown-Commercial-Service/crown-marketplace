@@ -172,6 +172,8 @@ en:
     application:
       back: Back
       beta: beta
+      cookie_link: Cookies
+      cookie_link_aria_label: How we use cookies
       crown_copyright: "© Crown copyright"
       error_prefix: Error
       feedback_aria_label: Email your feedback on this service
