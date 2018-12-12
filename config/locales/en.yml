@@ -177,6 +177,8 @@ en:
       feedback_aria_label: Email your feedback on this service
       feedback_html: This is a new service – your feedback (%{link}) will help us to improve it.
       having_problems: Having problems using this service?
+      privacy_link: Privacy policy
+      privacy_link_aria_label: View our privacy policy
       skip: Skip to main content
       support_html: Email %{link} or call %{phone} for support.
       support_link_aria_label: Email us for support with this service
