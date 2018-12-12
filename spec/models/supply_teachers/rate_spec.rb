@@ -10,6 +10,12 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     expect(rate).not_to be_valid
   end
 
+  it 'is not valid if lot_number is not in list of all lot numbers' do
+    rate.lot_number = 'invalid-number'
+    expect(rate).not_to be_valid
+    expect(rate.errors[:lot_number]).to include('is not included in the list')
+  end
+
   it 'is not valid if job_type is blank' do
     rate.job_type = ''
     expect(rate).not_to be_valid
