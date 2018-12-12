@@ -11,16 +11,24 @@ RSpec.feature 'Managed service providers', type: :feature do
   scenario 'Buyer wants to hire a master vendor managed service' do
     supplier = create(:supply_teachers_supplier)
 
-    create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'one_week', mark_up: 0.11)
-    create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'twelve_weeks', mark_up: 0.12)
-    create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'more_than_twelve_weeks', mark_up: 0.13)
+    create(:supply_teachers_master_vendor_rate,
+           supplier: supplier, job_type: 'qt', term: 'one_week', mark_up: 0.11)
+    create(:supply_teachers_master_vendor_rate,
+           supplier: supplier, job_type: 'qt', term: 'twelve_weeks', mark_up: 0.12)
+    create(:supply_teachers_master_vendor_rate,
+           supplier: supplier, job_type: 'qt', term: 'more_than_twelve_weeks', mark_up: 0.13)
 
-    create(:master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'one_week', mark_up: 0.21)
-    create(:master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'twelve_weeks', mark_up: 0.22)
-    create(:master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'more_than_twelve_weeks', mark_up: 0.23)
+    create(:supply_teachers_master_vendor_rate,
+           supplier: supplier, job_type: 'qt_sen', term: 'one_week', mark_up: 0.21)
+    create(:supply_teachers_master_vendor_rate,
+           supplier: supplier, job_type: 'qt_sen', term: 'twelve_weeks', mark_up: 0.22)
+    create(:supply_teachers_master_vendor_rate,
+           supplier: supplier, job_type: 'qt_sen', term: 'more_than_twelve_weeks', mark_up: 0.23)
 
-    create(:master_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.30)
-    create(:master_vendor_rate, supplier: supplier, job_type: 'fixed_term', mark_up: 0.40)
+    create(:supply_teachers_master_vendor_rate,
+           supplier: supplier, job_type: 'nominated', mark_up: 0.30)
+    create(:supply_teachers_master_vendor_rate,
+           supplier: supplier, job_type: 'fixed_term', mark_up: 0.40)
 
     visit_supply_teachers_start
 

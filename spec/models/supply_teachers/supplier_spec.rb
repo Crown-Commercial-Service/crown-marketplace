@@ -47,7 +47,7 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
     end
 
     it 'returns nil if unavailable for direct provision' do
-      create(:master_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.1)
+      create(:supply_teachers_master_vendor_rate, supplier: supplier, job_type: 'nominated', mark_up: 0.1)
       expect(supplier.nominated_worker_rate).to be_nil
     end
 
@@ -63,7 +63,7 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
     end
 
     it 'returns nil if unavailable for direct provision' do
-      create(:master_vendor_rate, supplier: supplier, job_type: 'fixed_term', mark_up: 0.1)
+      create(:supply_teachers_master_vendor_rate, supplier: supplier, job_type: 'fixed_term', mark_up: 0.1)
       expect(supplier.fixed_term_rate).to be_nil
     end
 
@@ -75,7 +75,7 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
   describe '.with_master_vendor_rates' do
     let!(:supplier_with_master_vendor_rate) do
       create(:supply_teachers_supplier).tap do |supplier|
-        create(:master_vendor_rate, supplier: supplier)
+        create(:supply_teachers_master_vendor_rate, supplier: supplier)
       end
     end
 
@@ -98,17 +98,17 @@ RSpec.describe SupplyTeachers::Supplier, type: :model do
 
   describe '.master_vendor_rates_grouped_by_job_type' do
     let!(:rate_qt_one_week) do
-      create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'one_week')
+      create(:supply_teachers_master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'one_week')
     end
     let!(:rate_qt_twelve_weeks) do
-      create(:master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'twelve_weeks')
+      create(:supply_teachers_master_vendor_rate, supplier: supplier, job_type: 'qt', term: 'twelve_weeks')
     end
 
     let!(:rate_qt_sen_one_week) do
-      create(:master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'one_week')
+      create(:supply_teachers_master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'one_week')
     end
     let!(:rate_qt_sen_twelve_weeks) do
-      create(:master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'twelve_weeks')
+      create(:supply_teachers_master_vendor_rate, supplier: supplier, job_type: 'qt_sen', term: 'twelve_weeks')
     end
 
     it 'returns rates grouped by job type' do

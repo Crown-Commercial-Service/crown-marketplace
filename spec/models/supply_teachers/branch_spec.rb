@@ -149,7 +149,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       end
       let!(:branch_with_master_vendor_nominated_worker_rate) do
         supplier = create(:supply_teachers_supplier)
-        create(:master_vendor_rate, job_type: 'nominated', supplier: supplier)
+        create(:supply_teachers_master_vendor_rate, job_type: 'nominated', supplier: supplier)
         create(
           :supply_teachers_branch,
           supplier: supplier,
@@ -197,7 +197,7 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       end
       let!(:branch_with_master_vendor_fixed_term_rate) do
         supplier = create(:supply_teachers_supplier)
-        create(:master_vendor_rate, job_type: 'fixed_term', supplier: supplier)
+        create(:supply_teachers_master_vendor_rate, job_type: 'fixed_term', supplier: supplier)
         create(
           :supply_teachers_branch,
           supplier: supplier,

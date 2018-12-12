@@ -18,7 +18,7 @@ FactoryBot.define do
     mark_up { 0.5 }
   end
 
-  factory :master_vendor_rate, parent: :supply_teachers_rate do
+  factory :supply_teachers_master_vendor_rate, parent: :supply_teachers_rate do
     master_vendor
   end
 

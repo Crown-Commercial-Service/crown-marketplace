@@ -20,9 +20,9 @@ RSpec.describe 'supply_teachers/suppliers/_master_vendor.html.erb' do
     let(:job_types_vs_rates) do
       {
         'qt' => [
-          build(:master_vendor_rate, job_type: 'qt', term: 'one_week', mark_up: 0.11),
-          build(:master_vendor_rate, job_type: 'qt', term: 'twelve_weeks', mark_up: 0.12),
-          build(:master_vendor_rate, job_type: 'qt', term: 'more_than_twelve_weeks', mark_up: 0.13)
+          build(:supply_teachers_master_vendor_rate, job_type: 'qt', term: 'one_week', mark_up: 0.11),
+          build(:supply_teachers_master_vendor_rate, job_type: 'qt', term: 'twelve_weeks', mark_up: 0.12),
+          build(:supply_teachers_master_vendor_rate, job_type: 'qt', term: 'more_than_twelve_weeks', mark_up: 0.13)
         ]
       }
     end
@@ -38,7 +38,7 @@ RSpec.describe 'supply_teachers/suppliers/_master_vendor.html.erb' do
     let(:job_types_vs_rates) do
       {
         'nominated' => [
-          build(:master_vendor_rate, job_type: 'nominated', mark_up: 0.3)
+          build(:supply_teachers_master_vendor_rate, job_type: 'nominated', mark_up: 0.3)
         ]
       }
     end
@@ -52,10 +52,10 @@ RSpec.describe 'supply_teachers/suppliers/_master_vendor.html.erb' do
     let(:job_types_vs_rates) do
       {
         'nominated' => [
-          build(:master_vendor_rate, job_type: 'nominated', mark_up: 0.3)
+          build(:supply_teachers_master_vendor_rate, job_type: 'nominated', mark_up: 0.3)
         ],
         'fixed_term' => [
-          build(:master_vendor_rate, job_type: 'fixed_term', mark_up: 0.4)
+          build(:supply_teachers_master_vendor_rate, job_type: 'fixed_term', mark_up: 0.4)
         ]
       }
     end
