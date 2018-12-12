@@ -45,7 +45,7 @@ RSpec.describe AuthController, type: :controller do
 
         it 'redirects to the Cognito logout path for the framework' do
           post :sign_out
-          expect(response).to redirect_to(Cognito.logout_path(facilities_management_gateway_path))
+          expect(response).to redirect_to(Cognito.logout_path(facilities_management_gateway_url))
         end
       end
 
@@ -58,7 +58,7 @@ RSpec.describe AuthController, type: :controller do
 
         it 'redirects to the Cognito logout path for the framework' do
           post :sign_out
-          expect(response).to redirect_to(Cognito.logout_path(management_consultancy_gateway_path))
+          expect(response).to redirect_to(Cognito.logout_path(management_consultancy_gateway_url))
         end
       end
 
@@ -71,7 +71,7 @@ RSpec.describe AuthController, type: :controller do
 
         it 'redirects to the Cognito logout path for the framework' do
           post :sign_out
-          expect(response).to redirect_to(Cognito.logout_path(supply_teachers_gateway_path))
+          expect(response).to redirect_to(Cognito.logout_path(supply_teachers_gateway_url))
         end
       end
 
@@ -90,7 +90,7 @@ RSpec.describe AuthController, type: :controller do
 
       it 'redirects to the supply teachers start page' do
         post :sign_out
-        expect(response).to redirect_to(supply_teachers_gateway_path)
+        expect(response).to redirect_to(supply_teachers_gateway_url)
       end
 
       it 'deletes the login from the session' do

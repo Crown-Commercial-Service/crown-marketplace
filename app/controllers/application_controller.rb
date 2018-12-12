@@ -23,14 +23,14 @@ class ApplicationController < ActionController::Base
 
   rescue_from Unauthorized, with: :deny_access
 
-  def gateway_path
+  def gateway_url
     case session[:last_visited_framework]
     when 'supply_teachers'
-      supply_teachers_gateway_path
+      supply_teachers_gateway_url
     when 'management_consultancy'
-      management_consultancy_gateway_path
+      management_consultancy_gateway_url
     when 'facilities_management'
-      facilities_management_gateway_path
+      facilities_management_gateway_url
     else
       ccs_homepage_url
     end
@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
 
     unless logged_in?
       session[:requested_path] = request.fullpath
-      redirect_to gateway_path
+      redirect_to gateway_url
       return
     end
 

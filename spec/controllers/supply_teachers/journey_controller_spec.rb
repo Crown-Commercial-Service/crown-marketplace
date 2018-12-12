@@ -28,7 +28,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
           journey: 'supply-teachers',
           slug: 'looking-for'
         }
-        expect(response).to redirect_to(supply_teachers_gateway_path)
+        expect(response).to redirect_to(supply_teachers_gateway_url)
       end
     end
 
