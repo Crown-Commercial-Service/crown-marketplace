@@ -95,10 +95,18 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
         end
       end
       let!(:branch_within_search_area) do
-        create(:branch, supplier: supplier, location: Geocoding.point(latitude: 51.5172265, longitude: -0.1275961))
+        create(
+          :branch,
+          supplier: supplier,
+          location: Geocoding.point(latitude: 51.5172265, longitude: -0.1275961)
+        )
       end
       let!(:branch_outside_search_area) do
-        create(:branch, supplier: supplier, location: Geocoding.point(latitude: 50.7230521, longitude: -2.0430911))
+        create(
+          :branch,
+          supplier: supplier,
+          location: Geocoding.point(latitude: 50.7230521, longitude: -2.0430911)
+        )
       end
       let(:results) do
         described_class.search(
@@ -121,22 +129,28 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       let!(:branch_with_nominated_worker_rates) do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'nominated', supplier: supplier)
-        create(:branch,
-               supplier: supplier,
-               location: Geocoding.point(latitude: 0, longitude: 0))
+        create(
+          :branch,
+          supplier: supplier,
+          location: Geocoding.point(latitude: 0, longitude: 0)
+        )
       end
       let!(:branch_with_no_nominated_worker_rates) do
         supplier = create(:supply_teachers_supplier)
-        create(:branch,
-               supplier: supplier,
-               location: Geocoding.point(latitude: 0, longitude: 0))
+        create(
+          :branch,
+          supplier: supplier,
+          location: Geocoding.point(latitude: 0, longitude: 0)
+        )
       end
       let!(:branch_with_master_vendor_nominated_worker_rate) do
         supplier = create(:supply_teachers_supplier)
         create(:master_vendor_rate, job_type: 'nominated', supplier: supplier)
-        create(:branch,
-               supplier: supplier,
-               location: Geocoding.point(latitude: 0, longitude: 0))
+        create(
+          :branch,
+          supplier: supplier,
+          location: Geocoding.point(latitude: 0, longitude: 0)
+        )
       end
       let(:results) do
         described_class.search(
@@ -163,22 +177,28 @@ RSpec.describe SupplyTeachers::Branch, type: :model do
       let!(:branch_with_fixed_term_rates) do
         supplier = create(:supply_teachers_supplier)
         create(:rate, job_type: 'fixed_term', supplier: supplier)
-        create(:branch,
-               supplier: supplier,
-               location: Geocoding.point(latitude: 0, longitude: 0))
+        create(
+          :branch,
+          supplier: supplier,
+          location: Geocoding.point(latitude: 0, longitude: 0)
+        )
       end
       let!(:branch_with_no_fixed_term_rates) do
         supplier = create(:supply_teachers_supplier)
-        create(:branch,
-               supplier: supplier,
-               location: Geocoding.point(latitude: 0, longitude: 0))
+        create(
+          :branch,
+          supplier: supplier,
+          location: Geocoding.point(latitude: 0, longitude: 0)
+        )
       end
       let!(:branch_with_master_vendor_fixed_term_rate) do
         supplier = create(:supply_teachers_supplier)
         create(:master_vendor_rate, job_type: 'fixed_term', supplier: supplier)
-        create(:branch,
-               supplier: supplier,
-               location: Geocoding.point(latitude: 0, longitude: 0))
+        create(
+          :branch,
+          supplier: supplier,
+          location: Geocoding.point(latitude: 0, longitude: 0)
+        )
       end
       let(:results) do
         point = Geocoding.point(latitude: 0, longitude: 0)
