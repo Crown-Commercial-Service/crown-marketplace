@@ -58,7 +58,7 @@ module SupplyTeachers
     end
 
     def term_required?
-      !%w[nominated fixed_term daily_fee].include?(job_type)
+      JobType.find_role_by(code: job_type).present?
     end
   end
 end
