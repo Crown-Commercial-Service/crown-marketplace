@@ -92,4 +92,19 @@ RSpec.feature 'Authentication', type: :feature do
 
     expect(page).to have_text('You don’t have permission to view this page')
   end
+
+  scenario 'DfE users cannot see school pages if they are not on the whitelist' do
+    allow(Marketplace)
+      .to receive(:dfe_signin_whitelist_enabled?)
+      .and_return(true)
+    allow(Marketplace)
+      .to receive(:dfe_signin_whitelisted_email_addresses)
+      .and_return([])
+    visit '/supply-teachers/start'
+    click_on 'Sign in with DfE Sign-in'
+
+    visit '/supply-teachers/start'
+
+    expect(page).to have_text('You don’t have permission to view this page')
+  end
 end
