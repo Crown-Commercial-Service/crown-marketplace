@@ -67,6 +67,12 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     expect(rate).not_to be_valid
   end
 
+  it 'is not valid if term is not in list of all rate terms' do
+    rate.assign_attributes(term: 'invalid-rate-term', job_type: 'admin')
+    expect(rate).not_to be_valid
+    expect(rate.errors[:term]).to include('is not included in the list')
+  end
+
   context "when it's a percentage mark up" do
     before do
       rate.assign_attributes(job_type: 'nominated', mark_up: 1)
@@ -136,7 +142,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
       supplier: rate.supplier,
       job_type: rate.job_type,
       lot_number: rate.lot_number,
-      term: 'one_month'
+      term: 'twelve_weeks'
     )
     expect(new_rate).to be_valid
   end
