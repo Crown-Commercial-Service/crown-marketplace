@@ -47,12 +47,12 @@
             <% supplier.rates.each do |rate| %>
               <% if rate.percentage_mark_up? %>
               <p class="govuk-body">
-                <%= t('.mark_up_html', mark_up:number_to_percentage(rate.mark_up * 100, precision: 1)) %>
+                <%= t('.mark_up_html', mark_up: number_to_percentage(rate.mark_up * 100, precision: 1)) %>
               </p>
               <p class="govuk-body"><%= t('.mark_up_explanation_html') %></p>
               <% else %>
               <p class="govuk-body">
-                <%= t('.daily_fee_html', daily_fee:number_to_currency(rate.daily_fee)) %>
+                <%= t('.daily_fee_html', daily_fee: number_to_currency(rate.daily_fee)) %>
               </p>
               <% end %>
             <% end %>
