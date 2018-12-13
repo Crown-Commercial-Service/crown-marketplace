@@ -113,6 +113,10 @@ module TempToPermCalculator
       @day_rate - (@day_rate / (1 + @markup_rate))
     end
 
+    def working_day_supplier_fee
+      daily_supplier_fee * (@days_per_week / MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK.to_f)
+    end
+
     def working_days
       (@contract_start_date..@hire_date).select do |day|
         day != @hire_date && working_day?(day)
@@ -142,10 +146,6 @@ module TempToPermCalculator
     end
 
     private
-
-    def working_day_supplier_fee
-      daily_supplier_fee * (@days_per_week / MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK.to_f)
-    end
 
     def late_notice_fee_can_be_charged_from
       working_days_after(@contract_start_date, WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED)

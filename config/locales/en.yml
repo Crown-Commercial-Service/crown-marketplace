@@ -344,6 +344,7 @@ en:
         between_9_and_12_weeks_and_no_notice_date: You're taking the worker on permanently within the first 12 working weeks so you can be charged a fee for taking the worker on permanently.
         between_9_and_12_weeks_and_not_enough_notice: You're taking the worker on permanently within the first 12 working weeks and you're not giving the supplier the required 4 weeks notice so you can be charged a fee for taking the worker on permanently.
         daily_supplier_fee: 'Supplier daily fee for the worker: %{fee} (based on the %{markup_rate} mark-up of the %{day_rate} daily cost for the worker)'
+        daily_supplier_fee_pro_rata: 'Pro rata supplier daily fee for the worker: %{fee} (based on the worker working %{days_per_week} days per week)'
         early_hire_chargeable_days: 'Days chargeable for early-hire: %{days}'
         header: Temp-to-perm fee
         lack_of_notice_chargeable_days: 'Days chargeable for lack of notice: %{days}'
