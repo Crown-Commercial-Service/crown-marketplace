@@ -10,4 +10,9 @@ module SupplyTeachers::TempToPermCalculatorHelper
       notice_date: calculator.notice_date.to_s(:long_with_day),
       hire_date: calculator.hire_date.to_s(:long_with_day))
   end
+
+  def display_chargeable_days_for_lack_of_notice(calculator)
+    t('supply_teachers.home.temp_to_perm_fee.lack_of_notice_chargeable_days',
+      days: calculator.chargeable_working_days_based_on_lack_of_notice)
+  end
 end
