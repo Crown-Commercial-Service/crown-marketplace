@@ -6,9 +6,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in_contract_start_date Date.parse('2018-09-03')
 
-    fill_in 'hire_date_day', with: 26
-    fill_in 'hire_date_month', with: 11
-    fill_in 'hire_date_year', with: 2018
+    fill_in_hire_date Date.parse('2018-11-26')
 
     fill_in 'days_per_week', with: 5
 
@@ -30,9 +28,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in_contract_start_date Date.parse('2018-09-03')
 
-    fill_in 'hire_date_day', with: 19
-    fill_in 'hire_date_month', with: 11
-    fill_in 'hire_date_year', with: 2018
+    fill_in_hire_date Date.parse('2018-11-19')
 
     fill_in 'days_per_week', with: 5
 
@@ -50,9 +46,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in_contract_start_date Date.parse('2018-09-03')
 
-    fill_in 'hire_date_day', with: 26
-    fill_in 'hire_date_month', with: 11
-    fill_in 'hire_date_year', with: 2018
+    fill_in_hire_date Date.parse('2018-11-26')
 
     fill_in 'days_per_week', with: 5
 
@@ -84,9 +78,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in_contract_start_date Date.parse('2018-09-03')
 
-    fill_in 'hire_date_day', with: 26
-    fill_in 'hire_date_month', with: 11
-    fill_in 'hire_date_year', with: 2018
+    fill_in_hire_date Date.parse('2018-11-26')
 
     fill_in 'days_per_week', with: 5
 
@@ -116,5 +108,11 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     fill_in 'contract_start_date_day', with: date.day
     fill_in 'contract_start_date_month', with: date.month
     fill_in 'contract_start_date_year', with: date.year
+  end
+
+  def fill_in_hire_date(date)
+    fill_in 'hire_date_day', with: date.day
+    fill_in 'hire_date_month', with: date.month
+    fill_in 'hire_date_year', with: date.year
   end
 end
