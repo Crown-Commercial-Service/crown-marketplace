@@ -40,12 +40,16 @@ Environment variables for the `production` Rails environment are currently obtai
 #### Cognito
 
 * `COGNITO_USER_POOL_SITE`
-  * If this is not set in development, both Cognito & DfE Signin
-    are configured to use OmniAuth test mode.
+  * Obtained from "App integration > Domain name" of the AWS Cognito User Pool
+  * Leave this blank in development to configure both Cognito & DfE Signin to use OmniAuth test mode.
 * `COGNITO_USER_POOL_ID`
+  * Obtained from the "General settings" of the AWS Cognito User Pool
 * `COGNITO_CLIENT_ID`
+  * Obtained from the "General settings > App clients" of the AWS Cognito User Pool
 * `COGNITO_CLIENT_SECRET`
+  * Obtained from the "General settings > App clients" of the AWS Cognito User Pool
 * `COGNITO_AWS_REGION`
+  * The AWS region the Cognito User Pool was created in
 
 #### DfE Signin
 
