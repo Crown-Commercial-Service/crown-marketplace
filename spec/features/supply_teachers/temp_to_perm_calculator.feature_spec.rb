@@ -2,10 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   scenario 'Making a worker permanent after 12 weeks and giving at least 4 weeks notice' do
-    visit_supply_teachers_start
-
-    choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
-    click_on I18n.t('common.submit')
+    visit_temp_to_perm_calculator
 
     fill_in 'contract_start_date_day', with: 3
     fill_in 'contract_start_date_month', with: 9
@@ -31,10 +28,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   end
 
   scenario 'Hiring a worker within 12 weeks of the start of their contract' do
-    visit_supply_teachers_start
-
-    choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
-    click_on I18n.t('common.submit')
+    visit_temp_to_perm_calculator
 
     fill_in 'contract_start_date_day', with: 3
     fill_in 'contract_start_date_month', with: 9
@@ -56,10 +50,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   end
 
   scenario 'Hiring a worker within 12 weeks of the start of their contract because of school holidays' do
-    visit_supply_teachers_start
-
-    choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
-    click_on I18n.t('common.submit')
+    visit_temp_to_perm_calculator
 
     fill_in 'contract_start_date_day', with: 3
     fill_in 'contract_start_date_month', with: 9
@@ -95,10 +86,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   end
 
   scenario 'Hiring a worker after 12 weeks of the start of their contract but without enough notice period' do
-    visit_supply_teachers_start
-
-    choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
-    click_on I18n.t('common.submit')
+    visit_temp_to_perm_calculator
 
     fill_in 'contract_start_date_day', with: 3
     fill_in 'contract_start_date_month', with: 9
@@ -121,5 +109,14 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     click_on I18n.t('common.submit')
 
     expect(page).to have_text('Based on the information provided you could be charged £200')
+  end
+
+  private
+
+  def visit_temp_to_perm_calculator
+    visit_supply_teachers_start
+
+    choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
+    click_on I18n.t('common.submit')
   end
 end
