@@ -9,10 +9,7 @@
     <%= t('supply_teachers.home.temp_to_perm_fee.working_days_required') %>
   </li>
   <li>
-    <%= t('supply_teachers.home.temp_to_perm_fee.working_days',
-          days: calculator.working_days,
-          contract_start_date: calculator.contract_start_date.to_s(:long_with_day),
-          hire_date: calculator.hire_date.to_s(:long_with_day)) %>
+    <%= display_working_days(calculator) %>
   </li>
   <li>
     <%= t('supply_teachers.home.temp_to_perm_fee.early_hire_chargeable_days',

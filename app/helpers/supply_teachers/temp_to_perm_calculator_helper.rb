@@ -37,4 +37,11 @@ module SupplyTeachers::TempToPermCalculatorHelper
     t('supply_teachers.home.temp_to_perm_fee.total_fee',
       fee: number_to_currency(calculator.fee))
   end
+
+  def display_working_days(calculator)
+    t('supply_teachers.home.temp_to_perm_fee.working_days',
+      days: calculator.working_days,
+      contract_start_date: calculator.contract_start_date.to_s(:long_with_day),
+      hire_date: calculator.hire_date.to_s(:long_with_day))
+  end
 end
