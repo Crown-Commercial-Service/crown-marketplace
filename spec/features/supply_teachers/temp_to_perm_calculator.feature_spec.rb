@@ -14,9 +14,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in 'markup_rate', with: 10
 
-    fill_in 'notice_date_day', with: 29
-    fill_in 'notice_date_month', with: 10
-    fill_in 'notice_date_year', with: 2018
+    fill_in_notice_date Date.parse('2018-10-29')
 
     click_on I18n.t('common.submit')
 
@@ -86,9 +84,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in 'markup_rate', with: 10
 
-    fill_in 'notice_date_day', with: 26
-    fill_in 'notice_date_month', with: 11
-    fill_in 'notice_date_year', with: 2018
+    fill_in_notice_date Date.parse('2018-11-26')
 
     click_on I18n.t('common.submit')
 
@@ -114,5 +110,11 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     fill_in 'hire_date_day', with: date.day
     fill_in 'hire_date_month', with: date.month
     fill_in 'hire_date_year', with: date.year
+  end
+
+  def fill_in_notice_date(date)
+    fill_in 'notice_date_day', with: date.day
+    fill_in 'notice_date_month', with: date.month
+    fill_in 'notice_date_year', with: date.year
   end
 end
