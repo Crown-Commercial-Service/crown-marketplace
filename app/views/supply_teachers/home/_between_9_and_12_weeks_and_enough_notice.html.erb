@@ -24,6 +24,13 @@
           markup_rate: number_to_percentage(calculator.markup_rate * 100, precision: 1),
           day_rate: number_to_currency(calculator.day_rate)) %>
   </li>
+  <% if calculator.days_per_week < TempToPermCalculator::Calculator::MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK %>
+    <li>
+      <%= I18n.t('supply_teachers.home.temp_to_perm_fee.daily_supplier_fee_pro_rata',
+                 fee: number_to_currency(calculator.working_day_supplier_fee),
+                 days_per_week: calculator.days_per_week) %>
+    </li>
+  <% end %>
   <li>
     <%= t('supply_teachers.home.temp_to_perm_fee.total_fee',
           fee: number_to_currency(calculator.fee)) %>
