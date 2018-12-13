@@ -4,9 +4,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   scenario 'Making a worker permanent after 12 weeks and giving at least 4 weeks notice' do
     visit_temp_to_perm_calculator
 
-    fill_in 'contract_start_date_day', with: 3
-    fill_in 'contract_start_date_month', with: 9
-    fill_in 'contract_start_date_year', with: 2018
+    fill_in_contract_start_date Date.parse('2018-09-03')
 
     fill_in 'hire_date_day', with: 26
     fill_in 'hire_date_month', with: 11
@@ -30,9 +28,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   scenario 'Hiring a worker within 12 weeks of the start of their contract' do
     visit_temp_to_perm_calculator
 
-    fill_in 'contract_start_date_day', with: 3
-    fill_in 'contract_start_date_month', with: 9
-    fill_in 'contract_start_date_year', with: 2018
+    fill_in_contract_start_date Date.parse('2018-09-03')
 
     fill_in 'hire_date_day', with: 19
     fill_in 'hire_date_month', with: 11
@@ -52,9 +48,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   scenario 'Hiring a worker within 12 weeks of the start of their contract because of school holidays' do
     visit_temp_to_perm_calculator
 
-    fill_in 'contract_start_date_day', with: 3
-    fill_in 'contract_start_date_month', with: 9
-    fill_in 'contract_start_date_year', with: 2018
+    fill_in_contract_start_date Date.parse('2018-09-03')
 
     fill_in 'hire_date_day', with: 26
     fill_in 'hire_date_month', with: 11
@@ -88,9 +82,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
   scenario 'Hiring a worker after 12 weeks of the start of their contract but without enough notice period' do
     visit_temp_to_perm_calculator
 
-    fill_in 'contract_start_date_day', with: 3
-    fill_in 'contract_start_date_month', with: 9
-    fill_in 'contract_start_date_year', with: 2018
+    fill_in_contract_start_date Date.parse('2018-09-03')
 
     fill_in 'hire_date_day', with: 26
     fill_in 'hire_date_month', with: 11
@@ -118,5 +110,11 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_calculate_temp_to_perm_fee')
     click_on I18n.t('common.submit')
+  end
+
+  def fill_in_contract_start_date(date)
+    fill_in 'contract_start_date_day', with: date.day
+    fill_in 'contract_start_date_month', with: date.month
+    fill_in 'contract_start_date_year', with: date.year
   end
 end
