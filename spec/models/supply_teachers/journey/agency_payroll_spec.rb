@@ -5,7 +5,7 @@ RSpec.describe SupplyTeachers::Journey::AgencyPayroll, type: :model do
     described_class.new(
       postcode: postcode,
       term: SupplyTeachers::Term.all.first,
-      job_type: SupplyTeachers::JobType.all.first
+      job_type: SupplyTeachers::JobType.roles.first
     )
   end
 

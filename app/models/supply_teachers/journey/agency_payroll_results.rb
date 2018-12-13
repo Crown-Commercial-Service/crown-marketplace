@@ -16,7 +16,7 @@ module SupplyTeachers
     end
 
     def job_type
-      JobType.find_by(code: @job_type)
+      JobType.find_role_by(code: @job_type)
     end
 
     def term

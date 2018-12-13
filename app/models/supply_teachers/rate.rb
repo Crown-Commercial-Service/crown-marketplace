@@ -1,19 +1,5 @@
 module SupplyTeachers
   class Rate < ApplicationRecord
-    JOB_TYPES = {
-      'qt' => 'Qualified teacher: non-SEN roles',
-      'qt_sen' => 'Qualified teacher: SEN roles',
-      'uqt' => 'Unqualified teacher: non-SEN roles',
-      'uqt_sen' => 'Unqualified teacher: SEN roles',
-      'support' => 'Educational support staff: non-SEN roles (including cover supervisor and teaching assistant)',
-      'support_sen' => 'Educational support staff: SEN roles (including cover supervisor and teaching assistant)',
-      'senior' => 'Headteacher and senior leadership positions',
-      'admin' => 'Administrative and clerical staff, IT staff, finance staff and cleaners',
-      'nominated' => 'A specific person',
-      'fixed_term' => 'Employed directly',
-      'daily_fee' => 'Neutral vendor managed service provider fee (per day)'
-    }.freeze
-
     belongs_to :supplier,
                foreign_key: :supply_teachers_supplier_id,
                inverse_of: :branches
@@ -24,7 +10,7 @@ module SupplyTeachers
 
     validates :job_type, presence: true,
                          uniqueness: { scope: %i[supplier term lot_number] },
-                         inclusion: { in: JOB_TYPES.keys }
+                         inclusion: { in: JobType.all_codes }
 
     validates :term,
               presence: { unless: :term_required? },
