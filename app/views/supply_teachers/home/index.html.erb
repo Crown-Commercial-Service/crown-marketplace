@@ -19,7 +19,7 @@
         To use the service, you will need your DFE Sign-in email and password.
       </p>
 
-      <%= link_to 'Start now', journey_start_url(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': 'Start finding supply teachers and agency workers' %>
+      <%= link_to 'Start now', journey_start_path(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': 'Start finding supply teachers and agency workers' %>
 
       <h2 class="govuk-heading-m">Before you start</h2>
 
