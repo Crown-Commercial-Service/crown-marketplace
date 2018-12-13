@@ -12,8 +12,7 @@
     <%= display_working_days(calculator) %>
   </li>
   <li>
-    <%= t('supply_teachers.home.temp_to_perm_fee.early_hire_chargeable_days',
-          days: calculator.chargeable_working_days_based_on_early_hire) %>
+    <%= display_chargeable_days_for_early_hire(calculator) %>
   </li>
   <li>
     <%= display_suppliers_daily_fee(calculator) %>
