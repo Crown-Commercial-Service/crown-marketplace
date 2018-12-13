@@ -34,7 +34,7 @@
   <li>
     <%= display_suppliers_daily_fee(calculator) %>
   </li>
-  <% if calculator.days_per_week < TempToPermCalculator::Calculator::MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK %>
+  <% if display_suppliers_pro_rata_daily_fee?(calculator) %>
     <li>
       <%= display_suppliers_pro_rata_daily_fee(calculator) %>
     </li>

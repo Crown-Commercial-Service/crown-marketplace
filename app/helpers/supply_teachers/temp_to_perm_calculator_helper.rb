@@ -23,6 +23,10 @@ module SupplyTeachers::TempToPermCalculatorHelper
       day_rate: number_to_currency(calculator.day_rate))
   end
 
+  def display_suppliers_pro_rata_daily_fee?(calculator)
+    calculator.days_per_week < TempToPermCalculator::Calculator::MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK
+  end
+
   def display_suppliers_pro_rata_daily_fee(calculator)
     t('supply_teachers.home.temp_to_perm_fee.daily_supplier_fee_pro_rata',
       fee: number_to_currency(calculator.working_day_supplier_fee),
