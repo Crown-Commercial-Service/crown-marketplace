@@ -13,8 +13,8 @@ module SupplyTeachers
                          inclusion: { in: JobType.all_codes }
 
     validates :term,
-              presence: { unless: :term_required? },
-              absence: { if: :term_required? },
+              presence: { if: :term_required? },
+              absence: { unless: :term_required? },
               inclusion: { in: RateTerm.all_codes, allow_blank: true }
 
     validates :mark_up,
@@ -58,7 +58,7 @@ module SupplyTeachers
     end
 
     def term_required?
-      %w[nominated fixed_term daily_fee].include?(job_type)
+      !%w[nominated fixed_term daily_fee].include?(job_type)
     end
   end
 end
