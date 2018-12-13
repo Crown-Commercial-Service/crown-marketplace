@@ -403,7 +403,7 @@ en:
         column2: Supplier mark-up
       master_vendors:
         do_next:
-          competition_online: you can also do this run a competition fully online, using CCS’s esourcing tool
+          competition_online: you can also run a competition fully online, using CCS’s esourcing tool
           further_competition: run a further competition to select a supplier - there is advice from CCS on how to do this
           header: What to do next
           more_help: Contact supplyteachers@crowncommercial.gov.uk if you need more help running a further competition.
