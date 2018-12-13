@@ -71,6 +71,7 @@ Metrics/LineLength:
     IgnoredPatterns:
         - 'it .* do$'
         - 'context .* do$'
+        - 'scenario .* do$'
 
 Metrics/BlockLength:
     Max: 40
