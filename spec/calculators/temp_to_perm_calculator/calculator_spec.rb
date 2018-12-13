@@ -4,7 +4,7 @@ RSpec.describe TempToPermCalculator::Calculator do
   subject(:calculator) do
     described_class.new(
       contract_start_date: contract_start_date,
-      days_per_week: 5,
+      days_per_week: days_per_week,
       day_rate: 110,
       markup_rate: 0.10,
       hire_date: hire_date,
@@ -25,6 +25,7 @@ RSpec.describe TempToPermCalculator::Calculator do
   let(:holiday_1_end_date) { nil }
   let(:holiday_2_start_date) { nil }
   let(:holiday_2_end_date) { nil }
+  let(:days_per_week) { 5 }
 
   describe 'initialization' do
     context 'when hire date is earlier than contract start date' do
@@ -73,6 +74,14 @@ RSpec.describe TempToPermCalculator::Calculator do
 
     it 'calculates the maximum fee for lack of notice as 20 days of the daily supplier fee' do
       expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 10)
+    end
+
+    context 'when the worker works fewer than 5 days per week' do
+      let(:days_per_week) { 2 }
+
+      it 'calculates the maximum fee for lack of notice as 20 days of the pro rata daily supplier fee' do
+        expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 4)
+      end
     end
   end
 

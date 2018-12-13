@@ -164,6 +164,18 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
       it 'explains how to avoid paying fees' do
         expect(rendered).to render_template('_avoid_paying_fees')
       end
+
+      context 'and the worker works fewer than 5 days a week' do
+        let(:days_per_week) { 2 }
+
+        it 'displays explanation' do
+          expect(rendered).to have_text(
+            I18n.t("#{i18n_key}.after_12_weeks_and_no_notice_date",
+                   max_fee: '£80.00',
+                   latest_notice_date: 'Monday 29 October 2018')
+          )
+        end
+      end
     end
   end
 
