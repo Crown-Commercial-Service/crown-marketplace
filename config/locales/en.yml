@@ -120,9 +120,9 @@ en:
   facilities_management:
     gateway:
       index:
-        heading: CCS Marketplace private beta
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     journey:
       supplier_region:
         nuts1:
@@ -206,9 +206,9 @@ en:
   management_consultancy:
     gateway:
       index:
-        heading: CCS Marketplace private beta
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     journey:
       choose_expenses:
         answer_expenses_not_paid: We will not pay expenses
@@ -328,9 +328,13 @@ en:
         results_found_with_location_html: "<strong>%{results}</strong> found within <strong>%{range}</strong> of <strong>%{postcode}</strong>."
     gateway:
       index:
-        heading: CCS Marketplace private beta
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        dfe_signin:
+          create_account_html: Contact <a href="mailto:%{email}">%{email}</a> if you don’t have an account and your school is in England. An account will be set up for you if you’re eligible and you’ll receive an invitation to use the service from DfE.
+          instructions: Sign in to your DfE Sign-In account to use this service. You will be automatically directed back to this service once you’ve signed in.
+          outside_england_html: If your school is in another part of the UK, you can’t use the digital service. Contact <a href="mailto:%{email}">%{email}</a> to check your eligibility and get help to access the agencies on the framework.
+        heading: CCS Marketplace private beta
     home:
       temp_to_perm_fee:
         after_12_weeks_and_enough_notice: You're taking the worker on permanently after 12 working weeks and you're giving the supplier the required 4 weeks notice so you can't be charged a fee for taking the worker on permanently.

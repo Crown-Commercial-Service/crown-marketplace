@@ -6,12 +6,31 @@
 
       <p><%= t('.cmp_support_email_html', link: support_email_link(t('.cmp_support_aria_label'))) %></p>
 
-      <p>
-        <%= link_to 'Sign in with beta credentials', cognito_sign_in_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8 ga-auth-cognito' %>
-        <% if Marketplace.dfe_signin_enabled? %>
-          <%= link_to 'Sign in with DfE Sign-in', dfe_sign_in_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8 ga-auth-dfe' %>
-        <% end %>
-      </p>
+      <% if Marketplace.dfe_signin_enabled? %>
+        <p>
+          <%= t('.dfe_signin.instructions') %>
+        </p>
+
+        <%= link_to('Sign in with DfE Sign-in',
+                    dfe_sign_in_path,
+                    role: 'button',
+                    class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8 ga-auth-dfe') %>
+
+        <p>
+          <%= t('.dfe_signin.create_account_html',
+                email: 'supplyteachers@crowncommercial.gov.uk') %>
+        </p>
+
+        <p>
+          <%= t('.dfe_signin.outside_england_html',
+                email: 'supplyteachers@crowncommercial.gov.uk') %>
+        </p>
+      <% end %>
+
+      <%= link_to('Sign in with beta credentials',
+                  cognito_sign_in_path,
+                  role: 'button',
+                  class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8 ga-auth-cognito') %>
     </div>
   </div>
 </div>
