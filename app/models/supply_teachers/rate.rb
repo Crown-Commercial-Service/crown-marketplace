@@ -14,12 +14,6 @@ module SupplyTeachers
       'daily_fee' => 'Neutral vendor managed service provider fee (per day)'
     }.freeze
 
-    TERMS = {
-      'one_week' => 'Up to 1 week',
-      'twelve_weeks' => '1 to 12 weeks',
-      'more_than_twelve_weeks' => 'Over 12 weeks'
-    }.freeze
-
     belongs_to :supplier,
                foreign_key: :supply_teachers_supplier_id,
                inverse_of: :branches
