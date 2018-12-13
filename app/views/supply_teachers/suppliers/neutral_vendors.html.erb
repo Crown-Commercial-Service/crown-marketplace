@@ -44,7 +44,7 @@
 
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds">
-            <% supplier.rates.each do |rate| %>                
+            <% supplier.rates.each do |rate| %>
               <% if rate.percentage_mark_up? %>
               <p class="govuk-body">
                 <%= t('.mark_up_html', mark_up:number_to_percentage(rate.mark_up * 100, precision: 1)) %>
