@@ -102,6 +102,21 @@ en:
               invalid_postcode: Enter a valid postcode
   common:
     submit: Continue
+  errors:
+    '404':
+      explanation: You may have mistyped the address or the page may have moved.
+      header: The page you were looking for doesn’t exist.
+      title: Errors#404
+    '422':
+      explanation: Maybe you tried to change something you didn’t have access to.
+      header: The change you wanted was rejected.
+      title: Errors#422
+    '500':
+      header: We’re sorry, but something went wrong.
+      title: Errors#500
+    maintenance:
+      explanation: You will be able to use the service later.
+      title: Service unavailable
   facilities_management:
     gateway:
       index:
