@@ -29,7 +29,7 @@ module SupplyTeachers::TempToPermCalculatorHelper
 
   def display_suppliers_pro_rata_daily_fee(calculator)
     t('supply_teachers.home.temp_to_perm_fee.daily_supplier_fee_pro_rata',
-      fee: number_to_currency(calculator.working_day_supplier_fee),
+      fee: number_to_currency(calculator.pro_rata_daily_supplier_fee),
       days_per_week: calculator.days_per_week)
   end
 
