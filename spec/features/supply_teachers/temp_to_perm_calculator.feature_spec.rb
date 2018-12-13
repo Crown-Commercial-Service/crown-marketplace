@@ -18,7 +18,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     click_on I18n.t('common.submit')
 
-    expect(page).to have_text('Based on the information provided you could be charged £0')
+    expect_fee 0
   end
 
   scenario 'Hiring a worker within 12 weeks of the start of their contract' do
@@ -36,7 +36,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     click_on I18n.t('common.submit')
 
-    expect(page).to have_text('Based on the information provided you could be charged £50')
+    expect_fee 50
   end
 
   scenario 'Hiring a worker within 12 weeks of the start of their contract because of school holidays' do
@@ -58,7 +58,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     click_on I18n.t('common.submit')
 
-    expect(page).to have_text('Based on the information provided you could be charged £100')
+    expect_fee 100
   end
 
   scenario 'Hiring a worker after 12 weeks of the start of their contract but without enough notice period' do
@@ -78,7 +78,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     click_on I18n.t('common.submit')
 
-    expect(page).to have_text('Based on the information provided you could be charged £200')
+    expect_fee 200
   end
 
   private
@@ -115,5 +115,9 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     fill_in "holiday_#{number}_end_date_day", with: end_date.day
     fill_in "holiday_#{number}_end_date_month", with: end_date.month
     fill_in "holiday_#{number}_end_date_year", with: end_date.year
+  end
+
+  def expect_fee(fee)
+    expect(page).to have_text("Based on the information provided you could be charged £#{fee}")
   end
 end
