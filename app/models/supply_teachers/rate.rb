@@ -26,6 +26,10 @@ module SupplyTeachers
                          uniqueness: { scope: %i[supplier term lot_number] },
                          inclusion: { in: JOB_TYPES.keys }
 
+    validates :term,
+              presence: { unless: :term_required? },
+              absence: { if: :term_required? }
+
     validates :mark_up,
               presence: { if: :percentage_mark_up? },
               absence: { unless: :percentage_mark_up? }
@@ -64,6 +68,10 @@ module SupplyTeachers
 
     def percentage_mark_up?
       !daily_fee?
+    end
+
+    def term_required?
+      %w[nominated fixed_term daily_fee].include?(job_type)
     end
   end
 end
