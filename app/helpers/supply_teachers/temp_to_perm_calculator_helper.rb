@@ -28,4 +28,9 @@ module SupplyTeachers::TempToPermCalculatorHelper
       fee: number_to_currency(calculator.working_day_supplier_fee),
       days_per_week: calculator.days_per_week)
   end
+
+  def display_total_fee(calculator)
+    t('supply_teachers.home.temp_to_perm_fee.total_fee',
+      fee: number_to_currency(calculator.fee))
+  end
 end
