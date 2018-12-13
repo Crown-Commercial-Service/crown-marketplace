@@ -36,9 +36,7 @@
   </li>
   <% if calculator.days_per_week < TempToPermCalculator::Calculator::MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK %>
     <li>
-      <%= I18n.t('supply_teachers.home.temp_to_perm_fee.daily_supplier_fee_pro_rata',
-                 fee: number_to_currency(calculator.working_day_supplier_fee),
-                 days_per_week: calculator.days_per_week) %>
+      <%= display_suppliers_pro_rata_daily_fee(calculator) %>
     </li>
   <% end %>
   <li>
