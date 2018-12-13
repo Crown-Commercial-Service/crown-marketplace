@@ -27,6 +27,46 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
     expect(rate.errors[:job_type]).to include('is not included in the list')
   end
 
+  it 'is valid if term is blank and job type is fixed term' do
+    rate.assign_attributes(term: '', job_type: 'fixed_term')
+    expect(rate).to be_valid
+  end
+
+  it 'is valid if term is blank and job type is nominated' do
+    rate.assign_attributes(term: '', job_type: 'nominated')
+    expect(rate).to be_valid
+  end
+
+  it 'is valid if term is blank and job type is daily_fee' do
+    rate.assign_attributes(term: '', job_type: 'daily_fee', daily_fee: 100, mark_up: nil)
+    expect(rate).to be_valid
+  end
+
+  it 'is not valid if term is not blank and job type is fixed term' do
+    rate.assign_attributes(term: 'one_week', job_type: 'fixed_term')
+    expect(rate).not_to be_valid
+  end
+
+  it 'is not valid if term is not blank and job type is nominated' do
+    rate.assign_attributes(term: 'one_week', job_type: 'nominated')
+    expect(rate).not_to be_valid
+  end
+
+  it 'is not valid if term is not blank and job type is daily_fee' do
+    rate.assign_attributes(term: 'one_week', job_type: 'daily_fee')
+    expect(rate).not_to be_valid
+  end
+
+  it 'is valid if term is not blank and job type is not fixed term, nominated or daily fee' do
+    rate.assign_attributes(term: 'one_week', job_type: 'admin')
+    expect(rate).to be_valid
+  end
+
+  it 'is not valid if term is blank and job type is not fixed term, nominated or daily fee' do
+    rate.assign_attributes(term: '', job_type: 'admin')
+    expect(rate).not_to be_valid
+  end
+
   context "when it's a percentage mark up" do
     before do
       rate.assign_attributes(job_type: 'nominated', mark_up: 1)
@@ -78,7 +118,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
   end
 
   it 'is not valid if supplier has another rate for this job type, lot_number and term' do
-    rate.update!(term: 'one_week')
+    rate.update!(job_type: 'admin', term: 'one_week')
     new_rate = build(
       :supply_teachers_rate,
       supplier: rate.supplier,
@@ -90,7 +130,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
   end
 
   it 'is valid if supplier has another rate for this job type and lot_number, but different term' do
-    rate.update!(term: 'one_week')
+    rate.update!(job_type: 'admin', term: 'one_week')
     new_rate = build(
       :supply_teachers_rate,
       supplier: rate.supplier,
@@ -102,7 +142,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
   end
 
   it 'is valid if different supplier has another rate for this job type, lot_number and term' do
-    rate.update!(term: 'one_week')
+    rate.update!(job_type: 'admin', term: 'one_week')
     new_rate = build(
       :supply_teachers_rate,
       supplier: build(:supply_teachers_supplier),
@@ -114,7 +154,7 @@ RSpec.describe SupplyTeachers::Rate, type: :model do
   end
 
   it 'is valid if supplier has another rate for this job type and term, but different lot_number' do
-    rate.update!(term: 'one_week')
+    rate.update!(job_type: 'admin', term: 'one_week')
     new_rate = build(
       :supply_teachers_rate,
       supplier: rate.supplier,
