@@ -32,10 +32,7 @@
           days: calculator.chargeable_working_days) %>
   </li>
   <li>
-    <%= t('supply_teachers.home.temp_to_perm_fee.daily_supplier_fee',
-          fee: number_to_currency(calculator.daily_supplier_fee),
-          markup_rate: number_to_percentage(calculator.markup_rate * 100, precision: 1),
-          day_rate: number_to_currency(calculator.day_rate)) %>
+    <%= display_suppliers_daily_fee(calculator) %>
   </li>
   <% if calculator.days_per_week < TempToPermCalculator::Calculator::MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK %>
     <li>
