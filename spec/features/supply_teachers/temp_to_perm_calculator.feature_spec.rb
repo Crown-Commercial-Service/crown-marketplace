@@ -5,17 +5,11 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date Date.parse('2018-09-03')
-
     fill_in_hire_date Date.parse('2018-11-26')
-
     fill_in 'days_per_week', with: 5
-
     fill_in 'day_rate', with: 110
-
     fill_in 'markup_rate', with: 10
-
     fill_in_notice_date Date.parse('2018-10-29')
-
     click_on I18n.t('common.submit')
 
     expect_fee 0
@@ -25,15 +19,10 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date Date.parse('2018-09-03')
-
     fill_in_hire_date Date.parse('2018-11-19')
-
     fill_in 'days_per_week', with: 5
-
     fill_in 'day_rate', with: 110
-
     fill_in 'markup_rate', with: 10
-
     click_on I18n.t('common.submit')
 
     expect_fee 50
@@ -43,19 +32,12 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date Date.parse('2018-09-03')
-
     fill_in_hire_date Date.parse('2018-11-26')
-
     fill_in 'days_per_week', with: 5
-
     fill_in 'day_rate', with: 110
-
     fill_in 'markup_rate', with: 10
-
     fill_in_holiday 1, Date.parse('2018-09-03'), Date.parse('2018-09-07')
-
     fill_in_holiday 2, Date.parse('2018-09-10'), Date.parse('2018-09-14')
-
     click_on I18n.t('common.submit')
 
     expect_fee 100
@@ -65,17 +47,11 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date Date.parse('2018-09-03')
-
     fill_in_hire_date Date.parse('2018-11-26')
-
     fill_in 'days_per_week', with: 5
-
     fill_in 'day_rate', with: 110
-
     fill_in 'markup_rate', with: 10
-
     fill_in_notice_date Date.parse('2018-11-26')
-
     click_on I18n.t('common.submit')
 
     expect_fee 200
