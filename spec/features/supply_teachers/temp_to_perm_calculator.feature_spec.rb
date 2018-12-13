@@ -15,7 +15,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     expect_fee 0
   end
 
-  scenario 'Hiring a worker within 12 weeks of the start of their contract' do
+  scenario 'Making a worker permanent within 12 weeks of the start of their contract' do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date Date.parse('2018-09-03')
@@ -28,7 +28,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     expect_fee 50
   end
 
-  scenario 'Hiring a worker within 12 weeks of the start of their contract because of school holidays' do
+  scenario 'Making a worker permanent within 12 weeks of the start of their contract because of school holidays' do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date Date.parse('2018-09-03')
@@ -43,7 +43,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     expect_fee 100
   end
 
-  scenario 'Hiring a worker after 12 weeks of the start of their contract but without enough notice period' do
+  scenario 'Making a worker permanent after 12 weeks of the start of their contract but without enough notice period' do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date Date.parse('2018-09-03')
