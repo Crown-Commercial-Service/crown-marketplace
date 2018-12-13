@@ -1,59 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
-  let(:contract_start_date) { Date.parse('2018-09-03') }
-  let(:day_rate) { 0 }
-  let(:markup_rate) { 0 }
+  let(:start_of_1st_week)  { Date.parse('Mon 3 Sep 2018') }
+  let(:start_of_2nd_week)  { Date.parse('Mon 10 Sep 2018') }
+  let(:start_of_3rd_week)  { Date.parse('Mon 17 Sep 2018') }
+  let(:start_of_4th_week)  { Date.parse('Mon 24 Sep 2018') }
+  let(:start_of_5th_week)  { Date.parse('Mon 1 Oct 2018') }
+  let(:start_of_6th_week)  { Date.parse('Mon 8 Oct 2018') }
+  let(:start_of_7th_week)  { Date.parse('Mon 15 Oct 2018') }
+  let(:start_of_8th_week)  { Date.parse('Mon 22 Oct 2018') }
+  let(:start_of_9th_week)  { Date.parse('Mon 29 Oct 2018') }
+  let(:start_of_10th_week) { Date.parse('Mon 5 Nov 2018') }
+  let(:start_of_11th_week) { Date.parse('Mon 12 Nov 2018') }
+  let(:start_of_12th_week) { Date.parse('Mon 19 Nov 2018') }
+  let(:start_of_13th_week) { Date.parse('Mon 26 Nov 2018') }
+
+  let(:contract_start_date) { start_of_1st_week }
   let(:hire_date) { nil }
+  let(:day_rate) { 110 }
+  let(:markup_rate) { 0.1 }
+  let(:days_per_week) { 5 }
   let(:notice_date) { nil }
-
-  let(:hiring_within_8_weeks?) { nil }
-  let(:hiring_between_9_and_12_weeks?) { nil }
-  let(:hiring_after_12_weeks?) { nil }
-
-  let(:notice_date_based_on_hire_date) { nil }
-  let(:maximum_fee_for_lack_of_notice) { nil }
-  let(:days_notice_required) { nil }
-  let(:days_notice_given) { nil }
-  let(:enough_notice?) { nil }
-
-  let(:chargeable_working_days_based_on_lack_of_notice) { 0 }
-  let(:chargeable_working_days_based_on_early_hire) { nil }
-  let(:chargeable_working_days) { nil }
-  let(:working_days) { nil }
-  let(:daily_supplier_fee) { 0 }
-  let(:fee) { 0 }
 
   let(:i18n_key) { 'supply_teachers.home.temp_to_perm_fee' }
 
   let(:calculator) do
     options = {
-      contract_start_date: contract_start_date,
       day_rate: day_rate,
-      markup_rate: markup_rate,
+      days_per_week: days_per_week,
+      contract_start_date: contract_start_date,
       hire_date: hire_date,
-      notice_date: notice_date,
-      hiring_within_8_weeks?: hiring_within_8_weeks?,
-      hiring_between_9_and_12_weeks?: hiring_between_9_and_12_weeks?,
-      hiring_after_12_weeks?: hiring_after_12_weeks?,
-      maximum_fee_for_lack_of_notice: maximum_fee_for_lack_of_notice,
-      days_notice_required: days_notice_required,
-      days_notice_given: days_notice_given,
-      enough_notice?: enough_notice?,
-      chargeable_working_days_based_on_lack_of_notice: chargeable_working_days_based_on_lack_of_notice,
-      chargeable_working_days_based_on_early_hire: chargeable_working_days_based_on_early_hire,
-      chargeable_working_days: chargeable_working_days,
-      working_days: working_days,
-      daily_supplier_fee: daily_supplier_fee,
-      fee: fee,
-      days_per_week: 0,
-      before_national_deal_began?: nil,
-      ideal_hire_date: Date.parse('2018-11-26'),
-      ideal_notice_date: Date.parse('2018-11-26'),
-      notice_period_required?: nil,
-      notice_date_based_on_hire_date: notice_date_based_on_hire_date,
+      markup_rate: markup_rate,
+      notice_date: notice_date
     }
-    instance_double(TempToPermCalculator::Calculator, options)
+    TempToPermCalculator::Calculator.new(options)
   end
 
   before do
@@ -62,10 +42,12 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
   describe 'national deal explanation' do
     let(:paragraph_string) { /before the National Deal was awarded/ }
+    let(:hire_date) { Time.zone.today }
 
     context 'when contract start date is before national deal began' do
+      let(:contract_start_date) { Date.parse('2018-08-22') }
+
       before do
-        allow(calculator).to receive(:before_national_deal_began?).and_return(true)
         render
       end
 
@@ -75,8 +57,9 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
     end
 
     context 'when contract start date is after national deal began' do
+      let(:contract_start_date) { Date.parse('2018-08-23') }
+
       before do
-        allow(calculator).to receive(:before_national_deal_began?).and_return(false)
         render
       end
 
@@ -87,6 +70,8 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
   end
 
   describe 'irrespective of hire date' do
+    let(:hire_date) { Time.zone.today }
+
     it 'explains the circumstances under which a supplier can charge a fee' do
       render
       expect(rendered).to have_text(/supplier can charge you a fee for making a temporary member of staff permanent/)
@@ -94,14 +79,16 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
   end
 
   context 'when hiring after 12 weeks' do
-    let(:hiring_after_12_weeks?) { true }
+    let(:hire_date) { start_of_13th_week }
 
     context 'and giving enough notice' do
-      let(:notice_date) { 'notice-date' }
-      let(:enough_notice?) { true }
+      let(:notice_date) { start_of_9th_week }
+
+      before do
+        render
+      end
 
       it 'displays explanation' do
-        render
         expect(rendered).to have_text(I18n.t("#{i18n_key}.after_12_weeks_and_enough_notice"))
       end
 
@@ -111,16 +98,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
     end
 
     context 'and not giving enough notice' do
-      let(:notice_date) { Date.parse('2018-11-19') }
-      let(:hire_date) { Date.parse('2018-11-26') }
-      let(:enough_notice?) { false }
-      let(:fee) { 50 }
-      let(:days_notice_required) { 20 }
-      let(:days_notice_given) { 15 }
-      let(:chargeable_working_days_based_on_lack_of_notice) { 5 }
-      let(:daily_supplier_fee) { 10 }
-      let(:markup_rate) { 0.1 }
-      let(:day_rate) { 110 }
+      let(:notice_date) { start_of_12th_week }
 
       before do
         render
@@ -134,14 +112,14 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays notice period required' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.notice_period_required", days: days_notice_required)
+          I18n.t("#{i18n_key}.notice_period_required", days: 20)
         )
       end
 
       it 'displays notice period given' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.notice_period_given",
-                 days: 15,
+                 days: 5,
                  notice_date: 'Monday 19 November 2018',
                  hire_date: 'Monday 26 November 2018')
         )
@@ -149,7 +127,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays chargeable days for lack of notice' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: chargeable_working_days_based_on_lack_of_notice)
+          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: 15)
         )
       end
 
@@ -161,7 +139,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays total fee' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.total_fee", fee: '£50.00')
+          I18n.t("#{i18n_key}.total_fee", fee: '£150.00')
         )
       end
 
@@ -172,13 +150,6 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
     context 'and not entering a notice date' do
       let(:notice_date) { nil }
-      let(:maximum_fee_for_lack_of_notice) { 200 }
-      let(:days_notice_required) { 20 }
-      let(:markup_rate) { 0.1 }
-      let(:day_rate) { 110 }
-      let(:daily_supplier_fee) { 10 }
-      let(:fee) { 50 }
-      let(:notice_date_based_on_hire_date) { Date.parse('2018-10-29') }
 
       before do
         render
@@ -199,22 +170,14 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
   end
 
   context 'when hiring between 9 and 12 weeks' do
-    let(:hiring_between_9_and_12_weeks?) { true }
+    let(:hire_date) { start_of_11th_week }
 
     before do
       render
     end
 
     context 'and giving enough notice' do
-      let(:hire_date) { Date.parse('2018-11-12') }
-      let(:notice_date) { 'notice-date' }
-      let(:enough_notice?) { true }
-      let(:working_days) { 50 }
-      let(:chargeable_working_days_based_on_early_hire) { 10 }
-      let(:daily_supplier_fee) { 10 }
-      let(:markup_rate) { 0.1 }
-      let(:day_rate) { 110 }
-      let(:fee) { 100 }
+      let(:notice_date) { start_of_7th_week }
 
       it 'displays explanation' do
         expect(rendered).to have_text(
@@ -261,19 +224,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
     end
 
     context 'and not giving enough notice' do
-      let(:notice_date) { Date.parse('2018-11-19') }
-      let(:hire_date) { Date.parse('2018-11-26') }
-      let(:enough_notice?) { false }
-      let(:working_days) { 50 }
-      let(:chargeable_working_days_based_on_early_hire) { 10 }
-      let(:days_notice_required) { 20 }
-      let(:days_notice_given) { 15 }
-      let(:chargeable_working_days_based_on_lack_of_notice) { 5 }
-      let(:chargeable_working_days) { 20 }
-      let(:daily_supplier_fee) { 10 }
-      let(:markup_rate) { 0.1 }
-      let(:day_rate) { 110 }
-      let(:fee) { 150 }
+      let(:notice_date) { start_of_10th_week }
 
       it 'displays explanation' do
         expect(rendered).to have_text(
@@ -292,7 +243,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
           I18n.t("#{i18n_key}.working_days",
                  days: 50,
                  contract_start_date: 'Monday 03 September 2018',
-                 hire_date: 'Monday 26 November 2018')
+                 hire_date: 'Monday 12 November 2018')
         )
       end
 
@@ -311,15 +262,15 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
       it 'displays notice period given' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.notice_period_given",
-                 days: 15,
-                 notice_date: 'Monday 19 November 2018',
-                 hire_date: 'Monday 26 November 2018')
+                 days: 5,
+                 notice_date: 'Monday 05 November 2018',
+                 hire_date: 'Monday 12 November 2018')
         )
       end
 
       it 'displays chargeable days for lack of notice' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: 5)
+          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: 15)
         )
       end
 
@@ -338,7 +289,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays total fee' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.total_fee", fee: '£150.00')
+          I18n.t("#{i18n_key}.total_fee", fee: '£200.00')
         )
       end
 
@@ -348,16 +299,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
     end
 
     context 'and not entering a notice date' do
-      let(:hire_date) { Date.parse('2018-11-26') }
-      let(:maximum_fee_for_lack_of_notice) { 200 }
       let(:notice_date) { nil }
-      let(:working_days) { 50 }
-      let(:chargeable_working_days_based_on_early_hire) { 10 }
-      let(:daily_supplier_fee) { 10 }
-      let(:markup_rate) { 0.1 }
-      let(:day_rate) { 110 }
-      let(:fee) { 100 }
-      let(:notice_date_based_on_hire_date) { Date.parse('2018-10-29') }
 
       it 'displays explanation' do
         expect(rendered).to have_text(
@@ -376,7 +318,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
           I18n.t("#{i18n_key}.working_days",
                  days: 50,
                  contract_start_date: 'Monday 03 September 2018',
-                 hire_date: 'Monday 26 November 2018')
+                 hire_date: 'Monday 12 November 2018')
         )
       end
 
@@ -402,7 +344,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.notice_period_disclaimer",
                  max_fee: '£200.00',
-                 latest_notice_date: 'Monday 29 October 2018')
+                 latest_notice_date: 'Monday 15 October 2018')
         )
       end
 
@@ -413,14 +355,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
   end
 
   context 'when hiring within the first 8 weeks' do
-    let(:hire_date) { Date.parse('2018-11-26') }
-    let(:hiring_within_8_weeks?) { true }
-    let(:working_days) { 50 }
-    let(:chargeable_working_days_based_on_early_hire) { 10 }
-    let(:daily_supplier_fee) { 10 }
-    let(:markup_rate) { 0.1 }
-    let(:day_rate) { 110 }
-    let(:fee) { 100 }
+    let(:hire_date) { start_of_8th_week }
 
     before do
       render
@@ -441,15 +376,15 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
     it 'displays the number of working days between contract start and hire date' do
       expect(rendered).to have_text(
         I18n.t("#{i18n_key}.working_days",
-               days: 50,
+               days: 35,
                contract_start_date: 'Monday 03 September 2018',
-               hire_date: 'Monday 26 November 2018')
+               hire_date: 'Monday 22 October 2018')
       )
     end
 
     it 'displays the days chargeable for early-hire' do
       expect(rendered).to have_text(
-        I18n.t("#{i18n_key}.early_hire_chargeable_days", days: 10)
+        I18n.t("#{i18n_key}.early_hire_chargeable_days", days: 25)
       )
     end
 
@@ -461,7 +396,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
     it 'displays total fee' do
       expect(rendered).to have_text(
-        I18n.t("#{i18n_key}.total_fee", fee: '£100.00')
+        I18n.t("#{i18n_key}.total_fee", fee: '£250.00')
       )
     end
 
