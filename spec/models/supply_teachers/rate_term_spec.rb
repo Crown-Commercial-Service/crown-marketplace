@@ -19,4 +19,11 @@ RSpec.describe SupplyTeachers::RateTerm, type: :model do
       expect(described_class['one_week']).to eq('Up to 1 week')
     end
   end
+
+  describe '.all_codes' do
+    it 'returns codes for all rate_terms' do
+      expect(described_class.all_codes.count).to eq(rate_terms.count)
+      expect(described_class.all_codes.first).to eq(first_rate_term.code)
+    end
+  end
 end

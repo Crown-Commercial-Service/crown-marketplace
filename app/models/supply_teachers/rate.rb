@@ -28,7 +28,8 @@ module SupplyTeachers
 
     validates :term,
               presence: { unless: :term_required? },
-              absence: { if: :term_required? }
+              absence: { if: :term_required? },
+              inclusion: { in: RateTerm.all_codes, allow_blank: true }
 
     validates :mark_up,
               presence: { if: :percentage_mark_up? },
