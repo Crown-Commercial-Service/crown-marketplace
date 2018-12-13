@@ -411,8 +411,7 @@ en:
         header: Master vendor managed service providers
         page_title: Master vendor managed service providers
       neutral_vendors:
-        daily_fee_explanation_html: This is charged if the agency finds you a worker, or if they take on someone you have them to manage (a ‘nominated worker’).
-        daily_fee_html: A %{daily_fee} daily fee is charged each day in addition to this mark-up rate.
+        daily_fee_html: A %{daily_fee} daily fee is charged each day in addition to this mark-up rate. This is charged if the agency finds you a worker, or if they take on someone you have them to manage (a ‘nominated worker’).
         do_next:
           contact_supplier: contact the supplier for this worker and for all your future temporary recruitment needs
           header: What to do next
