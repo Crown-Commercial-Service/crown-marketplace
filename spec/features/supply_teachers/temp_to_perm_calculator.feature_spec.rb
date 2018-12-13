@@ -52,19 +52,9 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
 
     fill_in 'markup_rate', with: 10
 
-    fill_in 'holiday_1_start_date_day', with: 3
-    fill_in 'holiday_1_start_date_month', with: 9
-    fill_in 'holiday_1_start_date_year', with: 2018
-    fill_in 'holiday_1_end_date_day', with: 7
-    fill_in 'holiday_1_end_date_month', with: 9
-    fill_in 'holiday_1_end_date_year', with: 2018
+    fill_in_holiday 1, Date.parse('2018-09-03'), Date.parse('2018-09-07')
 
-    fill_in 'holiday_2_start_date_day', with: 10
-    fill_in 'holiday_2_start_date_month', with: 9
-    fill_in 'holiday_2_start_date_year', with: 2018
-    fill_in 'holiday_2_end_date_day', with: 14
-    fill_in 'holiday_2_end_date_month', with: 9
-    fill_in 'holiday_2_end_date_year', with: 2018
+    fill_in_holiday 2, Date.parse('2018-09-10'), Date.parse('2018-09-14')
 
     click_on I18n.t('common.submit')
 
@@ -116,5 +106,14 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     fill_in 'notice_date_day', with: date.day
     fill_in 'notice_date_month', with: date.month
     fill_in 'notice_date_year', with: date.year
+  end
+
+  def fill_in_holiday(number, start_date, end_date)
+    fill_in "holiday_#{number}_start_date_day", with: start_date.day
+    fill_in "holiday_#{number}_start_date_month", with: start_date.month
+    fill_in "holiday_#{number}_start_date_year", with: start_date.year
+    fill_in "holiday_#{number}_end_date_day", with: end_date.day
+    fill_in "holiday_#{number}_end_date_month", with: end_date.month
+    fill_in "holiday_#{number}_end_date_year", with: end_date.year
   end
 end
