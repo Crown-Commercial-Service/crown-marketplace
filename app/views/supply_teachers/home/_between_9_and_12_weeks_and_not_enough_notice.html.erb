@@ -19,8 +19,7 @@
           days: calculator.chargeable_working_days_based_on_early_hire) %>
   </li>
   <li>
-    <%= t('supply_teachers.home.temp_to_perm_fee.notice_period_required',
-          days: calculator.days_notice_required) %>
+    <%= display_notice_period_required(calculator) %>
   </li>
   <li>
     <%= t('supply_teachers.home.temp_to_perm_fee.notice_period_given',
