@@ -22,4 +22,10 @@ module SupplyTeachers::TempToPermCalculatorHelper
       markup_rate: number_to_percentage(calculator.markup_rate * 100, precision: 1),
       day_rate: number_to_currency(calculator.day_rate))
   end
+
+  def display_suppliers_pro_rata_daily_fee(calculator)
+    t('supply_teachers.home.temp_to_perm_fee.daily_supplier_fee_pro_rata',
+      fee: number_to_currency(calculator.working_day_supplier_fee),
+      days_per_week: calculator.days_per_week)
+  end
 end
