@@ -43,7 +43,7 @@ module TempToPermCalculator
     # rubocop:enable Metrics/ParameterLists
 
     def maximum_fee_for_lack_of_notice
-      WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE * working_day_supplier_fee
+      WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE * pro_rata_daily_supplier_fee
     end
 
     def days_notice_required
@@ -81,7 +81,7 @@ module TempToPermCalculator
 
     def fee
       [
-        chargeable_working_days * working_day_supplier_fee,
+        chargeable_working_days * pro_rata_daily_supplier_fee,
         0
       ].max
     end
@@ -113,7 +113,7 @@ module TempToPermCalculator
       @day_rate - (@day_rate / (1 + @markup_rate))
     end
 
-    def working_day_supplier_fee
+    def pro_rata_daily_supplier_fee
       daily_supplier_fee * (@days_per_week / MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK.to_f)
     end
 
