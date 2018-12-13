@@ -120,6 +120,7 @@ en:
   facilities_management:
     gateway:
       index:
+        heading: CCS Marketplace private beta
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     journey:
@@ -205,6 +206,7 @@ en:
   management_consultancy:
     gateway:
       index:
+        heading: CCS Marketplace private beta
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     journey:
@@ -326,6 +328,7 @@ en:
         results_found_with_location_html: "<strong>%{results}</strong> found within <strong>%{range}</strong> of <strong>%{postcode}</strong>."
     gateway:
       index:
+        heading: CCS Marketplace private beta
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
     home:
