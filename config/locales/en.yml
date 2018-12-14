@@ -331,9 +331,9 @@ en:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         dfe_signin:
-          create_account_html: Contact <a href="mailto:%{email}">%{email}</a> if you don’t have an account and your school is in England. An account will be set up for you if you’re eligible and you’ll receive an invitation to use the service from DfE.
+          create_account_html: Contact %{link} if you don’t have an account and your school is in England. An account will be set up for you if you’re eligible and you’ll receive an invitation to use the service from DfE.
           instructions: Sign in to your DfE Sign-In account to use this service. You will be automatically directed back to this service once you’ve signed in.
-          outside_england_html: If your school is in another part of the UK, you can’t use the digital service. Contact <a href="mailto:%{email}">%{email}</a> to check your eligibility and get help to access the agencies on the framework.
+          outside_england_html: If your school is in another part of the UK, you can’t use the digital service. Contact %{link} to check your eligibility and get help to access the agencies on the framework.
         heading: CCS Marketplace private beta
     home:
       temp_to_perm_fee:
