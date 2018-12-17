@@ -4,6 +4,7 @@ RSpec.describe ManagementConsultancy::Service, type: :model do
   subject(:services) { described_class.all }
 
   let(:first_service) { services.first }
+  let(:all_codes) { described_class.all_codes }
 
   it 'loads services from CSV' do
     expect(services.count).to eq(85)
@@ -15,10 +16,14 @@ RSpec.describe ManagementConsultancy::Service, type: :model do
     expect(first_service.lot_number).to eq('1')
   end
 
+  it 'only has unique codes' do
+    expect(all_codes.uniq).to contain_exactly(*all_codes)
+  end
+
   describe '.all_codes' do
     it 'returns codes for all services' do
-      expect(described_class.all_codes.count).to eq(services.count)
-      expect(described_class.all_codes.first).to eq(first_service.code)
+      expect(all_codes.count).to eq(services.count)
+      expect(all_codes.first).to eq(first_service.code)
     end
   end
 end
