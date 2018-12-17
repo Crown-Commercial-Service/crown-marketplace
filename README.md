@@ -41,7 +41,7 @@ Environment variables for the `production` Rails environment are currently obtai
 
 * `COGNITO_USER_POOL_SITE`
   * Obtained from "App integration > Domain name" of the AWS Cognito User Pool
-  * Leave this blank in development to configure both Cognito & DfE Signin to use OmniAuth test mode.
+  * Leave this blank in development to configure both Cognito & DfE Sign-in to use OmniAuth test mode.
 * `COGNITO_USER_POOL_ID`
   * Obtained from the "General settings" of the AWS Cognito User Pool
 * `COGNITO_CLIENT_ID`
@@ -51,7 +51,7 @@ Environment variables for the `production` Rails environment are currently obtai
 * `COGNITO_AWS_REGION`
   * The AWS region the Cognito User Pool was created in
 
-#### DfE Signin
+#### DfE Sign-in
 
 * `DFE_SIGNIN_URL`
   * Obtained from DfE Sign-in. Should have just `/` as a path component, e.g.
@@ -65,8 +65,8 @@ Environment variables for the `production` Rails environment are currently obtai
     `https://marketplace.service.crowncommercial.gov.uk/auth/dfe/callback` for
     the live service
 * `DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES`
-  * Comma-separated list of email addresses allowed access via DfE Signin
-  * If this variable is not present, DfE Signin is not protected by whitelisting
+  * Comma-separated list of email addresses allowed access via DfE Sign-in
+  * If this variable is not present, DfE Sign-in is not protected by whitelisting
 
 #### Google Analytics
 
