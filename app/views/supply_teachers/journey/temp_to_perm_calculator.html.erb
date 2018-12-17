@@ -3,14 +3,15 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+    <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
     <%= form_tag @form_path, method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
       <%= govuk_form_group_with_optional_error(@journey, :contract_start_date) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :contract_start_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">
+            <h2 class="govuk-fieldset__heading">
               <%= t('.contract_start_question') %>
-            </h1>
+            </h2>
           </legend>
           <%= display_errors(@journey, :contract_start_date) %>
           <span id="contract-start-hint" class="govuk-hint">
@@ -47,11 +48,11 @@
 
       <%= govuk_form_group_with_optional_error(@journey, :days_per_week) do %>
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h1 class="govuk-fieldset__heading">
+          <h2 class="govuk-fieldset__heading">
             <label for="days_per_week">
             <%= t('.days_per_week_question') %>
             </label>
-          </h1>
+          </h2>
         </legend>
         <%= display_error(@journey, :days_per_week) %>
         <span class="govuk-hint">
@@ -62,11 +63,11 @@
 
       <%= govuk_form_group_with_optional_error(@journey, :day_rate) do %>
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h1 class="govuk-fieldset__heading">
+          <h2 class="govuk-fieldset__heading">
             <label for="day_rate">
             <%= t('.day_rate_question') %>
             </label>
-          </h1>
+          </h2>
         </legend>
         <%= display_error(@journey, :day_rate) %>
         <span class="govuk-hint">
@@ -80,11 +81,11 @@
 
       <%= govuk_form_group_with_optional_error(@journey, :markup_rate) do %>
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h1 class="govuk-fieldset__heading">
+          <h2 class="govuk-fieldset__heading">
             <label for="markup_rate">
             <%= t('.markup_rate_question') %>
             </label>
-          </h1>
+          </h2>
         </legend>
         <%= display_error(@journey, :markup_rate) %>
         <span class="govuk-hint">
@@ -99,9 +100,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :hire_date) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :hire_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">
+            <h2 class="govuk-fieldset__heading">
               <%= t('.hire_date_question') %>
-            </h1>
+            </h2>
           </legend>
           <%= display_errors(@journey, :hire_date) %>
           <span id="hire-date-hint" class="govuk-hint">
@@ -139,9 +140,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :holiday_1_start_date) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :holiday_1_start_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">
+            <h2 class="govuk-fieldset__heading">
               <%= t('.holiday_1_start_date_question') %>
-            </h1>
+            </h2>
           </legend>
           <%= display_errors(@journey, :holiday_1_start_date) %>
           <span id="holiday-1-start-date-hint" class="govuk-hint">
@@ -179,9 +180,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :holiday_1_end_date) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :holiday_1_end_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">
+            <h2 class="govuk-fieldset__heading">
               <%= t('.holiday_1_end_date_question') %>
-            </h1>
+            </h2>
           </legend>
           <%= display_errors(@journey, :holiday_1_end_date) %>
           <span id="holiday-1-end-date-hint" class="govuk-hint">
@@ -219,9 +220,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :holiday_2_start_date) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :holiday_2_start_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">
+            <h2 class="govuk-fieldset__heading">
               <%= t('.holiday_2_start_date_question') %>
-            </h1>
+            </h2>
           </legend>
           <%= display_errors(@journey, :holiday_2_start_date) %>
           <span id="holiday-2-start-date-hint" class="govuk-hint">
@@ -259,9 +260,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :holiday_2_end_date) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :holiday_2_end_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">
+            <h2 class="govuk-fieldset__heading">
               <%= t('.holiday_2_end_date_question') %>
-            </h1>
+            </h2>
           </legend>
           <%= display_errors(@journey, :holiday_2_end_date) %>
           <span id="holiday-2-end-date-hint" class="govuk-hint">
@@ -299,9 +300,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :notice_date_day, :notice_date_month, :notice_date_year) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :notice_date_day, :notice_date_month, :notice_date_year) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">
+            <h2 class="govuk-fieldset__heading">
               <%= t('.notice_date_question') %>
-            </h1>
+            </h2>
           </legend>
           <%= display_errors(@journey, :notice_date_day, :notice_date_month, :notice_date_year) %>
           <span id="notice-date-hint" class="govuk-hint">
