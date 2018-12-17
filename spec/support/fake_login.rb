@@ -14,7 +14,7 @@ module SpecSupport
     end
 
     def permit_framework(name)
-      allow_any_instance_of(Login::CognitoLogin)
+      allow_any_instance_of(Login::BaseLogin)
         .to receive(:permit?)
         .with(name)
         .and_return(true)
