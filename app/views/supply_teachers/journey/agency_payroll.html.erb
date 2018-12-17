@@ -17,12 +17,22 @@
   <% end %>
 
   <%= govuk_form_group_with_optional_error(@journey, :job_type) do %>
-    <label class="govuk-label govuk-label--m" for="job_type">
-      <%= t('.worker_type_question') %>
-    </label>
-    <select class="govuk-select" id="job_type" name="job_type">
-      <%= options_from_collection_for_select(SupplyTeachers::JobType.roles, :code, :description, params[:job_type]) %>
-    </select>
+    <%= govuk_fieldset_with_optional_error(@journey, :job_type) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.worker_type_question') %>
+        </h1>
+      </legend>
+      <%= display_error(@journey, :job_type) %>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <% SupplyTeachers::JobType.roles.each do |job_type| %>
+            <%= radio_button_tag :job_type, job_type.code, checked?(params[:job_type], job_type.code), class: 'govuk-radios__input' %>
+            <%= label_tag "job_type_#{job_type.code}", job_type.description, class: 'govuk-label govuk-radios__label' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
   <%= govuk_form_group_with_optional_error(@journey, :term) do %>
