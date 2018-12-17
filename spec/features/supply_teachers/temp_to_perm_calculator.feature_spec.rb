@@ -25,6 +25,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     fill_in 'days_per_week', with: 5
     fill_in 'day_rate', with: 110
     fill_in 'markup_rate', with: 10
+    fill_in_notice_date start_of_8th_week
     click_on I18n.t('common.submit')
 
     expect_fee 50
@@ -40,6 +41,7 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     fill_in 'markup_rate', with: 10
     fill_in_holiday 1, start_of_1st_week, start_of_1st_week.end_of_week
     fill_in_holiday 2, start_of_2nd_week, start_of_2nd_week.end_of_week
+    fill_in_notice_date start_of_9th_week
     click_on I18n.t('common.submit')
 
     expect_fee 100
