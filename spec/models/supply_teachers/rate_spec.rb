@@ -3,7 +3,13 @@ require 'rails_helper'
 RSpec.describe SupplyTeachers::Rate, type: :model do
   subject(:rate) { build(:supply_teachers_rate) }
 
+  let(:all_codes) { described_class.all.map(&:code) }
+
   it { is_expected.to be_valid }
+
+  it 'only has unique codes' do
+    expect(all_codes.uniq).to contain_exactly(*all_codes)
+  end
 
   it 'is not valid if lot_number is blank' do
     rate.lot_number = nil
