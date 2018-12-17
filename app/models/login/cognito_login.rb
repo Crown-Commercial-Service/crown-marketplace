@@ -1,10 +1,5 @@
 module Login
   class CognitoLogin < Login::BaseLogin
-    PERMITTED_FRAMEWORKS = %i[
-      facilities_management
-      management_consultancy
-    ].freeze
-
     def self.from_omniauth(hash)
       new(email: hash.dig('info', 'email'), extra: nil)
     end
@@ -17,8 +12,8 @@ module Login
       ::Cognito.logout_url(routable.gateway_url)
     end
 
-    def permit?(framework)
-      PERMITTED_FRAMEWORKS.include?(framework)
+    def permit?(_framework)
+      true
     end
   end
 end
