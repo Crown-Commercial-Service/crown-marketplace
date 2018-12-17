@@ -109,7 +109,11 @@ environments:
 
 ## Run
 
-    $ rails s
+Execute the following command:
+
+```
+$ rails s
+```
 
 Visit [localhost:3000](http://localhost:3000).
 
@@ -142,10 +146,10 @@ using the Rails console with one of the following commands:
 
 ## Regenerating error pages
 
-We use [juice][] to generate HTML error pages from the live service, inlining
-all css, images, webfonts, etc.
+We use the [juice][] npm package to generate HTML error pages from the live
+service, inlining all CSS, images, web fonts, etc. A Rake task makes this
+easier:
 
-A rake task makes this easier:
 ```
 $ rake 'error_pages[http://localhost:3000]'
 ```
