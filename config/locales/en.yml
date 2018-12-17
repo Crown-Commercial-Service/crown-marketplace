@@ -398,6 +398,7 @@ en:
         day_rate_question_hint: An amount in pounds. For example, 150
         days_per_week_question: How many days per week is the worker contracted for?
         days_per_week_question_hint: For example, 5
+        header: Calculate the temp-to-perm fee for a worker
         hire_date_question: What date do you want to take the worker on permanently from?
         hire_date_question_hint: For example, 31 3 1980
         holiday_1_end_date_question: What date did the first school holiday end?
