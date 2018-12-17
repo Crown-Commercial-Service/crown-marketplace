@@ -29,6 +29,8 @@ en:
               too_short: Please choose the services you require
         supply_teachers/journey/agency_payroll:
           attributes:
+            job_type:
+              blank: Select the type of worker you need
             location:
               invalid_location: Enter a valid postcode
         supply_teachers/journey/looking_for:

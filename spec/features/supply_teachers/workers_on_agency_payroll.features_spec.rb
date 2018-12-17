@@ -71,7 +71,7 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
 
     fill_in 'postcode', with: 'WC2B 6TE'
     select '4 weeks to 8 weeks', from: 'term'
-    select 'Qualified teacher: SEN roles', from: 'job_type'
+    choose 'Qualified teacher: SEN roles'
     click_on I18n.t('common.submit')
 
     expect(page).not_to have_text('whitechapel'), 'suppliers without appropriate rates should not be displayed'
