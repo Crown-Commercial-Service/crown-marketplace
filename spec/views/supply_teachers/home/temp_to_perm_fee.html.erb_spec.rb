@@ -155,9 +155,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays explanation' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.after_12_weeks_and_no_notice_date",
-                 max_fee: '£200.00',
-                 latest_notice_date: 'Monday 29 October 2018')
+          I18n.t("#{i18n_key}.after_12_weeks_and_no_notice_date")
         )
       end
 
@@ -170,9 +168,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
         it 'displays explanation' do
           expect(rendered).to have_text(
-            I18n.t("#{i18n_key}.after_12_weeks_and_no_notice_date",
-                   max_fee: '£80.00',
-                   latest_notice_date: 'Monday 29 October 2018')
+            I18n.t("#{i18n_key}.after_12_weeks_and_no_notice_date")
           )
         end
       end
