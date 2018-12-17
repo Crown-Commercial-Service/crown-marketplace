@@ -128,5 +128,9 @@ RSpec.feature 'Authentication', type: :feature do
     visit '/supply-teachers/cognito'
 
     expect(page).to have_text('Sign in with beta credentials')
+
+    click_on 'Sign in with beta credentials'
+
+    expect(page).to have_current_path('/supply-teachers')
   end
 end

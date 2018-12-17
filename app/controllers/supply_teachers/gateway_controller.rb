@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class GatewayController < ApplicationController
+  class GatewayController < FrameworkController
     require_permission :none, only: :index
 
     def index
