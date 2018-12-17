@@ -96,7 +96,7 @@ production environments:
 
 #### Upload route protection
 
-If the following env var is set then the app exposes routes for uploading
+If the following environment variable is set then the app exposes routes for uploading
 supplier data json. Otherwise those routes do not exist and users receive a 404.
 
 * `APP_HAS_UPLOAD_PRIVILEGES`
