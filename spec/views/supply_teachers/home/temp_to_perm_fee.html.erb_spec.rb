@@ -98,6 +98,12 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
         )
       end
 
+      it 'displays note about negotiable fees' do
+        expect(rendered).to have_text(
+          I18n.t("#{i18n_key}.fees_are_negotiable")
+        )
+      end
+
       it 'displays notice period required' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.notice_period_required", days: 20)
@@ -191,6 +197,12 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
         )
       end
 
+      it 'displays note about negotiable fees' do
+        expect(rendered).to have_text(
+          I18n.t("#{i18n_key}.fees_are_negotiable")
+        )
+      end
+
       it 'displays the number of working days required' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.working_days_required")
@@ -245,6 +257,12 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
       it 'displays explanation' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.between_9_and_12_weeks_and_not_enough_notice")
+        )
+      end
+
+      it 'displays note about negotiable fees' do
+        expect(rendered).to have_text(
+          I18n.t("#{i18n_key}.fees_are_negotiable")
         )
       end
 
@@ -333,6 +351,12 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
         )
       end
 
+      it 'displays note about negotiable fees' do
+        expect(rendered).to have_text(
+          I18n.t("#{i18n_key}.fees_are_negotiable")
+        )
+      end
+
       it 'displays the number of working days required' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.working_days_required")
@@ -400,6 +424,12 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
     it 'displays explanation' do
       expect(rendered).to have_text(
         I18n.t("#{i18n_key}.within_first_8_weeks")
+      )
+    end
+
+    it 'displays note about negotiable fees' do
+      expect(rendered).to have_text(
+        I18n.t("#{i18n_key}.fees_are_negotiable")
       )
     end
 
