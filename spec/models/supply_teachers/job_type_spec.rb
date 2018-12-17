@@ -5,6 +5,7 @@ RSpec.describe SupplyTeachers::JobType, type: :model do
 
   let(:first_job_type) { job_types.first }
   let(:non_role_job_type) { described_class.find_by(code: 'fixed_term') }
+  let(:all_codes) { described_class.all_codes }
 
   it 'loads job_types from CSV' do
     expect(job_types.count).to eq(11)
@@ -13,6 +14,10 @@ RSpec.describe SupplyTeachers::JobType, type: :model do
   it 'populates attributes of first job_type' do
     expect(first_job_type.code).to eq('qt')
     expect(first_job_type.description).to eq('Qualified teacher: non-SEN roles')
+  end
+
+  it 'only has unique codes' do
+    expect(all_codes.uniq).to contain_exactly(*all_codes)
   end
 
   describe '.[]' do
@@ -44,8 +49,8 @@ RSpec.describe SupplyTeachers::JobType, type: :model do
 
   describe '.all_codes' do
     it 'returns codes for all services' do
-      expect(described_class.all_codes.count).to eq(job_types.count)
-      expect(described_class.all_codes.first).to eq(first_job_type.code)
+      expect(all_codes.count).to eq(job_types.count)
+      expect(all_codes.first).to eq(first_job_type.code)
     end
   end
 end
