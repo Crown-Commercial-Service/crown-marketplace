@@ -48,7 +48,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :days_per_week) do %>
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           <h1 class="govuk-fieldset__heading">
+            <label for="days_per_week">
             <%= t('.days_per_week_question') %>
+            </label>
           </h1>
         </legend>
         <%= display_error(@journey, :days_per_week) %>
@@ -61,7 +63,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :day_rate) do %>
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           <h1 class="govuk-fieldset__heading">
+            <label for="day_rate">
             <%= t('.day_rate_question') %>
+            </label>
           </h1>
         </legend>
         <%= display_error(@journey, :day_rate) %>
@@ -77,7 +81,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :markup_rate) do %>
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           <h1 class="govuk-fieldset__heading">
+            <label for="markup_rate">
             <%= t('.markup_rate_question') %>
+            </label>
           </h1>
         </legend>
         <%= display_error(@journey, :markup_rate) %>
