@@ -123,7 +123,7 @@ The application keeps a record of each *successful* upload in the database. So, 
 * `ManagementConsultancy::Upload.order(:created_at).last.created_at`
 * `SupplyTeachers::Upload.order(:created_at).last.created_at`
 
-## Regenerating Error Pages
+## Regenerating error pages
 
 We use [juice](juice) to generate HTML error pages from the live service, inlining all css, images, webfonts, etc.
 
