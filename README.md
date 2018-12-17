@@ -50,6 +50,8 @@ Environment variables for the `production` Rails environment are currently obtai
   * Obtained from the "General settings > App clients" of the AWS Cognito User Pool
 * `COGNITO_AWS_REGION`
   * The AWS region the Cognito User Pool was created in
+* `SUPPLY_TEACHERS_COGNITO_ENABLED`
+  * If present, enable the Cognito sign-in link on the Supply Teachers gateway page
 
 #### DfE Sign-in
 
