@@ -60,9 +60,9 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
   describe 'irrespective of hire date' do
     let(:hire_date) { Time.zone.today }
 
-    it 'explains the circumstances under which a supplier can charge a fee' do
+    it 'explains the circumstances under which you can avoid paying the supplier a fee for taking on a worker permanently' do
       render
-      expect(rendered).to have_text(/supplier can charge you a fee for making a temporary member of staff permanent/)
+      expect(rendered).to have_text(/There is no fee for making a temporary member of staff permanent as long as/)
     end
   end
 

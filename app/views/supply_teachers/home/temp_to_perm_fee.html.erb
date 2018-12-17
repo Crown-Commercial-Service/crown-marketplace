@@ -14,16 +14,16 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h2>Explanation</h2>
+      <h2>How this fee is calculated</h2>
 
       <% if @calculator.before_national_deal_began? %>
         <p>The contract start date you have given, <%= @calculator.contract_start_date.to_formatted_s(:long) %>, is before the National Deal was awarded. The terms of the deal may not apply to this worker, unless you have since agreed with the supplier that they should.</p>
       <% end %>
 
-      <p>The supplier can charge you a fee for making a temporary member of staff permanent if:<p>
+      <p>There is no fee for making a temporary member of staff permanent as long as:<p>
       <ul>
-        <li>you take the worker on permanently within the first 12 working weeks of their contract</li>
-        <li>you take the worker on permanently after 8 working weeks of their contract and don't give the supplier at least 4 weeks notice</li>
+        <li>the worker has been in post for over 12 weeks, and</li>
+        <li>you give 4 weeks’ notice to the agency</li>
       </ul>
 
       <% if @calculator.hiring_after_12_weeks? %>
