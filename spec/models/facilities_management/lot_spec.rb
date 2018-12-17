@@ -4,6 +4,7 @@ RSpec.describe FacilitiesManagement::Lot, type: :model do
   subject(:lots) { described_class.all }
 
   let(:first_lot) { lots.first }
+  let(:all_numbers) { described_class.all_numbers }
 
   it 'loads lots from CSV' do
     expect(lots.count).to eq(3)
@@ -12,6 +13,10 @@ RSpec.describe FacilitiesManagement::Lot, type: :model do
   it 'populates attributes of first lot' do
     expect(first_lot.number).to eq('1a')
     expect(first_lot.description).to eq('Total contract value up to £7M')
+  end
+
+  it 'only has unique numbers' do
+    expect(all_numbers.uniq).to contain_exactly(*all_numbers)
   end
 
   describe '#direct_award_possible?' do
@@ -36,8 +41,8 @@ RSpec.describe FacilitiesManagement::Lot, type: :model do
 
   describe '.all_numbers' do
     it 'returns numbers for all lots' do
-      expect(described_class.all_numbers.count).to eq(lots.count)
-      expect(described_class.all_numbers.first).to eq(first_lot.number)
+      expect(all_numbers.count).to eq(lots.count)
+      expect(all_numbers.first).to eq(first_lot.number)
     end
   end
 end

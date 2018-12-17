@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Region, type: :model do
+  let(:all_codes) { described_class.all_codes }
+
+  it 'only has unique codes' do
+    expect(all_codes.uniq).to contain_exactly(*all_codes)
+  end
+
   describe 'all' do
     it 'has 74 regions' do
       expect(described_class.all)
@@ -90,8 +96,8 @@ RSpec.describe FacilitiesManagement::Region, type: :model do
     let(:first_region) { regions.first }
 
     it 'returns codes for all regions' do
-      expect(described_class.all_codes.count).to eq(regions.count)
-      expect(described_class.all_codes.first).to eq(first_region.code)
+      expect(all_codes.count).to eq(regions.count)
+      expect(all_codes.first).to eq(first_region.code)
     end
   end
 end
