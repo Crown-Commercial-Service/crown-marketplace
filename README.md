@@ -125,7 +125,7 @@ The application keeps a record of each *successful* upload in the database. So, 
 
 ## Regenerating error pages
 
-We use [juice](juice) to generate HTML error pages from the live service, inlining all css, images, webfonts, etc.
+We use [juice][] to generate HTML error pages from the live service, inlining all css, images, webfonts, etc.
 
 A rake task makes this easier:
 ```
