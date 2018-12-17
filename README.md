@@ -78,7 +78,7 @@ Environment variables for the `production` Rails environment are currently obtai
 #### Credentials protecting data upload URLs
 
 HTTP Basic Authentication credentials. Only needed in production environments.
-See the [Importing data section](#importing-data) below.
+See the [Uploading data section](#uploading-data) below.
 
 * `HTTP_BASIC_AUTH_NAME`
 * `HTTP_BASIC_AUTH_PASSWORD`
@@ -107,9 +107,9 @@ supplier data json. Otherwise those routes do not exist and users receive a 404.
 
 Visit [localhost:3000](http://localhost:3000).
 
-## Importing data
+## Uploading data
 
-You can import data for a given framework using the following command where `FRAMEWORK_NAME` is one of `supply-teachers`, `facilities-management` or `management-consultancy`; `SCHEME` is one of `http` (local development) or `https` (other environments); `HTTP_BASIC_AUTH_NAME` & `HTTP_BASIC_AUTH_PASSWORD` credentials (only needed for production environments):
+You can upload data for a given framework using the following command where `FRAMEWORK_NAME` is one of `supply-teachers`, `facilities-management` or `management-consultancy`; `SCHEME` is one of `http` (local development) or `https` (other environments); `HTTP_BASIC_AUTH_NAME` & `HTTP_BASIC_AUTH_PASSWORD` credentials (only needed for production environments):
 
 ```
 $ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
