@@ -158,8 +158,8 @@ easier:
 $ rake 'error_pages[http://localhost:3000]'
 ```
 
-This will pull down /errors/404.html, for example, and save an inlined copy in
-public/404.html
+This will pull down `/errors/404.html`, for example, and save an inlined copy in
+`public/404.html`.
 
 ## Development
 
