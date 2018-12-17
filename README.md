@@ -75,13 +75,18 @@ Environment variables for the `production` Rails environment are currently obtai
 * `GA_TRACKING_ID`
   * Google Analytics is disabled if this is not set
 
-#### Credentials protecting data upload URLs
+#### Upload URL protection
 
 HTTP Basic Authentication credentials. Only needed in production environments.
 See the [Uploading data section](#uploading-data) below.
 
 * `HTTP_BASIC_AUTH_NAME`
 * `HTTP_BASIC_AUTH_PASSWORD`
+
+If the following environment variable is set then the app exposes routes for uploading
+supplier data JSON. Otherwise those routes do not exist and users receive a 404.
+
+* `APP_HAS_UPLOAD_PRIVILEGES`
 
 #### Database
 
@@ -93,13 +98,6 @@ production environments:
 * `CCS_DEFAULT_DB_NAME`
 * `CCS_DEFAULT_DB_USER`
 * `CCS_DEFAULT_DB_PASSWORD`
-
-#### Upload route protection
-
-If the following environment variable is set then the app exposes routes for uploading
-supplier data JSON. Otherwise those routes do not exist and users receive a 404.
-
-* `APP_HAS_UPLOAD_PRIVILEGES`
 
 ## Run
 
