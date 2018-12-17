@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
+    get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
