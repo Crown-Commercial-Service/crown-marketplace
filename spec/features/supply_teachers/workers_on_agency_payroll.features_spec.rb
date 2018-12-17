@@ -70,7 +70,7 @@ RSpec.feature 'Workers on agency payroll', type: :feature do
     click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
-    select '4 weeks to 8 weeks', from: 'term'
+    choose '4 weeks to 8 weeks'
     choose 'Qualified teacher: SEN roles'
     click_on I18n.t('common.submit')
 

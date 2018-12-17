@@ -36,12 +36,22 @@
   <% end %>
 
   <%= govuk_form_group_with_optional_error(@journey, :term) do %>
-    <label class="govuk-label govuk-label--m" for="term">
-      <%= t('.worker_term_question') %>
-    </label>
-    <select class="govuk-select" id="term" name="term">
-      <%= options_from_collection_for_select(SupplyTeachers::Term.all, :code, :description, params[:term]) %>
-    </select>
+    <%= govuk_fieldset_with_optional_error(@journey, :term) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.worker_term_question') %>
+        </h1>
+      </legend>
+      <%= display_error(@journey, :term) %>
+      <div class="govuk-radios">
+        <% SupplyTeachers::Term.all.each do |term| %>
+          <div class="govuk-radios__item">
+            <%= radio_button_tag :term, term.code, checked?(params[:term], term.code), class: 'govuk-radios__input' %>
+            <%= label_tag "term_#{term.code}", term.description, class: 'govuk-label govuk-radios__label' %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 
   <%= submit_tag t('common.submit'), class: "govuk-button" %>

@@ -33,6 +33,8 @@ en:
               blank: Select the type of worker you need
             location:
               invalid_location: Enter a valid postcode
+            term:
+              blank: Select how long you need the worker for
         supply_teachers/journey/looking_for:
           attributes:
             looking_for:
