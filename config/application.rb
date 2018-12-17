@@ -93,6 +93,10 @@ module Marketplace
     dfe_signin_url.present?
   end
 
+  def self.supply_teachers_cognito_enabled?
+    ENV.key?('SUPPLY_TEACHERS_COGNITO_ENABLED')
+  end
+
   def self.dfe_signin_uri
     return unless dfe_signin_enabled?
 
