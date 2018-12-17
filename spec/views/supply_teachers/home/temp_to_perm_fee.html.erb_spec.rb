@@ -159,6 +159,10 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
         render
       end
 
+      it 'displays the minimum and maximum fees that could be charged by the supplier' do
+        expect(rendered).to have_text(/you could be charged\n +between £0 and £200/)
+      end
+
       it 'displays explanation' do
         expect(rendered).to have_text(
           I18n.t("#{i18n_key}.after_12_weeks_and_no_notice_date")

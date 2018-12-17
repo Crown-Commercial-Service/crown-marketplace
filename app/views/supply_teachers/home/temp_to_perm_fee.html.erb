@@ -7,7 +7,11 @@
         </h1>
         <div class="govuk-panel__body">
           <%= t('.panel_body') %>
-          <br><strong><%= number_to_currency(@calculator.fee) %></strong>
+          <% if @calculator.hiring_after_12_weeks? && @calculator.notice_date.blank? %>
+            <br>between <strong>£0</strong> and <strong><%= number_to_currency(@calculator.maximum_fee_for_lack_of_notice) %></strong>
+          <% else %>
+            <br><strong><%= number_to_currency(@calculator.fee) %></strong>
+          <% end %>
         </div>
       </div>
     </div>
