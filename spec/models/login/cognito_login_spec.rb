@@ -21,8 +21,8 @@ RSpec.describe Login::CognitoLogin, type: :model do
   it { is_expected.to have_attributes(email: email) }
 
   context 'when the framework is supply_teachers' do
-    it 'permits access' do
-      expect(login.permit?(:supply_teachers)).to be true
+    it 'denies access' do
+      expect(login.permit?(:supply_teachers)).to be false
     end
   end
 
