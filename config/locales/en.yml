@@ -345,6 +345,7 @@ en:
         daily_supplier_fee: 'Supplier daily fee for the worker: %{fee} (based on the %{markup_rate} mark-up of the %{day_rate} daily cost for the worker)'
         daily_supplier_fee_pro_rata: 'Pro rata supplier daily fee for the worker: %{fee} (based on the worker working %{days_per_week} days per week)'
         early_hire_chargeable_days: 'Days chargeable for early-hire: %{days}'
+        fees_are_negotiable: The amount shown is the maximum you’re likely to pay, but could be negotiated with the agency.
         header: Temp-to-perm fee
         lack_of_notice_chargeable_days: 'Days chargeable for lack of notice: %{days}'
         notice_period_disclaimer: You may be charged more than the fee displayed, up to a maximum of %{max_fee}, if you don't notify the supplier of your intention to make the worker permanent by %{latest_notice_date}.
