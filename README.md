@@ -136,7 +136,31 @@ $ rake 'error_pages[http://localhost:3000]'
 
 This will pull down /errors/404.html, for example, and save an inlined copy in public/404.html
 
+## Development
+
+### Linting
+
+* The [rubocop][] & [rubocop-rspec][] gems are used to enforce standard coding styles.
+* Some custom "cops" have been defined in [`lib/cop`][lib-cop].
+* Some "cops" in the standard configuration have been disabled or adjusted in [`.rubocop.yml`][rubocop-yml].
+* Rubocop linting is run as part of the default Rake task, but can be run individually using `rake rubocop`.
+
+### Testing
+
+* There is an automated RSpec-based test suite.
+* The [factory_bot_rails][] gem is used to build valid models for testing.
+* The [faker][] gem is used to generate realistic, but random test data of various types.
+* I18n translations are used in specs to reduce their sensitivity to copy changes.
+* [RSpec feature specs][feature-specs] are used for acceptance testing.
+* All the specs are run as part of the default Rake task, but the standard RSpec-provided Rake tasks also exist for running sub-groups of the specs.
+
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
 [juice]: https://www.npmjs.com/package/juice
 [dotenv-rails]: https://github.com/bkeepers/dotenv
 [aws-parameter-store]: https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html
+[rubocop]: https://github.com/rubocop-hq/rubocop
+[rubocop-rspec]: https://github.com/rubocop-hq/rubocop-rspec
+[lib-cop]: https://github.com/Crown-Commercial-Service/crown-marketplace/tree/master/lib/cop
+[rubocop-yml]: https://github.com/Crown-Commercial-Service/crown-marketplace/blob/master/.rubocop.yml
+[feature-specs]: https://github.com/Crown-Commercial-Service/crown-marketplace/tree/master/spec/features
+[factory_bot_rails]: https://github.com/thoughtbot/factory_bot_rails
