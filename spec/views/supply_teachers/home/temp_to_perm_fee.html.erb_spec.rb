@@ -419,6 +419,14 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
           )
         end
       end
+
+      context 'and the fee has reached the maximum fee that can be charged in this period' do
+        let(:hire_date) { start_of_9th_week }
+
+        it 'displays a single fee in the heading' do
+          expect(rendered).to have_text(/you could be charged\n +£200/)
+        end
+      end
     end
   end
 
