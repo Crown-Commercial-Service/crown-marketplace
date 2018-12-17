@@ -215,6 +215,20 @@ which are somewhat non-standard:
       [ActiveModel::Validations][] to define validation rules to constrain the
       values of those inputs.
 
+### Authentication and authorisation
+
+Authentication is implemented using
+[OmniAuth](https://github.com/omniauth/omniauth), with two configured
+providers:
+
+* [Amazon Cognito](https://aws.amazon.com/cognito/)
+* [DfE Sign-in](https://help.signin.education.gov.uk/contact)
+
+Both of these require configuration using environment variables listed above.
+
+Authorisation is implemented by the `Login::DfeLogin` and `Login::CognitoLogin`
+classes.
+
 ### Linting
 
 * The [rubocop][] & [rubocop-rspec][] gems are used to enforce standard coding
