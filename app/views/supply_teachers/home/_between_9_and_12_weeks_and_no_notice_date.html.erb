@@ -30,10 +30,12 @@
   </li>
 </ul>
 
-<p>
-  <%= t('supply_teachers.home.temp_to_perm_fee.notice_period_disclaimer',
-      max_fee: number_to_currency(calculator.maximum_fee_for_lack_of_notice),
-      latest_notice_date: calculator.notice_date_based_on_hire_date.to_s(:long_with_day)) %>
-</p>
+<% if calculator.fee < calculator.maximum_fee_for_lack_of_notice %>
+  <p>
+    <%= t('supply_teachers.home.temp_to_perm_fee.notice_period_disclaimer',
+        max_fee: number_to_currency(calculator.maximum_fee_for_lack_of_notice),
+        latest_notice_date: calculator.notice_date_based_on_hire_date.to_s(:long_with_day)) %>
+  </p>
+<% end %>
 
 <%= render partial: 'avoid_paying_fees', locals: { calculator: calculator } %>

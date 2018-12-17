@@ -426,6 +426,10 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
         it 'displays a single fee in the heading' do
           expect(rendered).to have_text(/you could be charged\n +£200/)
         end
+
+        it 'does not display the disclaimer about not giving enough notice' do
+          expect(rendered).not_to have_text(/You may be charged more than the fee displayed/)
+        end
       end
     end
   end
