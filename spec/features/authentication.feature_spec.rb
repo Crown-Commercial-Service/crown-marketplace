@@ -107,30 +107,4 @@ RSpec.feature 'Authentication', type: :feature do
 
     expect(page).to have_text('You don’t have permission to view this page')
   end
-
-  scenario 'Visitors to the normal school gateway cannot use Cognito option when disabled' do
-    allow(Marketplace)
-      .to receive(:supply_teachers_cognito_enabled?)
-      .and_return(false)
-    visit '/supply-teachers/start'
-
-    expect(page).not_to have_text('Sign in with beta credentials')
-
-    visit '/management-consultancy/start'
-    click_on 'Sign in with beta credentials'
-
-    visit '/supply-teachers/start'
-    expect(page).to have_text('You don’t have permission to view this page')
-  end
-
-  scenario 'Visitors to the normal school gateway can use Cognito option when enabled' do
-    allow(Marketplace)
-      .to receive(:supply_teachers_cognito_enabled?)
-      .and_return(true)
-
-    visit '/supply-teachers/start'
-    click_on 'Sign in with beta credentials'
-
-    expect(page).not_to have_text('Not permitted')
-  end
 end
