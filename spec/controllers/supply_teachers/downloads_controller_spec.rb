@@ -14,8 +14,6 @@ RSpec.describe SupplyTeachers::DownloadsController, type: :controller, auth: tru
   end
 
   it 'responds to requests for xlsx files' do
-    permit_framework :supply_teachers
-
     get :index, params: { format: 'xlsx' }
 
     expect(response.content_type)

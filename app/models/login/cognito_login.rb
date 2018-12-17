@@ -12,18 +12,8 @@ module Login
       ::Cognito.logout_url(routable.gateway_url)
     end
 
-    def permit?(framework)
-      permitted_frameworks.include?(framework)
-    end
-
-    private
-
-    def permitted_frameworks
-      if Marketplace.supply_teachers_cognito_enabled?
-        %i[facilities_management management_consultancy supply_teachers]
-      else
-        %i[facilities_management management_consultancy]
-      end
+    def permit?(_framework)
+      true
     end
   end
 end
