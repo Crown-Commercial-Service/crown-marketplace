@@ -9,7 +9,7 @@
           <%= t('.panel_body') %>
           <% if @calculator.hiring_after_12_weeks? && @calculator.notice_date.blank? %>
             <br>between <strong>£0</strong> and <strong><%= number_to_currency(@calculator.maximum_fee_for_lack_of_notice) %></strong>
-          <% elsif @calculator.hiring_between_9_and_12_weeks? && @calculator.notice_date.blank? %>
+          <% elsif @calculator.hiring_between_9_and_12_weeks? && @calculator.notice_date.blank? && @calculator.fee < @calculator.maximum_fee_for_lack_of_notice %>
             <br>between <strong><%= number_to_currency(@calculator.fee) %></strong> and <strong><%= number_to_currency(@calculator.maximum_fee_for_lack_of_notice) %></strong>
           <% else %>
             <br><strong><%= number_to_currency(@calculator.fee) %></strong>
