@@ -276,7 +276,9 @@ which are somewhat non-standard:
 [ActiveModel::Validations]: https://guides.rubyonrails.org/active_record_validations.html
 [capybara]: https://github.com/teamcapybara/capybara
 [AWS CodeBuild]: https://aws.amazon.com/codebuild/
+[AWS CodePipeline]: https://aws.amazon.com/codepipeline/
 [AWS Elastic Container Registry]: https://aws.amazon.com/ecr/
 [AWS Elastic Container Service]: https://aws.amazon.com/ecs/
 [CMpDevEnvironment]: https://github.com/Crown-Commercial-Service/CMpDevEnvironment
 [CMp Developer Guide]: https://github.com/Crown-Commercial-Service/CMpDevEnvironment/blob/develop/docs/ccs_aws_v1-developer_guide.md
+[faker]: https://github.com/stympy/faker
