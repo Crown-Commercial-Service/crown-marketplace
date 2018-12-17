@@ -167,7 +167,7 @@ This will pull down `/errors/404.html`, for example, and save an inlined copy in
 
 * The design of the app is closely based on the [GOV.UK Design System][] with
   some minor CCS-related variations.
-* The project uses and extends the [govuk_frontend_toolkit][] npm package.
+* The project uses and extends the [GOV.UK Frontend][] npm package.
 * The npm package dependencies are listed in `package.json`, installed using
   [yarn][], and the exact versions of all dependencies direct/indirect are
   locked in `yarn.lock`.
@@ -268,7 +268,7 @@ which are somewhat non-standard:
 [rubocop-yml]: https://github.com/Crown-Commercial-Service/crown-marketplace/blob/master/.rubocop.yml
 [feature-specs]: https://github.com/Crown-Commercial-Service/crown-marketplace/tree/master/spec/features
 [factory_bot_rails]: https://github.com/thoughtbot/factory_bot_rails
-[govuk_frontend_toolkit]: https://github.com/alphagov/govuk_frontend_toolkit_npm
+[GOV.UK Frontend]: https://github.com/alphagov/govuk-frontend
 [yarn]: https://github.com/yarnpkg/yarn
 [GOV.UK Design System]: https://design-system.service.gov.uk/
 [Block Element Modifier]: http://getbem.com/
