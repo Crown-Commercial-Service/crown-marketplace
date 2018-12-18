@@ -19,6 +19,10 @@ RSpec.describe SupplyTeachers::RateTerm, type: :model do
     expect(all_codes.uniq).to contain_exactly(*all_codes)
   end
 
+  it 'all have descriptions' do
+    expect(rate_terms.select { |r| r.description.blank? }).to be_empty
+  end
+
   describe '.[]' do
     it 'looks up rate term description by code' do
       expect(described_class['one_week']).to eq('Up to 1 week')

@@ -14,6 +14,10 @@ RSpec.describe SupplyTeachers::Lot, type: :model do
     expect(all_numbers.uniq).to contain_exactly(*all_numbers)
   end
 
+  it 'all have descriptions' do
+    expect(lots.select { |r| r.description.blank? }).to be_empty
+  end
+
   it 'populates attributes of first lot' do
     expect(first_lot.number).to eq('1')
     expect(first_lot.description).to eq('Direct provision')

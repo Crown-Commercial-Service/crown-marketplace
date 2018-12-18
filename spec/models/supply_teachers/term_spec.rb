@@ -18,4 +18,8 @@ RSpec.describe SupplyTeachers::Term, type: :model do
   it 'only has unique codes' do
     expect(all_codes.uniq).to contain_exactly(*all_codes)
   end
+
+  it 'all have descriptions' do
+    expect(terms.select { |r| r.description.blank? }).to be_empty
+  end
 end

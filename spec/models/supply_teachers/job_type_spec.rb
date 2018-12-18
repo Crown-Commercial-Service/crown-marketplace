@@ -20,6 +20,10 @@ RSpec.describe SupplyTeachers::JobType, type: :model do
     expect(all_codes.uniq).to contain_exactly(*all_codes)
   end
 
+  it 'all have description' do
+    expect(job_types.select { |r| r.description.blank? }).to be_empty
+  end
+
   describe '.[]' do
     it 'looks up job type description by code' do
       expect(described_class[first_job_type.code]).to eq(first_job_type.description)
