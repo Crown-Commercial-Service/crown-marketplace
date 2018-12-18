@@ -191,6 +191,7 @@ en:
   layouts:
     application:
       back: Back
+      back_aria_label: Back to the previous page
       beta: beta
       cookie_link: Cookies
       cookie_link_aria_label: How we use cookies
