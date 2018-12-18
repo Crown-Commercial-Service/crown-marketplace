@@ -19,9 +19,7 @@
   <%= govuk_form_group_with_optional_error(@journey, :job_type) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :job_type) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('.worker_type_question') %>
-        </h1>
+        <%= t('.worker_type_question') %>
       </legend>
       <%= display_error(@journey, :job_type) %>
       <div class="govuk-radios">
@@ -38,9 +36,7 @@
   <%= govuk_form_group_with_optional_error(@journey, :term) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :term) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('.worker_term_question') %>
-        </h1>
+        <%= t('.worker_term_question') %>
       </legend>
       <%= display_error(@journey, :term) %>
       <div class="govuk-radios">
