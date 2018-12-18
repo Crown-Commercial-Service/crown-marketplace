@@ -23,6 +23,10 @@ module ApplicationHelper
     )
   end
 
+  def dfe_account_request_url
+    'https://ccsheretohelp.uk/contact/?type=ST18/19'
+  end
+
   def support_telephone_number
     Marketplace.support_telephone_number
   end
