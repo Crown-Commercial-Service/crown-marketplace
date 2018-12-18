@@ -11,7 +11,7 @@ RSpec.describe FacilitiesManagement::Service, type: :model do
   end
 
   it 'all have names' do
-    expect(services.select { |r| r.name.blank? }).to be_empty
+    expect(services.select { |s| s.name.blank? }).to be_empty
   end
 
   it 'all have boolean mandatory attribute' do

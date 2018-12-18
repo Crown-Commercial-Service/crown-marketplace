@@ -21,7 +21,7 @@ RSpec.describe SupplyTeachers::JobType, type: :model do
   end
 
   it 'all have description' do
-    expect(job_types.select { |r| r.description.blank? }).to be_empty
+    expect(job_types.select { |jt| jt.description.blank? }).to be_empty
   end
 
   it 'all have boolean role attribute' do

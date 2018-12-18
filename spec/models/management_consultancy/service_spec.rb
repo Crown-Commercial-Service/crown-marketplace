@@ -21,7 +21,7 @@ RSpec.describe ManagementConsultancy::Service, type: :model do
   end
 
   it 'all have names' do
-    expect(services.select { |r| r.name.blank? }).to be_empty
+    expect(services.select { |s| s.name.blank? }).to be_empty
   end
 
   describe '.all_codes' do

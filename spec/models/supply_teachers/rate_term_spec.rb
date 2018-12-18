@@ -20,7 +20,7 @@ RSpec.describe SupplyTeachers::RateTerm, type: :model do
   end
 
   it 'all have descriptions' do
-    expect(rate_terms.select { |r| r.description.blank? }).to be_empty
+    expect(rate_terms.select { |rt| rt.description.blank? }).to be_empty
   end
 
   describe '.[]' do
