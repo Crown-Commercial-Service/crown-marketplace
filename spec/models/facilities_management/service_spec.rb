@@ -18,6 +18,13 @@ RSpec.describe FacilitiesManagement::Service, type: :model do
     expect(services.reject { |s| [TrueClass, FalseClass].include?(s.mandatory.class) }).to be_empty
   end
 
+  it 'all have valid work_package_code' do
+    services_with_valid_work_package_code = services.reject do |service|
+      FacilitiesManagement::WorkPackage.find_by(code: service.work_package_code).present?
+    end
+    expect(services_with_valid_work_package_code).to be_empty
+  end
+
   it 'populates attributes of first service' do
     expect(first_service.code).to eq('A.7')
     expect(first_service.name).to eq('Accessibility services')
