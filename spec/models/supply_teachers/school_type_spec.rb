@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe SupplyTeachers::SchoolType, type: :model do
-  let(:all_ids) { described_class.all.map(&:id) }
+  let(:school_types) { described_class.all }
+  let(:all_ids) { school_types.map(&:id) }
 
   it 'only has unique ids' do
     expect(all_ids.uniq).to contain_exactly(*all_ids)
+  end
+
+  it 'all have names' do
+    expect(school_types.select { |r| r.name.blank? }).to be_empty
   end
 
   context 'when it is a state school' do
