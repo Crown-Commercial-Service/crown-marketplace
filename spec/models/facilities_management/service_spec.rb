@@ -14,6 +14,10 @@ RSpec.describe FacilitiesManagement::Service, type: :model do
     expect(services.select { |r| r.name.blank? }).to be_empty
   end
 
+  it 'all have boolean mandatory attribute' do
+    expect(services.reject { |r| %w[true false].include?(r.mandatory) }).to be_empty
+  end
+
   it 'populates attributes of first service' do
     expect(first_service.code).to eq('A.7')
     expect(first_service.name).to eq('Accessibility services')

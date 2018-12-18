@@ -12,6 +12,10 @@ RSpec.describe SupplyTeachers::SchoolType, type: :model do
     expect(school_types.select { |r| r.name.blank? }).to be_empty
   end
 
+  it 'all have boolean non_profit attribute' do
+    expect(school_types.reject { |r| [TrueClass, FalseClass].include?(r.non_profit.class) }).to be_empty
+  end
+
   context 'when it is a state school' do
     subject { described_class.find_by(id: '01') }
 
