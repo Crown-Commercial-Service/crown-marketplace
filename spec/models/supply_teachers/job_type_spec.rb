@@ -25,7 +25,7 @@ RSpec.describe SupplyTeachers::JobType, type: :model do
   end
 
   it 'all have boolean role attribute' do
-    expect(job_types.reject { |r| %w[true false].include?(r.role) }).to be_empty
+    expect(job_types.reject { |jt| [TrueClass, FalseClass].include?(jt.role.class) }).to be_empty
   end
 
   describe '.[]' do

@@ -15,7 +15,7 @@ RSpec.describe FacilitiesManagement::Service, type: :model do
   end
 
   it 'all have boolean mandatory attribute' do
-    expect(services.reject { |r| %w[true false].include?(r.mandatory) }).to be_empty
+    expect(services.reject { |s| [TrueClass, FalseClass].include?(s.mandatory.class) }).to be_empty
   end
 
   it 'populates attributes of first service' do
@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::Service, type: :model do
   end
 
   it 'populates mandatory attribute of first service' do
-    expect(first_service.mandatory).to eq('true')
+    expect(first_service).to be_mandatory
   end
 
   it 'looks up work package based on its code' do
