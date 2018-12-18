@@ -15,7 +15,7 @@ RSpec.describe SupplyTeachers::Lot, type: :model do
   end
 
   it 'all have descriptions' do
-    expect(lots.select { |r| r.description.blank? }).to be_empty
+    expect(lots.select { |l| l.description.blank? }).to be_empty
   end
 
   it 'populates attributes of first lot' do

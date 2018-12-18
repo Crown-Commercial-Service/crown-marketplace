@@ -20,6 +20,6 @@ RSpec.describe FacilitiesManagement::WorkPackage, type: :model do
   end
 
   it 'all have names' do
-    expect(packages.select { |r| r.name.blank? }).to be_empty
+    expect(packages.select { |p| p.name.blank? }).to be_empty
   end
 end

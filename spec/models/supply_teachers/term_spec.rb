@@ -20,6 +20,6 @@ RSpec.describe SupplyTeachers::Term, type: :model do
   end
 
   it 'all have descriptions' do
-    expect(terms.select { |r| r.description.blank? }).to be_empty
+    expect(terms.select { |t| t.description.blank? }).to be_empty
   end
 end
