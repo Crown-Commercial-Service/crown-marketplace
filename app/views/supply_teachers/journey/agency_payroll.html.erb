@@ -13,7 +13,7 @@
       <%= t('.question_hint') %>
     </span>
     <%= display_error(@journey, :location) %>
-    <%= text_field_tag :postcode, params[:postcode], class: css_classes_for_input(@journey, :location, ['govuk-input--width-10']) %>
+    <%= text_field_tag :postcode, params[:postcode], placeholder: 'SW1A 1AA', class: css_classes_for_input(@journey, :location, ['govuk-input--width-10']) %>
   <% end %>
 
   <%= govuk_form_group_with_optional_error(@journey, :job_type) do %>
