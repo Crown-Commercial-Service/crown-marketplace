@@ -18,4 +18,8 @@ RSpec.describe FacilitiesManagement::WorkPackage, type: :model do
   it 'only has unique codes' do
     expect(all_codes.uniq).to contain_exactly(*all_codes)
   end
+
+  it 'all have names' do
+    expect(packages.select { |r| r.name.blank? }).to be_empty
+  end
 end

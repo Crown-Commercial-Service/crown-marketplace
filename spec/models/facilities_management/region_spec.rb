@@ -1,15 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Region, type: :model do
+  subject(:regions) { described_class.all }
+
   let(:all_codes) { described_class.all_codes }
 
   it 'only has unique codes' do
     expect(all_codes.uniq).to contain_exactly(*all_codes)
   end
 
+  it 'all have names' do
+    expect(regions.select { |r| r.name.blank? }).to be_empty
+  end
+
   describe 'all' do
     it 'has 74 regions' do
-      expect(described_class.all)
+      expect(regions)
         .to have_attributes(length: 74)
     end
   end
@@ -92,7 +98,6 @@ RSpec.describe FacilitiesManagement::Region, type: :model do
   end
 
   describe '.all_codes' do
-    let(:regions) { described_class.all }
     let(:first_region) { regions.first }
 
     it 'returns codes for all regions' do
