@@ -333,9 +333,9 @@ en:
     gateway:
       index:
         dfe_signin:
-          create_account_html: Complete <a href="%{url}">this form</a> if you don’t have an account.
+          create_account_html: Complete <a href="%{url}" aria-label="Crown Commercial Service contact form">this form</a> if you don’t have an account.
           instructions: Sign in to your DfE Sign-In account to use this service. You will be automatically directed back to this service once you’ve signed in.
-          outside_england_html: Schools outside England and local authorities can’t use the digital service yet, but can use the framework to access the deal. Complete <a href="%{url}">the form</a> to let us know if you’d like to use the framework.
+          outside_england_html: Schools outside England and local authorities can’t use the digital service yet, but can use the framework to access the deal. Complete <a href="%{url}" aria-label="Crown Commercial Service contact form">the form</a> to let us know if you’d like to use the framework.
         heading: CCS Marketplace private beta
     home:
       temp_to_perm_fee:
