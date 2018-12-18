@@ -19,6 +19,10 @@ RSpec.describe FacilitiesManagement::Lot, type: :model do
     expect(all_numbers.uniq).to contain_exactly(*all_numbers)
   end
 
+  it 'all have descriptions' do
+    expect(lots.select { |r| r.description.blank? }).to be_empty
+  end
+
   describe '#direct_award_possible?' do
     let(:result) { lot.direct_award_possible? }
 

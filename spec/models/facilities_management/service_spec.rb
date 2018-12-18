@@ -10,6 +10,10 @@ RSpec.describe FacilitiesManagement::Service, type: :model do
     expect(services.count).to eq(135)
   end
 
+  it 'all have names' do
+    expect(services.select { |r| r.name.blank? }).to be_empty
+  end
+
   it 'populates attributes of first service' do
     expect(first_service.code).to eq('A.7')
     expect(first_service.name).to eq('Accessibility services')
