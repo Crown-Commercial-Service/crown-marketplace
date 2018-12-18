@@ -24,6 +24,10 @@ RSpec.describe SupplyTeachers::JobType, type: :model do
     expect(job_types.select { |r| r.description.blank? }).to be_empty
   end
 
+  it 'all have boolean role attribute' do
+    expect(job_types.reject { |r| %w[true false].include?(r.role) }).to be_empty
+  end
+
   describe '.[]' do
     it 'looks up job type description by code' do
       expect(described_class[first_job_type.code]).to eq(first_job_type.description)
