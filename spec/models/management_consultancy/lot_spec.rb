@@ -19,6 +19,10 @@ RSpec.describe ManagementConsultancy::Lot, type: :model do
     expect(all_numbers.uniq).to contain_exactly(*all_numbers)
   end
 
+  it 'all have descriptions' do
+    expect(lots.select { |r| r.description.blank? }).to be_empty
+  end
+
   describe '.[]' do
     it 'looks up lot by number' do
       expect(described_class['1'].number).to eq('1')

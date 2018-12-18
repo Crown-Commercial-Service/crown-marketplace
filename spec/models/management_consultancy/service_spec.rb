@@ -20,6 +20,10 @@ RSpec.describe ManagementConsultancy::Service, type: :model do
     expect(all_codes.uniq).to contain_exactly(*all_codes)
   end
 
+  it 'all have names' do
+    expect(services.select { |r| r.name.blank? }).to be_empty
+  end
+
   describe '.all_codes' do
     it 'returns codes for all services' do
       expect(all_codes.count).to eq(services.count)
