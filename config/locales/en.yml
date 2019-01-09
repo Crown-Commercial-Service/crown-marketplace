@@ -366,7 +366,7 @@ en:
         page_title: School postcode and worker requirements
         postcode_question: What is your school’s postcode?
         question_hint: We use this to find agencies near to your school
-        worker_term_question: How long do you need the worker for?
+        worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker do you need?
       looking_for:
         answer_calculate_temp_to_perm_fee: To calculate the fee you’ll be charged if you make an agency worker permanent
