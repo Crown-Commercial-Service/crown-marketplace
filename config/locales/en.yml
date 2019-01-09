@@ -371,7 +371,7 @@ en:
       looking_for:
         answer_calculate_temp_to_perm_fee: To calculate the fee you’ll be charged if you make an agency worker permanent
         answer_managed_service_provider: An agency to manage all my needs - a ‘managed service provider’
-        answer_worker: An agency to manage an individual worker
+        answer_worker: An agency who can provide your school with an individual worker
         page_title: What are you looking for?
         question: What are you looking for?
       managed_service_provider:
