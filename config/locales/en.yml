@@ -305,7 +305,7 @@ en:
       index:
         distance_aria_label_html: Set the radius to %{radius_setting}
         do_next:
-          contact_supplier: contact the supplier of your choice from this list to find a suitable, available worker
+          contact_supplier: contact the supplier of your choice from the list below to find a suitable, available worker and their daily rate
           different_supplier: If you use a different supplier later on, you will need to sign another short order form.
           header: What to do next
           sign_form_html: sign the <a href="%{form_url}">short order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Supply Teachers - Order Form Template (Short Form).docx’)
