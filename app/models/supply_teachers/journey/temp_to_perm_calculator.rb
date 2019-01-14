@@ -178,6 +178,13 @@ module SupplyTeachers
       errors.add(:notice_date, :before_contract_start_date)
     end
 
+    def ensure_notice_date_is_before_hire_date
+      return if notice_date.blank? || hire_date.blank?
+      return if notice_date < hire_date
+
+      errors.add(:notice_date, :after_hire_date)
+    end
+
     def ensure_holiday_1_end_date_is_after_start_date
       return unless holiday_1_start_date.present? && holiday_1_end_date.present?
       return if holiday_1_end_date >= holiday_1_start_date
