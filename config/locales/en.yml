@@ -93,6 +93,7 @@ en:
               not_a_number: The mark-up percentage must be a number
             notice_date:
               invalid: Enter the date you notified the supplier of your intention to hire the worker and include a day, month and year
+              before_contract_start_date: The date you notified the supplier of your intention to take the worker on permanently cannot be before the date their current contract started
         supply_teachers/journey/worker_type:
           attributes:
             worker_type:
