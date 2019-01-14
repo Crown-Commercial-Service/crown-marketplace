@@ -51,28 +51,28 @@ RSpec.feature 'Temp to Perm fee calculator', type: :feature do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date start_of_1st_week
-    fill_in_hire_date start_of_13th_week
+    fill_in_hire_date start_of_14th_week
     fill_in 'days_per_week', with: 5
     fill_in 'day_rate', with: 110
     fill_in 'markup_rate', with: 10
     fill_in_notice_date start_of_13th_week
     click_on I18n.t('common.submit')
 
-    expect_fee 200
+    expect_fee 100
   end
 
   scenario 'Making a worker permanent after 12 weeks of the start of their contract but without enough notice period when they work fewer than 5 days per week' do
     visit_temp_to_perm_calculator
 
     fill_in_contract_start_date start_of_1st_week
-    fill_in_hire_date start_of_13th_week
+    fill_in_hire_date start_of_14th_week
     fill_in 'days_per_week', with: 2
     fill_in 'day_rate', with: 110
     fill_in 'markup_rate', with: 10
     fill_in_notice_date start_of_13th_week
     click_on I18n.t('common.submit')
 
-    expect_fee 80
+    expect_fee 40
   end
 
   private
