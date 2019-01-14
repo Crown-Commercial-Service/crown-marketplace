@@ -113,6 +113,8 @@ module SupplyTeachers
               }
 
     validate :ensure_hire_date_is_after_contract_start_date
+    validate :ensure_notice_date_is_after_contract_start_date
+    validate :ensure_notice_date_is_before_hire_date
 
     def next_step_class
       Journey::TempToPermFee
@@ -167,6 +169,13 @@ module SupplyTeachers
       return if hire_date > contract_start_date
 
       errors.add(:hire_date, :after_contract_start_date)
+    end
+
+    def ensure_notice_date_is_after_contract_start_date
+      return if notice_date.blank? || contract_start_date.blank?
+      return if notice_date > contract_start_date
+
+      errors.add(:notice_date, :before_contract_start_date)
     end
 
     def ensure_holiday_1_end_date_is_after_start_date
