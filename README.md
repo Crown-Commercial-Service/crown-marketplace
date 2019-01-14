@@ -111,6 +111,10 @@ environments:
 * `CCS_DEFAULT_DB_USER`
 * `CCS_DEFAULT_DB_PASSWORD`
 
+#### Log level
+
+* `LOG_LEVEL` can be used to manipulate the log level in production. Set to `'debug'` to see debug output; the default (if not set) is `:info`
+
 ## Run
 
 Execute the following command:
