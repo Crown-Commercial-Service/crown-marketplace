@@ -7,6 +7,8 @@ class AuthController < ApplicationController
   end
 
   def sign_out
+    return redirect_to supply_teachers_gateway_url if current_login.nil?
+
     redirect_to current_login.logout_url(self)
     delete_current_login
   end
