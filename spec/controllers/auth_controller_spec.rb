@@ -98,5 +98,16 @@ RSpec.describe AuthController, type: :controller do
         expect(current_login).to be_nil
       end
     end
+
+    context 'when there is no valid current_login (fallback)' do
+      before do
+        session.delete :login
+      end
+
+      it 'redirects to the supply teachers start page' do
+        post :sign_out
+        expect(response).to redirect_to(supply_teachers_gateway_url)
+      end
+    end
   end
 end
