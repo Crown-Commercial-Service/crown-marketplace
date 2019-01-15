@@ -106,7 +106,7 @@ RSpec.describe AuthController, type: :controller do
 
       it 'redirects to the supply teachers start page' do
         post :sign_out
-        expect(response).to redirect_to(supply_teachers_gateway_url)
+        expect(response).to redirect_to(controller.gateway_url)
       end
     end
   end
