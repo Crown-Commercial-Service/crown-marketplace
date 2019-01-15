@@ -92,6 +92,8 @@ en:
               less_than_or_equal_to: The mark-up percentage must be between 0 and 100
               not_a_number: The mark-up percentage must be a number
             notice_date:
+              after_hire_date: The date you notified the supplier of your intention to take the worker on permanently must be before the date they will be hired
+              before_contract_start_date: The date you notified the supplier of your intention to take the worker on permanently cannot be before the date their current contract started
               invalid: Enter the date you notified the supplier of your intention to hire the worker and include a day, month and year
         supply_teachers/journey/worker_type:
           attributes:

@@ -483,6 +483,42 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     end
   end
 
+  context 'when notice_date is present and earlier than contract_start_date' do
+    let(:notice_date_day) { 1 }
+    let(:notice_date_month) { 12 }
+    let(:notice_date_year) { 2018 }
+    let(:contract_start_date_day) { 1 }
+    let(:contract_start_date_month) { 1 }
+    let(:contract_start_date_year) { 2019 }
+
+    it { is_expected.to be_invalid }
+
+    it 'obtains the error message from an I18n translation' do
+      step.valid?
+      expect(step.errors[:notice_date]).to include(
+        I18n.t("#{model_key}.attributes.notice_date.before_contract_start_date")
+      )
+    end
+  end
+
+  context 'when notice_date is present and later than hire_date' do
+    let(:notice_date_day) { 1 }
+    let(:notice_date_month) { 12 }
+    let(:notice_date_year) { 2019 }
+    let(:hire_date_day) { 1 }
+    let(:hire_date_month) { 1 }
+    let(:hire_date_year) { 2018 }
+
+    it { is_expected.to be_invalid }
+
+    it 'obtains the error message from an I18n translation' do
+      step.valid?
+      expect(step.errors[:notice_date]).to include(
+        I18n.t("#{model_key}.attributes.notice_date.after_hire_date")
+      )
+    end
+  end
+
   context 'when holiday_1_start_date is absent' do
     let(:holiday_1_start_date_day) { nil }
     let(:holiday_1_start_date_month) { nil }
