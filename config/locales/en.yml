@@ -329,6 +329,7 @@ en:
         other_radius_html: 'Change this distance to: '
         page_title: Suppliers
         print: Print this page
+        related_actions_html: Related actions
         results_found_html: "<strong>%{results}</strong> found"
         results_found_with_location_html: "<strong>%{results}</strong> found within <strong>%{range}</strong> of <strong>%{postcode}</strong>."
     gateway:
