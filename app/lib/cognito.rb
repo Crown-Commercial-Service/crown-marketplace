@@ -9,7 +9,7 @@ module Cognito
 
   def self.logout_url(redirect)
     if pool_site.present?
-      "#{pool_site}/logout?client_id=#{client_id}&redirect_uri=#{redirect}"
+      "#{pool_site}/logout?client_id=#{client_id}&logout_uri=#{redirect}"
     else
       redirect
     end
