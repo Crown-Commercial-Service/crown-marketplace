@@ -20,7 +20,7 @@
         <% if branch.rate %>
           <div class="govuk-grid-column-one-half">
             <p class="govuk-body govuk-!-font-size-36 supplier-record__markup-rate">
-              <%= number_to_percentage(branch.rate * 100, precision: 1) %>
+              <%= number_to_percentage(branch.rate * 100, precision: 1, format: "%n<span class='govuk-!-font-size-24'>%</span>".html_safe) %>
             </p>
             <p class="govuk-body-s supplier-record__markup-rate-units"><%= t('.markup') %></p>
           </div>
