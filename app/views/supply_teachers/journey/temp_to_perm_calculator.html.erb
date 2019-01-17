@@ -297,14 +297,14 @@
         <% end %>
       <% end %>
 
-      <%= govuk_form_group_with_optional_error(@journey, :notice_date_day, :notice_date_month, :notice_date_year) do %>
-        <%= govuk_fieldset_with_optional_error(@journey, :notice_date_day, :notice_date_month, :notice_date_year) do %>
+      <%= govuk_form_group_with_optional_error(@journey, :notice_date) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :notice_date) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 class="govuk-fieldset__heading">
               <%= t('.notice_date_question') %>
             </h2>
           </legend>
-          <%= display_errors(@journey, :notice_date_day, :notice_date_month, :notice_date_year) %>
+          <%= display_errors(@journey, :notice_date) %>
           <span id="notice-date-hint" class="govuk-hint">
             <%= t('.notice_date_question_hint') %>
           </span>
@@ -314,7 +314,7 @@
                 <label class="govuk-label govuk-date-input__label" for="notice_date_day">
                   Day
                 </label>
-                <%= text_field_tag :notice_date_day, @journey.current_step.notice_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :notice_date_day, %w[govuk-date-input__input govuk-input--width-2]) %>
+                <%= text_field_tag :notice_date_day, @journey.current_step.notice_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :notice_date, %w[govuk-date-input__input govuk-input--width-2]) %>
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -322,7 +322,7 @@
                 <label class="govuk-label govuk-date-input__label" for="notice_date_month">
                   Month
                 </label>
-                <%= text_field_tag :notice_date_month, @journey.current_step.notice_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :notice_date_month, %w[govuk-date-input__input govuk-input--width-2]) %>
+                <%= text_field_tag :notice_date_month, @journey.current_step.notice_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :notice_date, %w[govuk-date-input__input govuk-input--width-2]) %>
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -330,7 +330,7 @@
                 <label class="govuk-label govuk-date-input__label" for="notice_date_year">
                   Year
                 </label>
-                <%= text_field_tag :notice_date_year, @journey.current_step.notice_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :notice_date_year, %w[govuk-date-input__input govuk-input--width-4]) %>
+                <%= text_field_tag :notice_date_year, @journey.current_step.notice_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :notice_date, %w[govuk-date-input__input govuk-input--width-4]) %>
               </div>
             </div>
           </div>

@@ -92,6 +92,8 @@ en:
               less_than_or_equal_to: The mark-up percentage must be between 0 and 100
               not_a_number: The mark-up percentage must be a number
             notice_date:
+              after_hire_date: The date you notified the supplier of your intention to take the worker on permanently must be before the date they will be hired
+              before_contract_start_date: The date you notified the supplier of your intention to take the worker on permanently cannot be before the date their current contract started
               invalid: Enter the date you notified the supplier of your intention to hire the worker and include a day, month and year
         supply_teachers/journey/worker_type:
           attributes:
@@ -329,14 +331,15 @@ en:
         other_radius_html: 'Change this distance to: '
         page_title: Suppliers
         print: Print this page
+        related_actions_html: Related actions
         results_found_html: "<strong>%{results}</strong> found"
         results_found_with_location_html: "<strong>%{results}</strong> found within <strong>%{range}</strong> of <strong>%{postcode}</strong>."
     gateway:
       index:
         dfe_signin:
-          create_account_html: Complete <a href="%{url}" aria-label="Crown Commercial Service contact form">this form</a> if you don’t have an account.
+          create_account_html: How do I know if I have a DfE Sign-in account? If you are from a not for profit school and your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a> you should be able to get a DfE Sign-in account. Please refer to <a href="%{dfe_sign_in_url}" aria-label="DfE Sign In contact form">this page</a> for more information on how the approver for your organisation can create an account for you.
           instructions: Sign in to your DfE Sign-In account to use this service. You will be automatically directed back to this service once you’ve signed in.
-          outside_england_html: Schools outside England and local authorities can’t use the digital service yet, but can use the framework to access the deal. Complete <a href="%{url}" aria-label="Crown Commercial Service contact form">the form</a> to let us know if you’d like to use the framework.
+          outside_england_html: Schools outside England cannot yet use the digital agency selection tool, but can request access to an offline (Excel) version of the tool by completing <a href="%{url}" aria-label="Crown Commercial Service contact form">this form</a> and stating 'offline agency selection tool' in the comments box.
         heading: CCS Marketplace private beta
     home:
       temp_to_perm_fee:
@@ -367,7 +370,7 @@ en:
         postcode_question: What is your school’s postcode?
         question_hint: We use this to find agencies near to your school
         worker_term_question: How long does your school need the worker for?
-        worker_type_question: What type of worker do you need?
+        worker_type_question: What type of worker does your school need?
       looking_for:
         answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
         answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
