@@ -17,8 +17,15 @@ $ccs_header_fg: govuk-colour("white");
 }
 
 .govuk-header__logotype svg {
-  width: 233px;
+  width: 110px;
   height: 90px;
+}
+
+.govuk-header__logotype_dfe svg {
+  width: 85px;
+  height: 69px;
+  vertical-align: top;
+  margin-left: 10px;
 }
 
 .govuk-header__content {
@@ -58,10 +65,15 @@ $ccs_header_fg: govuk-colour("white");
 
 @media (min-width: 641px) {
   .govuk-header__logotype svg {
-    width: 292px;
+    width: 140px;
   }
 
   .govuk-header__logotype svg {
     height: 113px;
+  }
+
+  .govuk-header__logotype_dfe svg {
+    width: 75px;
+    height: 61px;
   }
 }
