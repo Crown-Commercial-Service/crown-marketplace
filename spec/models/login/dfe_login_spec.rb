@@ -95,6 +95,29 @@ RSpec.describe Login::DfeLogin, type: :model do
       end
     end
 
+    context 'when the school type is non-profit and a number' do
+      let(:school_type) do
+        {
+          'id' => 28,
+          'name' => 'Academy sponsor led'
+        }
+      end
+
+      context 'and email whitelisting is disabled' do
+        let(:whitelist_enabled) { false }
+
+        it 'permits access to any email address' do
+          expect(login.permit?(:supply_teachers)).to be true
+        end
+
+        it 'logs the attempt' do
+          login.permit?(:supply_teachers)
+          expect(Rails.logger).to have_received(:info)
+            .with('Login attempt from dfe > email: user@example.com, school type id: 28, result: successful')
+        end
+      end
+    end
+
     context 'when the school type is for-profit' do
       let(:school_type) do
         {

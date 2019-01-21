@@ -26,7 +26,7 @@ module Login
     private
 
     def school_type
-      SupplyTeachers::SchoolType.find_by(id: @extra['school_id'])
+      SupplyTeachers::SchoolType.find_by(id: @extra['school_id'].to_s)
     end
 
     def whitelisted?
