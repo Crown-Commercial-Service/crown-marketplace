@@ -46,6 +46,7 @@ RSpec.describe Login::DfeLogin, type: :model do
       .and_return(whitelist_enabled)
     allow(Marketplace).to receive(:dfe_signin_whitelisted_email_addresses)
       .and_return(whitelisted_email_addresses)
+    allow(Rails.logger).to receive(:info)
   end
 
   it { is_expected.to be_a(described_class) }
@@ -66,6 +67,12 @@ RSpec.describe Login::DfeLogin, type: :model do
 
         it 'permits access to any email address' do
           expect(login.permit?(:supply_teachers)).to be true
+        end
+
+        it 'logs the attempt' do
+          login.permit?(:supply_teachers)
+          expect(Rails.logger).to have_received(:info)
+            .with('Login attempt from dfe > email: user@example.com, school_id: 01, result: successful')
         end
       end
 
@@ -99,12 +106,24 @@ RSpec.describe Login::DfeLogin, type: :model do
       it 'denies access' do
         expect(login.permit?(:supply_teachers)).to be false
       end
+
+      it 'logs the attempt' do
+        login.permit?(:supply_teachers)
+        expect(Rails.logger).to have_received(:info)
+          .with('Login attempt from dfe > email: user@example.com, school_id: 11, result: unsuccessful')
+      end
     end
   end
 
   context 'when the framework is anything else' do
     it 'denies access' do
       expect(login.permit?(:management_consultancy)).to be false
+    end
+
+    it 'logs the attempt' do
+      login.permit?(:management_consultancy)
+      expect(Rails.logger).to have_received(:info)
+        .with('Login attempt from dfe > email: user@example.com, school_id: 01, result: unsuccessful')
     end
   end
 end
