@@ -16,6 +16,10 @@ RSpec.describe Login::CognitoLogin, type: :model do
     }
   end
 
+  before do
+    allow(Rails.logger).to receive(:info)
+  end
+
   it { is_expected.to be_a(described_class) }
 
   it { is_expected.to have_attributes(email: email) }
@@ -23,6 +27,12 @@ RSpec.describe Login::CognitoLogin, type: :model do
   context 'when the framework is supply_teachers' do
     it 'permits access' do
       expect(login.permit?(:supply_teachers)).to be true
+    end
+
+    it 'logs the attempt' do
+      login.permit?(:supply_teachers)
+      expect(Rails.logger).to have_received(:info)
+        .with('Login attempt from cognito > email: user@example.com, result: successful')
     end
   end
 
