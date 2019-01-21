@@ -11,7 +11,7 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
     }
   end
 
-  let(:journey) { instance_double('Journey', params: {}, inputs: inputs) }
+  let(:journey) { instance_double('Journey', params: {}, inputs: inputs, previous_questions_and_answers: {}) }
   let(:first_supplier) { build(:supply_teachers_supplier, name: 'First Supplier') }
   let(:second_supplier) { build(:supply_teachers_supplier, name: 'Second Supplier') }
 
@@ -32,6 +32,8 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
   let(:link_to_calculator) { true }
 
   before do
+    view.extend(ApplicationHelper)
+
     assign(:journey, journey)
     assign(:branches, branches)
     assign(:location, location)
