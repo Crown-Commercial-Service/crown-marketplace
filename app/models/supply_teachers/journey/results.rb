@@ -11,8 +11,8 @@ module SupplyTeachers
           result.rate = rate(branch)
           result.distance = point.distance(branch.location)
           result.daily_rate = daily_rates.fetch(branch.id, nil)
-          result.worker_cost = calculate_worker_cost(result)
-          result.supplier_fee = calculate_supplier_fee(result)
+          result.worker_cost = supplier_mark_up(result.daily_rate, result.rate)&.worker_cost
+          result.supplier_fee = supplier_mark_up(result.daily_rate, result.rate)&.supplier_fee
         end
       end
     end
@@ -30,16 +30,11 @@ module SupplyTeachers
 
     private
 
-    def calculate_worker_cost(result)
-      return unless result.daily_rate
-      return if result.daily_rate.empty?
-      result.daily_rate.to_i / (1 + result.rate)
-    end
+    def supplier_mark_up(daily_rate, markup_rate)
+      return unless daily_rate && markup_rate
+      return if daily_rate.empty?
 
-    def calculate_supplier_fee(result)
-      return unless result.daily_rate
-      return if result.daily_rate.empty?
-      result.daily_rate.to_i - result.worker_cost
+      SupplierMarkUp.new(daily_rate: daily_rate, markup_rate: markup_rate)
     end
   end
 end
