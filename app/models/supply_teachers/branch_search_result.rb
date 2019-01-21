@@ -8,7 +8,11 @@ module SupplyTeachers
     attr_reader :contact_email
     attr_accessor :rate
     attr_accessor :distance
+    attr_accessor :daily_rate
+    attr_accessor :worker_cost
+    attr_accessor :supplier_fee
 
+    # rubocop:disable Metrics/ParameterLists
     def initialize(id:, supplier_name:, name:, contact_name:,
                    telephone_number:, contact_email:)
       @id = id
@@ -18,5 +22,6 @@ module SupplyTeachers
       @telephone_number = telephone_number
       @contact_email = contact_email
     end
+    # rubocop:enable Metrics/ParameterLists
   end
 end
