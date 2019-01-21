@@ -16,6 +16,7 @@ module SupplyTeachers
 
     def search_result_for(branch)
       BranchSearchResult.new(
+        id: branch.id,
         supplier_name: branch.supplier.name,
         name: display_name_for_branch(branch),
         contact_name: branch.contact_name,
