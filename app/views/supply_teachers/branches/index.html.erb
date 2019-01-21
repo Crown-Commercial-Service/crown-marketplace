@@ -73,30 +73,32 @@
     </div>
 
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <% if @branches.any? %>
-          <%= render partial: 'branch', collection: @branches %>
-        <% end %>
-      </div>
-      <div class="govuk-grid-column-one-third">
-        <div class="cmp-sidebar ccs-no-print">
-          <h2 class="govuk-heading-s"><%= t('.related_actions_html') %></h2>
-          <p class="govuk-body govuk-body-s supplier-record__print-option">
-            <a href="javascript:window.print()" class="govuk-link ga-print-link"><%= t('.print') %></a>
-          </p>
-          <p class="govuk-body govuk-body-s supplier-record__print-option">
-            <%= link_to t('.download'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx)), { class: 'supplier-record__file-download ga-download-shortlist', 'aria-label': t('.download_aria_label') } %>
-          </p>
-          <p class="govuk-body govuk-body-s supplier-record__print-option">
-            <% if link_to_calculator? %>
-            <%= link_to t('.download_with_calculator'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx, calculations: 'yes')), { class: 'supplier-record__file-download ga-download-calculator', 'aria-label': t('.download_with_calculator_aria_label') } %>
-            <% end %>
-          </p>
-
+    <%= form_tag @form_path, method: :get do %>
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <% if @branches.any? %>
+            <%= render partial: 'branch', collection: @branches %>
+          <% end %>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <div class="cmp-sidebar ccs-no-print">
+            <h2 class="govuk-heading-s"><%= t('.related_actions_html') %></h2>
+            <p class="govuk-body govuk-body-s supplier-record__print-option">
+              <a href="javascript:window.print()" class="govuk-link ga-print-link"><%= t('.print') %></a>
+            </p>
+            <p class="govuk-body govuk-body-s supplier-record__print-option">
+              <%= link_to t('.download'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx)), { class: 'supplier-record__file-download ga-download-shortlist', 'aria-label': t('.download_aria_label') } %>
+            </p>
+            <p class="govuk-body govuk-body-s supplier-record__print-option">
+              <% if link_to_calculator? %>
+              <%= link_to t('.download_with_calculator'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx, calculations: 'yes')), { class: 'supplier-record__file-download ga-download-calculator', 'aria-label': t('.download_with_calculator_aria_label') } %>
+              <% end %>
+            </p>
+            <%= submit_tag 'Calculate mark-up', class: "govuk-button" %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
