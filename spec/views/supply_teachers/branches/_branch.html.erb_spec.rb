@@ -11,6 +11,7 @@ RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
   let(:contact_email) { Faker::Internet.unique.email }
   let(:branch) do
     SupplyTeachers::BranchSearchResult.new(
+      id: supplier.id,
       supplier_name: supplier.name,
       name: branch_name,
       telephone_number: telephone_number,
