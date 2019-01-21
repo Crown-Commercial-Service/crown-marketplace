@@ -18,7 +18,9 @@ module Login
     end
 
     def permit?(framework)
-      framework == :supply_teachers && non_profit? && whitelisted?
+      result = framework == :supply_teachers && non_profit? && whitelisted?
+      log_attempt(result)
+      result
     end
 
     private
