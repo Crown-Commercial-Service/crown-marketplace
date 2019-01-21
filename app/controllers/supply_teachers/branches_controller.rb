@@ -23,7 +23,7 @@ module SupplyTeachers
       @location = step.location
       @radius_in_miles = step.radius
       @alternative_radiuses = SEARCH_RADIUSES - [@radius_in_miles]
-      @branches = step.branches
+      @branches = step.branches daily_rates
 
       respond_to do |format|
         format.html
@@ -32,6 +32,10 @@ module SupplyTeachers
           render xlsx: spreadsheet.to_xlsx, filename: 'branches'
         end
       end
+    end
+
+    def daily_rates
+      params[:daily_rate] || {}
     end
   end
 end
