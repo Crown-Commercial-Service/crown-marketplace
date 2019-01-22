@@ -3,65 +3,65 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl"><%= t('supply_teachers.home.title') %></h1>
+      <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.use_this_service_to.title') %></p>
+      <p class="govuk-body"><%= t('.use_this_service_to.title') %></p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li><%= t('supply_teachers.home.use_this_service_to.find_and_hire_a_worker') %></li>
-        <li><%= t('supply_teachers.home.use_this_service_to.hire_a_specific_person') %></li>
-        <li><%= t('supply_teachers.home.use_this_service_to.find_a_managed_service_provider') %></li>
-        <li><%= t('supply_teachers.home.use_this_service_to.view_the_rates') %></li>
-        <li><%= t('supply_teachers.home.use_this_service_to.check_the_breakdown_of_rates') %></li>
-        <li><%= t('supply_teachers.home.use_this_service_to.create_a_shortlist') %></li>
-        <li><%= t('supply_teachers.home.use_this_service_to.calculate_the_maximum') %></li>
+        <li><%= t('.use_this_service_to.find_and_hire_a_worker') %></li>
+        <li><%= t('.use_this_service_to.hire_a_specific_person') %></li>
+        <li><%= t('.use_this_service_to.find_a_managed_service_provider') %></li>
+        <li><%= t('.use_this_service_to.view_the_rates') %></li>
+        <li><%= t('.use_this_service_to.check_the_breakdown_of_rates') %></li>
+        <li><%= t('.use_this_service_to.create_a_shortlist') %></li>
+        <li><%= t('.use_this_service_to.calculate_the_maximum') %></li>
       </ul>
 
       <p class="govuk-body">
-        <%= t('supply_teachers.home.you_will_need_your_dfe_sign_in') %>
+        <%= t('.you_will_need_your_dfe_sign_in') %>
       </p>
 
-      <%= link_to t('supply_teachers.home.start_now'), journey_start_path(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('supply_teachers.home.start_finding_supply_teachers') %>
+      <%= link_to t('.start_now'), journey_start_path(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.start_finding_supply_teachers') %>
 
-      <h2 class="govuk-heading-m"><%= t('supply_teachers.home.before_you_start') %></h2>
+      <h2 class="govuk-heading-m"><%= t('.before_you_start') %></h2>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.you_will_need_to_have') %></p>
+      <p class="govuk-body"><%= t('.you_will_need_to_have') %></p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li><%= t('supply_teachers.home.your_schools_postcode') %></li>
-        <li><%= t('supply_teachers.home.details_of_how_long_you_want_the_worker') %></li>
+        <li><%= t('.your_schools_postcode') %></li>
+        <li><%= t('.details_of_how_long_you_want_the_worker') %></li>
       </ul>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.you_cant_use_the_service_if') %></p>
+      <p class="govuk-body"><%= t('.you_cant_use_the_service_if') %></p>
 
       <p class="govuk-body">
-        <%= t('supply_teachers.home.to_find_permanent_teaching_staff_html', url: 'https://www.gov.uk/guidance/list-a-teaching-job-at-your-school-on-teaching-vacancies') %>
+        <%= t('.to_find_permanent_teaching_staff_html', url: 'https://www.gov.uk/guidance/list-a-teaching-job-at-your-school-on-teaching-vacancies') %>
       </p>
 
-      <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('supply_teachers.home.accreditation_of_suppliers') %></h2>
+      <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('.accreditation_of_suppliers') %></h2>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.all_suppliers_have_undergone') %></p>
+      <p class="govuk-body"><%= t('.all_suppliers_have_undergone') %></p>
 
-      <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('supply_teachers.home.buyers_obligations') %></h2>
+      <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('.buyers_obligations') %></h2>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.this_service_contains_pricing_information') %></p>
+      <p class="govuk-body"><%= t('.this_service_contains_pricing_information') %></p>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.by_using_the_service') %></p>
+      <p class="govuk-body"><%= t('.by_using_the_service') %></p>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.in_consideration_of_being_given_use') %></p>
+      <p class="govuk-body"><%= t('.in_consideration_of_being_given_use') %></p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li><%= t('supply_teachers.home.keep_the_confidential_information_confidential') %></li>
-        <li><%= t('supply_teachers.home.not_disclose_use_or_exploit') %></li>
-        <li><%= t('supply_teachers.home.ensure_that_the_confidential_information') %></li>
-        <li><%= t('supply_teachers.home.immediately_notify_css') %></li>
+        <li><%= t('.keep_the_confidential_information_confidential') %></li>
+        <li><%= t('.not_disclose_use_or_exploit') %></li>
+        <li><%= t('.ensure_that_the_confidential_information') %></li>
+        <li><%= t('.immediately_notify_css') %></li>
       </ul>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.you_shall_inform_your_employees') %></p>
+      <p class="govuk-body"><%= t('.you_shall_inform_your_employees') %></p>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.you_shall_ensure_only_employees') %></p>
+      <p class="govuk-body"><%= t('.you_shall_ensure_only_employees') %></p>
 
-      <p class="govuk-body"><%= t('supply_teachers.home.by_using_this_service_you_agree') %></p>
+      <p class="govuk-body"><%= t('.by_using_this_service_you_agree') %></p>
 
 
     </div>

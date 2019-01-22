@@ -342,20 +342,39 @@ en:
           outside_england_html: Schools outside England cannot yet use the digital agency selection tool, but can request access to an offline (Excel) version of the tool by completing <a href="%{url}" aria-label="Crown Commercial Service contact form">this form</a> and stating 'offline agency selection tool' in the comments box.
         heading: CCS Marketplace private beta
     home:
-      accreditation_of_suppliers: Accreditation of suppliers
-      all_suppliers_have_undergone: All suppliers have undergone background screening and safeguarding to DfE’s Keeping Children Safe in Education standards. They are audited and accredited against best practice standards in education recruitment.
-      before_you_start: Before you start
-      buyers_obligations: Buyers’ obligations for supplier data
-      by_using_the_service: By using the service, you acknowledge and accept responsibility for keeping this information confidential in accordance with the requirements below, and not sharing it wider than your school.
-      by_using_this_service_you_agree: By using this service you acknowledge and agree to comply with the above requirements.
-      details_of_how_long_you_want_the_worker: details of how long you will want the worker
-      ensure_that_the_confidential_information: ensure that the confidential information is stored securely and that access to it is restricted to those of your employees who need such access for the purposes of buying services under the framework agreement for supply teachers and temporary staff; and
-      immediately_notify_css: immediately notify CCS if you suspect unauthorised access, copying, use or disclosure of the confidential information.
-      in_consideration_of_being_given_use: 'In consideration of being given use of the confidential information included in the service, you and your employees shall:'
-      keep_the_confidential_information_confidential: keep the confidential information strictly confidential and not directly or indirectly reveal, report, copy, part with possession of, license, publish, transfer, communicate or disclose the confidential information in any manner whatsoever without Crown Commercial Service’s (CCS) prior written consent;
-      not_disclose_use_or_exploit: not disclose, use or exploit the confidential information for any purpose except to buy services under the CCS framework agreement for supply teachers and temporary staff;
-      start_finding_supply_teachers: Start finding supply teachers and agency workers
-      start_now: Start now
+      index:
+        accreditation_of_suppliers: Accreditation of suppliers
+        all_suppliers_have_undergone: All suppliers have undergone background screening and safeguarding to DfE’s Keeping Children Safe in Education standards. They are audited and accredited against best practice standards in education recruitment.
+        before_you_start: Before you start
+        buyers_obligations: Buyers’ obligations for supplier data
+        by_using_the_service: By using the service, you acknowledge and accept responsibility for keeping this information confidential in accordance with the requirements below, and not sharing it wider than your school.
+        by_using_this_service_you_agree: By using this service you acknowledge and agree to comply with the above requirements.
+        details_of_how_long_you_want_the_worker: details of how long you will want the worker
+        ensure_that_the_confidential_information: ensure that the confidential information is stored securely and that access to it is restricted to those of your employees who need such access for the purposes of buying services under the framework agreement for supply teachers and temporary staff; and
+        immediately_notify_css: immediately notify CCS if you suspect unauthorised access, copying, use or disclosure of the confidential information.
+        in_consideration_of_being_given_use: 'In consideration of being given use of the confidential information included in the service, you and your employees shall:'
+        keep_the_confidential_information_confidential: keep the confidential information strictly confidential and not directly or indirectly reveal, report, copy, part with possession of, license, publish, transfer, communicate or disclose the confidential information in any manner whatsoever without Crown Commercial Service’s (CCS) prior written consent;
+        not_disclose_use_or_exploit: not disclose, use or exploit the confidential information for any purpose except to buy services under the CCS framework agreement for supply teachers and temporary staff;
+        start_finding_supply_teachers: Start finding supply teachers and agency workers
+        start_now: Start now
+        this_service_contains_pricing_information: This service contains pricing information for suppliers on the Agency Supply Teachers framework agreement. This is confidential and can be considered commercially sensitive.
+        title: Find supply teachers and agency workers
+        to_find_permanent_teaching_staff_html: To find permanent teaching staff, use the <a aria-label="Visit the Teaching Vacancies service website" href="%{url}">Teaching Vacancies</a> service.
+        use_this_service_to:
+          calculate_the_maximum: calculate the maximum you could be charged to make your agency worker permanent
+          check_the_breakdown_of_rates: check the breakdown of the rates the suppliers charge
+          create_a_shortlist: create a shortlist of suppliers based on your needs and download it
+          find_a_managed_service_provider: find a managed service provider, who can take on all your temporary staff needs
+          find_and_hire_a_worker: find and hire a worker using an agency
+          hire_a_specific_person: hire a specific person using an agency (a ‘nominated worker’)
+          title: 'Use this service to:'
+          view_the_rates: view the rates the suppliers charge
+        you_cant_use_the_service_if: You can’t use this service if you’re an independent school, unless you have charitable status.
+        you_shall_ensure_only_employees: You shall ensure that only employees are given access to the confidential information and you shall not give agents, sub-contractors, third parties nor other non-employees access to the confidential information.
+        you_shall_inform_your_employees: You shall inform your employees of the specially confidential nature of the information and ensure they agree to keep it confidential on terms no less onerous than those contained in this notice.
+        you_will_need_to_have: 'You will need to have:'
+        you_will_need_your_dfe_sign_in: To use the service, you will need your DFE Sign-in email and password.
+        your_schools_postcode: your school’s postcode
       temp_to_perm_fee:
         after_12_weeks_and_enough_notice: Based on the information you provided, you’re taking the worker on after 12 working weeks and giving 4 weeks’ notice, so you can’t be charged a fee under this deal.
         after_12_weeks_and_no_notice_date: Based on the information you provided, you’re taking the worker on after 12 working weeks, but it’s not clear if you’re providing the supplier with 4 weeks’ notice.
@@ -378,24 +397,6 @@ en:
         within_first_8_weeks: Based on the information you provided, you’re taking the worker on permanently within their first 12 working weeks, so you can be charged a fee.
         working_days: 'Working days between contract start (%{contract_start_date}) and hire date (%{hire_date}): %{days}'
         working_days_required: 'Minimum contract required: 60 working days (12 weeks)'
-      this_service_contains_pricing_information: This service contains pricing information for suppliers on the Agency Supply Teachers framework agreement. This is confidential and can be considered commercially sensitive.
-      title: Find supply teachers and agency workers
-      to_find_permanent_teaching_staff_html: To find permanent teaching staff, use the <a aria-label="Visit the Teaching Vacancies service website" href="%{url}">Teaching Vacancies</a> service.
-      use_this_service_to:
-        calculate_the_maximum: calculate the maximum you could be charged to make your agency worker permanent
-        check_the_breakdown_of_rates: check the breakdown of the rates the suppliers charge
-        create_a_shortlist: create a shortlist of suppliers based on your needs and download it
-        find_a_managed_service_provider: find a managed service provider, who can take on all your temporary staff needs
-        find_and_hire_a_worker: find and hire a worker using an agency
-        hire_a_specific_person: hire a specific person using an agency (a ‘nominated worker’)
-        title: 'Use this service to:'
-        view_the_rates: view the rates the suppliers charge
-      you_cant_use_the_service_if: You can’t use this service if you’re an independent school, unless you have charitable status.
-      you_shall_ensure_only_employees: You shall ensure that only employees are given access to the confidential information and you shall not give agents, sub-contractors, third parties nor other non-employees access to the confidential information.
-      you_shall_inform_your_employees: You shall inform your employees of the specially confidential nature of the information and ensure they agree to keep it confidential on terms no less onerous than those contained in this notice.
-      you_will_need_to_have: 'You will need to have:'
-      you_will_need_your_dfe_sign_in: To use the service, you will need your DFE Sign-in email and password.
-      your_schools_postcode: your school’s postcode
     journey:
       agency_payroll:
         page_title: School postcode and worker requirements
