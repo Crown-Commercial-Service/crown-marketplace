@@ -136,6 +136,21 @@ RSpec.describe Login::DfeLogin, type: :model do
           .with('Login attempt from dfe > email: user@example.com, school type id: 11, result: unsuccessful')
       end
     end
+
+    context 'when the school type doesn\'t match anything in the school types csv' do
+      let(:school_type) do
+        {
+          'id' => '999',
+          'name' => 'Hogwarts School of Witchcraft and Wizardry'
+        }
+      end
+
+      it 'logs the school type id' do
+        login.permit?(:supply_teachers)
+        expect(Rails.logger).to have_received(:info)
+          .with('Login failure from dfe > SchoolType not found for school type id: "999"')
+      end
+    end
   end
 
   context 'when the framework is anything else' do
