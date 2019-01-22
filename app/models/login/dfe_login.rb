@@ -1,6 +1,7 @@
 module Login
   class DfeLogin < Login::BaseLogin
     def self.from_omniauth(hash)
+      Rails.logger.info("Login attempt from dfe > OmniAuth hash #{hash.inspect}")
       new(
         email: hash.dig('info', 'email'),
         extra: {
