@@ -35,6 +35,12 @@ module Login
       Marketplace.dfe_signin_whitelisted_email_addresses.include?(email)
     end
 
-    delegate :non_profit?, to: :school_type, allow_nil: true
+    def non_profit?
+      school_type.non_profit?
+    rescue NoMethodError
+      school_id = @extra['school_id']
+      Rails.logger.info("Login failure from dfe > SchoolType not found for school type id: #{school_id.inspect}")
+      false
+    end
   end
 end
