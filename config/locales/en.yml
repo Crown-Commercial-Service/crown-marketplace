@@ -302,9 +302,15 @@ en:
     branches:
       branch:
         branch: Branch
+        calculator:
+          daily_rate: Enter daily rate
+          heading: Obtain a quote from the supplier to check the breakdown of daily rate
+          supplier_fee: Supplier fee
+          worker_cost: Cost of the worker
         markup: Mark-up
         miles: Miles
       index:
+        calculate_markup: Calculate mark-up
         distance_aria_label_html: Set the radius to %{radius_setting}
         do_next:
           contact_supplier: contact the supplier of your choice from the list below to find a suitable, available worker and their daily rate

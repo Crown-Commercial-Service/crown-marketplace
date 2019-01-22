@@ -95,7 +95,7 @@
               <%= link_to t('.download_with_calculator'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx, calculations: 'yes')), { class: 'supplier-record__file-download ga-download-calculator', 'aria-label': t('.download_with_calculator_aria_label') } %>
               <% end %>
             </p>
-            <%= submit_tag 'Calculate mark-up', class: "govuk-button" %>
+            <%= submit_tag t('.calculate_markup'), class: "govuk-button" %>
           </div>
         </div>
       </div>
