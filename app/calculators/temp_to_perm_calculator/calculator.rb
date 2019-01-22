@@ -10,7 +10,6 @@ module TempToPermCalculator
 
     attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate, :notice_date
 
-    # rubocop:disable Metrics/ParameterLists
     def initialize(
       day_rate:,
       days_per_week:,
@@ -40,7 +39,6 @@ module TempToPermCalculator
       @holiday_2_start_date = holiday_2_start_date
       @holiday_2_end_date = holiday_2_end_date
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def maximum_fee_for_lack_of_notice
       WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE * pro_rata_daily_supplier_fee

@@ -78,6 +78,11 @@ Metrics/BlockLength:
     Exclude:
         - 'spec/**/*'
 
+Metrics/ParameterLists:
+    Exclude:
+        - 'app/models/supply_teachers/branch_search_result.rb'
+        - 'app/calculators/temp_to_perm_calculator/calculator.rb'
+
 Migration/RequireUUIDPrimaryKeys:
     Include:
         - 'db/migrate/*.rb'
