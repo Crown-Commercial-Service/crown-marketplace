@@ -1,6 +1,7 @@
 module Login
   class DfeLogin < Login::BaseLogin
     def self.from_omniauth(hash)
+      Rails.logger.info("Login attempt from dfe > OmniAuth hash #{hash.inspect}")
       new(
         email: hash.dig('info', 'email'),
         extra: {
@@ -18,13 +19,15 @@ module Login
     end
 
     def permit?(framework)
-      framework == :supply_teachers && non_profit? && whitelisted?
+      result = framework == :supply_teachers && non_profit? && whitelisted?
+      log_attempt(result)
+      result
     end
 
     private
 
     def school_type
-      SupplyTeachers::SchoolType.find_by(id: @extra['school_id'])
+      SupplyTeachers::SchoolType.find_by(id: @extra['school_id'].to_s)
     end
 
     def whitelisted?
@@ -33,6 +36,12 @@ module Login
       Marketplace.dfe_signin_whitelisted_email_addresses.include?(email)
     end
 
-    delegate :non_profit?, to: :school_type, allow_nil: true
+    def non_profit?
+      school_type.non_profit?
+    rescue NoMethodError
+      school_id = @extra['school_id']
+      Rails.logger.info("Login failure from dfe > SchoolType not found for school type id: #{school_id.inspect}")
+      false
+    end
   end
 end

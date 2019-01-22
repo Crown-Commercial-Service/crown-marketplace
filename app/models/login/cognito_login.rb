@@ -13,6 +13,7 @@ module Login
     end
 
     def permit?(_framework)
+      log_attempt(true)
       true
     end
   end
