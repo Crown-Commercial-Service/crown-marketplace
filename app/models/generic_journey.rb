@@ -63,6 +63,8 @@ class GenericJourney
   end
 
   def previous_questions_and_answers
+    return params if current_step.final?
+
     params.except(*current_step.class.permit_list)
   end
 

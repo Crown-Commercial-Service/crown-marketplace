@@ -332,12 +332,25 @@ RSpec.describe GenericJourney, type: :model do
       )
     end
 
+    before { allow(journey.current_step).to receive(:final?).and_return(false) }
+
     it 'includes previous questions and answers' do
       expect(journey.previous_questions_and_answers).to include('first_question' => 'first-answer')
     end
 
     it 'does not include current questions and answers' do
       expect(journey.previous_questions_and_answers).not_to include('second_question' => 'second-answer')
+    end
+
+    context 'when it’s the final step' do
+      before { allow(journey.current_step).to receive(:final?).and_return(true) }
+
+      it 'includes all answers' do
+        expect(journey.previous_questions_and_answers).to include(
+          'first_question' => 'first-answer',
+          'second_question' => 'second-answer'
+        )
+      end
     end
   end
 end
