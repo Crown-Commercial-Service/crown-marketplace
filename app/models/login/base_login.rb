@@ -29,9 +29,9 @@ module Login
 
     def log_attempt(result)
       success = result ? 'successful' : 'unsuccessful'
-      school_id = @extra.nil? ? nil : "school type id: #{@extra['school_id']}, "
+      school_type_id = @extra.nil? ? nil : "school type id: #{@extra['school_type_id']}, "
       Rails.logger.info(
-        "Login attempt from #{auth_provider} > email: #{@email}, #{school_id}result: #{success}"
+        "Login attempt from #{auth_provider} > email: #{@email}, #{school_type_id}result: #{success}"
       )
     end
   end
