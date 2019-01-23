@@ -148,7 +148,61 @@ RSpec.describe Login::DfeLogin, type: :model do
       it 'logs the school type id' do
         login.permit?(:supply_teachers)
         expect(Rails.logger).to have_received(:info)
-          .with('Login failure from dfe > SchoolType not found for school type id: "999"')
+          .with(
+            'Login failure from dfe > SchoolType not found for school type id: "999", organisation category id: "001"'
+          )
+      end
+    end
+
+    context 'when the user is from a Multi-Academy Trust' do
+      let(:omniauth_hash) do
+        {
+          'info' => {
+            'email' => email
+          },
+          'provider' => 'dfe',
+          'extra' => {
+            'raw_info' => {
+              'organisation' => {
+                'id' => '047F32E7-FDD5-46E9-89D4-2498C2E77364',
+                'name' => 'St Custard’s',
+                'urn' => '900002',
+                'ukprn' => '90000002',
+                'category' => {
+                  'id' => '010',
+                  'name' => 'Multi-Academy Trust'
+                },
+                'type' => school_type
+              }
+            }
+          }
+        }
+      end
+
+      context 'and the schooltype is nil' do
+        let(:school_type) do
+          {
+            'id' => nil,
+            'name' => ''
+          }
+        end
+
+        it 'allows access' do
+          expect(login.permit?(:supply_teachers)).to be true
+        end
+      end
+
+      context 'and the school type is an empty string' do
+        let(:school_type) do
+          {
+            'id' => '',
+            'name' => ''
+          }
+        end
+
+        it 'allows access' do
+          expect(login.permit?(:supply_teachers)).to be true
+        end
       end
     end
   end
