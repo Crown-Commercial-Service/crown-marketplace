@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class SchoolCategory
+  class OrganisationCategory
     include Virtus.model
     include StaticRecord
 
@@ -12,5 +12,5 @@ module SupplyTeachers
     end
   end
 
-  SchoolCategory.load_csv('supply_teachers/school_categories.csv')
+  OrganisationCategory.load_csv('supply_teachers/organisation_categories.csv')
 end
