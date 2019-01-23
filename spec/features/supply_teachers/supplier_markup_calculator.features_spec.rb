@@ -9,8 +9,8 @@ RSpec.feature 'Supplier mark-up calculator', type: :feature do
     create(
       :supply_teachers_rate,
       supplier: holborn,
-      lot_number: 1,
-      job_type: 'fixed_term',
+      job_type: 'qt_sen',
+      term: 'twelve_weeks',
       mark_up: 0.35
     )
     create(
@@ -22,8 +22,8 @@ RSpec.feature 'Supplier mark-up calculator', type: :feature do
     create(
       :supply_teachers_rate,
       supplier: westminster,
-      lot_number: 1,
-      job_type: 'fixed_term',
+      job_type: 'qt_sen',
+      term: 'twelve_weeks',
       mark_up: 0.30
     )
     create(
@@ -46,10 +46,12 @@ RSpec.feature 'Supplier mark-up calculator', type: :feature do
     choose 'Yes'
     click_on I18n.t('common.submit')
 
-    choose 'No, I want to put the worker on our payroll'
+    choose 'Yes'
     click_on I18n.t('common.submit')
 
     fill_in 'postcode', with: 'WC2B 6TE'
+    choose '4 weeks to 8 weeks'
+    choose 'Qualified teacher: SEN roles'
     click_on I18n.t('common.submit')
 
     within page.find('.supplier-record:first') do
