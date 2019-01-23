@@ -19,8 +19,10 @@ RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
       contact_email: contact_email
     )
   end
+  let(:link_to_calculator?) { true }
 
   before do
+    allow(view).to receive(:link_to_calculator?).and_return(link_to_calculator?)
     render 'supply_teachers/branches/branch', branch: branch
   end
 
@@ -45,6 +47,18 @@ RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
 
     it 'does not display branch or its label' do
       expect(rendered).not_to have_content('Branch:')
+    end
+  end
+
+  it 'displays the online calculator' do
+    expect(rendered).to have_content(I18n.t('supply_teachers.branches.branch.calculator.heading'))
+  end
+
+  context 'when shortlisting for teachers on school payroll' do
+    let(:link_to_calculator?) { false }
+
+    it 'does not display the online calculator' do
+      expect(rendered).not_to have_content(I18n.t('supply_teachers.branches.branch.calculator.heading'))
     end
   end
 end
