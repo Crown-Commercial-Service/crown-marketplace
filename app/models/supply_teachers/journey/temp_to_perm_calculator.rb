@@ -116,48 +116,71 @@ module SupplyTeachers
     validate :ensure_notice_date_is_after_contract_start_date
     validate :ensure_notice_date_is_before_hire_date
 
+    PARSED_DATE_FORMAT = '%Y-%m-%d'.freeze
+
     def next_step_class
       Journey::TempToPermFee
     end
 
     def contract_start_date
-      Date.parse("#{contract_start_date_year}-#{contract_start_date_month}-#{contract_start_date_day}")
+      Date.strptime(
+        "#{contract_start_date_year}-#{contract_start_date_month}-#{contract_start_date_day}",
+        PARSED_DATE_FORMAT
+      )
     rescue ArgumentError
       nil
     end
 
     def hire_date
-      Date.parse("#{hire_date_year}-#{hire_date_month}-#{hire_date_day}")
+      Date.strptime(
+        "#{hire_date_year}-#{hire_date_month}-#{hire_date_day}",
+        PARSED_DATE_FORMAT
+      )
     rescue ArgumentError
       nil
     end
 
     def notice_date
-      Date.parse("#{notice_date_year}-#{notice_date_month}-#{notice_date_day}")
+      Date.strptime(
+        "#{notice_date_year}-#{notice_date_month}-#{notice_date_day}",
+        PARSED_DATE_FORMAT
+      )
     rescue ArgumentError
       nil
     end
 
     def holiday_1_start_date
-      Date.parse("#{holiday_1_start_date_year}-#{holiday_1_start_date_month}-#{holiday_1_start_date_day}")
+      Date.strptime(
+        "#{holiday_1_start_date_year}-#{holiday_1_start_date_month}-#{holiday_1_start_date_day}",
+        PARSED_DATE_FORMAT
+      )
     rescue ArgumentError
       nil
     end
 
     def holiday_1_end_date
-      Date.parse("#{holiday_1_end_date_year}-#{holiday_1_end_date_month}-#{holiday_1_end_date_day}")
+      Date.strptime(
+        "#{holiday_1_end_date_year}-#{holiday_1_end_date_month}-#{holiday_1_end_date_day}",
+        PARSED_DATE_FORMAT
+      )
     rescue ArgumentError
       nil
     end
 
     def holiday_2_start_date
-      Date.parse("#{holiday_2_start_date_year}-#{holiday_2_start_date_month}-#{holiday_2_start_date_day}")
+      Date.strptime(
+        "#{holiday_2_start_date_year}-#{holiday_2_start_date_month}-#{holiday_2_start_date_day}",
+        PARSED_DATE_FORMAT
+      )
     rescue ArgumentError
       nil
     end
 
     def holiday_2_end_date
-      Date.parse("#{holiday_2_end_date_year}-#{holiday_2_end_date_month}-#{holiday_2_end_date_day}")
+      Date.strptime(
+        "#{holiday_2_end_date_year}-#{holiday_2_end_date_month}-#{holiday_2_end_date_day}",
+        PARSED_DATE_FORMAT
+      )
     rescue ArgumentError
       nil
     end
