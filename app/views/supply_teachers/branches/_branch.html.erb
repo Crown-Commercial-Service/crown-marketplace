@@ -36,46 +36,48 @@
       </div>
     </div>
   </div>
-  <div class="govuk-!-padding-3 supplier-record__calculator">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <h4 class="govuk-heading-s"><%= t('.calculator.heading') %></h4>
-      </div>
-    </div>
-
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-third">
-        <div class="govuk-form-group govuk-!-margin-0">
-          <label class="govuk-label govuk-!-font-size-16" for="daily_rate_<%= branch.id %>">
-            <%= t('.calculator.daily_rate') %>
-          </label>
-          <div class="calculator-form__day-rate">
-            <%= text_field_tag "daily_rate[#{branch.id}]", branch.daily_rate, class: 'govuk-input govuk-input--width-10 calculator-form__day-rate-input' %>
-            <i class="govuk-body calculator-form__day-rate-icon">£</i>
-          </div>
+  <% if link_to_calculator? %>
+    <div class="govuk-!-padding-3 supplier-record__calculator">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h4 class="govuk-heading-s"><%= t('.calculator.heading') %></h4>
         </div>
       </div>
-      <div class="govuk-grid-column-one-third <%= 'supplier-record__calculator--muted' unless branch.worker_cost %>">
-        <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">
-          <%= t('.calculator.worker_cost') %>
-        </p>
-        <p class="govuk-body supplier-record__worker-cost">
-          <% if branch.worker_cost %>
-            <%= number_to_currency(branch.worker_cost) %>
-          <% end %>
-        </p>
-      </div>
-      <div class="govuk-grid-column-one-third <%= 'supplier-record__calculator--muted' unless branch.supplier_fee %>">
-        <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">
-          <%= t('.calculator.supplier_fee') %>
-        </p>
-        <p class="govuk-body supplier-record__supplier-fee">
-          <% if branch.supplier_fee %>
-            <%= number_to_currency(branch.supplier_fee) %>
-          <% end %>
-        </p>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+          <div class="govuk-form-group govuk-!-margin-0">
+            <label class="govuk-label govuk-!-font-size-16" for="daily_rate_<%= branch.id %>">
+              <%= t('.calculator.daily_rate') %>
+            </label>
+            <div class="calculator-form__day-rate">
+              <%= text_field_tag "daily_rate[#{branch.id}]", branch.daily_rate, class: 'govuk-input govuk-input--width-10 calculator-form__day-rate-input' %>
+              <i class="govuk-body calculator-form__day-rate-icon">£</i>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-grid-column-one-third <%= 'supplier-record__calculator--muted' unless branch.worker_cost %>">
+          <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">
+            <%= t('.calculator.worker_cost') %>
+          </p>
+          <p class="govuk-body supplier-record__worker-cost">
+            <% if branch.worker_cost %>
+              <%= number_to_currency(branch.worker_cost) %>
+            <% end %>
+          </p>
+        </div>
+        <div class="govuk-grid-column-one-third <%= 'supplier-record__calculator--muted' unless branch.supplier_fee %>">
+          <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">
+            <%= t('.calculator.supplier_fee') %>
+          </p>
+          <p class="govuk-body supplier-record__supplier-fee">
+            <% if branch.supplier_fee %>
+              <%= number_to_currency(branch.supplier_fee) %>
+            <% end %>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
   <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 </div>
