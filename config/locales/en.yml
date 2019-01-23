@@ -304,13 +304,14 @@ en:
         branch: Branch
         calculator:
           daily_rate: Enter daily rate
-          heading: Obtain a quote from the supplier to check the breakdown of daily rate
+          heading: 'Enter the supplier’s quote to see how much the worker will get paid:'
           supplier_fee: Supplier fee
           worker_cost: Cost of the worker
         markup: Mark-up
         miles: Miles
       index:
         calculate_markup: Calculate mark-up
+        calculate_markup_description: See how much the woker makes and what fee the supplier will get using the figure they quoted you
         distance_aria_label_html: Set the radius to %{radius_setting}
         do_next:
           contact_supplier: contact the supplier of your choice from the list below to find a suitable, available worker and their daily rate
