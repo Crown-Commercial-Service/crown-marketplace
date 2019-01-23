@@ -20,10 +20,7 @@ RSpec.describe Login::DfeLogin, type: :model do
             'name' => 'St Custard’s',
             'urn' => '900002',
             'ukprn' => '90000002',
-            'category' => {
-              'id' => '001',
-              'name' => 'Establishment'
-            },
+            'category' => school_category,
             'type' => school_type
           }
         }
@@ -35,6 +32,13 @@ RSpec.describe Login::DfeLogin, type: :model do
     {
       'id' => '01',
       'name' => 'Community school'
+    }
+  end
+
+  let(:school_category) do
+    {
+      'id' => '001',
+      'name' => 'Establishment'
     }
   end
 
@@ -137,24 +141,7 @@ RSpec.describe Login::DfeLogin, type: :model do
       end
     end
 
-    context 'when the school type doesn\'t match anything in the school types csv' do
-      let(:school_type) do
-        {
-          'id' => '999',
-          'name' => 'Hogwarts School of Witchcraft and Wizardry'
-        }
-      end
-
-      it 'logs the school type id' do
-        login.permit?(:supply_teachers)
-        expect(Rails.logger).to have_received(:info)
-          .with(
-            'Login failure from dfe > SchoolType not found for school type id: "999", organisation category id: "001"'
-          )
-      end
-    end
-
-    context 'when the user is from a Multi-Academy Trust' do
+    context 'with school category checking (fallback)' do
       let(:omniauth_hash) do
         {
           'info' => {
@@ -168,10 +155,7 @@ RSpec.describe Login::DfeLogin, type: :model do
                 'name' => 'St Custard’s',
                 'urn' => '900002',
                 'ukprn' => '90000002',
-                'category' => {
-                  'id' => '010',
-                  'name' => 'Multi-Academy Trust'
-                },
+                'category' => school_category,
                 'type' => school_type
               }
             }
@@ -179,7 +163,7 @@ RSpec.describe Login::DfeLogin, type: :model do
         }
       end
 
-      context 'and the schooltype is nil' do
+      context 'when the schooltype is nil' do
         let(:school_type) do
           {
             'id' => nil,
@@ -192,11 +176,37 @@ RSpec.describe Login::DfeLogin, type: :model do
         end
       end
 
-      context 'and the school type is an empty string' do
+      context 'when the school type is an empty string' do
         let(:school_type) do
           {
             'id' => '',
             'name' => ''
+          }
+        end
+
+        it 'allows access' do
+          expect(login.permit?(:supply_teachers)).to be true
+        end
+      end
+
+      context 'when the school type is non-profit' do
+        let(:school_type) do
+          {
+            'id' => '01',
+            'name' => 'Community school'
+          }
+        end
+
+        it 'allows access' do
+          expect(login.permit?(:supply_teachers)).to be true
+        end
+      end
+
+      context 'when the school type doesn\'t match anything in the school types csv' do
+        let(:school_type) do
+          {
+            'id' => '999',
+            'name' => 'Hogwarts School of Witchcraft and Wizardry'
           }
         end
 
