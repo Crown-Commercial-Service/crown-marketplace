@@ -33,6 +33,10 @@ module Login
       SupplyTeachers::SchoolType.find_by(id: @extra['school_type_id'].to_s)
     end
 
+    def school_category
+      SupplyTeachers::SchoolCategory.find_by(id: @extra['organisation_category'].to_s)
+    end
+
     def whitelisted?
       return true unless Marketplace.dfe_signin_whitelist_enabled?
 
@@ -40,21 +44,9 @@ module Login
     end
 
     def non_profit?
-      return true if multi_academy_trust?
-
       school_type.non_profit?
     rescue NoMethodError
-      school_type_id = @extra['school_type_id']
-      organisation_category = @extra['organisation_category']
-      Rails.logger.info(
-        "Login failure from dfe > SchoolType not found for school type \
-id: #{school_type_id.inspect}, organisation category id: #{organisation_category.inspect}"
-      )
-      false
-    end
-
-    def multi_academy_trust?
-      @extra['organisation_category'].to_s == '010'
+      school_category.non_profit?
     end
   end
 end
