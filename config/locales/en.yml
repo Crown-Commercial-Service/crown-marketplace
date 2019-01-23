@@ -311,7 +311,7 @@ en:
         miles: Miles
       index:
         calculate_markup: Calculate mark-up
-        calculate_markup_description: See how much the woker makes and what fee the supplier will get using the figure they quoted you
+        calculate_markup_description: 'See how much the worker makes and what fee the supplier will get using the figure they quoted you:'
         distance_aria_label_html: Set the radius to %{radius_setting}
         do_next:
           contact_supplier: contact the supplier of your choice from the list below to find a suitable, available worker and their daily rate
