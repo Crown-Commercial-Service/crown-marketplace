@@ -11,7 +11,7 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
     }
   end
 
-  let(:journey) { instance_double('Journey', params: {}, inputs: inputs) }
+  let(:journey) { instance_double('Journey', params: {}, inputs: inputs, previous_questions_and_answers: {}) }
   let(:first_supplier) { build(:supply_teachers_supplier, name: 'First Supplier') }
   let(:second_supplier) { build(:supply_teachers_supplier, name: 'Second Supplier') }
 
@@ -32,6 +32,8 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
   let(:link_to_calculator) { true }
 
   before do
+    view.extend(ApplicationHelper)
+
     assign(:journey, journey)
     assign(:branches, branches)
     assign(:location, location)
@@ -78,11 +80,19 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
     expect(rendered).to have_link('Download shortlist (with markup calculator)')
   end
 
+  it 'has a button to calculate the mark-up' do
+    expect(rendered).to have_button(I18n.t('supply_teachers.branches.index.calculate_markup'))
+  end
+
   context 'when shortlisting for teachers on school payroll' do
     let(:link_to_calculator) { false }
 
     it 'does not have a link to download the calculator' do
       expect(rendered).not_to have_link('Download shortlist (with markup calculator)')
+    end
+
+    it 'does not have a button to calculate the mark-up' do
+      expect(rendered).not_to have_button(I18n.t('supply_teachers.branches.index.calculate_markup'))
     end
   end
 

@@ -1,5 +1,6 @@
 module SupplyTeachers
   class BranchSearchResult
+    attr_reader :id
     attr_reader :supplier_name
     attr_reader :name
     attr_reader :contact_name
@@ -7,9 +8,13 @@ module SupplyTeachers
     attr_reader :contact_email
     attr_accessor :rate
     attr_accessor :distance
+    attr_accessor :daily_rate
+    attr_accessor :worker_cost
+    attr_accessor :supplier_fee
 
-    def initialize(supplier_name:, name:, contact_name:,
+    def initialize(id:, supplier_name:, name:, contact_name:,
                    telephone_number:, contact_email:)
+      @id = id
       @supplier_name = supplier_name
       @name = name
       @contact_name = contact_name
