@@ -33,8 +33,8 @@ module Login
       SupplyTeachers::SchoolType.find_by(id: @extra['school_type_id'].to_s)
     end
 
-    def school_category
-      SupplyTeachers::SchoolCategory.find_by(id: @extra['organisation_category'].to_s)
+    def organisation_category
+      SupplyTeachers::OrganisationCategory.find_by(id: @extra['organisation_category'].to_s)
     end
 
     def whitelisted?
@@ -46,7 +46,7 @@ module Login
     def non_profit?
       school_type.non_profit?
     rescue NoMethodError
-      school_category.non_profit?
+      organisation_category.non_profit?
     end
   end
 end
