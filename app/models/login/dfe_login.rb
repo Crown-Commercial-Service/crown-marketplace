@@ -1,11 +1,14 @@
 module Login
   class DfeLogin < Login::BaseLogin
     def self.from_omniauth(hash)
-      Rails.logger.info("Login attempt from dfe > OmniAuth hash #{hash.inspect}")
+      Rails.logger.info("Login attempt from dfe > OmniAuth hash extra #{hash.dig('extra').inspect}")
+      school_type_id = hash.dig('extra', 'raw_info', 'organisation', 'type', 'id')
+      organisation_category = hash.dig('extra', 'raw_info', 'organisation', 'category', 'id')
       new(
         email: hash.dig('info', 'email'),
         extra: {
-          'school_id' => hash.dig('extra', 'raw_info', 'organisation', 'type', 'id')
+          'school_type_id' => school_type_id,
+          'organisation_category' => organisation_category
         }
       )
     end
@@ -27,7 +30,11 @@ module Login
     private
 
     def school_type
-      SupplyTeachers::SchoolType.find_by(id: @extra['school_id'].to_s)
+      SupplyTeachers::SchoolType.find_by(id: @extra['school_type_id'].to_s)
+    end
+
+    def organisation_category
+      SupplyTeachers::OrganisationCategory.find_by(id: @extra['organisation_category'].to_s)
     end
 
     def whitelisted?
@@ -39,9 +46,7 @@ module Login
     def non_profit?
       school_type.non_profit?
     rescue NoMethodError
-      school_id = @extra['school_id']
-      Rails.logger.info("Login failure from dfe > SchoolType not found for school type id: #{school_id.inspect}")
-      false
+      organisation_category.non_profit?
     end
   end
 end

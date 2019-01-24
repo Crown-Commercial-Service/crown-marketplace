@@ -32,11 +32,11 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
   let(:model_key) { 'activemodel.errors.models.supply_teachers/journey/temp_to_perm_calculator' }
 
-  let(:contract_start_date_day) { 1 }
+  let(:contract_start_date_day) { 11 }
   let(:contract_start_date_month) { 1 }
   let(:contract_start_date_year) { 1970 }
 
-  let(:hire_date_day) { 2 }
+  let(:hire_date_day) { 12 }
   let(:hire_date_month) { 1 }
   let(:hire_date_year) { 1970 }
 
@@ -74,7 +74,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
   describe '#contract_start_date' do
     it 'returns date instance constructed from day, month & year' do
-      expect(step.contract_start_date).to eq(Date.parse('1970-01-01'))
+      expect(step.contract_start_date).to eq(Date.parse('1970-01-11'))
     end
 
     context 'when day is missing' do
@@ -93,7 +93,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
       end
     end
 
-    context 'when day is missing' do
+    context 'when year is missing' do
       let(:contract_start_date_year) { nil }
 
       it 'returns nil' do
@@ -104,7 +104,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
   describe '#hire_date' do
     it 'returns date instance constructed from day, month & year' do
-      expect(step.hire_date).to eq(Date.parse('1970-01-02'))
+      expect(step.hire_date).to eq(Date.parse('1970-01-12'))
     end
 
     context 'when day is missing' do
@@ -123,7 +123,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
       end
     end
 
-    context 'when day is missing' do
+    context 'when year is missing' do
       let(:hire_date_year) { nil }
 
       it 'returns nil' do
@@ -133,12 +133,12 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#notice_date' do
-    let(:notice_date_day) { 3 }
+    let(:notice_date_day) { 13 }
     let(:notice_date_month) { 1 }
     let(:notice_date_year) { 1970 }
 
     it 'returns date instance constructed from day, month & year' do
-      expect(step.notice_date).to eq(Date.parse('1970-01-03'))
+      expect(step.notice_date).to eq(Date.parse('1970-01-13'))
     end
 
     context 'when day is missing' do
@@ -167,12 +167,12 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#holiday_1_start_date' do
-    let(:holiday_1_start_date_day) { 4 }
+    let(:holiday_1_start_date_day) { 14 }
     let(:holiday_1_start_date_month) { 1 }
     let(:holiday_1_start_date_year) { 1970 }
 
     it 'returns date instance constructed from day, month & year' do
-      expect(step.holiday_1_start_date).to eq(Date.parse('1970-01-04'))
+      expect(step.holiday_1_start_date).to eq(Date.parse('1970-01-14'))
     end
 
     context 'when day is missing' do
@@ -201,12 +201,12 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#holiday_1_end_date' do
-    let(:holiday_1_end_date_day) { 5 }
+    let(:holiday_1_end_date_day) { 15 }
     let(:holiday_1_end_date_month) { 1 }
     let(:holiday_1_end_date_year) { 1970 }
 
     it 'returns date instance constructed from day, month & year' do
-      expect(step.holiday_1_end_date).to eq(Date.parse('1970-01-05'))
+      expect(step.holiday_1_end_date).to eq(Date.parse('1970-01-15'))
     end
 
     context 'when day is missing' do
@@ -235,12 +235,12 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#holiday_2_start_date' do
-    let(:holiday_2_start_date_day) { 6 }
+    let(:holiday_2_start_date_day) { 16 }
     let(:holiday_2_start_date_month) { 1 }
     let(:holiday_2_start_date_year) { 1970 }
 
     it 'returns date instance constructed from day, month & year' do
-      expect(step.holiday_2_start_date).to eq(Date.parse('1970-01-06'))
+      expect(step.holiday_2_start_date).to eq(Date.parse('1970-01-16'))
     end
 
     context 'when day is missing' do
@@ -269,12 +269,12 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
   end
 
   describe '#holiday_2_end_date' do
-    let(:holiday_2_end_date_day) { 1970 }
+    let(:holiday_2_end_date_day) { 17 }
     let(:holiday_2_end_date_month) { 1 }
-    let(:holiday_2_end_date_year) { 7 }
+    let(:holiday_2_end_date_year) { 1970 }
 
     it 'returns date instance constructed from day, month & year' do
-      expect(step.holiday_2_end_date).to eq(Date.parse('1970-01-07'))
+      expect(step.holiday_2_end_date).to eq(Date.parse('1970-01-17'))
     end
 
     context 'when day is missing' do

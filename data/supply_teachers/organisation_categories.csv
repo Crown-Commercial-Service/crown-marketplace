@@ -1,0 +1,11 @@
+id,name,non_profit
+001,Establishment,true
+002,Local Authority,false
+003,Other Legacy Organisations,false
+004,Early Year Setting,false
+008,Other Stakeholders,false
+009,Training Providers,false
+010,Multi-Academy Trust,true
+011,Government,false
+012,Other GIAS Stakeholder,false
+013,Single-Academy Trust,true
