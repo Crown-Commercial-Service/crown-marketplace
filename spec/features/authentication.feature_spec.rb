@@ -58,7 +58,7 @@ RSpec.feature 'Authentication', type: :feature do
 
     visit '/management-consultancy/start'
 
-    expect(page).to have_text('You don’t have permission to view this page')
+    expect(page).to have_text(I18n.t('shared.not_permitted.management_consultancy.title'))
   end
 
   scenario 'DfE users cannot see school pages if they are from a for-profit school' do
@@ -90,7 +90,7 @@ RSpec.feature 'Authentication', type: :feature do
 
     visit '/supply-teachers/start'
 
-    expect(page).to have_text('You don’t have permission to view this page')
+    expect(page).to have_text(I18n.t('shared.not_permitted.supply_teachers.title'))
   end
 
   scenario 'DfE users cannot see school pages if they are not on the whitelist' do
@@ -105,7 +105,7 @@ RSpec.feature 'Authentication', type: :feature do
 
     visit '/supply-teachers/start'
 
-    expect(page).to have_text('You don’t have permission to view this page')
+    expect(page).to have_text(I18n.t('shared.not_permitted.supply_teachers.title'))
   end
 
   scenario 'Visitors to the normal school gateway do not see a Cognito option when disabled' do
