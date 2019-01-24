@@ -292,8 +292,15 @@ en:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
-      details: You don’t have permission to view this page.
-      title: Not permitted
+      facilities_management:
+        details: You don’t have permission to view this page.
+        title: Not permitted
+      management_consultancy:
+        details: You don’t have permission to view this page.
+        title: Not permitted
+      supply_teachers:
+        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
+        title: Not permitted
   suppliers:
     unit:
       one: supplier

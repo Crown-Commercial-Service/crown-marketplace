@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in?
 
   def deny_access
-    render template: 'shared/not_permitted', status: 403
+    render template: 'shared/not_permitted', status: 403, locals: { permission_required: @permission_required }
   end
 
   delegate :ccs_homepage_url, to: Marketplace
