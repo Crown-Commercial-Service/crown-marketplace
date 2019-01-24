@@ -37,6 +37,7 @@ gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 gem 'phonejack'
 gem 'holidays'
 gem 'virtus'
+gem 'jquery-rails'
 
 # for cognito authentication
 gem 'omniauth'
