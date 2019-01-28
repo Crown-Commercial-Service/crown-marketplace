@@ -20,6 +20,10 @@ $('.supplier-record__calculator input').on('change', function () {
 
 $('.supplier-record__calculate-markup').hide();
 
+$('.supplier-record__calculator-form').on('submit', function (e) {
+  e.preventDefault();
+});
+
 function number_to_currency(number) {
   return '£' + number.toFixed(2)
 }
