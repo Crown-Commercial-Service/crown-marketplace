@@ -15,12 +15,18 @@ RSpec.describe SupplyTeachers::Spreadsheet do
       expect(worksheet.sheet_name).to eq 'Suppliers'
     end
 
-    it 'has one header row and two data rows' do
-      expect(worksheet.to_a.size).to eq 3
+    it 'has two header row and two data rows' do
+      expect(worksheet.to_a.size).to eq 4
     end
 
-    it 'has the correct header row' do
+    it 'has the correct header row 1' do
       expect(worksheet[0].cells.map(&:value)).to eq [
+        'Supplier list'
+      ]
+    end
+
+    it 'has the correct header row 2' do
+      expect(worksheet[1].cells.map(&:value)).to eq [
         'Supplier name',
         'Branch name',
         'Contact name',
@@ -30,7 +36,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
     end
 
     it 'has the correct data for branch 1' do
-      expect(worksheet[1].cells.map(&:value)).to eq [
+      expect(worksheet[2].cells.map(&:value)).to eq [
         branch1.supplier_name,
         branch1.name,
         branch1.contact_name,
@@ -40,7 +46,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
     end
 
     it 'has the correct data for branch 2' do
-      expect(worksheet[2].cells.map(&:value)).to eq [
+      expect(worksheet[3].cells.map(&:value)).to eq [
         branch2.supplier_name,
         branch2.name,
         branch2.contact_name,
@@ -53,7 +59,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
       let(:telephone_number) { '01214960123' }
 
       it 'is formatted' do
-        expect(worksheet[1].cells.map(&:value)[4])
+        expect(worksheet[2].cells.map(&:value)[4])
           .to eq('0121 496 0123')
       end
     end
@@ -62,7 +68,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
       let(:telephone_number) { '0111111111111' }
 
       it 'does not become a number' do
-        expect(worksheet[1].cells.map(&:value)[4])
+        expect(worksheet[2].cells.map(&:value)[4])
           .to eq(telephone_number)
       end
     end
