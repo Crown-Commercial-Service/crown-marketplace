@@ -51,7 +51,7 @@
         %>
         <%= t('.other_radius_html') %>
         <% @alternative_radiuses.each do |radius| %>
-          <span class="ccs-no-print st-supplier-page__radius-list-item"><%=
+          <span class="st-supplier-page__radius-list-item"><%=
             link_to(
               number_to_human(radius, units: :miles),
               supply_teachers_branches_path(@journey.params.merge(radius: radius)),
@@ -82,7 +82,7 @@
           <% end %>
         </div>
         <div class="govuk-grid-column-one-third">
-          <div class="cmp-sidebar ccs-no-print">
+          <div class="cmp-sidebar">
             <h2 class="govuk-heading-s"><%= t('.related_actions_html') %></h2>
             <p class="govuk-body govuk-body-s supplier-record__print-option">
               <a href="javascript:window.print()" class="govuk-link ga-print-link"><%= t('.print') %></a>
