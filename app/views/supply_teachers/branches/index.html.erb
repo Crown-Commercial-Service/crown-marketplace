@@ -73,7 +73,7 @@
     </div>
 
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    <%= form_tag @form_path, method: :get do %>
+    <%= form_tag @form_path, method: :get, class: 'supplier-record__calculator-form' do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
