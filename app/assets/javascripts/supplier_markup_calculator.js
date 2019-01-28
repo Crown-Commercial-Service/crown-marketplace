@@ -16,7 +16,9 @@ $('.supplier-record__calculator input').on('change', function () {
                  .find('.supplier-record__supplier-fee').text('');
     }
   }, 'json');
-}); 
+});
+
+$('.supplier-record__calculate-markup').hide();
 
 function number_to_currency(number) {
   return '£' + number.toFixed(2)
