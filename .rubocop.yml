@@ -119,6 +119,7 @@ RSpec/NestedGroups:
     Max: 4
     Exclude:
         - 'spec/**/journey_spec.rb'
+        - 'spec/**/branches_controller_spec.rb'
 
 RSpec/ContextWording:
     Prefixes:
