@@ -37,6 +37,7 @@ gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 gem 'phonejack'
 gem 'holidays'
 gem 'virtus'
+gem 'jquery-rails'
 
 # for cognito authentication
 gem 'omniauth'
@@ -59,6 +60,7 @@ group :development, :test do
   gem 'rubocop-rspec'
   gem 'rubyXL'
   gem 'i18n-tasks'
+  gem 'poltergeist'
 end
 
 group :development do

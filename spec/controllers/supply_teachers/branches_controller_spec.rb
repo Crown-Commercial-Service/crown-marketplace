@@ -6,8 +6,8 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller, auth: true
   end
 
   describe 'GET index' do
-    let(:first_branch) { build(:supply_teachers_branch) }
-    let(:second_branch) { build(:supply_teachers_branch) }
+    let(:first_branch) { create(:supply_teachers_branch) }
+    let(:second_branch) { create(:supply_teachers_branch) }
     let(:branches) { [first_branch, second_branch] }
 
     context 'when not logged in' do
@@ -89,6 +89,31 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller, auth: true
 
         expect(response.content_type)
           .to eq 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      end
+
+      context 'when an AJAX request is made' do
+        before { get :index, params: params.merge(daily_rate: { first_branch.id => daily_rate }), xhr: true }
+
+        let(:daily_rate) { '500' }
+
+        it 'responds with the correct content type' do
+          expect(response.content_type).to eq 'text/javascript'
+        end
+
+        it 'returns the first matching branch' do
+          expect(JSON.parse(response.body)).to include(
+            'id' => first_branch.id,
+            'daily_rate' => '500'
+          )
+        end
+
+        context 'when no daily rate is provided' do
+          let(:daily_rate) { '' }
+
+          it 'returns nothing' do
+            expect(JSON.parse(response.body)).to be_nil
+          end
+        end
       end
     end
 
