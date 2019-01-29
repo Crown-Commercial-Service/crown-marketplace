@@ -27,11 +27,10 @@ module Login
       raise 'not implemented'
     end
 
-    def log_attempt(result)
+    def log_attempt(result, framework)
       success = result ? 'successful' : 'unsuccessful'
-      school_type_id = @extra.nil? ? nil : "school type id: #{@extra['school_type_id']}, "
       Rails.logger.info(
-        "Login attempt from #{auth_provider} > email: #{@email}, #{school_type_id}result: #{success}"
+        "Login attempt to #{framework} from #{auth_provider} > email: #{@email}, result: #{success}"
       )
     end
   end
