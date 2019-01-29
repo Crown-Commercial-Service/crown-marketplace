@@ -26,6 +26,7 @@ module SupplyTeachers
       @branches = step.branches daily_rates
 
       respond_to do |format|
+        format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
         format.html
         format.xlsx do
           spreadsheet = Spreadsheet.new(@branches, with_calculations: params[:calculations].present?)
