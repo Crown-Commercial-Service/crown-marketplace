@@ -9,7 +9,7 @@ module SupplyTeachers
       daily_rate / (1 + markup_rate)
     end
 
-    def supplier_fee
+    def agency_fee
       daily_rate - worker_cost
     end
   end

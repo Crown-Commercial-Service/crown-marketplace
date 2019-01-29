@@ -10,7 +10,7 @@ module SupplyTeachers
     attr_accessor :distance
     attr_accessor :daily_rate
     attr_accessor :worker_cost
-    attr_accessor :supplier_fee
+    attr_accessor :agency_fee
 
     def initialize(id:, supplier_name:, name:, contact_name:,
                    telephone_number:, contact_email:)

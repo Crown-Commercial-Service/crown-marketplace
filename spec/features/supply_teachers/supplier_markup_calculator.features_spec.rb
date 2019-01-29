@@ -37,7 +37,7 @@ RSpec.feature 'Supplier mark-up calculator', type: :feature do
     Geocoder::Lookup::Test.reset
   end
 
-  scenario 'Buyer can calculate the supplier mark-up' do
+  scenario 'Buyer can calculate the agency mark-up' do
     visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
@@ -58,11 +58,11 @@ RSpec.feature 'Supplier mark-up calculator', type: :feature do
       fill_in 'Enter daily rate', with: '150'
     end
 
-    click_on 'Calculate mark-up'
+    click_on 'Calculate the fee'
 
     within page.find('.supplier-record:first') do
       expect(page).to have_css('.supplier-record__worker-cost', text: '£115.38')
-      expect(page).to have_css('.supplier-record__supplier-fee', text: '£34.62')
+      expect(page).to have_css('.supplier-record__agency-fee', text: '£34.62')
     end
   end
 end

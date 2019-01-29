@@ -81,7 +81,7 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
   end
 
   it 'has a button to calculate the mark-up' do
-    expect(rendered).to have_button(I18n.t('supply_teachers.branches.index.calculate_markup'))
+    expect(rendered).to have_button(I18n.t('supply_teachers.branches.index.calculate_markup_button_label'))
   end
 
   context 'when shortlisting for teachers on school payroll' do
@@ -92,7 +92,7 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
     end
 
     it 'does not have a button to calculate the mark-up' do
-      expect(rendered).not_to have_button(I18n.t('supply_teachers.branches.index.calculate_markup'))
+      expect(rendered).not_to have_button(I18n.t('supply_teachers.branches.index.calculate_markup_button_label'))
     end
   end
 

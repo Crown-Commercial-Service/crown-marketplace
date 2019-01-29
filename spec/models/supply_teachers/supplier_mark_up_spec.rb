@@ -11,9 +11,9 @@ RSpec.describe SupplyTeachers::SupplierMarkUp, type: :model do
     end
   end
 
-  describe '#supplier_fee' do
-    it 'calculates the supplier’s fee out of the daily rate' do
-      expect(supplier_mark_up.supplier_fee).to be_within(0.1).of(67.22)
+  describe '#agency_fee' do
+    it 'calculates the agency’s fee out of the daily rate' do
+      expect(supplier_mark_up.agency_fee).to be_within(0.1).of(67.22)
     end
   end
 end

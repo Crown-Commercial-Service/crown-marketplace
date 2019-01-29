@@ -94,9 +94,9 @@
               <p class="govuk-body govuk-body-s supplier-record__print-option">
                 <%= link_to t('.download_with_calculator'), supply_teachers_branches_path(@journey.params.merge(format: :xlsx, calculations: 'yes')), { class: 'supplier-record__file-download ga-download-calculator', 'aria-label': t('.download_with_calculator_aria_label') } %>
               </p>
-              <h2 class="govuk-heading-s"><%= t('.calculate_markup') %></h2>
+              <h2 class="govuk-heading-s"><%= t('.calculate_markup_heading') %></h2>
               <p class="govuk-body govuk-body-s"><%= t('.calculate_markup_description') %></p>
-              <%= submit_tag t('.calculate_markup'), class: "govuk-button govuk-!-margin-0" %>
+              <%= submit_tag t('.calculate_markup_button_label'), class: "govuk-button govuk-!-margin-0" %>
             <% end %>
           </div>
         </div>
