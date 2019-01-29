@@ -66,13 +66,13 @@
             <% end %>
           </p>
         </div>
-        <div class="govuk-grid-column-one-third <%= 'supplier-record__calculator--muted' unless branch.supplier_fee %>">
+        <div class="govuk-grid-column-one-third <%= 'supplier-record__calculator--muted' unless branch.agency_fee %>">
           <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">
-            <%= t('.calculator.supplier_fee') %>
+            <%= t('.calculator.agency_fee') %>
           </p>
-          <p class="govuk-body supplier-record__supplier-fee">
-            <% if branch.supplier_fee %>
-              <%= number_to_currency(branch.supplier_fee) %>
+          <p class="govuk-body supplier-record__agency-fee">
+            <% if branch.agency_fee %>
+              <%= number_to_currency(branch.agency_fee) %>
             <% end %>
           </p>
         </div>
