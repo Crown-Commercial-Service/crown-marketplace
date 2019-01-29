@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require rails-ujs
-//= require activestorage
 //= require govuk-frontend/all
 //= require google_analytics
 //= require cookie_banner
