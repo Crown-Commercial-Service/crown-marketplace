@@ -28,3 +28,7 @@ logfile
 /config/master.key
 
 .env.local
+.DS_Store
+
+# Simplecov
+/coverage/*

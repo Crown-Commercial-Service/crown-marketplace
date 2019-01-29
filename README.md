@@ -257,6 +257,12 @@ classes.
 * All the specs are run as part of the default Rake task, but the standard
   RSpec-provided Rake tasks also exist for running sub-groups of the specs.
 
+#### Code coverage
+
+Code coverage is measured by [simplecov](https://github.com/colszowka/simplecov)
+
+After running the Rspec tests, open [coverage/index.html](coverage/index.html) in a browser to see the code coverage percentage.
+
 ### Continuous integration & deployment
 
 * Continuous integration and deployment is implemented on the new AWS-based CCS
