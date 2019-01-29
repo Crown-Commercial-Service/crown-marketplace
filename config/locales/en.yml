@@ -310,15 +310,16 @@ en:
       branch:
         branch: Branch
         calculator:
+          agency_fee: Agency fee
           daily_rate: Enter daily rate
-          heading: 'Enter the supplier’s quote to see how much the worker will get paid:'
-          supplier_fee: Supplier fee
+          heading: 'Enter the quote from this agency to see what their fee will be:'
           worker_cost: Cost of the worker
         markup: Mark-up
         miles: Miles
       index:
-        calculate_markup: Calculate mark-up
-        calculate_markup_description: 'See how much the worker makes and what fee the supplier will get using the figure they quoted you:'
+        calculate_markup_button_label: Calculate the fee
+        calculate_markup_description: 'See how much the worker makes and what fee the agency will get using the figure they quoted you:'
+        calculate_markup_heading: Calculate agency fee
         distance_aria_label_html: Set the radius to %{radius_setting}
         do_next:
           contact_supplier: contact the supplier of your choice from the list below to find a suitable, available worker and their daily rate

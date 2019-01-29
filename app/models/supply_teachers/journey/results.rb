@@ -12,7 +12,7 @@ module SupplyTeachers
           result.distance = point.distance(branch.location)
           result.daily_rate = daily_rates.fetch(branch.id, nil)
           result.worker_cost = supplier_mark_up(result.daily_rate, result.rate)&.worker_cost
-          result.supplier_fee = supplier_mark_up(result.daily_rate, result.rate)&.supplier_fee
+          result.agency_fee = supplier_mark_up(result.daily_rate, result.rate)&.agency_fee
         end
       end
     end
