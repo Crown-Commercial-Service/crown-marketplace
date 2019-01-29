@@ -27,7 +27,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
 
     it 'has the correct header row 2' do
       expect(worksheet[1].cells.map(&:value)).to eq [
-        'Supplier name',
+        'Agency name',
         'Branch name',
         'Contact name',
         'Contact email',

@@ -11,7 +11,7 @@ class SupplyTeachers::Spreadsheet
     end
 
     def headers
-      ['Supplier name', 'Branch name', 'Contact name', 'Contact email', 'Telephone number']
+      ['Agency name', 'Branch name', 'Contact name', 'Contact email', 'Telephone number']
     end
 
     def types
@@ -36,13 +36,13 @@ class SupplyTeachers::Spreadsheet
 
     def title
       extra_title =
-        ['', '', '', '', '', 'Enter the supplier’s quote to see how much the worker will get paid']
+        ['', '', '', '', '', 'Enter the quote from this agency to see what their fee will be']
       super + extra_title
     end
 
     def headers
       extra_headers =
-        ['Mark-up', 'Enter daily rate', 'Cost of the worker', 'Supplier fee']
+        ['Mark-up', 'Enter daily rate', 'Cost of the worker', 'Agency fee']
       super + extra_headers
     end
 
