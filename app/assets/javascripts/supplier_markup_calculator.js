@@ -13,7 +13,7 @@ $('.supplier-record__calculator input').on('change', function () {
     } else {
       $calculator.addClass('supplier-record__calculator--muted')
                  .find('.supplier-record__worker-cost').text('').end()
-                 .find('.supplier-record__supplier-fee').text('');
+                 .find('.supplier-record__agency-fee').text('');
     }
   }, 'json');
 });
