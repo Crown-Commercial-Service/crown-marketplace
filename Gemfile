@@ -60,6 +60,7 @@ group :development, :test do
   gem 'rubocop-rspec'
   gem 'rubyXL'
   gem 'i18n-tasks'
+  gem 'poltergeist'
 end
 
 group :development do
