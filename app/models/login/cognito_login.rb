@@ -12,8 +12,8 @@ module Login
       ::Cognito.logout_url(routable.gateway_url)
     end
 
-    def permit?(_framework)
-      log_attempt(true)
+    def permit?(framework)
+      log_attempt(true, framework)
       true
     end
   end

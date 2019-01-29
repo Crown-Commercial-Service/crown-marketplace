@@ -69,7 +69,7 @@ RSpec.describe Login::DfeLogin, type: :model do
         it 'logs the attempt' do
           login.permit?(:supply_teachers)
           expect(Rails.logger).to have_received(:info)
-            .with('Login attempt from dfe > email: user@example.com, school type id: 01, result: successful')
+            .with('Login attempt to supply_teachers from dfe > email: user@example.com, result: successful')
         end
       end
 
@@ -110,7 +110,7 @@ RSpec.describe Login::DfeLogin, type: :model do
         it 'logs the attempt' do
           login.permit?(:supply_teachers)
           expect(Rails.logger).to have_received(:info)
-            .with('Login attempt from dfe > email: user@example.com, school type id: 28, result: successful')
+            .with('Login attempt to supply_teachers from dfe > email: user@example.com, result: successful')
         end
       end
     end
@@ -130,7 +130,7 @@ RSpec.describe Login::DfeLogin, type: :model do
       it 'logs the attempt' do
         login.permit?(:supply_teachers)
         expect(Rails.logger).to have_received(:info)
-          .with('Login attempt from dfe > email: user@example.com, school type id: 11, result: unsuccessful')
+          .with('Login attempt to supply_teachers from dfe > email: user@example.com, result: unsuccessful')
       end
     end
 
@@ -223,7 +223,7 @@ RSpec.describe Login::DfeLogin, type: :model do
     it 'logs the attempt' do
       login.permit?(:management_consultancy)
       expect(Rails.logger).to have_received(:info)
-        .with('Login attempt from dfe > email: user@example.com, school type id: 01, result: unsuccessful')
+        .with('Login attempt to management_consultancy from dfe > email: user@example.com, result: unsuccessful')
     end
   end
 end

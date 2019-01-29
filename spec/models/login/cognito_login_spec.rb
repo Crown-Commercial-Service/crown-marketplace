@@ -32,7 +32,7 @@ RSpec.describe Login::CognitoLogin, type: :model do
     it 'logs the attempt' do
       login.permit?(:supply_teachers)
       expect(Rails.logger).to have_received(:info)
-        .with('Login attempt from cognito > email: user@example.com, result: successful')
+        .with('Login attempt to supply_teachers from cognito > email: user@example.com, result: successful')
     end
   end
 
