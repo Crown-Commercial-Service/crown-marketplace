@@ -263,6 +263,8 @@ Code coverage is measured by [simplecov](https://github.com/colszowka/simplecov)
 
 After running the Rspec tests, open [coverage/index.html](coverage/index.html) in a browser to see the code coverage percentage.
 
+Note that some lines are excluded from simplecov with the `# :nocov:` instruction.
+
 ### Continuous integration & deployment
 
 * Continuous integration and deployment is implemented on the new AWS-based CCS
