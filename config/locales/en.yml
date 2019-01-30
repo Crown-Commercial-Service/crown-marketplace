@@ -352,9 +352,10 @@ en:
     gateway:
       index:
         dfe_signin:
-          create_account_html: How do I know if I have a DfE Sign-in account? If you are from a not for profit school and your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a> you should be able to get a DfE Sign-in account. Please refer to <a href="%{dfe_sign_in_url}" aria-label="DfE Sign In contact form">this page</a> for more information on how the approver for your organisation can create an account for you.
+          create_account_html: If your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a> you should be able to get a DfE Sign-in account. Find information on how the approver for your organisation can <a href="%{dfe_sign_in_url}" aria-label="DfE Sign In contact form">create an account for you</a>.
           instructions: Sign in to your DfE Sign-In account to use this service. You will be automatically directed back to this service once you’ve signed in.
-          outside_england_html: Schools outside England cannot yet use the digital agency selection tool, but can request access to an offline (Excel) version of the tool by completing <a href="%{url}" aria-label="Crown Commercial Service contact form">this form</a> and stating 'offline agency selection tool' in the comments box.
+          not_for_profit_html: Only not-for-profit and schools with charitable status are able to get access to the online and offline version of the service.
+          outside_england_html: Outside of England, not-for-profit and schools with charitable status cannot yet use the online agency selection service. They can <a href="%{url}" aria-label="Crown Commercial Service contact form">request access to an offline version</a> (an Excel spreadsheet) by putting 'offline agency selection tool’ in the comments box.
         heading: CCS Marketplace private beta
     home:
       index:
