@@ -1,9 +1,19 @@
-<p>
-  Give notice to the agency on <%= @calculator.ideal_notice_date.to_formatted_s(:long_with_day) %> and make the worker permanent on <%= @calculator.ideal_hire_date.to_formatted_s(:long_with_day) %>
-  <% if @calculator.hiring_after_12_weeks? %>
-    to
-  <% else %>
-    so they've been in post for over 12 weeks and you
-  <% end %>
-  provide 4 weeks’ notice. 
-</p>
+<% if @calculator.ideal_notice_date.past? %>
+  <p>
+    To provide 4 working weeks’ notice:
+  </p>
+  <ul>
+    <li>give notice to the agency as soon as possible and</li>
+    <li>make the worker permanent 4 working weeks after that date</li>
+  </ul>
+<% else %>
+  <p>
+    You could give notice to the agency on <%= @calculator.ideal_notice_date.to_formatted_s(:long_with_day) %> and make the worker permanent on <%= @calculator.ideal_hire_date.to_formatted_s(:long_with_day) %>
+    <% if @calculator.hiring_after_12_weeks? %>
+      to
+    <% else %>
+      so they've been in post for over 12 working weeks and you
+    <% end %>
+    provide 4 working weeks’ notice.
+  </p>
+<% end %>
