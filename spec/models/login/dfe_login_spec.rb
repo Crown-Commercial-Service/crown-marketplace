@@ -186,7 +186,7 @@ RSpec.describe Login::DfeLogin, type: :model do
             .with('Failed login from dfe > email user@example.com, school type nil, organisation category nil')
         end
       end
-  
+
       context 'when the school type is non-profit' do
         let(:school_type) do
           {
