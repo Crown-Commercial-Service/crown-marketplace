@@ -73,7 +73,7 @@ RSpec.describe 'supply_teachers/branches/index.html.erb' do
   end
 
   it 'has a link to download a spreadsheet' do
-    expect(rendered).to have_link('Download shortlist of suppliers')
+    expect(rendered).to have_link('Download shortlist of agencies')
   end
 
   it 'has a link to download the calculator' do
