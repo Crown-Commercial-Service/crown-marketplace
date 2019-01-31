@@ -6,13 +6,14 @@ RSpec.describe Login, type: :model do
   end
 
   let(:email) { 'user@example.com' }
+  let(:provider) { 'unknown' }
 
   let(:omniauth_hash) do
     {
       'info' => {
         'email' => email
       },
-      'provider' => 'unknown'
+      'provider' => provider
     }
   end
 
