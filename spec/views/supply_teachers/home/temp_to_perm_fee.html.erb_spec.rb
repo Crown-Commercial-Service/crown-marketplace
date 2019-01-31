@@ -62,7 +62,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
     it 'explains the circumstances under which you can avoid paying the supplier a fee for taking on a worker permanently' do
       render
-      expect(rendered).to have_text(/There is no fee for making a temporary member of staff permanent as long as/)
+      expect(rendered).to have_text(/There is no fee to make a temporary member of staff permanent as long as/)
     end
   end
 
@@ -121,7 +121,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays chargeable days for lack of notice' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: 15)
+          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", count: 15)
         )
       end
 
@@ -224,7 +224,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays the days chargeable for early-hire' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.early_hire_chargeable_days", days: 10)
+          I18n.t("#{i18n_key}.early_hire_chargeable_days", count: 10)
         )
       end
 
@@ -287,7 +287,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays the days chargeable for early-hire' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.early_hire_chargeable_days", days: 10)
+          I18n.t("#{i18n_key}.early_hire_chargeable_days", count: 10)
         )
       end
 
@@ -308,7 +308,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays chargeable days for lack of notice' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: 15)
+          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", count: 15)
         )
       end
 
@@ -382,7 +382,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays the days chargeable for early-hire' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.early_hire_chargeable_days", days: 10)
+          I18n.t("#{i18n_key}.early_hire_chargeable_days", count: 10)
         )
       end
 
@@ -470,7 +470,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
     it 'displays the days chargeable for early-hire' do
       expect(rendered).to have_text(
-        I18n.t("#{i18n_key}.early_hire_chargeable_days", days: 25)
+        I18n.t("#{i18n_key}.early_hire_chargeable_days", count: 25)
       )
     end
 
