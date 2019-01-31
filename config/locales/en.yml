@@ -292,8 +292,15 @@ en:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
-      details: You don’t have permission to view this page.
-      title: Not permitted
+      facilities_management:
+        details: You don’t have permission to view this page.
+        title: Not permitted
+      management_consultancy:
+        details: You don’t have permission to view this page.
+        title: Not permitted
+      supply_teachers:
+        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
+        title: Not permitted
   suppliers:
     unit:
       one: supplier
@@ -302,9 +309,17 @@ en:
     branches:
       branch:
         branch: Branch
+        calculator:
+          agency_fee: Agency fee
+          daily_rate: Enter daily rate
+          heading: 'Enter the quote from this agency to see what their fee will be:'
+          worker_cost: Cost of the worker
         markup: Mark-up
         miles: Miles
       index:
+        calculate_markup_button_label: Calculate the fee
+        calculate_markup_description: 'See how much the worker makes and what fee the agency will get using the figure they quoted you:'
+        calculate_markup_heading: Calculate agency fee
         distance_aria_label_html: Set the radius to %{radius_setting}
         do_next:
           contact_supplier: contact the supplier of your choice from the list below to find a suitable, available worker and their daily rate
@@ -337,11 +352,42 @@ en:
     gateway:
       index:
         dfe_signin:
-          create_account_html: How do I know if I have a DfE Sign-in account? If you are from a not for profit school and your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a> you should be able to get a DfE Sign-in account. Please refer to <a href="%{dfe_sign_in_url}" aria-label="DfE Sign In contact form">this page</a> for more information on how the approver for your organisation can create an account for you.
+          create_account_html: If your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a> you should be able to get a DfE Sign-in account. Find information on how the approver for your organisation can <a href="%{dfe_sign_in_url}" aria-label="DfE Sign In contact form">create an account for you</a>.
           instructions: Sign in to your DfE Sign-In account to use this service. You will be automatically directed back to this service once you’ve signed in.
-          outside_england_html: Schools outside England cannot yet use the digital agency selection tool, but can request access to an offline (Excel) version of the tool by completing <a href="%{url}" aria-label="Crown Commercial Service contact form">this form</a> and stating 'offline agency selection tool' in the comments box.
+          not_for_profit_html: Only not-for-profit and schools with charitable status are able to get access to the online and offline version of the service.
+          outside_england_html: Outside of England, not-for-profit and schools with charitable status cannot yet use the online agency selection service. They can <a href="%{url}" aria-label="Crown Commercial Service contact form">request access to an offline version</a> (an Excel spreadsheet) by putting 'offline agency selection tool’ in the comments box.
         heading: CCS Marketplace private beta
     home:
+      index:
+        accreditation_of_agencies: Accreditation of agencies
+        all_suppliers_have_undergone: All agencies have undergone background screening and safeguarding to DfE’s Keeping Children Safe in Education standards. They are audited and accredited against best practice standards in education recruitment.
+        before_you_start: Before you start
+        buyers_obligations: Buyers’ obligations for agency data
+        by_using_the_service: By using the service, you acknowledge and accept responsibility for keeping this information confidential plus the following requirements, and not sharing it wider than your school.
+        details_of_how_long_you_want_the_worker: details of how long you will want the worker
+        in_consideration_of_being_given_use: 'In consideration of being given use of the confidential information included in the service, you and your employees will need to:'
+        keep_the_information_confidential: keep the information confidential and not share it in any way unless you have permission from Crown Commercial Service (CCS) in writing
+        make_sure_the_confidential_information: make sure the confidential information is stored securely and that only people using the service to buy under the framework have access to it
+        only_use_the_information: only use the information for buying services under the CCS framework agreement for supply teachers and temporary staff
+        start_finding_supply_teachers: Start finding supply teachers and agency workers
+        start_now: Start now
+        tell_ccs_if_suspect: tell CCS if you suspect unauthorised access, copying, use or disclosure of the confidential information
+        this_service_contains_pricing_information_html: This service contains pricing information for agencies on the <a href="%{url}" aria-label="Deal for schools hiring supply teachers and agency workers">supply teachers deal</a>. This is confidential and can be considered commercially sensitive.
+        title: Find supply teachers and agency workers
+        to_find_permanent_teaching_staff_html: To find permanent teaching staff, use the <a aria-label="Visit the Teaching Vacancies service website" href="%{url}">Teaching Vacancies</a> service.
+        use_this_service_to:
+          calculate_the_maximum: calculate the maximum you could be charged to make your agency worker permanent
+          create_a_shortlist: create a shortlist of agencies based on your needs and download it
+          find_a_managed_service_provider: find a managed service provider, who can take on all your temporary staff needs
+          find_and_hire_a_worker: find and hire a worker using an agency
+          hire_a_specific_person: hire a specific person using an agency (a ‘nominated worker’)
+          title: 'Use this service to:'
+          view_the_rates: view the rates and breakdown of rates the agencies charge
+        you_cant_use_the_service_if: You can’t use this service if you’re an independent school, unless you have charitable status.
+        you_must_tell_your_employees: You must tell your employees of the confidential nature of the information and must also agree to the requirements. No agents, sub-contractors, third parties nor other non-employees can have access to the confidential information.
+        you_will_need_to_have: 'You will need to have:'
+        you_will_need_your_dfe_sign_in: To use the service, you will need your DFE Sign-in email and password. If you don’t have one you may be able to get one, or to access an offline version of the service.
+        your_schools_postcode: your school’s postcode
       temp_to_perm_fee:
         after_12_weeks_and_enough_notice: Based on the information you provided, you’re taking the worker on after 12 working weeks and giving 4 weeks’ notice, so you can’t be charged a fee under this deal.
         after_12_weeks_and_no_notice_date: Based on the information you provided, you’re taking the worker on after 12 working weeks, but it’s not clear if you’re providing the supplier with 4 weeks’ notice.

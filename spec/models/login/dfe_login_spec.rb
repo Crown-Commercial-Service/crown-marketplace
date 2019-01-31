@@ -20,7 +20,7 @@ RSpec.describe Login::DfeLogin, type: :model do
             'name' => 'St Custard’s',
             'urn' => '900002',
             'ukprn' => '90000002',
-            'category' => school_category,
+            'category' => organisaton_category,
             'type' => school_type
           }
         }
@@ -35,7 +35,7 @@ RSpec.describe Login::DfeLogin, type: :model do
     }
   end
 
-  let(:school_category) do
+  let(:organisaton_category) do
     {
       'id' => '001',
       'name' => 'Establishment'
@@ -59,13 +59,6 @@ RSpec.describe Login::DfeLogin, type: :model do
 
   context 'when the framework is supply_teachers' do
     context 'when the school type is non-profit' do
-      let(:school_type) do
-        {
-          'id' => '01',
-          'name' => 'Community school'
-        }
-      end
-
       context 'and email whitelisting is disabled' do
         let(:whitelist_enabled) { false }
 
@@ -76,7 +69,7 @@ RSpec.describe Login::DfeLogin, type: :model do
         it 'logs the attempt' do
           login.permit?(:supply_teachers)
           expect(Rails.logger).to have_received(:info)
-            .with('Login attempt from dfe > email: user@example.com, school type id: 01, result: successful')
+            .with('Login attempt to supply_teachers from dfe > email: user@example.com, result: successful')
         end
       end
 
@@ -117,7 +110,7 @@ RSpec.describe Login::DfeLogin, type: :model do
         it 'logs the attempt' do
           login.permit?(:supply_teachers)
           expect(Rails.logger).to have_received(:info)
-            .with('Login attempt from dfe > email: user@example.com, school type id: 28, result: successful')
+            .with('Login attempt to supply_teachers from dfe > email: user@example.com, result: successful')
         end
       end
     end
@@ -137,32 +130,11 @@ RSpec.describe Login::DfeLogin, type: :model do
       it 'logs the attempt' do
         login.permit?(:supply_teachers)
         expect(Rails.logger).to have_received(:info)
-          .with('Login attempt from dfe > email: user@example.com, school type id: 11, result: unsuccessful')
+          .with('Login attempt to supply_teachers from dfe > email: user@example.com, result: unsuccessful')
       end
     end
 
-    context 'with school category checking (fallback)' do
-      let(:omniauth_hash) do
-        {
-          'info' => {
-            'email' => email
-          },
-          'provider' => 'dfe',
-          'extra' => {
-            'raw_info' => {
-              'organisation' => {
-                'id' => '047F32E7-FDD5-46E9-89D4-2498C2E77364',
-                'name' => 'St Custard’s',
-                'urn' => '900002',
-                'ukprn' => '90000002',
-                'category' => school_category,
-                'type' => school_type
-              }
-            }
-          }
-        }
-      end
-
+    context 'with organisation category checking (fallback)' do
       context 'when the schooltype is nil' do
         let(:school_type) do
           {
@@ -186,6 +158,32 @@ RSpec.describe Login::DfeLogin, type: :model do
 
         it 'allows access' do
           expect(login.permit?(:supply_teachers)).to be true
+        end
+      end
+
+      context 'when the school type is nil AND the organisation category is nil' do
+        let(:school_type) do
+          {
+            'id' => nil,
+            'name' => ''
+          }
+        end
+
+        let(:organisaton_category) do
+          {
+            'id' => nil,
+            'name' => ''
+          }
+        end
+
+        it 'denies access' do
+          expect(login.permit?(:supply_teachers)).to be false
+        end
+
+        it 'logs the user information' do
+          login.permit?(:supply_teachers)
+          expect(Rails.logger).to have_received(:info)
+            .with('Failed login from dfe > email user@example.com, school type nil, organisation category nil')
         end
       end
 
@@ -225,7 +223,7 @@ RSpec.describe Login::DfeLogin, type: :model do
     it 'logs the attempt' do
       login.permit?(:management_consultancy)
       expect(Rails.logger).to have_received(:info)
-        .with('Login attempt from dfe > email: user@example.com, school type id: 01, result: unsuccessful')
+        .with('Login attempt to management_consultancy from dfe > email: user@example.com, result: unsuccessful')
     end
   end
 end

@@ -23,7 +23,7 @@ module Login
 
     def permit?(framework)
       result = framework == :supply_teachers && non_profit? && whitelisted?
-      log_attempt(result)
+      log_attempt(result, framework)
       result
     end
 
@@ -46,7 +46,16 @@ module Login
     def non_profit?
       school_type.non_profit?
     rescue NoMethodError
-      organisation_category.non_profit?
+      begin
+        organisation_category.non_profit?
+      rescue NoMethodError
+        Rails.logger.info(
+          "Failed login from dfe > email #{@email}, \
+school type #{@extra['school_type_id'].inspect}, \
+organisation category #{@extra['organisation_category'].inspect}"
+        )
+        false
+      end
     end
   end
 end

@@ -23,15 +23,20 @@ module SupplyTeachers
       @location = step.location
       @radius_in_miles = step.radius
       @alternative_radiuses = SEARCH_RADIUSES - [@radius_in_miles]
-      @branches = step.branches
+      @branches = step.branches daily_rates
 
       respond_to do |format|
+        format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
         format.html
         format.xlsx do
           spreadsheet = Spreadsheet.new(@branches, with_calculations: params[:calculations].present?)
           render xlsx: spreadsheet.to_xlsx, filename: 'branches'
         end
       end
+    end
+
+    def daily_rates
+      params[:daily_rate] || {}
     end
   end
 end

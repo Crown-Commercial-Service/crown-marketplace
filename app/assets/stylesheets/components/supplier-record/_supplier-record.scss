@@ -57,6 +57,22 @@
     min-height: 35px;
 }
 
+.supplier-record__calculator {
+  margin: 0;
+  background: govuk-colour("grey-4");
+}
+
+.supplier-record__calculator--muted p {
+  color: govuk-colour("grey-2");
+}
+
+.supplier-record__worker-cost,
+.supplier-record__agency-fee
+{
+  margin: 10px 0 0 0;
+  font-size: 24px;
+}
+
 @media print {
   .supplier-record {
     page-break-inside: avoid;
