@@ -12,9 +12,7 @@ module FacilitiesManagement
                              uniqueness: { scope: %i[supplier lot_number] },
                              inclusion: { in: Service.all_codes }
 
-    def self.for_lot(lot_number)
-      where(lot_number: lot_number)
-    end
+    scope :for_lot, -> { where(lot_number: lot_number) }
 
     def service
       Service.find_by(code: service_code)
