@@ -1,7 +1,7 @@
 module Login
   class DfeLogin < Login::BaseLogin
     def self.from_omniauth(hash)
-      Rails.logger.info("Login attempt from dfe > OmniAuth hash extra #{hash.dig('extra').inspect}")
+      Rails.logger.info("Login attempt from dfe > OmniAuth hash #{hash.inspect}")
       school_type_id = hash.dig('extra', 'raw_info', 'organisation', 'type', 'id')
       organisation_category = hash.dig('extra', 'raw_info', 'organisation', 'category', 'id')
       new(
