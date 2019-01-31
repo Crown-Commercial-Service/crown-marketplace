@@ -19,6 +19,14 @@ RSpec.describe GenericJourney, type: :model do
 
     let(:slug) { first_step_class.new.slug }
 
+    describe '#start_path' do
+      it 'returns the home path' do
+        allow(paths).to receive(:home)
+          .and_return('/')
+        expect(journey.start_path).to eq('/')
+      end
+    end
+
     describe '#first_step' do
       it 'returns the first step class' do
         expect(journey.first_step).to be_an_instance_of first_step_class

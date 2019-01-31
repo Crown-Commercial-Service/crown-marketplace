@@ -49,6 +49,7 @@ module Marketplace
     'https://www.crowncommercial.gov.uk/'
   end
 
+  # :nocov:
   def self.http_basic_auth_name
     @http_basic_auth_name ||= ENV.fetch('HTTP_BASIC_AUTH_NAME')
   end
@@ -56,6 +57,7 @@ module Marketplace
   def self.http_basic_auth_password
     @http_basic_auth_password ||= ENV.fetch('HTTP_BASIC_AUTH_PASSWORD')
   end
+  # :nocov:
 
   def self.cognito_user_pool_site
     @cognito_user_pool_site ||= ENV.fetch('COGNITO_USER_POOL_SITE')

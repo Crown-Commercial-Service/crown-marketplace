@@ -7,6 +7,13 @@ RSpec.describe FacilitiesManagement::Journey::SupplierRegion, type: :model do
 
   it { is_expected.to be_valid }
 
+  describe '#regions' do
+    it 'returns the regions' do
+      expect(step.regions).to be_an(Array)
+      expect(step.regions.first.code).to eq('UKC1')
+    end
+  end
+
   context 'when region_codes does not contain at least 1 code' do
     before do
       step.region_codes = []
