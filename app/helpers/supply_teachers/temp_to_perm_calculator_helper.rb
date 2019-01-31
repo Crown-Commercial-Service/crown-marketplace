@@ -47,7 +47,7 @@ module SupplyTeachers::TempToPermCalculatorHelper
 
   def display_chargeable_days_for_early_hire(calculator)
     t('supply_teachers.home.temp_to_perm_fee.early_hire_chargeable_days',
-      days: calculator.chargeable_working_days_based_on_early_hire)
+      count: calculator.chargeable_working_days_based_on_early_hire)
   end
 
   def display_working_days_required
