@@ -121,7 +121,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays chargeable days for lack of notice' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: 15)
+          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", count: 15)
         )
       end
 
@@ -308,7 +308,7 @@ RSpec.describe 'supply_teachers/home/temp_to_perm_fee.html.erb' do
 
       it 'displays chargeable days for lack of notice' do
         expect(rendered).to have_text(
-          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", days: 15)
+          I18n.t("#{i18n_key}.lack_of_notice_chargeable_days", count: 15)
         )
       end
 

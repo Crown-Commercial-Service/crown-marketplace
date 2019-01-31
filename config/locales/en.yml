@@ -402,7 +402,9 @@ en:
           other: 'Difference: %{count} working days'
         fees_are_negotiable: The amount shown is the maximum you’re likely to pay, but could be negotiated with the agency.
         header: Temp-to-perm fee
-        lack_of_notice_chargeable_days: 'Difference: %{days} working days'
+        lack_of_notice_chargeable_days:
+          one: 'Difference: 1 working day'
+          other: 'Difference: %{count} working days'
         notice_period_disclaimer: You may be charged more than the fee displayed, up to a maximum of %{max_fee}, if you don't notify the supplier of your intention to make the worker permanent by %{latest_notice_date}.
         notice_period_given: 'Notice period given: %{days} working days between %{notice_date} and %{hire_date}'
         notice_period_required: 'Notice period needed: %{days} working days'
