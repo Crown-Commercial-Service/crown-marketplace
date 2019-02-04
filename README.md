@@ -36,10 +36,10 @@ $ yarn install
 $ bundle
 ```
 
-To create the database:
+To create, migrate & seed the database:
 
 ```
-$ rake db:create
+$ rake db:setup
 ```
 
 ### Environment variables
