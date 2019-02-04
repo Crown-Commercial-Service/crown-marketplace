@@ -30,7 +30,8 @@ module SupplyTeachers
         format.html
         format.xlsx do
           spreadsheet = Spreadsheet.new(@branches, with_calculations: params[:calculations].present?)
-          render xlsx: spreadsheet.to_xlsx, filename: 'branches'
+          filename = "Shortlist of agencies#{params[:calculations].present? ? ' (with calculator)' : ''}"
+          render xlsx: spreadsheet.to_xlsx, filename: filename
         end
       end
     end
