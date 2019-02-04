@@ -344,7 +344,7 @@ en:
         inputs_header: Choices used to generate this list
         mark-up_explanation_html: Results are sorted by mark-up from lowest to highest. Mark-up is the percentage the agency charges on top of the charge for the worker. It includes things like overheads, the agencies’ profits and management charges.
         other_radius_html: 'Change this distance to: '
-        page_title: Suppliers
+        page_title: Agencies
         print: Print this page
         related_actions_html: Related actions
         results_found_html: "<strong>%{results}</strong> found"
