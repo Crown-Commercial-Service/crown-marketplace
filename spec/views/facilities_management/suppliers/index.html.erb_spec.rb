@@ -23,7 +23,7 @@ RSpec.describe 'facilities_management/suppliers/index.html.erb' do
     expect(rendered).to have_text('contract-value-range-text')
   end
 
-  it 'displays the number of suppliers in the lot' do
-    expect(rendered).to have_text('2 suppliers')
+  it 'displays the number of agencies in the lot' do
+    expect(rendered).to have_text('2 agencies')
   end
 end
