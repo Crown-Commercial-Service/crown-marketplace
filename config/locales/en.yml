@@ -322,11 +322,11 @@ en:
         calculate_markup_heading: Calculate agency fee
         distance_aria_label_html: Set the radius to %{radius_setting}
         do_next:
-          contact_supplier: contact the supplier of your choice from the list below to find a suitable, available worker and their daily rate
-          different_supplier: If you use a different supplier later on, you will need to sign another short order form.
+          contact_supplier: contact the agency of your choice from the list below to find a suitable, available worker and their daily rate
+          different_supplier: If you use a different agency later on, you will need to sign another short order form.
           header: What to do next
           sign_form_html: sign the <a href="%{form_url}">short order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Supply Teachers - Order Form Template (Short Form).docx’)
-          sign_once: You only need to sign the form once to use this supplier for the duration of the framework (which runs until 29 August 2020).
+          sign_once: You only need to sign the form once to use this agency for the duration of the framework (which runs until 29 August 2020).
         download: Download shortlist of agencies
         download_aria_label: Download shortlist as Microsoft Excel file
         download_with_calculator: Download shortlist (with markup calculator)
