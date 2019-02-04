@@ -22,7 +22,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
 
       it 'has the correct header row 1' do
         expect(worksheet[0].cells.map(&:value)).to eq [
-          'Supplier list'
+          'Agency list'
         ]
       end
 
@@ -84,7 +84,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
 
     describe '#sheet_name' do
       it 'returns the sheet name' do
-        expect(worksheet.sheet_name).to eq('Supplier shortlist')
+        expect(worksheet.sheet_name).to eq('Agency shortlist')
       end
     end
 
