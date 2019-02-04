@@ -7,7 +7,7 @@ class SupplyTeachers::Spreadsheet
     end
 
     def title
-      ['Supplier list']
+      ['Agency list']
     end
 
     def headers
@@ -31,7 +31,7 @@ class SupplyTeachers::Spreadsheet
 
   class Shortlist < DataDownload
     def sheet_name
-      'Supplier shortlist'
+      'Agency shortlist'
     end
 
     def title
