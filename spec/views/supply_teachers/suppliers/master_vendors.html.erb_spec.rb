@@ -9,6 +9,6 @@ RSpec.describe 'supply_teachers/suppliers/master_vendors.html.erb' do
 
   it 'displays the number of suppliers' do
     render
-    expect(rendered).to have_text(/0 suppliers/)
+    expect(rendered).to have_text(/0 agencies/)
   end
 end
