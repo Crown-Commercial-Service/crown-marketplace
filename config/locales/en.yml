@@ -430,8 +430,8 @@ en:
       managed_service_provider:
         answer_master_vendor: Master vendor managed service
         answer_neutral_vendor: Neutral vendor managed service
-        master_vendor_hint: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
-        neutral_vendor_hint: A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
+        master_vendor_hint: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other agencies who do.
+        neutral_vendor_hint: A neutral vendor only provides candidates from other agencies - they have no candidates of their own.
         page_title: What type of managed service do you want?
         question: What type of managed service do you want?
         question_hint: A managed service provider is a company that can manage all your temporary staff needs.
