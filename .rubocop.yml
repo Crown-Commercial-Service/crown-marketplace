@@ -65,6 +65,7 @@ Metrics/AbcSize:
     Max: 25 # TODO: Restore to '20'
     Exclude:
         - 'spec/**/*'
+        - 'app/controllers/supply_teachers/branches_controller.rb'
 
 Metrics/LineLength:
     Max: 120
