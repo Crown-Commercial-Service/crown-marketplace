@@ -4,15 +4,27 @@
 
 ### Ubuntu
 
+Install PostGIS
+
 ```
 sudo apt install postgresql
 sudo apt install postgresql-{postgresql-version}-postgis-{postgis-version}
 ```
 
+Install PhantomJS by following the instructions [in this gist](https://gist.github.com/julionc/7476620)
+
 ### MacOS
 
+Install PostGIS
+
 ```
-brew install postgis
+$ brew install postgis
+```
+
+Install PhantomJS (for Javascript tests)
+
+```
+$ brew install phantomjs
 ```
 
 ## Set up
@@ -24,10 +36,10 @@ $ yarn install
 $ bundle
 ```
 
-To create the database:
+To create, migrate & seed the database:
 
 ```
-$ rake db:create
+$ rake db:setup
 ```
 
 ### Environment variables
