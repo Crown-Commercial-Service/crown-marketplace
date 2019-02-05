@@ -64,6 +64,7 @@ RSpec.feature 'Supplier mark-up calculator', type: :feature do
       expect(page).to have_css('.supplier-record__worker-cost', text: '£115.38')
       expect(page).to have_css('.supplier-record__agency-fee', text: '£34.62')
     end
+    expect(page).to have_content('Calculated mark-up updated')
   end
 
   scenario 'Buyer can calculate the agency mark-up via AJAX', js: true do
