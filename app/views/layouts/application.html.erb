@@ -56,11 +56,14 @@
           <%= link_to_service_start_page %>
           <nav>
             <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+              <% if logged_in? %>
               <li class="govuk-header__navigation-item">
-                <% if logged_in? %>
-                  <%= button_to "Sign out", sign_out_path, class: 'ccs-header__signout' %>
-                <% end %>
+                <%= link_to 'Back to start', supply_teachers_path, class: 'govuk-header__link' %>
               </li>
+              <li class="govuk-header__navigation-item">
+                  <%= button_to "Sign out", sign_out_path, class: 'ccs-header__signout' %>
+              </li>
+              <% end %>
             </ul>
           </nav>
         </div>
