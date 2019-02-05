@@ -19,9 +19,8 @@ RSpec.describe 'supply_teachers/home/_avoid_paying_fees.html.erb' do
     let(:ideal_notice_date) { 5.months.ago }
     let(:ideal_hire_date) { 4.months.ago }
 
-    it 'displays a generic notice to notify the agency' do
-      expect(rendered).to have_content('give notice to the agency as soon as possible and')
-      expect(rendered).to have_content('make the worker permanent 4 working weeks after that date')
+    it 'does not display advice about notifying the agency' do
+      expect(rendered).not_to have_content('You could give notice to the agency')
     end
   end
 
