@@ -371,6 +371,7 @@ en:
         only_use_the_information: only use the information for buying services under the CCS framework agreement for supply teachers and temporary staff
         start_finding_supply_teachers: Start finding supply teachers and agency workers
         start_now: Start now
+        supported_by: 'Supported by:'
         tell_ccs_if_suspect: tell CCS if you suspect unauthorised access, copying, use or disclosure of the confidential information
         this_service_contains_pricing_information_html: This service contains pricing information for agencies on the <a href="%{url}" aria-label="Deal for schools hiring supply teachers and agency workers">supply teachers deal</a>. This is confidential and can be considered commercially sensitive.
         title: Find supply teachers and agency workers
