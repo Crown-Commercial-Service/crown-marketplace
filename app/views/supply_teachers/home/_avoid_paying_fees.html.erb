@@ -8,12 +8,6 @@
   </ul>
 <% else %>
   <p>
-    You could give notice to the agency on <%= @calculator.ideal_notice_date.to_formatted_s(:long_with_day) %> and make the worker permanent on <%= @calculator.ideal_hire_date.to_formatted_s(:long_with_day) %>
-    <% if @calculator.hiring_after_12_weeks? %>
-      to
-    <% else %>
-      so they've been in post for over 12 working weeks and you
-    <% end %>
-    provide 4 working weeks’ notice.
+    If you give notice to the agency on <%= @calculator.ideal_notice_date.to_formatted_s(:long_with_day) %>, and make the worker permanent on <%= @calculator.ideal_hire_date.to_formatted_s(:long_with_day) %> you will be charged £0.00 and avoid paying any temp-to-perm fee.
   </p>
 <% end %>
