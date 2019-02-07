@@ -29,8 +29,9 @@ $ccs_header_fg: govuk-colour("white");
 }
 
 .govuk-header__content {
-  display: flex;
-  justify-content: space-between;
+  display: block;
+  text-align: right;
+  margin-top: 2rem;
 }
 
 .govuk-header__link--service-name {
@@ -39,13 +40,18 @@ $ccs_header_fg: govuk-colour("white");
 
 .govuk-header__navigation  {
   text-align: right;
+  margin-top: 0.5rem;
 }
 
 .govuk-header__navigation-item {
   padding: 0;
 }
 
-.ccs-header__signout {
+.govuk-header__navigation-item:last-child {
+  margin-right: 0;
+}
+
+.ccs-header__signout, .govuk-header__navigation-item a {
   background: none;
   border: 0;
   box-shadow: none;

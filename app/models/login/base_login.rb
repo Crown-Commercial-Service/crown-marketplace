@@ -30,7 +30,7 @@ module Login
     def log_attempt(result, framework)
       success = result ? 'successful' : 'unsuccessful'
       Rails.logger.info(
-        "Login attempt to #{framework} from #{auth_provider} > email: #{@email}, result: #{success}"
+        "Login attempt to #{framework} from #{auth_provider} > email: #{Login.redact_email(@email)}, result: #{success}"
       )
     end
   end

@@ -303,8 +303,8 @@ en:
         title: Not permitted
   suppliers:
     unit:
-      one: supplier
-      other: suppliers
+      one: agency
+      other: agencies
   supply_teachers:
     branches:
       branch:
@@ -322,16 +322,16 @@ en:
         calculate_markup_heading: Calculate agency fee
         distance_aria_label_html: Set the radius to %{radius_setting}
         do_next:
-          contact_supplier: contact the supplier of your choice from the list below to find a suitable, available worker and their daily rate
-          different_supplier: If you use a different supplier later on, you will need to sign another short order form.
+          contact_supplier: contact the agency of your choice from the list below to find a suitable, available worker and their daily rate
+          different_supplier: If you use a different agency later on, you will need to sign another short order form.
           header: What to do next
           sign_form_html: sign the <a href="%{form_url}">short order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Supply Teachers - Order Form Template (Short Form).docx’)
-          sign_once: You only need to sign the form once to use this supplier for the duration of the framework (which runs until 29 August 2020).
-        download: Download shortlist of suppliers
+          sign_once: You only need to sign the form once to use this agency for the duration of the framework (which runs until 29 August 2020).
+        download: Download shortlist of agencies
         download_aria_label: Download shortlist as Microsoft Excel file
         download_with_calculator: Download shortlist (with markup calculator)
         download_with_calculator_aria_label: Download shortlist (with markup calculator) as Microsoft Excel file
-        header: Supplier list
+        header: Agency list
         inputs:
           job_type: Job type
           looking_for: Looking for
@@ -344,7 +344,7 @@ en:
         inputs_header: Choices used to generate this list
         mark-up_explanation_html: Results are sorted by mark-up from lowest to highest. Mark-up is the percentage the agency charges on top of the charge for the worker. It includes things like overheads, the agencies’ profits and management charges.
         other_radius_html: 'Change this distance to: '
-        page_title: Suppliers
+        page_title: Agencies
         print: Print this page
         related_actions_html: Related actions
         results_found_html: "<strong>%{results}</strong> found"
@@ -371,6 +371,7 @@ en:
         only_use_the_information: only use the information for buying services under the CCS framework agreement for supply teachers and temporary staff
         start_finding_supply_teachers: Start finding supply teachers and agency workers
         start_now: Start now
+        supported_by: 'Supported by:'
         tell_ccs_if_suspect: tell CCS if you suspect unauthorised access, copying, use or disclosure of the confidential information
         this_service_contains_pricing_information_html: This service contains pricing information for agencies on the <a href="%{url}" aria-label="Deal for schools hiring supply teachers and agency workers">supply teachers deal</a>. This is confidential and can be considered commercially sensitive.
         title: Find supply teachers and agency workers
@@ -389,27 +390,31 @@ en:
         you_will_need_your_dfe_sign_in: To use the service, you will need your DFE Sign-in email and password. If you don’t have one you may be able to get one, or to access an offline version of the service.
         your_schools_postcode: your school’s postcode
       temp_to_perm_fee:
-        after_12_weeks_and_enough_notice: Based on the information you provided, you’re taking the worker on after 12 working weeks and giving 4 weeks’ notice, so you can’t be charged a fee under this deal.
-        after_12_weeks_and_no_notice_date: Based on the information you provided, you’re taking the worker on after 12 working weeks, but it’s not clear if you’re providing the supplier with 4 weeks’ notice.
-        after_12_weeks_and_not_enough_notice: Based on the information you provided, you’re taking the worker on after 12 working weeks, but you’re not giving 4 weeks’ notice, so you can be charged a fee.
-        between_9_and_12_weeks_and_enough_notice: Based on the information you provided, you’re taking the worker on within the first 12 working weeks of their contract, so you can be charged a fee even though you’ve given 4 weeks’ notice.
-        between_9_and_12_weeks_and_no_notice_date: Based on the information you provided, you’re taking on the worker permanently within their first 12 working weeks, so you can be charged a fee.
-        between_9_and_12_weeks_and_not_enough_notice: Based on the information you provided, you’re taking on the worker within their first 12 working weeks and are not giving 4 weeks’ notice, so you can be charged a fee.
-        daily_supplier_fee: 'Supplier daily fee for the worker: %{fee} (based on the %{markup_rate} mark-up of the %{day_rate} daily cost for the worker)'
+        after_12_weeks_and_enough_notice: Based on the information you provided, you’re taking the worker on after 12 working weeks and giving 4 working weeks’ notice, so you can’t be charged a fee under this deal.
+        after_12_weeks_and_no_notice_date: Based on the information you provided, you’re taking the worker on permanently after 12 working weeks, but it’s not clear if you’re providing the agency with 4 working weeks’ notice.
+        after_12_weeks_and_not_enough_notice: Based on the information you provided, you’re taking the worker on after 12 working weeks, but you’re not giving 4 working weeks’ notice, so you can be charged a fee.
+        between_9_and_12_weeks_and_enough_notice: Based on the information you provided, you’re taking the worker on within the first 12 working weeks of their contract, so you can be charged a fee even though you’ve given 4 working weeks’ notice.
+        between_9_and_12_weeks_and_no_notice_date: Based on the information you provided, you’re taking the worker on permanently within their first 12 working weeks, but it’s not clear if you’re providing the agency with 4 working weeks’ notice.
+        between_9_and_12_weeks_and_not_enough_notice: Based on the information you provided, you’re taking the worker on within their first 12 working weeks and are not giving 4 working weeks’ notice, so you can be charged a fee.
+        daily_supplier_fee: 'Agency’s daily fee for the worker: %{fee} (based on the %{markup_rate} mark-up of the %{day_rate} daily cost for the worker)'
         daily_supplier_fee_pro_rata: 'Pro rata supplier daily fee for the worker: %{fee} (based on the worker working %{days_per_week} days per week)'
-        early_hire_chargeable_days: 'Days chargeable for early-hire: %{days}'
+        early_hire_chargeable_days:
+          one: 'Difference: 1 working day'
+          other: 'Difference: %{count} working days'
         fees_are_negotiable: The amount shown is the maximum you’re likely to pay, but could be negotiated with the agency.
         header: Temp-to-perm fee
-        lack_of_notice_chargeable_days: 'Days chargeable for lack of notice: %{days}'
+        lack_of_notice_chargeable_days:
+          one: 'Difference: 1 working day'
+          other: 'Difference: %{count} working days'
         notice_period_disclaimer: You may be charged more than the fee displayed, up to a maximum of %{max_fee}, if you don't notify the supplier of your intention to make the worker permanent by %{latest_notice_date}.
         notice_period_given: 'Notice period given: %{days} working days between %{notice_date} and %{hire_date}'
-        notice_period_required: 'Notice period required: %{days} working days'
+        notice_period_required: 'Notice period needed: %{days} working days'
         panel_body: Based on the information provided you could be charged
-        total_chargeable_days: 'Total chargeable days (capped at 4 weeks): %{days}'
-        total_fee: 'Fee chargeable by supplier: %{fee}'
+        total_chargeable_days: 'Total chargeable days: %{days}'
+        total_fee: 'Fee the agency can charge: %{fee}'
         within_first_8_weeks: Based on the information you provided, you’re taking the worker on permanently within their first 12 working weeks, so you can be charged a fee.
         working_days: 'Working days between contract start (%{contract_start_date}) and hire date (%{hire_date}): %{days}'
-        working_days_required: 'Minimum contract required: 60 working days (12 weeks)'
+        working_days_required: 'Minimum contract: 60 working days (12 weeks)'
     journey:
       agency_payroll:
         page_title: School postcode and worker requirements
@@ -426,8 +431,8 @@ en:
       managed_service_provider:
         answer_master_vendor: Master vendor managed service
         answer_neutral_vendor: Neutral vendor managed service
-        master_vendor_hint: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other suppliers who do.
-        neutral_vendor_hint: A neutral vendor only provides candidates from other suppliers - they have no candidates of their own.
+        master_vendor_hint: These supply whatever candidates they can. Where they don’t have a suitable candidate themselves, they find other agencies who do.
+        neutral_vendor_hint: A neutral vendor only provides candidates from other agencies - they have no candidates of their own.
         page_title: What type of managed service do you want?
         question: What type of managed service do you want?
         question_hint: A managed service provider is a company that can manage all your temporary staff needs.
@@ -465,9 +470,9 @@ en:
         holiday_2_start_date_question_hint: Leave this blank if there weren’t any holidays between the contract start date and the hire date
         markup_percentage_icon: "%"
         markup_rate_question: What mark-up does the agency charge for the worker?
-        markup_rate_question_hint: This is the percentage fee you agreed with the supplier. For example, 20
-        notice_date_question: What date did you notify the supplier that you wish to hire the worker?
-        notice_date_question_hint: Leave this blank if you haven’t yet notified the supplier
+        markup_rate_question_hint: This is the percentage fee you agreed with the agency. For example, 20
+        notice_date_question: What date did you notify the agency that you wish to hire the worker?
+        notice_date_question_hint: Leave this blank if you haven’t yet notified the agency
       worker_type:
         answer_agency_supplied: 'Yes'
         answer_nominated_worker: No, I have a worker I want the agency to manage (a ‘nominated worker’)
@@ -477,24 +482,24 @@ en:
     suppliers:
       master_vendor:
         column1: Job type
-        column2: Supplier mark-up
+        column2: Agency mark-up
       master_vendors:
         do_next:
           competition_online_html: you can also do this online, <a href="%{esourcing_url}">using CCS’s esourcing tool</a>
-          further_competition_html: run a further competition to select a supplier - there is <a href="%{advice_url}">advice from CCS</a> on how to do this -
+          further_competition_html: run a further competition to select an agency - there is <a href="%{advice_url}">advice from CCS</a> on how to do this -
           header: What to do next
           more_help: Contact supplyteachers@crowncommercial.gov.uk if you need more help running a further competition.
-          sign_form_html: select a supplier and <a href="%{form_url}">sign the full version order form</a> listed in the documents section of the CCS framework as ‘RM3826 Supply Teachers - Order Form Template (Full Version) V1.docx’
+          sign_form_html: select an agency and <a href="%{form_url}">sign the full version order form</a> listed in the documents section of the CCS framework as ‘RM3826 Supply Teachers - Order Form Template (Full Version) V1.docx’
         header: Master vendor managed service providers
         page_title: Master vendor managed service providers
       neutral_vendors:
         daily_fee_html: A %{daily_fee} daily fee is charged each day in addition to this mark-up rate. This is charged if the agency finds you a worker, or if they take on someone you have them to manage (a ‘nominated worker’).
         do_next:
-          contact_supplier: contact the supplier for this worker and for all your future temporary recruitment needs
+          contact_supplier: contact the agency for this worker and for all your future temporary recruitment needs
           header: What to do next
           sign_form_html: sign the <a href="%{form_url}">full version order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Supply Teachers - Order Form Template (Full Version).docx’)
         header: Neutral vendor managed service providers
-        mark_up_explanation_html: The mark-up varies for all other workers. Contact the supplier to find out the mark-up rate for the type of worker you need.
+        mark_up_explanation_html: The mark-up varies for all other workers. Contact the agency to find out the mark-up rate for the type of worker you need.
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers

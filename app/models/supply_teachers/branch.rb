@@ -21,7 +21,8 @@ module SupplyTeachers
 
     def self.search(point, rates:, radius:)
       metres = DistanceConverter.miles_to_metres(radius)
-      Branch.near(point, within_metres: metres)
+      Branch.includes(:supplier)
+            .near(point, within_metres: metres)
             .joins(supplier: [:rates])
             .merge(rates)
             .order(Rate.arel_table[:mark_up].asc)

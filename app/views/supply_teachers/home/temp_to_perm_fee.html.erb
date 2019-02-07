@@ -26,10 +26,10 @@
         <p>The contract start date you have given, <%= @calculator.contract_start_date.to_formatted_s(:long) %>, is before the National Deal was awarded. The terms of the deal may not apply to this worker, unless you have since agreed with the supplier that they should.</p>
       <% end %>
 
-      <p>There is no fee for making a temporary member of staff permanent as long as:<p>
+      <p>There is no fee to make a temporary member of staff permanent as long as:<p>
       <ul>
-        <li>the worker has been in post for over 12 weeks, and</li>
-        <li>you give 4 weeks’ notice to the agency</li>
+        <li>the worker has been in post for over 12 working weeks, and</li>
+        <li>you give 4 working weeks’ notice to the agency</li>
       </ul>
 
       <% if @calculator.hiring_after_12_weeks? %>

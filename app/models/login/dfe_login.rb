@@ -1,7 +1,7 @@
 module Login
   class DfeLogin < Login::BaseLogin
     def self.from_omniauth(hash)
-      Rails.logger.info("Login attempt from dfe > OmniAuth hash extra #{hash.dig('extra').inspect}")
+      Rails.logger.info("Login attempt from dfe > OmniAuth hash #{Login.redact_email(hash.inspect)}")
       school_type_id = hash.dig('extra', 'raw_info', 'organisation', 'type', 'id')
       organisation_category = hash.dig('extra', 'raw_info', 'organisation', 'category', 'id')
       new(
@@ -50,7 +50,7 @@ module Login
         organisation_category.non_profit?
       rescue NoMethodError
         Rails.logger.info(
-          "Failed login from dfe > email #{@email}, \
+          "Failed login from dfe > email #{Login.redact_email(@email)}, \
 school type #{@extra['school_type_id'].inspect}, \
 organisation category #{@extra['organisation_category'].inspect}"
         )

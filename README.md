@@ -4,15 +4,27 @@
 
 ### Ubuntu
 
+Install PostGIS
+
 ```
 sudo apt install postgresql
 sudo apt install postgresql-{postgresql-version}-postgis-{postgis-version}
 ```
 
+Install PhantomJS by following the instructions [in this gist](https://gist.github.com/julionc/7476620)
+
 ### MacOS
 
+Install PostGIS
+
 ```
-brew install postgis
+$ brew install postgis
+```
+
+Install PhantomJS (for Javascript tests)
+
+```
+$ brew install phantomjs
 ```
 
 ## Set up
@@ -24,10 +36,10 @@ $ yarn install
 $ bundle
 ```
 
-To create the database:
+To create, migrate & seed the database:
 
 ```
-$ rake db:create
+$ rake db:setup
 ```
 
 ### Environment variables
@@ -256,6 +268,14 @@ classes.
   make assertions about rendered HTML.
 * All the specs are run as part of the default Rake task, but the standard
   RSpec-provided Rake tasks also exist for running sub-groups of the specs.
+
+#### Code coverage
+
+Code coverage is measured by [simplecov](https://github.com/colszowka/simplecov)
+
+After running the Rspec tests, open [coverage/index.html](coverage/index.html) in a browser to see the code coverage percentage.
+
+Note that some lines are excluded from simplecov with the `# :nocov:` instruction.
 
 ### Continuous integration & deployment
 

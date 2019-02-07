@@ -44,6 +44,12 @@ RSpec.describe SupplyTeachers::JobType, type: :model do
     end
   end
 
+  describe '.role?' do
+    it 'returns the role boolean' do
+      expect(first_job_type.role?).to eq(true)
+    end
+  end
+
   describe '.roles' do
     it 'returns all role job types' do
       expect(described_class.roles.count).to eq(8)
