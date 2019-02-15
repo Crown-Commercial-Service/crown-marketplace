@@ -16,3 +16,4 @@
 //= require google_analytics
 //= require cookie_banner
 //= require supplier_markup_calculator
+//= require locations
