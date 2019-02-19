@@ -1,0 +1,31 @@
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
+
+      <p class="govuk-body"><%= t('.use_this_service_to.title') %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.use_this_service_to.find_education_and_skills_funding_agency') %></li>
+        <li><%= t('.use_this_service_to.produce_a_list_of_CCS_approved_training_providers') %></li>
+        <li><%= t('.use_this_service_to.review_and_use_ready_made_terms') %></li>
+      </ul>
+
+      <h2 class="govuk-heading-m"><%= t('.before_you_start') %></h2>
+
+      <p class="govuk-body"><%= t('.you_will_need_to_have') %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.belong_to_a_public_sector_organisation_html', url: 'https://www.gov.uk/guidance/list-a-teaching-job-at-your-school-on-teaching-vacancies') %>
+        <li><%= t('.have_an_account_with_Crown_Marketplace_html', url: 'https://www.gov.uk/guidance/list-a-teaching-job-at-your-school-on-teaching-vacancies') %>
+        <li><%= t('.know_the_apprenticeship_standards') %></li>
+        <li><%= t('.know_how_you_would_like_the_training_to_be_delivered') %></li>
+        <li><%= t('.know_weather_you_would_like_shared_training') %></li>
+      </ul>
+
+      <%= link_to t('.start_now'), journey_start_path(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.start_finding_supply_teachers') %>
+
+    </div>
+  </div>
