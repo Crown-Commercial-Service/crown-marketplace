@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
+    get '/value-band', to: 'select_locations#select_location'
     get '/select-locations', to: 'select_locations#select_location'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
