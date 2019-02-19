@@ -1,5 +1,8 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  namespace :facilities_management do
+    get 'select_services/select_services'
+  end
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
