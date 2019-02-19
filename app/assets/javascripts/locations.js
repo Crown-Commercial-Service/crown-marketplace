@@ -1,32 +1,41 @@
 $(() => {
 
     /* govuk-accordion__controls event handlers */
-    let selectedLocations = [];
+    let selectedLocations = JSON.parse(localStorage.getItem('locations')) || [];
 
     /* add a link to select all on the accordion */
     $('.govuk-accordion__controls').append("<a role='button' class='govuk-accordion__open-all' data-no-turbolink id=\"select-all-link\" name=\"select-all-link\" href=\"\">Select all</a>");
 
-    const initialize = () => {
+    const initialize = (() => {
+
+        clearAll();
+
+        /* Load and display cached values */
+        if (selectedLocations) {
+            selectedLocations.forEach((value, index, array) => {
+                $('input#' + value).click();
+            });
+        }
 
         /* set the initial count */
         updateLocationCount();
-    };
+    });
 
     /* Update the count of selected locations */
-    const updateLocationCount = () => {
+    const updateLocationCount = (() => {
         let count = $("#selected-fm-locations li").length;
 
         $('#selected-location-count').text(count);
-    };
+    });
 
     /* remove a location from the selected list */
-    const removeSelectedItem = (id) => {
+    const removeSelectedItem = ((id) => {
         $('li#' + id).remove();
         id = id.replace('_selected', '');
         $("input#" + id).removeAttr("checked");
 
         /* remove from the array that is saved */
-        let filtered = selectedLocations.filter((value, index, arr)=>{
+        let filtered = selectedLocations.filter((value, index, arr) => {
             if (value !== id) {
                 return true;
             } else {
@@ -34,20 +43,23 @@ $(() => {
             }
         });
 
-
         selectedLocations = filtered;
 
         updateLocationCount();
-    };
+    });
 
-    /* remove all locations from the list */
-    $('#remove-all-link').click(function (e) {
-        e.preventDefault();
-        $('li').remove();
+    /* uncheck all check boxes and clear list */
+    const clearAll = (() => {
+        $("#selected-fm-locations li").remove();
         $("input:checkbox").removeAttr("checked");
 
         updateLocationCount();
+    });
 
+    /* Click handler to remove all locations */
+    $('#remove-all-link').click((e) => {
+        e.preventDefault();
+        clearAll();
     });
 
     /* click handler for check boxes */
@@ -80,22 +92,26 @@ $(() => {
     });
 
     /* click handler for select all on accordion */
-    $('#select-all-link').click(function (event) {
-        event.preventDefault();
+    $('#select-all-link').click((e) => {
+        e.preventDefault();
+
+        clearAll();
 
         $('input:checkbox').attr('checked', 'checked');
         $('input:checkbox').click();
-        updateLocationCount();
+
         sortUnorderedList('selected-fm-locations');
+
+        updateLocationCount();
 
     });
 
-    const sortUnorderedList = (listID) => {
+    /* Sort an un-ordered list */
+    const sortUnorderedList = ((listID) => {
         let list, i, switching, b, shouldSwitch;
         list = document.getElementById(listID);
         switching = true;
-        /* Make a loop that will continue until
-        no switching has been done: */
+        /* Loop until no switching has been done: */
         while (switching) {
             // Start by saying: no switching is done:
             switching = false;
@@ -120,10 +136,16 @@ $(() => {
                 switching = true;
             }
         }
-    };
+    });
 
+    $('#save-locations-link').click((e) => {
+
+        if (localStorage) {
+            const selected = JSON.stringify(selectedLocations);
+            localStorage.setItem('locations', selected);
+        }
+    });
 
     initialize();
-
 
 });
