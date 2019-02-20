@@ -106,6 +106,45 @@ en:
           attributes:
             postcode:
               invalid_postcode: Enter a valid postcode
+  apprenticeships:
+    home:
+      index:
+        before_you_start: Before you start
+        belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a Digital Apprenticeship Service (DAS) account. More information can be <a href="%{url}" aria-label="Digital Apprenticeship Service (DAS)">here</a>
+        have_an_account_with_Crown_Marketplace_html: have an account with Crown Marketplace. You can <a href="%{url}" aria-label="Crown Marketplace">sign up here</a>
+        know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
+        know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
+        know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
+        start_finding_apprenticeships: Start finding apprenticeships training and related services
+        title: Find apprenticeship training and related services
+        use_this_service_to:
+          find_education_and_skills_funding_agency: find Education and Skills Funding Agency (ESFA) registered training providers that can deliver apprenticeship standards, frameworks and related services
+          produce_a_list_of_CCS_approved_training_providers: produce a list of Crown Commercial Service-approved training providers based on your requirements, for your region(s)
+          review_and_use_ready_made_terms: review and use ready-made terms and conditions
+          title: 'Use this service to:'
+        you_will_need_to_have: 'To use this service, you will need to:'
+      search:
+        page_title: Search for apprenticeship
+        search_label: Search for apprenticeship
+        search_hint: Search by keyword or apprenticeship name / number, or job title
+        search_button: Search
+      search_results:
+        page_title: Search results
+        header: Search results
+        results_found_html: 'There are <strong>%{results}</strong> apprenticeships matching your search for "<strong>%{search}</strong>"'
+        results_found_hint: Click on the apprenticeship to add your requirements and find training providers.
+        keyword_search_label: Keyword search
+        apply_filters_label: Apply filters
+        clear_filters_link: Clear filters
+        levels_label: Levels
+        explain_levels_link: Explain levels
+        routes_label: Routes
+        sort_by_label: Sort by
+        result_level_label: 'Level:'
+        providers_label: Provider(s)
+        next: Next
+
+    page_section: Find apprenticeship training and related services
   common:
     submit: Continue
   errors:
@@ -173,10 +212,10 @@ en:
       - LLP
   home:
     index:
+      apprenticeships_link: Find apprenticeship training and related services
       facilities_management_link: Find a facilities management supplier
       management_consultancy_link: Find management consultancy services
       supply_teachers_link: Find supply teachers and agency workers
-      apprenticeships_link: Find apprenticeship training and related services
   journey_step:
     supply_teachers:
       looking_for:
@@ -504,20 +543,3 @@ en:
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
-  apprenticeships:
-    page_section: Find apprenticeship training and related services
-    home:
-      index:
-        title: Find apprenticeship training and related services
-        use_this_service_to:
-          title: 'Use this service to:'
-          find_education_and_skills_funding_agency: find Education and Skills Funding Agency (ESFA) registered training providers that can deliver apprenticeship standards, frameworks and related services
-          produce_a_list_of_CCS_approved_training_providers: produce a list of Crown Commercial Service-approved training providers based on your requirements, for your region(s)
-          review_and_use_ready_made_terms: review and use ready-made terms and conditions
-        before_you_start: Before you start
-        you_will_need_to_have: 'To use this service, you will need to:'
-        belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a Digital Apprenticeship Service (DAS) account. More information can be <a href="%{url}" aria-label="Digital Apprenticeship Service (DAS)">here</a>
-        have_an_account_with_Crown_Marketplace_html: have an account with Crown Marketplace. You can <a href="%{url}" aria-label="Crown Marketplace">sign up here</a>
-        know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
-        know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
-        know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
