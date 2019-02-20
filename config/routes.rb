@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   namespace 'apprenticeships', path: 'apprenticeships' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
+    get '/search', to: 'home#search'
+    get '/search_results', to: 'home#search_results'
   end
 
   get '/errors/404'

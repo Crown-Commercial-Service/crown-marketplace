@@ -1,0 +1,15 @@
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+<%= form_tag apprenticeships_search_results_path, method: :get do %>
+
+  <label class="govuk-label govuk-label--m" for="search">
+    <%= t('.search_label') %>
+  </label>
+  <span class="govuk-hint">
+    <%= t('.search_hint') %>
+  </span>
+  <%= text_field_tag :search, params[:search], class: 'govuk-input govuk-input--width-30' %>
+  <br>
+  <%= submit_tag t('.search_button'), class: 'govuk-button govuk-!-margin-top-7' %>
+<% end %>

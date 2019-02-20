@@ -1,0 +1,102 @@
+<%= content_for :page_title, t('.page_title')  %>
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
+
+    <p class="govuk-body">
+        <%= t('.results_found_html', results: 55, search: params[:search]) %>
+    </p>
+    <p><%= t('.results_found_hint') %></p>
+
+    <%= form_tag apprenticeships_search_path, method: :get, class: 'supplier-record__calculator-form' do %>
+      <div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-one-third">
+          <div class="cmp-sidebar">
+            <h2 class="govuk-heading-s"><%= t('.keyword_search_label') %></h2>
+            <%= text_field_tag :search, params[:search], class: 'govuk-input' %>
+          </div>
+
+          <h2 class="govuk-heading-m"><%= t('.apply_filters_label') %></h2>
+
+          <%= link_to t('.clear_filters_link'), apprenticeships_search_path, class: 'ccs-no-print' %>
+
+          <div class="cmp-sidebar">
+            <h2 class="govuk-heading-s"><%= t('.levels_label') %></h2>
+
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                <div class="govuk-checkboxes">
+                  <% levels.each do |level| %>
+                    <div class="govuk-checkboxes__item">
+                      <%= check_box_tag(
+                              "levels[]",
+                              level,
+                              false,
+                              class: "govuk-checkboxes__input",
+                              id: "level_#{level}"
+                          ) %>
+                      <label class="govuk-label govuk-checkboxes__label" for="level_<%= level %>">
+                        <%= level %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+            <details class="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  <%= t('.explain_levels_link') %>
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <%= t('.explain_levels_text') %>
+              </div>
+            </details>
+          </div>
+          <br>
+          <div class="cmp-sidebar">
+            <h2 class="govuk-heading-s"><%= t('.routes_label') %></h2>
+
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                <div class="govuk-checkboxes">
+                  <% routes.each do |route| %>
+                    <div class="govuk-checkboxes__item">
+                      <%= check_box_tag(
+                              "routes[]",
+                              route,
+                              false,
+                              class: "govuk-checkboxes__input",
+                              id: "route_#{route}"
+                          ) %>
+                      <label class="govuk-label govuk-checkboxes__label" for="route_<%= route %>">
+                        <%= route %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+          <div>
+            <h2 class="govuk-heading-m"><%= t('.sort_by_label') %></h2>
+            <%= select_tag :sort, options_for_select(sort_option), class: 'govuk-select' %>
+
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <% results.each do |result| %>
+              <%= render 'search_apprenticeship', result: result %>
+            <% end %>
+
+            <%= link_to t('.next'), '#', class: 'govuk-link' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
