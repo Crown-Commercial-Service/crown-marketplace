@@ -125,25 +125,24 @@ en:
         you_will_need_to_have: 'To use this service, you will need to:'
       search:
         page_title: Search for apprenticeship
-        search_label: Search for apprenticeship
-        search_hint: Search by keyword or apprenticeship name / number, or job title
         search_button: Search
+        search_hint: Search by keyword or apprenticeship name / number, or job title
+        search_label: Search for apprenticeship
       search_results:
-        page_title: Search results
-        header: Search results
-        results_found_html: 'There are <strong>%{results}</strong> apprenticeships matching your search for "<strong>%{search}</strong>"'
-        results_found_hint: Click on the apprenticeship to add your requirements and find training providers.
-        keyword_search_label: Keyword search
         apply_filters_label: Apply filters
         clear_filters_link: Clear filters
-        levels_label: Levels
         explain_levels_link: Explain levels
+        header: Search results
+        keyword_search_label: Keyword search
+        levels_label: Levels
+        next: Next
+        page_title: Search results
+        providers_label: Provider(s)
+        result_level_label: 'Level:'
+        results_found_hint: Click on the apprenticeship to add your requirements and find training providers.
+        results_found_html: There are <strong>%{results}</strong> apprenticeships matching your search for "<strong>%{search}</strong>"
         routes_label: Routes
         sort_by_label: Sort by
-        result_level_label: 'Level:'
-        providers_label: Provider(s)
-        next: Next
-
     page_section: Find apprenticeship training and related services
   common:
     submit: Continue
