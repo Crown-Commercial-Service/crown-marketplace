@@ -128,7 +128,7 @@
           <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><strong><%= t('.overall_ofsted_rating_label') %></strong></td>
-            <td class="govuk-table__cell"><%= @provider.overall_ofsted %> <%= t('.view_report_html', url: "#") %></td>
+            <td class="govuk-table__cell"><%= @provider.overall_ofsted %> (<%= link_to t('.view_report'), '#' %>)</td>
           </tr>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><strong><%= t('.experience_in_delivering_apprenticeships_label') %></strong></td>

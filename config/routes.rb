@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     get '/search', to: 'home#search'
     get '/search_results', to: 'home#search_results'
     get '/training_provider', to: 'home#training_provider'
+    get '/training_provider_list', to: 'home#training_provider_list'
   end
 
   get '/errors/404'

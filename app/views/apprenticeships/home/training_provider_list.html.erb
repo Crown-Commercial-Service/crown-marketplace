@@ -1,0 +1,81 @@
+<%= content_for :page_title, t('.page_title')  %>
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m"><%= t('.subtitle') %></h2>
+        <p><%= link_to t('.download_file_info') %></p>
+        <p><%= t('.other_documents_title') %></p>
+        <p><%= link_to t('.basic_terms_and_conditions') %></p>
+        <p><%= link_to t('.customer_guidance_template') %></p>
+        <h2 class="govuk-heading-m"><%= t('.choices_used') %></h2>
+        <h3 class="govuk-heading-m"><%= t('.requirements') %></h3>
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.apprenticeship_standard') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.standard %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.apprenticeship_level') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.level %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.help_with_recruiting') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.help_with_recruiting %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.funding_band') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.funding_band %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.minimum_number') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.minimum_number %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.minimum_ofsted') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.minimum_ofsted %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.training_in_multiple_locations') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.training_in_multiple_locations %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.need_to_customise') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.need_to_customise %></td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 class="govuk-heading-m"><%= t('.filters_used') %></h3>
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.delivery_method') %></strong></td>
+              <td class="govuk-table__cell"><%= simple_format(@list.delivery_method) %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.time_demand') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.time_demand %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.classroom_sharing') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.classroom_sharing %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><strong><%= t('.training_availability') %></strong></td>
+              <td class="govuk-table__cell"><%= @list.training_availability %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <%= link_to t('.start_new_search'), apprenticeships_search_path, class: 'govuk-button' %>
+    <br>
+    <%= link_to t('.print_this_page'), 'javascript:window.print()' %>
+  </div>
+</div>

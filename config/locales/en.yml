@@ -192,9 +192,35 @@ en:
         training_availability_public_label: Public
         training_information_tab: Training information
         training_information_title: Training information
-        view_report_html: (<a href="%{url}">view report</a>)
+        view_report: view report
         website: 'Website:'
         workplace_based_label: Workplace based
+      training_provider_list:
+        page_title: Download the training provider list
+        title: Download the training provider list
+        subtitle: You can now download a training provider list and complete this procurement offline via a further competition.
+        info: This list will only be valid for 48hrs, as supplier information is continually being updated
+        download_file_info: Download training provider list as comma-separated values
+        other_documents_title: The following documents may also be of help
+        basic_terms_and_conditions: Basic terms and conditions
+        customer_guidance_template: Customer guidance template
+        choices_used: Choices used to generate your shortlist
+        requirements: Requirements
+        apprenticeship_standard: Apprenticeship Standard
+        apprenticeship_level: Apprenticeship Level
+        help_with_recruiting: Help with recruiting the apprentices
+        funding_band: Funding band
+        minimum_number: Minimum number of apprentices
+        minimum_ofsted: Minimum Ofsted rating
+        training_in_multiple_locations: Training in multiple locations
+        need_to_customise: Need to customise training
+        filters_used: Filters used
+        delivery_method: Delivery method
+        time_demand: Time demand
+        classroom_sharing: Classroom sharing
+        training_availability: Training availability
+        start_new_search: Start new search
+        print_this_page: Print this page
     page_section: Find apprenticeship training and related services
   common:
     submit: Continue
