@@ -56,6 +56,24 @@ module Apprenticeships
       )
     end
 
+    def training_provider_list
+      @list = OpenStruct.new(
+        standard: 'Building services design engineer',
+        level: 6,
+        help_with_recruiting: 'Yes',
+        funding_band: 'Above band maximum',
+        minimum_number: 30,
+        minimum_ofsted: '2 - Good',
+        training_in_multiple_locations: 'No',
+        need_to_customise: 'No',
+        delivery_method: 'Classroom based
+                          Blended',
+        time_demand: 'Day release',
+        classroom_sharing: 'Closed',
+        training_availability: 'Scheduled'
+      )
+    end
+
     private
 
     def set_back_path
