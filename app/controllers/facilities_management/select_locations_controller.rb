@@ -1,5 +1,5 @@
 class FacilitiesManagement::SelectLocationsController < ApplicationController
-  require_permission :none, only: :select_location
+  require_permission :facilities_management, only: :select_location
 
   def select_location
 

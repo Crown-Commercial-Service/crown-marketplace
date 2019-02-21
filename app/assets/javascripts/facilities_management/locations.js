@@ -1,10 +1,15 @@
+/*
+* filename: location.js
+* Description: Click handlers for the select location page
+* */
+
 $(() => {
 
     /* govuk-accordion__controls event handlers */
     let selectedLocations = JSON.parse(localStorage.getItem('locations')) || [];
 
     /* add a link to select all on the accordion */
-    $('.govuk-accordion__controls').append("<a role='button' class='govuk-accordion__open-all' data-no-turbolink id=\"select-all-link\" name=\"select-all-link\" href=\"\">Select all</a>");
+    $('#region-accordion .govuk-accordion__controls').append("<a role='button' class='govuk-accordion__open-all' data-no-turbolink id=\"select-all-link\" name=\"select-all-link\" href=\"\">Select all</a>");
 
     const initialize = (() => {
 
@@ -51,7 +56,7 @@ $(() => {
     /* uncheck all check boxes and clear list */
     const clearAll = (() => {
         $("#selected-fm-locations li").remove();
-        $("input:checkbox").removeAttr("checked");
+        $("#region-accordion input:checkbox").removeAttr("checked");
 
         updateLocationCount();
     });
@@ -63,7 +68,7 @@ $(() => {
     });
 
     /* click handler for check boxes */
-    $('.govuk-checkboxes__input').click((e) => {
+    $('#region-accordion .govuk-checkboxes__input').click((e) => {
 
         let labelID = '#' + e.target.id + '_label';
         let val = $(labelID)[0].innerText;
@@ -86,8 +91,10 @@ $(() => {
             removeSelectedItem(selectedID);
         }
 
+        isValid();
+
         updateLocationCount();
-        sortUnorderedList('selected-fm-locations');
+        common.sortUnorderedList('selected-fm-locations');
 
     });
 
@@ -100,49 +107,37 @@ $(() => {
         $('input:checkbox').attr('checked', 'checked');
         $('input:checkbox').click();
 
-        sortUnorderedList('selected-fm-locations');
+        common.sortUnorderedList('selected-fm-locations');
+
+        isValid();
 
         updateLocationCount();
 
     });
 
-    /* Sort an un-ordered list */
-    const sortUnorderedList = ((listID) => {
-        let list, i, switching, b, shouldSwitch;
-        list = document.getElementById(listID);
-        switching = true;
-        /* Loop until no switching has been done: */
-        while (switching) {
-            // Start by saying: no switching is done:
-            switching = false;
-            b = list.getElementsByTagName("LI");
-            // Loop through all list items:
-            for (i = 0; i < (b.length - 1); i++) {
-                // Start by saying there should be no switching:
-                shouldSwitch = false;
-                /* Check if the next item should
-                switch place with the current item: */
-                if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
-                    /* If next item is alphabetically lower than current item,
-                    mark as a switch and break the loop: */
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-            if (shouldSwitch) {
-                /* If a switch has been marked, make the switch
-                and mark the switch as done: */
-                b[i].parentNode.insertBefore(b[i + 1], b[i]);
-                switching = true;
-            }
+    const isValid = (() => {
+
+        let result = selectedLocations && selectedLocations.length > 0 ? true : false;
+
+        if (result === true) {
+            $('#location-error-message').attr('hidden', true);
         }
+
+        return result;
+
     });
 
     $('#save-locations-link').click((e) => {
 
-        if (localStorage) {
+        $('#location-error-message').attr('hidden', true);
+
+        if (isValid() === true && localStorage) {
             const selected = JSON.stringify(selectedLocations);
             localStorage.setItem('locations', selected);
+        } else {
+            e.preventDefault();
+            $('#location-error-message').removeAttr('hidden');
+            window.location = '#';
         }
     });
 
