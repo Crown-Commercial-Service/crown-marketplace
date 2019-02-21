@@ -143,6 +143,58 @@ en:
         results_found_html: There are <strong>%{results}</strong> apprenticeships matching your search for "<strong>%{search}</strong>"
         routes_label: Routes
         sort_by_label: Sort by
+      training_provider:
+        ability_to_bespoke_label: Ability to bespoke
+        about_the_apprenticeship_title: 'About the apprenticeship:'
+        about_the_provider_title: 'About the provider:'
+        address: 'Address:'
+        apprenticeship_label: Apprenticeship
+        at_your_location_label: at your location
+        blended_label: Blended
+        block_release_label: block release
+        caption: Training provider details
+        classroom_based_label: Classroom based
+        classroom_sharing_closed_label: Closed
+        classroom_sharing_label: 'Classroom sharing:'
+        classroom_sharing_open_label: Open
+        classroom_sharing_public_label: Public
+        contact_details_title: Contact details
+        day_release_label: day release
+        delivery_method_label: 'Delivery method:'
+        duration_label: Duration
+        email: 'Email:'
+        experience_in_delivering_apprenticeships_label: Experience in delivering apprenticeships
+        experience_in_this_apprenticeship_label: Experience in this apprenticeship
+        explain_classroom_sharing_details: Classoom sharing explanation
+        explain_classroom_sharing_label: Explain classroom sharing
+        explain_time_demand_details: Time demand explanation
+        explain_time_demand_label: Explain time demand
+        explain_training_availability_details: Training availability explained
+        explain_training_availability_label: Explain training availability
+        funding_band_label: Funding band
+        level_label: Level
+        national_provider_label: National provider
+        national_provider_title: This training provider is willing to offer apprenticeship training across England
+        ofsted_apprenticeship_label: Ofsted rating for this apprenticeship
+        online_label: Online
+        other_apprenticeship_standards_title: Other apprenticeship standards this provider delivers
+        other_apprenticeships_standards_title: Other apprenticeship standards this provider delivers
+        overall_ofsted_rating_label: Overall ofsted rating
+        page_title: Training provider details
+        phone_number: 'Phone number:'
+        provider_information_tab: Provider information
+        provider_information_title: Provider information
+        recruitment_support_label: Recruitment support
+        time_demand_label: 'Time demand:'
+        training_availability_closed_label: Closed
+        training_availability_label: 'Training availability:'
+        training_availability_open_label: Open
+        training_availability_public_label: Public
+        training_information_tab: Training information
+        training_information_title: Training information
+        view_report_html: (<a href="%{url}">view report</a>)
+        website: 'Website:'
+        workplace_based_label: Workplace based
     page_section: Find apprenticeship training and related services
   common:
     submit: Continue

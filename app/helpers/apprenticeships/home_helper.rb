@@ -1,20 +1,23 @@
 module Apprenticeships::HomeHelper
 
-  # TODO: TBD where these will sit
+  # TODO: TBD where this will sit
   def levels
     ['Level 2 (15)', 'Level 3 (24)', 'Level 4 (10)', 'Level 5 (2)', 'Level 6 (3)', 'Level 7 (1)']
   end
 
+  # TODO: TBD where this will sit
   def routes
     ['Agriculture, environmental and animal care', 'Business administration', 'Catering and hospitality', 'Construction',
      'Creative and design', 'Digital', 'Engineering and manufacturing', 'Hair and beauty', 'Health and science',
      'Legal, finance and accounting', 'Protective services', 'Sales, marketing and procurement', 'Transport']
   end
 
+  # TODO: TBD what options we have and where these will sit
   def sort_option
     ['Best match', 'Level', 'Provider(s)']
   end
 
+  # TODO: TBD where this will sit
   def results
     [
       { name: 'Building Services Design Technician', level: 3, providers: 12 },
@@ -28,5 +31,15 @@ module Apprenticeships::HomeHelper
       { name: 'Construction Site Engineering Technician', level: 4, providers: 12 },
       { name: 'Marine Engineer', level: 3, providers: 1 }
     ]
+  end
+
+  def option_availability(option)
+    option ? '✓' : 'x'
+  end
+
+  def list_from_array(array)
+    array.collect do |item|
+      content_tag(:li, item)
+    end.join.html_safe
   end
 end
