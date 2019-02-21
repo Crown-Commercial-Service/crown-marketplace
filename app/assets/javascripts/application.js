@@ -16,4 +16,6 @@
 //= require google_analytics
 //= require cookie_banner
 //= require supplier_markup_calculator
-//= require locations
+//= require common/common.js
+//= require facilities_management/locations.js
+//= require facilities_management/services.js*/
