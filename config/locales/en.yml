@@ -198,7 +198,7 @@ en:
       training_provider_list:
         page_title: Download the training provider list
         title: Download the training provider list
-        subtitle: You can now download a training provider list and complete this procurement offline via a further competition.
+        warning_text: You can now download a training provider list and complete this procurement offline via a further competition.
         info: This list will only be valid for 48hrs, as supplier information is continually being updated
         download_file_info: Download training provider list as comma-separated values
         other_documents_title: The following documents may also be of help
