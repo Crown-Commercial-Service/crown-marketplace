@@ -13,8 +13,6 @@
  *= require_self
  *= require govuk-frontend
 
-
-
 /*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
 
 
@@ -7901,4 +7899,41 @@ li code, td code, p code {
         text-align: right;
         padding-left: 10px
     }
+}
+
+.hmcts-filter-layout:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.hmcts-filter-layout__filter {
+    box-shadow: inset 0 0 0 1px #dee0e2;
+}
+
+@media (min-width: 48.0625em) {
+    .hmcts-filter-layout__filter {
+        float: left;
+        margin-right: 40px;
+        max-width: 385px;
+        min-width: 260px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 48.0525em) {
+    .js-enabled .hmcts-filter-layout__filter {
+        background-color: #ffffff;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow-y: scroll;
+        z-index: 100;
+    }
+}
+
+.hmcts-filter-layout__content {
+    overflow: hidden;
+    overflow-x: auto;
 }
