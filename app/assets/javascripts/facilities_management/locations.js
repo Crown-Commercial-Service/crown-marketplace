@@ -13,8 +13,6 @@ $(() => {
 
     const initialize = (() => {
 
-        clearAll();
-
         /* Load and display cached values */
         if (selectedLocations) {
             selectedLocations.forEach((value, index, array) => {
@@ -58,6 +56,8 @@ $(() => {
         $("#selected-fm-locations li").remove();
         $("#region-accordion input:checkbox").removeAttr("checked");
 
+        selectedLocations = [];
+
         updateLocationCount();
     });
 
@@ -76,7 +76,11 @@ $(() => {
         let removeLinkID = e.target.id + '_removeLink'
 
         if (e.target.checked === true) {
-            selectedLocations.push(e.target.id);
+
+            if (jQuery.inArray(e.target.id, selectedLocations) === -1) {
+                selectedLocations.push(e.target.id);
+            }
+
             let newLI = '<li style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
                 '<span class="govuk-!-padding-0">' + val + '</span><span class="remove-link">' +
                 '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
@@ -91,7 +95,7 @@ $(() => {
             removeSelectedItem(selectedID);
         }
 
-        isValid();
+        isLocationValid();
 
         updateLocationCount();
         common.sortUnorderedList('selected-fm-locations');
@@ -102,20 +106,20 @@ $(() => {
     $('#select-all-link').click((e) => {
         e.preventDefault();
 
+        isLocationValid();
+
         clearAll();
 
         $('input:checkbox').attr('checked', 'checked');
         $('input:checkbox').click();
 
         common.sortUnorderedList('selected-fm-locations');
-
-        isValid();
-
         updateLocationCount();
 
     });
 
-    const isValid = (() => {
+    /* must have at least one location selected */
+    const isLocationValid = (() => {
 
         let result = selectedLocations && selectedLocations.length > 0 ? true : false;
 
@@ -127,11 +131,12 @@ $(() => {
 
     });
 
+    /* Click handler for save and continue button */
     $('#save-locations-link').click((e) => {
 
         $('#location-error-message').attr('hidden', true);
 
-        if (isValid() === true && localStorage) {
+        if (isLocationValid() === true && localStorage) {
             const selected = JSON.stringify(selectedLocations);
             localStorage.setItem('locations', selected);
         } else {

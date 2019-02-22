@@ -1,11 +1,14 @@
+/*
+* filename: location.js
+* Description: Click handlers for the select services page
+* */
+
 $(() => {
 
     /!* govuk-accordion__controls event handlers *!/
     let selectedServices = JSON.parse(localStorage.getItem('services')) || [];
 
     const initialize = (() => {
-
-        clearAll();
 
         /!* Load and display cached values *!/
         if (selectedServices) {
@@ -50,6 +53,7 @@ $(() => {
         $("#selected-fm-services li").remove();
         $("#services-accordion input:checkbox").removeAttr("checked");
 
+        selectedServices=[];
         updateServiceCount();
     });
 

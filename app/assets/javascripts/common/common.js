@@ -3,8 +3,6 @@ const common = {
 
     /* Sort an un-ordered list */
     sortUnorderedList: ((listID) => {
-
-        console.log('==> sortUnorderedList')
         let list, i, switching, b, shouldSwitch;
         list = document.getElementById(listID);
         switching = true;
