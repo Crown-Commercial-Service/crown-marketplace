@@ -175,8 +175,8 @@ en:
     index:
       facilities_management_link: Find a facilities management supplier
       management_consultancy_link: Find management consultancy services
-      supply_teachers_link: Find supply teachers and agency workers
-      apprenticeships_link: Find apprenticeship training and related services !!
+      supply_teachers_link: Find apprenticeships training and related services
+      apprenticeships_link: Find apprenticeship training and related services
   journey_step:
     supply_teachers:
       looking_for:
@@ -375,7 +375,7 @@ en:
         supported_by: 'Supported by:'
         tell_ccs_if_suspect: tell CCS if you suspect unauthorised access, copying, use or disclosure of the confidential information
         this_service_contains_pricing_information_html: This service contains pricing information for agencies on the <a href="%{url}" aria-label="Deal for schools hiring supply teachers and agency workers">supply teachers deal</a>. This is confidential and can be considered commercially sensitive.
-        title: Find supply teachers and agency workers
+        title: Find supply teachers and agency workers!!
         to_find_permanent_teaching_staff_html: To find permanent teaching staff, use the <a aria-label="Visit the Teaching Vacancies service website" href="%{url}">Teaching Vacancies</a> service.
         use_this_service_to:
           calculate_the_maximum: calculate the maximum you could be charged to make your agency worker permanent
@@ -424,11 +424,14 @@ en:
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
       looking_for:
-        answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
-        answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
-        answer_worker: An agency who can provide my school with an individual worker
-        page_title: What is your school looking for?
-        question: What is your school looking for?
+        Yes: Yes
+        No: No
+        answer_calculate_temp_to_perm_fee: Above funding maximum
+        answer_managed_service_provider: At funding maximum
+        answer_worker: Below funding maximum
+        page_title: What ?
+        question: What funding band does this fall into ?
+        question2: Do you need help recruiting the apprentices ?
       managed_service_provider:
         answer_master_vendor: Master vendor managed service
         answer_neutral_vendor: Neutral vendor managed service
@@ -479,7 +482,7 @@ en:
         answer_nominated_worker: No, I have a worker I want the agency to manage (a ‘nominated worker’)
         page_title: Do you want an agency to supply the worker?
         question: Do you want an agency to supply the worker?
-    page_section: Find supply teachers and agency staff
+    page_section: Find supply teachers and agency staff!!!
     suppliers:
       master_vendor:
         column1: Job type
@@ -505,10 +508,10 @@ en:
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
   apprenticeships:
-    page_section: Find apprenticeship training and related services!?
+    page_section: Find apprenticeship training and related services
     home:
       index:
-        title: Find apprenticeship training and related services!
+        title: Find apprenticeship training and related services
         use_this_service_to:
           title: 'Use this service to:'
           find_education_and_skills_funding_agency: find Education and Skills Funding Agency (ESFA) registered training providers that can deliver apprenticeship standards, frameworks and related services
@@ -521,3 +524,12 @@ en:
         know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
         know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
         know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
+  requirements:
+    page_section2: Find apprenticeship training and related services
+        Yes: Yes
+        No: No
+        answer_calculate_temp_to_perm_fee: Above funding maximum
+        answer_managed_service_provider: At funding maximum
+        answer_worker: Below funding maximum
+        page_title: What ?
+        question: What funding band does this fall into ?
