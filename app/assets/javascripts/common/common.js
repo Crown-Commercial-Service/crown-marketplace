@@ -1,5 +1,4 @@
-const common = {
-
+const pageUtils = {
 
     /* Sort an un-ordered list */
     sortUnorderedList: ((listID) => {
@@ -31,6 +30,20 @@ const common = {
                 switching = true;
             }
         }
-    })
+    }),
+
+    setCachedData: ((key, data) => {
+        if(localStorage) {
+            const dataString = JSON.stringify(data);
+            localStorage.setItem(key, dataString);
+        }
+    }),
+
+    getCachedData: ((key) => {
+        if(localStorage) {
+           return JSON.parse(localStorage.getItem(key)) || [];
+        }
+    }),
+
 
 }

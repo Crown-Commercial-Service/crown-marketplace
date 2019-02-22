@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@hmcts/frontend@0.0.29-alpha":
+  version "0.0.29-alpha"
+  resolved "https://registry.yarnpkg.com/@hmcts/frontend/-/frontend-0.0.29-alpha.tgz#1a65f7d7ba2b954a6525ffab49816bc74cdec269"
+  integrity sha512-Mf4+glR6NjpgOTFHEA+8xd668J3VbIPPX7ZuaA0pHx5bsSZ2f1Erd36qRni9W7YpO7rLqxoKfIPfoSx1ns0MPg==
+
 ajv@^6.5.5:
   version "6.6.1"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.6.1.tgz#6360f5ed0d80f232cc2b294c362d5dc2e538dd61"
