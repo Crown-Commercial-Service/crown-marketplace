@@ -6,14 +6,14 @@
 $(() => {
 
     /!* govuk-accordion__controls event handlers *!/
-    let selectedServices = JSON.parse(localStorage.getItem('services')) || [];
+    let selectedServices = pageUtils.getCachedData('services');
 
     const initialize = (() => {
 
         /!* Load and display cached values *!/
         if (selectedServices) {
             selectedServices.forEach((value, index, array) => {
-                $('input#' + value).click();
+                $('input#' + value.code).click();
             });
         }
 
@@ -53,7 +53,7 @@ $(() => {
         $("#selected-fm-services li").remove();
         $("#services-accordion input:checkbox").removeAttr("checked");
 
-        selectedServices=[];
+        selectedServices = [];
         updateServiceCount();
     });
 
@@ -73,7 +73,14 @@ $(() => {
 
         if (e.target.checked === true) {
 
-                selectedServices.push(e.target.id);
+            let obj = selectedServices.filter(function (obj) {
+                return obj.code === e.target.id;
+            });
+
+            if (obj.length === 0) {
+                let service = {code: e.target.id, name: val};
+                selectedServices.push(service);
+            }
 
             let newLI = '<li style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
                 '<span class="govuk-!-padding-0">' + val + '</span><span class="remove-link">' +
@@ -92,7 +99,7 @@ $(() => {
         isValid();
 
         updateServiceCount();
-        common.sortUnorderedList('selected-fm-services');
+        pageUtils.sortUnorderedList('selected-fm-services');
 
     });
 
@@ -114,9 +121,8 @@ $(() => {
 
         $('#service-error-message').attr('hidden', true);
 
-        if (isValid() === true && localStorage) {
-            const selected = JSON.stringify(selectedServices);
-            localStorage.setItem('services', selected);
+        if (isValid() === true) {
+            pageUtils.setCachedData('services', selectedServices);
         } else {
             e.preventDefault();
             $('#service-error-message').removeAttr('hidden');

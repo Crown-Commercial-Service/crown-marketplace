@@ -6,7 +6,7 @@
 $(() => {
 
     /* govuk-accordion__controls event handlers */
-    let selectedLocations = JSON.parse(localStorage.getItem('locations')) || [];
+    let selectedLocations = pageUtils.getCachedData('locations');
 
     /* add a link to select all on the accordion */
     $('#region-accordion .govuk-accordion__controls').append("<a role='button' class='govuk-accordion__open-all' data-no-turbolink id=\"select-all-link\" name=\"select-all-link\" href=\"\">Select all</a>");
@@ -16,7 +16,7 @@ $(() => {
         /* Load and display cached values */
         if (selectedLocations) {
             selectedLocations.forEach((value, index, array) => {
-                $('input#' + value).click();
+                $('input#' + value.code).click();
             });
         }
 
@@ -39,7 +39,7 @@ $(() => {
 
         /* remove from the array that is saved */
         let filtered = selectedLocations.filter((value, index, arr) => {
-            if (value !== id) {
+            if (value.code !== id) {
                 return true;
             } else {
                 return false;
@@ -77,8 +77,13 @@ $(() => {
 
         if (e.target.checked === true) {
 
-            if (jQuery.inArray(e.target.id, selectedLocations) === -1) {
-                selectedLocations.push(e.target.id);
+            let obj = selectedLocations.filter(function (obj) {
+                return obj.code === e.target.id;
+            });
+
+            if (obj.length === 0) {
+                let location = {code: e.target.id, name: val}
+                selectedLocations.push(location);
             }
 
             let newLI = '<li style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
@@ -98,7 +103,7 @@ $(() => {
         isLocationValid();
 
         updateLocationCount();
-        common.sortUnorderedList('selected-fm-locations');
+        pageUtils.sortUnorderedList('selected-fm-locations');
 
     });
 
@@ -113,7 +118,7 @@ $(() => {
         $('input:checkbox').attr('checked', 'checked');
         $('input:checkbox').click();
 
-        common.sortUnorderedList('selected-fm-locations');
+        pageUtils.sortUnorderedList('selected-fm-locations');
         updateLocationCount();
 
     });
@@ -136,9 +141,8 @@ $(() => {
 
         $('#location-error-message').attr('hidden', true);
 
-        if (isLocationValid() === true && localStorage) {
-            const selected = JSON.stringify(selectedLocations);
-            localStorage.setItem('locations', selected);
+        if (isLocationValid() === true) {
+            pageUtils.setCachedData('locations', selectedLocations);
         } else {
             e.preventDefault();
             $('#location-error-message').removeAttr('hidden');
