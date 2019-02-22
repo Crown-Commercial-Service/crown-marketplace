@@ -3,5 +3,9 @@ module Apprenticeships
     require_permission :none, only: :index
 
     def index; end
+
+    def requirements
+    end
+	
   end
 end

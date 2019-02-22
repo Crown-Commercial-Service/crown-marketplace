@@ -176,7 +176,7 @@ en:
       facilities_management_link: Find a facilities management supplier
       management_consultancy_link: Find management consultancy services
       supply_teachers_link: Find supply teachers and agency workers
-      apprenticeships_link: Find apprenticeship training and related services !!
+      apprenticeships_link: Find apprenticeship training and related services
   journey_step:
     supply_teachers:
       looking_for:
@@ -505,10 +505,10 @@ en:
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
   apprenticeships:
-    page_section: Find apprenticeship training and related services!?
+    page_section: Find apprenticeship training and related services
     home:
       index:
-        title: Find apprenticeship training and related services!
+        title: Find apprenticeship training and related services
         use_this_service_to:
           title: 'Use this service to:'
           find_education_and_skills_funding_agency: find Education and Skills Funding Agency (ESFA) registered training providers that can deliver apprenticeship standards, frameworks and related services
