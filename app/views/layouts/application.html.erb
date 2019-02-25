@@ -22,7 +22,12 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <% if params[:controller].present? && params[:controller].start_with?('apprenticeships') %>
+    <%= stylesheet_link_tag 'apprenticeships', media: 'all' %>
+  <% else %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+  <% end %>
+
   <%= render partial: '/shared/google_analytics' %>
 </head>
 
