@@ -1,0 +1,100 @@
+/* 1. Import the GOVUK settings and then apply our overrides in the settings file */
+@import "govuk-frontend/settings/all";
+@import "settings";
+@import "govuk-frontend/tools/all";
+@import "govuk-frontend/helpers/all";
+@import "govuk-frontend/core/all";
+@import "govuk-frontend/objects/all";
+@import "govuk-frontend/utilities/all";
+@import "govuk-frontend/overrides/all";
+/* ******************************************************************* */
+
+
+/* 2. start imports of the GOVUK components this module needs/uses. Names preceeded by // are in part 3. */
+//@import "govuk-frontend/components/accordion/accordion";
+//back link
+@import "govuk-frontend/components/breadcrumbs/breadcrumbs";
+//button
+//@import "govuk-frontend/components/character-count/character-count";
+@import "govuk-frontend/components/checkboxes/checkboxes";
+@import "govuk-frontend/components/date-input/date-input";
+//details
+//error message
+//error summary
+//fieldset
+@import "govuk-frontend/components/file-upload/file-upload";
+//footer
+//header
+//inset text 
+@import "govuk-frontend/components/panel/panel";
+//phase banner
+@import "govuk-frontend/components/radios/radios";
+@import "govuk-frontend/components/select/select";
+@import "govuk-frontend/components/skip-link/skip-link";
+//@import "govuk-frontend/components/summary-list";
+//table
+@import "govuk-frontend/components/tabs/tabs";
+//tag
+//@import "govuk-frontend/components/text-input";
+@import "govuk-frontend/components/textarea/textarea";
+@import "govuk-frontend/components/warning-text/warning-text";
+@import "govuk-frontend/components/hint/hint";
+@import "govuk-frontend/components/input/input";
+/* ******************************************************************* */
+
+/* 3. Continue the imports of the GOVUK components (but from our own 'stylesheets/components' 
+directory - which echo the GOVUK directory structure - which contain bespoke but global css AND 
+the import call to the parent GOVUK component) */
+@import "components/back-link/back-link";
+@import "components/button/button";
+@import "components/calculator-form/calculator-form";
+@import "components/details/details";
+@import "components/error-message/error-message";
+@import "components/error-summary/error-summary";
+@import "components/header/header";
+@import "components/footer/footer";
+@import "components/fieldset/fieldset";
+@import "components/fm-supplier-record/fm-supplier-record";
+@import "components/inset-text/inset-text";
+@import "components/label/label";
+@import "components/logo/logo";
+@import "components/master-vendor-record/master-vendor-record";
+@import "components/mc-supplier-record/mc-supplier-record";
+@import "components/neutral-vendor-record/neutral-vendor-record";
+@import "components/phase-banner/phase-banner";
+@import "components/sidebar/sidebar";
+@import "components/st-supplier-page/st-supplier-page";
+@import "components/supplier-record/supplier-record";
+@import "components/table/table";
+@import "components/tag/tag";
+@import "components/typography/typography";
+/* ******************************************************************* */
+
+/* 4. Bespoke css overrides which THIS MODULE may require */
+
+
+
+ #cookie_banner {//ccs-no-print
+     display: none; 
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* @print ... //ccs-no-print
+
+.govuk-phase-banner, 
+.govuk-back-link {display: none; }
+
+*/

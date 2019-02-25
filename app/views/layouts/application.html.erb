@@ -1,152 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= page_title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0c0c" />
 
-<head>
-  <meta charset="utf-8" />
-  <title><%= page_title %></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0c0c" />
+    <link rel="shortcut icon" href="<%= image_path('favicon.ico') %>" type="image/x-icon" />
+    <link rel="mask-icon" href="<%= image_path('mask-icon.svg') %>" color="#0b0c0c">
+    <% %w[ 180x180 167x167 152x152 ].each do |size| %>
+      <link rel="apple-touch-icon" sizes="<%= size %>" href="<%= image_path("ccs-apple-touch-icon-#{size}.png") %>">
+    <% end %>
 
-  <link rel="shortcut icon" href="<%= image_path('favicon.ico') %>" type="image/x-icon" />
-  <link rel="mask-icon" href="<%= image_path('mask-icon.svg') %>" color="#0b0c0c">
-  <% %w[ 180x180 167x167 152x152 ].each do |size| %>
-    <link rel="apple-touch-icon" sizes="<%= size %>" href="<%= image_path("ccs-apple-touch-icon-#{size}.png") %>">
-  <% end %>
+    <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
 
-  <!--[if lt IE 9]>
-    <%= javascript_include_tag 'html5shiv/dist/html5shiv' %>
-  <![endif]-->
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-  <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+    <!--[if lt IE 9]><%= javascript_include_tag 'html5shiv/dist/html5shiv' %><![endif]-->
 
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+    <% if params[:controller].present? && params[:controller].start_with?('apprenticeships') %>
+      <%= stylesheet_link_tag 'apprenticeships', media: 'all' %>
+    <% else %>
+      <%= stylesheet_link_tag 'application', media: 'all' %>
+    <% end %>
 
-  <% if params[:controller].present? && params[:controller].start_with?('apprenticeships') %>
-    <%= stylesheet_link_tag 'apprenticeships', media: 'all' %>
-  <% else %>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-  <% end %>
+    <%= render partial: '/shared/google_analytics' %>
+  </head>
+  <body class="govuk-template__body">
+    <script>
+      document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script>
 
-  <%= render partial: '/shared/google_analytics' %>
-</head>
-
-<body class="govuk-template__body">
-  <script>
-    document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-
-  </script>
-
-  <div class="content-except-footer">
     <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
 
-      <div class="govuk-width-container" style="display:none" id="cookie_banner">
-        <div class="govuk-phase-banner ccs-no-print">
-            <p class="govuk-phase-banner__content">
-          Crown Marketplace uses cookies to make the site simpler. Read <a href="/cookies">more about cookies</a></p>
-        </div>
-      </div>
-
     <header class="govuk-header" role="banner" data-module="header">
-      <div class="govuk-header__container govuk-width-container">
-
-        <div class="govuk-header__logo">
-          <a href="<%= ccs_homepage_url %>" class="govuk-header__link govuk-header__link--homepage ga-crown-logo" aria-label="Crown Commercial Service homepage">
-            <span class="govuk-header__logotype">
-              <%= render partial: '/layouts/logotype' %>
-            </span>
-          </a>
-        </div>
-        <div class="govuk-header__content">
-          <%= link_to_service_start_page %>
-          <nav>
-            <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-              <% if logged_in? %>
-              <li class="govuk-header__navigation-item">
-                <%= link_to 'Back to start', supply_teachers_path, class: 'govuk-header__link' %>
-              </li>
-              <li class="govuk-header__navigation-item">
-                  <%= button_to "Sign out", sign_out_path, class: 'ccs-header__signout' %>
-              </li>
-              <% end %>
-            </ul>
-          </nav>
-        </div>
-      </div>
+      <%= render partial: '/layouts/header-banner' %>
     </header>
 
     <div class="govuk-width-container">
-      <div class="govuk-phase-banner ccs-no-print">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <p class="govuk-phase-banner__content">
-              <strong class="govuk-tag govuk-phase-banner__content__tag">
-                <%= t('.beta') %>
-              </strong>
-              <span class="govuk-phase-banner__text">
-                <%= t('.feedback_html', link: feedback_email_link) %>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
+
+      <%= render partial: '/layouts/beta-banner' %>
+
       <% if @back_path.present? %>
-        <%= link_to t('.back'), @back_path, class: 'govuk-back-link ccs-no-print', 'aria-label': t('.back_aria_label') %>
+        <%= link_to t('.back'), @back_path, class: 'govuk-back-link', 'aria-label': t('.back_aria_label') %>
       <% end %>
+
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= yield %>
       </main>
-    </div>
-  </div>
 
-  <footer class="govuk-footer" role="contentinfo">
-    <% if Marketplace.support_email_address.present? %>
-      <div class="footer-feedback govuk-!-padding-1">
-        <div class="govuk-width-container">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full">
-              <p class="govuk-!-margin-bottom-0 govuk-body-s">
-                <span class="govuk-!-font-weight-bold"><%= t('.having_problems') %></span>
-                <%= t('.support_html',
-                      link: support_email_link(t('.support_link_aria_label')),
-                      phone: support_telephone_number) %>
-              </p>
+    </div>
+
+    <footer class="govuk-footer" role="contentinfo">
+      <% if Marketplace.support_email_address.present? %>
+        <div class="footer-feedback govuk-!-padding-1">
+          <div class="govuk-width-container">
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                <p class="govuk-!-margin-bottom-0 govuk-body-s">
+                  <span class="govuk-!-font-weight-bold"><%= t('.having_problems') %></span>
+                  <%= t('.support_html',
+                        link: support_email_link(t('.support_link_aria_label')),
+                        phone: support_telephone_number) %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="govuk-footer__container govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-third">
+            <span class="govuk-footer__logotype">
+              <%= render partial: '/layouts/logotype' %>
+            </span>
+          </div>
+
+          <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-footer__meta">
+              <div class="govuk-footer__meta-item">
+                <a href="/cookies" aria-label= "<%= t('.cookie_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t(".cookie_link") %></a>
+              </div>
+              <div class="govuk-footer__meta-item">
+                <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice" aria-label= "<%= t('.privacy_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t(".privacy_link") %></a>
+              </div>
+              <div class="govuk-footer__meta-item">
+                <%= t(".crown_copyright") %>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    <% end %>
+    </footer>
 
-    <div class="govuk-footer__container govuk-width-container">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-third">
-          <span class="govuk-footer__logotype">
-            <%= render partial: '/layouts/logotype' %>
-          </span>
-        </div>
+    <%= render partial: '/layouts/cookie-banner' %>
 
-        <div class="govuk-grid-column-two-thirds">
-          <div class="govuk-footer__meta">
-            <div class="govuk-footer__meta-item">
-              <a href="/cookies" aria-label= "<%= t('.cookie_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t(".cookie_link") %></a>
-            </div>
-            <div class="govuk-footer__meta-item">
-              <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice" aria-label= "<%= t('.privacy_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t(".privacy_link") %></a>
-            </div>
-            <div class="govuk-footer__meta-item">
-              <%= t(".crown_copyright") %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+    <%= javascript_include_tag 'application' %>
+    <%= render partial: '/layouts/init-js' %>
 
-  <%= javascript_include_tag 'application' %>
-  <script>
-    window.GOVUKFrontend.initAll()
-
-  </script>
-</body>
-
+  </body>
 </html>
