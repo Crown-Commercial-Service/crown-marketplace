@@ -44,10 +44,13 @@ Rails.application.routes.draw do
 
   namespace 'apprenticeships', path: 'apprenticeships' do
     get '/', to: 'home#index'
+    get '/gateway', to: 'gateway#index'
+    get '/search', to: 'home#search'
+    get '/search_results', to: 'home#search_results'
+    get '/supplier_search', to: 'home#supplier_search'
     get '/requirements', to: 'home#requirements'
     get '/requirement', to: 'home#requirement'
   end
-  
 
   get '/errors/404'
   get '/errors/422'
