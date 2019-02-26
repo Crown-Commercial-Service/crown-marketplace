@@ -8,4 +8,12 @@ class Nuts1Region
   end
 end
 
-Nuts1Region.load_csv('nuts1_regions.csv')
+# Nuts1Region.load_csv('nuts1_regions.csv')
+begin
+  query = <<~SQL
+    SELECT code, name FROM nuts_regions where  nuts1_code is null and nuts2_code is null
+  SQL
+  Nuts1Region.load_db(query)
+rescue => detail
+  print detail.backtrace.join("\n")
+end

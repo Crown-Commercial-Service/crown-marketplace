@@ -41,5 +41,14 @@ module FacilitiesManagement
     end
   end
 
-  Region.load_csv('facilities_management/regions.csv')
+  # Region.load_csv('facilities_management/regions.csv')
+  begin
+    query = <<~SQL
+      SELECT code, name FROM fm_regions
+    SQL
+    Region.load_db(query)
+  rescue => detail
+    print detail.backtrace.join("\n")
+  end
+
 end
