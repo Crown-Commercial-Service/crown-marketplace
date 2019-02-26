@@ -39,8 +39,8 @@
                 <fieldset class="govuk-fieldset" aria-describedby="<%= workPackage['name'] %>">
                   <div id="services-checkboxes" class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
-                      <input title="<%= workPackage['name'] %>" class="govuk-checkboxes__input" id="<%= workPackage['code'].sub('.','-') %>" name="<%= workPackage['code'].sub('.','') %>" serviceid="<%= workPackage['name'] %>" type="checkbox" value="<%= workPackage['code'] %>">
-                      <label class="govuk-label govuk-checkboxes__label" for="<%=workPackage['code'] %>">
+                      <input title="<%= workPackage['name'] %>" class="govuk-checkboxes__input" id="<%= workPackage['code'].sub('.', '-') %>" name="<%= workPackage['code'].sub('.', '') %>" serviceid="<%= workPackage['name'] %>" type="checkbox" value="<%= workPackage['code'] %>">
+                      <label class="govuk-label govuk-checkboxes__label" for="<%= workPackage['code'] %>">
                         <%= workPackage['name'] %>
                       </label>
                     </div>
@@ -53,7 +53,7 @@
     <% end %>
   </div>
   <p>
-    <%= link_to 'Continue', '/facilities-management/suppliers/longList', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id:'save-services-link', name:'save-services-link'%>
+    <%= link_to 'Continue', '/facilities-management/suppliers/longList', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-services-link', name: 'save-services-link' %>
   </p>
 </div>
 <div class="govuk-grid-column-one-third">
@@ -67,6 +67,14 @@
         </h2>
       </div>
     </header>
+    <ul class="govuk-!-padding-0 font-size--08">
+      <li style="word-break: keep-all;background-color: #EAEAEA" class="govuk-list">
+        <span class="govuk-!-padding-0">Contract Management</span>
+      </li>
+      <li style="word-break: keep-all;background-color: #EAEAEA" class="govuk-list">
+        <span class="govuk-!-padding-0">Contract Mobilization</span>
+      </li>
+    </ul>
     <ul id="selected-fm-services" name="selected-fm-services" class="govuk-!-padding-0 font-size--10"></ul>
   </div>
 
