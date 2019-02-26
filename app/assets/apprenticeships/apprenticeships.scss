@@ -74,6 +74,14 @@ the import call to the parent GOVUK component) */
 
 
 
+
+
+
+#main-content {
+    min-height: 330px; 
+}
+
+
  #cookie_banner {//ccs-no-print
      display: none; 
  }
@@ -92,9 +100,11 @@ the import call to the parent GOVUK component) */
 
 
 
-/* @print ... //ccs-no-print
 
-.govuk-phase-banner, 
-.govuk-back-link {display: none; }
+/* ccs-no-print
+
+@media print {
+
+}
 
 */
