@@ -7,14 +7,6 @@ class FacilitiesManagement::SelectServicesController < ApplicationController
 
     @services = JSON.parse('[
        {
-           "code": "A",
-           "name": "Contract management"
-       },
-       {
-           "code": "B",
-           "name": "Contract mobilisation"
-       },
-       {
            "code": "C",
            "name": "Maintenance services"
        },

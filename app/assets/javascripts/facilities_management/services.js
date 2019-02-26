@@ -25,7 +25,7 @@ $(() => {
     const updateServiceCount = (() => {
         let count = $("#selected-fm-services li").length;
 
-        $('#selected-service-count').text(count);
+        $('#selected-service-count').text(count + 2);
     });
 
     /!* remove a service from the selected list *!/
