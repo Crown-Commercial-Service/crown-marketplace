@@ -35,7 +35,7 @@
 
     <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
 
-    <header class="govuk-header" role="banner" data-module="header">
+    <header id="main-header" class="govuk-header" role="banner" data-module="header">
       <%= render partial: '/layouts/header-banner' %>
     </header>
 
@@ -47,13 +47,13 @@
         <%= render partial: '/layouts/back-link' %>
       <% end %>
 
-      <main class="govuk-main-wrapper" id="main-content" role="main">
+      <main id="main-content" class="govuk-main-wrapper" role="main">
         <%= yield %>
       </main>
 
     </div>
 
-    <footer class="govuk-footer" role="contentinfo">
+    <footer id="main-footer" class="govuk-footer" role="contentinfo">
       <%= render partial: '/layouts/footer' %>
     </footer>
 

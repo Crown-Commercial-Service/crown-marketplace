@@ -140,7 +140,7 @@ en:
         providers_label: Provider(s)
         result_level_label: 'Level:'
         results_found_hint: Click on the apprenticeship to add your requirements and find training providers.
-        results_found_html: There are <strong>%{results}</strong> apprenticeships matching your search for "<strong>%{search}</strong>"
+        results_found_html: There are <b>%{results}</b> apprenticeships matching your search for "<b>%{search}</b>"
         routes_label: Routes
         sort_by_label: Sort by
       training_provider:

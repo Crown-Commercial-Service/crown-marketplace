@@ -62,7 +62,7 @@ the import call to the parent GOVUK component) */
 @import "components/mc-supplier-record/mc-supplier-record";
 @import "components/neutral-vendor-record/neutral-vendor-record";
 @import "components/phase-banner/phase-banner";
-@import "components/sidebar/sidebar";
+//@import "components/sidebar/sidebar";//don't need
 @import "components/st-supplier-page/st-supplier-page";
 @import "components/supplier-record/supplier-record";
 @import "components/table/table";
@@ -73,8 +73,24 @@ the import call to the parent GOVUK component) */
 /* 4. Bespoke css overrides which THIS MODULE may require */
 
 
+#results-filters {
+    .results-panel {
+        background-color: govuk-colour("grey-4"); 
+        padding: govuk-spacing(5); //std govuk 
+        
+        & ~ a {
+            float: right; 
+            line-height: govuk-spacing(6); 
+        }       
+    } 
 
+    
 
+    .govuk-form-group > h2 {
+        float: left; 
+        padding-right: govuk-spacing(1);
+    }    
+}
 
 
 #main-content {
@@ -101,10 +117,15 @@ the import call to the parent GOVUK component) */
 
 
 
-/* ccs-no-print
+/* ccs-no-print */
 
 @media print {
-
+    #results-filters {
+        .results-panel {
+            background-color: none; 
+            
+        }
+    }
 }
 
-*/
+
