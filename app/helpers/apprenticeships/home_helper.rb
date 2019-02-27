@@ -38,26 +38,6 @@ module Apprenticeships::HomeHelper
     [ '1 - Outstanding (0)', '2 - Good (3)', '3 - Requires improvements (5)']
   end
 
-
-  def results
-    [
-      { name: 'Building Services Design Technician', level: 3, providers: 12 },
-      { name: 'Building Services Design Engineer', level: 6, providers: 8 },
-      { name: 'Vehicle Body and Paint: Body Building', level: 3, providers: 16 },
-      { name: 'Construction Building: Trowel Occupations', level: 2, providers: 3 },
-      { name: 'Construction Building: Trowel Occupations', level: 3, providers: 22 },
-      { name: 'Building Services Engineering Technology and Project Management Technician', level: 3, providers: 2 },
-      { name: 'Construction Building: Maintenance Operations', level: 2, providers: 18 },
-      { name: 'Construction Building: Woodmachining', level: 2, providers: 44 },
-      { name: 'Construction Site Engineering Technician', level: 4, providers: 12 },
-      { name: 'Marine Engineer', level: 3, providers: 1 }
-    ]
-  end
-
-  def ofsted_rating
-    [ '1 - Outstanding (0)', '2 - Good (3)', '3 - Requires improvements (5)']
-  end
-
   def course_rating
     [ '1 - Outstanding (1)', '2 - Good (5)', '3 - Requires improvements (2)']
   end
