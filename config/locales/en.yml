@@ -115,6 +115,8 @@ en:
         know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
         know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
         know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
+        have_read_and_agreed: have read and agreed to the terms and conditions governing this service
+        this_service_will_help: This service will help you generate a shortlist of training providers that will only be valid for 48hrs, as supplier information is continually being updated.
         start_finding_apprenticeships: Start finding apprenticeships training and related services
         title: Find apprenticeship training and related services
         use_this_service_to:
@@ -410,6 +412,7 @@ en:
         make_sure_the_confidential_information: make sure the confidential information is stored securely and that only people using the service to buy under the framework have access to it
         only_use_the_information: only use the information for buying services under the CCS framework agreement for supply teachers and temporary staff
         start_finding_supply_teachers: Start finding supply teachers and agency workers
+        this_service_will_help: This service will help you generate a shortlist of training providers that will only be valid for 48hrs, as supplier information is continually being updated.
         start_now: Start now
         supported_by: 'Supported by:'
         tell_ccs_if_suspect: tell CCS if you suspect unauthorised access, copying, use or disclosure of the confidential information
