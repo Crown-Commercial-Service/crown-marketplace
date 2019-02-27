@@ -2,7 +2,7 @@ module CCS
   require 'pg'
   require 'csv'
 
-  def csv_to_nuts_regions(file_name, db_name)
+  def self.csv_to_nuts_regions(file_name, db_name)
     db = PG.connect(dbname: db_name)
     res = db.exec <<-SQL
         create table IF NOT EXISTS nuts_regions (
@@ -30,7 +30,7 @@ module CCS
     end
   end
 
-  def csv_to_fm_regions(file_name, db_name)
+  def self.csv_to_fm_regions(file_name, db_name)
     db = PG.connect(dbname: db_name)
     res = db.exec <<-SQL
         create table IF NOT EXISTS fm_regions (
@@ -56,28 +56,15 @@ module CCS
     end
   end
 
-  module_function :csv_to_nuts_regions
-  module_function :csv_to_fm_regions
-
-# Module CCS
-end
-
-
-namespace :db do
-
-  desc 'add NUTS static data to the database'
-  task :setup do
-
+  def self.load_static(directory = 'data/', db_name = 'marketplace_' + Rails.env)
     p 'Version of libpg: ' + PG.library_version.to_s
     p 'Loading NUTS static data'
     p "Environment: #{Rails.env}"
 
-    directory = 'data/'
     file1 = directory + 'nuts1_regions.csv'
     file2 = directory + 'nuts2_regions.csv'
     file3 = directory + 'nuts3_regions.csv'
 
-    db_name = 'marketplace_' + Rails.env
     CCS.csv_to_nuts_regions file1, db_name
     CCS.csv_to_nuts_regions file2, db_name
     CCS.csv_to_nuts_regions file3, db_name
@@ -87,7 +74,26 @@ namespace :db do
     p 'Loading FM regions static data'
     file4 = directory + 'facilities_management/regions.csv'
     CCS.csv_to_fm_regions file4, db_name
+  end
 
+# Module CCS
+end
+
+
+namespace :db do
+
+
+  desc 'add NUTS static data to the database'
+  task :static do
+
+    p 'Loading NUTS static'
+    CCS.load_static
+  end
+
+
+  desc 'add static data to the database'
+  task :setup  => [:static] do
+    p 'Loading static data'
   # task
   end
 
