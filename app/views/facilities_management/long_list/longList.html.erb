@@ -16,30 +16,45 @@
 
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
-    <h1 class="govuk-heading-xl">
-      Supplier results
-    </h1>
+    <strong class="govuk-heading-xl"> Supplier results</strong>
     <div class="govuk-inset-text">
       <strong>On this page</strong><br>
       <span>You will need to do this, this and that</span>
     </div>
   </fieldset>
   <p class="govuk-!-font-size-36">
-    <strong><%=@supplierCount %> suppliers found</strong> based on total contract value, when awarded.
+    <strong><%= @supplierCount %> suppliers found</strong> based on total contract value, when awarded.
   </p>
 
   <!-- Start of filter section -->
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
+      <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button" role="button">Hide filters</a><br>
 
       Filters go here
 
-    </div>
 
+    </div>
 
     <!-- Start of main list section -->
     <div class="govuk-grid-column-two-thirds">
-      Suppliers list goes here
+      <div class="govuk-grid-column-one-third">
+        <span class="govuk-heading-m">Up to £7m</span>
+        <span class="govuk-heading-s">Lot 1a</span>
+
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <span class="govuk-heading-m">£7m to 50m</span>
+        <span class="govuk-heading-s">Lot 1b</span>
+
+
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <span class="govuk-heading-m">Over £50m</span>
+        <span class="govuk-heading-s">Lot 1c</span>
+
+
+      </div>
     </div>
   </div>
 </div>
