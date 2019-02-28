@@ -21,16 +21,15 @@ module Apprenticeships::HomeHelper
 
   def results
     [
-      { name: 'Building Services Design Technician', level: 3, providers: 12 },
-      { name: 'Building Services Design Engineer', level: 6, providers: 8 },
-      { name: 'Vehicle Body and Paint: Body Building', level: 3, providers: 16 },
-      { name: 'Construction Building: Trowel Occupations', level: 2, providers: 3 },
-      { name: 'Construction Building: Trowel Occupations', level: 3, providers: 22 },
-      { name: 'Building Services Engineering Technology and Project Management Technician', level: 3, providers: 2 },
-      { name: 'Construction Building: Maintenance Operations', level: 2, providers: 18 },
-      { name: 'Construction Building: Woodmachining', level: 2, providers: 44 },
-      { name: 'Construction Site Engineering Technician', level: 4, providers: 12 },
-      { name: 'Marine Engineer', level: 3, providers: 1 }
+      { name: 'Building Services Design Technician', level: 3, length:36, max_funding: 12000, providers: 12 },
+      { name: 'Building Services Design Engineer', level: 6, length:60, max_funding: 27000, providers: 8 },
+      { name: 'Vehicle Body and Paint: Body Building', level: 2, length:36, max_funding: 9000, providers: 16 },
+      { name: 'Construction Building: Trowel Occupations', level: 3, length: 36, max_funding: 11000, providers: 3 },
+      { name: 'Construction Building: Trowel Occupations', level: 3, length: 48 , max_funding: 182000, providers: 22 },
+      { name: 'Construction Building: Woodmachining', level: 3, length: 24, max_funding: 8000, providers: 44 },
+      { name: 'Construction Building: Woodmachining', level: 3, length: 24, max_funding: 8000, providers: 44 },
+      { name: 'Construction Site Engineering Technician', level: 3, length: 24, max_funding: 8000, providers: 12 },
+      { name: 'Marine Engineer', level: 3, length: 24, max_funding: 8000, providers: 1 }
     ]
   end
 
@@ -74,5 +73,22 @@ module Apprenticeships::HomeHelper
       { name: 'University of Liverpool', rating: 0, distance: 76 },
     ]
   end
- 
-end
+
+  def browse_routes
+  [
+     'Agriculture, environmental and animal care',
+     'Business and administration',
+     'Catering and hospitality',
+     'Construction',
+     'Creative and design',
+     'Digital',
+     'Engineering and manufacturing',
+     'Hair and beauty',
+     'Health and science',
+     'Legal, finance and accounting',
+     'Protective services',
+     'Sales, marketing and procurement',
+     'Transport and logistics',
+  ]
+  end
+end 

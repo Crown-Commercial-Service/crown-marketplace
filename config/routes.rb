@@ -51,9 +51,16 @@ Rails.application.routes.draw do
     get '/find_apprentices', to: 'home#find_apprentices'
     get '/find_apprentices2', to: 'home#find_apprentices2'
     get '/find_apprentices3', to: 'home#find_apprentices3'
+    get '/find_apprentices4', to: 'home#find_apprentices4'
+    get '/find_apprentices5', to: 'home#find_apprentices5'
     get '/outline', to: 'home#outline'
     get '/requirements', to: 'home#requirements'
     get '/requirement', to: 'home#requirement'
+    get '/building_services', to: 'home#building_services'
+    get '/training_provider', to: 'home#training_provider'
+    get '/training_provider_list', to: 'home#training_provider_list'
+    get '/sorry', to: 'home#sorry'
+    get '/training_details', to: 'home#training_details'
   end
 
   get '/errors/404'
