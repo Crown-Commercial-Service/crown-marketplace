@@ -1,3 +1,5 @@
+# require_relative "config/application"
+
 module CCS
   require 'pg'
   require 'csv'
@@ -82,20 +84,16 @@ end
 
 namespace :db do
 
-
   desc 'add NUTS static data to the database'
-  task :static do
-
+  task :static => [] do
     p 'Loading NUTS static'
     CCS.load_static
   end
 
-
   desc 'add static data to the database'
-  task :setup  => [:static] do
-    p 'Loading static data'
-  # task
+  task :setup => [:static] do
   end
+
 
 
 end

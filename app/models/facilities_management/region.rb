@@ -41,14 +41,23 @@ module FacilitiesManagement
     end
   end
 
-  # Region.load_csv('facilities_management/regions.csv')
+  # # Region.load_csv('facilities_management/regions.csv')
   begin
     query = <<~SQL
       SELECT code, name FROM fm_regions
     SQL
     Region.load_db(query)
   rescue => detail
-    print detail.backtrace.join("\n")
+    if Region.all.count == 0
+      if File.split($0).last == 'rake' || $rails_rake_task
+        puts 'Guess what, I`m running from Rake'
+      else
+        puts 'No; this is not a Rake task'
+        message = "Region data is missing. Please run 'rake db:setup' to load static data."
+        puts "\e[5;37;41m\n" + message + "\033[0m\n"
+        raise detail
+      end
+    end
   end
 
 end
