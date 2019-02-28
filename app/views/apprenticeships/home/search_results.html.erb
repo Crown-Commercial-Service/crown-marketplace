@@ -13,54 +13,54 @@
   </div>
 </div>
 
-<div id="results-filters" class="govuk-grid-row govuk-!-padding-top-4 results-filters">
+<div id="ccs-at-results-filters" class="govuk-grid-row govuk-!-padding-top-4 CCS-AT-results-filters">
   
   <div class="govuk-grid-column-one-third">
-1
-    <div class="govuk-form-group results-filters__panel results-filters--padding">
+
+    <div class="govuk-form-group CCS-AT-results-filters__panel CCS-AT-results-filters--padding">
       <label class="govuk-label govuk-label--s" for="search">
         <%= t('.keyword_search_label') %>
       </label>
       <%= text_field_tag :search, params[:keywordSearch], class: 'govuk-input' %>
     </div>
-2
-    <div class="govuk-form-group results-filters__heading-bloc">
+
+    <div class="govuk-form-group CCS-AT-results-filters__heading-bloc">
       <h2 class="govuk-!-width-two-thirds govuk-heading-m">
         <%= t('.apply_filters_label') %>
       </h2>
       <%= link_to t('.clear_filters_link'), apprenticeships_search_path, class: 'govuk-!-width-one-third ccs-no-print', id: 'clear-filters' %>
     </div>
-3
-    <div class="govuk-form-group results-filters__panel">
 
-      <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <div class="govuk-form-group CCS-AT-results-filters__panel">
+
+      <fieldset class="govuk-fieldset CCS-AT-checkbox-accordian" aria-describedby="waste-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
           <%= t('.levels_label') %>
         </legend>
 
-        <a href="#"><span>Hide</span></a>
+        <span role="button" class="CCS-AT-show" aria-controls="c1" aria-expanded="true"><span>Show</span></span>
 
-        <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste-1" name="waste" type="checkbox" value="carcasses">
-            <label class="govuk-label govuk-checkboxes__label" for="waste-1">
-              Waste from animal carcasses
-            </label>
-          </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste-2" name="waste" type="checkbox" value="mines">
-            <label class="govuk-label govuk-checkboxes__label" for="waste-2">
-              Waste from mines or quarries
-            </label>
-          </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste-3" name="waste" type="checkbox" value="farm">
-            <label class="govuk-label govuk-checkboxes__label" for="waste-3">
-              Farm or agricultural waste
-            </label>
+        <div id="c1" class="CCS-AT-checkboxes-wrap">
+          <div class="govuk-checkboxes">
+            <% levels.each do |level| %>
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag(
+                        "levels[]",
+                        level,
+                        false,
+                        class: "govuk-checkboxes__input",
+                        id: "level_#{level}"
+                    ) %>
+                <label class="govuk-label govuk-checkboxes__label" for="level_<%= level %>">
+                  <%= level %>
+                </label>
+              </div>
+            <% end %>
           </div>
         </div>
       </fieldset>
+
+
 
     </div>    
 
@@ -75,13 +75,12 @@
 
 
 
-<hr>
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-<hr>
 
-<br><br><br><br><br><br><br><br><br><br><br><br>
+<hr> <p>WIP...</p>
 
-<div class="govuk-grid-row" style="border: 2px solid lime; margin-top: 100px;">
+<br><br><br><br><br>
+
+<div class="govuk-grid-row" style="margin-top: 100px;">
   <div class="govuk-grid-column-full">
     
 
