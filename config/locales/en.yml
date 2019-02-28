@@ -127,6 +127,7 @@ en:
         you_will_need_to_have: 'To use this service, you will need to:'
       search:
         page_title: Search for apprenticeship
+        page_section: Find apprenticeship training and related services
         search_button: Search
         search_hint: Search by keyword or apprenticeship name / number, or job title
         search_label: Search for apprenticeship
