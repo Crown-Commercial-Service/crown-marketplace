@@ -66,6 +66,6 @@ namespace :db do
   end
 
   desc 'add static data to the database'
-  task :setup[:static] do
+  task setup: :static do
   end
 end
