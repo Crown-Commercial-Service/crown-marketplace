@@ -32,13 +32,11 @@
     </div>
 
     <div class="govuk-form-group CCS-AT-results-filters__panel">
-
       <fieldset class="govuk-fieldset CCS-AT-checkbox-accordian" aria-describedby="waste-hint">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-          <%= t('.levels_label') %>
-        </legend>
-
-        <span role="button" class="CCS-AT-show" aria-controls="c1" aria-expanded="true"><span>Show</span></span>
+        <button type="button" class="CCS-AT-show CCS-AT-show--fontsize" aria-expanded="true" aria-controls="c1">
+          <%= t('.levels_label') %> 
+          <span>&nbsp;Show</span>
+        </button>
 
         <div id="c1" class="CCS-AT-checkboxes-wrap">
           <div class="govuk-checkboxes">
@@ -59,9 +57,6 @@
           </div>
         </div>
       </fieldset>
-
-
-
     </div>    
 
   </div>
