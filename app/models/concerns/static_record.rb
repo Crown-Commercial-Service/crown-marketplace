@@ -36,22 +36,17 @@ module StaticRecord
     # factory method
     # each row of data in the database is used to create a new object
     def load_db(query)
-      begin
-        res = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query( query ) }
-        @all = []
-        res.each do |row|
-          @all << new(row).freeze
-        end
-        @all.freeze
-      # rescue PG::Error => e
-      # puts e.message
-      rescue => detail
-        # print detail.backtrace.join("\n")
-        raise detail
-      ensure
-        # res&.clear
+      res = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+      @all = []
+      res.each do |row|
+        @all << new(row).freeze
       end
+      @all.freeze
+    # rescue PG::Error => e
+    # puts e.message
+    rescue StandardError => error
+      # print detail.backtrace.join("\n")
+      raise error
     end
-
   end
 end
