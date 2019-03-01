@@ -1,4 +1,3 @@
-require 'rake'
 module FacilitiesManagement
   class Region
     include StaticRecord
