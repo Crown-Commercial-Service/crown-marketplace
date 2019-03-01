@@ -41,6 +41,5 @@ module FacilitiesManagement
     end
   end
 
-  # Region.load_csv('facilities_management/regions.csv')
   StaticDataLoader.load_static_data(Region)
 end

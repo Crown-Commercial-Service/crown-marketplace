@@ -8,5 +8,4 @@ class Nuts1Region
   end
 end
 
-# Nuts1Region.load_csv('nuts1_regions.csv')
 StaticDataLoader.load_static_data(Nuts1Region)

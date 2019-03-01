@@ -10,5 +10,4 @@ class Nuts3Region
   delegate :nuts1_code, :nuts1_region, to: :nuts2_region
 end
 
-# Nuts3Region.load_csv('nuts3_regions.csv')
 StaticDataLoader.load_static_data(Nuts3Region)
