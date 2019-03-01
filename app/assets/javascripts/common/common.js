@@ -33,17 +33,34 @@ const pageUtils = {
     }),
 
     setCachedData: ((key, data) => {
-        if(localStorage) {
+        if (localStorage) {
             const dataString = JSON.stringify(data);
             localStorage.setItem(key, dataString);
         }
     }),
 
     getCachedData: ((key) => {
-        if(localStorage) {
-           return JSON.parse(localStorage.getItem(key)) || [];
+        if (localStorage) {
+            return JSON.parse(localStorage.getItem(key)) || [];
         }
     }),
 
+    sortByName: ((arr) => {
+        return arr.sort((a, b) => {
+            const nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+            if (nameA < nameB) //sort string ascending
+                return -1
+            if (nameA > nameB)
+                return 1
+            return 0
+        });
+    }),
 
-}
+    getCodes: ((arr) => {
+        let result = [];
+        arr.forEach((value, index, array) => {
+            result.push(value.code.replace('-','.'));
+        });
+        return result;
+    })
+};

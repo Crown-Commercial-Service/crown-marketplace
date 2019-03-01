@@ -28,33 +28,128 @@
 
   <!-- Start of filter section -->
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-third">
-      <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button" role="button">Hide filters</a><br>
-
-      Filters go here
-
-
+    <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button" role="button">Hide filters</a><br>
+    <div id="fm-filter-pane" class="govuk-grid-column-one-third">
+      <div class="govuk-!-padding-2 CCS-fm-supplier-filter-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half"><strong class="govuk-heading-m">Apply filters</strong></div>
+          <div class="govuk-grid-column-one-half">
+            <a href="<%= @select_FM_locations %>" class="remove-all" style="float:right">Clear filters</a></div>
+        </div>
+        <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+            <strong class="govuk-heading-m govuk-!-padding-1">Region</strong>
+          </div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half"><strong class="govuk-heading-s">2 selected</strong></div>
+            <div class="govuk-grid-column-one-half"><a href="<%= @select_FM_locations %>">Change region</a></div>
+          </div>
+          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+            <div id="fm-region-check-boxes" class="govuk-checkboxes"></div>
+          </div>
+        </div>
+        <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+            <strong class="govuk-heading-m govuk-!-padding-1">Service</strong>
+          </div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half"><strong class="govuk-heading-s">2 selected</strong></div>
+            <div class="govuk-grid-column-one-half"><a href="<%= @select_FM_services %>">Change service</a></div>
+          </div>
+          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+            <div id="fm-service-check-boxes" class="govuk-checkboxes"></div>
+          </div>
+        </div>
+        <a id="filter-toggle-btn" id="apply-filter-btn" href="" class="govuk-button" role="button">Apply filters</a><br>
+      </div>
     </div>
 
     <!-- Start of main list section -->
-    <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-grid-column-one-third">
+    <div id="CCS-fm-suppliers-long-list" class="govuk-grid-column-two-thirds">
+      <div id="fm-lot-1a-list" class="govuk-grid-column-one-third">
         <span class="govuk-heading-m">Up to £7m</span>
-        <span class="govuk-heading-s">Lot 1a</span>
-
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col">Lot 1a</th>
+          </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+          <% @Lot1a_suppliers.each do |supplier| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
+            </tr>
+            </tbody>
+          <% end %>
+          </table>
       </div>
-      <div class="govuk-grid-column-one-third">
+
+      <div id="fm-lot-1b-list" class="govuk-grid-column-one-third">
         <span class="govuk-heading-m">£7m to 50m</span>
-        <span class="govuk-heading-s">Lot 1b</span>
-
-
+        <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Lot 1b</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% @Lot1b_suppliers.each do |supplier| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
+          </tr>
+          </tbody>
+        <% end %>
+        </table>
       </div>
-      <div class="govuk-grid-column-one-third">
-        <span class="govuk-heading-m">Over £50m</span>
-        <span class="govuk-heading-s">Lot 1c</span>
-
-
+      
+      <div id="fm-lot-1c-list" class="govuk-grid-column-one-third">
+        <span class="govuk-heading-m">Over £50m</span><table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Lot 1c</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% @Lot1c_suppliers.each do |supplier| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
+          </tr>
+          </tbody>
+        <% end %>
+        </table>
       </div>
     </div>
   </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-inset-text">
+      <strong>Next steps</strong><br>
+      <span>We will now ask you questions about this contract, building and costs.</span><br>
+      <span>You can open competition for suppliers after you have recieved an assessed value.</span>
+    </div>
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+          <span class="govuk-heading-m">
+            Would you like to continue
+          </span>
+        </legend>
+        <div class="govuk-radios govuk-radios--inline">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="suppliers-continue-yes" name="suppliers-continue-yes" type="radio" value="yes">
+            <label class="govuk-label govuk-radios__label" for="suppliers-continue-yes">
+              Yes
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="suppliers-continue-no" name="suppliers-continue-no" type="radio" value="no">
+            <label class="govuk-label govuk-radios__label" for="suppliers-continue-no">
+              No
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <a id="suppliers-save-button" id="suppliers-save-button" href="" class="govuk-button" role="button">Save</a><br>
+  </div>
 </div>
+

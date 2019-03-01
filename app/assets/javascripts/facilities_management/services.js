@@ -7,6 +7,7 @@ $(() => {
 
     /!* govuk-accordion__controls event handlers *!/
     let selectedServices = pageUtils.getCachedData('services');
+    let selectedLocations = pageUtils.getCachedData('locations');
 
     const initialize = (() => {
 
@@ -69,7 +70,7 @@ $(() => {
         let val = e.target.title;
 
         let selectedID = e.target.id + '_selected';
-        let removeLinkID = e.target.id + '_removeLink'
+        let removeLinkID = e.target.id + '_removeLink';
 
         if (e.target.checked === true) {
 
@@ -98,10 +99,14 @@ $(() => {
 
         isValid();
 
+
+
         updateServiceCount();
         pageUtils.sortUnorderedList('selected-fm-services');
 
     });
+
+
 
     /* Check for at least one service has been selected */
     const isValid = (() => {
@@ -120,9 +125,19 @@ $(() => {
     $('#save-services-link').click((e) => {
 
         $('#service-error-message').attr('hidden', true);
+        const servicesForm = $('#fm-services-form');
+
 
         if (isValid() === true) {
             pageUtils.setCachedData('services', selectedServices);
+            let locationCodes = pageUtils.getCodes(selectedLocations);
+            let serviceCodes = pageUtils.getCodes(selectedServices);
+            let postedLocations = $('#postedlocations');
+            let postedServices  = $('#postedservices');
+
+            postedLocations.val(JSON.stringify(locationCodes));
+            postedServices.val(JSON.stringify(serviceCodes));
+            servicesForm.submit();
         } else {
             e.preventDefault();
             $('#service-error-message').removeAttr('hidden');
