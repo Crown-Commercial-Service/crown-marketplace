@@ -21,7 +21,6 @@ class StaticDataLoader
   end
 
   def self.call_rake(static_data_class, class_name, query)
-    class_name = static_data_class.name.demodulize
     if File.split($PROGRAM_NAME).last == 'rake'
       puts 'Guess what, I`m running this from Rake'
     else
