@@ -42,11 +42,6 @@ module StaticRecord
         @all << new(row).freeze
       end
       @all.freeze
-    # rescue PG::Error => e
-    # puts e.message
-    rescue StandardError => error
-      # print detail.backtrace.join("\n")
-      raise error
     end
   end
 end
