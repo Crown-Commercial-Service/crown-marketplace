@@ -94,42 +94,68 @@ the import call to the parent GOVUK component) */
 
         .govuk-checkboxes {
             background-color: govuk-colour("white"); 
-            padding: 10px; 
             margin-top: govuk-spacing(1); 
         }
 
         .govuk-checkboxes__input + .govuk-checkboxes__label::before, 
         .govuk-checkboxes__input {//the tick box border
-            height: 22px; 
-            width: 22px; 
-            top: 2px; 
+            height: 20px; 
+            width: 20px; 
+            top: 11px; 
+            left: 10px; 
+            border-width: 1px; 
         } 
 
         .govuk-checkboxes__input:checked + .govuk-checkboxes__label::after {//the tick
-            left: 4px; 
-            top: 7px; 
+            left: 13px; 
+            top: 15px; 
             width: 11px; 
             height: 5px; 
             border-width: 0 0 3px 3px; 
         } 
 
         .govuk-checkboxes__label {
-            padding: 0; 
+            padding: 5px; 
+            font-size: $results-filters-labels-m; 
+            width: 100%; 
+        }
+
+        .govuk-checkboxes__item { 
+            margin-bottom: 0; 
+            padding: 5px 10px 0 35px;  
+            border-top: 1px solid $govuk-border-colour; 
+
+            &:first-child {
+                border-top: none; 
+            }
+        } 
+
+        .govuk-input {
+            border-width: 1px; 
+        }
+
+        .govuk-details__text {
             font-size: $results-filters-labels-m;
         }
 
-        .govuk-checkboxes__item {
-            padding: 0 0 0 30px; 
-        } 
+        .CCS-AT-show--fontsize {//matches .govuk-label--s
+            @include govuk-font($size: 19, $weight: bold);
+        }        
 
-        .CCS-AT-show {
-            height: 26px;
-            width: 26px;
-            display: block;
-            position: absolute;
-            top: 0;
-            right: 0; 
+        .CCS-AT-show {//button    
+            min-height: 30px;
+            width: 100%;
+            background-color: transparent; 
+            text-align: left; 
+            border: none; 
+            margin: 2px 0 3px 0; 
             cursor: pointer; 
+            padding: 0 0 0 10px; 
+
+            &:focus {
+                outline: 3px solid govuk-colour("yellow");
+                outline-offset: 0;
+            }
 
             span {//text-indent no good
                 position: absolute; 
@@ -141,10 +167,10 @@ the import call to the parent GOVUK component) */
             &::after {//the tick
                 content: '';
                 position: absolute;
-                top: 0;
-                left: 5px;
-                width: 14px;
-                height: 14px;
+                top: 6px;
+                right: 10px;
+                width: 10px;
+                height: 10px;
                 border-width: 0; 
                 border-style: solid;
                 border-color: govuk-colour("black");            
@@ -159,7 +185,7 @@ the import call to the parent GOVUK component) */
 
         .CCS-AT-checkbox-accordian.show {
             .CCS-AT-show::after {
-                top: 8px;
+                top: 13px;
                 border-width: 3px 3px 0 0; 
             } 
 
@@ -184,27 +210,143 @@ the import call to the parent GOVUK component) */
     }
 }
 
-        body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
-            .CCS-AT-checkboxes-wrap {
-                display: none; 
+body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
+    .CCS-AT-checkboxes-wrap {
+        display: none; 
+    }
+    .CCS-AT-show::after {
+        border-width: 0 0 3px 3px; 
+    }
+}
+
+.CCS-AT-search-results {
+
+    .CCS-AT-search-results__sort {
+        float: right; 
+        clear: left; 
+        margin: 0 0 govuk-spacing(6) 0; 
+
+        .govuk-label {
+            display: inline-block; 
+            font-weight: bold; 
+            margin-right: 10px; 
+        }
+
+        .govuk-select {
+            min-width: 190px; 
+            border-width: 1px; 
+            border-radius: 5px; 
+        }
+        
+    }
+
+    ul.CCS-AT-results-list {
+        list-style: none; 
+        padding: 0; 
+        clear: left; 
+
+        li.govuk-list {
+            float: left; 
+            clear: left; 
+            width: 100%; 
+            padding: govuk-spacing(2) 0; 
+            margin: 0; 
+            border-bottom: 1px solid $govuk-border-colour; 
+
+            &:first-child {
+                border-top: 1px solid $govuk-border-colour; 
+            } 
+
+            & > div {
+                padding: 0; 
             }
-            .CCS-AT-show::after {
-                border-width: 0 0 3px 3px; 
+
+            a {
+                margin: 0; 
             }
         }
 
+        .CCS-AT-results-list__providers {
+            
+            div {
 
-//-webkit-transform: rotate(-45deg);
-//-ms-transform: rotate(-45deg);
+                float: right; 
+
+                span {
+                    width: 100%; 
+                    display: block; 
+                    font-weight: bold; 
+                    
+                }
+                
+                span span {
+                    font-weight: 700; 
+                }
+            }
+
+        }
+
+        .CCS-AT-results-list__details {
+            list-style: none; 
+            padding: 0; 
+            margin: govuk-spacing(2) 0 0 0; 
+            width: 100%; 
+
+            li {
+                margin: 0;
+                padding: 0; 
+            }
+        }
+
+    }
+
+}
+
+@media (max-width: 641px) {//mobile
+    .CCS-AT-search-results ul.CCS-AT-results-list .CCS-AT-results-list__providers div span span {
+        display: inline; 
+    }
+}
+
+
 
 #main-content {
     min-height: 330px; 
 }
 
 
- #cookie_banner {//ccs-no-print
-     display: none; 
- }
+#cookie_banner {//ccs-no-print
+    display: none; 
+}
+
+.CCS-search-icon {
+    display: block; 
+    //::after icon over input
+}
+
+.CCS-no-underline {
+    text-decoration: none; 
+
+    /*&:hover {
+        text-decoration: underline;
+    }*/
+}
+
+.CCS-AT-remove {
+    display: block; 
+    position: absolute; 
+    left: -3000px; 
+    top: -3000px; 
+}
+
+.CCS-AT-next {
+    text-decoration: none !important; 
+    padding: govuk-spacing(4) 0; 
+    display: block; 
+    width: 100%; 
+    text-align: right; 
+    clear: left; 
+}
 
 
 
