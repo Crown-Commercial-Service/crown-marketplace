@@ -1,20 +1,14 @@
 <li>
-  <a href="/" class="govuk-heading-s govuk-link--no-visited-state CSS-no-underline"><%= result[:name] %></a><br>
+  <div class="govuk-grid-column-two-thirds">
+    <a href="/" class="govuk-heading-s govuk-link--no-visited-state CSS-no-underline"><%= result[:name] %></a><br>
 
-  <b><%= t('apprenticeships.home.search_results.result_level_label') %></b> <br>
-  <%= result[:level] %><br>
-  <b><%= result[:providers] %> <%= t('apprenticeships.home.search_results.providers_label') %></b>
-</li>
-
-
-<div class="xgovuk-grid-row supplier-record__header-group">
-  <div class="xgovuk-grid-column-full">
-    <h3 class="xgovuk-heading-m xgovuk-!-font-size-27 xgovuk-link"><%= result[:name] %></h3>
-
-
-    <b><%= t('apprenticeships.home.search_results.result_level_label') %></b> <br>
-    <%= result[:level] %><br>
-    <b><%= result[:providers] %> <%= t('apprenticeships.home.search_results.providers_label') %></b>
+    <b>[[ <%= t('apprenticeships.home.search_results.result_level_label') %></b>]] <br>
+    <%= result[:level] %>
   </div>
-</div>
-<!--hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"-->
+
+  <div class="govuk-grid-column-one-third govuk-body CCS-at-results-list__providers">
+    <span class="govuk-!-font-size-16">
+      <span class="govuk-!-font-size-27"><%= result[:providers] %></span> <%= t('apprenticeships.home.search_results.providers_label') %>
+      </span>
+  </div>
+</li>
