@@ -5,6 +5,10 @@
       <% if branch.name.present? %>
         <h3 class="govuk-heading-s supplier-record__branch"><%= t('.branch') %>: <span class="supplier-record__branch-name"><%= branch.name %></span></h3>
       <% end %>
+      <p>
+        <%= branch.region %><br />
+        <%= branch.address_1 %>, <%= branch.address_2 %>, <%= branch.town %>, <%= branch.county %>
+      </p>
     </div>
   </div>
   <div class="govuk-grid-row">
