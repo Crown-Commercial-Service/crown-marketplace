@@ -17,4 +17,5 @@ Rails.application.config.assets.paths += [
 Rails.application.config.assets.precompile += %w[
   govuk-frontend/assets/images/*
   html5shiv/dist/html5shiv.js
+  apprenticeships.css
 ]
