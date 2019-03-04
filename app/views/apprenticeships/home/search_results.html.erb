@@ -13,10 +13,10 @@
   </div>
 </div>
 
-<div class="govuk-grid-row govuk-!-padding-top-4 CCS-AT-results-filters">
+<div class="govuk-grid-row govuk-!-padding-top-4 CCS-AT-results-pg">
   <%= form_tag apprenticeships_search_path, method: :get, class: 'supplier-record__calculator-form' do %>
   
-  <section id="ccs-at-results-filters" class="govuk-grid-column-one-third">
+  <section id="CCS-AT-results-filters" class="govuk-grid-column-one-third CCS-AT-results-filters">
     <!-- start Levels filters -->
     <div class="govuk-form-group CCS-AT-results-filters__panel CCS-AT-results-filters--padding">
       <label class="govuk-label govuk-label--s" for="search">
@@ -103,121 +103,36 @@
 
   </section>
 
-  <section id="css-at-search-results" class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-m CSS-remove">Results</h2>
-    
+  <section id="CCS-AT-search-results" class="govuk-grid-column-two-thirds CCS-AT-search-results">
 
-    <ul title="Results list" class="css-at-results-list">
+
+
+
+    <div class="govuk-form-group">
+      <div class="CCS-AT-search-results__sort">
+        <label class="govuk-label" for="sort">
+          <%= t('.sort_by_label') %>
+        </label>
+        <%= select_tag :sort, options_for_select(sort_option), class: 'govuk-select' %>
+      </div>
+    </div>
+
+
+
+
+
+    <h2 class="govuk-heading-m CCS-AT-remove">Results</h2>
+
+    <ul class="CCS-AT-results-list">
       <% results.each do |result| %>
         <%= render 'search_apprenticeship', result: result %>
       <% end %>
     </ul>
 
-    <%= link_to t('.next'), '#', class: 'govuk-link' %>
-
+    <%= link_to '#', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state CCS-AT-next' do %>
+      <%= t('.next')%><span>&nbsp;&rarr;</span>
+    <% end %>
   </section>
 
   <% end %>
-</div>
-
-
-
-
-<hr> <p>WIP...</p>
-
-<br><br><br><br><br>
-
-<div class="govuk-grid-row" style="margin-top: 100px;">
-  <div class="govuk-grid-column-full">
-    
-
-    
-      <div class="govuk-grid-row">
-
-        <div class="govuk-grid-column-one-third">
-          <div class="cmp-sidebar">
-            <h2 class="govuk-heading-s"><%= t('.keyword_search_label') %></h2>
-            <%= text_field_tag :search, params[:search], class: 'govuk-input' %>
-          </div>
-
-          <h2 class="govuk-heading-m"><%= t('.apply_filters_label') %></h2>
-
-          <%= link_to t('.clear_filters_link'), apprenticeships_search_path, class: 'ccs-no-print' %>
-
-          <div class="cmp-sidebar">
-            <h2 class="govuk-heading-s"><%= t('.levels_label') %></h2>
-
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% levels.each do |level| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "levels[]",
-                              level,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "level_#{level}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="level_<%= level %>">
-                        <%= level %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-            <details class="govuk-details">
-              <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
-                  <%= t('.explain_levels_link') %>
-                </span>
-              </summary>
-              <div class="govuk-details__text">
-                <%= t('.explain_levels_text') %>
-              </div>
-            </details>
-          </div>
-          <br>
-          <div class="cmp-sidebar">
-            <h2 class="govuk-heading-s"><%= t('.routes_label') %></h2>
-
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% routes.each do |route| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "routes[]",
-                              route,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "route_#{route}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="route_<%= route %>">
-                        <%= route %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-          </div>
-        </div>
-        <div class="govuk-grid-column-two-thirds">
-          <div>
-            <h2 class="govuk-heading-m"><%= t('.sort_by_label') %></h2>
-            <%= select_tag :sort, options_for_select(sort_option), class: 'govuk-select' %>
-
-            <!--hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"-->
-            <% results.each do |result| %>
-              <%= render 'search_apprenticeship', result: result %>
-            <% end %>
-
-            <%= link_to t('.next'), '#', class: 'govuk-link' %>
-          </div>
-        </div>
-      </div>
-    
-  </div>
 </div>
