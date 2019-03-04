@@ -13,14 +13,13 @@
   </div>
 </div>
 
-
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
     <strong class="govuk-heading-xl"> Supplier results</strong>
     <div class="govuk-inset-text">
       <strong>On this page</strong><br>
-      <span>You will need to do this, this and that</span>
-    </div>
+      <span>Based on your choices, we are showing suppliers in three different groups.</span>
+   </div>
   </fieldset>
   <p class="govuk-!-font-size-36">
     <strong><%= @supplierCount %> suppliers found</strong> based on total contract value, when awarded.
@@ -34,14 +33,14 @@
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half"><strong class="govuk-heading-m">Apply filters</strong></div>
           <div class="govuk-grid-column-one-half">
-            <a href="<%= @select_FM_locations %>" class="remove-all" style="float:right">Clear filters</a></div>
+            <a href="<%= @select_FM_locations %>" class="remove-all" >Clear filters</a></div>
         </div>
         <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
           <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
             <strong class="govuk-heading-m govuk-!-padding-1">Region</strong>
           </div>
           <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half"><strong class="govuk-heading-s">2 selected</strong></div>
+            <div class="govuk-grid-column-one-half"><strong id="region-count" class="govuk-heading-s">2 selected</strong></div>
             <div class="govuk-grid-column-one-half"><a href="<%= @select_FM_locations %>">Change region</a></div>
           </div>
           <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
@@ -53,14 +52,13 @@
             <strong class="govuk-heading-m govuk-!-padding-1">Service</strong>
           </div>
           <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half"><strong class="govuk-heading-s">2 selected</strong></div>
+            <div class="govuk-grid-column-one-half"><strong id="service-count" class="govuk-heading-s">2 selected</strong></div>
             <div class="govuk-grid-column-one-half"><a href="<%= @select_FM_services %>">Change service</a></div>
           </div>
           <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
             <div id="fm-service-check-boxes" class="govuk-checkboxes"></div>
           </div>
         </div>
-        <a id="filter-toggle-btn" id="apply-filter-btn" href="" class="govuk-button" role="button">Apply filters</a><br>
       </div>
     </div>
 
@@ -101,7 +99,7 @@
         <% end %>
         </table>
       </div>
-      
+
       <div id="fm-lot-1c-list" class="govuk-grid-column-one-third">
         <span class="govuk-heading-m">Over £50m</span><table class="govuk-table">
         <thead class="govuk-table__head">
@@ -123,33 +121,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-inset-text">
       <strong>Next steps</strong><br>
-      <span>We will now ask you questions about this contract, building and costs.</span><br>
-      <span>You can open competition for suppliers after you have recieved an assessed value.</span>
+      <span>We will now ask you questions about your procurement, buildings and costs.</span><br>
+      <span>You can open a competition for suppliers after you have received an assessed value from us.</span>
     </div>
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <span class="govuk-heading-m">
-            Would you like to continue
-          </span>
-        </legend>
-        <div class="govuk-radios govuk-radios--inline">
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="suppliers-continue-yes" name="suppliers-continue-yes" type="radio" value="yes">
-            <label class="govuk-label govuk-radios__label" for="suppliers-continue-yes">
-              Yes
-            </label>
-          </div>
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="suppliers-continue-no" name="suppliers-continue-no" type="radio" value="no">
-            <label class="govuk-label govuk-radios__label" for="suppliers-continue-no">
-              No
-            </label>
-          </div>
-        </div>
-      </fieldset>
-    </div>
-    <a id="suppliers-save-button" id="suppliers-save-button" href="" class="govuk-button" role="button">Save</a><br>
+
+    <a id="suppliers-continue-button" href="/facilities-management/select-locations" class="govuk-button" role="button">Continue</a><br>
+    <p>
+      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option" href="" >Print this page</a>
+    </p>
   </div>
 </div>
 
