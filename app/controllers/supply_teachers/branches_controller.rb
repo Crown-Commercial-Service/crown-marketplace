@@ -24,7 +24,7 @@ module SupplyTeachers
       @radius_in_miles = step.radius
       @alternative_radiuses = SEARCH_RADIUSES - [@radius_in_miles]
       @branches = step.branches daily_rates
-      flash[:notice] = 'Calculated mark-up updated' unless daily_rates.empty?
+      flash[:notice] = 'Calculated mark-up updated' if daily_rates.present? && !request.xhr?
 
       respond_to do |format|
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
