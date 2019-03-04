@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   post '/sign-out' => 'auth#sign_out', as: :sign_out
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
+  get '/find_apprentices', to: 'home#find_apprentices'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
   get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 end

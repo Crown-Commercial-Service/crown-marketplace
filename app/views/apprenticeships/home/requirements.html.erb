@@ -3,6 +3,10 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
+  <span id="more-detail-hint" class="govuk-hint">
+    Building services design engineer
+  </span>
+
       <h2 class="govuk-heading-l"><%= t('Add your requirements:') %></h2>
  <div class="govuk-radios">
 <div class="govuk-radios govuk-radios--inline">
@@ -100,7 +104,7 @@
 </div>
 <br/>
 <br/>
-      <%= link_to t('Find training providers'), journey_start_path(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.start_finding_supply_teachers') %>
+      <%= link_to t('Find training providers'), 'requirement', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.start_finding_supply_teachers') %>
 
     </div>
   </div>
