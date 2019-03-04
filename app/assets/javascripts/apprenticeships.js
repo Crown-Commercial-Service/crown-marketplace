@@ -3,17 +3,31 @@ function initSearchResults(id){
 
     accord.each(function(index) {
         var link = $(this).find('.CCS-AT-show');
-        var wrap = $(this);//.find('.CCS-AT-checkboxes-wrap');
+        var shopWrap = $(this);
 
         link.attr('aria-expanded', 'false').click(function(e){
-            e.preventDefault();//if 'a' tag
+            e.preventDefault();//if 'a' tag used
 
             $(this).attr('aria-expanded',$(this).attr('aria-expanded')==='true'?'false':'true' )
             .find('span').text(function(i, text){
                 return text === "Show" ? "Hide" : "Show";
             });
-            wrap.toggleClass('show');//could use '+' css selector on aria attr val, but this supports legacy browsers
+            shopWrap.toggleClass('show');//could use '+' css selector on aria attr val, but v this supports legacy browsers
         });
+    }); 
+
+
+    var checkboxs = accord.find('.govuk-checkboxes__input');
+
+    checkboxs.keypress(function(e){//select checkbox with keyboard
+        if((e.keyCode ? e.keyCode : e.which) == 13){
+            $(this).trigger('click');
+        }
+    });
+    
+    $('#ccs-clear-filters').click(function(e){
+        e.preventDefault();
+        checkboxs.prop('checked', false); // AND resubmit form to 'self' ????
     });
 }
 
@@ -31,8 +45,8 @@ function initCustomFnc() {
     
 
 
-    var filt = $('#ccs-at-results-filters');
-    if(filt.length){//it exists
+    var filt = $('#CCS-AT-results-filters');
+    if(filt.length){
         initSearchResults(filt);
     }
 }
