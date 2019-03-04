@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     get '/training_provider', to: 'home#training_provider'
     get '/training_provider_list', to: 'home#training_provider_list'
     get '/sorry', to: 'home#sorry'
+    get '/signup', to: 'home#signup'
+    get '/understanding', to: 'home#understanding'
     get '/training_details', to: 'home#training_details'
   end
 

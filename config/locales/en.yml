@@ -35,7 +35,7 @@ en:
               invalid_location: Enter a valid postcode
             term:
               blank: Select how long you need the worker for
-        supply_teachers/journey/apprentices:
+        supply_teachers/journey/looking_for:
           attributes:
             looking_for:
               inclusion: Select individual worker, managed service provider, or calculate temp-to-perm fee
@@ -115,8 +115,6 @@ en:
         know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
         know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
         know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
-        have_read_and_agreed: have read and agreed to the terms and conditions governing this service
-        this_service_will_help: This service will help you generate a shortlist of training providers that will only be valid for 48hrs, as supplier information is continually being updated.
         start_finding_apprenticeships: Start finding apprenticeships training and related services
         title: Find apprenticeship training and related services
         use_this_service_to:
@@ -127,7 +125,6 @@ en:
         you_will_need_to_have: 'To use this service, you will need to:'
       search:
         page_title: Search for apprenticeship
-        page_section: Find apprenticeship training and related services
         search_button: Search
         search_hint: Search by keyword or apprenticeship name / number, or job title
         search_label: Search for apprenticeship
@@ -143,12 +140,87 @@ en:
         providers_label: Provider(s)
         result_level_label: 'Level:'
         results_found_hint: Click on the apprenticeship to add your requirements and find training providers.
-        results_found_html: There are <strong>%{results}</strong> apprenticeships matching your search for "<strong>%{search}</strong>"
+        results_found_html: There are <b>%{results}</b> apprenticeships matching your search for "<b>%{search}</b>"
         routes_label: Routes
         sort_by_label: Sort by
-      supplier_search:
-        there_are_8: There are 8 training provides who can supply training for "Business services design engineer" that match your requirements
-        apply_filters: Apply filters to reduce the number of suppliers. When you're ready to proceed, download the suppliers list and complete the procurement offline
+      training_provider:
+        ability_to_bespoke_label: Ability to bespoke
+        about_the_apprenticeship_title: 'About the apprenticeship:'
+        about_the_provider_title: 'About the provider:'
+        address: 'Address:'
+        apprenticeship_label: Apprenticeship
+        at_your_location_label: at your location
+        blended_label: Blended
+        block_release_label: block release
+        caption: Training provider details
+        classroom_based_label: Classroom based
+        classroom_sharing_closed_label: Closed
+        classroom_sharing_label: 'Classroom sharing:'
+        classroom_sharing_open_label: Open
+        classroom_sharing_public_label: Public
+        contact_details_title: Contact details
+        day_release_label: day release
+        delivery_method_label: 'Delivery method:'
+        duration_label: Duration
+        email: 'Email:'
+        experience_in_delivering_apprenticeships_label: Experience in delivering apprenticeships
+        experience_in_this_apprenticeship_label: Experience in this apprenticeship
+        explain_classroom_sharing_details: Classoom sharing explanation
+        explain_classroom_sharing_label: Explain classroom sharing
+        explain_time_demand_details: Time demand explanation
+        explain_time_demand_label: Explain time demand
+        explain_training_availability_details: Training availability explained
+        explain_training_availability_label: Explain training availability
+        funding_band_label: Funding band
+        level_label: Level
+        national_provider_label: National provider
+        national_provider_title: This training provider is willing to offer apprenticeship training across England
+        ofsted_apprenticeship_label: Ofsted rating for this apprenticeship
+        online_label: Online
+        other_apprenticeship_standards_title: Other apprenticeship standards this provider delivers
+        other_apprenticeships_standards_title: Other apprenticeship standards this provider delivers
+        overall_ofsted_rating_label: Overall ofsted rating
+        page_title: Training provider details
+        phone_number: 'Phone number:'
+        provider_information_tab: Provider information
+        provider_information_title: Provider information
+        recruitment_support_label: Recruitment support
+        time_demand_label: 'Time demand:'
+        training_availability_closed_label: Closed
+        training_availability_label: 'Training availability:'
+        training_availability_open_label: Open
+        training_availability_public_label: Public
+        training_information_tab: Training information
+        training_information_title: Training information
+        view_report: view report
+        website: 'Website:'
+        workplace_based_label: Workplace based
+      training_provider_list:
+        page_title: Download the training provider list
+        title: Download the training provider list
+        warning_text: You can now download a training provider list and complete this procurement offline via a further competition.
+        info: This list will only be valid for 48hrs, as supplier information is continually being updated
+        download_file_info: Download training provider list as comma-separated values
+        other_documents_title: The following documents may also be of help
+        basic_terms_and_conditions: Basic terms and conditions
+        customer_guidance_template: Customer guidance template
+        choices_used: Choices used to generate your shortlist
+        requirements: Requirements
+        apprenticeship_standard: Apprenticeship Standard
+        apprenticeship_level: Apprenticeship Level
+        help_with_recruiting: Help with recruiting the apprentices
+        funding_band: Funding band
+        minimum_number: Minimum number of apprentices
+        minimum_ofsted: Minimum Ofsted rating
+        training_in_multiple_locations: Training in multiple locations
+        need_to_customise: Need to customise training
+        filters_used: Filters used
+        delivery_method: Delivery method
+        time_demand: Time demand
+        classroom_sharing: Classroom sharing
+        training_availability: Training availability
+        start_new_search: Start new search
+        print_this_page: Print this page
     page_section: Find apprenticeship training and related services
   common:
     submit: Continue
@@ -167,8 +239,6 @@ en:
     maintenance:
       explanation: You will be able to use the service later.
       title: Service unavailable
-  supplier_search:
-        There_are_8: There are 8 training provides who can supply training for "Business services design engineer" that match your requirements
   facilities_management:
     gateway:
       index:
@@ -417,7 +487,6 @@ en:
         make_sure_the_confidential_information: make sure the confidential information is stored securely and that only people using the service to buy under the framework have access to it
         only_use_the_information: only use the information for buying services under the CCS framework agreement for supply teachers and temporary staff
         start_finding_supply_teachers: Start finding supply teachers and agency workers
-        this_service_will_help: This service will help you generate a shortlist of training providers that will only be valid for 48hrs, as supplier information is continually being updated.
         start_now: Start now
         supported_by: 'Supported by:'
         tell_ccs_if_suspect: tell CCS if you suspect unauthorised access, copying, use or disclosure of the confidential information
