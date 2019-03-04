@@ -1,0 +1,134 @@
+<a href="/facilities-management/select-services" class="govuk-back-link">Back</a>
+
+<div id="-error-message" name="longList-error-message" hidden class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+  <h2 class="govuk-error-summary__title" id="error-summary-title">
+    There is a problem
+  </h2>
+  <div class="govuk-error-summary__body">
+    <ul class="govuk-list govuk-error-summary__list">
+      <li>
+        <a href="#">You must select at least one longList before clicking the save continue button</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <fieldset class="govuk-fieldset" aria-describedby="">
+    <strong class="govuk-heading-xl"> Supplier results</strong>
+    <div class="govuk-inset-text">
+      <strong>On this page</strong><br>
+      <span>Based on your choices, we are showing suppliers in three different groups.</span>
+   </div>
+  </fieldset>
+  <p class="govuk-!-font-size-36">
+    <strong><%= @supplierCount %> suppliers found</strong> based on total contract value, when awarded.
+  </p>
+
+  <!-- Start of filter section -->
+  <div class="govuk-grid-row">
+    <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button" role="button">Hide filters</a><br>
+    <div id="fm-filter-pane" class="govuk-grid-column-one-third">
+      <div class="govuk-!-padding-2 CCS-fm-supplier-filter-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half"><strong class="govuk-heading-m">Apply filters</strong></div>
+          <div class="govuk-grid-column-one-half">
+            <a href="<%= @select_FM_locations %>" class="remove-all" >Clear filters</a></div>
+        </div>
+        <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+            <strong class="govuk-heading-m govuk-!-padding-1">Region</strong>
+          </div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half"><strong id="region-count" class="govuk-heading-s">2 selected</strong></div>
+            <div class="govuk-grid-column-one-half"><a href="<%= @select_FM_locations %>">Change region</a></div>
+          </div>
+          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+            <div id="fm-region-check-boxes" class="govuk-checkboxes"></div>
+          </div>
+        </div>
+        <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+            <strong class="govuk-heading-m govuk-!-padding-1">Service</strong>
+          </div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half"><strong id="service-count" class="govuk-heading-s">2 selected</strong></div>
+            <div class="govuk-grid-column-one-half"><a href="<%= @select_FM_services %>">Change service</a></div>
+          </div>
+          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+            <div id="fm-service-check-boxes" class="govuk-checkboxes"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start of main list section -->
+    <div id="CCS-fm-suppliers-long-list" class="govuk-grid-column-two-thirds">
+      <div id="fm-lot-1a-list" class="govuk-grid-column-one-third">
+        <span class="govuk-heading-m">Up to £7m</span>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col">Lot 1a</th>
+          </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+          <% @Lot1a_suppliers.each do |supplier| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
+            </tr>
+            </tbody>
+          <% end %>
+          </table>
+      </div>
+
+      <div id="fm-lot-1b-list" class="govuk-grid-column-one-third">
+        <span class="govuk-heading-m">£7m to 50m</span>
+        <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Lot 1b</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% @Lot1b_suppliers.each do |supplier| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
+          </tr>
+          </tbody>
+        <% end %>
+        </table>
+      </div>
+
+      <div id="fm-lot-1c-list" class="govuk-grid-column-one-third">
+        <span class="govuk-heading-m">Over £50m</span><table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Lot 1c</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% @Lot1c_suppliers.each do |supplier| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
+          </tr>
+          </tbody>
+        <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-inset-text">
+      <strong>Next steps</strong><br>
+      <span>We will now ask you questions about your procurement, buildings and costs.</span><br>
+      <span>You can open a competition for suppliers after you have received an assessed value from us.</span>
+    </div>
+
+    <a id="suppliers-continue-button" href="/facilities-management/select-locations" class="govuk-button" role="button">Continue</a><br>
+    <p>
+      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option" href="" >Print this page</a>
+    </p>
+  </div>
+</div>
+
