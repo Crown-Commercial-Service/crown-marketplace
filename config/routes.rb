@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
     get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
+    get '/all-suppliers', to: 'suppliers#all_suppliers', as: 'all_suppliers'
     get '/agency-payroll-results', to: 'branches#index', slug: 'agency-payroll-results'
     get '/fixed-term-results', to: 'branches#index', slug: 'fixed-term-results', as: 'fixed_term_results'
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
