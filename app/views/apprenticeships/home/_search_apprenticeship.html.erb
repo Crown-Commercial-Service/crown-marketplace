@@ -1,8 +1,17 @@
-<div class="govuk-grid-row supplier-record__header-group">
-  <div class="govuk-grid-column-full">
-    <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-link"><%= result[:name] %></h2>
-    <p><strong><%= t('apprenticeships.home.search_results.result_level_label') %></strong> <%= result[:level] %></p>
-    <p><strong><%= result[:providers] %> <%= t('apprenticeships.home.search_results.providers_label') %></strong></p>
+<li class="govuk-list">
+  <div class="govuk-grid-column-two-thirds">
+    <a href="/" class="govuk-heading-s govuk-link--no-visited-state CCS-no-underline"><%= result[:name] %></a>
+    <ul class="CCS-AT-results-list__details">
+      <li class="govuk-grid-column-one-third"><b><%= t('apprenticeships.home.search_results.result_level_label') %></b> <%= result[:level] %></li>
+    </ul>
   </div>
-</div>
-<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+  <div class="govuk-grid-column-one-third CCS-AT-results-list__providers">
+    <div>
+      <span class="govuk-!-font-size-16">
+        <span class="govuk-!-font-size-27"><%= result[:providers] %></span> 
+        <%= t('apprenticeships.home.search_results.providers_label') %>
+      </span>
+    </div>
+  </div>
+</li>
