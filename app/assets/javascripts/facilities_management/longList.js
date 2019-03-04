@@ -13,15 +13,16 @@ $(() => {
 
         selectedLocations.forEach((value, index, array) => {
             let checkbox = '<div class="govuk-checkboxes__item">' +
-                '<input class="govuk-checkboxes__input" checked id="' + value.code + '" name="' + value.code + '" type="checkbox" value="' + value.name + '">' +
+                '<input class="govuk-checkboxes__input" checked id="' + value.code + '" name="fm-regions-checkbox" type="checkbox" value="' + value.name + '">' +
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label"  for="' + value.code + '">' + value.name + '</label></div>';
 
             regionCheckBoxes.append(checkbox);
 
             $('#' + value.code).click((e) => {
+                updateCounts();
                 if (!e.target.checked) {
-                    let filtered = selectedLocations.filter((service, index, arr) => {
-                        if (service.code !== value.code) {
+                    let filtered = selectedLocations.filter((obj, index, arr) => {
+                        if (obj.code !== value.code) {
                             return true;
                         } else {
                             return false;
@@ -29,11 +30,11 @@ $(() => {
                     });
                     selectedLocations = filtered;
                 } else {
-                    const service = {
+                    const location = {
                         code: e.target.id,
                         name: e.target.value
-                    }
-                    selectedLocations.push(service);
+                    };
+                    selectedLocations.push(location);
                 }
 
                 pageUtils.setCachedData('locations', selectedLocations);
@@ -46,12 +47,13 @@ $(() => {
 
         selectedServices.forEach((value, index, array) => {
             let checkbox = '<div class="govuk-checkboxes__item">' +
-                '<input class="govuk-checkboxes__input" checked id="' + value.code + '" name="' + value.code + '" type="checkbox" value="' + value.name + '">' +
+                '<input class="govuk-checkboxes__input" checked id="' + value.code + '" name="fm-services-checkbox" type="checkbox" value="' + value.name + '">' +
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label" for="' + value.code + '">' + value.name + '</label></div>';
 
             serviceCheckBoxes.append(checkbox);
 
             $('#' + value.code).click((e) => {
+                updateCounts();
                 if (!e.target.checked) {
                     let filtered = selectedServices.filter((service, index, arr) => {
                         if (service.code !== value.code) {
@@ -74,6 +76,15 @@ $(() => {
             });
         });
 
+        updateCounts();
+
+    });
+
+    const updateCounts = (() => {
+        let regionCount = $("input[name='fm-regions-checkbox']:checked").length;
+        let serviceCount = $("input[name='fm-services-checkbox']:checked").length;
+        $('#region-count').text(regionCount + " selected") ;
+        $('#service-count').text(serviceCount + " selected");
     });
 
     /* Click handler for the filter toggle button */
@@ -96,6 +107,12 @@ $(() => {
             longListSection.addClass('govuk-grid-column-two-thirds')
         }
 
+    });
+
+    /* Click handler for Print button */
+    $('#FM-print-supplier-list').click((e) => {
+        e.preventDefault();
+        window.print();
     });
 
     init();
