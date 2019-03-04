@@ -45,8 +45,8 @@ function initCustomFnc() {
     
 
 
-    var filt = $('#ccs-at-results-filters');
-    if(filt.length){//it exists
+    var filt = $('#CCS-AT-results-filters');
+    if(filt.length){
         initSearchResults(filt);
     }
 }
