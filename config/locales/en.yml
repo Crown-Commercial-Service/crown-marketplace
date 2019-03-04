@@ -35,7 +35,7 @@ en:
               invalid_location: Enter a valid postcode
             term:
               blank: Select how long you need the worker for
-        supply_teachers/journey/looking_for:
+        supply_teachers/journey/apprentices:
           attributes:
             looking_for:
               inclusion: Select individual worker, managed service provider, or calculate temp-to-perm fee
@@ -132,12 +132,11 @@ en:
         search_hint: Search by keyword or apprenticeship name / number, or job title
         search_label: Search for apprenticeship
       search_results:
-        apply_filters_label: xApply filters
+        apply_filters_label: Apply filters
         clear_filters_link: Clear filters
         explain_levels_link: Explain levels
         header: Search results
         keyword_search_label: Keyword search
-        There_are_8: There are 8 training provides who can supply training for "Business services design engineer" that match your requirements
         levels_label: Levels
         next: Next
         page_title: Search results
@@ -147,6 +146,9 @@ en:
         results_found_html: There are <strong>%{results}</strong> apprenticeships matching your search for "<strong>%{search}</strong>"
         routes_label: Routes
         sort_by_label: Sort by
+      supplier_search:
+        there_are_8: There are 8 training provides who can supply training for "Business services design engineer" that match your requirements
+        apply_filters: Apply filters to reduce the number of suppliers. When you're ready to proceed, download the suppliers list and complete the procurement offline
     page_section: Find apprenticeship training and related services
   common:
     submit: Continue
@@ -165,6 +167,8 @@ en:
     maintenance:
       explanation: You will be able to use the service later.
       title: Service unavailable
+  supplier_search:
+        There_are_8: There are 8 training provides who can supply training for "Business services design engineer" that match your requirements
   facilities_management:
     gateway:
       index:
