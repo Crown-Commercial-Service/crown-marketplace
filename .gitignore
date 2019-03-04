@@ -32,3 +32,6 @@ logfile
 
 # Simplecov
 /coverage/*
+
+# Rubymine files
+.idea/*

@@ -12,6 +12,11 @@ module SupplyTeachers
       @suppliers = Supplier.with_neutral_vendor_rates
     end
 
+    def all_suppliers
+      @back_path = supply_teachers_path
+      @branches = Branch.all
+    end
+
     private
 
     def source_journey
