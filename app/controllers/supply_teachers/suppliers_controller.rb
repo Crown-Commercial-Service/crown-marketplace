@@ -14,7 +14,9 @@ module SupplyTeachers
 
     def all_suppliers
       @back_path = supply_teachers_path
-      @branches = Branch.all
+      all_branches = Branch.all
+      @branches_count = all_branches.count
+      @branches = all_branches.page params[:page]
     end
 
     private

@@ -7,7 +7,8 @@
       <% end %>
       <p>
         <%= branch.region %><br />
-        <%= branch.address_1 %>, <%= branch.address_2 %>, <%= branch.town %>, <%= branch.county %>
+        <%= branch.address_1 %>, <%= branch.address_2 %>, <%= branch.town %>, <%= branch.county %>, <%= branch.postcode %><br />
+        <strong>Accreditation body:</strong>
       </p>
     </div>
   </div>
@@ -19,18 +20,32 @@
         <%= mail_to(branch.contact_email, branch.contact_email, 'aria-label': "Email #{branch.contact_name} from #{branch.supplier.name}") %>
       </p>
     </div>
-    <div class="govuk-grid-column-one-third">
-      <div class="govuk-grid-row">
-        <% if branch.supplier.rates.last %>
-          <div class="govuk-grid-column-one-half">
-            <p class="govuk-body govuk-!-font-size-36 supplier-record__markup-rate">
-              <%= number_to_percentage(branch.supplier.rates.last.mark_up * 100, precision: 1, format: "%n<span class='govuk-!-font-size-24'>%</span>".html_safe) %>
-            </p>
-            <p class="govuk-body-s supplier-record__markup-rate-units"><%= t('.markup') %></p>
-          </div>
-        <% end %>
-      </div>
-    </div>
   </div>
-  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col"><strong><%= t('.column1') %></strong></th>
+      <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['one_week'] %></strong></th>
+      <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['twelve_weeks'] %></strong></th>
+      <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['more_than_twelve_weeks'] %></strong></th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <% branch.supplier.rates_grouped_by_job_type.each do |job_type, rates| %>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="row"><%= SupplyTeachers::JobType[job_type] %></th>
+        <% if rates.length == 1 %>
+          <% 3.times do %>
+            <td class="govuk-table__cell govuk-table__cell--numeric master-vendor-record__markup-column"><%= number_to_percentage(rates.first.mark_up * 100, precision: 1) %></td>
+          <% end %>
+        <% elsif rates.length == 3 %>
+          <% rates.each do |rate| %>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= number_to_percentage(rate.mark_up * 100, precision: 1) %></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>

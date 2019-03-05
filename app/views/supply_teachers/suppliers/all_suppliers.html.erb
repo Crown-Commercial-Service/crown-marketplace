@@ -5,7 +5,8 @@
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
 
-    <p class="govuk-body"><%= number_to_human(@branches.count, units: :suppliers) %></p>
+    <p class="govuk-body"><%= number_to_human(@branches_count, units: :suppliers) %></p>
     <%= render partial: 'branch', collection: @branches %>
+    <%= paginate @branches %>
   </div>
 </div>
