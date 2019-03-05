@@ -182,7 +182,7 @@ This will pull down `/errors/404.html`, for example, and save an inlined copy in
 ### Design & frontend
 
 * The design of the app is closely based on the [GOV.UK Design System][] with
-  some minor CCS-related variations.
+  some minor ccs-related variations.
 * The project uses and extends the [GOV.UK Frontend][] npm package.
 * The npm package dependencies are listed in `package.json`, installed using
   [yarn][], and the exact versions of all dependencies direct/indirect are
