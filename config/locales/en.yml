@@ -507,3 +507,5 @@ en:
         page_title: Agency list
         header: Agency list
         markup: Mark-up
+        column1: Job type
+        column2: Agency mark-up
