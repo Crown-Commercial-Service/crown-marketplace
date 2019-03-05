@@ -4,14 +4,16 @@ module CCS
 
   def self.csv_to_nuts_regions(file_name, db_name)
     db = PG.connect(dbname: db_name)
-    db.exec 'create table IF NOT EXISTS nuts_regions ' \
-            '(code varchar(255) UNIQUE, name varchar(255), ' \
-            ' nuts1_code varchar(255), nuts2_code varchar(255) );'
+    query = 'create table IF NOT EXISTS nuts_regions (code varchar(255) UNIQUE, name varchar(255),
+                                             nuts1_code varchar(255), nuts2_code varchar(255) );'
+    db.query query
+
     CSV.read(file_name, headers: true).each do |row|
       column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
       values = row.fields.map { |i| "'#{i}'" }.join(',')
-      db.exec "DELETE FROM nuts_regions where code = '" + row['code'] + "' ; " \
-              'insert into nuts_regions ( ' + column_names + ') values (' + values + ')'
+      query = "DELETE FROM nuts_regions where code = '" + row['code'] + "' ; " \
+             'insert into nuts_regions ( ' + column_names + ') values (' + values + ')'
+      db.query query
     end
   rescue PG::Error => e
     puts e.message
@@ -21,15 +23,14 @@ module CCS
 
   def self.csv_to_fm_regions(file_name, db_name)
     db = PG.connect(dbname: db_name)
-    db.exec <<-SQL
-        create table IF NOT EXISTS fm_regions (
-          code varchar(255) UNIQUE, name varchar(255) );
-    SQL
+    query = 'create table IF NOT EXISTS fm_regions (code varchar(255) UNIQUE, name varchar(255) );'
+    db.query query
     CSV.read(file_name, headers: true).each do |row|
       column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
       values = row.fields.map { |i| "'#{i}'" }.join(',')
-      db.exec "DELETE FROM fm_regions where code = '" + row['code'] + "' ; " \
+      query = "DELETE FROM fm_regions where code = '" + row['code'] + "' ; " \
               'insert into fm_regions ( ' + column_names + ') values (' + values + ')'
+      db.query query
     end
   rescue PG::Error => e
     puts e.message
@@ -37,10 +38,11 @@ module CCS
     db&.close
   end
 
-  def self.load_static(directory = 'data/', db_name = 'marketplace_' + Rails.env)
-    p 'Version of libpg: ' + PG.library_version.to_s
+  def self.load_static(directory = 'data/')
     p 'Loading NUTS static data'
     p "Environment: #{Rails.env}"
+    db_name = Rails.application.config.database_configuration[Rails.env]['database']
+    p 'db: ' + db_name
 
     file1 = directory + 'nuts1_regions.csv'
     file2 = directory + 'nuts2_regions.csv'
