@@ -238,6 +238,13 @@ en:
         browse_tab_label: Browse 
         search_tab_label: Search
         outline_your_training_hint: Briefly outline your training requirements
+      find_apprentices4: 
+        find_apprenticeship-std: Find an apprenticeship standard 
+        find_apprenticeship-tab-title: Search or browse tabs
+        search_label: Keyword search 
+        browse_tab_label: Browse 
+        search_tab_label: Search
+
     page_section: Find apprenticeship training and related services
     
 
