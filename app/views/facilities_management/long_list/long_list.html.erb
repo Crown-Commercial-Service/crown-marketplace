@@ -22,7 +22,7 @@
    </div>
   </fieldset>
   <p class="govuk-!-font-size-36">
-    <strong><%= @supplierCount %> suppliers found</strong> based on total contract value, when awarded.
+    <strong><%= @supplier_count %> suppliers found</strong> based on total contract value, when awarded.
   </p>
 
   <!-- Start of filter section -->
@@ -33,7 +33,7 @@
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half"><strong class="govuk-heading-m ccs-no-print">Apply filters</strong></div>
           <div class="govuk-grid-column-one-half">
-            <a href="<%= @select_FM_locations %>" class="remove-all ccs-no-print" >Clear filters</a></div>
+            <a href="<%= @select_fm_locations %>" class="remove-all ccs-no-print" >Clear filters</a></div>
         </div>
         <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
           <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
@@ -41,7 +41,7 @@
           </div>
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-half"><strong id="region-count" class="govuk-heading-s">2 selected</strong></div>
-            <div class="govuk-grid-column-one-half ccs-no-print"><a href="<%= @select_FM_locations %>">Change region</a></div>
+            <div class="govuk-grid-column-one-half ccs-no-print"><a href="<%= @select_fm_locations %>">Change region</a></div>
           </div>
           <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
             <div id="fm-region-check-boxes" class="govuk-checkboxes"></div>
@@ -53,7 +53,7 @@
           </div>
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-half"><strong id="service-count" class="govuk-heading-s">2 selected</strong></div>
-            <div class="govuk-grid-column-one-half ccs-no-print"><a href="<%= @select_FM_services %>">Change service</a></div>
+            <div class="govuk-grid-column-one-half ccs-no-print"><a href="<%= @select_fm_services %>">Change service</a></div>
           </div>
           <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
             <div id="fm-service-check-boxes" class="govuk-checkboxes"></div>
@@ -73,7 +73,7 @@
           </tr>
           </thead>
           <tbody class="govuk-table__body">
-          <% @Lot1a_suppliers.each do |supplier| %>
+          <% @suppliers_lot1a.each do |supplier| %>
             <tr class="govuk-table__row">
               <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
             </tr>
@@ -91,7 +91,7 @@
         </tr>
         </thead>
         <tbody class="govuk-table__body">
-        <% @Lot1b_suppliers.each do |supplier| %>
+        <% @suppliers_lot1b.each do |supplier| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
           </tr>
@@ -108,7 +108,7 @@
         </tr>
         </thead>
         <tbody class="govuk-table__body">
-        <% @Lot1c_suppliers.each do |supplier| %>
+        <% @suppliers_lot1c.each do |supplier| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
           </tr>

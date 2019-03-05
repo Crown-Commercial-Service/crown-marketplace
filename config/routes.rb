@@ -1,6 +1,5 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
@@ -29,8 +28,8 @@ Rails.application.routes.draw do
     get '/value-band', to: 'select_locations#select_location'
     get '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations'
     get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
-    get '/suppliers/longList', to: 'long_list#longList'
-    post '/suppliers/longList' => 'long_list#longList'
+    get '/suppliers/long-list', to: 'long_list#long_list'
+    post '/suppliers/longList' => 'long_list#long_list'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'

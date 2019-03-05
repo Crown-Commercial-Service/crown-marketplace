@@ -32,7 +32,7 @@
           </h2>
         </div>
         <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
-          <% @workPackages.each do |workPackage| %>
+          <% @work_packages.each do |workPackage| %>
 
             <% if workPackage['work_package_code'].start_with?(service['code']) %>
               <div class="govuk-form-group">

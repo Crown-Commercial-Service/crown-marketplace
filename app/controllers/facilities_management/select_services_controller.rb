@@ -3,8 +3,6 @@ class FacilitiesManagement::SelectServicesController < ApplicationController
   require_permission :facilities_management, only: :select_services
 
   def select_services
-
-
     @services = JSON.parse('[
        {
            "code": "C",
@@ -60,7 +58,7 @@ class FacilitiesManagement::SelectServicesController < ApplicationController
        }
    ]')
 
-    @workPackages = JSON.parse('[
+    @work_packages = JSON.parse('[
         {
             "code": "A.7",
             "name": "Accessibility services",
@@ -870,6 +868,6 @@ class FacilitiesManagement::SelectServicesController < ApplicationController
             "name": "Management of billable works",
             "work_package_code": "O",
             "mandatory": true
-        }]',{create_additions:true})
+        }]', create_additions: true)
   end
 end
