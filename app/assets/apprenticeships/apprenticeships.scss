@@ -319,7 +319,8 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
 }
 
 
-#cookie_banner {//ccs-no-print
+#cookie_banner, 
+.ccs-no-print {//ccs-no-print
     display: none; 
 }
 
