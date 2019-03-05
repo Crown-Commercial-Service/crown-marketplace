@@ -7,6 +7,6 @@
 
     <p class="govuk-body"><%= number_to_human(@branches_count, units: :suppliers) %></p>
     <%= render partial: 'branch', collection: @branches %>
-    <%= paginate @branches %>
+    <%= paginate @branches, views_prefix: 'shared', window: 2, outer_window: 1 %>
   </div>
 </div>
