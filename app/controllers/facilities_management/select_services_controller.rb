@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/MethodLength
 require 'json'
 class FacilitiesManagement::SelectServicesController < ApplicationController
   require_permission :facilities_management, only: :select_services
@@ -871,3 +872,4 @@ class FacilitiesManagement::SelectServicesController < ApplicationController
         }]', create_additions: true)
   end
 end
+# rubocop:enable Metrics/MethodLength
