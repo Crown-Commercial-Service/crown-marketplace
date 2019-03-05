@@ -26,10 +26,16 @@
         <li><%= t('.have_read_and_agreed') %></li>
       </ul>
 
-      <p class="govuk-body"><%= t('.this_service_will_help') %></p>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          <%= t('.this_service_generate_shortlist_html') %>
+        </strong>
+      </div>
 
 
-<%= link_to t('Continue'), 'find_apprentices' , role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.Continue') %>
+      <%= link_to t('Continue'), 'find_apprentices' , role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.Continue') %>
 
     </div>
   </div>
