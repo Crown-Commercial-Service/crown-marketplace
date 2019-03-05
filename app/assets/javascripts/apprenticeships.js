@@ -1,8 +1,8 @@
 function initSearchResults(id){
-    var accord = id.find('.CCS-AT-checkbox-accordian'); 
+    var accord = id.find('.ccs-at-checkbox-accordian'); 
 
     accord.each(function(index) {
-        var link = $(this).find('.CCS-AT-show');
+        var link = $(this).find('.ccs-at-show');
         var shopWrap = $(this);
 
         link.attr('aria-expanded', 'false').click(function(e){
@@ -45,7 +45,7 @@ function initCustomFnc() {
     
 
 
-    var filt = $('#CCS-AT-results-filters');
+    var filt = $('#ccs-at-results-filters');
     if(filt.length){
         initSearchResults(filt);
     }
