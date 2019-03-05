@@ -315,7 +315,7 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
 
 
 #main-content {
-    min-height: 330px; 
+    min-height: 370px; 
 }
 
 
@@ -363,8 +363,11 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
 
 
 
-
-
+@media (min-width: 40.0625em){//desktop: stop horizonal jumping, between pgs
+  .govuk-fieldset__heading {
+      max-width: 445px; 
+    }
+}
 
 
 /* ccs-no-print */

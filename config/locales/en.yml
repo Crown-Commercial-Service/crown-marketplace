@@ -113,7 +113,8 @@ en:
         have_an_account_with_Crown_Marketplace_html: <a href="%{url}" class="govuk-link">sign up</a> for an account with Crown Marketplace. 
         know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
         know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
-        know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
+        know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you 
+        have_read_and_agreed_html: read and agree to the <a href="%{url}" class="govuk-link">terms &amp; conditions</a> governing this service
 
         this_service_generate_shortlist_html: This service will help you generate a shortlist of training providers that will only be valid for 48<abbr title="hours">hrs</abbr>, as supplier information is continually being updated.
 
@@ -228,6 +229,9 @@ en:
         find_1_legend: Do you know the apprenticeship standard that you would like training for? 
       find_apprentices2: 
         find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account? 
+      find_apprentices3:
+        outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
+        outline_your_training_hint: Briefly outline your training requirements
     page_section: Find apprenticeship training and related services
 
 
