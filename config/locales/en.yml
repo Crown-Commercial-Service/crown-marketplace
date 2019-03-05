@@ -109,11 +109,15 @@ en:
     home:
       index:
         before_you_start: Before you start
-        belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a Digital Apprenticeship Service (DAS) account. More information can be <a href="%{url}" aria-label="Digital Apprenticeship Service (DAS)">here</a>
-        have_an_account_with_Crown_Marketplace_html: have an account with Crown Marketplace. You can <a href="%{url}" aria-label="Crown Marketplace">sign up here</a>
+        belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a <a href="%{url}" class="govuk-link">Digital Apprenticeship Service</a> (DAS) account. 
+        have_an_account_with_Crown_Marketplace_html: <a href="%{url}" class="govuk-link">sign up</a> for an account with Crown Marketplace. 
         know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
         know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
         know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
+
+        this_service_generate_shortlist_html: This service will help you generate a shortlist of training providers that will only be valid for 48<abbr title="hours">hrs</abbr>, as supplier information is continually being updated.
+
+
         start_finding_apprenticeships: Start finding apprenticeships training and related services
         title: Find apprenticeship training and related services
         use_this_service_to:

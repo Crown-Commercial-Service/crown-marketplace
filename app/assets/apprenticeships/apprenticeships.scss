@@ -152,10 +152,14 @@ the import call to the parent GOVUK component) */
             cursor: pointer; 
             padding: 0 0 0 10px; 
 
+            &:hover {
+                background-color: govuk-colour("grey-3"); 
+            }            
+
             &:focus {
                 outline: 3px solid govuk-colour("yellow");
                 outline-offset: 0;
-            }
+            } 
 
             span {//text-indent no good
                 position: absolute; 
@@ -224,7 +228,7 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
     .CCS-AT-search-results__sort {
         float: right; 
         clear: left; 
-        margin: 0 2px govuk-spacing(6) 0; 
+        margin: 0 3px govuk-spacing(6) 0; 
 
         .govuk-label {
             display: inline-block; 
