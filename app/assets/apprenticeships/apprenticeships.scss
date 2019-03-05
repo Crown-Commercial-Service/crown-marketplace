@@ -72,14 +72,14 @@ the import call to the parent GOVUK component) */
 
 /* 4. Bespoke css overrides which THIS MODULE may require */
 
-.CCS-AT-results-filters {
+.ccs-at-results-filters {
     $results-filters-labels-m: 17px; 
 
-    .CCS-AT-results-filters__panel {
+    .ccs-at-results-filters__panel {
         background-color: govuk-colour("grey-4"); 
         padding: govuk-spacing(2); //10px
 
-        &.CCS-AT-results-filters--padding {
+        &.ccs-at-results-filters--padding {
             padding: govuk-spacing(5); //25px
         } 
 
@@ -138,11 +138,11 @@ the import call to the parent GOVUK component) */
             font-size: $results-filters-labels-m;
         }
 
-        .CCS-AT-show--fontsize {//matches .govuk-label--s
+        .ccs-at-show--fontsize {//matches .govuk-label--s
             @include govuk-font($size: 19, $weight: bold);
         }        
 
-        .CCS-AT-show {//button    
+        .ccs-at-show {//button    
             min-height: 30px;
             width: 100%;
             background-color: transparent; 
@@ -187,13 +187,13 @@ the import call to the parent GOVUK component) */
 
         }
 
-        .CCS-AT-checkbox-accordian.show {
-            .CCS-AT-show::after {
+        .ccs-at-checkbox-accordian.show {
+            .ccs-at-show::after {
                 top: 13px;
                 border-width: 3px 3px 0 0; 
             } 
 
-            .CCS-AT-checkboxes-wrap {
+            .ccs-at-checkboxes-wrap {
                 display: block; 
             }
 
@@ -201,7 +201,7 @@ the import call to the parent GOVUK component) */
 
     } 
 
-    .CCS-AT-results-filters__heading-bloc {
+    .ccs-at-results-filters__heading-bloc {
         & > h2 {
             float: left; 
         }
@@ -214,18 +214,18 @@ the import call to the parent GOVUK component) */
     }
 }
 
-body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
-    .CCS-AT-checkboxes-wrap {
+body.js-enabled .ccs-at-results-filters .ccs-at-checkbox-accordian {
+    .ccs-at-checkboxes-wrap {
         display: none; 
     }
-    .CCS-AT-show::after {
+    .ccs-at-show::after {
         border-width: 0 0 3px 3px; 
     }
 }
 
-.CCS-AT-search-results {
+.ccs-at-search-results {
 
-    .CCS-AT-search-results__sort {
+    .ccs-at-search-results__sort {
         float: right; 
         clear: left; 
         margin: 0 3px govuk-spacing(6) 0; 
@@ -244,7 +244,7 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
         
     }
 
-    ul.CCS-AT-results-list {
+    ul.ccs-at-results-list {
         list-style: none; 
         padding: 0; 
         clear: left; 
@@ -270,7 +270,7 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
             }
         }
 
-        .CCS-AT-results-list__providers {
+        .ccs-at-results-list__providers {
             
             div {
 
@@ -290,7 +290,7 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
 
         }
 
-        .CCS-AT-results-list__details {
+        .ccs-at-results-list__details {
             list-style: none; 
             padding: 0; 
             margin: govuk-spacing(2) 0 0 0; 
@@ -307,7 +307,7 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
 }
 
 @media (max-width: 641px) {//mobile
-    .CCS-AT-search-results ul.CCS-AT-results-list .CCS-AT-results-list__providers div span span {
+    .ccs-at-search-results ul.ccs-at-results-list .ccs-at-results-list__providers div span span {
         display: inline; 
     }
 }
@@ -324,12 +324,12 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
     display: none; 
 }
 
-.CCS-search-icon {
+.ccs-search-icon {
     display: block; 
     //::after icon over input
 }
 
-.CCS-no-underline {
+.ccs-no-underline {
     text-decoration: none; 
 
     /*&:hover {
@@ -337,14 +337,14 @@ body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
     }*/
 }
 
-.CCS-AT-remove {
+.ccs-at-remove {
     display: block; 
     position: absolute; 
     left: -3000px; 
     top: -3000px; 
 }
 
-.CCS-AT-next {
+.ccs-at-next {
     text-decoration: none !important; 
     padding: govuk-spacing(4) 0; 
     display: block; 
