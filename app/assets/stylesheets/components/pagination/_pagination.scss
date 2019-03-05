@@ -1,0 +1,15 @@
+ul.CSS-pagination-txt {
+  list-style: none;
+  width: 100%;
+  display: block;
+  min-height: 20px;
+  padding: 0;
+    li {
+      float: left;
+      clear: right;
+      margin-right: 3px;
+    }
+  & .active {
+    font-weight: bold;
+  }
+}
