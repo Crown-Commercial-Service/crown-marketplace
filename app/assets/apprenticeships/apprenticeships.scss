@@ -1,0 +1,377 @@
+/* 1. Import the GOVUK settings and then apply our overrides in the settings file */
+@import "govuk-frontend/settings/all";
+@import "settings";
+@import "govuk-frontend/tools/all";
+@import "govuk-frontend/helpers/all";
+@import "govuk-frontend/core/all";
+@import "govuk-frontend/objects/all";
+@import "govuk-frontend/utilities/all";
+@import "govuk-frontend/overrides/all";
+/* ******************************************************************* */
+
+
+/* 2. start imports of the GOVUK components this module needs/uses. Names preceeded by // are in part 3. */
+//@import "govuk-frontend/components/accordion/accordion";
+//back link
+@import "govuk-frontend/components/breadcrumbs/breadcrumbs";
+//button
+//@import "govuk-frontend/components/character-count/character-count";
+@import "govuk-frontend/components/checkboxes/checkboxes";
+@import "govuk-frontend/components/date-input/date-input";
+//details
+//error message
+//error summary
+//fieldset
+@import "govuk-frontend/components/file-upload/file-upload";
+//footer
+//header
+//inset text 
+@import "govuk-frontend/components/panel/panel";
+//phase banner
+@import "govuk-frontend/components/radios/radios";
+@import "govuk-frontend/components/select/select";
+@import "govuk-frontend/components/skip-link/skip-link";
+//@import "govuk-frontend/components/summary-list";
+//table
+@import "govuk-frontend/components/tabs/tabs";
+//tag
+//@import "govuk-frontend/components/text-input";
+@import "govuk-frontend/components/textarea/textarea";
+@import "govuk-frontend/components/warning-text/warning-text";
+@import "govuk-frontend/components/hint/hint";
+@import "govuk-frontend/components/input/input";
+/* ******************************************************************* */
+
+/* 3. Continue the imports of the GOVUK components (but from our own 'stylesheets/components' 
+directory - which echo the GOVUK directory structure - which contain bespoke but global css AND 
+the import call to the parent GOVUK component) */
+@import "components/back-link/back-link";
+@import "components/button/button";
+@import "components/calculator-form/calculator-form";
+@import "components/details/details";
+@import "components/error-message/error-message";
+@import "components/error-summary/error-summary";
+@import "components/header/header";
+@import "components/footer/footer";
+@import "components/fieldset/fieldset";
+@import "components/fm-supplier-record/fm-supplier-record";
+@import "components/inset-text/inset-text";
+@import "components/label/label";
+@import "components/logo/logo";
+@import "components/master-vendor-record/master-vendor-record";
+@import "components/mc-supplier-record/mc-supplier-record";
+@import "components/neutral-vendor-record/neutral-vendor-record";
+@import "components/phase-banner/phase-banner";
+//@import "components/sidebar/sidebar";//don't need
+@import "components/st-supplier-page/st-supplier-page";
+@import "components/supplier-record/supplier-record";
+@import "components/table/table";
+@import "components/tag/tag";
+@import "components/typography/typography";
+/* ******************************************************************* */
+
+/* 4. Bespoke css overrides which THIS MODULE may require */
+
+.CCS-AT-results-filters {
+    $results-filters-labels-m: 17px; 
+
+    .CCS-AT-results-filters__panel {
+        background-color: govuk-colour("grey-4"); 
+        padding: govuk-spacing(2); //10px
+
+        &.CCS-AT-results-filters--padding {
+            padding: govuk-spacing(5); //25px
+        } 
+
+        .govuk-fieldset {
+            position: relative;
+
+            legend {
+                padding: 0 govuk-spacing(2); 
+                margin-right: 30px; 
+            }
+        } 
+
+        .govuk-checkboxes {
+            background-color: govuk-colour("white"); 
+            margin-top: govuk-spacing(1); 
+        }
+
+        .govuk-checkboxes__input + .govuk-checkboxes__label::before, 
+        .govuk-checkboxes__input {//the tick box border
+            height: 20px; 
+            width: 20px; 
+            top: 11px; 
+            left: 10px; 
+            border-width: 1px; 
+        } 
+
+        .govuk-checkboxes__input:checked + .govuk-checkboxes__label::after {//the tick
+            left: 13px; 
+            top: 15px; 
+            width: 11px; 
+            height: 5px; 
+            border-width: 0 0 3px 3px; 
+        } 
+
+        .govuk-checkboxes__label {
+            padding: 5px; 
+            font-size: $results-filters-labels-m; 
+            width: 100%; 
+        }
+
+        .govuk-checkboxes__item { 
+            margin-bottom: 0; 
+            padding: 5px 10px 0 35px;  
+            border-top: 1px solid $govuk-border-colour; 
+
+            &:first-child {
+                border-top: none; 
+            }
+        } 
+
+        .govuk-input {
+            border-width: 1px; 
+        }
+
+        .govuk-details__text {
+            font-size: $results-filters-labels-m;
+        }
+
+        .CCS-AT-show--fontsize {//matches .govuk-label--s
+            @include govuk-font($size: 19, $weight: bold);
+        }        
+
+        .CCS-AT-show {//button    
+            min-height: 30px;
+            width: 100%;
+            background-color: transparent; 
+            text-align: left; 
+            border: none; 
+            margin: 2px 0 3px 0; 
+            cursor: pointer; 
+            padding: 0 0 0 10px; 
+
+            &:focus {
+                outline: 3px solid govuk-colour("yellow");
+                outline-offset: 0;
+            }
+
+            span {//text-indent no good
+                position: absolute; 
+                left: -3000px; 
+                top: -3000px; 
+                display: block; 
+            }            
+
+            &::after {//the tick
+                content: '';
+                position: absolute;
+                top: 6px;
+                right: 10px;
+                width: 10px;
+                height: 10px;
+                border-width: 0; 
+                border-style: solid;
+                border-color: govuk-colour("black");            
+                background: transparent; 
+                -webkit-transform: rotate(-45deg); 
+                -moz-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                transform: rotate(-45deg);            
+            } 
+
+        }
+
+        .CCS-AT-checkbox-accordian.show {
+            .CCS-AT-show::after {
+                top: 13px;
+                border-width: 3px 3px 0 0; 
+            } 
+
+            .CCS-AT-checkboxes-wrap {
+                display: block; 
+            }
+
+        }
+
+    } 
+
+    .CCS-AT-results-filters__heading-bloc {
+        & > h2 {
+            float: left; 
+        }
+
+        & > a {
+            text-align: right; 
+            display: inline-block;  
+            line-height: govuk-spacing(6); 
+        }        
+    }
+}
+
+body.js-enabled .CCS-AT-results-filters .CCS-AT-checkbox-accordian {
+    .CCS-AT-checkboxes-wrap {
+        display: none; 
+    }
+    .CCS-AT-show::after {
+        border-width: 0 0 3px 3px; 
+    }
+}
+
+.CCS-AT-search-results {
+
+    .CCS-AT-search-results__sort {
+        float: right; 
+        clear: left; 
+        margin: 0 0 govuk-spacing(6) 0; 
+
+        .govuk-label {
+            display: inline-block; 
+            font-weight: bold; 
+            margin-right: 10px; 
+        }
+
+        .govuk-select {
+            min-width: 190px; 
+            border-width: 1px; 
+            border-radius: 5px; 
+        }
+        
+    }
+
+    ul.CCS-AT-results-list {
+        list-style: none; 
+        padding: 0; 
+        clear: left; 
+
+        li.govuk-list {
+            float: left; 
+            clear: left; 
+            width: 100%; 
+            padding: govuk-spacing(2) 0; 
+            margin: 0; 
+            border-bottom: 1px solid $govuk-border-colour; 
+
+            &:first-child {
+                border-top: 1px solid $govuk-border-colour; 
+            } 
+
+            & > div {
+                padding: 0; 
+            }
+
+            a {
+                margin: 0; 
+            }
+        }
+
+        .CCS-AT-results-list__providers {
+            
+            div {
+
+                float: right; 
+
+                span {
+                    width: 100%; 
+                    display: block; 
+                    font-weight: bold; 
+                    
+                }
+                
+                span span {
+                    font-weight: 700; 
+                }
+            }
+
+        }
+
+        .CCS-AT-results-list__details {
+            list-style: none; 
+            padding: 0; 
+            margin: govuk-spacing(2) 0 0 0; 
+            width: 100%; 
+
+            li {
+                margin: 0;
+                padding: 0; 
+            }
+        }
+
+    }
+
+}
+
+@media (max-width: 641px) {//mobile
+    .CCS-AT-search-results ul.CCS-AT-results-list .CCS-AT-results-list__providers div span span {
+        display: inline; 
+    }
+}
+
+
+
+#main-content {
+    min-height: 330px; 
+}
+
+
+#cookie_banner {//ccs-no-print
+    display: none; 
+}
+
+.CCS-search-icon {
+    display: block; 
+    //::after icon over input
+}
+
+.CCS-no-underline {
+    text-decoration: none; 
+
+    /*&:hover {
+        text-decoration: underline;
+    }*/
+}
+
+.CCS-AT-remove {
+    display: block; 
+    position: absolute; 
+    left: -3000px; 
+    top: -3000px; 
+}
+
+.CCS-AT-next {
+    text-decoration: none !important; 
+    padding: govuk-spacing(4) 0; 
+    display: block; 
+    width: 100%; 
+    text-align: right; 
+    clear: left; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ccs-no-print */
+
+@media print {
+    #results-filters {
+        .results-panel {
+            background-color: none; 
+            
+        }
+    }
+}
+
+

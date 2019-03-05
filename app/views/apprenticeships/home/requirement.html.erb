@@ -1,0 +1,112 @@
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-l"><%= t('Add your requirements:') %></h2>
+ <div class="govuk-radios">
+<div class="govuk-radios govuk-radios--inline">
+
+      <p class="govuk-heading-s"><%= 'The maximum funding for this Apprenticehip standard is #27000. Would you use a supplier that requires additional funding to provide the training ? ' %></p>
+  <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
+        <label class="govuk-label govuk-radios__label" for="changed-name-1">
+          Yes
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
+        <label class="govuk-label govuk-radios__label" for="changed-name-2">
+          No
+        </label>
+      </div>
+    </div>
+
+<br/>
+<br/>
+
+      <p class="govuk-heading-s"><%= t('Do you need help with recruiting the apprentices ?:') %></p>
+
+ <div class="govuk-radios">
+<div class="govuk-radios govuk-radios--inline">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
+        <label class="govuk-label govuk-radios__label" for="changed-name-1">
+          Yes
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
+        <label class="govuk-label govuk-radios__label" for="changed-name-2">
+          No
+        </label>
+      </div>
+    </div>
+</div>
+<br/>
+<br/>
+      <p class="govuk-heading-s"><%= t('Do you need to customise this training to your organisation needs ?:') %></p>
+  <label class="govuk-hint" for="width-6">
+      For example, does the course require a custom structure or security specification      
+  </label>
+ <div class="govuk-radios">
+<div class="govuk-radios govuk-radios--inline">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
+        <label class="govuk-label govuk-radios__label" for="changed-name-1">
+          Yes
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
+        <label class="govuk-label govuk-radios__label" for="changed-name-2">
+          No
+        </label>
+      </div>
+    </div>
+</div>
+
+
+<br/>
+<br/>
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="width-6">
+       What is the minimum number of apprentices you need training ?
+  </label>
+  <label class="govuk-hint" for="width-6">
+      If your unsure of the exact number, use a good estimate      
+  </label>
+  <input class="govuk-input govuk-input--width-4" id="width-4" name="width-4" type="text">
+</div>
+
+<br/>
+<br/>
+      <p class="govuk-heading-s"><%= t('Does the training need to take place in multiple locations ?:') %></p>
+
+ <div class="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
+        <label class="govuk-label govuk-radios__label" for="changed-name-1">
+          Yes
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
+        <label class="govuk-label govuk-radios__label" for="changed-name-2">
+          No
+        </label>
+      </div>
+</div>
+<div class="govuk-form-group">
+  <label class="govuk-label" for="width-6">
+      Enter the postcode where training needs to happen ?
+  </label>
+  <input class="govuk-input govuk-input--width-4" id="width-4" name="width-4" type="text">
+</div>
+<br/>
+<br/>
+      <%= link_to t('Find training providers'), 'supplier_search', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.start_finding_supply_teachers') %>
+
+    </div>
+  </div>
