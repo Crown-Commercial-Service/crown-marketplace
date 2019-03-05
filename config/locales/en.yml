@@ -226,12 +226,14 @@ en:
         print_this_page: Print this page
       find_apprentices:
         find_1_legend: Do you know the apprenticeship standard that you would like training for? 
-        find_1_btn: Continue
+      find_apprentices2: 
+        find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account? 
     page_section: Find apprenticeship training and related services
 
 
   common:
-    submit: Continue
+    submit: Continue 
+    continue: Continue
   errors:
     '404':
       explanation: You may have mistyped the address or the page may have moved.

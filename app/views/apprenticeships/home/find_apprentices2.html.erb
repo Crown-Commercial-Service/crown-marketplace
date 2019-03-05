@@ -1,23 +1,42 @@
 <%= content_for :page_section, t('requirements.page_section') %>
+
   
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
- <p class="govuk-heading-s"><%= t('Does your organisation have a Digital Apprenticeship Service (DAS) account ?') %></p>
- <div class="govuk-radios">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
-        <label class="govuk-label govuk-radios__label" for="changed-name-1">
-                Yes
-        </label>
-      </div>
+      <form action="find_apprentices3" method="">
 
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
-        <label class="govuk-label govuk-radios__label" for="changed-name-2">
-	         No
-        </label>
-      </div>
-<br/>
-<%= link_to t('Continue'), 'find_apprentices3' , role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.Continue') %>
-</div>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
+              <h1 class="govuk-fieldset__heading"> 
+                <%= t('.find_2_legend') %>
+              </h1>
+            </legend>
+            <div class="govuk-radios">
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ap-have-das-1" name="ap-have-das" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="ap-have-das-1">
+                        Yes
+                </label>              
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ap-have-das-2" name="ap-have-das" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="ap-have-das-2">
+                  No
+                </label>
+              </div>
+
+            </div>
+
+          </fieldset>
+        </div> 
+
+        <%= render 'layouts/submit-btn', text: t('common.continue')%>
+
+      </form>
+
+    </div>
+  </div>  
