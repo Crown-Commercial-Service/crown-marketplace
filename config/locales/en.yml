@@ -224,7 +224,12 @@ en:
         training_availability: Training availability
         start_new_search: Start new search
         print_this_page: Print this page
+      find_apprentices:
+        find_1_legend: Do you know the apprenticeship standard that you would like training for? 
+        find_1_btn: Continue
     page_section: Find apprenticeship training and related services
+
+
   common:
     submit: Continue
   errors:
