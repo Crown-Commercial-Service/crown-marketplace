@@ -3,8 +3,6 @@ class AuthController < ApplicationController
 
   def callback
     self.current_login = Login.from_omniauth(request.env['omniauth.auth'])
-    puts (session[:requested_path])
-    #puts (gateway_url)
     redirect_to session[:requested_path] || gateway_url
   end
 

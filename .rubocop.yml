@@ -58,7 +58,7 @@ Metrics/ClassLength:
     Enabled: false
 
 Metrics/MethodLength:
-    Max: 50
+    Max: 100
     Exclude:
 
 Metrics/AbcSize:
@@ -69,6 +69,7 @@ Metrics/AbcSize:
 
 Metrics/LineLength:
     Max: 120
+    Enabled: false
     IgnoredPatterns:
         - 'it .* do$'
         - 'context .* do$'

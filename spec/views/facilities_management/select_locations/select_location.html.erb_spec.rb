@@ -1,13 +1,6 @@
 require 'rails_helper'
-
 RSpec.describe 'facilities_management/select_locations/select_location.html.erb', type: :view do
-
-=begin
-   it 'renders the title' do
-    render
-    expect(rendered).to have_text('Select your region')
-  end
-=end
-
-
+  # it 'renders the title' do
+  # render
+  # expect(rendered).to have_text('Select your region')
 end
