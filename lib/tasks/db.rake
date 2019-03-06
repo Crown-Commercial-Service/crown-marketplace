@@ -2,8 +2,8 @@ module CCS
   require 'pg'
   require 'csv'
 
-  def self.csv_to_nuts_regions(file_name, db_name)
-    db = PG.connect(dbname: db_name)
+  def self.csv_to_nuts_regions(file_name, db_config)
+    db = PG.connect(db_config)
     query = 'create table IF NOT EXISTS nuts_regions (code varchar(255) UNIQUE, name varchar(255),
                                              nuts1_code varchar(255), nuts2_code varchar(255) );'
     db.query query
@@ -21,8 +21,8 @@ module CCS
     db&.close
   end
 
-  def self.csv_to_fm_regions(file_name, db_name)
-    db = PG.connect(dbname: db_name)
+  def self.csv_to_fm_regions(file_name, db_config)
+    db = PG.connect(db_config)
     query = 'create table IF NOT EXISTS fm_regions (code varchar(255) UNIQUE, name varchar(255) );'
     db.query query
     CSV.read(file_name, headers: true).each do |row|
@@ -38,25 +38,34 @@ module CCS
     db&.close
   end
 
+  def self.config
+    db_config = Rails.application.config.database_configuration[Rails.env]
+    p 'db: ' + db_config['database']
+    if Rails.env.production?
+      {
+        host: db_config['host'],
+        port: db_config['port'],
+        dbname: db_config['database'],
+        user: db_config['username'],
+        password: db_config['password']
+      }
+    else
+      { dbname: db_config['database'] }
+    end
+  end
+
   def self.load_static(directory = 'data/')
     p 'Loading NUTS static data'
     p "Environment: #{Rails.env}"
-    db_name = Rails.application.config.database_configuration[Rails.env]['database']
-    p 'db: ' + db_name
 
-    file1 = directory + 'nuts1_regions.csv'
-    file2 = directory + 'nuts2_regions.csv'
-    file3 = directory + 'nuts3_regions.csv'
+    CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv', config
+    CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv', config
+    CCS.csv_to_nuts_regions directory + 'nuts3_regions.csv', config
 
-    CCS.csv_to_nuts_regions file1, db_name
-    CCS.csv_to_nuts_regions file2, db_name
-    CCS.csv_to_nuts_regions file3, db_name
-
-    p "Finished loading NUTS codes into db #{db_name}"
+    p "Finished loading NUTS codes into db #{Rails.application.config.database_configuration[Rails.env]['database']}"
     p
     p 'Loading FM regions static data'
-    file4 = directory + 'facilities_management/regions.csv'
-    CCS.csv_to_fm_regions file4, db_name
+    CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv', config
   end
 end
 
