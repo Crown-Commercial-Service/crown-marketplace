@@ -40,8 +40,8 @@ module Apprenticeships
         training_availability_closed: true,
         training_availability_public: false,
         overall_ofsted: '1 - Outstanding',
-        experience_in_delivering_apprenticeships: "Yes",
-        recruitment_support: "Yes",
+        experience_in_delivering_apprenticeships: 'Yes',
+        recruitment_support: 'Yes',
         about_provider: 'University of the Year for Student Experience; latest Times and Sunday Times league table
                          Ranked No.13 UK University; Guardian University Guide 2018
                          Gold for outstanding teaching and learning; Teaching Excellence Framework 2017
@@ -79,6 +79,5 @@ module Apprenticeships
     def set_back_path
       @back_path = :back
     end
-
   end
 end
