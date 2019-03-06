@@ -40,7 +40,6 @@ function initSearchResults(id){
 
 
 
-
 function initCustomFnc() {
     
 
