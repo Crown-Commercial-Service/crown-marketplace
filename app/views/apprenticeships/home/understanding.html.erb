@@ -1,0 +1,22 @@
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+
+<%= form_tag apprenticeships_search_results_path, method: :get do %>
+  <label class="govuk-label govuk-label--xl" for="search">
+    <%= t('Understanding what to buy STUB') %>
+  </label>
+  <span id="more-detail-hint" class="govuk-hint">
+	Before using this service, its important to understand which apprenticeship standard you need
+   <br/>
+	The Institute for Apprenticeships (IfA) has a comprehensive list of apprenticeship standards with information such as expected outcomes and the levels the standards can be delivered to.
+   <br/>
+	When you know the apprenticeship Standard you need you can continue using this service.
+  </span>
+</div> 
+</div> 
+ <%= link_to t('.Back to start'), 'training_provider' , role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.Continue') %>
+<% end %>
+</div> 
