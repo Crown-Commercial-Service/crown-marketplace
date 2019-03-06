@@ -480,6 +480,12 @@ en:
         question: Do you want an agency to supply the worker?
     page_section: Find supply teachers and agency staff
     suppliers:
+      all_suppliers:
+        branch: Branch
+        column1: Job type
+        column2: Agency mark-up
+        header: Agency list
+        page_title: Agency list
       master_vendor:
         column1: Job type
         column2: Agency mark-up
@@ -503,9 +509,10 @@ en:
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
-      all_suppliers:
-        page_title: Agency list
-        header: Agency list
-        markup: Mark-up
-        column1: Job type
-        column2: Agency mark-up
+  views:
+    pagination:
+      first: ''
+      last: ''
+      next: Next
+      previous: Previous
+      truncate: "..."
