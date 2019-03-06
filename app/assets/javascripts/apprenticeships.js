@@ -2,7 +2,7 @@ function initSearchResults(id){
     var accord = id.find('.ccs-at-checkbox-accordian'); 
 
     accord.each(function(index) {
-        var link = $(this).find('.ccs-at-show');
+        var link = $(this).find('.ccs-at-btn-toggle');
         var shopWrap = $(this);
 
         link.attr('aria-expanded', 'false').click(function(e){

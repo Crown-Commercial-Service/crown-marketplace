@@ -245,9 +245,11 @@ en:
 
   common:
     submit: Continue 
+    submit2: Submit 
     continue: Continue
     browse: Browse
-    search: Search
+    search: Search 
+    apply_filters: Apply filters
   errors:
     '404':
       explanation: You may have mistyped the address or the page may have moved.
