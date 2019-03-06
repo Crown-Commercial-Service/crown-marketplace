@@ -55,11 +55,11 @@
 
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
                   <h1 class="govuk-fieldset__heading">
-                    Browse by route
+                    <%= t('.browse_by_route_title') %>
                   </h1>
                 </legend>
 
-                <div class="govuk-checkboxes">
+                <div class="govuk-checkboxes css-govuk-checkboxes--s">
                   <% browse_routes.each do |rating| %>
                   <div class="govuk-checkboxes__item">
                     <%= check_box_tag(

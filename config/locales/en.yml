@@ -234,7 +234,8 @@ en:
         outline_your_training_hint: Briefly outline your training requirements
       find_apprentices4: 
         find_apprenticeship-std: Find an apprenticeship standard 
-        find_apprenticeship-tab-title: Search or browse tabs
+        find_apprenticeship-tab-title: Search or browse tabs 
+        browse_by_route_title: Browse by route 
         search_label: Keyword search 
         browse_tab_label: Browse 
         search_tab_label: Search
