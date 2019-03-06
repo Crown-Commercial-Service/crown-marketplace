@@ -79,10 +79,6 @@ the import call to the parent GOVUK component) */
         background-color: govuk-colour("grey-4"); 
         padding: govuk-spacing(2); //10px
 
-        &.ccs-at-results-filters--padding {
-            padding: govuk-spacing(5); //25px
-        } 
-
         .govuk-fieldset {
             position: relative;
 
@@ -138,11 +134,14 @@ the import call to the parent GOVUK component) */
             font-size: $results-filters-labels-m;
         }
 
-        .ccs-at-show--fontsize {//matches .govuk-label--s
-            @include govuk-font($size: 19, $weight: bold);
-        }        
+        .ccs-at-checkboxes-wrap {
+            .govuk-button {
+                margin: govuk-spacing(3) 0 0; 
+            }
+        }     
 
-        .ccs-at-show {//button    
+        .ccs-at-btn-toggle {//button    
+            @include govuk-font($size: 19, $weight: bold);
             min-height: 30px;
             width: 100%;
             background-color: transparent; 
@@ -188,7 +187,7 @@ the import call to the parent GOVUK component) */
         }
 
         .ccs-at-checkbox-accordian.show {
-            .ccs-at-show::after {
+            .ccs-at-btn-toggle::after {
                 top: 13px;
                 border-width: 3px 3px 0 0; 
             } 
@@ -218,7 +217,7 @@ body.js-enabled .ccs-at-results-filters .ccs-at-checkbox-accordian {
     .ccs-at-checkboxes-wrap {
         display: none; 
     }
-    .ccs-at-show::after {
+    .ccs-at-btn-toggle::after {
         border-width: 0 0 3px 3px; 
     }
 }
