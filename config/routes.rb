@@ -1,6 +1,5 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
