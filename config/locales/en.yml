@@ -1,4 +1,3 @@
----
 en:
   activemodel:
     errors:
@@ -106,6 +105,122 @@ en:
           attributes:
             postcode:
               invalid_postcode: Enter a valid postcode
+  apprenticeships:
+    home:
+      index:
+        before_you_start: Before you start
+        belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a Digital Apprenticeship Service (DAS) account. More information can be <a href="%{url}" aria-label="Digital Apprenticeship Service (DAS)">here</a>
+        have_an_account_with_Crown_Marketplace_html: have an account with Crown Marketplace. You can <a href="%{url}" aria-label="Crown Marketplace">sign up here</a>
+        know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
+        know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
+        know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
+        start_finding_apprenticeships: Start finding apprenticeships training and related services
+        title: Find apprenticeship training and related services
+        use_this_service_to:
+          find_education_and_skills_funding_agency: find Education and Skills Funding Agency (ESFA) registered training providers that can deliver apprenticeship standards, frameworks and related services
+          produce_a_list_of_CCS_approved_training_providers: produce a list of Crown Commercial Service-approved training providers based on your requirements, for your region(s)
+          review_and_use_ready_made_terms: review and use ready-made terms and conditions
+          title: 'Use this service to:'
+        you_will_need_to_have: 'To use this service, you will need to:'
+      search:
+        page_title: Search for apprenticeship
+        search_button: Search
+        search_hint: Search by keyword or apprenticeship name / number, or job title
+        search_label: Search for apprenticeship
+      search_results:
+        apply_filters_label: Apply filters
+        clear_filters_link: Clear filters
+        explain_levels_link: Explain levels
+        header: Search results
+        keyword_search_label: Keyword search
+        levels_label: Levels
+        next: Next
+        page_title: Search results
+        providers_label: Provider(s)
+        result_level_label: 'Level:'
+        results_found_hint: Click on the apprenticeship to add your requirements and find training providers.
+        results_found_html: There are <b>%{results}</b> apprenticeships matching your search for "<b>%{search}</b>"
+        routes_label: Routes
+        sort_by_label: Sort by
+      training_provider:
+        ability_to_bespoke_label: Ability to bespoke
+        about_the_apprenticeship_title: 'About the apprenticeship:'
+        about_the_provider_title: 'About the provider:'
+        address: 'Address:'
+        apprenticeship_label: Apprenticeship
+        at_your_location_label: at your location
+        blended_label: Blended
+        block_release_label: block release
+        caption: Training provider details
+        classroom_based_label: Classroom based
+        classroom_sharing_closed_label: Closed
+        classroom_sharing_label: 'Classroom sharing:'
+        classroom_sharing_open_label: Open
+        classroom_sharing_public_label: Public
+        contact_details_title: Contact details
+        day_release_label: day release
+        delivery_method_label: 'Delivery method:'
+        duration_label: Duration
+        email: 'Email:'
+        experience_in_delivering_apprenticeships_label: Experience in delivering apprenticeships
+        experience_in_this_apprenticeship_label: Experience in this apprenticeship
+        explain_classroom_sharing_details: Classoom sharing explanation
+        explain_classroom_sharing_label: Explain classroom sharing
+        explain_time_demand_details: Time demand explanation
+        explain_time_demand_label: Explain time demand
+        explain_training_availability_details: Training availability explained
+        explain_training_availability_label: Explain training availability
+        funding_band_label: Funding band
+        level_label: Level
+        national_provider_label: National provider
+        national_provider_title: This training provider is willing to offer apprenticeship training across England
+        ofsted_apprenticeship_label: Ofsted rating for this apprenticeship
+        online_label: Online
+        other_apprenticeship_standards_title: Other apprenticeship standards this provider delivers
+        other_apprenticeships_standards_title: Other apprenticeship standards this provider delivers
+        overall_ofsted_rating_label: Overall ofsted rating
+        page_title: Training provider details
+        phone_number: 'Phone number:'
+        provider_information_tab: Provider information
+        provider_information_title: Provider information
+        recruitment_support_label: Recruitment support
+        time_demand_label: 'Time demand:'
+        training_availability_closed_label: Closed
+        training_availability_label: 'Training availability:'
+        training_availability_open_label: Open
+        training_availability_public_label: Public
+        training_information_tab: Training information
+        training_information_title: Training information
+        view_report: view report
+        website: 'Website:'
+        workplace_based_label: Workplace based
+      training_provider_list:
+        page_title: Download the training provider list
+        title: Download the training provider list
+        warning_text: You can now download a training provider list and complete this procurement offline via a further competition.
+        info: This list will only be valid for 48hrs, as supplier information is continually being updated
+        download_file_info: Download training provider list as comma-separated values
+        other_documents_title: The following documents may also be of help
+        basic_terms_and_conditions: Basic terms and conditions
+        customer_guidance_template: Customer guidance template
+        choices_used: Choices used to generate your shortlist
+        requirements: Requirements
+        apprenticeship_standard: Apprenticeship Standard
+        apprenticeship_level: Apprenticeship Level
+        help_with_recruiting: Help with recruiting the apprentices
+        funding_band: Funding band
+        minimum_number: Minimum number of apprentices
+        minimum_ofsted: Minimum Ofsted rating
+        training_in_multiple_locations: Training in multiple locations
+        need_to_customise: Need to customise training
+        filters_used: Filters used
+        delivery_method: Delivery method
+        time_demand: Time demand
+        classroom_sharing: Classroom sharing
+        training_availability: Training availability
+        start_new_search: Start new search
+        print_this_page: Print this page
+    page_section: Find apprenticeship training and related services
   common:
     submit: Continue
   errors:
@@ -173,6 +288,7 @@ en:
       - LLP
   home:
     index:
+      apprenticeships_link: Find apprenticeship training and related services
       facilities_management_link: Find a facilities management supplier
       management_consultancy_link: Find management consultancy services
       supply_teachers_link: Find supply teachers and agency workers

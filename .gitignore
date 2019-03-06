@@ -32,3 +32,7 @@ logfile
 
 # Simplecov
 /coverage/*
+/nbproject/private/
+
+# Rubymine
+.idea/

@@ -1,0 +1,16 @@
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+<%= form_tag apprenticeships_search_results_path, method: :get do %>
+
+  <label class="govuk-label govuk-label--m" for="search">
+    <%= t('.Briefly outline your training requirements') %>
+  </label>
+  <span id="more-detail-hint" class="govuk-hint">
+    For example, the apprenticeship standard, level and specific requirements fromn the training provider.
+  </span>
+  <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+</div> 
+<br>
+  <%= submit_tag t('.search_button'), class: 'govuk-button govuk-!-margin-top-7' %>
+<% end %>

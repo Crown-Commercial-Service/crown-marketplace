@@ -1,0 +1,97 @@
+<a href="/facilities-management" class="govuk-back-link">Back</a>
+
+<div id="location-error-message" name="location-error-message" hidden class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+  <h2 class="govuk-error-summary__title" id="error-summary-title">
+    There is a problem
+  </h2>
+  <div class="govuk-error-summary__body">
+    <ul class="govuk-list govuk-error-summary__list">
+      <li>
+        <a href="#">You must select at least one location before clicking the save continue button</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <fieldset class="govuk-fieldset" aria-describedby="">
+    <h1 class="govuk-heading-xl">
+      Select your region
+    </h1>
+  </fieldset>
+  <p class="govuk-body">
+    Select/choose/pick/add one or multiple regions to give/provide<br> the location of your building/facilities
+  </p>
+</div>
+<div class="govuk-grid-column-two-thirds">
+
+
+  <div class="govuk-accordion" data-module="accordion" id="region-accordion">
+    <% @regions.each do |key, value| %>
+      <div class="govuk-accordion__section ">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="region-<%= key %>"><%= value %></span>
+          </h2>
+        </div>
+        <div id="<% key %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= value %>">
+
+          <% @subregions.each do |key2, value2| %>
+
+            <% if key2.start_with?(key) %>
+              <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="<%= value2 %>">
+                  <div id="location-checkboxes" class="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="<%= key2 %>" name="<%= key2 %>" locationid="<%= value2 %>" type="checkbox" value="<%= key2 %>">
+                      <label id="<%= key2 %>_label" class="govuk-label govuk-checkboxes__label" for="<%= key2 %>">
+                        <%= value2 %>
+                      </label>
+                    </div>
+                </fieldset>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="govuk-accordion__section ">
+      <div class="govuk-accordion__section-header">
+        <h2 class="govuk-accordion__section-heading">
+          <span class="govuk-accordion__section-button" id="region-OS01">International</span>
+        </h2>
+      </div>
+      <div id="OS01-content" class="govuk-accordion__section-content" aria-labelledby="International coverage">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="International coverage">
+            <div class="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="OS01" name="OS01" type="checkbox" locationid="International coverage" value="International coverage">
+                <label id="OS01_label" name="OS01_label" class="govuk-accordion__section-heading govuk-checkboxes__label" for="OS01">
+                  International coverage
+                </label>
+              </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p>
+    <%= link_to 'Continue', '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id:'save-locations-link', name:'save-locations-link'%>
+  </p>
+</div>
+<div class="govuk-grid-column-one-third">
+  <div class="filter-selection">
+    <header>
+      <div class="filter-selection__header">
+        <a id="remove-all-link" name="remove-all-link" class="remove-all js-filter" href="">Remove all</a>
+        <h2 class="font-weight-700">
+          <span id="selected-location-count" class="font-size--18">0</span>
+          Locations selected
+        </h2>
+      </div>
+    </header>
+    <ul id="selected-fm-locations" class="govuk-!-padding-0 font-size--10"></ul>
+  </div>
+</div>
