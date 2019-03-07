@@ -67,7 +67,7 @@ RSpec.feature 'Supplier mark-up calculator', type: :feature do
     expect(page).to have_content('Calculated mark-up updated')
   end
 
-  scenario 'Buyer can calculate the agency mark-up via AJAX', js: true do
+  scenario 'Buyer can calculate the agency mark-up via AJAX', js: true, driver: :poltergeist_no_errors do
     visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_worker'), visible: false

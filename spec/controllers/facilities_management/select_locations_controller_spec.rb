@@ -3,7 +3,7 @@ RSpec.describe FacilitiesManagement::SelectLocationsController, type: :controlle
   describe 'GET #select_location' do
     it 'returns http success' do
       get :select_location
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:found)
     end
   end
 end

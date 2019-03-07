@@ -7,13 +7,13 @@ module SpecSupport
     end
 
     def visit_facilities_management_start
-      visit '/facilities-management/start'
+      visit '/facilities-management'
       click_on 'Start now'
       click_on 'Sign in with beta credentials'
     end
 
     def visit_management_consultancy_start
-      visit '/'
+      visit '/management-consultancy'
       click_on 'Start now'
       click_on 'Sign in with beta credentials'
     end
