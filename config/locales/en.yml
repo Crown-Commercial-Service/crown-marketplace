@@ -108,6 +108,8 @@ en:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
     home:
+      building_services:
+        page_title: Building services
       find_apprentices:
         find_1_legend: Do you know the apprenticeship standard that you would like training for?
       find_apprentices2:
@@ -115,13 +117,21 @@ en:
       find_apprentices3:
         outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
         outline_your_training_hint: Briefly outline your training requirements
+        page_title: Outline your training requirements
       find_apprentices4:
-        browse_by_route_title: Browse by route
         browse_tab_label: Browse
+        building: Building
         find_apprenticeship-std: Find an apprenticeship standard
-        find_apprenticeship-tab-title: Search or browse tabs
-        search_label: Keyword search
+        find_apprenticeship-tab-title: Search and browse tabs
+        page_title: Find an apprenticeship standard
         search_tab_label: Search
+        title_browse_by_route: Browse by route
+      find_apprentices5:
+        building: Building
+        page_title: Apprenticeship standard
+        provider_information_title: Summary of this apprenticeship standard
+      find_apprentices6:
+        page_title: Apprenticeship requirements
       index:
         before_you_start: Before you start
         belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a <a href="%{url}" class="govuk-link">Digital Apprenticeship Service</a> (DAS) account.
@@ -138,6 +148,13 @@ en:
           review_and_use_ready_made_terms: review and use ready-made terms and conditions
           title: 'Use this service to:'
         you_will_need_to_have: 'To use this service, you will need to:'
+      looking_for:
+        answer_calculate_temp_to_perm_fee: Lorem ipsum 1
+        answer_managed_service_provider: Lorem ipsum 2
+        answer_worker: Lorem ipsum 3
+        page_title: Looking for
+        question: question 1 txt
+        question2: question 2 txt
       search:
         page_title: Search for apprenticeship
         search_button: Search
@@ -147,6 +164,7 @@ en:
         apply_filters_label: Apply filters
         clear_filters_link: Clear filters
         explain_levels_link: Explain levels
+        explain_levels_text: Lorem ipsum txt 1
         header: Search results
         keyword_search_label: Keyword search
         levels_label: Levels
@@ -158,6 +176,28 @@ en:
         results_found_html: There are <b>%{results}</b> apprenticeships matching your search for "<b>%{search}</b>"
         routes_label: Routes
         sort_by_label: Sort by
+      signup:
+        page_title: Sign up
+      sorry:
+        page_title: Sorry
+      supplier_search:
+        apply_filters: Apply filters
+        apply_filters_label: Apply filters
+        clear_filters_link: Clear filters
+        page_title: Supplier search
+        sort_by_label: Sort by
+        there_are_8: Lorem ipsum (for supplier search)
+      supplier_search2:
+        apply_filters: Apply filters
+        apply_filters_label: Apply filters
+        clear_filters_link: Clear filters
+        page_title: Supplier search
+        sort_by_label: Sort by
+        there_are_8: Lorem ipsum (for supplier search2)
+      training_details:
+        page_title: Training details
+      training_information:
+        page_title: Training information
       training_provider:
         ability_to_bespoke_label: Ability to bespoke
         about_the_apprenticeship_title: 'About the apprenticeship:'
@@ -234,11 +274,14 @@ en:
         training_availability: Training availability
         training_in_multiple_locations: Training in multiple locations
         warning_text: You can now download a training provider list and complete this procurement offline via a further competition.
+      understanding: 
+        page_title: Understanding 
     page_section: Find apprenticeship training and related services
   common:
     apply_filters: Apply filters
     browse: Browse
     continue: Continue
+    next: Next
     search: Search
     submit: Continue
   errors:
@@ -561,7 +604,8 @@ en:
         answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
         answer_worker: An agency who can provide my school with an individual worker
         page_title: What is your school looking for?
-        question: What is your school looking for?
+        question: What is your school looking for? 
+        question2: Lorem ipsum - question2
       managed_service_provider:
         answer_master_vendor: Master vendor managed service
         answer_neutral_vendor: Neutral vendor managed service
