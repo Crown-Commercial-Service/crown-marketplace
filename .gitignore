@@ -36,3 +36,5 @@ logfile
 # Rubymine
 .idea/
 
+# VSCode
+.vscode/
