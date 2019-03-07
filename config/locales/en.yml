@@ -120,7 +120,6 @@ en:
         page_title: Outline your training requirements
       find_apprentices4:
         browse_tab_label: Browse
-        building: Building
         find_apprenticeship-std: Find an apprenticeship standard
         find_apprenticeship-tab-title: Search and browse tabs
         page_title: Find an apprenticeship standard
@@ -274,8 +273,8 @@ en:
         training_availability: Training availability
         training_in_multiple_locations: Training in multiple locations
         warning_text: You can now download a training provider list and complete this procurement offline via a further competition.
-      understanding: 
-        page_title: Understanding 
+      understanding:
+        page_title: Understanding
     page_section: Find apprenticeship training and related services
   common:
     apply_filters: Apply filters
@@ -604,7 +603,7 @@ en:
         answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
         answer_worker: An agency who can provide my school with an individual worker
         page_title: What is your school looking for?
-        question: What is your school looking for? 
+        question: What is your school looking for?
         question2: Lorem ipsum - question2
       managed_service_provider:
         answer_master_vendor: Master vendor managed service
