@@ -604,7 +604,6 @@ en:
         answer_worker: An agency who can provide my school with an individual worker
         page_title: What is your school looking for?
         question: What is your school looking for?
-        question2: Lorem ipsum - question2
       managed_service_provider:
         answer_master_vendor: Master vendor managed service
         answer_neutral_vendor: Neutral vendor managed service

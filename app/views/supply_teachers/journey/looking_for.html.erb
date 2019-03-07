@@ -26,16 +26,7 @@
             </div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :looking_for, :calculate_temp_to_perm_fee, checked?(params[:looking_for], 'calculate_temp_to_perm_fee'), class: 'govuk-radios__input' %>
-    <%= label_tag :looking_for_calculate_temp_to_perm_fee, t('.answer_calculate_temp_to_perm_fee'), class: 'govuk-label govuk-radios__label' %>
-            </div>
-            <div class="govuk-radios__item">
-              <%= radio_button_tag :looking_for, :calculate_temp_to_perm_fee, checked?(params[:looking_for], 'calculate_temp_to_perm_fee'), class: 'govuk-radios__input' %>
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h3 class="govuk-fieldset__heading">
-              <%= t('.question2') %>
-            </h3>
-            <div class="govuk-radios__item">
-              <%= radio_button_tag :looking_for, :Yes, checked?(params[:looking_for], 'Yes'), class: 'govuk-radios__input' %>
+              <%= label_tag :looking_for_calculate_temp_to_perm_fee, t('.answer_calculate_temp_to_perm_fee'), class: 'govuk-label govuk-radios__label' %>
             </div>
           </div>
         <% end %>
