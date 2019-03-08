@@ -339,7 +339,8 @@ table.ccs-govuk-table--style {
         float: right;
         cursor: pointer;
         border: 0; 
-        background: govuk-colour("grey-1") url('https://www.digitalmarketplace.service.gov.uk/static/images/search-button.png') no-repeat 3px (-$search01); //temporary colour scheme and image!
+        background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADVElEQVRIia2UT2hcVRTGf+fN5M7Mu/f2TR7BlBhCkFLa4CKCShHpQlzYWulWBKkL0aVYdNGF0C66cSviwm60unSntCAoxU1aLJS0FdS4KV2UJDZJZ1KcN3nvuJg77fzJpIn4wYN3zj3nfOfe+50rjID1fgbVF4HngFnAAMvATUSuURS3Njc3s1H5Xcigw3k/rapvAu8DU6oaC6CAiABsBaIFETkvsNhoNLZGEZR6De/9nKpeAN4DUmBMRECkWxwgAjxwGDipsPb01NSN9fV13XEH3vu5QvUKMBFc68Bl4BJRtIhIRp7vB44BJ4BDIS4T+LTZbH4yahc476etcz9b5zR2LrfO3XbeH3X79sWDsfV6PbLeH7DOfWada1lr1Vq76Zw7Pj4+Hm1LYJ37yDqn4bttk2RuZDfdnMlJY537Ira2HfJ+sd4/NRzo/Yx17s8QtOa8P/qk4l0kSeKscz9a59Raq9a5dwZjoiDFqXBDlxH5dbcEGxsbTeBzYIuOCN5I07TvmCI6Oo/DbV9qPnjwcLcEATeApfA/l+V5Okgw+9iKFvdYHKJoHbgTrFiKYqJvmc6EgiqIPHEyhyBS0Bm+/no9juUQSND53pDnVTpDCZCpanOQ4GZPB8fq9fr2Wh4FkRng2WAt12q1u/0EIteAZVQBTrTz/Jnd1k6SpIzq24ALrp9WVlb6jjmiKG4BC4igqodQ/cBOTpqhattgS/UV4K1g3ge+G4wptdvtvFKpLAEnRcQpzEu7vT+u1a60Wq1tLz1JknK5UnmVoviWx2/Xl+VS6WKr1Sr6CAAqlcqKwhrwmoBR1XlVPWKMaRhj/jHVKqZaNWZsLDGVyuGiKD5G9Swwoardl7aUq15tZ9m9XoJHr+ns7Gy0urp6TuE0EAMobElniO7QEUJK50Id22MBkVObjcYfQwRdOOeOK5xB9WVkaLkX94FvgJeA53v8S4i83iUpDWbFcfxXofo98BtQhCYeAg1gFfgd+Bo4Uy6VLuaqVwXmgWkAVU0FXjDGXG9n2b0dW0zTNMryPA3jb1S1WavV7g5K0Xp/ENUfgANB7iCygMipHQn2gkDyFapHgquJyIdDR/Rf0c6yv40x1xGZB+qInBO48H/VfwTr/UHr3LvW2irAv/v6Ij41K6HtAAAAAElFTkSuQmCC') no-repeat 5px 8px;
+        /*background: govuk-colour("grey-1") url('https://www.digitalmarketplace.service.gov.uk/static/images/search-button.png') no-repeat 3px (-$search01); */
 
         &:focus {
             outline: 3px solid govuk-colour("yellow");
