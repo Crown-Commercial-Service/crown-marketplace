@@ -305,7 +305,23 @@ body.js-enabled .ccs-at-results-filters .ccs-at-checkbox-accordian {
 
 
 
+table.ccs-govuk-table--style {
+    .govuk-table__header, 
+    .govuk-table__cell {
+        border-bottom: none; 
+        vertical-align: top; 
+    }
 
+    .govuk-table__header {
+        font-weight: bold; 
+    }
+
+    .govuk-table__head tr .govuk-table__header:first-child, 
+    .govuk-table__body .govuk-table__header {
+        width: 33%; 
+        padding-right: govuk-spacing(4);
+    }
+}
 
 .govuk-input.ccs-govuk-input--search {
     $search01: govuk-spacing(3); 
