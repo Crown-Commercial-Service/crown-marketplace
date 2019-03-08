@@ -1,7 +1,7 @@
 require 'json'
 class FMSupplierData
+  # Get the count of suppliers for all lots in the initial long list by location and services
   def long_list_supplier_count(locations, services)
-    # Get the count of suppliers for all lots in the initial long list
     query = "select count(*) as record_count from (
           select
             distinct fms.name
@@ -18,8 +18,9 @@ class FMSupplierData
     result = ActiveRecord::Base.connection.execute(query)
     result[0]['record_count']
   end
+
+  # Get the suppliers for lot1a in the initial long list by location and services
   def long_list_suppliers_lot1a(locations, services)
-    # Get the suppliers for lot1a in the initial long list
     query = "select
           distinct INITCAP(fms.name) as name
         from
@@ -36,8 +37,9 @@ class FMSupplierData
     result = ActiveRecord::Base.connection.execute(query)
     JSON.parse(result.to_json)
   end
+
+  # Get the suppliers for lot1b in the initial long list by location and services
   def long_list_suppliers_lot1b(locations, services)
-    # Get the suppliers for lot1b in the initial long list
     query = "select
           distinct INITCAP(fms.name) as name
         from
@@ -54,8 +56,9 @@ class FMSupplierData
     result = ActiveRecord::Base.connection.execute(query)
     JSON.parse(result.to_json)
   end
+
+  # Get the suppliers for lot1c in the initial long list by location and services
   def long_list_suppliers_lot1c(locations, services)
-    # Get the suppliers for lot1c in the initial long list
     query = "select
           distinct INITCAP(fms.name) as name
         from
