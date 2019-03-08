@@ -17,8 +17,10 @@ module Apprenticeships
         phone: '01234 567890',
         website: 'http://websiteurl.ac.uk',
         address: 'Maidstone Campus, Tonbridge Road, Maidstone, Kent, ME16 8AQ',
-        about_apprenticeship: 'This professionally accredited course aims to equip you with the knowledge, technical and practical skills and techniques required for a successful career as a building services engineer, able to respond to environmental and ethical considerations, while talking into consideration relevant social and economic implications too.
-                ABC Training LTD has a long and prestigious engineering heritage and is ranked 2nd for \'Mechanical Engineering\', 10th for \'Civil Engineering\' and 30th for \'Electronic and Electrical Engineering\' by the Guardian University Guide 2018. We enjoy a strong portfolio of industry-related research, particularly in the areas of low carbon building technology, sustainable construction materials and engineering education',
+        about_apprenticeship: 'This professionally accredited course aims to equip you with the knowledge, technical and'\
+       ' practical skills and techniques required for a successful career as a building services engineer, able to respond to environmental and '\
+       ' ethical considerations, while talking into consideration relevant social and economic implications too.'\
+       ' ABC Training LTD has a long and prestigious engineering heritage and is ranked 2nd for \'Mechanical Engineering\', 10th for \'Civil Engineering\' and 30th for \'Electronic and Electrical Engineering\' by the Guardian University Guide 2018. We enjoy a strong portfolio of industry-related research, particularly in the areas of low carbon building technology, sustainable construction materials and engineering education',
         apprenticeship: 'Building services design engineer',
         ofsted_apprenticeship: '2 - Good',
         level: 6,
@@ -40,8 +42,8 @@ module Apprenticeships
         training_availability_closed: true,
         training_availability_public: false,
         overall_ofsted: '1 - Outstanding',
-        experience_in_delivering_apprenticeships: "Yes",
-        recruitment_support: "Yes",
+        experience_in_delivering_apprenticeships: 'Yes',
+        recruitment_support: 'Yes',
         about_provider: 'University of the Year for Student Experience; latest Times and Sunday Times league table
                          Ranked No.13 UK University; Guardian University Guide 2018
                          Gold for outstanding teaching and learning; Teaching Excellence Framework 2017
@@ -79,6 +81,5 @@ module Apprenticeships
     def set_back_path
       @back_path = :back
     end
-
   end
 end
