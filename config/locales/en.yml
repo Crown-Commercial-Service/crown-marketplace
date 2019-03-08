@@ -126,11 +126,10 @@ en:
         search_tab_label: Search
         title_browse_by_route: Browse by route
       find_apprentices5:
-        building: Building
         button_label: Add requirements and find training providers
-        title_caption: Apprenticeship training course
-        
+        page_title: Apprenticeship training course summary
         provider_information_title: Summary of this apprenticeship course
+        title_caption: Apprenticeship training course
       index:
         before_you_start: Before you start
         belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a <a href="%{url}" class="govuk-link">Digital Apprenticeship Service</a> (DAS) account.
