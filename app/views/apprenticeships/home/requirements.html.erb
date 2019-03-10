@@ -1,110 +1,281 @@
+<%= content_for :page_title, t('.page_title') %>
 <%= content_for :page_section, t('apprenticeships.page_section') %>
 
+
+
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
 
-  <span id="more-detail-hint" class="govuk-hint">
-    Building services design engineer
-  </span>
+      <span class="govuk-caption-xl">Building services design engineer</span>
+      <h1 class="govuk-heading-xl"><%= t('.requirements_h1_title') %></h1>
 
-      <h2 class="govuk-heading-l"><%= t('Add your requirements:') %></h2>
- <div class="govuk-radios">
-<div class="govuk-radios govuk-radios--inline">
+    </div>
+  </div> 
 
-      <p class="govuk-heading-s"><%= 'The maximum funding for this Apprenticehip standard is #27000. Would you use a supplier that requires additional funding to provide the training ? ' %></p>
-  <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
-        <label class="govuk-label govuk-radios__label" for="changed-name-1">
-          Yes
-        </label>
+  <form action="requirement" method="">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <h1 class="govuk-fieldset__heading">
+                The maximum funding for this Apprenticeship Standard is &pound;27,000. Would you use a supplier that requires additional funding to provide the training? 
+              </h1>
+            </legend>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-01" name="radio-a" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="radio-id-01">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-02" name="radio-a" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="radio-id-02">
+                  No
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <h1 class="govuk-fieldset__heading">
+                Do you need help with recruiting the apprentices?
+              </h1>
+            </legend>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-03" name="radio-b" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="radio-id-03">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-04" name="radio-b" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="radio-id-04">
+                  No
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>   
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="hint-radio-c">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <h1 class="govuk-fieldset__heading">
+                Do you need to customise this training to your organisation's needs? 
+              </h1>
+            </legend>
+
+            <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-16">
+              For example, does the course require a custom structure of security specification
+            </span>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-05" name="radio-c" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="radio-id-05">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-06" name="radio-c" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="radio-id-06">
+                  No
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>  
+
+        <fieldset class="govuk-fieldset" aria-describedby="hint-input-01">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="input-01">
+              What is the minimum number of apprentices that you need training?
+            </label>
+
+            <span id="hint-input-01" class="govuk-hint">
+              If you're unsure of exact numbers, use a good estimate
+            </span>
+
+            <input class="govuk-input govuk-input--width-4" id="input-01" name="input-01" type="text" aria-describedby="hint-input-01">
+          </div>
+        </fieldset>                   
+
       </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
-        <label class="govuk-label govuk-radios__label" for="changed-name-2">
-          No
-        </label>
+
+      <div class="govuk-grid-column-one-third">
+        <div id="ccs-panel-static" class="ccs-panel-static">
+          <p class="govuk-body-m govuk-!-font-weight-bold"><span>12</span> Providers can match these requirements</p>
+        </div>
       </div>
     </div>
 
-<br/>
-<br/>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full govuk-!-margin-top-6 govuk-!-margin-bottom-6">
 
-      <p class="govuk-heading-s"><%= t('Do you need help with recruiting the apprentices ?:') %></p>
+        <%= render 'layouts/button', text: t('.requirements_btn_text') %>
 
- <div class="govuk-radios">
-<div class="govuk-radios govuk-radios--inline">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
-        <label class="govuk-label govuk-radios__label" for="changed-name-1">
-          Yes
-        </label>
-      </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
-        <label class="govuk-label govuk-radios__label" for="changed-name-2">
-          No
-        </label>
       </div>
     </div>
-</div>
-<br/>
-<br/>
-      <p class="govuk-heading-s"><%= t('Do you need to customise this training to your organisation needs ?:') %></p>
-  <label class="govuk-hint" for="width-6">
-      For example, does the course require a custom structure or security specification      
-  </label>
- <div class="govuk-radios">
-<div class="govuk-radios govuk-radios--inline">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
-        <label class="govuk-label govuk-radios__label" for="changed-name-1">
-          Yes
-        </label>
+
+  </form>
+
+
+
+
+  <!--
+    <form action="requirement" method="">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <h1 class="govuk-fieldset__heading">
+                The maximum funding for this Apprenticeship Standard is &pound;27,000. Would you use a supplier that requires additional funding to provide the training? 
+              </h1>
+            </legend>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-01" name="radio-a" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="radio-id-01">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-02" name="radio-a" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="radio-id-02">
+                  No
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
       </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
-        <label class="govuk-label govuk-radios__label" for="changed-name-2">
-          No
-        </label>
+
+      <div class="govuk-grid-column-one-third">
+        <p>govuk-grid-column-one-third</p>
+      </div>    
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <h1 class="govuk-fieldset__heading">
+                Do you need help with recruiting the apprentices?
+              </h1>
+            </legend>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-03" name="radio-b" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="radio-id-03">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-04" name="radio-b" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="radio-id-04">
+                  No
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <p>govuk-grid-column-one-third</p>
+      </div>    
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="hint-radio-c">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <h1 class="govuk-fieldset__heading">
+                Do you need to customise this training to your organisation's needs? 
+              </h1>
+            </legend>
+
+            <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-16">
+              For example, does the course require a custom structure of security specification
+            </span>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-05" name="radio-c" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="radio-id-05">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-id-06" name="radio-c" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="radio-id-06">
+                  No
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <p>govuk-grid-column-one-third</p>
+      </div>    
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <fieldset class="govuk-fieldset" aria-describedby="hint-input-01">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="input-01">
+              What is the minimum number of apprentices that you need training?
+            </label>
+
+            <span id="hint-input-01" class="govuk-hint">
+              If you're unsure of exact numbers, use a good estimate
+            </span>
+
+            <input class="govuk-input govuk-input--width-4" id="input-01" name="input-01" type="text" aria-describedby="hint-input-01">
+          </div>
+        </fieldset>
+
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <p>govuk-grid-column-one-third</p>
+      </div>    
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full govuk-!-margin-top-6 govuk-!-margin-bottom-6">
+
+        <%= render 'layouts/button', text: t('.requirements_btn_text') %>
+
       </div>
     </div>
-</div>
 
+  </form>
 
-<br/>
-<br/>
-
-<div class="govuk-form-group">
-  <label class="govuk-label" for="width-6">
-       What is the minimum number of apprentices you need training ?
-  </label>
-  <label class="govuk-hint" for="width-6">
-      If your unsure of the exact number, use a good estimate      
-  </label>
-  <input class="govuk-input govuk-input--width-4" id="width-4" name="width-4" type="text">
-</div>
-
-<br/>
-<br/>
-      <p class="govuk-heading-s"><%= t('Does the training need to take place in multiple locations ?:') %></p>
-
- <div class="govuk-radios">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
-        <label class="govuk-label govuk-radios__label" for="changed-name-1">
-          Yes
-        </label>
-      </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
-        <label class="govuk-label govuk-radios__label" for="changed-name-2">
-          No
-        </label>
-      </div>
-</div>
-<br/>
-<br/>
-      <%= link_to t('Find training providers'), 'requirement', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
-
-    </div>
-  </div>
+  -->

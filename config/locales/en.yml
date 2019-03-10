@@ -120,8 +120,8 @@ en:
         page_title: Outline your training requirements
       find_apprentices4:
         browse_tab_label: Browse
-        find_apprenticeship-std: Find an apprenticeship standard
-        find_apprenticeship-tab-title: Search and browse tabs
+        find_apprenticeship_std: Find an apprenticeship standard
+        find_apprenticeship_tab_title: Search and browse tabs
         page_title: Find an apprenticeship standard
         search_tab_label: Search
         title_browse_by_route: Browse by route
@@ -153,6 +153,10 @@ en:
         page_title: Looking for
         question: question 1 txt
         question2: question 2 txt
+      requirements:
+        page_title: Apprenticeship requirements
+        requirements_btn_text: Find training providers
+        requirements_h1_title: Add your requirements
       search:
         page_title: Search for apprenticeship
         search_button: Search
