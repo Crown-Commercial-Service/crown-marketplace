@@ -72,4 +72,35 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
       expect(assigns(:back_path)).to eq(expected_path)
     end
   end
+
+  describe 'GET all suppliers' do
+    let(:branch) { create(:supply_teachers_branch) }
+    let(:branch1) { create(:supply_teachers_branch) }
+    let(:branches) { [branch, branch1].sort_by(&:name) }
+
+
+    before do
+      get :all_suppliers, params: {
+        journey: 'supply-teachers',
+        looking_for: 'all_suppliers'
+      }
+    end
+
+    it 'renders the neutral_vendors template' do
+      expect(response).to render_template('all_suppliers')
+    end
+
+    it 'assigns suppliers with neutral vendor rates to suppliers' do
+      expect(assigns(:branches)).to eq(branches)
+    end
+
+    it 'sets the back path to the managed-service-provider question' do
+      expected_path = journey_question_path(
+        journey: 'supply-teachers',
+        slug: 'all-suppliers',
+        looking_for: 'all_suppliers'
+      )
+      expect(assigns(:back_path)).to eq(expected_path)
+    end
+  end
 end
