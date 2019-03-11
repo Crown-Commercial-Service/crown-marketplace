@@ -76,6 +76,38 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 10)
     end
 
+    context 'when the contract starts on a bank holiday' do
+      let(:contract_start_date) { start_of_1st_week - 1.week }
+
+      it 'calculates the daily supplier fee based on day rate and markup rate' do
+        expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
+      end
+
+      it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
+        expect(calculator.ideal_hire_date).to eq(start_of_13th_week - 1.week + 1.day)
+      end
+
+      it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
+        expect(calculator.ideal_notice_date).to eq(start_of_9th_week - 1.week + 1.day)
+      end
+    end
+
+    context 'when the contract start day is on a Saturday' do
+      let(:contract_start_date) { start_of_1st_week - 2.days }
+
+      it 'calculates the daily supplier fee based on day rate and markup rate' do
+        expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
+      end
+
+      it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
+        expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
+      end
+
+      it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
+        expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
+      end
+    end
+
     context 'when the worker works fewer than 5 days per week' do
       let(:days_per_week) { 2 }
 
@@ -93,8 +125,8 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'returns the number of days notice required' do
         expect(calculator.days_notice_required).to eq(
-                                                     TempToPermCalculator::Calculator::WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE
-                                                   )
+          TempToPermCalculator::Calculator::WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE
+        )
       end
     end
   end
