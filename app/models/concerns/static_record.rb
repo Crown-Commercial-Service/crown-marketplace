@@ -32,5 +32,16 @@ module StaticRecord
     def load_csv(filename)
       define(*CSV.read(Rails.root.join('data', filename)))
     end
+
+    # factory method
+    # each row of data in the database is used to create a new object
+    def load_db(query)
+      res = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+      @all = []
+      res.each do |row|
+        @all << new(row).freeze
+      end
+      @all.freeze
+    end
   end
 end
