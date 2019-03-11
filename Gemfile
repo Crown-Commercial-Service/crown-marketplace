@@ -45,6 +45,9 @@ gem 'omniauth-oauth2'
 gem 'omniauth_openid_connect'
 gem 'json-jwt'
 
+# for pagination
+gem 'kaminari', '~> 1.1.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
