@@ -1,6 +1,8 @@
 require 'json'
+require 'facilities_management/fm_supplier_data'
 class FacilitiesManagement::LongListController < ApplicationController
   require_permission :facilities_management, only: :long_list
+
   def long_list
     @select_fm_locations = '/facilities-management/select-locations'
     @select_fm_services = '/facilities-management/select-services'
