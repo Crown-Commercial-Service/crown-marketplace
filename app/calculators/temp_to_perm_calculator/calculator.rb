@@ -24,7 +24,7 @@ module TempToPermCalculator
     )
       raise(ArgumentError, 'Hire date cannot be earlier than contract start date') if hire_date < contract_start_date
       raise(ArgumentError, 'Notice date cannot be later than hire date') if notice_date && notice_date > hire_date
-      raise(ArgumentError, 'Notice date cannot be earlier than contract start date') unless notice_date && notice_date < contract_start_date
+      raise(ArgumentError, 'Notice date cannot be earlier than contract start date') if notice_date && notice_date < contract_start_date
 
       @day_rate = day_rate
       @days_per_week = days_per_week
