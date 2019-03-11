@@ -31,7 +31,11 @@ function initSearchResults(id){
     });
 }
 
-
+function initPanStatic(id){
+    var divHeight = id.height(); 
+    //wip pg scroll and remove static near base of page
+    //$('#main-content').css('padding-bottom', divHeight * 2);
+}
 
 
 
@@ -47,6 +51,10 @@ function initCustomFnc() {
     var filt = $('#ccs-at-results-filters');
     if(filt.length){
         initSearchResults(filt);
+    }
+    var panstatic = $('#ccs-panel-static');
+    if(panstatic.length){
+        initPanStatic(panstatic);
     }
 }
 
