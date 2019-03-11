@@ -6,17 +6,37 @@ ul.CSS-pagination-txt {
   width: 100%;
   margin-top: 2.5rem;
   padding-top: 1.875rem;
+  padding-left: 0;
   list-style: none;
+  .icon {
+    margin-top: 0;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    position: relative;
+    top: 0.125em;
+  }
+  .icon + span, span + .icon {
+    margin-left: 0.5rem;
+  }
   li {
     color: #6F777B;
+    margin-right: 0.5em;
+    display: inline-block;
   }
-  & .active {
+  a {
     text-decoration: none;
   }
   .prev {
     margin-right: auto;
+    margin-left: 0;
   }
   .next {
     margin-left: auto;
+    margin-right: 0;
+  }
+  .first, .last {
+    display: none;
   }
 }
