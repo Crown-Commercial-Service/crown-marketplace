@@ -483,11 +483,9 @@ en:
     suppliers:
       all_suppliers:
         branch: Branch
-        column1: Job type
-        column2: Agency mark-up
         header: All agencies
         page_title: All agencies
-        results_found_with_location_html: "There are <strong>%{results} agencies</strong> currently available"
+        results_found_with_location_html: There are <strong>%{results} agencies</strong> currently available
       master_vendor:
         column1: Job type
         column2: Agency mark-up
@@ -517,4 +515,4 @@ en:
       last: ''
       next: Next
       previous: Previous
-      truncate: '...'
+      truncate: "..."

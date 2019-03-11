@@ -76,8 +76,6 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
   describe 'GET all suppliers' do
     let(:branch) { create(:supply_teachers_branch) }
     let(:branch1) { create(:supply_teachers_branch) }
-    let(:branches) { [branch, branch1].sort_by(&:name) }
-
 
     before do
       get :all_suppliers, params: {
@@ -91,7 +89,7 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
     end
 
     it 'assigns suppliers with neutral vendor rates to suppliers' do
-      expect(assigns(:branches)).to eq(branches)
+      expect(assigns(:branches)).to eq([branch, branch1])
     end
 
     it 'sets the back path to the managed-service-provider question' do
