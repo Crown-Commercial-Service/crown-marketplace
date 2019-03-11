@@ -423,6 +423,7 @@ en:
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
       looking_for:
+        all_suppliers: I want to see a list of all suppliers
         answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
         answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
         answer_worker: An agency who can provide my school with an individual worker
