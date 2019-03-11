@@ -11,6 +11,5 @@ class HomeController < ApplicationController
 
   def cookies; end
 
-  
   def landing_page; end
 end
