@@ -79,8 +79,8 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
 
       it 'redirects to worker-type question' do
         expect(response).to redirect_to(
-                              journey_question_path(journey: 'supply-teachers', slug: 'all-suppliers', looking_for: 'all_suppliers')
-                            )
+          journey_question_path(journey: 'supply-teachers', slug: 'all-suppliers', looking_for: 'all_suppliers')
+        )
       end
     end
 
