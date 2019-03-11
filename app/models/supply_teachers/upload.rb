@@ -3,6 +3,7 @@ module SupplyTeachers
     def self.upload!(suppliers)
       error = all_or_none(Supplier) do
         Supplier.destroy_all
+
         suppliers.map do |supplier_data|
           create_supplier!(supplier_data)
         end
@@ -61,10 +62,6 @@ module SupplyTeachers
       {
         name: branch['branch_name'],
         town: branch['town'],
-        address_1: branch['address_1'],
-        address_2: branch['address_2'],
-        county: branch['county'],
-        region: branch['region'],
         postcode: branch['postcode'],
         location: Geocoding.point(
           latitude: branch['lat'],
