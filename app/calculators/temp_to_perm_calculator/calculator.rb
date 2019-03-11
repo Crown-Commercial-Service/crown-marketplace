@@ -154,21 +154,21 @@ module TempToPermCalculator
     end
 
     def working_days_after(date, number_of_days)
-      working_days_count = 0
+      working_days_count = working_day?(date) ? 1 : 0
       while working_days_count <= number_of_days
-        working_days_count += 1 if working_day?(date)
         date += 1.day
+        working_days_count += 1 if working_day?(date)
       end
-      date - 1.day
+      date
     end
 
     def working_days_before(date, number_of_days)
-      working_days_count = 0
+      working_days_count = working_day?(date) ? 1 : 0
       while working_days_count <= number_of_days
-        working_days_count += 1 if working_day?(date)
         date -= 1.day
+        working_days_count += 1 if working_day?(date)
       end
-      date + 1.day
+      date
     end
 
     def working_days_between(earlier_date, later_date)
