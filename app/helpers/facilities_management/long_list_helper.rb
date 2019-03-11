@@ -1,2 +1,0 @@
-module FacilitiesManagement::LongListHelper
-end

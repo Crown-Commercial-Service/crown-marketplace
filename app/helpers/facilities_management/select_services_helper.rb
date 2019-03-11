@@ -1,2 +1,0 @@
-module FacilitiesManagement::SelectServicesHelper
-end
