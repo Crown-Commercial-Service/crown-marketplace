@@ -1,15 +1,22 @@
 ul.CSS-pagination-txt {
-  list-style: none;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
   width: 100%;
-  display: block;
-  min-height: 20px;
-  padding: 0;
-    li {
-      float: left;
-      clear: right;
-      margin-right: 3px;
-    }
+  margin-top: 2.5rem;
+  padding-top: 1.875rem;
+  list-style: none;
+  li {
+    color: #6F777B;
+  }
   & .active {
-    font-weight: bold;
+    text-decoration: none;
+  }
+  .prev {
+    margin-right: auto;
+  }
+  .next {
+    margin-left: auto;
   }
 }
