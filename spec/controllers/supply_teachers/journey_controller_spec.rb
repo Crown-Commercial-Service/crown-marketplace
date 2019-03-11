@@ -74,6 +74,16 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
       end
     end
 
+    context 'when looking to hire a worker via an agency' do
+      let(:looking_for) { 'all_suppliers' }
+
+      it 'redirects to worker-type question' do
+        expect(response).to redirect_to(
+                              journey_question_path(journey: 'supply-teachers', slug: 'all-suppliers', looking_for: 'all_suppliers')
+                            )
+      end
+    end
+
     context 'when answer is blank' do
       let(:looking_for) { '' }
 
