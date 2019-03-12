@@ -70,7 +70,6 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date:
-              after_contract_start_date: The date the worker will be hired must be after the date the contract started
               blank: Enter the date you want to hire the worker and include a day, month and year
             holiday_1_end_date:
               before_start_date: The end date of the first school holiday must be after the start date
@@ -415,6 +414,7 @@ en:
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
       looking_for:
+        all_suppliers: I want to see a list of all suppliers
         answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
         answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
         answer_worker: An agency who can provide my school with an individual worker
@@ -472,6 +472,11 @@ en:
         question: Do you want an agency to supply the worker?
     page_section: Find supply teachers and agency staff
     suppliers:
+      all_suppliers:
+        branch: Branch
+        header: All agencies
+        page_title: All agencies
+        results_found_with_location_html: There are <strong>%{results} agencies</strong> currently available
       master_vendor:
         column1: Job type
         column2: Agency mark-up
@@ -495,3 +500,10 @@ en:
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
+  views:
+    pagination:
+      first: ''
+      last: ''
+      next: Next
+      previous: Previous
+      truncate: "..."

@@ -189,7 +189,7 @@ module SupplyTeachers
 
     def ensure_hire_date_is_after_contract_start_date
       return if hire_date.blank? || contract_start_date.blank?
-      return if hire_date > contract_start_date
+      return if hire_date >= contract_start_date
 
       errors.add(:hire_date, :after_contract_start_date)
     end
