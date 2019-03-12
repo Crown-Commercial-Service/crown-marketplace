@@ -70,3 +70,18 @@ $govuk-heading-l: 27px;
 $govuk-link-colour: #007194;
 $govuk-link-hover-colour: #2b8cc4;
 $govuk-link-visited-colour: #4c2c92;
+
+
+
+
+
+
+/* global across framework styles: start */
+.ccs-landing-pg-content {
+    padding-bottom: 60px; 
+}
+.ccs-no-underline {
+  text-decoration: none; 
+}
+
+/* global across framework styles: end */

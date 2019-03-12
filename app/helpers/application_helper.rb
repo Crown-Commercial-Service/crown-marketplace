@@ -115,4 +115,8 @@ module ApplicationHelper
 
     render partial: "#{controller.class.parent_name.underscore}/link_to_start_page"
   end
+
+  def the_landing_page
+    controller.action_name == 'landing_page'
+  end
 end
