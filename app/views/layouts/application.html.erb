@@ -53,19 +53,23 @@
           </a>
         </div>
         <div class="govuk-header__content">
-          <%= link_to_service_start_page %>
-          <nav>
-            <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-              <% if logged_in? %>
-              <li class="govuk-header__navigation-item">
-                <%= link_to 'Back to start', supply_teachers_path, class: 'govuk-header__link ccs-no-print' %>
-              </li>
-              <li class="govuk-header__navigation-item">
-                  <%= button_to "Sign out", sign_out_path, class: 'ccs-header__signout ccs-no-print' %>
-              </li>
-              <% end %>
-            </ul>
-          </nav>
+          <% if the_landing_page %>
+              <p class="govuk-heading-m govuk-!-margin-top-2" style="color: #fff; width: 100%; text-align: right;">Crown Marketplace</p>
+          <% else %>
+            <%= link_to_service_start_page %>
+            <nav>
+              <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+                <% if logged_in? %>
+                <li class="govuk-header__navigation-item">
+                  <%= link_to 'Back to start', supply_teachers_path, class: 'govuk-header__link' %>
+                </li>
+                <li class="govuk-header__navigation-item">
+                    <%= button_to "Sign out", sign_out_path, class: 'ccs-header__signout' %>
+                </li>
+                <% end %>
+              </ul>
+            </nav>
+          <% end %>
         </div>
       </div>
     </header>
