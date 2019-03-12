@@ -10,19 +10,19 @@ RSpec.describe 'facilities_management/select_locations/select_location.html.erb'
 
   it 'counts lot1a suppliers with a location of UKC1 and a service of C-20' do
     fm_supplier_data = FMSupplierData.new
-    lot1a = fm_supplier_data.long_list_suppliers_lot1a("('UKC1')", "('C-20')")
+    lot1a = fm_supplier_data.long_list_suppliers_lot("('UKC1')", "('C-20')", '1a')
     assert(!lot1a.nil?)
   end
 
   it 'counts lot1b suppliers with a location of UKC1 and a service of C-20' do
     fm_supplier_data = FMSupplierData.new
-    lot1b = fm_supplier_data.long_list_suppliers_lot1b("('UKC1')", "('C-20')")
+    lot1b = fm_supplier_data.long_list_suppliers_lot("('UKC1')", "('C-20')", '1b')
     assert(!lot1b.nil?)
   end
 
   it 'counts lot1c suppliers with a location of UKC1 and a service of C-20' do
     fm_supplier_data = FMSupplierData.new
-    lot1c = fm_supplier_data.long_list_suppliers_lot1c("('UKC1')", "('C-20')")
+    lot1c = fm_supplier_data.long_list_suppliers_lot("('UKC1')", "('C-20')", '1c')
     assert(!lot1c.nil?)
   end
 end
