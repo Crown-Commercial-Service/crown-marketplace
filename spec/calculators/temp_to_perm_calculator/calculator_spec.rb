@@ -5,8 +5,8 @@ RSpec.describe TempToPermCalculator::Calculator do
     described_class.new(
       contract_start_date: contract_start_date,
       days_per_week: days_per_week,
-      day_rate: 110,
-      markup_rate: 0.10,
+      day_rate: day_rate,
+      markup_rate: markup_rate,
       hire_date: hire_date,
       notice_date: notice_date,
       holiday_1_start_date: holiday_1_start_date,
@@ -19,6 +19,8 @@ RSpec.describe TempToPermCalculator::Calculator do
   include_context 'with friendly dates'
 
   let(:contract_start_date) { start_of_1st_week }
+  let(:day_rate) { 110 }
+  let(:markup_rate) { 0.10 }
   let(:hire_date) { start_of_1st_week }
   let(:notice_date) { nil }
   let(:holiday_1_start_date) { nil }
@@ -76,11 +78,66 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 10)
     end
 
+    context 'when day rate is 116 and mark-up rate is 16%' do
+      let(:day_rate) { 116 }
+      let(:markup_rate) { 0.16 }
+
+      it 'calculates the maximum fee for lack of notice as 20 days of the daily supplier fee' do
+        expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 16)
+      end
+    end
+
+    context 'when the contract starts on a bank holiday' do
+      let(:contract_start_date) { start_of_1st_week - 1.week }
+
+      it 'calculates the daily supplier fee based on day rate and markup rate' do
+        expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
+      end
+
+      it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
+        expect(calculator.ideal_hire_date).to eq(start_of_13th_week - 1.week + 1.day)
+      end
+
+      it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
+        expect(calculator.ideal_notice_date).to eq(start_of_9th_week - 1.week + 1.day)
+      end
+    end
+
+    context 'when the contract start day is on a Saturday' do
+      let(:contract_start_date) { start_of_1st_week - 2.days }
+
+      it 'calculates the daily supplier fee based on day rate and markup rate' do
+        expect(calculator.daily_supplier_fee).to be_within(1e-6).of(10)
+      end
+
+      it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
+        expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
+      end
+
+      it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
+        expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
+      end
+    end
+
     context 'when the worker works fewer than 5 days per week' do
       let(:days_per_week) { 2 }
 
       it 'calculates the maximum fee for lack of notice as 20 days of the pro rata daily supplier fee' do
         expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 4)
+      end
+
+      it 'calculates the ideal hire date as the start of the 13th week to avoid paying an early hire fee' do
+        expect(calculator.ideal_hire_date).to eq(start_of_13th_week)
+      end
+
+      it 'calculates the ideal notice date as the start of the 9th week to avoid paying a lack of notice fee' do
+        expect(calculator.ideal_notice_date).to eq(start_of_9th_week)
+      end
+
+      it 'returns the number of days notice required' do
+        expect(calculator.days_notice_required).to eq(
+          TempToPermCalculator::Calculator::WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE
+        )
       end
     end
   end
@@ -105,6 +162,10 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.ideal_notice_date).to eq(start_of_11th_week)
     end
 
+    it 'calculates the maximum fee for lack of notice as 20 days of the daily supplier fee' do
+      expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 10)
+    end
+
     context 'and when there is a holiday within four weeks of the ideal hire date' do
       let(:holiday_2_start_date) { start_of_14th_week }
       let(:holiday_2_end_date) { start_of_14th_week.end_of_week }
@@ -120,6 +181,50 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the notice date based on hire date as the start of the 8th week to take the second holiday into account and avoid paying a lack of notice fee' do
         expect(calculator.notice_date_based_on_hire_date).to eq(start_of_8th_week)
+      end
+    end
+  end
+
+  context 'when there are 3 bank holidays between the start of the contract and the hire date' do
+    let(:start_date) { start_of_1st_week + 15.weeks }
+    let(:contract_start_date) { start_date }
+    let(:hire_date) { start_date + 12.weeks }
+
+    it 'calculates the ideal notice date as the 3rd day of the 8th week to avoid paying a lack of notice fee' do
+      expect(calculator.ideal_notice_date).to eq(start_date + 8.weeks + 3.days)
+    end
+
+    it 'calculates the maximum fee for lack of notice as 20 days of the daily supplier fee' do
+      expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 10)
+    end
+
+    context 'when worker works fewer than 5 days a week' do
+      let(:days_per_week) { 3 }
+
+      it 'calculates the ideal notice date as the start of the 11th week to avoid paying a lack of notice fee' do
+        expect(calculator.ideal_notice_date).to eq(start_date + 12.weeks - 4.weeks + 3.days)
+      end
+
+      it 'calculates the maximum fee for lack of notice as 20 days of the daily supplier fee' do
+        expect(calculator.maximum_fee_for_lack_of_notice).to be_within(1e-6).of(20 * 6)
+      end
+    end
+  end
+
+  context 'when the bank holiday is at the start of the contract' do
+    let(:start_date) { start_of_1st_week - 1.week }
+    let(:contract_start_date) { start_date }
+    let(:hire_date) { start_date + 12.weeks }
+
+    it 'calculates the ideal notice date as the 3rd day of the 8th week to avoid paying a lack of notice fee' do
+      expect(calculator.ideal_notice_date).to eq(start_date + 8.weeks + 1.day)
+    end
+
+    context 'when worker works fewer than 5 days a week' do
+      let(:days_per_week) { 3 }
+
+      it 'calculates the ideal notice date as the start of the 11th week to avoid paying a lack of notice fee' do
+        expect(calculator.ideal_notice_date).to eq(start_date + 12.weeks - 4.weeks + 1.day)
       end
     end
   end
@@ -156,7 +261,7 @@ RSpec.describe TempToPermCalculator::Calculator do
     end
 
     context 'when the school gives less than 4 weeks notice' do
-      let(:notice_date) { Date.parse('Mon 17 Sep 2018') }
+      let(:notice_date) { start_of_3rd_week }
 
       it 'returns 0 days for lack of notice as notice is not required within the first 8 weeks' do
         expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
@@ -199,6 +304,15 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.fee).to be_within(1e-6).of(5 * 10)
     end
 
+    context 'and when day rate is 116 and markup rate 16%' do
+      let(:day_rate) { 116 }
+      let(:markup_rate) { 0.16 }
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(5 * 16)
+      end
+    end
+
     context 'and they give 4 weeks notice' do
       let(:notice_date) { start_of_8th_week }
 
@@ -218,6 +332,15 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(5 * 10)
+      end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(5 * 16)
+        end
       end
     end
 
@@ -241,6 +364,15 @@ RSpec.describe TempToPermCalculator::Calculator do
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(10 * 10)
       end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(10 * 16)
+        end
+      end
     end
 
     context 'and they give 2 weeks notice' do
@@ -262,6 +394,15 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(15 * 10)
+      end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(15 * 16)
+        end
       end
     end
 
@@ -285,6 +426,15 @@ RSpec.describe TempToPermCalculator::Calculator do
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(20 * 10)
       end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(20 * 16)
+        end
+      end
     end
 
     context 'and they give no notice' do
@@ -306,6 +456,15 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(20 * 10)
+      end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(20 * 16)
+        end
       end
     end
   end
@@ -345,6 +504,15 @@ RSpec.describe TempToPermCalculator::Calculator do
       expect(calculator.fee).to be_within(1e-6).of(0)
     end
 
+    context 'and when day rate is 116 and markup rate 16%' do
+      let(:day_rate) { 116 }
+      let(:markup_rate) { 0.16 }
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(0)
+      end
+    end
+
     context 'and they give 4 weeks notice' do
       let(:notice_date) { start_of_9th_week }
 
@@ -360,6 +528,15 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the fee as zero' do
         expect(calculator.fee).to be_within(1e-6).of(0)
+      end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(0)
+        end
       end
     end
 
@@ -379,6 +556,15 @@ RSpec.describe TempToPermCalculator::Calculator do
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(5 * 10)
       end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(5 * 16)
+        end
+      end
     end
 
     context 'and they give 2 weeks notice' do
@@ -396,6 +582,15 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(10 * 10)
+      end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(10 * 16)
+        end
       end
     end
 
@@ -415,6 +610,15 @@ RSpec.describe TempToPermCalculator::Calculator do
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(15 * 10)
       end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(15 * 16)
+        end
+      end
     end
 
     context 'and they give no notice' do
@@ -432,6 +636,15 @@ RSpec.describe TempToPermCalculator::Calculator do
 
       it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
         expect(calculator.fee).to be_within(1e-6).of(20 * 10)
+      end
+
+      context 'and when day rate is 116 and markup rate 16%' do
+        let(:day_rate) { 116 }
+        let(:markup_rate) { 0.16 }
+
+        it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+          expect(calculator.fee).to be_within(1e-6).of(20 * 16)
+        end
       end
     end
   end
