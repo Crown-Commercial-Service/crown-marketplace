@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     facilities_management
     management_consultancy
     supply_teachers
+    apprenticeships
   ].freeze
 
   def self.require_permission(label, **kwargs)
