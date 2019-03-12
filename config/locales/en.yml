@@ -70,7 +70,6 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date:
-              after_contract_start_date: The date the worker will be hired must be after the date the contract started
               blank: Enter the date you want to hire the worker and include a day, month and year
             holiday_1_end_date:
               before_start_date: The end date of the first school holiday must be after the start date
