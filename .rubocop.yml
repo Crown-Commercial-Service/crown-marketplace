@@ -69,6 +69,7 @@ Metrics/AbcSize:
 
 Metrics/LineLength:
     Max: 120
+    Enabled: false
     IgnoredPatterns:
         - 'it .* do$'
         - 'context .* do$'

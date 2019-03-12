@@ -154,14 +154,6 @@ en:
         question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
         question_hint: This can be current costs, or estimated annual costs.
         submit: Continue
-    suppliers:
-      index:
-        direct_award_possible: Direct award to a single supplier may be an option if your maximum spend is under £1.5 million.
-        header: Lot %{lot} suppliers
-        suppliers_found_html: "<strong>%{suppliers}</strong> found"
-      supplier:
-        contact_email_missing: Contact email not available
-        contact_name_missing: Contact name not available
   faker:
     company:
       name:
