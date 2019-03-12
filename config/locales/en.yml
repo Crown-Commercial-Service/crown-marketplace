@@ -108,8 +108,6 @@ en:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
     home:
-      building_services:
-        page_title: Building services
       find_apprentices:
         find_1_legend: Do you know the apprenticeship standard that you would like training for?
       find_apprentices2:
@@ -121,7 +119,7 @@ en:
       find_apprentices4:
         browse_tab_label: Browse
         find_apprenticeship_std: Find an apprenticeship standard
-        find_apprenticeship_tab_title: Search and browse tabs
+        find_apprenticeship_tab_title: Keyword search or browse by route
         page_title: Find an apprenticeship standard
         search_tab_label: Search
         title_browse_by_route: Browse by route
