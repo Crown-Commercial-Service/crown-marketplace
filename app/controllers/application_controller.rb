@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   Unauthorized = Class.new(StandardError)
-
   PERMISSIONS = %i[
     none
     facilities_management

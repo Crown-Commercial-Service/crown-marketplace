@@ -27,6 +27,11 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
+    get '/value-band', to: 'select_locations#select_location'
+    get '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations'
+    get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
+    get '/suppliers/long-list', to: 'long_list#long_list'
+    post '/suppliers/longList' => 'long_list#long_list'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
