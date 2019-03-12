@@ -31,8 +31,9 @@ RSpec.describe 'supply_teachers/home/_avoid_paying_fees.html.erb' do
 
     it 'displays the ideal hire and notice dates' do
       expect(rendered).to have_content(
-        "You could give notice to the agency on #{ideal_notice_date.to_formatted_s(:long_with_day)} "\
-        "and make the worker permanent on #{ideal_hire_date.to_formatted_s(:long_with_day)}"
+        "If you give notice to the agency on #{ideal_notice_date.to_formatted_s(:long_with_day)}"\
+        ", and make the worker permanent on #{ideal_hire_date.to_formatted_s(:long_with_day)}"\
+        ' you will be charged £0.00 and avoid paying any temp-to-perm fee.'
       )
     end
   end
