@@ -68,7 +68,7 @@ module Apprenticeships::HomeHelper
       { name: 'A1 Training Solutions', rating: 2, distance: 14 },
       { name: 'North West Education LTD', rating: 3, distance: 5 },
       { name: 'OADS Training Group', rating: 3, distance: 103 },
-      { name: 'Pimlico College of Building', rating: 3, distance: 53 },
+      { name: 'Pimilico College of Building', rating: 3, distance: 53 },
       { name: 'United Colleges Groupi National', rating: 0, distance: 76 },
       { name: 'University of Liverpool', rating: 0, distance: 76 },
     ]

@@ -70,7 +70,6 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date:
-              after_contract_start_date: The date the worker will be hired must be after the date the contract started
               blank: Enter the date you want to hire the worker and include a day, month and year
             holiday_1_end_date:
               before_start_date: The end date of the first school holiday must be after the start date
@@ -106,177 +105,6 @@ en:
           attributes:
             postcode:
               invalid_postcode: Enter a valid postcode
-  apprenticeships:
-    home:
-      find_apprentices:
-        find_1_legend: Do you know the apprenticeship standard that you would like training for?
-      find_apprentices2:
-        find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account?
-      find_apprentices3:
-        outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
-        outline_your_training_hint: Briefly outline your training requirements
-        page_title: Outline your training requirements
-      find_apprentices4:
-        browse_tab_label: Browse
-        find_apprenticeship_std: Find an apprenticeship standard
-        find_apprenticeship_tab_title: Keyword search or browse by route
-        page_title: Find an apprenticeship standard
-        search_tab_label: Search
-        title_browse_by_route: Browse by route
-      find_apprentices5:
-        button_label: Add requirements and find training providers
-        page_title: Apprenticeship training course summary
-        provider_information_title: Summary of this apprenticeship course
-        title_caption: Apprenticeship training course
-      index:
-        before_you_start: Before you start
-        belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a <a href="%{url}" class="govuk-link">Digital Apprenticeship Service</a> (DAS) account.
-        have_an_account_with_Crown_Marketplace_html: <a href="%{url}" class="govuk-link">sign up</a> for an account with Crown Marketplace.
-        have_read_and_agreed_html: read and agree to the <a href="%{url}" class="govuk-link">terms &amp; conditions</a> governing this service
-        know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
-        know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
-        know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
-        this_service_generate_shortlist_html: This service will help you generate a shortlist of training providers that will only be valid for 48<abbr title="hours">hrs</abbr>, as supplier information is continually being updated.
-        title: Find apprenticeship training and related services
-        use_this_service_to:
-          find_education_and_skills_funding_agency: find Education and Skills Funding Agency (ESFA) registered training providers that can deliver apprenticeship standards, frameworks and related services
-          produce_a_list_of_CCS_approved_training_providers: produce a list of Crown Commercial Service-approved training providers based on your requirements, for your region(s)
-          review_and_use_ready_made_terms: review and use ready-made terms and conditions
-          title: 'Use this service to:'
-        you_will_need_to_have: 'To use this service, you will need to:'
-      looking_for:
-        answer_calculate_temp_to_perm_fee: Lorem ipsum 1
-        answer_managed_service_provider: Lorem ipsum 2
-        answer_worker: Lorem ipsum 3
-        page_title: Looking for
-        question: question 1 txt
-        question2: question 2 txt
-      requirements:
-        page_title: Apprenticeship requirements
-        requirements_btn_text: Find training providers
-        requirements_h1_title: Add your requirements
-      search:
-        page_title: Search for apprenticeship
-        search_button: Search
-        search_hint: Search by keyword or apprenticeship name / number, or job title
-        search_label: Search for apprenticeship
-      search_results:
-        apply_filters_label: Apply filters
-        clear_filters_link: Clear filters
-        explain_levels_link: Explain levels
-        explain_levels_text: Lorem ipsum txt 1
-        header: Search results
-        keyword_search_label: Keyword search
-        levels_label: Levels
-        next: Next
-        page_title: Search results
-        providers_label: Provider(s)
-        result_level_label: 'Level:'
-        results_found_hint: Click on the apprenticeship to add your requirements and find training providers.
-        results_found_html: There are <b>%{results}</b> apprenticeships matching your search for "<b>%{search}</b>"
-        routes_label: Routes
-        sort_by_label: Sort by
-      signup:
-        page_title: Sign up
-      sorry:
-        page_title: Sorry
-      supplier_search:
-        apply_filters: Apply filters
-        apply_filters_label: Apply filters
-        clear_filters_link: Clear filters
-        page_title: Supplier search
-        sort_by_label: Sort by
-        there_are_8: Lorem ipsum (for supplier search)
-      supplier_search2:
-        apply_filters: Apply filters
-        apply_filters_label: Apply filters
-        clear_filters_link: Clear filters
-        page_title: Supplier search
-        sort_by_label: Sort by
-        there_are_8: Lorem ipsum (for supplier search2)
-      training_details:
-        page_title: Training details
-      training_information:
-        page_title: Training information
-      training_provider:
-        ability_to_bespoke_label: Ability to bespoke
-        about_the_apprenticeship_title: 'About the apprenticeship:'
-        about_the_provider_title: 'About the provider:'
-        address: 'Address:'
-        apprenticeship_label: Apprenticeship
-        at_your_location_label: at your location
-        blended_label: Blended
-        block_release_label: block release
-        caption: Training provider details
-        classroom_based_label: Classroom based
-        classroom_sharing_closed_label: Closed
-        classroom_sharing_label: 'Classroom sharing:'
-        classroom_sharing_open_label: Open
-        classroom_sharing_public_label: Public
-        contact_details_title: Contact details
-        day_release_label: day release
-        delivery_method_label: 'Delivery method:'
-        duration_label: Duration
-        email: 'Email:'
-        experience_in_delivering_apprenticeships_label: Experience in delivering apprenticeships
-        experience_in_this_apprenticeship_label: Experience in this apprenticeship
-        explain_classroom_sharing_details: Classoom sharing explanation
-        explain_classroom_sharing_label: Explain classroom sharing
-        explain_time_demand_details: Time demand explanation
-        explain_time_demand_label: Explain time demand
-        explain_training_availability_details: Training availability explained
-        explain_training_availability_label: Explain training availability
-        funding_band_label: Funding band
-        level_label: Level
-        national_provider_label: National provider
-        national_provider_title: This training provider is willing to offer apprenticeship training across England
-        ofsted_apprenticeship_label: Ofsted rating for this apprenticeship
-        online_label: Online
-        other_apprenticeships_standards_title: Other apprenticeship standards this provider delivers
-        overall_ofsted_rating_label: Overall ofsted rating
-        page_title: Training provider details
-        phone_number: 'Phone number:'
-        provider_information_tab: Provider information
-        provider_information_title: Provider information
-        recruitment_support_label: Recruitment support
-        time_demand_label: 'Time demand:'
-        training_availability_closed_label: Closed
-        training_availability_label: 'Training availability:'
-        training_availability_open_label: Open
-        training_availability_public_label: Public
-        training_information_tab: Training information
-        training_information_title: Training information
-        view_report: view report
-        website: 'Website:'
-        workplace_based_label: Workplace based
-      training_provider_list:
-        apprenticeship_level: Apprenticeship Level
-        apprenticeship_standard: Apprenticeship Standard
-        basic_terms_and_conditions: Basic terms and conditions
-        choices_used: Choices used to generate your shortlist
-        classroom_sharing: Classroom sharing
-        customer_guidance_template: Customer guidance template
-        delivery_method: Delivery method
-        download_file_info: Download training provider list as comma-separated values
-        filters_used: Filters used
-        funding_band: Funding band
-        help_with_recruiting: Help with recruiting the apprentices
-        minimum_number: Minimum number of apprentices
-        minimum_ofsted: Minimum Ofsted rating
-        need_to_customise: Need to customise training
-        other_documents_title: The following documents may also be of help
-        page_title: Download the training provider list
-        print_this_page: Print this page
-        requirements: Requirements
-        start_new_search: Start new search
-        time_demand: Time demand
-        title: Download the training provider list
-        training_availability: Training availability
-        training_in_multiple_locations: Training in multiple locations
-        warning_text: You can now download a training provider list and complete this procurement offline via a further competition.
-      understanding:
-        page_title: Understanding
-    page_section: Find apprenticeship training and related services
   common:
     apply_filters: Apply filters
     browse: Browse
@@ -331,14 +159,6 @@ en:
         question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
         question_hint: This can be current costs, or estimated annual costs.
         submit: Continue
-    suppliers:
-      index:
-        direct_award_possible: Direct award to a single supplier may be an option if your maximum spend is under £1.5 million.
-        header: Lot %{lot} suppliers
-        suppliers_found_html: "<strong>%{suppliers}</strong> found"
-      supplier:
-        contact_email_missing: Contact email not available
-        contact_name_missing: Contact name not available
   faker:
     company:
       name:
@@ -349,7 +169,6 @@ en:
       - LLP
   home:
     index:
-      apprenticeships_link: Find apprenticeship training and related services
       facilities_management_link: Find a facilities management supplier
       management_consultancy_link: Find management consultancy services
       supply_teachers_link: Find supply teachers and agency workers
@@ -600,6 +419,7 @@ en:
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
       looking_for:
+        all_suppliers: I want to see a list of all suppliers
         answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
         answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
         answer_worker: An agency who can provide my school with an individual worker
@@ -657,6 +477,11 @@ en:
         question: Do you want an agency to supply the worker?
     page_section: Find supply teachers and agency staff
     suppliers:
+      all_suppliers:
+        branch: Branch
+        header: All agencies
+        page_title: All agencies
+        results_found_with_location_html: There are <strong>%{results} agencies</strong> currently available
       master_vendor:
         column1: Job type
         column2: Agency mark-up
@@ -680,3 +505,10 @@ en:
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
+  views:
+    pagination:
+      first: ''
+      last: ''
+      next: Next
+      previous: Previous
+      truncate: "..."

@@ -431,14 +431,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     let(:contract_start_date_month) { '1' }
     let(:contract_start_date_year) { '2018' }
 
-    it { is_expected.to be_invalid }
-
-    it 'obtains the error message from an I18n translation' do
-      step.valid?
-      expect(step.errors[:hire_date]).to include(
-        I18n.t("#{model_key}.attributes.hire_date.after_contract_start_date")
-      )
-    end
+    it { is_expected.to be_valid }
 
     context 'and hire_date is one day earlier' do
       let(:hire_date_day) { '9' }

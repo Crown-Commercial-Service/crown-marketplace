@@ -10,9 +10,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :looking_for) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :looking_for) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h3 class="govuk-fieldset__heading">
+            <h1 class="govuk-fieldset__heading">
               <%= t('.question') %>
-            </h3>
+            </h1>
           </legend>
           <%= display_error(@journey, :looking_for) %>
           <div class="govuk-radios">
@@ -24,9 +24,14 @@
               <%= radio_button_tag :looking_for, :managed_service_provider, checked?(params[:looking_for], 'managed_service_provider'), class: 'govuk-radios__input' %>
               <%= label_tag :looking_for_managed_service_provider, t('.answer_managed_service_provider'), class: 'govuk-label govuk-radios__label' %>
             </div>
+            <div class="govuk-radios__divider">or</div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :looking_for, :calculate_temp_to_perm_fee, checked?(params[:looking_for], 'calculate_temp_to_perm_fee'), class: 'govuk-radios__input' %>
               <%= label_tag :looking_for_calculate_temp_to_perm_fee, t('.answer_calculate_temp_to_perm_fee'), class: 'govuk-label govuk-radios__label' %>
+            </div>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :looking_for, :all_suppliers, checked?(params[:looking_for], 'calculate_temp_to_perm_fee'), class: 'govuk-radios__input' %>
+              <%= label_tag :all_suppliers, t('.all_suppliers'), class: 'govuk-label govuk-radios__label' %>
             </div>
           </div>
         <% end %>

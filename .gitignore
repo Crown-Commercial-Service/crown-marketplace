@@ -32,9 +32,5 @@ logfile
 
 # Simplecov
 /coverage/*
-
-# Rubymine
 .idea/
-
-# VSCode
-.vscode/
+/nbproject/private/

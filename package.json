@@ -2,6 +2,7 @@
   "name": "marketplace",
   "private": true,
   "dependencies": {
+    "@hmcts/frontend": "0.0.29-alpha",
     "govuk-frontend": "^2.7.0",
     "html5shiv": "^3.7.3"
   },
