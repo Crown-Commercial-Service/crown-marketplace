@@ -49,7 +49,7 @@ Rails.application.routes.draw do
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
-namespace 'apprenticeships', path: 'apprenticeships' do
+  namespace 'apprenticeships', path: 'apprenticeships' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     get '/search', to: 'home#search'
