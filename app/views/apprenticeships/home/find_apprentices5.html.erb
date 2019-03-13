@@ -1,0 +1,52 @@
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <span class="govuk-caption-xl"><%= t('.title_caption') %></span>
+      <h1 class="govuk-heading-xl">Building services design engineer</h1>
+
+      <%= link_to t('.button_label'), 'requirements', role: 'button', class: 'govuk-button' %>
+
+    </div>
+  </div>      
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <table class="govuk-table govuk-!-margin-top-4 govuk-!-margin-bottom-8 ccs-govuk-table--style">
+        <caption class="govuk-table__caption govuk-heading-m govuk-!-font-weight-bold"><%= t('.provider_information_title') %></caption>
+
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">Level</th>
+            <td class="govuk-table__cell">60 months</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">Max funding</th>
+            <td class="govuk-table__cell">&pound;27,000</td>
+          </tr>          
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">Course ID</th>
+            <td class="govuk-table__cell">ST0372</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">Number of providers</th>
+            <td class="govuk-table__cell">8</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">Entry requirements</th>
+            <td class="govuk-table__cell">Candidates will have at least 3 A levels at grades A* to C including maths and physical science or have completed a level 3 apprenticeship as a building services design technician</td>
+          </tr> 
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">More information</th>
+            <td class="govuk-table__cell">The institute for Apprenticeships has a more <a href="" class="govuk-link">detailed information</a> about this apprenticeship</td>
+          </tr>                    
+        </tbody>
+      </table>
+
+    </div>
+  </div>

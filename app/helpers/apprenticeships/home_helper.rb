@@ -6,7 +6,8 @@ module Apprenticeships::HomeHelper
 
   # TODO: TBD where this will sit
   def routes
-    ['Agriculture, environmental and animal care', 'Business administration', 'Catering and hospitality', 'Construction',
+    ['Agriculture, environmental and animal care', 'Business administration', 'Catering and hospitality' \
+     'Construction',
      'Creative and design', 'Digital', 'Engineering and manufacturing', 'Hair and beauty', 'Health and science',
      'Legal, finance and accounting', 'Protective services', 'Sales, marketing and procurement', 'Transport']
   end
@@ -67,7 +68,7 @@ module Apprenticeships::HomeHelper
       { name: 'A1 Training Solutions', rating: 2, distance: 14 },
       { name: 'North West Education LTD', rating: 3, distance: 5 },
       { name: 'OADS Training Group', rating: 3, distance: 103 },
-      { name: 'Pimilico College of Building', rating: 3, distance: 53 },
+      { name: 'Pimlico College of Building', rating: 3, distance: 53 },
       { name: 'United Colleges Groupi National', rating: 0, distance: 76 },
       { name: 'University of Liverpool', rating: 0, distance: 76 },
     ]

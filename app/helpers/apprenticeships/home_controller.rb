@@ -17,8 +17,10 @@ module Apprenticeships
         phone: '01234 567890',
         website: 'http://websiteurl.ac.uk',
         address: 'Maidstone Campus, Tonbridge Road, Maidstone, Kent, ME16 8AQ',
-        about_apprenticeship: 'This professionally accredited course aims to equip you with the knowledge, technical and practical skills and techniques required for a successful career as a building services engineer, able to respond to environmental and ethical considerations, while talking into consideration relevant social and economic implications too.
-                ABC Training LTD has a long and prestigious engineering heritage and is ranked 2nd for \'Mechanical Engineering\', 10th for \'Civil Engineering\' and 30th for \'Electronic and Electrical Engineering\' by the Guardian University Guide 2018. We enjoy a strong portfolio of industry-related research, particularly in the areas of low carbon building technology, sustainable construction materials and engineering education',
+        about_apprenticeship: 'This professionally accredited course aims to equip you with the knowledge, technical and'\
+       ' practical skills and techniques required for a successful career as a building services engineer, able to respond to environmental and '\
+       ' ethical considerations, while talking into consideration relevant social and economic implications too.'\
+       ' ABC Training LTD has a long and prestigious engineering heritage and is ranked 2nd for \'Mechanical Engineering\', 10th for \'Civil Engineering\' and 30th for \'Electronic and Electrical Engineering\' by the Guardian University Guide 2018. We enjoy a strong portfolio of industry-related research, particularly in the areas of low carbon building technology, sustainable construction materials and engineering education',
         apprenticeship: 'Building services design engineer',
         ofsted_apprenticeship: '2 - Good',
         level: 6,
