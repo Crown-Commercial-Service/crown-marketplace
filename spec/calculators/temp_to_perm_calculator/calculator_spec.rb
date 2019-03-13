@@ -649,6 +649,42 @@ RSpec.describe TempToPermCalculator::Calculator do
     end
   end
 
+  context 'when hire date is more than 12 weeks after contract start date' do
+    let(:hire_date) { start_of_14th_week }
+
+    it 'returns 0 if number of charchable days is < 0' do
+      expect(calculator.chargeable_working_days_based_on_early_hire).to eq(0)
+    end
+
+    it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+      expect(calculator.fee).to be_within(1e-6).of(0)
+    end
+
+    context 'and notice date is less than 4 weeks' do
+      let(:notice_date) { start_of_14th_week - 4.weeks + 2.days }
+
+      it 'returns 0 if number of chargeable days is < 0' do
+        expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(2)
+      end
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(2 * 10)
+      end
+    end
+
+    context 'and notice date is more than 4 weeks' do
+      let(:notice_date) { start_of_14th_week - 5.weeks }
+
+      it 'returns 0 if number of chargeable days is < 0' do
+        expect(calculator.chargeable_working_days_based_on_lack_of_notice).to eq(0)
+      end
+
+      it 'calculates the fee as the number of chargeable working days multiplied by the daily supplier fee' do
+        expect(calculator.fee).to be_within(1e-6).of(0)
+      end
+    end
+  end
+
   describe '#working_days' do
     context 'when the working period includes a bank holiday in England' do
       let(:august_bank_holiday) { Date.parse('Monday, 27th August 2018') }
