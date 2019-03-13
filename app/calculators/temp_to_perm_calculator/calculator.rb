@@ -96,7 +96,8 @@ module TempToPermCalculator
     end
 
     def chargeable_working_days_based_on_early_hire
-      WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED - working_days
+      chargeable_working_days = WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED - working_days
+      chargeable_working_days.negative? ? 0 : chargeable_working_days
     end
 
     def chargeable_working_days_based_on_lack_of_notice
