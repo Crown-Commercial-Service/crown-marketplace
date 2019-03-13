@@ -68,7 +68,8 @@ Metrics/AbcSize:
         - 'app/controllers/supply_teachers/branches_controller.rb'
 
 Metrics/LineLength:
-    Max: 520
+    Max: 120
+    Enabled: false
     IgnoredPatterns:
         - 'it .* do$'
         - 'context .* do$'

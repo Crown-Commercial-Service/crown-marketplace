@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@hmcts/frontend@0.0.29-alpha":
+  version "0.0.29-alpha"
+  resolved "https://registry.yarnpkg.com/@hmcts/frontend/-/frontend-0.0.29-alpha.tgz#1a65f7d7ba2b954a6525ffab49816bc74cdec269"
+  integrity sha512-Mf4+glR6NjpgOTFHEA+8xd668J3VbIPPX7ZuaA0pHx5bsSZ2f1Erd36qRni9W7YpO7rLqxoKfIPfoSx1ns0MPg==
+
 ajv@^6.5.5:
   version "6.6.1"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.6.1.tgz#6360f5ed0d80f232cc2b294c362d5dc2e538dd61"
@@ -280,10 +285,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-govuk-frontend@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.0.0.tgz#daf69eeffc60d013ad5fd14b59e5e488ac63a132"
-  integrity sha512-F0rChMqBumqphM2ourIfFgc+BIoqQcLIV3Jz/oUmx/yeiRrl799Q1DN7Q/JDB/+nbS3ZaoDLX++Qv6RtIp08/w==
+govuk-frontend@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.7.0.tgz#6a12baf514426653220dd3cdef55b1e1d97f52a6"
+  integrity sha512-IZvho72ExUAOmMOZHbE7s//HdtpSoO1aLn3fcXTnuIUi20UTsz6j+5i1Ztyqr4KUEb8OB/jNMYt4kuYyJnEMRQ==
 
 har-schema@^2.0.0:
   version "2.0.0"

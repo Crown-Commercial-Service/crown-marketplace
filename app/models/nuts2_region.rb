@@ -16,4 +16,4 @@ class Nuts2Region
   end
 end
 
-Nuts2Region.load_csv('nuts2_regions.csv')
+StaticDataLoader.load_static_data(Nuts2Region)
