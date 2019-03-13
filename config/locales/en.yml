@@ -105,6 +105,96 @@ en:
           attributes:
             postcode:
               invalid_postcode: Enter a valid postcode
+  apprenticeships:
+    home:
+      find_apprentices:
+        find_1_legend: Do you know the apprenticeship standard that you would like training for?
+      find_apprentices2:
+        find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account?
+      find_apprentices3:
+        outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
+        outline_your_training_hint: Briefly outline your training requirements
+        page_title: Outline your training requirements
+      find_apprentices4:
+        browse_tab_label: Browse
+        find_apprenticeship_std: Find an apprenticeship standard
+        find_apprenticeship_tab_title: Search and browse tabs
+        page_title: Find an apprenticeship standard
+        search_tab_label: Search
+        title_browse_by_route: Browse by route
+      find_apprentices5:
+        button_label: Add requirements and find training providers
+        page_title: Apprenticeship training course summary
+        provider_information_title: Summary of this apprenticeship course
+        title_caption: Apprenticeship training course
+      index:
+        before_you_start: Before you start
+        belong_to_a_public_sector_organisation_html: belong to a public sector organisation and have a <a href="%{url}" class="govuk-link">Digital Apprenticeship Service</a> (DAS) account.
+        have_an_account_with_Crown_Marketplace_html: <a href="%{url}" class="govuk-link">sign up</a> for an account with Crown Marketplace.
+        have_read_and_agreed_html: read and agree to the <a href="%{url}" class="govuk-link">terms &amp; conditions</a> governing this service
+        know_how_you_would_like_the_training_to_be_delivered: know how you would like the training to be delivered
+        know_the_apprenticeship_standards: know the apprenticeship standard(s) that you need training for
+        know_weather_you_would_like_shared_training: know whether you would like shared training, or training just for your own apprentices - shared training can increase a number of suppliers available to you
+        this_service_generate_shortlist_html: This service will help you generate a shortlist of training providers that will only be valid for 48<abbr title="hours">hrs</abbr>, as supplier information is continually being updated.
+        title: Find apprenticeship training and related services
+        use_this_service_to:
+          find_education_and_skills_funding_agency: find Education and Skills Funding Agency (ESFA) registered training providers that can deliver apprenticeship standards, frameworks and related services
+          produce_a_list_of_CCS_approved_training_providers: produce a list of Crown Commercial Service-approved training providers based on your requirements, for your region(s)
+          review_and_use_ready_made_terms: review and use ready-made terms and conditions
+          title: 'Use this service to:'
+        you_will_need_to_have: 'To use this service, you will need to:'
+      looking_for:
+        answer_calculate_temp_to_perm_fee: Lorem ipsum 1
+        answer_managed_service_provider: Lorem ipsum 2
+        answer_worker: Lorem ipsum 3
+        page_title: Looking for
+        question: question 1 txt
+        question2: question 2 txt
+      requirements:
+        page_title: Apprenticeship requirements
+        requirements_btn_text: Find training providers
+        requirements_h1_title: Add your requirements
+      search_results:
+        apply_filters_label: Apply filters
+        clear_filters_link: Clear filters
+        explain_levels_link: Explain levels
+        explain_levels_text: Lorem ipsum txt 1
+        header: Search results
+        keyword_search_label: Keyword search
+        levels_label: Levels
+        next: Next
+        page_title: Search results
+        providers_label: Provider(s)
+        result_level_label: 'Level:'
+        results_found_hint: Click on the apprenticeship to add your requirements and find training providers.
+        results_found_html: There are <b>%{results}</b> apprenticeships matching your search for "<b>%{search}</b>"
+        routes_label: Routes
+        sort_by_label: Sort by
+      signup:
+        page_title: Sign up
+      sorry:
+        page_title: Sorry
+      supplier_search:
+        apply_filters: Apply filters
+        apply_filters_label: Apply filters
+        clear_filters_link: Clear filters
+        page_title: Supplier search
+        sort_by_label: Sort by
+        there_are_8: Lorem ipsum (for supplier search)
+      supplier_search2:
+        apply_filters: Apply filters
+        apply_filters_label: Apply filters
+        clear_filters_link: Clear filters
+        page_title: Supplier search
+        sort_by_label: Sort by
+        there_are_8: Lorem ipsum (for supplier search2)
+      training_details:
+        page_title: Training details
+      training_information:
+        page_title: Training information
+      understanding:
+        page_title: Understanding
+    page_section: Find apprenticeship training and related services
   common:
     apply_filters: Apply filters
     browse: Browse
