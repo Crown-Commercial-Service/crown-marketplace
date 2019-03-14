@@ -3,7 +3,7 @@ class SupplyTeachers::Spreadsheet
     include TelephoneNumberHelper
 
     def sheet_name
-      'Suppliers'
+      'Agency shortlist'
     end
 
     def title
