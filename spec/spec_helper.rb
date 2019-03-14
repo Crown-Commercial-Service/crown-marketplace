@@ -14,8 +14,14 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
+require 'capybara'
+
 SimpleCov.start do
   add_filter '/spec/'
+end
+
+Capybara.register_driver :poltergeist_no_errors do |app|
+  Capybara::Poltergeist::Driver.new(app, js_errors: false)
 end
 
 RSpec.configure do |config|

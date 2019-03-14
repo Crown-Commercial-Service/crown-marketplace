@@ -1,0 +1,24 @@
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+     <form action="find_apprentices4" method="">
+
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-label--m govuk-!-font-weight-bold" for="more-detail3">
+            <%= t('.outline_your_training_hint') %>
+          </label>
+          <span id="more-detail-hint3" class="govuk-hint">
+            <%= t('.outline_your_training') %>
+          </span>
+          <textarea class="govuk-textarea" id="more-detail3" name="more-detail3" rows="5" aria-describedby="more-detail-hint3"></textarea>
+        </div>
+
+        <%= render 'layouts/button', text: t('common.continue')%>
+
+      </form>
+
+    </div>
+  </div>
