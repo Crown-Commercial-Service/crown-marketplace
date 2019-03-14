@@ -470,6 +470,7 @@ en:
           find_and_hire_a_worker: find and hire a worker using an agency
           hire_a_specific_person: hire a specific person using an agency (a ‘nominated worker’)
           title: 'Use this service to:'
+          view_all_suppliers: view a list of all the agencies
           view_the_rates: view the rates and breakdown of rates the agencies charge
         you_cant_use_the_service_if: You can’t use this service if you’re an independent school, unless you have charitable status.
         you_must_tell_your_employees: You must tell your employees of the confidential nature of the information and must also agree to the requirements. No agents, sub-contractors, third parties nor other non-employees can have access to the confidential information.
@@ -510,7 +511,7 @@ en:
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
       looking_for:
-        all_suppliers: I want to see a list of all suppliers
+        all_suppliers: A list of all agencies
         answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
         answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
         answer_worker: An agency who can provide my school with an individual worker
