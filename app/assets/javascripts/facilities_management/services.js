@@ -114,7 +114,7 @@ $(() => {
         let result = selectedServices && selectedServices.length > 0 ? true : false;
 
         if (result === true) {
-            $('#service-error-message').attr('hidden', true);
+            $('#inline-error-message').attr('hidden', true);
         }
 
         return result;
@@ -124,7 +124,7 @@ $(() => {
     /* Save and continue click handler */
     $('#save-services-link').click((e) => {
 
-        $('#service-error-message').attr('hidden', true);
+        $('#inline-error-message').attr('hidden', true);
         const servicesForm = $('#fm-services-form');
 
 
@@ -140,7 +140,7 @@ $(() => {
             servicesForm.submit();
         } else {
             e.preventDefault();
-            $('#service-error-message').removeAttr('hidden');
+            $('#inline-error-message').removeAttr('hidden');
             window.location = '#';
         }
     });
