@@ -1,0 +1,13 @@
+// We import the GOVUK settings and then override the ones we need to in
+// our own settings file.
+@import "govuk-frontend/settings/all";
+@import "settings";
+@import "govuk-frontend/tools/all";
+@import "govuk-frontend/helpers/all";
+@import "govuk-frontend/core/all";
+@import "govuk-frontend/objects/all";
+// We are importing all the GOVUK components here, but we could import only
+// the ones we need.
+@import "components/all";
+@import "govuk-frontend/utilities/all";
+@import "govuk-frontend/overrides/all";

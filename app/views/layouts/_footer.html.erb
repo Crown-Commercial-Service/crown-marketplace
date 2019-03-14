@@ -1,0 +1,42 @@
+      <% if Marketplace.support_email_address.present? %>
+        <div class="footer-feedback govuk-!-padding-1">
+          <div class="govuk-width-container">
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                <p class="govuk-!-margin-bottom-0 govuk-body-s">
+                  <span class="govuk-!-font-weight-bold"><%= t('layouts.application.having_problems') %></span>
+                  <%= t('layouts.application.support_html',
+                        link: support_email_link(t('layouts.application.support_link_aria_label')),
+                        phone: support_telephone_number) %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="govuk-footer__container govuk-width-container">
+        <div class="govuk-grid-row">
+          
+          <div class="govuk-grid-column-one-third">
+            <span class="govuk-footer__logotype">
+              <%= render partial: '/layouts/logotype' %>
+            </span>
+          </div>
+
+          <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-footer__meta">
+              <div class="govuk-footer__meta-item">
+                <a href="/cookies" aria-label= "<%= t('layouts.application.cookie_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t("layouts.application.cookie_link") %></a>
+              </div>
+              <div class="govuk-footer__meta-item">
+                <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice" aria-label= "<%= t('layouts.application.privacy_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t("layouts.application.privacy_link") %></a>
+              </div>
+              <div class="govuk-footer__meta-item">
+                <%= t("layouts.application.crown_copyright") %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>

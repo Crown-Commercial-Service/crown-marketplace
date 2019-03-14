@@ -32,3 +32,5 @@ logfile
 
 # Simplecov
 /coverage/*
+.idea/
+/nbproject/private/
