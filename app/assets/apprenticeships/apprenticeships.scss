@@ -19,6 +19,14 @@ $results-filters-labels-m: 17px;
         background-color: govuk-colour("grey-4"); 
         padding: govuk-spacing(2); //10px
 
+        .ccs-govuk-hint--selected {
+            color: govuk-colour("black"); 
+
+            //span:first-child {
+
+            //}
+        }
+
         .govuk-fieldset {
             position: relative;
 
@@ -79,7 +87,7 @@ $results-filters-labels-m: 17px;
             border: none; 
             margin: 2px 0 3px 0; 
             cursor: pointer; 
-            padding: 0 0 0 10px; 
+            padding: 0 30px 0 10px; 
 
             &:hover {
                 background-color: govuk-colour("grey-3"); 
@@ -362,7 +370,7 @@ table.ccs-govuk-table--style {
     text-decoration: none; 
 }
 
-.css-govuk-checkboxes--s {
+.css-govuk-checkboxes--s { 
 
     .govuk-checkboxes__input + .govuk-checkboxes__label::before, 
     .govuk-checkboxes__input {//the tick box border

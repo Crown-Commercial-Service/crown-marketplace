@@ -10,7 +10,7 @@ function initSearchResults(id){
 
             $(this).attr('aria-expanded',$(this).attr('aria-expanded')==='true'?'false':'true' )
             .find('span').text(function(i, text){
-                return text === "Show" ? "Hide" : "Show";
+                return text === "Hide" ? " Show" : " Hide";
             });
             shopWrap.toggleClass('show');//could use '+' css selector on aria attr val, but v this supports legacy browsers
         });

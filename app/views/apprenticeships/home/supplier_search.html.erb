@@ -1,18 +1,331 @@
 <%= content_for :page_title, t('.page_title')  %>
 <%= content_for :page_section, t('apprenticeships.page_section') %>
 
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl"><%= t('.provider_results_title') %></h1>
+
+    <p class="govuk-body">
+      <b>
+        <span class="govuk-!-font-size-27">8</span> <%= t('.training_providers') %>
+      </b> 
+      <%= t('.can_supply_training_for') %> 
+      &ldquo;<b>Building services design engineer</b>&rdquo; 
+      <%= t('.that_match_your_requirements') %> 
+    </p>
+
+    <%= link_to t('.download_label'), '#', role: 'button', class: 'govuk-button govuk-!-margin-top-5 govuk-!-margin-bottom-5' %>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-padding-top-4 ccs-at-results-pg">
+  <%= form_tag apprenticeships_search_path, method: :get, id: 'supplier-results-form' do %>
+
+    <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters">
+      
+      <div class="govuk-form-group ccs-at-results-filters__heading-bloc">
+        <h2 class="govuk-!-width-two-thirds govuk-heading-m">
+          <%= t('.apply_filters_label') %>
+        </h2>
+        <%= link_to t('.clear_filters_link'), apprenticeships_search_path, role: 'button', class: 'govuk-!-width-one-third govuk-link--no-visited-state ccs-no-print', id: 'ccs-clear-filters' %>
+      </div>    
+      
+      <!--overall ofsted rating start-->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c1">
+            <%= t('.overall_ofsted_rating_label') %> 
+            <span>&nbsp;Show</span>
+          </button>
+
+          <span id="waste-hint" class="govuk-hint ccs-govuk-hint--selected">
+            <span>2</span> <span class="ccs-at-remove">filters</span> selected
+          </span>
+
+          <div id="c1" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+
+              <% ofsted_rating.each do |rating| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "rating[]",
+                          rating,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "rating_#{rating}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="rating_<%= rating %>">
+                    <%= rating %>
+                  </label>
+                </div>
+              <% end %>            
+            </div>
+
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
+
+          </div>
+        </fieldset>
+      </div>  
+      
+      <!--apprenticeship ofsted rating start -->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c2">
+            <%= t('.apprenticeship_ofsted_rating_label') %> 
+            <span>&nbsp;Show</span>
+          </button>
+
+          <div id="c2" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+
+              <!-- temp example of disabled attribute start -->
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="x" id="x" value="x" class="govuk-checkboxes__input" disabled="disabled">
+                <label class="govuk-label govuk-checkboxes__label" for="x">
+                  Example of disabled checkbox 
+                </label>
+              </div>
+              <!-- temp example of disabled attribute end -->
+
+              <% course_rating.each do |course| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "course[]",
+                          course,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "course_#{course}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
+                    <%= course %>
+                  </label>
+                </div>
+              <% end %>           
+            </div>
+
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
+
+          </div>
+        </fieldset>
+      </div>  
+
+      <!--provider experience start-->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c3">
+            <%= t('.provider_experience_label') %> 
+            <span>&nbsp;Show</span>
+          </button>
+
+          <div id="c3" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+
+              <% provider_experience.each do |course| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "course[]",
+                          course,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "course_#{course}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
+                    <%= course %>
+                  </label>
+                </div>
+              <% end %>           
+            </div>
+
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
+
+          </div>
+        </fieldset>
+      </div> 
+
+      <!--delivery method start-->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c4">
+            <%= t('.delivery_method_label') %> 
+            <span>&nbsp;Show</span>
+          </button>
+
+          <div id="c4" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+
+              <% delivery_method.each do |course| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "course[]",
+                          course,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "course_#{course}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
+                    <%= course %>
+                  </label>
+                </div>
+              <% end %>           
+            </div>
+
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
+
+          </div>
+        </fieldset>
+      </div> 
+
+      <!--time demand start-->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c5">
+            <%= t('.time_demand_label') %> 
+            <span>&nbsp;Show</span>
+          </button>
+
+          <div id="c5" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+
+              <% time_demand.each do |course| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "course[]",
+                          course,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "course_#{course}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
+                    <%= course %>
+                  </label>
+                </div>
+              <% end %>           
+            </div>
+
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
+
+          </div>
+        </fieldset>
+      </div>   
+
+      <!--classroom sharing start-->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c6">
+            <%= t('.classroom_sharing_label') %> 
+            <span>&nbsp;Show</span>
+          </button>
+
+          <div id="c6" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+
+              <% classroom_sharing.each do |course| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "course[]",
+                          course,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "course_#{course}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
+                    <%= course %>
+                  </label>
+                </div>
+              <% end %>          
+            </div>
+
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
+
+          </div>
+        </fieldset>
+
+        <details class="govuk-details govuk-!-margin-top-6">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              <%= t('.explain_classroom_sharing_link') %>
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <%= t('.explain_classroom_sharing_text') %>
+          </div>
+        </details>
+
+      </div>  
+
+      <!--training availability start-->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c7">
+            <%= t('.training_availability_label') %> 
+            <span>&nbsp;Show</span>
+          </button>
+
+          <div id="c7" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+
+              <% training_availability.each do |course| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "course[]",
+                          course,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "course_#{course}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
+                    <%= course %>
+                  </label>
+                </div>
+              <% end %>          
+            </div>
+
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
+
+          </div>
+        </fieldset>
+
+        <details class="govuk-details govuk-!-margin-top-6">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              <%= t('.explain_training_availability_link') %>
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <%= t('.explain_training_availability_text') %>
+          </div>
+        </details>
+
+      </div> 
+
+
+
+
+    </section>
+
+    <section id="ccs-at-search-results" class="govuk-grid-column-two-thirds ccs-at-search-results">
+
+    </section>
+
+  <% end %>  
+</div>
+
+<br>
+xxxxxxxxxxxxxxxxxxxxxxxxx
+<hr>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.training provider results') %></h1>
 
-    <p class="govuk-body">
-        <%= t('.there_are_8', results: 55, search: params[:search]) %>
-    </p>
-    <p><%= t('.apply_filters') %></p>
 
-<%= link_to t('Download the suppliers list'), 'sorry' , role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
 
-    <%= form_tag apprenticeships_search_path, method: :get, class: 'supplier-record__calculator-form' do %>
+
+
+    <%= form_tag apprenticeships_search_path, method: :get do %>
       <div class="govuk-grid-row">
 
         <div class="govuk-grid-column-one-third">
