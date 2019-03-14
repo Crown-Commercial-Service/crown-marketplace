@@ -193,12 +193,26 @@ en:
       sorry:
         page_title: Sorry
       supplier_search:
-        apply_filters: Apply filters
         apply_filters_label: Apply filters
+        apprenticeship_ofsted_rating_label: Apprenticeship Ofsted rating
+        can_supply_training_for: can supply training for
+        classroom_sharing_label: Classroom sharing
         clear_filters_link: Clear filters
+        delivery_method_label: Delivery method
+        download_label: Download the suppliers list
+        explain_classroom_sharing_link: Explain classroom sharing
+        explain_classroom_sharing_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet lobortis sollicitudin. Phasellus cursus sollicitudin maximus.
+        explain_training_availability_link: Explain training availability
+        explain_training_availability_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        overall_ofsted_rating_label: Overall Ofsted rating
         page_title: Supplier search
+        provider_experience_label: Provider experience
+        provider_results_title: Training provider results
         sort_by_label: Sort by
-        there_are_8: Lorem ipsum (for supplier search)
+        that_match_your_requirements: that match your requirements.
+        time_demand_label: Time demand
+        training_availability_label: Training availability
+        training_providers: training providers
       supplier_search2:
         apply_filters: Apply filters
         apply_filters_label: Apply filters

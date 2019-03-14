@@ -14,7 +14,7 @@
 </div>
 
 <div class="govuk-grid-row govuk-!-padding-top-4 ccs-at-results-pg">
-  <%= form_tag apprenticeships_search_path, method: :get, class: 'supplier-record__calculator-form' do %>
+  <%= form_tag apprenticeships_search_path, method: :get, id: 'search-results-form' do %>
   
   <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters">
     <!-- start Levels filters -->
@@ -37,7 +37,7 @@
       <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
         <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c1">
           <%= t('.levels_label') %> 
-          <span>&nbsp;Show</span>
+          <span> Show</span>
         </button>
 
         <div id="c1" class="ccs-at-checkboxes-wrap">
@@ -82,7 +82,7 @@
       <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
         <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c2">
           <%= t('.routes_label') %>
-          <span>&nbsp;Show</span>
+          <span> Show</span>
         </button>
 
         <div id="c2" class="ccs-at-checkboxes-wrap">
