@@ -242,6 +242,14 @@ body.js-enabled .ccs-at-results-filters .ccs-at-checkbox-accordian {
 }
 
 
+.govuk-form-group + .govuk-form-group {
+    & > .govuk-label--s {
+        margin-top: govuk-spacing(6); 
+    }
+    & > .govuk-label--s ~ .govuk-input {
+        margin-bottom: govuk-spacing(3); 
+    }    
+}
 
 #main-content {
     min-height: 370px; 
@@ -421,7 +429,7 @@ table.ccs-govuk-table--style {
     }
 }
 
-.ccs--fieldset__heading--wide {
+.ccs-fieldset__heading--wide {
     max-width: none; 
     width: 100%;  
 }

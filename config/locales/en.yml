@@ -153,9 +153,21 @@ en:
         answer_worker: Lorem ipsum 3
         page_title: Looking for
         question: question 1 txt
-        question2: question 2 txt 
+        question2: question 2 txt
       requirement:
         page_title: Add your requirements
+        postcode_label: Enter the postcode where the training needs to take place
+        providers_text: Providers can match these requirements
+        question_01_pt01: The maximum funding for this Apprenticeship Standard is
+        question_01_pt02: Would you use a supplier that requires additional funding to provide the training?
+        question_02: Do you need help with recruiting the apprentices?
+        question_03: Do you need to customise this training to your organisation's needs?
+        question_03_hint: For example, does the course require a custom structure or security specification
+        question_04: What is the minimum number of apprentices that you need training?
+        question_04_hint: If you're unsure of exact numbers, use a good estimate
+        question_05: Does the training need to take place in multiple locations?
+        requirement_btn_text: Find training providers
+        requirement_h1_title: Add your requirements
       requirements:
         page_title: Apprenticeship requirements
         requirements_btn_text: Find training providers
