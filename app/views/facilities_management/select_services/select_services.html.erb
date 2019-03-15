@@ -1,16 +1,6 @@
 <a href="/facilities-management/select-locations" class="govuk-back-link">Back</a>
-<div id="service-error-message" hidden class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-  <h2 class="govuk-error-summary__title" id="error-summary-title">
-    There is a problem
-  </h2>
-  <div class="govuk-error-summary__body">
-    <ul class="govuk-list govuk-error-summary__list">
-      <li>
-        <a href="#">You must select at least one service before clicking the save continue button</a>
-      </li>
-    </ul>
-  </div>
-</div>
+
+<%= render('errors/inline_error_summary') %>
 
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
