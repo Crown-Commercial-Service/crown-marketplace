@@ -7,6 +7,10 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
     let(:supplier_name) { Faker::Company.unique.name }
     let(:supplier_id) { SecureRandom.uuid }
     let(:postcode) { Faker::Address.unique.postcode }
+    let(:region) { 'South East England' }
+    let(:address_1) { Faker::Address.street_address }
+    let(:address_2) { Faker::Address.secondary_address }
+    let(:county) { 'Surrey' }
     let(:phone_number) { Faker::PhoneNumber.unique.phone_number }
     let(:latitude) { Faker::Address.unique.latitude }
     let(:longitude) { Faker::Address.unique.longitude }
@@ -21,7 +25,11 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
       [
         {
           'branch_name' => branch_name,
+          'region' => region,
+          'address_1' => address_1,
+          'address_2' => address_2,
           'town' => branch_town,
+          'county' => county,
           'postcode' => postcode,
           'lat' => latitude,
           'lon' => longitude,
@@ -138,7 +146,25 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
         expect(branch.name).to eq(branch_name)
       end
 
-      it 'assigns address-related attributes to the branch' do
+      it 'assigns address_1 and address_2 attributes to the branch' do
+        described_class.upload!(suppliers)
+
+        supplier = SupplyTeachers::Supplier.last
+        branch = supplier.branches.first
+        expect(branch.address_1).to eq(address_1)
+        expect(branch.address_2).to eq(address_2)
+      end
+
+      it 'assigns county and region attributes to the branch' do
+        described_class.upload!(suppliers)
+
+        supplier = SupplyTeachers::Supplier.last
+        branch = supplier.branches.first
+        expect(branch.region).to eq(region)
+        expect(branch.county).to eq(county)
+      end
+
+      it 'assigns town and postcode attributes to the branch' do
         described_class.upload!(suppliers)
 
         supplier = SupplyTeachers::Supplier.last

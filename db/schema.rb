@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_122557) do
+ActiveRecord::Schema.define(version: 2019_03_15_144216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -95,6 +95,10 @@ ActiveRecord::Schema.define(version: 2018_12_10_122557) do
     t.text "telephone_number"
     t.text "name"
     t.text "town"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "county"
+    t.string "region"
     t.index ["supply_teachers_supplier_id"], name: "index_supply_teachers_branches_on_supply_teachers_supplier_id"
   end
 

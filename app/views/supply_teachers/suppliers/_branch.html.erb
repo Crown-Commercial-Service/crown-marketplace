@@ -1,8 +1,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= branch.supplier.name %></h2>
+    <%= link_to branch do %>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= branch.supplier.name %></h2>
+    <% end %>
     <% if branch.name.present? %>
-      <h3 class="govuk-heading-s supplier-record__branch"><%= t('supply_teachers.suppliers.all_suppliers.branch') %>: <span class="supplier-record__branch-name"><%= branch.name %></span></h3>
+      <h3 class="govuk-heading-s supplier-record__branch"><%= t('supply_teachers.suppliers.all_suppliers.branch') %>: <span class="supplier-record__branch-name"><%= branch.name %></span>
+      </h3>
     <% end %>
   </div>
 </div>
