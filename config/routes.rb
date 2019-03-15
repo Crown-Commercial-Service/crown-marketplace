@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
     get '/suppliers/long-list', to: 'long_list#long_list'
     post '/suppliers/longList' => 'long_list#long_list'
+    get '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
