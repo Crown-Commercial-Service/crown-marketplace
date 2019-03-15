@@ -204,10 +204,12 @@ en:
         explain_classroom_sharing_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet lobortis sollicitudin. Phasellus cursus sollicitudin maximus.
         explain_training_availability_link: Explain training availability
         explain_training_availability_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        list_of_filter_options_label: List of filter options
         overall_ofsted_rating_label: Overall Ofsted rating
         page_title: Supplier search
         provider_experience_label: Provider experience
         provider_results_title: Training provider results
+        selected_label: selected
         sort_by_label: Sort by
         that_match_your_requirements: that match your requirements.
         time_demand_label: Time demand
