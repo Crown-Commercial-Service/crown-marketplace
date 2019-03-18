@@ -180,7 +180,6 @@ en:
         header: Search results
         keyword_search_label: Keyword search
         levels_label: Levels
-        next: Next
         page_title: Search results
         providers_label: Provider(s)
         result_level_label: 'Level:'
@@ -209,8 +208,9 @@ en:
         page_title: Supplier search
         provider_experience_label: Provider experience
         provider_results_title: Training provider results
+        providers_label: miles
+        result_ofsted_label: Ofsted
         selected_label: selected
-        sort_by_label: Sort by
         that_match_your_requirements: that match your requirements.
         time_demand_label: Time demand
         training_availability_label: Training availability
