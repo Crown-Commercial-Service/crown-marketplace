@@ -10,86 +10,80 @@
         <p class="govuk-body govuk-body-s"><%= flash[:notice] %></p>
       </div>
     <% end %>
-
-    <div class="govuk-inset-text cmp-inset-text--success">
-      <h2 class="govuk-heading-s"><%= t('.inputs_header') %></h2>
-      <ul class="govuk-list govuk-list--bullet">
-        <% @journey.inputs.each do |question_key, answer| %>
-        <li class="cmp-inset-text__list-item"><%= t(".inputs.#{question_key}") %>: <%= answer %></li>
-        <% end %>
-      </ul>
-
-      <details class="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            <%= t('.do_next.header') %>
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          <ul class="govuk-list govuk-list--bullet">
-            <li>
-              <%= t('.do_next.contact_supplier') %>
-            </li>
-            <li>
-              <%= t('.do_next.sign_form_html',
-                    form_url: 'https://ccs-agreements.cabinetoffice.gov.uk/sites/default/files/contracts/RM3826%20Supply%20Teachers%20-%20Order%20Form%20Template%20%28Short%20Form%29.docx',
-                    framework_url: 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm3826') %>
-            </li>
-          </ul>
-          <p class="govuk-body">
-            <%= t('.do_next.sign_once') %>
-          </p>
-          <p class="govuk-body">
-            <%= t('.do_next.different_supplier') %>
-          </p>
-        </div>
-      </details>
-    </div>
-
-    <p class="govuk-body">
-      <% if @location %>
-        <%=
-          t('.results_found_with_location_html',
-            results: number_to_human(@branches.count, units: :results),
-            range: number_to_human(@radius_in_miles, units: :miles),
-            postcode: @location.postcode
-           )
-        %>
-        <%= t('.other_radius_html') %>
-        <% @alternative_radiuses.each do |radius| %>
-          <span class="st-supplier-page__radius-list-item"><%=
-            link_to(
-              number_to_human(radius, units: :miles),
-              supply_teachers_branches_path(@journey.params.merge(radius: radius)),
-              'aria-label' => t('.distance_aria_label_html', radius_setting:number_to_human(radius, units: :miles))
-            )
-          %></span>
-        <% end %>
-      <% else %>
-        <%=
-          t('.results_found_html',
-            results: number_to_human(@branches.count, units: :results)
-           )
-        %>
-      <% end %>
-    </p>
-
-    <div class="govuk-inset-text cmp-inset-text--neutral">
-      <p class="govuk-body cmp-inset-text__body--neutral"><%= t('.mark-up_explanation_html') %></p>
-    </div>
-
-    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <%= form_tag @form_path, method: :get, class: 'supplier-record__calculator-form' do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+
+          <p class="govuk-body">
+            <% if @location %>
+              <%=
+                t('.results_found_with_location_html',
+                  results: number_to_human(@branches.count, units: :results),
+                  range: number_to_human(@radius_in_miles, units: :miles),
+                  postcode: @location.postcode
+                )
+              %> <br/>
+              <strong><%= t('.other_radius_html') %></strong>
+              <% @alternative_radiuses.each do |radius| %>
+          <span class="st-supplier-page__radius-list-item"><%=
+            link_to(
+                number_to_human(radius, units: :miles),
+                supply_teachers_branches_path(@journey.params.merge(radius: radius)),
+                'aria-label' => t('.distance_aria_label_html', radius_setting:number_to_human(radius, units: :miles))
+            )
+          %></span>
+              <% end %>
+            <% else %>
+              <%=
+                t('.results_found_html',
+                  results: number_to_human(@branches.count, units: :results)
+                )
+              %>
+            <% end %>
+          </p>
+
+          <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-8">
+
           <% if @branches.any? %>
             <%= render partial: 'branch', collection: @branches %>
           <% end %>
         </div>
         <div class="govuk-grid-column-one-third">
           <div class="cmp-sidebar">
-            <h2 class="govuk-heading-s"><%= t('.related_actions_html') %></h2>
+            <h2 class="govuk-heading-s"><%= t('.inputs_header') %></h2>
+            <ul class="govuk-list govuk-list--bullet">
+              <% @journey.inputs.each do |question_key, answer| %>
+                <li class="cmp-inset-text__list-item"><%= t(".inputs.#{question_key}") %>: <%= answer %></li>
+              <% end %>
+            </ul>
+
+            <details class="govuk-details govuk-!-margin-bottom-3">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  <%= t('.do_next.header') %>
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>
+                    <%= t('.do_next.contact_supplier') %>
+                  </li>
+                  <li>
+                    <%= t('.do_next.sign_form_html',
+                          form_url: 'https://ccs-agreements.cabinetoffice.gov.uk/sites/default/files/contracts/RM3826%20Supply%20Teachers%20-%20Order%20Form%20Template%20%28Short%20Form%29.docx',
+                          framework_url: 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm3826') %>
+                  </li>
+                </ul>
+                <p class="govuk-body">
+                  <%= t('.do_next.sign_once') %>
+                </p>
+                <p class="govuk-body">
+                  <%= t('.do_next.different_supplier') %>
+                </p>
+              </div>
+            </details>
+            <p class="govuk-body cmp-inset-text__body--neutral"><%= t('.mark-up_explanation_html') %></p>
             <p class="govuk-body govuk-body-s supplier-record__print-option">
               <a href="javascript:window.print()" class="govuk-link ga-print-link"><%= t('.print') %></a>
             </p>
