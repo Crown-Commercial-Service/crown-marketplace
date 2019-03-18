@@ -208,7 +208,11 @@ en:
       signup:
         page_title: Sign up
       sorry:
-        page_title: Sorry
+        contact_support_text_html: <a href="#">Contact <abbr>CCS</abbr> Support</a> for help.
+        content_text: We're unable to find any training providers that match your requirements.
+        go_back_text_html: Go back and <a href="#">check your requirements</a> to make sure they're all correct.
+        page_title: No training providers were found
+        title: No training providers were found
       supplier_search:
         can_supply_training_for: can supply training for
         download_label: Download the suppliers list
