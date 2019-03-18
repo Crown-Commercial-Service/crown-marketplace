@@ -17,7 +17,7 @@ module SupplyTeachers
     end
 
     def show
-      @branch = Branch.find(params[:id])
+      @branch = Branch.friendly.find(params[:id])
     end
 
     private
