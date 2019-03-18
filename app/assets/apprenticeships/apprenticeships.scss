@@ -217,18 +217,16 @@ body.js-enabled {
         .ccs-at-results-list__providers {
             
             div {
-
                 float: right; 
 
                 span {
-                    width: 100%; 
-                    display: block; 
                     font-weight: bold; 
-                    
                 }
-                
-                span span {
+
+                span span.ccs-font--wrap {
                     font-weight: 700; 
+                    display: block; 
+                    width: 100%; 
                 }
             }
 
@@ -248,10 +246,50 @@ body.js-enabled {
 
     }
 
+    .govuk-table {
+        margin: 0; 
+
+        .govuk-table__head .govuk-table__header {
+            font-weight: bold; 
+        }
+
+        td > a[class^="govuk-heading"]{
+            margin-bottom: 0; 
+        } 
+
+        .govuk-table__header, 
+        .govuk-table__cell {
+            vertical-align: top; 
+        }
+
+        .govuk-table__head th, 
+        .govuk-table__body th, 
+        .govuk-table__body td {
+            text-align: right; 
+            padding-top: govuk-spacing(4); 
+            padding-bottom: govuk-spacing(4); 
+        }
+
+        .govuk-table__head th:first-child, 
+        .govuk-table__body th:first-child, 
+        .govuk-table__body td:first-child {
+            text-align: left; //avoided :last-child usage, for tbls with only one col
+        }
+
+    }
+
+    .ccs-tag {
+        background-color: govuk-colour("grey-1"); 
+        color: govuk-colour("white"); 
+        padding: 0 govuk-spacing(1); 
+        margin-left: govuk-spacing(1); 
+        text-align: center; 
+    }
+
 }
 
 @media (max-width: 641px) {//mobile
-    .ccs-at-search-results ul.ccs-at-results-list .ccs-at-results-list__providers div span span {
+    .ccs-at-search-results ul.ccs-at-results-list .ccs-at-results-list__providers div span span.ccs-font--wrap {
         display: inline; 
     }
 }

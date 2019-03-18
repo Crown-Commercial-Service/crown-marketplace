@@ -48,11 +48,15 @@ function initSearchResults(id){
         });
     }); 
 
+    //var theForm = id.find('form');
     var checkboxs = accord.find('.govuk-checkboxes__input');
 
     checkboxs.keypress(function(e){//select checkbox with keyboard
         if((e.keyCode ? e.keyCode : e.which) == 13){
-            $(this).trigger('click');
+            $(this).trigger('click'); 
+            /*theForm.submit(function(e){
+                e.preventDefault();
+            });*/
         }
     });
     
