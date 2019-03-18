@@ -9,6 +9,7 @@ RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
   let(:telephone_number) { '01214960123' }
   let(:contact_name) { Faker::Name.unique.name }
   let(:contact_email) { Faker::Internet.unique.email }
+  let(:slug) { supplier.name }
   let(:branch) do
     SupplyTeachers::BranchSearchResult.new(
       id: supplier.id,
@@ -16,7 +17,8 @@ RSpec.describe 'supply_teachers/branches/_branch.html.erb' do
       name: branch_name,
       telephone_number: telephone_number,
       contact_name: contact_name,
-      contact_email: contact_email
+      contact_email: contact_email,
+      slug: slug
     )
   end
   let(:link_to_calculator?) { true }
