@@ -32,8 +32,6 @@ module SupplyTeachers
             .order(Arel.sql("ST_Distance(location, '#{point}')"))
     end
 
-    def supplier_name
-      supplier.name
-    end
+    delegate :name, to: :supplier, prefix: true
   end
 end
