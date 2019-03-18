@@ -420,6 +420,15 @@ en:
           worker_cost: Cost of the worker
         markup: Mark-up
         miles: Miles
+        header: Agency details
+        branch_name: Branch
+        region: Region
+        contact_name: Contact name
+        contact_email: Contact email
+        phone_number: Phone number
+        address: Address
+        column1: Job type
+        column2: Agency mark-up
       index:
         calculate_markup_button_label: Calculate the fee
         calculate_markup_description: 'See how much the worker makes and what fee the agency will get using the figure they quoted you:'

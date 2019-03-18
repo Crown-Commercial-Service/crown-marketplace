@@ -1,35 +1,42 @@
-<%= content_for :page_title, @branch.name  %>
+<%= content_for :page_title, @branch.supplier.name  %>
 <%= content_for :page_section, t('supply_teachers.page_section') %>
 
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <p class="govuk-!-margin-bottom-0"><%= t('.header') %></p>
+    <p class="govuk-!-margin-bottom-0 app-content__section-heading"><%= t('supply_teachers.branches.branch.header') %></p>
     <h1 class="govuk-heading-xl"><%= @branch.supplier.name %></h1>
-    <div>
-      <p><strong><%= t('.branch') %></strong>: <br/> <%= @branch.name %></p>
-      <p><strong><%= t('.region') %></strong>: <br/> <%= @branch.region %></p>
-      <p><strong><%= t('.contact_name') %></strong>: <br/> <%= @branch.contact_name %></p>
-      <p><strong><%= t('.contact_email') %></strong>: <br/> <%= @branch.contact_email %></p>
-      <p><strong><%= t('.phone_number') %></strong>: <br/> <%= @branch.telephone_number %></p>
-      <p>
-        <strong><%= t('.address') %></strong>:<br/>
-        <%= @branch.address_1 %><br/>
-        <%= @branch.address_2 %><br/>
-        <%= @branch.town %><br/>
-        <%= @branch.county %><br/>
-        <%= @branch.postcode %>
-      </p>
+
+    <div class="cmp-inset-text--neutral govuk-grid-column-full govuk-!-padding-top-3 govuk-!-padding-left-0">
+      <div class="govuk-grid-column-one-third">
+        <p><strong><%= t('supply_teachers.branches.branch.branch_name') %></strong>: <br/> <%= @branch.name %></p>
+        <p><strong><%= t('supply_teachers.branches.branch.region') %></strong>: <br/> <%= @branch.region %></p>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p><strong><%= t('supply_teachers.branches.branch.contact_name') %></strong>: <br/> <%= @branch.contact_name %></p>
+        <p><strong><%= t('supply_teachers.branches.branch.contact_email') %></strong>: <br/> <%= link_to @branch.contact_email, 'mailto:' + @branch.contact_email %></p>
+        <p><strong><%= t('supply_teachers.branches.branch.phone_number') %></strong>: <br/> <%= @branch.telephone_number %></p>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p>
+          <strong><%= t('c.address') %></strong>:<br/>
+          <%= @branch.address_1 %><br/>
+          <%= @branch.address_2 %><br/>
+          <%= @branch.town %><br/>
+          <%= @branch.county %><br/>
+          <%= @branch.postcode %>
+        </p>
+      </div>
     </div>
   </div>
-  <div class="govuk-grid-column-full">
+  <div class="govuk-grid-column-full govuk-!-margin-top-7 govuk-!-margin-bottom-7">
     <table class="govuk-table">
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th class="govuk-table__header" scope="col"><strong><%= t('.column1') %></strong></th>
-        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['one_week'] %></strong></th>
-        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['twelve_weeks'] %></strong></th>
-        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['more_than_twelve_weeks'] %></strong></th>
+        <th class="govuk-table__header" scope="col"><strong><%= t('supply_teachers.branches.branch.column1') %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('supply_teachers.branches.branch.column2') %><br><%= SupplyTeachers::RateTerm['one_week'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('supply_teachers.branches.branch.column2') %><br><%= SupplyTeachers::RateTerm['twelve_weeks'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('supply_teachers.branches.branch.column2') %><br><%= SupplyTeachers::RateTerm['more_than_twelve_weeks'] %></strong></th>
       </tr>
       </thead>
       <tbody class="govuk-table__body">
