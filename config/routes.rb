@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     get '/search', to: 'home#search'
     get '/search_results', to: 'home#search_results'
     get '/supplier_search', to: 'home#supplier_search'
+    get '/supplier_search2', to: 'home#supplier_search2'
     get '/find_apprentices', to: 'home#find_apprentices'
     get '/find_apprentices2', to: 'home#find_apprentices2'
     get '/find_apprentices3', to: 'home#find_apprentices3'
