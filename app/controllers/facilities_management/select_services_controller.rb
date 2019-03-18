@@ -4,6 +4,11 @@ class FacilitiesManagement::SelectServicesController < ApplicationController
   require_permission :facilities_management, only: :select_services
 
   def select_services
+    # Inline error text for this page
+    @inline_error_summary_title = 'There was a problem'
+    @inline_error_summary_body_href = '#'
+    @inline_summary_error_text = 'You must select at least one service before clicking the save continue button'
+    # data needs replacing with api or service
     @services = JSON.parse('[
        {
            "code": "C",

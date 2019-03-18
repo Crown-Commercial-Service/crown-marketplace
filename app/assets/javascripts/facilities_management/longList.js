@@ -17,7 +17,6 @@ $(() => {
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label"  for="' + value.code + '">' + value.name + '</label></div>';
 
             regionCheckBoxes.append(checkbox);
-
             $('#' + value.code).click((e) => {
                 updateCounts();
                 if (!e.target.checked) {
@@ -38,6 +37,7 @@ $(() => {
                 }
 
                 pageUtils.setCachedData('locations', selectedLocations);
+                filterSuppliers();
 
             });
         });
@@ -51,7 +51,6 @@ $(() => {
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label" for="' + value.code + '">' + value.name + '</label></div>';
 
             serviceCheckBoxes.append(checkbox);
-
             $('#' + value.code).click((e) => {
                 updateCounts();
                 if (!e.target.checked) {
@@ -67,12 +66,12 @@ $(() => {
                     const service = {
                         code: e.target.id,
                         name: e.target.value
-                    }
+                    };
                     selectedServices.push(service);
                 }
 
                 pageUtils.setCachedData('services', selectedServices);
-
+                filterSuppliers();
             });
         });
 
@@ -83,7 +82,7 @@ $(() => {
     const updateCounts = (() => {
         let regionCount = $("input[name='fm-regions-checkbox']:checked").length;
         let serviceCount = $("input[name='fm-services-checkbox']:checked").length;
-        $('#region-count').text(regionCount + " selected") ;
+        $('#region-count').text(regionCount + " selected");
         $('#service-count').text(serviceCount + " selected");
     });
 
@@ -113,6 +112,37 @@ $(() => {
     $('#FM-print-supplier-list').click((e) => {
         e.preventDefault();
         window.print();
+    });
+
+    const filterSuppliers = (() => {
+
+        let tableRows = $('tbody  > tr');
+
+        tableRows.each(function (rowIndex, row) {
+            let id = row.id;
+            let operationalAreas = $('#' + id).attr('regioncode');
+
+            if (operationalAreas) {
+                operationalAreas = operationalAreas.replace('{', "").replace('}', "");
+                operationalAreas = operationalAreas.split(',');
+
+                let serviceOfferings = $('#' + id).attr('servicecode').replace('{', "").replace('}', "");
+
+                let isServiceOfferingSelected = selectedServices.some(selectedService => {
+                    return serviceOfferings.includes(selectedService.code.replace('-', '.'));
+                });
+
+                let isOperationalAreaSelected = selectedLocations.some(selectedLocation => {
+                    return operationalAreas.includes(selectedLocation.code);
+                });
+
+                if (isServiceOfferingSelected === true && isOperationalAreaSelected === true) {
+                    $('#' + id).attr('hidden', false);
+                } else {
+                    $('#' + id).attr('hidden', true);
+                }
+            }
+        });
     });
 
     init();
