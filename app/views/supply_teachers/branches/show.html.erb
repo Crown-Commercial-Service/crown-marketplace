@@ -1,11 +1,11 @@
-<%= content_for :page_title, @branch.supplier.name  %>
+<%= content_for :page_title, @branch.supplier_name  %>
 <%= content_for :page_section, t('supply_teachers.page_section') %>
 
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <p class="govuk-!-margin-bottom-0 app-content__section-heading"><%= t('supply_teachers.branches.branch.header') %></p>
-    <h1 class="govuk-heading-xl"><%= @branch.supplier.name %></h1>
+    <h1 class="govuk-heading-xl"><%= @branch.supplier_name %></h1>
 
     <div class="cmp-inset-text--neutral govuk-grid-column-full govuk-!-padding-top-3 govuk-!-padding-left-0">
       <div class="govuk-grid-column-one-third">
