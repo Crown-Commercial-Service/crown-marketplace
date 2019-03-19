@@ -30,7 +30,7 @@
             </div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :looking_for, :all_suppliers, checked?(params[:looking_for], 'calculate_temp_to_perm_fee'), class: 'govuk-radios__input' %>
-              <%= label_tag :all_suppliers, t('.all_suppliers'), class: 'govuk-label govuk-radios__label' %>
+              <%= label_tag :looking_for_all_suppliers, t('.all_suppliers'), class: 'govuk-label govuk-radios__label' %>
             </div>
           </div>
         <% end %>
