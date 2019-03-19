@@ -44,10 +44,11 @@
           </p>
 
           <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-8">
-
+          <div>
           <% if @branches.any? %>
             <%= render partial: 'branch', collection: @branches %>
           <% end %>
+          </div>
         </div>
         <div class="govuk-grid-column-one-third">
           <div class="cmp-sidebar">
