@@ -154,6 +154,24 @@ en:
         page_title: Looking for
         question: question 1 txt
         question2: question 2 txt
+      provider_filters:
+        apply_filters_label: Apply filters
+        apprenticeship_ofsted_rating_label: Apprenticeship Ofsted rating
+        classroom_sharing_label: Classroom sharing
+        clear_filters_link: Clear filters
+        delivery_method_label: Delivery method
+        explain_classroom_sharing_link: Explain classroom sharing
+        explain_classroom_sharing_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet lobortis sollicitudin. Phasellus cursus sollicitudin maximus.
+        explain_time_demand_link: Explain time demand
+        explain_time_demand_text2: Lorem ipsum consectetur adipiscing elit sit.
+        explain_training_availability_link: Explain training availability
+        explain_training_availability_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        list_of_filter_options_label: List of filter options
+        overall_ofsted_rating_label: Overall Ofsted rating
+        provider_experience_label: Provider experience
+        selected_label: selected
+        time_demand_label: Time demand
+        training_availability_label: Training availability
       requirement:
         page_title: Add your requirements
         postcode_label: Enter the postcode where the training needs to take place
@@ -190,38 +208,27 @@ en:
       signup:
         page_title: Sign up
       sorry:
-        page_title: Sorry
+        contact_support_text_html: <a href="#">Contact <abbr>CCS</abbr> Support</a> for help.
+        content_text: We're unable to find any training providers that match your requirements.
+        go_back_text_html: Go back and <a href="#">check your requirements</a> to make sure they're all correct.
+        page_title: No training providers were found
+        title: No training providers were found
       supplier_search:
-        apply_filters_label: Apply filters
-        apprenticeship_ofsted_rating_label: Apprenticeship Ofsted rating
         can_supply_training_for: can supply training for
-        classroom_sharing_label: Classroom sharing
-        clear_filters_link: Clear filters
-        delivery_method_label: Delivery method
         download_label: Download the suppliers list
-        explain_classroom_sharing_link: Explain classroom sharing
-        explain_classroom_sharing_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet lobortis sollicitudin. Phasellus cursus sollicitudin maximus.
-        explain_training_availability_link: Explain training availability
-        explain_training_availability_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        list_of_filter_options_label: List of filter options
-        overall_ofsted_rating_label: Overall Ofsted rating
         page_title: Supplier search
-        provider_experience_label: Provider experience
         provider_results_title: Training provider results
-        providers_label: miles
+        providers_label: Provider(s)
         result_ofsted_label: Ofsted
-        selected_label: selected
         that_match_your_requirements: that match your requirements.
-        time_demand_label: Time demand
-        training_availability_label: Training availability
         training_providers: training providers
       supplier_search2:
-        apply_filters: Apply filters
-        apply_filters_label: Apply filters
-        clear_filters_link: Clear filters
+        can_supply_training_for: can supply training for
+        download_label: Download the suppliers list
         page_title: Supplier search
-        sort_by_label: Sort by
-        there_are_8: Lorem ipsum (for supplier search2)
+        provider_results_title: Training provider results
+        that_match_your_requirements: that match your requirements.
+        training_providers: training providers
       training_details:
         page_title: Training details
       training_information:
