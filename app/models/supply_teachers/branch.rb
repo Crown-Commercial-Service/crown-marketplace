@@ -1,5 +1,8 @@
 module SupplyTeachers
   class Branch < ApplicationRecord
+    extend FriendlyId
+    friendly_id :supplier_name, use: :slugged
+
     belongs_to :supplier,
                foreign_key: :supply_teachers_supplier_id,
                inverse_of: :branches
@@ -28,5 +31,7 @@ module SupplyTeachers
             .order(Rate.arel_table[:mark_up].asc)
             .order(Arel.sql("ST_Distance(location, '#{point}')"))
     end
+
+    delegate :name, to: :supplier, prefix: true
   end
 end

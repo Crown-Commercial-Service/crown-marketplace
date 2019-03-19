@@ -154,6 +154,24 @@ en:
         page_title: Looking for
         question: question 1 txt
         question2: question 2 txt
+      provider_filters:
+        apply_filters_label: Apply filters
+        apprenticeship_ofsted_rating_label: Apprenticeship Ofsted rating
+        classroom_sharing_label: Classroom sharing
+        clear_filters_link: Clear filters
+        delivery_method_label: Delivery method
+        explain_classroom_sharing_link: Explain classroom sharing
+        explain_classroom_sharing_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet lobortis sollicitudin. Phasellus cursus sollicitudin maximus.
+        explain_time_demand_link: Explain time demand
+        explain_time_demand_text2: Lorem ipsum consectetur adipiscing elit sit.
+        explain_training_availability_link: Explain training availability
+        explain_training_availability_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        list_of_filter_options_label: List of filter options
+        overall_ofsted_rating_label: Overall Ofsted rating
+        provider_experience_label: Provider experience
+        selected_label: selected
+        time_demand_label: Time demand
+        training_availability_label: Training availability
       requirement:
         page_title: Add your requirements
         postcode_label: Enter the postcode where the training needs to take place
@@ -180,7 +198,6 @@ en:
         header: Search results
         keyword_search_label: Keyword search
         levels_label: Levels
-        next: Next
         page_title: Search results
         providers_label: Provider(s)
         result_level_label: 'Level:'
@@ -191,21 +208,27 @@ en:
       signup:
         page_title: Sign up
       sorry:
-        page_title: Sorry
+        contact_support_text_html: <a href="#">Contact <abbr>CCS</abbr> Support</a> for help.
+        content_text: We're unable to find any training providers that match your requirements.
+        go_back_text_html: Go back and <a href="#">check your requirements</a> to make sure they're all correct.
+        page_title: No training providers were found
+        title: No training providers were found
       supplier_search:
-        apply_filters: Apply filters
-        apply_filters_label: Apply filters
-        clear_filters_link: Clear filters
+        can_supply_training_for: can supply training for
+        download_label: Download the suppliers list
         page_title: Supplier search
-        sort_by_label: Sort by
-        there_are_8: Lorem ipsum (for supplier search)
+        provider_results_title: Training provider results
+        providers_label: Provider(s)
+        result_ofsted_label: Ofsted
+        that_match_your_requirements: that match your requirements.
+        training_providers: training providers
       supplier_search2:
-        apply_filters: Apply filters
-        apply_filters_label: Apply filters
-        clear_filters_link: Clear filters
+        can_supply_training_for: can supply training for
+        download_label: Download the suppliers list
         page_title: Supplier search
-        sort_by_label: Sort by
-        there_are_8: Lorem ipsum (for supplier search2)
+        provider_results_title: Training provider results
+        that_match_your_requirements: that match your requirements.
+        training_providers: training providers
       training_details:
         page_title: Training details
       training_information:
@@ -412,14 +435,23 @@ en:
   supply_teachers:
     branches:
       branch:
+        address: Address
         branch: Branch
+        branch_name: Branch
         calculator:
           agency_fee: Agency fee
           daily_rate: Enter daily rate
           heading: 'Enter the quote from this agency to see what their fee will be:'
           worker_cost: Cost of the worker
+        column1: Job type
+        column2: Agency mark-up
+        contact_email: Contact email
+        contact_name: Contact name
+        header: Agency details
         markup: Mark-up
         miles: Miles
+        phone_number: Phone number
+        region: Region
       index:
         calculate_markup_button_label: Calculate the fee
         calculate_markup_description: 'See how much the worker makes and what fee the agency will get using the figure they quoted you:'

@@ -24,7 +24,8 @@ module SupplyTeachers
         name: display_name_for_branch(branch),
         contact_name: branch.contact_name,
         telephone_number: branch.telephone_number,
-        contact_email: branch.contact_email
+        contact_email: branch.contact_email,
+        slug: branch.slug
       )
     end
 
