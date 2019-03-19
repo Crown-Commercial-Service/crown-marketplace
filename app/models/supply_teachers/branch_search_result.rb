@@ -6,6 +6,7 @@ module SupplyTeachers
     attr_reader :contact_name
     attr_reader :telephone_number
     attr_reader :contact_email
+    attr_reader :slug
     attr_accessor :rate
     attr_accessor :distance
     attr_accessor :daily_rate
@@ -13,13 +14,14 @@ module SupplyTeachers
     attr_accessor :agency_fee
 
     def initialize(id:, supplier_name:, name:, contact_name:,
-                   telephone_number:, contact_email:)
+                   telephone_number:, contact_email:, slug:)
       @id = id
       @supplier_name = supplier_name
       @name = name
       @contact_name = contact_name
       @telephone_number = telephone_number
       @contact_email = contact_email
+      @slug = slug
     end
   end
 end

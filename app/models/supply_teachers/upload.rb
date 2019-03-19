@@ -62,6 +62,10 @@ module SupplyTeachers
       {
         name: branch['branch_name'],
         town: branch['town'],
+        address_1: branch['address_1'],
+        address_2: branch['address_2'],
+        county: branch['county'],
+        region: branch['region'],
         postcode: branch['postcode'],
         location: Geocoding.point(
           latitude: branch['lat'],

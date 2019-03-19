@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     get '/agency-payroll-results', to: 'branches#index', slug: 'agency-payroll-results'
     get '/fixed-term-results', to: 'branches#index', slug: 'fixed-term-results', as: 'fixed_term_results'
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
-    resources :branches, only: :index
+    resources :branches, only: %i[index show]
     resources :downloads, only: :index
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
@@ -56,6 +56,7 @@ Rails.application.routes.draw do
     get '/search', to: 'home#search'
     get '/search_results', to: 'home#search_results'
     get '/supplier_search', to: 'home#supplier_search'
+    get '/supplier_search2', to: 'home#supplier_search2'
     get '/find_apprentices', to: 'home#find_apprentices'
     get '/find_apprentices2', to: 'home#find_apprentices2'
     get '/find_apprentices3', to: 'home#find_apprentices3'

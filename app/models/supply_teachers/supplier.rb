@@ -39,6 +39,10 @@ module SupplyTeachers
       rates.master_vendor.group_by(&:job_type)
     end
 
+    def rates_grouped_by_job_type
+      rates.group_by(&:job_type)
+    end
+
     def scoped_rates
       rates.direct_provision
     end
