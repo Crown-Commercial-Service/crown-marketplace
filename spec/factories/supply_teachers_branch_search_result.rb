@@ -6,6 +6,7 @@ FactoryBot.define do
     telephone_number { Faker::PhoneNumber.unique.phone_number }
     contact_name { Faker::Name.unique.name }
     contact_email { Faker::Internet.unique.email }
+    slug { Faker::Company.unique.name }
     initialize_with { new(attributes) }
   end
 end

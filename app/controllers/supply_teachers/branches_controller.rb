@@ -16,6 +16,10 @@ module SupplyTeachers
       end
     end
 
+    def show
+      @branch = Branch.friendly.find(params[:id])
+    end
+
     private
 
     def render_branches
