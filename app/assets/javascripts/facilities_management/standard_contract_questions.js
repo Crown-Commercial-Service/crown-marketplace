@@ -40,6 +40,22 @@ $(() => {
             });
         });
 
+        let isContractValueKnown = pageUtils.getCachedData('fm-contract-cost-is-known');
+        if (isContractValueKnown && isContractValueKnown === true) {
+            $('#fm-contract-cost-container').attr('hidden', false);
+            $('#fm-contract-cost-yes').attr('checked', true);
+            $('#fm-contract-cost-no').attr('checked', false);
+        } else {
+            $('#fm-contract-cost-container').attr('hidden', true);
+            $('#fm-contract-cost-yes').attr('checked', false);
+            $('#fm-contract-cost-no').attr('checked', true);
+        }
+
+        let estimatedContractValue = pageUtils.getCachedData('fm-contract-cost');
+        if (estimatedContractValue) {
+            $('#fm-contract-cost').val(estimatedContractValue);
+        }
+
         let isTupe = pageUtils.getCachedData('fm-contract-tupe');
 
         if (isTupe && isTupe === true) {
@@ -171,10 +187,29 @@ $(() => {
         processExtensionKeyUp(e);
     });
 
+    $('input[name="contract-cost-radio"]').click((e) => {
+
+        let isContractValueKnown = e.target.value === 'yes' ? true : false;
+
+        if (isContractValueKnown === true) {
+            $('#fm-contract-cost-container').attr('hidden', !isContractValueKnown);
+        } else {
+            $('#fm-contract-cost-container').attr('hidden', !isContractValueKnown);
+        }
+
+        pageUtils.setCachedData('fm-contract-cost-is-known', isContractValueKnown)
+
+    });
+
+    $('#fm-contract-cost').on('keyup', (e) => {
+        pageUtils.setCachedData('fm-contract-cost', e.target.value);
+    });
+
     $('input[name="contract-tupe-radio"]').click((e) => {
         let result = e.target.value === 'yes' ? true : false;
         pageUtils.setCachedData('fm-contract-tupe', result);
     });
+
 
     init();
 });
