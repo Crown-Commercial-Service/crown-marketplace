@@ -77,11 +77,23 @@ $govuk-link-visited-colour: #4c2c92;
 
 
 /* global across framework styles: start */
+#main-header .ccs-navigation--signin {
+  display: block !important; //don't hide on mobiles 
+  li {
+    border-bottom: none !important; 
+  }
+}
+
 .ccs-landing-pg-content {
-    padding-bottom: 60px; 
+  padding-bottom: 60px; 
 }
 .ccs-no-underline {
   text-decoration: none; 
 }
 
+@media all and (-ms-high-contrast:none){//wrapper div bug fix for IE11
+    *::-ms-backdrop, body > div {//targets IE11 only 
+      flex: none;
+    } 
+}
 /* global across framework styles: end */

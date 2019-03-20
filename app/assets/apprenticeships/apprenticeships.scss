@@ -288,7 +288,7 @@ body.js-enabled {
 
 ul.ccs-list-bullet--sm { 
     margin-left: govuk-spacing(1); //as design 
-    padding-bottom: govuk-spacing(4);
+    padding-bottom: govuk-spacing(3);
 
     li {
         font-size: 12px; 
@@ -333,6 +333,57 @@ a.ccs-no-underline {
         margin-left: govuk-spacing(1); 
     }
 } 
+
+ul.ccs-checklist {
+    list-style: none; 
+    padding: 0; 
+
+    & > li { 
+
+        b {
+            display: block; 
+            width: 33%; 
+            float: left; 
+        }
+
+        ul {
+            list-style: none; 
+            padding-left: 0; 
+            float: left; 
+            width: 66%; 
+            padding-bottom: govuk-spacing(4); 
+
+            li {
+                span.ccs-y, 
+                span.ccs-n {
+                    text-indent: -3000px; 
+                    color: transparent; 
+                    display: inline-block; 
+                    width: govuk-spacing(4); 
+                    height: govuk-spacing(4); 
+                    margin-right: govuk-spacing(2); 
+                    border: 1px solid lime; 
+                    background-image : url(); 
+                    background-repeat: no-repeat; 
+                    background-size: cover; 
+                } 
+
+                details {
+                    margin-top: govuk-spacing(2); 
+                }
+            }
+        }
+               
+    }
+}
+@media (max-width: 641px) {//mobile
+    ul.ccs-checklist li {
+        b,  
+        ul {
+            width: 100%; 
+        }
+    }
+}
 
 .ccs-info-panel {
     background-color: govuk-colour("grey-4"); 
