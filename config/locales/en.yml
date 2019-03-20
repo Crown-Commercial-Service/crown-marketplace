@@ -230,7 +230,23 @@ en:
         that_match_your_requirements: that match your requirements.
         training_providers: training providers
       training_details:
-        page_title: Training details
+        about_the_provider_title: About the provider
+        address_title: Address
+        contact_details_title: Contact details
+        email_title: Email
+        experience_in_delivering_apprenticeships: Experience in delivering apprenticeships
+        national_provider_tag: National provider
+        other_apprenticeship_standards_title: Other apprenticeship standards this provider delivers
+        overall_ofsted_rating: Overall Ofsted rating
+        page_title: Training provider details
+        phone_number_title: Phone number
+        provider_information_title: Provider information
+        provider_statement: This training provider offers apprenticeship training across England.
+        recruitment_support: Recruitment support
+        training_course_information_title: Training course information
+        training_provider_details_hint: Training provider details
+        training_provider_tab_title: Training provider details tabs
+        website_title: Website
       training_information:
         page_title: Training information
       understanding:
