@@ -3,7 +3,8 @@
     <h1 class="govuk-heading-xl cmp-page-heading"><%= @lot.full_description %></h1>
     <p class="govuk-body">
       <%= t('.suppliers_found_html',
-            suppliers: number_to_human(@suppliers.count, units: :suppliers)) %>
+            number: @suppliers.count,
+            suppliers: number_to_human(@suppliers.count, units: :companies, format: '%u')) %>
     </p>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
