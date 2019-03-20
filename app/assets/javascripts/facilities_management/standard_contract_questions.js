@@ -38,8 +38,17 @@ $(() => {
                 e.preventDefault();
                 removeExtension(extension.id + '-container');
             });
-
         });
+
+        let isTupe = pageUtils.getCachedData('fm-contract-tupe');
+
+        if (isTupe && isTupe === true) {
+            $('#fm-contract-tupe-yes').attr('checked', true);
+            $('#fm-contract-tupe-no').attr('checked', false);
+        } else {
+            $('#fm-contract-tupe-yes').attr('checked', false);
+            $('#fm-contract-tupe-no').attr('checked', true);
+        }
 
 
         updateFMExtensionCounts();
@@ -131,7 +140,7 @@ $(() => {
     });
 
     const removeAllExtensions = (() => {
-        
+
         $('[name="fm-extension-container"]').each(function (index, value) {
             if (index !== 0) {
                 $(value).remove;
@@ -160,6 +169,11 @@ $(() => {
 
     $('input[name="fm-extension"]').on('keyup', (e) => {
         processExtensionKeyUp(e);
+    });
+
+    $('input[name="contract-tupe-radio"]').click((e) => {
+        let result = e.target.value === 'yes' ? true : false;
+        pageUtils.setCachedData('fm-contract-tupe', result);
     });
 
     init();
