@@ -230,35 +230,43 @@ en:
         that_match_your_requirements: that match your requirements.
         training_providers: training providers
       training_details:
+        ability_to_customise_tbl: Ability to customise
+        about_the_apprenticeship_title: About the apprenticeship
         about_the_provider_title: About the provider
         address_title: Address
+        apprenticeship_tbl: Apprenticeship
+        classroom_sharing_label: Classroom sharing
+        classroom_sharing_txt: Lorem ipsum elit sit consectetur adipiscing elit sit.
         contact_details_title: Contact details
+        delivery_method_label: Delivery method
+        duration_tbl: Duration
         email_title: Email
         experience_in_delivering_apprenticeships_tbl: Experience in delivering apprenticeships
+        experience_in_this_apprenticeship_tbl: Experience in this apprenticeship
+        explain_classroom_sharing_title: Explain classroom sharing
+        explain_time_demand_title: Explain time demand
+        explain_training_availability_title: Explain training availability
+        level_tbl: Level
+        maximum_funding_tbl: Maximum funding
         national_provider_tag: National provider
+        ofsted_rating_for_apprenticeships_tbl: Ofsted rating for apprenticeships
         other_apprenticeship_standards_title: Other apprenticeship standards this provider delivers
         overall_ofsted_rating_tbl: Overall Ofsted rating
         page_title: Training provider details
         phone_number_title: Phone number
-        provider_information_title: Provider information
+        provider_information_summary: Provider information summary
+        provider_information_title: Provider information details
         provider_statement: This training provider offers apprenticeship training across England.
         recruitment_support_tbl: Recruitment support
+        time_demand_label: Time demand
+        time_demand_txt: Lorem ipsum consectetur adipiscing elit sit.
+        training_availability_txt: Lorem ipsum adipiscing elit consectetur adipiscing elit sit.
+        training_availablity_label: Training availability
+        training_course_information_summary: Training course summary
         training_course_information_title: Training course information
         training_provider_details_hint: Training provider details
         training_provider_tab_title: Training provider details tabs
-        website_title: Website 
-        provider_information_title: Provider information details
-        training_course_information_title: Training course information 
-        provider_information_summary: Provider information summary
-        training_course_information_summary: Training course summary 
-        apprenticeship_tbl: Apprenticeship 
-        ofsted_rating_for_apprenticeships_tbl: Ofsted rating for apprenticeships 
-        level_tbl: Level 
-        duration_tbl: Duration 
-        maximum_funding_tbl: Maximum funding 
-        ability_to_customise_tbl: Ability to customise 
-        experience_in_this_apprenticeship_tbl: Experience in this apprenticeship 
-        about_the_apprenticeship_title: About the apprenticeship
+        website_title: Website
       training_information:
         page_title: Training information
       understanding:
