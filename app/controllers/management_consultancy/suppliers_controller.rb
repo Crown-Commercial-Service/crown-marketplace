@@ -14,5 +14,9 @@ module ManagementConsultancy
         params[:expenses] == 'paid'
       )
     end
+
+    def show
+      @supplier = Supplier.find(params[:id])
+    end
   end
 end
