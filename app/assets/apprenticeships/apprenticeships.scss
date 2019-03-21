@@ -592,3 +592,26 @@ table.ccs-govuk-table--style {
     max-width: none; 
     width: 100%;  
 }
+
+.ccs-tag {
+    background-color: govuk-colour("grey-1"); 
+    color: govuk-colour("white"); 
+    padding: 0 govuk-spacing(1); 
+    text-align: center; 
+    margin-right: govuk-spacing(1); 
+}
+h1[class^="govuk-heading"], 
+h2[class^="govuk-heading"], 
+h3[class^="govuk-heading"] {
+    .ccs-tag {
+        display: inline-block;
+        vertical-align: middle; 
+        font-size: 1.1rem; 
+        margin-left: govuk-spacing(1); 
+    }
+}
+a.ccs-no-underline {
+    .ccs-tag {
+        margin-left: govuk-spacing(1); 
+    }
+} 
