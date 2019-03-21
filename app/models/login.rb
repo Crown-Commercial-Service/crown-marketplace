@@ -1,7 +1,7 @@
 module Login
   UnknownProvider = Class.new(StandardError)
 
-  EMAIL_REGEX = /([\w+\-.]+)@([a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+)/i.freeze
+  EMAIL_REGEX = /([\w+\-.]+)@([a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+)/i
 
   def self.class_for_provider(provider)
     case provider.to_s
