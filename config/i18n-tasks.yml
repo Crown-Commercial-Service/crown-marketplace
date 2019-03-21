@@ -107,6 +107,7 @@ ignore_unused:
   - miles.*
   - results.*
   - suppliers.*
+  - companies.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
 # - 'simple_form.{yes,no}'
