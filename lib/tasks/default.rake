@@ -1,1 +1,1 @@
-task(:default).clear.enhance(%i[rubocop db:static spec])
+task(:default).clear.enhance(%i[rubocop spec])

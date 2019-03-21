@@ -4,7 +4,7 @@
 class PostcodeChecker
   def self.in_london?(postcode)
     info = location_info(postcode)
-    false unless info.include?'admin_district'
+    false unless info.include? 'admin_district'
     @london_burroughs.include? info['admin_district']
   end
 
