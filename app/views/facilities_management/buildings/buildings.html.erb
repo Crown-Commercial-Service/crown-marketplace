@@ -1,2 +1,9 @@
-<h1>FacilitiesManagement::Buildings#buildings</h1>
-<p>Find me in app/views/facilities_management/buildings/buildings.html.erb</p>
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <a href="facilities-management/standard-contract/questions" class="govuk-back-link">Back</a>
+      <%= render('errors/inline_error_summary') %>
+      <%= render('facilities_management/buildings/building_list') %>
+    </div>
+  </div>
+</div>
