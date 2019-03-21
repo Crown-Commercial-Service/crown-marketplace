@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     get '/signup', to: 'home#signup'
     get '/understanding', to: 'home#understanding'
     get '/training_details', to: 'home#training_details'
+    get '/download_provider', to: 'home#download_provider'
   end
 
   get '/errors/404'
