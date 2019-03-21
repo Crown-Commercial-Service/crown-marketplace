@@ -1,0 +1,2 @@
+module FacilitiesManagement::BuildingsHelper
+end
