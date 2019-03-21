@@ -9,7 +9,7 @@ class PostcodeChecker
   end
 
   def self.location_info(postcode)
-    return @cache[postcode] if @@cache.include? postcode
+    return @cache[postcode] if @cache.include? postcode
 
     pc = CGI.escape(postcode)
     uri = URI.parse('http://api.postcodes.io/postcodes/' + pc)
@@ -21,7 +21,7 @@ class PostcodeChecker
     @cache[postcode] = j
   end
 
-  # @@cache = {  }
+  # @cache = {  }
   # populate postcode with 3 test data entries
   @cache = {
     'SW1P 2BA' =>
