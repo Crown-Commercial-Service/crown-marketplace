@@ -48,4 +48,21 @@ a.ccs-no-underline {
 /* css-tag end ****** */ 
 
 
+a.ccs-print-icon {
+    padding-left: govuk-spacing(2); 
+    display: inline-block; 
+
+    &::before {
+        content: ' '; 
+        display: inline-block; 
+        width: govuk-spacing(4); 
+        height: govuk-spacing(4); 
+        position: relative; 
+        left: -#{govuk-spacing(2)}; 
+        top: govuk-spacing(1); 
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASAgMAAAAvVbb5AAAACVBMVEX///////8KDAwmYEUdAAAAAXRSTlMAQObYZgAAADBJREFUCFtjYOBa1cDAoBkKJFYCCSYwEYpCrAICZCI0FEhkrURmQRRnrYRpW7WqAQAlGR86Ip1rwwAAAABJRU5ErkJggg==') no-repeat center center;  
+    }
+}
+
+
 
