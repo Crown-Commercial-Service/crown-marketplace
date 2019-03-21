@@ -107,6 +107,14 @@ en:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
     home:
+      download_provider:
+        download_training_provider_list_link: Download training provider list
+        lead_text: You can now download the training provider list and complete this procurement offline via a further competition
+        page_title: Download the training provider list
+        the_following_documents_text: The following documents may also be of help
+        title: Download the training provider list
+        warning_text: Please be aware that appointed suppliers are constantly changing. Therefore please download this list of providers and use it immediately. Any list providers older than 2 working days will be considered to have expired.
+        warning_title: Warning
       find_apprentices:
         find_1_legend: Do you know the apprenticeship standard that you would like training for?
         page_title: Which training course
@@ -230,7 +238,43 @@ en:
         that_match_your_requirements: that match your requirements.
         training_providers: training providers
       training_details:
-        page_title: Training details
+        ability_to_customise_tbl: Ability to customise
+        about_the_apprenticeship_title: About the apprenticeship
+        about_the_provider_title: About the provider
+        address_title: Address
+        apprenticeship_tbl: Apprenticeship
+        classroom_sharing_label: Classroom sharing
+        classroom_sharing_txt: Lorem ipsum elit sit consectetur adipiscing elit sit.
+        contact_details_title: Contact details
+        delivery_method_label: Delivery method
+        duration_tbl: Duration
+        email_title: Email
+        experience_in_delivering_apprenticeships_tbl: Experience in delivering apprenticeships
+        experience_in_this_apprenticeship_tbl: Experience in this apprenticeship
+        explain_classroom_sharing_title: Explain classroom sharing
+        explain_time_demand_title: Explain time demand
+        explain_training_availability_title: Explain training availability
+        level_tbl: Level
+        maximum_funding_tbl: Maximum funding
+        national_provider_tag: National provider
+        ofsted_rating_for_apprenticeships_tbl: Ofsted rating for apprenticeships
+        other_apprenticeship_standards_title: Other apprenticeship standards this provider delivers
+        overall_ofsted_rating_tbl: Overall Ofsted rating
+        page_title: Training provider details
+        phone_number_title: Phone number
+        provider_information_summary: Provider information summary
+        provider_information_title: Provider information details
+        provider_statement: This training provider offers apprenticeship training across England.
+        recruitment_support_tbl: Recruitment support
+        time_demand_label: Time demand
+        time_demand_txt: Lorem ipsum consectetur adipiscing elit sit.
+        training_availability_txt: Lorem ipsum adipiscing elit consectetur adipiscing elit sit.
+        training_availablity_label: Training availability
+        training_course_information_summary: Training course summary
+        training_course_information_title: Training course information
+        training_provider_details_hint: Training provider details
+        training_provider_tab_title: Training provider details tabs
+        website_title: Website
       training_information:
         page_title: Training information
       understanding:
@@ -240,9 +284,13 @@ en:
     apply_filters: Apply filters
     browse: Browse
     continue: Continue
+    csv_html: <abbr title="Comma-separated values">CSV</abbr>
+    doc_html: <abbr title="Microsoft Word">DOC</abbr>
     next: Next
     search: Search
     submit: Continue
+    type_csv: text/csv
+    type_doc: application/msword
   companies:
     unit:
       one: company
