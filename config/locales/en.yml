@@ -291,6 +291,11 @@ en:
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     type_doc: application/msword 
     doc_html: <abbr title="Microsoft Word">DOC</abbr>    
+    submit: Continue
+  companies:
+    unit:
+      one: company
+      other: companies
   errors:
     '404':
       explanation: You may have mistyped the address or the page may have moved.
@@ -406,7 +411,7 @@ en:
         question: What services will you require?
     suppliers:
       index:
-        suppliers_found_html: "<strong>%{suppliers}</strong> found"
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> that can provide consultants who can meet your requirements"
       supplier:
         contact_email_missing: Contact email not available
         contact_name_missing: Contact name not available
@@ -530,7 +535,6 @@ en:
         other_radius_html: 'Change this distance to: '
         page_title: Agencies
         print: Print this page
-        related_actions_html: Related actions
         results_found_html: "<strong>%{results}</strong> found"
         results_found_with_location_html: "<strong>%{results}</strong> found within <strong>%{range}</strong> of <strong>%{postcode}</strong>."
     gateway:
