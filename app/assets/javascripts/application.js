@@ -20,3 +20,4 @@
 //= require facilities_management/locations.js
 //= require facilities_management/services.js
 //= require facilities_management/longList.js
+//= require facilities_management/standard_contract_questions.js
