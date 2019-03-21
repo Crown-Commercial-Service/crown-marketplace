@@ -296,7 +296,6 @@ ul.ccs-list-bullet--sm {
 
         & > span {
             @include govuk-font($size: 19, $weight: inherit);
-            
         }
     }
 }
@@ -310,29 +309,6 @@ table.ccs-at-govuk-table--sm {
         font-size: 0.9rem; 
     }
 }
-
-.ccs-tag {
-    background-color: govuk-colour("grey-1"); 
-    color: govuk-colour("white"); 
-    padding: 0 govuk-spacing(1); 
-    text-align: center; 
-    margin-right: govuk-spacing(1); 
-}
-h1[class^="govuk-heading"], 
-h2[class^="govuk-heading"], 
-h3[class^="govuk-heading"] {
-    .ccs-tag {
-        display: inline-block;
-        vertical-align: middle; 
-        font-size: 1.1rem; 
-        margin-left: govuk-spacing(1); 
-    }
-}
-a.ccs-no-underline {
-    .ccs-tag {
-        margin-left: govuk-spacing(1); 
-    }
-} 
 
 ul.ccs-checklist {
     list-style: none; 
@@ -362,6 +338,8 @@ ul.ccs-checklist {
                     width: govuk-spacing(4); 
                     height: govuk-spacing(4); 
                     margin-right: govuk-spacing(2); 
+                    position: relative; 
+                    top: 3px; 
                     background-repeat: no-repeat; 
                     background-size: cover; 
                 } 
@@ -472,6 +450,11 @@ ul.ccs-checklist {
 }
 .js-enabled .govuk-tabs__tab[aria-selected="true"]{
     margin-bottom: -2px !important;
+}
+.supplier-record__file-download abbr {
+    position: absolute; 
+    top: -3000px; 
+    left: -3000px; 
 }
 /* AT overrides end */
 

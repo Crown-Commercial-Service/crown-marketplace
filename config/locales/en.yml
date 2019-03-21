@@ -270,15 +270,27 @@ en:
       training_information:
         page_title: Training information
       understanding:
-        page_title: Understanding
-    page_section: Find apprenticeship training and related services
+        page_title: Understanding 
+      download_provider: 
+        page_title: Download the training provider list 
+        title: Download the training provider list 
+        lead_text: You can now download the training provider list and complete this procurement offline via a further competition 
+        warning_text: Please be aware that appointed suppliers are constantly changing. Therefore please download this list of providers and use it immediately. Any list providers older than 2 working days will be considered to have expired. 
+        warning_title: Warning 
+        download_training_provider_list_link: Download training provider list 
+        the_following_documents_text: The following documents may also be of help
+    page_section: Find apprenticeship training and related services 
   common:
     apply_filters: Apply filters
     browse: Browse
     continue: Continue
     next: Next
     search: Search
-    submit: Continue
+    submit: Continue 
+    type_csv: text/csv 
+    csv_html: <abbr title="Comma-separated values">CSV</abbr>
+    type_doc: application/msword 
+    doc_html: <abbr title="Microsoft Word">DOC</abbr>    
   errors:
     '404':
       explanation: You may have mistyped the address or the page may have moved.
