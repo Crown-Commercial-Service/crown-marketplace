@@ -1,0 +1,68 @@
+#main-header .ccs-navigation--signin {
+  display: block !important; //don't hide on mobiles 
+  li {
+    border-bottom: none !important; 
+  }
+}
+
+.ccs-landing-pg-content {
+  padding-bottom: 60px; 
+}
+
+.ccs-no-underline {
+  text-decoration: none; 
+}
+
+@media all and (-ms-high-contrast:none){//wrapper div bug fix for IE11
+    *::-ms-backdrop, body > div {//targets IE11 only 
+      flex: none;
+    } 
+}
+
+
+
+
+/* css-tag start ****** */
+.ccs-tag {
+    background-color: govuk-colour("grey-1"); 
+    color: govuk-colour("white"); 
+    padding: 0 govuk-spacing(1); 
+    text-align: center; 
+    margin-right: govuk-spacing(1); 
+}
+h1[class^="govuk-heading"], 
+h2[class^="govuk-heading"], 
+h3[class^="govuk-heading"] {
+    .ccs-tag {
+        display: inline-block;
+        vertical-align: middle; 
+        font-size: 1.1rem; 
+        margin-left: govuk-spacing(1); 
+    }
+}
+a.ccs-no-underline {
+    .ccs-tag {
+        margin-left: govuk-spacing(1); 
+    }
+}
+/* css-tag end ****** */ 
+
+
+a.ccs-print-icon {
+    padding-left: govuk-spacing(2); 
+    display: inline-block; 
+
+    &::before {
+        content: ' '; 
+        display: inline-block; 
+        width: govuk-spacing(4); 
+        height: govuk-spacing(4); 
+        position: relative; 
+        left: -#{govuk-spacing(2)}; 
+        top: govuk-spacing(1); 
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASAgMAAAAvVbb5AAAACVBMVEX///////8KDAwmYEUdAAAAAXRSTlMAQObYZgAAADBJREFUCFtjYOBa1cDAoBkKJFYCCSYwEYpCrAICZCI0FEhkrURmQRRnrYRpW7WqAQAlGR86Ip1rwwAAAABJRU5ErkJggg==') no-repeat center center;  
+    }
+}
+
+
+

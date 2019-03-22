@@ -52,7 +52,23 @@
 .supplier-record__file-download[href*='format=xlsx']:before {
     background-color: #007831;
     content: ".XLSX";
+} 
+
+.supplier-record__file-download[href*='format=csv']:before {
+    background-color: #007831;
+    content: ".CSV";
 }
+
+.supplier-record__file-download[href*='format=doc']:before {
+    background-color: #0d0da0;
+    content: ".DOC";
+}
+
+.supplier-record__file-download[href*='format=pdf']:before {
+    background-color: #df1a1a;
+    content: ".PDF";
+}
+
 .supplier-record__print-option {
     min-height: 35px;
 }
