@@ -45,6 +45,14 @@ const pageUtils = {
         }
     }),
 
+    clearCashedData: ((key) => {
+        if (key) {
+            localStorage.removeItem(key);
+        } else {
+            localStorage.clear();
+        }
+    }),
+
     sortByName: ((arr) => {
         return arr.sort((a, b) => {
             const nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
