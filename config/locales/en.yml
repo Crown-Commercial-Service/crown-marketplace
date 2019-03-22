@@ -219,7 +219,7 @@ en:
         sort_by_label: Sort by
       signup:
         body_text_01_html: To access funds to pay for apprenticeship training you need to <a href="">register on the apprenticeship service</a>.
-        lead_text_html: Before using this service, you need to have a Digital Apprenticeship Service (<abbr>DAS</abb>) account.
+        lead_text_html: Before using this service, you need to have a Digital Apprenticeship Service (<abbr>DAS</abbr>) account.
         page_title: Sign up for a Digital Apprenticeship Service account
         title: Sign up for a Digital Apprenticeship Service (DAS) account
       sorry:
