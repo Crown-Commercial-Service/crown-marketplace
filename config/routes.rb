@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     post '/suppliers/longList' => 'long_list#long_list'
     get '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
     get '/buildings-list', to: 'buildings#buildings'
+    get '/buildings/new-building', to: 'buildings#new_building'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
