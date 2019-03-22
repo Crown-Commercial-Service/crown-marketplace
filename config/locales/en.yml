@@ -218,7 +218,10 @@ en:
         routes_label: Routes
         sort_by_label: Sort by
       signup:
-        page_title: Sign up
+        body_text_01_html: To access funds to pay for apprenticeship training you need to <a href="">register on the apprenticeship service</a>.
+        lead_text_html: Before using this service, you need to have a Digital Apprenticeship Service (<abbr>DAS</abb>) account.
+        page_title: Sign up for a Digital Apprenticeship Service account
+        title: Sign up for a Digital Apprenticeship Service (DAS) account
       sorry:
         contact_support_text_html: <a href="#">Contact <abbr>CCS</abbr> Support</a> for help.
         content_text: We're unable to find any training providers that match your requirements.
@@ -282,10 +285,16 @@ en:
       training_information:
         page_title: Training information
       understanding:
-        page_title: Understanding
+        back_to_start: Back to start
+        body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
+        body_text_02_html: When you know the apprenticeship Standard you need, you can continue using this service.
+        lead_text: Before using this service, it's important to understand which apprenticeship standard you need.
+        page_title: Understanding what to buy
+        title: Understanding what to buy
     page_section: Find apprenticeship training and related services
   common:
     apply_filters: Apply filters
+    back_to_start: Back to start
     browse: Browse
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
