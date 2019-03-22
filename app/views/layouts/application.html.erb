@@ -39,18 +39,20 @@
       <%= render partial: '/layouts/header-banner' %>
     </header>
 
-    <div class="govuk-width-container">
+    <div>
+      <div class="govuk-width-container">
 
-      <%= render partial: '/layouts/beta-banner' %>
+        <%= render partial: '/layouts/beta-banner' %>
 
-      <% if @back_path.present? %>
-        <%= render partial: '/layouts/back-link' %>
-      <% end %>
+        <% if @back_path.present? %>
+          <%= render partial: '/layouts/back-link' %>
+        <% end %>
 
-      <main id="main-content" class="govuk-main-wrapper" role="main">
-        <%= yield %>
-      </main>
+        <main id="main-content" class="govuk-main-wrapper" role="main">
+          <%= yield %>
+        </main>
 
+      </div>
     </div>
 
     <footer id="main-footer" class="govuk-footer" role="contentinfo">
