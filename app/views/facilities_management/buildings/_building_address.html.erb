@@ -1,0 +1,30 @@
+<h2 class="govuk-heading-m govuk-!-margin-0">What is your buildings address?</h2>
+<span class="govuk-caption-m">We'll use this UK address for the building</span>
+<div class="govuk-!-margin-top-4 fm-postcode-lookup-panel">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Enter Postcode</h2>
+  <span class="govuk-caption-m govuk-!-margin-top-0 govuk-!-margin-bottom-4">For example SW1A 2AA</span>
+  <div class="">
+    <input type="text" class="govuk-input govuk-input--width-5 govuk-!-margin-right-3">
+    <a href="#" role="button" class="govuk-button">Find address</a>
+  </div>
+  <div id="fm-post-code-results-container" class="govuk-form-group govuk-visually-hidden">
+    <select class="govuk-select" id="fm-postcode-lookup-results" name="fm-postcode-lookup-results">
+      <option value="add1">3 addresses found</option>
+      <option value="add2" selected>address 1</option>
+      <option value="add3">Address 2</option>
+      <option value="add4">Address 3</option>
+    </select>
+  </div>
+  <details class="govuk-details">
+    <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      My building is outside the UK
+    </span>
+    </summary>
+    <div class="govuk-details__text">
+      blurb goes here?
+    </div>
+  </details>
+  <a href="https://www.royalmail.com/find-a-postcode" class="govuk-link--no-visited-state" target="_blank" role="button">Find a postcode on Royal Mail's
+    postcode finder</a>
+</div>
