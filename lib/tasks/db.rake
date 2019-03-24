@@ -66,7 +66,11 @@ module CCS
     p
     p 'Loading FM regions static data'
     CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv', config
+    p 'Loading FM rates static data'
+    CCS.csv_to_fm_rates directory + 'facilities_management/rates.csv', config
   end
+
+
 end
 
 namespace :db do
