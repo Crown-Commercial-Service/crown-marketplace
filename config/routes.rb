@@ -90,6 +90,10 @@ Rails.application.routes.draw do
   end
   post '/sign-out' => 'auth#sign_out', as: :sign_out
 
+  scope module: :postcode do
+    resources :postcodes, only: [:show]
+  end
+
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
   get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'

@@ -1,15 +1,13 @@
-#main-header .ccs-navigation--signin {
-  display: block !important; //don't hide on mobiles 
-  li {
+.govuk-header__navigation .govuk-header__navigation-item {
     border-bottom: none !important; 
-  }
 }
 
 .ccs-landing-pg-content {
   padding-bottom: 60px; 
 }
 
-.ccs-no-underline {
+.ccs-no-underline, 
+.govuk-warning-text abbr {
   text-decoration: none; 
 }
 
@@ -19,6 +17,12 @@
     } 
 }
 
+.ccs-remove {
+  display: block; 
+  position: absolute; 
+  left: -3000px; 
+  top: -3000px; 
+}
 
 
 
