@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PostCodes
+module Postcode
   # post code retrieval
   class PostcodeChecker
     def self.in_london?(postcode)
@@ -24,14 +24,8 @@ module PostCodes
       end
     end
 
-    private
-
-    def msg(postcode)
-      response = Net::HTTP.get(
-        URI.parse(
-          CGI.escape('http://api.postcodes.io/postcodes/' + postcode)
-        )
-      )
+    def self.msg(postcode)
+      response = Net::HTTP.get('api.postcodes.io', '/postcodes/' + postcode)
       j = JSON.parse(response)
       return @cache[postcode] = j['result'] if j.include? 'result'
 

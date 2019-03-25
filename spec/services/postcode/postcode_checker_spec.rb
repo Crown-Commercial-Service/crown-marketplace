@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'postcode/postcode_checker'
 
-RSpec.describe PostcodeChecker do
+RSpec.describe Postcode::PostcodeChecker do
   describe 'POST postcode' do
     it 'Postcode not in London' do
       expect(described_class.in_london?('G32 0RP')).to be false
