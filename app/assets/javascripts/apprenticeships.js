@@ -44,7 +44,7 @@ function initSearchResults(id){
             .find('span').text(function(i, text){
                 return text === "Hide" ? " Show" : " Hide";
             });
-            shopWrap.toggleClass('show');//could use '+' css selector on aria attr val, but v this supports legacy browsers
+            shopWrap.toggleClass('show');//could use '+' css selector on aria attr val, but this v supports legacy browsers
         });
     }); 
 
@@ -67,7 +67,15 @@ function initSearchResults(id){
         var hint = id.find('.ccs-govuk-hint--selected');
         if(hint.length){
             ifChecked(false, hint);
-        }
+        } 
+
+        /* additional submit functionality start ... */
+        /*var pathname = window.location.pathname; //path only (/path/example.html)
+        var origin   = window.location.origin;   //base URL (https://example.com)
+        window.location.href = origin + pathname;//removes querystrings*/
+        //id.find('form').submit();
+        /* additional submit functionality end */
+
     });
 }
 
