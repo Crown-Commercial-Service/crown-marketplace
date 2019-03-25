@@ -12,14 +12,33 @@ $(() => {
 
     });
 
-    $('#fm-new-building-name').on('change', (e) => {
-        let value = e.target.value;
+    const validateBuildingName = ((value) => {
+
         if (value) {
-            pageUtils.setCachedData('fm-new-building-name', e.target.value);
+            pageUtils.setCachedData('fm-new-building-name', value);
+            $('#fm-building-name-error').addClass('govuk-visually-hidden');
+            $('#fm-building-name-container').removeClass('govuk-form-group--error');
+        } else {
+            $('#fm-building-name-error').removeClass('govuk-visually-hidden');
+            $('#fm-building-name-container').addClass('govuk-form-group--error');
+            pageUtils.clearCashedData('fm-new-building-name');
         }
+
+    });
+
+    $('#fm-new-building-name').on('keyup', (e) => {
+        let value = e.target.value;
+        validateBuildingName(value);
+    });
+
+    $('#fm-postcode-input').on('focus', (e) => {
+        let newBuildingValue = $('#fm-new-building-name');
+
+        validateBuildingName(newBuildingValue.val());
     });
 
     $('#fm-postcode-input').on('keyup', (e) => {
+
         if (isPostCodeValid(e.target.value)) {
             showPostCodeError(false);
             postCode = e.target.value;
@@ -55,8 +74,6 @@ $(() => {
     });
 
     const getAddresses = ((postCode) => {
-        console.log('==> getAddresses', postCode);
-
         $.get(encodeURI("https://api.postcodes.io/postcodes/" + postCode))
             .done(function (data) {
                 if (data.result.region === 'London') {
@@ -66,7 +83,6 @@ $(() => {
                 }
             })
             .fail(function (error) {
-                console.log(error.responseJSON);
                 showPostCodeError(true, error.responseJSON.error);
             });
     });
@@ -79,6 +95,10 @@ $(() => {
         } else {
             showPostCodeError(true);
         }
+    });
+
+    $('#fm-new-building-continue').click((e) => {
+        e.preventDefault();
     });
 
     init();
