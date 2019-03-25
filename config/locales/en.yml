@@ -108,9 +108,13 @@ en:
   apprenticeships:
     home:
       download_provider:
+        audit_text: For audit purposes, please find below the list of choices and requiements that you have entered to generate this shortlist. Print this page, to keep a copy of this for your records.
+        button_label: Start new search
         download_training_provider_list_link: Download training provider list
         lead_text: You can now download the training provider list and complete this procurement offline via a further competition
         page_title: Download the training provider list
+        print_this_page: Print this page
+        selections_used_title: Selections used to generate your shortlist
         the_following_documents_text: The following documents may also be of help
         title: Download the training provider list
         warning_text: Please be aware that appointed suppliers are constantly changing. Therefore please download this list of providers and use it immediately. Any list providers older than 2 working days will be considered to have expired.
@@ -214,7 +218,10 @@ en:
         routes_label: Routes
         sort_by_label: Sort by
       signup:
-        page_title: Sign up
+        body_text_01_html: To access funds to pay for apprenticeship training you need to <a href="">register on the apprenticeship service</a>.
+        lead_text_html: Before using this service, you need to have a Digital Apprenticeship Service (<abbr>DAS</abbr>) account.
+        page_title: Sign up for a Digital Apprenticeship Service account
+        title: Sign up for a Digital Apprenticeship Service (DAS) account
       sorry:
         contact_support_text_html: <a href="#">Contact <abbr>CCS</abbr> Support</a> for help.
         content_text: We're unable to find any training providers that match your requirements.
@@ -278,10 +285,16 @@ en:
       training_information:
         page_title: Training information
       understanding:
-        page_title: Understanding
+        back_to_start: Back to start
+        body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
+        body_text_02_html: When you know the apprenticeship Standard you need, you can continue using this service.
+        lead_text: Before using this service, it's important to understand which apprenticeship standard you need.
+        page_title: Understanding what to buy
+        title: Understanding what to buy
     page_section: Find apprenticeship training and related services
   common:
     apply_filters: Apply filters
+    back_to_start: Back to start
     browse: Browse
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>

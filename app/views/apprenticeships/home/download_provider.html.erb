@@ -9,7 +9,7 @@
 
     <p class="govuk-heading-m"><%= t('.lead_text') %></p>
 
-    <div class="govuk-warning-text">
+    <div class="govuk-warning-text govuk-!-margin-bottom-7">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
             <span class="govuk-warning-text__assistive"><%= t('.warning_title') %></span>
@@ -38,17 +38,17 @@
         </li>        
     </ul>
 
-    <h2 class="govuk-heading-m govuk-!-font-weight-bold">Selections used to generate your shortlist</h2>
+    <h2 class="govuk-heading-m govuk-!-font-weight-bold"><%= t('.selections_used_title') %></h2>
 
-    <p class="govuk-body">For audit purposes, please find below the list of choices and requiements that you have entered to generate this shortlist. Print this page, to keep a copy of this for your records.</p>
+    <p class="govuk-body"><%= t('.audit_text') %></p>
 
     <p class="govuk-body">
-        <a href="javascript:window.print()" class="govuk-link govuk-link--no-visited-state ccs-print-icon ga-print-link">Print this page</a>
+        <a href="javascript:window.print()" class="govuk-link govuk-link--no-visited-state ccs-print-icon ga-print-link"><%= t('.print_this_page') %></a>
     </p>
 
-    <h2 class="govuk-heading-m govuk-!-font-weight-bold">Requirements</h2>
+    <h2 class="govuk-heading-m">Requirements</h2>
 
-    <table class="govuk-table ccs-at-govuk-table--sm">
+    <table class="govuk-table ccs-at-govuk-table--sm ccs-at-govuk-table--5050">
         <caption class="govuk-table__caption ccs-at-remove">
             Requirements summary
         </caption>
@@ -56,39 +56,70 @@
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">Briefly outline the qualities you are looking for in a supplier</th>
-                <td class="govuk-table__cell">1 - Lorem ipsum ...</td>
+                <td class="govuk-table__cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut condimentum turpis. Praesent in est finibus purus pharetra ultricies at eu ipsum. Phasellus pretium consectetur erat, ac consequat sapien faucibus ultrices. Aliquam erat volutpat. </td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Experience in delivering apprenticeships</th>
+                <th class="govuk-table__header" scope="row">Apprenticeship training course</th>
+                <td class="govuk-table__cell">Building services design engineer</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Level</th>
+                <td class="govuk-table__cell">6</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Help with recruiting the apprentices</th>
                 <td class="govuk-table__cell">Yes</td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Recruitment support</th>
+                <th class="govuk-table__header" scope="row">Willing to provide additional funding</th>
                 <td class="govuk-table__cell">Yes</td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Overall Ofsted rating</th>
-                <td class="govuk-table__cell">1 - Outstanding (<a href="#">view report</a>)</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Experience in delivering apprenticeships</th>
-                <td class="govuk-table__cell">Yes</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Recruitment support</th>
-                <td class="govuk-table__cell">Yes</td>
+                <th class="govuk-table__header" scope="row">Minimum number of apprentices</th>
+                <td class="govuk-table__cell">30</td>
             </tr> 
             <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Recruitment support</th>
-                <td class="govuk-table__cell">Yes</td>
-            </tr>                        
+                <th class="govuk-table__header" scope="row">Minimum Ofsted rating</th>
+                <td class="govuk-table__cell">2 - Good</td>
+            </tr> 
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Training in multiple locations</th>
+                <td class="govuk-table__cell">No</td>
+            </tr>                                   
         </tbody>
     </table>
 
+    <h2 class="govuk-heading-m">Filters used</h2>
 
+    <table class="govuk-table ccs-at-govuk-table--sm ccs-at-govuk-table--5050">
+        <caption class="govuk-table__caption ccs-at-remove">
+            Filters used summary
+        </caption>
+
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Delivery method</th>
+                <td class="govuk-table__cell">Classroom based</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Time demand</th>
+                <td class="govuk-table__cell">Day release</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Classroom sharing</th>
+                <td class="govuk-table__cell">Closed</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Training availability</th>
+                <td class="govuk-table__cell">Scheduled</td>
+            </tr>  
+        </tbody>
+    </table>
+
+    <%= link_to t('.button_label'), '/apprenticeships/', role: 'button', class: 'govuk-button govuk-!-margin-top-6' %>
 
      
-    <p style="width: 100%; text-align: right; margin: 80px 0 50px 0;"><small><i><a href="/apprenticeships/training_details">Temporary link to next page > (remove)</a></i></small></p>
+    <p style="width: 100%; text-align: right; margin: 80px 0 50px 0;"><small><i><a href="/apprenticeships/understanding">Temporary link to next page > (remove)</a></i></small></p>
 
     </div>
   </div>
