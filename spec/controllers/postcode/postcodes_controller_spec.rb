@@ -9,8 +9,8 @@ RSpec.describe Postcode::PostcodesController, type: :controller do
       get :show, params: { id: 'G32 0RP' }
       expect(response.header['Content-Type']).to include 'application/json'
       json_response = JSON.parse(response.body)
-      expect(json_response['postcode']).to eq(postcode)
-      expect(json_response['admin_district']).to eq('Glasgow City')
+      expect(json_response['result']['postcode']).to eq(postcode)
+      expect(json_response['result']['admin_district']).to eq('Glasgow City')
     end
   end
 end
