@@ -19,12 +19,12 @@ RSpec.describe Postcode::PostcodeChecker do
 
     it 'nuts code in Westminster' do
       place = described_class.location_info('SW1P 2BA')
-      expect(place['nuts']).to eq 'Westminster'
+      expect(place[:result]['nuts']).to eq 'Westminster'
     end
 
     it 'admin district is Westminster' do
       place = described_class.location_info('SW1P 2BA')
-      expect(place['admin_district']).to eq 'Westminster'
+      expect(place[:result]['admin_district']).to eq 'Westminster'
     end
   end
 end
