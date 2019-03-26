@@ -143,16 +143,13 @@ $results-filters-labels-m: 17px;
     } 
 
     .ccs-at-results-filters__heading-bloc {
-        & > h2 {
-            float: left; 
-        }
-
         & > a {
             text-align: right; 
-            display: inline-block;  
+            display: none;  
             line-height: govuk-spacing(6); 
         }        
-    }
+    } 
+   
 }
 
 body.js-enabled {
@@ -164,7 +161,14 @@ body.js-enabled {
             border-width: 0 0 3px 3px; 
         }
     } 
-   
+    .ccs-at-results-filters__heading-bloc {
+        & > h2 {
+            float: left; 
+        }
+        & > a {
+            display: inline-block; 
+        }
+    }
 }
 
 .ccs-at-search-results {
@@ -326,62 +330,7 @@ table.ccs-at-govuk-table--5050 {
 }
 
 
-ul.ccs-checklist {
-    list-style: none; 
-    padding: 0; 
 
-    & > li { 
-
-        b {
-            display: block; 
-            width: 33%; 
-            float: left; 
-        }
-
-        ul {
-            list-style: none; 
-            padding-left: 0; 
-            float: left; 
-            width: 66%; 
-            padding-bottom: govuk-spacing(5); 
-
-            li {
-                span.ccs-y, 
-                span.ccs-n {
-                    text-indent: -3000px; 
-                    color: transparent; 
-                    display: inline-block; 
-                    width: govuk-spacing(4); 
-                    height: govuk-spacing(4); 
-                    margin-right: govuk-spacing(2); 
-                    position: relative; 
-                    top: 3px; 
-                    background-repeat: no-repeat; 
-                    background-size: cover; 
-                } 
-                span.ccs-y {
-                    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAACU0lEQVR4Ae3YA6xcQRQG4D+1bdtu58yza9uemefaQRk3dm3btm3btrWd4lnzdHeTbJIT7r332388sNlsDl1OoBOoywmEojAIPtUhgVAsGILZ/hVNcSggFAVq2C9dtqiicQ4B1DgRBxdRiobaFYhA3j9BXERJCrILEIL6QLKfCeMiiqZbDtSwnoa4OZgwIYOlQEjeDYJ+JImTNC8CpwtWJdfFCCdoIZZ1zmjpKIbkHSHpe9I4tiQCZxkQktpDsm8GzbocE3wyGa8kCHUriyC3WqnDubQxwelaGYEzAiLEqzQk3dL1FCEu1VM4CbeEYF8NklsDpTIbbxYgeCn94M2oF7BHCOSVk5lcc0j2xSC5dZjQOYvxbgZh7iUg6Ho8//I+BJU3w1FTMxxtjMAZAaE8i0PS1USa4jaUR5kkkguAoM8GuM0Ib541WftB/eDupPsLu4Eg15IJLF9+kPTJoFm36QGRLdkbVgTyGtCDwuADVzCYF42ZnKu3xn80SG4HhrpmT/GOGnpagWDPDEbeBYR7Fv6fnCcE+2DwzC6o1jlSveWHcq0NQS8MPngGgS6tIem9QXJ7MaJJzjQ7kyCQ6kLQyyQ+bFaS9iPEJ1eaH5oQ5Fofkl6lDscOYpR77nQ71UHwhhDsdQqTO4xwnifdj506SYJkb5KZ3DGogLyWnYshuAskvTUD0gkM8cln+cEd0tXNYMSeQrBHfrvdLEBxD434kOC0M9S1gN2vPhDIvOKsGpKdQygVdJi7GSjuG4GMvqpYAzRP0v/vgAhyK+K8fnMCnUA7128nPTg6GfvQPgAAAABJRU5ErkJggg=='); 
-                }
-                span.ccs-n {
-                    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAFVBMVEX/////VVWyDx+yDyGyDx6xDh6xDh4Sl4TlAAAAB3RSTlMAA6VWqf/8dNf9xAAAAHRJREFUeNrl1DEOACEIRNEVHe9/ZC2s/komoZWSvERF4Hs8WnSmerSLG5odbmq0i9OWcDoSTlvC/WRIR8JJgetAIpHIzFHS5RIul3C5hDMSjhLOSOM89Ef7x9TL4wvuv7DaFL7NfOMWRsEMV2lc/QLwK+XtWGhtCI1x8c/cAAAAAElFTkSuQmCC');
-                }
-                details {
-                    margin-top: govuk-spacing(2); 
-                    margin-left: govuk-spacing(1); 
-                }
-            }
-        }
-               
-    }
-}
-@media (max-width: 641px) {//mobile
-    ul.ccs-checklist li {
-        b,  
-        ul {
-            width: 100%; 
-        }
-    }
-}
 
 .ccs-info-panel {
     background-color: govuk-colour("grey-4"); 
@@ -422,21 +371,6 @@ ul.ccs-checklist {
     }    
 }
 
-#main-content {
-    min-height: 370px; 
-}
-
-#cookie_banner {//ccs-no-print
-    display: none; 
-}
-
-.ccs-at-remove {
-    display: block; 
-    position: absolute; 
-    left: -3000px; 
-    top: -3000px; 
-}
-
 .ccs-at-next {
     text-decoration: none !important; 
     padding: govuk-spacing(4) 0; 
@@ -473,21 +407,6 @@ ul.ccs-checklist {
     left: -3000px; 
 }
 /* AT overrides end */
-
-
-/* ccs-no-print */
-@media print {
-    #results-filters {
-        .results-panel {
-            background-color: none; 
-            
-        }
-    }
-    .ccs-print-icon {
-        display: none; 
-    }
-}
-
 
 
 /* ccs global patterns start: currently here. **************************/
@@ -534,10 +453,6 @@ table.ccs-govuk-table--style {
             max-width: ($search02 - 2) !important; //for -moz-
         } 
     }
-}
-
-.ccs-no-underline {
-    text-decoration: none; 
 }
 
 .css-govuk-checkboxes--s { 
