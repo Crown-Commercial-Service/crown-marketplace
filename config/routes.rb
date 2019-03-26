@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
     get '/suppliers/long-list', to: 'long_list#long_list'
     post '/suppliers/longList' => 'long_list#long_list'
+    get '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
@@ -44,6 +45,7 @@ Rails.application.routes.draw do
     get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
     get '/supplier/:id', to: 'suppliers#show', as: 'supplier'
+    get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -87,6 +89,10 @@ Rails.application.routes.draw do
     get '/auth/dfe/callback' => 'auth#callback'
   end
   post '/sign-out' => 'auth#sign_out', as: :sign_out
+
+  scope module: :postcode do
+    resources :postcodes, only: [:show]
+  end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
