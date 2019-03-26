@@ -6,6 +6,9 @@
             number: @suppliers.count,
             suppliers: number_to_human(@suppliers.count, units: :companies, format: '%u')) %>
     </p>
+    <p>
+      <%= link_to(t('.download_suppliers_list'), management_consultancy_suppliers_download_path, class: 'govuk-button') unless @suppliers.empty? %>
+    </p>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
   </div>

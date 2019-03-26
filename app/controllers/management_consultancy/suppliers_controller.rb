@@ -14,5 +14,7 @@ module ManagementConsultancy
         params[:expenses] == 'paid'
       )
     end
+
+    def download; end
   end
 end
