@@ -39,24 +39,12 @@ $(() => {
 
     $('#fm-postcode-input').on('keyup', (e) => {
 
-        if (isPostCodeValid(e.target.value)) {
+        if (pageUtils.isPostCodeValid(e.target.value)) {
             showPostCodeError(false);
             postCode = e.target.value;
         } else {
             postCode = "";
         }
-    });
-
-    const isPostCodeValid = ((postCodeInput) => {
-        let result;
-        if (postCodeInput) {
-            postCodeInput = postCodeInput.replace(/\s/g, "");
-            const regex = /^[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/i;
-            result = regex.test(postCodeInput);
-        } else {
-            result = false;
-        }
-        return result;
     });
 
     const showPostCodeError = ((show, errorMsg) => {
@@ -113,7 +101,7 @@ $(() => {
 
     $('#fm-post-code-lookup-button').click((e) => {
         e.preventDefault();
-        if (isPostCodeValid(postCode)) {
+        if (pageUtils.isPostCodeValid(postCode)) {
             showPostCodeError(false);
             isPostCodeInLondon(postCode);
 

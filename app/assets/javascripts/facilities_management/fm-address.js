@@ -15,6 +15,8 @@ $(() => {
             $('#fm-address-postcode').val(postCode);
         }
 
+        $('#fm-address-line-1').focus();
+
     });
 
 
@@ -80,12 +82,13 @@ $(() => {
             result = false;
         }
 
-        if (result && !address['fm-address-postcode']) {
+        if (result && !address['fm-address-postcode'] || pageUtils.isPostCodeValid(postCode) === false) {
             id = 'fm-address-postcode';
             result = false;
         }
 
         if (result === false) {
+            $('#' + id).focus();
             $('#' + id + '-container').addClass('govuk-form-group--error');
             $('#' + id + '-error').removeClass('govuk-visually-hidden');
         } else {
