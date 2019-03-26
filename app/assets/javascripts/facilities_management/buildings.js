@@ -42,7 +42,6 @@ $(() => {
         if (isPostCodeValid(e.target.value)) {
             showPostCodeError(false);
             postCode = e.target.value;
-            console.log(postCode);
         } else {
             postCode = "";
         }
@@ -87,18 +86,60 @@ $(() => {
             });
     });
 
+    const isPostCodeInLondon = ((postcode) => {
+
+        pageUtils.clearCashedData('fm-postcode-is-in-london');
+
+        $.get(encodeURI("/postcodes/" + postCode))
+            .done(function (data) {
+                // Todo remove this when the api returns a 200 code for found post codes
+                if (data && !data.status) {
+                    data.status = 200;
+                }
+
+                if (data && data.status === 200) {
+                    pageUtils.setCachedData('fm-postcode-is-in-london', data.result && data.result.region === 'London' ? true : false);
+                    pageUtils.setCachedData('fm-postcode', postCode);
+                }
+
+                if (data && data.status === 404) {
+                    showPostCodeError(true, data.error);
+                }
+            })
+            .fail(function (data) {
+                showPostCodeError(true, data.error);
+            });
+    });
+
     $('#fm-post-code-lookup-button').click((e) => {
         e.preventDefault();
         if (isPostCodeValid(postCode)) {
             showPostCodeError(false);
-            getAddresses(postCode);
+            isPostCodeInLondon(postCode);
+
+            //fm-post-code-results-container
+            $('#fm-postcode-label').text(postCode);
+            $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
+            $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
+
+
+            //getAddresses(postCode);
         } else {
             showPostCodeError(true);
         }
     });
 
+    $('#fm-change-postcode').click((e) => {
+        $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
+        $('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
+    });
+
     $('#fm-new-building-continue').click((e) => {
         e.preventDefault();
+    });
+
+    $('#fm-building-not-found').click((e) => {
+
     });
 
     init();

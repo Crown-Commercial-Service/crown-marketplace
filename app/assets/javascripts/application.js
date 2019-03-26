@@ -22,4 +22,4 @@
 //= require facilities_management/longList.js
 //= require facilities_management/standard_contract_questions.js
 //= require facilities_management/buildings.js
-
+//= require facilities_management/fm-address.js
