@@ -424,7 +424,8 @@ en:
     suppliers:
       index:
         download_suppliers_list: Download the supplier list
-        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> that can provide consultants who can meet your requirements"
+        heading: Supplier results
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
   miles:
     unit:
       one: mile
