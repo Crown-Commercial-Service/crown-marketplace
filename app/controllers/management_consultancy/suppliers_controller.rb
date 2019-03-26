@@ -17,6 +17,10 @@ module ManagementConsultancy
       @suppliers = Kaminari.paginate_array(@all_suppliers).page(params[:page])
     end
 
+    def show
+      @supplier = Supplier.find(params[:id])
+    end
+
     def download; end
   end
 end
