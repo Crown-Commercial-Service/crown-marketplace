@@ -423,6 +423,7 @@ en:
         question: What services will you require?
     suppliers:
       index:
+        download_suppliers_list: Download the supplier list
         suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> that can provide consultants who can meet your requirements"
       supplier:
         contact_email_missing: Contact email not available
