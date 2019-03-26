@@ -8,7 +8,7 @@ RSpec.describe 'management_consultancy/suppliers/_supplier.html.erb' do
   let(:telephone_number) { '01214960123' }
 
   let(:supplier) do
-    build(
+    create(
       :management_consultancy_supplier,
       contact_name: contact_name,
       contact_email: contact_email,
@@ -26,39 +26,14 @@ RSpec.describe 'management_consultancy/suppliers/_supplier.html.erb' do
     expect(rendered).to have_text(supplier.name)
   end
 
-  it 'displays the supplier contact name' do
-    expect(rendered).to have_text(contact_name)
-  end
-
-  it 'displays the supplier contact email' do
-    expect(rendered).to have_text(contact_email)
-  end
-
-  it 'displays the formatted supplier telephone number' do
-    expect(rendered).to have_text('0121 496 0123')
-  end
-
-  context 'when supplier contact name is not available' do
-    let(:contact_name) { nil }
-
-    it 'displays message explaining absence of contact name' do
-      expect(rendered).to have_text('Contact name not available')
+  context 'when the supplier is an SME' do
+    before do
+      supplier.update(sme: true)
+      render 'management_consultancy/suppliers/supplier', supplier: supplier, lot_number: '1'
     end
-  end
 
-  context 'when supplier contact email is not available' do
-    let(:contact_email) { nil }
-
-    it 'displays message explaining absence of contact email' do
-      expect(rendered).to have_text('Contact email not available')
-    end
-  end
-
-  context 'when supplier telephone number is not available' do
-    let(:telephone_number) { nil }
-
-    it 'displays message explaining absence of telephone number' do
-      expect(rendered).to have_text('Telephone number not available')
+    it 'displays the SME label' do
+      expect(rendered).to have_text('SME')
     end
   end
 end

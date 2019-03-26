@@ -423,11 +423,9 @@ en:
         question: What services will you require?
     suppliers:
       index:
-        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> that can provide consultants who can meet your requirements"
-      supplier:
-        contact_email_missing: Contact email not available
-        contact_name_missing: Contact name not available
-        telephone_number_missing: Telephone number not available
+        download_suppliers_list: Download the supplier list
+        heading: Supplier results
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
   miles:
     unit:
       one: mile
@@ -493,6 +491,7 @@ en:
       supply_teachers:
         details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
         title: Not permitted
+  sme: SME
   suppliers:
     unit:
       one: agency

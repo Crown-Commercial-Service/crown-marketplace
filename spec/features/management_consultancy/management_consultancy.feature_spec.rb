@@ -58,7 +58,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 1 - business services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Aardvark Ltd/)
   end
@@ -81,7 +81,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 1 - business services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('0 companies')
   end
   scenario 'Buyer wants to buy procurement, supply chain and commercial services (Lot 2)' do
@@ -102,7 +102,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 2 - procurement, supply chain and commercial services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Mega Group PLC/)
   end
@@ -125,7 +125,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 3 - complex and transformation services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Johnson LLP/)
   end
@@ -148,7 +148,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 4 - strategic services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Aardvark Ltd/)
   end
