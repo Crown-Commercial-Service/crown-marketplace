@@ -11,7 +11,7 @@ function ifChecked(sWrap, h){//count and show checked checkboxes totals
         var txt = h.data('txt');
         h.find('.ccs-filter-no').text(howmany).end().find('.ccs-filter-txt').text(txt).end().addClass('ccs-hint--show');
     }else{
-        h.removeClass('ccs-hint--show').find('.ccs-filter-no .ccs-filter-txt').empty();
+        h.removeClass('ccs-hint--show').find('.ccs-filter-no').empty().end().find('.ccs-filter-txt').empty();
     }
 }
 
@@ -96,3 +96,7 @@ function initCustomFnc() {
         initSearchResults(filt);
     }
 }
+
+jQuery(document).ready(function(){ 
+    initCustomFnc(); 
+});
