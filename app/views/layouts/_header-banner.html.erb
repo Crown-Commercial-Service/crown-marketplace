@@ -1,31 +1,41 @@
       <div class="govuk-header__container govuk-width-container">
-
         <div class="govuk-header__logo">
-          <a href="<%= ccs_homepage_url %>" class="govuk-header__link govuk-header__link--homepage ga-crown-logo" aria-label="Crown Commercial Service homepage">
+          <a href="<%= ccs_homepage_url %>" class="govuk-header__link govuk-header__link--homepage ga-crown-logo " aria-label="Crown Commercial Service homepage">
             <span class="govuk-header__logotype">
               <%= render partial: '/layouts/logotype' %>
-            </span>
+              <span class="govuk-header__logotype-text ccs-remove">Crown Commercial Service</span>
+            </span>              
           </a>
-        </div>
+        </div>        
 
         <div class="govuk-header__content">
           <% if the_landing_page %>
-            <span class="govuk-header__link govuk-header__link--service-name" style="text-decoration: none;">Crown Marketplace</span>
+            <span class="govuk-header__link--service-name">Crown Marketplace</span>
           <% else %>
-           <%= link_to_service_start_page %>
-            <nav>
-              <ul id="navigation" class="govuk-header__navigation ccs-navigation--signin" aria-label="Top Level Navigation">
-                <% if logged_in? %>
-                  <li class="govuk-header__navigation-item">
-                    <%= link_to 'Back to start', service_start_page_path, class: 'govuk-header__link' %>
-                  </li>
-                  <li class="govuk-header__navigation-item">
-                      <%= button_to "Sign out", sign_out_path, class: 'ccs-header__signout' %>
-                  </li>
-                <% end %>
-              </ul>
-            </nav>
+            <%= link_to_service_start_page %>
           <% end %>
-        </div>
 
+          <button type="button" role="button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+
+          <nav>
+            <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+              <li class="govuk-header__navigation-item">
+                <% if the_landing_page %>
+
+                <% else %>
+                  <%= link_to 'Back to start', service_start_page_path, class: 'govuk-header__link' %>
+                <% end %> 
+              </li>
+              <li class="govuk-header__navigation-item">
+                <% if logged_in? %>
+                  <%= button_to "Sign out", sign_out_path, class: 'govuk-header__link ccs-header__signout' %>
+                <% else %>     
+                  <a href="#" class="govuk-header__link">Sign in</a>
+
+                  <!-- button_to "Sign in", sign_in_path, class: 'govuk-header__link ccs-header__signout' -->
+                <% end %>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
