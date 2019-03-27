@@ -1,0 +1,17 @@
+<div id="fm-lot-1b-list" class="govuk-grid-column-one-third">
+  <span class="govuk-heading-m">£7m to 50m</span>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Lot 1b</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <% @suppliers_lot1b.each do |supplier| %>
+      <tr id="<%= SecureRandom.uuid %>" class="govuk-table__row" servicecode="<%= supplier['service_code'] %>" regioncode="<%= supplier['region_code'] %>" >
+        <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
+</div>

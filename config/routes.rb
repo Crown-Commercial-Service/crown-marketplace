@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     get '/agency-payroll-results', to: 'branches#index', slug: 'agency-payroll-results'
     get '/fixed-term-results', to: 'branches#index', slug: 'fixed-term-results', as: 'fixed_term_results'
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
-    resources :branches, only: :index
+    resources :branches, only: %i[index show]
     resources :downloads, only: :index
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
     get '/suppliers/long-list', to: 'long_list#long_list'
     post '/suppliers/longList' => 'long_list#long_list'
+    get '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
@@ -43,10 +44,37 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
+    get '/supplier/:id', to: 'suppliers#show', as: 'supplier'
+    get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
+  end
+
+  namespace 'apprenticeships', path: 'apprenticeships' do
+    get '/', to: 'home#index'
+    get '/gateway', to: 'gateway#index'
+    get '/search', to: 'home#search'
+    get '/search_results', to: 'home#search_results'
+    get '/supplier_search', to: 'home#supplier_search'
+    get '/supplier_search2', to: 'home#supplier_search2'
+    get '/find_apprentices', to: 'home#find_apprentices'
+    get '/find_apprentices2', to: 'home#find_apprentices2'
+    get '/find_apprentices3', to: 'home#find_apprentices3'
+    get '/find_apprentices4', to: 'home#find_apprentices4'
+    get '/find_apprentices5', to: 'home#find_apprentices5'
+    get '/outline', to: 'home#outline'
+    get '/requirements', to: 'home#requirements'
+    get '/requirement', to: 'home#requirement'
+    get '/building_services', to: 'home#building_services'
+    get '/training_provider', to: 'home#training_provider'
+    get '/training_provider_list', to: 'home#training_provider_list'
+    get '/sorry', to: 'home#sorry'
+    get '/signup', to: 'home#signup'
+    get '/understanding', to: 'home#understanding'
+    get '/training_details', to: 'home#training_details'
+    get '/download_provider', to: 'home#download_provider'
   end
 
   get '/errors/404'
@@ -61,6 +89,10 @@ Rails.application.routes.draw do
     get '/auth/dfe/callback' => 'auth#callback'
   end
   post '/sign-out' => 'auth#sign_out', as: :sign_out
+
+  scope module: :postcode do
+    resources :postcodes, only: [:show]
+  end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'

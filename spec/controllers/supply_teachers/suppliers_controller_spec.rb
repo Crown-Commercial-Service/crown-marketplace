@@ -95,7 +95,7 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
     it 'sets the back path to the managed-service-provider question' do
       expected_path = journey_question_path(
         journey: 'supply-teachers',
-        slug: 'all-suppliers',
+        slug: 'looking-for',
         looking_for: 'all_suppliers'
       )
       expect(assigns(:back_path)).to eq(expected_path)
