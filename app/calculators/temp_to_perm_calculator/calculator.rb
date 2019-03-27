@@ -24,9 +24,7 @@ module TempToPermCalculator
     )
       raise(ArgumentError, 'Hire date cannot be earlier than contract start date') if hire_date < contract_start_date
       raise(ArgumentError, 'Notice date cannot be later than hire date') if notice_date && notice_date > hire_date
-      if notice_date && notice_date < contract_start_date
-        raise(ArgumentError, 'Notice date cannot be earlier than contract start date')
-      end
+      raise(ArgumentError, 'Notice date cannot be earlier than contract start date') if notice_date && notice_date < contract_start_date
 
       @day_rate = day_rate
       @days_per_week = days_per_week
@@ -96,7 +94,8 @@ module TempToPermCalculator
     end
 
     def chargeable_working_days_based_on_early_hire
-      WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED - working_days
+      chargeable_working_days = WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED - working_days
+      chargeable_working_days.negative? ? 0 : chargeable_working_days
     end
 
     def chargeable_working_days_based_on_lack_of_notice

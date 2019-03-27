@@ -13,7 +13,7 @@ RSpec.describe SupplyTeachers::Spreadsheet do
       let(:workbook) { RubyXL::Parser.parse_buffer(StringIO.new(spreadsheet.to_xlsx)) }
 
       it 'is has the name Suppliers' do
-        expect(worksheet.sheet_name).to eq 'Suppliers'
+        expect(worksheet.sheet_name).to eq 'Agency shortlist'
       end
 
       it 'has two header row and two data rows' do

@@ -1,17 +1,6 @@
 <a href="/facilities-management/select-services" class="govuk-back-link ccs-no-print">Back</a>
 
-<div id="-error-message" name="longList-error-message" hidden class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-  <h2 class="govuk-error-summary__title" id="error-summary-title">
-    There is a problem
-  </h2>
-  <div class="govuk-error-summary__body">
-    <ul class="govuk-list govuk-error-summary__list">
-      <li>
-        <a href="#">You must select at least one longList before clicking the save continue button</a>
-      </li>
-    </ul>
-  </div>
-</div>
+<%= render('errors/inline_error_summary') %>
 
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
@@ -29,93 +18,14 @@
   <div class="govuk-grid-row">
     <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print" role="button">Hide filters</a><br>
     <div id="fm-filter-pane" class="govuk-grid-column-one-third">
-      <div class="govuk-!-padding-2 CCS-fm-supplier-filter-container">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-one-half"><strong class="govuk-heading-m ccs-no-print">Apply filters</strong></div>
-          <div class="govuk-grid-column-one-half">
-            <a href="<%= @select_fm_locations %>" class="remove-all ccs-no-print" >Clear filters</a></div>
-        </div>
-        <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-            <strong class="govuk-heading-m govuk-!-padding-1">Region</strong>
-          </div>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half"><strong id="region-count" class="govuk-heading-s">2 selected</strong></div>
-            <div class="govuk-grid-column-one-half ccs-no-print"><a href="<%= @select_fm_locations %>">Change region</a></div>
-          </div>
-          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-            <div id="fm-region-check-boxes" class="govuk-checkboxes"></div>
-          </div>
-        </div>
-        <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-            <strong class="govuk-heading-m govuk-!-padding-1">Service</strong>
-          </div>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half"><strong id="service-count" class="govuk-heading-s">2 selected</strong></div>
-            <div class="govuk-grid-column-one-half ccs-no-print"><a href="<%= @select_fm_services %>">Change service</a></div>
-          </div>
-          <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-            <div id="fm-service-check-boxes" class="govuk-checkboxes"></div>
-          </div>
-        </div>
-      </div>
+      <%= render('facilities_management/long_list/filters') %>
     </div>
 
     <!-- Start of main list section -->
     <div id="CCS-fm-suppliers-long-list" class="govuk-grid-column-two-thirds">
-      <div id="fm-lot-1a-list" class="govuk-grid-column-one-third">
-        <span class="govuk-heading-m">Up to £7m</span>
-        <table class="govuk-table">
-          <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="col">Lot 1a</th>
-          </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-          <% @suppliers_lot1a.each do |supplier| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
-            </tr>
-            </tbody>
-          <% end %>
-          </table>
-      </div>
-
-      <div id="fm-lot-1b-list" class="govuk-grid-column-one-third">
-        <span class="govuk-heading-m">£7m to 50m</span>
-        <table class="govuk-table">
-        <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col">Lot 1b</th>
-        </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-        <% @suppliers_lot1b.each do |supplier| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
-          </tr>
-          </tbody>
-        <% end %>
-        </table>
-      </div>
-
-      <div id="fm-lot-1c-list" class="govuk-grid-column-one-third">
-        <span class="govuk-heading-m">Over £50m</span><table class="govuk-table">
-        <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col">Lot 1c</th>
-        </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-        <% @suppliers_lot1c.each do |supplier| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
-          </tr>
-          </tbody>
-        <% end %>
-        </table>
-      </div>
+      <%= render('facilities_management/long_list/lot1a') %>
+      <%= render('facilities_management/long_list/lot1b') %>
+      <%= render('facilities_management/long_list/lot1c') %>
     </div>
   </div>
   <div class="govuk-grid-row ccs-no-print">
@@ -125,7 +35,7 @@
       <span>You can open a competition for suppliers after you have received an assessed value from us.</span>
     </div>
 
-    <a id="suppliers-continue-button" href="/facilities-management/select-locations" class="govuk-button ccs-no-print" role="button">Continue</a><br>
+    <a id="suppliers-continue-button" href="/facilities-management/standard-contract/questions" class="govuk-button ccs-no-print" role="button">Continue</a><br>
     <p>
       <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" >Print this page</a>
     </p>
