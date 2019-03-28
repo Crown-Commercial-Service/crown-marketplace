@@ -55,22 +55,17 @@ module CCS
   end
 
   def self.load_static(directory = 'data/')
-    p 'Loading NUTS static data'
-    p "Environment: #{Rails.env}"
+    p "Loading NUTS static data, Environment: #{Rails.env}"
 
     CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv', config
     CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv', config
     CCS.csv_to_nuts_regions directory + 'nuts3_regions.csv', config
 
     p "Finished loading NUTS codes into db #{Rails.application.config.database_configuration[Rails.env]['database']}"
-    p
-    p 'Loading FM regions static data'
     CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv', config
     p 'Loading FM rates static data'
     CCS.csv_to_fm_rates directory + 'facilities_management/rates.csv', config
   end
-
-
 end
 
 namespace :db do
