@@ -17,6 +17,7 @@ module SupplyTeachers
     end
 
     def show
+      @back_path = :back
       @branch = Branch.friendly.find(params[:id])
     end
 
