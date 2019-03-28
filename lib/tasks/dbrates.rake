@@ -4,7 +4,6 @@ module CCS
 
   def self.csv_to_fm_rates(file_name, db_config)
 
-    byebug
     db = PG.connect(db_config)
     query = 'create table IF NOT EXISTS fm_rates (code varchar(5) UNIQUE, framework varchar(10), benchmark varchar(10));'
     db.query query
