@@ -91,4 +91,3 @@ RSpec.describe FMCalculator::Calculator do
   end
 end
 # rubocop:enable all
-
