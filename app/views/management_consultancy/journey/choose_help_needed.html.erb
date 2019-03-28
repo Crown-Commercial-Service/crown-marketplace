@@ -1,0 +1,25 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.question') %>
+        </h1>
+      </legend>
+      <%= display_error(@journey, :help_needed) %>
+      <div class="govuk-radios">
+        <% ManagementConsultancy::Journey::ChooseHelpNeeded::FRAMEWORKS.each do |framework| %>
+          <div class="govuk-radios__item">
+            <%= radio_button_tag :help_needed, framework, checked?(params[:help_needed], framework), class: 'govuk-radios__input' %>
+            <%= label_tag :help_needed, t(".#{framework}_description"), class: 'govuk-label govuk-radios__label' %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+  <%= submit_tag t('.submit'), class: "govuk-button" %>
+<% end %>
