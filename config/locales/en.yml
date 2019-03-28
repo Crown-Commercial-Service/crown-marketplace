@@ -421,12 +421,10 @@ en:
         management_consultants_description: Specific areas of expertise for longer running projects
         question: What do you need to procure?
         research_marketplace_description: Social, economic or market research for projects of all size and budgets
-        submit: Continue
         technology_services_description: Technology services all government security classifcation levels
       choose_lot:
         question: What kind of management consultancy do you want to procure?
         question_hint: The lot you choose here will affect the services offered and the suppliers presented.
-        submit: Continue
       choose_regions:
         question: In which regions will you require the services?
       choose_services:
