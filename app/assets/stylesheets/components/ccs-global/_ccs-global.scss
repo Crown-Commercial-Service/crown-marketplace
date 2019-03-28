@@ -1,3 +1,9 @@
+%ccs-font-21 {
+    font-size: 21px;
+    font-size: 1.3125rem;
+    line-height: 1.5;
+}
+
 .govuk-header__navigation .govuk-header__navigation-item {
     border-bottom: none !important; 
 }
@@ -135,7 +141,51 @@ ul.ccs-checklist {
 /* CCS checklist with tick/x icons, end */
 
 
+/* ccs dynamic accordian starts ... */
+#ccs-dynamic-accordian {
 
+    .govuk-accordion__open-all {
+        margin-bottom: govuk-spacing(3);
+    }
+
+    .govuk-accordion__section-header {
+        .govuk-accordion__section-heading .govuk-accordion__section-button {
+            //@include govuk-font($size: 19); //this is a std gds size (no 20px)
+            @extend %ccs-font-21;
+            font-weight: normal; 
+        }
+
+        span.govuk-accordion__icon {//can't adjust further: browsers limit at 25%
+            width: 14px; 
+            height: 13px; 
+            margin-top: -6px; 
+
+            &:before, &:after {
+                background-color: govuk-colour("grey-1"); 
+            }
+        }
+    }
+
+    .govuk-accordion__section-content {
+        margin-top: -#{govuk-spacing(3)}; 
+
+        .govuk-fieldset {
+            legend {
+                display: block; 
+                position: absolute; 
+                left: -3000px; 
+                top: -3000px; 
+            }
+        }
+
+        .govuk-checkboxes__input + .govuk-checkboxes__label::before {
+            border-width: 1.5px; 
+        }
+
+    }
+
+}
+/* ccs dynamic accordain ends */
 
 
 

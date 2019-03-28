@@ -79,7 +79,45 @@ function initSearchResults(id){
     });
 }
 
+function initDynamicAccordian(){
+    var accordion = $('#accordion-default'); 
 
+    accordion.find('.govuk-checkboxes').each(function(){ 
+        var theseboxgroups = $(this).find('.govuk-checkboxes__item'); 
+
+
+        //listen for change of state on the checkboxes to add to item to list
+
+
+
+        var hasAll = $(this).find('.ccs-select-all');
+        if(hasAll.length){
+            hasAll.find('.govuk-checkboxes__label').click(function(){ 
+                
+                
+                //this works
+                //theseboxgroups.find('.govuk-checkboxes__input').prop('checked', true);
+                
+                //but need to check if true then turn to false and visaversa
+                theseboxgroups.find('.govuk-checkboxes__input').each(function(){
+                    if(){
+                        $(this).find('.govuk-checkboxes__input').prop('checked', true);
+                    }else{
+
+                    }
+                    
+                });
+            });
+        }
+
+        /*$(this).find('.govuk-checkboxes__input').each(function(){
+            if($(this).hasClass('.ccs-select-all')){
+                alert('yep');
+            }
+        });*/
+    });
+
+}
 
 
 
@@ -88,12 +126,13 @@ function initSearchResults(id){
 
 
 function initCustomFnc() {
-    
-
-
     var filt = $('#ccs-at-results-filters');
     if(filt.length){//call function only if this id is on this page
         initSearchResults(filt);
+    }
+
+    if($('#ccs-dynamic-accordian').length){//if this pg has this ID
+        initDynamicAccordian();
     }
 }
 
