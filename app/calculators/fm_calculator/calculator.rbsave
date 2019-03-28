@@ -6,7 +6,6 @@ require 'pg'
 #
 # # facilities management calculator based on Damolas spreadsheet -  the first set framework calculations are repeated with a benchmark rate to give two values
 # # 1. Unit of measure of deliverables required
-#
 # # 3. Benchmarked costs
 # # the calculations are simple and sequential based on previous totals which are then used for subsequent calculations - calculations are either summing or multiplication
 # # cafm = computer aided facilities management
