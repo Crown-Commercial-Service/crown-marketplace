@@ -145,7 +145,8 @@ ul.ccs-checklist {
 #ccs-dynamic-accordian {
 
     .govuk-accordion__open-all {
-        margin-bottom: govuk-spacing(3);
+        margin-bottom: govuk-spacing(3); 
+        text-decoration: underline; 
     }
 
     .govuk-accordion__section-header {
@@ -181,9 +182,86 @@ ul.ccs-checklist {
         .govuk-checkboxes__input + .govuk-checkboxes__label::before {
             border-width: 1.5px; 
         }
+    }
+
+    #css-list-basket {
+        padding-top: govuk-spacing(4); 
+
+        .govuk-heading-m {
+            margin-bottom: govuk-spacing(1); 
+        }
+    
+        & > button {
+            width: 100%; 
+        }
+
+        & > div {
+            background-color: govuk-colour("grey-4"); 
+            padding: govuk-spacing(2);            
+        }
+
+        ul.govuk-list {
+            margin: govuk-spacing(3) 0 0 0; 
+
+            li {
+                background-color: govuk-colour("white"); 
+                margin-bottom: 0;
+                padding: govuk-spacing(1) govuk-spacing(2);
+                border-top: 1px solid govuk-colour("grey-2"); 
+
+                &:first-child {
+                    border-top: none; 
+                }
+
+                &::after {
+                    content: '';
+                    clear: both;
+                    display: table;
+                }
+
+                span:first-child {
+                    width: 66%; 
+                    text-align: left; 
+                    font-size: 16px; 
+                    font-size: 1rem; 
+                    top: 0; 
+                    float: left; 
+                    padding-top: 2px; 
+                }
+
+                span, a {
+                    width: 33%; 
+                    text-align: right; 
+                    font-size: 14px; 
+                    font-size: 0.9rem; 
+                    position: relative; 
+                    top: -2px; 
+                    display: inline-block;                     
+                }
+
+                a {
+                    color: $govuk-link-colour; 
+                    &:hover {
+                        color: $govuk-link-hover-colour; 
+                    }
+                }
+                
+            }
+
+            li:first-child {
+                border-bottom: none; 
+            }
+        }
 
     }
 
+}
+@media (max-width: 641px) {//mobile
+    #css-list-basket {
+        & > button {
+            display: none; 
+        }
+    }
 }
 /* ccs dynamic accordain ends */
 
