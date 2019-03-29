@@ -46,6 +46,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
     required_region = Nuts2Region.find_by(code: 'UKC1')
 
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
+
     choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
 
@@ -69,6 +72,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
     required_region = Nuts2Region.find_by(code: 'UKC1')
 
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
+
     choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
 
@@ -89,6 +95,9 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     required_service = ManagementConsultancy::Service.where(code: '2.1').first
     required_region = Nuts2Region.find_by(code: 'UKC2')
+
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
 
     choose 'Lot 2 - procurement, supply chain and commercial services'
     click_on I18n.t('common.submit')
@@ -113,6 +122,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     required_service = ManagementConsultancy::Service.where(code: '3.1').first
     required_region = Nuts2Region.find_by(code: 'UKD1')
 
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
+
     choose 'Lot 3 - complex and transformation services'
     click_on I18n.t('common.submit')
 
@@ -135,6 +147,9 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     required_service = ManagementConsultancy::Service.where(code: '4.1').first
     required_region = Nuts2Region.find_by(code: 'UKD3')
+
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
 
     choose 'Lot 4 - strategic services'
     click_on I18n.t('common.submit')
