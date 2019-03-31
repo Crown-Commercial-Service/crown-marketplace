@@ -1,7 +1,43 @@
+<% x = 0; %>
 <h2 class="govuk-caption-xl">Your buildings</h2>
 <h1 class="govuk-heading-xl">Add your buildings</h1>
-<h2 class="govuk-heading-m govuk-!-margin-0">0 buildings are on your list now</h2>
-<h2 class="govuk-caption-m govuk-!-margin-4">Browse the list of 0 building in total so far.</h2>
+<h2 class="govuk-heading-m govuk-!-margin-0"><%= @building_count %> building(s) are on your list now</h2>
+<h2 class="govuk-caption-m govuk-!-margin-4">Browse the list of <%= @building_count %> building(s) in total so far.</h2>
 
-<a id="fm-buildings-continue" href="buildings/new-building" class="govuk-button ccs-no-print" role="button">+ Add a building</a>
+<div id="fm-buildings-container">
+  <div class="govuk-accordion" data-module="accordion" id="services-accordion">
+    <div class="govuk-radios">
+      <% @building_data.each do |building| %>
+        <% x = x +1; obj = JSON.parse(building['building'].to_s) %>
+        <div class="govuk-accordion__section ">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <!--<div class="govuk-radios__item govuk-!-margin-top-3">-->
+              <!-- <input class="govuk-radios__input" id="<%= 'building' + x.to_s %>" name="<%= 'building_radio' %>" type="radio" value="<%= 'building' + x.to_s %>">-->
+              <!-- <label class="govuk-label govuk-radios__label" for="<%= 'building' + x.to_s %>">-->
+              <span class="govuk-accordion__section-button" id="<%= 'building_' + x.to_s + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + obj['name'] %></span>
+              <!--</label>-->
+              <!--</div> -->
+            </h2>
+          </div>
+          <div class="govuk-accordion__section-content" aria-labelledby="<%= obj['name'] %>">
+            <div class="govuk-body">Building name: <%= obj['name'] %></div>
+            <div class="govuk-body">Address: <%= obj['address']['fm-address-line-1'] %>,
+              <%= obj['address']['fm-address-line-2'] %>,
+              <%= obj['address']['fm-address-town'] %>,
+              <%= obj['address']['fm-address-county'] %>,
+              <%= obj['address']['fm-address-postcode'] %>
+            </div>
+            <div class="govuk-body">London Region: <%= obj['isLondon'] %></div>
+          </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
 </div>
+<div>
+  <a id="fm-buildings-continue" href="buildings/new-building" class="govuk-button ccs-no-print" role="button">+ Add a
+    building
+  </a>
+</div>
+
