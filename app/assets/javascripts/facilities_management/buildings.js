@@ -1,6 +1,8 @@
 $(() => {
 
     let postCode = "";
+    let buildings = pageUtils.getCachedData('fm-buildings') || [];
+    let counter = 0;
 
     const init = (() => {
 
@@ -10,7 +12,66 @@ $(() => {
             $('#fm-new-building-name').val(newBuildingName);
         }
 
+        loadBuildings();
+
     });
+
+    const addBuildingToList = ((building) => {
+
+        counter++;
+
+        let buildingAccordionHTML = '<div class="govuk-accordion__section ">' +
+            '<div class="govuk-accordion__section-header">' +
+            '<h2 class="govuk-accordion__section-heading">' +
+            '<span class="govuk-accordion__section-button" id="accordion-default-heading-1">' +
+            'Writing well for the web' +
+            '</span>' +
+            '</h2>' +
+            '</div>' +
+            '<div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">' +
+            '<p class="govuk-body">This is the content for Writing well for the web.</p>' +
+            '</div>' +
+            '</div>'
+        //$('#fm-buildings-accordion').append(buildingAccordionHTML);
+
+        let test = '<div class="govuk-accordion__section ">\n' +
+            '    <div class="govuk-accordion__section-header">\n' +
+            '      <h2 class="govuk-accordion__section-heading">\n' +
+            '        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">\n' +
+            '          Writing well for specialists\n' +
+            '        </span>\n' +
+            '      </h2>\n' +
+            '    </div>\n' +
+            '    <div id="accordion-default-content-' + counter +'" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">\n' +
+            '      <p class=\'govuk-body\'>This is the content for Writing well for specialists.</p>\n' +
+            '    </div>\n' +
+            '  </div>';
+
+        return test;
+
+
+    });
+
+    const loadBuildings = (() => {
+
+        if (buildings) {
+
+            // let accordian = '<div class="govuk-accordion" data-module="accordion" id="accordion-default">';
+            //
+            // buildings.forEach((building, index, array) => {
+            //     accordian += addBuildingToList(building);
+            // });
+            //
+            // accordian += '</div>';
+            //
+            // $('#fm-buildings-container').append(accordian);
+            // $('.govuk-accordion').refresh();
+
+        }
+
+
+    });
+
 
     const validateBuildingName = ((value) => {
 
@@ -129,6 +190,9 @@ $(() => {
     $('#fm-building-not-found').click((e) => {
 
     });
+
+//
+
 
     init();
 

@@ -17,6 +17,8 @@ $(() => {
 
         $('#fm-address-line-1').focus();
 
+        address['fm-address-postcode'] = postCode;
+
     });
 
 
@@ -104,15 +106,32 @@ $(() => {
         e.preventDefault();
 
         if (isAddressValid(address)) {
+
+            let isLondon = pageUtils.getCachedData('fm-postcode-is-in-london');
+
             let building = {
                 name: buildingName,
-                address: address
+                address: address,
+                isLondon: isLondon && isLondon === true ? 'Yes' : 'No'
             };
 
             buildings.push(building);
             pageUtils.setCachedData('fm-buildings', buildings);
 
-            location.href = '/facilities-management/buildings-list'
+            $.ajax({
+                url: '/facilities-management/buildings/new-building-address/save-building',
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(building),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.href = '/facilities-management/buildings-list'
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
         }
 
     });
