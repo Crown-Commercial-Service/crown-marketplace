@@ -168,6 +168,15 @@ RSpec.feature 'Management consultancy', type: :feature do
     expect(page).to have_text(/Aardvark Ltd/)
   end
 
+  scenario 'Buyer needs a different framework' do
+    visit_management_consultancy_start
+
+    choose 'help_needed_g_cloud'
+    click_on 'Continue'
+
+    expect(page).to have_css('h1', text: 'You need a different framework')
+  end
+
   scenario 'Buyer doesn’t pick a framework' do
     visit_management_consultancy_start
     click_on 'Continue'
