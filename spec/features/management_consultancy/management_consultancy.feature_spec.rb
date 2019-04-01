@@ -167,4 +167,11 @@ RSpec.feature 'Management consultancy', type: :feature do
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Aardvark Ltd/)
   end
+
+  scenario 'Buyer doesn’t pick a framework' do
+    visit_management_consultancy_start
+    click_on 'Continue'
+
+    expect(page).to have_css('.govuk-error-message', text: 'Select what you need')
+  end
 end
