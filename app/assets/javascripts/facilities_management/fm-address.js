@@ -110,6 +110,7 @@ $(() => {
             let isLondon = pageUtils.getCachedData('fm-postcode-is-in-london');
 
             let building = {
+                id: pageUtils.generateGuid(),
                 name: buildingName,
                 address: address,
                 isLondon: isLondon && isLondon === true ? 'Yes' : 'No'

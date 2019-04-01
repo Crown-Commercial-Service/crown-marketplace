@@ -13,6 +13,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def new_building
+    @fm_building_data = FMBuildingData.new
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'error'
@@ -25,11 +26,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def save_building
-
     @new_building_json = request.raw_post
-    @fmbuildingData = FMBuildingData.new
-
-    result = @fmbuildingData.save_building(current_login.email.to_s, @new_building_json)
-
+    @fm_building_data = FMBuildingData.new
+    @fm_building_data.save_building(current_login.email.to_s, @new_building_json)
   end
 end
