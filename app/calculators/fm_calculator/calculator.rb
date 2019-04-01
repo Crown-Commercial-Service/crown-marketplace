@@ -51,8 +51,8 @@ module FMCalculator
 
     # read in the benchmark and framework rates - these were taken from the Damolas spreadsheet and put in the postgres database numbers are to 15dp
     def read_benchmark_rates
-      con = PG.connect(dbname: 'marketplace_development', user: 'mike')
-      rs = con.exec 'SELECT code, framework, benchmark FROM public.fm_rates;'
+      query = 'SELECT code, framework, benchmark FROM fm_rates;'
+      rs = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
       @benchmark_rates = {}
       @framework_rates = {}
       rs.each do |row|
@@ -62,8 +62,6 @@ module FMCalculator
         @benchmark_rates[@code] = @benchmark.to_f
         @framework_rates[@code] = @framework.to_f
       end
-      rs&.clear if rs
-      con&.close if con
     end
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
