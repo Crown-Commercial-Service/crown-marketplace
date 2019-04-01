@@ -13,42 +13,6 @@ $(() => {
         }
     });
 
-    const addBuildingToList = ((building) => {
-
-        counter++;
-
-        let buildingAccordionHTML = '<div class="govuk-accordion__section ">' +
-            '<div class="govuk-accordion__section-header">' +
-            '<h2 class="govuk-accordion__section-heading">' +
-            '<span class="govuk-accordion__section-button" id="accordion-default-heading-1">' +
-            'Writing well for the web' +
-            '</span>' +
-            '</h2>' +
-            '</div>' +
-            '<div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">' +
-            '<p class="govuk-body">This is the content for Writing well for the web.</p>' +
-            '</div>' +
-            '</div>'
-        //$('#fm-buildings-accordion').append(buildingAccordionHTML);
-
-        let test = '<div class="govuk-accordion__section ">\n' +
-            '    <div class="govuk-accordion__section-header">\n' +
-            '      <h2 class="govuk-accordion__section-heading">\n' +
-            '        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">\n' +
-            '          Writing well for specialists\n' +
-            '        </span>\n' +
-            '      </h2>\n' +
-            '    </div>\n' +
-            '    <div id="accordion-default-content-' + counter + '" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">\n' +
-            '      <p class=\'govuk-body\'>This is the content for Writing well for specialists.</p>\n' +
-            '    </div>\n' +
-            '  </div>';
-
-        return test;
-
-
-    });
-
     const validateBuildingName = ((value) => {
 
         if (value) {
@@ -101,15 +65,10 @@ $(() => {
 
         pageUtils.clearCashedData('fm-postcode-is-in-london');
 
-        $.get(encodeURI("/postcodes/" + postCode))
+        $.get(encodeURI("/postcodes/in_london?postcode=" + postCode))
             .done(function (data) {
-                // Todo remove this when the api returns a 200 code for found post codes
-                if (data && !data.status) {
-                    data.status = 200;
-                }
-
-                if (data && data.status === 200) {
-                    pageUtils.setCachedData('fm-postcode-is-in-london', data.result && data.result.region === 'London' ? true : false);
+                if (data) {
+                    pageUtils.setCachedData('fm-postcode-is-in-london', data);
                     pageUtils.setCachedData('fm-postcode', postCode);
                 }
 
@@ -122,12 +81,28 @@ $(() => {
             });
     });
 
+    const getRegion = ((postcode) => {
+
+        $.get(encodeURI("/postcodes/" + postcode))
+            .done(function (data) {
+                if (data) {
+                    pageUtils.setCachedData('fm-current-region', data.region);
+                }
+
+
+            })
+            .fail(function (data) {
+                showPostCodeError(true, data.error);
+            });
+    });
+
+
     $('#fm-post-code-lookup-button').click((e) => {
         e.preventDefault();
         if (pageUtils.isPostCodeValid(postCode)) {
             showPostCodeError(false);
             isPostCodeInLondon(postCode);
-
+            getRegion(postCode);
             //fm-post-code-results-container
             $('#fm-postcode-label').text(postCode);
             $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');

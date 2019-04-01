@@ -112,6 +112,7 @@ $(() => {
             let building = {
                 id: pageUtils.generateGuid(),
                 name: buildingName,
+                region: pageUtils.getCachedData('fm-current-region'),
                 address: address,
                 isLondon: isLondon && isLondon === true ? 'Yes' : 'No'
             };
