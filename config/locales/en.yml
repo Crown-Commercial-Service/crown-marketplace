@@ -446,6 +446,10 @@ en:
         question: In which regions will you require the services?
       choose_services:
         question: What services will you require?
+      other_framework:
+        back_to_start: Back to start
+        heading: You need a different framework
+        introduction: This service is for the management consultancy frameworks RM3745 and RM6008.
     suppliers:
       index:
         download_suppliers_list: Download the supplier list
