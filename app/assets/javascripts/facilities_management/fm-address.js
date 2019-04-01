@@ -1,14 +1,33 @@
 $(() => {
 
     let address = {};
-    let buildings = pageUtils.getCachedData('fm-buildings') || [];
     let buildingName = pageUtils.getCachedData('fm-new-building-name');
     let postCode = pageUtils.getCachedData('fm-postcode');
+    let currentBuilding = pageUtils.getCachedData('fm-current-building');
 
     const init = (() => {
 
         if (buildingName) {
             $('#fm-building-name').text(buildingName);
+        }
+
+        if (currentBuilding) {
+
+            let address = currentBuilding.address;
+
+            let newOptionData = address['fm-address-line-1'] + ', ' +
+                address['fm-address-line-2'] + ', ' +
+                address['fm-address-town'] + ', ' +
+                address['fm-address-county'] + ', ' +
+                address['fm-address-postcode'];
+
+            let newOption = '<option selected value="' + newOptionData + '">' + newOptionData + '</option>';
+
+
+            $('#fm-postcode-lookup-results').append(newOption);
+            $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
+            $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
+
         }
 
         if (postCode) {
@@ -117,9 +136,6 @@ $(() => {
                 isLondon: isLondon && isLondon === true ? 'Yes' : 'No'
             };
 
-            buildings.push(building);
-            pageUtils.setCachedData('fm-buildings', buildings);
-
             $.ajax({
                 url: '/facilities-management/buildings/new-building-address/save-building',
                 dataType: 'json',
@@ -128,7 +144,8 @@ $(() => {
                 data: JSON.stringify(building),
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
-                    location.href = '/facilities-management/buildings-list'
+                    pageUtils.setCachedData('fm-current-building', building);
+                    location.href = '/facilities-management/buildings/new-building'
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
