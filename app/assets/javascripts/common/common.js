@@ -88,7 +88,7 @@ const pageUtils = {
             let result;
             if (postCodeInput) {
                 postCodeInput = postCodeInput.replace(/\s/g, "");
-                const regex = /^[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/i;
+                const regex = /^([A-PR-UWYZ][A-HK-Y0-9](?:[A-HJKS-UW0-9][ABEHMNPRV-Y0-9]?)?\s*[0-9][ABD-HJLNP-UW-Z]{2}|GIR\s*0AA)$/i;
                 result = regex.test(postCodeInput);
             } else {
                 result = false;
