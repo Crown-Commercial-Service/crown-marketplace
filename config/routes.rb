@@ -80,6 +80,7 @@ Rails.application.routes.draw do
   namespace 'ccs_patterns', path: 'ccs-patterns' do
     get '/', to: 'home#index'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
+    get '/supplier-results-v1', to: 'home#supplier_results_v1'
   end
 
   get '/errors/404'
