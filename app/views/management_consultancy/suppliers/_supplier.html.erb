@@ -1,7 +1,7 @@
 <li class="govuk-list">
   <div class="govuk-grid-column-three-quarters">
     <h2 class="govuk-heading-m">
-      <%= link_to supplier.name, management_consultancy_supplier_path(supplier.id), class: "govuk-!-font-size-20 mc-supplier-record__supplier-name ccs-no-underline" %>
+      <%= link_to supplier.name, management_consultancy_supplier_path(supplier.id), class: "govuk-!-font-size-20 ccs-no-underline" %>
       <% if supplier.sme? %>
         <span class="ccs-tag"><%= t('sme') %></span>
       <% end %>
