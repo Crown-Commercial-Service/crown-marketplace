@@ -15,6 +15,10 @@ en:
           attributes:
             expenses:
               inclusion: Please say whether you pay expenses
+        management_consultancy/journey/choose_help_needed:
+          attributes:
+            help_needed:
+              inclusion: Select what you need
         management_consultancy/journey/choose_lot:
           attributes:
             lot:
