@@ -11,9 +11,6 @@ $(() => {
         if (newBuildingName) {
             $('#fm-new-building-name').val(newBuildingName);
         }
-
-        loadBuildings();
-
     });
 
     const addBuildingToList = ((building) => {
@@ -42,7 +39,7 @@ $(() => {
             '        </span>\n' +
             '      </h2>\n' +
             '    </div>\n' +
-            '    <div id="accordion-default-content-' + counter +'" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">\n' +
+            '    <div id="accordion-default-content-' + counter + '" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">\n' +
             '      <p class=\'govuk-body\'>This is the content for Writing well for specialists.</p>\n' +
             '    </div>\n' +
             '  </div>';
@@ -51,27 +48,6 @@ $(() => {
 
 
     });
-
-    const loadBuildings = (() => {
-
-        if (buildings) {
-
-            // let accordian = '<div class="govuk-accordion" data-module="accordion" id="accordion-default">';
-            //
-            // buildings.forEach((building, index, array) => {
-            //     accordian += addBuildingToList(building);
-            // });
-            //
-            // accordian += '</div>';
-            //
-            // $('#fm-buildings-container').append(accordian);
-            // $('.govuk-accordion').refresh();
-
-        }
-
-
-    });
-
 
     const validateBuildingName = ((value) => {
 
@@ -121,20 +97,6 @@ $(() => {
         }
     });
 
-    const getAddresses = ((postCode) => {
-        $.get(encodeURI("https://api.postcodes.io/postcodes/" + postCode))
-            .done(function (data) {
-                if (data.result.region === 'London') {
-                    pageUtils.setCachedData('fm-postcode-is-in-london', true);
-                } else {
-                    pageUtils.setCachedData('fm-postcode-is-in-london', false);
-                }
-            })
-            .fail(function (error) {
-                showPostCodeError(true, error.responseJSON.error);
-            });
-    });
-
     const isPostCodeInLondon = ((postcode) => {
 
         pageUtils.clearCashedData('fm-postcode-is-in-london');
@@ -171,8 +133,6 @@ $(() => {
             $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
             $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
 
-
-            //getAddresses(postCode);
         } else {
             showPostCodeError(true);
         }
@@ -186,13 +146,6 @@ $(() => {
     $('#fm-new-building-continue').click((e) => {
         e.preventDefault();
     });
-
-    $('#fm-building-not-found').click((e) => {
-
-    });
-
-//
-
 
     init();
 

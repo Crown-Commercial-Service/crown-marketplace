@@ -15,20 +15,83 @@
               <!--<div class="govuk-radios__item govuk-!-margin-top-3">-->
               <!-- <input class="govuk-radios__input" id="<%= 'building' + x.to_s %>" name="<%= 'building_radio' %>" type="radio" value="<%= 'building' + x.to_s %>">-->
               <!-- <label class="govuk-label govuk-radios__label" for="<%= 'building' + x.to_s %>">-->
-              <span class="govuk-accordion__section-button" id="<%= 'building_' + x.to_s + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + obj['name'] %></span>
+              <span class="govuk-accordion__section-button" id="<%= obj['id'] + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + obj['name'] %></span>
               <!--</label>-->
               <!--</div> -->
             </h2>
           </div>
           <div class="govuk-accordion__section-content" aria-labelledby="<%= obj['name'] %>">
-            <div class="govuk-body">Building name: <%= obj['name'] %></div>
-            <div class="govuk-body">Address: <%= obj['address']['fm-address-line-1'] %>,
-              <%= obj['address']['fm-address-line-2'] %>,
-              <%= obj['address']['fm-address-town'] %>,
-              <%= obj['address']['fm-address-county'] %>,
-              <%= obj['address']['fm-address-postcode'] %>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter">
+                Type:
+              </div>
+              <div class="govuk-grid-column-three-quarters">
+                Other - Underground Lab
+              </div>
             </div>
-            <div class="govuk-body">London Region: <%= obj['isLondon'] %></div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter">
+                Region:
+              </div>
+              <div class="govuk-grid-column-three-quarters">
+
+              </div>
+            </div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter">
+                Address:
+              </div>
+              <div class="govuk-grid-column-three-quarters">
+                <%= obj['address']['fm-address-line-1'] %>,
+                <%= obj['address']['fm-address-line-2'] %>,
+                <%= obj['address']['fm-address-town'] %>,
+                <%= obj['address']['fm-address-county'] %>,
+                <%= obj['address']['fm-address-postcode'] %>
+              </div>
+            </div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter">
+                Postcode in london:
+              </div>
+              <div class="govuk-grid-column-three-quarters">
+                <%= obj['isLondon'] %>
+              </div>
+            </div>
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter">
+                Internal area:
+              </div>
+              <div class="govuk-grid-column-three-quarters">
+
+              </div>
+            </div>
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter">
+                External area:
+              </div>
+              <div class="govuk-grid-column-three-quarters">
+
+              </div>
+            </div>
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter">
+                Lifts:
+              </div>
+              <div class="govuk-grid-column-three-quarters">
+
+              </div>
+            </div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter">
+                Floors:
+              </div>
+              <div class="govuk-grid-column-three-quarters">
+
+              </div>
+            </div>
           </div>
       <% end %>
       </div>
