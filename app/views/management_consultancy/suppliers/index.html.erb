@@ -10,7 +10,7 @@
       <%= link_to(t('.download_suppliers_list'), management_consultancy_suppliers_download_path, class: 'govuk-button') unless @suppliers.empty? %>
     </p>
     <section class="govuk-grid-column-two-thirds ccs-search-results">
-      <ul class="ccs-at-results-list">
+      <ul class="ccs-results-list">
         <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
       </ul>
     </section>
