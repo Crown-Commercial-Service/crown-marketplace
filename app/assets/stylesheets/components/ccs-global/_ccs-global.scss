@@ -34,6 +34,15 @@
   top: -3000px; 
 }
 
+.ccs-next {
+    text-decoration: none !important; 
+    padding: govuk-spacing(4) 0; 
+    display: block; 
+    width: 100%; 
+    text-align: right; 
+    clear: left; 
+}
+
 #cookie_banner {
     display: none; 
 }
@@ -264,6 +273,129 @@ ul.ccs-checklist {
     }
 }
 /* ccs dynamic accordain ends */
+
+
+/* ccs supplier results v1 starts */
+.ccs-search-results {
+
+    .ccs-search-results__sort {
+        float: right; 
+        clear: left; 
+        margin: 0 3px govuk-spacing(6) 0; 
+
+        .govuk-label {
+            display: inline-block; 
+            font-weight: bold; 
+            margin-right: 10px; 
+        }
+
+        .govuk-select {
+            min-width: 190px; 
+            border-width: 1px; 
+            border-radius: 5px; 
+        }
+        
+    }
+
+    ul.ccs-at-results-list {
+        list-style: none; 
+        padding: 0; 
+        clear: left; 
+
+        li.govuk-list {
+            float: left; 
+            clear: left; 
+            width: 100%; 
+            padding: govuk-spacing(2) 0; 
+            margin: 0; 
+            border-bottom: 1px solid $govuk-border-colour; 
+
+            &:first-child {
+                border-top: 1px solid $govuk-border-colour; 
+            } 
+
+            & > div {
+                padding: 0; 
+            }
+
+            a {
+                margin: 0; 
+            }
+        }
+
+        .ccs-at-results-list__detail {
+            
+            div {
+                float: right; 
+
+                span {
+                    font-weight: bold; 
+                }
+
+                span span.ccs-font--wrap {
+                    font-weight: 700; 
+                    display: block; 
+                    width: 100%; 
+                }
+            }
+
+        }
+
+        .ccs-at-results-list__details {
+            list-style: none; 
+            padding: 0; 
+            margin: govuk-spacing(2) 0 0 0; 
+            width: 100%; 
+
+            li {
+                margin: 0;
+                padding: 0; 
+            }
+        }
+
+    }
+
+    .govuk-table {
+        margin: 0; 
+
+        .govuk-table__head .govuk-table__header {
+            font-weight: bold; 
+        }
+
+        td > a[class^="govuk-heading"]{
+            margin-bottom: 0; 
+        } 
+
+        .govuk-table__header, 
+        .govuk-table__cell {
+            vertical-align: top; 
+        }
+
+        .govuk-table__head th, 
+        .govuk-table__body th, 
+        .govuk-table__body td {
+            text-align: right; 
+            padding-top: govuk-spacing(4); 
+            padding-bottom: govuk-spacing(4); 
+        }
+
+        .govuk-table__head th:first-child, 
+        .govuk-table__body th:first-child, 
+        .govuk-table__body td:first-child {
+            text-align: left; //avoided :last-child usage, for tbls with only one col
+        }
+
+    }
+
+}
+
+@media (max-width: 641px) {//mobile
+    .ccs-search-results ul.ccs-at-results-list .ccs-at-results-list__detail div span span.ccs-font--wrap {
+        display: inline; 
+    }
+}
+/* ccs supplier results v1 ends */
+
 
 
 
