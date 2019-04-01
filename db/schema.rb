@@ -51,6 +51,13 @@ ActiveRecord::Schema.define(version: 2019_03_20_114608) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "fm_rates", id: false, force: :cascade do |t|
+    t.string "code", limit: 255
+    t.decimal "framework", null: false
+    t.decimal "benchmark", null: false
+    t.index ["code"], name: "fm_rates_code_key", unique: true
+  end
+
   create_table "fm_regions", id: false, force: :cascade do |t|
     t.string "code", limit: 255
     t.string "name", limit: 255

@@ -38,6 +38,23 @@ module CCS
     db&.close
   end
 
+  def self.csv_to_fm_rates(file_name, db_config)
+    db = PG.connect(db_config)
+    query = 'create table IF NOT EXISTS fm_rates (code varchar(255) UNIQUE, framework numeric, benchmark numeric );'
+    db.query query
+    CSV.read(file_name, headers: true).each do |row|
+      column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
+      values = row.fields.map { |i| "'#{i}'" }.join(',')
+      query = "DELETE FROM fm_rates where code = '" + row['code'] + "' ; " \
+              'insert into fm_rates ( ' + column_names + ') values (' + values + ')'
+      db.query query
+    end
+  rescue PG::Error => e
+    puts e.message
+  ensure
+    db&.close
+  end
+
   def self.config
     db_config = Rails.application.config.database_configuration[Rails.env]
     p 'db: ' + db_config['database']
@@ -55,17 +72,16 @@ module CCS
   end
 
   def self.load_static(directory = 'data/')
-    p 'Loading NUTS static data'
-    p "Environment: #{Rails.env}"
+    p "Loading NUTS static data, Environment: #{Rails.env}"
 
     CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv', config
     CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv', config
     CCS.csv_to_nuts_regions directory + 'nuts3_regions.csv', config
 
     p "Finished loading NUTS codes into db #{Rails.application.config.database_configuration[Rails.env]['database']}"
-    p
-    p 'Loading FM regions static data'
     CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv', config
+    p 'Loading FM rates static data'
+    CCS.csv_to_fm_rates directory + 'facilities_management/rates.csv', config
   end
 end
 
