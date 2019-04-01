@@ -46,6 +46,9 @@ RSpec.feature 'Management consultancy', type: :feature do
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
     required_region = Nuts2Region.find_by(code: 'UKC1')
 
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
+
     choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
 
@@ -58,7 +61,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 1 - business services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Aardvark Ltd/)
   end
@@ -68,6 +71,9 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
     required_region = Nuts2Region.find_by(code: 'UKC1')
+
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
 
     choose 'Lot 1 - business services'
     click_on I18n.t('common.submit')
@@ -81,7 +87,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 1 - business services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('0 companies')
   end
   scenario 'Buyer wants to buy procurement, supply chain and commercial services (Lot 2)' do
@@ -89,6 +95,9 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     required_service = ManagementConsultancy::Service.where(code: '2.1').first
     required_region = Nuts2Region.find_by(code: 'UKC2')
+
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
 
     choose 'Lot 2 - procurement, supply chain and commercial services'
     click_on I18n.t('common.submit')
@@ -102,7 +111,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 2 - procurement, supply chain and commercial services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Mega Group PLC/)
   end
@@ -112,6 +121,9 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     required_service = ManagementConsultancy::Service.where(code: '3.1').first
     required_region = Nuts2Region.find_by(code: 'UKD1')
+
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
 
     choose 'Lot 3 - complex and transformation services'
     click_on I18n.t('common.submit')
@@ -125,7 +137,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 3 - complex and transformation services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Johnson LLP/)
   end
@@ -135,6 +147,9 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     required_service = ManagementConsultancy::Service.where(code: '4.1').first
     required_region = Nuts2Region.find_by(code: 'UKD3')
+
+    choose 'help_needed_management_consultants'
+    click_on 'Continue'
 
     choose 'Lot 4 - strategic services'
     click_on I18n.t('common.submit')
@@ -148,8 +163,15 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Lot 4 - strategic services')
+    expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Aardvark Ltd/)
+  end
+
+  scenario 'Buyer doesn’t pick a framework' do
+    visit_management_consultancy_start
+    click_on 'Continue'
+
+    expect(page).to have_css('.govuk-error-message', text: 'Select what you need')
   end
 end
