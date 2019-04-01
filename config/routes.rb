@@ -77,6 +77,11 @@ Rails.application.routes.draw do
     get '/download_provider', to: 'home#download_provider'
   end
 
+  namespace 'ccs_patterns', path: 'ccs-patterns' do
+    get '/', to: 'home#index'
+    get '/dynamic-accordian', to: 'home#dynamic_accordian'
+  end
+
   get '/errors/404'
   get '/errors/422'
   get '/errors/500'
