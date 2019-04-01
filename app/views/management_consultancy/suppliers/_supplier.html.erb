@@ -1,23 +1,23 @@
-<div class="mc-supplier-record">
-  <div class="govuk-grid-row supplier-record__header-group">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m">
-        <%= link_to supplier.name, management_consultancy_supplier_path(supplier.id), class: "govuk-!-font-size-27 mc-supplier-record__supplier-name ccs-no-underline" %>
-        <% if supplier.sme? %>
-          <span class="ccs-tag"><%= t('sme') %></span>
-        <% end %>
-      </h2>
-    </div>
+<li class="govuk-list">
+  <div class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-m">
+      <%= link_to supplier.name, management_consultancy_supplier_path(supplier.id), class: "govuk-!-font-size-20 mc-supplier-record__supplier-name ccs-no-underline" %>
+      <% if supplier.sme? %>
+        <span class="ccs-tag"><%= t('sme') %></span>
+      <% end %>
+    </h2>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter ccs-at-results-list__detail">
     <% supplier.rate_cards.select do |rate_card| %>
       <% if rate_card.lot == params[:lot].to_i %>
-        <div class="govuk-grid-column-one-third">
-          <p class="govuk-!-font-size-36">
-            <%= number_to_currency(rate_card.average_daily_rate, precision: 0) %>
-          </p>
-          <p>Average day rate</p>
-        </div>
+        <strong class="govuk-!-font-size-36 ccs-font--wrap">
+          <%= number_to_currency(rate_card.average_daily_rate, precision: 0) %>
+        </strong><br />
+        <span class="govuk-!-font-size-16">
+          Average day rate
+        </span>
       <% end %>
     <% end%>
   </div>
-  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-</div>
+</li>
