@@ -12,7 +12,7 @@ module ManagementConsultancy
         params[:services],
         params[:region_codes],
         params[:expenses] == 'paid'
-      )
+      ).includes(:rate_cards)
 
       @suppliers = Kaminari.paginate_array(@all_suppliers).page(params[:page])
     end
