@@ -12,7 +12,7 @@ RSpec.feature 'Authentication', type: :feature do
     click_on 'Sign in with beta credentials'
 
     expect(page).not_to have_text('Not permitted')
-    expect(page).to have_text('What kind of management consultancy do you want to procure?')
+    expect(page).to have_text('What do you need to procure?')
   end
 
   scenario 'Users signed in using AWS Cognito can sign out' do
