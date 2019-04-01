@@ -15,6 +15,10 @@ en:
           attributes:
             expenses:
               inclusion: Please say whether you pay expenses
+        management_consultancy/journey/choose_help_needed:
+          attributes:
+            help_needed:
+              inclusion: Select what you need
         management_consultancy/journey/choose_lot:
           attributes:
             lot:
@@ -408,15 +412,40 @@ en:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
+    home:
+      index:
+        before_you_start:
+          heading: Before you start
+          use_this_service:
+            heading: 'To use this service, you need to:'
+            item_1: know the location where the work will be carried out
+            item_2_html: review the %{ojeu_contract_link} and framework specification to ensure your requirements are within the scope of this agreement
+            item_3_html: 'know the lot (or lots) the consultancy services belong to - see the documents ''Lot descriptions MCF2 RM6008'' and ''RM3745 MCF Lot desfriptions'' listed on the following agreements: %{mcf_link} and %{mcf2_link}'
+        heading: Find management consultants
+        mcf2_link_text: Management Consultancy Framework Two
+        mcf_link_text: Management Consultancy Framework
+        ojeu_contract_link_text: OJEU contract notice
+        use_this_service:
+          heading: 'Use this service to:'
+          item_1: produce a list of Crown Commercial Service approved management consultants based on your requirements
+          item_2: adhere to the public procurement procedures
     journey:
       choose_expenses:
         answer_expenses_not_paid: We will not pay expenses
         answer_expenses_paid: We will pay expenses
         question: Do you pay expenses?
+      choose_help_needed:
+        contingent_labour_description: Staff for short-term projects with specific outcomes
+        corporate_financial_services_description: Advice on complex corporate financial matters
+        digital_outcomes_and_specialists_description: Support to design, build and deliver digital outcomes using the agile approach
+        g_cloud_description: Cloud hosting, software and support
+        management_consultants_description: Specific areas of expertise for longer running projects
+        question: What do you need to procure?
+        research_marketplace_description: Social, economic or market research for projects of all size and budgets
+        technology_services_description: Technology services all government security classifcation levels
       choose_lot:
         question: What kind of management consultancy do you want to procure?
         question_hint: The lot you choose here will affect the services offered and the suppliers presented.
-        submit: Continue
       choose_regions:
         question: In which regions will you require the services?
       choose_services:
@@ -424,7 +453,8 @@ en:
     suppliers:
       index:
         download_suppliers_list: Download the supplier list
-        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> that can provide consultants who can meet your requirements"
+        heading: Supplier results
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
   miles:
     unit:
       one: mile
@@ -545,7 +575,6 @@ en:
         other_radius_html: 'Change this distance to: '
         page_title: Agencies
         print: Print this page
-        related_actions_html: Related actions
         results_found_html: "<strong>%{results}</strong> found"
         results_found_with_location_html: "<strong>%{results}</strong> found within <strong>%{range}</strong> of <strong>%{postcode}</strong>."
     gateway:

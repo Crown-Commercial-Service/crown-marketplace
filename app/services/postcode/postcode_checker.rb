@@ -5,11 +5,11 @@ module Postcode
   class PostcodeChecker
     def self.in_london?(postcode)
       info = location_info(postcode)
-      return false if info['status'] == 404
+      return info if info['status'] == 404
 
-      return false unless info[:result].include? 'admin_district'
+      return { status: 404, result: false } unless info['result'].include? 'admin_district'
 
-      @london_burroughs.include? info[:result]['admin_district']
+      { status: 200, result: (@london_burroughs.include? info['result']['admin_district']) }
     end
 
     def self.location_info(postcode)
@@ -30,7 +30,7 @@ module Postcode
     def self.msg(postcode)
       response = Net::HTTP.get('api.postcodes.io', '/postcodes/' + postcode)
       j = JSON.parse(response)
-      return @cache[postcode] = j['result'] if j.include? 'result'
+      # return @cache[postcode] = j['result'] if j.include? 'result'
 
       @cache[postcode] = j
     end
@@ -39,7 +39,8 @@ module Postcode
     # populate postcode with 3 test data entries
     @cache = {
       'SW1P 2BA' =>
-        { 'status': 200, 'result':
+        { 'status' => 200,
+          'result' =>
             { 'postcode' => 'SW1P 2BA',
               'quality' => 1, 'eastings' => 529_827, 'northings' => 179_059,
               'country' => 'England',
@@ -64,8 +65,11 @@ module Postcode
                            'ccg' => 'E38000031',
                            'ced' => 'E99999999',
                            'nuts' => 'UKI32' } } },
-      'G32 0RP' => { 'status': 200, 'result':
-            { 'postcode' => 'G32 0RP',
+      'G32 0RP' => {
+        'status' => 200,
+        'result' =>
+            {
+              'postcode' => 'G32 0RP',
               'quality' => 1,
               'eastings' => 266_293,
               'northings' => 663_408,
@@ -92,7 +96,9 @@ module Postcode
                 'ccg' => 'S03000043',
                 'ced' => 'S99999999',
                 'nuts' => 'UKM82'
-              } } },
+              }
+            }
+      },
       'X11 1XX' => {
         'status' => 404,
         'error' => 'Postcode not found'

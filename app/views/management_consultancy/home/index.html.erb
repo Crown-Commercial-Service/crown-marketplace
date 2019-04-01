@@ -2,30 +2,26 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      <h1 class="govuk-heading-xl">Find management consultancy services</h1>
+      <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-      <p>Use this service to find a shortlist of suppliers to provide management consultants for:</p>
+      <p><%= t('.use_this_service.heading') %></p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>business services - for example, the strategy, structure, management or operations of an organisation</li>
-        <li>procurement, supply chain and commercial services - for example, complex commercial procurement transactions and transactional functional services</li>
-        <li>complex and transformation services - for example, implementing, leading or supporting multi-disciplinary, transformational and large-scale or interdependent programmes</li>
-        <li>strategic services - for example, corporate strategies, appraising business structures, value for money reviews, business performance measurement, product or service design, process and production management</li>
+        <li><%= t('.use_this_service.item_1') %></li>
+        <li><%= t('.use_this_service.item_2') %></li>
+      </ul>
+
+      <h2 class="govuk-heading-m"><%= t('.before_you_start.heading') %></h2>
+
+      <p><%= t('.before_you_start.use_this_service.heading') %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.before_you_start.use_this_service.item_1') %></li>
+        <li><%= t('.before_you_start.use_this_service.item_2_html', ojeu_contract_link: link_to(t('.ojeu_contract_link_text'), 'http://ted.europa.eu/TED/notice/udl?uri=TED:NOTICE:377411-2017:TEXT:EN:HTML&rearus=dQx2Ud0JnqAMCZKQx764kA')) %></li>
+        <li><%= t('.before_you_start.use_this_service.item_3_html', mcf_link: link_to(t('.mcf_link_text'), 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm3745'), mcf2_link: link_to(t('.mcf2_link_text'), 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm6008')) %></li>
       </ul>
 
       <%= link_to 'Start now', journey_start_path(journey: ManagementConsultancy::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
-
-      <h2 class="govuk-heading-m">Before you start</h2>
-
-      <p>To use the service, you will need to know:</p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>the region (or regions) where the work will be carried out</li>
-        <li>the lot (or lots) the consultancy services belong to - see the ‘Lot Descriptions MCF2 RM6008’ document listed <a href='https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm6008'>on the framework agreement</a></li>
-        <!--
-        <li>whether your organisation is prepared to pay expenses for a consultant to travel to where the work is carried out</li>
-        -->
-      </ul>
 
     </div>
   </div>
