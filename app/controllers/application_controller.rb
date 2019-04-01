@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
     management_consultancy
     supply_teachers
     apprenticeships
+    ccs_patterns
   ].freeze
 
   def self.require_permission(label, **kwargs)
