@@ -1,5 +1,25 @@
 require 'json'
 class FMBuildingData
+
+  def create_facilities_management_buildings_table
+
+    query = 'CREATE TABLE if not exists public.facilities_management_buildings
+            (
+                email_address character varying COLLATE pg_catalog."default" NOT NULL,
+                building_json json NOT NULL
+            );'
+    ActiveRecord::Base.connection.execute(query)
+
+    query = 'DROP INDEX public.facilities_management_buildings_email_address_idx;'
+    ActiveRecord::Base.connection.execute(query)
+
+    query = 'CREATE INDEX facilities_management_buildings_email_address_idx
+    ON public.facilities_management_buildings USING btree
+    (email_address COLLATE pg_catalog."default");'
+
+    ActiveRecord::Base.connection.execute(query)
+  end
+
   def save_building(email_address, building)
     query = "insert into facilities_management_buildings values('" + email_address + "', '" + building + "')"
     ActiveRecord::Base.connection.execute(query)

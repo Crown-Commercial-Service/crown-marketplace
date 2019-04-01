@@ -1,8 +1,6 @@
 $(() => {
 
     let postCode = "";
-    let buildings = pageUtils.getCachedData('fm-buildings') || [];
-    let counter = 0;
 
     const init = (() => {
 
@@ -65,11 +63,10 @@ $(() => {
 
         pageUtils.clearCashedData('fm-postcode-is-in-london');
 
-        $.get(encodeURI("/postcodes/in_london?postcode=" + postCode))
+        $.get(encodeURI("/postcodes/in_london?postcode=" + postcode))
             .done(function (data) {
                 if (data) {
                     pageUtils.setCachedData('fm-postcode-is-in-london', data);
-                    pageUtils.setCachedData('fm-postcode', postCode);
                 }
 
                 if (data && data.status === 404) {
@@ -100,10 +97,10 @@ $(() => {
     $('#fm-post-code-lookup-button').click((e) => {
         e.preventDefault();
         if (pageUtils.isPostCodeValid(postCode)) {
+            pageUtils.setCachedData('fm-postcode', postCode);
             showPostCodeError(false);
             isPostCodeInLondon(postCode);
             getRegion(postCode);
-            //fm-post-code-results-container
             $('#fm-postcode-label').text(postCode);
             $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
             $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
@@ -120,6 +117,10 @@ $(() => {
 
     $('#fm-new-building-continue').click((e) => {
         e.preventDefault();
+    });
+
+    $('#fm-buildings-continue').click((e) => {
+        pageUtils.clearCashedData('fm-current-building');
     });
 
     init();
