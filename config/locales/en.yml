@@ -410,22 +410,21 @@ en:
   legal_services:
     home:
       index:
-        authorised_customer_list_link_text: Authorised customer list
+        authorised_customer_list_link_text: authorised customer list
         before_you_start:
           heading: Before you start
           use_this_service:
-            heading: 'To use this service you will need to:'
+            heading: 'You will need to:'
             item_1_html: be a recognised public sector body in the %{authorised_customer_list_link}
             item_2_html: have read and understood the framework’s %{customer_guidance_document_link}
-            item_3_html: be a central government customer looking for transactional property and litigation services, where the value per matter is &pound20,000 or less
-            item_4: have put together a well structured business case outlining the need for external legal support
-            item_5: have an estimate of your gross contract value
-        customer_guidance_document_link_text: Customer guidance document
+            item_3: have put together a well-structured business case outlining the need for external legal support
+            item_4: have an estimate of your gross contract value
+        customer_guidance_document_link_text: customer guidance document
         heading: Find legal services for the wider public sector
         use_this_service:
-          heading: 'Use this service to:'
-          item_1: find suppliers for a range of legal service primarily to the wider public sector
-          item_2: produce compliant shortlist of suppliers based on your requirements
+          description: Using this service means you’re adhering to the public service procurement procedures.
+          heading: Use this service to download a short list of law firms that provide the legal services you need.
+          item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less
   management_consultancy:
     gateway:
       index:
