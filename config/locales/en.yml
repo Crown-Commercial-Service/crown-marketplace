@@ -425,6 +425,10 @@ en:
           description: Using this service means you’re adhering to the public service procurement procedures.
           heading: Use this service to download a short list of law firms that provide the legal services you need.
           item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less
+      service_not_suitable:
+        heading: Sorry, this service isn't suitable for you
+        only_supports_legal_services: This service only supports a range of legal services requirements primarily for the wider sector public
+        better_suited_framework_html: "You maybe better suited to use the <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> framework."
   management_consultancy:
     gateway:
       index:
