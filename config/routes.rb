@@ -84,6 +84,10 @@ Rails.application.routes.draw do
     get '/small-checkboxes', to: 'home#small_checkboxes'
   end
 
+  namespace 'legal_services', path: 'legal-services' do
+    get '/', to: 'home#index'
+  end
+
   get '/errors/404'
   get '/errors/422'
   get '/errors/500'
