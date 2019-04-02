@@ -15,19 +15,20 @@ $(() => {
 
             let address = currentBuilding.address;
 
-            let newOptionData = address['fm-address-line-1'] + ', ' +
-                address['fm-address-line-2'] + ', ' +
-                address['fm-address-town'] + ', ' +
-                address['fm-address-county'] + ', ' +
-                address['fm-address-postcode'];
+            if (address) {
+                let newOptionData = address['fm-address-line-1'] + ', ' +
+                    address['fm-address-line-2'] + ', ' +
+                    address['fm-address-town'] + ', ' +
+                    address['fm-address-county'] + ', ' +
+                    address['fm-address-postcode'];
 
-            let newOption = '<option selected value="' + newOptionData + '">' + newOptionData + '</option>';
+                let newOption = '<option selected value="' + newOptionData + '">' + newOptionData + '</option>';
 
-
-            $('#fm-postcode-lookup-results').append(newOption);
-            $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
-            $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
-
+                $('#fm-postcode-lookup-results').find('option[value="status-option"]').remove();
+                $('#fm-postcode-lookup-results').append(newOption);
+                $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
+                $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
+            }
         }
 
         if (postCode) {

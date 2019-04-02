@@ -9,6 +9,12 @@ $(() => {
         if (newBuildingName) {
             $('#fm-new-building-name').val(newBuildingName);
         }
+
+        let currentBuilding = pageUtils.getCachedData('fm-current-building');
+        let gia = currentBuilding ? currentBuilding['fm-gross-internal-area'] : 0;
+
+        $('#fm-internal-square-area').val(gia);
+
     });
 
     const validateBuildingName = ((value) => {
@@ -121,6 +127,18 @@ $(() => {
 
     $('#fm-buildings-continue').click((e) => {
         pageUtils.clearCashedData('fm-current-building');
+    });
+
+    $('#fm-internal-square-area').change((e) => {
+
+        let value = e.target.value;
+
+        if (value && value !== "") {
+            let currentBuilding = pageUtils.getCachedData('fm-current-building');
+            currentBuilding['fm-gross-internal-area'] = value;
+            pageUtils.setCachedData('fm-current-building', currentBuilding);
+        }
+
     });
 
     init();
