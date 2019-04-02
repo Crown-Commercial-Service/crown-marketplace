@@ -44,7 +44,7 @@
             background-color: govuk-colour("white"); 
             margin-top: govuk-spacing(1); 
 
-            &.css-govuk-checkboxes--s {
+            &.ccs-govuk-checkboxes--s {
                 .govuk-checkboxes__input + .govuk-checkboxes__label::before, 
                 .govuk-checkboxes__input {
                     top: 11px; 
