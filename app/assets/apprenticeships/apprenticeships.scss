@@ -11,7 +11,7 @@
 
 
 
-$results-filters-labels-m: 17px;
+
 
 .ccs-at-results-filters {
 
@@ -73,7 +73,8 @@ $results-filters-labels-m: 17px;
         }
 
         .govuk-details__text {
-            font-size: $results-filters-labels-m;
+            font-size: 17px;
+            font-size: 1.0625rem;
         }
 
         .ccs-at-checkboxes-wrap {
@@ -325,41 +326,6 @@ table.ccs-govuk-table--style {
             max-width: ($search02 - 2) !important; //for -moz-
         } 
     }
-}
-
-.css-govuk-checkboxes--s { 
-
-    .govuk-checkboxes__input + .govuk-checkboxes__label::before, 
-    .govuk-checkboxes__input {//the tick box border
-        height: 20px; 
-        width: 20px; 
-        top: 11px; 
-        left: 0; 
-        border-width: 1px; 
-    } 
-
-    .govuk-checkboxes__input:checked + .govuk-checkboxes__label::after {//the tick
-        left: 3px; 
-        top: 15px; 
-        width: 11px; 
-        height: 5px; 
-        border-width: 0 0 3px 3px; 
-    } 
-
-    .govuk-checkboxes__label {
-        padding: 5px; 
-        font-size: $results-filters-labels-m; 
-        width: 100%; 
-    }
-
-    .govuk-checkboxes__item { 
-        margin-bottom: 0; 
-        padding-top: 5px; 
-        padding-right: 10px; 
-        padding-bottom: 0; 
-        padding-left: 25px;  
-    } 
-
 }
 
 .ccs-right-panel-sticky {
