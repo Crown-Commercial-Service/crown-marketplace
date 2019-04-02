@@ -20,12 +20,6 @@
   padding-bottom: 60px; 
 }
 
-@media all and (-ms-high-contrast:none){//wrapper div bug fix for IE11
-    *::-ms-backdrop, body > div {//targets IE11 only 
-      flex: none;
-    } 
-} 
-
 .ccs-no-underline, 
 .govuk-warning-text abbr {
   text-decoration: none; 
@@ -495,3 +489,15 @@ body.js-enabled #ccs-dynamic-accordian {
         width: 100%; 
     }
 }
+
+@media all and (-ms-high-contrast:none){//IE11 bugs. This targets IE11 only (with ::-ms-backdrop)
+    *::-ms-backdrop, body > div {
+      flex: none;//wrapper div bug fix for pg layouts
+    }
+    *::-ms-backdrop, img[src*=".svg"] {
+       width: 100%; //all std images
+    }
+    *::-ms-backdrop, .ccs-logo__dfe img[src*=".svg"] {
+        width: 50%; //for dfe logo (or similar when required)
+    }
+} 
