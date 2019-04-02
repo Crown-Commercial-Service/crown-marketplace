@@ -165,8 +165,12 @@ function initDynamicAccordian(){
     });
 }
 
-
-
+function ie11menu(){//targets IE11 only
+    $('#main-header').find('.govuk-header__menu-button').removeEventListener('click', function(){
+        $(this).toggleClass('govuk-header__menu-button--open');
+        $('#navigation').toggleClass('govuk-header__navigation--open');
+    });
+}
 
 
 
@@ -179,6 +183,10 @@ function initCustomFnc() {
 
     if($('#ccs-dynamic-accordian').length){//if this pg has this ID
         initDynamicAccordian();
+    }
+
+    if(window.location.hash = !!window.MSInputMethodContext && !!document.documentMode){
+        ie11menu();//fixes top nav bug in ie11 later versions (11.5 +). 
     }
 }
 
