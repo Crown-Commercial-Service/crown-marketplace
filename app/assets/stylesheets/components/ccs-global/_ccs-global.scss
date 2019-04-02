@@ -3,6 +3,10 @@
     font-size: 1.3125rem;
     line-height: 1.5;
 }
+%ccs-labels-m {
+    font-size: 17px;
+    font-size: 1.0625rem;
+}
 
 .govuk-header__navigation .govuk-header__navigation-item {
     border-bottom: none !important; 
@@ -16,12 +20,6 @@
   padding-bottom: 60px; 
 }
 
-@media all and (-ms-high-contrast:none){//wrapper div bug fix for IE11
-    *::-ms-backdrop, body > div {//targets IE11 only 
-      flex: none;
-    } 
-} 
-
 .ccs-no-underline, 
 .govuk-warning-text abbr {
   text-decoration: none; 
@@ -32,6 +30,15 @@
   position: absolute; 
   left: -3000px; 
   top: -3000px; 
+}
+
+.ccs-next {
+    text-decoration: none !important; 
+    padding: govuk-spacing(4) 0; 
+    display: block; 
+    width: 100%; 
+    text-align: right; 
+    clear: left; 
 }
 
 #cookie_banner {
@@ -150,10 +157,13 @@ ul.ccs-checklist {
     }
 
     .govuk-accordion__section-header {
-        .govuk-accordion__section-heading .govuk-accordion__section-button {
-            //@include govuk-font($size: 19); //this is a std gds size (no 20px)
-            @extend %ccs-font-21;
-            font-weight: normal; 
+        .govuk-accordion__section-heading   {
+            padding: govuk-spacing(3) govuk-spacing(3) govuk-spacing(3) 0;//see .js-enabled
+
+            .govuk-accordion__section-button {//$size: 19 is a std gds size (no 21px)
+                @extend %ccs-font-21;
+                font-weight: normal; 
+            }
         }
 
         span.govuk-accordion__icon {//can't adjust further: browsers limit at 25%
@@ -170,6 +180,13 @@ ul.ccs-checklist {
     .govuk-accordion__section-content {
         margin-top: -#{govuk-spacing(3)}; 
 
+        .govuk-checkboxes {
+            & > div + p, 
+            & .ccs-select-all {
+                display: none; //see .js-enabled
+            }
+        }
+
         .govuk-fieldset {
             legend {
                 display: block; 
@@ -177,7 +194,7 @@ ul.ccs-checklist {
                 left: -3000px; 
                 top: -3000px; 
             }
-        }
+        } 
 
         .govuk-checkboxes__input + .govuk-checkboxes__label::before {
             border-width: 1.5px; 
@@ -185,6 +202,7 @@ ul.ccs-checklist {
     }
 
     #css-list-basket {
+        display: none; //see .js-enabled
         padding-top: govuk-spacing(4); 
 
         .govuk-heading-m {
@@ -263,10 +281,189 @@ ul.ccs-checklist {
         }
     }
 }
+@media (max-width: 768px) {//tablet and smaller
+    ul.govuk-list {
+        li {
+            span, a {
+                width: 100% !important; 
+                text-align: left !important; 
+            }        
+        }
+    }
+}
+
+body.js-enabled #ccs-dynamic-accordian {
+    #css-list-basket, 
+    .govuk-checkboxes .ccs-select-all, 
+    .govuk-checkboxes > div + p {
+        display: block; 
+    }
+    .govuk-accordion__section-heading {
+        padding: 0; 
+    } 
+}
 /* ccs dynamic accordain ends */
 
 
+/* ccs supplier results v1 starts */
+.ccs-search-results {
 
+    .ccs-search-results__sort {
+        float: right; 
+        clear: left; 
+        margin: 0 3px govuk-spacing(6) 0; 
+
+        .govuk-label {
+            display: inline-block; 
+            font-weight: bold; 
+            margin-right: 10px; 
+        }
+
+        .govuk-select {
+            min-width: 190px; 
+            border-width: 1px; 
+            border-radius: 5px; 
+        }
+        
+    }
+
+    ul.ccs-results-list {
+        list-style: none; 
+        padding: 0; 
+        clear: left; 
+
+        li.govuk-list {
+            float: left; 
+            clear: left; 
+            width: 100%; 
+            padding: govuk-spacing(2) 0; 
+            margin: 0; 
+            border-bottom: 1px solid $govuk-border-colour; 
+
+            &:first-child {
+                border-top: 1px solid $govuk-border-colour; 
+            } 
+
+            & > div {
+                padding: 0; 
+            }
+
+            a {
+                margin: 0; 
+            }
+        }
+
+        .ccs-results-list__detail {
+            
+            div {
+                float: right; 
+
+                span {
+                    font-weight: bold; 
+                }
+
+                span span.ccs-font--wrap {
+                    font-weight: 700; 
+                    display: block; 
+                    width: 100%; 
+                }
+            }
+
+        }
+
+        .ccs-results-list__details {
+            list-style: none; 
+            padding: 0; 
+            margin: govuk-spacing(2) 0 0 0; 
+            width: 100%; 
+
+            li {
+                margin: 0;
+                padding: 0; 
+            }
+        }
+
+    }
+
+    .govuk-table {
+        margin: 0; 
+
+        .govuk-table__head .govuk-table__header {
+            font-weight: bold; 
+        }
+
+        td > a[class^="govuk-heading"]{
+            margin-bottom: 0; 
+        } 
+
+        .govuk-table__header, 
+        .govuk-table__cell {
+            vertical-align: top; 
+        }
+
+        .govuk-table__head th, 
+        .govuk-table__body th, 
+        .govuk-table__body td {
+            text-align: right; 
+            padding-top: govuk-spacing(4); 
+            padding-bottom: govuk-spacing(4); 
+        }
+
+        .govuk-table__head th:first-child, 
+        .govuk-table__body th:first-child, 
+        .govuk-table__body td:first-child {
+            text-align: left; //avoided :last-child usage, for tbls with only one col
+        }
+
+    }
+
+}
+
+@media (max-width: 641px) {//mobile
+    .ccs-search-results ul.ccs-results-list .ccs-results-list__detail div span span.ccs-font--wrap {
+        display: inline; 
+    }
+}
+/* ccs supplier results v1 ends */
+
+
+/* small checkboxes starts */
+.ccs-govuk-checkboxes--s { 
+
+    .govuk-checkboxes__input + .govuk-checkboxes__label::before, 
+    .govuk-checkboxes__input {//the tick box border
+        height: 20px; 
+        width: 20px; 
+        top: 11px; 
+        left: 0; 
+        border-width: 1px; 
+    } 
+
+    .govuk-checkboxes__input:checked + .govuk-checkboxes__label::after {//the tick
+        left: 3px; 
+        top: 15px; 
+        width: 11px; 
+        height: 5px; 
+        border-width: 0 0 3px 3px; 
+    } 
+
+    .govuk-checkboxes__label {
+        padding: 5px; 
+        width: 100%; 
+        font-size: 17px;
+        font-size: 1.0625rem; 
+    }
+
+    .govuk-checkboxes__item { 
+        margin-bottom: 0; 
+        padding-top: 5px; 
+        padding-right: 10px; 
+        padding-bottom: 0; 
+        padding-left: 25px;  
+    } 
+
+}
+/* small checkboxes ends */
 
 /* ccs-print start ... */
 @media print {
@@ -292,3 +489,15 @@ ul.ccs-checklist {
         width: 100%; 
     }
 }
+
+@media all and (-ms-high-contrast:none){//IE11 bugs. This targets IE11 only (with ::-ms-backdrop)
+    *::-ms-backdrop, body > div {
+      flex: none;//wrapper div bug fix for pg layouts
+    }
+    *::-ms-backdrop, img[src*=".svg"] {
+       width: 100%; //all std images
+    }
+    *::-ms-backdrop, .ccs-logo__dfe img[src*=".svg"] {
+        width: 50%; //for dfe logo (or similar when required)
+    }
+} 

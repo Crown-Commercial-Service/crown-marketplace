@@ -10,6 +10,11 @@ module ManagementConsultancy
              inverse_of: :supplier,
              dependent: :destroy
 
+    has_many :rate_cards,
+             foreign_key: :management_consultancy_supplier_id,
+             inverse_of: :supplier,
+             dependent: :destroy
+
     validates :name, presence: true
 
     def self.available_in_lot(lot_number)
