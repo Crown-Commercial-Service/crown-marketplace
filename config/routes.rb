@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
+    get '/supplier-results-v2', to: 'home#supplier_results_v2'    
     get '/small-checkboxes', to: 'home#small_checkboxes'
   end
 
