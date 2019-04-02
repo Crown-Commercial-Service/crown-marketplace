@@ -7,7 +7,7 @@ module CcsPatterns
 
     def dynamic_accordian; end
 
-    def supplier_results_v1; end 
+    def supplier_results_v1; end
 
     def supplier_results_v2; end
 
