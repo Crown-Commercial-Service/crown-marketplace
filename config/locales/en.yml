@@ -370,6 +370,7 @@ en:
   home:
     index:
       facilities_management_link: Find a facilities management supplier
+      legal_services_link: Find legal service for the wider public sector
       management_consultancy_link: Find management consultancy services
       supply_teachers_link: Find supply teachers and agency workers
   journey_step:
@@ -406,6 +407,24 @@ en:
       title: Crown Commercial Service
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
+  legal_services:
+    home:
+      index:
+        authorised_customer_list_link_text: authorised customer list
+        before_you_start:
+          heading: Before you start
+          use_this_service:
+            heading: 'You will need to:'
+            item_1_html: be a recognised public sector body in the %{authorised_customer_list_link}
+            item_2_html: have read and understood the framework’s %{customer_guidance_document_link}
+            item_3: have put together a well-structured business case outlining the need for external legal support
+            item_4: have an estimate of your gross contract value
+        customer_guidance_document_link_text: customer guidance document
+        heading: Find legal services for the wider public sector
+        use_this_service:
+          description: Using this service means you’re adhering to the public service procurement procedures.
+          heading: Use this service to download a short list of law firms that provide the legal services you need.
+          item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less
   management_consultancy:
     gateway:
       index:

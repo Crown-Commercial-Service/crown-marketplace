@@ -1,0 +1,27 @@
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+
+      <p><%= t('.use_this_service.heading') %></p>
+      <p><%= t('.use_this_service.description') %></p>
+
+      <p class="govuk-inset-text"><%= t('.use_this_service.item_html') %></p>
+
+      <h2 class="govuk-heading-m"><%= t('.before_you_start.heading') %></h2>
+
+      <p><%= t('.before_you_start.use_this_service.heading') %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.before_you_start.use_this_service.item_1_html', authorised_customer_list_link: link_to(t('.authorised_customer_list_link_text'), '/Authorised Customer List.docx')) %></li>
+        <li><%= t('.before_you_start.use_this_service.item_2_html', customer_guidance_document_link: link_to(t('.customer_guidance_document_link_text'), 'https://www.crowncommercial.gov.uk/agreements/RM3788')) %></li>
+        <li><%= t('.before_you_start.use_this_service.item_3') %></li>
+        <li><%= t('.before_you_start.use_this_service.item_4') %></li>
+      </ul>
+
+      <%= link_to 'Start now', '#', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+
+    </div>
+  </div>
+</div>
