@@ -87,6 +87,7 @@ end
 
 namespace :db do
   desc 'add NUTS static data to the database'
+  Rails.env = 'test'
   task :static do
     p 'Loading NUTS static'
     CCS.load_static
