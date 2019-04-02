@@ -8,7 +8,7 @@
     </h2>
   </div>
 
-  <div class="govuk-grid-column-one-quarter ccs-at-results-list__detail">
+  <div class="govuk-grid-column-one-quarter ccs-results-list__detail">
     <% supplier.rate_cards.select do |rate_card| %>
       <% if rate_card.lot == params[:lot].to_i %>
         <strong class="govuk-!-font-size-36 ccs-font--wrap">

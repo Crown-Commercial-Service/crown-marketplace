@@ -90,13 +90,16 @@ function updateList(govb){
 
     list.find('.ccs-removethis').remove(); 
 
-    thecheckboxes.each(function(index){
-        $this = $(this); 
-        thelist = thelist + '<li class="ccs-removethis"><span>'+ $this.next('label').text() +'</span> <a href="#" data-id="'+ $this.attr('id') +'">Remove</a></li>';
-        i = index + 1; 
-    });
-
-    mycount.text(i);
+    if(thecheckboxes.length){
+        thecheckboxes.each(function(index){
+            $this = $(this); 
+            thelist = thelist + '<li class="ccs-removethis"><span>'+ $this.next('label').text() +'</span> <a href="#" data-id="'+ $this.attr('id') +'">Remove</a></li>';
+            i = index + 1; 
+        });  
+        mycount.text(i);      
+    }else{
+        mycount.text('0');
+    }
 
     list.append(thelist).find('a').click(function(e){
         e.preventDefault();
@@ -109,7 +112,7 @@ function updateList(govb){
         var theparent = thisbox.parents('.govuk-checkboxes').find('.ccs-select-all').find('.govuk-checkboxes__input:checked');
         if(theparent.length){
             theparent.prop('checked', false);
-        }
+        } 
     });
 
     $('#removeAll').removeClass('ccs-remove').click(function(e){
