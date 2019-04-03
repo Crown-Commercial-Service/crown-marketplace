@@ -89,6 +89,7 @@ Rails.application.routes.draw do
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    get '/service-not-suitable', to: 'home#service_not_suitable'
   end
 
   get '/errors/404'
