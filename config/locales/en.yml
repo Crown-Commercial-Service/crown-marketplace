@@ -11,6 +11,10 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        legal_services/journey/choose_organisation_type:
+          attributes:
+            central_government:
+              inclusion: Select yes if you work for central government
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -425,6 +429,11 @@ en:
           description: Using this service means you’re adhering to the public service procurement procedures.
           heading: Use this service to download a short list of law firms that provide the legal services you need.
           item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less
+    journey:
+      choose_organisation_type:
+        central_government_search_link_title: central government departments, agencies and public bodies
+        question: Do you work for central government?
+        search_central_government_html: Search %{central_government_search_link} if you’re unsure.
   management_consultancy:
     gateway:
       index:
@@ -482,6 +491,7 @@ en:
     unit:
       one: mile
       other: miles
+  'no': 'No'
   number:
     currency:
       format:
@@ -768,3 +778,4 @@ en:
       next: Next
       previous: Previous
       truncate: "..."
+  'yes': 'Yes'

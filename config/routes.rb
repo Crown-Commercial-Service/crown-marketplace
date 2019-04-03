@@ -86,6 +86,9 @@ Rails.application.routes.draw do
 
   namespace 'legal_services', path: 'legal-services' do
     get '/', to: 'home#index'
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   get '/errors/404'

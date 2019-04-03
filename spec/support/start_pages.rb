@@ -17,6 +17,11 @@ module SpecSupport
       click_on 'Start now'
       click_on 'Sign in with beta credentials'
     end
+
+    def visit_legal_services_start
+      visit '/legal-services'
+      click_on 'Start now'
+    end
   end
 end
 
