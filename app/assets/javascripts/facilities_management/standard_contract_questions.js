@@ -6,7 +6,7 @@ $(() => {
 
     /* validate and cache contract length */
     const init = (() => {
-        contractLength = parseInt(pageUtils.getCachedData('contractlength'));
+        contractLength = parseInt(pageUtils.getCachedData('fm-contractlength'));
         $('#fm-contract-length').val(contractLength);
 
         extensions = pageUtils.getCachedData('fm-contract-extensions');
@@ -105,7 +105,7 @@ $(() => {
             $('#fm-contract-length-error-form-group').removeClass('govuk-form-group--error');
             $('#fm-contract-length-error').addClass('govuk-visually-hidden');
             contractLength = value;
-            pageUtils.setCachedData('contractlength', contractLength);
+            pageUtils.setCachedData('fm-contractlength', contractLength);
         }
     });
 

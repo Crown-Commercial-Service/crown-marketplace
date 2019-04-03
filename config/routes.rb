@@ -35,6 +35,12 @@ Rails.application.routes.draw do
     get '/standard-contract/calculator', to: 'calculator#calculator'
     post'/standard-contract/calculator2', to: 'calculator#calculator'
     get '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
+    get '/buildings-list', to: 'buildings#buildings'
+    get '/buildings/new-building', to: 'buildings#new_building'
+    get '/buildings/new-building-address', to: 'buildings#manual_address_entry_form'
+    post '/buildings/new-building-address/save-building' => 'buildings#save_building'
+    get '/buildings/building-type', to: 'buildings#building_type'
+    post '/buildings/update_building' => 'buildings#update_building'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
@@ -83,11 +89,16 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
+    get '/supplier-results-v2', to: 'home#supplier_results_v2'
     get '/small-checkboxes', to: 'home#small_checkboxes'
   end
 
   namespace 'legal_services', path: 'legal-services' do
     get '/', to: 'home#index'
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    get '/service-not-suitable', to: 'home#service_not_suitable'
   end
 
   get '/errors/404'
