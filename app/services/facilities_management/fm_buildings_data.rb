@@ -11,10 +11,7 @@ class FMBuildingData
             );'
     ActiveRecord::Base.connection.execute(query)
 
-    query = 'DROP INDEX public.facilities_management_buildings_email_address_idx;'
-    ActiveRecord::Base.connection.execute(query)
-
-    query = 'CREATE INDEX facilities_management_buildings_user_id_idx
+    query = 'CREATE INDEX if not exists facilities_management_buildings_user_id_idx
     ON public.facilities_management_buildings USING btree
     (user_id COLLATE pg_catalog."default");'
 
