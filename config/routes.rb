@@ -86,6 +86,7 @@ Rails.application.routes.draw do
 
   namespace 'legal_services', path: 'legal-services' do
     get '/', to: 'home#index'
+    get '/service-not-suitable', to: 'home#service_not_suitable'
   end
 
   get '/errors/404'
