@@ -13,14 +13,16 @@
  *= require_self
  *= require govuk-frontend
  *= require facilities_management/long_list
+ *= require facilities_management/standard_contract_questions
+ *= require facilities_management/buildings
 
 /*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
 
 
 @media print {
     .govuk-link, .app-prose-scope a {
+        font-family: sans-serif
     }
-    font-family: sans-serif
 }
 
 .govuk-link:focus, .app-prose-scope a:focus {

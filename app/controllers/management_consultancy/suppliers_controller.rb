@@ -7,12 +7,20 @@ module ManagementConsultancy
       @back_path = @journey.previous_step_path
 
       @lot = Lot.find_by(number: params[:lot])
-      @suppliers = Supplier.offering_services_in_regions(
+      @all_suppliers = Supplier.offering_services_in_regions(
         params[:lot],
         params[:services],
         params[:region_codes],
         params[:expenses] == 'paid'
-      )
+      ).includes(:rate_cards)
+
+      @suppliers = Kaminari.paginate_array(@all_suppliers).page(params[:page])
     end
+
+    def show
+      @supplier = Supplier.find(params[:id])
+    end
+
+    def download; end
   end
 end

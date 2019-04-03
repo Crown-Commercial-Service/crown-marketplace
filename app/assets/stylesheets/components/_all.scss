@@ -29,7 +29,6 @@
 @import "label/label";
 @import "logo/logo";
 @import "master-vendor-record/master-vendor-record";
-@import "mc-supplier-record/mc-supplier-record";
 @import "neutral-vendor-record/neutral-vendor-record";
 @import "pagination/pagination";
 @import "phase-banner/phase-banner";
@@ -39,3 +38,6 @@
 @import "table/table";
 @import "tag/tag";
 @import "typography/typography";
+
+/* CCS override and bespoke styles; re-used globally across all modules */
+@import "ccs-global/ccs-global";

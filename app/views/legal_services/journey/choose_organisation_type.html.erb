@@ -1,0 +1,28 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.question') %>
+        </h1>
+      </legend>
+      <p><%= t('.search_central_government_html', central_government_search_link: link_to(t('.central_government_search_link_title'), 'https://www.gov.uk/government/organisations')) %></p>
+      <%= display_error(@journey, :central_government) %>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :central_government, 'yes', checked?(params[:central_government], 'yes'), class: 'govuk-radios__input' %>
+          <%= label_tag :central_government, t('yes'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :central_government, 'no', checked?(params[:central_government], 'no'), class: 'govuk-radios__input' %>
+          <%= label_tag :central_government, t('no'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+<% end %>

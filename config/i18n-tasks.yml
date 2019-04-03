@@ -107,6 +107,8 @@ ignore_unused:
   - miles.*
   - results.*
   - suppliers.*
+  - companies.*
+  - management_consultancy.journey.choose_help_needed.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
 # - 'simple_form.{yes,no}'
