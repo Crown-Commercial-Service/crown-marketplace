@@ -1,0 +1,72 @@
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <a href="new-building" class="govuk-back-link">Back</a>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-caption-xl">Your buildings - <span id="fm-building-name"></span></h2>
+      <h1 class="govuk-heading-xl">Add missing address</h1>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-0">What is your building's
+            address?</h2>
+          <h2 class="govuk-caption-m govuk-!-margin-top-0 govuk-!-margin-bottom-3">Enter a UK address, including
+            postcode</h2>
+          <div id="fm-address-line-1-container" name="fm-address-error-container" class="govuk-form-group">
+            <span id="fm-address-line-1-error" name="fm-address-error" class="govuk-error-message govuk-visually-hidden">
+                Please enter a building and or a street name
+            </span>
+            <label class="govuk-label" for="fm-address-line-1">
+              Building and street
+              <span class="govuk-visually-hidden">line 1 of 2</span>
+            </label>
+            <input class="govuk-input" id="fm-address-line-1" name="fm-address-line-1" type="text">
+          </div>
+
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="fm-address-line-2">
+              <span class="govuk-visually-hidden">Building and street line 2 of 2</span>
+            </label>
+            <input class="govuk-input" id="fm-address-line-2" name="fm-address-line-2" type="text">
+          </div>
+
+          <div id="fm-address-town-container" name="fm-address-error-container" class="govuk-form-group">
+            <span id="fm-address-town-error" name="fm-address-error" class="govuk-error-message govuk-visually-hidden">
+                Please enter a post town
+            </span>
+            <label class="govuk-label" for="fm-address-town">
+              Town or city
+            </label>
+            <input class="govuk-input govuk-!-width-two-thirds" id="fm-address-town" name="fm-address-town" type="text">
+          </div>
+
+          <div id="fm-address-county-container" name="fm-address-error-container" class="govuk-form-group">
+            <span id="fm-address-county-error" name="fm-address-error" class="govuk-error-message govuk-visually-hidden">
+                Please enter a county
+            </span>
+            <label class="govuk-label" for="fm-address-county">
+              County
+            </label>
+            <input class="govuk-input govuk-!-width-two-thirds" id="fm-address-county" name="fm-address-county" type="text">
+          </div>
+
+          <div id="fm-address-postcode-container" name="fm-address-error-container" class="govuk-form-group">
+            <span id="fm-address-postcode-error" name="fm-address-error" class="govuk-error-message govuk-visually-hidden">
+                Please enter a postcode
+            </span>
+            <label class="govuk-label" for="fm-address-postcode">
+              Postcode
+            </label>
+            <input class="govuk-input govuk-input--width-10" id="fm-address-postcode" name="fm-address-postcode" type="text">
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="govuk-!-margin-top-6">
+        <a id="fm-new-address-continue" href="#" class="govuk-button ccs-no-print" role="button">Continue</a>
+      </div>
+    </div>
+  </div>
+</div>

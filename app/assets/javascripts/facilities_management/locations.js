@@ -6,7 +6,7 @@
 $(() => {
 
     /* govuk-accordion__controls event handlers */
-    let selectedLocations = pageUtils.getCachedData('locations');
+    let selectedLocations = pageUtils.getCachedData('fm-locations');
 
     /* add a link to select all on the accordion */
     $('#region-accordion .govuk-accordion__controls').append("<a role='button' class='govuk-accordion__open-all' data-no-turbolink id=\"select-all-link\" name=\"select-all-link\" href=\"\">Select all</a>");
@@ -142,7 +142,7 @@ $(() => {
         $('#inline-error-message').attr('hidden', true);
 
         if (isLocationValid() === true) {
-            pageUtils.setCachedData('locations', selectedLocations);
+            pageUtils.setCachedData('fm-locations', selectedLocations);
         } else {
             e.preventDefault();
             $('#inline-error-message').removeAttr('hidden');
