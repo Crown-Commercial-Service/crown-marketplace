@@ -17,6 +17,12 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
+  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.json "building_json", null: false
+    t.index ["user_id"], name: "facilities_management_buildings_user_id_idx"
+  end
+
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_supplier_id", null: false
     t.text "lot_number", null: false
@@ -51,10 +57,24 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "fm_rates", id: false, force: :cascade do |t|
+    t.string "code", limit: 255
+    t.decimal "framework"
+    t.decimal "benchmark"
+    t.index ["code"], name: "fm_rates_code_key", unique: true
+  end
+
   create_table "fm_regions", id: false, force: :cascade do |t|
     t.string "code", limit: 255
     t.string "name", limit: 255
     t.index ["code"], name: "fm_regions_code_key", unique: true
+  end
+
+  create_table "london_postcodes", id: false, force: :cascade do |t|
+    t.text "postcode"
+    t.text "In Use"
+    t.text "region"
+    t.text "Last updated"
   end
 
   create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
