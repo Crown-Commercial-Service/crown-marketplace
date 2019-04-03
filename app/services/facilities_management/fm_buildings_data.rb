@@ -1,7 +1,6 @@
 require 'json'
 require 'base64'
 class FMBuildingData
-
   def initialize
     create_facilities_management_buildings_table
   end
