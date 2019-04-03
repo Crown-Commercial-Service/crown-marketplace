@@ -9,7 +9,7 @@ class FMBuildingData
     query = 'CREATE TABLE if not exists public.facilities_management_buildings
             (
                 user_id character varying COLLATE pg_catalog."default" NOT NULL,
-                building_json json NOT NULL
+                building_json jsonb NOT NULL
             );'
     ActiveRecord::Base.connection.execute(query)
     query = 'CREATE INDEX if not exists facilities_management_buildings_user_id_idx
@@ -25,7 +25,6 @@ class FMBuildingData
     ActiveRecord::Base.connection.execute(query)
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building: #{e}"
-    true
   end
 
   def update_building(email_address, id, building)
