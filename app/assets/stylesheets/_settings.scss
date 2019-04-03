@@ -70,3 +70,7 @@ $govuk-heading-l: 27px;
 $govuk-link-colour: #007194;
 $govuk-link-hover-colour: #2b8cc4;
 $govuk-link-visited-colour: #4c2c92;
+
+#main-footer .ccs-footer__links {
+  text-decoration: underline; 
+}

@@ -1,12 +1,12 @@
 <li class="govuk-list">
   <div class="govuk-grid-column-two-thirds">
     <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline"><%= result[:name] %></a>
-    <ul class="ccs-at-results-list__details">
+    <ul class="ccs-results-list__details">
       <li class="govuk-grid-column-one-third"><b><%= t('apprenticeships.home.search_results.result_level_label') %></b> <%= result[:level] %></li>
     </ul>
   </div>
 
-  <div class="govuk-grid-column-one-third ccs-at-results-list__providers">
+  <div class="govuk-grid-column-one-third ccs-results-list__detail">
     <div>
       <span class="govuk-!-font-size-16">
         <span class="govuk-!-font-size-27 ccs-font--wrap"><%= result[:providers] %></span> 

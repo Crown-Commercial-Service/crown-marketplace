@@ -15,7 +15,7 @@ module Postcode
     #      http://localhost:3000/postcodes/in_london?postcode=G69%206HB
     def show
       result = if params[:id] == 'in_london'
-                 PostcodeChecker.in_london?(params[:postcode])
+                 PostcodeChecker.in_london? params[:postcode]
                else
                  PostcodeChecker.location_info(params[:id])
                end

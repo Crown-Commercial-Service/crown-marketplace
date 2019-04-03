@@ -15,6 +15,7 @@
 
 <div class="govuk-grid-row govuk-!-padding-top-4 ccs-at-results-pg">
   
+  <!-- ID #ccs-at-results-filters required -->
   <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters"> 
     <%= form_tag apprenticeships_search_path, method: :get, id: 'search-results-form' do %><!-- form inside section element-->
 
@@ -42,7 +43,7 @@
           </button>
 
           <div id="c1" class="ccs-at-checkboxes-wrap">
-            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+            <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
               
               <% levels.each do |level| %>
                 <div class="govuk-checkboxes__item">
@@ -87,7 +88,7 @@
           </button>
 
           <div id="c2" class="ccs-at-checkboxes-wrap">
-            <div class="govuk-checkboxes css-govuk-checkboxes--s">
+            <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
 
               <% routes.each do |route| %>
                 <div class="govuk-checkboxes__item">
@@ -115,10 +116,10 @@
     <% end %>
   </section>
 
-  <section id="ccs-at-search-results" class="govuk-grid-column-two-thirds ccs-at-search-results">
+  <section class="govuk-grid-column-two-thirds ccs-search-results">
 
     <div class="govuk-form-group">
-      <div class="ccs-at-search-results__sort">
+      <div class="ccs-search-results__sort">
         <label class="govuk-label" for="sortBox">
           <%= t('.sort_by_label') %>
         </label>
@@ -126,15 +127,15 @@
       </div>
     </div>
 
-    <h2 class="govuk-heading-m ccs-at-remove">Results</h2>
+    <h2 class="govuk-heading-m ccs-remove">Results</h2>
 
-    <ul class="ccs-at-results-list">
+    <ul class="ccs-results-list">
       <% results.each do |result| %>
         <%= render 'search_apprenticeship', result: result %>
       <% end %>
     </ul>
 
-    <%= link_to '/apprenticeships/find_apprentices5', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state ccs-at-next' do %>
+    <%= link_to '/apprenticeships/find_apprentices5', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state ccs-next' do %>
       <%= t('common.next')%><span>&nbsp;&rarr;</span>
     <% end %>
 

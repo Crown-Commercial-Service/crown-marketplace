@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
+    get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
+    get '/suppliers/:id', to: 'suppliers#show', as: 'supplier'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -79,6 +81,22 @@ Rails.application.routes.draw do
     get '/understanding', to: 'home#understanding'
     get '/training_details', to: 'home#training_details'
     get '/download_provider', to: 'home#download_provider'
+  end
+
+  namespace 'ccs_patterns', path: 'ccs-patterns' do
+    get '/', to: 'home#index'
+    get '/dynamic-accordian', to: 'home#dynamic_accordian'
+    get '/supplier-results-v1', to: 'home#supplier_results_v1'
+    get '/supplier-results-v2', to: 'home#supplier_results_v2'
+    get '/small-checkboxes', to: 'home#small_checkboxes'
+  end
+
+  namespace 'legal_services', path: 'legal-services' do
+    get '/', to: 'home#index'
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    get '/service-not-suitable', to: 'home#service_not_suitable'
   end
 
   get '/errors/404'

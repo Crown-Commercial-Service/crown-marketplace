@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
     management_consultancy
     supply_teachers
     apprenticeships
+    ccs_patterns
+    legal_services
   ].freeze
 
   def self.require_permission(label, **kwargs)
@@ -34,6 +36,8 @@ class ApplicationController < ActionController::Base
       facilities_management_gateway_url
     when 'apprenticeships'
       apprenticeships_gateway_url
+    when 'legal_services'
+      legal_services_url
     else
       ccs_homepage_url
     end
