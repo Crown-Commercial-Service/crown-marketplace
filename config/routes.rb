@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     get '/buildings/new-building', to: 'buildings#new_building'
     get '/buildings/new-building-address', to: 'buildings#manual_address_entry_form'
     post '/buildings/new-building-address/save-building' => 'buildings#save_building'
+    get '/buildings/building-type', to: 'buildings#building_type'
+    post '/buildings/update_building' => 'buildings#update_building'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'

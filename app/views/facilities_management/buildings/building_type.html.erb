@@ -1,0 +1,48 @@
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <a href="new-building" class="govuk-back-link">Back</a>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-caption-xl">Your buildings - <span id="fm-building-name"></span></h2>
+      <h1 class="govuk-heading-xl">Type of your building</h1>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">What is the type of your building?</h2>
+    </div>
+  </div>
+
+  <!-- Radio's -->
+  <div class="govuk-radios">
+    <% @type_list.each do |building_type| %>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>"
+               name="fm-builing-type-radio" type="radio" value="<%= building_type %>">
+        <label class="govuk-label govuk-radios__label" for="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>">
+          <%= building_type %><br>
+          <span class="govuk-caption-m"><%= @type_list_descriptions[building_type] %></span>
+        </label>
+      </div>
+    <% end %>
+
+    <div class="govuk-!-margin-6">
+      or
+    </div>
+
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="not-in-list" name="fm-builing-type-radio" type="radio" value="not-in-list">
+      <label class="govuk-label govuk-radios__label" for="not-in-list">
+        None of the above<br>
+        <span class="govuk-caption-m">Other</span>
+        <input class="govuk-input" type="text" id="other-building-type">
+      </label>
+    </div>
+  </div>
+  <div class="govuk-!-margin-top-6">
+    <a id="fm-building-type-continue" href="#" class="govuk-button ccs-no-print" role="button">Continue</a>
+  </div>
+</div>

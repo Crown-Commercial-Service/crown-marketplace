@@ -122,7 +122,33 @@ $(() => {
 
     });
 
-    $('#fm-new-building-continue').click((e) => {
+    const saveBuilding = ((building, isUpdate, whereNext) => {
+
+        let url = '/facilities-management/buildings/new-building-address/save-building';
+
+        if (isUpdate === true) {
+            url = '/facilities-management/buildings/update_building';
+        }
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(building),
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                pageUtils.setCachedData('fm-current-building', building);
+                location.href = whereNext
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+    });
+
+    $('#fm-new-address-continue').click((e) => {
         e.preventDefault();
 
         if (isAddressValid(address)) {
@@ -137,22 +163,14 @@ $(() => {
                 isLondon: isLondon && isLondon === true ? 'Yes' : 'No'
             };
 
-            $.ajax({
-                url: '/facilities-management/buildings/new-building-address/save-building',
-                dataType: 'json',
-                type: 'post',
-                contentType: 'application/json',
-                data: JSON.stringify(building),
-                processData: false,
-                success: function (data, textStatus, jQxhr) {
-                    pageUtils.setCachedData('fm-current-building', building);
-                    location.href = '/facilities-management/buildings/new-building'
-                },
-                error: function (jqXhr, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }
-            });
+            saveBuilding(building, false, '/facilities-management/buildings/new-building');
+
         }
+
+    });
+
+    $('#fm-new-building-continue').click((e) => {
+
 
     });
 
