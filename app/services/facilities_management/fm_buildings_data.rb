@@ -1,6 +1,11 @@
 require 'json'
 require 'base64'
 class FMBuildingData
+
+  def initialize
+    create_facilities_management_buildings_table
+  end
+
   def create_facilities_management_buildings_table
     query = 'CREATE TABLE if not exists public.facilities_management_buildings
             (
@@ -13,7 +18,7 @@ class FMBuildingData
     (user_id COLLATE pg_catalog."default");'
     ActiveRecord::Base.connection.execute(query)
   rescue StandardError => e
-    Rails.logger.warn "Couldn't create tables: #{e}"
+    Rails.logger.warn "Couldn't create the facilities_management_buildings table: #{e}"
   end
 
   def save_building(email_address, building)

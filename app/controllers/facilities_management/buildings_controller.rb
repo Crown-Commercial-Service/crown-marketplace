@@ -27,7 +27,6 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   def save_building
     @new_building_json = request.raw_post
     @fm_building_data = FMBuildingData.new
-    @fm_building_data.create_facilities_management_buildings_table
     @fm_building_data.save_building(current_login.email.to_s, @new_building_json)
   end
 
