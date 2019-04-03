@@ -71,8 +71,8 @@ $(() => {
 
         $.get(encodeURI("/postcodes/in_london?postcode=" + postcode))
             .done(function (data) {
-                if (data) {
-                    pageUtils.setCachedData('fm-postcode-is-in-london', data);
+                if (data.status === 200) {
+                    pageUtils.setCachedData('fm-postcode-is-in-london', data.result);
                 }
 
                 if (data && data.status === 404) {
@@ -89,7 +89,7 @@ $(() => {
         $.get(encodeURI("/postcodes/" + postcode))
             .done(function (data) {
                 if (data) {
-                    pageUtils.setCachedData('fm-current-region', data.region);
+                    pageUtils.setCachedData('fm-current-region', data.result.region);
                 }
 
 
