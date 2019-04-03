@@ -15,7 +15,7 @@
               <!--<div class="govuk-radios__item govuk-!-margin-top-3">-->
               <!-- <input class="govuk-radios__input" id="<%= 'building' + x.to_s %>" name="<%= 'building_radio' %>" type="radio" value="<%= 'building' + x.to_s %>">-->
               <!-- <label class="govuk-label govuk-radios__label" for="<%= 'building' + x.to_s %>">-->
-              <span class="govuk-accordion__section-button" id="<%= building['id'] + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + building['name'] %>
+              <span class="govuk-accordion__section-button" id="<%= building['id'].to_s + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + building['name'].to_s %>
                 <br>
                 <span class="govuk-caption-m govuk-!-font-size-18">
                   <% address = building['address']['fm-address-line-1'].to_s + ', ' +
@@ -24,7 +24,7 @@
                       building['address']['fm-address-county'].to_s + ', ' +
                       building['address']['fm-address-postcode'].to_s
                   %>
-                  <%= address.sub(', , ',', ') %>
+                  <%= address.sub(', , ', ', ') %>
                 </span>
               </span>
               <!--</label>-->
@@ -37,7 +37,7 @@
                 Type:
               </div>
               <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
-
+                <%= building['fm-building-type'] %>
               </div>
             </div>
             <div class="govuk-grid-row">

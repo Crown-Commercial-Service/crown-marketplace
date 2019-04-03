@@ -121,10 +121,6 @@ $(() => {
         $('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
     });
 
-    $('#fm-new-building-continue').click((e) => {
-        e.preventDefault();
-    });
-
     $('#fm-buildings-continue').click((e) => {
         pageUtils.clearCashedData('fm-current-building');
     });
@@ -140,6 +136,75 @@ $(() => {
         }
 
     });
+
+    const updateBuilding = ((building, isUpdate, whereNext) => {
+
+        let url = '/facilities-management/buildings/new-building-address/save-building';
+
+        if (isUpdate === true) {
+            url = '/facilities-management/buildings/update_building';
+        }
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(building),
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                pageUtils.setCachedData('fm-current-building', building);
+                location.href = whereNext
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+    });
+
+    $('input[name="fm-builing-type-radio"]').click((e) => {
+        let value = e.target.value;
+        let buldingTypeOther = $('#other-building-type').value;
+        let currentBuilding = pageUtils.getCachedData('fm-current-building');
+        currentBuilding['fm-building-type'] = value;
+
+        if (value === "not-in-list") {
+            currentBuilding['fm-building-type'] = buldingTypeOther;
+        }
+
+        pageUtils.setCachedData('fm-current-building', currentBuilding);
+    });
+
+    const isBuildingTypeValid = (() => {
+        let len = $('input[name="fm-builing-type-radio"]:radio:checked').length;
+        let result = true;
+
+        if (!len) {
+            result = false;
+        }
+
+        let radioValue = $('input[name="fm-builing-type-radio"]:radio:checked').val();
+        let otherType = $('#other-building-type').val();
+
+        if (radioValue && radioValue === 'not-in-list' && !otherType) {
+            result = false;
+        }
+
+        return result;
+    });
+
+    $('#fm-building-type-continue').click((e) => {
+
+        if (isBuildingTypeValid() === true) {
+            let currentBuilding = pageUtils.getCachedData('fm-current-building');
+            updateBuilding(currentBuilding, true, '#');
+        } else {
+            alert('validation failed');
+        }
+
+    });
+
 
     init();
 
