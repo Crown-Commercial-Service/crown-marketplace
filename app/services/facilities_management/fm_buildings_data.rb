@@ -31,7 +31,7 @@ class FMBuildingData
 
   def update_building(email_address, id, building)
     query = "update facilities_management_buildings set building_json = '" + building + "'" \
-            " where user_id = '" + Base64.encode(email_address) + "' and building_json ->> 'id' = '" + id + "'"
+            " where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
     ActiveRecord::Base.connection.execute(query)
   rescue StandardError => e
     Rails.logger.warn "Couldn't update building: #{e}"
