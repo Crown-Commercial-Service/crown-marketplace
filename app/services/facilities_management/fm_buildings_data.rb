@@ -1,20 +1,16 @@
 require 'json'
 require 'base64'
 class FMBuildingData
-
   def create_facilities_management_buildings_table
-
     query = 'CREATE TABLE if not exists public.facilities_management_buildings
             (
                 user_id character varying COLLATE pg_catalog."default" NOT NULL,
                 building_json json NOT NULL
             );'
     ActiveRecord::Base.connection.execute(query)
-
     query = 'CREATE INDEX if not exists facilities_management_buildings_user_id_idx
     ON public.facilities_management_buildings USING btree
     (user_id COLLATE pg_catalog."default");'
-
     ActiveRecord::Base.connection.execute(query)
   rescue StandardError => e
     Rails.logger.warn "Couldn't create tables: #{e}"
