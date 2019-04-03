@@ -19,13 +19,14 @@
 
           <nav>
             <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-              <li class="govuk-header__navigation-item">
-                <% if the_landing_page %>
+              <% if the_landing_page %>
 
-                <% else %>
+              <% else %>
+                <li class="govuk-header__navigation-item">
                   <%= link_to 'Back to start', service_start_page_path, class: 'govuk-header__link' %>
-                <% end %> 
-              </li>
+                </li>
+              <% end %> 
+
               <li class="govuk-header__navigation-item">
                 <% if logged_in? %>
                   <%= button_to "Sign out", sign_out_path, class: 'govuk-header__link ccs-header__signout' %>
