@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, auth: true do
-  let(:supplier) { build(:management_consultancy_supplier) }
-  let(:suppliers) { [supplier] }
+  let(:supplier) { create(:management_consultancy_supplier) }
+  let(:suppliers) { ManagementConsultancy::Supplier.where(id: supplier.id) }
   let(:lot) { ManagementConsultancy::Lot.find_by(number: lot_number) }
   let(:services) { ManagementConsultancy::Service.all.sample(5).map(&:code) }
   let(:region_codes) { Nuts2Region.all.sample(5).map(&:code) }
@@ -27,7 +27,8 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           lot: lot_number,
           services: services,
           expenses: 'paid',
-          region_codes: region_codes
+          region_codes: region_codes,
+          help_needed: 'management_consultants'
         }
       end
 
@@ -50,7 +51,8 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           lot: lot_number,
           services: services,
           expenses: 'paid',
-          region_codes: region_codes
+          region_codes: region_codes,
+          help_needed: 'management_consultants'
         )
         expect(assigns(:back_path)).to eq(expected_path)
       end
@@ -65,7 +67,8 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           lot: lot_number,
           services: services,
           expenses: 'paid',
-          region_codes: region_codes
+          region_codes: region_codes,
+          help_needed: 'management_consultants'
         }
       end
 
@@ -88,7 +91,8 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           lot: lot_number,
           services: services,
           expenses: 'paid',
-          region_codes: region_codes
+          region_codes: region_codes,
+          help_needed: 'management_consultants'
         )
         expect(assigns(:back_path)).to eq(expected_path)
       end

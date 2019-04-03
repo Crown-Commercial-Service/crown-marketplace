@@ -1,0 +1,158 @@
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-m">Supplier results <b>table</b> v2</h1>
+
+            <p class="govuk-body">New HTML for a supplier results table (v2) pattern (with col headings). This example shows several details which can be included or omitted.</p>
+
+            <p>Uses GDS markup, classes and styles, with the following additional classes:</p>
+
+            <p><b>Note</b> classes: .ccs-search-results, .ccs-remove, .ccs-no-underline, .ccs-tag, .ccs-next</p>
+
+            <p><small>Change the parent class '.govuk-grid-column-two-thirds' accordingly.</small></p>
+        </div>
+    </div>
+
+    <hr style="margin-bottom: 150px;">
+    <style>.ccs-search-results {margin-bottom: 100px; }</style>
+
+
+
+
+      
+  <section class="govuk-grid-column-two-thirds ccs-search-results">
+  
+    <table class="govuk-table">
+      
+      <caption class="govuk-table__caption ccs-remove">Results</caption>
+
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Training provider</th>
+          <th class="govuk-table__header" scope="col">Distance</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                    Example provider title <span class="govuk-!-font-size-14 ccs-tag">National</span>
+                </a>
+                <b>Ofsted:</b> 3 - Requires improvement
+            </td>
+            <td class="govuk-table__cell">
+                <span class="govuk-!-font-size-19">
+                    <b><span>12</span> miles</b>
+                </span>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+              <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  ABC Training LTD National 
+              </a>
+          </td>
+          <td class="govuk-table__cell">
+              <span class="govuk-!-font-size-19">
+                  <b><span>xx</span> Provider(s)</b>
+              </span>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+              <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  DWK Group 
+              </a>
+          </td>
+          <td class="govuk-table__cell">
+              <span class="govuk-!-font-size-19">
+                  <b><span>xx</span> Provider(s)</b>
+              </span>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+              <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  A1 Training Solutions 
+              </a>
+          </td>
+          <td class="govuk-table__cell">
+              <span class="govuk-!-font-size-19">
+                  <b><span>xx</span> Provider(s)</b>
+              </span>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+              <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  North West Education LTD 
+              </a>
+          </td>
+          <td class="govuk-table__cell">
+              <span class="govuk-!-font-size-19">
+                  <b><span>xx</span> label</b>
+              </span>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+              <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  OADS Training Group 
+              </a>
+              <b>Ofsted:</b> 2 - Good
+          </td>
+          <td class="govuk-table__cell">
+              <span class="govuk-!-font-size-19">
+                  <b><span>xx</span> Provider(s)</b>
+              </span>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+              <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  Pimlico College of Building 
+              </a>
+              <b>Ofsted:</b> 2 - Good
+          </td>
+          <td class="govuk-table__cell">
+              <span class="govuk-!-font-size-19">
+                  <b><span>xx</span> Provider(s)</b>
+              </span>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+              <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  United Colleges Groupi National 
+              </a>
+              <b>Ofsted:</b> 2 - Good
+          </td>
+          <td class="govuk-table__cell">
+              <span class="govuk-!-font-size-19">
+                  <b><span>xx</span> Provider(s)</b>
+              </span>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+              <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  University of Liverpool 
+              </a>
+              <b>Ofsted:</b> 2 - Good
+          </td>
+          <td class="govuk-table__cell">
+              <span class="govuk-!-font-size-19">
+                  <b><span>xx</span> Provider(s)</b>
+              </span>
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>                         
+
+    <%= link_to '#', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state ccs-next' do %>
+    <%= t('common.next')%><span>&nbsp;&rarr;</span>
+    <% end %>
+
+  </section>

@@ -1,27 +1,23 @@
-<div class="mc-supplier-record">
-  <div class="govuk-grid-row supplier-record__header-group">
-    <div class="govuk-grid-column-full">
-      <h2 class="govuk-heading-m govuk-!-font-size-27 mc-supplier-record__supplier-name"><%= supplier.name %></h2>
-    </div>
+<li class="govuk-list">
+  <div class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-m">
+      <%= link_to supplier.name, management_consultancy_supplier_path(supplier.id), class: "govuk-!-font-size-20 ccs-no-underline" %>
+      <% if supplier.sme? %>
+        <span class="ccs-tag"><%= t('sme') %></span>
+      <% end %>
+    </h2>
   </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half mc-supplier-record__contact-details">
-      <h3 class="govuk-heading-s mc-supplier-record__contact-name mc-supplier-record__contact-item">
-        <%= supplier.contact_name.present? ?
-              supplier.contact_name :
-              t('.contact_name_missing') %>
-      </h3>
-      <p class="govuk-body mc-supplier-record__contact-item">
-        <%= supplier.contact_email.present? ?
-              mail_to(supplier.contact_email, supplier.contact_email, 'aria-label': "Email #{supplier.contact_name} from #{supplier.name}") :
-              t('.contact_email_missing') %>
-      </p>
-      <p class="govuk-body mc-supplier-record__contact-item">
-        <%= supplier.telephone_number.present? ?
-              format_telephone_number(supplier.telephone_number) :
-              t('.telephone_number_missing') %>
-      </p>
-    </div>
+
+  <div class="govuk-grid-column-one-quarter ccs-results-list__detail">
+    <% supplier.rate_cards.select do |rate_card| %>
+      <% if rate_card.lot == params[:lot].to_i %>
+        <strong class="govuk-!-font-size-36 ccs-font--wrap">
+          <%= number_to_currency(rate_card.average_daily_rate, precision: 0) %>
+        </strong><br />
+        <span class="govuk-!-font-size-16">
+          Average day rate
+        </span>
+      <% end %>
+    <% end%>
   </div>
-  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-</div>
+</li>
