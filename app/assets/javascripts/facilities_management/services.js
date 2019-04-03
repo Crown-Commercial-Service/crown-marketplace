@@ -20,6 +20,8 @@ $(() => {
 
         /!* set the initial count *!/
         updateServiceCount();
+
+
     });
 
     /!* Update the count of selected services *!/
@@ -27,6 +29,11 @@ $(() => {
         let count = $("#selected-fm-services li").length;
 
         $('#selected-service-count').text(count + 2);
+
+        const serviceCount = $('#fm-service-count');
+        if (serviceCount) {
+            serviceCount.text(selectedServices ? selectedServices.length : 0);
+        }
     });
 
     /!* remove a service from the selected list *!/
@@ -99,14 +106,10 @@ $(() => {
 
         isValid();
 
-
-
         updateServiceCount();
         pageUtils.sortUnorderedList('selected-fm-services');
 
     });
-
-
 
     /* Check for at least one service has been selected */
     const isValid = (() => {
@@ -133,7 +136,7 @@ $(() => {
             let locationCodes = pageUtils.getCodes(selectedLocations);
             let serviceCodes = pageUtils.getCodes(selectedServices);
             let postedLocations = $('#postedlocations');
-            let postedServices  = $('#postedservices');
+            let postedServices = $('#postedservices');
 
             postedLocations.val(JSON.stringify(locationCodes));
             postedServices.val(JSON.stringify(serviceCodes));
@@ -144,6 +147,7 @@ $(() => {
             window.location = '#';
         }
     });
+
 
     initialize();
 
