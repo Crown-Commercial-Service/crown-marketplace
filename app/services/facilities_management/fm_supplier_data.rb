@@ -14,7 +14,7 @@ class FMSupplierData
             and fms.id = fmra.facilities_management_supplier_id
             and fmso.facilities_management_supplier_id = fms.id
             and (fmso.service_code in " + services + " )
-            and fmso.lot_number in ('1c','1b','c1')) sup;"
+            and fmso.lot_number in ('1a','1b','1c')) sup;"
     result = ActiveRecord::Base.connection.execute(query)
     result[0]['record_count']
   end
