@@ -42,7 +42,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   def building_type
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
-    @inline_summary_error_text = 'error'
+    @inline_summary_error_text = 'Please select an option before continuing'
     @type_list = ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations',
                   'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary School', 'Special Schools',
                   'Universities and Colleges', 'Doctors, Dentists and Health Clinics', 'Nursery and Care Homes', 'Data Centre Operations',
