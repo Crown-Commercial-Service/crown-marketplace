@@ -20,7 +20,7 @@
         <li><%= t('.before_you_start.use_this_service.item_4') %></li>
       </ul>
 
-      <%= link_to 'Start now', '#', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+      <%= link_to 'Start now', journey_start_path(journey: LegalServices::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
 
     </div>
   </div>
