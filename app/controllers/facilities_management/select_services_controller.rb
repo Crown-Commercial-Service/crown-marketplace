@@ -1,7 +1,7 @@
 # rubocop:disable Metrics/MethodLength
 require 'json'
 class FacilitiesManagement::SelectServicesController < ApplicationController
-  require_permission :facilities_management, only: :select_services
+  require_permission :facilities_management, only: %i[select_services].freeze
 
   def select_services
     # Inline error text for this page

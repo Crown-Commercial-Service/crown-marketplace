@@ -200,7 +200,7 @@ $(() => {
         if (isBuildingTypeValid() === true) {
             $('#inline-error-message').addClass('govuk-visually-hidden');
             let currentBuilding = pageUtils.getCachedData('fm-current-building');
-            updateBuilding(currentBuilding, true, '#');
+            updateBuilding(currentBuilding, true, '/facilities-management/buildings/select-services');
         } else {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
         }
