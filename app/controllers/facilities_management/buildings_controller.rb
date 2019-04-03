@@ -79,8 +79,6 @@ class FacilitiesManagement::BuildingsController < ApplicationController
                                 'Port and Airport buildings' => 'Areas associated with air and sea transportation and supporting facilities, such as airports, aerodromes and dock areas.',
                                 'List X Property' => 'A commercial site (i.e. non-Government) on UK soil that is approved to hold UK government protectively marked information marked as \'confidential\' and above. It is applied to a company\'s specific site and not a company as a whole.',
                                 'Hospitals' => 'Areas including mainstream medical, healthcare facilities such as hospitals and medical centres.',
-                                'Mothballed / Vacant / Disposal' => 'Areas which are vacant or awaiting disposal where no services are being undertaken.'
-    }
-
+                                'Mothballed / Vacant / Disposal' => 'Areas which are vacant or awaiting disposal where no services are being undertaken.' }
   end
 end
