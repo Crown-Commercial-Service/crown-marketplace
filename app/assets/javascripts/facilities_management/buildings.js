@@ -165,12 +165,14 @@ $(() => {
 
     $('input[name="fm-builing-type-radio"]').click((e) => {
         let value = e.target.value;
-        let buldingTypeOther = $('#other-building-type').value;
+        let buildingTypeOther = $('#other-building-type').value;
         let currentBuilding = pageUtils.getCachedData('fm-current-building');
         currentBuilding['fm-building-type'] = value;
 
+        $('#inline-error-message').addClass('govuk-visually-hidden');
+
         if (value === "not-in-list") {
-            currentBuilding['fm-building-type'] = buldingTypeOther;
+            currentBuilding['fm-building-type'] = buildingTypeOther;
         }
 
         pageUtils.setCachedData('fm-current-building', currentBuilding);
@@ -195,17 +197,14 @@ $(() => {
     });
 
     $('#fm-building-type-continue').click((e) => {
-
         if (isBuildingTypeValid() === true) {
+            $('#inline-error-message').addClass('govuk-visually-hidden');
             let currentBuilding = pageUtils.getCachedData('fm-current-building');
             updateBuilding(currentBuilding, true, '#');
         } else {
-            alert('validation failed');
+            $('#inline-error-message').removeClass('govuk-visually-hidden');
         }
-
     });
 
-
     init();
-
 });
