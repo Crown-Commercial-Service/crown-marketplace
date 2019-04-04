@@ -16,13 +16,13 @@ class FMSupplierData
 
   # Get the suppliers for a lot in the initial long list by location and services
   def long_list_suppliers_lot(locations, services, lot)
-    query = "SELECT distinct data->'supplier_name', lots->'services' as  \"service_code\", lots->'regions' as \"region_code\"
+    query = "SELECT distinct data->>'supplier_name' as \"name\", lots->>'services' as  \"service_code\", lots->>'regions' as \"region_code\"
 		from fm_suppliers, jsonb_array_elements(fm_suppliers.data -> 'lots') lots,
 			jsonb_array_elements(lots -> 'regions') regions,
 			jsonb_array_elements(lots->'services') services
 		where"
     query += ' regions in ' + locations + ' and services in ' + services + " and  lots -> 'lot_number\' in ( '\"" + lot + '"\' )'
-    query += "order by data->'supplier_name'"
+    query += "order by data->>'supplier_name'"
 
     rs = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(rs.to_json)
