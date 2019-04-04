@@ -1,0 +1,105 @@
+<% x = 0; %>
+<h2 class="govuk-caption-xl">Your buildings</h2>
+<h1 class="govuk-heading-xl">Add your buildings</h1>
+<h2 class="govuk-heading-m govuk-!-margin-0"><%= @building_count %> building(s) are on your list now</h2>
+<h2 class="govuk-caption-m govuk-!-margin-4">Browse the list of <%= @building_count %> building(s) in total so far.</h2>
+
+<div id="fm-buildings-container">
+  <div class="govuk-accordion" data-module="accordion" id="services-accordion">
+    <div class="govuk-radios">
+      <% @building_data.each do |record| %>
+        <% x = x +1; building = JSON.parse(record['building'].to_s) %>
+        <div class="govuk-accordion__section ">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <!--<div class="govuk-radios__item govuk-!-margin-top-3">-->
+              <!-- <input class="govuk-radios__input" id="<%= 'building' + x.to_s %>" name="<%= 'building_radio' %>" type="radio" value="<%= 'building' + x.to_s %>">-->
+              <!-- <label class="govuk-label govuk-radios__label" for="<%= 'building' + x.to_s %>">-->
+              <span class="govuk-accordion__section-button" id="<%= building['id'].to_s + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + building['name'].to_s %>
+                <br>
+                <span class="govuk-caption-m govuk-!-font-size-18">
+                  <% address = building['address']['fm-address-line-1'].to_s + ', ' +
+                      building['address']['fm-address-line-2'].to_s + ', ' +
+                      building['address']['fm-address-town'].to_s + ', ' +
+                      building['address']['fm-address-county'].to_s + ', ' +
+                      building['address']['fm-address-postcode'].to_s
+                  %>
+                  <%= address.sub(', , ', ', ') %>
+                </span>
+              </span>
+              <!--</label>-->
+              <!--</div> -->
+            </h2>
+          </div>
+          <div class="govuk-accordion__section-content" aria-labelledby="<%= building['name'] %>">
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
+                Type:
+              </div>
+              <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
+                <%= building['fm-building-type'] %>
+              </div>
+            </div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
+                Region:
+              </div>
+              <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
+                <%= building['region'] %>
+              </div>
+            </div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
+                Postcode in london:
+              </div>
+              <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
+                <%= building['isLondon'] %>
+              </div>
+            </div>
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
+                Internal area:
+              </div>
+              <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
+                <%= building['fm-gross-internal-area'] %>
+              </div>
+            </div>
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
+                External area:
+              </div>
+              <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
+
+              </div>
+            </div>
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
+                Lifts:
+              </div>
+              <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
+
+              </div>
+            </div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
+                Floors:
+              </div>
+              <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
+
+              </div>
+            </div>
+          </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <a id="fm-buildings-continue" href="buildings/new-building" class="govuk-button ccs-no-print" role="button">+ Add a
+    building
+  </a>
+</div>
+

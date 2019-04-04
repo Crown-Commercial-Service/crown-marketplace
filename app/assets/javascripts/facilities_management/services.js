@@ -6,8 +6,8 @@
 $(() => {
 
     /!* govuk-accordion__controls event handlers *!/
-    let selectedServices = pageUtils.getCachedData('services');
-    let selectedLocations = pageUtils.getCachedData('locations');
+    let selectedServices = pageUtils.getCachedData('fm-services');
+    let selectedLocations = pageUtils.getCachedData('fm-locations');
 
     const initialize = (() => {
 
@@ -114,7 +114,7 @@ $(() => {
         let result = selectedServices && selectedServices.length > 0 ? true : false;
 
         if (result === true) {
-            $('#service-error-message').attr('hidden', true);
+            $('#inline-error-message').attr('hidden', true);
         }
 
         return result;
@@ -124,12 +124,12 @@ $(() => {
     /* Save and continue click handler */
     $('#save-services-link').click((e) => {
 
-        $('#service-error-message').attr('hidden', true);
+        $('#inline-error-message').attr('hidden', true);
         const servicesForm = $('#fm-services-form');
 
 
         if (isValid() === true) {
-            pageUtils.setCachedData('services', selectedServices);
+            pageUtils.setCachedData('fm-services', selectedServices);
             let locationCodes = pageUtils.getCodes(selectedLocations);
             let serviceCodes = pageUtils.getCodes(selectedServices);
             let postedLocations = $('#postedlocations');
@@ -140,7 +140,7 @@ $(() => {
             servicesForm.submit();
         } else {
             e.preventDefault();
-            $('#service-error-message').removeAttr('hidden');
+            $('#inline-error-message').removeAttr('hidden');
             window.location = '#';
         }
     });

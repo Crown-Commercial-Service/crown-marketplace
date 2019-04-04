@@ -14,109 +14,112 @@
 </div>
 
 <div class="govuk-grid-row govuk-!-padding-top-4 ccs-at-results-pg">
-  <%= form_tag apprenticeships_search_path, method: :get, class: 'supplier-record__calculator-form' do %>
   
-  <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters">
-    <!-- start Levels filters -->
-    <div class="govuk-form-group ccs-at-results-filters__panel">
-      <label class="govuk-label govuk-label--s" for="search">
-        <%= t('.keyword_search_label') %>
-      </label>
-      <%= text_field_tag :keywords, params[:keywordSearch], type: 'search', class: 'govuk-input ccs-govuk-input--search', maxlength: '200' %> 
-      <input class="submit" type="submit" value="<%= t('common.search') %>">
-    </div>
+  <!-- ID #ccs-at-results-filters required -->
+  <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters"> 
+    <%= form_tag apprenticeships_search_path, method: :get, id: 'search-results-form' do %><!-- form inside section element-->
 
-    <div class="govuk-form-group ccs-at-results-filters__heading-bloc">
-      <h2 class="govuk-!-width-two-thirds govuk-heading-m">
-        <%= t('.apply_filters_label') %>
-      </h2>
-      <%= link_to t('.clear_filters_link'), apprenticeships_search_path, role: 'button', class: 'govuk-!-width-one-third govuk-link--no-visited-state ccs-no-print', id: 'ccs-clear-filters' %>
-    </div>
+      <!-- start Levels filters -->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <label class="govuk-label govuk-label--s" for="search">
+          <%= t('.keyword_search_label') %>
+        </label>
+        <%= text_field_tag :keywords, params[:keywordSearch], type: 'search', class: 'govuk-input ccs-govuk-input--search', maxlength: '200' %> 
+        <input class="submit" type="submit" value="<%= t('common.search') %>">
+      </div>
 
-    <div class="govuk-form-group ccs-at-results-filters__panel">
-      <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
-        <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c1">
-          <%= t('.levels_label') %> 
-          <span>&nbsp;Show</span>
-        </button>
+      <div class="govuk-form-group ccs-at-results-filters__heading-bloc">
+        <h2 class="govuk-!-width-two-thirds govuk-heading-m">
+          <%= t('.apply_filters_label') %>
+        </h2>
+        <%= link_to t('.clear_filters_link'), apprenticeships_search_path, role: 'button', class: 'govuk-!-width-one-third govuk-link--no-visited-state ccs-no-print', id: 'ccs-clear-filters' %>
+      </div>
 
-        <div id="c1" class="ccs-at-checkboxes-wrap">
-          <div class="govuk-checkboxes css-govuk-checkboxes--s">
-            
-            <% levels.each do |level| %>
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag(
-                        "levels[]",
-                        level,
-                        false,
-                        class: "govuk-checkboxes__input",
-                        id: "level_#{level}"
-                    ) %>
-                <label class="govuk-label govuk-checkboxes__label" for="level_<%= level %>">
-                  <%= level %>
-                </label>
-              </div>
-            <% end %>
-          </div>
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c1">
+            <%= t('.levels_label') %> 
+            <span> Show</span>
+          </button>
 
-          <%= render 'layouts/button', text: t('common.apply_filters')%>
+          <div id="c1" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
+              
+              <% levels.each do |level| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "levels[]",
+                          level,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "level_#{level}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="level_<%= level %>">
+                    <%= level %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
 
-        </div>
-      </fieldset>
-
-      <details class="govuk-details govuk-!-margin-top-6">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            <%= t('.explain_levels_link') %>
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          <%= t('.explain_levels_text') %>
-        </div>
-      </details>
-
-    </div>  
-
-    <!-- start Routes filters -->
-    <div class="govuk-form-group ccs-at-results-filters__panel">
-      <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
-        <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c2">
-          <%= t('.routes_label') %>
-          <span>&nbsp;Show</span>
-        </button>
-
-        <div id="c2" class="ccs-at-checkboxes-wrap">
-          <div class="govuk-checkboxes css-govuk-checkboxes--s">
-
-            <% routes.each do |route| %>
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag(
-                        "routes[]",
-                        route,
-                        false,
-                        class: "govuk-checkboxes__input",
-                        id: "route_#{route}"
-                    ) %>
-                <label class="govuk-label govuk-checkboxes__label" for="route_<%= route %>">
-                  <%= route %>
-                </label>
-              </div>
-            <% end %>
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
 
           </div>
+        </fieldset>
 
-          <%= render 'layouts/button', text: t('common.apply_filters')%>
+        <details class="govuk-details govuk-!-margin-top-6">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              <%= t('.explain_levels_link') %>
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <%= t('.explain_levels_text') %>
+          </div>
+        </details>
 
-        </div>
-      </fieldset>
-    </div>         
+      </div>  
 
+      <!-- start Routes filters -->
+      <div class="govuk-form-group ccs-at-results-filters__panel">
+        <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
+          <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c2">
+            <%= t('.routes_label') %>
+            <span> Show</span>
+          </button>
+
+          <div id="c2" class="ccs-at-checkboxes-wrap">
+            <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
+
+              <% routes.each do |route| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                          "routes[]",
+                          route,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "route_#{route}"
+                      ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="route_<%= route %>">
+                    <%= route %>
+                  </label>
+                </div>
+              <% end %>
+
+            </div>
+
+            <%= render 'layouts/button', text: t('common.apply_filters')%>
+
+          </div>
+        </fieldset>
+      </div>
+              
+    <% end %>
   </section>
 
-  <section id="ccs-at-search-results" class="govuk-grid-column-two-thirds ccs-at-search-results">
+  <section class="govuk-grid-column-two-thirds ccs-search-results">
 
     <div class="govuk-form-group">
-      <div class="ccs-at-search-results__sort">
+      <div class="ccs-search-results__sort">
         <label class="govuk-label" for="sortBox">
           <%= t('.sort_by_label') %>
         </label>
@@ -124,19 +127,18 @@
       </div>
     </div>
 
-    <h2 class="govuk-heading-m ccs-at-remove">Results</h2>
+    <h2 class="govuk-heading-m ccs-remove">Results</h2>
 
-    <ul class="ccs-at-results-list">
+    <ul class="ccs-results-list">
       <% results.each do |result| %>
         <%= render 'search_apprenticeship', result: result %>
       <% end %>
     </ul>
 
-    <%= link_to '/apprenticeships/find_apprentices5', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state ccs-at-next' do %>
-      <%= t('.next')%><span>&nbsp;&rarr;</span>
+    <%= link_to '/apprenticeships/find_apprentices5', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state ccs-next' do %>
+      <%= t('common.next')%><span>&nbsp;&rarr;</span>
     <% end %>
 
   </section>
 
-  <% end %>
 </div>

@@ -7,7 +7,7 @@
 
       <div class="ccs-logo__dfe">
         <p class="govuk-body-s"><%= t('.supported_by') %></p>
-        <%= image_tag('Department_for_Education.svg', alt: 'Department for Education', width: '145px;') %>
+        <%= image_tag('Department_for_Education.svg', alt: 'Department for Education', width: '145px;', viewBox: '0 0 640 480') %>
       </div>
 
       <p class="govuk-body"><%= t('.use_this_service_to.title') %></p>
@@ -26,9 +26,7 @@
         <%= t('.you_will_need_your_dfe_sign_in') %>
       </p>
 
-      <%= link_to t('.start_now'), journey_start_path(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.start_finding_supply_teachers') %>
-
-      <h2 class="govuk-heading-m"><%= t('.before_you_start') %></h2>
+      <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('.before_you_start') %></h2>
 
       <p class="govuk-body"><%= t('.you_will_need_to_have') %></p>
 
@@ -47,7 +45,9 @@
 
       <p class="govuk-body"><%= t('.all_suppliers_have_undergone') %></p>
 
-      <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('.buyers_obligations') %></h2>
+      <%= link_to t('.start_now'), journey_start_path(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('.start_finding_supply_teachers') %>
+
+      <h2 class="govuk-heading-m"><%= t('.buyers_obligations') %></h2>
 
       <p class="govuk-body"><%= t('.this_service_contains_pricing_information_html', url: 'https://www.gov.uk/guidance/deal-for-schools-hiring-supply-teachers-and-agency-workers') %></p>
 

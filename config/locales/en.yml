@@ -11,10 +11,18 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        legal_services/journey/choose_organisation_type:
+          attributes:
+            central_government:
+              inclusion: Select yes if you work for central government
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
               inclusion: Please say whether you pay expenses
+        management_consultancy/journey/choose_help_needed:
+          attributes:
+            help_needed:
+              inclusion: Select what you need
         management_consultancy/journey/choose_lot:
           attributes:
             lot:
@@ -107,6 +115,18 @@ en:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
     home:
+      download_provider:
+        audit_text: For audit purposes, please find below the list of choices and requiements that you have entered to generate this shortlist. Print this page, to keep a copy of this for your records.
+        button_label: Start new search
+        download_training_provider_list_link: Download training provider list
+        lead_text: You can now download the training provider list and complete this procurement offline via a further competition
+        page_title: Download the training provider list
+        print_this_page: Print this page
+        selections_used_title: Selections used to generate your shortlist
+        the_following_documents_text: The following documents may also be of help
+        title: Download the training provider list
+        warning_text: Please be aware that appointed suppliers are constantly changing. Therefore please download this list of providers and use it immediately. Any list providers older than 2 working days will be considered to have expired.
+        warning_title: Warning
       find_apprentices:
         find_1_legend: Do you know the apprenticeship standard that you would like training for?
         page_title: Which training course
@@ -154,6 +174,24 @@ en:
         page_title: Looking for
         question: question 1 txt
         question2: question 2 txt
+      provider_filters:
+        apply_filters_label: Apply filters
+        apprenticeship_ofsted_rating_label: Apprenticeship Ofsted rating
+        classroom_sharing_label: Classroom sharing
+        clear_filters_link: Clear filters
+        delivery_method_label: Delivery method
+        explain_classroom_sharing_link: Explain classroom sharing
+        explain_classroom_sharing_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet lobortis sollicitudin. Phasellus cursus sollicitudin maximus.
+        explain_time_demand_link: Explain time demand
+        explain_time_demand_text2: Lorem ipsum consectetur adipiscing elit sit.
+        explain_training_availability_link: Explain training availability
+        explain_training_availability_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        list_of_filter_options_label: List of filter options
+        overall_ofsted_rating_label: Overall Ofsted rating
+        provider_experience_label: Provider experience
+        selected_label: selected
+        time_demand_label: Time demand
+        training_availability_label: Training availability
       requirement:
         page_title: Add your requirements
         postcode_label: Enter the postcode where the training needs to take place
@@ -180,7 +218,6 @@ en:
         header: Search results
         keyword_search_label: Keyword search
         levels_label: Levels
-        next: Next
         page_title: Search results
         providers_label: Provider(s)
         result_level_label: 'Level:'
@@ -189,37 +226,96 @@ en:
         routes_label: Routes
         sort_by_label: Sort by
       signup:
-        page_title: Sign up
+        body_text_01_html: To access funds to pay for apprenticeship training you need to <a href="">register on the apprenticeship service</a>.
+        lead_text_html: Before using this service, you need to have a Digital Apprenticeship Service (<abbr>DAS</abbr>) account.
+        page_title: Sign up for a Digital Apprenticeship Service account
+        title: Sign up for a Digital Apprenticeship Service (DAS) account
       sorry:
-        page_title: Sorry
+        contact_support_text_html: <a href="#">Contact <abbr>CCS</abbr> Support</a> for help.
+        content_text: We're unable to find any training providers that match your requirements.
+        go_back_text_html: Go back and <a href="#">check your requirements</a> to make sure they're all correct.
+        page_title: No training providers were found
+        title: No training providers were found
       supplier_search:
-        apply_filters: Apply filters
-        apply_filters_label: Apply filters
-        clear_filters_link: Clear filters
+        can_supply_training_for: can supply training for
+        download_label: Download the suppliers list
         page_title: Supplier search
-        sort_by_label: Sort by
-        there_are_8: Lorem ipsum (for supplier search)
+        provider_results_title: Training provider results
+        providers_label: Provider(s)
+        result_ofsted_label: Ofsted
+        that_match_your_requirements: that match your requirements.
+        training_providers: training providers
       supplier_search2:
-        apply_filters: Apply filters
-        apply_filters_label: Apply filters
-        clear_filters_link: Clear filters
+        can_supply_training_for: can supply training for
+        download_label: Download the suppliers list
         page_title: Supplier search
-        sort_by_label: Sort by
-        there_are_8: Lorem ipsum (for supplier search2)
+        provider_results_title: Training provider results
+        that_match_your_requirements: that match your requirements.
+        training_providers: training providers
       training_details:
-        page_title: Training details
+        ability_to_customise_tbl: Ability to customise
+        about_the_apprenticeship_title: About the apprenticeship
+        about_the_provider_title: About the provider
+        address_title: Address
+        apprenticeship_tbl: Apprenticeship
+        classroom_sharing_label: Classroom sharing
+        classroom_sharing_txt: Lorem ipsum elit sit consectetur adipiscing elit sit.
+        contact_details_title: Contact details
+        delivery_method_label: Delivery method
+        duration_tbl: Duration
+        email_title: Email
+        experience_in_delivering_apprenticeships_tbl: Experience in delivering apprenticeships
+        experience_in_this_apprenticeship_tbl: Experience in this apprenticeship
+        explain_classroom_sharing_title: Explain classroom sharing
+        explain_time_demand_title: Explain time demand
+        explain_training_availability_title: Explain training availability
+        level_tbl: Level
+        maximum_funding_tbl: Maximum funding
+        national_provider_tag: National provider
+        ofsted_rating_for_apprenticeships_tbl: Ofsted rating for apprenticeships
+        other_apprenticeship_standards_title: Other apprenticeship standards this provider delivers
+        overall_ofsted_rating_tbl: Overall Ofsted rating
+        page_title: Training provider details
+        phone_number_title: Phone number
+        provider_information_summary: Provider information summary
+        provider_information_title: Provider information details
+        provider_statement: This training provider offers apprenticeship training across England.
+        recruitment_support_tbl: Recruitment support
+        time_demand_label: Time demand
+        time_demand_txt: Lorem ipsum consectetur adipiscing elit sit.
+        training_availability_txt: Lorem ipsum adipiscing elit consectetur adipiscing elit sit.
+        training_availablity_label: Training availability
+        training_course_information_summary: Training course summary
+        training_course_information_title: Training course information
+        training_provider_details_hint: Training provider details
+        training_provider_tab_title: Training provider details tabs
+        website_title: Website
       training_information:
         page_title: Training information
       understanding:
-        page_title: Understanding
+        back_to_start: Back to start
+        body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
+        body_text_02_html: When you know the apprenticeship Standard you need, you can continue using this service.
+        lead_text: Before using this service, it's important to understand which apprenticeship standard you need.
+        page_title: Understanding what to buy
+        title: Understanding what to buy
     page_section: Find apprenticeship training and related services
   common:
     apply_filters: Apply filters
+    back_to_start: Back to start
     browse: Browse
     continue: Continue
+    csv_html: <abbr title="Comma-separated values">CSV</abbr>
+    doc_html: <abbr title="Microsoft Word">DOC</abbr>
     next: Next
     search: Search
     submit: Continue
+    type_csv: text/csv
+    type_doc: application/msword
+  companies:
+    unit:
+      one: company
+      other: companies
   errors:
     '404':
       explanation: You may have mistyped the address or the page may have moved.
@@ -278,6 +374,7 @@ en:
   home:
     index:
       facilities_management_link: Find a facilities management supplier
+      legal_services_link: Find legal service for the wider public sector
       management_consultancy_link: Find management consultancy services
       supply_teachers_link: Find supply teachers and agency workers
   journey_step:
@@ -314,36 +411,90 @@ en:
       title: Crown Commercial Service
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
+  legal_services:
+    home:
+      index:
+        authorised_customer_list_link_text: authorised customer list
+        before_you_start:
+          heading: Before you start
+          use_this_service:
+            heading: 'You will need to:'
+            item_1_html: be a recognised public sector body in the %{authorised_customer_list_link}
+            item_2_html: have read and understood the framework’s %{customer_guidance_document_link}
+            item_3: have put together a well-structured business case outlining the need for external legal support
+            item_4: have an estimate of your gross contract value
+        customer_guidance_document_link_text: customer guidance document
+        heading: Find legal services for the wider public sector
+        use_this_service:
+          description: Using this service means you’re adhering to the public service procurement procedures.
+          heading: Use this service to download a short list of law firms that provide the legal services you need.
+          item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less
+      service_not_suitable:
+        better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
+        heading: You need a different framework
+    journey:
+      choose_organisation_type:
+        central_government_search_link_title: central government departments, agencies and public bodies
+        question: Do you work for central government?
+        search_central_government_html: Search %{central_government_search_link} if you’re unsure.
   management_consultancy:
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
+    home:
+      index:
+        before_you_start:
+          heading: Before you start
+          use_this_service:
+            heading: 'To use this service, you need to:'
+            item_1: know the location where the work will be carried out
+            item_2_html: review the %{ojeu_contract_link} and framework specification to ensure your requirements are within the scope of this agreement
+            item_3_html: 'know the lot (or lots) the consultancy services belong to - see the documents ''Lot descriptions MCF2 RM6008'' and ''RM3745 MCF Lot desfriptions'' listed on the following agreements: %{mcf_link} and %{mcf2_link}'
+        heading: Find management consultants
+        mcf2_link_text: Management Consultancy Framework Two
+        mcf_link_text: Management Consultancy Framework
+        ojeu_contract_link_text: OJEU contract notice
+        use_this_service:
+          heading: 'Use this service to:'
+          item_1: produce a list of Crown Commercial Service approved management consultants based on your requirements
+          item_2: adhere to the public procurement procedures
     journey:
       choose_expenses:
         answer_expenses_not_paid: We will not pay expenses
         answer_expenses_paid: We will pay expenses
         question: Do you pay expenses?
+      choose_help_needed:
+        contingent_labour_description: Staff for short-term projects with specific outcomes
+        corporate_financial_services_description: Advice on complex corporate financial matters
+        digital_outcomes_and_specialists_description: Support to design, build and deliver digital outcomes using the agile approach
+        g_cloud_description: Cloud hosting, software and support
+        management_consultants_description: Specific areas of expertise for longer running projects
+        question: What do you need to procure?
+        research_marketplace_description: Social, economic or market research for projects of all size and budgets
+        technology_services_description: Technology services all government security classifcation levels
       choose_lot:
         question: What kind of management consultancy do you want to procure?
         question_hint: The lot you choose here will affect the services offered and the suppliers presented.
-        submit: Continue
       choose_regions:
         question: In which regions will you require the services?
       choose_services:
         question: What services will you require?
+      other_framework:
+        back_to_start: Back to start
+        heading: You need a different framework
+        introduction: This service is for the management consultancy frameworks RM3745 and RM6008.
     suppliers:
       index:
-        suppliers_found_html: "<strong>%{suppliers}</strong> found"
-      supplier:
-        contact_email_missing: Contact email not available
-        contact_name_missing: Contact name not available
-        telephone_number_missing: Telephone number not available
+        download_suppliers_list: Download the supplier list
+        heading: Supplier results
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
   miles:
     unit:
       one: mile
       other: miles
+  'no': 'No'
   number:
     currency:
       format:
@@ -405,6 +556,7 @@ en:
       supply_teachers:
         details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
         title: Not permitted
+  sme: SME
   suppliers:
     unit:
       one: agency
@@ -412,14 +564,23 @@ en:
   supply_teachers:
     branches:
       branch:
+        address: Address
         branch: Branch
+        branch_name: Branch
         calculator:
           agency_fee: Agency fee
           daily_rate: Enter daily rate
           heading: 'Enter the quote from this agency to see what their fee will be:'
           worker_cost: Cost of the worker
+        column1: Job type
+        column2: Agency mark-up
+        contact_email: Contact email
+        contact_name: Contact name
+        header: Agency details
         markup: Mark-up
         miles: Miles
+        phone_number: Phone number
+        region: Region
       index:
         calculate_markup_button_label: Calculate the fee
         calculate_markup_description: 'See how much the worker makes and what fee the agency will get using the figure they quoted you:'
@@ -450,7 +611,6 @@ en:
         other_radius_html: 'Change this distance to: '
         page_title: Agencies
         print: Print this page
-        related_actions_html: Related actions
         results_found_html: "<strong>%{results}</strong> found"
         results_found_with_location_html: "<strong>%{results}</strong> found within <strong>%{range}</strong> of <strong>%{postcode}</strong>."
     gateway:
@@ -621,3 +781,4 @@ en:
       next: Next
       previous: Previous
       truncate: "..."
+  'yes': 'Yes'

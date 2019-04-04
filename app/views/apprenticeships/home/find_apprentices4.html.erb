@@ -41,13 +41,6 @@
               </h1>  
               <%= text_field_tag :search, params[:search], class: 'govuk-input ccs-search-icon' %>
             </div>
-
-
-                  <!--label class="govuk-label govuk-label--s" for="search">
-        Keyword search
-      </label>
-      <input type="search" name="keywords" id="keywords" class="govuk-input ccs-govuk-input--search" maxlength="200" /> 
-      <input class="submit" type="submit" value="Search"-->
             
             <%= render 'layouts/button', text: t('common.search')%>
 
@@ -66,7 +59,7 @@
                   </h1>
                 </legend>
 
-                <div class="govuk-checkboxes css-govuk-checkboxes--s">
+                <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
                   <% browse_routes.each do |rating| %>
                   <div class="govuk-checkboxes__item">
                     <%= check_box_tag(

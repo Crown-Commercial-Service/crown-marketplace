@@ -1,13 +1,238 @@
 <%= content_for :page_title, t('.page_title') %>
 <%= content_for :page_section, t('apprenticeships.page_section') %>
 
-<%= form_tag apprenticeships_search_results_path, method: :get do %>
-  <label class="govuk-label govuk-label--m" for="search">
-    <%= t('Training provider details STUB') %>
-  </label>
-  <span id="more-detail-hint" class="govuk-hint">
-    For example, the apprenticeship standard, level and specific requirements fromn the training provider.
-  </span>
-</div> 
- <%= link_to t('common.continue'), journey_start_path(journey: SupplyTeachers::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('common.continue') %>
-<% end %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <span class="govuk-caption-xl"><%= t('.training_provider_details_hint') %></span>
+      <h1 class="govuk-heading-xl">
+        ABC Training LTD 
+        <span class="govuk-heading-s ccs-tag"><%= t('.national_provider_tag') %></span>
+      </h1>
+
+    </div>
+  </div> 
+
+  <div class="govuk-grid-row">
+    <section class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-tabs" data-module="tabs">
+        <h2 class="govuk-tabs__title">
+          <%= t('.training_provider_tab_title') %>
+        </h2>
+
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab govuk-tabs__tab--selected" href="#provider">
+              <%= t('.provider_information_title') %>
+            </a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#training">
+              <%= t('.training_course_information_title') %>
+            </a>
+          </li>
+        </ul>
+
+        <section class="govuk-tabs__panel" id="provider">
+          <h2 class="govuk-heading-l"><%= t('.provider_information_title') %></h2>
+
+          <p class="govuk-body">
+            <span class="ccs-tag"><%= t('.national_provider_tag') %></span>
+            <%= t('.provider_statement') %>
+          </p>
+
+          <table class="govuk-table ccs-at-govuk-table--sm">
+            <caption class="govuk-table__caption ccs-remove">
+              <%= t('.provider_information_summary') %>
+            </caption>
+
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.overall_ofsted_rating_tbl') %></th>
+                <td class="govuk-table__cell">1 - Outstanding (<a href="#">view report</a>)</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.experience_in_delivering_apprenticeships_tbl') %></th>
+                <td class="govuk-table__cell">Yes</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.recruitment_support_tbl') %></th>
+                <td class="govuk-table__cell">Yes</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 class="govuk-heading-m"><%= t('.about_the_provider_title') %>:</h3>
+
+          <p class="govuk-body">University of the Year for Student Experience; latest Times and Sunday Times leaue table</p>
+
+          <p class="govuk-body">Ranked No.13 UK University; Guardian university Guide 2019</p>
+          
+          <p class="govuk-body">Gold for outstanding eaching and learning; Teaching Excellence Framework 2017</p>
+          
+          <p class="govuk-body">ABC Training LTD apprenticeships are pleased to offer the opportunity to upskill employees with a range of higher and degree apprenticeships. These apprenticeshipsenable people of all ages to earn a wage while studying for a higher-level qualification.</p>
+          
+          <p class="govuk-body">With ABC Training LTD, apprentices can gain professional qualifications as well as academic qualifications.</p>
+
+          <h3 class="govuk-heading-m"><%= t('.other_apprenticeship_standards_title') %></h3>
+          
+          <ul class="govuk-list govuk-list--bullet ccs-list-bullet--sm">
+            <li><span>Construction Building: Woodmachining</span></li>
+            <li><span>Construction Technical and Professional: Building Control</span></li>
+            <li><span>Construction Building: Trowel Occupations</span></li>
+            <li><span>Facilities Management: Building Services</span></li>
+            <li><span>Building Service Engineering Installer</span></li>
+            <li><span>Building Services Engineering Ductwork Craftsperson</span></li>            
+          </ul>
+
+        </section>
+
+        <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="training">
+          <h2 class="govuk-heading-l"><%= t('.training_course_information_title') %></h2>
+
+          <table class="govuk-table ccs-at-govuk-table--sm">
+            <caption class="govuk-table__caption ccs-remove">
+              <%= t('.training_course_information_summary') %>
+            </caption>
+
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.apprenticeship_tbl') %></th>
+                <td class="govuk-table__cell">1 - Outstanding (<a href="#">view report</a>)</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.ofsted_rating_for_apprenticeships_tbl') %></th>
+                <td class="govuk-table__cell">Yes</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.level_tbl') %></th>
+                <td class="govuk-table__cell">Yes</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.duration_tbl') %></th>
+                <td class="govuk-table__cell">Yes</td>
+              </tr> 
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.maximum_funding_tbl') %></th>
+                <td class="govuk-table__cell">Yes</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.ability_to_customise_tbl') %></th>
+                <td class="govuk-table__cell">Yes</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row"><%= t('.experience_in_this_apprenticeship_tbl') %></th>
+                <td class="govuk-table__cell">Yes</td>
+              </tr>                                         
+            </tbody>
+          </table>  
+
+          <h3 class="govuk-heading-m"><%= t('.about_the_apprenticeship_title') %></h3>
+
+          <p class="govuk-body">This professionally accredited course aims to equip you with the knowledge, technical and practial skills and techniquies required for a successful career as a building services engineer, able to respond to environmental and ethical considerations, while taking into consideration relevant social and economic implications too.</p>
+
+          <p class="govuk-body">ABC Traning LTD has a long and prestigious engineering heirtage and is ranked 2nd for 'Mechanical Engineering', 10th for 'Civil Engineering' and 30th for 'Electronic and Electrical Engineering' by the Guardian University Guide 2018. We enjoy a strong portfolio of industry-related research, particularly in the areas of low carbon buildling technology, sustainable construction materials and engineering education.</p>
+
+          <ul class="ccs-checklist govuk-clearfix">
+            <li><b><%= t('.time_demand_label') %>: </b>
+              
+              <ul>
+                <li><span class="ccs-y">Yes:</span> day release</li>
+                <li><span class="ccs-y">Yes:</span> block release</li>
+                <li><span class="ccs-n">No:</span> at your location</li>
+                <li>
+                  <details class="govuk-details">
+                    <summary class="govuk-details__summary">
+                      <span class="govuk-details__summary-text">
+                        <%= t('.explain_time_demand_title') %>
+                      </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                      <%= t('.time_demand_txt') %>
+                    </div>
+                  </details>                
+                </li>
+              </ul>
+
+            </li>
+            <li><b><%= t('.delivery_method_label') %>: </b>
+              
+              <ul>
+                <li><span class="ccs-y">Yes:</span> Classroom based</li>
+                <li><span class="ccs-y">Yes:</span> Online</li>
+                <li><span class="ccs-n">No:</span> Workplace based</li>
+                <li><span class="ccs-y">Yes:</span> Blended</li>
+              </ul>
+              
+            </li>
+            <li><b><%= t('.classroom_sharing_label') %>: </b>
+              
+              <ul>
+                <li><span class="ccs-n">No:</span> Open</li>
+                <li><span class="ccs-y">Yes:</span> Closed</li>
+                <li><span class="ccs-n">No:</span> Public</li>
+                <li>
+                  <details class="govuk-details">
+                    <summary class="govuk-details__summary">
+                      <span class="govuk-details__summary-text">
+                        <%= t('.explain_classroom_sharing_title') %>
+                      </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                      <%= t('.classroom_sharing_txt') %>
+                    </div>
+                  </details>                
+                </li>
+              </ul>
+              
+            </li> 
+            <li><b><%= t('.training_availablity_label') %>: </b>
+              
+              <ul>
+                <li><span class="ccs-n">No:</span> Open</li>
+                <li><span class="ccs-y">Yes:</span> Closed</li>
+                <li><span class="ccs-n">No:</span> Public</li>
+                <li>
+                  <details class="govuk-details">
+                    <summary class="govuk-details__summary">
+                      <span class="govuk-details__summary-text">
+                        <%= t('.explain_training_availability_title') %>
+                      </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                      <%= t('.training_availability_txt') %>
+                    </div>
+                  </details>                
+                </li>
+              </ul>
+              
+            </li>                       
+          </ul>
+          
+        </section>
+      </div>
+
+      <p style="width: 100%; text-align: right; margin: 80px 0 50px 0;"><small><i><a href="/apprenticeships/download_provider">Temporary link to next page > (remove)</a></i></small></p>
+
+    </section>
+
+    <section class="govuk-grid-column-one-third">
+
+      <div class="ccs-info-panel govuk-!-margin-top-8">
+        <h3 class="govuk-heading-m"><%= t('.contact_details_title') %></h3>
+
+        <dl>
+          <dt><%= t('.email_title') %>:</dt>
+          <dd><a href="mailto:emailaddress@websiteurl.ac.uk">emailaddress@websiteurl.ac.uk</a></dd>
+          <dt><%= t('.phone_number_title') %>:</dt>
+          <dd>1234 567890</dd>
+          <dt><%= t('.website_title') %>:</dt>
+          <dd><a href="http://www.websiteurl.ac.uk">http://www.websiteurl.ac.uk</a></dd>
+          <dt><%= t('.address_title') %>:</dt>
+          <dd>Maidstone Campus, Tonbridge Road, Maidstone, Kent, ME16 8AQ</dd>
+        </dl>
+      </div>
+
+    </section>
+  </div>

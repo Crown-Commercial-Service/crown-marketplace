@@ -16,6 +16,11 @@ module SupplyTeachers
       end
     end
 
+    def show
+      @back_path = :back
+      @branch = Branch.friendly.find(params[:id])
+    end
+
     private
 
     def render_branches

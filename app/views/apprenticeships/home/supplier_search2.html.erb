@@ -1,204 +1,60 @@
 <%= content_for :page_title, t('.page_title')  %>
 <%= content_for :page_section, t('apprenticeships.page_section') %>
 
+
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.training provider results') %></h1>
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl"><%= t('.provider_results_title') %></h1>
 
     <p class="govuk-body">
-        <%= t('.there_are_8', results: 55, search: params[:search]) %>
+      <b>
+        <span class="govuk-!-font-size-27">8</span> <%= t('.training_providers') %>
+      </b> 
+      <%= t('.can_supply_training_for') %> 
+      &ldquo;<b>Building services design engineer</b>&rdquo; 
+      <%= t('.that_match_your_requirements') %> 
     </p>
-    <p><%= t('.apply_filters') %></p>
 
-    <%= form_tag apprenticeships_search_path, method: :get, class: 'supplier-record__calculator-form' do %>
-      <div class="govuk-grid-row">
+    <%= link_to t('.download_label'), '#', role: 'button', class: 'govuk-button govuk-!-margin-top-5 govuk-!-margin-bottom-5' %>
 
-        <div class="govuk-grid-column-one-third">
-
-          <h2 class="govuk-heading-m"><%= t('.apply_filters_label') %></h2>
-
-          <%= link_to t('.clear_filters_link'), apprenticeships_search_path, class: 'ccs-no-print' %>
-
-          <div class="cmp-sidebar">
-            <h2 class="govuk-heading-s"><%= t('.Overall Ofsted rating') %></h2>
-
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% ofsted_rating.each do |rating| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "rating[]",
-                              rating,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "rating_#{rating}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="rating_<%= rating %>">
-                        <%= rating %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-
-           <h2 class="govuk-heading-s"><%= t('.Course Ofsted rating') %></h2>
-	   <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% course_rating.each do |course| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "course[]",
-                              course,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "course_#{course}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
-                        <%= course %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset> 
-            </div>
-
-         <h2 class="govuk-heading-s"><%= t('.Provider experience ') %></h2>
-           <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% provider_experience.each do |course| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "course[]",
-                              course,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "course_#{course}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
-                        <%= course %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-
-         <h2 class="govuk-heading-s"><%= t('.Delivery method ') %></h2>
-           <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% delivery_method.each do |course| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "course[]",
-                              course,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "course_#{course}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
-                        <%= course %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-
-         <h2 class="govuk-heading-s"><%= t('.Time demand') %></h2>
-           <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% time_demand.each do |course| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "course[]",
-                              course,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "course_#{course}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
-                        <%= course %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-
-          <h2 class="govuk-heading-s"><%= t('.Classroom sharing ') %></h2>
-           <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% classroom_sharing.each do |course| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "course[]",
-                              course,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "course_#{course}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
-                        <%= course %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-
-         <h2 class="govuk-heading-s"><%= t('.Training availability ') %></h2>
-           <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                <div class="govuk-checkboxes">
-                  <% training_availability.each do |course| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag(
-                              "course[]",
-                              course,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "course_#{course}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="course_<%=course %>">
-                        <%= course %>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-       </div>
-          </div>
-        </div>
- 
-
-<table class="govuk-table">
-  <caption class="govuk-table__caption">Dates and amounts</caption>
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="col">Date</th>
-      <th class="govuk-table__header" scope="col">Amount</th>
-    </tr>
-  </thead>
-	  <div class="govuk-grid-column-two-thirds">
-          <div>
-            <h2 class="govuk-heading-m"><%= t('.sort_by_label') %></h2>
-
-            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-            <% supplier_results.each do |result| %>
-              <%= render 'search_apprenticeship', result: result %>
-            <% end %>
-
-            <%= link_to t('common.next'), '#', class: 'govuk-link' %>
-          </div>
-        </div>
-      </div>
-    <% end %>
   </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-padding-top-4 ccs-at-results-pg">
+
+  <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters">
+    <%= form_tag apprenticeships_search_path, method: :get, id: 'supplier-results-form' do %><!-- form inside section element-->
+     
+      <%= render partial: 'provider_filters' %>
+
+    <% end %> 
+  </section>
+
+  <section class="govuk-grid-column-two-thirds ccs-search-results">
+  
+    <table class="govuk-table">
+      
+      <caption class="govuk-table__caption ccs-remove">Search results</caption>
+
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Training provider</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+
+        <% supplier_results.each do |result| %>
+          <%= render 'search_provider2', result: result %>
+        <% end %>
+
+      </tbody>
+    </table>             
+
+    <%= link_to '/apprenticeships/sorry', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state ccs-next' do %>
+      <%= t('common.next')%><span>&nbsp;&rarr;</span>
+    <% end %>
+
+  </section>
+ 
 </div>
