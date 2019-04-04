@@ -4,9 +4,9 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   require_permission :facilities_management, only: %i[buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building].freeze
 
   def select_services_per_building
-    @inline_error_summary_title = 'There was a problem'
-    @inline_error_summary_body_href = '#'
-    @inline_summary_error_text = 'Error'
+    @inline_error_summary_title = 'Services are not selected'
+    @inline_error_summary_body_href = '#fm-service-count'
+    @inline_summary_error_text = 'You must select at least one service before continuing'
   end
 
   def buildings

@@ -8,6 +8,8 @@ $(() => {
     /!* govuk-accordion__controls event handlers *!/
     let selectedServices = pageUtils.getCachedData('fm-services');
     let selectedLocations = pageUtils.getCachedData('fm-locations');
+    let selectedServicesForThisBuilding = selectedServices;
+    let currentBuilding = pageUtils.getCachedData('fm-current-building');
 
     const initialize = (() => {
 
@@ -20,19 +22,54 @@ $(() => {
 
         /!* set the initial count *!/
         updateServiceCount();
+        renderSelectedServices();
+
+    });
+
+    const renderSelectedServices = (() => {
+
+        selectedServices.forEach((service, index) => {
+            let newCheckBoxItem = '<div class="govuk-checkboxes__item">\n' +
+                '                <input class="govuk-checkboxes__input" checked id="' + service.code + '" name="fm-building-service-checkbox" type="checkbox" value="' + service.code + '">\n' +
+                '                <label class="govuk-label govuk-checkboxes__label" for="' + service.code + '">\n' + service.name + '</label></div>'
+
+            $('#fm-buildings-selected-services').prepend(newCheckBoxItem);
+
+            /* add a change handler for the new check box item */
+            $('#' + service.code).on('change', (e) => {
+                let isChecked = e.target.checked;
+
+                if (isChecked === true) {
+                    selectedServicesForThisBuilding.push(service);
+                    updateServiceCount();
+                } else {
+                    /* remove the item */
+                    selectedServicesForThisBuilding = selectedServicesForThisBuilding.filter((currentService) => {
+                        if (currentService && currentService.code !== service.code) {
+                            return true;
+                        }
+                    });
+                    updateServiceCount();
+                }
+            });
+        });
 
 
     });
 
     /!* Update the count of selected services *!/
     const updateServiceCount = (() => {
-        let count = $("#selected-fm-services li").length;
+        let count = selectedServicesForThisBuilding ? selectedServicesForThisBuilding.length : 0;
 
         $('#selected-service-count').text(count + 2);
 
         const serviceCount = $('#fm-service-count');
         if (serviceCount) {
-            serviceCount.text(selectedServices ? selectedServices.length : 0);
+            serviceCount.text(count);
+            $('#fm-select-all-services').prop('checked', (count === selectedServices.length) ? true : false);
+            if (count > 0) {
+                pageUtils.toggleInlineErrorMessage(false);
+            }
         }
     });
 
@@ -117,7 +154,7 @@ $(() => {
         let result = selectedServices && selectedServices.length > 0 ? true : false;
 
         if (result === true) {
-            $('#inline-error-message').attr('hidden', true);
+            pageUtils.toggleInlineErrorMessage(false);
         }
 
         return result;
@@ -127,29 +164,60 @@ $(() => {
     /* Save and continue click handler */
     $('#save-services-link').click((e) => {
 
-        $('#inline-error-message').attr('hidden', true);
+        pageUtils.toggleInlineErrorMessage(false);
         const servicesForm = $('#fm-services-form');
-
 
         if (isValid() === true) {
             pageUtils.setCachedData('fm-services', selectedServices);
-            let locationCodes = pageUtils.getCodes(selectedLocations);
-            let serviceCodes = pageUtils.getCodes(selectedServices);
-            let postedLocations = $('#postedlocations');
-            let postedServices = $('#postedservices');
 
-            postedLocations.val(JSON.stringify(locationCodes));
-            postedServices.val(JSON.stringify(serviceCodes));
-            servicesForm.submit();
+            let ref = document.referrer;
+
+            if (ref.indexOf('buildings/select-services') > -1) {
+                e.preventDefault();
+                location.href = document.referrer;
+            } else {
+                let locationCodes = pageUtils.getCodes(selectedLocations);
+                let serviceCodes = pageUtils.getCodes(selectedServices);
+                let postedLocations = $('#postedlocations');
+                let postedServices = $('#postedservices');
+                postedLocations.val(JSON.stringify(locationCodes));
+                postedServices.val(JSON.stringify(serviceCodes));
+                servicesForm.submit();
+            }
         } else {
             e.preventDefault();
-            $('#inline-error-message').removeAttr('hidden');
+            pageUtils.toggleInlineErrorMessage(true);
             window.location = '#';
+        }
+    });
+
+    $('#fm-select-all-services').change((e) => {
+        let checked = $('#fm-select-all-services').is(':checked');
+        $('input[name="fm-building-service-checkbox"]').prop("checked", checked);
+        $('input[name="fm-building-service-checkbox"]').trigger({
+            type: "change",
+            checked: checked
+        });
+
+    });
+
+    $('#fm-select-services-continue-btn').on('click', (e) => {
+        e.preventDefault();
+
+        if (selectedServicesForThisBuilding && selectedServicesForThisBuilding.length > 0) {
+            /* save services with building information */
+            pageUtils.toggleInlineErrorMessage(false);
+            currentBuilding['services'] = selectedServicesForThisBuilding;
+            fm.services.updateBuilding(currentBuilding, true, '#');
+        } else {
+            /* show error message */
+            pageUtils.toggleInlineErrorMessage(true);
         }
     });
 
 
     initialize();
 
-});
+})
+;
 
