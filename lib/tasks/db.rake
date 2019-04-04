@@ -93,13 +93,14 @@ module CCS
             '  created_at timestamp without time zone NOT NULL,' \
             '  updated_at timestamp without time zone NOT NULL);' \
             'CREATE INDEX IF NOT EXISTS idxgin ON fm_suppliers USING GIN (data);' \
-            'CREATE INDEX IF NOT EXISTS idxginp ON fm_suppliers USING GIN (data jsonb_path_ops);'
+            'CREATE INDEX IF NOT EXISTS idxginp ON fm_suppliers USING GIN (data jsonb_path_ops);' \
+            "CREATE INDEX IF NOT EXISTS idxginlots ON fm_suppliers USING GIN ((data -> 'lots'));"
     # query = 'CREATE TABLE IF NOT EXISTS fm_suppliers (' \
     #        'supplier_id UUID, ' \
     #        'id BIGSERIAL PRIMARY KEY, data jsonb);'
     db.query query
 
-    file = File.read('data/' + 'facilities_management/anonymized_supplier_data.json')
+    file = File.read('data/' + 'facilities_management/dummy_supplier_data.json')
 
     # data = JSON '{"test":23}'  # => {"test"=>23}
     data = JSON file
