@@ -21,8 +21,9 @@ class FMSupplierData
 			jsonb_array_elements(lots -> 'regions') regions,
 			jsonb_array_elements(lots->'services') services
 		where"
-    query += ' regions in ' + locations + ' and services in ' + services + " and  lots -> 'lot_number\' in ( '\"" + lot + '"\' )'
-    query += "order by data->>'supplier_name'"
+    query += ' regions in ' + locations + ' and services in ' + services + " and  lots -> 'lot_number\' in ( '\"" + lot + '"\' )' \
+             ' group by name, service_code, region_code' \
+             " order by data->>'supplier_name'"
 
     rs = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(rs.to_json)
