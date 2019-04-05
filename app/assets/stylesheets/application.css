@@ -21,8 +21,8 @@
 
 @media print {
     .govuk-link, .app-prose-scope a {
+        font-family: sans-serif
     }
-    font-family: sans-serif
 }
 
 .govuk-link:focus, .app-prose-scope a:focus {
