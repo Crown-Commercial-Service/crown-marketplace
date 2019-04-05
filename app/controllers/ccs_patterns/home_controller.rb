@@ -13,6 +13,8 @@ module CcsPatterns
 
     def small_checkboxes; end
 
+    def titles_checkboxes; end
+
     private
 
     def set_back_path
