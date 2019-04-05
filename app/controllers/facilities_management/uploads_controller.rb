@@ -15,6 +15,8 @@ module FacilitiesManagement
     def create
       suppliers = JSON.parse(request.body.read)
 
+      Upload.upload_json!(suppliers)
+
       Upload.upload!(suppliers)
 
       render json: {}, status: :created
