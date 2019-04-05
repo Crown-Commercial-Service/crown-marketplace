@@ -437,6 +437,12 @@ en:
         central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
+    suppliers:
+      index:
+        heading: Supplier results
+        page_title: Supplier results
+        results_html: <strong class="govuk-!-font-size-27">%{results}</strong> <strong>firms</strong> can provide the legal services that meet your requirements.
+        sme: SME
   management_consultancy:
     gateway:
       index:
