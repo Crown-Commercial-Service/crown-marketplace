@@ -41,7 +41,7 @@ function initSearchResults(id){
             e.preventDefault();//if 'a' tag used
 
             $(this).attr('aria-expanded',$(this).attr('aria-expanded')==='true'?'false':'true' )
-            .find('span').text(function(i, text){
+                .find('span').text(function(i, text){
                 return text === "Hide" ? " Show" : " Hide";
             });
             shopWrap.toggleClass('show');//could use '+' css selector on aria attr val, but this v supports legacy browsers

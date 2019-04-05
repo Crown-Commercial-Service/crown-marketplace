@@ -21,14 +21,14 @@ class FMBuildingData
   end
 
   def save_building(email_address, building)
-    query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building + "')"
+    query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
     ActiveRecord::Base.connection.execute(query)
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building: #{e}"
   end
 
   def update_building(email_address, id, building)
-    query = "update facilities_management_buildings set building_json = '" + building + "'" \
+    query = "update facilities_management_buildings set building_json = '" + building.gsub("'", "''") + "'" \
             " where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
     ActiveRecord::Base.connection.execute(query)
   rescue StandardError => e
