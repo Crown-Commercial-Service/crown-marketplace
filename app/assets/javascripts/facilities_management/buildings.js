@@ -137,39 +137,13 @@ $(() => {
 
     });
 
-    const updateBuilding = ((building, isUpdate, whereNext) => {
-
-        let url = '/facilities-management/buildings/new-building-address/save-building';
-
-        if (isUpdate === true) {
-            url = '/facilities-management/buildings/update_building';
-        }
-
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify(building),
-            processData: false,
-            success: function (data, textStatus, jQxhr) {
-                pageUtils.setCachedData('fm-current-building', building);
-                location.href = whereNext
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
-            }
-        });
-
-    });
-
     $('input[name="fm-builing-type-radio"]').click((e) => {
         let value = e.target.value;
         let buildingTypeOther = $('#other-building-type').value;
         let currentBuilding = pageUtils.getCachedData('fm-current-building');
         currentBuilding['fm-building-type'] = value;
 
-        $('#inline-error-message').addClass('govuk-visually-hidden');
+        pageUtils.toggleInlineErrorMessage(false);
 
         if (value === "not-in-list") {
             currentBuilding['fm-building-type'] = buildingTypeOther;
@@ -198,11 +172,11 @@ $(() => {
 
     $('#fm-building-type-continue').click((e) => {
         if (isBuildingTypeValid() === true) {
-            $('#inline-error-message').addClass('govuk-visually-hidden');
+            pageUtils.toggleInlineErrorMessage(false);
             let currentBuilding = pageUtils.getCachedData('fm-current-building');
-            updateBuilding(currentBuilding, true, '#');
+            fm.services.updateBuilding(currentBuilding, true, '/facilities-management/buildings/select-services');
         } else {
-            $('#inline-error-message').removeClass('govuk-visually-hidden');
+            pageUtils.toggleInlineErrorMessage(true);
         }
     });
 
