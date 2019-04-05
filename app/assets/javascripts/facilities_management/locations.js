@@ -129,7 +129,7 @@ $(() => {
         let result = selectedLocations && selectedLocations.length > 0 ? true : false;
 
         if (result === true) {
-            $('#inline-error-message').attr('hidden', true);
+            pageUtils.toggleInlineErrorMessage(false);
         }
 
         return result;
@@ -139,13 +139,13 @@ $(() => {
     /* Click handler for save and continue button */
     $('#save-locations-link').click((e) => {
 
-        $('#inline-error-message').attr('hidden', true);
+        pageUtils.toggleInlineErrorMessage(false);
 
         if (isLocationValid() === true) {
             pageUtils.setCachedData('fm-locations', selectedLocations);
         } else {
             e.preventDefault();
-            $('#inline-error-message').removeAttr('hidden');
+            pageUtils.toggleInlineErrorMessage(true);
             window.location = '#';
         }
     });
