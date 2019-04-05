@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.page_title') %>
 <%= content_for :page_section, t('apprenticeships.page_section') %>
-  
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
@@ -8,19 +8,20 @@
 
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset">
-            
+
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
-              <h1 class="govuk-fieldset__heading"> 
+              <h1 class="govuk-fieldset__heading">
                 <%= t('.find_2_legend') %>
               </h1>
             </legend>
+
             <div class="govuk-radios">
 
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="ap-have-das-1" name="ap-have-das" type="radio" value="yes">
                 <label class="govuk-label govuk-radios__label" for="ap-have-das-1">
                         Yes
-                </label>              
+                </label>
               </div>
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="ap-have-das-2" name="ap-have-das" type="radio" value="no">
@@ -32,11 +33,11 @@
             </div>
 
           </fieldset>
-        </div> 
+        </div>
 
         <%= render 'layouts/button', text: t('common.continue')%>
 
       </form>
 
     </div>
-  </div>  
+  </div>

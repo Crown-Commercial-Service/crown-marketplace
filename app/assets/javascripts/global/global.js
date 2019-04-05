@@ -146,7 +146,6 @@ function updateList(govb, id, basket){
         e.preventDefault();
         list.find('.ccs-removethis').remove();
         govb.find('.govuk-checkboxes__input:checked').prop('checked', false);
-        //mycount.empty();
         headerTxt(basket, false);
         $(this).addClass('ccs-remove').siblings().find('span:first-child').empty();
     });
