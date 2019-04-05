@@ -12,6 +12,22 @@ module FacilitiesManagement
       raise error if error
     end
 
+    def self.upload_json!(suppliers)
+      error = all_or_none(Supplier) do
+        Supplier.delete_all_with_dependents
+
+        suppliers.map do |supplier_data|
+          CCS::FM::Supplier.find(supplier_data['supplier_id']).destroy
+          CCS::FM::Supplier.create!(
+            supplier_id: supplier_data['supplier_id'],
+            data: supplier_data
+          )
+        end
+        create!
+      end
+      raise error if error
+    end
+
     def self.all_or_none(transaction_class)
       error = nil
       transaction_class.transaction do
