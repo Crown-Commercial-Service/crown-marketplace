@@ -1,9 +1,9 @@
-function ifChecked(sWrap, h) {//count and show checked checkboxes totals
+function ifChecked(sWrap, h){//count and show checked checkboxes totals
     var howmany;
 
-    if (sWrap === false) {//called from Clear All link
+    if(sWrap === false){//called from Clear All link
         howmany = 0;
-    } else {
+    }else{
         howmany = sWrap.find('.govuk-checkboxes__input:checked').length;
     }
 
@@ -15,15 +15,15 @@ function ifChecked(sWrap, h) {//count and show checked checkboxes totals
     }
 }
 
-function whenChecked(sWrap, h) {//recount checked boxes totals when checkbox states changes
+function whenChecked(sWrap, h){//recount checked boxes totals when checkbox states changes
     var allcheckbxs = sWrap.find('.govuk-checkboxes__input');
 
-    allcheckbxs.change(function () {
+    allcheckbxs.change(function(){
         ifChecked(sWrap, h);
     });
 }
 
-function initSearchResults(id) {
+function initSearchResults(id){
     var accord = id.find('.ccs-at-checkbox-accordian');
 
     accord.each(function (index) {
@@ -51,8 +51,8 @@ function initSearchResults(id) {
     //var theForm = id.find('form');
     var checkboxs = accord.find('.govuk-checkboxes__input');
 
-    checkboxs.keypress(function (e) {//select checkbox with keyboard
-        if ((e.keyCode ? e.keyCode : e.which) == 13) {
+    checkboxs.keypress(function(e){//select checkbox with keyboard
+        if((e.keyCode ? e.keyCode : e.which) == 13){
             $(this).trigger('click');
             /*theForm.submit(function(e){
                 e.preventDefault();
@@ -60,7 +60,7 @@ function initSearchResults(id) {
         }
     });
 
-    $('#ccs-clear-filters').click(function (e) {
+    $('#ccs-clear-filters').click(function(e){
         e.preventDefault();
         checkboxs.prop('checked', false); // AND resubmit form to 'self' ????
 
@@ -81,7 +81,7 @@ function initSearchResults(id) {
 
 function updateList(govb) {
     var i = '';
-    var thelist = '';
+    var thelist ='';
     var $this;
     var basket = $('#css-list-basket');
     var list = basket.find('ul');
@@ -90,14 +90,14 @@ function updateList(govb) {
 
     list.find('.ccs-removethis').remove();
 
-    if (thecheckboxes.length) {
-        thecheckboxes.each(function (index) {
+    if(thecheckboxes.length){
+        thecheckboxes.each(function(index){
             $this = $(this);
-            thelist = thelist + '<li class="ccs-removethis"><span>' + $this.next('label').text() + '</span> <a href="#" data-id="' + $this.attr('id') + '">Remove</a></li>';
+            thelist = thelist + '<li class="ccs-removethis"><span>'+ $this.next('label').text() +'</span> <a href="#" data-id="'+ $this.attr('id') +'">Remove</a></li>';
             i = index + 1;
         });
         mycount.text(i);
-    } else {
+    }else{
         mycount.text('0');
     }
 
@@ -115,7 +115,7 @@ function updateList(govb) {
         }
     });
 
-    $('#removeAll').removeClass('ccs-remove').click(function (e) {
+    $('#removeAll').removeClass('ccs-remove').click(function(e){
         e.preventDefault();
         list.find('.ccs-removethis').remove();
         govb.find('.govuk-checkboxes__input:checked').prop('checked', false);
@@ -125,50 +125,43 @@ function updateList(govb) {
 }
 
 
-function initDynamicAccordian() {
+function initDynamicAccordian(){
     var govcheckboxes = $('#accordion-default').find('.govuk-checkboxes');
 
-    govcheckboxes.each(function () {
+    govcheckboxes.each(function(){
 
         var hasAll = $(this).find('.ccs-select-all');
         var theseboxgroups = $(this).find('.govuk-checkboxes__item').not(hasAll);
         var thecheckboxes = theseboxgroups.find('.govuk-checkboxes__input');
 
         //start 'select all' checkbox functionality
-        if (hasAll.length) {
+        if(hasAll.length){
             var hasAllInput = hasAll.find('.govuk-checkboxes__input');
 
-            hasAllInput.change(function () {
+            hasAllInput.change(function(){
                 var checkstate = hasAllInput.is(':checked');
 
-                thecheckboxes.each(function () {
-                    if (checkstate) {//$(this).prop("checked", !$(this).prop("checked"));
+                thecheckboxes.each(function(){
+                    if(checkstate){//$(this).prop("checked", !$(this).prop("checked"));
                         $(this).prop('checked', true);
-                    } else {
+                    }else{
                         $(this).prop('checked', false);
                     }
                 });
                 updateList(govcheckboxes);
             });
 
-            thecheckboxes.change(function () {
+            thecheckboxes.change(function(){
                 var labelfor = $(this).attr('for');
-                if (!$(this).is(':checked')) {
+                if(!$(this).is(':checked')){
                     hasAll.find('.govuk-checkboxes__input').prop('checked', false);
                 }
             });
         }//end 'select all' checkbox functionality
 
-        thecheckboxes.change(function () {//for all checkboxes
+        thecheckboxes.change(function(){//for all checkboxes
             updateList(govcheckboxes);
         });
-    });
-}
-
-function ie11menu() {//targets IE11 only
-    $('#main-header').find('.govuk-header__menu-button').removeEventListener('click', function () {
-        $(this).toggleClass('govuk-header__menu-button--open');
-        $('#navigation').toggleClass('govuk-header__navigation--open');
     });
 }
 
@@ -182,18 +175,8 @@ function initCustomFnc() {
     if ($('#ccs-dynamic-accordian').length) {//if this pg has this ID
         initDynamicAccordian();
     }
-
-    if (window.location.hash = !!window.MSInputMethodContext && !!document.documentMode) {
-        ie11menu();//fixes top nav bug in ie11 later versions (11.5 +). 
-    }
-
-    jQuery.removeFromArray = function (value, arr) {
-        return jQuery.grep(arr, function (elem, index) {
-            return elem !== value;
-        });
-    };
 }
 
-jQuery(document).ready(function () {
+jQuery(document).ready(function(){
     initCustomFnc(); //call block of custom functions calls
 });

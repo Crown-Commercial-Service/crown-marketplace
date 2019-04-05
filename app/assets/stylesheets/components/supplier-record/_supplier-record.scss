@@ -52,7 +52,7 @@
 .supplier-record__file-download[href*='format=xlsx']:before {
     background-color: #007831;
     content: ".XLSX";
-} 
+}
 
 .supplier-record__file-download[href*='format=csv']:before {
     background-color: #007831;
@@ -94,16 +94,16 @@
     page-break-inside: avoid;
   }
 
-  .supplier-record .supplier-record__supplier-name {
-    /*font-size: 0.8rem;*/
+  /*.supplier-record .supplier-record__supplier-name {
+    //font-size: 0.8rem;
   }
 
   .supplier-record p,
   .supplier-record li,
   .supplier-record .supplier-record__distance,
   .supplier-record .supplier-record__markup-rate {
-    /*font-size: 0.8rem !important;*/
-  }
+    //font-size: 0.8rem !important;
+  }*/
 
   .supplier-record__distance,
   .supplier-record__distance-units,
