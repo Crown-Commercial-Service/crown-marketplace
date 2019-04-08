@@ -14,9 +14,9 @@
 </div>
 
 <div class="govuk-grid-row govuk-!-padding-top-4 ccs-at-results-pg">
-  
+
   <!-- ID #ccs-at-results-filters required -->
-  <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters"> 
+  <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters">
     <%= form_tag apprenticeships_search_path, method: :get, id: 'search-results-form' do %><!-- form inside section element-->
 
       <!-- start Levels filters -->
@@ -24,7 +24,7 @@
         <label class="govuk-label govuk-label--s" for="search">
           <%= t('.keyword_search_label') %>
         </label>
-        <%= text_field_tag :keywords, params[:keywordSearch], type: 'search', class: 'govuk-input ccs-govuk-input--search', maxlength: '200' %> 
+        <%= text_field_tag :keywords, params[:keywordSearch], type: 'search', class: 'govuk-input ccs-govuk-input--search', maxlength: '200' %>
         <input class="submit" type="submit" value="<%= t('common.search') %>">
       </div>
 
@@ -38,13 +38,13 @@
       <div class="govuk-form-group ccs-at-results-filters__panel">
         <fieldset class="govuk-fieldset ccs-at-checkbox-accordian">
           <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c1">
-            <%= t('.levels_label') %> 
+            <%= t('.levels_label') %>
             <span> Show</span>
           </button>
 
           <div id="c1" class="ccs-at-checkboxes-wrap">
             <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
-              
+
               <% levels.each do |level| %>
                 <div class="govuk-checkboxes__item">
                   <%= check_box_tag(
@@ -77,7 +77,7 @@
           </div>
         </details>
 
-      </div>  
+      </div>
 
       <!-- start Routes filters -->
       <div class="govuk-form-group ccs-at-results-filters__panel">
@@ -112,7 +112,7 @@
           </div>
         </fieldset>
       </div>
-              
+
     <% end %>
   </section>
 
@@ -135,9 +135,21 @@
       <% end %>
     </ul>
 
-    <%= link_to '/apprenticeships/find_apprentices5', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state ccs-next' do %>
-      <%= t('common.next')%><span>&nbsp;&rarr;</span>
-    <% end %>
+    <nav aria-label="Pagination Navigation">
+        <ul class="govuk-list ccs-pagination">
+            <li class="ccs-first">
+                <a href="http://www.url.com" rel="prev"><b>&larr;</b>&nbsp;Previous page</a>
+            </li>
+            <li><a href="http://www.url.com">1</a></li>
+            <li><a href="http://www.url.com">2</a></li>
+            <li><a href="http://www.url.com" aria-current="true">3</a></li>
+            <li><a href="http://www.url.com">4</a></li>
+            <li><a href="http://www.url.com">5</a></li>
+            <li class="ccs-last">
+                <a href="/apprenticeships/find_apprentices5" rel="next">Next page&nbsp;<b>&rarr;</b></a>
+            </li>
+        </ul>
+    </nav>
 
   </section>
 
