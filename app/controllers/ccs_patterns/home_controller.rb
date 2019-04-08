@@ -15,6 +15,8 @@ module CcsPatterns
 
     def titles_checkboxes; end
 
+    def numbered_pagination; end
+
     private
 
     def set_back_path
