@@ -13,10 +13,8 @@ module SupplyTeachers
     attribute :fixed_term_contract_fee
     validates :fixed_term_contract_fee, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
-
     def next_step_class
       Journey::FTAToPermFee
     end
-
   end
 end
