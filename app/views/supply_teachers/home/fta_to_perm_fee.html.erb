@@ -1,0 +1,22 @@
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">
+          <%= t('.header') %>
+        </h1>
+        <div class="govuk-panel__body">
+          <%= t('.panel_body') %>
+          <strong><%= number_to_currency(@calculator.fee) %></strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p>
+        <%= @calculator.fee > 0 ? t('.avoid_fee') : t('.no_fee') %>
+      </p>
+    </div>
+  </div>
+</div>

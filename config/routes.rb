@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
+    get '/fta-to-perm-fee', to: 'home#fta_to_perm_fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
     get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
     get '/all-suppliers', to: 'suppliers#all_suppliers', as: 'all_suppliers'
