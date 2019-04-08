@@ -418,7 +418,7 @@ en:
         before_you_start:
           heading: Before you start
           use_this_service:
-            heading: 'You will need to:'
+            heading: 'You need to:'
             item_1_html: be a recognised public sector body in the %{authorised_customer_list_link}
             item_2_html: have read and understood the framework’s %{customer_guidance_document_link}
             item_3: have put together a well-structured business case outlining the need for external legal support
@@ -428,7 +428,7 @@ en:
         use_this_service:
           description: Using this service means you’re adhering to the public service procurement procedures.
           heading: Use this service to download a short list of law firms that provide the legal services you need.
-          item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less
+          item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less.
       service_not_suitable:
         better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
