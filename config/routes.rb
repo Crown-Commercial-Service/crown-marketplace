@@ -91,6 +91,7 @@ Rails.application.routes.draw do
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
     get '/small-checkboxes', to: 'home#small_checkboxes'
+    get '/titles-checkboxes', to: 'home#titles_checkboxes'
   end
 
   namespace 'legal_services', path: 'legal-services' do

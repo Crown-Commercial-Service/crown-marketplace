@@ -115,12 +115,12 @@ function updateList(govb){
         } 
     });
 
-    $('#removeAll').removeClass('ccs-remove').click(function(e){
-        e.preventDefault(); 
-        list.find('.ccs-removethis').remove(); 
-        govb.find('.govuk-checkboxes__input:checked').prop('checked', false); 
-        mycount.text('0');
-        $(this).addClass('ccs-remove');        
+    $('#removeAll').click(function(e){
+        e.preventDefault();
+        list.find('.ccs-removethis').remove();
+        govb.find('.govuk-checkboxes__input:checked').prop('checked', false);
+        headerTxt(basket, false);
+        $(this).addClass('ccs-remove').siblings().find('span:first-child').empty();
     });
 }
 
