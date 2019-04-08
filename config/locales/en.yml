@@ -623,6 +623,11 @@ en:
           outside_england_html: Outside of England, not-for-profit and schools with charitable status cannot yet use the online agency selection service. They can <a href="%{url}" aria-label="Crown Commercial Service contact form">request access to an offline version</a> (an Excel spreadsheet) by putting 'offline agency selection tool’ in the comments box.
         heading: CCS Marketplace private beta
     home:
+      fta_to_perm_fee:
+        avoid_fee: To avoid this fee you can hire the worker permanently 6 months after current contract with you ends.
+        header: Fixed-term to permanent fee
+        no_fee: You cannot be charged a fee if you hire the worker 6 months after their contract ends
+        panel_body: Based on the information provided you could be charged
       index:
         accreditation_of_agencies: Accreditation of agencies
         all_suppliers_have_undergone: All agencies have undergone background screening and safeguarding to DfE’s Keeping Children Safe in Education standards. They are audited and accredited against best practice standards in education recruitment.
@@ -688,8 +693,19 @@ en:
         question_hint: We use this to find agencies near to your school
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
+      fta_to_perm_calculator:
+        answer_within_6_months_false: 'No'
+        answer_within_6_months_true: 'Yes'
+        current_contract_length_question: How many months long is the worker's current fixed-term contract?
+        current_contract_length_question_hint: For example, 6
+        fixed_term_contract_fee_icon: "£"
+        fixed_term_contract_fee_question: What fixed-term contract fee did you originally pay for the worker
+        fixed_term_contract_fee_question_hint: An amount in pounds. For example, 15000
+        header: Work out what fixed-term worker transfer fee you could be charged
+        within_6_months_question: Do you intend to hire the worker within 6 months of their fixed term contract coming to an end?
       looking_for:
         all_suppliers: A list of all agencies
+        answer_calculate_fta_to_perm_fee: To work out what fixed-term worker transfer fee I could be charged
         answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
         answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
         answer_worker: An agency who can provide my school with an individual worker
