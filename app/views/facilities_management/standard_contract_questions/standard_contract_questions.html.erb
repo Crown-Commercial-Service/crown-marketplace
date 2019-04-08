@@ -1,16 +1,17 @@
 <div class="govuk-body">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <a href="/facilities-management/select-locations" class="govuk-back-link">Back</a>
-      <%= render('errors/inline_error_summary') %>
-      <%= render('facilities_management/standard_contract_questions/title_section') %>
-      <%= render('facilities_management/standard_contract_questions/contract_length') %>
-      <%= render('facilities_management/standard_contract_questions/contract_extensions') %>
-      <%= render('facilities_management/standard_contract_questions/estimated_contract_value') %>
-      <%= render('facilities_management/standard_contract_questions/tupe') %>
+      <%= form_for (@player) do | f | %>
+	<p> 
+		<%= f.label :first_name %>
+		<%= f.text_field :first_name %>
+	</p>
+	<p> 
+		<%= f.label :first_name %>
+		<%= f.text_field :last_name %>
+	</p>
+	</p>
+     <% end %>
     </div>
-  </div>
-  <div class="govuk-grid-row govuk-!-margin-top-4">
-    <a id="fm-questions-continue" href="/facilities-management/calculator"" class="govuk-button ccs-no-print" role="button">Continue</a>
   </div>
 </div>
