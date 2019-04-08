@@ -17,7 +17,8 @@ module FacilitiesManagement
 
       Upload.upload_json!(suppliers)
 
-      Upload.upload!(suppliers)
+      # do not make relational tables
+      # Upload.upload!(suppliers)
 
       render json: {}, status: :created
     rescue ActiveRecord::RecordInvalid => e
