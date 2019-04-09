@@ -9,7 +9,7 @@
       <p class="govuk-body govuk-!-margin-bottom-7"><%= t('.results_html', results: @suppliers.count) %></p>
 
 
-      <%= link_to 'Download the supplier list', '#', role: 'button', class: 'govuk-button govuk-!-margin-bottom-6' %>
+      <%= link_to 'Download the supplier list', legal_services_suppliers_download_shortlist_path, role: 'button', class: 'govuk-button govuk-!-margin-bottom-6' %>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
       <% @suppliers.each do |supplier| %>
         <%= render 'supplier', supplier: supplier%>

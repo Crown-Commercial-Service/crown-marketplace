@@ -446,6 +446,9 @@ en:
       show:
         caption: Supplier details
         heading: Supplier details
+      download_shortlist:
+        page_title: Download supplier list
+        heading: Download the supplier shortlist
   management_consultancy:
     gateway:
       index:
