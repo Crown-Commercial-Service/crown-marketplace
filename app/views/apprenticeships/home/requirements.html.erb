@@ -9,7 +9,7 @@
       <h1 class="govuk-heading-xl"><%= t('.requirements_h1_title') %></h1>
 
     </div>
-  </div> 
+  </div>
 
   <form action="requirement" method="">
 
@@ -22,16 +22,20 @@
       </div>
 
       <div class="govuk-grid-column-two-thirds">
-        
+
         <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset">
+          <fieldset class="govuk-fieldset" aria-describedby="checkbox-hint-01">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <h1 class="govuk-fieldset__heading ccs-fieldset__heading--wide">
-                The maximum funding for this Apprenticeship Standard is &pound;27,000. Would you use a supplier that requires additional funding to provide the training? 
+                The maximum funding for this Apprenticeship Standard is &pound;27,000. Would you use a supplier that requires additional funding to provide the training?
               </h1>
             </legend>
 
-            <div class="govuk-radios govuk-radios--inline">
+            <span id="checkbox-hint-01" class="govuk-hint">
+              Maximum funding already includes things like fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum.
+            </span>
+
+            <div class="govuk-radios">
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="radio-id-01" name="radio-a" type="radio" value="yes">
                 <label class="govuk-label govuk-radios__label" for="radio-id-01">
@@ -45,6 +49,15 @@
                 </label>
               </div>
             </div>
+
+            <div class="govuk-radios__divider govuk-!-margin-top-3 govuk-!-margin-bottom-3">or</div>
+
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="radio-id-03" name="radio-a" type="radio" value="nopref">
+              <label class="govuk-label govuk-radios__label" for="radio-id-03">
+                No preference
+              </label>
+            </div>
           </fieldset>
         </div>
 
@@ -56,28 +69,37 @@
               </h1>
             </legend>
 
-            <div class="govuk-radios govuk-radios--inline">
+            <div class="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="radio-id-03" name="radio-b" type="radio" value="yes">
-                <label class="govuk-label govuk-radios__label" for="radio-id-03">
+                <input class="govuk-radios__input" id="radio-id-04" name="radio-b" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="radio-id-04">
                   Yes
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="radio-id-04" name="radio-b" type="radio" value="no">
-                <label class="govuk-label govuk-radios__label" for="radio-id-04">
+                <input class="govuk-radios__input" id="radio-id-05" name="radio-b" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="radio-id-05">
                   No
                 </label>
               </div>
             </div>
+
+            <div class="govuk-radios__divider govuk-!-margin-top-3 govuk-!-margin-bottom-3">or</div>
+
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="radio-id-06" name="radio-b" type="radio" value="nopref">
+              <label class="govuk-label govuk-radios__label" for="radio-id-06">
+                No preference
+              </label>
+            </div>
           </fieldset>
-        </div>   
+        </div>
 
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" aria-describedby="hint-radio-c">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <h1 class="govuk-fieldset__heading ccs-fieldset__heading--wide">
-                Do you need to customise this training to your organisation's needs? 
+                Do you need to customise this training to your organisation's needs?
               </h1>
             </legend>
 
@@ -85,33 +107,42 @@
               For example, does the course require a custom structure of security specification
             </span>
 
-            <div class="govuk-radios govuk-radios--inline">
+            <div class="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="radio-id-05" name="radio-c" type="radio" value="yes">
-                <label class="govuk-label govuk-radios__label" for="radio-id-05">
+                <input class="govuk-radios__input" id="radio-id-07" name="radio-c" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="radio-id-07">
                   Yes
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="radio-id-06" name="radio-c" type="radio" value="no">
-                <label class="govuk-label govuk-radios__label" for="radio-id-06">
+                <input class="govuk-radios__input" id="radio-id-08" name="radio-c" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="radio-id-08">
                   No
                 </label>
               </div>
             </div>
+
+            <div class="govuk-radios__divider govuk-!-margin-top-3 govuk-!-margin-bottom-3">or</div>
+
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="radio-id-09" name="radio-c" type="radio" value="nopref">
+              <label class="govuk-label govuk-radios__label" for="radio-id-09">
+                No preference
+              </label>
+            </div>
           </fieldset>
-        </div>  
+        </div>
 
         <div class="govuk-form-group">
-          <label class="govuk-label govuk-label--s" for="input-01">
-            What is the minimum number of apprentices that you need training? 
+          <label class="govuk-label govuk-label--s" for="input-10">
+            What is the minimum number of apprentices that you need training?
           </label>
 
-          <span id="hint-input-01" class="govuk-hint govuk-!-font-size-16">
+          <span id="hint-input-10" class="govuk-hint govuk-!-font-size-16">
             If you're unsure of exact numbers, use a good estimate
           </span>
 
-          <input class="govuk-input govuk-input--width-4" id="input-01" name="input-01" type="text" aria-describedby="hint-input-01">
+          <input class="govuk-input govuk-input--width-4" id="input-10" name="qty" type="text" aria-describedby="hint-input-10">
         </div>
 
       </div>
