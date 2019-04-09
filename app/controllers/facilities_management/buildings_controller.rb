@@ -1,7 +1,7 @@
 require 'facilities_management/fm_buildings_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building].freeze
+  require_permission :facilities_management, only: %i[buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
 
   def select_services_per_building
     @inline_error_summary_title = 'Services are not selected'
@@ -42,6 +42,20 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     id = obj['id']
     @fm_building_data = FMBuildingData.new
     @fm_building_data.update_building(current_login.email.to_s, id, @new_building_json)
+  end
+
+  def units_of_measurement
+    @inline_error_summary_title = 'There was a problem'
+    @inline_error_summary_body_href = '#'
+    @inline_summary_error_text = 'error'
+    @building_id = 'building_id'
+    @building_name = 'Sandy airfield'
+    @service_code = 'A-2'
+    @service_title = 'Cleaning of external areas service'
+    @uom_title = 'What is the number of building users (occupants) in this building?'
+    @uom_example = 'For example, 56. When 56 people are based in this office'
+    @unit_text = 'occupants (per year)'
+    @is_lift = false
   end
 
   def building_type
