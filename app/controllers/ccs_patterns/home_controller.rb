@@ -17,6 +17,8 @@ module CcsPatterns
 
     def numbered_pagination; end
 
+    def table_5050; end
+
     private
 
     def set_back_path

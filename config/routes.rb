@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     get '/small-checkboxes', to: 'home#small_checkboxes'
     get '/titles-checkboxes', to: 'home#titles_checkboxes'
     get '/numbered-pagination', to: 'home#numbered_pagination'
+    get '/table-5050', to: 'home#table_5050'
   end
 
   namespace 'legal_services', path: 'legal-services' do
