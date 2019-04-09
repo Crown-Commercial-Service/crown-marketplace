@@ -12,5 +12,10 @@ module LegalServices
         OpenStruct.new(name: 'Acme partners LTD', sme: false)
       ]
     end
+
+    def show
+      @back_path = :back
+      @supplier = OpenStruct.new(name: params[:name], sme: params[:sme])
+    end
   end
 end
