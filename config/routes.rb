@@ -98,6 +98,7 @@ Rails.application.routes.draw do
   namespace 'legal_services', path: 'legal-services' do
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
+    get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
     resources :suppliers, only: %i[index show]
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
