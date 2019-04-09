@@ -25,6 +25,9 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
 
     context 'when supplier list is empty' do
       let(:suppliers) { [] }
+      before(:context) do
+        CCS::FM::Supplier.delete_all
+      end
 
       it 'does not create any suppliers' do
         expect do
@@ -34,6 +37,9 @@ RSpec.describe FacilitiesManagement::Upload, type: :model do
     end
 
     context 'when supplier does not exist' do
+      before(:context) do
+        CCS::FM::Supplier.delete_all
+      end
       it 'creates record of successful upload' do
         expect do
           described_class.upload_json!(suppliers)
