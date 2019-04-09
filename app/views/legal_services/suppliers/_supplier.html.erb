@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m govuk-!-margin-top-0">
-      <%= link_to supplier.name, '#', class: 'govuk-link ccs-no-underline' %>
+      <%= link_to supplier.name, legal_services_supplier_path(supplier, name: supplier.name, sme: supplier.sme), class: 'govuk-link ccs-no-underline' %>
       <% if supplier.sme %>
         <span class="govuk-tag govuk-!-font-size-14 ccs-tag"><%= t('legal_services.suppliers.index.sme') %></span>
       <% end %>

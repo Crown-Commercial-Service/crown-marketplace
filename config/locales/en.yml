@@ -443,6 +443,9 @@ en:
         page_title: Supplier results
         results_html: <strong class="govuk-!-font-size-27">%{results}</strong> <strong>firms</strong> can provide the legal services that meet your requirements.
         sme: SME
+      show:
+        caption: Supplier details
+        heading: Supplier details
   management_consultancy:
     gateway:
       index:
