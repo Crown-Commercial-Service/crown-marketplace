@@ -8,7 +8,7 @@ RSpec.describe FMCalculator::Calculator do
   end
 
   before(:all) do
-    # args  Service ref, uom_vol, occupants, tuoe involved, london_location, CAFM, helpdesk
+    # args Service ref, uom_vol, occupants, tuoe involved, london_location, CAFM, helpdesk
     CalcFM = described_class.new('G1', 23000, 125, 'Y', 'Y', ' Y', 'N')
   end
 
