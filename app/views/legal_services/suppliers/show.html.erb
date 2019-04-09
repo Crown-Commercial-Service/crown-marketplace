@@ -1,0 +1,15 @@
+<%= content_for :page_title, t('.heading')  %>
+
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <span class="govuk-caption-xl govuk-!-margin-bottom-0"><%= t('.caption') %></span>
+      <h1 class="govuk-heading-xl">
+        <%= @supplier.name %>
+        <% if @supplier.sme %>
+          <span class="govuk-tag ccs-tag govuk-!-font-size-14 govuk-!-margin-bottom-4"><%= t('legal_services.suppliers.index.sme') %></span>
+        <% end %>
+      </h1>
+    </div>
+  </div>
+</div>
