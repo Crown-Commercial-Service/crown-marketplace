@@ -1,0 +1,52 @@
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <a href="<%= request.referrer %>" class="govuk-back-link">Back</a>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <%= render('errors/inline_error_summary') %>
+      <h2 class="govuk-caption-xl">Building - <span id="fm-building-name"></span></h2>
+      <h1 class="govuk-heading-xl"><%= @service_title %> </h1>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= @uom_title %> </h2>
+      <h2 class="govuk-caption-m govuk-!-margin-top-1"><%= @uom_example %> </h2>
+    </div>
+  </div>
+  <div id="fm-uom-input-container"
+       <% if @is_lift == true %><%= 'hidden' %>
+       <% end %> >
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <input id="fm-uom-input" class="govuk-input govuk-input--width-5" type="number" value="">&nbsp;<%= @unit_text %>
+      </div>
+    </div>
+  </div>
+  <div id="fm-uom-lift-container"
+       <% if @is_lift == false %><%= 'hidden' %>
+       <% end %> >
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        Lift section
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-form-group">
+        <form method="post">
+          <hidden id="building-id" name="building-id"/>
+          <hidden id="fm-service-code" name="fm-service-code" value="<%= @service_code %>"/>
+          <hidden id="fm-service-uom" name="fm-service-uom"/>
+          <div class="govuk-!-margin-top-8">
+            <a id="fm-unit-of-measurement-submit" type="button" class="govuk-button" role="button">Continue</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
