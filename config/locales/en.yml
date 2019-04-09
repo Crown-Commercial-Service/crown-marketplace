@@ -803,7 +803,7 @@ en:
     pagination:
       first: ''
       last: ''
-      next: Next
-      previous: Previous
+      next: 'Next <b>→</b>'
+      previous: '<b>←</b> Previous'
       truncate: "..."
   'yes': 'Yes'
