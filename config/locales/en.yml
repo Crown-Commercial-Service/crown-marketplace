@@ -438,6 +438,9 @@ en:
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
     suppliers:
+      download_shortlist:
+        heading: Download the supplier shortlist
+        page_title: Download supplier list
       index:
         heading: Supplier results
         page_title: Supplier results
@@ -446,9 +449,6 @@ en:
       show:
         caption: Supplier details
         heading: Supplier details
-      download_shortlist:
-        page_title: Download supplier list
-        heading: Download the supplier shortlist
   management_consultancy:
     gateway:
       index:
