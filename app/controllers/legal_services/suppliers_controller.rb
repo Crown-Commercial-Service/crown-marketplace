@@ -17,5 +17,9 @@ module LegalServices
       @back_path = :back
       @supplier = OpenStruct.new(name: params[:name], sme: params[:sme])
     end
+
+    def download_shortlist
+      @back_path = :back
+    end
   end
 end
