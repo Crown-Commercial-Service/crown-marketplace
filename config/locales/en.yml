@@ -803,9 +803,7 @@ en:
         page_title: Neutral vendor managed service providers
   views:
     pagination:
-      first: ''
-      last: ''
-      next: Next
-      previous: Previous
+      next: Next <b>→</b>
+      previous: "<b>←</b> Previous"
       truncate: "..."
   'yes': 'Yes'

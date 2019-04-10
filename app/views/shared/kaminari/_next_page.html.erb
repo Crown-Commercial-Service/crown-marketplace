@@ -6,9 +6,6 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<li class="next">
-  <span><%= link_to_unless current_page.last?, t('views.pagination.next').html_safe, url, rel: 'next', remote: remote %></span>
-  <span class="icon">
-    <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
-  </span>
+<li class="ccs-last">
+  <%= link_to_unless current_page.last?, t('views.pagination.next').html_safe, url, rel: 'next', remote: remote %>
 </li>
