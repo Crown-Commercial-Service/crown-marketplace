@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     post '/buildings/update_building' => 'buildings#update_building'
     get '/buildings/select-services', to: 'buildings#select_services_per_building'
     get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
+    post '/buildings/save-uom-value' => 'buildings#save_uom_value'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
