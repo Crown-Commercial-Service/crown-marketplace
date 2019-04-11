@@ -7,6 +7,13 @@
     font-size: 17px;
     font-size: 1.0625rem;
 }
+%clearfix {
+    &::after {
+        content: '';
+        clear: both;
+        display: table;
+    }
+}
 
 .govuk-header__navigation .govuk-header__navigation-item {
     border-bottom: none !important;
@@ -21,7 +28,8 @@
 }
 
 .ccs-no-underline,
-.govuk-warning-text abbr {
+.govuk-warning-text abbr,
+abbr {
   text-decoration: none;
 }
 
@@ -43,6 +51,10 @@
 
 #cookie_banner {
     display: none;
+}
+
+.govuk-accordion .govuk-accordion__section-button {
+    font-family: $govuk-font-family;
 }
 
 
@@ -240,11 +252,7 @@ ul.ccs-checklist {
                     border-top: none;
                 }
 
-                &::after {
-                    content: '';
-                    clear: both;
-                    display: table;
-                }
+                @extend %clearfix;
 
                 span {
                     width: 66%;
@@ -389,6 +397,7 @@ body.js-enabled #ccs-dynamic-accordian {
             }
         }
 
+        @extend %clearfix;
     }
 
     .govuk-table {
@@ -471,6 +480,68 @@ body.js-enabled #ccs-dynamic-accordian {
 }
 /* small checkboxes ends */
 
+/* titles checkboxes starts */
+.ccs-titles-checboxes {
+    margin-bottom: govuk-spacing(8);
+
+    .govuk-fieldset__heading {//color: lighten( govuk-colour("black"), 10% );
+        margin-bottom: govuk-spacing(5);
+        font-weight: normal;
+    }
+    .govuk-checkboxes__item {
+        .govuk-checkboxes__hint {
+            margin-bottom: govuk-spacing(1) !important;
+        }
+        .govuk-details {
+            margin-left: govuk-spacing(3);//margin not padding for border
+            margin-right: govuk-spacing(3);
+            border-bottom: 1px solid govuk-colour("grey-2");
+            margin-bottom: govuk-spacing(1);
+            padding-bottom: govuk-spacing(1);
+        }
+    }
+}
+/* titles checkboxes ends */
+
+/* ccs pagination starts */
+ul.ccs-pagination {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: govuk-spacing(4) 0;
+
+    li {
+        display: inline-block;
+        margin: auto govuk-spacing(1);
+
+        &:first-child.ccs-first {
+            float: left;
+            margin-left: 0;
+        }
+
+        &:last-child.ccs-last {
+            float: right;
+            margin-right: 0;
+        }
+
+        a {
+            text-decoration: none;
+
+            &[aria-current] {
+                color: govuk-colour("grey-2") !important;
+            }
+
+            b {
+                font-size: 1.4rem;
+                line-height: 1rem;
+                font-weight: 800;
+            }
+        }
+    }
+
+}
+/* ccs pagination ends */
+
 /* ccs-print start ... */
 @media print {
     #results-filters {
@@ -507,3 +578,30 @@ body.js-enabled #ccs-dynamic-accordian {
         width: 50%; //for dfe logo (or similar when required)
     }
 }
+
+/* ccs table styles starts */
+table.ccs-at-govuk-table--sm {
+    th {
+        @include govuk-font($size: 16, $weight: inherit);
+    }
+    td {/*@include govuk-font($size: 14, $weight: inherit); */
+        font-size: 15px;
+        font-size: 0.9rem;
+    }
+}
+table.ccs-at-govuk-table--5050 {//works on two col tables
+    tr th:first-child,
+    tr td:first-child {
+        width: 50%;
+        padding-right: govuk-spacing(2);
+    }
+}
+table.ccs-at-govuk-table--sm,
+table.ccs-at-govuk-table--5050 {
+    th, td {
+        padding-top: govuk-spacing(3);
+        padding-bottom: govuk-spacing(3);
+        vertical-align: top;
+    }
+}
+/* ccs table styles ends */

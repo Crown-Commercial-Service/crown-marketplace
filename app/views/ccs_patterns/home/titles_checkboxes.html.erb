@@ -1,0 +1,103 @@
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-m">Titles with checkboxes list</h1>
+      <p class="govuk-body">New HTML for list of checkboxes as part of list &hellip;</p>
+
+      <p><b>Note</b> additional class: .ccs-titles-checboxes</p>
+
+      <p>Static page: There is no javascript dependency. <br>
+      Note: aria-describedby=&quot;building-01-item-hint&quot; and related ID.</p>
+    </div>
+  </div>
+
+  <hr style="margin-bottom: 150px;">
+
+
+
+
+  <!-- ccs pattern HTML starts below ... -->
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">Success, Phoenix House was added</h1>
+      <p class="govuk-!-font-size-36 govuk-!-margin-bottom-6"><b>1 building</b> is on your list</p>
+    </div>
+
+    <section class="govuk-grid-column-two-thirds">
+      <form action="" method="">
+
+        <div class="govuk-form-group ccs-titles-checboxes">
+          <fieldset class="govuk-fieldset">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h1 class="govuk-fieldset__heading">
+                Select all the buildings required in your contract.
+              </h1>
+            </legend>
+
+            <div class="govuk-checkboxes">
+
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="building-01" name="building" type="checkbox" value="b-01" aria-describedby="building-01-item-hint" checked="checked">
+                <label class="govuk-label govuk-checkboxes__label" for="building-01">
+                  Building 1 - Phoenix House
+                </label>
+
+                <span id="building-01-item-hint" class="govuk-hint govuk-checkboxes__hint">
+                  1 Wilbraham Place, Kensington and Chelsea, London, SW1X 9AE
+                </span>
+
+                <details class="govuk-details">
+                  <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                      Building details
+                    </span>
+                  </summary>
+                  <div class="govuk-details__text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur ac eros id laoreet. Phasellus venenatis magna in dignissim accumsan. Donec arcu metus, semper non enim et, semper iaculis est.
+                  </div>
+                </details>
+              </div>
+
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="building-02" name="building" type="checkbox" value="b-02" aria-describedby="building-02-item-hint">
+                <label class="govuk-label govuk-checkboxes__label" for="building-02">
+                  Building 2 - Vale Court
+                </label>
+
+                <span id="building-02-item-hint" class="govuk-hint govuk-checkboxes__hint">
+                  9 Capital building address, Hampshire, SO40 6FS
+                </span>
+
+                <details class="govuk-details">
+                  <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                      Building details
+                    </span>
+                  </summary>
+                  <div class="govuk-details__text">
+                    Maecenas efficitur ac eros id laoreet. Phasellus venenatis magna, semper iaculis est in dignissim accumsan. Donec arcu metus, semper non enim et.
+                  </div>
+                </details>
+              </div>
+
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full govuk-!-padding-bottom-6">
+            <a href="#" class="govuk-link govuk-!-font-size-19 govuk-link--no-visited-state">
+                  &plus;&nbsp;Add a new building
+            </a>
+          </div>
+        </div>
+
+        <%= render 'layouts/button', text: t('common.continue')%>
+
+      </form>
+    </section>
+
+  </div>
+  <!-- ccs pattern HTML ends -->

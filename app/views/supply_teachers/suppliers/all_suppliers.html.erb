@@ -8,6 +8,6 @@
     <p class="govuk-body govuk-!-margin-bottom-8"><%= t('.results_found_with_location_html', results:@branches_count) %></p>
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
     <%= render partial: 'branch', collection: @branches %>
-    <%= paginate @branches, views_prefix: 'shared', window: 2, outer_window: 1 %>
+    <%= paginate @branches, views_prefix: 'shared', window: 0, outer_window: 2 %>
   </div>
 </div>

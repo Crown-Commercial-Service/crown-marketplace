@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
+    get '/fta-to-perm-fee', to: 'home#fta_to_perm_fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
     get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
     get '/all-suppliers', to: 'suppliers#all_suppliers', as: 'all_suppliers'
@@ -44,6 +45,7 @@ Rails.application.routes.draw do
     post '/buildings/save-uom-value' => 'buildings#save_uom_value'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
+    get '/contract-start', to: 'contract#start_of_contract'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
@@ -92,11 +94,16 @@ Rails.application.routes.draw do
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
     get '/small-checkboxes', to: 'home#small_checkboxes'
+    get '/titles-checkboxes', to: 'home#titles_checkboxes'
+    get '/numbered-pagination', to: 'home#numbered_pagination'
+    get '/table-5050', to: 'home#table_5050'
   end
 
   namespace 'legal_services', path: 'legal-services' do
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
+    get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
+    resources :suppliers, only: %i[index show]
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'

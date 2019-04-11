@@ -13,6 +13,12 @@ module CcsPatterns
 
     def small_checkboxes; end
 
+    def titles_checkboxes; end
+
+    def numbered_pagination; end
+
+    def table_5050; end
+
     private
 
     def set_back_path
