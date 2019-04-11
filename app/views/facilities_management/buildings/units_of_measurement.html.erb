@@ -38,14 +38,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="govuk-form-group">
-        <form method="post">
-          <hidden id="building-id" name="building-id"/>
-          <hidden id="fm-service-code" name="fm-service-code" value="<%= @service_code %>"/>
-          <hidden id="fm-service-uom" name="fm-service-uom"/>
-          <div class="govuk-!-margin-top-8">
-            <a id="fm-unit-of-measurement-submit" type="button" class="govuk-button" role="button">Continue</a>
-          </div>
-        </form>
+        <hidden id="fm-building-uom-id" name="fm-building-uom-id" value="<%= @building_id %>"></hidden>
+        <hidden id="fm-service-uom-code" name="fm-service-uom-code" value="<%= @service_code %>"></hidden>
+        <div class="govuk-!-margin-top-8">
+          <a id="fm-unit-of-measurement-submit" type="button" class="govuk-button" role="button">Continue</a>
+        </div>
       </div>
     </div>
   </div>
