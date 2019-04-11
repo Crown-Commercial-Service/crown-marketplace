@@ -63,7 +63,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
       @unit_text = service_data['unit_text']
       @is_lift = false
     else
-      redirect_to('/facilities-management/buildings/select-services')
+      redirect_to('/facilities-management/contract-start')
     end
   end
 
@@ -79,7 +79,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
 
     count = fm_service_data.unset_service_count(current_login.email.to_s, building_id)
 
-    url = count.positive? ? '/facilities-management/buildings/units-of-measurement?building_id=' + building_id : '/facilities-management/buildings/select-services'
+    url = count.positive? ? '/facilities-management/buildings/units-of-measurement?building_id=' + building_id : '/facilities-management/contract-start'
 
     j = { 'status': 200, 'next': url }
 

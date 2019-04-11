@@ -1,61 +1,61 @@
 <a href="#" onclick="window.history.go(-1); return false;" class="govuk-back-link govuk-!-margin-bottom-7">Back</a>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-        <form action="" method="">
+    <form action="" method="">
 
-            <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset govuk-!-padding-bottom-8 govuk-!-margin-bottom-8" aria-describedby="start-hint" role="group">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset govuk-!-padding-bottom-8 govuk-!-margin-bottom-8" aria-describedby="start-hint" role="group">
 
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-bottom-1">
-                        <h1 class="govuk-fieldset__heading">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-bottom-1">
+            <h1 class="govuk-fieldset__heading">
                             <span class="govuk-caption-xl">
                                 About your contract <span class="ccs-remove">: </span>
                             </span>
-                            When do you need the service to start?
-                        </h1>
-                    </legend>
+              When do you need the service to start?
+            </h1>
+          </legend>
 
-                    <span id="start-hint" class="govuk-hint">
+          <span id="start-hint" class="govuk-hint">
                         For example, <time datetime="2019-09-28">28 09 2019</time>
                     </span>
 
-                    <div class="govuk-date-input govuk-!-padding-top-3" id="start-date">
+          <div class="govuk-date-input govuk-!-padding-top-3" id="start-date">
 
-                        <div class="govuk-date-input__item">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label govuk-date-input__label" for="day">
-                                    Day
-                                </label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="day" type="number" pattern="[0-9]*">
-                            </div>
-                        </div>
-                        <div class="govuk-date-input__item">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label govuk-date-input__label" for="month">
-                                    Month
-                                </label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="month" type="number" pattern="[0-9]*">
-                            </div>
-                        </div>
-                        <div class="govuk-date-input__item">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label govuk-date-input__label" for="year">
-                                    Year
-                                </label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="year" type="number" pattern="[0-9]*">
-                            </div>
-                        </div>
-
-                    </div>
-
-                </fieldset>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="day">
+                  Day
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="day" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="month">
+                  Month
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="month" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="year">
+                  Year
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="year" type="number" pattern="[0-9]*">
+              </div>
             </div>
 
-            <%= submit_tag t('common.submit'), class: "govuk-button" %>
+          </div>
 
-        </form>
+        </fieldset>
+      </div>
 
-     </div>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+
+    </form>
+
   </div>
+</div>
