@@ -2,64 +2,30 @@ require 'json'
 class FMSupplierData
   # Get the count of suppliers for all lots in the initial long list by location and services
   def long_list_supplier_count(locations, services)
-    query = "select count(*) as record_count from (
-          select
-            distinct fms.name
-          from
-            public.facilities_management_suppliers fms,
-	          public.facilities_management_regional_availabilities fmra,
-	          public.facilities_management_service_offerings fmso
-          where
-            (fmra.region_code in " + locations + ")
-            and fms.id = fmra.facilities_management_supplier_id
-            and fmso.facilities_management_supplier_id = fms.id
-            and (fmso.service_code in " + services + " )
-            and fmso.lot_number in ('1a','1b','1c')) sup;"
-    result = ActiveRecord::Base.connection.execute(query)
-    result[0]['record_count']
+    query = "SELECT count(distinct(supplier_id))
+					from fm_suppliers, jsonb_array_elements(fm_suppliers.data -> 'lots') lots,
+						jsonb_array_elements(lots -> 'regions') regions,
+						jsonb_array_elements(lots->'services') services
+					where"
+    query += ' regions in ' + locations + ' and services in ' + services +
+             ' and  lots -> \'lot_number\' in ( \'"1a"\' , \'"1b"\', \'"1c"\')'
+
+    rs = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    rs[0]['count']
   end
 
   # Get the suppliers for a lot in the initial long list by location and services
   def long_list_suppliers_lot(locations, services, lot)
-    query = "select name,service_code,region_code from(select
-	distinct initcap(fms.name) as name,
-	array(
-	select
-		distinct fmso.service_code
-	from
-		public.facilities_management_suppliers fms,
-		public.facilities_management_regional_availabilities fmra,
-		public.facilities_management_service_offerings fmso
-	where
-		(fmra.region_code in " + locations + ")
-		and (fmso.service_code in " + services + ")
-		and fms.id = fmra.facilities_management_supplier_id
-		and fmso.facilities_management_supplier_id = fms.id
-		and fmso.lot_number = '" + lot + "') as service_code,
-	array(
-	select
-		distinct fmra.region_code
-	from
-		public.facilities_management_suppliers fms,
-		public.facilities_management_regional_availabilities fmra,
-		public.facilities_management_service_offerings fmso
-	where
-		(fmra.region_code in " + locations + ")
-		and (fmso.service_code in " + services + ")
-		and fms.id = fmra.facilities_management_supplier_id
-		and fmso.facilities_management_supplier_id = fms.id
-		and fmso.lot_number ='" + lot + "') as region_code
-from
-	public.facilities_management_suppliers fms,
-	public.facilities_management_regional_availabilities fmra,
-	public.facilities_management_service_offerings fmso
-where
-	(fmra.region_code in " + locations + ")
-	and (fmso.service_code in " + services + " )
-	and fms.id = fmra.facilities_management_supplier_id
-	and fmso.facilities_management_supplier_id = fms.id
-	and fmso.lot_number = '" + lot + "' order by name) sups;"
-    result = ActiveRecord::Base.connection.execute(query)
-    JSON.parse(result.to_json)
+    query = "SELECT distinct data->>'supplier_name' as \"name\", lots->>'services' as  \"service_code\", lots->>'regions' as \"region_code\"
+		from fm_suppliers, jsonb_array_elements(fm_suppliers.data -> 'lots') lots,
+			jsonb_array_elements(lots -> 'regions') regions,
+			jsonb_array_elements(lots->'services') services
+		where"
+    query += ' regions in ' + locations + ' and services in ' + services + " and  lots -> 'lot_number\' in ( '\"" + lot + '"\' )' \
+             ' group by name, service_code, region_code' \
+             " order by data->>'supplier_name'"
+
+    rs = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    JSON.parse(rs.to_json)
   end
 end

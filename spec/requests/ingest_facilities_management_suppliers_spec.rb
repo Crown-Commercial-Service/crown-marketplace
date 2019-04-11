@@ -6,12 +6,14 @@ RSpec.describe 'Ingest facilities management suppliers', type: :request do
     let(:suppliers) do
       [
         {
+          'supplier_id' => SecureRandom.uuid,
           'supplier_name' => Faker::Company.unique.name,
           'contact_name' => Faker::Name.unique.name,
           'contact_email' => Faker::Internet.unique.email,
           'contact_phone' => Faker::PhoneNumber.unique.phone_number,
         },
         {
+          'supplier_id' => SecureRandom.uuid,
           'supplier_name' => Faker::Company.unique.name,
           'contact_name' => Faker::Name.unique.name,
           'contact_email' => Faker::Internet.unique.email,
@@ -32,14 +34,16 @@ RSpec.describe 'Ingest facilities management suppliers', type: :request do
       end
 
       it 'ingests suppliers' do
+        count = CCS::FM::Supplier.count
         ingest(suppliers)
         expect(response).to have_http_status(:created)
-        expect(FacilitiesManagement::Supplier.count).to eq(2)
+        expect(CCS::FM::Supplier.count).to eq(count + 2)
       end
 
       it 'destroys all suppliers before ingesting' do
+        count = CCS::FM::Supplier.count
         2.times { ingest(suppliers) }
-        expect(FacilitiesManagement::Supplier.count).to eq(2)
+        expect(CCS::FM::Supplier.count).to eq(count + 2)
       end
     end
 

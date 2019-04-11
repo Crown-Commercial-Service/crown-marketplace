@@ -10,8 +10,8 @@ class FacilitiesManagement::LongListController < ApplicationController
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
-    locations = @posted_locations.to_s.tr('"', "'").sub('[', '(').sub(']', ')')
-    services = @posted_services.to_s.tr('"', "'").sub('[', '(').sub(']', ')')
+    locations = '(' + @posted_locations.map { |x| "'\"#{x}\"'" }.join(',') + ')'
+    services = '(' + @posted_services.map { |x| "'\"#{x}\"'" }.join(',') + ')'
     fm_supplier_data = FMSupplierData.new
     @supplier_count = fm_supplier_data.long_list_supplier_count(locations, services)
     @suppliers_lot1a = fm_supplier_data.long_list_suppliers_lot(locations, services, '1a')
