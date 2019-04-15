@@ -1,0 +1,61 @@
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-m">Example of error messages HTML</h1>
+
+      <p><b>Note</b> classes: .govuk-form-group--error, .govuk-error-message</p>
+
+    </div>
+  </div>
+
+  <hr style="margin-bottom: 150px;">
+
+
+
+
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="" method="">
+
+        <div class="govuk-form-group govuk-form-group--error">
+          <fieldset class="govuk-fieldset">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
+              <h1 class="govuk-fieldset__heading">
+                Do you know the apprenticeship standard that you would like training for?
+              </h1>
+            </legend>
+
+            <span id="ap-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Select yes if you know the apprenticeship standard that you would like training for
+            </span>
+
+            <div class="govuk-radios">
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ap-std-1" name="ap-std" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="ap-std-1">
+                        Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ap-std-2" name="ap-std" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="ap-std-2">
+                  No
+                </label>
+              </div>
+
+            </div>
+
+          </fieldset>
+        </div>
+
+        <%= render 'layouts/button', text: t('common.continue')%>
+
+      </form>
+
+     </div>
+  </div>

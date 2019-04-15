@@ -19,6 +19,10 @@ module CcsPatterns
 
     def table_5050; end
 
+    def errors_find_apprentices; end
+
+    def errors_find_apprentices3; end
+
     private
 
     def set_back_path

@@ -1,0 +1,42 @@
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-m">Example of error messages HTML</h1>
+
+      <p><b>Note</b> classes: .govuk-form-group--error, .govuk-error-message, .govuk-textarea--error</p>
+
+    </div>
+  </div>
+
+  <hr style="margin-bottom: 150px;">
+
+
+
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+     <form action="" method="">
+
+        <div class="govuk-form-group govuk-form-group--error">
+          <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--m govuk-!-font-weight-bold" for="more-detail3">
+              Briefly outline your training requirements
+            </label>
+          </h1>
+          <span id="more-detail-hint3" class="govuk-hint">
+            For example, the apprenticeship standard, level and specific requirements from the training provider
+          </span>
+          <span id="more-detail3-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> Enter your outline for training requirements
+          </span>
+          <textarea class="govuk-textarea govuk-textarea--error" id="more-detail3" name="more-detail3" rows="5" aria-describedby="more-detail-hint3"></textarea>
+        </div>
+
+        <%= render 'layouts/button', text: t('common.continue')%>
+
+      </form>
+
+    </div>
+  </div>
