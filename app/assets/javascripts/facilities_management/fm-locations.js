@@ -57,6 +57,7 @@ $(() => {
         $("#region-accordion input:checkbox").removeAttr("checked");
 
         selectedLocations = [];
+        pageUtils.setCachedData('fm-locations', selectedLocations);
 
         updateLocationCount();
     });

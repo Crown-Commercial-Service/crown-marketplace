@@ -99,6 +99,7 @@ $(() => {
         $("#services-accordion input:checkbox").removeAttr("checked");
 
         selectedServices = [];
+        pageUtils.setCachedData('fm-services', selectedServices);
         updateServiceCount();
     });
 
