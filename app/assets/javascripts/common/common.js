@@ -168,7 +168,9 @@ const fm = {
 
         isDateValid: ((day, month, year) => {
             const d = new Date(year, month - 1, day);
-            return d.getFullYear() === year && (d.getMonth() + 1) === month && d.getDate() === day;
+            let result = d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month) && d.getDate() === parseInt(day);
+            console.log(day, month, year, d, result);
+            return result;
         })
     }
 };
