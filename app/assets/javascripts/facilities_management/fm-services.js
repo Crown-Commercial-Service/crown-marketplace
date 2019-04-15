@@ -104,7 +104,7 @@ $(() => {
     });
 
     /!* Click handler to remove all services *!/
-    $('#remove-all-link').click((e) => {
+    $('#remove-all-services-link').click((e) => {
         e.preventDefault();
         clearAll();
     });
