@@ -125,4 +125,8 @@ module ApplicationHelper
   def the_landing_page
     controller.action_name == 'landing_page'
   end
+
+  def admin_page
+    controller.class.parent_name.underscore == 'supply_teachers/admin'
+  end
 end
