@@ -113,8 +113,8 @@ module CCS
     db = PG.connect(config)
     query = "CREATE TABLE IF NOT EXISTS public.facilities_management_buildings (user_id varchar NOT NULL, building_json jsonb NOT NULL);
             CREATE INDEX IF NOT EXISTS fm_buildings_user_id_idx ON public.facilities_management_buildings USING btree (user_id);
-            CREATE INDEX IF NOT EXISTS fm_buildings_building_id_idx ON public.facilities_management_buildings USING gin (((building_json -> ' id '::text)));
-            CREATE INDEX IF NOT EXISTS fm_buildings_services_idx ON public.facilities_management_buildings USING gin (((building_json -> ' services '::text)));"
+            CREATE INDEX IF NOT EXISTS fm_buildings_building_id_idx ON public.facilities_management_buildings USING gin (((building_json -> 'id'::text)));
+            CREATE INDEX IF NOT EXISTS fm_buildings_services_idx ON public.facilities_management_buildings USING gin (((building_json -> 'services'::text)));"
     db.query query
   rescue PG::Error => e
     puts e.message
