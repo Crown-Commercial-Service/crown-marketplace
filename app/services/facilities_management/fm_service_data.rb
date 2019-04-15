@@ -937,5 +937,5 @@ class FMServiceData
             "mandatory": true
         }]', create_additions: true)
   end
-# rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 end
