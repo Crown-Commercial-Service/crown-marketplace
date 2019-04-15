@@ -99,6 +99,7 @@ Rails.application.routes.draw do
     get '/errors-find-apprentices2', to: 'home#errors_find_apprentices2'
     get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
     get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
+    get '/errors-requirements', to: 'home#errors_requirements'
   end
 
   namespace 'legal_services', path: 'legal-services' do
