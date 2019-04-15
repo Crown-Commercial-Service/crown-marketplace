@@ -5,7 +5,7 @@
 
     <form action="" method="">
 
-      <div class="govuk-form-group govuk-form-group--error">
+      <div id="fm-contract-date-form-group-error-container"  class="govuk-form-group">
         <fieldset class="govuk-fieldset govuk-!-padding-bottom-8 govuk-!-margin-bottom-8" aria-describedby="start-hint" role="group">
 
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-bottom-1">
@@ -21,7 +21,7 @@
                         For example, <time datetime="2019-09-28">28 09 2019</time>
                     </span>
 
-          <span id="fm-contract-start-error" class="govuk-error-message">
+          <span id="fm-contract-start-error-message" class="govuk-error-message govuk-visually-hidden">
                         <span class="govuk-visually-hidden">Error:</span> An invalid date has been entered, please enter a valid date
                     </span>
 
@@ -32,7 +32,7 @@
                 <label class="govuk-label govuk-date-input__label" for="day">
                   Day
                 </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input--error" id="day" name="day" type="number" pattern="[0-9]*">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="day" type="number" pattern="[0-9]*">
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -40,7 +40,7 @@
                 <label class="govuk-label govuk-date-input__label" for="month">
                   Month
                 </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input--error" id="month" name="month" type="number" pattern="[0-9]*">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="month" type="number" pattern="[0-9]*">
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -48,7 +48,7 @@
                 <label class="govuk-label govuk-date-input__label" for="year">
                   Year
                 </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input--error" id="year" name="year" type="number" pattern="[0-9]*">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="year" type="number" pattern="[0-9]*">
               </div>
             </div>
 
@@ -62,7 +62,7 @@
   </fieldset>
 </div>
 
-<%= submit_tag t('common.submit'), class: "govuk-button" %>
+<a role='button' class='govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' id='fm-save-contract-start-date-link'>Continue</a>
 
 </form>
 
