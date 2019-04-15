@@ -9,7 +9,7 @@
         </div>
 
         <div class="govuk-header__content">
-          <% if the_landing_page %>
+          <% if the_landing_page || admin_page %>
             <span class="govuk-header__link--service-name">Crown Marketplace</span>
           <% else %>
             <%= link_to_service_start_page %>
@@ -19,7 +19,7 @@
 
           <nav>
             <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-              <% if the_landing_page %>
+              <% if the_landing_page || admin_page %>
 
               <% else %>
                 <li class="govuk-header__navigation-item">
