@@ -21,7 +21,11 @@ module CcsPatterns
 
     def errors_find_apprentices; end
 
+    def errors_find_apprentices2; end
+
     def errors_find_apprentices3; end
+
+    def errors_find_apprentices4; end
 
     private
 

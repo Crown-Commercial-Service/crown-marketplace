@@ -4,6 +4,8 @@
 
       <p><b>Note</b> classes: .govuk-form-group--error, .govuk-error-message, .govuk-textarea--error</p>
 
+      <p><b>Note</b>: see how the aria-describedby is added for <em>this</em>&nbsp; error <br>state to the <b>textbox</b> element and references the ID on the error message HTML.</p>
+
     </div>
   </div>
 
@@ -25,13 +27,16 @@
               Briefly outline your training requirements
             </label>
           </h1>
+
           <span id="more-detail-hint3" class="govuk-hint">
             For example, the apprenticeship standard, level and specific requirements from the training provider
           </span>
+
           <span id="more-detail3-error" class="govuk-error-message">
             <span class="govuk-visually-hidden">Error:</span> Enter your outline for training requirements
           </span>
-          <textarea class="govuk-textarea govuk-textarea--error" id="more-detail3" name="more-detail3" rows="5" aria-describedby="more-detail-hint3"></textarea>
+
+          <textarea class="govuk-textarea govuk-textarea--error" id="more-detail3" name="more-detail3" rows="5" aria-describedby="more-detail-hint3 more-detail3-error"></textarea>
         </div>
 
         <%= render 'layouts/button', text: t('common.continue')%>
