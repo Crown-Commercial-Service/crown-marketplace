@@ -208,7 +208,8 @@ $(() => {
             /* save services with building information */
             pageUtils.toggleInlineErrorMessage(false);
             currentBuilding['services'] = selectedServicesForThisBuilding;
-            fm.services.updateBuilding(currentBuilding, true, '#');
+            let url = '/facilities-management/buildings/units-of-measurement?building_id=' + currentBuilding['id'];
+            fm.services.updateBuilding(currentBuilding, true, url);
         } else {
             /* show error message */
             pageUtils.toggleInlineErrorMessage(true);
