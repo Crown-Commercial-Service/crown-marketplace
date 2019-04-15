@@ -27,6 +27,8 @@ module CcsPatterns
 
     def errors_find_apprentices4; end
 
+    def errors_requirements; end
+
     private
 
     def set_back_path
