@@ -19,7 +19,7 @@ class FMServiceData
 
   def unset_service_count(email_address, building_id)
     records = service(email_address, building_id)
-    records.ntuples
+    records.count
   rescue StandardError => e
     Rails.logger.warn "Couldn't retrieve service data: #{e}"
   end
@@ -32,7 +32,7 @@ class FMServiceData
     return_data = {}
     return_data['hasService'] = false
 
-    if result_a.ntuples.positive?
+    if result_a.count.positive?
       service = result_a[0].to_h
       code = service['code']
 
