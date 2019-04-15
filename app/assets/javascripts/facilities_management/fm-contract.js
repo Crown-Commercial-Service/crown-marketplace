@@ -26,15 +26,15 @@ $(() => {
     });
 
 
-    $('#day').on('change', ((e) => {
+    $('#day').on('keyup', ((e) => {
         validateDate();
     }));
 
-    $('#month').on('change', ((e) => {
+    $('#month').on('keyup', ((e) => {
         validateDate();
     }));
 
-    $('#year').on('change', ((e) => {
+    $('#year').on('keyup', ((e) => {
         validateDate();
     }));
 
