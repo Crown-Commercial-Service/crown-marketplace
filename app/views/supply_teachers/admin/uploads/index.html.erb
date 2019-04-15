@@ -1,0 +1,28 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3 cmp-page-heading">Uploads</h1>
+
+    <%= link_to 'New upload', new_supply_teachers_admin_upload_path %>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    <% @uploads.each do |upload| %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <%= link_to upload.current_accredited_suppliers.file.filename, upload.current_accredited_suppliers_url %>
+          <br>
+          <%= link_to upload.geographical_data_all_suppliers.file.filename, upload.geographical_data_all_suppliers_url %>
+          <br>
+          <%= link_to upload.lot_1_and_lot_2_comparisons.file.filename, upload.lot_1_and_lot_2_comparisons_url %>
+          <br>
+          <%= link_to upload.master_vendor_contacts.file.filename, upload.master_vendor_contacts_url %>
+          <br>
+          <%= link_to upload.neutral_vendor_contacts.file.filename, upload.neutral_vendor_contacts_url %>
+          <br>
+          <%= link_to upload.pricing_for_tool.file.filename, upload.pricing_for_tool_url %>
+          <br>
+          <%= link_to upload.supplier_lookup.file.filename, upload.supplier_lookup_url %>
+        </div>
+      </div>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    <% end %>
+  </div>
+</div>

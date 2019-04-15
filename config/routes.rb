@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
     resources :branches, only: %i[index show]
     resources :downloads, only: :index
+    namespace :admin do
+      resources :uploads
+    end
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
