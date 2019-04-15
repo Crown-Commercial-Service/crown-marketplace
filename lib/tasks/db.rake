@@ -60,11 +60,11 @@ module CCS
     p 'db: ' + db_config['database']
     if Rails.env.production?
       {
-        host: db_config['host'],
-        port: db_config['port'],
-        dbname: db_config['database'],
-        user: db_config['username'],
-        password: db_config['password']
+          host: db_config['host'],
+          port: db_config['port'],
+          dbname: db_config['database'],
+          user: db_config['username'],
+          password: db_config['password']
       }
     else
       { dbname: db_config['database'] }
@@ -100,9 +100,22 @@ module CCS
       values = supplier.to_json.gsub("'") { "''" }
       query = "DELETE FROM fm_suppliers where data->'supplier_id' ? '" + supplier['supplier_id'] + "' ; " \
               'insert into fm_suppliers ( created_at, updated_at, supplier_id, data ) values ( now(), now(), \'' \
-              + supplier['supplier_id'] + "', '" + values + "')"
+                  + supplier['supplier_id'] + "', '" + values + "')"
       db.query query
     end
+  rescue PG::Error => e
+    puts e.message
+  ensure
+    db&.close
+  end
+
+  def self.facilities_management_buildings
+    db = PG.connect(config)
+    query = "CREATE TABLE IF NOT EXISTS public.facilities_management_buildings (user_id varchar NOT NULL, building_json jsonb NOT NULL);
+            CREATE INDEX IF NOT EXISTS fm_buildings_user_id_idx ON public.facilities_management_buildings USING btree (user_id);
+            CREATE INDEX IF NOT EXISTS fm_buildings_building_id_idx ON public.facilities_management_buildings USING gin (((building_json -> ' id '::text)));
+            CREATE INDEX IF NOT EXISTS fm_buildings_services_idx ON public.facilities_management_buildings USING gin (((building_json -> ' services '::text)));"
+    db.query query
   rescue PG::Error => e
     puts e.message
   ensure
@@ -117,6 +130,8 @@ namespace :db do
     CCS.load_static
     p 'Loading FM Suppliers static'
     CCS.fm_suppliers
+    p 'Creating FM building database'
+    CCS.facilities_management_buildings
   end
 
   desc 'add static data to the database'
