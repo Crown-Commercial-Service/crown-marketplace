@@ -2,20 +2,19 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-m">Example of error message state HTML</h1>
 
-      <p><b>Note</b> classes: </p>
+      <p><b>Note</b> additional classes: .govuk-input--error, .govuk-form-group--error (plus, the new inserted HTML for main top summary and individual error messages. <br>In the top <b>summary</b> a list of error messages repeat the messages inline below, and link via the related ID directly to the form elements concerned.</p>
 
-      <p><b>Note</b>: </p>
+      <p><b>Note</b>: on radio fieldsets, the <b>aria-describedby</b> which are added and reference the ID of the first radio or checkbox in the group. The <b>aria-describedby</b> is added directly to the input element on the text field which references the IDs on the hint, and the error message. </p>
 
     </div>
   </div>
 
   <hr style="margin-bottom: 150px;">
-xxxxxxxxxxxxxxx
 
 
 
 
-    <div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
       <span class="govuk-caption-xl">Building services design engineer</span>
@@ -25,6 +24,26 @@ xxxxxxxxxxxxxxx
   </div>
 
   <form action="requirement" method="">
+
+
+
+    <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+      <h2 class="govuk-error-summary__title" id="error-summary-title">
+        There is a problem
+      </h2>
+      <div class="govuk-error-summary__body">
+        <ul class="govuk-list govuk-error-summary__list">
+          <li>
+            <a href="#radio-id-04">Select yes if you need help with recruiting the apprentices</a>
+          </li>
+          <li>
+            <a href="#input-10">Enter the the minimum number of apprentices that you need training</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
 
     <div class="govuk-grid-row">
 
@@ -74,13 +93,17 @@ xxxxxxxxxxxxxxx
           </fieldset>
         </div>
 
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset">
+        <div class="govuk-form-group govuk-form-group--error">
+          <fieldset class="govuk-fieldset" aria-describedby="radio-id-04-error">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <h1 class="govuk-fieldset__heading ccs-fieldset__heading--wide">
                 Do you need help with recruiting the apprentices?
               </h1>
             </legend>
+
+            <span id="radio-id-04-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Select yes if you need help with recruiting the apprentices
+            </span>
 
             <div class="govuk-radios">
               <div class="govuk-radios__item">
@@ -146,7 +169,7 @@ xxxxxxxxxxxxxxx
           </fieldset>
         </div>
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
           <label class="govuk-label govuk-label--s" for="input-10">
             What is the minimum number of apprentices that you need training?
           </label>
@@ -155,7 +178,11 @@ xxxxxxxxxxxxxxx
             If you're unsure of exact numbers, use a good estimate
           </span>
 
-          <input class="govuk-input govuk-input--width-4" id="input-10" name="qty" type="text" aria-describedby="hint-input-10">
+          <span id="input-10-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> Select yes if you need help with recruiting the apprentices
+          </span>
+
+          <input class="govuk-input govuk-input--width-4 govuk-input--error" id="input-10" name="qty" type="text" aria-describedby="hint-input-10 input-10-error">
         </div>
 
       </div>
