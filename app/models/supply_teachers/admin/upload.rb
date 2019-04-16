@@ -21,22 +21,22 @@ module SupplyTeachers
         require 'rake'
         Rails.application.load_tasks
 
-        # Rake::Task['st:clean'].execute
-        #
-        # copy_files_to_input_folder
-        #
-        # Rake::Task['st:data'].invoke
+        Rake::Task['st:clean'].execute
+
+        copy_files_to_input_folder
+
+        Rake::Task['st:data'].invoke
 
       end
 
       def copy_files_to_input_folder
-        # FileUtils.cp(Rails.root.to_s + current_accredited_suppliers_url, './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx') if current_accredited_suppliers_changed?
-        # FileUtils.cp(Rails.root.to_s + geographical_data_all_suppliers_url, './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx') if geographical_data_all_suppliers_changed?
-        # FileUtils.cp(Rails.root.to_s + lot_1_and_lot_2_comparisons_url, './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx') if lot_1_and_lot_2_comparisons_changed?
-        # FileUtils.cp(Rails.root.to_s + master_vendor_contacts_url, './lib/tasks/supply_teachers/input/master_vendor_contacts.csv') if master_vendor_contacts_changed?
-        # FileUtils.cp(Rails.root.to_s + neutral_vendor_contacts_url, './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv') if neutral_vendor_contacts_changed?
-        # FileUtils.cp(Rails.root.to_s + pricing_for_tool_url, './lib/tasks/supply_teachers/input/pricing for tool.xlsx') if pricing_for_tool_changed?
-        # FileUtils.cp(Rails.root.to_s + supplier_lookup_url, './lib/tasks/supply_teachers/input/supplier_lookup.csv') if supplier_lookup_changed?
+        FileUtils.cp(Rails.root.to_s + current_accredited_suppliers_url, './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx') if current_accredited_suppliers_changed?
+        FileUtils.cp(Rails.root.to_s + geographical_data_all_suppliers_url, './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx') if geographical_data_all_suppliers_changed?
+        FileUtils.cp(Rails.root.to_s + lot_1_and_lot_2_comparisons_url, './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx') if lot_1_and_lot_2_comparisons_changed?
+        FileUtils.cp(Rails.root.to_s + master_vendor_contacts_url, './lib/tasks/supply_teachers/input/master_vendor_contacts.csv') if master_vendor_contacts_changed?
+        FileUtils.cp(Rails.root.to_s + neutral_vendor_contacts_url, './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv') if neutral_vendor_contacts_changed?
+        FileUtils.cp(Rails.root.to_s + pricing_for_tool_url, './lib/tasks/supply_teachers/input/pricing for tool.xlsx') if pricing_for_tool_changed?
+        FileUtils.cp(Rails.root.to_s + supplier_lookup_url, './lib/tasks/supply_teachers/input/supplier_lookup.csv') if supplier_lookup_changed?
       end
     end
   end
