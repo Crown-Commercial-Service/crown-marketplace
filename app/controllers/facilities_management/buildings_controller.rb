@@ -35,6 +35,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @new_building_json = request.raw_post
     @fm_building_data = FMBuildingData.new
     @fm_building_data.save_building(current_login.email.to_s, @new_building_json)
+    j = { 'status': 200 }
+    render json: j, status: 200
   end
 
   def update_building
@@ -43,6 +45,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     id = obj['id']
     @fm_building_data = FMBuildingData.new
     @fm_building_data.update_building(current_login.email.to_s, id, @new_building_json)
+    j = { 'status': 200 }
+    render json: j, status: 200
   end
 
   def units_of_measurement
