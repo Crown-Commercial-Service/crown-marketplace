@@ -15,6 +15,10 @@ en:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
+        apprenticeships/journey/find_apprentices:
+          attributes:
+            central_government:
+              inclusion: Error message for Darren to change
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:

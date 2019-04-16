@@ -28,6 +28,7 @@ module JourneyControllerActions
   def render_form
     @form_path = @journey.form_path
     @back_path = @journey.previous_step_path
+    byebug
     render @journey.template
   end
 

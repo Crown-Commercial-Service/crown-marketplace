@@ -1,0 +1,27 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <%= govuk_form_group_with_optional_error(@journey, :das) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :das) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+                <%= t('Does your organisation have a digital apprenticeship service(DAS) account') %>
+        </h1>
+      </legend>
+      <%= display_error(@journey, :das) %>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :das, 'yes', checked?(params[:das], 'yes'), class: 'govuk-radios__input' %>
+          <%= label_tag :das, t('yes'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= radio_button_tag :das, 'no', checked?(params[:das], 'no'), class: 'govuk-radios__input' %>
+          <%= label_tag :das, t('no'), class: 'govuk-label govuk-radios__label' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+<% end %>
