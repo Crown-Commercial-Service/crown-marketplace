@@ -5,7 +5,7 @@ $(() => {
         const month = $('#month').val();
         const year = $('#year').val();
 
-        const isValid = fm.services.isDateValid(day, month, year);
+        const isValid = fm.services.isDateInFuture(day, month, year);
 
         if (isValid === false) {
             $('#fm-contract-start-error-message').removeClass('govuk-visually-hidden');
