@@ -99,8 +99,9 @@ module CCS
 
   def self.facilities_management_buildings
     db = PG.connect(config)
-    query = "CREATE TABLE IF NOT EXISTS public.facilities_management_buildings (user_id varchar NOT NULL, building_json jsonb NOT NULL); drop index if exists fm_buildings_building_id_idx;CREATE INDEX IF NOT EXISTS fm_buildings_building_id_idx ON public.facilities_management_buildings USING GIN (((building_json -> 'id'::text)));
-             drop index if exists fm_buildings_services_code_idx; CREATE INDEX IF NOT EXISTS fm_buildings_services_code_idx ON public.facilities_management_buildings USING GIN ((((building_json -> 'services'::text) -> 'code'::text))); drop index if exists fm_buildings_services_name_idx; CREATE INDEX IF NOT EXISTS fm_buildings_services_name_idx ON public.facilities_management_buildings USING GIN ((((building_json -> 'services'::text) -> 'name'::text))); drop index if exists fm_buildings_user_id_idx; CREATE INDEX IF NOT EXISTS fm_buildings_user_id_idx ON public.facilities_management_buildings USING btree (user_id);"
+    query = "create table if not exists public.facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
+            drop index if exists fm_buildings_building_id_idx; create index if not exists fm_buildings_building_id_idx on public.facilities_management_buildings ((building_json -> 'id'::text) jsonb_ops); drop index if exists fm_buildings_services_code_idx; create index if not exists fm_buildings_services_code_idx on public.facilities_management_buildings (((building_json -> 'services'::text) -> 'code'::text) jsonb_ops);
+            drop index if exists fm_buildings_services_name_idx; create index if not exists fm_buildings_services_name_idx on public.facilities_management_buildings (((building_json -> 'services'::text) -> 'name'::text) jsonb_ops); drop index if exists fm_buildings_user_id_idx; create index if not exists fm_buildings_user_id_idx on public.facilities_management_buildings (user_id text_ops);"
     db.query query
   rescue PG::Error => e
     puts e.message
