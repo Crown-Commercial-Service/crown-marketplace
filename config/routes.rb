@@ -69,7 +69,7 @@ Rails.application.routes.draw do
     get '/search', to: 'home#search'
     get '/search_results', to: 'home#search_results'
     get '/supplier_search', to: 'home#supplier_search'
-    get '/supplier_search2', to: 'home#supplier_search2'
+   get '/supplier_search2', to: 'home#supplier_search2'
     get '/find_apprentices', to: 'home#find_apprentices'
     get '/find_apprentices2', to: 'home#find_apprentices2'
     get '/find_apprentices3', to: 'home#find_apprentices3'
@@ -86,6 +86,10 @@ Rails.application.routes.draw do
     get '/understanding', to: 'home#understanding'
     get '/training_details', to: 'home#training_details'
     get '/download_provider', to: 'home#download_provider'
+    resources :suppliers, only: %i[index show]
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
