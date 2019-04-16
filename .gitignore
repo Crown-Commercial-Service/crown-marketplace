@@ -35,5 +35,9 @@ logfile
 .idea/
 /nbproject/private/
 
-# SupplyTeachers data folder
-/data/supply_teachers/*
+# SupplyTeachers data folders
+lib/tasks/supply_teachers/input/*
+lib/tasks/supply_teachers/output/*
+uploads/*
+public/data/*
+public/uploads/*

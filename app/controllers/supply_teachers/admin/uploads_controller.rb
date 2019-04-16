@@ -1,3 +1,4 @@
+require 'rake'
 module SupplyTeachers
   module Admin
     class UploadsController < FrameworkController
@@ -11,8 +12,7 @@ module SupplyTeachers
       end
 
       def create
-        @upload = Upload.last.dup || Upload.new
-        @upload.assign_attributes(upload_params)
+        @upload = Upload.new(upload_params)
         @upload.state = 'created'
 
         if @upload.save
