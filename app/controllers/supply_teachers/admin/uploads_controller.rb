@@ -1,4 +1,3 @@
-require 'rake'
 module SupplyTeachers
   module Admin
     class UploadsController < FrameworkController
@@ -8,7 +7,7 @@ module SupplyTeachers
       end
 
       def new
-        @upload = Upload.last.dup || Upload.new
+        @upload = Upload.new
       end
 
       def create

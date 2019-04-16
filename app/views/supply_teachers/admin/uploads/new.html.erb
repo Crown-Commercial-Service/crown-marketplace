@@ -1,4 +1,5 @@
 <%= form_for @upload, html: { multipart: true } do |f| %>
+  <p><%= @upload.errors.full_messages.to_sentence %></p>
   <div>
     <label>Current Accredited Suppliers</label>
     <p><%= link_to f.object.current_accredited_suppliers.file.filename, f.object.current_accredited_suppliers_url if f.object.current_accredited_suppliers.file %></p>
