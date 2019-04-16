@@ -2,6 +2,8 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-m">Example of error messages HTML</h1>
 
+      <p><b>Note</b>: each item listed in the top errory <b>summary</b> links directly to the ID of the related form element; in this case, one error links to the first radio input element</p>
+
       <p><b>Note</b> classes: .govuk-form-group--error, .govuk-error-message</p>
 
       <p><b>Note</b>: see how the aria-describedby is added for this error state and references the ID on the error message HTML.</p>
@@ -21,6 +23,21 @@
     <div class="govuk-grid-column-two-thirds">
 
       <form action="" method="">
+
+
+        <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+          <h2 class="govuk-error-summary__title" id="error-summary-title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li>
+                <a href="#ap-std-1">Select yes if you know the apprenticeship standard that you would like training for</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
 
         <div class="govuk-form-group govuk-form-group--error">
           <fieldset class="govuk-fieldset" aria-describedby="ap-error">

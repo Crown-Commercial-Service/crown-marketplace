@@ -10,6 +10,9 @@
       <p><b>Note</b> additional error classes: .govuk-form-group--error, .govuk-error-message</p>
       <p><b>Note</b>: the aria-describedby attribute is added - for this error state only - to the <b>fieldset</b> element and references the ID on the error message.</p>
 
+      <p><b>Note</b>: each item listed in the top errory <b>summary</b> links directly to the ID of the related form element; in this case, one error links to the first input element</p>
+
+
     </div>
   </div>
 
@@ -53,6 +56,21 @@
         <section class="govuk-tabs__panel" id="search-tab">
           <%= form_tag apprenticeships_search_results_path, method: :get do %>
 
+
+            <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+              <h2 class="govuk-error-summary__title" id="error-summary-title">
+                There is a problem
+              </h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  <li>
+                    <a href="#search">Enter an apprenticeship standard</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
             <div class="govuk-form-group govuk-form-group--error">
               <h1 class="govuk-label-wrapper">
                 <label class="govuk-label govuk-label--m govuk-!-font-weight-bold" for="search">
@@ -75,6 +93,21 @@
 
         <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="browse-tab">
           <%= form_tag apprenticeships_search_results_path, method: :get do %>
+
+
+          <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+              There is a problem
+            </h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                <li>
+                  <a href="#rate-01">Select one or more apprenticeship standards</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
 
             <div class="govuk-form-group govuk-form-group--error">
               <fieldset class="govuk-fieldset" aria-describedby="browse-error">
