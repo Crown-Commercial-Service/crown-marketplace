@@ -101,6 +101,11 @@ Rails.application.routes.draw do
     get '/titles-checkboxes', to: 'home#titles_checkboxes'
     get '/numbered-pagination', to: 'home#numbered_pagination'
     get '/table-5050', to: 'home#table_5050'
+    get '/errors-find-apprentices', to: 'home#errors_find_apprentices'
+    get '/errors-find-apprentices2', to: 'home#errors_find_apprentices2'
+    get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
+    get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
+    get '/errors-requirements', to: 'home#errors_requirements'
   end
 
   namespace 'legal_services', path: 'legal-services' do

@@ -99,11 +99,12 @@ $(() => {
         $("#services-accordion input:checkbox").removeAttr("checked");
 
         selectedServices = [];
+        pageUtils.setCachedData('fm-services', selectedServices);
         updateServiceCount();
     });
 
     /!* Click handler to remove all services *!/
-    $('#remove-all-link').click((e) => {
+    $('#remove-all-services-link').click((e) => {
         e.preventDefault();
         clearAll();
     });
