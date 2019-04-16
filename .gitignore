@@ -34,3 +34,6 @@ logfile
 /coverage/*
 .idea/
 /nbproject/private/
+
+# SupplyTeachers data folder
+/data/supply_teachers/*
