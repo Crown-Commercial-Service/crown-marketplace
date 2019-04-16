@@ -17,8 +17,8 @@ module SupplyTeachers
       validate :script_data
 
       private
+
       def script_data
-        begin
         copy_files_to_input_folder
 
         Rake::Task.clear
@@ -30,9 +30,11 @@ module SupplyTeachers
           file = File.open('./lib/tasks/supply_teachers/output/errors.out')
           errors.add(:base, "There is an error with your files: " + file.read)
         end
-        rescue StandardError => e
-          errors.add(:base, "There is an error with your files. Please try again")
-        end
+
+        state = 'review'
+
+      rescue StandardError => e
+        errors.add(:base, "There is an error with your files. Please try again")
       end
 
       def copy_files_to_input_folder
