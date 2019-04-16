@@ -52,19 +52,20 @@ $(() => {
     });
 
     /* uncheck all check boxes and clear list */
-    const clearAll = (() => {
+    const clearAllLocations = (() => {
         $("#selected-fm-locations li").remove();
         $("#region-accordion input:checkbox").removeAttr("checked");
 
         selectedLocations = [];
+        pageUtils.setCachedData('fm-locations', selectedLocations);
 
         updateLocationCount();
     });
 
     /* Click handler to remove all locations */
-    $('#remove-all-link').click((e) => {
+    $('#remove-all-locations-link').click((e) => {
         e.preventDefault();
-        clearAll();
+        clearAllLocations();
     });
 
     /* click handler for check boxes */
@@ -113,7 +114,7 @@ $(() => {
 
         isLocationValid();
 
-        clearAll();
+        clearAllLocations();
 
         $('input:checkbox').attr('checked', 'checked');
         $('input:checkbox').click();
