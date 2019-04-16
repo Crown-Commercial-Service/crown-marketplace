@@ -21,7 +21,7 @@ class FMServiceData
     records = service(email_address, building_id)
     records.count
   rescue StandardError => e
-    Rails.logger.warn "Couldn't retrieve service data: #{e}"
+    Rails.logger.warn "Couldn't retrieve service data count: #{e}"
   end
 
   # Get any service with an unset unit of measurement value
