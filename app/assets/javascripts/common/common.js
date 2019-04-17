@@ -135,6 +135,56 @@ const fm = {
                     console.log(errorThrown);
                 }
             });
-        })
+        }),
+
+        save_uom: ((building_id, service_code, uom_value) => {
+
+            let url = '/facilities-management/buildings/save-uom-value';
+
+            let data = {
+                building_id: building_id,
+                service_code: service_code,
+                uom_value: uom_value
+            };
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    if (textStatus === 'success') {
+                        location.replace(data.next);
+                    }
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+        }),
+
+        isDateInFuture: ((day, month, year) => {
+            let result = false;
+            if (fm.services.isDateValid(day, month, year) === true) {
+                let date_today = new Date();
+                let date_a = new Date(year, month - 1, day);
+                date_a.setHours(date_today.getHours() + 1);
+                date_a.setMinutes(date_today.getMinutes() + 1);
+                date_a.setSeconds(date_today.getSeconds() + 1);
+                result = date_a >= date_today;
+            }
+            return result;
+
+        }),
+
+        isDateValid:
+            ((day, month, year) => {
+                const d = new Date(year, month - 1, day);
+                let result = d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month) && d.getDate() === parseInt(day);
+                return result;
+            })
     }
 };

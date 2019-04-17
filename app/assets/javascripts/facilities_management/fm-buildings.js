@@ -121,7 +121,7 @@ $(() => {
         $('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
     });
 
-    $('#fm-buildings-continue').click((e) => {
+    $('#fm-buildings-add-building').click((e) => {
         pageUtils.clearCashedData('fm-current-building');
     });
 

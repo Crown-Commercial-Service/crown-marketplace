@@ -41,8 +41,15 @@ Rails.application.routes.draw do
     get '/buildings/building-type', to: 'buildings#building_type'
     post '/buildings/update_building' => 'buildings#update_building'
     get '/buildings/select-services', to: 'buildings#select_services_per_building'
+
     get '/summary', to: 'summary#index'
+
+    get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
+    post '/buildings/save-uom-value' => 'buildings#save_uom_value'
+    get '/suppliers', to: 'suppliers#index'
+
     get '/start', to: 'journey#start', as: 'journey_start'
+    get '/contract-start', to: 'contract#start_of_contract'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
@@ -94,6 +101,11 @@ Rails.application.routes.draw do
     get '/titles-checkboxes', to: 'home#titles_checkboxes'
     get '/numbered-pagination', to: 'home#numbered_pagination'
     get '/table-5050', to: 'home#table_5050'
+    get '/errors-find-apprentices', to: 'home#errors_find_apprentices'
+    get '/errors-find-apprentices2', to: 'home#errors_find_apprentices2'
+    get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
+    get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
+    get '/errors-requirements', to: 'home#errors_requirements'
   end
 
   namespace 'legal_services', path: 'legal-services' do
