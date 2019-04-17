@@ -10,9 +10,7 @@ class JourneyPaths
   end
 
   def question(slug, params = nil)
-    byebug
     if params
-      byebug
       journey_question_path(journey: @journey_name,
                             slug: slug,
                             params: params)
