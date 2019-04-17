@@ -4,7 +4,6 @@ module Apprenticeships
 
     def initialize(slug, params)
       paths = JourneyPaths.new(self.class.journey_name)
-      byebug
       first_step_class = FindApprentices
       super(first_step_class, slug, params, paths)
     end
