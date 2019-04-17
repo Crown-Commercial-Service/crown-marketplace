@@ -1,4 +1,4 @@
-<a href="/facilities-management/select-services" class="govuk-back-link ccs-no-print">Back</a>
+<a href="<%= request.referer %>" class="govuk-back-link">Back</a>
 
 <%= render('errors/inline_error_summary') %>
 
@@ -8,7 +8,7 @@
     <div class="govuk-inset-text ccs-no-print">
       <strong>On this page</strong><br>
       <span>Based on your choices, we are showing suppliers in three different groups.</span>
-   </div>
+    </div>
   </fieldset>
   <p class="govuk-!-font-size-36">
     <strong><%= @supplier_count %> suppliers found</strong> based on total contract value, when awarded.
@@ -16,7 +16,8 @@
 
   <!-- Start of filter section -->
   <div class="govuk-grid-row">
-    <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print" role="button">Hide filters</a><br>
+    <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print" role="button">Hide
+      filters</a><br>
     <div id="fm-filter-pane" class="govuk-grid-column-one-third">
       <%= render('facilities_management/long_list/filters') %>
     </div>
@@ -42,7 +43,8 @@
     <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1c" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1c</a><br>
 
     <p>
-      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" >Print this page</a>
+      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="">Print this
+        page</a>
     </p>
   </div>
 </div>

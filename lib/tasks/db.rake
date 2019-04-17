@@ -3,6 +3,7 @@ module CCS
   require 'csv'
   require 'json'
 
+
   def self.csv_to_nuts_regions(file_name)
     query = 'create table IF NOT EXISTS nuts_regions (code varchar(255) UNIQUE, name varchar(255),
                                              nuts1_code varchar(255), nuts2_code varchar(255) );'
@@ -54,7 +55,6 @@ module CCS
     puts e.message
   end
 
-
   def self.load_static(directory = 'data/')
     p "Loading NUTS static data, Environment: #{Rails.env}"
     CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv'
@@ -87,12 +87,23 @@ module CCS
                 + supplier['supplier_id'] + "', '" + values + "')"
         db.query query
       end
+
+    end
+  rescue PG::Error => e
+    puts e.message
+  end
+
+  def self.facilities_management_buildings
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      query = "create table if not exists public.facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
+              drop index if exists fm_buildings_building_id_idx; create index if not exists fm_buildings_building_id_idx on public.facilities_management_buildings ((building_json -> 'id'::text) jsonb_ops); drop index if exists fm_buildings_services_code_idx; create index if not exists fm_buildings_services_code_idx on public.facilities_management_buildings (((building_json -> 'services'::text) -> 'code'::text) jsonb_ops);
+              drop index if exists fm_buildings_services_name_idx; create index if not exists fm_buildings_services_name_idx on public.facilities_management_buildings (((building_json -> 'services'::text) -> 'name'::text) jsonb_ops); drop index if exists fm_buildings_user_id_idx; create index if not exists fm_buildings_user_id_idx on public.facilities_management_buildings (user_id text_ops);"
+      db.query query
     end
   rescue PG::Error => e
     puts e.message
   end
 end
-
 namespace :db do
   desc 'add NUTS static data to the database'
   task :static => :environment do
@@ -100,8 +111,9 @@ namespace :db do
     CCS.load_static
     p 'Loading FM Suppliers static'
     CCS.fm_suppliers
+    p 'Creating FM building database'
+    CCS.facilities_management_buildings
   end
-
   desc 'add static data to the database'
   task setup: :static do
   end
