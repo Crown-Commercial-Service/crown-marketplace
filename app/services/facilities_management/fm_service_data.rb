@@ -3,15 +3,13 @@ require 'base64'
 require 'pg'
 class FMServiceData
   def service(email_address, building_id)
-    query = "select trim(replace(elem->>'code', '-', '.')) code, elem->>'name' as description from
-	(select jsonb_array_elements(building_json->'services') elem from facilities_management_buildings where
-		facilities_management_buildings.building_json->>'id' = '" + building_id + "' and
-		 facilities_management_buildings.user_id = '" + Base64.encode64(email_address) + "') sub where
-     trim(replace(elem->>'code', '-', '.')) not in (
-		select v.service_code from fm_uom_values v where
-		v.building_id = '" + building_id + "'
-		and v.user_id = '" + Base64.encode64(email_address) + "') and
-    trim(replace(elem->>'code', '-', '.')) in (select distinct (unnest(service_usage)) from fm_units_of_measurement fuom order by 1) limit 1;"
+    query = "select trim(replace(subcode, '-', '.')) as code, subname as name from (SELECT json_array_elements(building_json::json->'services') ->>'code' as subcode,
+json_array_elements(building_json::json->'services') ->>'name' as subname
+  FROM facilities_management_buildings where facilities_management_buildings.building_json->>'id' = '" + building_id + "' and
+		 facilities_management_buildings.user_id = '" + Base64.encode64(email_address) + "') sub
+where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom_values v where v.building_id = '" + building_id + "' and
+		 v.user_id = '" + Base64.encode64(email_address) + "') and
+    trim(replace(subcode, '-', '.')) in (select distinct (unnest(service_usage)) from fm_units_of_measurement fuom order by 1) limit 1;"
     ActiveRecord::Base.connection.execute(query)
   rescue StandardError => e
     Rails.logger.warn "Couldn't retrieve service data: #{e}"
