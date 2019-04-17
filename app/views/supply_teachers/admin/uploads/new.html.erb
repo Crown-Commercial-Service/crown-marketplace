@@ -1,14 +1,21 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3 cmp-page-heading">New Upload Session</h1>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        Creating a new Upload Session will cancel all previous Upload Sessions that are in review
+      </strong>
+    </div>
     <%= form_for @upload, html: { multipart: true } do |f| %>
-      <p><%= @upload.errors.full_messages.to_sentence %></p>
+      <span class="govuk-error-message"><%= @upload.errors.full_messages.to_sentence %></span>
       <div class="govuk-form-group">
         <%= f.label :current_accredited_suppliers, class: "govuk-label" %>
         <%= f.file_field :current_accredited_suppliers, class: "govuk-file-upload" %>
         <%= f.hidden_field :current_accredited_suppliers_cache %>
         <% if @previous_uploaded_files.current_accredited_suppliers.present? %>
-          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.current_accredited_suppliers.file.filename, @previous_uploaded_files.current_accredited_suppliers.file.path %></p>
+          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.current_accredited_suppliers.file.filename, @previous_uploaded_files.current_accredited_suppliers_url, target: '_blank' %></p>
         <% end %>
       </div>
       <div class="govuk-form-group">
@@ -17,7 +24,7 @@
         <%= f.file_field :geographical_data_all_suppliers, class: "govuk-file-upload" %>
         <%= f.hidden_field :geographical_data_all_suppliers_cache %>
         <% if @previous_uploaded_files.geographical_data_all_suppliers.present? %>
-          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.geographical_data_all_suppliers.file.filename, @previous_uploaded_files.geographical_data_all_suppliers.file.path %></p>
+          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.geographical_data_all_suppliers.file.filename, @previous_uploaded_files.geographical_data_all_suppliers_url, target: '_blank' %></p>
         <% end %>
       </div>
       <div class="govuk-form-group">
@@ -26,7 +33,7 @@
         <%= f.file_field :lot_1_and_lot_2_comparisons, class: "govuk-file-upload" %>
         <%= f.hidden_field :lot_1_and_lot_2_comparisons_cache %>
         <% if @previous_uploaded_files.lot_1_and_lot_2_comparisons.present? %>
-          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.lot_1_and_lot_2_comparisons.file.filename, @previous_uploaded_files.lot_1_and_lot_2_comparisons.file.path %></p>
+          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.lot_1_and_lot_2_comparisons.file.filename, @previous_uploaded_files.lot_1_and_lot_2_comparisons_url, target: '_blank' %></p>
         <% end %>
       </div>
       <div class="govuk-form-group">
@@ -35,7 +42,7 @@
         <%= f.file_field :master_vendor_contacts, class: "govuk-file-upload" %>
         <%= f.hidden_field :master_vendor_contacts_cache %>
         <% if @previous_uploaded_files.master_vendor_contacts.present? %>
-          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.master_vendor_contacts.file.filename, @previous_uploaded_files.master_vendor_contacts.file.path %></p>
+          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.master_vendor_contacts.file.filename, @previous_uploaded_files.master_vendor_contacts_url, target: '_blank' %></p>
         <% end %>
       </div>
       <div class="govuk-form-group">
@@ -44,7 +51,7 @@
         <%= f.file_field :neutral_vendor_contacts, class: "govuk-file-upload" %>
         <%= f.hidden_field :neutral_vendor_contacts_cache %>
         <% if @previous_uploaded_files.neutral_vendor_contacts.present? %>
-          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.neutral_vendor_contacts.file.filename, @previous_uploaded_files.neutral_vendor_contacts.file.path %></p>
+          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.neutral_vendor_contacts.file.filename, @previous_uploaded_files.neutral_vendor_contacts_url, target: '_blank' %></p>
         <% end %>
       </div>
       <div class="govuk-form-group">
@@ -53,7 +60,7 @@
         <%= f.file_field :pricing_for_tool, class: "govuk-file-upload" %>
         <%= f.hidden_field :pricing_for_tool_cache %>
         <% if @previous_uploaded_files.pricing_for_tool.present? %>
-          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.pricing_for_tool.file.filename, @previous_uploaded_files.pricing_for_tool.file.path %></p>
+          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.pricing_for_tool.file.filename, @previous_uploaded_files.pricing_for_tool_url, target: '_blank' %></p>
         <% end %>
       </div>
       <div class="govuk-form-group">
@@ -62,7 +69,7 @@
         <%= f.file_field :supplier_lookup, class: "govuk-file-upload" %>
         <%= f.hidden_field :supplier_lookup_cache %>
         <% if @previous_uploaded_files.supplier_lookup.present? %>
-          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.supplier_lookup.file.filename, @previous_uploaded_files.supplier_lookup.file.path %></p>
+          <p><b>Current file:</b> <%= link_to @previous_uploaded_files.supplier_lookup.file.filename, @previous_uploaded_files.supplier_lookup_url, target: '_blank' %></p>
         <% end %>
       </div>
       <%= f.submit class: 'govuk-button' %>
