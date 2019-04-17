@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
   end
 
   create_table "supply_teachers_admin_uploads", force: :cascade do |t|
-    t.string "state"
+    t.string "aasm_state"
     t.string "current_accredited_suppliers"
     t.string "geographical_data_all_suppliers"
     t.string "lot_1_and_lot_2_comparisons"
