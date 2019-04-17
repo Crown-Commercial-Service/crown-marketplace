@@ -86,19 +86,6 @@ module CCS
   end
 
   def self.facilities_management_buildings
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = "create table if not exists public.facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
-              drop index if exists fm_buildings_building_id_idx; create index if not exists fm_buildings_building_id_idx on public.facilities_management_buildings ((building_json -> 'id'::text) jsonb_ops); drop index if exists fm_buildings_services_code_idx; create index if not exists fm_buildings_services_code_idx on public.facilities_management_buildings (((building_json -> 'services'::text) -> 'code'::text) jsonb_ops);
-              drop index if exists fm_buildings_services_name_idx; create index if not exists fm_buildings_services_name_idx on public.facilities_management_buildings (((building_json -> 'services'::text) -> 'name'::text) jsonb_ops); drop index if exists fm_buildings_user_id_idx; create index if not exists fm_buildings_user_id_idx on public.facilities_management_buildings (user_id text_ops);"
-      db.query query
-    end
-  rescue PG::Error => e
-    puts e.message
-  ensure
-    db&.close
-  end
-
-  def self.facilities_management_buildings
     db = PG.connect(config)
     query = "create table if not exists public.facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
              DROP INDEX IF EXISTS buildings_idx; CREATE INDEX IF NOT EXISTS buildings_idx ON public.facilities_management_buildings USING gin (building_json jsonb_path_ops);"
@@ -109,6 +96,7 @@ module CCS
     db&.close
   end
 end
+
 namespace :db do
   desc 'add NUTS static data to the database'
   task static: :environment do
