@@ -3,36 +3,29 @@ module CCS
   require 'csv'
   require 'json'
 
-
   def self.csv_to_nuts_regions(file_name)
-    query = 'create table IF NOT EXISTS nuts_regions (code varchar(255) UNIQUE, name varchar(255),
-                                             nuts1_code varchar(255), nuts2_code varchar(255) );'
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      db.exec_query(query)
+      db.exec_query('create table IF NOT EXISTS nuts_regions (code varchar(255) UNIQUE, name varchar(255),
+      nuts1_code varchar(255), nuts2_code varchar(255) );')
       CSV.read(file_name, headers: true).each do |row|
-        column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
+        column_names = row.headers.map { |i| '"' + i + '"' }.join(',')
         values = row.fields.map { |i| "'#{i}'" }.join(',')
-        query = "DELETE FROM nuts_regions where code = '" + row['code'] + "' ; "
-        db.exec_query(query)
-        query = 'insert into nuts_regions ( ' + column_names + ') values (' + values + ')';
-        db.exec_query(query)
+        db.exec_query("DELETE FROM nuts_regions where code = '" + row['code'] + "' ; ")
+        db.exec_query('insert into nuts_regions ( ' + column_names + ') values (' + values + ')')
+      end
     end
-  end
   rescue PG::Error => e
     puts e.message
   end
 
   def self.csv_to_fm_regions(file_name)
-    query = 'create table IF NOT EXISTS fm_regions (code varchar(255) UNIQUE, name varchar(255) );'
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      db.exec_query(query)
+      db.exec_query('create table IF NOT EXISTS fm_regions (code varchar(255) UNIQUE, name varchar(255) );')
       CSV.read(file_name, headers: true).each do |row|
-        column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
+        column_names = row.headers.map { |i| '"' + i + '"' }.join(',')
         values = row.fields.map { |i| "'#{i}'" }.join(',')
-        query = "DELETE FROM fm_regions where code = '" + row['code'] + "' ; "
-        db.exec_query(query)
-        query = 'insert into fm_regions ( ' + column_names + ') values (' + values + ')'
-        db.exec_query(query)
+        db.exec_query("DELETE FROM fm_regions where code = '" + row['code'] + "' ; ")
+        db.exec_query('insert into fm_regions ( ' + column_names + ') values (' + values + ')')
       end
     end
   rescue PG::Error => e
@@ -87,7 +80,6 @@ module CCS
                 + supplier['supplier_id'] + "', '" + values + "')"
         db.query query
       end
-
     end
   rescue PG::Error => e
     puts e.message
@@ -106,7 +98,7 @@ module CCS
 end
 namespace :db do
   desc 'add NUTS static data to the database'
-  task :static => :environment do
+  task static: :environment do
     p 'Loading NUTS static'
     CCS.load_static
     p 'Loading FM Suppliers static'
