@@ -8,6 +8,7 @@ module SupplyTeachers
 
       def new
         @upload = Upload.new
+        @previous_uploaded_files = ::PreviousUploadedFilesPresenter.new
       end
 
       def create
@@ -20,14 +21,13 @@ module SupplyTeachers
         end
       end
 
-      def show
-        @upload = Upload.find(params[:id])
-      end
-
       def approve
+        upload = Upload.find(params[:upload_id])
         suppliers = JSON.parse(File.read(data_file))
 
         SupplyTeachers::Upload.upload!(suppliers)
+
+        upload.approve!
 
         redirect_to supply_teachers_admin_uploads_path
       rescue ActiveRecord::RecordInvalid => e
@@ -40,7 +40,8 @@ module SupplyTeachers
       end
 
       def reject
-
+        upload = Upload.find(params[:upload_id])
+        upload.reject!
       end
 
       private

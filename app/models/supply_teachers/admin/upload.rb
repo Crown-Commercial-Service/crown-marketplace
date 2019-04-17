@@ -5,6 +5,8 @@ module SupplyTeachers
       include AASM
       self.table_name = "supply_teachers_admin_uploads"
 
+      default_scope { order(created_at: :desc) }
+
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
       mount_uploader :geographical_data_all_suppliers, SupplyTeachersFileUploader
       mount_uploader :lot_1_and_lot_2_comparisons, SupplyTeachersFileUploader
@@ -29,6 +31,10 @@ module SupplyTeachers
         event :cancel do
           transitions from: :review, to: :canceled
         end
+      end
+
+      def self.previous_uploaded_file(attr_name)
+        where(aasm_state: :approved).where.not("#{attr_name}": nil).first.try(:send, attr_name)
       end
 
       private
