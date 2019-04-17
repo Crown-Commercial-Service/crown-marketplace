@@ -166,11 +166,25 @@ const fm = {
 
         }),
 
-        isDateValid: ((day, month, year) => {
-            const d = new Date(year, month - 1, day);
-            let result = d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month) && d.getDate() === parseInt(day);
-            console.log(day, month, year, d, result);
+        isDateInFuture: ((day, month, year) => {
+            let result = false;
+            if (fm.services.isDateValid(day, month, year) === true) {
+                let date_today = new Date();
+                let date_a = new Date(year, month - 1, day);
+                date_a.setHours(date_today.getHours() + 1);
+                date_a.setMinutes(date_today.getMinutes() + 1);
+                date_a.setSeconds(date_today.getSeconds() + 1);
+                result = date_a >= date_today;
+            }
             return result;
-        })
+
+        }),
+
+        isDateValid:
+            ((day, month, year) => {
+                const d = new Date(year, month - 1, day);
+                let result = d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month) && d.getDate() === parseInt(day);
+                return result;
+            })
     }
 };
