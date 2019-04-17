@@ -20,9 +20,10 @@ Rails.application.routes.draw do
     resources :branches, only: %i[index show]
     resources :downloads, only: :index
     namespace :admin do
-      get '/approve', to: 'uploads#approve'
-      get '/reject', to: 'uploads#reject'
-      resources :uploads
+      resources :uploads, only: %i[index new create] do
+        get 'approve'
+        get 'reject'
+      end
     end
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
