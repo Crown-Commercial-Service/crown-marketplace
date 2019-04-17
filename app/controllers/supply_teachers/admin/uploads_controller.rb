@@ -13,10 +13,12 @@ module SupplyTeachers
 
       def create
         @upload = Upload.new(upload_params)
+        @previous_uploaded_files = ::PreviousUploadedFilesPresenter.new
 
         if @upload.save
-          redirect_to supply_teachers_admin_uploads_path
+          redirect_to supply_teachers_admin_uploads_path, notice: 'Upload session successfully created.'
         else
+          @upload.cleanup_input_files
           render :new
         end
       end
@@ -29,7 +31,7 @@ module SupplyTeachers
 
         upload.approve!
 
-        redirect_to supply_teachers_admin_uploads_path
+        redirect_to supply_teachers_admin_uploads_path, notice: 'Database has now been updated.'
       rescue ActiveRecord::RecordInvalid => e
         summary = {
           record: e.record,
@@ -42,6 +44,7 @@ module SupplyTeachers
       def reject
         upload = Upload.find(params[:upload_id])
         upload.reject!
+        redirect_to supply_teachers_admin_uploads_path, notice: 'Upload session rejected.'
       end
 
       private

@@ -26,15 +26,50 @@ module SupplyTeachers
           transitions from: :review, to: :approved
         end
         event :reject do
+          after do
+            cleanup_input_files
+          end
           transitions from: :review, to: :rejected
         end
         event :cancel do
+          after do
+            cleanup_input_files
+          end
           transitions from: :review, to: :canceled
+        end
+
+      end
+
+      def cleanup_input_files
+        if current_accredited_suppliers.file.present? && previous_current_accredited_suppliers = self.class.previous_uploaded_file(:current_accredited_suppliers).file
+          FileUtils.cp(previous_current_accredited_suppliers.path, './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx')
+        end
+        if geographical_data_all_suppliers.file.present? && previous_geographical_data_all_suppliers = self.class.previous_uploaded_file(:geographical_data_all_suppliers).file
+          FileUtils.cp(previous_geographical_data_all_suppliers.path, './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx')
+        end
+        if lot_1_and_lot_2_comparisons.file.present? && previous_lot_1_and_lot_2_comparisons = self.class.previous_uploaded_file(:lot_1_and_lot_2_comparisons).file
+          FileUtils.cp(previous_lot_1_and_lot_2_comparisons.path, './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx')
+        end
+        if master_vendor_contacts.file.present? && previous_master_vendor_contacts = self.class.previous_uploaded_file(:master_vendor_contacts).file
+          FileUtils.cp(previous_master_vendor_contacts.path, './lib/tasks/supply_teachers/input/master_vendor_contacts.csv')
+        end
+        if neutral_vendor_contacts.file.present? && previous_neutral_vendor_contacts = self.class.previous_uploaded_file(:neutral_vendor_contacts).file
+          FileUtils.cp(previous_neutral_vendor_contacts.path, './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv')
+        end
+        if pricing_for_tool.file.present? && previous_pricing_for_tool = self.class.previous_uploaded_file(:pricing_for_tool).file
+          FileUtils.cp(previous_pricing_for_tool.path, './lib/tasks/supply_teachers/input/pricing for tool.xlsx')
+        end
+        if supplier_lookup.file.present? && previous_supplier_lookup = self.class.previous_uploaded_file(:supplier_lookup).file
+          FileUtils.cp(previous_supplier_lookup.path, './lib/tasks/supply_teachers/input/supplier_lookup.csv')
         end
       end
 
       def self.previous_uploaded_file(attr_name)
-        where(aasm_state: :approved).where.not("#{attr_name}": nil).first.try(:send, attr_name)
+        previous_uploaded_file_object(attr_name).try(:send, attr_name)
+      end
+
+      def self.previous_uploaded_file_object(attr_name)
+        where(aasm_state: :approved).where.not("#{attr_name}": nil).first
       end
 
       private
