@@ -2,6 +2,7 @@ require 'rake'
 module SupplyTeachers
   module Admin
     class Upload < ApplicationRecord
+      include AASM
       self.table_name = "supply_teachers_admin_uploads"
 
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
@@ -14,11 +15,26 @@ module SupplyTeachers
 
       attr_accessor :current_accredited_suppliers_cache, :geographical_data_all_suppliers_cache, :lot_1_and_lot_2_comparisons_cache, :master_vendor_contacts_cache, :neutral_vendor_contacts_cache, :pricing_for_tool_cache, :supplier_lookup_cache
 
-      validate :script_data
+      validate :script_data, on: :create
+
+      aasm do
+        state :review, initial: true
+        state :approved, :rejected, :canceled
+        event :approve do
+          transitions from: :review, to: :approved
+        end
+        event :reject do
+          transitions from: :review, to: :rejected
+        end
+        event :cancel do
+          transitions from: :review, to: :canceled
+        end
+      end
 
       private
 
       def script_data
+        reject_all_uploads_in_review
         copy_files_to_input_folder
 
         Rake::Task.clear
@@ -30,8 +46,6 @@ module SupplyTeachers
           file = File.open('./lib/tasks/supply_teachers/output/errors.out')
           errors.add(:base, "There is an error with your files: " + file.read)
         end
-
-        state = 'review'
 
       rescue StandardError => e
         errors.add(:base, "There is an error with your files. Please try again")
@@ -46,6 +60,11 @@ module SupplyTeachers
         FileUtils.cp(pricing_for_tool.file.path, './lib/tasks/supply_teachers/input/pricing for tool.xlsx') if pricing_for_tool_changed?
         FileUtils.cp(supplier_lookup.file.path, './lib/tasks/supply_teachers/input/supplier_lookup.csv') if supplier_lookup_changed?
       end
+
+      def reject_all_uploads_in_review
+        Upload.review.map(&:cancel!)
+      end
+
     end
   end
 end

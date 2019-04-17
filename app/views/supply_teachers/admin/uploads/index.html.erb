@@ -22,7 +22,7 @@
           <%= link_to upload.supplier_lookup.file.try(:filename), upload.supplier_lookup_url %>
         </div>
       </div>
-      <%= link_to "Review", upload, class: 'govuk-button' %>
+      <%= link_to "Review", upload, class: 'govuk-button' if upload.review? %>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
     <% end %>
   </div>
