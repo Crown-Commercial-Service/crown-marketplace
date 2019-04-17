@@ -2,6 +2,11 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3 cmp-page-heading">Uploads</h1>
 
+    <% if flash[:notice] %>
+      <div class="govuk-inset-text cmp-inset-text--success">
+        <p class="govuk-body govuk-body-s"><%= flash[:notice] %></p>
+      </div>
+    <% end %>
     <%= link_to 'New upload', new_supply_teachers_admin_upload_path, class: 'govuk-button'  %>
     <hr class="govuk-section-break govuk-section-break--xl">
     <% @uploads.each do |upload| %>
