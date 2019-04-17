@@ -1,0 +1,172 @@
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-m govuk-!-margin-bottom-8">Example of error message state HTML</h1>
+
+      <h2 class="govuk-heading-m">Search tab</h2>
+      <p><b>Note</b> additional error classes: .govuk-form-group--error, .govuk-error-message,  .govuk-input--error</p>
+      <p><b>Note</b>: see how the aria-describedby is added for this error state (only) on the <b>input</b> element and references the ID on the error message.</p>
+
+      <h2 class="govuk-heading-m">Browse tab</h2>
+      <p><b>Note</b> additional error classes: .govuk-form-group--error, .govuk-error-message</p>
+      <p><b>Note</b>: the aria-describedby attribute is added - for this error state only - to the <b>fieldset</b> element and references the ID on the error message.</p>
+
+      <p><b>Note</b>: each item listed in the top errory <b>summary</b> links directly to the ID of the related form element; in this case, one error links to the first input element</p>
+
+
+    </div>
+  </div>
+
+  <hr style="margin-bottom: 150px;">
+
+
+
+
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Find an apprenticeship standard</h1>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-tabs" data-module="tabs">
+        <h2 class="govuk-tabs__title ccs-no-print">
+          Search
+        </h2>
+
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab govuk-tabs__tab--selected" href="#search-tab">
+              Search
+            </a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#browse-tab">
+              Browse
+            </a>
+          </li>
+        </ul>
+
+        <section class="govuk-tabs__panel" id="search-tab">
+          <%= form_tag apprenticeships_search_results_path, method: :get do %>
+
+
+            <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+              <h2 class="govuk-error-summary__title" id="error-summary-title">
+                There is a problem
+              </h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  <li>
+                    <a href="#search">Enter an apprenticeship standard</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="govuk-form-group govuk-form-group--error">
+              <h1 class="govuk-label-wrapper">
+                <label class="govuk-label govuk-label--m govuk-!-font-weight-bold" for="search">
+                  <%= t('common.search') %>
+                </label>
+              </h1>
+
+              <span id="search-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Enter an apprenticeship standard
+              </span>
+
+              <input type="text" name="search" id="search" class="govuk-input ccs-search-icon govuk-input--error" aria-describedby="search-error" />
+
+            </div>
+
+            <%= render 'layouts/button', text: t('common.search')%>
+
+          <% end %>
+        </section>
+
+        <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="browse-tab">
+          <%= form_tag apprenticeships_search_results_path, method: :get do %>
+
+
+          <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+              There is a problem
+            </h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                <li>
+                  <a href="#rate-01">Select one or more apprenticeship standards</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+
+            <div class="govuk-form-group govuk-form-group--error">
+              <fieldset class="govuk-fieldset" aria-describedby="browse-error">
+
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
+                  <h1 class="govuk-fieldset__heading">
+                    Browse by route
+                  </h1>
+                </legend>
+
+                <span id="browse-error" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> Select one or more apprenticeship standards
+                </span>
+
+                <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
+                  <div class="govuk-checkboxes__item">
+                    <input type="checkbox" name="rating" id="rate-01" value="Agriculture, environmental and animal care" class="govuk-checkboxes__input" />
+                      <label class="govuk-label govuk-checkboxes__label" for="rate-01">
+                        Agriculture, environmental and animal care
+                      </label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input type="checkbox" name="rating" id="rate-02" value="Business and administration" class="govuk-checkboxes__input" />
+                      <label class="govuk-label govuk-checkboxes__label" for="rate-02">
+                        Business and administration
+                      </label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input type="checkbox" name="rating" id="rate-03" value="Catering and hospitality" class="govuk-checkboxes__input" />
+                      <label class="govuk-label govuk-checkboxes__label" for="rate-03">
+                        Catering and hospitality
+                      </label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input type="checkbox" name="rating" id="rate-04" value="Construction" class="govuk-checkboxes__input" />
+                      <label class="govuk-label govuk-checkboxes__label" for="rate-04">
+                        Construction
+                      </label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input type="checkbox" name="rating" id="rate-05" value="Creative and design" class="govuk-checkboxes__input" />
+                      <label class="govuk-label govuk-checkboxes__label" for="rate-05">
+                        Creative and design
+                      </label>
+                  </div>
+                </div>
+
+              </fieldset>
+            </div>
+
+            <%= render 'layouts/button', text: t('common.browse')%>
+
+          <% end %>
+        </section>
+
+      </div>
+
+
+
+    </div>
+  </div>
+
