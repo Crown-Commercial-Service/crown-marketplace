@@ -3,8 +3,8 @@ require 'base64'
 require 'pg'
 class FMServiceData
   def service(email_address, building_id)
-    query = "select trim(replace(subcode, '-', '.')) as code, subname as name from (SELECT jsonb_array_elements(building_json->'services') ->>'code' as subcode,
-jsonb_array_elements(building_json->'services') ->>'name' as subname
+    query = "select trim(replace(subcode, '-', '.')) as code, subname as name from (SELECT json_array_elements(building_json::json->'services') ->>'code' as subcode,
+json_array_elements(building_json::json->'services') ->>'name' as subname
   FROM facilities_management_buildings where facilities_management_buildings.building_json->>'id' = '" + building_id + "' and
 		 facilities_management_buildings.user_id = '" + Base64.encode64(email_address) + "') sub
 where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom_values v where v.building_id = '" + building_id + "' and
