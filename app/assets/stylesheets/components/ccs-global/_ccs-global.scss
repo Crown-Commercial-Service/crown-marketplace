@@ -15,6 +15,23 @@
     }
 }
 
+/* footer at foot fix: starts */
+#wrapper{//around all body content
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+}
+#main-footer{
+  overflow: hidden;
+}
+.govuk-width-container,
+main {
+  flex-grow: 1;
+  width: 100%;
+}
+/* footer at foot fix: ends */
+
 .govuk-header__navigation .govuk-header__navigation-item {
     border-bottom: none !important;
 }
@@ -574,7 +591,7 @@ ul.ccs-pagination {
 }
 
 @media all and (-ms-high-contrast:none){//IE11 bugs. This targets IE11 only (with ::-ms-backdrop)
-    *::-ms-backdrop, body > div {
+    *::-ms-backdrop, #wrapper {
       flex: none;//wrapper div bug fix for pg layouts
     }
     *::-ms-backdrop, img[src*=".svg"] {
