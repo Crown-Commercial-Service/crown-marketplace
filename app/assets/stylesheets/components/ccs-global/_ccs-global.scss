@@ -20,7 +20,7 @@
 }
 
 #main-content {
-    min-height: 370px;
+    min-height: 450px;
 }
 
 .ccs-landing-pg-content {
@@ -230,7 +230,7 @@ ul.ccs-checklist {
             }
         }
 
-        & > button {
+        & > .govuk-button {
             width: 100%;
         }
 
@@ -290,7 +290,7 @@ ul.ccs-checklist {
 }
 @media (max-width: 641px) {//mobile
     #css-list-basket {
-        & > button {
+        & > .govuk-button {
             display: none;
         }
     }
@@ -650,3 +650,4 @@ table.ccs-at-govuk-table--5050 {
     }
 }
 /* ccs sticky right panel ends */
+
