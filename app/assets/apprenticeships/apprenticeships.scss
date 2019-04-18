@@ -10,8 +10,22 @@
 @import "govuk-frontend/overrides/all";
 
 
-
-
+/* footer at foot starts */
+/*#wrapper{//around all body content
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+}
+#main-footer{
+  overflow:hidden;
+}
+body > div,
+body > div > div.govuk-width-container,
+main {
+  flex-grow:1;
+}*/
+/* footer at foot ends */
 
 .ccs-at-results-filters {
 

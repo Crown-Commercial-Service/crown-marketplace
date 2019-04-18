@@ -471,6 +471,12 @@ en:
           heading: 'Use this service to:'
           item_1: produce a list of Crown Commercial Service approved management consultants based on your requirements
           item_2: adhere to the public procurement procedures
+    html:
+      select_services:
+        heading: Select the business consultancy services you need
+        none_selected: None selected
+        remove_all: Remove all
+        services_selected: services selected
     journey:
       choose_expenses:
         answer_expenses_not_paid: We will not pay expenses
