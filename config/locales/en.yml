@@ -18,15 +18,15 @@ en:
         apprenticeships/journey/find_apprentices:
           attributes:
             training_course:
-              inclusion: Error message for Darren to change
+              inclusion: Please select yes or no
         apprenticeships/journey/find_apprentices2:
           attributes:
             das:
-              inclusion: Error message for Darren to change
+              inclusion: Please select yes or no
         apprenticeships/journey/find_apprentices4:
           attributes:
             rating:
-              too_short: Error message for Darren to change
+              too_short: Please select a checkbox
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -126,28 +126,15 @@ en:
             postcode:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
-    home:
-      download_provider:
-        button_label: Start new search
-        download_training_provider_list_link: Download supplier shortlist
-        lead_text: You can now download the training provider list and complete this procurement offline via a further competition
-        page_title: Download the training provider list
-        print_this_page: Print this page
-        the_following_documents_text: The following documents may also be of help
-        the_spreadsheet_text: The spreadsheet includes the selections you made, for your records and audit trail.
-        title: Download the training provider list
-        warning_text: Please be aware that appointed suppliers are constantly changing. Therefore please download this list of providers and use it immediately. Any list providers older than 2 working days will be considered to have expired.
-        warning_title: Warning
+    journey:
       find_apprentices:
         find_1_legend: Do you know the apprenticeship standard that you would like training for?
-        page_title: Which training course
       find_apprentices2:
         find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account?
-        page_title: Do you have a DAS account
       find_apprentices3:
         outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
+
         outline_your_training_hint: Briefly outline your training requirements
-        page_title: Outline your training requirements
       find_apprentices4:
         browse_tab_label: Browse
         find_apprenticeship_std: Find an apprenticeship standard
@@ -160,6 +147,26 @@ en:
         page_title: Apprenticeship training course summary
         provider_information_title: Summary of this apprenticeship course
         title_caption: Apprenticeship training course
+      understanding:
+        back_to_start: Back to start
+        body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
+        body_text_02_html: When you know the apprenticeship Standard you need, you can continue using this service.
+        lead_text: Before using this service, it's important to understand which apprenticeship standard you need.
+        page_title: Understanding what to buy
+        title: Understanding what to buy
+    home:
+      download_provider:
+        button_label: Start new search
+        download_training_provider_list_link: Download supplier shortlist
+        lead_text: You can now download the training provider list and complete this procurement offline via a further competition
+        page_title: Download the training provider list
+        print_this_page: Print this page
+        the_following_documents_text: The following documents may also be of help
+        the_spreadsheet_text: The spreadsheet includes the selections you made, for your records and audit trail.
+        title: Download the training provider list
+        warning_text: Please be aware that appointed suppliers are constantly changing. Therefore please download this list of providers and use it immediately. Any list providers older than 2 working days will be considered to have expired.
+        warning_title: Warning
+        page_title: Do you have a DAS account
       index:
         apprenticeships_link: Find apprenticeship training providers
         before_you_start: Before you start
