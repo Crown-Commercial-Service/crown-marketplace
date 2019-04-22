@@ -3,18 +3,6 @@ en:
   activemodel:
     errors:
       models:
-        facilities_management/journey/supplier_region:
-          attributes:
-            region_codes:
-              too_short: Select at least one region
-        facilities_management/journey/value_band:
-          attributes:
-            value_band:
-              inclusion: Select a value band to see a list of suppliers
-        legal_services/journey/choose_organisation_type:
-          attributes:
-            central_government:
-              inclusion: Select yes if you work for central government
         apprenticeships/journey/find_apprentices:
           attributes:
             training_course:
@@ -27,6 +15,18 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
+        facilities_management/journey/supplier_region:
+          attributes:
+            region_codes:
+              too_short: Select at least one region
+        facilities_management/journey/value_band:
+          attributes:
+            value_band:
+              inclusion: Select a value band to see a list of suppliers
+        legal_services/journey/choose_organisation_type:
+          attributes:
+            central_government:
+              inclusion: Select yes if you work for central government
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -126,47 +126,18 @@ en:
             postcode:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
-    journey:
-      find_apprentices:
-        find_1_legend: Do you know the apprenticeship standard that you would like training for?
-      find_apprentices2:
-        find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account?
-      find_apprentices3:
-        outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
-
-        outline_your_training_hint: Briefly outline your training requirements
-      find_apprentices4:
-        browse_tab_label: Browse
-        find_apprenticeship_std: Find an apprenticeship standard
-        find_apprenticeship_tab_title: Search and browse tabs
-        page_title: Find an apprenticeship standard
-        search_tab_label: Search
-        title_browse_by_route: Browse by route
-      find_apprentices5:
-        button_label: Add requirements and find training providers
-        page_title: Apprenticeship training course summary
-        provider_information_title: Summary of this apprenticeship course
-        title_caption: Apprenticeship training course
-      understanding:
-        back_to_start: Back to start
-        body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
-        body_text_02_html: When you know the apprenticeship Standard you need, you can continue using this service.
-        lead_text: Before using this service, it's important to understand which apprenticeship standard you need.
-        page_title: Understanding what to buy
-        title: Understanding what to buy
     home:
       download_provider:
         button_label: Start new search
         download_training_provider_list_link: Download supplier shortlist
         lead_text: You can now download the training provider list and complete this procurement offline via a further competition
-        page_title: Download the training provider list
+        page_title: Do you have a DAS account
         print_this_page: Print this page
         the_following_documents_text: The following documents may also be of help
         the_spreadsheet_text: The spreadsheet includes the selections you made, for your records and audit trail.
         title: Download the training provider list
         warning_text: Please be aware that appointed suppliers are constantly changing. Therefore please download this list of providers and use it immediately. Any list providers older than 2 working days will be considered to have expired.
         warning_title: Warning
-        page_title: Do you have a DAS account
       index:
         apprenticeships_link: Find apprenticeship training providers
         before_you_start: Before you start
@@ -310,6 +281,33 @@ en:
         website_title: Website
       training_information:
         page_title: Training information
+      understanding:
+        back_to_start: Back to start
+        body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
+        body_text_02_html: When you know the apprenticeship Standard you need, you can continue using this service.
+        lead_text: Before using this service, it's important to understand which apprenticeship standard you need.
+        page_title: Understanding what to buy
+        title: Understanding what to buy
+    journey:
+      find_apprentices:
+        find_1_legend: Do you know the apprenticeship standard that you would like training for?
+      find_apprentices2:
+        find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account?
+      find_apprentices3:
+        outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
+        outline_your_training_hint: Briefly outline your training requirements
+      find_apprentices4:
+        browse_tab_label: Browse
+        find_apprenticeship_std: Find an apprenticeship standard
+        find_apprenticeship_tab_title: Search and browse tabs
+        page_title: Find an apprenticeship standard
+        search_tab_label: Search
+        title_browse_by_route: Browse by route
+      find_apprentices5:
+        button_label: Add requirements and find training providers
+        page_title: Apprenticeship training course summary
+        provider_information_title: Summary of this apprenticeship course
+        title_caption: Apprenticeship training course
       understanding:
         back_to_start: Back to start
         body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
