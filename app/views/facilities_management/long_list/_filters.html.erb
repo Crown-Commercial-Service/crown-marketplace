@@ -16,9 +16,9 @@
       <div id="fm-region-check-boxes" class="govuk-checkboxes"></div>
     </div>
 
-    <%= @posted_locations.first %>
-    <% @posted_locations.each do |x| %>
-    <%= x %>
+
+    <% @subregions.each do |place| %>
+    <%= place %>
     <% end %>
 
   </div>
@@ -35,8 +35,8 @@
     </div>
   </div>
 
-  <% @posted_services.each do |x| %>
-  <%= x %>
+  <% @selected_services.each do | service | %>
+  <%= service.inspect %>
   <% end %>
 
 </div>
