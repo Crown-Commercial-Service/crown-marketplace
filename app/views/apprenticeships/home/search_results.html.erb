@@ -17,7 +17,7 @@
 
   <!-- ID #ccs-at-results-filters required -->
   <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters">
-    <%= form_tag apprenticeships_search_path, method: :get, id: 'search-results-form' do %><!-- form inside section element-->
+    <%= form_tag apprenticeships_search_path, method: :get, id: 'search-results-form',  autocomplete: 'off' do %><!-- form inside section element-->
 
       <!-- start Levels filters -->
       <div class="govuk-form-group ccs-at-results-filters__panel">
