@@ -36,7 +36,7 @@ INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_t
 	uom_value varchar NULL,
 	building_id varchar NULL
 );
-DROP fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_id_idx ON public.fm_uom_values USING btree (user_id, service_code, building_id);
+DROP INDEX fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_id_idx ON public.fm_uom_values USING btree (user_id, service_code, building_id);
 '
       db.query query
     end
@@ -47,9 +47,9 @@ end
 namespace :db do
   desc 'add FM static data to the database'
   task static: :environment do
-    p 'Creating UOM Table'
+    p 'Creating UOM table'
     FM.create_uom_table
-    p 'Creating UOM Table values table'
+    p 'Creating UOM values table'
     FM.create_uom_values_table
   end
   desc 'add FM static data to the database'
