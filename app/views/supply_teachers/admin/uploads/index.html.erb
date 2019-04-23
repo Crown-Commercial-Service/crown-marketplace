@@ -8,10 +8,11 @@
       </div>
     <% end %>
     <%= link_to 'New upload', new_supply_teachers_admin_upload_path, class: 'govuk-button'  %>
-    <hr class="govuk-section-break govuk-section-break--xl">
-    <% @uploads.each do |upload| %>
-      <%= render 'upload', upload: upload %>
-      <hr class="govuk-section-break govuk-section-break--xl">
-    <% end %>
+    <hr class="govuk-section-break govuk-section-break--m">
+    <div class="govuk-accordion" data-module="accordion" id="accordion-with-summary-sections">
+      <% @uploads.each do |upload| %>
+        <%= render 'upload', upload: upload %>
+      <% end %>
+    </div>
   </div>
 </div>
