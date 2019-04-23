@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
   create_table "facilities_management_buildings", id: false, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.index ["user_id"], name: "facilities_management_buildings_user_id_idx"
   end
 
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
