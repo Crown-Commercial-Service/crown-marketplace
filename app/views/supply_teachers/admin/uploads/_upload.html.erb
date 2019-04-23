@@ -3,7 +3,7 @@
   <div class="govuk-accordion__section-header">
     <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
-          Upload session #<%= upload.id %>
+          #<%= upload.id %> Upload session (<%= upload.created_at.strftime('%m/%d/%Y %H:%M') %>)
         </span>
     </h2>
     <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-1">
