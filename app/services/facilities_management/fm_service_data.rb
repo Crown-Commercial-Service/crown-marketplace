@@ -35,7 +35,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
       code = service['code']
 
       # query for a uom description etc based on the service code
-      description = service['description']
+      description = service['name']
       query = "select fuom.title_text, fuom.example_text, fuom.unit_text from fm_units_of_measurement fuom where '" + code + "' in (select(unnest(service_usage)));"
       result_b = ActiveRecord::Base.connection.execute(query)
 
