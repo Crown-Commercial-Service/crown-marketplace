@@ -41,26 +41,26 @@ module SupplyTeachers
       end
 
       def cleanup_input_files
-        if current_accredited_suppliers.file.present? && previous_current_accredited_suppliers = self.class.previous_uploaded_file(:current_accredited_suppliers).file
-          FileUtils.cp(previous_current_accredited_suppliers.path, './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx')
+        if current_accredited_suppliers.file.present? && self.class.previous_uploaded_file(:current_accredited_suppliers).try(:file).present?
+          FileUtils.cp(self.class.previous_uploaded_file(:current_accredited_suppliers).file.path, './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx')
         end
-        if geographical_data_all_suppliers.file.present? && previous_geographical_data_all_suppliers = self.class.previous_uploaded_file(:geographical_data_all_suppliers).file
-          FileUtils.cp(previous_geographical_data_all_suppliers.path, './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx')
+        if geographical_data_all_suppliers.file.present? && self.class.previous_uploaded_file(:geographical_data_all_suppliers).try(:file).present?
+          FileUtils.cp(self.class.previous_uploaded_file(:geographical_data_all_suppliers).file.path, './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx')
         end
-        if lot_1_and_lot_2_comparisons.file.present? && previous_lot_1_and_lot_2_comparisons = self.class.previous_uploaded_file(:lot_1_and_lot_2_comparisons).file
-          FileUtils.cp(previous_lot_1_and_lot_2_comparisons.path, './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx')
+        if lot_1_and_lot_2_comparisons.file.present? && self.class.previous_uploaded_file(:lot_1_and_lot_2_comparisons).try(:file).present?
+          FileUtils.cp(self.class.previous_uploaded_file(:lot_1_and_lot_2_comparisons).file.path, './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx')
         end
-        if master_vendor_contacts.file.present? && previous_master_vendor_contacts = self.class.previous_uploaded_file(:master_vendor_contacts).file
-          FileUtils.cp(previous_master_vendor_contacts.path, './lib/tasks/supply_teachers/input/master_vendor_contacts.csv')
+        if master_vendor_contacts.file.present? && self.class.previous_uploaded_file(:master_vendor_contacts).try(:file).present?
+          FileUtils.cp(self.class.previous_uploaded_file(:master_vendor_contacts).file.path, './lib/tasks/supply_teachers/input/master_vendor_contacts.csv')
         end
-        if neutral_vendor_contacts.file.present? && previous_neutral_vendor_contacts = self.class.previous_uploaded_file(:neutral_vendor_contacts).file
-          FileUtils.cp(previous_neutral_vendor_contacts.path, './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv')
+        if neutral_vendor_contacts.file.present? && self.class.previous_uploaded_file(:neutral_vendor_contacts).try(:file).present?
+          FileUtils.cp(self.class.previous_uploaded_file(:neutral_vendor_contacts).file.path, './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv')
         end
-        if pricing_for_tool.file.present? && previous_pricing_for_tool = self.class.previous_uploaded_file(:pricing_for_tool).file
-          FileUtils.cp(previous_pricing_for_tool.path, './lib/tasks/supply_teachers/input/pricing for tool.xlsx')
+        if pricing_for_tool.file.present? &&  self.class.previous_uploaded_file(:pricing_for_tool).try(:file).present?
+          FileUtils.cp(self.class.previous_uploaded_file(:pricing_for_tool).file.path, './lib/tasks/supply_teachers/input/pricing for tool.xlsx')
         end
-        if supplier_lookup.file.present? && previous_supplier_lookup = self.class.previous_uploaded_file(:supplier_lookup).file
-          FileUtils.cp(previous_supplier_lookup.path, './lib/tasks/supply_teachers/input/supplier_lookup.csv')
+        if supplier_lookup.file.present? && self.class.previous_uploaded_file(:supplier_lookup).try(:file).present?
+          FileUtils.cp(self.class.previous_uploaded_file(:supplier_lookup).file.path, './lib/tasks/supply_teachers/input/supplier_lookup.csv')
         end
       end
 
