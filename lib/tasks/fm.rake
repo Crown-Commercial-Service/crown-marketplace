@@ -27,12 +27,30 @@ INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_t
   rescue PG::Error => e
     puts e.message
   end
+
+  def self.create_uom_values_table
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      query = 'CREATE TABLE IF NOT EXISTS public.fm_uom_values (
+	user_id varchar NULL,
+	service_code varchar NULL,
+	uom_value varchar NULL,
+	building_id varchar NULL
+);
+DROP INDEX fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_id_idx ON public.fm_uom_values USING btree (user_id, service_code, building_id);
+'
+      db.query query
+    end
+  rescue PG::Error => e
+    puts e.message
+  end
 end
 namespace :db do
   desc 'add FM static data to the database'
   task static: :environment do
-    p 'Creating UOM Table'
+    p 'Creating UOM table'
     FM.create_uom_table
+    p 'Creating UOM values table'
+    FM.create_uom_values_table
   end
   desc 'add FM static data to the database'
   task setup: :static do
