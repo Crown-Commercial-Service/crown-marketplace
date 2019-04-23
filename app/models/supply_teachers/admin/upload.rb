@@ -64,6 +64,14 @@ module SupplyTeachers
         end
       end
 
+      def files_count
+        count = 0
+        [current_accredited_suppliers, geographical_data_all_suppliers, lot_1_and_lot_2_comparisons, master_vendor_contacts, neutral_vendor_contacts, pricing_for_tool, supplier_lookup].each do |uploaded_file|
+          count += 1 if uploaded_file.file.present?
+        end
+        count
+      end
+
       def self.previous_uploaded_file(attr_name)
         previous_uploaded_file_object(attr_name).try(:send, attr_name)
       end
