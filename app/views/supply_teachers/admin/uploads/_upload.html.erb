@@ -1,62 +1,79 @@
-<table class="govuk-table">
-  <caption class="govuk-table__caption">Upload session #<%= upload.id %></caption>
-  <tbody class="govuk-table__body">
-  <tr class="govuk-table__row">
-    <th class="govuk-table__header" scope="row">State</th>
-    <td class="govuk-table__cell"><%= upload.aasm_state %></td>
-  </tr>
-  <% if upload.current_accredited_suppliers.file.present? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Current accredited suppliers</th>
-      <td class="govuk-table__cell"><%= link_to upload.current_accredited_suppliers.file.filename, upload.current_accredited_suppliers_url %></td>
-    </tr>
-  <% end %>
-  <% if upload.geographical_data_all_suppliers.file.present? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Geographical data all suppliers</th>
-      <td class="govuk-table__cell"><%= link_to upload.geographical_data_all_suppliers.file.filename, upload.geographical_data_all_suppliers_url %></td>
-    </tr>
-  <% end %>
-  <% if upload.lot_1_and_lot_2_comparisons.file.present? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Lot 1 and Lot 2 comparisons</th>
-      <td class="govuk-table__cell"><%= link_to upload.lot_1_and_lot_2_comparisons.file.filename, upload.lot_1_and_lot_2_comparisons_url %></td>
-    </tr>
-  <% end %>
-  <% if upload.master_vendor_contacts.file.present? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Master vendor contacts</th>
-      <td class="govuk-table__cell"><%= link_to upload.master_vendor_contacts.file.filename, upload.master_vendor_contacts_url %></td>
-    </tr>
-  <% end %>
-  <% if upload.neutral_vendor_contacts.file.present? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Neutral vendor contacts</th>
-      <td class="govuk-table__cell"><%= link_to upload.neutral_vendor_contacts.file.filename, upload.neutral_vendor_contacts_url %></td>
-    </tr>
-  <% end %>
-  <% if upload.pricing_for_tool.file.present? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Pricing for tool</th>
-      <td class="govuk-table__cell"><%= link_to upload.pricing_for_tool.file.filename, upload.pricing_for_tool_url %></td>
-    </tr>
-  <% end %>
-  <% if upload.supplier_lookup.file.present? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Supplier lookup</th>
-      <td class="govuk-table__cell"><%= link_to upload.supplier_lookup.file.filename, upload.supplier_lookup_url %></td>
-    </tr>
-  <% end %>
-  <% if upload.review? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Actions</th>
-      <td class="govuk-table__cell">
 
-        <%= link_to "Approve", supply_teachers_admin_upload_approve_path(upload), class: 'govuk-button' %>
-        <%= link_to "Reject", supply_teachers_admin_upload_reject_path(upload), class: 'govuk-button' %>
+<div class="govuk-accordion__section ">
+  <div class="govuk-accordion__section-header">
+    <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+          Upload session #<%= upload.id %>
+        </span>
+    </h2>
+    <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-1">
+      <p class="govuk-body">
+        <span><strong>State</strong>: <%= upload.aasm_state %></span>
+        <span><strong>Files</strong>: <%= upload.files_count %></span>
+      </p>
+    </div>
+  </div>
+  <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
 
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+      <% if upload.current_accredited_suppliers.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Current accredited suppliers</th>
+          <td class="govuk-table__cell"><%= link_to upload.current_accredited_suppliers.file.filename, upload.current_accredited_suppliers_url %></td>
+        </tr>
+      <% end %>
+      <% if upload.geographical_data_all_suppliers.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Geographical data all suppliers</th>
+          <td class="govuk-table__cell"><%= link_to upload.geographical_data_all_suppliers.file.filename, upload.geographical_data_all_suppliers_url %></td>
+        </tr>
+      <% end %>
+      <% if upload.lot_1_and_lot_2_comparisons.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Lot 1 and Lot 2 comparisons</th>
+          <td class="govuk-table__cell"><%= link_to upload.lot_1_and_lot_2_comparisons.file.filename, upload.lot_1_and_lot_2_comparisons_url %></td>
+        </tr>
+      <% end %>
+      <% if upload.master_vendor_contacts.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Master vendor contacts</th>
+          <td class="govuk-table__cell"><%= link_to upload.master_vendor_contacts.file.filename, upload.master_vendor_contacts_url %></td>
+        </tr>
+      <% end %>
+      <% if upload.neutral_vendor_contacts.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Neutral vendor contacts</th>
+          <td class="govuk-table__cell"><%= link_to upload.neutral_vendor_contacts.file.filename, upload.neutral_vendor_contacts_url %></td>
+        </tr>
+      <% end %>
+      <% if upload.pricing_for_tool.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Pricing for tool</th>
+          <td class="govuk-table__cell"><%= link_to upload.pricing_for_tool.file.filename, upload.pricing_for_tool_url %></td>
+        </tr>
+      <% end %>
+      <% if upload.supplier_lookup.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Supplier lookup</th>
+          <td class="govuk-table__cell"><%= link_to upload.supplier_lookup.file.filename, upload.supplier_lookup_url %></td>
+        </tr>
+      <% end %>
+      <% if upload.review? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Actions</th>
+          <td class="govuk-table__cell">
+
+            <%= link_to "Approve", supply_teachers_admin_upload_approve_path(upload), class: 'govuk-button' %>
+            <%= link_to "Reject", supply_teachers_admin_upload_reject_path(upload), class: 'govuk-button' %>
+
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <hr class="govuk-section-break govuk-section-break--m">
+  </div>
+</div>
+
