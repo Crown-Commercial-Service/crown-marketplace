@@ -492,6 +492,7 @@ en:
       select_location:
         heading: Where do you want the consultants to work?
         none_selected: None selected
+        remove_all: Remove all
         services_selected: regions selected
         sub_txt: Suppliers have said where they'll provide consultants.
       select_lot:
