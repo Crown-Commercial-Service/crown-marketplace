@@ -2,7 +2,6 @@
 * filename: location.js
 * Description: Click handlers for the select services page
 * */
-
 $(() => {
 
     /!* govuk-accordion__controls event handlers *!/
@@ -209,7 +208,7 @@ $(() => {
             /* save services with building information */
             pageUtils.toggleInlineErrorMessage(false);
             currentBuilding['services'] = selectedServicesForThisBuilding;
-            let url = '/facilities-management/buildings/units-of-measurement?building_id=' + currentBuilding['id'];
+            let url = ('/facilities-management/buildings/units-of-measurement?building_id=' + escape(currentBuilding['id']));
             fm.services.updateBuilding(currentBuilding, true, url);
         } else {
             /* show error message */

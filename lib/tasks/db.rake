@@ -88,7 +88,8 @@ module CCS
   def self.facilities_management_buildings
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "create table if not exists public.facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
-       DROP INDEX IF EXISTS buildings_idx; CREATE INDEX IF NOT EXISTS buildings_idx ON public.facilities_management_buildings USING gin (building_json jsonb_path_ops);"
+       DROP INDEX IF EXISTS idx_buildings_service; CREATE INDEX IF NOT EXISTS idx_buildings_service ON facilities_management_buildings USING GIN ((building_json -> 'services'));
+       DROP INDEX IF EXISTS idx_buildings_user_id; CREATE INDEX idx_buildings_user_id ON public.facilities_management_buildings USING btree (user_id);"
       db.query query
     end
   rescue PG::Error => e
