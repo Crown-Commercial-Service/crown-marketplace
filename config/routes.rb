@@ -88,6 +88,10 @@ Rails.application.routes.draw do
     get '/understanding', to: 'home#understanding'
     get '/training_details', to: 'home#training_details'
     get '/download_provider', to: 'home#download_provider'
+    resources :suppliers, only: %i[index show]
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
