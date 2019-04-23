@@ -1,25 +1,6 @@
 require 'json'
 require 'base64'
 class FMBuildingData
-  def initialize
-    create_facilities_management_buildings_table
-  end
-
-  def create_facilities_management_buildings_table
-    query = 'CREATE TABLE if not exists public.facilities_management_buildings
-            (
-                user_id character varying COLLATE pg_catalog."default" NOT NULL,
-                building_json jsonb NOT NULL
-            );'
-    ActiveRecord::Base.connection.execute(query)
-    query = 'CREATE INDEX if not exists facilities_management_buildings_user_id_idx
-    ON public.facilities_management_buildings USING btree
-    (user_id COLLATE pg_catalog."default");'
-    ActiveRecord::Base.connection.execute(query)
-  rescue StandardError => e
-    Rails.logger.warn "Couldn't create the facilities_management_buildings table: #{e}"
-  end
-
   def save_building(email_address, building)
     query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
     ActiveRecord::Base.connection.execute(query)

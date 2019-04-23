@@ -47,9 +47,9 @@ end
 namespace :db do
   desc 'add FM static data to the database'
   task static: :environment do
-    p 'Creating UOM table'
+    p 'Creating FM UOM table'
     FM.create_uom_table
-    p 'Creating UOM values table'
+    p 'Creating FM UOM values table'
     FM.create_uom_values_table
   end
   desc 'add FM static data to the database'

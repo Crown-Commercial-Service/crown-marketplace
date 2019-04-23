@@ -44,27 +44,37 @@ $(() => {
 
     $('#fm-address-line-1').on('change', (e) => {
         let value = e.target.value;
-        address['fm-address-line-1'] = value;
+        if (value) {
+            address['fm-address-line-1'] = value;
+        }
     });
 
     $('#fm-address-line-2').on('change', (e) => {
         let value = e.target.value;
-        address['fm-address-line-2'] = value;
+        if (value) {
+            address['fm-address-line-2'] = value;
+        }
     });
 
     $('#fm-address-town').on('change', (e) => {
         let value = e.target.value;
-        address['fm-address-town'] = value;
+        if (value) {
+            address['fm-address-town'] = value;
+        }
     });
 
     $('#fm-address-county').on('change', (e) => {
         let value = e.target.value;
-        address['fm-address-county'] = value;
+        if (value) {
+            address['fm-address-county'] = value;
+        }
     });
 
     $('#fm-address-postcode').on('change', (e) => {
         let value = e.target.value;
-        address['fm-address-postcode'] = value;
+        if (value) {
+            address['fm-address-postcode'] = value;
+        }
     });
 
     const clearErrors = (() => {
