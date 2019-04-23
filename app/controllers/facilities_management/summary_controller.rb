@@ -8,6 +8,16 @@ module FacilitiesManagement
 
     def index
 
+      respond_to do |format|
+        format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
+        format.html
+        format.xlsx do
+          spreadsheet = Spreadsheet.new(@branches, with_calculations: params[:calculations].present?)
+          filename = "Shortlist of agencies#{params[:calculations].present? ? ' (with calculator)' : ''}"
+          render xlsx: spreadsheet.to_xlsx, filename: filename
+        end
+      end
+
       @select_fm_locations = '/facilities-management/select-locations'
       @select_fm_services = '/facilities-management/select-services'
       @posted_locations = $tsi[session.id, :posted_locations]
@@ -18,13 +28,29 @@ module FacilitiesManagement
 
 
       # Get nuts regions
-      # h = {}
-      # Nuts1Region.all.each { |x| h[x.code] = x.name }
-      # @regions = h
+      h = {}
+      Nuts1Region.all.each { |x| h[x.code] = x.name }
+      @regions = h
       h = {}
       FacilitiesManagement::Region.all.each { |x| h[x.code] = x.name }
       @subregions = h
       @subregions.select! { | k, v | @posted_locations.include? k }
+
+
+      @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
+      # ------------------------------
+
+      puts FacilitiesManagement::Service.all_codes
+      puts FacilitiesManagement::Service.all
+      puts FacilitiesManagement::Service.all.first.code
+      puts FacilitiesManagement::Service.all.first.name
+      puts FacilitiesManagement::Service.all.first.mandatory
+      puts FacilitiesManagement::Service.all.first.mandatory?
+      puts FacilitiesManagement::Service.all.first.work_package
+      puts FacilitiesManagement::Service.all.first.work_package.code
+      puts FacilitiesManagement::Service.all.first.work_package.name
+
+      # ------------------------------
 
       @supplier_count = $tsi[session.id, :supplier_count]
 

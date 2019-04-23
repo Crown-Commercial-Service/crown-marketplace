@@ -24,6 +24,8 @@ List of Suppliers
       <!-- Start of filter section -->
       <div class="govuk-grid-row">
 
+
+
 <!--
         <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print" role="button">Hide filters</a><br>
         <div id="fm-filter-pane" class="govuk-grid-column-one-third">
@@ -48,12 +50,61 @@ List of Suppliers
 
 
       </div>
+
+<!------->
+<p>Choices used to generate your shortlist:</p>
+<p>Filters used</p>
+<p>Regions(<%= @subregions.count %>)</p>
+<% @subregions.each do |key2, value2| %>
+<div>
+  <fieldset aria-describedby="<%= value2 %>">
+    <div id="location-checkboxes">
+      <div>
+        <input class="govuk-checkboxes__input" id="<%= key2 %>" name="<%= key2 %>" locationid="<%= value2 %>" type="checkbox" value="<%= key2 %>">
+        <label id="<%= key2 %>_label" for="<%= key2 %>">
+          <%= value2 %>
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+<% end %>
+<!------->
+<p/>
+<p>Services with pricing (<%= @selected_services.count %>):</p>
+<% @selected_services.each do | service | %>
+<p><strong><%= service.name %></strong></p>
+<p/>
+<span>    </span><%= service.inspect %>
+<p/>
+<span>    </span><%= service.work_package.inspect %>
+<% end %>
+<p/>
+<p>Services without pricing (<%= @selected_services.count %>):</p>
+<% @selected_services.each do | service | %>
+<p><strong><%= service.name %></strong></p>
+<% end %>
+<!------->
+
+<p/>
+<div class="">
+    <p><strong>You can now download the supplier list and requirements document</strong></p>
+
+    <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          This list will be saved and it will be available for you later, for up to 60 days from today.
+        </strong>
+    </div>
+
+    <p class="govuk-body govuk-body-s supplier-record__print-option">
+        <a class="supplier-record__file-download ga-download-calculator" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx&amp;job_type=qt&amp;looking_for=worker&amp;payroll_provider=agency&amp;postcode=sw1p+2ba&amp;term=8_12&amp;worker_type=agency_supplied">Download supplier list and Deliverables Matrix Lite</a>
+    </p>
+</div>
+
       <div class="govuk-grid-row ccs-no-print">
-        <div class="govuk-inset-text">
-          <strong>Next steps</strong><br>
-          <span>We will now ask you questions about your procurement, buildings and costs.</span><br>
-          <span>You can open a competition for suppliers after you have received an assessed value from us.</span>
-        </div>
+
 
         <a id="suppliers-continue-button" href="/facilities-management/standard-contract/questions" class="govuk-button ccs-no-print" role="button">Continue</a><br>
         <a id="suppliers-summary-button" href="/facilities-management/summary" class="govuk-button ccs-no-print" role="button">XX Summary</a><br>
@@ -61,44 +112,16 @@ List of Suppliers
         <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1b" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1b</a><br>
         <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1c" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1c</a><br>
 
+
+
+
+
+
         <p>
           <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" >Print this page</a>
         </p>
       </div>
     </div>
-
-<!------->
-
-<% @regions.each do |key, value| %>
-<div class="govuk-accordion__section ">
-  <div class="govuk-accordion__section-header">
-    <h2 class="govuk-accordion__section-heading">
-      <span class="govuk-accordion__section-button" id="region-<%= key %>"><%= value %></span>
-    </h2>
-  </div>
-  <div id="<% key %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= value %>">
-
-    <% @subregions.each do |key2, value2| %>
-
-      <% if key2.start_with?(key) %>
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset" aria-describedby="<%= value2 %>">
-            <div id="location-checkboxes" class="govuk-checkboxes">
-              <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="<%= key2 %>" name="<%= key2 %>" locationid="<%= value2 %>" type="checkbox" value="<%= key2 %>">
-                <label id="<%= key2 %>_label" class="govuk-label govuk-checkboxes__label" for="<%= key2 %>">
-                  <%= value2 %>
-                </label>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-</div>
-<% end %>
-<!------->
 
     <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print" role="button">Hide filters</a><br>
     <div id="fm-filter-pane" class="govuk-grid-column-one-third">
