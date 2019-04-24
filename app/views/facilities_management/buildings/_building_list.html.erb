@@ -87,10 +87,20 @@
               <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
                 Floors:
               </div>
-              <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
-
-              </div>
             </div>
+
+            <% @uom_values.each do |values| %>
+              <% if building['id'].to_s == values['building_id'].to_s %>
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-one-quarter govuk-!-font-size-16 govuk-!-font-weight-bold">
+                    <%= values['description'] %>:
+                  </div>
+                  <div class="govuk-grid-column-three-quarters govuk-!-font-size-16">
+                    <%= values['uom_value'] %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
           </div>
         </div>
       <% end %>

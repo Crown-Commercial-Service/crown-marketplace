@@ -3,8 +3,8 @@ require 'base64'
 require 'pg'
 class FMServiceData
   def service(email_address, building_id)
-    query = "select trim(replace(subcode, '-', '.')) as code, subname as name from (SELECT json_array_elements(building_json::json->'services') ->>'code' as subcode,
-json_array_elements(building_json::json->'services') ->>'name' as subname
+    query = "select trim(replace(subcode, '-', '.')) as code, subname as name from (SELECT jsonb_array_elements(building_json->'services') ->>'code' as subcode,
+jsonb_array_elements(building_json->'services') ->>'name' as subname
   FROM facilities_management_buildings where facilities_management_buildings.building_json->>'id' = '" + building_id + "' and
 		 facilities_management_buildings.user_id = '" + Base64.encode64(email_address) + "') sub
 where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom_values v where v.building_id = '" + building_id + "' and
@@ -64,6 +64,14 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
     Rails.logger.warn "Couldn't add unit of measurement data: #{e}"
   end
 
+  def uom_values(email_address)
+    query = "select building_id, service_code, uom_value from fm_uom_values where
+	user_id = '" + Base64.encode64(email_address) + "'"
+    ActiveRecord::Base.connection.execute(query)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get unit of measurement values: #{e}"
+  end
+
   # rubocop:disable Metrics/MethodLength
   def services
     JSON.parse('[
@@ -120,6 +128,18 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
            "name": "Management of billable works"
        }
    ]')
+  end
+
+  def work_package_description(code)
+    result = ''
+    workpackages = work_packages
+    workpackages.each do |wp|
+      if wp['code'].to_s == code.to_s
+        result = wp['name']
+      end
+    end
+    p result
+    result
   end
 
   def work_packages
