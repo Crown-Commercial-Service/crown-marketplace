@@ -33,13 +33,14 @@
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
-    <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
+    <div id="wrapper">
 
-    <header id="main-header" class="govuk-header" role="banner" data-module="header">
-      <%= render partial: '/layouts/header-banner' %>
-    </header>
+      <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
 
-    <div>
+      <header id="main-header" class="govuk-header" role="banner" data-module="header">
+        <%= render partial: '/layouts/header-banner' %>
+      </header>
+
       <div class="govuk-width-container">
 
         <%= render partial: '/layouts/beta-banner' %>
@@ -53,11 +54,12 @@
         </main>
 
       </div>
-    </div>
 
-    <footer id="main-footer" class="govuk-footer" role="contentinfo">
-      <%= render partial: '/layouts/footer' %>
-    </footer>
+      <footer id="main-footer" class="govuk-footer" role="contentinfo">
+        <%= render partial: '/layouts/footer' %>
+      </footer>
+
+    </div>
 
     <%= render partial: '/layouts/cookie-banner' %>
 
