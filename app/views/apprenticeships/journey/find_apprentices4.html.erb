@@ -48,23 +48,6 @@
               </h1>  
               <%= text_field_tag :search, params[:search], class: 'govuk-input ccs-search-icon' %>
             </div>
-                <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
-                  <%= browse_routes.each do |rating| %>
-                  <div class="govuk-checkboxes__item">
-                    <%= check_box_tag(
-                              "rating[]",
-                              rating,
-                              false,
-                              class: "govuk-checkboxes__input",
-                              id: "rating_#{rating}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="rating_<%= rating %>">
-                        <%= rating %>
-                      </label>
-                  </div>
-                  <% end %>
-                </div>
-
             
             <%= render 'layouts/button', text: t('common.search')%>
 
@@ -81,7 +64,7 @@
                   </h1>
 
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
-                  <%= browse_routes.each do |rating| %>
+                  <% browse_routes.each do |rating| %>
                   <div class="govuk-checkboxes__item">
                     <%= check_box_tag(
                               "rating[]",
