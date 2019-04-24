@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     get '/suppliers/:id', to: 'suppliers#show', as: 'supplier'
     get '/html/select-lot', to: 'html#select_lot'
     get '/html/select-services', to: 'html#select_services'
+    get '/html/select-location', to: 'html#select_location'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
