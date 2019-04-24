@@ -4,7 +4,7 @@ module ManagementConsultancy
       @back_path = :back
     end
 
-    def select_servicesd
+    def select_services
       @back_path = :back
     end
   end
