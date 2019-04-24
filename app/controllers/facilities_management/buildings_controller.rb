@@ -22,8 +22,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     fm_service_data = FMServiceData.new
     uom_values = fm_service_data.uom_values(current_login_email)
     uom_values.each do |values|
-      desc = fm_service_data.work_package_description(values['service_code'])
-      values['description'] = desc
+      values['description'] = fm_service_data.work_package_description(values['service_code'])
+      values['unit_text'] = fm_service_data.work_package_unit_text(values['service_code'])
       @uom_values.push(values)
     end
     @uom_values
@@ -71,11 +71,11 @@ class FacilitiesManagement::BuildingsController < ApplicationController
 
     if service_data['hasService'] == true
       @service_code = service_data['service_code']
+      @is_lift = @service_code.to_s == 'C.5'
       @service_title = service_data['service_description']
       @uom_title = service_data['title_text']
       @uom_example = service_data['example_text']
       @unit_text = service_data['unit_text']
-      @is_lift = false
     else
       redirect_to('/facilities-management/buildings-list')
     end
