@@ -11,12 +11,22 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def buildings
+    @uom_values = []
+    current_login_email = current_login.email.to_s
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'Error'
     @fm_building_data = FMBuildingData.new
-    @building_count = @fm_building_data.get_count_of_buildings(current_login.email.to_s)
-    @building_data = @fm_building_data.get_building_data(current_login.email.to_s)
+    @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
+    @building_data = @fm_building_data.get_building_data(current_login_email)
+    fm_service_data = FMServiceData.new
+    uom_values = fm_service_data.uom_values(current_login_email)
+    uom_values.each do |values|
+      desc = fm_service_data.work_package_description(values['service_code'])
+      values['description'] = desc
+      @uom_values.push(values)
+    end
+    @uom_values
   end
 
   def new_building
