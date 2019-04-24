@@ -43,16 +43,29 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
   rescue PG::Error => e
     puts e.message
   end
+
+  def self.facilities_management_buildings
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      query = "create table if not exists public.facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
+       DROP INDEX IF EXISTS idx_buildings_service; CREATE INDEX IF NOT EXISTS idx_buildings_service ON facilities_management_buildings USING GIN ((building_json -> 'services'));
+       DROP INDEX IF EXISTS idx_buildings_user_id; CREATE INDEX idx_buildings_user_id ON public.facilities_management_buildings USING btree (user_id);"
+      db.query query
+    end
+  rescue PG::Error => e
+    puts e.message
+  end
 end
 namespace :db do
   desc 'add FM static data to the database'
-  task static: :environment do
+  task fmdata: :environment do
+    p 'Creating FM building database'
+    FM.facilities_management_buildings
     p 'Creating FM UOM table'
     FM.create_uom_table
     p 'Creating FM UOM values table'
     FM.create_uom_values_table
   end
   desc 'add FM static data to the database'
-  task setup: :static do
+  task static: :fmdata do
   end
 end
