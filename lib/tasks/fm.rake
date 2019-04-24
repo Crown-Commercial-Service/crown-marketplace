@@ -47,8 +47,10 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
   def self.facilities_management_buildings
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "create table if not exists public.facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
-       DROP INDEX IF EXISTS idx_buildings_service; CREATE INDEX IF NOT EXISTS idx_buildings_service ON facilities_management_buildings USING GIN ((building_json -> 'services'));
-       DROP INDEX IF EXISTS idx_buildings_user_id; CREATE INDEX idx_buildings_user_id ON public.facilities_management_buildings USING btree (user_id);"
+      DROP INDEX IF EXISTS idx_buildings_gin; CREATE INDEX idx_buildings_gin ON facilities_management_buildings USING GIN (building_json);
+      DROP INDEX IF EXISTS idx_buildings_ginp; CREATE INDEX idx_buildings_ginp ON facilities_management_buildings USING GIN (building_json jsonb_path_ops);
+      DROP INDEX IF EXISTS idx_buildings_service; CREATE INDEX idx_buildings_service ON facilities_management_buildings USING GIN ((building_json -> 'services'));
+      DROP INDEX IF EXISTS idx_buildings_user_id; CREATE INDEX ON public.facilities_management_buildings USING btree (user_id);"
       db.query query
     end
   rescue PG::Error => e
