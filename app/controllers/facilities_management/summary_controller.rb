@@ -1,12 +1,15 @@
 require 'transient_session_info'
 
 module FacilitiesManagement
-  class SummaryController < FrameworkController
-    skip_before_action :verify_authenticity_token, only: :create
+  class SummaryController < ApplicationController
+    skip_before_action :verify_authenticity_token, only: :index
+
     require_permission :none, only: :index
       # :nocov:
 
     def index
+
+      puts 'SummaryController >> index'
 
       respond_to do |format|
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
@@ -71,7 +74,22 @@ module FacilitiesManagement
 
     # @supplier_count = [ @suppliers_lot1a, @suppliers_lot1b, @suppliers_lot1c ].max
     # puts @supplier_count
-    puts 'SummaryController >> index'
+
+    calulate_fm
+    calulate_fm_cleaning
+
   end
 
-end
+  private
+
+  def calulate_fm
+    puts 'calculate_fm'
+
+  end
+
+  def calulate_fm_cleaning
+    puts 'calulate_fm_cleaning'
+
+  end
+
+end # module
