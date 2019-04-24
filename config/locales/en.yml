@@ -502,6 +502,18 @@ en:
         none_selected: None selected
         remove_all: Remove all
         services_selected: services selected
+      supplier_detail:
+        address: Address
+        contact_details: Contact details
+        day_rates: Day rates
+        email: Email
+        max_day_rate: Max day rate
+        person: Person
+        phone_number: Phone number
+        position: Position
+        sub_title: Supplier details
+        title: XYZ Consultants LTD
+        website: Website
     journey:
       choose_expenses:
         answer_expenses_not_paid: We will not pay expenses
