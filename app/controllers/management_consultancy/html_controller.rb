@@ -11,5 +11,9 @@ module ManagementConsultancy
     def select_services
       @back_path = :back
     end
+
+    def supplier_detail
+      @back_path = :back
+    end
   end
 end
