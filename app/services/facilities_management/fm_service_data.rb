@@ -72,6 +72,20 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
     Rails.logger.warn "Couldn't get unit of measurement values: #{e}"
   end
 
+  def save_lift_data(email_address, building_id, json_data)
+    query = "INSERT INTO fm_lifts (user_id, building_id, lift_data) VALUES('" + Base64.encode64(email_address) + "', '" + building_id + "', '" + json_data.to_json + "');"
+    ActiveRecord::Base.connection.execute(query)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't save lift data : #{e}"
+  end
+
+  def get_lift_data(email_address, building_id)
+    query = "select lift_data from fm_lifts where user_id = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "';"
+    ActiveRecord::Base.connection.execute(query)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't retrieve lift data : #{e}"
+  end
+
   # rubocop:disable Metrics/MethodLength
   def services
     JSON.parse('[

@@ -27,6 +27,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
       @uom_values.push(values)
     end
     @uom_values
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController buildings(): #{e}"
   end
 
   def new_building
@@ -47,6 +49,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @fm_building_data.save_building(current_login.email.to_s, @new_building_json)
     j = { 'status': 200 }
     render json: j, status: 200
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
   end
 
   def update_building
@@ -57,6 +61,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @fm_building_data.update_building(current_login.email.to_s, id, @new_building_json)
     j = { 'status': 200 }
     render json: j, status: 200
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController update_building(): #{e}"
   end
 
   def units_of_measurement
@@ -79,6 +85,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     else
       redirect_to('/facilities-management/buildings-list')
     end
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController units_of_measurement(): #{e}"
   end
 
   def save_uom_value
@@ -98,6 +106,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     j = { 'status': 200, 'next': url }
 
     render json: j, status: 200
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController save_uom_value(): #{e}"
   end
 
   def building_type
@@ -107,5 +117,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @inline_summary_error_text = 'Please select an option before continuing'
     @type_list = fm_building_data.building_type_list
     @type_list_descriptions = fm_building_data.building_type_list_descriptions
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController building_type(): #{e}"
   end
 end

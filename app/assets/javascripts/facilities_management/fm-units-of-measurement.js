@@ -2,10 +2,11 @@ $(() => {
 
     let currentBuilding = pageUtils.getCachedData('fm-current-building');
 
-
     const init = (() => {
         $('#fm-building-name').text(currentBuilding.name);
     });
+
+    //init();
 
     $('#fm-unit-of-measurement-submit').click((e) => {
         e.preventDefault();
@@ -14,20 +15,18 @@ $(() => {
         let uom_value = $('#fm-uom-input').val();
         let isLift = $('#fm-is-lift').attr('value');
 
-        if (uom_value && uom_value.length > 0) {
-            pageUtils.toggleInlineErrorMessage(false);
-            if (isLift === true) {
+        if (isLift === "true") {
+            let liftData = pageUtils.getCachedData('fm-lift-data');
 
-                //fm-current-building
+            fm.services.saveLiftData(building_id, liftData)
+        } else {
+            if (uom_value && uom_value.length > 0) {
+                pageUtils.toggleInlineErrorMessage(false);
+                fm.services.save_uom(building_id, service_code, uom_value);
 
             } else {
-                fm.services.save_uom(building_id, service_code, uom_value);
+                pageUtils.toggleInlineErrorMessage(true);
             }
-        } else {
-            pageUtils.toggleInlineErrorMessage(true);
         }
-
-
     });
-
 });
