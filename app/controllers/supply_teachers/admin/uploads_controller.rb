@@ -16,6 +16,7 @@ module SupplyTeachers
         @previous_uploaded_files = ::PreviousUploadedFilesPresenter.new
 
         if @upload.save
+          SupplyTeachers::DataScriptWorker.perform_async(@upload.id)
           redirect_to supply_teachers_admin_uploads_path, notice: 'Upload session successfully created.'
         else
           @upload.cleanup_input_files

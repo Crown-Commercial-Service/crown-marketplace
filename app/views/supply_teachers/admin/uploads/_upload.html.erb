@@ -14,7 +14,9 @@
     </div>
   </div>
   <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
-
+    <% if upload.fail_reason %>
+      <span class="govuk-error-message"><%= upload.fail_reason %></span>
+    <% end %>
     <table class="govuk-table">
       <tbody class="govuk-table__body">
       <% if upload.current_accredited_suppliers.file.present? %>
@@ -59,7 +61,7 @@
           <td class="govuk-table__cell"><%= link_to upload.supplier_lookup.file.filename, upload.supplier_lookup_url %></td>
         </tr>
       <% end %>
-      <% if upload.review? %>
+      <% if upload.in_review? %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header" scope="row">Actions</th>
           <td class="govuk-table__cell">

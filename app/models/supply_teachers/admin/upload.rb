@@ -1,4 +1,3 @@
-require 'rake'
 module SupplyTeachers
   module Admin
     class Upload < ApplicationRecord
@@ -20,22 +19,28 @@ module SupplyTeachers
       validate :script_data, on: :create
 
       aasm do
-        state :review, initial: true
-        state :approved, :rejected, :canceled
+        state :in_progress, initial: true
+        state :in_review, :failed, :approved, :rejected, :canceled
+        event :review do
+          transitions from: :in_progress, to: :in_review
+        end
+        event :fail do
+          transitions from: :in_progress, to: :failed
+        end
         event :approve do
-          transitions from: :review, to: :approved
+          transitions from: :in_review, to: :approved
         end
         event :reject do
           after do
             cleanup_input_files
           end
-          transitions from: :review, to: :rejected
+          transitions from: :in_review, to: :rejected
         end
         event :cancel do
           after do
             cleanup_input_files
           end
-          transitions from: :review, to: :canceled
+          transitions from: :in_review, to: :canceled
         end
 
       end
@@ -86,16 +91,6 @@ module SupplyTeachers
         reject_all_uploads_in_review
         copy_files_to_input_folder
 
-        Rake::Task.clear
-        Rails.application.load_tasks
-        Rake::Task['st:clean'].invoke
-        Rake::Task['st:data'].invoke
-
-        unless File.zero?('./lib/tasks/supply_teachers/output/errors.out')
-          file = File.open('./lib/tasks/supply_teachers/output/errors.out')
-          errors.add(:base, "There is an error with your files: " + file.read)
-        end
-
       rescue StandardError => e
         errors.add(:base, "There is an error with your files. Please try again")
       end
@@ -111,7 +106,7 @@ module SupplyTeachers
       end
 
       def reject_all_uploads_in_review
-        Upload.review.map(&:cancel!)
+        Upload.in_review.map(&:cancel!)
       end
 
     end
