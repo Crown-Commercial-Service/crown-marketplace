@@ -19,6 +19,8 @@ module CcsPatterns
 
     def table_5050; end
 
+    def supplier_detail; end
+
     def errors_find_apprentices; end
 
     def errors_find_apprentices2; end
