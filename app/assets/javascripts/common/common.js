@@ -166,6 +166,34 @@ const fm = {
 
         }),
 
+        saveLiftData: ((building_id, liftData) => {
+
+            let url = '/facilities-management/services/save-lift-data';
+
+            let data = {
+                building_id: building_id,
+                lift_data: liftData
+            };
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    if (textStatus === 'success') {
+                        location.replace(data.next);
+                    }
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+        }),
+
         isDateInFuture: ((day, month, year) => {
             let result = false;
             if (fm.services.isDateValid(day, month, year) === true) {
