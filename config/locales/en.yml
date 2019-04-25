@@ -3,6 +3,18 @@ en:
   activemodel:
     errors:
       models:
+        apprenticeships/journey/find_apprentices:
+          attributes:
+            training_course:
+              inclusion: Please select yes or no
+        apprenticeships/journey/find_apprentices2:
+          attributes:
+            das:
+              inclusion: Please select yes or no
+        apprenticeships/journey/find_apprentices4:
+          attributes:
+            rating:
+              too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -119,35 +131,13 @@ en:
         button_label: Start new search
         download_training_provider_list_link: Download supplier shortlist
         lead_text: You can now download the training provider list and complete this procurement offline via a further competition
-        page_title: Download the training provider list
+        page_title: Do you have a DAS account
         print_this_page: Print this page
         the_following_documents_text: The following documents may also be of help
         the_spreadsheet_text: The spreadsheet includes the selections you made, for your records and audit trail.
         title: Download the training provider list
         warning_text: Please be aware that appointed suppliers are constantly changing. Therefore please download this list of providers and use it immediately. Any list providers older than 2 working days will be considered to have expired.
         warning_title: Warning
-      find_apprentices:
-        find_1_legend: Do you know the apprenticeship standard that you would like training for?
-        page_title: Which training course
-      find_apprentices2:
-        find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account?
-        page_title: Do you have a DAS account
-      find_apprentices3:
-        outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
-        outline_your_training_hint: Briefly outline your training requirements
-        page_title: Outline your training requirements
-      find_apprentices4:
-        browse_tab_label: Browse
-        find_apprenticeship_std: Find an apprenticeship standard
-        find_apprenticeship_tab_title: Search and browse tabs
-        page_title: Find an apprenticeship standard
-        search_tab_label: Search
-        title_browse_by_route: Browse by route
-      find_apprentices5:
-        button_label: Add requirements and find training providers
-        page_title: Apprenticeship training course summary
-        provider_information_title: Summary of this apprenticeship course
-        title_caption: Apprenticeship training course
       index:
         apprenticeships_link: Find apprenticeship training providers
         before_you_start: Before you start
@@ -291,6 +281,33 @@ en:
         website_title: Website
       training_information:
         page_title: Training information
+      understanding:
+        back_to_start: Back to start
+        body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
+        body_text_02_html: When you know the apprenticeship Standard you need, you can continue using this service.
+        lead_text: Before using this service, it's important to understand which apprenticeship standard you need.
+        page_title: Understanding what to buy
+        title: Understanding what to buy
+    journey:
+      find_apprentices:
+        find_1_legend: Do you know the apprenticeship standard that you would like training for?
+      find_apprentices2:
+        find_2_legend: Does your organisation have a Digital Apprenticeship Service (DAS) account?
+      find_apprentices3:
+        outline_your_training: For example, the apprenticeship standard, level and specific requirements from the training provider
+        outline_your_training_hint: Briefly outline your training requirements
+      find_apprentices4:
+        browse_tab_label: Browse
+        find_apprenticeship_std: Find an apprenticeship standard
+        find_apprenticeship_tab_title: Search and browse tabs
+        page_title: Find an apprenticeship standard
+        search_tab_label: Search
+        title_browse_by_route: Browse by route
+      find_apprentices5:
+        button_label: Add requirements and find training providers
+        page_title: Apprenticeship training course summary
+        provider_information_title: Summary of this apprenticeship course
+        title_caption: Apprenticeship training course
       understanding:
         back_to_start: Back to start
         body_text_01_html: The <a href="https://www.instituteforapprenticeships.org/" class="govuk-link">Institue for Apprenticeships (<abbr>IfA</abbr>)</a> has a comprehensive list of apprenticeship standards with information ushc as expected outcomes and the levels the standards can be delivered to.
@@ -471,6 +488,31 @@ en:
           heading: 'Use this service to:'
           item_1: produce a list of Crown Commercial Service approved management consultants based on your requirements
           item_2: adhere to the public procurement procedures
+    html:
+      select_location:
+        heading: Where do you want the consultants to work?
+        none_selected: None selected
+        remove_all: Remove all
+        services_selected: regions selected
+        sub_txt: Suppliers have said where they'll provide consultants.
+      select_lot:
+        heading: Which area of your organisation needs advice?
+      select_services:
+        heading: Select the business consultancy services you need
+        none_selected: None selected
+        remove_all: Remove all
+        services_selected: services selected
+      supplier_detail:
+        address: Address
+        contact_details: Contact details
+        day_rates: Day rates
+        email: Email
+        max_day_rate: Max day rate
+        person: Person
+        phone_number: Phone number
+        position: Position
+        sub_title: Supplier details
+        website: Website
     journey:
       choose_expenses:
         answer_expenses_not_paid: We will not pay expenses
@@ -787,7 +829,7 @@ en:
           further_competition_html: run a further competition to select an agency - there is <a href="%{advice_url}">advice from CCS</a> on how to do this -
           header: What to do next
           more_help: Contact supplyteachers@crowncommercial.gov.uk if you need more help running a further competition.
-          sign_form_html: select an agency and <a href="%{form_url}">sign the full version order form</a> listed in the documents section of the CCS framework as ‘RM3826 Supply Teachers - Order Form Template (Full Version) V1.docx’
+          sign_form_html: select an agency and <a href="%{form_url}">sign the full version order form</a> listed in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Order form template full version v1.docx’
         header: Master vendor managed service providers
         page_title: Master vendor managed service providers
       neutral_vendors:
@@ -795,7 +837,7 @@ en:
         do_next:
           contact_supplier: contact the agency for this worker and for all your future temporary recruitment needs
           header: What to do next
-          sign_form_html: sign the <a href="%{form_url}">full version order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Supply Teachers - Order Form Template (Full Version).docx’)
+          sign_form_html: sign the <a href="%{form_url}">full version order form</a> (also available in the documents section of the <a href="%{framework_url}">CCS framework</a> as ‘RM3826 Order form template full version v1.docx’)
         header: Neutral vendor managed service providers
         mark_up_explanation_html: The mark-up varies for all other workers. Contact the agency to find out the mark-up rate for the type of worker you need.
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).

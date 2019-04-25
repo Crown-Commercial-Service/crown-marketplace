@@ -1,37 +1,19 @@
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-m">Dynamic accordian</h1>
-      <p class="govuk-body">New HTML for dynamic accordian pattern &hellip;</p>
-
-      <p><b>Note</b> Parent IDs: #ccs-dynamic-accordian, #css-list-basket</p>
-      <p><b>Note</b> classes: .ccs-select-all</p>
-      <p>Note each 'aria-labelledby' attribute on each accordian and its corresponding ID in the header.</p>
-    </div>
-  </div>
-
-  <hr style="margin-bottom: 150px;">
-
-
-
-
-<!-- ccs pattern HTML starts below ... -->
 <div id="ccs-dynamic-accordian" class="govuk-grid-row">
   <form action="" method="" autocomplete="off">
 
     <section class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-m">
-        Where are your buildings located?
-        <span class="govuk-caption-m govuk-!-margin-top-6">Choose one or more regions, based on building's location where you require facilities management services.</span>
+        <%= t('.heading') %>
       </h1>
 
       <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
-        <div class="govuk-accordion__section ">
+        <div class="govuk-accordion__section">
           <div class="govuk-accordion__section-header">
             <h2 class="govuk-accordion__section-heading">
               <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-                Accordian one
+                Best practice tools and techniques
               </span>
             </h2>
           </div>
@@ -40,25 +22,19 @@
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
 
-                  <legend>Accordian one (repeat title from button)</legend>
+                  <legend>Best practice tools and techniques</legend>
 
                   <div class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="box1-1" name="box" type="checkbox" value="orange">
                       <label class="govuk-label govuk-checkboxes__label" for="box1-1">
-                        The colour orange
+                        Outsourcing
                       </label>
                     </div>
                     <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="box1-2" name="box" type="checkbox" value="blue">
                       <label class="govuk-label govuk-checkboxes__label" for="box1-2">
-                        Blue colour
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="box1-3" name="box" type="checkbox" value="green">
-                      <label class="govuk-label govuk-checkboxes__label" for="box1-3">
-                        Green is the colour
+                        Shared
                       </label>
                     </div>
 
@@ -76,11 +52,11 @@
 
           </div>
         </div>
-        <div class="govuk-accordion__section ">
+        <div class="govuk-accordion__section">
           <div class="govuk-accordion__section-header">
             <h2 class="govuk-accordion__section-heading">
               <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
-                Second title link for Accordian
+                Business and disaster recovery
               </span>
             </h2>
           </div>
@@ -89,25 +65,13 @@
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
 
-                  <legend>Second title link for Accordian (repeat title from button)</legend>
+                  <legend>Business and disaster recovery</legend>
 
                   <div class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="box2-1" name="box" type="checkbox" value="a">
                       <label class="govuk-label govuk-checkboxes__label" for="box2-1">
-                        The letter A
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="box2-2" name="box" type="checkbox" value="b">
-                      <label class="govuk-label govuk-checkboxes__label" for="box2-2">
-                        B is the letter
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="box2-3" name="box" type="checkbox" value="c">
-                      <label class="govuk-label govuk-checkboxes__label" for="box2-3">
-                        C is the third letter
+                        Corporate planning
                       </label>
                     </div>
                   </div>
@@ -116,11 +80,11 @@
 
           </div>
         </div>
-        <div class="govuk-accordion__section ">
+        <div class="govuk-accordion__section">
           <div class="govuk-accordion__section-header">
             <h2 class="govuk-accordion__section-heading">
               <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
-                Third Accordian link
+                Capability development
               </span>
             </h2>
           </div>
@@ -129,88 +93,71 @@
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
 
-                  <legend>Third Accordian link (repeat title from button)</legend>
+                  <legend>Capability development</legend>
 
                   <div class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="box3-1" name="box" type="checkbox" value="01">
                       <label class="govuk-label govuk-checkboxes__label" for="box3-1">
-                        The number 1
+                        Artificial intelligence
                       </label>
                     </div>
                     <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="box3-2" name="box" type="checkbox" value="02">
                       <label class="govuk-label govuk-checkboxes__label" for="box3-2">
-                        2 is the number
+                        Options analysis
                       </label>
                     </div>
                     <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="box3-3" name="box" type="checkbox" value="03">
                       <label class="govuk-label govuk-checkboxes__label" for="box3-3">
-                        3 is the final number option
+                        Economic analysis
                       </label>
                     </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="box3-4" name="box" type="checkbox" value="04">
+                      <label class="govuk-label govuk-checkboxes__label" for="box3-4">
+                        Requirements specification
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="box3-5" name="box" type="checkbox" value="05">
+                      <label class="govuk-label govuk-checkboxes__label" for="box3-5">
+                        Digital services strategy
+                      </label>
+                    </div>
+
+                    <p class="govuk-body govuk-!-margin-top-4">Or</p>
+
+                    <div class="govuk-checkboxes__item ccs-select-all">
+                      <input class="govuk-checkboxes__input" id="box3-all" name="box1-all" type="checkbox" value=""><!-- no value -->
+                      <label class="govuk-label govuk-checkboxes__label" for="box3-all">
+                        Select all
+                      </label>
+                    </div>
+
                   </div>
                 </fieldset>
               </div>
 
           </div>
         </div>
-        <div class="govuk-accordion__section ">
-          <div class="govuk-accordion__section-header">
-            <h2 class="govuk-accordion__section-heading">
-              <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
-                Fourth link for the Accordian
-              </span>
-            </h2>
-          </div>
-          <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
 
-              <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-
-                  <legend>Fourth link for the Accordian (repeat title from button)</legend>
-
-                  <div class="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="box4-1" name="box" type="checkbox" value="baked">
-                      <label class="govuk-label govuk-checkboxes__label" for="box4-1">
-                        Baked food
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="box4-2" name="box" type="checkbox" value="fried">
-                      <label class="govuk-label govuk-checkboxes__label" for="box4-2">
-                        Food that is fried
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="box4-3" name="box" type="checkbox" value="roasted">
-                      <label class="govuk-label govuk-checkboxes__label" for="box4-3">
-                        Roasted food
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-
-          </div>
-        </div>
 
       </div>
 
-      <button type="submit" class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-8">Continue</button>
+      <%= submit_tag t('common.submit'), class: "govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-8" %><!-- keep this 2nd button -->
 
     </section>
 
     <section class="govuk-grid-column-one-third govuk-!-margin-top-9">
       <div id="css-list-basket">
 
-        <button type="submit" class="govuk-button">Continue</button>
+        <%= submit_tag t('common.submit'), class: "govuk-button" %>
 
         <div>
-          <h3 class="govuk-heading-m" data-txt01="regions selected" data-txt02="None selected"><span></span> <span></span></h3>
-          <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll">Remove all</a>
+          <h3 class="govuk-heading-m" data-txt01="<%= t('.services_selected') %>" data-txt02="<%= t('.none_selected') %>"><span></span> <span></span></h3>
+          <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll"><%= t('.remove_all') %></a>
           <ul class="govuk-list"></ul>
         </div>
 

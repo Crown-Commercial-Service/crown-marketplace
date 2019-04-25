@@ -1,0 +1,21 @@
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('apprenticeships.page_section') %>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
+
+      <p class="govuk-heading-m govuk-!-padding-bottom-4"><%= t('.lead_text') %></p>
+
+      <p class="govuk-body"><%= t('.body_text_01_html') %></p>
+
+      <p class="govuk-body"><%= t('.body_text_02_html') %></p>
+
+      <%= link_to t('.back_to_start'), '/apprenticeships/' , role: 'button', class: 'govuk-button govuk-!-margin-top-4' %>
+
+        <p style="width: 100%; text-align: right; margin: 30px 0 20px 0;"><small><i><a href="/apprenticeships/signup">Temporary link to next page > (remove)</a></i></small></p>
+
+    </div>
+  </div>

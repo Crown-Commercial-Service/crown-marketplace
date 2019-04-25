@@ -1,3 +1,10 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+
 <%= content_for :page_title, t('.page_title') %>
 <%= content_for :page_section, t('apprenticeships.page_section') %>
 
@@ -41,6 +48,23 @@
               </h1>  
               <%= text_field_tag :search, params[:search], class: 'govuk-input ccs-search-icon' %>
             </div>
+                <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
+                  <%= browse_routes.each do |rating| %>
+                  <div class="govuk-checkboxes__item">
+                    <%= check_box_tag(
+                              "rating[]",
+                              rating,
+                              false,
+                              class: "govuk-checkboxes__input",
+                              id: "rating_#{rating}"
+                          ) %>
+                      <label class="govuk-label govuk-checkboxes__label" for="rating_<%= rating %>">
+                        <%= rating %>
+                      </label>
+                  </div>
+                  <% end %>
+                </div>
+
             
             <%= render 'layouts/button', text: t('common.search')%>
 
@@ -52,15 +76,12 @@
 
             <div class="govuk-form-group">
               <fieldset class="govuk-fieldset">
-
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
                   <h1 class="govuk-fieldset__heading">
                     <%= t('.title_browse_by_route') %>
                   </h1>
-                </legend>
 
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
-                  <% browse_routes.each do |rating| %>
+                  <%= browse_routes.each do |rating| %>
                   <div class="govuk-checkboxes__item">
                     <%= check_box_tag(
                               "rating[]",
@@ -83,11 +104,10 @@
 
           <% end %>
         </section>
-
       </div>
-
-
-
     </div>
   </div>
-  
+ <% end %>
+ <% end %>
+ <%= submit_tag t('common.submit'), class: "govuk-button" %>
+ <% end %>
