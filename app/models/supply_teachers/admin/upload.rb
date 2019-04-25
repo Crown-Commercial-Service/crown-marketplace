@@ -20,29 +20,31 @@ module SupplyTeachers
 
       aasm do
         state :in_progress, initial: true
-        state :in_review, :failed, :approved, :rejected, :canceled
+        state :in_review, :failed, :approved, :rejected, :canceled, :uploading
         event :review do
           transitions from: :in_progress, to: :in_review
         end
         event :fail do
-          transitions from: :in_progress, to: :failed
+          after :cleanup_input_files
+          transitions from: %i[in_progress uploading], to: :failed
+        end
+        event :upload do
+          after do
+            SupplyTeachers::DataUploadWorker.perform_async(id)
+          end
+          transitions from: :in_review, to: :uploading
         end
         event :approve do
-          transitions from: :in_review, to: :approved
+          transitions from: :uploading, to: :approved
         end
         event :reject do
-          after do
-            cleanup_input_files
-          end
+          after :cleanup_input_files
           transitions from: :in_review, to: :rejected
         end
         event :cancel do
-          after do
-            cleanup_input_files
-          end
+          after :cleanup_input_files
           transitions from: :in_review, to: :canceled
         end
-
       end
 
       def cleanup_input_files
