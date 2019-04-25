@@ -3,7 +3,7 @@ require 'base64'
 class FMBuildingData
   def save_building(email_address, building)
     query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
-    ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building: #{e}"
   end
@@ -11,7 +11,7 @@ class FMBuildingData
   def update_building(email_address, id, building)
     query = "update facilities_management_buildings set building_json = '" + building.gsub("'", "''") + "'" \
             " where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
-    ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't update building: #{e}"
   end
@@ -19,7 +19,7 @@ class FMBuildingData
   def get_building_data(email_address)
     ActiveRecord::Base.include_root_in_json = false
     query = "select building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
-    result = ActiveRecord::Base.connection.execute(query)
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(result.to_json)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
@@ -27,7 +27,7 @@ class FMBuildingData
 
   def get_count_of_buildings(email_address)
     query = "select count(*) as record_count from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
-    result = ActiveRecord::Base.connection.execute(query)
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     result[0]['record_count']
   rescue StandardError => e
     Rails.logger.warn "Couldn't get count of buildings: #{e}"
