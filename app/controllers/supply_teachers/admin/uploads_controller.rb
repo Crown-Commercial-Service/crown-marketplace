@@ -17,7 +17,7 @@ module SupplyTeachers
 
         if @upload.save
           SupplyTeachers::DataScriptWorker.perform_async(@upload.id)
-          redirect_to supply_teachers_admin_uploads_path, notice: 'Upload session successfully created.'
+          redirect_to supply_teachers_admin_uploads_path, notice: 'Upload session successfully created and is now in progress.'
         else
           @upload.cleanup_input_files
           render :new
@@ -26,20 +26,8 @@ module SupplyTeachers
 
       def approve
         upload = Upload.find(params[:upload_id])
-        suppliers = JSON.parse(File.read(data_file))
-
-        SupplyTeachers::Upload.upload!(suppliers)
-
-        upload.approve!
-
-        redirect_to supply_teachers_admin_uploads_path, notice: 'Database has now been updated.'
-      rescue ActiveRecord::RecordInvalid => e
-        summary = {
-          record: e.record,
-          record_class: e.record.class.to_s,
-          errors: e.record.errors
-        }
-        render show: summary, status: :unprocessable_entity
+        upload.upload!
+        redirect_to supply_teachers_admin_uploads_path, notice: 'Database upload is now in progress.'
       end
 
       def reject
@@ -54,13 +42,6 @@ module SupplyTeachers
         params.require(:supply_teachers_admin_upload).permit(:current_accredited_suppliers, :geographical_data_all_suppliers, :lot_1_and_lot_2_comparisons, :master_vendor_contacts, :neutral_vendor_contacts, :pricing_for_tool, :supplier_lookup)
       end
 
-      def data_file
-        if Rails.env.production?
-          './lib/tasks/supply_teachers/output/data.json'
-        else
-          './lib/tasks/supply_teachers/output/anonymous.json'
-        end
-      end
     end
   end
 end
