@@ -10,12 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_12_144942) do
+ActiveRecord::Schema.define(version: 2019_04_25_140554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
+
+  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.jsonb "building_json", null: false
+    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
+    t.index ["building_json"], name: "buildings_idx", opclass: :jsonb_path_ops, using: :gin
+    t.index ["user_id"], name: "idx_buildings_user_id"
+  end
 
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_supplier_id", null: false
@@ -62,6 +70,24 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.string "code", limit: 255
     t.string "name", limit: 255
     t.index ["code"], name: "fm_regions_code_key", unique: true
+  end
+
+  create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.jsonb "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
+    t.index ["data"], name: "idxgin", using: :gin
+    t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
+  end
+
+  create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
+    t.serial "id", null: false
+    t.string "title_text", null: false
+    t.string "example_text"
+    t.string "unit_text"
+    t.string "data_type"
+    t.text "service_usage", array: true
   end
 
   create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -131,6 +157,7 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.string "supplier_lookup"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "fail_reason"
   end
 
   create_table "supply_teachers_branches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
