@@ -43,7 +43,7 @@ module SupplyTeachers
         end
         event :cancel do
           after :cleanup_input_files
-          transitions from: :in_review, to: :canceled
+          transitions from: %i[in_review in_progress], to: :canceled
         end
       end
 
@@ -90,7 +90,7 @@ module SupplyTeachers
       private
 
       def script_data
-        reject_all_uploads_in_review
+        reject_all_uploads_in_review_or_in_progress
         copy_files_to_input_folder
 
       rescue StandardError => e
@@ -107,8 +107,9 @@ module SupplyTeachers
         FileUtils.cp(supplier_lookup.file.path, './lib/tasks/supply_teachers/input/supplier_lookup.csv') if supplier_lookup_changed?
       end
 
-      def reject_all_uploads_in_review
+      def reject_all_uploads_in_review_or_in_progress
         Upload.in_review.map(&:cancel!)
+        Upload.in_progress.map(&:cancel!)
       end
 
     end
