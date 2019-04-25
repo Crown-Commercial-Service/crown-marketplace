@@ -1,109 +1,31 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form action="" method="">
 
-            <div class="govuk-form-group ccs-titles-checkboxes">
-                <fieldset class="govuk-fieldset">
+        <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
-                        <h1 class="govuk-fieldset__heading">
-                            <%= t('.heading') %>XXXXXXXX DOWNLOAD: WIP
-                        </h1>
-                    </legend>
+        <p class="govuk-heading-m govuk-!-margin-bottom-8"><%= t('.lead_text') %></p>
 
-                    <div class="govuk-radios">
+        <p class="govuk-body">
+            <a href="/downloads/example?format=csv" class="supplier-record__file-download" type="<%= t('common.type_csv') %>" download>
+                <%= t('.download_supplier_shortlist') %> <span class="govuk-visually-hidden"><%= t('common.csv_html') %></span>
+            </a>
+        </p>
 
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="advice-01" name="advice" type="radio" value="a-01">
-                            <label class="govuk-label govuk-radios__label" for="advice-01">
-                                Audit (MCF Lot 3)
-                            </label>
+        <p class="govuk-body"><%= t('.the_spreadsheet_text') %></p>
 
-                            <details class="govuk-details">
-                                <summary class="govuk-details__summary">
-                                    <span class="govuk-details__summary-text">
-                                        Audit services
-                                    </span>
-                                </summary>
-                                <div class="govuk-details__text">
-                                    <ul class="govuk-list">
-                                        <li>Accounting advice and risk</li>
-                                        <li>Acquisition finance solutions</li>
-                                        <li>Asset financial management including valuation, sales and disposals</li>
-                                        <li>Business analysis</li>
-                                        <li>Capital fund raising, derivatives and hedging</li>
-                                        <li>Cash management</li>
-                                        <li>Commercial benefits</li>
-                                        <li>Competition policy</li>
-                                        <li>Complex cost benefit studies and analysis</li>
-                                        <li>Corporate restructuring and flotation</li>
-                                    </ul>
-                                </div>
-                            </details>
-                        </div>
+        <h2 class="govuk-heading-m"><%= t('.other_documents') %></h2>
 
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="advice-02" name="advice" type="radio" value="a-02" checked="checked">
-                            <label class="govuk-label govuk-radios__label" for="advice-02">
-                                Finance (MCF Lot 2)
-                            </label>
+        <ul class="govuk-list govuk-!-margin-top-6">
 
-                            <details class="govuk-details">
-                                <summary class="govuk-details__summary">
-                                    <span class="govuk-details__summary-text">
-                                        Finance services
-                                    </span>
-                                </summary>
-                                <div class="govuk-details__text">
-                                    <ul class="govuk-list">
-                                        <li>Business analysis</li>
-                                        <li>Capital fund raising, derivatives and hedging</li>
-                                        <li>Cash management</li>
-                                        <li>Commercial benefits</li>
-                                        <li>Competition policy</li>
-                                        <li>Complex cost benefit studies and analysis</li>
-                                        <li>Corporate restructuring and flotation</li>
-                                        <li>Accounting advice and risk</li>
-                                        <li>Acquisition finance solutions</li>
-                                        <li>Asset financial management including valuation, sales and disposals</li>
-                                    </ul>
-                                </div>
-                            </details>
-                        </div>
+            <li class="govuk-!-margin-bottom-3">
+                <a href="/downloads/example?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                    <%= t('.expression_of_interest_template') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+                </a>
+            </li>
 
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="advice-03" name="advice" type="radio" value="a-03">
-                            <label class="govuk-label govuk-radios__label" for="advice-03">
-                                Health and Community (MCF Lot 5)
-                            </label>
+        </ul>
 
-                            <details class="govuk-details">
-                                <summary class="govuk-details__summary">
-                                    <span class="govuk-details__summary-text">
-                                        Health and community services
-                                    </span>
-                                </summary>
-                                <div class="govuk-details__text">
-                                    <ul class="govuk-list">
-                                        <li>Capital fund raising, derivatives and hedging</li>
-                                        <li>Cash management</li>
-                                        <li>Commercial benefits</li>
-                                        <li>Competition policy</li>
-                                        <li>Complex cost benefit studies and analysis</li>
-                                        <li>Corporate restructuring and flotation</li>
-                                        <li>Business analysis</li>
-                                    </ul>
-                                </div>
-                            </details>
-                        </div>
+       <%= link_to t('.button_start_new_search'), '/management_consultancy/', role: 'button', class: 'govuk-button govuk-!-margin-top-6' %>
 
-                    </div>
-
-                </fieldset>
-            </div>
-
-            <%= submit_tag t('common.submit'), class: "govuk-button" %>
-
-        </form>
     </div>
 </div>
