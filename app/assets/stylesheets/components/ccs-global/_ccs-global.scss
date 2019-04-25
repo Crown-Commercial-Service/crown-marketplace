@@ -674,34 +674,34 @@ table.ccs-at-govuk-table--5050 {
 }
 /* ccs sticky right panel ends */
 
-.ccs-right-panel {
+.ccs-info-panel {
     background-color: govuk-colour("grey-4");
     padding: govuk-spacing(3);
     margin: 0 0 govuk-spacing(7) 0;
 
-    .govuk-grid-column-one-third & {
+    &.ccs-info-panel--pull-up {
         margin-top: -#{govuk-spacing(3)} !important;
     }
-}
 
-dl.ccs-contact-details {
-    dt, dd {
-        font-family: $govuk-font-family;
-        @include govuk-font($size: 19, $weight: normal);
-        width: 100%;
-        display: inline-block;
-        margin: 0;
-    }
-    dt {
-        font-weight: bold;
-        margin-top: govuk-spacing(4);
-
-        &:first-child {
-            margin-top: 0;
+    dl.ccs-contact-details {
+        dt, dd {
+            font-family: $govuk-font-family;
+            @include govuk-font($size: 19, $weight: normal);
+            width: 100%;
+            display: inline-block;
+            margin: 0;
         }
-    }
-    a {
-        overflow-wrap: break-word;
-        word-wrap: break-word;
+        dt {
+            font-weight: bold;
+            margin-top: govuk-spacing(4);
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+        a {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
     }
 }

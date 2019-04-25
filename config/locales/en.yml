@@ -489,9 +489,11 @@ en:
           item_1: produce a list of Crown Commercial Service approved management consultants based on your requirements
           item_2: adhere to the public procurement procedures
     html:
+      download_the_supplier_list:
+        heading: Download the supplier shortlist
       select_location:
         heading: Where do you want the consultants to work?
-        none_selected: None selected
+        no_regions_selected: No regions selected
         remove_all: Remove all
         services_selected: regions selected
         sub_txt: Suppliers have said where they'll provide consultants.
@@ -499,7 +501,7 @@ en:
         heading: Which area of your organisation needs advice?
       select_services:
         heading: Select the business consultancy services you need
-        none_selected: None selected
+        no_services_selected: No services selected
         remove_all: Remove all
         services_selected: services selected
       supplier_detail:
