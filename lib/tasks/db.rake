@@ -77,7 +77,7 @@ module CCS
         values = supplier.to_json.gsub("'") { "''" }
         query = "DELETE FROM fm_suppliers where data->'supplier_id' ? '" + supplier['supplier_id'] + "' ; " \
                 'insert into fm_suppliers ( created_at, updated_at, supplier_id, data ) values ( now(), now(), \'' \
-                         + supplier['supplier_id'] + "', '" + values + "')"
+                          + supplier['supplier_id'] + "', '" + values + "')"
         db.query query
       end
     end
