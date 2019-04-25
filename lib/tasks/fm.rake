@@ -46,7 +46,7 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
 
   def self.facilities_management_buildings
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = "DROP TABLE IF EXISTS facilities_management_buildings; create table if not exists facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
+      query = "create table if not exists facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
       DROP INDEX IF EXISTS idx_buildings_gin; CREATE INDEX idx_buildings_gin ON facilities_management_buildings USING GIN (building_json);
       DROP INDEX IF EXISTS idx_buildings_ginp; CREATE INDEX idx_buildings_ginp ON facilities_management_buildings USING GIN (building_json jsonb_path_ops);
       DROP INDEX IF EXISTS idx_buildings_service; CREATE INDEX idx_buildings_service ON facilities_management_buildings USING GIN ((building_json -> 'services'));
