@@ -16,12 +16,13 @@ $(() => {
             let address = currentBuilding.address;
 
             if (address) {
-                let newOptionData = address['fm-address-line-1'] + ', ' +
-                    address['fm-address-line-2'] + ', ' +
-                    address['fm-address-town'] + ', ' +
-                    address['fm-address-county'] + ', ' +
-                    address['fm-address-postcode'];
 
+                let add1 = address['fm-address-line-1'] ? address['fm-address-line-1'] + ', ' : '';
+                let add2 = address['fm-address-line-2'] ? address['fm-address-line-2'] + ', ' : '';
+                let postTown = address['fm-address-town'] ? address['fm-address-town'] + ', ' : '';
+                let county = address['fm-address-county'] ? address['fm-address-county'] + ', ' : '';
+                let postCode = address['fm-address-postcode'] ? address['fm-address-postcode'] : '';
+                let newOptionData = add1 + add2 + postTown + county + postCode;
                 let newOption = '<option selected value="' + newOptionData + '">' + newOptionData + '</option>';
 
                 $('#fm-postcode-lookup-results').find('option[value="status-option"]').remove();

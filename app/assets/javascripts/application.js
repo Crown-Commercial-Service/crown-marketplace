@@ -25,4 +25,5 @@
 //= require facilities_management/fm-address.js
 //= require facilities_management/fm-units-of-measurement.js
 //= require facilities_management/fm-contract.js
+//= require facilities_management/fm-lifts.js
 //= require global/global.js
