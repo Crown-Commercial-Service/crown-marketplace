@@ -490,7 +490,13 @@ en:
           item_2: adhere to the public procurement procedures
     html:
       download_the_supplier_list:
+        button_start_new_search: Start new search
+        download_supplier_shortlist: Download supplier shortlist
+        expression_of_interest_template: Expression of interest template
         heading: Download the supplier shortlist
+        lead_text: The list is valid for 2 days as we frequently update supplier contact details
+        other_documents: Other documents
+        the_spreadsheet_text: The spreadsheet includes the selections you made, for your records and audit trail.
       select_location:
         heading: Where do you want the consultants to work?
         no_regions_selected: No regions selected
