@@ -1,7 +1,9 @@
 $(() => {
 
-    let selectedLocations = pageUtils.getCachedData('locations');
-    let selectedServices = pageUtils.getCachedData('services');
+    let selectedLocations = pageUtils.getCachedData('fm-locations');
+    let selectedServices = pageUtils.getCachedData('fm-services');
+    let supplierCount = parseInt($('#fm-long-list-supplier-count').innerText);
+    let visibleSuppliers = [];
 
     const init = (() => {
 
@@ -36,9 +38,8 @@ $(() => {
                     selectedLocations.push(location);
                 }
 
-                pageUtils.setCachedData('locations', selectedLocations);
+                pageUtils.setCachedData('fm-locations', selectedLocations);
                 filterSuppliers();
-
             });
         });
 
@@ -70,12 +71,12 @@ $(() => {
                     selectedServices.push(service);
                 }
 
-                pageUtils.setCachedData('services', selectedServices);
+                pageUtils.setCachedData('fm-services', selectedServices);
                 filterSuppliers();
             });
         });
 
-        updateCounts();
+        filterSuppliers();
 
     });
 
@@ -84,6 +85,11 @@ $(() => {
         let serviceCount = $("input[name='fm-services-checkbox']:checked").length;
         $('#region-count').text(regionCount + " selected");
         $('#service-count').text(serviceCount + " selected");
+        supplierCount = visibleSuppliers.length;
+        if (supplierCount >= 0) {
+            $('#fm-long-list-supplier-count').text(supplierCount);
+        }
+
     });
 
     /* Click handler for the filter toggle button */
@@ -108,25 +114,36 @@ $(() => {
 
     });
 
+    $('#fm-suppliers-long-list-clear-filters').on('click', (e) => {
+        e.preventDefault();
+
+        $('input[name="fm-regions-checkbox"]').prop("checked", false);
+        $('input[name="fm-services-checkbox"]').prop("checked", false);
+        filterSuppliers();
+    });
+
     /* Click handler for Print button */
     $('#FM-print-supplier-list').click((e) => {
         e.preventDefault();
         window.print();
     });
 
+
     const filterSuppliers = (() => {
 
         let tableRows = $('tbody  > tr');
-
+        visibleSuppliers = [];
         tableRows.each(function (rowIndex, row) {
             let id = row.id;
+            let name = $('#' + id).attr('name');
             let operationalAreas = $('#' + id).attr('regioncode');
 
             if (operationalAreas) {
-                operationalAreas = operationalAreas.replace('{', "").replace('}', "");
-                operationalAreas = operationalAreas.split(',');
+                operationalAreas = JSON.parse(operationalAreas);//.replace('{', "").replace('}', "");
+                //operationalAreas = operationalAreas.split(',');
 
-                let serviceOfferings = $('#' + id).attr('servicecode').replace('{', "").replace('}', "");
+                //let serviceOfferings = $('#' + id).attr('servicecode').replace('{', "").replace('}', "");
+                let serviceOfferings = JSON.parse($('#' + id).attr('servicecode'));
 
                 let isServiceOfferingSelected = selectedServices.some(selectedService => {
                     return serviceOfferings.includes(selectedService.code.replace('-', '.'));
@@ -138,11 +155,15 @@ $(() => {
 
                 if (isServiceOfferingSelected === true && isOperationalAreaSelected === true) {
                     $('#' + id).attr('hidden', false);
+                    if (name && !visibleSuppliers.includes(name)) {
+                        visibleSuppliers.push(name);
+                    }
                 } else {
                     $('#' + id).attr('hidden', true);
                 }
             }
         });
+        updateCounts();
     });
 
     init();
