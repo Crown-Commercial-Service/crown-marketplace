@@ -77,20 +77,9 @@ module CCS
         values = supplier.to_json.gsub("'") { "''" }
         query = "DELETE FROM fm_suppliers where data->'supplier_id' ? '" + supplier['supplier_id'] + "' ; " \
                 'insert into fm_suppliers ( created_at, updated_at, supplier_id, data ) values ( now(), now(), \'' \
-                         + supplier['supplier_id'] + "', '" + values + "')"
+                          + supplier['supplier_id'] + "', '" + values + "')"
         db.query query
       end
-    end
-  rescue PG::Error => e
-    puts e.message
-  end
-
-  def self.facilities_management_buildings
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = "create table if not exists public.facilities_management_buildings (user_id varchar not null, building_json jsonb not null);
-       DROP INDEX IF EXISTS idx_buildings_service; CREATE INDEX IF NOT EXISTS idx_buildings_service ON facilities_management_buildings USING GIN ((building_json -> 'services'));
-       DROP INDEX IF EXISTS idx_buildings_user_id; CREATE INDEX idx_buildings_user_id ON public.facilities_management_buildings USING btree (user_id);"
-      db.query query
     end
   rescue PG::Error => e
     puts e.message
@@ -103,8 +92,6 @@ namespace :db do
     CCS.load_static
     p 'Loading FM Suppliers static'
     CCS.fm_suppliers
-    p 'Creating FM building database'
-    CCS.facilities_management_buildings
   end
   desc 'add static data to the database'
   task setup: :static do
