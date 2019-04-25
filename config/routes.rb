@@ -1,9 +1,13 @@
 # rubocop:disable Metrics/BlockLength
+require 'sidekiq/web'
+require 'user_constraint.rb'
 Rails.application.routes.draw do
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
   get '/landing-page', to: 'home#landing_page'
+
+  mount Sidekiq::Web => '/sidekiq-log', :constraints => UserConstraint.new
 
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
