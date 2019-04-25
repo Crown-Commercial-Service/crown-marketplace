@@ -16,14 +16,14 @@ module SupplyTeachers
       end
       upload.review!
     rescue StandardError => e
-      fail_upload(upload, "There is an error with your files. Please try again. " + e.message)
+      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), "There is an error with your files. Please try again. " + e.message)
     end
 
     private
 
     def fail_upload(upload, fail_reason)
       upload.fail!
-      upload.update_attributes(fail_reason: fail_reason)
+      upload.update(fail_reason: fail_reason)
     end
   end
 end
