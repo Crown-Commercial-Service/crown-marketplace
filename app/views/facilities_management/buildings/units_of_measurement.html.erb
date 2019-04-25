@@ -11,7 +11,9 @@
       <h1 class="govuk-heading-xl"><%= @service_title %> </h1>
     </div>
   </div>
-  <div class="govuk-grid-row">
+  <div class="govuk-grid-row"
+       <% if @is_lift == true %><%= 'hidden' %>
+       <% end %> >
     <div class="govuk-grid-column-full">
       <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= @uom_title %> </h2>
       <h2 class="govuk-caption-m govuk-!-margin-top-1"><%= @uom_example %> </h2>
@@ -31,7 +33,21 @@
        <% end %> >
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        Lift section
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-0">How many lifts do you have in this building?</h2>
+        <h2 class="govuk-caption-m govuk-!-margin-top-1">For example, 5. Enter the total number of lifts in your
+          building</h2>
+        <input id="fm-uom-number-of-lifts" class="govuk-input govuk-input--width-5" type="number" value="">
+        <div id="fm-lift-floors-container" class="govuk-!-margin-top-6 govuk-visually-hidden">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= @uom_title %> </h2>
+              <h2 class="govuk-caption-m govuk-!-margin-top-1"><%= @uom_example %> </h2>
+              <div id="fm-lift-floors-input-container" >
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -40,6 +56,7 @@
       <div class="govuk-form-group">
         <hidden id="fm-building-uom-id" name="fm-building-uom-id" value="<%= @building_id %>"></hidden>
         <hidden id="fm-service-uom-code" name="fm-service-uom-code" value="<%= @service_code %>"></hidden>
+        <hidden id="fm-is-lift" name="fm-is-lift" value="<%= @is_lift %>"></hidden>
         <div class="govuk-!-margin-top-8">
           <a id="fm-unit-of-measurement-submit" type="button" class="govuk-button" role="button">Continue</a>
         </div>

@@ -182,36 +182,6 @@ ul.ccs-list-bullet--sm {
     }
 }
 
-.ccs-info-panel {
-    background-color: govuk-colour("grey-4");
-    padding: govuk-spacing(4) govuk-spacing(4) govuk-spacing(3) govuk-spacing(4);
-
-    dl {
-        font-family: $govuk-font-family;
-        @include govuk-font($size: 19, $weight: inherit);
-
-        dt {
-            font-weight: bold;
-            margin-top: govuk-spacing(3);
-        }
-
-        dt:first-child {
-            margin-top: 0;
-        }
-
-        dd {
-            margin-inline-start: 0;
-            margin-left: 0;
-
-            a {
-                overflow-wrap: break-word;
-                word-wrap: break-word;
-            }
-        }
-    }
-}
-
-
 .govuk-form-group + .govuk-form-group {
     & > .govuk-label--s {
         margin-top: govuk-spacing(6);
