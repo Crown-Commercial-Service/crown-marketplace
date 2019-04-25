@@ -1,19 +1,30 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-    <p class="govuk-body">
-      <%= t('.suppliers_found_html',
-            number: @all_suppliers.count,
-            suppliers: number_to_human(@all_suppliers.count, units: :companies, format: '%u')) %>
-    </p>
-    <p>
-      <%= link_to(t('.download_suppliers_list'), management_consultancy_suppliers_download_path, class: 'govuk-button') unless @suppliers.empty? %>
-    </p>
-    <section class="govuk-grid-column-two-thirds ccs-search-results">
-      <ul class="ccs-results-list">
-        <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
-      </ul>
-    </section>
-    <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
+    <% if @all_suppliers.count.zero? %>
+      <h1 class="govuk-heading-xl"><%= t('.no_suppliers_found.heading') %></h1>
+      <p class="govuk-body govuk-!-font-size-24">
+        <%=t('.no_suppliers_found.text') %>
+      </p>
+      <br>
+      <p class="govuk-body">
+        <%= t('.no_suppliers_found.contact_html', contact_link: mail_to('email@example.com', t('.no_suppliers_found.contact_link_text'))) %>
+      </p>
+    <% else %>
+      <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+      <p class="govuk-body">
+        <%= t('.suppliers_found_html',
+              number: @all_suppliers.count,
+              suppliers: number_to_human(@all_suppliers.count, units: :companies, format: '%u')) %>
+      </p>
+      <p>
+        <%= link_to(t('.download_suppliers_list'), management_consultancy_suppliers_download_path, class: 'govuk-button') unless @suppliers.empty? %>
+      </p>
+      <section class="govuk-grid-column-two-thirds ccs-search-results">
+        <ul class="ccs-results-list">
+          <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
+        </ul>
+      </section>
+      <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
+    <% end %>
   </div>
 </div>

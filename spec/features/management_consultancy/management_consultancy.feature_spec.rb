@@ -87,8 +87,8 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_region.name
     click_on I18n.t('common.submit')
 
-    expect(page).to have_css('h1', text: 'Supplier results')
-    expect(page).to have_text('0 companies')
+    expect(page).to have_css('h1', text: 'No suppliers were found')
+    expect(page).to have_text('No companies can provide consultants that can meet your requirements')
   end
   scenario 'Buyer wants to buy procurement, supply chain and commercial services (Lot 2)' do
     visit_management_consultancy_start
