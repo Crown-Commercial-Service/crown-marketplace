@@ -41,15 +41,25 @@ module OrdnanceSurvey
     object = Aws::S3::Resource.new
     object.bucket('ccs-postcodes').objects.each do |obj|
       if obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
+
         # File.write('/tmp/pc.csv', obj.get.body.read)
-        query = "copy import_products from STDIN
-            with csv header NULL AS '' QUOTE AS '\"';"
-        query << obj.get.body.read
+        # query = "copy os_address from STDIN with csv"
+        # query << obj.get.body.read
+        # query << '\.'
+        # query << ';'
 
-        query << '\.'
-        query << ';'
+        # File.write('/tmp/query.sql', query)
 
-        ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
+        ActiveRecord::Base.connection_pool.with_connection do |conn|
+
+          conn = ActiveRecord::Base.connection
+          rc = conn.raw_connection
+          rc.exec("COPY os_address FROM STDIN WITH CSV")
+
+          rc.put_copy_data(obj.get.body.read)
+
+          rc.put_copy_end
+        end
 
         return
       end
