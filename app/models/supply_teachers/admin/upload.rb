@@ -91,6 +91,7 @@ module SupplyTeachers
         errors.add(:base, 'There is an error with your files. Please try again: ' + e.message)
       end
 
+      # rubocop:disable Metrics/AbcSize
       def copy_files_to_input_folder
         cp_file_to_input(current_accredited_suppliers.file.try(:path), CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
         cp_file_to_input(geographical_data_all_suppliers.file.try(:path), GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
@@ -100,6 +101,7 @@ module SupplyTeachers
         cp_file_to_input(pricing_for_tool.file.try(:path), PRICING_TOOL_PATH, pricing_for_tool_changed?)
         cp_file_to_input(supplier_lookup.file.try(:path), SUPPLIER_LOOKUP_PATH, supplier_lookup_changed?)
       end
+      # rubocop:enable Metrics/AbcSize
 
       def cp_file_to_input(file_path, new_path, condition)
         FileUtils.cp(file_path, new_path) if condition

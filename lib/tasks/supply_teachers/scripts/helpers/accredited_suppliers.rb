@@ -28,9 +28,10 @@ accredited_supplier_names = accredited_suppliers_hashes.map(&:values).flatten
 @accredited_suppliers = suppliers.select do |supplier|
   accredited_supplier_names.include?(supplier[:'accreditation supplier name'])
 end
-
+# rubocop:disable Style/PreferredHashMethods, Rails/Blank
 def supplier_accredited?(id)
   return false if id.nil? || id.empty?
 
   @accredited_suppliers.select { |supplier| supplier.has_value?(id) }.any?
 end
+# rubocop:enable Style/PreferredHashMethods, Rails/Blank

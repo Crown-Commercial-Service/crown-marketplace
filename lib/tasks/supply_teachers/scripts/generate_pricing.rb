@@ -19,7 +19,7 @@ def add_headings(row)
   %i[number supplier_name role job_type fee1 fee2 fee3].zip(row).to_h
 end
 
-# rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/CyclomaticComplexity
 def symbolize_job_types(row)
   job_type = case row[:job_type]
              when /Qualified.*Non-Special/m
@@ -48,7 +48,7 @@ def symbolize_job_types(row)
              end
   row.merge(job_type: job_type)
 end
-# rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
 
 def normalize_pricing(row)
   case row[:job_type]
