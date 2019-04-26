@@ -26,6 +26,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
       values['unit_text'] = fm_service_data.work_package_unit_text(values['service_code'])
       @uom_values.push(values)
     end
+    @lift_data = fm_service_data.get_lift_data(current_login_email)
     @uom_values
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController buildings(): #{e}"

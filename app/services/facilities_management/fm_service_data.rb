@@ -10,7 +10,7 @@ jsonb_array_elements(building_json->'services') ->>'name' as subname
 where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom_values v where v.building_id = '" + building_id + "' and
 		 v.user_id = '" + Base64.encode64(email_address) + "') and
     trim(replace(subcode, '-', '.')) in (select distinct (unnest(service_usage)) from fm_units_of_measurement fuom order by 1) limit 1;"
-    ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't retrieve service data: #{e}"
   end
@@ -37,7 +37,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
       # query for a uom description etc based on the service code
       description = service['name']
       query = "select fuom.title_text, fuom.example_text, fuom.unit_text from fm_units_of_measurement fuom where '" + code + "' in (select(unnest(service_usage)));"
-      result_b = ActiveRecord::Base.connection.execute(query)
+      result_b = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
 
       if result_b.present?
         # uom_data = result_b[0].to_h
@@ -59,29 +59,31 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
   def add_uom_value(email_address, building_id, service_code, value)
     query = "INSERT INTO fm_uom_values (user_id, service_code, uom_value,building_id)
              VALUES ('" + Base64.encode64(email_address) + "','" + service_code + "','" + value + "','" + building_id + "');"
-    ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't add unit of measurement data: #{e}"
   end
 
   def uom_values(email_address)
     query = "select building_id, service_code, uom_value from fm_uom_values where
-	user_id = '" + Base64.encode64(email_address) + "'"
-    ActiveRecord::Base.connection.execute(query)
+	user_id = '" + Base64.encode64(email_address) + "' and service_code not in ('C.5'); "
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't get unit of measurement values: #{e}"
   end
 
   def save_lift_data(email_address, building_id, json_data)
     query = "INSERT INTO fm_lifts (user_id, building_id, lift_data) VALUES('" + Base64.encode64(email_address) + "', '" + building_id + "', '" + json_data.to_json + "');"
-    ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    add_uom_value(email_address, building_id, 'C.5', 'Saved')
   rescue StandardError => e
     Rails.logger.warn "Couldn't save lift data : #{e}"
   end
 
-  def get_lift_data(email_address, building_id)
-    query = "select lift_data from fm_lifts where user_id = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "';"
-    ActiveRecord::Base.connection.execute(query)
+  def get_lift_data(email_address)
+    query = "select building_id, lift_data::jsonb->'lift_data'->>'lifts-qty' lift_qty, lift_data::jsonb->'lift_data'->>'total-floor-count' total_floor_count from fm_lifts
+   where user_id =  '" + Base64.encode64(email_address) + "';"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't retrieve lift data : #{e}"
   end

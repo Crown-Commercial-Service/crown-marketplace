@@ -8,7 +8,7 @@
     </thead>
     <tbody class="govuk-table__body">
     <% @suppliers_lot1a.each do |supplier| %>
-      <tr id="<%= SecureRandom.uuid %>" class="govuk-table__row" servicecode="<%= supplier['service_code'] %>" regioncode="<%= supplier['region_code'] %>" >
+      <tr id="<%= SecureRandom.uuid %>" name="<%= supplier['name'] %>" class="govuk-table__row" servicecode="<%= supplier['service_code'] %>" regioncode="<%= supplier['region_code'] %>">
         <td class="govuk-table__header" scope="row"><%= supplier['name'] %></td>
       </tr>
       </tbody>
