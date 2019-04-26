@@ -16,11 +16,6 @@
       <div id="fm-region-check-boxes" class="govuk-checkboxes"></div>
     </div>
 
-
-    <% @subregions.each do |place| %>
-    <%= place %>
-    <% end %>
-
   </div>
   <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
     <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
@@ -34,9 +29,5 @@
       <div id="fm-service-check-boxes" class="govuk-checkboxes"></div>
     </div>
   </div>
-
-  <% @selected_services.each do | service | %>
-  <%= service.inspect %>
-  <% end %>
 
 </div>
