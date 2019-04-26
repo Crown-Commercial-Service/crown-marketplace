@@ -31,7 +31,6 @@ module OrdnanceSurvey
   end
 end
 
-
 namespace :db do
   desc 'add FM postcode data to the database'
   task postcode: :environment do
