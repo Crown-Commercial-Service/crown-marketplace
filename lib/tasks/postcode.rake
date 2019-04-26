@@ -2,7 +2,7 @@ module OrdnanceSurvey
   require 'aws-sdk-s3'
   require 'json'
 
-  def create_postcode_table
+  def self.create_postcode_table
     str = File.read(Rails.root + 'data/postcode/PostgreSQL_AddressBase_Plus_CreateTable.sql')
     query = str.slice str.index('CREATE TABLE')..str.length
     query.sub!('<INSERTTABLENAME>', 'os_address')
@@ -10,7 +10,7 @@ module OrdnanceSurvey
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
   end
 
-  def awd_credentials
+  def self.awd_credentials
     creds = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
     Aws.config[:credentials] = Aws::Credentials.new(creds['AccessKeyId'], creds['SecretAccessKey'])
   end
