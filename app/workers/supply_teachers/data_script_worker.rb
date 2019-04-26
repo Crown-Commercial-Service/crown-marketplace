@@ -12,11 +12,11 @@ module SupplyTeachers
 
       unless File.zero?('./lib/tasks/supply_teachers/output/errors.out')
         file = File.open('./lib/tasks/supply_teachers/output/errors.out')
-        fail_upload(upload, "There is an error with your files: " + file.read)
+        fail_upload(upload, 'There is an error with your files: ' + file.read)
       end
       upload.review!
     rescue StandardError => e
-      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), "There is an error with your files. Please try again. " + e.message)
+      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), 'There is an error with your files. Please try again. ' + e.message)
     end
 
     private

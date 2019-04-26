@@ -1,6 +1,6 @@
 class CreateSupplyTeachersAdminUploads < ActiveRecord::Migration[5.2]
   def change
-    create_table :supply_teachers_admin_uploads do |t|
+    create_table :supply_teachers_admin_uploads, id: :uuid do |t|
       t.string :aasm_state, limit: 15
       t.string :current_accredited_suppliers, limit: 255
       t.string :geographical_data_all_suppliers, limit: 255

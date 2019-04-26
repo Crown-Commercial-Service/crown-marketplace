@@ -122,11 +122,7 @@ module ApplicationHelper
     send controller.class.parent_name.underscore + '_path'
   end
 
-  def the_landing_page
-    controller.action_name == 'landing_page'
-  end
-
-  def admin_page
-    controller.class.parent_name.underscore == 'supply_teachers/admin'
+  def landing_or_admin_page
+    controller.action_name == 'landing_page' || controller.class.parent_name.underscore == 'supply_teachers/admin'
   end
 end

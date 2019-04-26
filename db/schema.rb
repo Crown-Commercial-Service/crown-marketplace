@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.index ["code"], name: "nuts_regions_code_key", unique: true
   end
 
-  create_table "supply_teachers_admin_uploads", force: :cascade do |t|
+  create_table "supply_teachers_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "aasm_state", limit: 15
     t.string "current_accredited_suppliers", limit: 255
     t.string "geographical_data_all_suppliers", limit: 255
