@@ -16,5 +16,4 @@ class SupplyTeachersFileUploader < CarrierWave::Uploader::Base
   def extension_whitelist
     %w[xls xlsx csv]
   end
-
 end
