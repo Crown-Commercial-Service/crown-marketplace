@@ -139,10 +139,7 @@ $(() => {
             let operationalAreas = $('#' + id).attr('regioncode');
 
             if (operationalAreas) {
-                operationalAreas = JSON.parse(operationalAreas);//.replace('{', "").replace('}', "");
-                //operationalAreas = operationalAreas.split(',');
-
-                //let serviceOfferings = $('#' + id).attr('servicecode').replace('{', "").replace('}', "");
+                operationalAreas = JSON.parse(operationalAreas);
                 let serviceOfferings = JSON.parse($('#' + id).attr('servicecode'));
 
                 let isServiceOfferingSelected = selectedServices.some(selectedService => {
