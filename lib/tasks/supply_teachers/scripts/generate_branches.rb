@@ -99,5 +99,6 @@ branches = branch_sheet.parse(header_search: ['Supplier Name'])
                        .map { |row| strip_punctuation_from_postcode(row) }
 
 collated = collate(branches.map { |row| nest(row, :branches) })
-
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(collated)
+# rubocop:enable Rails/Output

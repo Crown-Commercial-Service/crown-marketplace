@@ -271,5 +271,7 @@ csv_string = CSV.generate do |out|
   end
 end
 
+# rubocop:disable Rails/Output
 puts csv_string
-# rubocop:enable Metrics/LineLength
+# rubocop:enable Rails/Output
+

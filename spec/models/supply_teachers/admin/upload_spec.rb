@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
-  subject { create(:supply_teachers_admin_upload) }
+  let(:admin_upload) { create(:supply_teachers_admin_upload) }
 
   describe '#default scope' do
     it 'orders by descending created_at' do
@@ -11,9 +11,10 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
 
   describe '#aasm state' do
     before do
-      allow(subject).to receive(:cleanup_input_files)
-      allow(subject).to receive(:start_upload)
+      allow(admin_upload).to receive(:cleanup_input_files)
+      allow(admin_upload).to receive(:start_upload)
     end
+
     describe 'initial state' do
       it { is_expected.to have_state(:in_progress) }
       it { is_expected.not_to have_received(:cleanup_input_files) }
@@ -21,7 +22,7 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
     end
 
     describe 'in_review' do
-      before { subject.review }
+      before { admin_upload.review }
 
       it { is_expected.to have_state(:in_review) }
       it { is_expected.not_to have_received(:cleanup_input_files) }
@@ -30,7 +31,7 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
 
     describe 'failed' do
       context 'when in_progress' do
-        before { subject.fail }
+        before { admin_upload.fail }
 
         it { is_expected.to have_state(:failed) }
         it { is_expected.to have_received(:cleanup_input_files) }
@@ -39,9 +40,10 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
 
       context 'when uploading' do
         before do
-          subject.aasm.current_state = :uploading
-          subject.fail
+          admin_upload.aasm.current_state = :uploading
+          admin_upload.fail
         end
+
         it { is_expected.to have_state(:failed) }
         it { is_expected.to have_received(:cleanup_input_files) }
         it { is_expected.not_to have_received(:start_upload) }
@@ -50,9 +52,10 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
 
     describe 'uploading' do
       before do
-        subject.aasm.current_state = :in_review
-        subject.upload
+        admin_upload.aasm.current_state = :in_review
+        admin_upload.upload
       end
+
       it { is_expected.to have_state(:uploading) }
       it { is_expected.not_to have_received(:cleanup_input_files) }
       it { is_expected.to have_received(:start_upload) }
@@ -60,9 +63,10 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
 
     describe 'approved' do
       before do
-        subject.aasm.current_state = :uploading
-        subject.approve
+        admin_upload.aasm.current_state = :uploading
+        admin_upload.approve
       end
+
       it { is_expected.to have_state(:approved) }
       it { is_expected.not_to have_received(:cleanup_input_files) }
       it { is_expected.not_to have_received(:start_upload) }
@@ -70,9 +74,10 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
 
     describe 'rejected' do
       before do
-        subject.aasm.current_state = :in_review
-        subject.reject
+        admin_upload.aasm.current_state = :in_review
+        admin_upload.reject
       end
+
       it { is_expected.to have_state(:rejected) }
       it { is_expected.to have_received(:cleanup_input_files) }
       it { is_expected.not_to have_received(:start_upload) }
@@ -81,18 +86,21 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
     describe 'canceled' do
       context 'when in review' do
         before do
-          subject.aasm.current_state = :in_review
-          subject.cancel
+          admin_upload.aasm.current_state = :in_review
+          admin_upload.cancel
         end
+
         it { is_expected.to have_state(:canceled) }
         it { is_expected.to have_received(:cleanup_input_files) }
         it { is_expected.not_to have_received(:start_upload) }
       end
+
       context 'when in progress' do
         before do
-          subject.aasm.current_state = :in_progress
-          subject.cancel
+          admin_upload.aasm.current_state = :in_progress
+          admin_upload.cancel
         end
+
         it { is_expected.to have_state(:canceled) }
         it { is_expected.to have_received(:cleanup_input_files) }
         it { is_expected.not_to have_received(:start_upload) }
@@ -111,8 +119,8 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
 
     context 'when previous approved upload exists' do
       before do
-        subject.aasm.current_state = :uploading
-        subject.approve!
+        admin_upload.aasm.current_state = :uploading
+        admin_upload.approve!
       end
 
       it 'returns true for supplier_lookup' do
@@ -148,30 +156,30 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
   describe '#files_count' do
     context 'when one file' do
       it 'returns 1' do
-        expect(subject.files_count).to eq(1)
+        expect(admin_upload.files_count).to eq(1)
       end
     end
 
     context 'when two files' do
       before do
-        subject.master_vendor_contacts = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/supplier_lookup_test.csv'))
+        admin_upload.master_vendor_contacts = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'supplier_lookup_test.csv'))
       end
+
       it 'returns 2' do
-        expect(subject.files_count).to eq(2)
+        expect(admin_upload.files_count).to eq(2)
       end
     end
   end
 
   describe '#previous_uploaded_file_object' do
-
     context 'when there is a previous approved upload' do
       before do
-        subject.aasm.current_state = :uploading
-        subject.approve!
+        admin_upload.aasm.current_state = :uploading
+        admin_upload.approve!
       end
 
       it 'returns previous approved object with uploaded file' do
-        expect(described_class.previous_uploaded_file_object(:supplier_lookup)).to eq subject
+        expect(described_class.previous_uploaded_file_object(:supplier_lookup)).to eq admin_upload
       end
 
       it 'returns nil if file is not there' do
@@ -185,5 +193,4 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
       end
     end
   end
-
 end

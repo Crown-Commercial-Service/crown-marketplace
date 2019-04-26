@@ -19,5 +19,6 @@ suppliers = suppliers.map do |supplier|
   supplier.delete('line_no')
   supplier
 end
-
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(suppliers)
+# rubocop:enable Rails/Output

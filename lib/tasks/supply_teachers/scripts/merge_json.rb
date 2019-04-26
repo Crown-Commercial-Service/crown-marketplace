@@ -69,5 +69,6 @@ augmentations.each do |k, item|
     warn "#{k}: does not appear in aliases file (input/supplier_lookup.csv). Make sure you include it in the column '#{supplier_name_key}'"
   end
 end
-
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(merged)
+# rubocop:enable Rails/Output

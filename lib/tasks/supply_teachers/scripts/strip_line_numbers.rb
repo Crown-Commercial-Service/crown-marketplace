@@ -9,4 +9,6 @@ hash =
   .for(json)
   .delete('..line_no')
   .to_hash
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(hash)
+# rubocop:enable Rails/Output
