@@ -125,5 +125,6 @@ nv_pricing = [
 ].map { |row| nest(row, :neutral_vendor_pricing) }
 
 collated = collate(mv_pricing + nv_pricing)
-
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(collated)
+# rubocop:enable Rails/Output

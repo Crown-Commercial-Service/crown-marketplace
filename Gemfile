@@ -58,7 +58,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'carrierwave', '~> 1.0'
 
 # handles spreadsheets
-gem "roo", "~> 2.8.0"
+gem 'roo', '~> 2.8.0'
 
 # manipulating JSON for anonymisation
 gem 'jsonpath', '~> 0.5.8'

@@ -79,7 +79,6 @@ def strip_fields(row)
   row.map { |k, v| [k, v.is_a?(String) ? v.strip : v] }.to_h
 end
 
-# rubocop:disable Metrics/MethodLength
 def collate(records)
   suppliers = records.map { |p| p[:supplier_name] }.uniq
   suppliers.map do |supplier|
@@ -96,7 +95,6 @@ def collate(records)
     base_record
   end
 end
-# rubocop:enable Metrics/MethodLength
 
 mark_up_sheet = price_workbook.sheet('Lot 1 Pricing')
 pricing = mark_up_sheet
@@ -111,5 +109,6 @@ pricing = mark_up_sheet
           .map            { |row| nest(row, :pricing) }
 
 collated = collate(pricing)
-
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(collated)
+# rubocop:enable Rails/Output

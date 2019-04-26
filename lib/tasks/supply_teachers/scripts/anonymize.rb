@@ -24,4 +24,6 @@ hash =
   .gsub('..neutral_vendor_contact.email') { Faker::Internet.unique.email }
   .gsub('..branch_name'){ Faker::Company.unique.name }
   .to_hash
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(hash)
+# rubocop:enable Rails/Output

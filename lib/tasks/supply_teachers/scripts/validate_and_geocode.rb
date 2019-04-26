@@ -90,6 +90,7 @@ end
 suppliers = suppliers.map do |supplier|
   supplier.tap do |s|
     next unless s['branches']
+
     s['branches'] = s['branches']
                     .map { |b| check_contacts(b) }
                     .map { |b| fix_telephone(b) }
@@ -111,9 +112,9 @@ suppliers.map do |supplier|
 end
 
 suppliers = suppliers.sort_by { |s| s['supplier_name'] }
-
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(suppliers)
-
+# rubocop:enable Rails/Output
 File.open(geocoder_cache_path, 'w') do |file|
   file.write(YAML.dump(geocoder_cache))
 end

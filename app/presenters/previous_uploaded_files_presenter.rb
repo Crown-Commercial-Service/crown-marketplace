@@ -1,5 +1,4 @@
 class PreviousUploadedFilesPresenter
-
   def current_accredited_suppliers
     @current_accredited_suppliers ||= previous_uploaded_file(:current_accredited_suppliers)
   end

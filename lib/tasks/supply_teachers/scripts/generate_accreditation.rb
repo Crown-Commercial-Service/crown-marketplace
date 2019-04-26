@@ -59,7 +59,6 @@ lot_3_accreditation =
                            .map            { |row| add_accreditation(row) }
 
 accreditation = lot_1_accreditation + lot_2_accreditation + lot_3_accreditation
-
+# rubocop:disable Rails/Output
 puts JSON.pretty_generate(accreditation)
-
-# rubocop:enable Metrics/LineLength
+# rubocop:enable Rails/Output
