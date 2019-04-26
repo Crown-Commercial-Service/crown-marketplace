@@ -14,6 +14,7 @@
         <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
       </ul>
     </section>
+
     <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
   </div>
 </div>
