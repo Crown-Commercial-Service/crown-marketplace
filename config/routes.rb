@@ -23,10 +23,12 @@ Rails.application.routes.draw do
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
     resources :branches, only: %i[index show]
     resources :downloads, only: :index
-    namespace :admin do
-      resources :uploads, only: %i[index new create] do
-        get 'approve'
-        get 'reject'
+    unless Rails.env.production? # not be available on production environments yet
+      namespace :admin do
+        resources :uploads, only: %i[index new create] do
+          get 'approve'
+          get 'reject'
+        end
       end
     end
     get '/start', to: 'journey#start', as: 'journey_start'

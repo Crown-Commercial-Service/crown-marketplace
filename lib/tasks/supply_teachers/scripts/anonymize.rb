@@ -22,6 +22,6 @@ hash =
   .gsub('..neutral_vendor_contact.telephone') { Faker::PhoneNumber.unique.phone_number }
   .gsub('..neutral_vendor_contact.name') { Faker::Name.unique.name }
   .gsub('..neutral_vendor_contact.email') { Faker::Internet.unique.email }
-  .delete('..branch_name')
+  .gsub('..branch_name'){ Faker::Company.unique.name }
   .to_hash
 puts JSON.pretty_generate(hash)
