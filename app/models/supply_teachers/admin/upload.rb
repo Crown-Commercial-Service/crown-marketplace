@@ -16,7 +16,7 @@ module SupplyTeachers
 
       attr_accessor :current_accredited_suppliers_cache, :geographical_data_all_suppliers_cache, :lot_1_and_lot_2_comparisons_cache, :master_vendor_contacts_cache, :neutral_vendor_contacts_cache, :pricing_for_tool_cache, :supplier_lookup_cache
 
-      validate :script_data, on: :create
+      validate :reject_uploads_and_cp_files, on: :create
 
       aasm do
         state :in_progress, initial: true
@@ -30,7 +30,7 @@ module SupplyTeachers
         end
         event :upload do
           after do
-            SupplyTeachers::DataUploadWorker.perform_async(id)
+            start_upload
           end
           transitions from: :in_review, to: :uploading
         end
@@ -48,27 +48,13 @@ module SupplyTeachers
       end
 
       def cleanup_input_files
-        if current_accredited_suppliers.file.present? && self.class.previous_uploaded_file(:current_accredited_suppliers).try(:file).present?
-          FileUtils.cp(self.class.previous_uploaded_file(:current_accredited_suppliers).file.path, './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx')
-        end
-        if geographical_data_all_suppliers.file.present? && self.class.previous_uploaded_file(:geographical_data_all_suppliers).try(:file).present?
-          FileUtils.cp(self.class.previous_uploaded_file(:geographical_data_all_suppliers).file.path, './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx')
-        end
-        if lot_1_and_lot_2_comparisons.file.present? && self.class.previous_uploaded_file(:lot_1_and_lot_2_comparisons).try(:file).present?
-          FileUtils.cp(self.class.previous_uploaded_file(:lot_1_and_lot_2_comparisons).file.path, './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx')
-        end
-        if master_vendor_contacts.file.present? && self.class.previous_uploaded_file(:master_vendor_contacts).try(:file).present?
-          FileUtils.cp(self.class.previous_uploaded_file(:master_vendor_contacts).file.path, './lib/tasks/supply_teachers/input/master_vendor_contacts.csv')
-        end
-        if neutral_vendor_contacts.file.present? && self.class.previous_uploaded_file(:neutral_vendor_contacts).try(:file).present?
-          FileUtils.cp(self.class.previous_uploaded_file(:neutral_vendor_contacts).file.path, './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv')
-        end
-        if pricing_for_tool.file.present? &&  self.class.previous_uploaded_file(:pricing_for_tool).try(:file).present?
-          FileUtils.cp(self.class.previous_uploaded_file(:pricing_for_tool).file.path, './lib/tasks/supply_teachers/input/pricing for tool.xlsx')
-        end
-        if supplier_lookup.file.present? && self.class.previous_uploaded_file(:supplier_lookup).try(:file).present?
-          FileUtils.cp(self.class.previous_uploaded_file(:supplier_lookup).file.path, './lib/tasks/supply_teachers/input/supplier_lookup.csv')
-        end
+        cp_previous_uploaded_file(:current_accredited_suppliers, './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx')
+        cp_previous_uploaded_file(:geographical_data_all_suppliers, './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx')
+        cp_previous_uploaded_file(:lot_1_and_lot_2_comparisons, './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx')
+        cp_previous_uploaded_file(:master_vendor_contacts, './lib/tasks/supply_teachers/input/master_vendor_contacts.csv')
+        cp_previous_uploaded_file(:neutral_vendor_contacts, './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv')
+        cp_previous_uploaded_file(:pricing_for_tool, './lib/tasks/supply_teachers/input/pricing for tool.xlsx')
+        cp_previous_uploaded_file(:supplier_lookup, './lib/tasks/supply_teachers/input/supplier_lookup.csv')
       end
 
       def files_count
@@ -89,12 +75,16 @@ module SupplyTeachers
 
       private
 
-      def script_data
-        reject_all_uploads_in_review_or_in_progress
+      def start_upload
+        SupplyTeachers::DataUploadWorker.perform_async(id)
+      end
+
+      def reject_uploads_and_cp_files
+        reject_previous_uploads
         copy_files_to_input_folder
 
       rescue StandardError => e
-        errors.add(:base, "There is an error with your files. Please try again")
+        errors.add(:base, "There is an error with your files. Please try again: " + e.message)
       end
 
       def copy_files_to_input_folder
@@ -107,9 +97,17 @@ module SupplyTeachers
         FileUtils.cp(supplier_lookup.file.path, './lib/tasks/supply_teachers/input/supplier_lookup.csv') if supplier_lookup_changed?
       end
 
-      def reject_all_uploads_in_review_or_in_progress
-        Upload.in_review.map(&:cancel!)
-        Upload.in_progress.map(&:cancel!)
+      def reject_previous_uploads
+        self.class.in_review.map(&:cancel!)
+        self.class.in_progress.map(&:cancel!)
+      end
+
+      def cp_previous_uploaded_file(attr_name, file_path)
+        FileUtils.cp(self.class.previous_uploaded_file(attr_name).file.path, file_path) if available_for_cp(attr_name)
+      end
+
+      def available_for_cp(attr_name)
+        send(attr_name).file.present? && self.class.previous_uploaded_file(attr_name).try(:file).present?
       end
 
     end
