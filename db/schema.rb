@@ -17,9 +17,16 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
+  create_table "app_suppliers", id: false, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.integer "level"
+    t.index ["name"], name: "app_suppliers_name_key", unique: true
+  end
+
   create_table "facilities_management_buildings", id: false, force: :cascade do |t|
     t.string "user_id", null: false
-    t.jsonb "building_json", null: false
+    t.json "building_json", null: false
+    t.index ["user_id"], name: "facilities_management_buildings_user_id_idx"
   end
 
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -58,8 +65,8 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
 
   create_table "fm_rates", id: false, force: :cascade do |t|
     t.string "code", limit: 255
-    t.decimal "framework"
-    t.decimal "benchmark"
+    t.decimal "framework", null: false
+    t.decimal "benchmark", null: false
     t.index ["code"], name: "fm_rates_code_key", unique: true
   end
 
@@ -76,29 +83,6 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
     t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
     t.index ["data"], name: "idxgin", using: :gin
     t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
-  end
-
-  create_table "fm_units_of_measurement", id: :serial, force: :cascade do |t|
-    t.string "title_text", null: false
-    t.string "example_text"
-    t.string "unit_text"
-    t.string "data_type"
-    t.text "service_usage", array: true
-  end
-
-  create_table "fm_uom_values", id: false, force: :cascade do |t|
-    t.string "user_id"
-    t.string "service_code"
-    t.string "uom_value"
-    t.string "building_id"
-    t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
-  end
-
-  create_table "london_postcodes", id: false, force: :cascade do |t|
-    t.text "postcode"
-    t.text "In Use"
-    t.text "region"
-    t.text "Last updated"
   end
 
   create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
