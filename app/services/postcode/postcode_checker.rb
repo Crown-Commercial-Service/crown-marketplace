@@ -7,7 +7,6 @@ module Postcode
       info = location_info(postcode)
 
       { status: 200, result: (@london_burroughs.include? info[0]['administrative_area']) }
-
     rescue StandardError
       false
     end
