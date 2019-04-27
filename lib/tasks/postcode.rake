@@ -8,11 +8,14 @@ module OrdnanceSurvey
     query.sub!('<INSERTTABLENAME>', 'os_address')
     query.sub!('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS')
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
+    query = 'CREATE INDEX IF NOT EXISTS idx_postcode ON os_address USING btree (postcode);'
+    ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
   end
 
   def self.awd_credentials
-    creds = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
-    Aws.config[:credentials] = Aws::Credentials.new(creds['AccessKeyId'], creds['SecretAccessKey'])
+    @secrets = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
+    Aws.config[:credentials] = Aws::Credentials.new(@secrets['AccessKeyId'], @secrets['SecretAccessKey'])
+    p Aws.config
   end
 
   def self.import_postcodes
@@ -20,7 +23,7 @@ module OrdnanceSurvey
     awd_credentials
 
     object = Aws::S3::Resource.new
-    object.bucket('ccs-postcodes').objects.each do |obj|
+    object.bucket(@secrets['bucket']).objects.each do |obj|
       next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
 
       p 'Loading ' + obj.key
@@ -37,11 +40,18 @@ module OrdnanceSurvey
 end
 
 namespace :db do
-  desc 'add FM postcode data to the database'
+  desc 'add OS postcode data to the database'
   task postcode: :environment do
     p 'Creating postcode database and import'
     OrdnanceSurvey.import_postcodes
   end
+
+  desc 'create OS postcode table'
+  task pctable: :environment do
+    p 'Creating postcode database and import'
+    OrdnanceSurvey.create_postcode_table
+  end
+
   # desc 'add postcode static data to the database'
   # task static: :postcode do
   # end
