@@ -14,12 +14,14 @@ module Postcode
     #      http://localhost:3000/postcodes/in_london?postcode=SW1P%202AP
     #      http://localhost:3000/postcodes/in_london?postcode=G69%206HB
     def show
-      result = if params[:id] == 'in_london'
-                 PostcodeChecker.in_london? params[:postcode]
-               else
-                 PostcodeChecker.location_info(params[:id])
-               end
-      render json: result
+        result = if params[:id] == 'in_london'
+                  PostcodeChecker.in_london? params[:postcode]
+                else
+                  PostcodeChecker.location_info(params[:id])
+                end
+        render json: { status: 200, result: result }
+      rescue StandardError
+        render json: { status: 404, result: nil }
     end
   end
 end
