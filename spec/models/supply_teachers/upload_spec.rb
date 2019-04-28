@@ -516,9 +516,11 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
 
   private
 
-  def ignoring_exception(klass)
+  # rubocop:disable Naming/UncommunicativeMethodParamName:
+  def ignoring_exception(e)
     yield
-  rescue klass
+  rescue e
     nil
   end
+  # rubocop:enable Naming/UncommunicativeMethodParamName
 end
