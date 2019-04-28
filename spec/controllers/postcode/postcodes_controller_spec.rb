@@ -1,10 +1,8 @@
 require 'rails_helper'
-
 require 'postcode/postcodes_controller'
 
 RSpec.describe Postcode::PostcodesController, type: :controller do
   describe 'can retrieve a postcode' do
-
     it 'bad postcode' do
       postcode = 'X11 1XX'
       get :show, params: { id: postcode }
@@ -13,7 +11,5 @@ RSpec.describe Postcode::PostcodesController, type: :controller do
       expect(json_response['status']).to eq(404)
       expect(json_response['error']).to eq('Postcode not found')
     end
-
   end
-
 end
