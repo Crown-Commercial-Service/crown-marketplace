@@ -23,7 +23,7 @@
             "name": "RSpec - all",
             "type": "Ruby",
             "request": "launch",
-            "program": "/Users/tariq/.rvm/gems/ruby-2.6.2/bin/rspec",
+            "program": "/Users/tariq/.rvm/gems/ruby-2.6.3/bin/rspec",
             "args": [
                 "-I",
                 "${workspaceRoot}"
@@ -33,7 +33,7 @@
             "name": "RSpec - active spec file only",
             "type": "Ruby",
             "request": "launch",
-            "program": "/Users/tariq/.rvm/gems/ruby-2.6.2/bin/rspec",
+            "program": "/Users/tariq/.rvm/gems/ruby-2.6.3/bin/rspec",
             "args": [
                 "-I",
                 "${workspaceRoot}",
@@ -45,7 +45,7 @@
             "name": "RSpec - specific line in file only",
             "type": "Ruby",
             "request": "launch",
-            "program": "/Users/tariq/.rvm/gems/ruby-2.6.2/bin/rspec",
+            "program": "/Users/tariq/.rvm/gems/ruby-2.6.3/bin/rspec",
             "args": [
                 "-I",
                 "${workspaceRoot}",
@@ -57,7 +57,7 @@
             "name": "rake db:static",
             "type": "Ruby",
             "request": "launch",
-            "program": "~/.rvm/gems/ruby-2.6.2/bin/rake",
+            "program": "~/.rvm/gems/ruby-2.6.3/bin/rake",
             "args": [
                 "db:static"
             ]
