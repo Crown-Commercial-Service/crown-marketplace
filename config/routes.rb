@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     get '/buildings/select-services', to: 'buildings#select_services_per_building'
 
     get '/summary', to: 'summary#index'
+    post '/summary', to: 'summary#index'
 
     get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
     post '/buildings/save-uom-value' => 'buildings#save_uom_value'
