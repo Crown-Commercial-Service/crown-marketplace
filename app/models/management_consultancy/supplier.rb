@@ -43,6 +43,7 @@ module ManagementConsultancy
     def self.delete_all_with_dependents
       RegionalAvailability.delete_all
       ServiceOffering.delete_all
+      RateCard.delete_all
       delete_all
     end
 

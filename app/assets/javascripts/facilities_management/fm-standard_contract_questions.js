@@ -22,7 +22,7 @@ $(() => {
         extensions.forEach((extension, index) => {
             let newDiv = '<div name="fm-extension-container" id="' + extension.id + '-container"' + '>' +
                 '<div id="' + extension.id + '-error" hidden><span class="govuk-error-message" >This field can not be empty and contracts, including extensions, must be 10 years or less</span></div>' +
-                '<input id="' + extension.id + '" name="fm-extension" type="number" placeholder="Extension ' + (index + 1) + '"  value="' + extension.value + '"/>&nbsp;';
+                '<input id="' + extension.id + '" name="fm-extension" type="number" min="0" placeholder="Extension ' + (index + 1) + '"  value="' + extension.value + '"/>&nbsp;';
             if (index > 0) {
                 newDiv += '<a role="button" class="govuk-link" id="fm-remove-extension-' + (index + 1) + '" name="fm-remove-extension" href="">Remove</a>';
             }
@@ -208,6 +208,15 @@ $(() => {
     $('input[name="contract-tupe-radio"]').click((e) => {
         let result = e.target.value === 'yes' ? true : false;
         pageUtils.setCachedData('fm-contract-tupe', result);
+    });
+
+    $('input[name="fm-extension"]').on('keyup', (e) => {
+        if (!((e.keyCode > 95 && e.keyCode < 106)
+            || (e.keyCode > 47 && e.keyCode < 58)
+            || e.keyCode == 8
+            || e.keyCode == 9)) {
+            return false;
+        }
     });
 
 
