@@ -4,6 +4,7 @@ require 'transient_session_info'
 
 class FacilitiesManagement::LongListController < ApplicationController
   require_permission :facilities_management, only: :long_list
+
   def long_list
     @select_fm_locations = '/facilities-management/select-locations'
     @select_fm_services = '/facilities-management/select-services'

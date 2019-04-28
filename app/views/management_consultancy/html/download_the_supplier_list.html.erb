@@ -1,0 +1,31 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+
+        <p class="govuk-heading-m govuk-!-margin-bottom-8"><%= t('.lead_text') %></p>
+
+        <p class="govuk-body">
+            <a href="/downloads/example?format=csv" class="supplier-record__file-download" type="<%= t('common.type_csv') %>" download>
+                <%= t('.download_supplier_shortlist') %> <span class="govuk-visually-hidden"><%= t('common.csv_html') %></span>
+            </a>
+        </p>
+
+        <p class="govuk-body"><%= t('.the_spreadsheet_text') %></p>
+
+        <h2 class="govuk-heading-m"><%= t('.other_documents') %></h2>
+
+        <ul class="govuk-list govuk-!-margin-top-6">
+
+            <li class="govuk-!-margin-bottom-3">
+                <a href="/downloads/example?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                    <%= t('.expression_of_interest_template') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+                </a>
+            </li>
+
+        </ul>
+
+       <%= link_to t('.button_start_new_search'), '/management_consultancy/', role: 'button', class: 'govuk-button govuk-!-margin-top-6' %>
+
+    </div>
+</div>

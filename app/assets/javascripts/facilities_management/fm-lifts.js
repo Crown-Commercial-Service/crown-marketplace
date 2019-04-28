@@ -2,6 +2,7 @@ $(() => {
 
     let liftData = {};
     let liftFloorData = [];
+    let liftFloorCount = 0;
 
     let numberOfLifts = 0;
 
@@ -29,8 +30,10 @@ $(() => {
                 $('#fm-uom-input-lift-' + x).on('change', (e) => {
                     let liftInfo = {};
                     liftInfo['lift-' + x] = e.target.value;
+                    liftFloorCount += parseInt(e.target.value);
                     liftFloorData.push(liftInfo);
                     liftData['floor-data'] = liftFloorData;
+                    liftData['total-floor-count'] = liftFloorCount;
                     pageUtils.setCachedData('fm-lift-data', liftData);
                 });
             }

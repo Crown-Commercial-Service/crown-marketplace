@@ -489,9 +489,17 @@ en:
           item_1: produce a list of Crown Commercial Service approved management consultants based on your requirements
           item_2: adhere to the public procurement procedures
     html:
+      download_the_supplier_list:
+        button_start_new_search: Start new search
+        download_supplier_shortlist: Download supplier shortlist
+        expression_of_interest_template: Expression of interest template
+        heading: Download the supplier shortlist
+        lead_text: The list is valid for 2 days as we frequently update supplier contact details
+        other_documents: Other documents
+        the_spreadsheet_text: The spreadsheet includes the selections you made, for your records and audit trail.
       select_location:
         heading: Where do you want the consultants to work?
-        none_selected: None selected
+        no_regions_selected: No regions selected
         remove_all: Remove all
         services_selected: regions selected
         sub_txt: Suppliers have said where they'll provide consultants.
@@ -499,7 +507,7 @@ en:
         heading: Which area of your organisation needs advice?
       select_services:
         heading: Select the business consultancy services you need
-        none_selected: None selected
+        no_services_selected: No services selected
         remove_all: Remove all
         services_selected: services selected
       supplier_detail:
@@ -542,6 +550,11 @@ en:
       index:
         download_suppliers_list: Download the supplier list
         heading: Supplier results
+        no_suppliers_found:
+          contact_html: "%{contact_link} for help"
+          contact_link_text: Contact CCS Support
+          heading: No suppliers were found
+          text: No companies can provide consultants that can meet your requirements
         suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
   miles:
     unit:
