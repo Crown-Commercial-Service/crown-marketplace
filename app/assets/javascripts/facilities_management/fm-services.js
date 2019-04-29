@@ -2,7 +2,6 @@
 * filename: location.js
 * Description: Click handlers for the select services page
 * */
-
 $(() => {
 
     /!* govuk-accordion__controls event handlers *!/
@@ -99,11 +98,12 @@ $(() => {
         $("#services-accordion input:checkbox").removeAttr("checked");
 
         selectedServices = [];
+        pageUtils.setCachedData('fm-services', selectedServices);
         updateServiceCount();
     });
 
     /!* Click handler to remove all services *!/
-    $('#remove-all-link').click((e) => {
+    $('#remove-all-services-link').click((e) => {
         e.preventDefault();
         clearAll();
     });
@@ -208,7 +208,8 @@ $(() => {
             /* save services with building information */
             pageUtils.toggleInlineErrorMessage(false);
             currentBuilding['services'] = selectedServicesForThisBuilding;
-            fm.services.updateBuilding(currentBuilding, true, '#');
+            let url = ('/facilities-management/buildings/units-of-measurement?building_id=' + escape(currentBuilding['id']));
+            fm.services.updateBuilding(currentBuilding, true, url);
         } else {
             /* show error message */
             pageUtils.toggleInlineErrorMessage(true);

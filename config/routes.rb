@@ -53,6 +53,9 @@ Rails.application.routes.draw do
     get '/buildings/building-type', to: 'buildings#building_type'
     post '/buildings/update_building' => 'buildings#update_building'
     get '/buildings/select-services', to: 'buildings#select_services_per_building'
+    get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
+    post '/buildings/save-uom-value' => 'buildings#save_uom_value'
+    post '/services/save-lift-data' => 'select_services#save_lift_data'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/contract-start', to: 'contract#start_of_contract'
@@ -67,6 +70,11 @@ Rails.application.routes.draw do
     get '/suppliers', to: 'suppliers#index'
     get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
     get '/suppliers/:id', to: 'suppliers#show', as: 'supplier'
+    get '/html/select-lot', to: 'html#select_lot'
+    get '/html/select-services', to: 'html#select_services'
+    get '/html/select-location', to: 'html#select_location'
+    get '/html/supplier-detail', to: 'html#supplier_detail'
+    get '/html/download-the-supplier-list', to: 'html#download_the_supplier_list'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -96,6 +104,10 @@ Rails.application.routes.draw do
     get '/understanding', to: 'home#understanding'
     get '/training_details', to: 'home#training_details'
     get '/download_provider', to: 'home#download_provider'
+    resources :suppliers, only: %i[index show]
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
@@ -107,6 +119,12 @@ Rails.application.routes.draw do
     get '/titles-checkboxes', to: 'home#titles_checkboxes'
     get '/numbered-pagination', to: 'home#numbered_pagination'
     get '/table-5050', to: 'home#table_5050'
+    get '/supplier-detail', to: 'home#supplier_detail'
+    get '/errors-find-apprentices', to: 'home#errors_find_apprentices'
+    get '/errors-find-apprentices2', to: 'home#errors_find_apprentices2'
+    get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
+    get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
+    get '/errors-requirements', to: 'home#errors_requirements'
   end
 
   namespace 'legal_services', path: 'legal-services' do
