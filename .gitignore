@@ -60,6 +60,7 @@ lib/tasks/supply_teachers/output/supplier_vendor_pricing.json
 uploads/*
 public/data/*
 public/uploads/*
+lib/tasks/supply_teachers/.geocoder-cache.yml
 
 # Redis dump
 dump.rdb
