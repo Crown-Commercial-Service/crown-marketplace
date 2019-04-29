@@ -14,13 +14,7 @@ price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricin
 mv_price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx'
 accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'
 
-extra_supplier_names = [
-  # only has offerings in Lot 2 (master vendor)
-  # and doesn't appear in branch_workbook
-  'Guidant Group',
-  # only has offerings in Lot 3 (neutral vendor)
-  'GRI UK'
-]
+extra_supplier_names = []
 
 header_map = {
   'Supplier Name' => :supplier_name,
@@ -38,64 +32,7 @@ header_map = {
   'Supplier Name - Accreditation Held' => :supplier_name
 }
 
-name_map = {
-  '4myschools Education' => '4myschools',
-  'A-Day Consultants Ltd t/a Academics, Servoca Education and Classic Education' => 'Academics, Servoca Education and Classic Education',
-  'A-Day Consultants t/a Academics, Servoca Education, Classic Education, and Academics Advance' => 'Academics, Servoca Education and Classic Education',
-  'Academic Solutions UK Ltd' => 'Academic Solutions',
-  'Affinity Workforce Limited t/a Monarch Education Limited' => 'Monarch Education Limited',
-  'Apollo Teaching' => 'Apollo Teaching Services',
-  'Apollo Teaching t/a Apollo Teaching Services Ltd' => 'Apollo Teaching Services',
-  'Asphalia Holdings Limited' => 'Ashpalia Holdings t/a Care Field',
-  'Aurelia Education Ltd' => 'Aurelia Education Ltd.',
-  'Balfor Recruitment t/a Boston Clark' => 'Balfor Recruitment a trading name of Boston ClarK Ltd',
-  'Bumblebee Education Ltd.' => 'BumbleBee Education LTD',
-  'Castles Education' => 'Castles Education LLP',
-  'Celsian Group Limited' => 'Celsian Education',
-  'City of York Trading Limited (Trading as WorkwithSchools)' => 'City of York Trading Limited Trading as WorkwithSchools',
-  'Coyle Personnel plc t/a Coyle Education' => 'Coyle Personnel plc',
-  'Day Webster Education Ltd' => 'Day Wester Ltd',
-  'Education Recruitment Ltd T/A Travail Education' => 'Education Recruitment Ltd',
-  'Education Recruitment Ltd t/a Travail Education' => 'Education Recruitment Ltd',
-  'EYPS Ltd t/a EYPS Teaching Supply' => 'EYPS Ltd',
-  'Exclusive Education Ltd' => 'Exclusvie Education',
-  'First for Education' => 'First For Education Ltd.',
-  'GRI UK (formerly de Poel)' => 'GRI UK',
-  'Guardian Selection Limited (trading as GSL Education)' => 'Guardian Selection Limited, trading as GSL Education',
-  'GSL Education t/a Guardian Selection Limited' => 'Guardian Selection Limited, trading as GSL Education',
-  'Hoople Ltd' => 'Hoople Recruitment',
-  'Just Teachers' => 'justteachers',
-  'LB Education Services Limited (t/a Class People)' => 'Class People',
-  'LB Education Services Ltd t/a Class People' => 'Class People',
-  'Mana Resourcing Ltd (t/a Mana Education)' => 'Mana Education',
-  'Master Class Education Ltd' => 'MasterClass Education LTD',
-  'Media & Data Services Ltd T/A Inspiring Teaching' => 'Inspiring Teaching',
-  'Monarch Education (Affinity Workforce)' => 'Monarch Education Limited',
-  'New Directions Ltd' => 'New Directions Education Ltd',
-  'OR Education Ltd t/a Axcis Education Recruitment' => 'Axcis Education',
-  'Prospero Teaching' => 'Prospero Group Ltd',
-  'Protocol t/a Teaching Force' => 'Protocol',
-  'Randstad' => 'Randstad public services',
-  'Randstad Education' => 'Randstad public services',
-  'REd Ltd t/a REd Teachers and REd (Recruitment for Education)' => 'REd Ltd',
-  'Reed Specialist Recruitment Ltd.' => 'Reed Education',
-  'Reed Specialist Recruitment Ltd' => 'Reed Education',
-  'Reed Recruitment' => 'Reed Education',
-  'Remedy Recruitment Group t/a Remedy Education' => 'Remedy Recruitment Group',
-  'School Improvement Liverpool Recruitment' => 'School Improvement Liverpool Limited',
-  'Shares' => 'SHARES Lancashire',
-  'Simply Supply Ltd.' => 'Simply Supply Limited',
-  'Smile' => 'Smile Education',
-  'TLTP' => 'London Teaching Pool Limited',
-  'Teaching Services (SW) Ltd (t/a Cover Teachers)' => 'Cover Teachers',
-  'Tempest' => 'Tempest Resoucing Limited',
-  'Textbook Teachers Education and Recruitment Services Ltd' => 'Textbook Teachers Ltd',
-  'TEXTBOOK TEACHERS EDUCATION AND RECRUITMENT SERVICES LTD t/a Textbook Teachers Ltd' => 'Textbook Teachers Ltd',
-  'The FRCE Recruitment Group Ltd' => 'FRCE Recruitment Group Ltd',
-  'The Staff Room Agency Limited t/a The Staff Room' => 'The Staff Room Agency Limited',
-  'Wise Employment (Swindon) Ltd t/a Pro Education' => 'Pro Education',
-  'Your World Recruitment Limited' => 'Your World Education'
-}
+name_map = {}
 
 def remap_headers(row, header_map)
   r = row.map do |k, v|
