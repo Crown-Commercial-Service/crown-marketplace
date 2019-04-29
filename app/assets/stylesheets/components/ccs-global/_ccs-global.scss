@@ -25,19 +25,16 @@
 #main-footer{
   overflow: hidden;
 }
-.govuk-width-container,
-main {
-  flex-grow: 1;
-  width: 100%;
+@media (min-width:1025px){//desktop. stops horizontal scroll on smaller size
+    .govuk-width-container {
+        flex-grow: 1;
+        width: 100%;
+    }
 }
 /* footer at foot fix: ends */
 
 .govuk-header__navigation .govuk-header__navigation-item {
     border-bottom: none !important;
-}
-
-#main-content {
-    min-height: 450px;
 }
 
 .ccs-landing-pg-content {
@@ -99,9 +96,8 @@ abbr {
     p.govuk-body & {
         padding: 0 govuk-spacing(3);
     }
-}
-a.ccs-no-underline {
-    .ccs-tag {
+
+    a.ccs-no-underline & {
         margin-left: govuk-spacing(1);
     }
 }
