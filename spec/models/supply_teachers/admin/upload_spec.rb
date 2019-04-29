@@ -16,26 +16,44 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
     end
 
     describe 'initial state' do
-      it { is_expected.to have_state(:in_progress) }
-      it { is_expected.not_to have_received(:cleanup_input_files) }
-      it { is_expected.not_to have_received(:start_upload) }
+      it 'has state in progress' do
+        expect(admin_upload).to have_state(:in_progress)
+      end
+      it 'does not cleanup files' do
+        expect(admin_upload).not_to have_received(:cleanup_input_files)
+      end
+      it 'does not start upload' do
+        expect(admin_upload).not_to have_received(:start_upload)
+      end
     end
 
     describe 'in_review' do
       before { admin_upload.review }
 
-      it { is_expected.to have_state(:in_review) }
-      it { is_expected.not_to have_received(:cleanup_input_files) }
-      it { is_expected.not_to have_received(:start_upload) }
+      it 'has state in review' do
+        expect(admin_upload).to have_state(:in_review)
+      end
+      it 'does not cleanup files' do
+        expect(admin_upload).not_to have_received(:cleanup_input_files)
+      end
+      it 'does not start upload' do
+        expect(admin_upload).not_to have_received(:start_upload)
+      end
     end
 
     describe 'failed' do
       context 'when in_progress' do
         before { admin_upload.fail }
 
-        it { is_expected.to have_state(:failed) }
-        it { is_expected.to have_received(:cleanup_input_files) }
-        it { is_expected.not_to have_received(:start_upload) }
+        it 'has state failed' do
+          expect(admin_upload).to have_state(:failed)
+        end
+        it 'does cleanup files' do
+          expect(admin_upload).to have_received(:cleanup_input_files)
+        end
+        it 'does not start upload' do
+          expect(admin_upload).not_to have_received(:start_upload)
+        end
       end
 
       context 'when uploading' do
@@ -44,9 +62,15 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
           admin_upload.fail
         end
 
-        it { is_expected.to have_state(:failed) }
-        it { is_expected.to have_received(:cleanup_input_files) }
-        it { is_expected.not_to have_received(:start_upload) }
+        it 'has state failed' do
+          expect(admin_upload).to have_state(:failed)
+        end
+        it 'does cleanup files' do
+          expect(admin_upload).to have_received(:cleanup_input_files)
+        end
+        it 'does not start upload' do
+          expect(admin_upload).not_to have_received(:start_upload)
+        end
       end
     end
 
@@ -56,9 +80,15 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
         admin_upload.upload
       end
 
-      it { is_expected.to have_state(:uploading) }
-      it { is_expected.not_to have_received(:cleanup_input_files) }
-      it { is_expected.to have_received(:start_upload) }
+      it 'has state uploading' do
+        expect(admin_upload).to have_state(:uploading)
+      end
+      it 'does not cleanup files' do
+        expect(admin_upload).not_to have_received(:cleanup_input_files)
+      end
+      it 'does start upload' do
+        expect(admin_upload).to have_received(:start_upload)
+      end
     end
 
     describe 'approved' do
@@ -67,9 +97,15 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
         admin_upload.approve
       end
 
-      it { is_expected.to have_state(:approved) }
-      it { is_expected.not_to have_received(:cleanup_input_files) }
-      it { is_expected.not_to have_received(:start_upload) }
+      it 'has state approved' do
+        expect(admin_upload).to have_state(:approved)
+      end
+      it 'does not cleanup files' do
+        expect(admin_upload).not_to have_received(:cleanup_input_files)
+      end
+      it 'does not start upload' do
+        expect(admin_upload).not_to have_received(:start_upload)
+      end
     end
 
     describe 'rejected' do
@@ -78,9 +114,15 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
         admin_upload.reject
       end
 
-      it { is_expected.to have_state(:rejected) }
-      it { is_expected.to have_received(:cleanup_input_files) }
-      it { is_expected.not_to have_received(:start_upload) }
+      it 'has state rejected' do
+        expect(admin_upload).to have_state(:rejected)
+      end
+      it 'does cleanup files' do
+        expect(admin_upload).to have_received(:cleanup_input_files)
+      end
+      it 'does not start upload' do
+        expect(admin_upload).not_to have_received(:start_upload)
+      end
     end
 
     describe 'canceled' do
@@ -90,9 +132,15 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
           admin_upload.cancel
         end
 
-        it { is_expected.to have_state(:canceled) }
-        it { is_expected.to have_received(:cleanup_input_files) }
-        it { is_expected.not_to have_received(:start_upload) }
+        it 'has state canceled' do
+          expect(admin_upload).to have_state(:canceled)
+        end
+        it 'does cleanup files' do
+          expect(admin_upload).to have_received(:cleanup_input_files)
+        end
+        it 'does not start upload' do
+          expect(admin_upload).not_to have_received(:start_upload)
+        end
       end
 
       context 'when in progress' do
@@ -101,9 +149,15 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
           admin_upload.cancel
         end
 
-        it { is_expected.to have_state(:canceled) }
-        it { is_expected.to have_received(:cleanup_input_files) }
-        it { is_expected.not_to have_received(:start_upload) }
+        it 'has state canceled' do
+          expect(admin_upload).to have_state(:canceled)
+        end
+        it 'does cleanup files' do
+          expect(admin_upload).to have_received(:cleanup_input_files)
+        end
+        it 'does not start upload' do
+          expect(admin_upload).not_to have_received(:start_upload)
+        end
       end
     end
   end
