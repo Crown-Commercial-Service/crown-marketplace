@@ -20,9 +20,6 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
   create_table "facilities_management_buildings", id: false, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
-    t.index ["building_json"], name: "buildings_idx", opclass: :jsonb_path_ops, using: :gin
-    t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -81,13 +78,27 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
-    t.serial "id", null: false
+  create_table "fm_units_of_measurement", id: :serial, force: :cascade do |t|
     t.string "title_text", null: false
     t.string "example_text"
     t.string "unit_text"
     t.string "data_type"
     t.text "service_usage", array: true
+  end
+
+  create_table "fm_uom_values", id: false, force: :cascade do |t|
+    t.string "user_id"
+    t.string "service_code"
+    t.string "uom_value"
+    t.string "building_id"
+    t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
+  end
+
+  create_table "london_postcodes", id: false, force: :cascade do |t|
+    t.text "postcode"
+    t.text "In Use"
+    t.text "region"
+    t.text "Last updated"
   end
 
   create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

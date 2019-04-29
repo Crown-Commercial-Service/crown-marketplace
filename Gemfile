@@ -51,6 +51,7 @@ gem 'kaminari', '~> 1.1.1'
 # for pretty urls
 gem 'friendly_id', '~> 5.2.4'
 
+<<<<<<< HEAD
 # for file uploads
 gem 'carrierwave', '~> 1.0'
 
@@ -67,6 +68,9 @@ gem 'aasm', '~> 5.0'
 gem 'sidekiq', '~> 5.2.7'
 gem 'sinatra', '~> 2.0.5', require: false
 gem 'slim', '~> 4.0.1'
+
+# aws s3 bucket access for postcode data
+gem 'aws-sdk-s3', '~> 1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -88,7 +92,6 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
 end
 

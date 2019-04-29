@@ -1,0 +1,66 @@
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-m">Example of error messages HTML</h1>
+
+      <p><b>Note</b>: each item listed in the top errory <b>summary</b> links directly to the ID of the related form element; in this case, one error links to the textfield element</p>
+
+      <p><b>Note</b> classes: .govuk-form-group--error, .govuk-error-message, .govuk-textarea--error</p>
+
+      <p><b>Note</b>: see how the aria-describedby is added for <em>this</em>&nbsp; error <br>state to the <b>textbox</b> element and references the ID on the error message HTML.</p>
+
+    </div>
+  </div>
+
+  <hr style="margin-bottom: 150px;">
+
+
+
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+     <form action="" method="">
+
+
+
+        <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+          <h2 class="govuk-error-summary__title" id="error-summary-title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li>
+                <a href="#more-detail3">Enter your outline for training requirements</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+        <div class="govuk-form-group govuk-form-group--error">
+          <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--m govuk-!-font-weight-bold" for="more-detail3">
+              Briefly outline your training requirements
+            </label>
+          </h1>
+
+          <span id="more-detail-hint3" class="govuk-hint">
+            For example, the apprenticeship standard, level and specific requirements from the training provider
+          </span>
+
+          <span id="more-detail3-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> Enter your outline for training requirements
+          </span>
+
+          <textarea class="govuk-textarea govuk-textarea--error" id="more-detail3" name="more-detail3" rows="5" aria-describedby="more-detail-hint3 more-detail3-error"></textarea>
+        </div>
+
+        <%= render 'layouts/button', text: t('common.continue')%>
+
+      </form>
+
+    </div>
+  </div>
