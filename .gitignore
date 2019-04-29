@@ -36,7 +36,7 @@ logfile
 /nbproject/private/
 
 # SupplyTeachers data folders
-!lib/tasks/supply_teachers/**
+!lib/tasks/supply_teachers/*
 lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx
 lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx
 lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx
