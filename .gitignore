@@ -36,8 +36,27 @@ logfile
 /nbproject/private/
 
 # SupplyTeachers data folders
-lib/tasks/supply_teachers/input/*
-lib/tasks/supply_teachers/output/*
+lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx
+lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx
+lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx
+lib/tasks/supply_teachers/input/master_vendor_contacts.csv
+lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv
+lib/tasks/supply_teachers/input/pricing for tool.xlsx
+lib/tasks/supply_teachers/input/supplier_lookup.csv
+lib/tasks/supply_teachers/output/anonymous.json
+lib/tasks/supply_teachers/output/data.json
+lib/tasks/supply_teachers/output/data_branches_pricing.json
+lib/tasks/supply_teachers/output/data_branches_pricing_vendors.json
+lib/tasks/supply_teachers/output/data_merged.json
+lib/tasks/supply_teachers/output/data_only_accredited.json
+lib/tasks/supply_teachers/output/data_with_line_numbers.json
+lib/tasks/supply_teachers/output/data_with_vendors.json
+lib/tasks/supply_teachers/output/errors.out
+lib/tasks/supply_teachers/output/supplier_accreditation.json
+lib/tasks/supply_teachers/output/supplier_branches.json
+lib/tasks/supply_teachers/output/supplier_pricing.json
+lib/tasks/supply_teachers/output/supplier_vendor_pricing.json
+!lib/tasks/supply_teachers/**
 uploads/*
 public/data/*
 public/uploads/*
