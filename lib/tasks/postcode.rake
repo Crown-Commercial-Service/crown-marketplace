@@ -15,13 +15,13 @@ module OrdnanceSurvey
   def self.awd_credentials
     @secrets = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
     Aws.config[:credentials] = Aws::Credentials.new(@secrets['AccessKeyId'], @secrets['SecretAccessKey'])
+    p "Importing from AWS bucket: #{@secrets['bucket']}, region: #{@secrets['region']}"
   end
 
   def self.import_postcodes
     create_postcode_table
     awd_credentials
 
-    p "Importing from AWS bucket: #{@secrets['bucket']}, region: #{@secrets['region']}"
     object = Aws::S3::Resource.new(region: @secrets['region'])
     object.bucket(@secrets['bucket']).objects.each do |obj|
       next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
