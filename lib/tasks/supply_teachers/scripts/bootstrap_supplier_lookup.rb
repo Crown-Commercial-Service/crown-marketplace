@@ -120,18 +120,7 @@ mv_pricing_names = mv_mark_up_sheet
                    .map            { |row| original_name_only(row) }
                    .uniq
 
-nv_pricing_data = [
-  {
-    supplier_name: 'GRI UK',
-    job_type: :nominated,
-    fee: 0.04
-  },
-  {
-    supplier_name: 'GRI UK',
-    job_type: :daily_fee,
-    fee: 2.50
-  }
-]
+nv_pricing_data = []
 
 nv_pricing_names = nv_pricing_data
                    .map { |row| remap_names(row, name_map) }
