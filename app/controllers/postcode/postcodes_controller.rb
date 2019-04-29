@@ -19,7 +19,9 @@ module Postcode
                else
                  PostcodeChecker.location_info(params[:id])
                end
-      render json: result
+      render json: { status: 200, result: result }
+    rescue StandardError
+      render json: { status: 404, error: 'Postcode not found' }
     end
   end
 end
