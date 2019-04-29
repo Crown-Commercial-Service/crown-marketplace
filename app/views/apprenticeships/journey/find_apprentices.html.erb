@@ -13,12 +13,12 @@
       <%= display_error(@journey, :training_course) %>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
-          <%= radio_button_tag :training_course, 'yes', checked?(params[:training_course], 'yes'), class: 'govuk-radios__input' %>
-          <%= label_tag :training_course, t('yes'), class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :training_course, 'yes', checked?(params[:training_course], 'yes'), class: 'govuk-radios__input', id: 'radio-y' %>
+          <%= label_tag :training_course, t('yes'), class: 'govuk-label govuk-radios__label', for: 'radio-y' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :training_course, 'no', checked?(params[:training_course], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :training_course, t('no'), class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :training_course, 'no', checked?(params[:training_course], 'no'), class: 'govuk-radios__input', id: 'radio-n' %>
+          <%= label_tag :training_course, t('no'), class: 'govuk-label govuk-radios__label', for: 'radio-n' %>
         </div>
       </div>
     <% end %>
