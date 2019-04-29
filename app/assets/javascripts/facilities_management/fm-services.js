@@ -28,32 +28,35 @@ $(() => {
     const renderSelectedServices = (() => {
 
         selectedServices.forEach((service, index) => {
-            let newCheckBoxItem = '<div class="govuk-checkboxes__item">\n' +
-                '                <input class="govuk-checkboxes__input" checked id="' + service.code + '" name="fm-building-service-checkbox" type="checkbox" value="' + service.code + '">\n' +
-                '                <label class="govuk-label govuk-checkboxes__label" for="' + service.code + '">\n' + service.name + '</label></div>'
 
-            $('#fm-buildings-selected-services').prepend(newCheckBoxItem);
+            let id = service.code;
 
-            /* add a change handler for the new check box item */
-            $('#' + service.code).on('change', (e) => {
-                let isChecked = e.target.checked;
+            if (!$('#' + id)) {
+                let newCheckBoxItem = '<div class="govuk-checkboxes__item">\n' +
+                    '                <input class="govuk-checkboxes__input" checked id="' + id + '" name="fm-building-service-checkbox" type="checkbox" value="' + id + '">\n' +
+                    '                <label class="govuk-label govuk-checkboxes__label" for="' + service.code + '">\n' + service.name + '</label></div>'
 
-                if (isChecked === true) {
-                    selectedServicesForThisBuilding.push(service);
-                    updateServiceCount();
-                } else {
-                    /* remove the item */
-                    selectedServicesForThisBuilding = selectedServicesForThisBuilding.filter((currentService) => {
-                        if (currentService && currentService.code !== service.code) {
-                            return true;
-                        }
-                    });
-                    updateServiceCount();
-                }
-            });
+                $('#fm-buildings-selected-services').prepend(newCheckBoxItem);
+
+                /* add a change handler for the new check box item */
+                $('#' + service.code).on('change', (e) => {
+                    let isChecked = e.target.checked;
+
+                    if (isChecked === true) {
+                        selectedServicesForThisBuilding.push(service);
+                        updateServiceCount();
+                    } else {
+                        /* remove the item */
+                        selectedServicesForThisBuilding = selectedServicesForThisBuilding.filter((currentService) => {
+                            if (currentService && currentService.code !== service.code) {
+                                return true;
+                            }
+                        });
+                        updateServiceCount();
+                    }
+                });
+            }
         });
-
-
     });
 
     /!* Update the count of selected services *!/

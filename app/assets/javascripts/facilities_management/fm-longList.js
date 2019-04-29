@@ -68,7 +68,13 @@ $(() => {
                         code: e.target.id,
                         name: e.target.value
                     };
-                    selectedServices.push(service);
+
+                    let b = JSON.stringify(service);
+                    let a = JSON.stringify(selectedServices);
+
+                    if (a.indexOf(b) === -1) {
+                        selectedServices.push(service);
+                    }
                 }
 
                 pageUtils.setCachedData('fm-services', selectedServices);
@@ -119,7 +125,15 @@ $(() => {
 
         $('input[name="fm-regions-checkbox"]').prop("checked", false);
         $('input[name="fm-services-checkbox"]').prop("checked", false);
-        filterSuppliers();
+
+        let tableRows = $('tbody  > tr');
+        tableRows.each(function (rowIndex, row) {
+            let id = row.id;
+            $('#' + id).attr('hidden', true);
+        });
+
+        visibleSuppliers = [];
+        updateCounts();
     });
 
     /* Click handler for Print button */
@@ -161,6 +175,23 @@ $(() => {
             }
         });
         updateCounts();
+    });
+
+
+    $('#fm-suppliers-continue-button').on('click', (e) => {
+        e.preventDefault();
+        let regionCount = $("input[name='fm-regions-checkbox']:checked").length;
+        let serviceCount = $("input[name='fm-services-checkbox']:checked").length;
+
+        if (regionCount > 0 && serviceCount > 0) {
+            pageUtils.toggleInlineErrorMessage(false);
+            location.href = '/facilities-management/standard-contract/questions';
+        } else {
+            pageUtils.toggleInlineErrorMessage(true);
+            $("html, body").animate({scrollTop: 0}, "1");
+            $('html, body').stop(true, true);
+        }
+
     });
 
     init();

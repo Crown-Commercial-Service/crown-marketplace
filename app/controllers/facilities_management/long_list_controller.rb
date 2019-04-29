@@ -10,7 +10,7 @@ class FacilitiesManagement::LongListController < ApplicationController
     @posted_services = JSON.parse(params[:postedservices])
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
-    @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
+    @inline_summary_error_text = 'You must select at least one region and one service before clicking the continue button'
     locations = '(' + @posted_locations.map { |x| "'\"#{x}\"'" }.join(',') + ')'
     services = '(' + @posted_services.map { |x| "'\"#{x}\"'" }.join(',') + ')'
     fm_supplier_data = FMSupplierData.new
