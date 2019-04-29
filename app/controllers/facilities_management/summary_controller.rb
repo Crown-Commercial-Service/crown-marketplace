@@ -14,6 +14,13 @@ module FacilitiesManagement
 
       set_vars
 
+
+      zero_rated_services = [ 'C.8' 'C.19' 'C.21' 'C.22' 'D.3' 'E.9' 'F.2' 'F.3' 'F.4' 'F.5' 'F.6' 'F.7' 'F.8' 'F.9' 'F.10' 'G.8' 'G.12' 'G.13' 'H.12' 'H.14' 'H.15' 'H.16' 'J.9' 'K.6' 'L.1' 'L.2' 'L.4' 'L.9' 'L.10' 'L.11' 'M.1' ]
+      non_zero_rated_services = [ 'C.1' 'C.2' 'C.3' 'C.4' 'C.5' 'C.6' 'C.7' 'C.11' 'C.12' 'C.13' 'C.14' 'C.9' 'C.10' 'C.15' 'C.16' 'C.17' 'C.18' 'C.20' 'D.1' 'D.2' 'D.4' 'D.5' 'D.6' 'E.1' 'E.2' 'E.3' 'E.4' 'E.5' 'E.6' 'E.7' 'E.8' 'F.1' 'G.1' 'G.2' 'G.3' 'G.4' 'G.6' 'G.7' 'G.15' 'G.5' 'G.9' 'G.10' 'G.11' 'G.14' 'G.16' 'H.5' 'H.7' 'H.1' 'H.2' 'H.3' 'H.4' 'H.6' 'H.8' 'H.9' 'H.10' 'H.11' 'H.13' 'I.1' 'I.2' 'I.3' 'I.4' 'I.5' 'J.1' 'J.2' 'J.3' 'J.4' 'J.5' 'J.6' 'J.7' 'J.8' 'J.10' 'J.11' 'J.12' 'K.2' 'K.3' 'K.1' 'K.4' 'K.5' 'K.144' 'L.3' 'L.5' 'L.6' 'L.7' 'L.8' 'M.5' 'M.136' 'M.138' 'M.140' 'M.141' 'M.142' 'M.144' 'M.148' 'N.1' 'M.146' 'N.3' 'N.4' 'N.5' 'N.6' 'K.7' ]
+
+
+      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+
       respond_to do |format|
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
         format.html
@@ -52,13 +59,15 @@ module FacilitiesManagement
 
       puts FacilitiesManagement::Service.all_codes
       puts FacilitiesManagement::Service.all
-      puts FacilitiesManagement::Service.all.first.code
-      puts FacilitiesManagement::Service.all.first.name
-      puts FacilitiesManagement::Service.all.first.mandatory
-      puts FacilitiesManagement::Service.all.first.mandatory?
-      puts FacilitiesManagement::Service.all.first.work_package
-      puts FacilitiesManagement::Service.all.first.work_package.code
-      puts FacilitiesManagement::Service.all.first.work_package.name
+      @selected_services.all do | service |
+        puts service.first.code
+        puts service.name
+        puts service.mandatory
+        puts service.mandatory?
+        puts service.work_package
+        puts service.work_package.code
+        puts service.work_package.name
+      end
 
       # ------------------------------
 
