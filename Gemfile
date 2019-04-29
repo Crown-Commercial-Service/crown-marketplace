@@ -51,7 +51,6 @@ gem 'kaminari', '~> 1.1.1'
 # for pretty urls
 gem 'friendly_id', '~> 5.2.4'
 
-<<<<<<< HEAD
 # for file uploads
 gem 'carrierwave', '~> 1.0'
 
