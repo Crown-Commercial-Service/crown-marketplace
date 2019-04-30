@@ -12,12 +12,11 @@ module SupplyTeachers
 
       def new
         @upload = Upload.new
-        @previous_uploaded_files = ::PreviousUploadedFilesPresenter.new
+        @uploads_in_progress = Upload.in_review_or_in_progress?
       end
 
       def create
         @upload = Upload.new(upload_params)
-        @previous_uploaded_files = ::PreviousUploadedFilesPresenter.new
 
         if @upload.save
           SupplyTeachers::DataScriptWorker.perform_async(@upload.id)
