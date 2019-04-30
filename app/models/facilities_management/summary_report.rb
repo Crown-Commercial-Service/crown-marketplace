@@ -1,34 +1,19 @@
-require 'transient_session_info'
-
 module FacilitiesManagement
-  class SummaryController < FrameworkController
-    skip_before_action :verify_authenticity_token, only: :index
+    class SummaryReport
 
-    require_permission :none, only: :index
-      # :nocov:
+    def initialize(start_date, user_id, data)
+        @start_date = start_date
+        @user_id = user_id
+        @data = data
+    end
+        
+    def test
+      set_vars
 
-
-    def index
-
-      puts 'SummaryController >> index'
-
-      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-      #@lot_choice = params[:lot]
-
-      report = SummaryReport.new(@start_date, current_login.email.to_s, $tsi[session.id])
-      report.test
-
-      respond_to do |format|
-        format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
-        format.html
-        format.xlsx do
-          spreadsheet = Spreadsheet.new(@suppliers, with_calculations: params[:calculations].present?)
-          filename = "Shortlist of agencies#{params[:calculations].present? ? ' (with calculator)' : ''}"
-          render xlsx: spreadsheet.to_xlsx, filename: filename
-        end
-      end
-
-
+      # CCS::FM::Rate.zero_rate
+      zero_rated_services2 = CCS::FM::Rate.zero_rate.map(&:code)
+      # CCS::FM::Rate.non_zero_rate
+      non_zero_rated_services2 = CCS::FM::Rate.non_zero_rate.map(&:code)
     end
 
 
@@ -36,13 +21,14 @@ module FacilitiesManagement
 
     def set_vars
 
-      @select_fm_locations = '/facilities-management/select-locations'
-      @select_fm_services = '/facilities-management/select-services'
-      @posted_locations = $tsi[session.id, :posted_locations]
-      @posted_services = $tsi[session.id, :posted_services]
-      @inline_error_summary_title = 'There was a problem'
-      @inline_error_summary_body_href = '#'
-      @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
+      # @select_fm_locations = '/facilities-management/select-locations'
+      # @select_fm_services = '/facilities-management/select-services'
+      # @inline_error_summary_title = 'There was a problem'
+      # @inline_error_summary_body_href = '#'
+      # @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
+
+      @posted_locations = @data[:posted_locations]
+      @posted_services = @data[:posted_services]
 
       # Get nuts regions
       @regions = {}
@@ -52,46 +38,72 @@ module FacilitiesManagement
       @subregions.select! { | k, v | @posted_locations.include? k }
 
       @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
-      # ------------------------------
 
-      puts FacilitiesManagement::Service.all_codes
-      puts FacilitiesManagement::Service.all
-      @selected_services.each do | service |
-        puts service.code
-        puts service.name
-        puts service.mandatory
-        puts service.mandatory?
-        puts service.work_package
-        puts service.work_package.code
-        puts service.work_package.name
-      end
 
       # ------------------------------
 
-      @supplier_count = $tsi[session.id, :supplier_count]
+      @building_data = CCS::FM::Building.buildings_for_user(@user_id)
 
-      @choice = params[:lot]
-      case @choice # a_variable is the variable we want to compare
-      when '1a'
-        @suppliers = @suppliers_lot1a = $tsi[session.id, :suppliers_lot1a]
-      when '1b'
-        @suppliers = @suppliers_lot1b = $tsi[session.id, :suppliers_lot1b]
-      when '1c'
-        @suppliers = @suppliers_lot1c = $tsi[session.id, :suppliers_lot1c]
-      else
-        @suppliers_lot1a = $tsi[session.id, :suppliers_lot1a]
-        @suppliers_lot1b = $tsi[session.id, :suppliers_lot1b]
-        @suppliers_lot1c = $tsi[session.id, :suppliers_lot1c]
-        @suppliers = ( @suppliers_lot1a || [] ) + ( @suppliers_lot1b || [] )  + ( @suppliers_lot1c || [] )
+      # puts FacilitiesManagement::Service.all_codes
+      # puts FacilitiesManagement::Service.all
+      @building_data.each do | building |
+
+        sumX = 0
+        sumY = 0
+
+        fm_gross_internal_area = building.building_json['fm-gross-internal-area'].to_i
+
+        occupants = 125 # fix it !!!
+
+        london_flag = if building.building_json['isLondon'] == 'Yes'
+                     'Y'
+                   else
+                     'N'
+                   end
+
+        tupe_flag = 'Y' # fix it !!!
+        cafm_flag = 'Y' # fix it !!!
+        helpdesk_flag = 'N' # fix it !!!
+
+        @selected_services.each do | service |
+          puts service.code
+          puts service.name
+          puts service.mandatory
+          puts service.mandatory?
+          puts service.work_package
+          puts service.work_package.code
+          puts service.work_package.name
+
+          code = service.code.remove('.')
+          calcFM = FMCalculator::Calculator.new(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+          x1 = calcFM.sumunitofmeasure(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+          y1 = calcFM.benchmarkedcostssum(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+
+          sumX += x1
+          sumY += y1
+        end
       end
 
+      p sumX
+      p sumY
+      # ------------------------------
 
+      locations = @data[:locations]
+      services = @data[:services]
+
+      fm_supplier_data = FMSupplierData.new
+      @supplier_count = fm_supplier_data.long_list_supplier_count(locations, services)
+      @suppliers_lot1a = fm_supplier_data.long_list_suppliers_lot(locations, services, '1a')
+      @suppliers_lot1b = fm_supplier_data.long_list_suppliers_lot(locations, services, '1b')
+      @suppliers_lot1c = fm_supplier_data.long_list_suppliers_lot(locations, services, '1c')
+
+      @suppliers = ( @suppliers_lot1a || [] ) + ( @suppliers_lot1b || [] )  + ( @suppliers_lot1c || [] )
 
       # @supplier_count = [ @suppliers_lot1a, @suppliers_lot1b, @suppliers_lot1c ].max
       # puts @supplier_count
 
       calculate_fm
-      calculate_fm_cleaning
+      calculate_fm_cleaning('G1', 23000, 125, 'Y', 'Y', 'Y', 'N')
     end
 
     def calculate_fm
@@ -159,12 +171,13 @@ module FacilitiesManagement
       # expect(SumY).to eq(1029770)
     end
 
-    def calculate_fm_cleaning
+    # (service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    def calculate_fm_cleaning(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
       puts 'calculate_fm_cleaning'
 
-
       # args  Service ref, uom_vol, occupants, tuoe involved, london_location, CAFM, helpdesk
-      calc = FMCalculator::Calculator.new('G1', 23000, 125, 'Y', 'Y', 'Y', 'N')
+      # calc = FMCalculator::Calculator.new('G1', 23000, 125, 'Y', 'Y', 'Y', 'N')
+      calc = FMCalculator::Calculator.new(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
 
       x = calc.uomd
       # expect(x).to eq(277491)
@@ -243,8 +256,7 @@ module FacilitiesManagement
     end
 
 
-  end # class
 
 
-
-end # module
+    end
+end
