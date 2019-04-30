@@ -20,13 +20,16 @@ module FacilitiesManagement
 
 
       @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-      #@lot_choice = params[:lot]
 
       report = SummaryReport.new(@start_date, current_login.email.to_s, $tsi[session.id])
       report.calculate_services_for_buildings
 
+      @without_pricing = report.without_pricing
+      @with_pricing = report.with_pricing
+
+
       # -------------------------
-      @posted_locations = $tsi[session.id, :posted_locations]
+      @posted_locations = $tsi[session.id][:posted_locations]
 
       # Get nuts regions
       @regions = {}
@@ -35,6 +38,7 @@ module FacilitiesManagement
       FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
       @subregions.select! { | k, v | @posted_locations.include? k }
       # -------------------------
+
 
       respond_to do |format|
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
