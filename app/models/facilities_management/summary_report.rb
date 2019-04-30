@@ -7,8 +7,8 @@ module FacilitiesManagement
         @data = data
     end
         
-    def test
-      set_vars
+    def calculate_services_for_buildings
+      services_for_buildings
 
       # CCS::FM::Rate.zero_rate
       zero_rated_services2 = CCS::FM::Rate.zero_rate.map(&:code)
@@ -19,26 +19,10 @@ module FacilitiesManagement
 
     private
 
-    def set_vars
+    def services_for_buildings
 
-      # @select_fm_locations = '/facilities-management/select-locations'
-      # @select_fm_services = '/facilities-management/select-services'
-      # @inline_error_summary_title = 'There was a problem'
-      # @inline_error_summary_body_href = '#'
-      # @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
-
-      @posted_locations = @data[:posted_locations]
       @posted_services = @data[:posted_services]
-
-      # Get nuts regions
-      @regions = {}
-      Nuts1Region.all.each { |x| @regions[x.code] = x.name }
-      @subregions = {}
-      FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
-      @subregions.select! { | k, v | @posted_locations.include? k }
-
       @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
-
 
       # ------------------------------
 
@@ -82,10 +66,12 @@ module FacilitiesManagement
           sumX += x1
           sumY += y1
         end
+
+        p sumX
+        p sumY
       end
 
-      p sumX
-      p sumY
+
       # ------------------------------
 
       locations = @data[:locations]
