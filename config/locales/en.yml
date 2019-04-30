@@ -655,6 +655,12 @@ en:
         show:
           caption: Agency supply teachers and agency workers
           heading: 'Upload session #%{number}'
+        in_progress:
+          heading: Upload successful
+          content: The spreadsheets have been uploaded and are now processing.
+        uploading:
+          heading: Data upload in progress
+          content_html: "The data from <strong>'Upload session #%{session_no}'</strong> is currently in progress to be published to the <strong>'Agency supply teachers and agency workers'</strong> service."
     branches:
       branch:
         address: Address
