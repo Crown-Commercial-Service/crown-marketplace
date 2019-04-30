@@ -1,0 +1,85 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 cmp-page-heading"><%= t('.heading', number: @upload.short_uuid) %></h1>
+    <table>
+      <tbody>
+      <tr>
+        <td>
+          <p class="govuk-body govuk-!-margin-bottom-0"><strong>Status:</strong></p>
+        </td>
+        <td>
+          <p class="govuk-body govuk-!-margin-bottom-0"><strong class="govuk-tag ccs-tag-<%= @upload.aasm_state %>"><%= t('supply_teachers.admin.uploads.index.'+@upload.aasm_state+'_tag') %></strong></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p><strong>Date/time:</strong></p>
+        </td>
+        <td>
+          <p><%= @upload.created_at.strftime('%m/%d/%Y @ %H:%M') %></p>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table class="govuk-table govuk-!-margin-top-4">
+      <caption class="govuk-table__caption">Files</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Spreadsheet</th>
+          <th class="govuk-table__header" scope="col">Download</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <% if @upload.current_accredited_suppliers.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Current accredited suppliers</th>
+          <td class="govuk-table__cell"><%= link_to 'Download', @upload.current_accredited_suppliers_url %></td>
+        </tr>
+      <% end %>
+      <% if @upload.geographical_data_all_suppliers.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Geographical data all suppliers</th>
+          <td class="govuk-table__cell"><%= link_to 'Download', @upload.geographical_data_all_suppliers_url %></td>
+        </tr>
+      <% end %>
+      <% if @upload.lot_1_and_lot_2_comparisons.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Lot 1 and Lot 2 comparisons</th>
+          <td class="govuk-table__cell"><%= link_to 'Download', @upload.lot_1_and_lot_2_comparisons_url %></td>
+        </tr>
+      <% end %>
+      <% if @upload.master_vendor_contacts.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Master vendor contacts</th>
+          <td class="govuk-table__cell"><%= link_to 'Download', @upload.master_vendor_contacts_url %></td>
+        </tr>
+      <% end %>
+      <% if @upload.neutral_vendor_contacts.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Neutral vendor contacts</th>
+          <td class="govuk-table__cell"><%= link_to 'Download', @upload.neutral_vendor_contacts_url %></td>
+        </tr>
+      <% end %>
+      <% if @upload.pricing_for_tool.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Pricing for tool</th>
+          <td class="govuk-table__cell"><%= link_to 'Download', @upload.pricing_for_tool_url %></td>
+        </tr>
+      <% end %>
+      <% if @upload.supplier_lookup.file.present? %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Supplier lookup</th>
+          <td class="govuk-table__cell"><%= link_to 'Download', @upload.supplier_lookup_url %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <% if @upload.in_review? %>
+      <p class="govuk-body govuk-!-margin-top-8">Confirm these files are ready to be used by the live service:</p>
+      <%= link_to "Approve and publish to live services", supply_teachers_admin_upload_approve_path(@upload), class: 'govuk-button' %>
+      <%= link_to "Reject", supply_teachers_admin_upload_reject_path(@upload), class: 'govuk-button govuk-button--warning' %>
+    <% end %>
+  </div>
+</div>

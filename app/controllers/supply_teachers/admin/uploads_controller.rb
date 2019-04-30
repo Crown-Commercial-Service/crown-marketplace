@@ -7,10 +7,12 @@ module SupplyTeachers
       end
 
       def show
+        @back_path = :back
         @upload = Upload.find(params[:id])
       end
 
       def new
+        @back_path = :back
         @upload = Upload.new
         @uploads_in_progress = Upload.in_review_or_in_progress?
       end
