@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
     post '/buildings/save-uom-value' => 'buildings#save_uom_value'
     post '/services/save-lift-data' => 'select_services#save_lift_data'
+    get '/buildings/region', to: 'buildings#region_info'
     get '/suppliers', to: 'suppliers#index'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/contract-start', to: 'contract#start_of_contract'

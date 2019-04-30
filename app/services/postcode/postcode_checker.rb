@@ -8,9 +8,10 @@ module Postcode
       @london_burroughs.include? info[0]['administrative_area']
     end
 
-    # SELECT * FROM os_address where postcode='G32 0RP';
+    # SELECT * FROM os_address_view where postcode='G32 0RP';
     def self.location_info(postcode)
-      query = 'SELECT * FROM os_address where postcode=\'' + postcode + '\';'
+      query = "select distinct initcap(add1) as add1, initcap(village) as village, initcap(post_town) as post_town, initcap(county) as county, upper(postcode) as postcode, administrative_area
+ from public.os_address_view where postcode = '" + postcode + "';"
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     end
 

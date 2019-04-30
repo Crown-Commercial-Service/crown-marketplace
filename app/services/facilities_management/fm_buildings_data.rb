@@ -1,5 +1,6 @@
 require 'json'
 require 'base64'
+require 'net/http'
 class FMBuildingData
   def save_building(email_address, building)
     query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
@@ -31,6 +32,16 @@ class FMBuildingData
     result[0]['record_count']
   rescue StandardError => e
     Rails.logger.warn "Couldn't get count of buildings: #{e}"
+  end
+
+  def region_info_for_post_town(post_code)
+    # Needs to be converted to get the data from the database
+    res = Net::HTTP.start('api.postcodes.io') do |http|
+      http.get('/postcodes/' + post_code)
+    end
+    res.body
+  rescue StandardError => e
+    Rails.logger.warn "Couldn' t get region information for post town : #{e}"
   end
 
   def building_type_list
