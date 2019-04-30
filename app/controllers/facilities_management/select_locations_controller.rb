@@ -14,4 +14,5 @@ class FacilitiesManagement::SelectLocationsController < ApplicationController
     FacilitiesManagement::Region.all.each { |x| h[x.code] = x.name }
     @subregions = h
   end
+
 end
