@@ -14,6 +14,10 @@ class TransientSessionInfo
         @dict[key1][key2]
     end
 
+    def [](key1)
+        @dict[key1]
+    end
+
 end
 
 

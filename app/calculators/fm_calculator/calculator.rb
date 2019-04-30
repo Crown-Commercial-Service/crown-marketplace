@@ -46,6 +46,7 @@ module FMCalculator
       @benchhelpdesk = 0
       @benchsubtotal2 = 0
       @benchsubtotal3 = 0
+      @benchvariance = 0
       read_benchmark_rates
     end
 
@@ -76,6 +77,8 @@ module FMCalculator
       @uomd = @uom_vol * @framework_rate
       Rails.logger.info("uomd=#{@uomd}")
       @uomd = @uomd.round(0)
+    rescue StandardError => e
+      raise e
     end
 
     # cleaning consumables
