@@ -74,3 +74,7 @@ $govuk-link-visited-colour: #4c2c92;
 #main-footer .ccs-footer__links {
   text-decoration: underline; 
 }
+
+.govuk-button--warning {
+  background-color: govuk-colour("red") !important;
+}
