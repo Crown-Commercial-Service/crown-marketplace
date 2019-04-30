@@ -628,6 +628,24 @@ en:
       one: agency
       other: agencies
   supply_teachers:
+    admin:
+      uploads:
+        index:
+          caption: Manage supplier data
+          heading: Agency Supply teachers and agency workers
+          create_new: Create a new data upload
+          table_caption: Previous uploads
+          name: Name
+          date: Date
+          no_of_files: Number of files
+          status: Status
+          in_review_tag: In Review
+          in_progress_tag: In Progress
+          uploading_tag: Uploading
+          canceled_tag: Canceled
+          rejected_tag: Rejected
+          failed_tag: Failed
+          approved_tag: Approved
     branches:
       branch:
         address: Address
