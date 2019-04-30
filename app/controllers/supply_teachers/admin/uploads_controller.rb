@@ -22,7 +22,7 @@ module SupplyTeachers
 
         if @upload.save
           SupplyTeachers::DataScriptWorker.perform_async(@upload.id)
-          redirect_to supply_teachers_admin_uploads_path, notice: 'Upload session successfully created and is now in progress.'
+          redirect_to supply_teachers_admin_in_progress_path
         else
           @upload.cleanup_input_files
           render :new
@@ -32,13 +32,19 @@ module SupplyTeachers
       def approve
         upload = Upload.find(params[:upload_id])
         upload.upload!
-        redirect_to supply_teachers_admin_uploads_path, notice: 'Database upload is now in progress.'
+        redirect_to supply_teachers_admin_upload_uploading_path(upload_id: upload.id)
       end
 
       def reject
         upload = Upload.find(params[:upload_id])
         upload.reject!
         redirect_to supply_teachers_admin_uploads_path, notice: 'Upload session rejected.'
+      end
+
+      def in_progress; end
+
+      def uploading
+        @upload = Upload.find(params[:upload_id])
       end
 
       private
