@@ -14,12 +14,19 @@
                     role: 'button',
                     class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8 ga-auth-dfe') %>
 
+        <h2 class="govuk-heading-l"><%= t(".subheading") %></h2>
+
         <p>
           <%= t('.dfe_signin.create_account_html',
-                gias_url: 'https://get-information-schools.service.gov.uk/',
-                dfe_sign_in_url: 'http://help.signin.education.gov.uk/contact') %>
+                gias_url: 'https://get-information-schools.service.gov.uk/') %>
         </p>
 
+        <p class="class: 'govuk-!-margin-bottom-2'">
+          <%= link_to t('.dfe_signin.create_dfe_signin_link'), 'http://help.signin.education.gov.uk/contact', role: 'button' %>.
+        </p>
+        <p>
+          <%= t('.dfe_signin.find_more_info_html', terms_url: 'https://interactions.signin.education.gov.uk/terms') %>
+        </p>
         <p>
           <%= t('.dfe_signin.not_for_profit_html') %>
         </p>
