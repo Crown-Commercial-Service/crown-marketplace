@@ -78,6 +78,10 @@ module SupplyTeachers
         where(aasm_state: :approved).where.not("#{attr_name}": nil).first
       end
 
+      def self.in_review_or_in_progress?
+        in_review.any? || in_progress.any?
+      end
+
       private
 
       def start_upload
