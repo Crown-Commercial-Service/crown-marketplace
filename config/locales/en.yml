@@ -646,6 +646,12 @@ en:
           rejected_tag: Rejected
           failed_tag: Failed
           approved_tag: Approved
+        new:
+          caption: Agency supply teachers and agency workers
+          heading: New data upload
+          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+          upload_title: Upload one or more of the following spreadsheets
+          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
     branches:
       branch:
         address: Address
