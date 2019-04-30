@@ -70,6 +70,10 @@ module SupplyTeachers
         count
       end
 
+      def short_uuid
+        id[0..7]
+      end
+
       def self.previous_uploaded_file(attr_name)
         previous_uploaded_file_object(attr_name).try(:send, attr_name)
       end
