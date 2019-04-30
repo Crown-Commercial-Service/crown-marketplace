@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     resources :downloads, only: :index
     unless Rails.env.production? # not be available on production environments yet
       namespace :admin do
-        resources :uploads, only: %i[index new create] do
+        resources :uploads, only: %i[index new create show] do
           get 'approve'
           get 'reject'
         end

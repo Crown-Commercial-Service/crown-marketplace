@@ -2,7 +2,12 @@ module SupplyTeachers
   module Admin
     class UploadsController < FrameworkController
       def index
+        @back_path = :back
         @uploads = Upload.all
+      end
+
+      def show
+        @upload = Upload.find(params[:id])
       end
 
       def new
