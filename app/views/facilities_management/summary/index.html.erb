@@ -1,9 +1,3 @@
-List of Suppliers
-
-
-
-
-
 
     <a href="/facilities-management/select-services" class="govuk-back-link ccs-no-print">Back</a>
 
@@ -11,15 +5,25 @@ List of Suppliers
 
     <div>
       <fieldset class="govuk-fieldset" aria-describedby="">
-        <strong class="govuk-heading-xl"> Supplier results</strong>
+        <strong class="govuk-heading-xl"> Review services without pricing</strong>
+<!--
         <div class="govuk-inset-text ccs-no-print">
           <strong>On this page</strong><br>
           <span>Based on your choices, we are showing suppliers in three different groups.</span>
        </div>
+-->
       </fieldset>
       <p class="govuk-!-font-size-36">
-        <strong><%= @supplier_count %> suppliers found</strong> based on total contract value, when awarded.
+        <strong><%= @without_pricing.count %> suppliers found</strong>
+         (from <%= @without_pricing.count + @with_pricing.count%> selected) without a price.
       </p>
+      <p class="govuk-!-font-size-36">
+        Your assessed value is £???,??? for the contract term of 7 years.
+      </p>
+      <p class="govuk-!-font-size-36">
+        Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.
+      </p>
+
 
       <!-- Start of filter section -->
       <div class="govuk-grid-row">
@@ -33,7 +37,8 @@ List of Suppliers
         </div>
 -->
 
-        <!-- Start of main list section -->
+<!---
+
         <div id="CCS-fm-suppliers-long-list" class="govuk-grid-column-two-thirds">
             <% if (@suppliers_lot1a) %>
             <%= render('facilities_management/long_list/lot1a') %>
@@ -45,13 +50,13 @@ List of Suppliers
             <%= render('facilities_management/long_list/lot1c') %>
             <% end %>
         </div>
-
+--->
 
 
 
       </div>
 
-<!------->
+<!----
 <p>Choices used to generate your shortlist:</p>
 <p>Filters used</p>
 <p>Regions(<%= @subregions.count %>)</p>
@@ -69,19 +74,17 @@ List of Suppliers
   </fieldset>
 </div>
 <% end %>
-<!------->
+----->
+<!--
 <p/>
-<p>Services with pricing (<%= @selected_services.count %>):</p>
-<% @selected_services.each do | service | %>
+<p>Services with pricing (<%= @with_pricing.count %>):</p>
+<% @with_pricing.each do | service | %>
 <p><strong><%= service.name %></strong></p>
-<p/>
-<span>    </span><%= service.inspect %>
-<p/>
-<span>    </span><%= service.work_package.inspect %>
 <% end %>
+-->
 <p/>
-<p>Services without pricing (<%= @selected_services.count %>):</p>
-<% @selected_services.each do | service | %>
+<p>Services without pricing (<%= @without_pricing.count %>):</p>
+<% @without_pricing.each do | service | %>
 <p><strong><%= service.name %></strong></p>
 <% end %>
 <!------->
@@ -121,10 +124,5 @@ List of Suppliers
           <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" >Print this page</a>
         </p>
       </div>
-    </div>
-
-    <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print" role="button">Hide filters</a><br>
-    <div id="fm-filter-pane" class="govuk-grid-column-one-third">
-        <%= render('facilities_management/long_list/filters') %>
     </div>
 

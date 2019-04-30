@@ -1,35 +1,46 @@
 module FacilitiesManagement
-    class SummaryReport
+  class SummaryReport
 
     def initialize(start_date, user_id, data)
-        @start_date = start_date
-        @user_id = user_id
-        @data = data
+      @start_date = start_date
+      @user_id = user_id
+      @data = data
+      @posted_services = @data[:posted_services]
     end
-        
+
     def calculate_services_for_buildings
       services_for_buildings
 
-      # CCS::FM::Rate.zero_rate
-      zero_rated_services2 = CCS::FM::Rate.zero_rate.map(&:code)
-      # CCS::FM::Rate.non_zero_rate
-      non_zero_rated_services2 = CCS::FM::Rate.non_zero_rate.map(&:code)
+
+
     end
 
+
+    def with_pricing
+
+      # CCS::FM::Rate.non_zero_rate
+      services_with_pricing = CCS::FM::Rate.non_zero_rate.map(&:code)
+
+      FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code and services_with_pricing.include? service.code }
+    end
+
+
+    def without_pricing
+      # CCS::FM::Rate.zero_rate
+      services_without_pricing = CCS::FM::Rate.zero_rate.map(&:code)
+
+      FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code and services_without_pricing.include? service.code }
+    end
 
     private
 
     def services_for_buildings
 
-      @posted_services = @data[:posted_services]
+
       @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
 
       # ------------------------------
-
       @building_data = CCS::FM::Building.buildings_for_user(@user_id)
-
-      # puts FacilitiesManagement::Service.all_codes
-      # puts FacilitiesManagement::Service.all
       @building_data.each do | building |
 
         sumX = 0
@@ -50,13 +61,13 @@ module FacilitiesManagement
         helpdesk_flag = 'N' # fix it !!!
 
         @selected_services.each do | service |
-          puts service.code
-          puts service.name
-          puts service.mandatory
-          puts service.mandatory?
-          puts service.work_package
-          puts service.work_package.code
-          puts service.work_package.name
+          # puts service.code
+          # puts service.name
+          # puts service.mandatory
+          # puts service.mandatory?
+          # puts service.work_package
+          # puts service.work_package.code
+          # puts service.work_package.name
 
           code = service.code.remove('.')
           calcFM = FMCalculator::Calculator.new(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
@@ -240,9 +251,5 @@ module FacilitiesManagement
       # expect(x).to eq(600243)
 
     end
-
-
-
-
-    end
+  end
 end
