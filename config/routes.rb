@@ -28,7 +28,9 @@ Rails.application.routes.draw do
         resources :uploads, only: %i[index new create show] do
           get 'approve'
           get 'reject'
+          get 'uploading'
         end
+        get '/in_progress', to: 'uploads#in_progress'
       end
     end
     get '/start', to: 'journey#start', as: 'journey_start'

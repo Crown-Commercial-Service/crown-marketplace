@@ -2,7 +2,11 @@
   <div class="govuk-grid-column-full">
     <span class="govuk-caption-xl"><%= t('.caption') %></span>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-
+    <% if flash[:notice] %>
+      <div class="govuk-inset-text cmp-inset-text--success">
+        <p class="govuk-body govuk-body-s"><%= flash[:notice] %></p>
+      </div>
+    <% end %>
     <%= link_to t('.create_new'), new_supply_teachers_admin_upload_path, class: 'govuk-button'  %>
     <hr class="govuk-section-break govuk-section-break--m">
   </div>
