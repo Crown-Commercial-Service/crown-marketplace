@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
@@ -53,6 +53,9 @@ gem 'friendly_id', '~> 5.2.4'
 
 # aws s3 bucket access for postcode data
 gem 'aws-sdk-s3', '~> 1'
+
+# Performance Cops will be removed from RuboCop 0.68. Use rubocop-performance gem instead.
+gem 'rubocop-performance'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
