@@ -110,10 +110,10 @@ $(() => {
             result = false;
         }
 
-        if (result && !address['fm-address-county']) {
-            id = 'fm-address-county';
-            result = false;
-        }
+        // if (result && !address['fm-address-county']) {
+        //     id = 'fm-address-county';
+        //     result = false;
+        // }
 
         if (result && !address['fm-address-postcode'] || pageUtils.isPostCodeValid(postCode) === false) {
             id = 'fm-address-postcode';
