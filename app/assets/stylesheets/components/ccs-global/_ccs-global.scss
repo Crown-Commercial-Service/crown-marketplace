@@ -100,6 +100,15 @@ abbr {
     a.ccs-no-underline & {
         margin-left: govuk-spacing(1);
     }
+  &-approved {
+    background-color: govuk-colour("green");
+  }
+  &-canceled, &-failed, &-rejected {
+    background-color: govuk-colour("red");
+  }
+  &-in_review, &-in_progress, &-uploading {
+    background-color: govuk-colour("grey-1");
+  }
 }
 /* css-tag end ****** */
 
