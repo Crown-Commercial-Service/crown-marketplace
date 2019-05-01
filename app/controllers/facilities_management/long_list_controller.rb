@@ -24,6 +24,8 @@ class FacilitiesManagement::LongListController < ApplicationController
     @suppliers_lot1a = fm_supplier_data.long_list_suppliers_lot(@locations, @services, '1a')
     @suppliers_lot1b = fm_supplier_data.long_list_suppliers_lot(@locations, @services, '1b')
     @suppliers_lot1c = fm_supplier_data.long_list_suppliers_lot(@locations, @services, '1c')
+
+    transient_session_info
   end
 
   private
