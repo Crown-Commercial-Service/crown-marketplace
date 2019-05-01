@@ -14,8 +14,8 @@
 -->
       </fieldset>
       <p class="govuk-!-font-size-36">
-        <strong><%= @without_pricing.count %> suppliers found</strong>
-         (from <%= @without_pricing.count + @with_pricing.count%> selected) without a price.
+        <strong><%= @report.without_pricing.count %> suppliers found</strong>
+         (from <%= @report.without_pricing.count + @report.with_pricing.count%> selected) without a price.
       </p>
       <p class="govuk-!-font-size-36">
         Your assessed value is £???,??? for the contract term of 7 years.
@@ -25,18 +25,9 @@
       </p>
 
 
-
-
-<!--
 <p/>
-<p>Services with pricing (<%= @with_pricing.count %>):</p>
-<% @with_pricing.each do | service | %>
-<p><strong><%= service.name %></strong></p>
-<% end %>
--->
-<p/>
-<p>Services without pricing (<%= @without_pricing.count %>):</p>
-<% @without_pricing.each do | service | %>
+<p>Services without pricing (<%= @report.without_pricing.count %>):</p>
+<% @report.without_pricing.each do | service | %>
 <p><strong><%= service.name %></strong></p>
 <% end %>
 <!------->
