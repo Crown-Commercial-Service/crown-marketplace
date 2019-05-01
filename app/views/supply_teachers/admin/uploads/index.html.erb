@@ -22,10 +22,9 @@
       </tr>
       </thead>
       <tbody class="govuk-table__body">
-      <% @uploads.each do |upload| %>
-        <%= render 'upload', upload: upload %>
-      <% end %>
+      <%= render partial: 'upload', collection: @uploads %>
       </tbody>
     </table>
+    <%= paginate @uploads, views_prefix: 'shared', window: 0, outer_window: 2 %>
   </div>
 </div>
