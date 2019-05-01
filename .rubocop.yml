@@ -2,7 +2,6 @@
 require:
   - rubocop-rspec
   - './lib/cop/all'
-  - rubocop-performance
 
 AllCops:
     TargetRubyVersion: 2.5
