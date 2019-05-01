@@ -51,6 +51,23 @@ gem 'kaminari', '~> 1.1.1'
 # for pretty urls
 gem 'friendly_id', '~> 5.2.4'
 
+# for file uploads
+gem 'carrierwave', '~> 1.0'
+
+# handles spreadsheets
+gem 'roo', '~> 2.8.0'
+
+# manipulating JSON for anonymisation
+gem 'jsonpath', '~> 0.5.8'
+
+# state machine
+gem 'aasm', '~> 5.0'
+
+# for running background jobs
+gem 'sidekiq', '~> 5.2.7'
+gem 'sinatra', '~> 2.0.5', require: false
+gem 'slim', '~> 4.0.1'
+
 # aws s3 bucket access for postcode data
 gem 'aws-sdk-s3', '~> 1'
 

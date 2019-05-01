@@ -1,0 +1,63 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/error_summary', locals: { errors: @upload.errors } %>
+    <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5 cmp-page-heading"><%= t('.heading') %></h1>
+    <% if @uploads_in_progress %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          <%= t('.warning_text') %>
+        </strong>
+      </div>
+    <% end %>
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.upload_title') %></h3>
+    <span class="govuk-caption-m govuk-!-margin-bottom-7"><%= t('.upload_caption') %></span>
+    <%= form_for @upload, html: { multipart: true } do |f| %>
+      <%= govuk_form_group_with_optional_error(@upload, :current_accredited_suppliers) do %>
+        <%= display_errors(@upload, :current_accredited_suppliers) %>
+        <%= f.label :current_accredited_suppliers, class: "govuk-label" %>
+        <%= f.file_field :current_accredited_suppliers, class: css_classes_for_file_upload(@upload, :current_accredited_suppliers) %>
+        <%= f.hidden_field :current_accredited_suppliers_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :geographical_data_all_suppliers) do %>
+        <%= f.label :geographical_data_all_suppliers, class: "govuk-label" %>
+        <%= display_errors(@upload, :geographical_data_all_suppliers) %>
+        <%= f.file_field :geographical_data_all_suppliers, class: css_classes_for_file_upload(@upload, :geographical_data_all_suppliers) %>
+        <%= f.hidden_field :geographical_data_all_suppliers_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :lot_1_and_lot_2_comparisons) do %>
+        <%= display_errors(@upload, :lot_1_and_lot_2_comparisons) %>
+        <%= f.label :lot_1_and_lot_2_comparisons, class: "govuk-label" %>
+        <%= f.file_field :lot_1_and_lot_2_comparisons, class: css_classes_for_file_upload(@upload, :lot_1_and_lot_2_comparisons) %>
+        <%= f.hidden_field :lot_1_and_lot_2_comparisons_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :master_vendor_contacts) do %>
+        <%= display_errors(@upload, :master_vendor_contacts) %>
+        <%= f.label :master_vendor_contacts, class: "govuk-label" %>
+        <%= f.file_field :master_vendor_contacts, class: css_classes_for_file_upload(@upload, :master_vendor_contacts) %>
+        <%= f.hidden_field :master_vendor_contacts_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :neutral_vendor_contacts) do %>
+        <%= display_errors(@upload, :neutral_vendor_contacts) %>
+        <%= f.label :neutral_vendor_contacts, class: "govuk-label" %>
+        <%= f.file_field :neutral_vendor_contacts, class: css_classes_for_file_upload(@upload, :neutral_vendor_contacts) %>
+        <%= f.hidden_field :neutral_vendor_contacts_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :pricing_for_tool) do %>
+        <%= display_errors(@upload, :pricing_for_tool) %>
+        <%= f.label :pricing_for_tool, class: "govuk-label" %>
+        <%= f.file_field :pricing_for_tool, class: css_classes_for_file_upload(@upload, :pricing_for_tool) %>
+        <%= f.hidden_field :pricing_for_tool_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :supplier_lookup) do %>
+        <%= display_errors(@upload, :supplier_lookup) %>
+        <%= f.label :supplier_lookup, class: "govuk-label" %>
+        <%= f.file_field :supplier_lookup, class: css_classes_for_file_upload(@upload, :supplier_lookup) %>
+        <%= f.hidden_field :supplier_lookup_cache %>
+      <% end %>
+      <%= f.submit 'Upload data', class: 'govuk-button' %>
+    <% end %>
+  </div>
+</div>
