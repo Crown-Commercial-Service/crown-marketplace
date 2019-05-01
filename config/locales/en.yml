@@ -628,6 +628,45 @@ en:
       one: agency
       other: agencies
   supply_teachers:
+    admin:
+      uploads:
+        in_progress:
+          content: The spreadsheets have been uploaded and are now processing.
+          heading: Upload successful
+        index:
+          caption: Manage supplier data
+          create_new: Create a new data upload
+          date: Date
+          heading: Agency Supply teachers and agency workers
+          name: Name
+          no_of_files: Number of files
+          status: Status
+          table_caption: Previous uploads
+        new:
+          caption: Agency supply teachers and agency workers
+          heading: New data upload
+          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_title: Upload one or more of the following spreadsheets
+          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+        show:
+          caption: Agency supply teachers and agency workers
+          confirm_changes: 'Confirm these files are ready to be used by the live service:'
+          current_accredited_suppliers: Current accredited suppliers
+          datetime: 'Date/time:'
+          download: Download
+          files: Files
+          geographical_data_all_suppliers: Geographical data all suppliers
+          heading: 'Upload session #%{number}'
+          lot_1_and_lot_2_comparisons: Lot 1 and Lot 2 comparisons
+          master_vendor_contacts: Master vendor contacts
+          neutral_vendor_contacts: Neutral vendor contacts
+          pricing_for_tool: Pricing for tool
+          spreadsheet: Spreadsheet
+          status: 'Status:'
+          supplier_lookup: Supplier lookup
+        uploading:
+          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
+          heading: Data upload in progress
     branches:
       branch:
         address: Address
