@@ -101,8 +101,6 @@ $(() => {
         let selectedAddress = $("select#fm-postcode-lookup-results > option:selected").val();
         if (selectedAddress) {
             let addressElements = selectedAddress.split(',');
-            console.log(addressElements);
-
             getRegion(addressElements[4]);
             let address = {};
 
