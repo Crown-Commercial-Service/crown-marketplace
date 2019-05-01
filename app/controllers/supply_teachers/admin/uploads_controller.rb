@@ -3,7 +3,7 @@ module SupplyTeachers
     class UploadsController < FrameworkController
       def index
         @back_path = :back
-        @uploads = Upload.all
+        @uploads = Upload.all.page params[:page]
       end
 
       def show
