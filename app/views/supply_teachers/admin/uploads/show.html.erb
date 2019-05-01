@@ -55,7 +55,7 @@
       <% end %>
       <% if @upload.master_vendor_contacts.file.present? %>
         <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="row"><%= t('.master_vendor_contacts') %>></th>
+          <th class="govuk-table__header" scope="row"><%= t('.master_vendor_contacts') %></th>
           <td class="govuk-table__cell"><%= link_to 'Download', @upload.master_vendor_contacts_url %></td>
         </tr>
       <% end %>
