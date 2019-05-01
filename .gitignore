@@ -34,12 +34,3 @@ logfile
 /coverage/*
 .idea/
 /nbproject/private/
-
-# SupplyTeachers data folders
-uploads/*
-public/data/*
-public/uploads/*
-lib/tasks/supply_teachers/.geocoder-cache.yml
-
-# Redis dump
-dump.rdb
