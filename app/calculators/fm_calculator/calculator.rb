@@ -16,8 +16,8 @@ module FMCalculator
   class Calculator
     attr_writer :uom, :framework_rate
 
-    @@benchmark_rates = nil
-    @@framework_rates = nil
+    @benchmark_rates = nil
+    @framework_rates = nil
 
     def initialize(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
       @service_ref = service_ref
@@ -50,30 +50,30 @@ module FMCalculator
       @benchsubtotal2 = 0
       @benchsubtotal3 = 0
       @benchvariance = 0
-      read_benchmark_rates if @@benchmark_rates.nil?
+      read_benchmark_rates if @benchmark_rates.nil?
     end
 
     # read in the benchmark and framework rates - these were taken from the Damolas spreadsheet and put in the postgres database numbers are to 15dp
     def read_benchmark_rates
       query = 'SELECT code, framework, benchmark FROM fm_rates;'
       rs = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-      @@benchmark_rates = {}
-      @@framework_rates = {}
+      @benchmark_rates = {}
+      @framework_rates = {}
       rs.each do |row|
         @code = row['code'].remove('.')
         framework = row['framework']
         benchmark = row['benchmark']
-        @@benchmark_rates[@code] = benchmark.to_f
-        @@framework_rates[@code] = framework.to_f
+        @benchmark_rates[@code] = benchmark.to_f
+        @framework_rates[@code] = framework.to_f
       end
     end
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
-      @framework_rate = @@framework_rates[@service_ref]
+      @framework_rate = @framework_rates[@service_ref]
 
       # benchmark rate set here
-      @benchmark_rate = @@benchmark_rates[@service_ref]
+      @benchmark_rate = @benchmark_rates[@service_ref]
 
       @uomd = @uom_vol * @framework_rate
 
@@ -84,7 +84,7 @@ module FMCalculator
 
     # cleaning consumables
     def clean
-      @clean = @occupants * @@framework_rates['M146']
+      @clean = @occupants * @framework_rates['M146']
 
       @clean = @clean.round(0)
     end
@@ -99,7 +99,7 @@ module FMCalculator
     # London location variance based on being in london and a framework rate multiplied by subtotal1
     def variance
       if @london_flag == 'Y'
-        @variance = @subtotal1 * @@benchmark_rates['M144']
+        @variance = @subtotal1 * @benchmark_rates['M144']
 
         @variance = @variance.round(0)
       else
@@ -117,7 +117,7 @@ module FMCalculator
     # if cafm flag is set then subtotal * framework rate
     def cafm
       if @cafm_flag == 'Y'
-        @cafm = @subtotal2 * @@framework_rates['M136']
+        @cafm = @subtotal2 * @framework_rates['M136']
 
         @cafm = @cafm.round(0)
       else
@@ -128,7 +128,7 @@ module FMCalculator
     # if helpdesk_flag is set then multiply by subtotal2
     def helpdesk
       if @helpdesk_flag == 'Y'
-        @helpdesk = @subtotal2 * @@framework_rates['M138']
+        @helpdesk = @subtotal2 * @framework_rates['M138']
 
         @helpdesk = @helpdesk.round(0)
       else
@@ -145,7 +145,7 @@ module FMCalculator
 
     # mobilisation = subtotal3 * framework_rate
     def mobilisation
-      @mobilisation = @subtotal3 * @@framework_rates['M5']
+      @mobilisation = @subtotal3 * @framework_rates['M5']
 
       @mobilisation = @mobilisation.round(0)
     end
@@ -153,7 +153,7 @@ module FMCalculator
     # if tupe_flag set then calculate tupe risk premium = subtotal3 * framework rate
     def tupe
       if @tupe_flag == 'Y'
-        @tupe = @subtotal3 * @@framework_rates['M148']
+        @tupe = @subtotal3 * @framework_rates['M148']
 
         @tupe = @tupe.round(0)
       else
@@ -170,14 +170,14 @@ module FMCalculator
 
     # Management overhead
     def manage
-      @manage = @year1 * @@framework_rates['M140']
+      @manage = @year1 * @framework_rates['M140']
 
       @manage = @manage.round(0)
     end
 
     # Corporate overhead
     def corporate
-      @corporate = @year1 * @@framework_rates['M141']
+      @corporate = @year1 * @framework_rates['M141']
 
       @corporate = @corporate.round(0)
     end
@@ -191,7 +191,7 @@ module FMCalculator
 
     # framework profit
     def profit
-      @profit = @year1 * @@framework_rates['M142']
+      @profit = @year1 * @framework_rates['M142']
       @profit = @profit.round(0)
     end
 
@@ -204,7 +204,7 @@ module FMCalculator
 
     # subsequent year(s) total charges
     def subyearstotal
-      @subyearstotal = 2 * (@year1totalcharges - (((@mobilisation + (@mobilisation * @@framework_rates['M140']) + (@mobilisation * @@framework_rates['M141'])) * (@@framework_rates['M142'] + 1))))
+      @subyearstotal = 2 * (@year1totalcharges - (((@mobilisation + (@mobilisation * @framework_rates['M140']) + (@mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
 
       @subyearstotal = @subyearstotal.round(0)
     end
@@ -217,7 +217,7 @@ module FMCalculator
 
     # benchmarked costs start = benchmark rates * unit of mesasure volume
     def benchmarkedcosts
-      benchmark_rate = @@benchmark_rates[@service_ref]
+      benchmark_rate = @benchmark_rates[@service_ref]
       benchmarkedcosts = benchmark_rate * @uom_vol
 
       @benchmarkedcosts = benchmarkedcosts.round(0)
@@ -225,7 +225,7 @@ module FMCalculator
 
     # cleaning consumables using benchmark rate
     def benchclean
-      @benchclean = @occupants * @@framework_rates['M146']
+      @benchclean = @occupants * @framework_rates['M146']
       @benchclean = @benchclean.round(0)
     end
 
@@ -238,7 +238,7 @@ module FMCalculator
     # benchmark variation if london_flag set
     def benchvariation
       if @london_flag == 'Y'
-        @benchvariance = @benchsubtotal1 * @@benchmark_rates['M144']
+        @benchvariance = @benchsubtotal1 * @benchmark_rates['M144']
         @benchvariance = @benchvariance.round(0)
       else
         0
@@ -254,7 +254,7 @@ module FMCalculator
     # benchmark cafm if flag set
     def benchcafm
       if @cafm_flag == 'Y'
-        @benchcafm = @@framework_rates['M136'] * @benchsubtotal2
+        @benchcafm = @framework_rates['M136'] * @benchsubtotal2
         @benchcafm = @benchcafm.round(0)
       else
         0
@@ -264,7 +264,7 @@ module FMCalculator
     # benchmark helpsdesk costs if helpdesk_flag set
     def benchhelpdesk
       if @helpdesk_flag == 'Y'
-        @benchhelpdesk = @benchsubtotal2 * @@framework_rates['M138']
+        @benchhelpdesk = @benchsubtotal2 * @framework_rates['M138']
         @benchhelpdesk = @benchhelpdesk.round(0)
       else
         0
@@ -279,14 +279,14 @@ module FMCalculator
 
     # benchmark mobilisation costs
     def benchmobilisation
-      @benchmobilisation = @benchsubtotal3 * @@framework_rates['M5']
+      @benchmobilisation = @benchsubtotal3 * @framework_rates['M5']
       @benchmobilisation = @benchmobilisation.round(0)
     end
 
     # benchmark tupe costs if flag set
     def benchtupe
       if @tupe_flag == 'Y'
-        @benchtupe = @benchsubtotal3 * @@framework_rates['M148']
+        @benchtupe = @benchsubtotal3 * @framework_rates['M148']
         @benchtupe = @benchtupe.round(0)
       else
         0
@@ -301,13 +301,13 @@ module FMCalculator
 
     # benchmark mananagement overhead costs
     def benchmanage
-      @benchmanage = @benchyear1 * @@framework_rates['M140']
+      @benchmanage = @benchyear1 * @framework_rates['M140']
       @benchmanage = @benchmanage.round(0)
     end
 
     # bench mark corporate overhead cost
     def benchcorporate
-      @benchcorporate = @benchyear1 * @@framework_rates['M141']
+      @benchcorporate = @benchyear1 * @framework_rates['M141']
       @benchcorporate = @benchcorporate.round(0)
     end
 
@@ -319,7 +319,7 @@ module FMCalculator
 
     # bench mark profit
     def benchprofit
-      @benchprofit = @benchyear1 * @@framework_rates['M142']
+      @benchprofit = @benchyear1 * @framework_rates['M142']
 
       @benchprofit = @benchprofit.round(0)
     end
@@ -332,7 +332,7 @@ module FMCalculator
 
     # bench mark subsequent year(s) total charges
     def benchsubyearstotal
-      @benchsubyearstotal = 2 * (@benchyear1totalcharges - (((@benchmobilisation + (@benchmobilisation * @@framework_rates['M140']) + (@benchmobilisation * @@framework_rates['M141'])) * (@@framework_rates['M142'] + 1))))
+      @benchsubyearstotal = 2 * (@benchyear1totalcharges - (((@benchmobilisation + (@benchmobilisation * @framework_rates['M140']) + (@benchmobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
       @benchsubyearstotal = @benchsubyearstotal.round(0)
     end
 

@@ -9,84 +9,84 @@ require 'fm_calculator/calculator'
 
     before(:each) do
       # args  Service ref, uom_vol, occupants, tuoe involved, london_location, CAFM, helpdesk
-      Calc = described_class.new('G1', 23000, 125, 'Y', 'Y', 'Y', 'N')
+      @calc = described_class.new('G1', 23000, 125, 'Y', 'Y', 'Y', 'N')
     end
 
     describe 'calculate routine cleaning'
     it 'calculate routine cleaning' do
 
-      x = Calc.uomd
+      x = @calc.uomd
       expect(x).to eq(277491)
-      x = Calc.clean
+      x = @calc.clean
       expect(x).to eq(3276)
-      x = Calc.subtotal1
+      x = @calc.subtotal1
       expect(x).to eq(280767)
-      x = Calc.variance
+      x = @calc.variance
       expect(x).to eq(52816)
-      x = Calc.subtotal2
+      x = @calc.subtotal2
       expect(x).to eq(333583)
-      x = Calc.cafm
+      x = @calc.cafm
       expect(x).to eq(4850)
-      x = Calc.helpdesk
+      x = @calc.helpdesk
       expect(x).to eq(0)
-      x = Calc.subtotal3
+      x = @calc.subtotal3
       expect(x).to eq(338433)
-      x = Calc.mobilisation
+      x = @calc.mobilisation
       expect(x).to eq(21998)
-      x = Calc.tupe
+      x = @calc.tupe
       expect(x).to eq(35142)
-      x = Calc.year1
+      x = @calc.year1
       expect(x).to eq(395573)
-      x = Calc.manage
+      x = @calc.manage
       expect(x).to eq(39915)
-      x = Calc.corporate
+      x = @calc.corporate
       expect(x).to eq(19709)
-      x = Calc.year1total
+      x = @calc.year1total
       expect(x).to eq(455197)
-      x = Calc.profit
+      x = @calc.profit
       expect(x).to eq(21472)
-      x = Calc.year1totalcharges
+      x = @calc.year1totalcharges
       expect(x).to eq(476669)
-      x = Calc.subyearstotal
-      x = Calc.totalcharges
+      x = @calc.subyearstotal
+      x = @calc.totalcharges
       # expect(x).to eq(899962)
       # expect(x).to eq(1376631)
     # -------------------------------------- Benchmarked Costs ----------------------------------------------
-      x = Calc.benchmarkedcosts
+      x = @calc.benchmarkedcosts
       # expect(x).to eq(119144)
-      x = Calc.benchclean
+      x = @calc.benchclean
       # expect(x).to eq(3276)
-      x = Calc.benchsubtotal1
+      x = @calc.benchsubtotal1
       # expect(x).to eq(122420)
-      x = Calc.benchvariation
+      x = @calc.benchvariation
       # expect(x).to eq(23029)
-      x = Calc.benchsubtotal2
+      x = @calc.benchsubtotal2
       # expect(x).to eq(145449)
-      x = Calc.benchcafm
+      x = @calc.benchcafm
       # expect(x).to eq(0)
       # expect(x).to eq(2115)
-      x = Calc.benchhelpdesk
-      x = Calc.benchsubtotal3
+      x = @calc.benchhelpdesk
+      x = @calc.benchsubtotal3
       # expect(x).to eq(147564)
-      x = Calc.benchmobilisation
+      x = @calc.benchmobilisation
       # expect(x).to eq(9592)
-      x = Calc.benchtupe
+      x = @calc.benchtupe
       # expect(x).to eq(15323)
-      x = Calc.benchyear1
+      x = @calc.benchyear1
       # expect(x).to eq(172479)
-      x = Calc.benchmanage
+      x = @calc.benchmanage
       # expect(x).to eq(17404)
-      x = Calc.benchcorporate
+      x = @calc.benchcorporate
       # expect(x).to eq(8594)
-      x = Calc.benchyear1total
+      x = @calc.benchyear1total
       # expect(x).to eq(198477)
-      x = Calc.benchprofit
+      x = @calc.benchprofit
       # expect(x).to eq(9362)
-      x = Calc.benchyear1totalcharges
+      x = @calc.benchyear1totalcharges
       # expect(x).to eq(207839)
-      x = Calc.benchsubyearstotal
+      x = @calc.benchsubyearstotal
       # expect(x).to eq(392404)
-      x = calc.benchtotalcharges
+      x = @calc.benchtotalcharges
       # expect(x).to eq(600243)
   end
 end
