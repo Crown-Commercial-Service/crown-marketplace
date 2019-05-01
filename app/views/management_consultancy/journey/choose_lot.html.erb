@@ -32,7 +32,7 @@
           <%= label_tag :lot_4, ManagementConsultancy::Lot['4'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF.3', checked?(params[:lot], 'MCF2.3'), class: 'govuk-radios__input' %>
+          <%= radio_button_tag :lot, 'MCF2.3', checked?(params[:lot], 'MCF2.3'), class: 'govuk-radios__input' %>
           <%= label_tag :lot_mcf2_3, ManagementConsultancy::Lot['MCF2.3'].full_description, class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
