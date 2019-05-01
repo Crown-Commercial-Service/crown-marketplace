@@ -15,18 +15,11 @@ module FacilitiesManagement
       # @inline_error_summary_body_href = '#'
       # @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
 
-      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+      start_date
 
-      @report = SummaryReport.new(@start_date, current_login.email.to_s, $tsi[session.id])
-      @report.calculate_services_for_buildings
+      report
 
-      # @without_pricing = report.without_pricing
-      # @with_pricing = report.with_pricing
-
-
-      # -------------------------
       regions
-      # -------------------------
 
       respond_to do |format|
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
@@ -41,18 +34,24 @@ module FacilitiesManagement
 
     private
 
+    def report
+      @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo.tsi[session.id])
+      @report.calculate_services_for_buildings
+    end
+
+    def start_date
+      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+    end
+
     def regions
-      @posted_locations = $tsi[session.id][:posted_locations]
+      @posted_locations = TransientSessionInfo.tsi[session.id][:posted_locations]
 
       # Get nuts regions
       @regions = {}
       Nuts1Region.all.each { |x| @regions[x.code] = x.name }
       @subregions = {}
       FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
-      @subregions.select! { | k, _v | @posted_locations.include? k }
+      @subregions.select! { |k, _v| @posted_locations.include? k }
     end
-
-  end # class
-
-
-end # module
+  end
+end
