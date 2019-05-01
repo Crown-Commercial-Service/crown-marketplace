@@ -1,6 +1,0 @@
-<tr class="govuk-table__row">
-  <td class="govuk-table__cell"><%= link_to 'Upload session #' + upload.short_uuid, upload %></td>
-  <td class="govuk-table__cell"><%= upload.created_at.strftime('%m/%d/%Y @ %H:%M') %></td>
-  <td class="govuk-table__cell"><%= upload.files_count %></td>
-  <td class="govuk-table__cell"><strong class="govuk-tag ccs-tag-<%= upload.aasm_state %>"><%= upload.aasm_state.humanize %></strong></td>
-</tr>
