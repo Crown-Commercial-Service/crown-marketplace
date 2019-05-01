@@ -1,5 +1,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <span id="passport-issued-error" class="govuk-error-message">
+      <span class="govuk-visually-hidden">Error:</span> <%= @upload.fail_reason %>
+    </span>
     <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 cmp-page-heading"><%= t('.heading', number: @upload.short_uuid) %></h1>
     <table>
