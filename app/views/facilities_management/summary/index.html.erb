@@ -25,56 +25,8 @@
       </p>
 
 
-      <!-- Start of filter section -->
-      <div class="govuk-grid-row">
 
 
-
-<!--
-        <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print" role="button">Hide filters</a><br>
-        <div id="fm-filter-pane" class="govuk-grid-column-one-third">
-          <%= render('facilities_management/long_list/filters') %>
-        </div>
--->
-
-<!---
-
-        <div id="CCS-fm-suppliers-long-list" class="govuk-grid-column-two-thirds">
-            <% if (@suppliers_lot1a) %>
-            <%= render('facilities_management/long_list/lot1a') %>
-            <% end %>
-            <% if (@suppliers_lot1b) %>
-            <%= render('facilities_management/long_list/lot1b') %>
-            <% end %>
-            <% if (@suppliers_lot1c) %>
-            <%= render('facilities_management/long_list/lot1c') %>
-            <% end %>
-        </div>
---->
-
-
-
-      </div>
-
-<!----
-<p>Choices used to generate your shortlist:</p>
-<p>Filters used</p>
-<p>Regions(<%= @subregions.count %>)</p>
-<% @subregions.each do |key2, value2| %>
-<div>
-  <fieldset aria-describedby="<%= value2 %>">
-    <div id="location-checkboxes">
-      <div>
-        <input class="govuk-checkboxes__input" id="<%= key2 %>" name="<%= key2 %>" locationid="<%= value2 %>" type="checkbox" value="<%= key2 %>">
-        <label id="<%= key2 %>_label" for="<%= key2 %>">
-          <%= value2 %>
-        </label>
-      </div>
-    </div>
-  </fieldset>
-</div>
-<% end %>
------>
 <!--
 <p/>
 <p>Services with pricing (<%= @with_pricing.count %>):</p>
@@ -105,6 +57,34 @@
         <a class="supplier-record__file-download ga-download-calculator" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx&amp;job_type=qt&amp;looking_for=worker&amp;payroll_provider=agency&amp;postcode=sw1p+2ba&amp;term=8_12&amp;worker_type=agency_supplied">Download supplier list and Deliverables Matrix Lite</a>
     </p>
 </div>
+
+<form action="/facilities-management/summary" method="post">
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading">
+          Based on these non-priced services, would you estimate that you move up a sub-lot?
+        </h1>
+      </legend>
+
+      <div class="govuk-radios govuk-radios--inline">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
+          <label class="govuk-label govuk-radios__label" for="changed-name-1">
+            Yes, I will move up a sub-lot
+          </label> </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
+          <label class="govuk-label govuk-radios__label" for="changed-name-2">
+            No, I will stay in the same sub-lot
+          </label> </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+
+  </form>
 
       <div class="govuk-grid-row ccs-no-print">
 
