@@ -42,7 +42,7 @@ module Postcode
 
       { status: 200, result: "Uploading postcodes from AWS bucket #{bucket}, region: #{region}" }
     rescue IOError => e
-      #some error occur, dir not writable etc.
+      # some error occur, dir not writable etc.
       { status: 404, error: e.to_s }
     rescue StandardError => e
       { status: 404, error: e.to_s }
