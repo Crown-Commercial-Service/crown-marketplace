@@ -1,11 +1,6 @@
 module LegalServices
   class Journey::CheckSuitability
     include Steppable
-<<<<<<< Updated upstream
-
-=======
-  
->>>>>>> Stashed changes
     attribute :central_government
     validates :central_government, inclusion: ['yes', 'no']
 
