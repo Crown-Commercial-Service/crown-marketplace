@@ -8,10 +8,8 @@ module LegalServices
     def next_step_class
       case central_government
       when 'yes'
-        byebug
         Journey::CheckSuitability3
       else
-        byebug
         Journey::ChooseServicesArea
       end
     end
