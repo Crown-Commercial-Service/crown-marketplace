@@ -110,10 +110,10 @@ $(() => {
             result = false;
         }
 
-        if (result && !address['fm-address-county']) {
-            id = 'fm-address-county';
-            result = false;
-        }
+        // if (result && !address['fm-address-county']) {
+        //     id = 'fm-address-county';
+        //     result = false;
+        // }
 
         if (result && !address['fm-address-postcode'] || pageUtils.isPostCodeValid(postCode) === false) {
             id = 'fm-address-postcode';
@@ -163,25 +163,30 @@ $(() => {
         e.preventDefault();
 
         if (isAddressValid(address)) {
-
-            let isLondon = pageUtils.getCachedData('fm-postcode-is-in-london');
-
-            let building = {
-                id: pageUtils.generateGuid(),
-                name: buildingName,
-                region: pageUtils.getCachedData('fm-current-region'),
-                address: address,
-                isLondon: isLondon && isLondon === true ? 'Yes' : 'No'
-            };
-
-            saveBuilding(building, false, '/facilities-management/buildings/new-building');
-
+            pageUtils.setCachedData('fm-new-address', address);
+            location.href = '/facilities-management/buildings/new-building#fm-internal-square-area'
         }
 
     });
 
     $('#fm-new-building-continue').click((e) => {
 
+        e.preventDefault();
+
+        let isLondon = pageUtils.getCachedData('fm-postcode-is-in-london');
+
+        let building = {
+            id: pageUtils.generateGuid(),
+            name: pageUtils.getCachedData('fm-new-building-name'),
+            region: pageUtils.getCachedData('fm-current-region'),
+            address: pageUtils.getCachedData('fm-new-address'),
+            isLondon: isLondon && isLondon === true ? 'Yes' : 'No',
+            gia: pageUtils.getCachedData('fm-gia')
+        };
+
+        currentBuilding = building;
+        pageUtils.setCachedData('fm-current-building', building);
+        saveBuilding(building, false, '/facilities-management/buildings/building-type');
 
     });
 
