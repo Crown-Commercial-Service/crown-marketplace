@@ -163,6 +163,7 @@ $(() => {
         e.preventDefault();
 
         if (isAddressValid(address)) {
+            currentBuilding.address = address;
             pageUtils.setCachedData('fm-new-address', address);
             location.href = '/facilities-management/buildings/new-building#fm-internal-square-area'
         }
@@ -186,6 +187,7 @@ $(() => {
 
         currentBuilding = building;
         pageUtils.setCachedData('fm-current-building', building);
+        pageUtils.clearCashedData('fm-new-address');
         saveBuilding(building, false, '/facilities-management/buildings/building-type');
 
     });
