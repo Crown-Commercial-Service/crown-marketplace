@@ -45,7 +45,6 @@ module Postcode
         return "There are already #{rows} rows of postcodes data! Please clear that data first.\n" unless rows.zero?
       end
       PostcodeChecker.upload(access_key, secret_access_key, bucket, region)
-
     end
   end
 end
