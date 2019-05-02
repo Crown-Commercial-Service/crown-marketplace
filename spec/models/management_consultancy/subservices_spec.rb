@@ -11,9 +11,9 @@ RSpec.describe ManagementConsultancy::Subservice, type: :model do
   end
 
   it 'populates attributes of first service' do
-    expect(first_subservice.code).to eq('MCF2.3.1.a')
+    expect(first_subservice.code).to eq('MCF2.3.2.a')
     expect(first_subservice.name).to eq('Testing')
-    expect(first_subservice.service).to eq('MCF2.3.1')
+    expect(first_subservice.service).to eq('MCF2.3.2')
   end
 
   it 'only has unique codes' do
