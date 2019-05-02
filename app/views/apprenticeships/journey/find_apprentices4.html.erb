@@ -1,5 +1,5 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
-
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
   <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
@@ -14,10 +14,32 @@
       <h1 class="govuk-heading-xl"><%= t('.find_apprenticeship_std') %></h1>
 
     </div>
-  </div>
+  </div>    
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
 
-<<<<<<< HEAD
+      <div class="govuk-tabs" data-module="tabs">
+        <h2 class="govuk-tabs__title ccs-no-print">
+          <%= t('.find_apprenticeship_tab_title') %>
+        </h2>
+
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab govuk-tabs__tab--selected" href="#search-tab">
+              <%= t('.search_tab_label') %>
+            </a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#browse-tab">
+              <%= t('.browse_tab_label') %>
+            </a>
+          </li>
+        </ul>
+
+        <section class="govuk-tabs__panel" id="search-tab">
+          <%= form_tag apprenticeships_search_results_path, method: :get do %>
+
             <div class="govuk-form-group">
               <h1 class="govuk-label-wrapper">
                 <label class="govuk-label govuk-label--m govuk-!-font-weight-bold" for="search">
@@ -28,48 +50,13 @@
             </div>
             
             <%= render 'layouts/button', text: t('common.search')%>
-=======
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
 
-        <div class="govuk-tabs" data-module="tabs">
->>>>>>> 974328ebc2fc84c326aef96c93736df2571892e9
-
-          <h2 class="govuk-tabs__title ccs-no-print">
-            <%= t('.find_apprenticeship_tab_title') %>
-          </h2>
-
-          <ul class="govuk-tabs__list">
-            <li class="govuk-tabs__list-item">
-              <a class="govuk-tabs__tab govuk-tabs__tab--selected" href="#search-tab">
-                <%= t('.search_tab_label') %>
-              </a>
-            </li>
-            <li class="govuk-tabs__list-item">
-              <a class="govuk-tabs__tab" href="#browse-tab">
-                <%= t('.browse_tab_label') %>
-              </a>
-            </li>
-          </ul>
-
-          <%= form_tag apprenticeships_search_results_path, method: :get do %>
-            <section class="govuk-tabs__panel" id="search-tab">
-              <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-
-              <div class="govuk-form-group">
-                <h1 class="govuk-label-wrapper">
-                  <label class="govuk-label govuk-label--m govuk-!-font-weight-bold" for="search">
-                    <%= t('common.search') %>
-                  </label>
-                </h1>
-                <%= text_field_tag :search, params[:search], class: 'govuk-input ccs-search-icon' %>
-              </div>
-
-              <%= submit_tag t('common.search'), class: "govuk-button govuk-!-margin-top-5", id: 'submit-search' %>
-            </section>
           <% end %>
+        </section>
 
-<<<<<<< HEAD
+        <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="browse-tab">
+          <%= form_tag apprenticeships_search_results_path, method: :get do %>
+
             <div class="govuk-form-group">
               <fieldset class="govuk-fieldset">
                   <h1 class="govuk-fieldset__heading">
@@ -89,53 +76,21 @@
                       <label class="govuk-label govuk-checkboxes__label" for="rating<%= rating %>">
                         <%= rating %>
                       </label>
-=======
-          <%= form_tag apprenticeships_search_results_path, method: :get do %>
-            <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="browse-tab">
-              <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-
-              <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
-                    <h1 class="govuk-fieldset__heading">
-                      <%= t('.title_browse_by_route') %>
-                    </h1>
-                  </legend>
-
-                  <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
-                    <%= browse_routes.each do |rating| %>
-                      <div class="govuk-checkboxes__item">
-                        <%= check_box_tag(
-                                  "rating[]",
-                                  rating,
-                                  false,
-                                  class: "govuk-checkboxes__input",
-                                  id: "rating_#{rating}"
-                              ) %>
-                          <label class="govuk-label govuk-checkboxes__label" for="rating_<%= rating %>">
-                            <%= rating %>
-                          </label>
-                      </div>
-                    <% end %>
->>>>>>> 974328ebc2fc84c326aef96c93736df2571892e9
                   </div>
+                  <% end %>
+                </div>
 
-                </fieldset>
-              </div>
+              </fieldset>
+            </div>
 
-              <%= submit_tag t('common.browse'), class: "govuk-button govuk-!-margin-top-5", id: 'submit-browse' %>
+            <%= render 'layouts/button', text: t('common.browse')%>
 
-            </section>
           <% end %>
-
-        </div>
-
+        </section>
       </div>
     </div>
-
-<% end %>
-<!--
-  %= submit_tag t('common.search'), class: "govuk-button", id: 'submit-global' %
--->
-<% end %>
-<% end %>
+  </div>
+ <% end %>
+ <% end %>
+ <%= submit_tag t('common.submit'), class: "govuk-button" %>
+ <% end %>
