@@ -124,6 +124,7 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
     get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
+    get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
     resources :suppliers, only: %i[index show]
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
