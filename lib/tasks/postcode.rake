@@ -16,6 +16,14 @@ module OrdnanceSurvey
     @secrets = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
     Aws.config[:credentials] = Aws::Credentials.new(@secrets['AccessKeyId'], @secrets['SecretAccessKey'])
     p "Importing from AWS bucket: #{@secrets['bucket']}, region: #{@secrets['region']}"
+
+    extend_timeout
+  end
+
+  def self.extend_timeout
+    Aws.config[:http_open_timeout] = 600
+    Aws.config[:http_read_timeout] = 600
+    Aws.config[:http_idle_timeout] = 600
   end
 
   def self.import_postcodes
