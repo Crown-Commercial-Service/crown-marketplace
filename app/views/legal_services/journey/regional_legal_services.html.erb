@@ -15,7 +15,6 @@
              <% lot1 = ['north east', 'north west','yorkshire and the humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
              <% lot1.each do |lot| %>
                <div class="govuk-checkboxes__item">
-	     <% byebug %>
                  <%= check_box_tag(
                             "lot[]",
                             lot,
