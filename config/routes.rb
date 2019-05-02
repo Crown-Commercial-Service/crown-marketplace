@@ -41,10 +41,16 @@ Rails.application.routes.draw do
     get '/buildings/building-type', to: 'buildings#building_type'
     post '/buildings/update_building' => 'buildings#update_building'
     get '/buildings/select-services', to: 'buildings#select_services_per_building'
+
+    get '/summary', to: 'summary#index'
+    post '/summary', to: 'summary#index'
+
     get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
     post '/buildings/save-uom-value' => 'buildings#save_uom_value'
     post '/services/save-lift-data' => 'select_services#save_lift_data'
+    get '/buildings/region', to: 'buildings#region_info'
     get '/suppliers', to: 'suppliers#index'
+
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/contract-start', to: 'contract#start_of_contract'
     get '/:slug', to: 'journey#question', as: 'journey_question'
@@ -119,6 +125,8 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
     get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
+    get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
+    get '/suppliers/cg-no-suppliers-found', to: 'suppliers#cg_no_suppliers_found'
     resources :suppliers, only: %i[index show]
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
