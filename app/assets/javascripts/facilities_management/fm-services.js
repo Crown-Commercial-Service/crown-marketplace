@@ -10,6 +10,7 @@ $(() => {
     let selectedServicesForThisBuilding = selectedServices;
     let currentBuilding = pageUtils.getCachedData('fm-current-building');
 
+
     const initialize = (() => {
 
         /!* Load and display cached values *!/
@@ -61,8 +62,9 @@ $(() => {
 
     /!* Update the count of selected services *!/
     const updateServiceCount = (() => {
-        let count = selectedServicesForThisBuilding ? selectedServicesForThisBuilding.length : 0;
 
+        let $checkboxes = $('input[type="checkbox"]');
+        let count = $checkboxes.filter(':checked').length;
         $('#selected-service-count').text(count + 2);
 
         const serviceCount = $('#fm-service-count');
@@ -91,6 +93,7 @@ $(() => {
         });
 
         selectedServices = filtered;
+        serviceCount = selectedServices.length + 2
 
         updateServiceCount();
     });
@@ -138,10 +141,12 @@ $(() => {
             $('#' + removeLinkID).click((e) => {
                 e.preventDefault();
                 removeSelectedItem(selectedID);
+                updateServiceCount();
             });
 
         } else {
             removeSelectedItem(selectedID);
+            updateServiceCount();
         }
 
         isValid();
@@ -201,6 +206,7 @@ $(() => {
             type: "change",
             checked: checked
         });
+        updateServiceCount();
 
     });
 
@@ -222,6 +228,4 @@ $(() => {
 
     initialize();
 
-})
-;
-
+});
