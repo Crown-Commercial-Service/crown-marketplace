@@ -84,4 +84,5 @@ code,name,lot_number
 4.11,Environmental strategy and policy,4
 4.12,Sustainability,4
 4.13,Strategic advice,4
-MCF2.3.1,Test service,MCF2.3
+MCF2.3.1,Test service without subservices,MCF2.3
+MCF2.3.2,Test service with subservices,MCF2.3
