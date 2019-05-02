@@ -28,8 +28,12 @@ $(() => {
     const renderSelectedServices = (() => {
 
         selectedServices.forEach((service, index) => {
+
+            let id = service.code;
+//
+            //if (!$('#' + id)) {
             let newCheckBoxItem = '<div class="govuk-checkboxes__item">\n' +
-                '                <input class="govuk-checkboxes__input" checked id="' + service.code + '" name="fm-building-service-checkbox" type="checkbox" value="' + service.code + '">\n' +
+                '                <input class="govuk-checkboxes__input" checked id="' + id + '" name="fm-building-service-checkbox" type="checkbox" value="' + id + '">\n' +
                 '                <label class="govuk-label govuk-checkboxes__label" for="' + service.code + '">\n' + service.name + '</label></div>'
 
             $('#fm-buildings-selected-services').prepend(newCheckBoxItem);
@@ -51,9 +55,8 @@ $(() => {
                     updateServiceCount();
                 }
             });
+            //}
         });
-
-
     });
 
     /!* Update the count of selected services *!/

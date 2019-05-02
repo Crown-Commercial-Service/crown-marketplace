@@ -12,17 +12,33 @@ module OrdnanceSurvey
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
   end
 
+  def self.create_address_lookup_view
+    query = "CREATE OR REPLACE VIEW public.os_address_view
+AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) || adds.street_description::text AS add1,
+    adds.town_name AS village,
+    adds.post_town,
+    adds.administrative_area AS county,
+    adds.postcode
+   FROM os_address adds
+  WHERE ((adds.pao_start_number || adds.pao_start_suffix::text) || adds.street_description::text) IS NOT NULL AND adds.post_town IS NOT NULL
+  ORDER BY adds.pao_start_number, adds.street_description;
+"
+    ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
+  rescue PG::Error => e
+    puts e.message
+  end
+
   def self.awd_credentials
     @secrets = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
     Aws.config[:credentials] = Aws::Credentials.new(@secrets['AccessKeyId'], @secrets['SecretAccessKey'])
-    p Aws.config
+    p "Importing from AWS bucket: #{@secrets['bucket']}, region: #{@secrets['region']}"
   end
 
   def self.import_postcodes
     create_postcode_table
     awd_credentials
 
-    object = Aws::S3::Resource.new
+    object = Aws::S3::Resource.new(region: @secrets['region'])
     object.bucket(@secrets['bucket']).objects.each do |obj|
       next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
 
@@ -50,6 +66,8 @@ namespace :db do
   task pctable: :environment do
     p 'Creating postcode database and import'
     OrdnanceSurvey.create_postcode_table
+    p 'Creating address lookup view'
+    OrdnanceSurvey.create_address_lookup_view
   end
 
   # desc 'add postcode static data to the database'
