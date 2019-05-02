@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 module LegalServices
   class Journey::Lot1RegionalService
     include Steppable

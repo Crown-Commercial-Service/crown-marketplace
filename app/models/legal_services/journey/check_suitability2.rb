@@ -10,11 +10,7 @@ module LegalServices
       when 'yes'
         Journey::CheckSuitability3
       else
-<<<<<<< Updated upstream
         Journey::ChooseServicesArea
-=======
-        Journey::Sorry
->>>>>>> Stashed changes
       end
     end
   end
