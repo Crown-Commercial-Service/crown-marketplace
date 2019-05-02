@@ -1,5 +1,5 @@
 module LegalServices
-  class Journey::CheckSuitability
+  class Journey::FeesUnder20k
     include Steppable
 
     attribute :central_government
@@ -8,7 +8,8 @@ module LegalServices
     def next_step_class
       case central_government
       when 'yes'
-        Journey::CheckSuitability2
+	byebug
+        Journey::FeesUnder20k
       else
         Journey::ChooseServicesArea
       end

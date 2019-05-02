@@ -8,7 +8,7 @@ module LegalServices
     def next_step_class
       case central_government
       when 'yes'
-        Journey::CheckSuitability2
+        Journey::FeesUnder20k
       else
         Journey::ChooseServicesArea
       end

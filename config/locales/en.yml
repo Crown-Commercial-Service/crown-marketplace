@@ -453,6 +453,9 @@ en:
         central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
+      check_suitability:
+        central_government_search_link_title: central government departments, agencies and public bodies
+        question: Select the legal services you need
     suppliers:
       download_shortlist:
         heading: Download the supplier shortlist

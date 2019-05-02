@@ -1,0 +1,36 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('Lot 1 - Regional service provision') %>
+        </h1>
+      </legend>
+      <%= display_error(@journey, :central_government) %>
+          <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
+             <% lot1 = ['Property and constuction', 'Litigation/dispute resolution','Employment'] %>
+             <% lot1.each do |lot| %>
+               <div class="govuk-checkboxes__item">
+	     <% byebug %>
+                 <%= check_box_tag(
+                            "lot[]",
+                            lot,
+                            false,
+                            class: "govuk-checkboxes__input",
+                            id: "lot_#{lot}"
+                          ) %>
+                      <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot %>">
+                        <%= lot %>
+                      </label>
+                  </div>
+                  <% end %>
+                </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+<% end %>
