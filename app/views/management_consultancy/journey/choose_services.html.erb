@@ -2,34 +2,25 @@
 
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
-  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-  <%= govuk_form_group_with_optional_error(@journey, :services) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :services) do %>
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('.question') %>
-        </h1>
-        <%= display_error(@journey, :services) %>
-      </legend>
-        <div class="govuk-form-group">
-          <div class="govuk-checkboxes">
-            <% @journey.current_step.services_for_lot(@journey.params['lot']).each do |service| %>
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag(
-                  "services[]",
-                  service.code,
-                  @journey.current_step.services.include?(service.code),
-                  class: "govuk-checkboxes__input",
-                  id: "service_#{service.code}"
-                ) %>
-                <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>">
-                  <%= service.name %>
-                </label>
-              </div>
-            <% end %>
-          </div>
-        </div>
+  <div class="govuk-grid-column-two-thirds">
+    <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+    <%= govuk_form_group_with_optional_error(@journey, :services) do %>
+      <%= govuk_fieldset_with_optional_error(@journey, :services) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.question') %>
+          </h1>
+          <%= display_error(@journey, :services) %>
+        </legend>
+        <% if @journey.params['lot'].split('.')[0] == 'MCF2' %>
+          <%= render partial: 'mcf2_services', locals: { services: @journey.current_step.services_for_lot(@journey.params['lot']) } %>
+        <% else %>
+          <%= render partial: 'mcf_services', locals: { services: @journey.current_step.services_for_lot(@journey.params['lot']) } %>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+  </div>
+  <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
+    <%= submit_tag t('common.submit'), class: "govuk-button" %>
+  </div>
 <% end %>
