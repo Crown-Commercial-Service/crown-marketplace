@@ -97,16 +97,17 @@ module Postcode
 
       def rake
         if File.split($PROGRAM_NAME).last == 'rake'
-          Rails.logger.info('Guess what, I`m running this from Rake')
+          Rails.logger.info('')
         else
           begin
             Rails.logger.info('No, this is not a Rake task')
             Rails.application.load_tasks
             Rake::Task['db:postcode'].execute
-          rescue StandardError
+          rescue StandardError => e
             message = self.class.name + " data is missing! Please run 'rake db:postcode' to load postcode data."
             Rails.logger.info("\e[5;37;41m\n" + message + "\033[0m\n")
-            raise error
+            Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
+            raise e
           end
         end
       end
