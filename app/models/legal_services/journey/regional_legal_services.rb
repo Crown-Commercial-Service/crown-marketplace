@@ -1,5 +1,5 @@
 module LegalServices
-  class Journey::Lot1RegionalService
+  class Journey::RegionalLegalServices
     include Steppable
 
     attribute :central_government
