@@ -55,7 +55,10 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
         rc = conn.raw_connection
         rc.exec('COPY os_address FROM STDIN WITH CSV')
         # rc.put_copy_data(obj.get.body)
-        obj.get.body.each_line { |line| rc.put_copy_data(line) }
+        # obj.get.body.each_line { |line| rc.put_copy_data(line) }
+        obj.get do |chunk|
+          rc.put_copy_data chunk
+        end
         rc.put_copy_end
       end
     end
