@@ -320,10 +320,11 @@ en:
     apply_filters: Apply filters
     back_to_start: Back to start
     browse: Browse
-    ccs_contact_support_url: https://www.ccs.gov.uk/support
+    ccs_contact_url: https://www.crowncommercial.gov.uk/contact
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
+    general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     search: Search
     submit: Continue
@@ -455,6 +456,11 @@ en:
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
     suppliers:
+      cg_no_suppliers_found:
+        heading: No suppliers were found
+        statement_pt_1: The
+        statement_pt_2_link_text: General Legal Advice Services (RM3786)
+        statement_pt_3: agreement provides legal advice services for central government and arms-length bodies.
       download_shortlist:
         heading: Download the supplier shortlist
         page_title: Download supplier list
