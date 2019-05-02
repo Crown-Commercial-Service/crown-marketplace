@@ -12,9 +12,32 @@ $(() => {
 
         let currentBuilding = pageUtils.getCachedData('fm-current-building');
         let gia = currentBuilding ? currentBuilding['gia'] : 0;
+        let address = pageUtils.getCachedData('fm-new-address');
+        
+        if (address !== []) {
+
+            let add1 = address['fm-address-line-1'] ? address['fm-address-line-1'] + ', ' : '';
+            let add2 = address['fm-address-line-2'] ? address['fm-address-line-2'] + ', ' : '';
+            let postTown = address['fm-address-town'] ? address['fm-address-town'] + ', ' : '';
+            let county = address['fm-address-county'] ? address['fm-address-county'] + ', ' : '';
+            let postCode = address['fm-address-postcode'] ? address['fm-address-postcode'] : '';
+            let newOptionData = add1 + add2 + postTown + county + postCode;
+            let newOption = '<option selected value="' + newOptionData + '">' + newOptionData + '</option>';
+
+            $('#fm-postcode-lookup-results').find('option[value="status-option"]').remove();
+            $('#fm-postcode-lookup-results').append(newOption);
+            $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
+            $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
+            $('#fm-postcode-input').removeClass('govuk-visually-hidden');
+            $('#fm-postcode-label').text(postCode);
+        }
 
         $('#fm-internal-square-area').val(gia);
 
+    });
+
+    $('#fm-building-not-found').on('click', (e) => {
+        pageUtils.clearCashedData('fm-new-address');
     });
 
     const validateBuildingName = ((value) => {
