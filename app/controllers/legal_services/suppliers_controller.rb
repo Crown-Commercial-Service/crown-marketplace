@@ -18,6 +18,10 @@ module LegalServices
       @back_path = :back
     end
 
+    def no_suppliers_found
+      @back_path = :back
+    end
+
     private
 
     def mocked_suppliers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
