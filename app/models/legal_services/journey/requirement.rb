@@ -1,5 +1,5 @@
 module LegalServices
-  class Journey::ChooseServicesArea2
+  class Journey::Requirement
     include Steppable
 
     attribute :central_government
@@ -10,7 +10,7 @@ module LegalServices
       when 'yes'
         Journey::FeesUnder20k
       else
-        Journey::Requirement
+        Journey::Lot2FullService
       end
     end
   end

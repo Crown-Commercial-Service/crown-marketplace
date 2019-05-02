@@ -7,14 +7,15 @@
     <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
-          <%= t('Lot 1 - Regional service provision') %>
+          <%= t('Lot 2 - Full service firms ') %>
         </h1>
       </legend>
       <%= display_error(@journey, :central_government) %>
-          <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
-             <% lot1 = ['Property and constuction', 'Litigation/dispute resolution','Employment'] %>
+          <div class="govuk-checkboxes ccs-govuk-checkboxes--s">'
+             <% lot1 = ['Administrative and public law', 'Banking and Finance','Contracts', 'Competition Law','Corporate M&A','Data protection and information law', 'Employment', 'Information Technology, Infrastructure, Intellectual Property, Litigation and dispute resolution, Outsourcing/insourcing, Partnerships, Property, real estate & contruction, Tex, EU, Planning, Projects, Restructuring and insolvancy, Education law, Child law, Energy and natural resourcee, food ruaral abed environmental affairs, francise law, health and healthcare, life sciences, telecommunications,the law of international trade investment and regulation, public international law, charities law, health and safetly law, licensing law, transport law (excluding rail)'] %>
              <% lot1.each do |lot| %>
                <div class="govuk-checkboxes__item">
+	     <% byebug %>
                  <%= check_box_tag(
                             "lot[]",
                             lot,
