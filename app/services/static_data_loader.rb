@@ -23,7 +23,7 @@ class StaticDataLoader
 
   def self.call_rake(static_data_class, class_name, query)
     if File.split($PROGRAM_NAME).last == 'rake'
-      Rails.logger.info('Guess what, I`m running this from Rake')
+      Rails.logger.info('')
     else
       begin
         Rails.logger.info('No, this is not a Rake task')
@@ -31,10 +31,11 @@ class StaticDataLoader
         Rake::Task['db:static'].execute
         # reload the data a second time
         static_data_class.load_db(query)
-      rescue StandardError
+      rescue StandardError => e
         message = class_name + " data is missing! Please run 'rake db:static' to load static data."
         Rails.logger.info("\e[5;37;41m\n" + message + "\033[0m\n")
-        raise error
+        Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
+        raise e
       end
     end
   end

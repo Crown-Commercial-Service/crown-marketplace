@@ -13,8 +13,8 @@ $(() => {
         let currentBuilding = pageUtils.getCachedData('fm-current-building');
         let gia = currentBuilding ? currentBuilding['gia'] : 0;
         let address = pageUtils.getCachedData('fm-new-address');
-        
-        if (address !== []) {
+
+        if (address && address.length !== 0) {
 
             let add1 = address['fm-address-line-1'] ? address['fm-address-line-1'] + ', ' : '';
             let add2 = address['fm-address-line-2'] ? address['fm-address-line-2'] + ', ' : '';
