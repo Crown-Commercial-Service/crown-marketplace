@@ -5,12 +5,12 @@ module Postcode
   class PostcodeChecker
     def self.in_london?(postcode)
       info = location_info(postcode)
-      @london_burroughs.include? info[0]['administrative_area']
+      @london_burroughs.include? info[0]['county'].upcase
     end
 
     # SELECT * FROM os_address_view where postcode='G32 0RP';
     def self.location_info(postcode)
-      query = "select distinct initcap(add1) as add1, initcap(village) as village, initcap(post_town) as post_town, initcap(county) as county, upper(postcode) as postcode, administrative_area
+      query = "select distinct initcap(add1) as add1, initcap(village) as village, initcap(post_town) as post_town, initcap(county) as county, upper(postcode) as postcode
  from public.os_address_view where postcode = '" + postcode + "';"
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     rescue StandardError => e
