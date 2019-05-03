@@ -554,7 +554,11 @@ en:
         question: What kind of management consultancy do you want to procure?
         question_hint: The lot you choose here will affect the services offered and the suppliers presented.
       choose_regions:
-        question: In which regions will you require the services?
+        no_regions_selected: No regions selected
+        question: Where do you want the consultants to work?
+        regions_selected: Regions selected
+        remove_all: Remove all
+        subtitle: Suppliers have said where they’ll provide consultants.
       choose_services:
         question: Select the business consultancy services you need
       other_framework:
