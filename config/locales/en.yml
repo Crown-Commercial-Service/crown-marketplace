@@ -541,7 +541,10 @@ en:
       choose_regions:
         question: In which regions will you require the services?
       choose_services:
+        no_services_selected: No services selected
         question: Select the business consultancy services you need
+        remove_all: Remove all
+        services_selected: services selected
       other_framework:
         back_to_start: Back to start
         heading: You need a different framework
