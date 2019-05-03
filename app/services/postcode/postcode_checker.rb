@@ -47,6 +47,7 @@ module Postcode
       'invalid access key or secret key' unless verify_access(access_key, secret_access_key)
 
       ActiveRecord::Base.connection_pool.with_connection do |db|
+        db.exec_query 'DROP VIEW IF EXISTS public.os_address_view;'
         db.exec_query 'DROP TABLE IF EXISTS os_address;'
       end
     rescue StandardError => e
@@ -86,7 +87,7 @@ module Postcode
 
         File.open(Rails.root.to_s + '/../aws-secrets.json', 'w') { |file| file.write(aws_secrets.to_json) }
 
-        rake
+        rake 'db:postcode'
 
         { status: 200, result: "Uploading postcodes from AWS bucket #{bucket}, region: #{region}" }
       rescue IOError => e
@@ -96,18 +97,19 @@ module Postcode
         { status: 404, error: e.to_s }
       end
 
-      def rake
+      # rake 'db:postcode'
+      def rake(task_name)
         if File.split($PROGRAM_NAME).last == 'rake'
           Rails.logger.info('')
         else
           begin
             Rails.logger.info('No, this is not a Rake task')
             Rails.application.load_tasks
-            Rake::Task['db:postcode'].execute
+            Rake::Task[task_name].execute
           rescue StandardError => e
-            message = self.class.name + " data is missing! Please run 'rake db:postcode' to load postcode data."
-            Rails.logger.info("\e[5;37;41m\n" + message + "\033[0m\n")
-            Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
+            message = self.class.name + " data is missing! Please run 'rake " + task_name + "' to load postcode data."
+            Rails.logger.info("\e[5;37;41m\n" + message + '\n' + e.to_s + "\033[0m\n")
+            # Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
             raise e
           end
         end
