@@ -32,6 +32,14 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
     @secrets = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
     Aws.config[:credentials] = Aws::Credentials.new(@secrets['AccessKeyId'], @secrets['SecretAccessKey'])
     p "Importing from AWS bucket: #{@secrets['bucket']}, region: #{@secrets['region']}"
+
+    extend_timeout
+  end
+
+  def self.extend_timeout
+    Aws.config[:http_open_timeout] = 600
+    Aws.config[:http_read_timeout] = 600
+    Aws.config[:http_idle_timeout] = 600
   end
 
   def self.import_postcodes
@@ -46,7 +54,11 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
       ActiveRecord::Base.connection_pool.with_connection do |conn|
         rc = conn.raw_connection
         rc.exec('COPY os_address FROM STDIN WITH CSV')
-        rc.put_copy_data(obj.get.body.read)
+        # rc.put_copy_data(obj.get.body)
+        # obj.get.body.each_line { |line| rc.put_copy_data(line) }
+        obj.get do |chunk|
+          rc.put_copy_data chunk
+        end
         rc.put_copy_end
       end
     end

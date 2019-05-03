@@ -15,7 +15,7 @@ $(() => {
 
             let address = currentBuilding.address;
 
-            if (address) {
+            if (address && address.length !== 0) {
 
                 let add1 = address['fm-address-line-1'] ? address['fm-address-line-1'] + ', ' : '';
                 let add2 = address['fm-address-line-2'] ? address['fm-address-line-2'] + ', ' : '';
