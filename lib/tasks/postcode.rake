@@ -43,7 +43,6 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
   end
 
   def self.import_postcodes
-    create_postcode_table
     awd_credentials
 
     object = Aws::S3::Resource.new(region: @secrets['region'])
@@ -71,6 +70,8 @@ namespace :db do
   desc 'add OS postcode data to the database'
   task postcode: :environment do
     p 'Creating postcode database and import'
+    OrdnanceSurvey.create_postcode_table
+    OrdnanceSurvey.create_address_lookup_view
     OrdnanceSurvey.import_postcodes
   end
 
@@ -81,8 +82,4 @@ namespace :db do
     p 'Creating address lookup view'
     OrdnanceSurvey.create_address_lookup_view
   end
-
-  # desc 'add postcode static data to the database'
-  # task static: :postcode do
-  # end
 end
