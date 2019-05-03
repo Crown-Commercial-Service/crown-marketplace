@@ -563,10 +563,10 @@ en:
         download_suppliers_list: Download the supplier list
         heading: Supplier results
         no_suppliers_found:
-          contact_html: "%{contact_link} for help"
+          contact_html: "%{contact_link} for help."
           contact_link_text: Contact CCS Support
           heading: No suppliers were found
-          text: No companies can provide consultants that can meet your requirements
+          text: No companies can provide consultants that can meet your requirements.
         suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
   miles:
     unit:
