@@ -4,7 +4,7 @@ module FacilitiesManagement
 
     def initialize(slug, params)
       paths = JourneyPaths.new(self.class.journey_name)
-      first_step_class = Journey::ValueBand
+      first_step_class = Journey::ContractStart
       super(first_step_class, slug, params, paths)
     end
 
@@ -18,7 +18,7 @@ module FacilitiesManagement
 
     def next_step_path
       case next_slug
-      when 'suppliers'
+      when 'summary'
         facilities_management_suppliers_path(journey: self.class.journey_name, params: params)
       else
         super
