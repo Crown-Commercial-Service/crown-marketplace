@@ -18,7 +18,7 @@
          (from <%= @report.without_pricing.count + @report.with_pricing.count%> selected) without a price.
       </p>
       <p class="govuk-!-font-size-36">
-        Your assessed value is £???,??? for the contract term of 7 years.
+        Your assessed value is <%=number_to_currency(@report.sum_uom + @report.sum_benchmark, strip_insignificant_zeros: true)%> for the contract term of 7 years.
       </p>
       <p class="govuk-!-font-size-36">
         Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.
@@ -50,6 +50,7 @@
 </div>
 
 <form action="/facilities-management/summary" method="post">
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
