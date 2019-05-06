@@ -69,6 +69,31 @@ class FacilitiesManagement::Spreadsheet
       end
 
       @format.style(workbook, sheet)
+
+
+      @workbook.add_worksheet(:name => "Service Matrix") do |sheet|
+
+        i = 1
+        vals = ['Work Package', 'Service Reference', 'Service Name', 'Unit of Measure']
+        @report.building_data.each do |building|
+          vals << 'Building ' + i.to_s
+          i += 1
+        end
+        sheet.add_row vals
+        # sheet.add_row [1, 2, 0.3, 4]
+        # sheet.add_row [1, 2, 0.2, 4]
+        # sheet.add_row [1, 2, 0.1, 4]
+        # sheet.col_style 2, percent, :row_offset => 1
+        # sheet.row_style 0, head
+      end
+
+      @workbook.add_worksheet(:name => 'Procurement summary') do |sheet|
+        sheet.add_row ['CCS reference number & date/time of production of this document']
+        sheet.add_row
+        sheet.add_row ['1. Customer details']
+      end
+
+
     end
   end
 
@@ -76,9 +101,9 @@ class FacilitiesManagement::Spreadsheet
 
   def spreadsheet(name)
     package = Axlsx::Package.new
-    workbook = package.workbook
-    workbook.add_worksheet(name: name) do |sheet|
-      yield workbook, sheet
+    @workbook = package.workbook
+    @workbook.add_worksheet(name: name) do |sheet|
+      yield @workbook, sheet
     end
     package.to_stream.read
   end
