@@ -11,10 +11,33 @@ $(() => {
         }
 
         let currentBuilding = pageUtils.getCachedData('fm-current-building');
-        let gia = currentBuilding ? currentBuilding['fm-gross-internal-area'] : 0;
+        let gia = currentBuilding ? currentBuilding['gia'] : 0;
+        let address = pageUtils.getCachedData('fm-new-address');
+
+        if (address && address.length !== 0) {
+
+            let add1 = address['fm-address-line-1'] ? address['fm-address-line-1'] + ', ' : '';
+            let add2 = address['fm-address-line-2'] ? address['fm-address-line-2'] + ', ' : '';
+            let postTown = address['fm-address-town'] ? address['fm-address-town'] + ', ' : '';
+            let county = address['fm-address-county'] ? address['fm-address-county'] + ', ' : '';
+            let postCode = address['fm-address-postcode'] ? address['fm-address-postcode'] : '';
+            let newOptionData = add1 + add2 + postTown + county + postCode;
+            let newOption = '<option selected value="' + newOptionData + '">' + newOptionData + '</option>';
+
+            $('#fm-postcode-lookup-results').find('option[value="status-option"]').remove();
+            $('#fm-postcode-lookup-results').append(newOption);
+            $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
+            $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
+            $('#fm-postcode-input').removeClass('govuk-visually-hidden');
+            $('#fm-postcode-label').text(postCode);
+        }
 
         $('#fm-internal-square-area').val(gia);
 
+    });
+
+    $('#fm-building-not-found').on('click', (e) => {
+        pageUtils.clearCashedData('fm-new-address');
     });
 
     const validateBuildingName = ((value) => {
@@ -84,33 +107,74 @@ $(() => {
             });
     });
 
-    const getRegion = ((postcode) => {
+    const getRegion = ((post_code) => {
 
-        $.get(encodeURI("/postcodes/" + postcode))
+        $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
             .done(function (data) {
                 if (data) {
                     pageUtils.setCachedData('fm-current-region', data.result.region);
                 }
-
-
             })
             .fail(function (data) {
                 showPostCodeError(true, data.error);
             });
     });
 
+    $('#fm-postcode-lookup-results').on('change', (e) => {
+        let selectedAddress = $("select#fm-postcode-lookup-results > option:selected").val();
+        if (selectedAddress) {
+            let addressElements = selectedAddress.split(',');
+            getRegion(addressElements[4]);
+            let address = {};
+
+            address['fm-address-line-1'] = addressElements[0];
+            address['fm-address-line-2'] = addressElements[1];
+            address['fm-address-town'] = addressElements[2];
+            address['fm-address-county'] = addressElements[3];
+            address['fm-address-postcode'] = addressElements[4];
+
+            pageUtils.setCachedData('fm-new-address', address);
+        }
+
+    });
 
     $('#fm-post-code-lookup-button').click((e) => {
         e.preventDefault();
         if (pageUtils.isPostCodeValid(postCode)) {
-            pageUtils.setCachedData('fm-postcode', postCode);
+            pageUtils.setCachedData('fm-postcode', postCode.toUpperCase());
+            pageUtils.clearCashedData('fm-new-address');
             showPostCodeError(false);
             isPostCodeInLondon(postCode);
-            getRegion(postCode);
+
             $('#fm-postcode-label').text(postCode);
             $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
             $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
+            $('#fm-postcode-lookup-results').find('option').remove();
+            $('#fm-postcode-lookup-results').append('<option value="status-option" selected>0 addresses found</option>');
 
+            $.get(encodeURI("/postcodes/" + postCode.toUpperCase()))
+                .done(function (data) {
+                    if (data && data.result && data.result.length > 0) {
+                        $('#fm-postcode-lookup-results').find('option').remove();
+                        $('#fm-postcode-lookup-results').append('<option value="status-option" selected>' + data.result.length + ' addresses found</option>');
+                        let addresses = data.result;
+                        addresses.forEach((address, index) => {
+                            let add1 = address['add1'] ? address['add1'] + ', ' : '';
+                            let add2 = address['village'] ? address['village'] + ', ' : '';
+                            let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
+                            let county = address['county'] ? address['county'] + ', ' : '';
+                            let postCode = address['postcode'] ? address['postcode'] : '';
+                            let newOptionData = add1 + add2 + postTown + county + postCode;
+                            let newOption = '<option value="' + newOptionData + '">' + newOptionData + '</option>';
+                            $('#fm-postcode-lookup-results').append(newOption);
+                            $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
+                            $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
+                        })
+                    }
+                })
+                .fail(function (data) {
+                    showPostCodeError(true, data.error);
+                });
         } else {
             showPostCodeError(true);
         }
@@ -130,9 +194,7 @@ $(() => {
         let value = e.target.value;
 
         if (value && value !== "") {
-            let currentBuilding = pageUtils.getCachedData('fm-current-building');
-            currentBuilding['fm-gross-internal-area'] = value;
-            pageUtils.setCachedData('fm-current-building', currentBuilding);
+            pageUtils.setCachedData('fm-gia', value);
         }
 
     });

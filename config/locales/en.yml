@@ -320,9 +320,11 @@ en:
     apply_filters: Apply filters
     back_to_start: Back to start
     browse: Browse
+    ccs_contact_url: https://www.crowncommercial.gov.uk/contact
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
+    general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     search: Search
     submit: Continue
@@ -454,6 +456,11 @@ en:
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
     suppliers:
+      cg_no_suppliers_found:
+        heading: No suppliers were found
+        statement_pt_1: The
+        statement_pt_2_link_text: General Legal Advice Services (RM3786)
+        statement_pt_3: agreement provides legal advice services for central government and arms-length bodies.
       download_shortlist:
         heading: Download the supplier shortlist
         page_title: Download supplier list
@@ -462,6 +469,11 @@ en:
         page_title: Supplier results
         results_html: <strong class="govuk-!-font-size-27">%{results}</strong> <strong>firms</strong> can provide the legal services that meet your requirements.
         sme: SME
+      no_suppliers_found:
+        heading: No suppliers were found
+        link_click_text: Contact CCS Support
+        link_end_text: for help.
+        statement: No companies can provide suppliers that can meet your requirements.
       show:
         caption: Supplier details
         heading: Supplier details
@@ -539,7 +551,11 @@ en:
         question: What kind of management consultancy do you want to procure?
         question_hint: The lot you choose here will affect the services offered and the suppliers presented.
       choose_regions:
-        question: In which regions will you require the services?
+        no_regions_selected: No regions selected
+        question: Where do you want the consultants to work?
+        regions_selected: Regions selected
+        remove_all: Remove all
+        subtitle: Suppliers have said where they’ll provide consultants.
       choose_services:
         no_services_selected: No services selected
         question: Select the business consultancy services you need
@@ -554,10 +570,10 @@ en:
         download_suppliers_list: Download the supplier list
         heading: Supplier results
         no_suppliers_found:
-          contact_html: "%{contact_link} for help"
+          contact_html: "%{contact_link} for help."
           contact_link_text: Contact CCS Support
           heading: No suppliers were found
-          text: No companies can provide consultants that can meet your requirements
+          text: No companies can provide consultants that can meet your requirements.
         suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
   miles:
     unit:

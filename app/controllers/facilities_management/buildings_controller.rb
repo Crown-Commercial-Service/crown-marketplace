@@ -2,7 +2,7 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  require_permission :facilities_management, only: %i[region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
 
   def select_services_per_building
     @inline_error_summary_title = 'Services are not selected'
@@ -64,6 +64,15 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     render json: j, status: 200
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController update_building(): #{e}"
+  end
+
+  def region_info
+    post_code = params['post_code']
+    fm_building_data = FMBuildingData.new
+    result = fm_building_data.region_info_for_post_town(post_code)
+    render json: result
+  rescue StandardError
+    render json: { status: 404, error: 'Region not found' }
   end
 
   def units_of_measurement
