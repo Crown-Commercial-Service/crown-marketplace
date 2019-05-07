@@ -60,25 +60,27 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:enable Metrics/CyclomaticComplexity
 
   def to_xlsx
-    builing_information
+    building_information
 
     service_matrix
 
     procurement_summary
+
+    @package.to_stream.read
   end
 
   private
 
   def spreadsheet(name)
-    package = Axlsx::Package.new
-    @workbook = package.workbook
+    @package = Axlsx::Package.new
+    @workbook = @package.workbook
     @workbook.add_worksheet(name: name) do |sheet|
       yield @workbook, sheet
     end
-    package.to_stream.read
+    # package.to_stream.read
   end
 
-  def builing_information
+  def building_information
     spreadsheet(@format.sheet_name) do |workbook, sheet|
       sheet.add_row @format.title
 
@@ -94,14 +96,14 @@ class FacilitiesManagement::Spreadsheet
   end
 
   def service_matrix
-    @workbook.add_worksheet(name: 'Service Matrix') do |sheet2|
+    @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       i = 1
       vals = ['Work Package', 'Service Reference', 'Service Name', 'Unit of Measure']
       @report.building_data.each do |building|
         vals << 'Building ' + i.to_s + ', ' + building.building_json['name']
         i += 1
       end
-      sheet2.add_row vals
+      sheet.add_row vals
       # sheet.add_row [1, 2, 0.3, 4]
       # sheet.add_row [1, 2, 0.2, 4]
       # sheet.add_row [1, 2, 0.1, 4]
@@ -111,10 +113,10 @@ class FacilitiesManagement::Spreadsheet
   end
 
   def procurement_summary
-    @workbook.add_worksheet(name: 'Procurement summary') do |sheet3|
-      sheet3.add_row ['CCS reference number & date/time of production of this document']
-      sheet3.add_row
-      sheet3.add_row ['1. Customer details']
+    @workbook.add_worksheet(name: 'Procurement summary') do |sheet|
+      sheet.add_row ['CCS reference number & date/time of production of this document']
+      sheet.add_row
+      sheet.add_row ['1. Customer details']
     end
   end
 end
