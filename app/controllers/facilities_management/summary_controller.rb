@@ -28,6 +28,8 @@ module FacilitiesManagement
           render xlsx: spreadsheet.to_xlsx, filename: filename
         end
       end
+    rescue StandardError => e
+      { status: 404, error: e.to_s }
     end
 
     private
