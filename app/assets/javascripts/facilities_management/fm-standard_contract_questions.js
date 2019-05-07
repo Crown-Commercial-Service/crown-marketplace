@@ -1,12 +1,20 @@
 $(() => {
 
-    let contractLength = 0;
+    let contractLength = 7;
     let extensionCount = 1;
     let extensions = [];
+    const max_contract_years = 10;
 
     /* validate and cache contract length */
     const init = (() => {
-        contractLength = parseInt(pageUtils.getCachedData('fm-contractlength'));
+
+        contractLength = pageUtils.getCachedData('fm-contractlength');
+
+        console.log(contractLength);
+
+        contractLength = contractLength && contractLength.length !== 0 ? parseInt(contractLength) : 7;
+
+
         $('#fm-contract-length').val(contractLength);
 
         extensions = pageUtils.getCachedData('fm-contract-extensions');
@@ -24,7 +32,7 @@ $(() => {
                 '<div id="' + extension.id + '-error" hidden><span class="govuk-error-message" >This field can not be empty and contracts, including extensions, must be 10 years or less</span></div>' +
                 '<input id="' + extension.id + '" name="fm-extension" type="number" min="0" placeholder="Extension ' + (index + 1) + '"  value="' + extension.value + '"/>&nbsp;';
             if (index > 0) {
-                newDiv += '<a role="button" class="govuk-link" id="fm-remove-extension-' + (index + 1) + '" name="fm-remove-extension" href="">Remove</a>';
+                newDiv += '<a role="button" class="govuk-link govuk-link--no-visited-state" id="fm-remove-extension-' + (index + 1) + '" name="fm-remove-extension" href="#">Remove</a>';
             }
 
             newDiv += '</div>';
@@ -91,12 +99,14 @@ $(() => {
             result += elem.value ? parseInt(elem.value) : 0;
         });
 
-        return result;
+        return result || 0;
 
     });
 
     $('#fm-contract-length').on('keyup', (e) => {
         let value = e.target.value;
+
+        value = value ? parseInt(value) : 0;
 
         if (!value || value < 1 || value > 7) {
             $('#fm-contract-length-error-form-group').addClass('govuk-form-group--error');
@@ -107,6 +117,7 @@ $(() => {
             contractLength = value;
             pageUtils.setCachedData('fm-contractlength', contractLength);
         }
+        updateFMExtensionCounts();
     });
 
     $('#fm-contract-extension-yes').click((e) => {
@@ -122,7 +133,7 @@ $(() => {
 
     const updateFMExtensionCounts = (() => {
         let totalExtensionYears = calcTotalExtensionYears();
-        let remainingExtensionCount = (10 - (contractLength + totalExtensionYears));
+        let remainingExtensionCount = (max_contract_years - (contractLength + totalExtensionYears));
         $('#fm-remaining-extension-count').text(remainingExtensionCount);
     });
 
@@ -136,7 +147,7 @@ $(() => {
             let newDiv = '<div id="' + id + '-container' + '" name="fm-extension-container">' +
                 '<div id="' + id + '-error" hidden><span class="govuk-error-message" >This field can not be empty and contracts, including extensions, must be 10 years or less</span></div>' +
                 '<input id="' + id + '" name="fm-extension" type="number" placeholder="Extension ' + extensionCount + '"  value=""/>&nbsp;' +
-                '<a role="button" class="govuk-link" id="fm-remove-extension-' + extensionCount + '" name="fm-remove-extension" href="">Remove</a></div>';
+                '<a role="button" class="govuk-link govuk-link--no-visited-state" id="fm-remove-extension-' + extensionCount + '" name="fm-remove-extension" href="">Remove</a></div>';
             $('#fm-extensions').append(newDiv);
             $('#' + id).on('keyup', (e) => {
                 processExtensionKeyUp(e);
