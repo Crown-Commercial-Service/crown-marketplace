@@ -32,6 +32,7 @@ class FacilitiesManagement::Spreadsheet
     @format = with_calculations ? Shortlist.new : DataDownload.new
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def row(report, idx)
     vals = []
     report.building_data.each do |building|
@@ -56,45 +57,14 @@ class FacilitiesManagement::Spreadsheet
     end
     vals
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def to_xlsx
-    spreadsheet(@format.sheet_name) do |workbook, sheet|
-      sheet.add_row @format.title
+    builing_information
 
-      i = 0
-      @format.headers.each do |label|
-        vals = row(@report, i)
-        sheet.add_row [label] + vals, types: @format.types
-        i += 1
-      end
+    service_matrix
 
-      @format.style(workbook, sheet)
-
-
-      @workbook.add_worksheet(:name => "Service Matrix") do |sheet|
-
-        i = 1
-        vals = ['Work Package', 'Service Reference', 'Service Name', 'Unit of Measure']
-        @report.building_data.each do |building|
-          vals << 'Building ' + i.to_s
-          i += 1
-        end
-        sheet.add_row vals
-        # sheet.add_row [1, 2, 0.3, 4]
-        # sheet.add_row [1, 2, 0.2, 4]
-        # sheet.add_row [1, 2, 0.1, 4]
-        # sheet.col_style 2, percent, :row_offset => 1
-        # sheet.row_style 0, head
-      end
-
-      @workbook.add_worksheet(:name => 'Procurement summary') do |sheet|
-        sheet.add_row ['CCS reference number & date/time of production of this document']
-        sheet.add_row
-        sheet.add_row ['1. Customer details']
-      end
-
-
-    end
+    procurement_summary
   end
 
   private
@@ -106,5 +76,45 @@ class FacilitiesManagement::Spreadsheet
       yield @workbook, sheet
     end
     package.to_stream.read
+  end
+
+  def builing_information
+    spreadsheet(@format.sheet_name) do |workbook, sheet|
+      sheet.add_row @format.title
+
+      i = 0
+      @format.headers.each do |label|
+        vals = row(@report, i)
+        sheet.add_row [label] + vals, types: @format.types
+        i += 1
+      end
+
+      @format.style(workbook, sheet)
+    end
+  end
+
+  def service_matrix
+    @workbook.add_worksheet(name: 'Service Matrix') do |sheet2|
+      i = 1
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Unit of Measure']
+      @report.building_data.each do |building|
+        vals << 'Building ' + i.to_s + ', ' + building.building_json['name']
+        i += 1
+      end
+      sheet2.add_row vals
+      # sheet.add_row [1, 2, 0.3, 4]
+      # sheet.add_row [1, 2, 0.2, 4]
+      # sheet.add_row [1, 2, 0.1, 4]
+      # sheet.col_style 2, percent, :row_offset => 1
+      # sheet.row_style 0, head
+    end
+  end
+
+  def procurement_summary
+    @workbook.add_worksheet(name: 'Procurement summary') do |sheet3|
+      sheet3.add_row ['CCS reference number & date/time of production of this document']
+      sheet3.add_row
+      sheet3.add_row ['1. Customer details']
+    end
   end
 end
