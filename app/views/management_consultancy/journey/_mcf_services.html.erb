@@ -1,4 +1,4 @@
-<div data-module="accordion" id="accordion-default">
+<div id="accordion-default">
   <div class="govuk-form-group">
     <div class="govuk-checkboxes">
       <% services.each do |service| %>
@@ -8,9 +8,9 @@
             service.code,
             @journey.current_step.services.include?(service.code),
             class: "govuk-checkboxes__input",
-            id: "service_#{service.code}",
+            id: "service_#{service.code.gsub('.', '-')}",
           ) %>
-          <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>">
+          <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code.gsub('.', '-') %>">
             <%= service.name %>
           </label>
         </div>

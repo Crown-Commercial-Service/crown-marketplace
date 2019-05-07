@@ -19,9 +19,9 @@
                     service.code,
                     @journey.current_step.services.include?(service.code),
                     class: "govuk-checkboxes__input",
-                    id: "service_#{service.code}",
+                    id: "service_#{service.code.gsub('.', '-')}",
                   ) %>
-                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>">
+                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code.gsub('.', '-') %>">
                     <%= service.name %>
                   </label>
                 </div>
@@ -33,9 +33,9 @@
                     subservice.code,
                     @journey.current_step.services.include?(subservice.code),
                     class: "govuk-checkboxes__input",
-                    id: "service_#{service.code}-#{subservice.code}",
+                    id: "service_#{service.code.gsub('.', '-')}-#{subservice.code.gsub('.', '-')}",
                   ) %>
-                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>-<%= subservice.code %>">
+                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>-<%= subservice.code.gsub('.', '-') %>">
                     <%= subservice.name %>
                   </label>
                 </div>
