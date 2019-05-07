@@ -14,14 +14,37 @@ module Postcode
     #      http://localhost:3000/postcodes/in_london?postcode=SW1P%202AP
     #      http://localhost:3000/postcodes/in_london?postcode=G69%206HB
     def show
-      result = if params[:id] == 'in_london'
-                 PostcodeChecker.in_london? params[:postcode]
-               else
-                 PostcodeChecker.location_info(params[:id])
-               end
+      result = query(params[:id])
+
       render json: { status: 200, result: result }
-    rescue StandardError
-      render json: { status: 404, error: 'Postcode not found' }
+    rescue StandardError => e
+      render json: { status: 404, error: e.to_s }
+    end
+
+    private
+
+    def query(param)
+      case param
+      when 'in_london'
+        PostcodeChecker.in_london? params[:postcode]
+      when 'clear'
+        PostcodeChecker.clear(params[:access_key], params[:secret_access_key])
+      when 'count'
+        PostcodeChecker.count(params[:access_key], params[:secret_access_key])
+      when 'upload'
+        upload(params[:access_key], params[:secret_access_key], params[:bucket], params[:region])
+      else
+        PostcodeChecker.location_info(param)
+      end
+    end
+
+    def upload(access_key, secret_access_key, bucket, region)
+      flag = PostcodeChecker.table_exists
+      if flag
+        rows = PostcodeChecker.count(access_key, secret_access_key)
+        return "There are already #{rows} rows of postcodes data! Please clear that data first.\n" unless rows.zero?
+      end
+      PostcodeChecker.upload(access_key, secret_access_key, bucket, region)
     end
   end
 end
