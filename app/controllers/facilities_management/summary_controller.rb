@@ -15,17 +15,15 @@ module FacilitiesManagement
       # @inline_error_summary_body_href = '#'
       # @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
 
-      start_date
+      # @journey = Journey.new('summary', params)
 
       report
-
-      regions
 
       respond_to do |format|
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
         format.html
         format.xlsx do
-          spreadsheet = Spreadsheet.new(@suppliers, with_calculations: params[:calculations].present?)
+          spreadsheet = Spreadsheet.new(@report, with_calculations: params[:calculations].present?)
           filename = "Shortlist of agencies#{params[:calculations].present? ? ' (with calculator)' : ''}"
           render xlsx: spreadsheet.to_xlsx, filename: filename
         end
@@ -35,12 +33,14 @@ module FacilitiesManagement
     private
 
     def report
+      start_date
       @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo.tsi[session.id])
       @report.calculate_services_for_buildings
+      regions
     end
 
     def start_date
-      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+      # @start_date = Date.new(@journey.params[:year].to_i, @journey.params[:month].to_i, @journey.params[:day].to_i)
     end
 
     def regions

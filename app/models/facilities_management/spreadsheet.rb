@@ -2,28 +2,8 @@ class FacilitiesManagement::Spreadsheet
   class DataDownload
     include TelephoneNumberHelper
 
-    def sheet_name
-      'Agency shortlist'
-    end
-
-    def title
-      ['Agency list']
-    end
-
-    def headers
-      ['Agency name', 'Branch name', 'Contact name', 'Contact email', 'Telephone number']
-    end
-
     def types
       %i[string string string string string]
-    end
-
-    def row(supplier, _row_num)
-      [supplier.supplier_name,
-       supplier.name,
-       supplier.contact_name,
-       supplier.contact_email,
-       format_telephone_number(supplier.telephone_number)]
     end
 
     def style(workbook, sheet); end
@@ -31,73 +11,112 @@ class FacilitiesManagement::Spreadsheet
 
   class Shortlist < DataDownload
     def sheet_name
-      'Agency shortlist'
+      'Building Information'
     end
 
     def title
-      extra_title =
-        ['', '', '', '', '', 'Enter the quote from this agency to see what their fee will be']
-      super + extra_title
+      ['Buildings information']
     end
 
     def headers
-      extra_headers =
-        ['Mark-up', 'Enter daily rate', 'Cost of the worker', 'Agency fee']
-      super + extra_headers
+      ['Building Type', 'Name', 'Address', '', '', '', 'GIA']
     end
 
     def types
       super + [:float, nil, nil, nil]
     end
-
-    def row(supplier, row)
-      extra_fields =
-        ['supplier.rate', '', formula(row, 'G#/(1+F#)'), formula(row, 'G#-H#')]
-      super + extra_fields
-    end
-
-    def formula(row_num, formula)
-      "=#{formula.gsub('#', row_num.to_s)}"
-    end
-
-    def style(workbook, sheet)
-      workbook.styles do |s|
-        percent = s.add_style(format_code: '0%')
-        money = s.add_style(format_code: '[$£-809]##,##0.00')
-        sheet.col_style 5, percent
-        sheet.col_style 6, money
-        sheet.col_style 7, money
-        sheet.col_style 8, money
-        sheet.column_widths(nil, nil, nil, nil, nil, nil, 20, 20, 20)
-      end
-    end
   end
 
-  def initialize(suppliers, with_calculations: false)
-    @suppliers = suppliers
+  def initialize(report, with_calculations: false)
+    @report = report
     @format = with_calculations ? Shortlist.new : DataDownload.new
   end
 
-  def to_xlsx(with_calculations: false)
-    spreadsheet(@format.sheet_name) do |workbook, sheet|
-      sheet.add_row @format.title
-      sheet.merge_cells 'G1:I1' if with_calculations
-      sheet.add_row @format.headers
-      @suppliers.each.with_index(3) do |supplier, i|
-        sheet.add_row @format.row(supplier, i), types: @format.types
-      end
-      @format.style(workbook, sheet)
+  # rubocop:disable Metrics/CyclomaticComplexity
+  def row(report, idx)
+    vals = []
+    report.building_data.each do |building|
+      str =
+        case idx
+        when 0
+          building.building_json['fm-building-type']
+        when 1
+          building.building_json['name']
+        when 2
+          building.building_json['address']['fm-address-line-1']
+        when 3
+          building.building_json['address']['fm-address-town']
+        when 4
+          building.building_json['address']['fm-address-county']
+        when 5
+          building.building_json['address']['fm-address-postcode']
+        when 6
+          building.building_json['fm-gross-internal-area']
+        end
+      vals << str
     end
+    vals
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+
+  def to_xlsx
+    building_information
+
+    service_matrix
+
+    procurement_summary
+
+    @package.to_stream.read
   end
 
   private
 
   def spreadsheet(name)
-    package = Axlsx::Package.new
-    workbook = package.workbook
-    workbook.add_worksheet(name: name) do |sheet|
-      yield workbook, sheet
+    @package = Axlsx::Package.new
+    @workbook = @package.workbook
+    @workbook.add_worksheet(name: name) do |sheet|
+      yield @workbook, sheet
     end
-    package.to_stream.read
+    # package.to_stream.read
+  end
+
+  def building_information
+    spreadsheet(@format.sheet_name) do |workbook, sheet|
+      sheet.add_row @format.title
+
+      i = 0
+      @format.headers.each do |label|
+        vals = row(@report, i)
+        sheet.add_row [label] + vals, types: @format.types
+        i += 1
+      end
+
+      @format.style(workbook, sheet)
+    end
+  end
+
+  def service_matrix
+    @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
+      i = 1
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Unit of Measure']
+      @report.building_data.each do |building|
+        vals << 'Building ' + i.to_s + ', ' + building.building_json['name']
+        i += 1
+      end
+      sheet.add_row vals
+      # sheet.add_row [1, 2, 0.3, 4]
+      # sheet.add_row [1, 2, 0.2, 4]
+      # sheet.add_row [1, 2, 0.1, 4]
+      # sheet.col_style 2, percent, :row_offset => 1
+      # sheet.row_style 0, head
+    end
+  end
+
+  def procurement_summary
+    @workbook.add_worksheet(name: 'Procurement summary') do |sheet|
+      sheet.add_row ['CCS reference number & date/time of production of this document']
+      sheet.add_row
+      sheet.add_row ['1. Customer details']
+    end
   end
 end
