@@ -47,7 +47,6 @@ module FacilitiesManagement
 
       selected_services
 
-      # ----------------------------
       @building_data = CCS::FM::Building.buildings_for_user(@user_id)
       @building_data.each do |building|
         fm_gross_internal_area = building.building_json['fm-gross-internal-area'].to_i
