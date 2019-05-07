@@ -15,7 +15,7 @@ module FacilitiesManagement
       # @inline_error_summary_body_href = '#'
       # @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
 
-      @journey = Journey.new('summary', params)
+      # @journey = Journey.new('summary', params)
 
       report
 
