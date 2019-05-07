@@ -38,7 +38,7 @@ module FacilitiesManagement
     def services_for_buildings
       selected_services
 
-      # ------------------------------
+      # -----------------------------
       @building_data = CCS::FM::Building.buildings_for_user(@user_id)
       @building_data.each do |building|
         sum_x = 0
