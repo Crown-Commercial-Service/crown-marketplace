@@ -8,6 +8,7 @@ module FacilitiesManagement
       @user_id = user_id
       @data = data
       @posted_services = @data[:posted_services]
+      @posted_locations = @data[:posted_locations]
 
       @sum_uom = 0
       @sum_benchmark = 0
@@ -78,9 +79,6 @@ module FacilitiesManagement
           @sum_uom += uom_cost
           @sum_benchmark += benchmark_cost
         end
-
-        # p sumX
-        # p sumY
       end
     end
   end
