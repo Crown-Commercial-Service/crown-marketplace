@@ -41,7 +41,10 @@ module FacilitiesManagement
     def build_report
       set_start_date
 
-      move_up params['move-up-a-sublot'] == 'yes'
+      increase_current_lot if params['move-up-a-sublot'] == 'yes'
+
+      puts @current_lot
+
       @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo[session.id])
       @report.calculate_services_for_buildings
       regions
@@ -54,15 +57,13 @@ module FacilitiesManagement
       @start_date = TransientSessionInfo[session.id][:start_date]
     end
 
-    # Lot.all_numbers
-    def move_up(yes)
-      increase_current_lot if yes
-    end
-
+    # Lot.all_numberss
     def increase_current_lot
       current_lot = TransientSessionInfo[session.id][:current_lot]
 
       case current_lot
+      when nil
+        @current_lot = '1a'
       when '1a'
         @current_lot = '1b'
       when '1b'
