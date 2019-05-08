@@ -31,9 +31,9 @@ class FacilitiesManagement::LongListController < ApplicationController
   private
 
   def transient_session_info
-    TransientSessionInfo.tsi[session.id, :posted_locations] = @posted_locations
-    TransientSessionInfo.tsi[session.id, :posted_services] = @posted_services
-    TransientSessionInfo.tsi[session.id, :locations] = @locations
-    TransientSessionInfo.tsi[session.id, :services] = @services
+    TransientSessionInfo[session.id, :posted_locations] = @posted_locations
+    TransientSessionInfo[session.id, :posted_services] = @posted_services
+    TransientSessionInfo[session.id, :locations] = @locations
+    TransientSessionInfo[session.id, :services] = @services
   end
 end
