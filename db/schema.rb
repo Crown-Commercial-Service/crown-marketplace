@@ -17,18 +17,6 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-  create_table "app_suppliers", id: false, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.integer "level"
-    t.index ["name"], name: "app_suppliers_name_key", unique: true
-  end
-
-  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
-    t.string "user_id", null: false
-    t.json "building_json", null: false
-    t.index ["user_id"], name: "facilities_management_buildings_user_id_idx"
-  end
-
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_supplier_id", null: false
     t.text "lot_number", null: false
@@ -61,28 +49,6 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
   create_table "facilities_management_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "fm_rates", id: false, force: :cascade do |t|
-    t.string "code", limit: 255
-    t.decimal "framework", null: false
-    t.decimal "benchmark", null: false
-    t.index ["code"], name: "fm_rates_code_key", unique: true
-  end
-
-  create_table "fm_regions", id: false, force: :cascade do |t|
-    t.string "code", limit: 255
-    t.string "name", limit: 255
-    t.index ["code"], name: "fm_regions_code_key", unique: true
-  end
-
-  create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
-    t.jsonb "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
-    t.index ["data"], name: "idxgin", using: :gin
-    t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
   end
 
   create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -131,14 +97,6 @@ ActiveRecord::Schema.define(version: 2019_03_25_092205) do
   create_table "management_consultancy_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "nuts_regions", id: false, force: :cascade do |t|
-    t.string "code", limit: 255
-    t.string "name", limit: 255
-    t.string "nuts1_code", limit: 255
-    t.string "nuts2_code", limit: 255
-    t.index ["code"], name: "nuts_regions_code_key", unique: true
   end
 
   create_table "supply_teachers_branches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
