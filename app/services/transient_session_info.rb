@@ -1,22 +1,23 @@
 class TransientSessionInfo
-  @tsi = TransientSessionInfo.new
+  # @tsi = TransientSessionInfo.new
+  @dict = {}
 
   class << self
-    attr_reader :tsi
+    attr_reader :dict
+
+    def self.initialize
+      @dict = {}
+    end
   end
 
-  def initialize
-    @dict = {}
-  end
-
-  def [](key1, key2 = nil)
+  def self.[](key1, key2 = nil)
     return @dict[key1] if key2.nil?
     return nil unless @dict[key1]
 
     @dict[key1][key2]
   end
 
-  def []=(key1, key2, value)
+  def self.[]=(key1, key2, value)
     @dict ||= {}
     @dict[key1] ||= {}
     @dict[key1][key2] = value

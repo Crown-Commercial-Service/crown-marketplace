@@ -6,6 +6,9 @@ module FacilitiesManagement
 
     require_permission :none, only: :index
     # :nocov:
+    attr_accessor :start_date
+    attr_accessor :current_lot
+    attr_accessor :report
 
     def index
       # puts 'SummaryController >> index'
@@ -17,7 +20,7 @@ module FacilitiesManagement
 
       # @journey = Journey.new('summary', params)
 
-      report
+      build_report
 
       respond_to do |format|
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
@@ -29,24 +32,46 @@ module FacilitiesManagement
         end
       end
     rescue StandardError => e
-      { status: 404, error: e.to_s }
+      @message = e.message
+      render 'error'
     end
 
     private
 
-    def report
-      start_date
-      @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo.tsi[session.id])
+    def build_report
+      set_start_date
+
+      increase_current_lot if params['move-up-a-sublot'] == 'yes'
+
+      @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo[session.id])
       @report.calculate_services_for_buildings
       regions
     end
 
-    def start_date
-      # @start_date = Date.new(@journey.params[:year].to_i, @journey.params[:month].to_i, @journey.params[:day].to_i)
+    def set_start_date
+      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+      TransientSessionInfo[session.id, :start_date] = @start_date
+    rescue StandardError
+      @start_date = TransientSessionInfo[session.id][:start_date]
+    end
+
+    # Lot.all_numberss
+    def increase_current_lot
+      current_lot = TransientSessionInfo[session.id][:current_lot]
+
+      case current_lot
+      when nil
+        @current_lot = '1a'
+      when '1a'
+        @current_lot = '1b'
+      when '1b'
+        @current_lot = '1c'
+      end
+      TransientSessionInfo[session.id][:current_lot] = @current_lot
     end
 
     def regions
-      @posted_locations = TransientSessionInfo.tsi[session.id][:posted_locations]
+      @posted_locations = TransientSessionInfo[session.id][:posted_locations]
 
       # Get nuts regions
       @regions = {}
