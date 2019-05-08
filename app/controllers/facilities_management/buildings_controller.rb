@@ -30,6 +30,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @uom_values
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController buildings(): #{e}"
+    @message = e.to_s
+    render 'error'
   end
 
   def new_building
@@ -105,16 +107,11 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     building_id = uom_json['building_id']
     service_code = uom_json['service_code']
     uom_value = uom_json['uom_value']
-
     fm_service_data = FMServiceData.new
     fm_service_data.add_uom_value(current_login.email.to_s, building_id, service_code, uom_value)
-
     count = fm_service_data.unset_service_count(current_login.email.to_s, building_id)
-
     url = count.positive? ? '/facilities-management/buildings/units-of-measurement?building_id=' + building_id : '/facilities-management/buildings-list'
-
     j = { 'status': 200, 'next': url }
-
     render json: j, status: 200
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController save_uom_value(): #{e}"
