@@ -22,6 +22,6 @@ module JourneyHelper
   end
 
   def production_env?
-    Rails.env == 'production'
+    Rails.env.production?
   end
 end
