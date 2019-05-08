@@ -43,8 +43,6 @@ module FacilitiesManagement
 
       increase_current_lot if params['move-up-a-sublot'] == 'yes'
 
-      puts @current_lot
-
       @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo[session.id])
       @report.calculate_services_for_buildings
       regions
