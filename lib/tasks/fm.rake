@@ -83,7 +83,7 @@ namespace :db do
   task fmdata: :environment do
     p 'Creating FM building database'
     FM.facilities_management_buildings
-    p 'Truncate buildings table'
+    p 'Truncate buildings table again'
     FM.truncate_buildings_table
     p 'Creating FM UOM table'
     FM.create_uom_table
