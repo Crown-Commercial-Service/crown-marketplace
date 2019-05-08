@@ -18,12 +18,10 @@
 
         <p>
           <%= t('.dfe_signin.create_account_html',
+                get_signin_url: 'https://help.signin.education.gov.uk/contact/service/45df2595-90b2-4662-b1ad-a94afa60615b/create-account',
                 gias_url: 'https://get-information-schools.service.gov.uk/') %>
         </p>
 
-        <p class="class: 'govuk-!-margin-bottom-2'">
-          <%= link_to t('.dfe_signin.create_dfe_signin_link'), 'http://help.signin.education.gov.uk/contact', role: 'button' %>.
-        </p>
         <p>
           <%= t('.dfe_signin.find_more_info_html', terms_url: 'https://interactions.signin.education.gov.uk/terms') %>
         </p>
