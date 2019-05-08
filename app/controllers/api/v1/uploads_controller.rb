@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 module Api
@@ -6,27 +5,26 @@ module Api
     # return json
     class UploadsController < ApplicationController
       protect_from_forgery with: :exception
-      require_permission :none, only: %i[create show]
-      skip_before_action :verify_authenticity_token, only: %i[create show]
-
+      require_permission :none, only: :show
+      skip_before_action :verify_authenticity_token, only: :show
 
       # :nocov:
       if Rails.env.production?
         http_basic_authenticate_with(
-            name: Marketplace.http_basic_auth_name,
-            password: Marketplace.http_basic_auth_password
+          name: Marketplace.http_basic_auth_name,
+          password: Marketplace.http_basic_auth_password
         )
       end
       # :nocov:
 
       # usage:
-      # curl  --request POST --header "Content-Type: application/json" --data @aws-secrets.json http://localhost:3000/api/v1/postcode?x=y
+      # curl  --request POST   --header "Content-Type: application/json" --data @aws-secrets.json http://localhost:3000/api/v1/postcode/upload
       def show
         action = params[:id]
 
         data = JSON.parse(request.body.read)
 
-
+        query(action, data)
 
         render json: {}, status: :created
       rescue StandardError => e
@@ -36,18 +34,14 @@ module Api
       # ---------------------------
       # private
 
-      def query(param)
-        case param
-        when 'in_london'
-          PostcodeChecker.in_london? params[:postcode]
+      def query(action, data)
+        case action
         when 'clear'
-          PostcodeChecker.clear(params[:access_key], params[:secret_access_key])
+          PostcodeChecker.clear
         when 'count'
-          PostcodeChecker.count(params[:access_key], params[:secret_access_key])
+          PostcodeChecker.count
         when 'upload'
-          upload(params[:access_key], params[:secret_access_key], params[:bucket], params[:region])
-        else
-          PostcodeChecker.location_info(param)
+          upload(data[:access_key], data[:secret_access_key], data[:bucket], data[:region])
         end
       end
 
@@ -59,8 +53,6 @@ module Api
         end
         PostcodeChecker.upload(access_key, secret_access_key, bucket, region)
       end
-
     end
-
   end
 end

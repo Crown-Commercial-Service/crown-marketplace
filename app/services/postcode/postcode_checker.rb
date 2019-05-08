@@ -30,9 +30,7 @@ module Postcode
     end
 
     # SELECT COUNT (*) FROM os_address;
-    def self.count(access_key, secret_access_key)
-      'invalid access key or secret key' unless verify_access(access_key, secret_access_key)
-
+    def self.count
       ActiveRecord::Base.connection_pool.with_connection do |db|
         result = db.exec_query 'SELECT COUNT (postcode) FROM os_address;'
         return 0 if result.nil?
@@ -43,9 +41,7 @@ module Postcode
       e
     end
 
-    def self.clear(access_key, secret_access_key)
-      'invalid access key or secret key' unless verify_access(access_key, secret_access_key)
-
+    def self.clear
       ActiveRecord::Base.connection_pool.with_connection do |db|
         db.exec_query 'TRUNCATE os_address CASCADE;'
       end
@@ -69,24 +65,8 @@ module Postcode
 
     # private class methods
     class << self
-      def verify_access(access_key, secret_access_key)
-        secrets = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
-        access_key == secrets['AccessKeyId'] && secret_access_key == secrets['SecretAccessKey']
-      rescue StandardError
-        false
-      end
-
       def uploader(access_key, secret_access_key, bucket, region)
-        aws_secrets = {
-          AccessKeyId: access_key,
-          SecretAccessKey: secret_access_key,
-          bucket: bucket,
-          region: region
-        }
-
-        File.open(Rails.root.to_s + '/../aws-secrets.json', 'w') { |file| file.write(aws_secrets.to_json) }
-
-        rake 'db:postcode'
+        rake "db:postcode \"#{access_key} #{secret_access_key} #{bucket} #{region}\""
 
         { status: 200, result: "Uploading postcodes from AWS bucket #{bucket}, region: #{region}" }
       rescue IOError => e
