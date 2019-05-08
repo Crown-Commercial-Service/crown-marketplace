@@ -1,26 +1,34 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
-
-<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-<%= form_tag @form_path, method: :get do %>
-  <div class="govuk-grid-column-two-thirds">
-    <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-    <%= govuk_form_group_with_optional_error(@journey, :services) do %>
-      <%= govuk_fieldset_with_optional_error(@journey, :services) do %>
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h1 class="govuk-fieldset__heading">
-            <%= t('.question') %>
-          </h1>
-          <%= display_error(@journey, :services) %>
-        </legend>
-        <% if @journey.params['lot'].split('.')[0] == 'MCF2' %>
-          <%= render partial: 'mcf2_services', locals: { services: @journey.current_step.services_for_lot(@journey.params['lot']) } %>
-        <% else %>
-          <%= render partial: 'mcf_services', locals: { services: @journey.current_step.services_for_lot(@journey.params['lot']) } %>
+<div id="ccs-dynamic-accordian" class="govuk-grid-row">
+  <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+  <%= form_tag @form_path, method: :get do %>
+    <section class="govuk-grid-column-two-thirds">
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <%= govuk_form_group_with_optional_error(@journey, :services) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :services) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.question') %>
+            </h1>
+            <%= display_error(@journey, :services) %>
+          </legend>
+          <% if @journey.params['lot'].split('.')[0] == 'MCF2' %>
+            <%= render partial: 'mcf2_services', locals: { services: @journey.current_step.services_for_lot(@journey.params['lot']) } %>
+          <% else %>
+            <%= render partial: 'mcf_services', locals: { services: @journey.current_step.services_for_lot(@journey.params['lot']) } %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
-  </div>
-  <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
-    <%= submit_tag t('common.submit'), class: "govuk-button" %>
-  </div>
-<% end %>
+    </section>
+    <section class="govuk-grid-column-one-third govuk-!-margin-top-9">
+      <div id="css-list-basket">
+        <%= submit_tag t('common.submit'), class: "govuk-button" %>
+        <div>
+          <h3 class="govuk-heading-m" data-txt01="<%= t('.services_selected') %>" data-txt02="<%= t('.no_services_selected') %>"><span></span> <span></span></h3>
+          <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll"><%= t('.remove_all') %></a>
+          <ul class="govuk-list"></ul>
+        </div>
+      </div>
+    </section>
+  <% end %>
+</div>

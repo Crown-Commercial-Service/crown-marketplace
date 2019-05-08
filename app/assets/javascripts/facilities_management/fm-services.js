@@ -58,21 +58,19 @@ $(() => {
             });
             //}
         });
+        updateServiceCount();
     });
 
-    /!* Update the count of selected services *!/
     const updateServiceCount = (() => {
 
-        let $checkboxes = $('input[type="checkbox"]');
-        let count = $checkboxes.filter(':checked').length;
-        $('#selected-service-count').text(count + 2);
+        let count = $('input[name=fm-building-service-checkbox]:checked').length;
+        let serviceCount = $('#selected-service-count');
+        let selectedServiceCount = $('#fm-selected-service-count');
 
-        let serviceCount = $('#fm-service-count');
-        let selectedservicecount = $('#fm-selected-service-count');
-
-        if (selectedservicecount) {
-            selectedservicecount.text((count - 1) > 0 ? count - 1 : 0);
+        if (selectedServiceCount) {
+            selectedServiceCount.text(count);
         }
+
         if (serviceCount) {
             serviceCount.text(count);
             $('#fm-select-all-services').prop('checked', (count === selectedServices.length) ? true : false);
@@ -81,6 +79,7 @@ $(() => {
             }
         }
     });
+
 
     /!* remove a service from the selected list *!/
     const removeSelectedItem = ((id) => {
