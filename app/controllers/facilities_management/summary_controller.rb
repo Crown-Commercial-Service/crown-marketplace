@@ -28,25 +28,39 @@ module FacilitiesManagement
           render xlsx: spreadsheet.to_xlsx, filename: filename
         end
       end
-    rescue StandardError => e
-      { status: 404, error: e.to_s }
+    rescue Exception => ex
+      @message = ex.message
+      render 'error'
     end
 
     private
 
     def report
       start_date
-      @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo.tsi[session.id])
+
+
+      move_up 'yes'== params['move-up-a-sublot'
+      @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo[session.id])
       @report.calculate_services_for_buildings
       regions
     end
 
     def start_date
-      # @start_date = Date.new(@journey.params[:year].to_i, @journey.params[:month].to_i, @journey.params[:day].to_i)
+      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+      TransientSessionInfo[session.id, :start_date] = @start_date
+    rescue
+      @start_date =  TransientSessionInfo[session.id][:start_date]
+    end
+
+    # Lot.all_numbers
+    def move_up
+      current_lot = TransientSessionInfo[session.id][:current_lot]
+
+
     end
 
     def regions
-      @posted_locations = TransientSessionInfo.tsi[session.id][:posted_locations]
+      @posted_locations = TransientSessionInfo[session.id][:posted_locations]
 
       # Get nuts regions
       @regions = {}
