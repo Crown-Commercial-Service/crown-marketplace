@@ -47,8 +47,7 @@ module Postcode
       'invalid access key or secret key' unless verify_access(access_key, secret_access_key)
 
       ActiveRecord::Base.connection_pool.with_connection do |db|
-        db.exec_query 'DROP VIEW IF EXISTS public.os_address_view;'
-        db.exec_query 'DROP TABLE IF EXISTS os_address;'
+        db.exec_query 'TRUNCATE os_address CASCADE;'
       end
     rescue StandardError => e
       e

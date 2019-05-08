@@ -9,19 +9,19 @@
         </h2>
       </div>
       <div class="govuk-accordion__section-content">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group" data-service="<%= service.name if service.subservices.size.positive? %>" >
           <fieldset class="govuk-fieldset">
             <div class="govuk-checkboxes">
               <% unless service.subservices.size.positive? %>
-                <div class="govuk-checkboxes__item">
+                <div class="govuk-checkboxes__item" >
                   <%= check_box_tag(
                     "services[]",
                     service.code,
                     @journey.current_step.services.include?(service.code),
                     class: "govuk-checkboxes__input",
-                    id: "service_#{service.code}"
+                    id: "service_#{service.code.gsub('.', '-')}",
                   ) %>
-                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>">
+                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code.gsub('.', '-') %>">
                     <%= service.name %>
                   </label>
                 </div>
@@ -33,9 +33,9 @@
                     subservice.code,
                     @journey.current_step.services.include?(subservice.code),
                     class: "govuk-checkboxes__input",
-                    id: "service_#{service.code}-#{subservice.code}"
+                    id: "service_#{service.code.gsub('.', '-')}-#{subservice.code.gsub('.', '-')}",
                   ) %>
-                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>-<%= subservice.code %>">
+                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>-<%= subservice.code.gsub('.', '-') %>">
                     <%= subservice.name %>
                   </label>
                 </div>

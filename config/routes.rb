@@ -42,9 +42,6 @@ Rails.application.routes.draw do
     post '/buildings/update_building' => 'buildings#update_building'
     get '/buildings/select-services', to: 'buildings#select_services_per_building'
 
-    get '/summary', to: 'summary#index'
-    post '/summary', to: 'summary#index'
-
     get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
     post '/buildings/save-uom-value' => 'buildings#save_uom_value'
     post '/services/save-lift-data' => 'select_services#save_lift_data'
@@ -53,6 +50,10 @@ Rails.application.routes.draw do
 
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/contract-start', to: 'contract#start_of_contract'
+
+    get '/summary', to: 'summary#index'
+    post '/summary', to: 'summary#index'
+
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?

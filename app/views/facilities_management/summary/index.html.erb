@@ -18,7 +18,7 @@
          (from <%= @report.without_pricing.count + @report.with_pricing.count%> selected) without a price.
       </p>
       <p class="govuk-!-font-size-36">
-        Your assessed value is £???,??? for the contract term of 7 years.
+        Your assessed value is <%=number_to_currency(@report.sum_uom + @report.sum_benchmark, strip_insignificant_zeros: true)%> for the contract term of 7 years.
       </p>
       <p class="govuk-!-font-size-36">
         Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.
