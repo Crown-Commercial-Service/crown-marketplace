@@ -66,7 +66,7 @@ $(() => {
         let count = $('input[name=fm-building-service-checkbox]:checked').length;
         let serviceCount = $('#selected-service-count');
         let selectedServiceCount = $('#fm-selected-service-count');
-        
+
         if (selectedServiceCount) {
             selectedServiceCount.text(count);
         }
