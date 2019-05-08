@@ -67,6 +67,15 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
   rescue PG::Error => e
     puts e.message
   end
+
+  def self.truncate_buildings_table
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      query = 'TRUNCATE TABLE public.facilities_management_buildings;'
+      db.query query
+    end
+  rescue PG::Error => e
+    puts e.message
+  end
 end
 
 namespace :db do
