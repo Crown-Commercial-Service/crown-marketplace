@@ -6,7 +6,7 @@ RSpec.describe FacilitiesManagement::UploadsController, type: :controller do
 
     before do
       allow(FacilitiesManagement::Upload)
-        .to receive(:upload!)
+        .to receive(:upload_json!)
     end
 
     context 'when the app has upload privileges' do
@@ -24,7 +24,7 @@ RSpec.describe FacilitiesManagement::UploadsController, type: :controller do
         post :create, body: suppliers.to_json
 
         expect(FacilitiesManagement::Upload)
-          .to have_received(:upload!)
+          .to have_received(:upload_json!)
           .with(suppliers)
       end
 
@@ -35,13 +35,13 @@ RSpec.describe FacilitiesManagement::UploadsController, type: :controller do
       end
 
       context 'when model validation error occurs' do
-        let(:supplier) { build(:facilities_management_supplier) }
+        let(:ccs_supplier) { build(:ccs_fm_supplier) }
 
         before do
-          supplier.errors.add(:name, 'error-message')
+          ccs_supplier.errors.add(:name, 'error-message')
           allow(FacilitiesManagement::Upload)
-            .to receive(:upload!)
-            .and_raise(ActiveRecord::RecordInvalid.new(supplier))
+            .to receive(:upload_json!)
+            .and_raise(ActiveRecord::RecordInvalid.new(ccs_supplier))
         end
 
         it 'responds with 422 Unprocessable Entity' do
@@ -50,12 +50,13 @@ RSpec.describe FacilitiesManagement::UploadsController, type: :controller do
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
-        it 'responds with JSON in body with details of the error' do
+        it 'responds with JSON in body and details of the error' do
           post :create, body: suppliers.to_json
 
           body = JSON.parse(response.body)
-          expect(body['record']).to include('name' => supplier.name)
-          expect(body['record_class']).to eq('FacilitiesManagement::Supplier')
+          # expect(body['record']).to include('data')
+          expect(body['record']['data']).to include('supplier_name' => ccs_supplier.data['supplier_name'])
+          expect(body['record_class']).to eq('CCS::FM::Supplier')
           expect(body['errors']).to eq('name' => ['error-message'])
         end
       end

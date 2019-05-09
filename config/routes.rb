@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
+    get '/fta-to-perm-fee', to: 'home#fta_to_perm_fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
     get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
     get '/all-suppliers', to: 'suppliers#all_suppliers', as: 'all_suppliers'
@@ -39,8 +40,20 @@ Rails.application.routes.draw do
     post '/buildings/new-building-address/save-building' => 'buildings#save_building'
     get '/buildings/building-type', to: 'buildings#building_type'
     post '/buildings/update_building' => 'buildings#update_building'
+    get '/buildings/select-services', to: 'buildings#select_services_per_building'
+
+    get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
+    post '/buildings/save-uom-value' => 'buildings#save_uom_value'
+    post '/services/save-lift-data' => 'select_services#save_lift_data'
+    get '/buildings/region', to: 'buildings#region_info'
     get '/suppliers', to: 'suppliers#index'
+
     get '/start', to: 'journey#start', as: 'journey_start'
+    get '/contract-start', to: 'contract#start_of_contract'
+
+    get '/summary', to: 'summary#index'
+    post '/summary', to: 'summary#index'
+
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
@@ -52,6 +65,11 @@ Rails.application.routes.draw do
     get '/suppliers', to: 'suppliers#index'
     get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
     get '/suppliers/:id', to: 'suppliers#show', as: 'supplier'
+    get '/html/select-lot', to: 'html#select_lot'
+    get '/html/select-services', to: 'html#select_services'
+    get '/html/select-location', to: 'html#select_location'
+    get '/html/supplier-detail', to: 'html#supplier_detail'
+    get '/html/download-the-supplier-list', to: 'html#download_the_supplier_list'
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -69,7 +87,7 @@ Rails.application.routes.draw do
     get '/find_apprentices2', to: 'home#find_apprentices2'
     get '/find_apprentices3', to: 'home#find_apprentices3'
     get '/find_apprentices4', to: 'home#find_apprentices4'
-    get '/find_apprentices5', to: 'home#find_apprentices5'
+    get '/find_apprentices5', to: 'journey#find_apprentices5'
     get '/outline', to: 'home#outline'
     get '/requirements', to: 'home#requirements'
     get '/requirement', to: 'home#requirement'
@@ -81,6 +99,10 @@ Rails.application.routes.draw do
     get '/understanding', to: 'home#understanding'
     get '/training_details', to: 'home#training_details'
     get '/download_provider', to: 'home#download_provider'
+    resources :suppliers, only: %i[index show]
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
@@ -89,11 +111,24 @@ Rails.application.routes.draw do
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
     get '/small-checkboxes', to: 'home#small_checkboxes'
+    get '/titles-checkboxes', to: 'home#titles_checkboxes'
+    get '/numbered-pagination', to: 'home#numbered_pagination'
+    get '/table-5050', to: 'home#table_5050'
+    get '/supplier-detail', to: 'home#supplier_detail'
+    get '/errors-find-apprentices', to: 'home#errors_find_apprentices'
+    get '/errors-find-apprentices2', to: 'home#errors_find_apprentices2'
+    get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
+    get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
+    get '/errors-requirements', to: 'home#errors_requirements'
   end
 
   namespace 'legal_services', path: 'legal-services' do
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
+    get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
+    get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
+    get '/suppliers/cg-no-suppliers-found', to: 'suppliers#cg_no_suppliers_found'
+    resources :suppliers, only: %i[index show]
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -112,8 +147,14 @@ Rails.application.routes.draw do
   end
   post '/sign-out' => 'auth#sign_out', as: :sign_out
 
-  scope module: :postcode do
-    resources :postcodes, only: [:show]
+  # scope module: :postcode do
+  #  resources :postcodes, only: :show
+  # end
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :postcodes, only: :show
+      post '/postcode/:id', to: 'uploads#show'
+    end
   end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'

@@ -1,5 +1,4 @@
-<a href="/facilities-management/select-locations" class="govuk-back-link">Back</a>
-
+<a href="<%= request.referer %>" class="govuk-back-link">Back</a>
 <%= render('errors/inline_error_summary') %>
 
 <div>
@@ -29,7 +28,7 @@
                 <fieldset class="govuk-fieldset" aria-describedby="<%= workPackage['name'] %>">
                   <div id="services-checkboxes" class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
-                      <input title="<%= workPackage['name'] %>" class="govuk-checkboxes__input" id="<%= workPackage['code'].sub('.', '-') %>" name="<%= workPackage['code'].sub('.', '') %>" serviceid="<%= workPackage['name'] %>" type="checkbox" value="<%= workPackage['code'] %>">
+                      <input title="<%= workPackage['name'] %>" class="govuk-checkboxes__input" id="<%= workPackage['code'].sub('.', '-') %>" name="fm-building-service-checkbox" serviceid="<%= workPackage['name'] %>" type="checkbox" value="<%= workPackage['code'] %>">
                       <label class="govuk-label govuk-checkboxes__label" for="<%= workPackage['code'] %>">
                         <%= workPackage['name'] %>
                       </label>
@@ -57,7 +56,7 @@
   <div class="filter-selection">
     <header>
       <div class="filter-selection__header">
-        <a id="remove-all-link" class="remove-all js-filter" href="">Remove all</a>
+        <a id="remove-all-services-link" class="remove-all js-filter" href="">Remove all</a>
         <h2 class="font-weight-700">
           <span id="selected-service-count" class="font-size--18">0</span>
           Services selected

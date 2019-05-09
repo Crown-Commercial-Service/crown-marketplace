@@ -1,7 +1,7 @@
 <div class="govuk-body">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <a href="new-building" class="govuk-back-link">Back</a>
+      <a href="<%= request.referer %>" class="govuk-back-link">Back</a>
     </div>
   </div>
   <div class="govuk-grid-row">
@@ -65,7 +65,7 @@
       </div>
 
       <div class="govuk-!-margin-top-6">
-        <a id="fm-new-address-continue" href="#" class="govuk-button ccs-no-print" role="button">Continue</a>
+        <a id="fm-new-address-continue" href="/facilities-management/buildings/new-building" class="govuk-button ccs-no-print" role="button">Continue</a>
       </div>
     </div>
   </div>

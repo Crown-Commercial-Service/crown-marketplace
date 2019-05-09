@@ -4,9 +4,9 @@
             <span class="govuk-header__logotype">
               <%= render partial: '/layouts/logotype' %>
               <span class="govuk-header__logotype-text ccs-remove">Crown Commercial Service</span>
-            </span>              
+            </span>
           </a>
-        </div>        
+        </div>
 
         <div class="govuk-header__content">
           <% if the_landing_page %>
@@ -25,15 +25,11 @@
                 <li class="govuk-header__navigation-item">
                   <%= link_to 'Back to start', service_start_page_path, class: 'govuk-header__link' %>
                 </li>
-              <% end %> 
+              <% end %>
 
               <li class="govuk-header__navigation-item">
                 <% if logged_in? %>
                   <%= button_to "Sign out", sign_out_path, class: 'govuk-header__link ccs-header__signout' %>
-                <% else %>     
-                  <a href="#" class="govuk-header__link">Sign in</a>
-
-                  <!-- button_to "Sign in", sign_in_path, class: 'govuk-header__link ccs-header__signout' -->
                 <% end %>
               </li>
             </ul>

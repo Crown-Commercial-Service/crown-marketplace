@@ -1,0 +1,67 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+    <h1 class="govuk-heading-xl cmp-page-heading"><%= t('.header') %></h1>
+    <%= form_tag @form_path, method: :get do %>
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+
+
+      <%= govuk_form_group_with_optional_error(@journey, :within_6_months) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :within_6_months) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.within_6_months_question') %>
+            </h1>
+          </legend>
+          <%= display_error(@journey, :within_6_months) %>
+          <div class="govuk-radios">
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :within_6_months, true, checked?(params[:within_6_months], 'true'), class: 'govuk-radios__input' %>
+              <%= label_tag :within_6_months_true, t('.answer_within_6_months_true'), class: 'govuk-label govuk-radios__label' %>
+            </div>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :within_6_months, false, checked?(params[:within_6_months], 'false'), class: 'govuk-radios__input' %>
+              <%= label_tag :within_6_months_false, t('.answer_within_6_months_false'), class: 'govuk-label govuk-radios__label' %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :fixed_term_contract_fee) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h2 class="govuk-fieldset__heading">
+            <label for="day_rate">
+              <%= t('.fixed_term_contract_fee_question') %>
+            </label>
+          </h2>
+        </legend>
+        <%= display_error(@journey, :day_rate) %>
+        <span class="govuk-hint">
+          <%= t('.fixed_term_contract_fee_question_hint') %>
+        </span>
+        <div class="calculator-form__day-rate">
+          <%= text_field_tag :fixed_term_contract_fee, params[:fixed_term_contract_fee], class: css_classes_for_input(@journey, :fixed_term_contract_fee, ['govuk-input--width-10 calculator-form__day-rate-input']) %>
+          <i class="govuk-body calculator-form__day-rate-icon"><%= t('.fixed_term_contract_fee_icon') %></i>
+        </div>
+      <% end %>
+
+      <%= govuk_form_group_with_optional_error(@journey, :current_contract_length) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h2 class="govuk-fieldset__heading">
+            <label for="days_per_week">
+              <%= t('.current_contract_length_question') %>
+            </label>
+          </h2>
+        </legend>
+        <%= display_error(@journey, :current_contract_length) %>
+        <span class="govuk-hint">
+          <%= t('.current_contract_length_question_hint') %>
+        </span>
+        <%= text_field_tag :current_contract_length, params[:current_contract_length], class: css_classes_for_input(@journey, :current_contract_length, ['govuk-input--width-3']) %>
+      <% end %>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
