@@ -5,13 +5,15 @@
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
   <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
-          <%= t('Sorry, this service isn't suitable for you') %>
+		  <%= t('Sorry, this service is not suitable for you') %>
         </h1>
       </legend>
+     <p><%= t('This service only supports a range of legal services and requirements primarily for the wider public sector') %></p>
+     <p><%= t('You may be better suited to use the General Legal advice Services(RM3786)') %></p>
       <%= display_error(@journey, :central_government) %>
     <% end %>
   <% end %>
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+  <%= link_to 'Back to start', legal_services_path, class: 'govuk-button' %>
 <% end %>

@@ -1,15 +1,16 @@
 module LegalServices
   class Journey::CheckSuitability
     include Steppable
-    attribute :central_government
-    validates :central_government, inclusion: ['yes', 'no']
+    attribute :legal_services
+    validates :legal_services, inclusion: ['yes', 'no', 'other']
 
     def next_step_class
-      case central_government
+      case legal_services
       when 'yes'
+      when 'no'
         Journey::CheckSuitability2
-      else
-        Journey::ChooseServicesArea
+      when 'other'
+        Journey::Sorry
       end
     end
   end
