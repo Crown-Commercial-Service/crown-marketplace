@@ -28,10 +28,9 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
     puts e.message
   end
 
-  def self.awd_credentials
-    @secrets = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
-    Aws.config[:credentials] = Aws::Credentials.new(@secrets['AccessKeyId'], @secrets['SecretAccessKey'])
-    p "Importing from AWS bucket: #{@secrets['bucket']}, region: #{@secrets['region']}"
+  def self.awd_credentials(access_key, secret_key, bucket, region)
+    Aws.config[:credentials] = Aws::Credentials.new(access_key, secret_key)
+    p "Importing from AWS bucket: #{bucket}, region: #{region}"
 
     extend_timeout
   end
@@ -42,11 +41,11 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
     Aws.config[:http_idle_timeout] = 600
   end
 
-  def self.import_postcodes
-    awd_credentials
+  def self.import_postcodes(access_key, secret_key, bucket, region)
+    awd_credentials access_key, secret_key, bucket, region
 
-    object = Aws::S3::Resource.new(region: @secrets['region'])
-    object.bucket(@secrets['bucket']).objects.each do |obj|
+    object = Aws::S3::Resource.new(region: region)
+    object.bucket(bucket).objects.each do |obj|
       next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
 
       p 'Loading ' + obj.key
@@ -69,10 +68,16 @@ end
 namespace :db do
   desc 'add OS postcode data to the database'
   task postcode: :environment do
+    a = ARGV[1].split
+    access_key = a[0]
+    secret_key = a[1]
+    bucket = a[2]
+    region = a[3]
     p 'Creating postcode database and import'
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view
-    OrdnanceSurvey.import_postcodes
+    OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
+    exit 0
   end
 
   desc 'create OS postcode table'
