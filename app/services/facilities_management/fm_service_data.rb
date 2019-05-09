@@ -3,6 +3,7 @@ require 'base64'
 require 'pg'
 class FMServiceData
   def service(email_address, building_id)
+    Rails.logger.info '=> FMServiceData.service()'
     query = "select trim(replace(subcode, '-', '.')) as code, subname as name from (SELECT jsonb_array_elements(building_json->'services') ->>'code' as subcode,
 jsonb_array_elements(building_json->'services') ->>'name' as subname
   FROM facilities_management_buildings where facilities_management_buildings.building_json->>'id' = '" + building_id + "' and
@@ -16,15 +17,17 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
   end
 
   def unset_service_count(email_address, building_id)
+    Rails.logger.info '==> FMServiceData.unset_service_count()'
     records = service(email_address, building_id)
     records.count
   rescue StandardError => e
-    Rails.logger.warn "Couldn't retrieve service data count: #{e}"
+    Rails.logger.warn "Couldn't retrieve service data count:#{e}"
   end
 
   # Get any service with an unset unit of measurement value
   # for a particular user and building
   def unit_of_measurement_unset(email_address, building_id)
+    Rails.logger.info '==> FMServiceData.unit_of_measurement_unset()'
     # first query for any unit value that is missing and get the details
     result_a = service(email_address, building_id)
     return_data = {}
@@ -57,6 +60,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
   end
 
   def add_uom_value(email_address, building_id, service_code, value)
+    Rails.logger.info '==> FMServiceData.add_uom_value()'
     query = "INSERT INTO fm_uom_values (user_id, service_code, uom_value,building_id)
              VALUES ('" + Base64.encode64(email_address) + "','" + service_code + "','" + value + "','" + building_id + "');"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -65,6 +69,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
   end
 
   def uom_values(email_address)
+    Rails.logger.info '==> FMServiceData.uom_values()'
     query = "select building_id, service_code, uom_value from fm_uom_values where
 	user_id = '" + Base64.encode64(email_address) + "' and service_code not in ('C.5'); "
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -73,6 +78,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
   end
 
   def save_lift_data(email_address, building_id, json_data)
+    Rails.logger.info '==> FMServiceData.save_lift_data()'
     query = "INSERT INTO fm_lifts (user_id, building_id, lift_data) VALUES('" + Base64.encode64(email_address) + "', '" + building_id + "', '" + json_data.to_json + "');"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     add_uom_value(email_address, building_id, 'C.5', 'Saved')
@@ -81,6 +87,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
   end
 
   def get_lift_data(email_address)
+    Rails.logger.info '==> FMServiceData.get_lift_data()'
     query = "select building_id, lift_data::jsonb->'lift_data'->>'lifts-qty' lift_qty, lift_data::jsonb->'lift_data'->>'total-floor-count' total_floor_count from fm_lifts
    where user_id =  '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
