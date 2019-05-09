@@ -37,21 +37,21 @@ module Api
       def query(action, data)
         case action
         when 'clear'
-          PostcodeChecker.clear
+          Postcode::PostcodeChecker.clear
         when 'count'
-          PostcodeChecker.count
+          Postcode::PostcodeChecker.count
         when 'upload'
           upload(data[:access_key], data[:secret_access_key], data[:bucket], data[:region])
         end
       end
 
       def upload(access_key, secret_access_key, bucket, region)
-        flag = PostcodeChecker.table_exists
+        flag = Postcode::PostcodeChecker.table_exists
         if flag
-          rows = PostcodeChecker.count(access_key, secret_access_key)
+          rows = Postcode::PostcodeChecker.count(access_key, secret_access_key)
           return "There are already #{rows} rows of postcodes data! Please clear that data first.\n" unless rows.zero?
         end
-        PostcodeChecker.upload(access_key, secret_access_key, bucket, region)
+        Postcode::PostcodeChecker.upload(access_key, secret_access_key, bucket, region)
       end
     end
   end
