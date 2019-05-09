@@ -3,7 +3,7 @@ require 'base64'
 require 'pg'
 class FMServiceData
   def service(email_address, building_id)
-    Rails.logger.info '=> FMServiceData.service()'
+    Rails.logger.info '==> FMServiceData.service()'
     query = "select trim(replace(subcode, '-', '.')) as code, subname as name from (SELECT jsonb_array_elements(building_json->'services') ->>'code' as subcode,
 jsonb_array_elements(building_json->'services') ->>'name' as subname
   FROM facilities_management_buildings where facilities_management_buildings.building_json->>'id' = '" + building_id + "' and
@@ -27,21 +27,15 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
   # Get any service with an unset unit of measurement value
   # for a particular user and building
   def unit_of_measurement_unset(email_address, building_id)
-    Rails.logger.info '==> FMServiceData.unit_of_measurement_unset()'
-    # first query for any unit value that is missing and get the details
     result_a = service(email_address, building_id)
-    return_data = {}
-    return_data['hasService'] = false
-
+    return_data = { 'hasService' => false }
     if result_a.count.positive?
       service = result_a[0].to_h
       code = service['code']
-
       # query for a uom description etc based on the service code
       description = service['name']
       query = "select fuom.title_text, fuom.example_text, fuom.unit_text from fm_units_of_measurement fuom where '" + code + "' in (select(unnest(service_usage)));"
       result_b = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-
       if result_b.present?
         # uom_data = result_b[0].to_h
         return_data['hasService'] = true
