@@ -92,7 +92,7 @@ $(() => {
 
         pageUtils.clearCashedData('fm-postcode-is-in-london');
 
-        $.get(encodeURI("/postcodes/in_london?postcode=" + postcode))
+        $.get(encodeURI("/api/v1/postcodes/in_london?postcode=" + postcode))
             .done(function (data) {
                 if (data.status === 200) {
                     pageUtils.setCachedData('fm-postcode-is-in-london', data.result);
@@ -152,7 +152,7 @@ $(() => {
             $('#fm-postcode-lookup-results').find('option').remove();
             $('#fm-postcode-lookup-results').append('<option value="status-option" selected>0 addresses found</option>');
 
-            $.get(encodeURI("/postcodes/" + postCode.toUpperCase()))
+            $.get(encodeURI("/api/v1/postcodes/" + postCode.toUpperCase()))
                 .done(function (data) {
                     if (data && data.result && data.result.length > 0) {
                         $('#fm-postcode-lookup-results').find('option').remove();
