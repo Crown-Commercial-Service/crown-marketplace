@@ -28,24 +28,9 @@ module Api
         case param
         when 'in_london'
           PostcodeChecker.in_london? params[:postcode]
-        when 'clear'
-          PostcodeChecker.clear(params[:access_key], params[:secret_access_key])
-        when 'count'
-          PostcodeChecker.count(params[:access_key], params[:secret_access_key])
-        when 'upload'
-          upload(params[:access_key], params[:secret_access_key], params[:bucket], params[:region])
         else
           PostcodeChecker.location_info(param)
         end
-      end
-
-      def upload(access_key, secret_access_key, bucket, region)
-        flag = PostcodeChecker.table_exists
-        if flag
-          rows = PostcodeChecker.count(access_key, secret_access_key)
-          return "There are already #{rows} rows of postcodes data! Please clear that data first.\n" unless rows.zero?
-        end
-        PostcodeChecker.upload(access_key, secret_access_key, bucket, region)
       end
     end
   end
