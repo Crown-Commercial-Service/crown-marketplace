@@ -22,13 +22,9 @@ module Api
       def show
         action = params[:id]
 
-        data = JSON.parse(request.body.read)
+        data = JSON.parse(request.body.read) unless request.body.read.size.zero?
 
         query(action, data)
-
-        render json: {}, status: :created
-      rescue StandardError => e
-        render json: { error: e.to_s }, status: 404
       end
 
       # ---------------------------
@@ -41,17 +37,10 @@ module Api
         when 'count'
           Postcode::PostcodeChecker.count
         when 'upload'
-          upload(data[:access_key], data[:secret_access_key], data[:bucket], data[:region])
+          Postcode::PostcodeChecker.upload(data['AccessKeyId'], data['SecretAccessKey'], data['bucket'], data['region'])
+        else
+          raise "unknown action #{action}"
         end
-      end
-
-      def upload(access_key, secret_access_key, bucket, region)
-        flag = Postcode::PostcodeChecker.table_exists
-        if flag
-          rows = Postcode::PostcodeChecker.count(access_key, secret_access_key)
-          return "There are already #{rows} rows of postcodes data! Please clear that data first.\n" unless rows.zero?
-        end
-        Postcode::PostcodeChecker.upload(access_key, secret_access_key, bucket, region)
       end
     end
   end
