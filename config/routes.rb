@@ -147,8 +147,14 @@ Rails.application.routes.draw do
   end
   post '/sign-out' => 'auth#sign_out', as: :sign_out
 
-  scope module: :postcode do
-    resources :postcodes, only: [:show]
+  # scope module: :postcode do
+  #  resources :postcodes, only: :show
+  # end
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :postcodes, only: :show
+      post '/postcode/:id', to: 'uploads#show'
+    end
   end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
