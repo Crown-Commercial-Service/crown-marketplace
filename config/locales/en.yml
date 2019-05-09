@@ -706,7 +706,7 @@ en:
           instructions: To use this service you need to sign in with your DfE Sign-in account.
           not_for_profit_html: Only not-for-profit and schools with charitable status are able to get access to the online and offline version of the service.
           outside_england_html: Outside of England, not-for-profit and schools with charitable status cannot yet use the online agency selection service. They can <a href="%{url}" aria-label="Crown Commercial Service contact form">request access to an offline version</a> (an Excel spreadsheet) by putting 'offline agency selection tool’ in the comments box.
-        heading: CCS Marketplace - Find supply teachers and agency workers
+        heading: Sign in to find supply teachers and agency workers
         subheading: If you don’t have a DfE Sign-in account
     home:
       fta_to_perm_fee:
