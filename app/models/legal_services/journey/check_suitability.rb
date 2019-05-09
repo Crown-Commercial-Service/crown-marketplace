@@ -5,7 +5,6 @@ module LegalServices
     validates :legal_services, inclusion: ['yes', 'no', 'other']
 
     def next_step_class
-      byebug
       case legal_services
       when 'yes', 'no'
         Journey::CheckSuitability2
