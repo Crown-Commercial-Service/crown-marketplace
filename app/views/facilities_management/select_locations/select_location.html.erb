@@ -1,4 +1,4 @@
-<a href="/facilities-management" class="govuk-back-link">Back</a>
+<a href="<%= request.referer %>" class="govuk-back-link">Back</a>
 
 <%= render('errors/inline_error_summary') %>
 
@@ -23,7 +23,7 @@
             <span class="govuk-accordion__section-button" id="region-<%= key %>"><%= value %></span>
           </h2>
         </div>
-        <div id="<% key %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= value %>">
+        <div id="<% key %>-content" class="govuk-accordion__section-content CCS-fm-region-filter-check-box-label" aria-labelledby="<%= value %>">
 
           <% @subregions.each do |key2, value2| %>
 
@@ -33,7 +33,7 @@
                   <div id="location-checkboxes" class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="<%= key2 %>" name="<%= key2 %>" locationid="<%= value2 %>" type="checkbox" value="<%= key2 %>">
-                      <label id="<%= key2 %>_label" class="govuk-label govuk-checkboxes__label" for="<%= key2 %>">
+                      <label id="<%= key2 %>_label" class="govuk-label govuk-checkboxes__label CCS-fm-region-filter-check-box-label" for="<%= key2 %>">
                         <%= value2 %>
                       </label>
                     </div>
@@ -76,7 +76,7 @@
   <div class="filter-selection">
     <header>
       <div class="filter-selection__header">
-        <a id="remove-all-link" name="remove-all-link" class="remove-all js-filter" href="">Remove all</a>
+        <a id="remove-all-locations-link" name="remove-all-link" class="remove-all js-filter" href="">Remove all</a>
         <h2 class="font-weight-700">
           <span id="selected-location-count" class="font-size--18">0</span>
           Locations selected

@@ -1,0 +1,58 @@
+<div class="govuk-accordion" data-module="accordion" id="accordion-default">
+  <% services.each do |service| %>
+    <div class="govuk-accordion__section">
+      <div class="govuk-accordion__section-header">
+        <h2 class="govuk-accordion__section-heading">
+          <span class="govuk-accordion__section-button" id="accordion-default-heading-<%= service.code %>">
+            <%= service.name %>
+          </span>
+        </h2>
+      </div>
+      <div class="govuk-accordion__section-content">
+        <div class="govuk-form-group" data-service="<%= service.name if service.subservices.size.positive? %>" >
+          <fieldset class="govuk-fieldset">
+            <div class="govuk-checkboxes">
+              <% unless service.subservices.size.positive? %>
+                <div class="govuk-checkboxes__item" >
+                  <%= check_box_tag(
+                    "services[]",
+                    service.code,
+                    @journey.current_step.services.include?(service.code),
+                    class: "govuk-checkboxes__input",
+                    id: "service_#{service.code.gsub('.', '-')}",
+                  ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code.gsub('.', '-') %>">
+                    <%= service.name %>
+                  </label>
+                </div>
+              <% end %>
+              <% service.subservices.each do |subservice| %>
+                <div class="govuk-checkboxes__item">
+                  <%= check_box_tag(
+                    "services[]",
+                    subservice.code,
+                    @journey.current_step.services.include?(subservice.code),
+                    class: "govuk-checkboxes__input",
+                    id: "service_#{service.code.gsub('.', '-')}-#{subservice.code.gsub('.', '-')}",
+                  ) %>
+                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>-<%= subservice.code.gsub('.', '-') %>">
+                    <%= subservice.name %>
+                  </label>
+                </div>
+              <% end %>
+              <% if service.subservices.count > 1 %>
+                <p class="govuk-body govuk-!-margin-top-4">Or</p>
+                <div class="govuk-checkboxes__item ccs-select-all">
+                  <input class="govuk-checkboxes__input" id="service_<%= service.code %>-all" name="service_<%= service.code %>-all" type="checkbox" value=""><!-- no value -->
+                  <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>-all">
+                    Select all
+                  </label>
+                </div>
+              <% end %>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

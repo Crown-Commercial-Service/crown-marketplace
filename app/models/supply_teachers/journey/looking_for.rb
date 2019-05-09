@@ -7,6 +7,7 @@ module SupplyTeachers
       worker
       managed_service_provider
       calculate_temp_to_perm_fee
+      calculate_fta_to_perm_fee
       all_suppliers
     ]
 
@@ -18,6 +19,8 @@ module SupplyTeachers
         Journey::ManagedServiceProvider
       when 'calculate_temp_to_perm_fee'
         Journey::TempToPermCalculator
+      when 'calculate_fta_to_perm_fee'
+        Journey::FTAToPermCalculator
       when 'all_suppliers'
         Journey::AllSuppliers
       end

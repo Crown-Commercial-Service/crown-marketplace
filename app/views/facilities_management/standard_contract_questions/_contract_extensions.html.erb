@@ -20,20 +20,22 @@
           Yes
         </label>
         <div id="fm-contract-yes-container" name="fm-extension-container" hidden>
-          <div id="fm-extensions" class="govuk-details__text" >
+          <div id="fm-extensions" class="govuk-details__text">
             <div id="fm-extension-1-container">
-              <div id="fm-extension-1-error" hidden><span class="govuk-error-message">This field can not be empty and contracts, including extensions, must be 10 years or less</span></div>
+              <div id="fm-extension-1-error" hidden>
+                <span class="govuk-error-message">This field can not be empty and contracts, including extensions, must be 10 years or less</span>
+              </div>
               <input class="govuk-!-margin-bottom-0" id="fm-extension-1" name="fm-extension" type="number" placeholder="Extension 1"/>
             </div>
           </div>
           <div>
-            <a class="govuk-link" id="fm-add-another-extension-link" role="button" href="">+ Add another
+            <a class="govuk-link govuk-link--no-visited-state" id="fm-add-another-extension-link" role="button" href="">+ Add another
               (<span id="fm-remaining-extension-count"></span><span> remaining)</span></a>
           </div>
         </div>
       </div>
       <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="fm-contract-extension-no" name="contract-extension-radio" type="radio" value="no">
+        <input class="govuk-radios__input" checked id="fm-contract-extension-no" name="contract-extension-radio" type="radio" value="no">
         <label class="govuk-label govuk-radios__label" for="fm-contract-extension-no">
           No
         </label>

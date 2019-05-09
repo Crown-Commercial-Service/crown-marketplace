@@ -3,27 +3,41 @@
   border-style: solid;
   border-width: 1px;
   border-color: silver;
-  padding-top:10px;
+  padding-top: 10px;
+  min-width: 315px;
 }
 
-.CCS-fm-supplier-filter-container-grey{
+.CCS-fm-supplier-filter-container-grey {
   background-color: #F8F8F8;
-  margin-top:5px;
-  margin-left:5px;
-  margin-right:5px;
-  margin-bottom:5px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
   padding-bottom: 5px;
 }
 
-.CCS-fm-supplier-filter-check-boxes{
+.CCS-fm-supplier-filter-check-boxes {
   background-color: white;
-  margin-left:10px;
-  margin-right:10px;
-  max-width:250px;
-  margin-top:15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  max-width: 50px;
+  margin-top: 15px;
 }
 
-.CCS-fm-supplier-filter-check-box-label{
-  background-color:  white;
-  height:26px;
+.CCS-fm-supplier-filter-check-box-label {
+  background-color: white;
+  height: 26px;
+  overflow-wrap: break-word;
+  max-width: 230px;
+  margin-left: 0px !important;
+  padding-left: 5px;
+}
+
+@media only screen and (orientation: portrait) {
+  .CCS-fm-region-filter-check-box-label {
+    background-color: white;
+    overflow-wrap: break-word;
+    max-width: 239px;
+    padding-left: 5px;
+  }
 }

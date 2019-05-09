@@ -1,0 +1,20 @@
+<%= content_for :page_title, t('.page_title')  %>
+
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-0"><%= t('.heading') %></h1>
+
+      <p class="govuk-body govuk-!-margin-bottom-7"><%= t('.results_html', results: @suppliers_count) %></p>
+
+
+      <%= link_to 'Download the supplier list', legal_services_suppliers_download_shortlist_path, role: 'button', class: 'govuk-button govuk-!-margin-bottom-6' %>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <% @suppliers.each do |supplier| %>
+        <%= render 'supplier', supplier: supplier%>
+      <% end %>
+      <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
+    </div>
+  </div>
+</div>

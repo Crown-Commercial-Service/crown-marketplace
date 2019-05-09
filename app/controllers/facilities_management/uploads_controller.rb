@@ -15,7 +15,10 @@ module FacilitiesManagement
     def create
       suppliers = JSON.parse(request.body.read)
 
-      Upload.upload!(suppliers)
+      Upload.upload_json!(suppliers)
+
+      # do not make relational tables
+      # Upload.upload!(suppliers)
 
       render json: {}, status: :created
     rescue ActiveRecord::RecordInvalid => e

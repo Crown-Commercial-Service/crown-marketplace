@@ -2,7 +2,7 @@ module ManagementConsultancy
   class Lot
     include StaticRecord
 
-    attr_accessor :number, :description
+    attr_accessor :number, :description, :framework
 
     def self.[](number)
       Lot.find_by(number: number)
