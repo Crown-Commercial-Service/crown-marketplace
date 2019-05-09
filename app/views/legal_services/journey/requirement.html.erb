@@ -7,22 +7,19 @@
     <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
-          <%= t('Do you need legal services for property and construction or rail?') %>
+          <%= t('Is your requirement restricted to a small geographical area?') %>
         </h1>
       </legend>
+      <p><%= t('.search_central_government_html', central_government_search_link: link_to(t('.central_government_search_link_title'), 'https://www.gov.uk/government/organisations')) %></p>
       <%= display_error(@journey, :central_government) %>
-      <div class="govuk-radios">
+      <div class="govuk-radios--inline">
         <div class="govuk-radios__item">
           <%= radio_button_tag :central_government, 'yes', checked?(params[:central_government], 'yes'), class: 'govuk-radios__input' %>
-          <%= label_tag :central_government, t('Yes, property and construction (Lot 3)'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :central_government, t('yes'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :central_government, 'yes', checked?(params[:central_government], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :central_government, t('Yes, rail (Lot 4)'), class: 'govuk-label govuk-radios__label' %>
-        </div>
- <div class="govuk-radios__item">
           <%= radio_button_tag :central_government, 'no', checked?(params[:central_government], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :central_government, t('No'), class: 'govuk-label govuk-radios__label' %>
+          <%= label_tag :central_government, t('no'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     <% end %>
