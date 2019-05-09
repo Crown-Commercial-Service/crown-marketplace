@@ -17,7 +17,7 @@ RSpec.feature 'Management consultancy', type: :feature do
 
     supplier3.service_offerings.create!(lot_number: 'MCF2.2', service_code: 'MCF2.2.2')
     supplier3.service_offerings.create!(lot_number: 'MCF2.2', service_code: 'MCF2.2.3')
-    supplier3.service_offerings.create!(lot_number: 'MCF2.3', service_code: 'MCF2.3.1')
+    supplier3.service_offerings.create!(lot_number: 'MCF2.3', service_code: 'MCF2.3.10')
 
     supplier4.service_offerings.create!(lot_number: 'MCF2.3', service_code: 'MCF2.3.2')
     supplier4.service_offerings.create!(lot_number: 'MCF2.4', service_code: 'MCF2.4.2')
@@ -119,7 +119,7 @@ RSpec.feature 'Management consultancy', type: :feature do
   scenario 'Buyer wants to buy complex & transformation services (MCF2 Lot 3)' do
     visit_management_consultancy_start
 
-    required_service = ManagementConsultancy::Service.where(code: 'MCF2.3.1').first
+    required_service = ManagementConsultancy::Service.where(code: 'MCF2.3.10').first
     required_region = Nuts2Region.find_by(code: 'UKD1')
 
     choose 'help_needed_management_consultants'
