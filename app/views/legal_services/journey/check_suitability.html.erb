@@ -3,26 +3,27 @@
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+  <%= govuk_form_group_with_optional_error(@journey, :legal_services) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :legal_services) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
           <%= t('Select the legal services you need') %>
         </h1>
       </legend>
-      <%= display_error(@journey, :central_government) %>
+      <%= display_error(@journey, :legal_services) %>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
-          <%= radio_button_tag :central_government, 'yes', checked?(params[:central_government], 'yes'), class: 'govuk-radios__input' %>
-          <%= label_tag :central_government, t('Transactional property, including noncomplex conveyancing and work relating to leases and licences'), class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :legal_services, 'yes', checked?(params[:legal_services], 'yes'), class: 'govuk-radios__input' %>
+          <%= label_tag :legal_services, t('Transactional property, including noncomplex conveyancing and work relating to leases and licences'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :central_government, 'yes', checked?(params[:central_government], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :central_government, t('Litigation work,including employment'), class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :legal_services, 'yes', checked?(params[:legal_services], 'no'), class: 'govuk-radios__input' %>
+          <%= label_tag :legal_services, t('Litigation work,including employment'), class: 'govuk-label govuk-radios__label' %>
         </div>
+           <div class="govuk-radios__divider govuk-!-margin-top-3 govuk-!-margin-bottom-3">or</div>
  <div class="govuk-radios__item">
-          <%= radio_button_tag :central_government, 'no', checked?(params[:central_government], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :central_government, t('Other'), class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :legal_services, 'other', checked?(params[:legal_services], 'other'), class: 'govuk-radios__input' %>
+          <%= label_tag :legal_services, t('Other'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     <% end %>
