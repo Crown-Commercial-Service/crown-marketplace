@@ -18,8 +18,8 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
       get :index, params: params
     end
 
-    context 'when the lot answer is lot1' do
-      let(:lot_number) { '1' }
+    context 'when the lot answer is MCF2 lot1' do
+      let(:lot_number) { 'MCF2.1' }
 
       let(:params) do
         {
@@ -58,8 +58,8 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
       end
     end
 
-    context 'when the lot answer is lot2' do
-      let(:lot_number) { '2' }
+    context 'when the lot answer is MCF2 lot2' do
+      let(:lot_number) { 'MCF2.2' }
 
       let(:params) do
         {

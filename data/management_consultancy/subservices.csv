@@ -1,3 +1,104 @@
 code,name,service
-MCF2.3.2.a,Testing,MCF2.3.2
-MCF2.3.2.b,QA Work,MCF2.3.2
+MCF2.1.7.1,Outsourcing,MCF2.1.7
+MCF2.1.7.2,Shared services,MCF2.1.7
+MCF2.1.8.1,Structural reviews,MCF2.1.8
+MCF2.1.8.2,Organisational diagnosis,MCF2.1.8
+MCF2.1.8.3,Role design,MCF2.1.8
+MCF2.1.8.4,Re-organisation,MCF2.1.8
+MCF2.1.8.5,Organisation redesign,MCF2.1.8
+MCF2.1.8.6,Planning,MCF2.1.8
+MCF2.1.8.7,Process,MCF2.1.8
+MCF2.1.8.8,Stakeholder engagement and management,MCF2.1.8
+MCF2.1.8.9,Training,MCF2.1.8
+MCF2.1.8.10,Issues identification and resolution,MCF2.1.8
+MCF2.1.8.11,"Rationalisation and efficiency, to include transformation solutions",MCF2.1.8
+MCF2.1.17.1,Development of vision and strategic brief,MCF2.1.17
+MCF2.1.17.2,Analysis of current systems and problem / opportunity definition,MCF2.1.17
+MCF2.1.17.3,Artificial intelligence,MCF2.1.17
+MCF2.1.17.4,Options analysis,MCF2.1.17
+MCF2.1.17.5,Conceptualisation / inception and viability studies,MCF2.1.17
+MCF2.1.17.6,Technical analysis,MCF2.1.17
+MCF2.1.17.7,Economic analysis,MCF2.1.17
+MCF2.1.17.8,Operational analysis,MCF2.1.17
+MCF2.1.17.9,Cost ‘vs’ benefit analysis,MCF2.1.17
+MCF2.1.17.10,Recommendation of preferred solution,MCF2.1.17
+MCF2.1.17.11,Requirements specification,MCF2.1.17
+MCF2.1.17.12,Provide technical expertise to support ongoing ICT projects,MCF2.1.17
+MCF2.1.17.13,Digital services strategy,MCF2.1.17
+MCF2.1.17.14,Security and risk management planning,MCF2.1.17
+MCF2.1.20.1,Strategic knowledge,MCF2.1.20
+MCF2.1.20.2,Information management,MCF2.1.20
+MCF2.1.20.3,Development,MCF2.1.20
+MCF2.1.20.4,Advice,MCF2.1.20
+MCF2.1.20.5,Review,MCF2.1.20
+MCF2.1.21.1,Managing the project scope,MCF2.1.21
+MCF2.1.21.2,Project stakeholders,MCF2.1.21
+MCF2.1.21.3,Project team,MCF2.1.21
+MCF2.1.21.4,Project risks,MCF2.1.21
+MCF2.1.21.5,Project schedule,MCF2.1.21
+MCF2.1.21.6,Project budget,MCF2.1.21
+MCF2.1.21.7,Project conflicts and benefits,MCF2.1.21
+MCF2.1.21.8,Planning,MCF2.1.21
+MCF2.1.21.9,Execution,MCF2.1.21
+MCF2.1.21.10,Monitoring control and closure of a project,MCF2.1.21
+MCF2.2.21.1,Assessing bidding proposals and contract negotiations,MCF2.2.21
+MCF2.2.21.2,Assessing and developing project proposals,MCF2.2.21
+MCF2.2.21.3,"Complex transactions including planning, review, design and evaluation.",MCF2.2.21
+MCF2.2.21.4,Design and implementing commercial strategies and procedures,MCF2.2.21
+MCF2.2.21.5,Design and implementing procurement / sourcing strategies and procedures,MCF2.2.21
+MCF2.2.21.6,Preparing project documentation,MCF2.2.21
+MCF2.2.21.7,Pricing models and benchmarking,MCF2.2.21
+MCF2.2.21.8,Review and document,MCF2.2.21
+MCF2.2.21.9,Stakeholder management (internal and external),MCF2.2.21
+MCF2.2.21.10,"Sustainability, corporate and social responsibility and ethics",MCF2.2.21
+MCF2.2.21.11,Post award implementation (including refinancing advice),MCF2.2.21
+MCF2.2.32.1,Warehousing,MCF2.2.32
+MCF2.2.32.2,Distribution,MCF2.2.32
+MCF2.2.32.3,Demand forecasting,MCF2.2.32
+MCF2.2.32.4,Inventory analysis,MCF2.2.32
+MCF2.2.32.5,E-commerce,MCF2.2.32
+MCF2.2.32.6,Enterprise resource planning systems,MCF2.2.32
+MCF2.2.32.7,Network design and optimisation.,MCF2.2.32
+MCF2.2.32.8,Sales and operations planning,MCF2.2.32
+MCF2.2.32.9,Technology and automation,MCF2.2.32
+MCF2.3.1.1,Structural reviews,MCF2.3.1
+MCF2.3.1.2,Organisational diagnosis,MCF2.3.1
+MCF2.3.1.3,Role design,MCF2.3.1
+MCF2.3.1.4,Re-organisation,MCF2.3.1
+MCF2.3.1.5,Organisation redesign,MCF2.3.1
+MCF2.3.1.6,Planning,MCF2.3.1
+MCF2.3.1.7,Process,MCF2.3.1
+MCF2.3.1.8,Stakeholder engagement and management,MCF2.3.1
+MCF2.3.1.9,Training,MCF2.3.1
+MCF2.3.1.10,Issues identification and resolution,MCF2.3.1
+MCF2.3.1.11,"Rationalisation and efficiency, to include transformation solutions",MCF2.3.1
+MCF2.3.2.1,Planning,MCF2.3.2
+MCF2.3.2.2,Design,MCF2.3.2
+MCF2.3.2.3,Diagnostics,MCF2.3.2
+MCF2.3.2.4,Review,MCF2.3.2
+MCF2.3.2.5,Analytics,MCF2.3.2
+MCF2.3.2.6,Stakeholder engagement / management and communications,MCF2.3.2
+MCF2.4.1.1,Viability,MCF2.4.1
+MCF2.4.1.2,Feasibility,MCF2.4.1
+MCF2.4.1.3,Research including analytics,MCF2.4.1
+MCF2.4.1.4,Stakeholder engagement,MCF2.4.1
+MCF2.4.1.5,Document review,MCF2.4.1
+MCF2.4.1.6,Market overview,MCF2.4.1
+MCF2.4.2.1,Viability,MCF2.4.2
+MCF2.4.2.2,Feasibility,MCF2.4.2
+MCF2.4.2.3,"Research, including analytics.",MCF2.4.2
+MCF2.4.2.4,Stakeholder engagement,MCF2.4.2
+MCF2.4.2.5,Document review,MCF2.4.2
+MCF2.4.2.6,Market overview,MCF2.4.2
+MCF2.4.6.1,Structural reviews,MCF2.4.6
+MCF2.4.6.2,Organisational diagnosis,MCF2.4.6
+MCF2.4.6.3,Role design,MCF2.4.6
+MCF2.4.6.4,Re-organisation,MCF2.4.6
+MCF2.4.6.5,Organisation redesign,MCF2.4.6
+MCF2.4.6.6,"Rationalisation and efficiency, to include transformation solutions",MCF2.4.6
+MCF2.4.9.1,Business intelligence,MCF2.4.9
+MCF2.4.9.2,Market studies and analysis,MCF2.4.9
+MCF2.4.9.3,Regulation benchmarking and statistical analysis,MCF2.4.9
+MCF2.4.9.4,"Skills analysis, audit and capability management",MCF2.4.9
+MCF2.4.9.5,"Forecasting, planning and development",MCF2.4.9
+MCF2.4.9.6,Complex cost benefit studies and analysis,MCF2.4.9

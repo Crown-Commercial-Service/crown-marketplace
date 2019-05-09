@@ -45,7 +45,7 @@ RSpec.describe ManagementConsultancy::ServiceOffering, type: :model do
     new_offering = build(
       :management_consultancy_service_offering,
       supplier: service_offering.supplier,
-      lot_number: '2',
+      lot_number: 'MCF2.1',
       service_code: service_offering.service_code
     )
     expect(new_offering).to be_valid
@@ -57,7 +57,7 @@ RSpec.describe ManagementConsultancy::ServiceOffering, type: :model do
       :management_consultancy_service_offering,
       supplier: service_offering.supplier,
       lot_number: service_offering.lot_number,
-      service_code: '1.2'
+      service_code: 'MCF1.2.2'
     )
     expect(new_offering).to be_valid
   end
@@ -80,8 +80,8 @@ RSpec.describe ManagementConsultancy::ServiceOffering, type: :model do
   end
 
   it 'looks up service based on its code' do
-    offering = build(:management_consultancy_service_offering, service_code: '1.1')
+    offering = build(:management_consultancy_service_offering, service_code: 'MCF1.2.1')
     expect(offering.service).to be_instance_of(ManagementConsultancy::Service)
-    expect(offering.service.code).to eq('1.1')
+    expect(offering.service.code).to eq('MCF1.2.1')
   end
 end

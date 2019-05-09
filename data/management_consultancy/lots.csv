@@ -1,6 +1,12 @@
 number,description,framework
-1,business services,MCF2
-2,"procurement, supply chain and commercial services",MCF2
-3,complex and transformation services,MCF2
-4,strategic services,MCF2
-MCF2.3,Audit,MCF
+MCF1.2,Finance,MCF
+MCF1.3,Audit,MCF
+MCF1.4,HR,MCF
+MCF1.5,Health and Community,MCF
+MCF1.6,Education,MCF
+MCF1.7,Infrastructure,MCF
+MCF1.8,ICT and Digital
+MCF2.1,Business Consultancy Services,MCF2
+MCF2.2,"Procurement, Supply Chain and Commercial Consultancy Services",MCF2
+MCF2.3,"Complex and Transformation Consultancy Services",MCF2
+MCF2.4,"Strategic Consultancy Services",MCF2

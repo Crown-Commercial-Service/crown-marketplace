@@ -4,17 +4,17 @@ RSpec.describe ManagementConsultancy::Service, type: :model do
   subject(:services) { described_class.all }
 
   let(:first_service) { services.first }
-  let(:last_service) { services.last }
+  let(:last_service_with_subservices) { services.find { |service| service.code == 'MCF2.4.9' } }
   let(:all_codes) { described_class.all_codes }
 
   it 'loads services from CSV' do
-    expect(services.count).to eq(87)
+    expect(services.count).to eq(242)
   end
 
   it 'populates attributes of first service' do
-    expect(first_service.code).to eq('1.1')
-    expect(first_service.name).to eq('Business case development')
-    expect(first_service.lot_number).to eq('1')
+    expect(first_service.code).to eq('MCF1.2.1')
+    expect(first_service.name).to eq('Accounting advice & risk')
+    expect(first_service.lot_number).to eq('MCF1.2')
   end
 
   it 'only has unique codes' do
@@ -34,7 +34,7 @@ RSpec.describe ManagementConsultancy::Service, type: :model do
 
   describe '.subservices' do
     it 'returns codes for all of a service’s subservices' do
-      expect(last_service.subservices.count).to eq(2)
+      expect(last_service_with_subservices.subservices.count).to eq(6)
     end
   end
 end
