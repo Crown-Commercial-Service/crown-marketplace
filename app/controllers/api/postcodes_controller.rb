@@ -48,6 +48,5 @@ module Api
         PostcodeChecker.upload(access_key, secret_access_key, bucket, region)
       end
     end
-
   end
 end
