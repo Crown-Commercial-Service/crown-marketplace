@@ -27,9 +27,9 @@ module Api
       def query(param)
         case param
         when 'in_london'
-          PostcodeChecker.in_london? params[:postcode]
+          Postcode::PostcodeChecker.in_london? params[:postcode]
         else
-          PostcodeChecker.location_info(param)
+          Postcode::PostcodeChecker.location_info(param)
         end
       end
     end
