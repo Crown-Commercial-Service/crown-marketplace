@@ -72,8 +72,8 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
   end
 
   describe 'GET all suppliers' do
-    let(:branch) { create(:supply_teachers_branch,  name: 'Branch A') }
-    let(:branch1) { create(:supply_teachers_branch, name: 'Branch B') }
+    let(:branch) { create(:supply_teachers_branch,  slug: 'branch-a') }
+    let(:branch1) { create(:supply_teachers_branch, slug: 'branch-b') }
 
     before do
       get :all_suppliers, params: {
