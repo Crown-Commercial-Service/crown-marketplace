@@ -75,7 +75,7 @@ module Postcode
           begin
             Rails.logger.info('No, this is not a Rake task')
             Rails.application.load_tasks
-            args = [:access_key, :secret_access_key, :bucket, :region].zip([access_key, secret_access_key, bucket, region]).to_h
+            args = %i[access_key secret_access_key bucket region].zip([access_key, secret_access_key, bucket, region]).to_h
             Rake::Task[task_name].execute(args)
           rescue StandardError => e
             Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
