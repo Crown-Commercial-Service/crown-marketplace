@@ -11,9 +11,9 @@ module Api
       # GET /postcodes/SW1A 2AA.json
       #
       # usage:
-      #      http://localhost:3000/postcodes/SW1A%202AA
-      #      http://localhost:3000/postcodes/in_london?postcode=SW1P%202AP
-      #      http://localhost:3000/postcodes/in_london?postcode=G69%206HB
+      #      http://localhost:3000/api/v1/postcodes/SW1A%202AA
+      #      http://localhost:3000/api/v1/postcodes/in_london?postcode=SW1P%202AP
+      #      http://localhost:3000/api/v1/postcodes/in_london?postcode=G69%206HB
       def show
         result = query(params[:id])
 
@@ -27,9 +27,9 @@ module Api
       def query(param)
         case param
         when 'in_london'
-          Postcode::PostcodeChecker.in_london? params[:postcode]
+          PostcodeChecker.in_london? params[:postcode]
         else
-          Postcode::PostcodeChecker.location_info(param)
+          PostcodeChecker.location_info(param)
         end
       end
     end
