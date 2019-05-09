@@ -23,6 +23,8 @@
         </a>
     </p>
 
+    <p class="govuk-body govuk-!-margin-bottom-8"><%= t('.the_spreadsheet_text') %></p>
+
     <p class="govuk-body"><%= t('.the_following_documents_text') %>: </p>
 
     <ul class="govuk-list govuk-!-margin-top-6">
@@ -35,90 +37,18 @@
             <a href="/apprenticeships/downloads/example?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
                 Customer guidance template <%= t('common.doc_html') %>
             </a>
-        </li>        
+        </li>
     </ul>
 
-    <h2 class="govuk-heading-m govuk-!-font-weight-bold"><%= t('.selections_used_title') %></h2>
 
-    <p class="govuk-body"><%= t('.audit_text') %></p>
-
-    <p class="govuk-body">
+    <!--p class="govuk-body">
         <a href="javascript:window.print()" class="govuk-link govuk-link--no-visited-state ccs-print-icon ga-print-link"><%= t('.print_this_page') %></a>
-    </p>
+    </p-->
 
-    <h2 class="govuk-heading-m">Requirements</h2>
-
-    <table class="govuk-table ccs-at-govuk-table--sm ccs-at-govuk-table--5050">
-        <caption class="govuk-table__caption ccs-remove">
-            Requirements summary
-        </caption>
-
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Briefly outline the qualities you are looking for in a supplier</th>
-                <td class="govuk-table__cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut condimentum turpis. Praesent in est finibus purus pharetra ultricies at eu ipsum. Phasellus pretium consectetur erat, ac consequat sapien faucibus ultrices. Aliquam erat volutpat. </td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Apprenticeship training course</th>
-                <td class="govuk-table__cell">Building services design engineer</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Level</th>
-                <td class="govuk-table__cell">6</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Help with recruiting the apprentices</th>
-                <td class="govuk-table__cell">Yes</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Willing to provide additional funding</th>
-                <td class="govuk-table__cell">Yes</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Minimum number of apprentices</th>
-                <td class="govuk-table__cell">30</td>
-            </tr> 
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Minimum Ofsted rating</th>
-                <td class="govuk-table__cell">2 - Good</td>
-            </tr> 
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Training in multiple locations</th>
-                <td class="govuk-table__cell">No</td>
-            </tr>                                   
-        </tbody>
-    </table>
-
-    <h2 class="govuk-heading-m">Filters used</h2>
-
-    <table class="govuk-table ccs-at-govuk-table--sm ccs-at-govuk-table--5050">
-        <caption class="govuk-table__caption ccs-remove">
-            Filters used summary
-        </caption>
-
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Delivery method</th>
-                <td class="govuk-table__cell">Classroom based</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Time demand</th>
-                <td class="govuk-table__cell">Day release</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Classroom sharing</th>
-                <td class="govuk-table__cell">Closed</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Training availability</th>
-                <td class="govuk-table__cell">Scheduled</td>
-            </tr>  
-        </tbody>
-    </table>
 
     <%= link_to t('.button_label'), '/apprenticeships/', role: 'button', class: 'govuk-button govuk-!-margin-top-6' %>
 
-     
+
     <p style="width: 100%; text-align: right; margin: 80px 0 50px 0;"><small><i><a href="/apprenticeships/understanding">Temporary link to next page > (remove)</a></i></small></p>
 
     </div>
