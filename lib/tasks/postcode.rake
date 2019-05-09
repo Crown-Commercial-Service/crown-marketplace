@@ -67,7 +67,8 @@ end
 
 namespace :db do
   desc 'add OS postcode data to the database'
-  task :postcode, [:access_key, :secret_access_key, :bucket, :region] => :environment do |_, args|
+  # task :postcode, [:access_key, :secret_access_key, :bucket, :region] => :environment do |_, args|
+  task postcode: :environment do |_, args|
     p 'Creating postcode database and import'
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view
