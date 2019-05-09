@@ -37,16 +37,12 @@ module Postcode
 
         result[0]['count']
       end
-    rescue StandardError => e
-      e
     end
 
     def self.clear
       ActiveRecord::Base.connection_pool.with_connection do |db|
         db.exec_query 'TRUNCATE os_address CASCADE;'
       end
-    rescue StandardError => e
-      e
     end
 
     @london_burroughs = [
@@ -66,29 +62,23 @@ module Postcode
     # private class methods
     class << self
       def uploader(access_key, secret_access_key, bucket, region)
-        rake "db:postcode \"#{access_key} #{secret_access_key} #{bucket} #{region}\""
+        rake 'db:postcode', access_key, secret_access_key, bucket, region
 
         { status: 200, result: "Uploading postcodes from AWS bucket #{bucket}, region: #{region}" }
-      rescue IOError => e
-        # some error occur, dir not writable etc.
-        { status: 404, error: e.to_s }
-      rescue StandardError => e
-        { status: 404, error: e.to_s }
       end
 
       # rake 'db:postcode'
-      def rake(task_name)
+      def rake(task_name, access_key, secret_access_key, bucket, region)
         if File.split($PROGRAM_NAME).last == 'rake'
           Rails.logger.info('')
         else
           begin
             Rails.logger.info('No, this is not a Rake task')
             Rails.application.load_tasks
-            Rake::Task[task_name].execute
+            args = %i[access_key secret_access_key bucket region].zip([access_key, secret_access_key, bucket, region]).to_h
+            Rake::Task[task_name].execute(args)
           rescue StandardError => e
-            message = self.class.name + " data is missing! Please run 'rake " + task_name + "' to load postcode data."
-            Rails.logger.info("\e[5;37;41m\n" + message + '\n' + e.to_s + "\033[0m\n")
-            # Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
+            Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
             raise e
           end
         end
