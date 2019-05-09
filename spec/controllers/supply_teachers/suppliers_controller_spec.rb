@@ -11,8 +11,7 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
 
     before do
       allow(SupplyTeachers::Supplier)
-        .to receive(:with_master_vendor_rates)
-        .and_return(suppliers)
+        .to receive(:with_master_vendor_rates).and_return(suppliers)
       get :master_vendors, params: {
         journey: 'supply-teachers',
         looking_for: 'managed_service_provider',
@@ -45,8 +44,7 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
 
     before do
       allow(SupplyTeachers::Supplier)
-        .to receive(:with_neutral_vendor_rates)
-        .and_return(suppliers)
+        .to receive(:with_neutral_vendor_rates).and_return(suppliers)
       get :neutral_vendors, params: {
         journey: 'supply-teachers',
         looking_for: 'managed_service_provider',
@@ -74,8 +72,8 @@ RSpec.describe SupplyTeachers::SuppliersController, type: :controller, auth: tru
   end
 
   describe 'GET all suppliers' do
-    let(:branch) { create(:supply_teachers_branch) }
-    let(:branch1) { create(:supply_teachers_branch) }
+    let(:branch) { create(:supply_teachers_branch,  name: 'Branch A') }
+    let(:branch1) { create(:supply_teachers_branch, name: 'Branch B') }
 
     before do
       get :all_suppliers, params: {
