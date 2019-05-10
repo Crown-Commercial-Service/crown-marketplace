@@ -51,28 +51,6 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "fm_rates", id: false, force: :cascade do |t|
-    t.string "code", limit: 255
-    t.decimal "framework"
-    t.decimal "benchmark"
-    t.index ["code"], name: "fm_rates_code_key", unique: true
-  end
-
-  create_table "fm_regions", id: false, force: :cascade do |t|
-    t.string "code", limit: 255
-    t.string "name", limit: 255
-    t.index ["code"], name: "fm_regions_code_key", unique: true
-  end
-
-  create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
-    t.jsonb "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
-    t.index ["data"], name: "idxgin", using: :gin
-    t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
-  end
-
   create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "management_consultancy_supplier_id", null: false
     t.integer "lot"
@@ -119,14 +97,6 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
   create_table "management_consultancy_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "nuts_regions", id: false, force: :cascade do |t|
-    t.string "code", limit: 255
-    t.string "name", limit: 255
-    t.string "nuts1_code", limit: 255
-    t.string "nuts2_code", limit: 255
-    t.index ["code"], name: "nuts_regions_code_key", unique: true
   end
 
   create_table "supply_teachers_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
