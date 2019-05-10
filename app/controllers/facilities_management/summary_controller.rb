@@ -38,6 +38,17 @@ module FacilitiesManagement
 
     private
 
+    helper_method :title
+
+    def title
+      case @current_lot
+      when nil
+        'Review service without pricing'
+      else
+        'List of Suppliers'
+      end
+    end
+
     def build_report
       set_start_date
 
@@ -57,17 +68,24 @@ module FacilitiesManagement
 
     # Lot.all_numberss
     def increase_current_lot
-      current_lot = TransientSessionInfo[session.id][:current_lot]
+      TransientSessionInfo[session.id][:current_lot]
 
-      case current_lot
-      when nil
-        @current_lot = '1a'
-      when '1a'
-        @current_lot = '1b'
-      when '1b'
-        @current_lot = '1c'
-      end
+      @current_lot = move_upto_next_lot(TransientSessionInfo[session.id][:current_lot])
+
       TransientSessionInfo[session.id][:current_lot] = @current_lot
+    end
+
+    def move_upto_next_lot(lot)
+      case lot
+      when nil
+        '1a'
+      when '1a'
+        '1b'
+      when '1b'
+        '1c'
+      else
+        lot
+      end
     end
 
     def regions
