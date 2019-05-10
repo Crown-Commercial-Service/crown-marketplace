@@ -67,18 +67,15 @@ module FacilitiesManagement
         else
           ' to provide services in your regions.'
         end
-      str.html_safe
     end
 
     def lot_title
-      str =
       if @current_lot.nil?
         'Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.'
       else
         "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
         </strong>, subject to your total contract value and services without a price.</p>"
       end
-      str.html_safe
     end
 
     def build_report
