@@ -1,17 +1,22 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-<%= form_tag @form_path, method: :get do %>
+<%= form_tag @form_path, class: :'ccs-form', method: :get do %>
+
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+
   <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+
+
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
-          <%= t('Lot 1 - Regional service provision ') %>
+          <%= t('Lot 1 - Regional service provision ') %> xxx
         </h1>
       </legend>
+      xxxx
       <%= display_error(@journey, :central_government) %>
-          <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
+          <div class="govuk-checkboxes ccs-govuk-checkboxes--s" style="border: 1px solid lime;">
              <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
              <% lot1.each do |lot| %>
                <div class="govuk-checkboxes__item">
@@ -28,8 +33,12 @@
                   </div>
                   <% end %>
                 </div>
-      </div>
+          </div>
+
+
     <% end %>
   <% end %>
   <%= submit_tag t('common.submit'), class: "govuk-button" %>
+
+
 <% end %>
