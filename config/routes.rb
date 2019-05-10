@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     get '/summary', to: 'summary#index'
     post '/summary', to: 'summary#index'
 
+    get '/reset', to: 'buildings#reset_buildings_tables'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
