@@ -78,6 +78,13 @@ module FacilitiesManagement
       end
     end
 
+    def list_services
+      str = "<p>Services without pricing (#{@report.without_pricing.count}):</p>"
+      @report.without_pricing.each do | service |
+        str << "\n<p><strong>#{service.name}</strong></p>"
+      end
+    end
+
     def build_report
       set_start_date
 

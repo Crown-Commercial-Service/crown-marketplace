@@ -14,6 +14,7 @@
     <%=raw lot_title%>
   </p>
   <p/>
+  <%=raw list_services %>
   <p>Services without pricing (<%= @report.without_pricing.count %>):</p>
   <% @report.without_pricing.each do | service | %>
     <p><strong><%= service.name %></strong></p>
