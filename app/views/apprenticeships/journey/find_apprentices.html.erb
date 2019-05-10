@@ -1,27 +1,34 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
-<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-<%= form_tag @form_path, method: :get do %>
-  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-  <%= govuk_form_group_with_optional_error(@journey, :training_course) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :training_course) do %>
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('.find_1_legend') %>
-        </h1>
-      </legend>
-      <%= display_error(@journey, :training_course) %>
-      <div class="govuk-radios">
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :training_course, 'yes', checked?(params[:training_course], 'yes'), class: 'govuk-radios__input', id: 'radio-y' %>
-          <%= label_tag :training_course, t('yes'), class: 'govuk-label govuk-radios__label', for: 'radio-y' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :training_course, 'no', checked?(params[:training_course], 'no'), class: 'govuk-radios__input', id: 'radio-n' %>
-          <%= label_tag :training_course, t('no'), class: 'govuk-label govuk-radios__label', for: 'radio-n' %>
-        </div>
-      </div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+    <%= form_tag @form_path, method: :get do %>
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <%= govuk_form_group_with_optional_error(@journey, :training_course) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :training_course) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              <%= t('.find_1_legend') %>
+            </h1>
+          </legend>
+          <%= display_error(@journey, :training_course) %>
+          <div class="govuk-radios">
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :training_course, 'yes', checked?(params[:training_course], 'yes'), class: 'govuk-radios__input', id: 'radio-y' %>
+              <%= label_tag :training_course, t('yes'), class: 'govuk-label govuk-radios__label', for: 'radio-y' %>
+            </div>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :training_course, 'no', checked?(params[:training_course], 'no'), class: 'govuk-radios__input', id: 'radio-n' %>
+              <%= label_tag :training_course, t('no'), class: 'govuk-label govuk-radios__label', for: 'radio-n' %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
     <% end %>
-  <% end %>
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
-<% end %>
+
+  </div>
+</div>

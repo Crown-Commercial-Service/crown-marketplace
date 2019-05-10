@@ -110,11 +110,6 @@ $(() => {
             result = false;
         }
 
-        // if (result && !address['fm-address-county']) {
-        //     id = 'fm-address-county';
-        //     result = false;
-        // }
-
         if (result && !address['fm-address-postcode'] || pageUtils.isPostCodeValid(postCode) === false) {
             id = 'fm-address-postcode';
             result = false;
@@ -170,26 +165,71 @@ $(() => {
 
     });
 
+    const validateBuildingName = ((value) => {
+        let result = false;
+        if (value) {
+            pageUtils.setCachedData('fm-new-building-name', value);
+            $('#fm-building-name-error').addClass('govuk-visually-hidden');
+            $('#fm-building-name-container').removeClass('govuk-form-group--error');
+            result = true;
+        } else {
+            $('#fm-building-name-error').removeClass('govuk-visually-hidden');
+            $('#fm-building-name-container').addClass('govuk-form-group--error');
+            pageUtils.clearCashedData('fm-new-building-name');
+        }
+
+        return result;
+
+    });
+
+    $('#fm-new-building-name').on('keyup', (e) => {
+        let value = e.target.value;
+        validateBuildingName(value);
+    });
+
+    $('#fm-postcode-input').on('focus', (e) => {
+        let newBuildingValue = $('#fm-new-building-name');
+        validateBuildingName(newBuildingValue.val());
+    });
+
+
     $('#fm-new-building-continue').click((e) => {
 
         e.preventDefault();
 
-        let isLondon = pageUtils.getCachedData('fm-postcode-is-in-london');
+        let isValid = true;
+        let address = pageUtils.getCachedData('fm-new-address');
+        let newBuildingValue = $('#fm-new-building-name').val();
+        let gia = pageUtils.getCachedData('fm-gia');
+        gia = gia && ('' + gia).length > 0 ? parseInt(gia) : 0;
 
-        let building = {
-            id: pageUtils.generateGuid(),
-            name: pageUtils.getCachedData('fm-new-building-name'),
-            region: pageUtils.getCachedData('fm-current-region'),
-            address: pageUtils.getCachedData('fm-new-address'),
-            isLondon: isLondon && isLondon === true ? 'Yes' : 'No',
-            gia: pageUtils.getCachedData('fm-gia')
-        };
+        if (validateBuildingName(newBuildingValue) === false) {
+            isValid = false;
+        } else if (address && address.length === 0) {
+            pageUtils.showAddressError(true);
+            isValid = false;
+        } else if (gia === 0) {
+            pageUtils.showGIAError(true, '');
+            isValid = false;
+        }
 
-        currentBuilding = building;
-        pageUtils.setCachedData('fm-current-building', building);
-        pageUtils.clearCashedData('fm-new-address');
-        saveBuilding(building, false, '/facilities-management/buildings/building-type');
+        if (isValid === true) {
+            let isLondon = pageUtils.getCachedData('fm-postcode-is-in-london');
 
+            let building = {
+                id: pageUtils.generateGuid(),
+                name: pageUtils.getCachedData('fm-new-building-name'),
+                region: pageUtils.getCachedData('fm-current-region'),
+                address: pageUtils.getCachedData('fm-new-address'),
+                isLondon: isLondon && isLondon === true ? 'Yes' : 'No',
+                gia: gia
+            };
+
+            currentBuilding = building;
+            pageUtils.setCachedData('fm-current-building', building);
+            saveBuilding(building, false, '/facilities-management/buildings/building-type');
+
+        }
     });
 
 

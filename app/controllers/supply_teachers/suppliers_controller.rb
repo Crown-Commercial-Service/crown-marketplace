@@ -14,7 +14,7 @@ module SupplyTeachers
 
     def all_suppliers
       @back_path = source_journey.previous_step_path
-      all_branches = Branch.all.order(:name)
+      all_branches = Branch.all.order(:slug)
       @branches_count = all_branches.count
       @branches = all_branches.page params[:page]
     end
