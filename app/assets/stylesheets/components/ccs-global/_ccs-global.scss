@@ -88,6 +88,11 @@ form.ccs-form {
     .govuk-radios__input + .govuk-radios__label::before {
         border-width: 1.6px;
     }
+    .ccs-govuk-checkboxes--thin {
+        .govuk-checkboxes__input + .govuk-checkboxes__label::before {
+          border-width: 1.6px;
+        }
+    }
     .js-enabled .govuk-tabs__tab[aria-selected="true"]{
         margin-bottom: -2px !important;
     }
