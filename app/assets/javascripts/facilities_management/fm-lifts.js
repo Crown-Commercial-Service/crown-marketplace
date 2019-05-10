@@ -6,6 +6,16 @@ $(() => {
 
     let numberOfLifts = 0;
 
+    const getFloorCount = (() => {
+        let result = 0;
+        for (let x = 1; x <= numberOfLifts; x++) {
+            let elem = $('#fm-uom-input-lift-' + x);
+            result += elem ? parseInt(elem.val()) : 0;
+        }
+
+        return result;
+    });
+
     $('#fm-uom-number-of-lifts').on('keyup', (e) => {
         $('#fm-uom-number-of-lifts-error').addClass('govuk-visually-hidden');
         $('#fm-uom-number-of-lifts-error-form-group').removeClass('govuk-form-group--error');
@@ -41,7 +51,7 @@ $(() => {
                     if (value > 0) {
                         let liftInfo = {};
                         liftInfo['lift-' + x] = value;
-                        liftFloorCount += value
+                        liftFloorCount = getFloorCount();
                         liftFloorData.push(liftInfo);
                         liftData['floor-data'] = liftFloorData;
                         liftData['total-floor-count'] = liftFloorCount;
