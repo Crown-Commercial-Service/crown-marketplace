@@ -5,13 +5,13 @@
     <strong class="govuk-heading-xl"><%= title %></strong>
   </fieldset>
   <p class="govuk-!-font-size-36">
-    <%=suppliers_title%>
+    <%=raw suppliers_title%>
   </p>
   <p class="govuk-!-font-size-36">
     Your assessed value is <%=number_to_currency(@report.sum_uom + @report.sum_benchmark, strip_insignificant_zeros: true)%> for the contract term of 7 years.
   </p>
   <p class="govuk-!-font-size-36">
-    <%=lot_title%>
+    <%=raw lot_title%>
   </p>
   <p/>
   <p>Services without pricing (<%= @report.without_pricing.count %>):</p>
