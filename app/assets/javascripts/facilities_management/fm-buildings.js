@@ -40,51 +40,14 @@ $(() => {
         pageUtils.clearCashedData('fm-new-address');
     });
 
-    const validateBuildingName = ((value) => {
-
-        if (value) {
-            pageUtils.setCachedData('fm-new-building-name', value);
-            $('#fm-building-name-error').addClass('govuk-visually-hidden');
-            $('#fm-building-name-container').removeClass('govuk-form-group--error');
-        } else {
-            $('#fm-building-name-error').removeClass('govuk-visually-hidden');
-            $('#fm-building-name-container').addClass('govuk-form-group--error');
-            pageUtils.clearCashedData('fm-new-building-name');
-        }
-
-    });
-
-    $('#fm-new-building-name').on('keyup', (e) => {
-        let value = e.target.value;
-        validateBuildingName(value);
-    });
-
-    $('#fm-postcode-input').on('focus', (e) => {
-        let newBuildingValue = $('#fm-new-building-name');
-
-        validateBuildingName(newBuildingValue.val());
-    });
 
     $('#fm-postcode-input').on('keyup', (e) => {
 
         if (pageUtils.isPostCodeValid(e.target.value)) {
-            showPostCodeError(false);
+            pageUtils.showPostCodeError(false);
             postCode = e.target.value;
         } else {
             postCode = "";
-        }
-    });
-
-    const showPostCodeError = ((show, errorMsg) => {
-
-        errorMsg = errorMsg || "The postcode entered is invalid";
-        if (show === true) {
-            $('#fm-postcode-error').text(errorMsg);
-            $('#fm-postcode-error').removeClass('govuk-visually-hidden');
-            $('#fm-postcode-error-form-group').addClass('govuk-form-group--error');
-        } else {
-            $('#fm-postcode-error').addClass('govuk-visually-hidden');
-            $('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');
         }
     });
 
@@ -100,21 +63,23 @@ $(() => {
 
             })
             .fail(function (data) {
-                showPostCodeError(true, data.error);
+                pageUtils.showPostCodeError(true, data.error);
             });
     });
 
     const getRegion = ((post_code) => {
 
-        $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
-            .done(function (data) {
-                if (data) {
-                    pageUtils.setCachedData('fm-current-region', data.result.region);
-                }
-            })
-            .fail(function (data) {
-                showPostCodeError(true, data.error);
-            });
+        if (post_code && pageUtils.isPostCodeValid(post_code)) {
+            $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
+                .done(function (data) {
+                    if (data) {
+                        pageUtils.setCachedData('fm-current-region', data.result.region);
+                    }
+                })
+                .fail(function (data) {
+                    pageUtils.showPostCodeError(true, data.error);
+                });
+        }
     });
 
     $('#fm-postcode-lookup-results').on('change', (e) => {
@@ -131,6 +96,7 @@ $(() => {
             address['fm-address-postcode'] = addressElements[4];
 
             pageUtils.setCachedData('fm-new-address', address);
+            pageUtils.showAddressError(false);
         }
 
     });
@@ -140,7 +106,7 @@ $(() => {
         if (pageUtils.isPostCodeValid(postCode)) {
             pageUtils.setCachedData('fm-postcode', postCode.toUpperCase());
             pageUtils.clearCashedData('fm-new-address');
-            showPostCodeError(false);
+            pageUtils.showPostCodeError(false);
             isPostCodeInLondon(postCode);
 
             $('#fm-postcode-label').text(postCode);
@@ -170,10 +136,10 @@ $(() => {
                     }
                 })
                 .fail(function (data) {
-                    showPostCodeError(true, data.error);
+                    pageUtils.showPostCodeError(true, data.error);
                 });
         } else {
-            showPostCodeError(true);
+            pageUtils.showPostCodeError(true);
         }
     });
 
@@ -183,17 +149,19 @@ $(() => {
     });
 
     $('#fm-buildings-add-building').click((e) => {
-        pageUtils.clearCashedData('fm-current-building');
+        fm.clearBuildingCache();
     });
 
     $('#fm-internal-square-area').change((e) => {
 
         let value = e.target.value;
-
-        if (value && value !== "") {
-            pageUtils.setCachedData('fm-gia', value);
+        value = (value && value.length > 0) ? parseInt(value) : 0;
+        pageUtils.setCachedData('fm-gia', value);
+        if (value > 0) {
+            pageUtils.showGIAError(false, '');
+        } else {
+            pageUtils.showGIAError(true, '');
         }
-
     });
 
     $('input[name="fm-builing-type-radio"]').click((e) => {
