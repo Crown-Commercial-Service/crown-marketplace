@@ -80,10 +80,18 @@ module FacilitiesManagement
     end
 
     def list_services
-      str = "<strong>Services without pricing (#{@report.without_pricing.count}):</strong><p/>"
-      @report.without_pricing.each do |service|
-        str << "<strong>#{service.name}</strong><hr style='width: 50%;margin-left: 0;'></hr>"
+      if @current_lot.nil?
+        str = "<strong>Services without pricing (#{@report.without_pricing.count}):</strong><p/>"
+        @report.without_pricing.each do |service|
+          str << "<strong>#{service.name}</strong><hr style='width: 50%;margin-left: 0;'></hr>"
+        end
+      else
+        str = "<strong>Services with pricing (#{@report.with_pricing.count}):</strong><p/>"
+        @report.with_pricing.each do |service|
+          str << "<strong>#{service.name}</strong><hr style='width: 50%;margin-left: 0;'></hr>"
+        end
       end
+
       str
     end
 
@@ -100,14 +108,13 @@ module FacilitiesManagement
     def set_start_date
       @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
       TransientSessionInfo[session.id, :start_date] = @start_date
+      TransientSessionInfo[session.id, :current_lot] = nil
     rescue StandardError
       @start_date = TransientSessionInfo[session.id][:start_date]
     end
 
     # Lot.all_numberss
     def increase_current_lot
-      TransientSessionInfo[session.id][:current_lot]
-
       @current_lot = move_upto_next_lot(TransientSessionInfo[session.id][:current_lot])
 
       TransientSessionInfo[session.id][:current_lot] = @current_lot

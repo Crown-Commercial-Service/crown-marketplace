@@ -20,7 +20,7 @@
   <!------->
   </p>
   <p/>
-  <% if @current_lot %>
+  <% if !@current_lot.nil? %>
   <div class="">
     <p><strong>You can now download the supplier list and requirements document</strong></p>
     <div class="govuk-warning-text">
@@ -36,6 +36,7 @@
   </div>
   <% end %>
 
+  <% if @report.with_pricing.count > 0 && @current_lot != '1c' %>
   <form action="/facilities-management/summary" method="post">
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
@@ -61,6 +62,8 @@
     </div>
     <%= submit_tag t('common.submit'), class: "govuk-button" %>
   </form>
+  <% end %>
+
   <div class="govuk-grid-row ccs-no-print">
 <!--
         <a id="suppliers-summary-button" href="/facilities-management/summary" class="govuk-button ccs-no-print" role="button">XX Summary</a><br>
