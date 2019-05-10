@@ -1,6 +1,6 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-<%= form_tag @form_path, method: :get do %>
+<%= form_tag @form_path, class: :'ccs-form', method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
   <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
@@ -44,10 +44,10 @@
                 <label class="govuk-label govuk-label--m govuk-!-font-weight-bold" for="search">
                   <%= t('common.search') %>
                 </label>
-              </h1>  
+              </h1>
               <%= text_field_tag :search, params[:search], class: 'govuk-input ccs-search-icon' %>
             </div>
-            
+
             <%= render 'layouts/button', text: t('common.search')%>
 
           <% end %>
