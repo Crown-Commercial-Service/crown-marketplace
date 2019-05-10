@@ -98,9 +98,6 @@ $(() => {
                     pageUtils.setCachedData('fm-postcode-is-in-london', data.result);
                 }
 
-                if (data && data.status === 404) {
-                    showPostCodeError(true, data.error);
-                }
             })
             .fail(function (data) {
                 showPostCodeError(true, data.error);
