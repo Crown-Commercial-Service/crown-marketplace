@@ -2,7 +2,14 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  require_permission :facilities_management, only: %i[reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+
+  def reset_buildings_tables
+    fmd = FMBuildingData.new
+    fmd.reset_buildings_tables
+    j = { 'status': 200 }
+    render json: j, status: 200
+  end
 
   def select_services_per_building
     @inline_error_summary_title = 'Services are not selected'
@@ -30,6 +37,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @uom_values
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController buildings(): #{e}"
+    @message = e.to_s
+    render 'error'
   end
 
   def new_building
@@ -66,6 +75,15 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     Rails.logger.warn "Error: BuildingsController update_building(): #{e}"
   end
 
+  def region_info
+    post_code = params['post_code']
+    fm_building_data = FMBuildingData.new
+    result = fm_building_data.region_info_for_post_town(post_code)
+    render json: result
+  rescue StandardError
+    render json: { status: 404, error: 'Region not found' }
+  end
+
   def units_of_measurement
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
@@ -96,16 +114,11 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     building_id = uom_json['building_id']
     service_code = uom_json['service_code']
     uom_value = uom_json['uom_value']
-
     fm_service_data = FMServiceData.new
     fm_service_data.add_uom_value(current_login.email.to_s, building_id, service_code, uom_value)
-
     count = fm_service_data.unset_service_count(current_login.email.to_s, building_id)
-
     url = count.positive? ? '/facilities-management/buildings/units-of-measurement?building_id=' + building_id : '/facilities-management/buildings-list'
-
     j = { 'status': 200, 'next': url }
-
     render json: j, status: 200
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController save_uom_value(): #{e}"

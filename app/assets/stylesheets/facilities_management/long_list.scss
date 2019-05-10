@@ -32,3 +32,12 @@
   margin-left: 0px !important;
   padding-left: 5px;
 }
+
+@media only screen and (orientation: portrait) {
+  .CCS-fm-region-filter-check-box-label {
+    background-color: white;
+    overflow-wrap: break-word;
+    max-width: 239px;
+    padding-left: 5px;
+  }
+}
