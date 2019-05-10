@@ -1,44 +1,87 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
-
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-<%= form_tag @form_path, class: :'ccs-form', method: :get do %>
 
+<%= form_tag @form_path, class: :'ccs-form', method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
   <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
     <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+    <!-- add to fieldset *****************************
+    aria-describedby: services-hint
+    **************************************************
+    -->
 
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
 
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('Lot 1 - Regional service provision ') %> xxx
-        </h1>
-      </legend>
-      xxxx
-      <%= display_error(@journey, :central_government) %>
-          <div class="govuk-checkboxes ccs-govuk-checkboxes--s" style="border: 1px solid lime;">
-             <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
-             <% lot1.each do |lot| %>
-               <div class="govuk-checkboxes__item">
-                 <%= check_box_tag(
-                            "lot[]",
-                            lot,
-                            false,
-                            class: "govuk-checkboxes__input",
-                            id: "lot_#{lot}"
-                          ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot %>">
-                        <%= lot %>
-                      </label>
-                  </div>
-                  <% end %>
-                </div>
+          <%= display_error(@journey, :central_government) %>
+
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">
+              Lot 1 - Regional service provision
+            </h1>
+          </legend>
+
+        </div>
+      </div>
+
+      <div id="ccs-dynamic-accordian" class="govuk-grid-row">
+
+        <div id="accordion-default" class="govuk-grid-column-two-thirds">
+
+          <span id="services-hint" class="govuk-hint govuk-heading-m">
+            Select the services you need
+          </span>
+
+          <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
+
+            <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
+
+            <!-- ********************** REMOVE ********************** -->
+            <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="lot[]" id="lot_Yorkshire_and_the_Humber2" value="Yorkshire and the Humber" class="govuk-checkboxes__input">
+                <label class="govuk-label govuk-checkboxes__label" for="lot_Yorkshire_and_the_Humber2">
+                      Remove this example (using valid ID)
+                </label>
+            </div>
+            <!-- **************************************************** -->
+
+            <% lot1.each do |lot| %>
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag(
+                          "lot[]",
+                          lot,
+                          false,
+                          class: "govuk-checkboxes__input",
+                          id: "lot_#{lot}"
+                        ) %>
+                <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot %>">
+                  <%= lot %>
+                </label>
+              </div>
+            <% end %>
           </div>
 
+          <%= submit_tag t('common.submit'), class: "govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-8" %>
+
+        </div>
+
+        <section class="govuk-grid-column-one-third">
+          <div id="css-list-basket">
+            <button type="submit" class="govuk-button">Continue</button>
+
+            <div>
+              <h3 class="govuk-heading-m" data-txt01="services selected" data-txt02="No services selected"><span></span> <span></span></h3>
+              <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll">Remove all</a>
+              <ul class="govuk-list"></ul>
+            </div>
+          </div>
+        </section>
+
+      </div>
 
     <% end %>
   <% end %>
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
-
 
 <% end %>
+
