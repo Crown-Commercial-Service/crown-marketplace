@@ -38,6 +38,46 @@ module FacilitiesManagement
 
     private
 
+    # helper :all
+    helper_method %i[title suppliers_title lot_title]
+
+    def title
+      case @current_lot
+      when nil
+        'Review service without pricing'
+      else
+        'List of Suppliers'
+      end
+    end
+
+    def suppliers_title
+      count = @report.without_pricing.count
+
+      str =
+        if count == 1
+          '<strong>' + count.to_s + ' supplier found </strong>'
+        else
+          '<strong>' + count.to_s + ' suppliers found </strong>'
+        end
+
+      count = @report.without_pricing.count + @report.with_pricing.count
+      str <<
+        if @current_lot.nil?
+          ' (from ' + count.to_s + ' selected) without a price.'
+        else
+          ' to provide services in your regions.'
+        end
+    end
+
+    def lot_title
+      if @current_lot.nil?
+        'Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.'
+      else
+        "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
+        </strong>, subject to your total contract value and services without a price.</p>"
+      end
+    end
+
     def build_report
       set_start_date
 
@@ -57,17 +97,24 @@ module FacilitiesManagement
 
     # Lot.all_numberss
     def increase_current_lot
-      current_lot = TransientSessionInfo[session.id][:current_lot]
+      TransientSessionInfo[session.id][:current_lot]
 
-      case current_lot
-      when nil
-        @current_lot = '1a'
-      when '1a'
-        @current_lot = '1b'
-      when '1b'
-        @current_lot = '1c'
-      end
+      @current_lot = move_upto_next_lot(TransientSessionInfo[session.id][:current_lot])
+
       TransientSessionInfo[session.id][:current_lot] = @current_lot
+    end
+
+    def move_upto_next_lot(lot)
+      case lot
+      when nil
+        '1a'
+      when '1a'
+        '1b'
+      when '1b'
+        '1c'
+      else
+        lot
+      end
     end
 
     def regions
