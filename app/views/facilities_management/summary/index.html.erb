@@ -13,14 +13,14 @@
   <p class="govuk-!-font-size-36">
     <%=raw lot_title%>
   </p>
-  <p/>
+  <p>
+
   <%=raw list_services %>
-  <p>Services without pricing (<%= @report.without_pricing.count %>):</p>
-  <% @report.without_pricing.each do | service | %>
-    <p><strong><%= service.name %></strong></p>
-  <% end %>
+
   <!------->
+  </p>
   <p/>
+  <% if @current_lot %>
   <div class="">
     <p><strong>You can now download the supplier list and requirements document</strong></p>
     <div class="govuk-warning-text">
@@ -34,13 +34,16 @@
       <a class="supplier-record__file-download ga-download-calculator" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx&amp;job_type=qt&amp;looking_for=worker&amp;payroll_provider=agency&amp;postcode=sw1p+2ba&amp;term=8_12&amp;worker_type=agency_supplied">Download supplier list and Deliverables Matrix Lite</a>
     </p>
   </div>
+  <% end %>
+
   <form action="/facilities-management/summary" method="post">
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h1 class="govuk-fieldset__heading">
+          <p><strong>
             Based on these non-priced services, would you estimate that you move up a sub-lot?
-          </h1>
+          </strong></p>
+
         </legend>
         <div class="govuk-radios govuk-radios--inline">
           <div class="govuk-radios__item">
