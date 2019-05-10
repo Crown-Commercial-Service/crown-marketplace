@@ -1,7 +1,6 @@
 ---
 en:
   'No': 'No'
-  Other: Other
   Scotland: Scotland
   'Yes': 'Yes'
   activemodel:
@@ -455,6 +454,12 @@ en:
         better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     journey:
+      check_suitability:
+        heading: Select the legal services you need
+        label_01: Transactional property, including noncomplex conveyancing and work relating to leases and licences
+        label_02: Litigation work, including employment
+        label_03: Other
+        or: or
       choose_organisation_type:
         central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
