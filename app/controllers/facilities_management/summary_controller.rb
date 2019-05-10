@@ -39,7 +39,7 @@ module FacilitiesManagement
     private
 
     # helper :all
-    helper_method %i[title suppliers_title lot_title]
+    helper_method %i[title suppliers_title lot_title list_services]
 
     def title
       case @current_lot
@@ -71,11 +71,20 @@ module FacilitiesManagement
 
     def lot_title
       if @current_lot.nil?
-        'Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.'
+        'Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.
+        <p>Because you have selected services without a price, we can\'t inclue these in the calculation. You can choose to move up into the next sub-lot.<p>'
       else
         "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
         </strong>, subject to your total contract value and services without a price.</p>"
       end
+    end
+
+    def list_services
+      str = "<strong>Services without pricing (#{@report.without_pricing.count}):</strong><p/>"
+      @report.without_pricing.each do |service|
+        str << "<strong>#{service.name}</strong><hr style='width: 50%;margin-left: 0;'></hr>"
+      end
+      str
     end
 
     def build_report

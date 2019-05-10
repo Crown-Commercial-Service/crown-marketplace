@@ -17,6 +17,15 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
+  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.jsonb "building_json", null: false
+    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
+    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
+    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.index ["user_id"], name: "idx_buildings_user_id"
+  end
+
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_supplier_id", null: false
     t.text "lot_number", null: false
@@ -49,6 +58,59 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
   create_table "facilities_management_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "fm_lifts", id: false, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.string "building_id", null: false
+    t.jsonb "lift_data", null: false
+    t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
+    t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
+  end
+
+  create_table "fm_rates", id: false, force: :cascade do |t|
+    t.string "code", limit: 255
+    t.decimal "framework"
+    t.decimal "benchmark"
+    t.index ["code"], name: "fm_rates_code_key", unique: true
+  end
+
+  create_table "fm_regions", id: false, force: :cascade do |t|
+    t.string "code", limit: 255
+    t.string "name", limit: 255
+    t.index ["code"], name: "fm_regions_code_key", unique: true
+  end
+
+  create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.jsonb "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
+    t.index ["data"], name: "idxgin", using: :gin
+    t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
+  end
+
+  create_table "fm_units_of_measurement", id: :serial, force: :cascade do |t|
+    t.string "title_text", null: false
+    t.string "example_text"
+    t.string "unit_text"
+    t.string "data_type"
+    t.text "service_usage", array: true
+  end
+
+  create_table "fm_uom_values", id: false, force: :cascade do |t|
+    t.string "user_id"
+    t.string "service_code"
+    t.string "uom_value"
+    t.string "building_id"
+    t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
+  end
+
+  create_table "london_postcodes", id: false, force: :cascade do |t|
+    t.text "postcode"
+    t.text "In Use"
+    t.text "region"
+    t.text "Last updated"
   end
 
   create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -97,6 +159,14 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
   create_table "management_consultancy_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "nuts_regions", id: false, force: :cascade do |t|
+    t.string "code", limit: 255
+    t.string "name", limit: 255
+    t.string "nuts1_code", limit: 255
+    t.string "nuts2_code", limit: 255
+    t.index ["code"], name: "nuts_regions_code_key", unique: true
   end
 
   create_table "supply_teachers_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
