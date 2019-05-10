@@ -1,9 +1,14 @@
 <div class="govuk-form-group govuk-!-margin-left-4">
   <div class="govuk-grid-row govuk-!-margin-top-6 ">
     <h2 class="govuk-heading-m govuk-!-margin-0">What is the total internal area of this building?</h2>
-    <span class="govuk-caption-m govuk-!-font-size-16" >For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm</span>
+    <span class="govuk-caption-m govuk-!-font-size-16">For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm</span>
   </div>
   <div class="govuk-grid-row govuk-!-margin-top-2">
-    <input class="govuk-input govuk-input--width-5" id="fm-internal-square-area" type="number" value=""><span> sqm (square meters)</span>
+    <div id="fm-internal-square-area-error-form-group" class="govuk-form-group">
+    <span id="fm-internal-square-area-error" class="govuk-error-message govuk-visually-hidden">
+      The postcode entered is invalid
+    </span>
+      <input required class="govuk-input govuk-input--width-5" id="fm-internal-square-area" type="number" value=""><span> sqm (square meters)</span>
+    </div>
   </div>
 </div>

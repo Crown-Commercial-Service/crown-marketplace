@@ -14,15 +14,14 @@
             <h2 class="govuk-accordion__section-heading">
                 <span class="govuk-accordion__section-button" id="<%= building['id'].to_s + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + building['name'].to_s %>
                   <br>
-
                 <span class="govuk-caption-m govuk-!-font-size-18">
-                  <% if building.any? %>
-                  <% address = building['address']['fm-address-line-1'].to_s + ', ' +
-                      building['address']['fm-address-line-2'].to_s + ', ' +
-                      building['address']['fm-address-town'].to_s + ', ' +
-                      building['address']['fm-address-county'].to_s + ', ' +
-                      building['address']['fm-address-postcode'].to_s
-                  %>
+                  <% if building['address'].any? %>
+                    <% address = building['address']['fm-address-line-1'].to_s + ', ' +
+                       building['address']['fm-address-line-2'].to_s + ', ' +
+                           building['address']['fm-address-town'].to_s + ', ' +
+                           building['address']['fm-address-county'].to_s + ', ' +
+                           building['address']['fm-address-postcode'].to_s
+                    %>
                     <%= address.sub(', , ', ', ') %>
                   <% end %>
                 </span>
