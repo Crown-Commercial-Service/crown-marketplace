@@ -38,7 +38,8 @@ module FacilitiesManagement
 
     private
 
-    helper_method :title
+    # helper :all
+    helper_method %i[title suppliers_title lot_title]
 
     def title
       case @current_lot
@@ -47,6 +48,34 @@ module FacilitiesManagement
       else
         'List of Suppliers'
       end
+    end
+
+    def suppliers_title
+      count = @report.without_pricing.count
+
+      str = if count == 1
+        '<strong>' + count.to_s + ' supplier found </strong>'
+      else
+        '<strong>'+ count.to_s + ' suppliers found </strong>'
+      end
+
+      count = @report.without_pricing.count + @report.with_pricing.count
+      str << if @current_lot.nil?
+        ' (from ' + count.to_s + ' selected) without a price.'
+      else
+        ' to provide services in your regions.'
+      end
+      # render html: str.html_safe and return
+    end
+
+    def lot_title
+      str =
+      if @current_lot.nil?
+      'Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.'
+      else
+      '<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot ' + @current_lot +  '</strong>, subject to your total contract value and services without a price.</p>'
+      end
+      # render html: str.html_safe and return
     end
 
     def build_report
