@@ -18,7 +18,7 @@
 
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">
-              Lot 1 - Regional service provision
+              <%= t('.heading') %>
             </h1>
           </legend>
 
@@ -29,9 +29,9 @@
 
         <div id="accordion-default" class="govuk-grid-column-two-thirds">
 
-          <span id="services-hint" class="govuk-hint govuk-heading-m">
-            Select the services you need
-          </span>
+          <p id="services-hint" class="govuk-heading-m govuk-!-font-size-27">
+            <%= t('.hint') %>
+          </p>
 
           <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
@@ -68,11 +68,11 @@
 
         <section class="govuk-grid-column-one-third">
           <div id="css-list-basket">
-            <button type="submit" class="govuk-button">Continue</button>
+            <%= submit_tag t('common.submit'), class: "govuk-button" %>
 
             <div>
-              <h3 class="govuk-heading-m" data-txt01="services selected" data-txt02="No services selected"><span></span> <span></span></h3>
-              <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll">Remove all</a>
+              <h3 class="govuk-heading-m" data-txt01="<%= t('.txt01') %>" data-txt02="<%= t('.txt02') %>"><span></span> <span></span></h3>
+              <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll"><%= t('.remove_all') %></a>
               <ul class="govuk-list"></ul>
             </div>
           </div>

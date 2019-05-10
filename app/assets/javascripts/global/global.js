@@ -154,7 +154,6 @@ function updateList(govb, id, basket){
 
 function initDynamicAccordian(){
     var govcheckboxes = $('#accordion-default').find('.govuk-checkboxes');
-    govcheckboxes.addClass('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     var id = $('#css-list-basket');
     var basketheader = id.find('.govuk-heading-m');
     headerTxt(basketheader, false);
