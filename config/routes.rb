@@ -56,16 +56,19 @@ Rails.application.routes.draw do
     post '/buildings/update_building' => 'buildings#update_building'
     get '/buildings/select-services', to: 'buildings#select_services_per_building'
 
-    get '/summary', to: 'summary#index'
-    post '/summary', to: 'summary#index'
-
     get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
     post '/buildings/save-uom-value' => 'buildings#save_uom_value'
     post '/services/save-lift-data' => 'select_services#save_lift_data'
+    get '/buildings/region', to: 'buildings#region_info'
     get '/suppliers', to: 'suppliers#index'
 
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/contract-start', to: 'contract#start_of_contract'
+
+    get '/summary', to: 'summary#index'
+    post '/summary', to: 'summary#index'
+
+    get '/reset', to: 'buildings#reset_buildings_tables'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
@@ -99,7 +102,7 @@ Rails.application.routes.draw do
     get '/find_apprentices2', to: 'home#find_apprentices2'
     get '/find_apprentices3', to: 'home#find_apprentices3'
     get '/find_apprentices4', to: 'home#find_apprentices4'
-    get '/find_apprentices5', to: 'home#find_apprentices5'
+    get '/find_apprentices5', to: 'journey#find_apprentices5'
     get '/outline', to: 'home#outline'
     get '/requirements', to: 'home#requirements'
     get '/requirement', to: 'home#requirement'
@@ -138,6 +141,8 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
     get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
+    get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
+    get '/suppliers/cg-no-suppliers-found', to: 'suppliers#cg_no_suppliers_found'
     resources :suppliers, only: %i[index show]
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
@@ -157,8 +162,14 @@ Rails.application.routes.draw do
   end
   post '/sign-out' => 'auth#sign_out', as: :sign_out
 
-  scope module: :postcode do
-    resources :postcodes, only: [:show]
+  # scope module: :postcode do
+  #  resources :postcodes, only: :show
+  # end
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :postcodes, only: :show
+      post '/postcode/:id', to: 'uploads#show'
+    end
   end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'

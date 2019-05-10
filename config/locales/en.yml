@@ -1,5 +1,9 @@
 ---
 en:
+  'No': 'No'
+  Other: Other
+  Scotland: Scotland
+  'Yes': 'Yes'
   activemodel:
     errors:
       models:
@@ -320,9 +324,11 @@ en:
     apply_filters: Apply filters
     back_to_start: Back to start
     browse: Browse
+    ccs_contact_url: https://www.crowncommercial.gov.uk/contact
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
+    general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     search: Search
     submit: Continue
@@ -453,7 +459,17 @@ en:
         central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
+      choose_regional_or_fullservice:
+        question: Question
+      requirement:
+        central_government_search_link_title: Central government search link title
+        search_central_government_html: Search central government html
     suppliers:
+      cg_no_suppliers_found:
+        heading: No suppliers were found
+        statement_pt_1: The
+        statement_pt_2_link_text: General Legal Advice Services (RM3786)
+        statement_pt_3: agreement provides legal advice services for central government and arms-length bodies.
       download_shortlist:
         heading: Download the supplier shortlist
         page_title: Download supplier list
@@ -462,6 +478,11 @@ en:
         page_title: Supplier results
         results_html: <strong class="govuk-!-font-size-27">%{results}</strong> <strong>firms</strong> can provide the legal services that meet your requirements.
         sme: SME
+      no_suppliers_found:
+        heading: No suppliers were found
+        link_click_text: Contact CCS Support
+        link_end_text: for help.
+        statement: No companies can provide suppliers that can meet your requirements.
       show:
         caption: Supplier details
         heading: Supplier details
@@ -539,9 +560,16 @@ en:
         question: What kind of management consultancy do you want to procure?
         question_hint: The lot you choose here will affect the services offered and the suppliers presented.
       choose_regions:
-        question: In which regions will you require the services?
+        no_regions_selected: No regions selected
+        question: Where do you want the consultants to work?
+        regions_selected: Regions selected
+        remove_all: Remove all
+        subtitle: Suppliers have said where they’ll provide consultants.
       choose_services:
-        question: What services will you require?
+        no_services_selected: No services selected
+        question: Select the business consultancy services you need
+        remove_all: Remove all
+        services_selected: services selected
       other_framework:
         back_to_start: Back to start
         heading: You need a different framework
@@ -551,10 +579,10 @@ en:
         download_suppliers_list: Download the supplier list
         heading: Supplier results
         no_suppliers_found:
-          contact_html: "%{contact_link} for help"
+          contact_html: "%{contact_link} for help."
           contact_link_text: Contact CCS Support
           heading: No suppliers were found
-          text: No companies can provide consultants that can meet your requirements
+          text: No companies can provide consultants that can meet your requirements.
         suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
   miles:
     unit:
@@ -721,11 +749,13 @@ en:
     gateway:
       index:
         dfe_signin:
-          create_account_html: If your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a> you should be able to get a DfE Sign-in account. Find information on how the approver for your organisation can <a href="%{dfe_sign_in_url}" aria-label="DfE Sign In contact form">create an account for you</a>.
-          instructions: Sign in to your DfE Sign-In account to use this service. You will be automatically directed back to this service once you’ve signed in.
+          create_account_html: You can <a href="%{get_signin_url}">get a DfE Sign-in account</a> if your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a>.
+          find_more_info_html: Find more information about the <a href="%{terms_url}">terms and conditions of the DfE Sign-in account</a>.
+          instructions: To use this service you need to sign in with your DfE Sign-in account.
           not_for_profit_html: Only not-for-profit and schools with charitable status are able to get access to the online and offline version of the service.
           outside_england_html: Outside of England, not-for-profit and schools with charitable status cannot yet use the online agency selection service. They can <a href="%{url}" aria-label="Crown Commercial Service contact form">request access to an offline version</a> (an Excel spreadsheet) by putting 'offline agency selection tool’ in the comments box.
-        heading: CCS Marketplace private beta
+        heading: Sign in to find supply teachers and agency workers
+        subheading: If you don’t have a DfE Sign-in account
     home:
       fta_to_perm_fee:
         avoid_fee: To avoid this fee you can hire the worker permanently 6 months after current contract with you ends.
@@ -762,7 +792,7 @@ en:
         you_cant_use_the_service_if: You can’t use this service if you’re an independent school, unless you have charitable status.
         you_must_tell_your_employees: You must tell your employees of the confidential nature of the information and must also agree to the requirements. No agents, sub-contractors, third parties nor other non-employees can have access to the confidential information.
         you_will_need_to_have: 'You will need to have:'
-        you_will_need_your_dfe_sign_in: To use the service, you will need your DFE Sign-in email and password. If you don’t have one you may be able to get one, or to access an offline version of the service.
+        you_will_need_your_dfe_sign_in_html: your DfE Sign-in email address and password. If you don’t have an account, you can <a href="%{get_dfe_url}">get a DfE Sign-in account</a> if your school is on the <a href="%{get_schools_info_url}">Get Information About Schools (GIAS) register</a>
         your_schools_postcode: your school’s postcode
       temp_to_perm_fee:
         after_12_weeks_and_enough_notice: Based on the information you provided, you’re taking the worker on after 12 working weeks and giving 4 working weeks’ notice, so you can’t be charged a fee under this deal.

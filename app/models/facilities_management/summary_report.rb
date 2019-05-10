@@ -1,10 +1,17 @@
 module FacilitiesManagement
   class SummaryReport
+    attr_reader :sum_uom, :sum_benchmark
+    attr_reader :building_data
+
     def initialize(start_date, user_id, data)
       @start_date = start_date
       @user_id = user_id
       @data = data
       @posted_services = @data[:posted_services]
+      @posted_locations = @data[:posted_locations]
+
+      @sum_uom = 0
+      @sum_benchmark = 0
     end
 
     def calculate_services_for_buildings
@@ -36,14 +43,13 @@ module FacilitiesManagement
     private
 
     def services_for_buildings
+      @sum_uom = 0
+      @sum_benchmark = 0
+
       selected_services
 
-      # ------------------------------
       @building_data = CCS::FM::Building.buildings_for_user(@user_id)
       @building_data.each do |building|
-        sum_x = 0
-        sum_y = 0
-
         fm_gross_internal_area = building.building_json['fm-gross-internal-area'].to_i
         occupants = 125 # fix it !!!
         london_flag = if building.building_json['isLondon'] == 'Yes'
@@ -67,15 +73,12 @@ module FacilitiesManagement
 
           code = service.code.remove('.')
           calc_fm = FMCalculator::Calculator.new(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-          x = calc_fm.sumunitofmeasure(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-          y = calc_fm.benchmarkedcostssum(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+          uom_cost = calc_fm.sumunitofmeasure(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+          benchmark_cost = calc_fm.benchmarkedcostssum(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
 
-          sum_x += x
-          sum_y += y
+          @sum_uom += uom_cost
+          @sum_benchmark += benchmark_cost
         end
-
-        # p sumX
-        # p sumY
       end
     end
   end

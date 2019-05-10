@@ -3,7 +3,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <form action="/facilities-management/summary" method="post">
+    <form id="fm-contract-date-form" action="/facilities-management/summary" method="post">
 
       <div id="fm-contract-date-form-group-error-container" class="govuk-form-group">
         <fieldset class="govuk-fieldset govuk-!-padding-bottom-8 govuk-!-margin-bottom-8" aria-describedby="start-hint" role="group">
@@ -56,13 +56,7 @@
 
         </fieldset>
       </div>
-
-
-      <%= submit_tag t('common.submit'), class: "govuk-button" %>
-
+      <a role='button' class='govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' id='fm-save-contract-start-date-link'>Continue</a>
     </form>
   </div>
 </div>
-
-<a role='button' class='govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' id='fm-save-contract-start-date-link'>Continue</a>
-<br/>

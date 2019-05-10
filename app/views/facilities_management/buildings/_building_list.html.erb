@@ -12,23 +12,21 @@
         <div class="govuk-accordion__section ">
           <div class="govuk-accordion__section-header">
             <h2 class="govuk-accordion__section-heading">
-              <!--<div class="govuk-radios__item govuk-!-margin-top-3">-->
-              <!-- <input class="govuk-radios__input" id="<%= 'building' + x.to_s %>" name="<%= 'building_radio' %>" type="radio" value="<%= 'building' + x.to_s %>">-->
-              <!-- <label class="govuk-label govuk-radios__label" for="<%= 'building' + x.to_s %>">-->
-              <span class="govuk-accordion__section-button" id="<%= building['id'].to_s + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + building['name'].to_s %>
-                <br>
+                <span class="govuk-accordion__section-button" id="<%= building['id'].to_s + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + building['name'].to_s %>
+                  <br>
+
                 <span class="govuk-caption-m govuk-!-font-size-18">
+                  <% if building.any? %>
                   <% address = building['address']['fm-address-line-1'].to_s + ', ' +
                       building['address']['fm-address-line-2'].to_s + ', ' +
                       building['address']['fm-address-town'].to_s + ', ' +
                       building['address']['fm-address-county'].to_s + ', ' +
                       building['address']['fm-address-postcode'].to_s
                   %>
-                  <%= address.sub(', , ', ', ') %>
+                    <%= address.sub(', , ', ', ') %>
+                  <% end %>
                 </span>
               </span>
-              <!--</label>-->
-              <!--</div> -->
             </h2>
           </div>
           <div class="govuk-accordion__section-content" aria-labelledby="<%= building['name'] %>">
@@ -62,7 +60,7 @@
                 Internal area:
               </div>
               <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
-                <%= building['fm-gross-internal-area'] %>
+                <%= building['gia'] %>
               </div>
             </div>
             <div class="govuk-grid-row">
