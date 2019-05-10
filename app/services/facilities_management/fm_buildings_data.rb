@@ -3,6 +3,17 @@ require 'base64'
 require 'net/http'
 require 'uri'
 class FMBuildingData
+  def reset_buildings_tables
+    query = 'truncate fm_uom_values;'
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    query = 'truncate fm_lifts;'
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    query = 'truncate facilities_management_buildings;'
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't reset building tables: #{e}"
+  end
+
   def save_building(email_address, building)
     Rails.logger.info '==> FMBuildingData.save_building()'
     query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"

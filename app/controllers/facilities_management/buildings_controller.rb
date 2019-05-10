@@ -2,7 +2,14 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  require_permission :facilities_management, only: %i[reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+
+  def reset_buildings_tables
+    fmd = FMBuildingData.new
+    fmd.reset_buildings_tables
+    j = { 'status': 200 }
+    render json: j, status: 200
+  end
 
   def select_services_per_building
     @inline_error_summary_title = 'Services are not selected'
