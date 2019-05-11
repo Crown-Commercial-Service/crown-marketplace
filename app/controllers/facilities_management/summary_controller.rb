@@ -20,7 +20,6 @@ module FacilitiesManagement
 
       # @journey = Journey.new('summary', params)
 
-
       build_report
 
       respond_to do |format|
