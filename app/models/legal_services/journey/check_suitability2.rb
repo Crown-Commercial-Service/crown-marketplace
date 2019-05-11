@@ -10,7 +10,7 @@ module LegalServices
       when 'yes'
         Journey::CheckSuitability3
       else
-        Journey::ChooseServicesArea
+        Journey::Sorry
       end
     end
   end
