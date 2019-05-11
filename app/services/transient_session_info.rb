@@ -17,9 +17,13 @@ class TransientSessionInfo
     @dict[key1][key2]
   end
 
-  def self.[]=(key1, key2, value)
+  def self.[]=(key1, key2=nil, value)
     @dict ||= {}
     @dict[key1] ||= {}
-    @dict[key1][key2] = value
+    if key2
+      @dict[key1][key2] = value
+    else
+      @dict[key1] = value
+    end
   end
 end
