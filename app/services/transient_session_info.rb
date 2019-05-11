@@ -17,7 +17,7 @@ class TransientSessionInfo
     @dict[key1][key2]
   end
 
-  def self.[]=(key1, key2=nil, value)
+  def self.[]=(key1, key2 = nil, value)
     @dict ||= {}
     @dict[key1] ||= {}
     if key2
