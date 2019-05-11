@@ -9,12 +9,7 @@ $(() => {
     const init = (() => {
 
         contractLength = pageUtils.getCachedData('fm-contractlength');
-
-        console.log(contractLength);
-
         contractLength = contractLength && contractLength.length !== 0 ? parseInt(contractLength) : 7;
-
-
         $('#fm-contract-length').val(contractLength);
 
         extensions = pageUtils.getCachedData('fm-contract-extensions');
