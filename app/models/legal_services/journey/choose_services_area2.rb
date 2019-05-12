@@ -10,7 +10,7 @@ module LegalServices
       when 'yes'
         Journey::FeesUnder20k
       else
-        Journey::Requirement
+        Journey::Sorry
       end
     end
   end
