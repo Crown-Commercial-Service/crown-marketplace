@@ -26,6 +26,14 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        legal_services/journey/check_suitability:
+          attributes:
+            legal_services:
+              inclusion: Select a legal service
+        legal_services/journey/check_suitability3:
+          attributes:
+            lot:
+              too_short: Select at least one checkbox
         legal_services/journey/choose_organisation_type:
           attributes:
             central_government:
