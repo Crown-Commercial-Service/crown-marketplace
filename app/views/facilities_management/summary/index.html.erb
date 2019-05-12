@@ -14,11 +14,16 @@
     <%=raw lot_title%>
   </p>
 
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full ccs-results-list__detail">
       <div>
         <span class="govuk-!-font-size-27 ccs-font--wrap">
-      <%=raw list_services %>
+          <% if @current_lot.nil? %>
+            <%=raw list_services %>
+          <% else %>
+            <%=raw list_suppliers %>
+          <% end %>
 
         </span>
       </div>
@@ -26,7 +31,7 @@
   </div>
 
 
-  <% if !@current_lot.nil? %>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full ccs-results-list__detail">
       <p><strong>You can now download the supplier list and requirements document</strong></p>
@@ -42,7 +47,6 @@
       </p>
     </div>
   </div>
-  <% end %>
 
   <% if @report.with_pricing.count > 0 && @current_lot != '1c' %>
   <form action="/facilities-management/summary" method="post">
