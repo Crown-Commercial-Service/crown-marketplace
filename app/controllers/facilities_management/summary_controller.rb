@@ -11,15 +11,6 @@ module FacilitiesManagement
     attr_accessor :report
 
     def index
-      # puts 'SummaryController >> index'
-      # @select_fm_locations = '/facilities-management/select-locations'
-      # @select_fm_services = '/facilities-management/select-services'
-      # @inline_error_summary_title = 'There was a problem'
-      # @inline_error_summary_body_href = '#'
-      # @inline_summary_error_text = 'You must select at least one longList before clicking the save continue button'
-
-      # @journey = Journey.new('summary', params)
-
       build_report
 
       respond_to do |format|
@@ -39,7 +30,7 @@ module FacilitiesManagement
     private
 
     # helper :all
-    helper_method %i[title suppliers_title lot_title list_services]
+    helper_method %i[title services_and_suppliers_title lot_title list_services list_suppliers]
 
     def title
       case @current_lot
@@ -50,23 +41,30 @@ module FacilitiesManagement
       end
     end
 
-    def suppliers_title
+    def services_title
       count = @report.without_pricing.count
 
       str =
         if count == 1
-          '<strong>' + count.to_s + ' service found </strong>'
+          "<strong>#{count} service found </strong>"
         else
-          '<strong>' + count.to_s + ' services found </strong>'
+          "<strong>#{count} services found </strong>"
         end
 
-      count = @report.without_pricing.count + @report.with_pricing.count
-      str <<
-        if @current_lot.nil?
-          ' (from ' + count.to_s + ' selected) without a price.'
-        else
-          ' to provide services in your regions.'
-        end
+      str << " (from #{@report.without_pricing.count + @report.with_pricing.count} selected) without a price."
+    end
+
+    def suppliers_title
+      str = "<strong>#{@supplier_count} suppliers found</strong>"
+      str << ' to provide the chosen services in your regions.'
+    end
+
+    def services_and_suppliers_title
+      if @current_lot.nil?
+        services_title
+      else
+        suppliers_title
+      end
     end
 
     def lot_title
@@ -74,8 +72,18 @@ module FacilitiesManagement
         'Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.
         <p>Because you have selected services without a price, we can\'t include these in the calculation. You can choose to move up into the next sub-lot.<p>'
       else
-        "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
+        str = "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
         </strong>, subject to your total contract value and services without a price.</p>"
+        str << '<p><strong>'
+        case @current_lot
+        when '1a'
+          'Total contract value up to £7m'
+        when '1b'
+          'Total contract value between £7m to £50m'
+        when '1c'
+          'Total contract value over £50m'
+        end
+        str << '</strong></p>'
       end
     end
 
@@ -94,10 +102,37 @@ module FacilitiesManagement
       str
     end
 
-    def build_report
+    def list_suppliers
+      str = "<p><strong>Lot #{@current_lot}</strong><p/>"
+
+      suppliers = CCS::FM::Supplier.all.select do |s|
+        s.data['lots'].find do |l|
+          (l['lot_number'] == @current_lot) &&
+            (@posted_locations & l['regions']).any? &&
+            (@posted_services & l['services']).any?
+        end
+      end
+
+      suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
+      suppliers.each do |supplier|
+        str << "<p>#{supplier.data['supplier_name']}</p><hr style='width: 50%;margin-left: 0;'></hr>"
+      end
+      str
+    end
+
+    def set_current_choices
       TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
+      @supplier_count = TransientSessionInfo[session.id, 'supplier_count']
+      @posted_locations = TransientSessionInfo[session.id]['posted_locations']
+      @posted_services = TransientSessionInfo[session.id]['posted_services']
+      @posted_locations ||= []
+      @posted_services ||= []
 
       set_start_date
+    end
+
+    def build_report
+      set_current_choices
 
       increase_current_lot if params['move-up-a-sublot'] == 'yes'
 
@@ -108,17 +143,17 @@ module FacilitiesManagement
 
     def set_start_date
       @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-      TransientSessionInfo[session.id, :start_date] = @start_date
-      TransientSessionInfo[session.id, :current_lot] = nil
+      TransientSessionInfo[session.id, 'start_date'] = @start_date
+      TransientSessionInfo[session.id, 'current_lot'] = nil
     rescue StandardError
-      @start_date = TransientSessionInfo[session.id][:start_date]
+      @start_date = TransientSessionInfo[session.id]['start_date']
     end
 
     # Lot.all_numberss
     def increase_current_lot
-      @current_lot = move_upto_next_lot(TransientSessionInfo[session.id][:current_lot])
+      @current_lot = move_upto_next_lot(TransientSessionInfo[session.id]['current_lot'])
 
-      TransientSessionInfo[session.id][:current_lot] = @current_lot
+      TransientSessionInfo[session.id]['current_lot'] = @current_lot
     end
 
     def move_upto_next_lot(lot)
@@ -135,8 +170,6 @@ module FacilitiesManagement
     end
 
     def regions
-      @posted_locations = TransientSessionInfo[session.id][:posted_locations]
-
       # Get nuts regions
       @regions = {}
       Nuts1Region.all.each { |x| @regions[x.code] = x.name }
