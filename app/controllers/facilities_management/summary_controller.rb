@@ -136,7 +136,7 @@ module FacilitiesManagement
       str << '<p>'
       str << "Services (#{services.count})"
       str << '</p>'
-      services.sort_by! { |service| service.code }
+      services.sort_by!(&:code)
       services.each do |s|
         str << '<p>'
         str << s.name
