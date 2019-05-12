@@ -7,8 +7,8 @@ module FacilitiesManagement
       @start_date = start_date
       @user_id = user_id
       @data = data
-      @posted_services = @data[:posted_services]
-      @posted_locations = @data[:posted_locations]
+      @posted_services = @data['posted_services']
+      @posted_locations = @data['posted_locations']
 
       @sum_uom = 0
       @sum_benchmark = 0

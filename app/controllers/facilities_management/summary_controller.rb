@@ -39,7 +39,7 @@ module FacilitiesManagement
     private
 
     # helper :all
-    helper_method %i[title suppliers_title lot_title list_services]
+    helper_method %i[title services_and_suppliers_title lot_title list_services]
 
     def title
       case @current_lot
@@ -50,23 +50,33 @@ module FacilitiesManagement
       end
     end
 
-    def suppliers_title
+    def services_title
       count = @report.without_pricing.count
 
       str =
         if count == 1
-          '<strong>' + count.to_s + ' service found </strong>'
+          "<strong>#{count} service found </strong>"
         else
-          '<strong>' + count.to_s + ' services found </strong>'
+          "<strong>#{count} services found </strong>"
         end
 
-      count = @report.without_pricing.count + @report.with_pricing.count
       str <<
-        if @current_lot.nil?
-          ' (from ' + count.to_s + ' selected) without a price.'
-        else
-          ' to provide services in your regions.'
-        end
+          " (from #{@report.without_pricing.count + @report.with_pricing.count} selected) without a price."
+
+    end
+
+    def suppliers_title
+      str = "<strong>#{@supplier_count} suppliers found</strong>"
+      str <<
+          ' to provide the chosen services in your regions.'
+    end
+
+    def services_and_suppliers_title
+      if @current_lot.nil?
+        services_title
+      else
+        suppliers_title
+      end
     end
 
     def lot_title
@@ -96,6 +106,7 @@ module FacilitiesManagement
 
     def build_report
       TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
+      @supplier_count = TransientSessionInfo[session.id, 'supplier_count']
 
       set_start_date
 
@@ -108,17 +119,17 @@ module FacilitiesManagement
 
     def set_start_date
       @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-      TransientSessionInfo[session.id, :start_date] = @start_date
-      TransientSessionInfo[session.id, :current_lot] = nil
+      TransientSessionInfo[session.id, 'start_date'] = @start_date
+      TransientSessionInfo[session.id, 'current_lot'] = nil
     rescue StandardError
-      @start_date = TransientSessionInfo[session.id][:start_date]
+      @start_date = TransientSessionInfo[session.id]['start_date']
     end
 
     # Lot.all_numberss
     def increase_current_lot
-      @current_lot = move_upto_next_lot(TransientSessionInfo[session.id][:current_lot])
+      @current_lot = move_upto_next_lot(TransientSessionInfo[session.id]['current_lot'])
 
-      TransientSessionInfo[session.id][:current_lot] = @current_lot
+      TransientSessionInfo[session.id]['current_lot'] = @current_lot
     end
 
     def move_upto_next_lot(lot)
@@ -135,7 +146,7 @@ module FacilitiesManagement
     end
 
     def regions
-      @posted_locations = TransientSessionInfo[session.id][:posted_locations]
+      @posted_locations = TransientSessionInfo[session.id]['posted_locations']
 
       # Get nuts regions
       @regions = {}
