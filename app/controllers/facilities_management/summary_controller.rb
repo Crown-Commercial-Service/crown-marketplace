@@ -30,7 +30,7 @@ module FacilitiesManagement
     private
 
     # helper :all
-    helper_method %i[title services_and_suppliers_title lot_title list_services list_suppliers]
+    helper_method %i[title services_and_suppliers_title lot_title list_services list_suppliers list_choices]
 
     def title
       case @current_lot
@@ -91,12 +91,12 @@ module FacilitiesManagement
       if @current_lot.nil?
         str = "<p><strong>Services without pricing (#{@report.without_pricing.count}):</strong><p/>"
         @report.without_pricing.each do |service|
-          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;'></hr>"
+          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;'/>"
         end
       else
         str = "<p><strong>Services with pricing (#{@report.with_pricing.count}):</strong><p/>"
         @report.with_pricing.each do |service|
-          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;'></hr>"
+          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;'/>"
         end
       end
       str
@@ -115,8 +115,34 @@ module FacilitiesManagement
 
       suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
       suppliers.each do |supplier|
-        str << "<p>#{supplier.data['supplier_name']}</p><hr style='width: 50%;margin-left: 0;'></hr>"
+        str << "<p>#{supplier.data['supplier_name']}</p><hr style='width: 50%;margin-left: 0;'/>"
       end
+      str
+    end
+
+    def list_choices
+      str = '<p><strong>Choices used to generate your shortlist:</strong></p>'
+      str << '<p><strong>Filters used:</strong></p>'
+      str << "<p>Regions (#{@subregions.count})</p>"
+      @subregions.each do |location|
+        str << '<p>'
+        str << location[1]
+        str << '</p>'
+      end
+
+      str << "<hr style='width: 50%;margin-left: 0;'/>"
+      # FacilitiesManagement::Service.all
+      services = FacilitiesManagement::Service.where(code: @posted_services)
+      str << '<p>'
+      str << "Services (#{services.count})"
+      str << '</p>'
+      services.sort_by!(&:code)
+      services.each do |s|
+        str << '<p>'
+        str << s.name
+        str << '</p>'
+      end
+
       str
     end
 

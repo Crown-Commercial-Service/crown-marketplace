@@ -80,6 +80,8 @@ module FacilitiesManagement
           @sum_benchmark += benchmark_cost
         end
       end
+    rescue StandardError => e
+      raise e
     end
   end
 end
