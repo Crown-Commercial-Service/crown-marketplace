@@ -1,6 +1,5 @@
 module CCS
   module FM
-
     # -----------------
     # facilities_management_buildings
     class Building < ApplicationRecord

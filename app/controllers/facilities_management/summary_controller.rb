@@ -60,15 +60,12 @@ module FacilitiesManagement
           "<strong>#{count} services found </strong>"
         end
 
-      str <<
-          " (from #{@report.without_pricing.count + @report.with_pricing.count} selected) without a price."
-
+      str << " (from #{@report.without_pricing.count + @report.with_pricing.count} selected) without a price."
     end
 
     def suppliers_title
       str = "<strong>#{@supplier_count} suppliers found</strong>"
-      str <<
-          ' to provide the chosen services in your regions.'
+      str << ' to provide the chosen services in your regions.'
     end
 
     def services_and_suppliers_title
