@@ -1,8 +1,5 @@
 module CCS
   module FM
-    def self.table_name_prefix
-      'facilities_management_'
-    end
 
     # -----------------
     # facilities_management_buildings
