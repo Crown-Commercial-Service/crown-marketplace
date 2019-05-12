@@ -55,9 +55,9 @@ module FacilitiesManagement
 
       str =
         if count == 1
-          '<strong>' + count.to_s + ' supplier found </strong>'
+          '<strong>' + count.to_s + ' service found </strong>'
         else
-          '<strong>' + count.to_s + ' suppliers found </strong>'
+          '<strong>' + count.to_s + ' services found </strong>'
         end
 
       count = @report.without_pricing.count + @report.with_pricing.count
@@ -72,7 +72,7 @@ module FacilitiesManagement
     def lot_title
       if @current_lot.nil?
         'Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.
-        <p>Because you have selected services without a price, we can\'t inclue these in the calculation. You can choose to move up into the next sub-lot.<p>'
+        <p>Because you have selected services without a price, we can\'t include these in the calculation. You can choose to move up into the next sub-lot.<p>'
       else
         "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
         </strong>, subject to your total contract value and services without a price.</p>"
@@ -81,21 +81,22 @@ module FacilitiesManagement
 
     def list_services
       if @current_lot.nil?
-        str = "<strong>Services without pricing (#{@report.without_pricing.count}):</strong><p/>"
+        str = "<p><strong>Services without pricing (#{@report.without_pricing.count}):</strong><p/>"
         @report.without_pricing.each do |service|
-          str << "<strong>#{service.name}</strong><hr style='width: 50%;margin-left: 0;'></hr>"
+          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;'></hr>"
         end
       else
-        str = "<strong>Services with pricing (#{@report.with_pricing.count}):</strong><p/>"
+        str = "<p><strong>Services with pricing (#{@report.with_pricing.count}):</strong><p/>"
         @report.with_pricing.each do |service|
-          str << "<strong>#{service.name}</strong><hr style='width: 50%;margin-left: 0;'></hr>"
+          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;'></hr>"
         end
       end
-
       str
     end
 
     def build_report
+      TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
+
       set_start_date
 
       increase_current_lot if params['move-up-a-sublot'] == 'yes'
