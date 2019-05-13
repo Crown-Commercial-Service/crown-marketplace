@@ -58,6 +58,15 @@ abbr {
   top: -3000px;
 }
 
+.ccs-fully-hidden,
+div.govuk-error-summary + div#ccs-error-summary,
+span.govuk-error-message + span.ccs-client-error-message {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+}
+
 .ccs-next {
     text-decoration: none !important;
     padding: govuk-spacing(4) 0;
