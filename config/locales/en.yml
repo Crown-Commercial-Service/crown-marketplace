@@ -474,6 +474,12 @@ en:
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
       choose_regional_or_fullservice:
         question: Question
+      lot1_regional_service:
+        heading: Lot 1 - Regional service provision
+        hint: Select the services you need
+        remove_all: Remove all
+        txt01: services selected
+        txt02: No services selected
       requirement:
         central_government_search_link_title: Central government search link title
         search_central_government_html: Search central government html

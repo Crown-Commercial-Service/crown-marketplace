@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
 
     <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-    <%= form_tag @form_path, class: :'css-form', method: :get do %>
+    <%= form_tag @form_path, class: :'ccs-form', method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
       <%= govuk_form_group_with_optional_error(@journey, :legal_services) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :legal_services) do %>

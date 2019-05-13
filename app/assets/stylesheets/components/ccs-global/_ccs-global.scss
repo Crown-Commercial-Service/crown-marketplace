@@ -76,7 +76,7 @@ abbr {
 }
 
 /* form.ccs-form overrides start */
-form.css-form {
+form.ccs-form {
     .govuk-input,
     .govuk-textarea,
     .govuk-radios__input,
@@ -87,6 +87,11 @@ form.css-form {
     }
     .govuk-radios__input + .govuk-radios__label::before {
         border-width: 1.6px;
+    }
+    .ccs-govuk-checkboxes--thin {
+        .govuk-checkboxes__input + .govuk-checkboxes__label::before {
+          border-width: 1.6px;
+        }
     }
     .js-enabled .govuk-tabs__tab[aria-selected="true"]{
         margin-bottom: -2px !important;
