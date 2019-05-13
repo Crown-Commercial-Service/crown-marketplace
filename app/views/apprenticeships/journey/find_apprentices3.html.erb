@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= form_tag @form_path, method: :get do %>
+    <%= form_tag @form_path, class: :'ccs-form', method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
         <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
@@ -18,12 +18,6 @@
             <span id="more-detail-hint3" class="govuk-hint">
               <%= t('.outline_your_training') %>
             </span>
-
-            <!-- example error html...
-              <span id="more-detail3-error" class="govuk-error-message">
-                <span class="govuk-visually-hidden">Error:</span> Enter your outline for training requirements
-              </span>
-            -->
 
             <textarea class="govuk-textarea" id="more-detail3" name="more-detail3" rows="5" aria-describedby="more-detail-hint3"></textarea>
 
