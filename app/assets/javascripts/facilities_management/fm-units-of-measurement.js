@@ -32,7 +32,7 @@ $(() => {
             }
         }
 
-        if (numberOfLifts === 0) {
+        if (numberOfLifts === 0 || numberOfLifts > 20) {
             $('#fm-uom-number-of-lifts-error').removeClass('govuk-visually-hidden');
             $('#fm-uom-number-of-lifts-error-form-group').addClass('govuk-form-group--error');
             isValid = false;
