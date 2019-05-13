@@ -4,8 +4,8 @@
 <%= form_tag @form_path, class: :'ccs-form', method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
-  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+  <%= govuk_form_group_with_optional_error(@journey, :lot_region) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :lot_region) do %>
     <!-- add to fieldset *****************************
     aria-describedby: services-hint
     **************************************************
@@ -37,32 +37,21 @@
 
             <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
 
-            <!-- ********************** REMOVE ********************** -->
-            <div class="govuk-checkboxes__item">
-                <input type="checkbox" name="lot[]" id="lot_Yorkshire_and_the_Humber2" value="Yorkshire and the Humber" class="govuk-checkboxes__input">
-                <label class="govuk-label govuk-checkboxes__label" for="lot_Yorkshire_and_the_Humber2">
-                      Remove this example (using valid ID)
-                </label>
-            </div>
-            <!-- **************************************************** -->
-
-            <% lot1.each do |lot| %>
+            <% lot1.each do |lot_region| %>
               <div class="govuk-checkboxes__item">
                 <%= check_box_tag(
-                          "lot[]",
-                          lot,
+                          "lot_region[]",
+                          lot_region,
                           false,
                           class: "govuk-checkboxes__input",
-                          id: "lot_#{lot}"
+                          id: "lot_region_i{lot_region}"
                         ) %>
-                <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot %>">
-                  <%= lot %>
+                <label class="govuk-label govuk-checkboxes__label" for="lot_region<%= lot_region %>">
+                  <%= lot_region %>
                 </label>
               </div>
             <% end %>
           </div>
-
-          <%= submit_tag t('common.submit'), class: "govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-8" %>
 
         </div>
 
