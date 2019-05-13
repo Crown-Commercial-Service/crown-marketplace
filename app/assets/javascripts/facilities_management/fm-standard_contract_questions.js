@@ -132,6 +132,24 @@ $(() => {
         $('#fm-remaining-extension-count').text(remainingExtensionCount);
     });
 
+    const validateTotalContractLength = (() => {
+        let totalExtensionYears = calcTotalExtensionYears();
+        let contractLength = $('#fm-contract-length').val();
+        contractLength = contractLength ? parseInt(contractLength) : 0;
+        let result = false;
+
+        if (contractLength > 0 && contractLength + totalExtensionYears > 10) {
+            $('#fm-contract-length-error-form-group').addClass('govuk-form-group--error');
+            $('#fm-contract-length-error').removeClass('govuk-visually-hidden');
+        } else {
+            $('#fm-contract-length-error-form-group').addClass('govuk-form-group--error');
+            $('#fm-contract-length-error').removeClass('govuk-visually-hidden');
+            result = true;
+        }
+
+        return result;
+    });
+
     $('#fm-add-another-extension-link').click((e) => {
         e.preventDefault();
         let totalExtensionYears = calcTotalExtensionYears();
@@ -225,6 +243,17 @@ $(() => {
         }
     });
 
+    $('#fm-questions-continue').on('click', (e) => {
+        e.preventDefault();
+        let isValid = validateTotalContractLength();
+
+        if (isValid === true) {
+            location.href = '/facilities-management/buildings-list';
+        } else {
+            $("html, body").animate({scrollTop: 0}, "1");
+            $('html, body').stop(true, true);
+        }
+    });
 
     init();
 });
