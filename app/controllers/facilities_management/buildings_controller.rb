@@ -97,6 +97,14 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     if service_data['hasService'] == true
       @service_code = service_data['service_code']
       @is_lift = @service_code.to_s == 'C.5'
+
+      if @is_lift
+        @inline_error_summary_title = 'Invalid lift information'
+        @inline_error_summary_body_href = '#'
+        @inline_summary_error_text = 'Please enter a valid number'
+      end
+
+
       @service_title = service_data['service_description']
       @uom_title = service_data['title_text']
       @uom_example = service_data['example_text']
