@@ -34,6 +34,10 @@ en:
           attributes:
             legal_services:
               inclusion: Select a legal service
+        legal_services/journey/check_suitability2:
+          attributes:
+            central_government:
+              inclusion: Select yes if the fees will be under £20,000
         legal_services/journey/check_suitability3:
           attributes:
             lot:
@@ -471,6 +475,8 @@ en:
         better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     journey:
+      check_suitability2:
+        heading: Will the fees be under £20,000 per matter?
       check_suitability:
         heading: Select the legal services you need
         label_01: Transactional property, including noncomplex conveyancing and work relating to leases and licences
