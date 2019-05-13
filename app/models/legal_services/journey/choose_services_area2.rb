@@ -10,7 +10,7 @@ module LegalServices
       when 'yes'
         Journey::Lot1RegionalService
       when 'no'
-	Journey::Lot2FullService
+        Journey::Lot2FullService
       else
         Journey::Requirement
       end
