@@ -136,6 +136,8 @@ $(() => {
         let totalExtensionYears = calcTotalExtensionYears();
         let contractLength = $('#fm-contract-length').val();
         contractLength = contractLength ? parseInt(contractLength) : 0;
+        contractLength = contractLength <= 0 ? 0 : contractLength
+
         let result = false;
 
         if (contractLength > 0 && contractLength + totalExtensionYears > 10) {
@@ -188,9 +190,9 @@ $(() => {
         });
     });
 
-
     const processExtensionKeyUp = ((e) => {
         let extValue = e.target.value ? parseInt(e.target.value) : 0;
+        extValue = extValue <= 0 ? 0 : extValue;
         let totalExtensionYears = calcTotalExtensionYears();
         let errorId = e.target.id + '-error';
         let containerId = e.target.id + '-container';

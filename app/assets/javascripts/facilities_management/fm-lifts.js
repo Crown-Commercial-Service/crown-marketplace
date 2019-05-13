@@ -25,7 +25,7 @@ $(() => {
 
         $('#fm-lift-floors-input-container').empty();
 
-        if (numberOfLifts > 0) {
+        if (numberOfLifts > 0 && numberOfLifts <= 20) {
             liftData['lifts-qty'] = numberOfLifts;
             pageUtils.setCachedData('fm-lift-data', liftData);
 
