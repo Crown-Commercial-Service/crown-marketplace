@@ -88,7 +88,7 @@ $(() => {
             }
 
             let newLI = '<li style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
-                '<span class="govuk-!-padding-0">' + val + '</span><span class="remove-link">' +
+                '<span class="govuk-!-padding-0 CCS-fm-regions-selected-label">' + val + '</span><span class="remove-link">' +
                 '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
             $("#selected-fm-locations").append(newLI);
 
