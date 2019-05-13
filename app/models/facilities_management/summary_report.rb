@@ -40,6 +40,32 @@ module FacilitiesManagement
       @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
     end
 
+    def assessed_value
+      @sum_uom + @sum_benchmark
+    end
+
+    def current_lot
+      case assessed_value
+      when 0..7000000
+        '1a'
+      when 7000000..50000000
+        '1b'
+      else # when > 50000000
+        '1c'
+      end
+    end
+
+    def lot_limit
+      case assessed_value
+      when 0..7000000
+        '£7 Million'
+      when 7000000..50000000
+        'above £7 Million'
+      else
+        'above £50 Million'
+      end
+    end
+
     private
 
     def services_for_buildings
