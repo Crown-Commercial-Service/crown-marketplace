@@ -197,6 +197,16 @@ $(() => {
         return result;
     });
 
+    $('#other-building-type').keypress(function (e) {
+        let regex = new RegExp("^[a-zA-Z0-9 ]+$");
+        let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+
     $('#fm-building-type-continue').click((e) => {
         if (isBuildingTypeValid() === true) {
             pageUtils.toggleInlineErrorMessage(false);
