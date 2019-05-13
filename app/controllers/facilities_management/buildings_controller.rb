@@ -104,7 +104,6 @@ class FacilitiesManagement::BuildingsController < ApplicationController
         @inline_summary_error_text = 'Please enter a valid number'
       end
 
-
       @service_title = service_data['service_description']
       @uom_title = service_data['title_text']
       @uom_example = service_data['example_text']
