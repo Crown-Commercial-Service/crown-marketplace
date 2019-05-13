@@ -90,6 +90,7 @@ en:
           attributes:
             contract_start_date:
               blank: Enter the date the contract started and include a day, month and year
+              invalid: Enter a valid date the contract started
             day_rate:
               blank: Enter the number of pounds charged per day
               greater_than: The number of pounds charged per day must be more than 0
@@ -102,20 +103,25 @@ en:
               not_a_number: The number of days worked per week must be a number
             hire_date:
               blank: Enter the date you want to hire the worker and include a day, month and year
+              invalid: Enter a valid date you want to hire the worker
             holiday_1_end_date:
               before_start_date: The end date of the first school holiday must be after the start date
+              blank: Enter the date the first school holiday ended and include a day, month and year
               blank_when_start_date_is_set: The end date of the first school holiday must be set when a start date is entered
-              invalid: Enter the date the first school holiday ended and include a day, month and year
+              invalid: Enter a valid date the first school holiday ended
               without_corresponding_start_date: The end date of the first school holiday cannot be set without a corresponding start date
             holiday_1_start_date:
-              invalid: Enter the date the first school holiday started and include a day, month and year
+              blank: Enter the date the first school holiday started and include a day, month and year
+              invalid: Enter a valid date the first school holiday started
             holiday_2_end_date:
               before_start_date: The end date of the second school holiday must be after the start date
+              blank: Enter the date the second school holiday ended and include a day, month and year
               blank_when_start_date_is_set: The end date of the second school holiday must be set when a start date is entered
-              invalid: Enter the date the second school holiday ended and include a day, month and year
+              invalid: Enter a valid date the second school holiday ended
               without_corresponding_start_date: The end date of the second school holiday cannot be set without a corresponding start date
             holiday_2_start_date:
-              invalid: Enter the date the second school holiday started and include a day, month and year
+              blank: Enter the date the second school holiday started and include a day, month and year
+              invalid: Enter a valid date the second school holiday started
             markup_rate:
               blank: Enter a mark-up percentage
               greater_than_or_equal_to: The mark-up percentage must be between 0 and 100
@@ -124,7 +130,8 @@ en:
             notice_date:
               after_hire_date: The date you notified the supplier of your intention to take the worker on permanently must be before the date they will be hired
               before_contract_start_date: The date you notified the supplier of your intention to take the worker on permanently cannot be before the date their current contract started
-              invalid: Enter the date you notified the supplier of your intention to hire the worker and include a day, month and year
+              blank: Enter the date you notified the supplier of your intention to hire the worker and include a day, month and year
+              invalid: Enter a valid date you notified the supplier of your intention to hire the worker
         supply_teachers/journey/worker_type:
           attributes:
             worker_type:
