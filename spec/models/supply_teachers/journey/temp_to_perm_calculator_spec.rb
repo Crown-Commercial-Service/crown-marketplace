@@ -100,6 +100,26 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
         expect(step.contract_start_date).to be_nil
       end
     end
+
+    context 'when day is invalid' do
+      let(:contract_start_date_day) { '49' }
+      let(:contract_start_date_month) { '1' }
+      let(:contract_start_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
+
+    context 'when month is invalid' do
+      let(:contract_start_date_day) { '1' }
+      let(:contract_start_date_month) { '59' }
+      let(:contract_start_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
   end
 
   describe '#hire_date' do
@@ -128,6 +148,26 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
       it 'returns nil' do
         expect(step.hire_date).to be_nil
+      end
+    end
+
+    context 'when day is invalid' do
+      let(:hire_date_day) { '49' }
+      let(:hire_date_month) { '1' }
+      let(:hire_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
+
+    context 'when month is invalid' do
+      let(:hire_date_day) { '1' }
+      let(:hire_date_month) { '49' }
+      let(:hire_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
       end
     end
   end
@@ -164,6 +204,26 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
         expect(step.notice_date).to be_nil
       end
     end
+
+    context 'when day is invalid' do
+      let(:notice_date_day) { '49' }
+      let(:notice_date_month) { '1' }
+      let(:notice_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
+
+    context 'when month is invalid' do
+      let(:notice_date_day) { '1' }
+      let(:notice_date_month) { '49' }
+      let(:notice_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
   end
 
   describe '#holiday_1_start_date' do
@@ -196,6 +256,26 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
       it 'returns nil' do
         expect(step.holiday_1_start_date).to be_nil
+      end
+    end
+
+    context 'when day is invalid' do
+      let(:holiday_1_start_date_day) { '49' }
+      let(:holiday_1_start_date_month) { '1' }
+      let(:holiday_1_start_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
+
+    context 'when month is invalid' do
+      let(:holiday_1_start_date_day) { '1' }
+      let(:holiday_1_start_date_month) { '49' }
+      let(:holiday_1_start_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
       end
     end
   end
@@ -232,6 +312,26 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
         expect(step.holiday_1_end_date).to be_nil
       end
     end
+
+    context 'when day is invalid' do
+      let(:holiday_1_end_date_day) { '49' }
+      let(:holiday_1_end_date_month) { '1' }
+      let(:holiday_1_end_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
+
+    context 'when month is invalid' do
+      let(:holiday_1_end_date_day) { '1' }
+      let(:holiday_1_end_date_month) { '49' }
+      let(:holiday_1_end_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
   end
 
   describe '#holiday_2_start_date' do
@@ -266,6 +366,26 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
         expect(step.holiday_2_start_date).to be_nil
       end
     end
+
+    context 'when day is invalid' do
+      let(:holiday_2_start_date_day) { '49' }
+      let(:holiday_2_start_date_month) { '1' }
+      let(:holiday_2_start_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
+
+    context 'when month is invalid' do
+      let(:holiday_2_start_date_day) { '1' }
+      let(:holiday_2_start_date_month) { '49' }
+      let(:holiday_2_start_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
   end
 
   describe '#holiday_2_end_date' do
@@ -298,6 +418,26 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
       it 'returns nil' do
         expect(step.holiday_2_end_date).to be_nil
+      end
+    end
+
+    context 'when day is invalid' do
+      let(:holiday_2_end_date_day) { '49' }
+      let(:holiday_2_end_date_month) { '1' }
+      let(:holiday_2_end_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
+      end
+    end
+
+    context 'when month is invalid' do
+      let(:holiday_2_end_date_day) { '1' }
+      let(:holiday_2_end_date_month) { '49' }
+      let(:holiday_2_end_date_year) { '2019' }
+
+      it 'is invalid' do
+        expect(step).not_to be_valid
       end
     end
   end

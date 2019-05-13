@@ -5,6 +5,7 @@ module SupplyTeachers
     attribute :contract_start_date_day
     attribute :contract_start_date_month
     attribute :contract_start_date_year
+    validate :ensure_contract_start_date_valid
     validates :contract_start_date, presence: true
 
     attribute :days_per_week
@@ -23,6 +24,7 @@ module SupplyTeachers
     attribute :hire_date_day
     attribute :hire_date_month
     attribute :hire_date_year
+    validate :ensure_hire_date_valid
     validates :hire_date, presence: true
 
     attribute :holiday_1_start_date_day
@@ -35,12 +37,14 @@ module SupplyTeachers
                     calculator.holiday_1_start_date_month.present? ||
                     calculator.holiday_1_start_date_year.present?
                 end,
-                message: :invalid
+                message: :blank
               }
+    validate :ensure_holiday_1_start_date_valid
 
     attribute :holiday_1_end_date_day
     attribute :holiday_1_end_date_month
     attribute :holiday_1_end_date_year
+    validate :ensure_holiday_1_end_date_valid
     validates :holiday_1_end_date,
               presence: {
                 if: proc do |calculator|
@@ -48,7 +52,7 @@ module SupplyTeachers
                     calculator.holiday_1_end_date_month.present? ||
                     calculator.holiday_1_end_date_year.present?
                 end,
-                message: :invalid
+                message: :blank
               }
     validates :holiday_1_end_date,
               presence: {
@@ -65,6 +69,7 @@ module SupplyTeachers
     attribute :holiday_2_start_date_day
     attribute :holiday_2_start_date_month
     attribute :holiday_2_start_date_year
+    validate :ensure_holiday_2_start_date_valid
     validates :holiday_2_start_date,
               presence: {
                 if: proc do |calculator|
@@ -72,12 +77,13 @@ module SupplyTeachers
                     calculator.holiday_2_start_date_month.present? ||
                     calculator.holiday_2_start_date_year.present?
                 end,
-                message: :invalid
+                message: :blank
               }
 
     attribute :holiday_2_end_date_day
     attribute :holiday_2_end_date_month
     attribute :holiday_2_end_date_year
+    validate :ensure_holiday_2_end_date_valid
     validates :holiday_2_end_date,
               presence: {
                 if: proc do |calculator|
@@ -85,7 +91,7 @@ module SupplyTeachers
                     calculator.holiday_2_end_date_month.present? ||
                     calculator.holiday_2_end_date_year.present?
                 end,
-                message: :invalid
+                message: :blank
               }
     validates :holiday_2_end_date,
               presence: {
@@ -102,6 +108,7 @@ module SupplyTeachers
     attribute :notice_date_day
     attribute :notice_date_month
     attribute :notice_date_year
+    validate :ensure_notice_date_valid
     validates :notice_date,
               presence: {
                 if: proc do |calculator|
@@ -109,7 +116,7 @@ module SupplyTeachers
                     calculator.notice_date_month.present? ||
                     calculator.notice_date_year.present?
                 end,
-                message: :invalid
+                message: :blank
               }
 
     validate :ensure_hire_date_is_after_contract_start_date
@@ -186,6 +193,79 @@ module SupplyTeachers
     end
 
     private
+
+    def ensure_contract_start_date_valid
+      Date.strptime(
+        "#{contract_start_date_year}-#{contract_start_date_month}-#{contract_start_date_day}",
+        PARSED_DATE_FORMAT
+      )
+    rescue ArgumentError
+      errors.add(:contract_start_date, :invalid)
+    end
+
+    def ensure_hire_date_valid
+      Date.strptime(
+        "#{hire_date_year}-#{hire_date_month}-#{hire_date_day}",
+        PARSED_DATE_FORMAT
+      )
+    rescue ArgumentError
+      errors.add(:hire_date, :invalid)
+    end
+
+    def ensure_holiday_1_start_date_valid
+      return unless holiday_1_start_date_year.present? || holiday_1_start_date_month.present? || holiday_1_start_date_day.present?
+
+      Date.strptime(
+        "#{holiday_1_start_date_year}-#{holiday_1_start_date_month}-#{holiday_1_start_date_day}",
+        PARSED_DATE_FORMAT
+      )
+    rescue ArgumentError
+      errors.add(:holiday_1_start_date, :invalid)
+    end
+
+    def ensure_holiday_1_end_date_valid
+      return unless holiday_1_end_date_year.present? || holiday_1_end_date_month.present? || holiday_1_end_date_day.present?
+
+      Date.strptime(
+        "#{holiday_1_end_date_year}-#{holiday_1_end_date_month}-#{holiday_1_end_date_day}",
+        PARSED_DATE_FORMAT
+      )
+    rescue ArgumentError
+      errors.add(:holiday_1_end_date, :invalid)
+    end
+
+    def ensure_holiday_2_start_date_valid
+      return unless holiday_2_start_date_year.present? || holiday_2_start_date_month.present? || holiday_2_start_date_day.present?
+
+      Date.strptime(
+        "#{holiday_2_start_date_year}-#{holiday_2_start_date_month}-#{holiday_2_start_date_day}",
+        PARSED_DATE_FORMAT
+      )
+    rescue ArgumentError
+      errors.add(:holiday_2_start_date, :invalid)
+    end
+
+    def ensure_holiday_2_end_date_valid
+      return unless holiday_2_end_date_year.present? || holiday_2_end_date_month.present? || holiday_2_end_date_day.present?
+
+      Date.strptime(
+        "#{holiday_2_end_date_year}-#{holiday_2_end_date_month}-#{holiday_2_end_date_day}",
+        PARSED_DATE_FORMAT
+      )
+    rescue ArgumentError
+      errors.add(:holiday_2_end_date, :invalid)
+    end
+
+    def ensure_notice_date_valid
+      return unless notice_date_year.present? || notice_date_month.present? || notice_date_day.present?
+
+      Date.strptime(
+        "#{notice_date_year}-#{notice_date_month}-#{notice_date_day}",
+        PARSED_DATE_FORMAT
+      )
+    rescue ArgumentError
+      errors.add(:notice_date, :invalid)
+    end
 
     def ensure_hire_date_is_after_contract_start_date
       return if hire_date.blank? || contract_start_date.blank?
