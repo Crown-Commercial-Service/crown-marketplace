@@ -25,7 +25,7 @@ $(() => {
 
         $('#fm-lift-floors-input-container').empty();
 
-        if (numberOfLifts > 0) {
+        if (numberOfLifts > 0 && numberOfLifts <= 20) {
             liftData['lifts-qty'] = numberOfLifts;
             pageUtils.setCachedData('fm-lift-data', liftData);
 
@@ -35,7 +35,7 @@ $(() => {
                 lift += '<div>Lift ' + x + '</div>';
                 lift += '<div id="fm-Lift-' + x + '-error-form-group" class="govuk-form-group"> \n' +
                     '<span id="fm-Lift-' + x + '-error" class="govuk-error-message govuk-visually-hidden">\n' +
-                    'Invalid input\n' +
+                    'Invalid number of floors\n' +
                     '</span>';
 
 
