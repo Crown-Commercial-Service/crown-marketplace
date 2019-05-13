@@ -30,28 +30,28 @@ module FacilitiesManagement
     private
 
     # helper :all
-    helper_method %i[title services_and_suppliers_title lot_title list_services list_suppliers list_choices]
+    helper_method %i[title services_and_suppliers_title lot_title list_services list_suppliers list_choices no_price_message]
 
     def title
       case @current_lot
       when nil
-        'Review service without pricing'
+        "You have #{@report.without_pricing.count + @report.with_pricing.count} services selected"
       else
-        'List of Suppliers'
+        'Shorlist of Suppliers'
       end
     end
 
     def services_title
       count = @report.without_pricing.count
 
-      str =
+      str = '<strong>However, '
+      str <<
         if count == 1
-          "<strong>#{count} service found </strong>"
+          '1 service does '
         else
-          "<strong>#{count} services found </strong>"
+          "#{count} services do "
         end
-
-      str << " (from #{@report.without_pricing.count + @report.with_pricing.count} selected) without a price."
+      str << 'not have a price and we need you to estimate these costs'
     end
 
     def suppliers_title
@@ -68,13 +68,12 @@ module FacilitiesManagement
     end
 
     def lot_title
-      if @current_lot.nil?
-        'Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.
-        <p>Because you have selected services without a price, we can\'t include these in the calculation. You can choose to move up into the next sub-lot.<p>'
-      else
-        str = "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
-        </strong>, subject to your total contract value and services without a price.</p>"
-        str << '<p><strong>'
+      return if @current_lot.nil?
+
+      str = "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
+      </strong>, subject to your total contract value and services without a price.</p>"
+      str << '<br/><p><strong>'
+      str <<
         case @current_lot
         when '1a'
           'Total contract value up to £7m'
@@ -83,20 +82,23 @@ module FacilitiesManagement
         when '1c'
           'Total contract value over £50m'
         end
-        str << '</strong></p>'
-      end
+      str << '</strong></p>'
+    end
+
+    def no_price_message
+      "Suggested sub-lot <span style='display:inline-block; position: relative; left: 270px;'><strong>Lot #{@report.current_lot}</strong></span>"
     end
 
     def list_services
       if @current_lot.nil?
-        str = "<p><strong>Services without pricing (#{@report.without_pricing.count}):</strong><p/>"
+        str = '<p class="govuk-!-font-size-24"><strong>Services without pricing</strong><p/>'
         @report.without_pricing.each do |service|
-          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;'/>"
+          str << "<p>#{service.name}</p><hr style='width: 50%;margin-left: 0;border-style: dotted;'/>"
         end
       else
         str = "<p><strong>Services with pricing (#{@report.with_pricing.count}):</strong><p/>"
         @report.with_pricing.each do |service|
-          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;'/>"
+          str << "<p><strong>#{service.name}</strong></p><hr style='width: 50%;margin-left: 0;border-style: dotted;'/>"
         end
       end
       str
@@ -130,7 +132,7 @@ module FacilitiesManagement
         str << '</p>'
       end
 
-      str << "<hr style='width: 50%;margin-left: 0;'/>"
+      str << "<hr style='width: 50%;margin-left: 0;border-style: dotted;'/>"
       # FacilitiesManagement::Service.all
       services = FacilitiesManagement::Service.where(code: @posted_services)
       str << '<p>'
@@ -160,10 +162,21 @@ module FacilitiesManagement
     def build_report
       set_current_choices
 
-      increase_current_lot if params['move-up-a-sublot'] == 'yes'
-
       @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo[session.id])
       @report.calculate_services_for_buildings
+
+      # params['sublot'] == 'no'
+      if @report.current_lot == '1c'
+        @current_lot = '1c'
+      elsif params['sublot'] == 'yes'
+        # check_current_lot
+        @current_lot = @report.current_lot
+      elsif params['sublot'] == 'no'
+        @current_lot = move_upto_next_lot(@current_lot)
+      end
+      # params['sublot'] == 'no'
+      TransientSessionInfo[session.id]['current_lot'] = @current_lot
+
       regions
     end
 
@@ -176,8 +189,8 @@ module FacilitiesManagement
     end
 
     # Lot.all_numberss
-    def increase_current_lot
-      @current_lot = move_upto_next_lot(TransientSessionInfo[session.id]['current_lot'])
+    def check_current_lot
+      @current_lot = @report.current_lot
 
       TransientSessionInfo[session.id]['current_lot'] = @current_lot
     end
