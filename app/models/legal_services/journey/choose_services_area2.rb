@@ -8,9 +8,11 @@ module LegalServices
     def next_step_class
       case central_government
       when 'yes'
-        Journey::FeesUnder20k
+        Journey::Lot1RegionalService
+      when 'no'
+	Journey::Lot2FullService
       else
-        Journey::Sorry
+        Journey::Requirement
       end
     end
   end

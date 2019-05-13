@@ -14,6 +14,10 @@ en:
           attributes:
             das:
               inclusion: Please select yes or no
+        apprenticeships/journey/lot1_regional_service:
+          attributes:
+            lot:
+              too_short: Please select a checkbox
         apprenticeships/journey/find_apprentices4:
           attributes:
             rating:
@@ -26,6 +30,10 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        legal_services/journey/lot1_regional_service:
+          attributes:
+            lot_region:
+              too_short: Select at least one checkbox
         legal_services/journey/check_suitability:
           attributes:
             legal_services:
@@ -476,7 +484,7 @@ en:
         question: Question
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
-        hint: Select the services you need
+        hint: Where do you need the regional legal service
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
