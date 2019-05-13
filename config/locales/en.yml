@@ -34,6 +34,10 @@ en:
           attributes:
             legal_services:
               inclusion: Select a legal service
+        legal_services/journey/check_suitability2:
+          attributes:
+            central_government:
+              inclusion: Select yes if the fees will be under £20,000
         legal_services/journey/check_suitability3:
           attributes:
             lot:
@@ -477,6 +481,8 @@ en:
         label_02: Litigation work, including employment
         label_03: Other
         or: or
+      check_suitability2:
+        heading: Will the fees be under £20,000 per matter?
       choose_organisation_type:
         central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
