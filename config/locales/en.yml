@@ -14,13 +14,13 @@ en:
           attributes:
             das:
               inclusion: Please select yes or no
-        apprenticeships/journey/lot1_regional_service:
-          attributes:
-            lot:
-              too_short: Please select a checkbox
         apprenticeships/journey/find_apprentices4:
           attributes:
             rating:
+              too_short: Please select a checkbox
+        apprenticeships/journey/lot1_regional_service:
+          attributes:
+            lot:
               too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
@@ -30,10 +30,6 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
-        legal_services/journey/lot1_regional_service:
-          attributes:
-            lot_region:
-              too_short: Select at least one checkbox
         legal_services/journey/check_suitability:
           attributes:
             legal_services:
@@ -46,6 +42,10 @@ en:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
+        legal_services/journey/lot1_regional_service:
+          attributes:
+            lot_region:
+              too_short: Select at least one checkbox
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
