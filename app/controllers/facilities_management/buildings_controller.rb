@@ -85,9 +85,9 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def units_of_measurement
-    @inline_error_summary_title = 'There was a problem'
-    @inline_error_summary_body_href = '#'
-    @inline_summary_error_text = 'Enter a value'
+    @inline_error_summary_title = 'The value entered is invalid'
+    @inline_error_summary_body_href = '#fm-uom-input'
+    @inline_summary_error_text = 'Enter a number in the correct format'
 
     building_id = params['building_id']
     fm_service_data = FMServiceData.new
