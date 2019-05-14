@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark
+    attr_reader :sum_uom, :sum_benchmark, :building_data
 
     def initialize(start_date, user_id, data)
       @start_date = start_date
@@ -29,7 +29,8 @@ module FacilitiesManagement
       @sum_uom = 0
       @sum_benchmark = 0
 
-      CCS::FM::Building.buildings_for_user(@user_id).each do |building|
+      @building_data = CCS::FM::Building.buildings_for_user(@user_id)
+      @building_data.each do |building|
         services building
       end
     end
