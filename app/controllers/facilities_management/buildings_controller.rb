@@ -18,11 +18,11 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def buildings
+    cache_choices
+
     @uom_values = []
     current_login_email = current_login.email.to_s
-    @inline_error_summary_title = 'There was a problem'
-    @inline_error_summary_body_href = '#'
-    @inline_summary_error_text = 'Error'
+    set_error_messages
     @fm_building_data = FMBuildingData.new
     @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
     @building_data = @fm_building_data.get_building_data(current_login_email)
@@ -140,5 +140,25 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @type_list_descriptions = fm_building_data.building_type_list_descriptions
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController building_type(): #{e}"
+  end
+
+  private
+
+  # use
+  #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
+  # to copy the cached choices
+  def cache_choices
+    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length']
+    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
+    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost']
+    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
+  end
+
+  def set_error_messages
+    @inline_error_summary_title = 'There was a problem'
+    @inline_error_summary_body_href = '#'
+    @inline_summary_error_text = 'Error'
   end
 end
