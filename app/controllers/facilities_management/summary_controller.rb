@@ -17,9 +17,8 @@ module FacilitiesManagement
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
         format.html
         format.xlsx do
-          spreadsheet = Spreadsheet.new(@report, with_calculations: params[:calculations].present?)
-          filename = "Shortlist of agencies#{params[:calculations].present? ? ' (with calculator)' : ''}"
-          render xlsx: spreadsheet.to_xlsx, filename: filename
+          spreadsheet = Spreadsheet.new(@report)
+          render xlsx: spreadsheet.to_xlsx, filename: 'procurement_summary'
         end
       end
     rescue StandardError => e
