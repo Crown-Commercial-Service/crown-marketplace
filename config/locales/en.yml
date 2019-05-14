@@ -491,10 +491,19 @@ en:
         question: Question
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
-        hint: Where do you need the regional legal service
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
+      lot1_regional_service2:
+        heading: Heading
+        hint: Hint
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
+      lot2_full_service:
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
       requirement:
         central_government_search_link_title: Central government search link title
         search_central_government_html: Search central government html
