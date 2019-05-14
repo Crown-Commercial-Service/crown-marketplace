@@ -3,26 +3,26 @@
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-  <%= govuk_form_group_with_optional_error(@journey, :services_area) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :services_area) do %>
+  <%= govuk_form_group_with_optional_error(@journey, :services_area2) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :services_area2) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
           <%= t('What lot do you need?') %>
         </h1>
       </legend>
-      <%= display_error(@journey, :services_area) %>
+      <%= display_error(@journey, :services_area2) %>
       <div class="govuk-radios">
         <div class="govuk-radios__item">
-          <%= radio_button_tag :services_area, 'yes', checked?(params[:services_area], 'yes'), class: 'govuk-radios__input' %>
-          <%= label_tag :services_area, t('Lot 1 - Regional service provision'), class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :services_area2, 'yes', checked?(params[:services_area], 'yes'), class: 'govuk-radios__input' %>
+          <%= label_tag :services_area2, t('Lot 1 - Regional service provision'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :services_area, 'yes', checked?(params[:services_area], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :services_area, t('Lot 2 - Full service firms'), class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :services_area2, 'no', checked?(params[:services_area], 'no'), class: 'govuk-radios__input' %>
+          <%= label_tag :services_area2, t('Lot 2 - Full service firms'), class: 'govuk-label govuk-radios__label' %>
         </div>
  <div class="govuk-radios__item">
-          <%= radio_button_tag :services_area, 'no', checked?(params[:services_area], 'no'), class: 'govuk-radios__input' %>
-          <%= label_tag :services_area, t('I dont know'), class: 'govuk-label govuk-radios__label' %>
+          <%= radio_button_tag :services_area2, 'other', checked?(params[:services_area], 'other'), class: 'govuk-radios__input' %>
+          <%= label_tag :services_area2, t('I dont know'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
     <% end %>
