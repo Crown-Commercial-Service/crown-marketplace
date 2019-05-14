@@ -27,6 +27,12 @@ Install PhantomJS (for Javascript tests)
 $ brew install phantomjs
 ```
 
+Install Redis (for Sidekiq background jobs)
+
+```
+$ brew install redis
+```
+
 ## Set up
 
 To install dependencies:
@@ -132,6 +138,8 @@ environments:
 Execute the following command:
 
 ```
+$ redis-server /usr/local/etc/redis.conf
+$ bundle exec sidekiq
 $ rails s
 ```
 
