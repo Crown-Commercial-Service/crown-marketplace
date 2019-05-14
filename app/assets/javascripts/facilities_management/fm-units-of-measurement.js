@@ -45,11 +45,24 @@ $(() => {
         return isValid;
     });
 
+    $('#fm-uom-input').keypress(function (e) {
+        let regex = new RegExp("^[0-9]+$");
+        let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+
     $('#fm-unit-of-measurement-submit').click((e) => {
         e.preventDefault();
         let building_id = $('#fm-building-uom-id').attr('value');
         let service_code = $('#fm-service-uom-code').attr('value');
+
         let uom_value = $('#fm-uom-input').val();
+        uom_value = uom_value ? parseInt(uom_value) : 0;
+
         let isLift = $('#fm-is-lift').attr('value');
 
         if (isLift === "true") {
@@ -67,12 +80,16 @@ $(() => {
 
 
         } else {
-            if (uom_value && uom_value.length > 0) {
+            if (uom_value > 0) {
+                e.preventDefault();
                 pageUtils.toggleInlineErrorMessage(false);
-                fm.services.save_uom(building_id, service_code, uom_value);
-
+                fm.services.save_uom(building_id, service_code, uom_value.toString());
+                $('#fm-uom-row').removeClass('govuk-form-group--error');
+                $('#fm-uom-input-error').addClass('govuk-visually-hidden');
             } else {
                 pageUtils.toggleInlineErrorMessage(true);
+                $('#fm-uom-row').addClass('govuk-form-group--error');
+                $('#fm-uom-input-error').removeClass('govuk-visually-hidden');
             }
         }
     });
