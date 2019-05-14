@@ -16,6 +16,13 @@ $(() => {
         return result;
     });
 
+    $('#fm-uom-number-of-lifts').keypress(function (event) {
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
     $('#fm-uom-number-of-lifts').on('keyup', (e) => {
         $('#fm-uom-number-of-lifts-error').addClass('govuk-visually-hidden');
         $('#fm-uom-number-of-lifts-error-form-group').removeClass('govuk-form-group--error');
@@ -43,6 +50,14 @@ $(() => {
                 lift += '</div></div></div></div>';
 
                 $('#fm-lift-floors-input-container').append(lift);
+
+                $('#fm-uom-input-lift-' + x).keypress(function (event) {
+                    $(this).val($(this).val().replace(/[^\d].+/, ""));
+                    if ((event.which < 48 || event.which > 57)) {
+                        event.preventDefault();
+                    }
+                });
+
                 $('#fm-uom-input-lift-' + x).on('change', (e) => {
 
                     let value = e.target.value;
