@@ -128,9 +128,15 @@ module FacilitiesManagement
           # puts service.work_package.name
 
           occupants = 0 # fix it !!!
-          x = @uom_dict[building.building_json['id']][service.code]['uom_value'].to_i
-
-
+          case service.code
+          when 'G.3'
+            occupants =
+              begin
+                @uom_dict[building.building_json['id']][service.code]['uom_value'].to_i
+              rescue
+                0
+              end
+          end
 
           code = service.code.remove('.')
           calc_fm = FMCalculator::Calculator.new(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
