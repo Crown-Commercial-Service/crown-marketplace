@@ -6,7 +6,6 @@ module LegalServices
     validates :services_area, inclusion: ['yes', 'no']
 
     def next_step_class
-      binding.pry
       case services_area
       when 'yes'
         Journey::Lot1RegionalService
