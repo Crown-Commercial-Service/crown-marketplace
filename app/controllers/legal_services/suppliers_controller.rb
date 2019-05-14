@@ -4,7 +4,7 @@ module LegalServices
 
     def index
       @back_path = :back
-      suppliers_array = mocked_suppliers
+      suppliers_array = mocked_suppliers.shuffle
       @suppliers_count = suppliers_array.count
       @suppliers = Kaminari.paginate_array(suppliers_array).page(params[:page])
     end
