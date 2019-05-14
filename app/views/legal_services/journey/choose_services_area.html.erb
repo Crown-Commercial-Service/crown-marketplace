@@ -17,11 +17,11 @@
           <%= label_tag :services_area, t('Yes, property and construction (Lot 3)'), class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
-          <%= radio_button_tag :services_area, 'yes', checked?(params[:services_area], 'no'), class: 'govuk-radios__input' %>
+          <%= radio_button_tag :services_area, 'no', checked?(params[:services_area], 'no'), class: 'govuk-radios__input' %>
           <%= label_tag :services_area, t('Yes, rail (Lot 4)'), class: 'govuk-label govuk-radios__label' %>
         </div>
  <div class="govuk-radios__item">
-          <%= radio_button_tag :services_area, 'no', checked?(params[:services_area], 'no'), class: 'govuk-radios__input' %>
+          <%= radio_button_tag :services_area, 'other', checked?(params[:services_area], 'other'), class: 'govuk-radios__input' %>
           <%= label_tag :services_area, t('No'), class: 'govuk-label govuk-radios__label' %>
         </div>
       </div>
