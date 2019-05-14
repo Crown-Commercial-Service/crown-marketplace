@@ -12,7 +12,7 @@
       </legend>
       <p><%= t('.search_central_government_html', central_government_search_link: link_to(t('.central_government_search_link_title'), 'https://www.gov.uk/government/organisations')) %></p>
       <%= display_error(@journey, :central_government) %>
-      <div class="govuk-radios">
+      <div class="govuk-radios--inline">
         <div class="govuk-radios__item">
           <%= radio_button_tag :central_government, 'yes', checked?(params[:central_government], 'yes'), class: 'govuk-radios__input' %>
           <%= label_tag :central_government, t('yes'), class: 'govuk-label govuk-radios__label' %>

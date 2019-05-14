@@ -1,5 +1,8 @@
 ---
 en:
+  'No': 'No'
+  Scotland: Scotland
+  'Yes': 'Yes'
   activemodel:
     errors:
       models:
@@ -15,6 +18,10 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
+        apprenticeships/journey/lot1_regional_service:
+          attributes:
+            lot:
+              too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -23,10 +30,26 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        legal_services/journey/check_suitability:
+          attributes:
+            legal_services:
+              inclusion: Select a legal service
+        legal_services/journey/check_suitability2:
+          attributes:
+            central_government:
+              inclusion: Select yes if the fees will be under £20,000
+        legal_services/journey/check_suitability3:
+          attributes:
+            lot:
+              too_short: Select at least one checkbox
         legal_services/journey/choose_organisation_type:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
+        legal_services/journey/lot1_regional_service:
+          attributes:
+            lot_region:
+              too_short: Select at least one checkbox
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -328,6 +351,7 @@ en:
     next: Next
     search: Search
     submit: Continue
+    there_is_a_problem: There is a problem
     type_csv: text/csv
     type_doc: application/msword
   companies:
@@ -451,10 +475,29 @@ en:
         better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     journey:
+      check_suitability:
+        heading: Select the legal services you need
+        label_01: Transactional property, including noncomplex conveyancing and work relating to leases and licences
+        label_02: Litigation work, including employment
+        label_03: Other
+        or: or
+      check_suitability2:
+        heading: Will the fees be under £20,000 per matter?
       choose_organisation_type:
         central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
+      choose_regional_or_fullservice:
+        question: Question
+      lot1_regional_service:
+        heading: Lot 1 - Regional service provision
+        hint: Where do you need the regional legal service
+        remove_all: Remove all
+        txt01: services selected
+        txt02: No services selected
+      requirement:
+        central_government_search_link_title: Central government search link title
+        search_central_government_html: Search central government html
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
@@ -647,6 +690,45 @@ en:
       one: agency
       other: agencies
   supply_teachers:
+    admin:
+      uploads:
+        in_progress:
+          content: The spreadsheets have been uploaded and are now processing.
+          heading: Upload successful
+        index:
+          caption: Manage supplier data
+          create_new: Create a new data upload
+          date: Date
+          heading: Agency Supply teachers and agency workers
+          name: Name
+          no_of_files: Number of files
+          status: Status
+          table_caption: Previous uploads
+        new:
+          caption: Agency supply teachers and agency workers
+          heading: New data upload
+          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_title: Upload one or more of the following spreadsheets
+          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+        show:
+          caption: Agency supply teachers and agency workers
+          confirm_changes: 'Confirm these files are ready to be used by the live service:'
+          current_accredited_suppliers: Current accredited suppliers
+          datetime: 'Date/time:'
+          download: Download
+          files: Files
+          geographical_data_all_suppliers: Geographical data all suppliers
+          heading: 'Upload session #%{number}'
+          lot_1_and_lot_2_comparisons: Lot 1 and Lot 2 comparisons
+          master_vendor_contacts: Master vendor contacts
+          neutral_vendor_contacts: Neutral vendor contacts
+          pricing_for_tool: Pricing for tool
+          spreadsheet: Spreadsheet
+          status: 'Status:'
+          supplier_lookup: Supplier lookup
+        uploading:
+          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
+          heading: Data upload in progress
     branches:
       branch:
         address: Address
@@ -701,11 +783,13 @@ en:
     gateway:
       index:
         dfe_signin:
-          create_account_html: If your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a> you should be able to get a DfE Sign-in account. Find information on how the approver for your organisation can <a href="%{dfe_sign_in_url}" aria-label="DfE Sign In contact form">create an account for you</a>.
-          instructions: Sign in to your DfE Sign-In account to use this service. You will be automatically directed back to this service once you’ve signed in.
+          create_account_html: You can <a href="%{get_signin_url}">get a DfE Sign-in account</a> if your school is on the <a href="%{gias_url}" aria-label="Get Information About Schools register">Get Information About Schools (GIAS) register</a>.
+          find_more_info_html: Find more information about the <a href="%{terms_url}">terms and conditions of the DfE Sign-in account</a>.
+          instructions: To use this service you need to sign in with your DfE Sign-in account.
           not_for_profit_html: Only not-for-profit and schools with charitable status are able to get access to the online and offline version of the service.
           outside_england_html: Outside of England, not-for-profit and schools with charitable status cannot yet use the online agency selection service. They can <a href="%{url}" aria-label="Crown Commercial Service contact form">request access to an offline version</a> (an Excel spreadsheet) by putting 'offline agency selection tool’ in the comments box.
-        heading: CCS Marketplace private beta
+        heading: Sign in to find supply teachers and agency workers
+        subheading: If you don’t have a DfE Sign-in account
     home:
       fta_to_perm_fee:
         avoid_fee: To avoid this fee you can hire the worker permanently 6 months after current contract with you ends.
@@ -742,7 +826,7 @@ en:
         you_cant_use_the_service_if: You can’t use this service if you’re an independent school, unless you have charitable status.
         you_must_tell_your_employees: You must tell your employees of the confidential nature of the information and must also agree to the requirements. No agents, sub-contractors, third parties nor other non-employees can have access to the confidential information.
         you_will_need_to_have: 'You will need to have:'
-        you_will_need_your_dfe_sign_in: To use the service, you will need your DFE Sign-in email and password. If you don’t have one you may be able to get one, or to access an offline version of the service.
+        you_will_need_your_dfe_sign_in_html: your DfE Sign-in email address and password. If you don’t have an account, you can <a href="%{get_dfe_url}">get a DfE Sign-in account</a> if your school is on the <a href="%{get_schools_info_url}">Get Information About Schools (GIAS) register</a>
         your_schools_postcode: your school’s postcode
       temp_to_perm_fee:
         after_12_weeks_and_enough_notice: Based on the information you provided, you’re taking the worker on after 12 working weeks and giving 4 working weeks’ notice, so you can’t be charged a fee under this deal.

@@ -20,4 +20,8 @@ module JourneyHelper
       'Transport and logistics',
     ]
   end
+
+  def production_env?
+    Rails.env.production?
+  end
 end

@@ -7,7 +7,8 @@ module FacilitiesManagement
       @start_date = start_date
       @user_id = user_id
       @data = data
-      @posted_services = @data[:posted_services]
+      @posted_services = @data['posted_services']
+      @posted_locations = @data['posted_locations']
 
       @sum_uom = 0
       @sum_benchmark = 0
@@ -37,6 +38,32 @@ module FacilitiesManagement
 
     def selected_services
       @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
+    end
+
+    def assessed_value
+      @sum_uom + @sum_benchmark
+    end
+
+    def current_lot
+      case assessed_value
+      when 0..7000000
+        '1a'
+      when 7000000..50000000
+        '1b'
+      else # when > 50000000
+        '1c'
+      end
+    end
+
+    def lot_limit
+      case assessed_value
+      when 0..7000000
+        '£7 Million'
+      when 7000000..50000000
+        'above £7 Million'
+      else
+        'above £50 Million'
+      end
     end
 
     private
@@ -78,10 +105,9 @@ module FacilitiesManagement
           @sum_uom += uom_cost
           @sum_benchmark += benchmark_cost
         end
-
-        # p sumX
-        # p sumY
       end
+    rescue StandardError => e
+      raise e
     end
   end
 end

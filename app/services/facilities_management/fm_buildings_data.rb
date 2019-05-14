@@ -3,7 +3,19 @@ require 'base64'
 require 'net/http'
 require 'uri'
 class FMBuildingData
+  def reset_buildings_tables
+    query = 'truncate fm_uom_values;'
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    query = 'truncate fm_lifts;'
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    query = 'truncate facilities_management_buildings;'
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't reset building tables: #{e}"
+  end
+
   def save_building(email_address, building)
+    Rails.logger.info '==> FMBuildingData.save_building()'
     query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
@@ -11,6 +23,7 @@ class FMBuildingData
   end
 
   def update_building(email_address, id, building)
+    Rails.logger.info '==> FMBuildingData.update_building()'
     query = "update facilities_management_buildings set building_json = '" + building.gsub("'", "''") + "'" \
             " where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -19,6 +32,7 @@ class FMBuildingData
   end
 
   def get_building_data(email_address)
+    Rails.logger.info '==> FMBuildingData.get_building_data()'
     ActiveRecord::Base.include_root_in_json = false
     query = "select building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -28,6 +42,7 @@ class FMBuildingData
   end
 
   def get_count_of_buildings(email_address)
+    Rails.logger.info '==> FMBuildingData.get_count_of_buildings()'
     query = "select count(*) as record_count from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     result[0]['record_count']
@@ -36,6 +51,7 @@ class FMBuildingData
   end
 
   def region_info_for_post_town(post_code)
+    Rails.logger.info '==> FMBuildingData.region_info_for_post_town()'
     # Needs to be converted to get the data from the database
     uri = URI('https://api.postcodes.io/postcodes/' + ERB::Util.url_encode(post_code))
 

@@ -1,9 +1,13 @@
 # rubocop:disable Metrics/BlockLength
+require 'sidekiq/web'
+require 'user_constraint.rb'
 Rails.application.routes.draw do
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
   get '/landing-page', to: 'home#landing_page'
+
+  mount Sidekiq::Web => '/sidekiq-log', :constraints => UserConstraint.new
 
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
@@ -19,6 +23,16 @@ Rails.application.routes.draw do
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
     resources :branches, only: %i[index show]
     resources :downloads, only: :index
+    unless Rails.env.production? # not be available on production environments yet
+      namespace :admin do
+        resources :uploads, only: %i[index new create show] do
+          get 'approve'
+          get 'reject'
+          get 'uploading'
+        end
+        get '/in_progress', to: 'uploads#in_progress'
+      end
+    end
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -54,6 +68,7 @@ Rails.application.routes.draw do
     get '/summary', to: 'summary#index'
     post '/summary', to: 'summary#index'
 
+    get '/reset', to: 'buildings#reset_buildings_tables'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
@@ -87,7 +102,7 @@ Rails.application.routes.draw do
     get '/find_apprentices2', to: 'home#find_apprentices2'
     get '/find_apprentices3', to: 'home#find_apprentices3'
     get '/find_apprentices4', to: 'home#find_apprentices4'
-    get '/find_apprentices5', to: 'home#find_apprentices5'
+    get '/find_apprentices5', to: 'journey#find_apprentices5'
     get '/outline', to: 'home#outline'
     get '/requirements', to: 'home#requirements'
     get '/requirement', to: 'home#requirement'
@@ -147,8 +162,14 @@ Rails.application.routes.draw do
   end
   post '/sign-out' => 'auth#sign_out', as: :sign_out
 
-  scope module: :postcode do
-    resources :postcodes, only: [:show]
+  # scope module: :postcode do
+  #  resources :postcodes, only: :show
+  # end
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :postcodes, only: :show
+      post '/postcode/:id', to: 'uploads#show'
+    end
   end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'

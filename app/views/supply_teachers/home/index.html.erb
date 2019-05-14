@@ -22,24 +22,28 @@
         <li><%= t('.use_this_service_to.view_all_suppliers') %></li>
       </ul>
 
-      <p class="govuk-body">
-        <%= t('.you_will_need_your_dfe_sign_in') %>
-      </p>
-
-      <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('.before_you_start') %></h2>
-
-      <p class="govuk-body"><%= t('.you_will_need_to_have') %></p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li><%= t('.your_schools_postcode') %></li>
-        <li><%= t('.details_of_how_long_you_want_the_worker') %></li>
-      </ul>
-
-      <p class="govuk-body"><%= t('.you_cant_use_the_service_if') %></p>
 
       <p class="govuk-body">
         <%= t('.to_find_permanent_teaching_staff_html', url: 'https://www.gov.uk/guidance/list-a-teaching-job-at-your-school-on-teaching-vacancies') %>
       </p>
+
+
+      <p class="govuk-body"><%= t('.you_cant_use_the_service_if') %></p>
+
+      <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('.before_you_start') %></h2>
+
+
+      <p class="govuk-body"><%= t('.you_will_need_to_have') %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.you_will_need_your_dfe_sign_in_html',
+                  get_dfe_url: 'https://help.signin.education.gov.uk/contact/service/45df2595-90b2-4662-b1ad-a94afa60615b/create-account',
+                  get_schools_info_url: 'https://get-information-schools.service.gov.uk/') %></li>
+        <li><%= t('.your_schools_postcode') %></li>
+        <li><%= t('.details_of_how_long_you_want_the_worker') %></li>
+      </ul>
+
+
 
       <h2 class="govuk-heading-m cmp-start-page__sub-heading"><%= t('.accreditation_of_agencies') %></h2>
 

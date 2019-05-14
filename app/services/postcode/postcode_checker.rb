@@ -30,27 +30,19 @@ module Postcode
     end
 
     # SELECT COUNT (*) FROM os_address;
-    def self.count(access_key, secret_access_key)
-      'invalid access key or secret key' unless verify_access(access_key, secret_access_key)
-
+    def self.count
       ActiveRecord::Base.connection_pool.with_connection do |db|
         result = db.exec_query 'SELECT COUNT (postcode) FROM os_address;'
         return 0 if result.nil?
 
         result[0]['count']
       end
-    rescue StandardError => e
-      e
     end
 
-    def self.clear(access_key, secret_access_key)
-      'invalid access key or secret key' unless verify_access(access_key, secret_access_key)
-
+    def self.clear
       ActiveRecord::Base.connection_pool.with_connection do |db|
         db.exec_query 'TRUNCATE os_address CASCADE;'
       end
-    rescue StandardError => e
-      e
     end
 
     @london_burroughs = [
@@ -69,46 +61,24 @@ module Postcode
 
     # private class methods
     class << self
-      def verify_access(access_key, secret_access_key)
-        secrets = JSON.parse(File.read(Rails.root.to_s + '/../aws-secrets.json'))
-        access_key == secrets['AccessKeyId'] && secret_access_key == secrets['SecretAccessKey']
-      rescue StandardError
-        false
-      end
-
       def uploader(access_key, secret_access_key, bucket, region)
-        aws_secrets = {
-          AccessKeyId: access_key,
-          SecretAccessKey: secret_access_key,
-          bucket: bucket,
-          region: region
-        }
-
-        File.open(Rails.root.to_s + '/../aws-secrets.json', 'w') { |file| file.write(aws_secrets.to_json) }
-
-        rake 'db:postcode'
+        rake 'db:postcode', access_key, secret_access_key, bucket, region
 
         { status: 200, result: "Uploading postcodes from AWS bucket #{bucket}, region: #{region}" }
-      rescue IOError => e
-        # some error occur, dir not writable etc.
-        { status: 404, error: e.to_s }
-      rescue StandardError => e
-        { status: 404, error: e.to_s }
       end
 
       # rake 'db:postcode'
-      def rake(task_name)
+      def rake(task_name, access_key, secret_access_key, bucket, region)
         if File.split($PROGRAM_NAME).last == 'rake'
           Rails.logger.info('')
         else
           begin
             Rails.logger.info('No, this is not a Rake task')
             Rails.application.load_tasks
-            Rake::Task[task_name].execute
+            args = %i[access_key secret_access_key bucket region].zip([access_key, secret_access_key, bucket, region]).to_h
+            Rake::Task[task_name].execute(args)
           rescue StandardError => e
-            message = self.class.name + " data is missing! Please run 'rake " + task_name + "' to load postcode data."
-            Rails.logger.info("\e[5;37;41m\n" + message + '\n' + e.to_s + "\033[0m\n")
-            # Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
+            Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
             raise e
           end
         end

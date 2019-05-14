@@ -1,98 +1,114 @@
+<a href="/facilities-management/contract-start" class="govuk-back-link ccs-no-print">Back</a>
+<%= render('errors/inline_error_summary') %>
+<div>
+  <fieldset class="govuk-fieldset" aria-describedby="">
+    <strong class="govuk-heading-xl"><%= title %></strong>
+  </fieldset>
+  <p class="govuk-!-font-size-36">
+    <%= raw services_and_suppliers_title %>
+    <%= raw lot_title %>
+  </p>
 
-    <a href="/facilities-management/select-services" class="govuk-back-link ccs-no-print">Back</a>
-
-    <%= render('errors/inline_error_summary') %>
-
-    <div>
-      <fieldset class="govuk-fieldset" aria-describedby="">
-        <strong class="govuk-heading-xl"> Review services without pricing</strong>
-<!--
-        <div class="govuk-inset-text ccs-no-print">
-          <strong>On this page</strong><br>
-          <span>Based on your choices, we are showing suppliers in three different groups.</span>
-       </div>
--->
-      </fieldset>
-      <p class="govuk-!-font-size-36">
-        <strong><%= @report.without_pricing.count %> suppliers found</strong>
-         (from <%= @report.without_pricing.count + @report.with_pricing.count%> selected) without a price.
-      </p>
-      <p class="govuk-!-font-size-36">
-        Your assessed value is <%=number_to_currency(@report.sum_uom + @report.sum_benchmark, strip_insignificant_zeros: true)%> for the contract term of 7 years.
-      </p>
-      <p class="govuk-!-font-size-36">
-        Your suggested sub-lot at this time is: <strong>Lot 1a</strong>, subject to the contract value being up to £7m.
-      </p>
-
-
-<p/>
-<p>Services without pricing (<%= @report.without_pricing.count %>):</p>
-<% @report.without_pricing.each do | service | %>
-<p><strong><%= service.name %></strong></p>
-<% end %>
-<!------->
-
-<p/>
-<div class="">
-    <p><strong>You can now download the supplier list and requirements document</strong></p>
-
-    <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-warning-text__assistive">Warning</span>
-          This list will be saved and it will be available for you later, for up to 60 days from today.
-        </strong>
-    </div>
-
-    <p class="govuk-body govuk-body-s supplier-record__print-option">
-        <a class="supplier-record__file-download ga-download-calculator" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx&amp;job_type=qt&amp;looking_for=worker&amp;payroll_provider=agency&amp;postcode=sw1p+2ba&amp;term=8_12&amp;worker_type=agency_supplied">Download supplier list and Deliverables Matrix Lite</a>
-    </p>
-</div>
-
-<form action="/facilities-management/summary" method="post">
-  <div class="govuk-form-group">
-    <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-        <h1 class="govuk-fieldset__heading">
-          Based on these non-priced services, would you estimate that you move up a sub-lot?
-        </h1>
-      </legend>
-
-      <div class="govuk-radios govuk-radios--inline">
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
-          <label class="govuk-label govuk-radios__label" for="changed-name-1">
-            Yes, I will move up a sub-lot
-          </label> </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
-          <label class="govuk-label govuk-radios__label" for="changed-name-2">
-            No, I will stay in the same sub-lot
-          </label> </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full ccs-results-list__detail">
+      <div>
+        <span class="govuk-!-font-size-27 ccs-font--wrap">
+          <% if @current_lot.nil? %>
+            <%=raw list_services %>
+          <% else %>
+            <%=raw list_suppliers %>
+            <%=raw list_choices %>
+          <% end %>
+        </span>
       </div>
-    </fieldset>
+    </div>
   </div>
 
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+  <br/><br/>
 
-  </form>
+  <% if @current_lot.nil? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full ccs-results-list__detail">
+        <p class="govuk-!-font-size-24"><strong>Calculation summary</strong></p>
+        <p>
+            Estimated costs for all services 
+            <span style="display:inline-block; position: relative; left: 170px;">
+              <%= number_to_currency(@report.assessed_value, strip_insignificant_zeros: true)%>
+            </span>
+        </p>
+        <hr style='width: 50%;margin-left: 0;border-style: dotted;'/>
+        <p>
+          <%=raw no_price_message%>
+        </p>
+      </div>
+    </div>
+  <% end %>
 
-      <div class="govuk-grid-row ccs-no-print">
 
+
+  <% if @current_lot %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full ccs-results-list__detail">
+        <p><strong>You can now download the supplier list and requirements document</strong></p>
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            This list will be saved and it will be available for you later, for up to 60 days from today.
+          </strong>
+        </div>
+        <p class="govuk-body govuk-body-s supplier-record__print-option">
+          <a class="supplier-record__file-download ga-download-calculator" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx&amp;job_type=qt&amp;looking_for=worker&amp;payroll_provider=agency&amp;postcode=sw1p+2ba&amp;term=8_12&amp;worker_type=agency_supplied">Download supplier list and Deliverables Matrix Lite</a>
+        </p>
+      </div>
+    </div>
+  <% end %>
+
+  <br/><br/><br/><br/>
+
+  <% if @current_lot.nil? %>
+    <form action="/facilities-management/summary" method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <p><strong>
+              Do you think the total value of your services will move your estimated costs over <%=@report.lot_limit%>?
+            </strong></p>
+
+          </legend>
+          <div class="govuk-radios govuk-radios--inline">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="changed-name-1" name="sublot" type="radio" value="yes">
+              <label class="govuk-label govuk-radios__label" for="changed-name-1">
+                Yes, it will go <%=@report.lot_limit%>
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="changed-name-2" name="sublot" type="radio" value="no">
+              <label class="govuk-label govuk-radios__label" for="changed-name-2">
+                No, it will stay under <%=@report.lot_limit%>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+
+      <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
+    </form>
+  <% end %>
+
+
+  <div class="govuk-grid-row ccs-no-print">
 <!--
         <a id="suppliers-summary-button" href="/facilities-management/summary" class="govuk-button ccs-no-print" role="button">XX Summary</a><br>
         <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1a" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1a</a><br>
         <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1b" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1b</a><br>
         <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1c" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1c</a><br>
 -->
-
-
-
-
-
-        <p>
-          <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" >Print this page</a>
-        </p>
-      </div>
-    </div>
+    <p>
+      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" >Print this page</a>
+    </p>
+  </div>
+</div>
 

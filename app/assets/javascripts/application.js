@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require global/jquery.validate.min.js
 //= require rails-ujs
 //= require govuk-frontend/all
 //= require google_analytics

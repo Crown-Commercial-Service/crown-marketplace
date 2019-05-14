@@ -2,7 +2,14 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  require_permission :facilities_management, only: %i[reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+
+  def reset_buildings_tables
+    fmd = FMBuildingData.new
+    fmd.reset_buildings_tables
+    j = { 'status': 200 }
+    render json: j, status: 200
+  end
 
   def select_services_per_building
     @inline_error_summary_title = 'Services are not selected'
@@ -78,9 +85,9 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def units_of_measurement
-    @inline_error_summary_title = 'There was a problem'
-    @inline_error_summary_body_href = '#'
-    @inline_summary_error_text = 'Enter a value'
+    @inline_error_summary_title = 'The value entered is invalid'
+    @inline_error_summary_body_href = '#fm-uom-input'
+    @inline_summary_error_text = 'Enter a number in the correct format'
 
     building_id = params['building_id']
     fm_service_data = FMServiceData.new
@@ -90,6 +97,13 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     if service_data['hasService'] == true
       @service_code = service_data['service_code']
       @is_lift = @service_code.to_s == 'C.5'
+
+      if @is_lift
+        @inline_error_summary_title = 'Invalid lift information'
+        @inline_error_summary_body_href = '#'
+        @inline_summary_error_text = 'Please enter a valid number'
+      end
+
       @service_title = service_data['service_description']
       @uom_title = service_data['title_text']
       @uom_example = service_data['example_text']
