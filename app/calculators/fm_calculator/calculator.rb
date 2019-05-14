@@ -21,7 +21,7 @@ module FMCalculator
 
     def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
       @contract_length_years = contract_length_years
-      @subsequent_length_years = contract_length_years -1
+      @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
       @uom_vol = uom_vol
       @occupants = occupants
