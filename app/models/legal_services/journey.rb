@@ -4,12 +4,15 @@ module LegalServices
 
     def initialize(slug, params)
       paths = JourneyPaths.new(self.class.journey_name)
-      first_step_class = ChooseOrganisationType
-      super(first_step_class, slug, params, paths)
+      super(self.class.first_step_class, slug, params, paths)
     end
 
     def self.journey_name
       'legal-services'
+    end
+
+    def self.first_step_class
+      ChooseOrganisationType
     end
 
     def start_path

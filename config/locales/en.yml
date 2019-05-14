@@ -34,6 +34,10 @@ en:
           attributes:
             legal_services:
               inclusion: Select a legal service
+        legal_services/journey/check_suitability2:
+          attributes:
+            central_government:
+              inclusion: Select yes if the fees will be under £20,000
         legal_services/journey/check_suitability3:
           attributes:
             lot:
@@ -343,11 +347,11 @@ en:
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
+    error_summary_title: There is a problem
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     search: Search
     submit: Continue
-    there_is_a_problem: There is a problem
     type_csv: text/csv
     type_doc: application/msword
   companies:
@@ -477,6 +481,8 @@ en:
         label_02: Litigation work, including employment
         label_03: Other
         or: or
+      check_suitability2:
+        heading: Will the fees be under £20,000 per matter?
       choose_organisation_type:
         central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
@@ -485,10 +491,19 @@ en:
         question: Question
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
-        hint: Where do you need the regional legal service
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
+      lot1_regional_service2:
+        heading: Heading
+        hint: Hint
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
+      lot2_full_service:
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
       requirement:
         central_government_search_link_title: Central government search link title
         search_central_government_html: Search central government html

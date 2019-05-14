@@ -5,9 +5,21 @@
   <div class="govuk-grid-column-two-thirds">
 
     <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-    <%= render 'layouts/ccs_error_summary', title: t('common.there_is_a_problem') %>
 
-    <%= form_tag @form_path, id: 'form-01', class: :'css-form', method: :get do %>
+    <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+      <h2 class="govuk-error-summary__title" id="error-summary-title"><%= t('common.error_summary_title') %></h2>
+      <div class="govuk-error-summary__body">
+        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
+          <li>
+            <a href="#legal_services_yes">
+              <%= t('activemodel.errors.models.legal_services/journey/check_suitability.attributes.legal_services.inclusion') %>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <%= form_tag @form_path, class: :'css-form', autocomplete: :'off', method: :get do %>
 
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
@@ -20,8 +32,11 @@
             </h1>
           </legend>
 
+          <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden">
+            <%= t('activemodel.errors.models.legal_services/journey/check_suitability.attributes.legal_services.inclusion') %>
+          </span>
+
           <%= display_error(@journey, :legal_services) %>
-          <%= render 'layouts/ccs_error_msg', error_msg: t('activemodel.errors.models.legal_services/journey/check_suitability.attributes.legal_services.inclusion') %>
 
           <div class="govuk-radios">
             <div class="govuk-radios__item">
@@ -43,7 +58,7 @@
           </div>
         <% end %>
       <% end %>
-      <%= submit_tag t('common.submit'), class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.submit'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
     <% end %>
 
   </div>
@@ -51,25 +66,31 @@
 
 <script>
   function initFormVal(){
-      $("#form-01").validate({//.add('#form-02')
-        rules: {
-          legal_services: "required"
-        },
-        errorPlacement: function(error, element) {
-          errorPlacementFnc(error, element);
-        },
-        success: function(error, element) {
-          successFnc(error, element);
-        },
-        invalidHandler: function(event, validator) {
-          invalidHandlerFnc(event, validator);
-        }
-      });
+
+    $('#submit').click(function(e){
+      var form = $('#main-content').find('form');
+      var state = form.find('input[name="legal_services"]');
+
+      if(state.prop("checked") == true){
+
+        form.submit();
+
+      }else{
+        e.preventDefault();
+
+        var title = $('html').children('head').find('title');
+        title.text('Error: '+ title.text().replace(/Error: /g,''));
+
+        state.parents('.govuk-form-group').addClass('govuk-form-group--error');
+
+        $('#ccs-error-sum').attr('tabindex','-1').focus().add('#legal_services-error').removeClass('govuk-visually-hidden');
+      }
+    });
 
   }
 
   function isValidatorLoaded(){
-    if(window.jQuery && $.validator){ initFormVal(); }
+    if(window.jQuery){ initFormVal(); }
     else{ window.setTimeout('isValidatorLoaded();',100); }
   }
   isValidatorLoaded();
