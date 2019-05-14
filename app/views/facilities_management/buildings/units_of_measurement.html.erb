@@ -4,7 +4,6 @@
       <a href="<%= request.referrer %>" class="govuk-back-link">Back</a>
     </div>
   </div>
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= render('errors/inline_error_summary') %>
@@ -20,62 +19,55 @@
       <h2 class="govuk-caption-m govuk-!-margin-top-1"><%= @uom_example %> </h2>
     </div>
   </div>
-
   <div id="fm-uom-input-container"
        <% if @is_lift == true %><%= 'hidden' %>
        <% end %> >
-    <div id="fm-uom-input-error-form-group" class="govuk-grid-row">
+    <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <div id="fm-uom-input-error-form-group" class="govuk-form-group">
-        <span id="fm-uom-input-length-error" class="govuk-error-message govuk-visually-hidden">
-            <span class="govuk-visually-hidden">Error:</span> The value should a positive number
-        </span>
-          <input id="fm-uom-input" class="govuk-input govuk-input--width-5" type="number" value="">&nbsp;<%= @unit_text %>
-        </div>
+        <input id="fm-uom-input" class="govuk-input govuk-input--width-5" type="number" value="">&nbsp;<%= @unit_text %>
       </div>
     </div>
   </div>
-</div>
-<div id="fm-uom-lift-container"
-     <% if @is_lift == false %><%= 'hidden' %>
-     <% end %> >
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m govuk-!-margin-bottom-0">How many lifts do you have in this building?</h2>
-      <h2 class="govuk-caption-m govuk-!-margin-top-1">For example, 5. Enter the total number of lifts in your
-        building</h2>
+  <div id="fm-uom-lift-container"
+       <% if @is_lift == false %><%= 'hidden' %>
+       <% end %> >
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-0">How many lifts do you have in this building?</h2>
+        <h2 class="govuk-caption-m govuk-!-margin-top-1">For example, 5. Enter the total number of lifts in your
+          building</h2>
 
-      <div id="fm-uom-number-of-lifts-error-form-group" class="govuk-form-group">
+        <div id="fm-uom-number-of-lifts-error-form-group" class="govuk-form-group">
           <span id="fm-uom-number-of-lifts-error" class="govuk-error-message govuk-visually-hidden">
-            Invalid number of lifts (maximum 20 per building)
+            Invalid number of lifts
           </span>
-        <input id="fm-uom-number-of-lifts" class="govuk-input govuk-input--width-5" type="number" value="">
-      </div>
+          <input id="fm-uom-number-of-lifts" class="govuk-input govuk-input--width-5" type="number" value="">
+        </div>
 
-      <div id="fm-lift-floors-container" class="govuk-!-margin-top-6 govuk-visually-hidden">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= @uom_title %> </h2>
-            <h2 class="govuk-caption-m govuk-!-margin-top-1"><%= @uom_example %> </h2>
-            <div id="fm-lift-floors-input-container">
+        <div id="fm-lift-floors-container" class="govuk-!-margin-top-6 govuk-visually-hidden">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= @uom_title %> </h2>
+              <h2 class="govuk-caption-m govuk-!-margin-top-1"><%= @uom_example %> </h2>
+              <div id="fm-lift-floors-input-container">
 
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-form-group">
-      <hidden id="fm-building-uom-id" name="fm-building-uom-id" value="<%= @building_id %>"></hidden>
-      <hidden id="fm-service-uom-code" name="fm-service-uom-code" value="<%= @service_code %>"></hidden>
-      <hidden id="fm-is-lift" name="fm-is-lift" value="<%= @is_lift %>"></hidden>
-      <div class="govuk-!-margin-top-8">
-        <a id="fm-unit-of-measurement-submit" type="button" class="govuk-button" role="button">Continue</a>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-form-group">
+        <hidden id="fm-building-uom-id" name="fm-building-uom-id" value="<%= @building_id %>"></hidden>
+        <hidden id="fm-service-uom-code" name="fm-service-uom-code" value="<%= @service_code %>"></hidden>
+        <hidden id="fm-is-lift" name="fm-is-lift" value="<%= @is_lift %>"></hidden>
+        <div class="govuk-!-margin-top-8">
+          <a id="fm-unit-of-measurement-submit" type="button" class="govuk-button" role="button">Continue</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
