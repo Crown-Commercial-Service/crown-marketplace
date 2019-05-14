@@ -152,8 +152,8 @@ module FacilitiesManagement
       @supplier_count = TransientSessionInfo[session.id, 'supplier_count']
       @posted_locations = TransientSessionInfo[session.id]['posted_locations']
       @posted_services = TransientSessionInfo[session.id]['posted_services']
-      @posted_locations ||= []
-      @posted_services ||= []
+      # @posted_locations ||= []
+      # @posted_services ||= []
 
       set_start_date
     end
