@@ -81,6 +81,7 @@ $(() => {
 
         } else {
             if (uom_value > 0) {
+                e.preventDefault();
                 pageUtils.toggleInlineErrorMessage(false);
                 fm.services.save_uom(building_id, service_code, uom_value.toString());
                 $('#fm-uom-row').removeClass('govuk-form-group--error');
