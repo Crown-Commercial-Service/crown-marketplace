@@ -82,7 +82,7 @@ $(() => {
         } else {
             if (uom_value > 0) {
                 pageUtils.toggleInlineErrorMessage(false);
-                fm.services.save_uom(building_id, service_code, uom_value);
+                fm.services.save_uom(building_id, service_code, uom_value.toString());
                 $('#fm-uom-row').removeClass('govuk-form-group--error');
                 $('#fm-uom-input-error').addClass('govuk-visually-hidden');
             } else {
