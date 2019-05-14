@@ -168,7 +168,7 @@ module FacilitiesManagement
       # params['sublot'] == 'no'
       if @report.current_lot == '1c'
         @current_lot = '1c'
-      elsif (params['sublot'] == 'no') || @report.without_pricing.count == 0
+      elsif (params['sublot'] == 'no') || @report.without_pricing.count.zero?
         # check_current_lot
         @current_lot = @report.current_lot
       elsif params['sublot'] == 'yes'
