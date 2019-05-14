@@ -245,6 +245,12 @@ $(() => {
         }
     });
 
+    $('#fm-internal-square-area').on('keypress', (event) => {
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
     $('#fm-questions-continue').on('click', (e) => {
         e.preventDefault();
         let isValid = validateTotalContractLength();
