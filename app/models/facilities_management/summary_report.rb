@@ -9,6 +9,7 @@ module FacilitiesManagement
       @data = data
       @posted_services = @data['posted_services']
       @posted_locations = @data['posted_locations']
+      @contract_length_years = @data['fm-contract-length'].to_i
 
       @sum_uom = 0
       @sum_benchmark = 0
@@ -139,9 +140,9 @@ module FacilitiesManagement
           end
 
           code = service.code.remove('.')
-          calc_fm = FMCalculator::Calculator.new(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-          uom_cost = calc_fm.sumunitofmeasure(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-          benchmark_cost = calc_fm.benchmarkedcostssum(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+          calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+          uom_cost = calc_fm.sumunitofmeasure(@contract_length_years, code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+          benchmark_cost = calc_fm.benchmarkedcostssum(@contract_length_years, code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
 
           @sum_uom += uom_cost
           @sum_benchmark += benchmark_cost
