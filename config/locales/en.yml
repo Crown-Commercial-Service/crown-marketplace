@@ -347,13 +347,13 @@ en:
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
+    error_summary_title: There is a problem
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     search: Search
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
-    error_summary_title: There is a problem
   companies:
     unit:
       one: company
