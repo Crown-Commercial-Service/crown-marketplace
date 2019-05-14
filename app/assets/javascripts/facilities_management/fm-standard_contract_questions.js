@@ -37,6 +37,16 @@ $(() => {
                 processExtensionKeyUp(e);
             });
 
+            $('#' + extension.id).on('keypress', (e) => {
+                let regex = new RegExp("^[0-9]+$");
+                let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(str)) {
+                    return true;
+                }
+                e.preventDefault();
+                return false;
+            });
+
             $('#fm-remove-extension-' + (index + 1)).click((e) => {
                 e.preventDefault();
                 removeExtension(extension.id + '-container');
@@ -96,6 +106,12 @@ $(() => {
 
         return result || 0;
 
+    });
+
+    $('#fm-contract-length').keypress(function (event) {
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
     });
 
     $('#fm-contract-length').on('keyup', (e) => {
@@ -167,6 +183,16 @@ $(() => {
             $('#' + id).on('keyup', (e) => {
                 processExtensionKeyUp(e);
             });
+
+            $('#' + id).on('keypress', (e) => {
+                let regex = new RegExp("^[0-9]+$");
+                let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(str)) {
+                    return true;
+                }
+                e.preventDefault();
+                return false;
+            });
         }
     });
 
@@ -191,6 +217,11 @@ $(() => {
     });
 
     const processExtensionKeyUp = ((e) => {
+
+        if ((e.which < 48 || e.which > 57)) {
+            e.preventDefault();
+        }
+
         let extValue = e.target.value ? parseInt(e.target.value) : 0;
         extValue = extValue <= 0 ? 0 : extValue;
         let totalExtensionYears = calcTotalExtensionYears();
@@ -211,6 +242,13 @@ $(() => {
 
     $('input[name="fm-extension"]').on('keyup', (e) => {
         processExtensionKeyUp(e);
+    });
+
+    $('input[name="fm-extension"]').on('keypress', (event) => {
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+            return false;
+        }
     });
 
     $('input[name="contract-cost-radio"]').click((e) => {
