@@ -18,7 +18,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def buildings
-    cache_values
+    cache_choices
 
     @uom_values = []
     current_login_email = current_login.email.to_s
@@ -144,11 +144,16 @@ class FacilitiesManagement::BuildingsController < ApplicationController
 
   private
 
-  def cache_values
-    TransientSessionInfo[session.id]['fm-contract-length'] = params['fm-contract-length']
-    TransientSessionInfo[session.id]['fm-extension'] = params['fm-extension']
-    TransientSessionInfo[session.id]['contract-extension-radio'] = params['contract-extension-radio']
-    TransientSessionInfo[session.id]['fm-contract-cost'] = params['fm-contract-cost']
+  # use
+  #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
+  # to copy the cached choices
+  def cache_choices
+    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length']
+    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
+    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost']
+    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
   end
 
   def set_error_messages
