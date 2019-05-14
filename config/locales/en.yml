@@ -353,6 +353,7 @@ en:
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
+    error_summary_title: There is a problem
   companies:
     unit:
       one: company
