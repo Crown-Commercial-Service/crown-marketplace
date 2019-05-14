@@ -23,8 +23,7 @@ module FacilitiesManagement
         end
       end
     rescue StandardError => e
-      @message = e.message
-      render action: 'error.html.erb'
+      raise e
     end
 
     private
