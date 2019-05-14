@@ -17,7 +17,6 @@ $(() => {
     });
 
     $('#fm-uom-number-of-lifts').keypress(function (event) {
-        $(this).val($(this).val().replace(/[^\d].+/, ""));
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
@@ -52,7 +51,6 @@ $(() => {
                 $('#fm-lift-floors-input-container').append(lift);
 
                 $('#fm-uom-input-lift-' + x).keypress(function (event) {
-                    $(this).val($(this).val().replace(/[^\d].+/, ""));
                     if ((event.which < 48 || event.which > 57)) {
                         event.preventDefault();
                     }
