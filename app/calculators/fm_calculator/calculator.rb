@@ -289,7 +289,7 @@ module FMCalculator
         @benchtupe = @benchsubtotal3 * @framework_rates['M148']
         @benchtupe = @benchtupe.round(0)
       else
-        0
+        @benchtupe = 0
       end
     end
 
