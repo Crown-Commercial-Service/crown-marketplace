@@ -9,7 +9,7 @@ require 'fm_calculator/calculator'
 
     before(:each) do
       # args  Service ref, uom_vol, occupants, tuoe involved, london_location, CAFM, helpdesk
-      @calc = described_class.new('G1', 23000, 125, 'Y', 'Y', 'Y', 'N')
+      @calc = described_class.new(2, 'G1', 23000, 125, 'Y', 'Y', 'Y', 'N')
     end
 
     describe 'calculate routine cleaning'

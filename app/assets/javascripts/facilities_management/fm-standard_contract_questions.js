@@ -256,7 +256,10 @@ $(() => {
         let isValid = validateTotalContractLength();
 
         if (isValid === true) {
-            location.href = '/facilities-management/buildings-list';
+            // location.href = '/facilities-management/buildings-list';
+            $('#fm-extension-sum').attr('value', calcTotalExtensionYears());
+            $('#fm-seq-form').submit()
+
         } else {
             $("html, body").animate({scrollTop: 0}, "1");
             $('html, body').stop(true, true);

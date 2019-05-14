@@ -168,11 +168,11 @@ module FacilitiesManagement
       # params['sublot'] == 'no'
       if @report.current_lot == '1c'
         @current_lot = '1c'
-      elsif params['sublot'] == 'yes'
+      elsif params['sublot'] == 'no'
         # check_current_lot
         @current_lot = @report.current_lot
-      elsif params['sublot'] == 'no'
-        @current_lot = move_upto_next_lot(@current_lot)
+      elsif params['sublot'] == 'yes'
+        @current_lot = move_upto_next_lot(@report.current_lot)
       end
       # params['sublot'] == 'no'
       TransientSessionInfo[session.id]['current_lot'] = @current_lot
