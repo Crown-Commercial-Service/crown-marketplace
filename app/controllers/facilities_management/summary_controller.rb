@@ -159,23 +159,26 @@ module FacilitiesManagement
       set_start_date
     end
 
+    def workout_current_lot
+      if @report.current_lot == '1c'
+        @current_lot = '1c'
+      elsif (params['sublot'] == 'no') || @report.without_pricing.count.zero?
+        # check_current_lot
+        @current_lot = @report.current_lot
+      elsif params['sublot'] == 'yes'
+        @current_lot = move_upto_next_lot(@report.current_lot)
+      end
+
+      TransientSessionInfo[session.id]['current_lot'] = @current_lot
+    end
+
     def build_report
       set_current_choices
 
       @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo[session.id])
       @report.calculate_services_for_buildings
 
-      # params['sublot'] == 'no'
-      if @report.current_lot == '1c'
-        @current_lot = '1c'
-      elsif params['sublot'] == 'no'
-        # check_current_lot
-        @current_lot = @report.current_lot
-      elsif params['sublot'] == 'yes'
-        @current_lot = move_upto_next_lot(@report.current_lot)
-      end
-      # params['sublot'] == 'no'
-      TransientSessionInfo[session.id]['current_lot'] = @current_lot
+      workout_current_lot
 
       regions
     end
