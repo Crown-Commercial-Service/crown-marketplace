@@ -13,6 +13,15 @@ sudo apt install postgresql-{postgresql-version}-postgis-{postgis-version}
 
 Install PhantomJS by following the instructions [in this gist](https://gist.github.com/julionc/7476620)
 
+Install Redis (for Sidekiq background jobs)
+
+```
+wget http://download.redis.io/redis-stable.tar.gz
+tar xvzf redis-stable.tar.gz
+cd redis-stable
+make
+```
+
 ### MacOS
 
 Install PostGIS
@@ -25,6 +34,12 @@ Install PhantomJS (for Javascript tests)
 
 ```
 $ brew install phantomjs
+```
+
+Install Redis (for Sidekiq background jobs)
+
+```
+$ brew install redis
 ```
 
 ## Set up
@@ -129,9 +144,11 @@ environments:
 
 ## Run
 
-Execute the following command:
+Execute the following commands:
 
 ```
+$ redis-server /usr/local/etc/redis.conf
+$ bundle exec sidekiq
 $ rails s
 ```
 
