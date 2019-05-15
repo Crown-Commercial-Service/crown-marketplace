@@ -49,7 +49,7 @@ en:
         legal_services/journey/lot1_regional_service:
           attributes:
             lot_region:
-              too_short: Select at least one checkbox
+              too_short: Select the legal service or services you need
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
