@@ -78,14 +78,12 @@ class FacilitiesManagement::Spreadsheet
 
         uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
         if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
-           uom.count
-          uom.each do | u |
-            sheet.add_row [label, s.code, s.name] + [uom[0]['title_text']] + [uom[0]['unit_text']]
+          uom.each do |u|
+            sheet.add_row [label, s.code, s.name] + [u['title_text']] + [u['unit_text']]
           end
         else
           sheet.add_row [label, s.code, s.name]
         end
-
 
         work_package = s.work_package_code
       end
