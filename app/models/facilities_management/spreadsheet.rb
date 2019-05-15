@@ -57,7 +57,7 @@ class FacilitiesManagement::Spreadsheet
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       i = 1
-      vals = ['Work Package', 'Service Reference', 'Service Name', 'Unit of Measure']
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement', 'Unit of Measure']
       @report.building_data.each do |building|
         vals << 'Building ' + i.to_s + ', ' + building.building_json['name']
         i += 1
@@ -66,7 +66,8 @@ class FacilitiesManagement::Spreadsheet
 
       # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
       work_package = ''
-      services = FacilitiesManagement::Service.all.sort_by(&:code)
+      @report.selected_services
+      services = @report.selected_services.sort_by(&:code)
       services.each do |s|
         if work_package == s.work_package_code
           label = nil
@@ -75,12 +76,15 @@ class FacilitiesManagement::Spreadsheet
         end
         work_package = s.work_package_code
 
-        # uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
-        # if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
-        #   uom.count
-        # end
+        uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
+        if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
+          uom.each do |u|
+            sheet.add_row [label, s.code, s.name] + [u['title_text']] + [u['unit_text']]
+          end
+        else
+          sheet.add_row [label, s.code, s.name]
+        end
 
-        sheet.add_row [label, s.code, s.name]
         work_package = s.work_package_code
       end
     end
