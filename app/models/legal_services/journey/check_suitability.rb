@@ -7,7 +7,7 @@ module LegalServices
     def next_step_class
       case legal_services
       when 'yes', 'no'
-        Journey::SupplierResults
+        Journey::CheckSuitability2
       when 'other'
         Journey::Sorry
       end

@@ -35,17 +35,18 @@
 
           <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-            <% lot1 = ['Property and construction', 'Social housing','Child law','Court of protection', 'Education','Debt recovery', 'Planning and environment', 'Licensing','Pensions','Litigation / dispute resolution','Intellectual property','Employment','Healthcare','Primary care'] %>
+            <% lot1 = ['Property and construction', 'Litigation / dispute resolution','Employment'] %>
 
 
             <% lot1.each do |lot_region| %>
               <div class="govuk-checkboxes__item">
+              <% lot_region_no_space = lot_region.gsub(' ', '_') %>
                 <%= check_box_tag(
                           "lot_region[]",
                           lot_region,
                           false,
                           class: "govuk-checkboxes__input",
-                          id: "lot_region_i{lot_region}"
+                          id: "lot_region_#{lot_region_no_space}"
                         ) %>
                 <label class="govuk-label govuk-checkboxes__label" for="lot_region<%= lot_region %>">
                   <%= lot_region %>
