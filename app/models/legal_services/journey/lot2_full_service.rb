@@ -1,8 +1,8 @@
 module LegalServices
   class Journey::Lot2FullService
     include Steppable
-    def next_step_class
-      Journey::Lot2FullService
-    end
+    attribute :lot, Array
+    validates :lot, length: { minimum: 1 }
+    include Steppable
   end
 end

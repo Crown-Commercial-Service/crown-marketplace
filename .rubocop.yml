@@ -11,6 +11,7 @@ AllCops:
         - 'bin/**/*'
         - 'vendor/**/*'
         - 'tmp/**/*'
+        - 'lib/tasks/supply_teachers/**/*'
 
 Rails:
     Enabled: true

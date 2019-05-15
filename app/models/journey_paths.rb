@@ -11,9 +11,15 @@ class JourneyPaths
 
   def question(slug, params = nil)
     if params
-      journey_question_path(journey: @journey_name,
-                            slug: slug,
-                            params: params)
+      if slug
+        journey_question_path(journey: @journey_name,
+                              slug: slug,
+                              params: params)
+      else
+        journey_question_path(journey: @journey_name,
+                              slug: 'sorry',
+                              params: params)
+      end
     else
       journey_question_path(journey: @journey_name,
                             slug: slug)

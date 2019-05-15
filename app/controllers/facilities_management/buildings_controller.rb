@@ -2,7 +2,14 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  require_permission :facilities_management, only: %i[reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+
+  def reset_buildings_tables
+    fmd = FMBuildingData.new
+    fmd.reset_buildings_tables
+    j = { 'status': 200 }
+    render json: j, status: 200
+  end
 
   def select_services_per_building
     @inline_error_summary_title = 'Services are not selected'
@@ -11,11 +18,11 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def buildings
+    cache_choices
+
     @uom_values = []
     current_login_email = current_login.email.to_s
-    @inline_error_summary_title = 'There was a problem'
-    @inline_error_summary_body_href = '#'
-    @inline_summary_error_text = 'Error'
+    set_error_messages
     @fm_building_data = FMBuildingData.new
     @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
     @building_data = @fm_building_data.get_building_data(current_login_email)
@@ -78,9 +85,9 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def units_of_measurement
-    @inline_error_summary_title = 'There was a problem'
-    @inline_error_summary_body_href = '#'
-    @inline_summary_error_text = 'Enter a value'
+    @inline_error_summary_title = 'The value entered is invalid'
+    @inline_error_summary_body_href = '#fm-uom-input'
+    @inline_summary_error_text = 'Enter a number in the correct format'
 
     building_id = params['building_id']
     fm_service_data = FMServiceData.new
@@ -90,6 +97,13 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     if service_data['hasService'] == true
       @service_code = service_data['service_code']
       @is_lift = @service_code.to_s == 'C.5'
+
+      if @is_lift
+        @inline_error_summary_title = 'Invalid lift information'
+        @inline_error_summary_body_href = '#'
+        @inline_summary_error_text = 'Please enter a valid number'
+      end
+
       @service_title = service_data['service_description']
       @uom_title = service_data['title_text']
       @uom_example = service_data['example_text']
@@ -126,5 +140,25 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @type_list_descriptions = fm_building_data.building_type_list_descriptions
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController building_type(): #{e}"
+  end
+
+  private
+
+  # use
+  #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
+  # to copy the cached choices
+  def cache_choices
+    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length']
+    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
+    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost']
+    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
+  end
+
+  def set_error_messages
+    @inline_error_summary_title = 'There was a problem'
+    @inline_error_summary_body_href = '#'
+    @inline_summary_error_text = 'Error'
   end
 end

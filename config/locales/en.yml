@@ -1,7 +1,6 @@
 ---
 en:
   'No': 'No'
-  Other: Other
   Scotland: Scotland
   'Yes': 'Yes'
   activemodel:
@@ -19,6 +18,10 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
+        apprenticeships/journey/lot1_regional_service:
+          attributes:
+            lot:
+              too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -27,10 +30,26 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        legal_services/journey/check_suitability:
+          attributes:
+            legal_services:
+              inclusion: Select a legal service
+        legal_services/journey/check_suitability2:
+          attributes:
+            central_government:
+              inclusion: Select yes if the fees will be under £20,000
+        legal_services/journey/check_suitability3:
+          attributes:
+            lot:
+              too_short: Select at least one checkbox
         legal_services/journey/choose_organisation_type:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
+        legal_services/journey/lot1_regional_service:
+          attributes:
+            lot_region:
+              too_short: Select at least one checkbox
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -82,7 +101,8 @@ en:
         supply_teachers/journey/temp_to_perm_calculator:
           attributes:
             contract_start_date:
-              blank: Enter the date the contract started and include a day, month and year
+              blank: Enter the contract start date, including the day, month and year
+              invalid: Enter a real date
             day_rate:
               blank: Enter the number of pounds charged per day
               greater_than: The number of pounds charged per day must be more than 0
@@ -94,30 +114,30 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date:
-              blank: Enter the date you want to hire the worker and include a day, month and year
+              blank: Enter the date you want to take the worker on permanently, including the day, month and year
+              invalid: Enter a real date
             holiday_1_end_date:
-              before_start_date: The end date of the first school holiday must be after the start date
-              blank_when_start_date_is_set: The end date of the first school holiday must be set when a start date is entered
-              invalid: Enter the date the first school holiday ended and include a day, month and year
-              without_corresponding_start_date: The end date of the first school holiday cannot be set without a corresponding start date
+              blank: Enter the date the first school holiday ended, including the day, month and year
+              invalid: Enter a real date
             holiday_1_start_date:
-              invalid: Enter the date the first school holiday started and include a day, month and year
+              blank: Enter the date the first school holiday started, including the day, month and year
+              invalid: Enter a real date
             holiday_2_end_date:
-              before_start_date: The end date of the second school holiday must be after the start date
-              blank_when_start_date_is_set: The end date of the second school holiday must be set when a start date is entered
-              invalid: Enter the date the second school holiday ended and include a day, month and year
-              without_corresponding_start_date: The end date of the second school holiday cannot be set without a corresponding start date
+              blank: Enter the date the second school holiday ended, including the day, month and yea
+              invalid: Enter a real date
             holiday_2_start_date:
-              invalid: Enter the date the second school holiday started and include a day, month and year
+              blank: Enter the date the second school holiday started, including the day, month and year
+              invalid: Enter a real date
             markup_rate:
               blank: Enter a mark-up percentage
               greater_than_or_equal_to: The mark-up percentage must be between 0 and 100
               less_than_or_equal_to: The mark-up percentage must be between 0 and 100
               not_a_number: The mark-up percentage must be a number
             notice_date:
-              after_hire_date: The date you notified the supplier of your intention to take the worker on permanently must be before the date they will be hired
-              before_contract_start_date: The date you notified the supplier of your intention to take the worker on permanently cannot be before the date their current contract started
-              invalid: Enter the date you notified the supplier of your intention to hire the worker and include a day, month and year
+              after_hire_date: The date you notified the agency that you wish to hire the worker must be before the date you want to take the worker on permanently
+              before_contract_start_date: The date you notified the agency that you wish to hire the worker must be after the date the worker’s current contract started
+              blank: Enter the date you notified the agency that you wish to hire the worker, including the day, month and year
+              invalid: Enter a real date
         supply_teachers/journey/worker_type:
           attributes:
             worker_type:
@@ -328,6 +348,7 @@ en:
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
+    error_summary_title: There is a problem
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     search: Search
@@ -455,12 +476,35 @@ en:
         better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     journey:
+      check_suitability:
+        heading: Select the legal services you need
+        label_01: Transactional property, including noncomplex conveyancing and work relating to leases and licences
+        label_02: Litigation work, including employment
+        label_03: Other
+        or: or
+      check_suitability2:
+        heading: Will the fees be under £20,000 per matter?
       choose_organisation_type:
         central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you’re unsure.
       choose_regional_or_fullservice:
         question: Question
+      lot1_regional_service:
+        heading: Lot 1 - Regional service provision
+        remove_all: Remove all
+        txt01: services selected
+        txt02: No services selected
+      lot1_regional_service2:
+        heading: Heading
+        hint: Hint
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
+      lot2_full_service:
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
       requirement:
         central_government_search_link_title: Central government search link title
         search_central_government_html: Search central government html
@@ -656,6 +700,45 @@ en:
       one: agency
       other: agencies
   supply_teachers:
+    admin:
+      uploads:
+        in_progress:
+          content: The spreadsheets have been uploaded and are now processing.
+          heading: Upload successful
+        index:
+          caption: Manage supplier data
+          create_new: Create a new data upload
+          date: Date
+          heading: Agency Supply teachers and agency workers
+          name: Name
+          no_of_files: Number of files
+          status: Status
+          table_caption: Previous uploads
+        new:
+          caption: Agency supply teachers and agency workers
+          heading: New data upload
+          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_title: Upload one or more of the following spreadsheets
+          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+        show:
+          caption: Agency supply teachers and agency workers
+          confirm_changes: 'Confirm these files are ready to be used by the live service:'
+          current_accredited_suppliers: Current accredited suppliers
+          datetime: 'Date/time:'
+          download: Download
+          files: Files
+          geographical_data_all_suppliers: Geographical data all suppliers
+          heading: 'Upload session #%{number}'
+          lot_1_and_lot_2_comparisons: Lot 1 and Lot 2 comparisons
+          master_vendor_contacts: Master vendor contacts
+          neutral_vendor_contacts: Neutral vendor contacts
+          pricing_for_tool: Pricing for tool
+          spreadsheet: Spreadsheet
+          status: 'Status:'
+          supplier_lookup: Supplier lookup
+        uploading:
+          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
+          heading: Data upload in progress
     branches:
       branch:
         address: Address
@@ -664,6 +747,8 @@ en:
         calculator:
           agency_fee: Agency fee
           daily_rate: Enter daily rate
+          error: 'Error:'
+          error_message: Daily rate is invalid
           heading: 'Enter the quote from this agency to see what their fee will be:'
           worker_cost: Cost of the worker
         column1: Job type

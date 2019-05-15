@@ -106,11 +106,62 @@ const pageUtils = {
         if (inLineErrorMessage && show === false) {
             $('#inline-error-message').addClass('govuk-visually-hidden');
         }
+    }),
+
+    showGIAError: ((show, errorMsg) => {
+
+        errorMsg = errorMsg || "The total internal area value entered is invalid";
+        if (show === true) {
+            $('#fm-internal-square-area-error').text(errorMsg);
+            $('#fm-internal-square-area-error').removeClass('govuk-visually-hidden');
+            $('#fm-internal-square-area-error-form-group').addClass('govuk-form-group--error');
+        } else {
+            $('#fm-internal-square-area-error').addClass('govuk-visually-hidden');
+            $('#fm-internal-square-area-error-form-group').removeClass('govuk-form-group--error');
+        }
+    }),
+
+    showPostCodeError: ((show, errorMsg) => {
+
+        errorMsg = errorMsg || "The postcode entered is invalid";
+        if (show === true) {
+            $('#fm-postcode-error').text(errorMsg);
+            $('#fm-postcode-error').removeClass('govuk-visually-hidden');
+            $('#fm-postcode-error-form-group').addClass('govuk-form-group--error');
+        } else {
+            $('#fm-postcode-error').addClass('govuk-visually-hidden');
+            $('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');
+        }
+    }),
+
+    showAddressError: ((show, errorMsg) => {
+
+        errorMsg = errorMsg || "No address selected";
+        if (show === true) {
+            $('#fm-address-error').text(errorMsg);
+            $('#fm-address-error').removeClass('govuk-visually-hidden');
+            $('#fm-address-error-form-group').addClass('govuk-form-group--error');
+            pageUtils.showPostCodeError(true, "Address not selected");
+        } else {
+            $('#fm-address-error').addClass('govuk-visually-hidden');
+            $('#fm-address-error-form-group').removeClass('govuk-form-group--error');
+            pageUtils.showPostCodeError(false);
+        }
     })
 
 };
 
 const fm = {
+    clearBuildingCache: (() => {
+        pageUtils.clearCashedData('fm-current-building');
+        pageUtils.clearCashedData('fm-current-region');
+        pageUtils.clearCashedData('fm-new-building-name');
+        pageUtils.clearCashedData('fm-building-type');
+        pageUtils.clearCashedData('fm-gia');
+        pageUtils.clearCashedData('fm-new-address');
+        pageUtils.clearCashedData('fm-postcode-is-in-london');
+        pageUtils.clearCashedData('fm-postcode');
+    }),
     services: {
         updateBuilding: ((building, isUpdate, whereNext) => {
 
@@ -215,7 +266,7 @@ const fm = {
                 return result;
             }),
 
-        addressLookUp:((postcode)=>{
+        addressLookUp: ((postcode) => {
 
         })
     }
