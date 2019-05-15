@@ -707,7 +707,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     it 'obtains the error message from an I18n translation' do
       step.valid?
       expect(step.errors[:holiday_1_end_date]).to include(
-        I18n.t("#{model_key}.attributes.holiday_1_end_date.blank_when_start_date_is_set")
+        I18n.t("#{model_key}.attributes.holiday_1_end_date.blank")
       )
     end
   end
@@ -735,8 +735,8 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
     it 'obtains the error message from an I18n translation' do
       step.valid?
-      expect(step.errors[:holiday_1_end_date]).to include(
-        I18n.t("#{model_key}.attributes.holiday_1_end_date.without_corresponding_start_date")
+      expect(step.errors[:holiday_1_start_date]).to include(
+        I18n.t("#{model_key}.attributes.holiday_1_start_date.blank")
       )
     end
   end
@@ -829,7 +829,7 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
     it 'obtains the error message from an I18n translation' do
       step.valid?
       expect(step.errors[:holiday_2_end_date]).to include(
-        I18n.t("#{model_key}.attributes.holiday_2_end_date.blank_when_start_date_is_set")
+        I18n.t("#{model_key}.attributes.holiday_2_end_date.blank")
       )
     end
   end
@@ -857,8 +857,8 @@ RSpec.describe SupplyTeachers::Journey::TempToPermCalculator, type: :model do
 
     it 'obtains the error message from an I18n translation' do
       step.valid?
-      expect(step.errors[:holiday_2_end_date]).to include(
-        I18n.t("#{model_key}.attributes.holiday_2_end_date.without_corresponding_start_date")
+      expect(step.errors[:holiday_2_start_date]).to include(
+        I18n.t("#{model_key}.attributes.holiday_2_start_date.blank")
       )
     end
   end
