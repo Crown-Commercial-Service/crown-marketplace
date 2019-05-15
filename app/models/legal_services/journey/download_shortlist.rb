@@ -1,8 +1,7 @@
 module LegalServices
-  class Journey::SupplierResults
+  class Journey::DownloadShortlist
     include Steppable
     def next_step_class
-      Journey::DownloadShortlist
     end
   end
 end

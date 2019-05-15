@@ -30,6 +30,14 @@ en:
           attributes:
             value_band:
               inclusion: Select a value band to see a list of suppliers
+        legal_services/journey/lot1_regional_services:
+          attributes:
+            lot_region:
+              too_short: Select the services you need
+        legal_services/journey/lot1_regional_service:
+          attributes:
+            legal_services:
+              too_short: Select the services you need
         legal_services/journey/check_suitability:
           attributes:
             legal_services:

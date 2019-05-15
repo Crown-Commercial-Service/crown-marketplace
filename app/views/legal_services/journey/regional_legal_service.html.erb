@@ -7,12 +7,12 @@
     <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
-          <%= t('Lot 1 - Regional service provision ') %>
+          <%= t('Where do you need the regional legal services?') %>
         </h1>
       </legend>
       <%= display_error(@journey, :central_government) %>
           <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
-             <% lot1 = ['Property and constuction', 'Social housing','Child law','Court pf protection','Education','Debt recovery','Planning and recovery','Licensing','Pensions','Litigation/dispute resolution','Intellectual property','Employment','Healthcare','Primary care'] %>
+             <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
              <% lot1.each do |lot| %>
                <div class="govuk-checkboxes__item">
                  <%= check_box_tag(
