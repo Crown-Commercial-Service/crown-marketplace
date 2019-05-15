@@ -7,11 +7,13 @@ module CCS
     end
 
     class UnitsOfMeasurement < ApplicationRecord
+      self.table_name = 'fm_units_of_measurement'
       # usage:
-      # CCS::FM::Rate.zero_rate
-      # CCS::FM::Rate.service_usage.map(&:code)
+      # CCS::FM::UnitsOfMeasurement.where('C.5')
+      # CCS::FM::UnitsOfMeasurement.where("? = ANY(service_usage)", 'C.5')
       def self.service_usage(service)
-        CCS::FM::UnitsOfMeasurement.where(service_usage: service)
+        # CCS::FM::UnitsOfMeasurement.where(service_usage: service)
+        where('? = ANY(service_usage)', service)
       end
     end
   end
