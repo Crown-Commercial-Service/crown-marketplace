@@ -6,7 +6,7 @@
 
     <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 
-    <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+    <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
       <h2 class="govuk-error-summary__title" id="error-summary-title"><%= t('common.error_summary_title') %></h2>
       <div class="govuk-error-summary__body">
         <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
@@ -31,11 +31,11 @@
             </h1>
           </legend>
 
-          <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden">
+          <%= display_error(@journey, :central_government) %>
+
+          <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
             <%= t('activemodel.errors.models.legal_services/journey/check_suitability2.attributes.central_government.inclusion') %>
           </span>
-
-          <%= display_error(@journey, :central_government) %>
 
           <div class="govuk-radios--inline">
             <div class="govuk-radios__item">
