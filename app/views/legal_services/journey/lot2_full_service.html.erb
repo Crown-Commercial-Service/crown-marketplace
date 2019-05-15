@@ -39,12 +39,13 @@
 
             <% lot1.each do |lot_region| %>
               <div class="govuk-checkboxes__item">
+		<% lot_region_no_space = lot_region.gsub(' ', '_') %>
                 <%= check_box_tag(
                           "lot_region[]",
                           lot_region,
                           false,
                           class: "govuk-checkboxes__input",
-                          id: "lot_region_i{lot_region}"
+                          id: "lot_region_#{lot_region_no_space}"
                         ) %>
                 <label class="govuk-label govuk-checkboxes__label" for="lot_region<%= lot_region %>">
                   <%= lot_region %>
