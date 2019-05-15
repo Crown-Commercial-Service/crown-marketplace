@@ -747,6 +747,8 @@ en:
         calculator:
           agency_fee: Agency fee
           daily_rate: Enter daily rate
+          error: 'Error:'
+          error_message: Daily rate is invalid
           heading: 'Enter the quote from this agency to see what their fee will be:'
           worker_cost: Cost of the worker
         column1: Job type
