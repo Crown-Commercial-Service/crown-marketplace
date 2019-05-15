@@ -39,6 +39,11 @@ module SupplyTeachers
                 end,
                 message: :blank
               }
+    validates :holiday_1_start_date,
+              presence: {
+                if: proc { |calculator| calculator.holiday_1_end_date.present? },
+                message: :blank
+              }
     validate :ensure_holiday_1_start_date_valid
 
     attribute :holiday_1_end_date_day
@@ -57,12 +62,7 @@ module SupplyTeachers
     validates :holiday_1_end_date,
               presence: {
                 if: proc { |calculator| calculator.holiday_1_start_date.present? },
-                message: :blank_when_start_date_is_set
-              }
-    validates :holiday_1_end_date,
-              absence: {
-                if: proc { |calculator| calculator.holiday_1_start_date.blank? },
-                message: :without_corresponding_start_date
+                message: :blank
               }
     validate :ensure_holiday_1_end_date_is_after_start_date
 
@@ -80,6 +80,11 @@ module SupplyTeachers
                 message: :blank
               }
 
+    validates :holiday_2_start_date,
+              presence: {
+                if: proc { |calculator| calculator.holiday_2_end_date.present? },
+                message: :blank
+              }
     attribute :holiday_2_end_date_day
     attribute :holiday_2_end_date_month
     attribute :holiday_2_end_date_year
@@ -96,12 +101,7 @@ module SupplyTeachers
     validates :holiday_2_end_date,
               presence: {
                 if: proc { |calculator| calculator.holiday_2_start_date.present? },
-                message: :blank_when_start_date_is_set
-              }
-    validates :holiday_2_end_date,
-              absence: {
-                if: proc { |calculator| calculator.holiday_2_start_date.blank? },
-                message: :without_corresponding_start_date
+                message: :blank
               }
     validate :ensure_holiday_2_end_date_is_after_start_date
 
