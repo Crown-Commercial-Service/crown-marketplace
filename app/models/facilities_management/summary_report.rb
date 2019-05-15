@@ -87,8 +87,6 @@ module FacilitiesManagement
       end
     end
 
-    private
-
     def uom_values
       @uom_dict = {}
 
@@ -104,6 +102,8 @@ module FacilitiesManagement
       @lift_data = fm_service_data.get_lift_data(@user_id)
       @uom_dict
     end
+
+    private
 
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
