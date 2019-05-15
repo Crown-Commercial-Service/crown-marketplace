@@ -485,9 +485,9 @@ en:
       check_suitability2:
         heading: Will the fees be under £20,000 per matter?
       choose_organisation_type:
-        central_government_search_link_title: central government departments, agencies and public bodies
+        txt_link_text: central government departments, agencies and public bodies
         question: Do you work for central government?
-        search_central_government_html: Search %{central_government_search_link} if you’re unsure.
+        search_central_government_html: Search %{central_government_search_link} if you're unsure.
       choose_regional_or_fullservice:
         question: Question
       lot1_regional_service:
