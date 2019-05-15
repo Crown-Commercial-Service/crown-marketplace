@@ -74,6 +74,12 @@ class FacilitiesManagement::Spreadsheet
           label = 'Work Package ' + s.work_package_code + ' ' + s.work_package.name
         end
         work_package = s.work_package_code
+
+        # uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
+        # if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
+        #   uom.count
+        # end
+
         sheet.add_row [label, s.code, s.name]
         work_package = s.work_package_code
       end

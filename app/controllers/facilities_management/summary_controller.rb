@@ -55,6 +55,8 @@ module FacilitiesManagement
     def suppliers_title
       str = "<strong>#{@supplier_count} suppliers found</strong>"
       str << ' to provide the chosen services in your regions.'
+      str << '<br/>'
+      str << 'Your estimated cost is ' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, strip_insignificant_zeros: true) + " for the contract term of #{@contract_length_years} years."
     end
 
     def services_and_suppliers_title
@@ -148,9 +150,11 @@ module FacilitiesManagement
 
     def set_current_choices
       TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
-      @supplier_count = TransientSessionInfo[session.id, 'supplier_count']
-      @posted_locations = TransientSessionInfo[session.id]['posted_locations']
-      @posted_services = TransientSessionInfo[session.id]['posted_services']
+      data = TransientSessionInfo[session.id]
+      @supplier_count = data['supplier_count']
+      @posted_locations = data['posted_locations']
+      @posted_services = data['posted_services']
+      @contract_length_years = data['fm-contract-length']&.to_i
       # @posted_locations ||= []
       # @posted_services ||= []
 
