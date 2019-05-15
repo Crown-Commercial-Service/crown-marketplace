@@ -56,10 +56,11 @@ class FacilitiesManagement::Spreadsheet
     end
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
+      @uom_values = @report.uom_values
       i = 1
       vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement', 'Unit of Measure']
       @report.building_data.each do |building|
-        vals << 'Building ' + i.to_s + ', ' + building.building_json['name']
+        vals << 'Building ' + i.to_s + ' - ' + building.building_json['name']
         i += 1
       end
       sheet.add_row vals
@@ -78,9 +79,21 @@ class FacilitiesManagement::Spreadsheet
 
         uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
         if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
+          vals = [label, s.code, s.name]
           uom.each do |u|
-            sheet.add_row [label, s.code, s.name] + [u['title_text']] + [u['unit_text']]
+            vals << u['title_text']
+            vals << u['unit_text']
+
+            @report.building_data.each do |building|
+              # begin
+              id = building.building_json['id']
+              vals << @uom_values[id][s.code]['uom_value']
+            rescue StandardError
+              vals << '=NA()'
+              # end
+            end
           end
+          sheet.add_row vals
         else
           sheet.add_row [label, s.code, s.name]
         end
