@@ -9,12 +9,7 @@ $(() => {
     const init = (() => {
 
         contractLength = pageUtils.getCachedData('fm-contractlength');
-
-        console.log(contractLength);
-
         contractLength = contractLength && contractLength.length !== 0 ? parseInt(contractLength) : 7;
-
-
         $('#fm-contract-length').val(contractLength);
 
         extensions = pageUtils.getCachedData('fm-contract-extensions');
@@ -40,6 +35,16 @@ $(() => {
 
             $('#' + extension.id).on('keyup', (e) => {
                 processExtensionKeyUp(e);
+            });
+
+            $('#' + extension.id).on('keypress', (e) => {
+                let regex = new RegExp("^[0-9]+$");
+                let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(str)) {
+                    return true;
+                }
+                e.preventDefault();
+                return false;
             });
 
             $('#fm-remove-extension-' + (index + 1)).click((e) => {
@@ -103,6 +108,12 @@ $(() => {
 
     });
 
+    $('#fm-contract-length').keypress(function (event) {
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
     $('#fm-contract-length').on('keyup', (e) => {
         let value = e.target.value;
 
@@ -137,6 +148,26 @@ $(() => {
         $('#fm-remaining-extension-count').text(remainingExtensionCount);
     });
 
+    const validateTotalContractLength = (() => {
+        let totalExtensionYears = calcTotalExtensionYears();
+        let contractLength = $('#fm-contract-length').val();
+        contractLength = contractLength ? parseInt(contractLength) : 0;
+        contractLength = contractLength <= 0 ? 0 : contractLength
+
+        let result = false;
+
+        if (contractLength > 0 && contractLength + totalExtensionYears > 10) {
+            $('#fm-contract-length-error-form-group').addClass('govuk-form-group--error');
+            $('#fm-contract-length-error').removeClass('govuk-visually-hidden');
+        } else {
+            $('#fm-contract-length-error-form-group').addClass('govuk-form-group--error');
+            $('#fm-contract-length-error').removeClass('govuk-visually-hidden');
+            result = true;
+        }
+
+        return result;
+    });
+
     $('#fm-add-another-extension-link').click((e) => {
         e.preventDefault();
         let totalExtensionYears = calcTotalExtensionYears();
@@ -151,6 +182,16 @@ $(() => {
             $('#fm-extensions').append(newDiv);
             $('#' + id).on('keyup', (e) => {
                 processExtensionKeyUp(e);
+            });
+
+            $('#' + id).on('keypress', (e) => {
+                let regex = new RegExp("^[0-9]+$");
+                let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(str)) {
+                    return true;
+                }
+                e.preventDefault();
+                return false;
             });
         }
     });
@@ -175,9 +216,14 @@ $(() => {
         });
     });
 
-
     const processExtensionKeyUp = ((e) => {
+
+        if ((e.which < 48 || e.which > 57)) {
+            e.preventDefault();
+        }
+
         let extValue = e.target.value ? parseInt(e.target.value) : 0;
+        extValue = extValue <= 0 ? 0 : extValue;
         let totalExtensionYears = calcTotalExtensionYears();
         let errorId = e.target.id + '-error';
         let containerId = e.target.id + '-container';
@@ -196,6 +242,13 @@ $(() => {
 
     $('input[name="fm-extension"]').on('keyup', (e) => {
         processExtensionKeyUp(e);
+    });
+
+    $('input[name="fm-extension"]').on('keypress', (event) => {
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+            return false;
+        }
     });
 
     $('input[name="contract-cost-radio"]').click((e) => {
@@ -230,6 +283,26 @@ $(() => {
         }
     });
 
+    $('#fm-internal-square-area').on('keypress', (event) => {
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
+    $('#fm-questions-continue').on('click', (e) => {
+        e.preventDefault();
+        let isValid = validateTotalContractLength();
+
+        if (isValid === true) {
+            // location.href = '/facilities-management/buildings-list';
+            $('#fm-extension-sum').attr('value', calcTotalExtensionYears());
+            $('#fm-seq-form').submit()
+
+        } else {
+            $("html, body").animate({scrollTop: 0}, "1");
+            $('html, body').stop(true, true);
+        }
+    });
 
     init();
 });

@@ -54,7 +54,7 @@
         </ul>
 
         <section class="govuk-tabs__panel" id="search-tab">
-          <%= form_tag apprenticeships_search_results_path, method: :get do %>
+          <%= form_tag apprenticeships_search_results_path, class: :'ccs-form', method: :get do %>
 
 
             <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
@@ -92,7 +92,7 @@
         </section>
 
         <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="browse-tab">
-          <%= form_tag apprenticeships_search_results_path, method: :get do %>
+          <%= form_tag apprenticeships_search_results_path, class: :'ccs-form', method: :get do %>
 
 
           <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">

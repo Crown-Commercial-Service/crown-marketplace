@@ -1,0 +1,18 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+		  <%= t('Supplier Results') %>
+        </h1>
+      </legend>
+     <p><%= t('127 firms can provide the legal services that meet your requirements ') %></p>
+      <%= display_error(@journey, :central_government) %>
+    <% end %>
+  <% end %>
+  <%= link_to 'Back to start', legal_services_path, class: 'govuk-button' %>
+<% end %>

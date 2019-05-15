@@ -26,9 +26,14 @@
       </div>
     </div>
     <label class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</label>
-    <select class="govuk-select govuk-!-width-full" id="fm-postcode-lookup-results" name="fm-postcode-lookup-results">
-      <option value="status-option" selected>0 addresses found</option>
-    </select>
+    <div id="fm-address-error-form-group" class="govuk-form-group">
+    <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
+      No address selected
+    </span>
+      <select class="govuk-select govuk-!-width-full" id="fm-postcode-lookup-results" name="fm-postcode-lookup-results">
+        <option value="status-option" selected>0 addresses found</option>
+      </select>
+    </div>
     <div class="govuk-!-margin-top-3">
       <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button">I
         cant find my building's

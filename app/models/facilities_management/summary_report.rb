@@ -1,21 +1,42 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark
-    attr_reader :building_data
+    attr_reader :sum_uom, :sum_benchmark, :building_data
 
     def initialize(start_date, user_id, data)
       @start_date = start_date
       @user_id = user_id
       @data = data
-      @posted_services = @data[:posted_services]
-      @posted_locations = @data[:posted_locations]
+      @posted_services = @data['posted_services']
+      @posted_locations = @data['posted_locations']
+      @contract_length_years = @data['fm-contract-length'].to_i
+
+      @tupe_flag =
+        begin
+          if @data['contract-tupe-radio'] == 'yes'
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
+          'N'
+        end
 
       @sum_uom = 0
       @sum_benchmark = 0
     end
 
     def calculate_services_for_buildings
-      services_for_buildings
+      uom_values
+
+      selected_services
+
+      @sum_uom = 0
+      @sum_benchmark = 0
+
+      @building_data = CCS::FM::Building.buildings_for_user(@user_id)
+      @building_data.each do |building|
+        services building
+      end
     end
 
     def with_pricing
@@ -40,46 +61,130 @@ module FacilitiesManagement
       @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
     end
 
+    def assessed_value
+      @sum_uom + @sum_benchmark
+    end
+
+    def current_lot
+      case assessed_value
+      when 0..7000000
+        '1a'
+      when 7000000..50000000
+        '1b'
+      else # when > 50000000
+        '1c'
+      end
+    end
+
+    def lot_limit
+      case assessed_value
+      when 0..7000000
+        '£7 Million'
+      when 7000000..50000000
+        'above £7 Million'
+      else
+        'above £50 Million'
+      end
+    end
+
+    def uom_values
+      @uom_dict = {}
+
+      fm_service_data = FMServiceData.new
+
+      uom_values = fm_service_data.uom_values(@user_id)
+      uom_values.each do |values|
+        values['description'] = fm_service_data.work_package_description(values['service_code'])
+        values['unit_text'] = fm_service_data.work_package_unit_text(values['service_code'])
+        @uom_dict[values['building_id']] ||= {}
+        @uom_dict[values['building_id']][values['service_code']] = values
+      end
+      @lift_data = fm_service_data.get_lift_data(@user_id)
+      @uom_dict
+    end
+
     private
 
-    def services_for_buildings
-      @sum_uom = 0
-      @sum_benchmark = 0
-
-      selected_services
-
-      @building_data = CCS::FM::Building.buildings_for_user(@user_id)
-      @building_data.each do |building|
-        fm_gross_internal_area = building.building_json['fm-gross-internal-area'].to_i
-        occupants = 125 # fix it !!!
-        london_flag = if building.building_json['isLondon'] == 'Yes'
-                        'Y'
-                      else
-                        'N'
-                      end
-
-        tupe_flag = 'Y' # fix it !!!
-        cafm_flag = 'Y' # fix it !!!
-        helpdesk_flag = 'N' # fix it !!!
-
-        @selected_services.each do |service|
-          # puts service.code
-          # puts service.name
-          # puts service.mandatory
-          # puts service.mandatory?
-          # puts service.work_package
-          # puts service.work_package.code
-          # puts service.work_package.name
-
-          code = service.code.remove('.')
-          calc_fm = FMCalculator::Calculator.new(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-          uom_cost = calc_fm.sumunitofmeasure(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-          benchmark_cost = calc_fm.benchmarkedcostssum(code, fm_gross_internal_area, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-
-          @sum_uom += uom_cost
-          @sum_benchmark += benchmark_cost
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
+    def copy_params(building_json)
+      @fm_gross_internal_area =
+        begin
+          building_json['gia'].to_i
+        rescue StandardError
+          0
         end
+
+      @london_flag =
+        begin
+          if building_json['isLondon'] == 'Yes'
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
+          'N'
+        end
+
+      @cafm_flag =
+        begin
+          if building_json['services'].any? { |x| x['name'] == 'CAFM system' }
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
+          'N'
+        end
+
+      @helpdesk_flag =
+        begin
+          if building_json['services'].any? { |x| x['name'] == 'Helpdesk services' }
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
+          'N'
+        end
+    end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
+
+    def occupants(code, building_json)
+      case code
+      when 'G.3'
+        begin
+          @uom_dict[building_json['id']][service.code]['uom_value'].to_i
+        rescue StandardError
+          0
+        end
+      else
+        0
       end
+    end
+
+    def services(building)
+      data = building.building_json
+      copy_params data
+      @selected_services.each do |service|
+        # puts service.code
+        # puts service.name
+        # puts service.mandatory
+        # puts service.mandatory?
+        # puts service.work_package
+        # puts service.work_package.code
+        # puts service.work_package.name
+
+        occupants = occupants(service.code, data)
+
+        code = service.code.remove('.')
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        @sum_uom += calc_fm.sumunitofmeasure(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        @sum_benchmark = calc_fm.benchmarkedcostssum(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+      end
+    rescue StandardError => e
+      raise e
     end
   end
 end

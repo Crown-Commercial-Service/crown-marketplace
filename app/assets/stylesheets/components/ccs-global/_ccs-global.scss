@@ -58,6 +58,15 @@ abbr {
   top: -3000px;
 }
 
+.ccs-fully-hidden,
+div.govuk-error-summary + div#ccs-error-summary,
+span.govuk-error-message + span.ccs-client-error-message {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+}
+
 .ccs-next {
     text-decoration: none !important;
     padding: govuk-spacing(4) 0;
@@ -75,7 +84,34 @@ abbr {
     font-family: $govuk-font-family;
 }
 
-
+/* form.ccs-form overrides start */
+form.ccs-form {
+    .govuk-input,
+    .govuk-textarea,
+    .govuk-radios__input,
+    .js-enabled .govuk-tabs__list,
+    .js-enabled .govuk-tabs__panel,
+    .js-enabled .govuk-tabs__tab[aria-selected="true"] {
+        border-width: 1.5px !important;
+    }
+    .govuk-radios__input + .govuk-radios__label::before {
+        border-width: 1.6px;
+    }
+    .ccs-govuk-checkboxes--thin {
+        .govuk-checkboxes__input + .govuk-checkboxes__label::before {
+          border-width: 1.6px;
+        }
+    }
+    .js-enabled .govuk-tabs__tab[aria-selected="true"]{
+        margin-bottom: -2px !important;
+    }
+    .supplier-record__file-download abbr {
+        position: absolute;
+        top: -3000px;
+        left: -3000px;
+    }
+}
+/* form.ccs-form overrides end */
 
 /* css-tag (inline solid title block) #start ****** */
 .ccs-tag {
@@ -104,6 +140,15 @@ abbr {
     a.ccs-no-underline & {
         margin-left: govuk-spacing(1);
     }
+  &-approved {
+    background-color: govuk-colour("green");
+  }
+  &-canceled, &-failed, &-rejected {
+    background-color: govuk-colour("red");
+  }
+  &-in_review, &-in_progress, &-uploading {
+    background-color: govuk-colour("grey-1");
+  }
 }
 /* css-tag end ****** */
 
