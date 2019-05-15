@@ -11,9 +11,13 @@ module FacilitiesManagement
       @contract_length_years = @data['fm-contract-length'].to_i
 
       @tupe_flag =
-        if @data['contract-tupe-radio'] == 'yes'
-          'Y'
-        else
+        begin
+          if @data['contract-tupe-radio'] == 'yes'
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
           'N'
         end
 
@@ -101,30 +105,51 @@ module FacilitiesManagement
       @uom_dict
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def copy_params(building_json)
-      @fm_gross_internal_area = building_json['gia'].to_i
+      @fm_gross_internal_area =
+        begin
+          building_json['gia'].to_i
+        rescue StandardError
+          0
+        end
 
       @london_flag =
-        if building_json['isLondon'] == 'Yes'
-          'Y'
-        else
+        begin
+          if building_json['isLondon'] == 'Yes'
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
           'N'
         end
 
       @cafm_flag =
-        if building_json['services'].any? { |x| x['name'] == 'CAFM system' }
-          'Y'
-        else
+        begin
+          if building_json['services'].any? { |x| x['name'] == 'CAFM system' }
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
           'N'
         end
 
       @helpdesk_flag =
-        if building_json['services'].any? { |x| x['name'] == 'Helpdesk services' }
-          'Y'
-        else
+        begin
+          if building_json['services'].any? { |x| x['name'] == 'Helpdesk services' }
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
           'N'
         end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
 
     def occupants(code, building_json)
       case code
