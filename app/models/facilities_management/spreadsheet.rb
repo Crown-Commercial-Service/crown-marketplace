@@ -103,6 +103,8 @@ class FacilitiesManagement::Spreadsheet
     end
 
     @workbook.add_worksheet(name: 'Procurement summary') do |sheet|
+      date = sheet.styles.add_style(:format_code => "dd mmm yyyy", :border => Axlsx::STYLE_THIN_BORDER)
+
       sheet.add_row ['CCS reference number & date/time of production of this document']
       sheet.add_row
       sheet.add_row ['1. Customer details']
@@ -112,15 +114,15 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row ['Contact details']
       sheet.add_row ['']
       sheet.add_row ['2. Contract requirements']
-      sheet.add_row ['Initial Contract length']
+      sheet.add_row ['Initial Contract length', @report.contract_length_years]
       sheet.add_row ['Extensions']
       sheet.add_row ['']
-      sheet.add_row ['Tupe involvement']
+      sheet.add_row ['Tupe involvement', @report.tupe_flag]
       sheet.add_row ['']
-      sheet.add_row ['Contract start date']
+      sheet.add_row ['Contract start date', @report.start_date], :style => [nil, date]
       sheet.add_row ['']
       sheet.add_row ['3. Price and sub-lot recommendation']
-      sheet.add_row ['Assessed Value']
+      sheet.add_row ['Assessed Value', @report.assessed_value]
       sheet.add_row ['Assessed value estimated accuracy']
       sheet.add_row ['']
       sheet.add_row ['Lot recommendation']
