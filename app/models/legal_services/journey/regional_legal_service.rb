@@ -1,5 +1,5 @@
 module LegalServices
-  class Journey::RegionalLegalServices
+  class Journey::RegionalLegalService
     include Steppable
     attribute :lot, Array
     validates :lot, length: { minimum: 1 }
