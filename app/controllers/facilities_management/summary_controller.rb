@@ -56,7 +56,7 @@ module FacilitiesManagement
       str = "<strong>#{@supplier_count} suppliers found</strong>"
       str << ' to provide the chosen services in your regions.'
       str << '<br/>'
-      str << 'Your estimated cost is ' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, strip_insignificant_zeros: true) + " for the contract term of #{@contract_length_years} years."
+      str << 'Your estimated cost is ' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, strip_insignificant_zeros: true) + " for the contract term of #{@report.contract_length_years} years."
     end
 
     def services_and_suppliers_title
@@ -154,7 +154,6 @@ module FacilitiesManagement
       @supplier_count = data['supplier_count']
       @posted_locations = data['posted_locations']
       @posted_services = data['posted_services']
-      @contract_length_years = data['fm-contract-length']&.to_i
       # @posted_locations ||= []
       # @posted_services ||= []
 
