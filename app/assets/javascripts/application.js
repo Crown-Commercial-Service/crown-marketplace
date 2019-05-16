@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require global/jquery.validate.min.js
 //= require rails-ujs
 //= require govuk-frontend/all
 //= require google_analytics
@@ -27,4 +26,5 @@
 //= require facilities_management/fm-units-of-measurement.js
 //= require facilities_management/fm-contract.js
 //= require facilities_management/fm-lifts.js
+//=require legal_services/ls_form_validation.js
 //= require global/global.js

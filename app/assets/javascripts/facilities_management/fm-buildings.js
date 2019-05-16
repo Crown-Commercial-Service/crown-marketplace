@@ -207,6 +207,17 @@ $(() => {
         return false;
     });
 
+    //FM-delete-building-link
+
+    $('a[name=FM-delete-building-link]').on('click', (e) => {
+        e.preventDefault();
+        let id = e.target.id;
+        let id_elems = id.split('~');
+        let building_id = id_elems[1];
+        fm.services.delete_building(building_id);
+
+    });
+
     $('#fm-building-type-continue').click((e) => {
         if (isBuildingTypeValid() === true) {
             pageUtils.toggleInlineErrorMessage(false);

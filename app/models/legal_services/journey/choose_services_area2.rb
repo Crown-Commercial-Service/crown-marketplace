@@ -2,13 +2,13 @@ module LegalServices
   class Journey::ChooseServicesArea2
     include Steppable
 
-    attribute :services_area
-    validates :services_area, inclusion: ['yes', 'no']
+    attribute :services_area2
+    validates :services_area2, inclusion: ['yes', 'no', 'other']
 
     def next_step_class
-      case services_area
+      case services_area2
       when 'yes'
-        Journey::Lot1RegionalService
+        Journey::Lot1RegionalServices
       when 'no'
         Journey::Lot2FullService
       else

@@ -47,8 +47,8 @@ Rails.application.routes.draw do
     get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
     get '/suppliers/long-list', to: 'long_list#long_list'
     post '/suppliers/longList' => 'long_list#long_list'
-    get '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
-    get '/buildings-list', to: 'buildings#buildings'
+    post '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
+    post '/buildings-list', to: 'buildings#buildings'
     get '/buildings/new-building', to: 'buildings#new_building'
     get '/buildings/new-building-address', to: 'buildings#manual_address_entry_form'
     post '/buildings/new-building-address/save-building' => 'buildings#save_building'
@@ -61,9 +61,10 @@ Rails.application.routes.draw do
     post '/services/save-lift-data' => 'select_services#save_lift_data'
     get '/buildings/region', to: 'buildings#region_info'
     get '/suppliers', to: 'suppliers#index'
+    post '/buildings/delete_building' => 'buildings#delete_building'
 
     get '/start', to: 'journey#start', as: 'journey_start'
-    get '/contract-start', to: 'contract#start_of_contract'
+    post '/contract-start', to: 'contract#start_of_contract'
 
     get '/summary', to: 'summary#index'
     post '/summary', to: 'summary#index'

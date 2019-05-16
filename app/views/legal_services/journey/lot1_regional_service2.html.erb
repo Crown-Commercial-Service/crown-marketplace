@@ -18,7 +18,7 @@
 
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">
-              <%= t('Lot2 Full Service firms') %>
+              <%= t('.heading') %>
             </h1>
           </legend>
 
@@ -30,22 +30,21 @@
         <div id="accordion-default" class="govuk-grid-column-two-thirds">
 
           <p id="services-hint" class="govuk-heading-m govuk-!-font-size-27">
-            <%= t('select the legal services you need') %>
+            <%= t('.hint') %>
           </p>
 
           <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-  <% lot1 = ['Administrative and public law', 'Banking and Finance','Contracts', 'Competition Law','Corporate M&A','Data protection and information law', 'Employment', 'Information Technology', 'Infrastructure', 'Intellectual Property', 'Litigation and dispute resolution', 'Outsourcing/insourcing', 'Partnerships', 'Property', 'real estate & contruction', 'Tex', 'EU', 'Planning', 'Projects', 'Restructuring and insolvancy', 'Education law', 'Child law', 'Energy and natural resource', 'food rural and environmental affairs', 'francise law', 'health and healthcare', 'life sciences', 'telecommunications','the law of international trade investment and regulation', 'public international law', 'charities law', 'health and safetly law', 'licensing law', 'transport law (excluding rail)'] %>
+            <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
 
             <% lot1.each do |lot_region| %>
               <div class="govuk-checkboxes__item">
-		<% lot_region_no_space = lot_region.gsub(' ', '_') %>
                 <%= check_box_tag(
                           "lot_region[]",
                           lot_region,
                           false,
                           class: "govuk-checkboxes__input",
-                          id: "lot_region_#{lot_region_no_space}"
+                          id: "lot_region_i{lot_region}"
                         ) %>
                 <label class="govuk-label govuk-checkboxes__label" for="lot_region<%= lot_region %>">
                   <%= lot_region %>

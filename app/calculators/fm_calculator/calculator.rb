@@ -19,7 +19,9 @@ module FMCalculator
     @benchmark_rates = nil
     @framework_rates = nil
 
-    def initialize(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+      @contract_length_years = contract_length_years
+      @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
       @uom_vol = uom_vol
       @occupants = occupants
@@ -204,7 +206,7 @@ module FMCalculator
 
     # subsequent year(s) total charges
     def subyearstotal
-      @subyearstotal = 2 * (@year1totalcharges - (((@mobilisation + (@mobilisation * @framework_rates['M140']) + (@mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
+      @subyearstotal = @subsequent_length_years * (@year1totalcharges - (((@mobilisation + (@mobilisation * @framework_rates['M140']) + (@mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
 
       @subyearstotal = @subyearstotal.round(0)
     end
@@ -289,7 +291,7 @@ module FMCalculator
         @benchtupe = @benchsubtotal3 * @framework_rates['M148']
         @benchtupe = @benchtupe.round(0)
       else
-        0
+        @benchtupe = 0
       end
     end
 
@@ -332,7 +334,7 @@ module FMCalculator
 
     # bench mark subsequent year(s) total charges
     def benchsubyearstotal
-      @benchsubyearstotal = 2 * (@benchyear1totalcharges - (((@benchmobilisation + (@benchmobilisation * @framework_rates['M140']) + (@benchmobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
+      @benchsubyearstotal = @subsequent_length_years * (@benchyear1totalcharges - (((@benchmobilisation + (@benchmobilisation * @framework_rates['M140']) + (@benchmobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
       @benchsubyearstotal = @benchsubyearstotal.round(0)
     end
 
@@ -344,7 +346,7 @@ module FMCalculator
     end
 
     # entry point to calculate sum of the unit of measure
-    def sumunitofmeasure(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    def sumunitofmeasure(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
       @service_ref = service_ref
       @uom_vol = uom_vol
       @occupants = occupants
@@ -353,7 +355,7 @@ module FMCalculator
       @cafm_flag = cafm_flag
       @helpdesk_flag = helpdesk_flag
 
-      initialize(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+      initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
       uomd
       clean
       subtotal1
@@ -374,7 +376,7 @@ module FMCalculator
     end
 
     # entry point to calculate bench marked sum
-    def benchmarkedcostssum(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    def benchmarkedcostssum(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
       @service_ref = service_ref
       @uom_vol = uom_vol
       @occupants = occupants
@@ -382,7 +384,7 @@ module FMCalculator
       @london_flag = london_flag
       @cafm_flag = cafm_flag
       @helpdesk_flag = helpdesk_flag
-      initialize(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+      initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
       benchmarkedcosts
       benchclean
       benchsubtotal1

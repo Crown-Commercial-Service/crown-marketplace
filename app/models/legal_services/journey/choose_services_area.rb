@@ -3,12 +3,12 @@ module LegalServices
     include Steppable
 
     attribute :services_area
-    validates :services_area, inclusion: ['yes', 'no']
+    validates :services_area, inclusion: ['yes', 'no', 'other']
 
     def next_step_class
       case services_area
-      when 'yes'
-        Journey::FeesUnder20k
+      when 'yes', 'no'
+        Journey::SupplierResults
       else
         Journey::ChooseServicesArea2
       end

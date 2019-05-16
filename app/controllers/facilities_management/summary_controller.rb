@@ -17,14 +17,12 @@ module FacilitiesManagement
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
         format.html
         format.xlsx do
-          spreadsheet = Spreadsheet.new(@report, with_calculations: params[:calculations].present?)
-          filename = "Shortlist of agencies#{params[:calculations].present? ? ' (with calculator)' : ''}"
-          render xlsx: spreadsheet.to_xlsx, filename: filename
+          spreadsheet = Spreadsheet.new(@report)
+          render xlsx: spreadsheet.to_xlsx, filename: 'procurement_summary'
         end
       end
     rescue StandardError => e
-      @message = e.message
-      render 'error'
+      raise e
     end
 
     private
@@ -57,6 +55,8 @@ module FacilitiesManagement
     def suppliers_title
       str = "<strong>#{@supplier_count} suppliers found</strong>"
       str << ' to provide the chosen services in your regions.'
+      str << '<br/>'
+      str << 'Your estimated cost is ' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, strip_insignificant_zeros: true) + " for the contract term of #{@report.contract_length_years} years."
     end
 
     def services_and_suppliers_title
@@ -150,13 +150,25 @@ module FacilitiesManagement
 
     def set_current_choices
       TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
-      @supplier_count = TransientSessionInfo[session.id, 'supplier_count']
-      @posted_locations = TransientSessionInfo[session.id]['posted_locations']
-      @posted_services = TransientSessionInfo[session.id]['posted_services']
-      @posted_locations ||= []
-      @posted_services ||= []
+      data = TransientSessionInfo[session.id]
+      @supplier_count = data['supplier_count']
+      @posted_locations = data['posted_locations']
+      @posted_services = data['posted_services']
 
       set_start_date
+    end
+
+    def workout_current_lot
+      if @report.current_lot == '1c'
+        @current_lot = '1c'
+      elsif (params['sublot'] == 'no') || @report.without_pricing.count.zero?
+        # check_current_lot
+        @current_lot = @report.current_lot
+      elsif params['sublot'] == 'yes'
+        @current_lot = move_upto_next_lot(@report.current_lot)
+      end
+
+      TransientSessionInfo[session.id]['current_lot'] = @current_lot
     end
 
     def build_report
@@ -165,17 +177,7 @@ module FacilitiesManagement
       @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo[session.id])
       @report.calculate_services_for_buildings
 
-      # params['sublot'] == 'no'
-      if @report.current_lot == '1c'
-        @current_lot = '1c'
-      elsif params['sublot'] == 'yes'
-        # check_current_lot
-        @current_lot = @report.current_lot
-      elsif params['sublot'] == 'no'
-        @current_lot = move_upto_next_lot(@current_lot)
-      end
-      # params['sublot'] == 'no'
-      TransientSessionInfo[session.id]['current_lot'] = @current_lot
+      workout_current_lot
 
       regions
     end

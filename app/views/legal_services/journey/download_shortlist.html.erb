@@ -1,0 +1,18 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+		  <%= t('Download the supplier shortlist') %>
+        </h1>
+      </legend>
+     <p><%= t('The list is valid for 2 days as we frequently update supplier contact details') %></p>
+      <%= display_error(@journey, :central_government) %>
+    <% end %>
+  <% end %>
+  <%= link_to 'Start new search', legal_services_path, class: 'govuk-button' %>
+<% end %>
