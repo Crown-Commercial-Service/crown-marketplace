@@ -10,10 +10,10 @@
     <p class="govuk-body">
       <b>
         <span class="govuk-!-font-size-27">8</span> <%= t('.training_providers') %>
-      </b> 
-      <%= t('.can_supply_training_for') %> 
-      &ldquo;<b>Building services design engineer</b>&rdquo; 
-      <%= t('.that_match_your_requirements') %> 
+      </b>
+      <%= t('.can_supply_training_for') %>
+      &ldquo;<b>Building services design engineer</b>&rdquo;
+      <%= t('.that_match_your_requirements') %>
     </p>
 
     <%= link_to t('.download_label'), '#', role: 'button', class: 'govuk-button govuk-!-margin-top-5 govuk-!-margin-bottom-5' %>
@@ -24,17 +24,17 @@
 <div class="govuk-grid-row govuk-!-padding-top-4 ccs-at-results-pg">
 
   <section id="ccs-at-results-filters" class="govuk-grid-column-one-third ccs-at-results-filters">
-    <%= form_tag apprenticeships_search_path, method: :get, id: 'supplier-results-form' do %><!-- form inside section element-->
+    <%= form_tag apprenticeships_search_path, class: :'ccs-form', method: :get, id: 'supplier-results-form' do %><!-- form inside section element-->
 
-      <%= render partial: 'provider_filters' %> 
+      <%= render partial: 'provider_filters' %>
 
-    <% end %> 
+    <% end %>
   </section>
 
   <section class="govuk-grid-column-two-thirds ccs-search-results">
-  
+
     <table class="govuk-table">
-      
+
       <caption class="govuk-table__caption ccs-remove">Search results</caption>
 
       <thead class="govuk-table__head">
@@ -66,12 +66,12 @@
         <% end %>
 
       </tbody>
-    </table>             
+    </table>
 
     <%= link_to '/apprenticeships/supplier_search2', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state ccs-next' do %>
       <%= t('common.next')%><span>&nbsp;&rarr;</span>
     <% end %>
 
   </section>
- 
+
 </div>
