@@ -20,7 +20,7 @@ en:
               too_short: Please select a checkbox
         apprenticeships/journey/lot1_regional_service:
           attributes:
-            lot:
+            lot_region:
               too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
@@ -32,8 +32,12 @@ en:
               inclusion: Select a value band to see a list of suppliers
         legal_services/journey/lot2_full_service:
           attributes:
-            lot:
+            lot_region:
               too_short: Select at least one service
+        legal_services/journey/regional_legal_services:
+          attributes:
+            region:
+              too_short: Select at least one region
         legal_services/journey/regional_legal_service:
           attributes:
             lot:
@@ -44,7 +48,7 @@ en:
               inclusion: Select the services you need
         legal_services/journey/lot1_regional_services:
           attributes:
-            lot_region:
+            lot:
               too_short: Select the services you need
         legal_services/journey/lot1_regional_service:
           attributes:
