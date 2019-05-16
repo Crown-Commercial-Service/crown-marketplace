@@ -154,8 +154,6 @@ module FacilitiesManagement
       @supplier_count = data['supplier_count']
       @posted_locations = data['posted_locations']
       @posted_services = data['posted_services']
-      # @posted_locations ||= []
-      # @posted_services ||= []
 
       set_start_date
     end
