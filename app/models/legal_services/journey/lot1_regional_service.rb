@@ -4,7 +4,7 @@ module LegalServices
     attribute :lot_region, Array
     validates :lot_region, length: { minimum: 1 }
     def next_step_class
-      Journey::RegionalLegalServices
+      Journey::RegionalLegalService
     end
   end
 end

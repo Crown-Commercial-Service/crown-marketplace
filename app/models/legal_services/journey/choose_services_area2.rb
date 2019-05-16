@@ -8,7 +8,7 @@ module LegalServices
     def next_step_class
       case services_area2
       when 'yes'
-        Journey::Lot1RegionalService
+        Journey::Lot1RegionalServices
       when 'no'
         Journey::Lot2FullService
       else
