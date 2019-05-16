@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     post '/services/save-lift-data' => 'select_services#save_lift_data'
     get '/buildings/region', to: 'buildings#region_info'
     get '/suppliers', to: 'suppliers#index'
+    post '/buildings/delete_building' => 'buildings#delete_building'
 
     get '/start', to: 'journey#start', as: 'journey_start'
     post '/contract-start', to: 'contract#start_of_contract'

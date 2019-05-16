@@ -22,6 +22,30 @@ class FMBuildingData
     Rails.logger.warn "Couldn't save building: #{e}"
   end
 
+  def delete_uom_for_building(email_address, building_id)
+    query = "delete from fm_uom_values where user_id = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "';"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't delete uom's for building: #{e}"
+  end
+
+  def delete_lifts_for_building(email_address, building_id)
+    query = "delete from fm_lifts where user_id = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "';"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't delete lift info for building: #{e}"
+  end
+
+  def delete_building(email_address, building_id)
+    Rails.logger.info '==> FMBuildingData.delete_building()'
+    delete_uom_for_building(email_address, building_id)
+    delete_lifts_for_building(email_address, building_id)
+    query = "delete from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + building_id + "';"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't delete building: #{e}"
+  end
+
   def update_building(email_address, id, building)
     Rails.logger.info '==> FMBuildingData.update_building()'
     query = "update facilities_management_buildings set building_json = '" + building.gsub("'", "''") + "'" \

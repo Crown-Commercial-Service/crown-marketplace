@@ -1,11 +1,11 @@
 module LegalServices
   class Journey::RegionalLegalServices
     include Steppable
-    attribute :legal_services
-    validates :legal_services, inclusion: ['yes', 'no', 'other']
+    attribute :region, Array
+    validates :region, length: { minimum: 1 }
 
     def next_step_class
-      SupplierResults
+      Journey::SupplierResults
     end
   end
 end
