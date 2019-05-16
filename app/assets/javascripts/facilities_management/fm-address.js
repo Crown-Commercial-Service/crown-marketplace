@@ -36,7 +36,7 @@ $(() => {
             $('#fm-address-postcode').val(postCode);
         }
 
-        $('#fm-address-line-1').focus();
+        $('#fm-address-line-1').trigger('focus')
 
         address['fm-address-postcode'] = postCode;
 
@@ -116,7 +116,7 @@ $(() => {
         }
 
         if (result === false) {
-            $('#' + id).focus();
+            $('#' + id).trigger('focus');
             $('#' + id + '-container').addClass('govuk-form-group--error');
             $('#' + id + '-error').removeClass('govuk-visually-hidden');
         } else {
@@ -154,7 +154,7 @@ $(() => {
 
     });
 
-    $('#fm-new-address-continue').click((e) => {
+    $('#fm-new-address-continue').on('click', (e) => {
         e.preventDefault();
 
         if (isAddressValid(address)) {
@@ -193,7 +193,7 @@ $(() => {
     });
 
 
-    $('#fm-new-building-continue').click((e) => {
+    $('#fm-new-building-continue').on('click', (e) => {
 
         e.preventDefault();
 

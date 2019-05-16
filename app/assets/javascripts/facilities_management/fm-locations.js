@@ -16,7 +16,7 @@ $(() => {
         /* Load and display cached values */
         if (selectedLocations) {
             selectedLocations.forEach((value, index, array) => {
-                $('input#' + value.code).click();
+                $('input#' + value.code).trigger("click");
             });
         }
 
@@ -35,7 +35,7 @@ $(() => {
     const removeSelectedItem = ((id) => {
         $('li#' + id).remove();
         id = id.replace('_selected', '');
-        $("input#" + id).removeAttr("checked");
+        $("input#" + id).prop("checked", false);
 
         /* remove from the array that is saved */
         let filtered = selectedLocations.filter((value, index, arr) => {
@@ -54,7 +54,7 @@ $(() => {
     /* uncheck all check boxes and clear list */
     const clearAllLocations = (() => {
         $("#selected-fm-locations li").remove();
-        $("#region-accordion input:checkbox").removeAttr("checked");
+        $("#region-accordion input:checkbox").prop("checked", false);
 
         selectedLocations = [];
         pageUtils.setCachedData('fm-locations', selectedLocations);
@@ -63,13 +63,13 @@ $(() => {
     });
 
     /* Click handler to remove all locations */
-    $('#remove-all-locations-link').click((e) => {
+    $('#remove-all-locations-link').on('click', (e) => {
         e.preventDefault();
         clearAllLocations();
     });
 
     /* click handler for check boxes */
-    $('#region-accordion .govuk-checkboxes__input').click((e) => {
+    $('#region-accordion .govuk-checkboxes__input').on('click', (e) => {
 
         let labelID = '#' + e.target.id + '_label';
         let val = $(labelID)[0].innerText;
@@ -92,7 +92,7 @@ $(() => {
                 '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
             $("#selected-fm-locations").append(newLI);
 
-            $('#' + removeLinkID).click((e) => {
+            $('#' + removeLinkID).on('click', (e) => {
                 e.preventDefault();
                 removeSelectedItem(selectedID);
             });
@@ -109,15 +109,15 @@ $(() => {
     });
 
     /* click handler for select all on accordion */
-    $('#select-all-link').click((e) => {
+    $('#select-all-link').on('click', (e) => {
         e.preventDefault();
 
         isLocationValid();
 
         clearAllLocations();
 
-        $('input:checkbox').attr('checked', 'checked');
-        $('input:checkbox').click();
+        $('input:checkbox').prop("checked", true);
+        $('input:checkbox').trigger("click");
 
         pageUtils.sortUnorderedList('selected-fm-locations');
         updateLocationCount();
@@ -138,7 +138,7 @@ $(() => {
     });
 
     /* Click handler for save and continue button */
-    $('#save-locations-link').click((e) => {
+    $('#save-locations-link').on('click', (e) => {
 
         pageUtils.toggleInlineErrorMessage(false);
 
