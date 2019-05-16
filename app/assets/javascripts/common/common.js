@@ -180,7 +180,16 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     pageUtils.setCachedData('fm-current-building', building);
-                    location.href = whereNext
+                    // location.href = whereNext
+                    if (whereNext == '/facilities-management/buildings/select-services')
+                    {
+                        $('#fm-building-type-form').submit()
+                    }
+                    else
+                    {
+                        $('#fm-select-services-continue-btn-form').submit()
+                    }
+
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);

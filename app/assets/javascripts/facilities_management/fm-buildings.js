@@ -150,6 +150,7 @@ $(() => {
 
     $('#fm-buildings-add-building').click((e) => {
         fm.clearBuildingCache();
+        $('#fm-new-building-form').submit()
     });
 
     $('#fm-internal-square-area').change((e) => {
