@@ -69,7 +69,7 @@ en:
         legal_services/journey/lot1_regional_service:
           attributes:
             lot_region:
-              too_short: Select at least one checkbox
+              too_short: Select the legal service or services you need
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -121,7 +121,8 @@ en:
         supply_teachers/journey/temp_to_perm_calculator:
           attributes:
             contract_start_date:
-              blank: Enter the date the contract started and include a day, month and year
+              blank: Enter the contract start date, including the day, month and year
+              invalid: Enter a real date
             day_rate:
               blank: Enter the number of pounds charged per day
               greater_than: The number of pounds charged per day must be more than 0
@@ -133,30 +134,30 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date:
-              blank: Enter the date you want to hire the worker and include a day, month and year
+              blank: Enter the date you want to take the worker on permanently, including the day, month and year
+              invalid: Enter a real date
             holiday_1_end_date:
-              before_start_date: The end date of the first school holiday must be after the start date
-              blank_when_start_date_is_set: The end date of the first school holiday must be set when a start date is entered
-              invalid: Enter the date the first school holiday ended and include a day, month and year
-              without_corresponding_start_date: The end date of the first school holiday cannot be set without a corresponding start date
+              blank: Enter the date the first school holiday ended, including the day, month and year
+              invalid: Enter a real date
             holiday_1_start_date:
-              invalid: Enter the date the first school holiday started and include a day, month and year
+              blank: Enter the date the first school holiday started, including the day, month and year
+              invalid: Enter a real date
             holiday_2_end_date:
-              before_start_date: The end date of the second school holiday must be after the start date
-              blank_when_start_date_is_set: The end date of the second school holiday must be set when a start date is entered
-              invalid: Enter the date the second school holiday ended and include a day, month and year
-              without_corresponding_start_date: The end date of the second school holiday cannot be set without a corresponding start date
+              blank: Enter the date the second school holiday ended, including the day, month and yea
+              invalid: Enter a real date
             holiday_2_start_date:
-              invalid: Enter the date the second school holiday started and include a day, month and year
+              blank: Enter the date the second school holiday started, including the day, month and year
+              invalid: Enter a real date
             markup_rate:
               blank: Enter a mark-up percentage
               greater_than_or_equal_to: The mark-up percentage must be between 0 and 100
               less_than_or_equal_to: The mark-up percentage must be between 0 and 100
               not_a_number: The mark-up percentage must be a number
             notice_date:
-              after_hire_date: The date you notified the supplier of your intention to take the worker on permanently must be before the date they will be hired
-              before_contract_start_date: The date you notified the supplier of your intention to take the worker on permanently cannot be before the date their current contract started
-              invalid: Enter the date you notified the supplier of your intention to hire the worker and include a day, month and year
+              after_hire_date: The date you notified the agency that you wish to hire the worker must be before the date you want to take the worker on permanently
+              before_contract_start_date: The date you notified the agency that you wish to hire the worker must be after the date the worker’s current contract started
+              blank: Enter the date you notified the agency that you wish to hire the worker, including the day, month and year
+              invalid: Enter a real date
         supply_teachers/journey/worker_type:
           attributes:
             worker_type:
@@ -766,6 +767,8 @@ en:
         calculator:
           agency_fee: Agency fee
           daily_rate: Enter daily rate
+          error: 'Error:'
+          error_message: Daily rate is invalid
           heading: 'Enter the quote from this agency to see what their fee will be:'
           worker_cost: Cost of the worker
         column1: Job type

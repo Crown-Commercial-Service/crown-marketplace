@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :building_data
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag
 
     def initialize(start_date, user_id, data)
       @start_date = start_date
@@ -11,9 +11,13 @@ module FacilitiesManagement
       @contract_length_years = @data['fm-contract-length'].to_i
 
       @tupe_flag =
-        if @data['contract-tupe-radio'] == 'yes'
-          'Y'
-        else
+        begin
+          if @data['contract-tupe-radio'] == 'yes'
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
           'N'
         end
 
@@ -83,8 +87,6 @@ module FacilitiesManagement
       end
     end
 
-    private
-
     def uom_values
       @uom_dict = {}
 
@@ -101,30 +103,53 @@ module FacilitiesManagement
       @uom_dict
     end
 
+    private
+
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def copy_params(building_json)
-      @fm_gross_internal_area = building_json['gia'].to_i
+      @fm_gross_internal_area =
+        begin
+          building_json['gia'].to_i
+        rescue StandardError
+          0
+        end
 
       @london_flag =
-        if building_json['isLondon'] == 'Yes'
-          'Y'
-        else
+        begin
+          if building_json['isLondon'] == 'Yes'
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
           'N'
         end
 
       @cafm_flag =
-        if building_json['services'].any? { |x| x['name'] == 'CAFM system' }
-          'Y'
-        else
+        begin
+          if building_json['services'].any? { |x| x['name'] == 'CAFM system' }
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
           'N'
         end
 
       @helpdesk_flag =
-        if building_json['services'].any? { |x| x['name'] == 'Helpdesk services' }
-          'Y'
-        else
+        begin
+          if building_json['services'].any? { |x| x['name'] == 'Helpdesk services' }
+            'Y'
+          else
+            'N'
+          end
+        rescue StandardError
           'N'
         end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
 
     def occupants(code, building_json)
       case code
