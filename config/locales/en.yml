@@ -70,6 +70,10 @@ en:
           attributes:
             region:
               too_short: Select at least one region
+        legal_services/journey/requirement:
+          attributes:
+            legal_services:
+              inclusion: Select yes if your requirement is restricted to a small geographical area?
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -526,8 +530,8 @@ en:
         txt01: Txt01
         txt02: Txt02
       requirement:
-        central_government_search_link_title: Central government search link title
-        search_central_government_html: Search central government html
+        hint: For example, Greater London or East Midlands
+        question: Is your requirement restricted to a small geographical area?
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
