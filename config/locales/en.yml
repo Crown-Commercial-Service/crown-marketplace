@@ -18,10 +18,6 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
-        apprenticeships/journey/lot1_regional_service:
-          attributes:
-            lot_region:
-              too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -52,7 +48,7 @@ en:
               inclusion: Select the services you need
         legal_services/journey/lot1_regional_service:
           attributes:
-            lot_region:
+            regional_legal_service:
               too_short: Select the legal service or services you need
         legal_services/journey/lot1_regional_services:
           attributes:
