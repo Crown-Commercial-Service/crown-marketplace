@@ -45,7 +45,8 @@ Rails.application.routes.draw do
     get '/value-band', to: 'select_locations#select_location'
     get '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations'
     # get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
-    post '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
+    # post '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
+    match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: [:get, :post]
     get '/suppliers/long-list', to: 'long_list#long_list'
     post '/suppliers/longList' => 'long_list#long_list'
     post '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'

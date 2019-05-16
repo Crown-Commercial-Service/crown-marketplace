@@ -38,6 +38,9 @@ $(() => {
 
     $('#fm-building-not-found').on('click', (e) => {
         pageUtils.clearCashedData('fm-new-address');
+
+        e.preventDefault()
+        $('#fm-new-building-continue-form').attr('action', 'new-building-address').submit()
     });
 
 
@@ -150,6 +153,7 @@ $(() => {
 
     $('#fm-buildings-add-building').click((e) => {
         fm.clearBuildingCache();
+        e.preventDefault()
         $('#fm-new-building-form').submit()
     });
 
