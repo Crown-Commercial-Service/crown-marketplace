@@ -12,20 +12,9 @@ RSpec.describe 'legal_services/journey/choose_organisation_type.html.erb' do
     assign(:form_path, '/')
   end
 
-  it 'does not display the error summary' do
-    render
-    expect(rendered).not_to have_css('.govuk-error-summary')
-  end
-
   it 'does not include aria-describedby attribute' do
     render
     expect(rendered).not_to have_css('fieldset[aria-describedby]')
-  end
-
-  it 'does not include any error message classes' do
-    render
-    expect(rendered).not_to have_css('.govuk-form-group--error')
-    expect(rendered).not_to have_css('.govuk-error-message')
   end
 
   it 'does not set the page title prefix' do
