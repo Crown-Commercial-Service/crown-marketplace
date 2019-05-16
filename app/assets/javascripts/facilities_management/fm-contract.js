@@ -45,7 +45,7 @@ $(() => {
             const month = $('#month').val();
             const year = $('#year').val();
             pageUtils.setCachedData('fm-contract-start-date', day + '-' + month + '-' + year);
-            $('#fm-contract-date-form').submit();
+            $('#fm-contract-date-form').trigger('submit');
         }
     }));
 
