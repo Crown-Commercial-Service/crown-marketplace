@@ -3,8 +3,8 @@
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+  <%= govuk_form_group_with_optional_error(@journey, :lot1_region) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :lot1_region) do %>
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         <h1 class="govuk-fieldset__heading">
           <%= t('Where do you need the regional legal services?') %>
@@ -13,16 +13,17 @@
       <%= display_error(@journey, :central_government) %>
           <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
              <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
-             <% lot1.each do |lot| %>
+             <% lot1.each do |lot1_region| %>
                <div class="govuk-checkboxes__item">
+               <% lot1_region_no_space = lot1_region.gsub(' ', '_') %>
                  <%= check_box_tag(
-                            "lot[]",
-                            lot,
+                            "lot1_region[]",
+                            lot1_region,
                             false,
                             class: "govuk-checkboxes__input",
-                            id: "lot_#{lot}"
+                            id: "lot1_region_#{lot1_region_no_space}"
                           ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot %>">
+                      <label class="govuk-label govuk-checkboxes__label" for="lot1_region<%= lot1_region %>">
                         <%= lot %>
                       </label>
                   </div>
