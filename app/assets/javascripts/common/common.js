@@ -217,6 +217,31 @@ const fm = {
 
         }),
 
+        delete_building: ((building_id) => {
+
+            let url = '/facilities-management/buildings/delete_building';
+
+            let data = {
+                building_id: building_id
+            };
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+        }),
+
         saveLiftData: ((building_id, liftData) => {
 
             let url = '/facilities-management/services/save-lift-data';
