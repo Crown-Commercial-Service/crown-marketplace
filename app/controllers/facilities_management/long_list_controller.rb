@@ -25,12 +25,12 @@ class FacilitiesManagement::LongListController < ApplicationController
     @suppliers_lot1b = fm_supplier_data.long_list_suppliers_lot(@locations, @services, '1b')
     @suppliers_lot1c = fm_supplier_data.long_list_suppliers_lot(@locations, @services, '1c')
 
-    transient_session_info
+    set_current_choices
   end
 
   private
 
-  def transient_session_info
+  def set_current_choices
     TransientSessionInfo[session.id, 'supplier_count'] = @supplier_count
     TransientSessionInfo[session.id, 'posted_locations'] = @posted_locations
     TransientSessionInfo[session.id, 'posted_services'] = @posted_services

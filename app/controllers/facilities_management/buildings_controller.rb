@@ -18,7 +18,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def buildings
-    cache_choices
+    set_current_choices
 
     @uom_values = []
     current_login_email = current_login.email.to_s
@@ -144,17 +144,24 @@ class FacilitiesManagement::BuildingsController < ApplicationController
 
   private
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   # use
   #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
   # to copy the cached choices
-  def cache_choices
-    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length']
-    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension']
-    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
-    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost']
-    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio']
-    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
+  def set_current_choices
+    TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
+    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length'] if params['fm-contract-length']
+    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension'] if params['fm-extension']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
+    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost'] if params['fm-contract-cost']
+    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
   end
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 
   def set_error_messages
     @inline_error_summary_title = 'There was a problem'
