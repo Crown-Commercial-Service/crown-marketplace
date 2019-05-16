@@ -2,7 +2,7 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  require_permission :facilities_management, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
 
   def reset_buildings_tables
     fmd = FMBuildingData.new
@@ -18,7 +18,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def buildings
-    cache_choices
+    set_current_choices
 
     @uom_values = []
     current_login_email = current_login.email.to_s
@@ -142,19 +142,38 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     Rails.logger.warn "Error: BuildingsController building_type(): #{e}"
   end
 
+  def delete_building
+    raw_post = request.raw_post
+    raw_post_json = JSON.parse(raw_post)
+    building_id = raw_post_json['building_id']
+    fm_building_data = FMBuildingData.new
+    fm_building_data.delete_building(current_login.email.to_s, building_id)
+    j = { 'status': 200 }
+    render json: j, status: 200
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController delete_building: #{e}"
+  end
+
   private
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   # use
   #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
   # to copy the cached choices
-  def cache_choices
-    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length']
-    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension']
-    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
-    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost']
-    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio']
-    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
+  def set_current_choices
+    TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
+    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length'] if params['fm-contract-length']
+    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension'] if params['fm-extension']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
+    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost'] if params['fm-contract-cost']
+    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
   end
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 
   def set_error_messages
     @inline_error_summary_title = 'There was a problem'

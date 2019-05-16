@@ -1,5 +1,5 @@
 <div class="govuk-body">
-  <%= form_tag '/facilities-management/buildings-list', id: 'fm-seq-form', method: :get do %>
+  <%= form_tag '/facilities-management/buildings-list', id: 'fm-seq-form', method: :post do %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <a href="/facilities-management/select-locations" class="govuk-back-link">Back</a>
@@ -14,6 +14,8 @@
     </div>
 
     <input type="hidden" id="fm-extension-sum" name="fm-extension-sum"/>
+
+    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
 
     <div class="govuk-grid-row govuk-!-margin-top-4">
       <a id="fm-questions-continue" href="/facilities-management/buildings-list" class="govuk-button ccs-no-print" role="button">Continue</a>
