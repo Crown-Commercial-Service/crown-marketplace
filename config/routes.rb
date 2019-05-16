@@ -86,6 +86,16 @@ Rails.application.routes.draw do
     get '/html/select-location', to: 'html#select_location'
     get '/html/supplier-detail', to: 'html#supplier_detail'
     get '/html/download-the-supplier-list', to: 'html#download_the_supplier_list'
+    unless Rails.env.production? # not be available on production environments yet
+      namespace :admin do
+        resources :uploads, only: %i[index new create show] do
+          get 'approve'
+          get 'reject'
+          get 'uploading'
+        end
+        get '/in_progress', to: 'uploads#in_progress'
+      end
+    end
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'

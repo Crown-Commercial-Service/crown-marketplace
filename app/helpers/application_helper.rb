@@ -1,4 +1,6 @@
 module ApplicationHelper
+  ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin'].freeze
+
   def miles_to_metres(miles)
     DistanceConverter.miles_to_metres(miles)
   end
@@ -123,6 +125,6 @@ module ApplicationHelper
   end
 
   def landing_or_admin_page
-    controller.action_name == 'landing_page' || controller.class.parent_name.underscore == 'supply_teachers/admin'
+    controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.underscore)
   end
 end

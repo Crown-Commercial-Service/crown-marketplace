@@ -551,6 +551,42 @@ en:
         caption: Supplier details
         heading: Supplier details
   management_consultancy:
+    admin:
+      uploads:
+        in_progress:
+          content: The spreadsheets have been uploaded and are now processing.
+          heading: Upload successful
+        index:
+          caption: Manage supplier data
+          create_new: Create a new data upload
+          date: Date
+          heading: Management Consultancy
+          name: Name
+          no_of_files: Number of files
+          status: Status
+          table_caption: Previous uploads
+        new:
+          caption: Management Consultancy
+          heading: New data upload
+          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_title: Upload one or more of the following spreadsheets
+          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+        show:
+          caption: Management consultancy
+          confirm_changes: 'Confirm these files are ready to be used by the live service:'
+          datetime: 'Date/time:'
+          download: Download
+          files: Files
+          heading: 'Upload session #%{number}'
+          rate_cards: Rate Cards
+          spreadsheet: Spreadsheet
+          status: 'Status:'
+          supplier_regional_offerings: Supplier Regional Offerings
+          supplier_service_offerings: Supplier Service Offerings
+          suppliers: Suppliers
+        uploading:
+          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
+          heading: Data upload in progress
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
