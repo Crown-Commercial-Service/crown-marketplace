@@ -66,7 +66,8 @@ Rails.application.routes.draw do
     post '/buildings/delete_building' => 'buildings#delete_building'
 
     get '/start', to: 'journey#start', as: 'journey_start'
-    post '/contract-start', to: 'contract#start_of_contract'
+    # post '/contract-start', to: 'contract#start_of_contract'
+    match '/contract-start', to: 'contract#start_of_contract', via: [:get, :post]
 
     get '/summary', to: 'summary#index'
     post '/summary', to: 'summary#index'
