@@ -6,7 +6,20 @@
 
     <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 
-    <%= form_tag @form_path, method: :get do %>
+    <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+      <h2 class="govuk-error-summary__title" id="error-summary-title"><%= t('common.error_summary_title') %></h2>
+      <div class="govuk-error-summary__body">
+        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
+          <li>
+            <a href="#central_government_yes">
+              <%= t('activemodel.errors.models.legal_services/journey/choose_organisation_type.attributes.central_government.inclusion') %>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <%= form_tag @form_path, id: :'choose_organistion_type', method: :get do %>
 
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
@@ -23,6 +36,10 @@
 
           <%= display_error(@journey, :central_government) %>
 
+          <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+            <%= t('activemodel.errors.models.legal_services/journey/choose_organisation_type.attributes.central_government.inclusion') %>
+          </span>
+
           <div class="govuk-radios--inline">
             <div class="govuk-radios__item">
               <%= radio_button_tag :central_government, 'yes', checked?(params[:central_government], 'yes'), class: 'govuk-radios__input', id: 'central_government_yes' %>
@@ -37,10 +54,9 @@
         <% end %>
       <% end %>
 
-      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+      <%= submit_tag t('common.submit'), id: "submit", class: "govuk-button" %>
 
     <% end %>
 
   </div>
 </div>
-
