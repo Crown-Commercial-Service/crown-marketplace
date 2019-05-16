@@ -12,7 +12,7 @@ function check_suitability(form){
   $('#submit').click(function(e){
     var state = form.find('input[name="legal_services"]');
 
-    if(state.prop("checked") == true){
+    if(state.filter(':checked').length > 0){
       form.submit();
     }else{
       e.preventDefault();
@@ -25,7 +25,7 @@ function check_suitability2(form){
   $('#submit').click(function(e){
     var state = form.find('input[name="central_government"]');
 
-    if(state.prop("checked") == true){
+    if(state.filter(':checked').length > 0){
       form.submit();
     }else{
       e.preventDefault();
@@ -38,7 +38,7 @@ function lot1_regional_service(form){
   $('#submit01').add('#submit02').click(function(e){
     var state = form.find('input[name="regional_legal_service"]');
 
-    if(state.prop("checked") == true){
+    if(state.filter(':checked').length > 0){
       form.submit();
     }else{
       e.preventDefault();
@@ -51,7 +51,20 @@ function choose_organistion_type(form){
   $('#submit').click(function(e){
     var state = form.find('input[name="central_government"]');
 
-    if(state.prop("checked") == true){
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
+
+function requirement(form){
+  $('#submit').click(function(e){
+    var state = form.find('input[name="central_government"]');
+
+    if(state.filter(':checked').length > 0){
       form.submit();
     }else{
       e.preventDefault();
@@ -76,6 +89,8 @@ jQuery(document).ready(function(){
         lot1_regional_service(f);
     }else if($('#choose_organistion_type').length){
         choose_organistion_type(f);
+    }else if($('#requirement').length){
+        requirement(f);
     }
 
 });
