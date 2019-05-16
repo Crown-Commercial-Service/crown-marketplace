@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :building_data
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag
 
     def initialize(start_date, user_id, data)
       @start_date = start_date
