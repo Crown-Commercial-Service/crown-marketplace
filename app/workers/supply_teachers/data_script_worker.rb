@@ -2,6 +2,7 @@ require 'rake'
 module SupplyTeachers
   class DataScriptWorker
     include Sidekiq::Worker
+    sidekiq_options queue: 'default'
 
     def perform(upload_id)
       upload = SupplyTeachers::Admin::Upload.find(upload_id)
