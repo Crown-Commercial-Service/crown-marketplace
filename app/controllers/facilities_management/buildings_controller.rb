@@ -2,7 +2,7 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  require_permission :facilities_management, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
 
   def reset_buildings_tables
     fmd = FMBuildingData.new
@@ -140,6 +140,18 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @type_list_descriptions = fm_building_data.building_type_list_descriptions
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController building_type(): #{e}"
+  end
+
+  def delete_building
+    raw_post = request.raw_post
+    raw_post_json = JSON.parse(raw_post)
+    building_id = raw_post_json['building_id']
+    fm_building_data = FMBuildingData.new
+    fm_building_data.delete_building(current_login.email.to_s, building_id)
+    j = { 'status': 200 }
+    render json: j, status: 200
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController delete_building: #{e}"
   end
 
   private
