@@ -20,7 +20,7 @@ en:
               too_short: Please select a checkbox
         apprenticeships/journey/lot1_regional_service:
           attributes:
-            lot:
+            lot_region:
               too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
@@ -46,10 +46,30 @@ en:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
+        legal_services/journey/choose_services_area:
+          attributes:
+            services_area:
+              inclusion: Select the services you need
         legal_services/journey/lot1_regional_service:
           attributes:
             lot_region:
               too_short: Select the legal service or services you need
+        legal_services/journey/lot1_regional_services:
+          attributes:
+            lot:
+              too_short: Select the services you need
+        legal_services/journey/lot2_full_service:
+          attributes:
+            lot_region:
+              too_short: Select at least one service
+        legal_services/journey/regional_legal_service:
+          attributes:
+            lot:
+              too_short: Select at least one region
+        legal_services/journey/regional_legal_services:
+          attributes:
+            region:
+              too_short: Select at least one region
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -485,9 +505,9 @@ en:
       check_suitability2:
         heading: Will the fees be under £20,000 per matter?
       choose_organisation_type:
-        central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
-        search_central_government_html: Search %{central_government_search_link} if you’re unsure.
+        search_central_government_html: Search %{central_government_search_link} if you're unsure.
+        txt_link_text: central government departments, agencies and public bodies
       choose_regional_or_fullservice:
         question: Question
       lot1_regional_service:

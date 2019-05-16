@@ -7,7 +7,7 @@ module LegalServices
 
     def next_step_class
       case services_area
-      when 'yes'
+      when 'yes', 'no'
         Journey::SupplierResults
       else
         Journey::ChooseServicesArea2
