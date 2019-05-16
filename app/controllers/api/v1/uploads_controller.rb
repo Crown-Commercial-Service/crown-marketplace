@@ -24,7 +24,15 @@ module Api
 
         data = JSON.parse(request.body.read) unless request.body.read.size.zero?
 
-        query(action, data)
+        result = query(action, data)
+
+        render json: { status: 200, result: result }
+      rescue StandardError => e
+        summary = {
+          status: 500,
+          error: e.to_s
+        }
+        render json: summary, status: :unprocessable_entity
       end
 
       # ---------------------------
