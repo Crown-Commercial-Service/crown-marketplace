@@ -10,8 +10,8 @@
       <div class="govuk-error-summary__body">
         <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
           <li>
-            <a href="#lot_North_East">
-              <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service.attributes.regional_legal_service.too_short') %>
+            <a href="#lot_Property_and_construction">
+              <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service.attributes.lot1_regional_service.too_short') %>
             </a>
           </li>
         </ul>
@@ -49,7 +49,7 @@
               <%= display_error(@journey, :lot1_region) %>
 
               <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service.attributes.regional_legal_service.too_short') %>
+                <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service.attributes.lot1_regional_service.too_short') %>
               </span>
 
               <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
@@ -58,7 +58,7 @@
                 <% lot1.each do |lot| %>
                   <div class="govuk-checkboxes__item">
                     <%= check_box_tag(
-                                "regional_legal_service",
+                                "lot1_regional_service",
                                 lot,
                                 false,
                                 class: "govuk-checkboxes__input",
