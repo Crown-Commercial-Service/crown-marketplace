@@ -35,7 +35,7 @@ module FacilitiesManagement
 
       @building_data = CCS::FM::Building.buildings_for_user(@user_id)
       @building_data.each do |building|
-        services building
+        services building.building_json
       end
     end
 
@@ -164,9 +164,8 @@ module FacilitiesManagement
       end
     end
 
-    def services(building)
-      data = building.building_json
-      copy_params data
+    def services(building_data)
+      copy_params building_data
       @selected_services.each do |service|
         # puts service.code
         # puts service.name
@@ -176,7 +175,7 @@ module FacilitiesManagement
         # puts service.work_package.code
         # puts service.work_package.name
 
-        occupants = occupants(service.code, data)
+        occupants = occupants(service.code, building_data)
 
         code = service.code.remove('.')
         calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)

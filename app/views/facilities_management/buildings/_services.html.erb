@@ -23,13 +23,22 @@
     </div>
   </div>
   <div class="govuk-grid-row govuk-!-margin-top-6">
-    <a id="fm-buldings-add-services-continue-link" href="/facilities-management/select-services" class="govuk-link--no-visited-state  ccs-no-print" role="button">+
-      Add
-      services</a>
+    <%= form_tag '/facilities-management/select-services', id: 'fm-buldings-add-services-continue-link-form', method: :post do %>
+      <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+<!--
+      <a id="fm-buldings-add-services-continue-link" href="/facilities-management/select-services" class="govuk-link--no-visited-state  ccs-no-print" role="button">+
+        Add
+        services</a>
+-->
+      <%= submit_tag '+ Add services', class: "govuk-link--no-visited-state ccs-no-print" %>
+    <% end %>
   </div>
-  <div class="govuk-grid-row govuk-!-margin-top-6">
-    <a id="fm-select-services-continue-btn" href="#" class="govuk-button ccs-no-print" role="button">Continue</a>
-  </div>
+  <%= form_tag '/facilities-management/buildings-list', id: 'fm-select-services-continue-btn-form', method: :post do %>
+    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <a id="fm-select-services-continue-btn" href="" class="govuk-button ccs-no-print" role="button">Continue</a>
+    </div>
+  <% end %>
 </div>
 
 

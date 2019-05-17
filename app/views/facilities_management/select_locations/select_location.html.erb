@@ -69,7 +69,9 @@
     </div>
   </div>
   <p>
-    <%= link_to 'Continue', '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id:'save-locations-link', name:'save-locations-link'%>
+    <%= form_tag '/facilities-management/buildings/select-services', id: 'save-locations-link-form', method: :post do %>
+      <%= link_to 'Continue', '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id:'save-locations-link', name:'save-locations-link'%>
+    <% end %>
   </p>
 </div>
 <div class="govuk-grid-column-one-third">
