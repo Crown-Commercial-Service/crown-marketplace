@@ -3,7 +3,7 @@ module SupplyTeachers
     def self.upload!(suppliers)
       error = all_or_none(Supplier) do
         Supplier.destroy_all
-        SupplyTeachers::Admin::Upload.destroy_all #temporarily destroying all upload sessions on upload
+        SupplyTeachers::Admin::Upload.destroy_all # temporarily destroying all upload sessions on upload
 
         suppliers.map do |supplier_data|
           create_supplier!(supplier_data)
