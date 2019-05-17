@@ -3,5 +3,6 @@ if Rails.env.production?
     config.storage    = :aws
     config.aws_bucket = ENV['CCS_APP_API_DATA_BUCKET']
     config.aws_acl = 'public-read'
+    config.aws_attributes = { cache_control: 'max-age=604800' }
   end
 end
