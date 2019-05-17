@@ -180,7 +180,15 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     pageUtils.setCachedData('fm-current-building', building);
-                    location.href = whereNext
+                    // location.href = whereNext
+                    if (whereNext == '/facilities-management/buildings/select-services')
+                    {
+                        $('#fm-building-type-form').submit()
+                    }
+                    else
+                    {
+                        $('#fm-select-services-continue-btn-form').attr('action', whereNext).submit()
+                    }
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
@@ -207,7 +215,8 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     if (textStatus === 'success') {
-                        location.replace(data.next);
+                        // location.replace(data.next);
+                        $('#fm-units-of-measurement-form').attr('action', data.next).submit()
                     }
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
@@ -260,7 +269,8 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     if (textStatus === 'success') {
-                        location.replace(data.next);
+                        // location.replace(data.next);
+                        $('#fm-units-of-measurement-form').attr('action', data.next).submit()
                     }
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
