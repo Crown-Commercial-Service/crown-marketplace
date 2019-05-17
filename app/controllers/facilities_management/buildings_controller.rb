@@ -42,12 +42,16 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def new_building
+    set_current_choices
+
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'error'
   end
 
   def manual_address_entry_form
+    set_current_choices
+
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'error'
@@ -85,9 +89,9 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def units_of_measurement
-    @inline_error_summary_title = 'The value entered is invalid'
-    @inline_error_summary_body_href = '#fm-uom-input'
-    @inline_summary_error_text = 'Enter a number in the correct format'
+    set_current_choices
+
+    uom_error_messages
 
     building_id = params['building_id']
     fm_service_data = FMServiceData.new
@@ -132,6 +136,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def building_type
+    set_current_choices
+
     fm_building_data = FMBuildingData.new
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
@@ -179,5 +185,11 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'Error'
+  end
+
+  def uom_error_messages
+    @inline_error_summary_title = 'The value entered is invalid'
+    @inline_error_summary_body_href = '#fm-uom-input'
+    @inline_summary_error_text = 'Enter a number in the correct format'
   end
 end
