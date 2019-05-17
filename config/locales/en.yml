@@ -1,7 +1,7 @@
 ---
 en:
   'No': 'No'
-  Scotland: Scotland 
+  Scotland: Scotland
   'Yes': 'Yes'
   activemodel:
     errors:
