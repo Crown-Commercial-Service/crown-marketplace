@@ -186,9 +186,7 @@ $(() => {
 
             if (ref.indexOf('buildings/select-services') > -1) {
                 e.preventDefault();
-                // debugger
                 // location.href = document.referrer;
-                // debugger
                 $('#fm-services-form').attr('action', document.referrer).submit()
             } else {
                 let locationCodes = pageUtils.getCodes(selectedLocations);
@@ -202,7 +200,6 @@ $(() => {
         } else {
             e.preventDefault();
             pageUtils.toggleInlineErrorMessage(true);
-            debugger
             window.location = '#';
         }
     });

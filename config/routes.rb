@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     get '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations'
     # get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
     # post '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
-    match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: [:get, :post]
+    match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
     get '/suppliers/long-list', to: 'long_list#long_list'
     post '/suppliers/longList' => 'long_list#long_list'
     post '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
@@ -67,7 +67,7 @@ Rails.application.routes.draw do
 
     get '/start', to: 'journey#start', as: 'journey_start'
     # post '/contract-start', to: 'contract#start_of_contract'
-    match '/contract-start', to: 'contract#start_of_contract', via: [:get, :post]
+    match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]
 
     get '/summary', to: 'summary#index'
     post '/summary', to: 'summary#index'

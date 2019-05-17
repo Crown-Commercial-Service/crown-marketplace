@@ -143,7 +143,6 @@ $(() => {
         pageUtils.toggleInlineErrorMessage(false);
 
         if (isLocationValid() === true) {
-            debugger
             // $('#save-locations-link-form').attr('action', "/facilities-management/buildings/select-services").submit()
             pageUtils.setCachedData('fm-locations', selectedLocations);
         } else {
