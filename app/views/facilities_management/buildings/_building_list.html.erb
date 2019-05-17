@@ -125,10 +125,16 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full govuk-!-margin-top-6 govuk-!-margin-left-4">
     <div>
-      <a id="fm-buildings-add-building" href="buildings/new-building" class="govuk-link--no-visited-state ccs-no-print" role="button">+
-        Add a
-        building
-      </a>
+      <%= form_tag '/facilities-management/buildings/new-building', id: 'fm-new-building-form', method: :post do %>
+        <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+<!--
+        <a id="fm-buildings-add-building" href="buildings/new-building" class="govuk-link--no-visited-state ccs-no-print" role="button">+
+-->
+        <a id="fm-buildings-add-building" href="#" class="govuk-link--no-visited-state ccs-no-print" role="button">+
+          Add a
+          building
+        </a>
+      <% end %>
     </div>
   </div>
 </div>
