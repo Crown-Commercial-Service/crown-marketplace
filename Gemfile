@@ -58,7 +58,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'carrierwave', '~> 1.0'
 
 # for S3 storage of files
-gem 'carrierwave-aws'
+gem 'carrierwave-aws', '~> 1.3.0'
 
 # handles spreadsheets
 gem 'roo', '~> 2.8.0'
