@@ -113,7 +113,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
       @uom_example = service_data['example_text']
       @unit_text = service_data['unit_text']
     else
-      redirect_to('/facilities-management/buildings-list')
+      redirect_to_building_list
     end
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController units_of_measurement(): #{e}"
@@ -162,6 +162,13 @@ class FacilitiesManagement::BuildingsController < ApplicationController
 
   private
 
+  def redirect_to_building_list
+    # request.query_parameters['current_choices'] = params['current_choices'] if params['current_choices']
+    # p = params.permit('current_choices', 'building_id', 'authenticity_token', 'utf8').merge(building_id: request.query_parameters['building_id'])
+    # p = request.query_parameters.merge({:current_choices => params['current_choices']})
+    redirect_to('/facilities-management/buildings-list', current_choices: params['current_choices'], flash: { 'current_choices': params['current_choices'] })
+  end
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
@@ -170,6 +177,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   # to copy the cached choices
   def set_current_choices
     TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
+    TransientSessionInfo[session.id] = JSON.parse(flash['current_choices']) if flash['current_choices'] && params['current_choices'].nil?
+
     TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length'] if params['fm-contract-length']
     TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension'] if params['fm-extension']
     TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
