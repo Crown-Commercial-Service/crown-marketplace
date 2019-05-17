@@ -187,9 +187,8 @@ const fm = {
                     }
                     else
                     {
-                        $('#fm-select-services-continue-btn-form').submit()
+                        $('#fm-select-services-continue-btn-form').attr('action', whereNext).submit()
                     }
-
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
@@ -216,7 +215,8 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     if (textStatus === 'success') {
-                        location.replace(data.next);
+                        // location.replace(data.next);
+                        $('#fm-units-of-measurement-form').attr('action', data.next).submit()
                     }
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
@@ -269,7 +269,8 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     if (textStatus === 'success') {
-                        location.replace(data.next);
+                        // location.replace(data.next);
+                        $('#fm-units-of-measurement-form').attr('action', data.next).submit()
                     }
                 },
                 error: function (jqXhr, textStatus, errorThrown) {

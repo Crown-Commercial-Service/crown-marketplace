@@ -58,7 +58,7 @@ Rails.application.routes.draw do
     post '/buildings/update_building' => 'buildings#update_building'
     post '/buildings/select-services', to: 'buildings#select_services_per_building'
 
-    get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
+    post '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
     post '/buildings/save-uom-value' => 'buildings#save_uom_value'
     post '/services/save-lift-data' => 'select_services#save_lift_data'
     get '/buildings/region', to: 'buildings#region_info'
