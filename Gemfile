@@ -57,9 +57,6 @@ gem 'aws-sdk-s3', '~> 1'
 # for file uploads
 gem 'carrierwave', '~> 1.0'
 
-# for S3 storage of files
-gem 'fog-aws', '~> 3.5.0'
-
 # handles spreadsheets
 gem 'roo', '~> 2.8.0'
 
@@ -73,6 +70,11 @@ gem 'aasm', '~> 5.0'
 gem 'sidekiq', '~> 5.2.7'
 gem 'sinatra', '~> 2.0.5', require: false
 gem 'slim', '~> 4.0.1'
+
+group :production do
+  # for S3 storage of files
+  gem 'fog-aws', '~> 3.5.0'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
