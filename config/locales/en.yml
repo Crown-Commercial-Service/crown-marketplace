@@ -1,7 +1,7 @@
 ---
 en:
   'No': 'No'
-  Scotland: Scotland 
+  Scotland: Scotland
   'Yes': 'Yes'
   activemodel:
     errors:
@@ -515,6 +515,7 @@ en:
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
+        hint: Select the services you need
       lot1_regional_service2:
         heading: Heading
         hint: Hint
