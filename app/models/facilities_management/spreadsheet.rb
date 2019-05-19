@@ -1,6 +1,8 @@
 class FacilitiesManagement::Spreadsheet
-  def initialize(report)
+  def initialize(report, current_lot, data)
     @report = report
+    @current_lot = current_lot
+    @data = data
     create_spreadsheet
   end
 
@@ -114,63 +116,41 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row ['Organisation']
       sheet.add_row ['Position']
       sheet.add_row ['Contact details']
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['2. Contract requirements']
       sheet.add_row ['Initial Contract length', @report.contract_length_years, 'years'], style: [nil, nil, left_align]
       sheet.add_row ['Extensions']
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['Tupe involvement', @report.tupe_flag]
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['Contract start date', @report.start_date.to_date], style: [nil, date]
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['3. Price and sub-lot recommendation']
       sheet.add_row ['Assessed Value', @report.assessed_value], style: [nil, ccy]
       sheet.add_row ['Assessed value estimated accuracy'], style: [nil, ccy]
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['Lot recommendation', @report.assessed_value]
       sheet.add_row ['Direct award option']
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['4. Supplier Shortlist']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
+      @report.selected_suppliers(@current_lot).each do |supplier|
+        sheet.add_row [nil, supplier.data['supplier_name']]
+      end
+      sheet.add_row
+
       sheet.add_row ['5. Regions summary']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
+      FacilitiesManagement::Region.all.select { |region| @data['posted_locations'].include? region.code }.each do |region|
+        sheet.add_row [nil, region.name]
+      end
+      sheet.add_row
+
       sheet.add_row ['6 Services summary']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
+      services = FacilitiesManagement::Service.where(code: @data['posted_services'])
+      services.sort_by!(&:code)
+      services.each do |s|
+        sheet.add_row [nil, s.name]
+      end
+      sheet.add_row
     end
     # package.to_stream.read
   end
