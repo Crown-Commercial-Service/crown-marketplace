@@ -31,7 +31,7 @@ en:
               inclusion: Select a legal service
         legal_services/journey/check_suitability2:
           attributes:
-            central_government:
+            fees:
               inclusion: Select yes if the fees will be under £20,000
         legal_services/journey/check_suitability3:
           attributes:
