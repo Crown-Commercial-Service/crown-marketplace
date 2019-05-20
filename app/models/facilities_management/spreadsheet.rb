@@ -59,18 +59,25 @@ class FacilitiesManagement::Spreadsheet
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       @uom_values = @report.uom_values
+
+      # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
+      services = @report.selected_services.sort_by(&:code)
+      selected_services = services.collect {|s| s.code}
+      selected_services = selected_services.map { |s| s.gsub('.', '-') }
+      selected_buildings = @report.building_data.select do |b|
+        b_services = b.building_json['services'].collect { |s| s['code'] }
+        (selected_services & b_services).any?
+      end
+
       i = 1
       vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement', 'Unit of Measure']
-      @report.building_data.each do |building|
+      selected_buildings.each do |building|
         vals << 'Building ' + i.to_s + ' - ' + building.building_json['name']
         i += 1
       end
       sheet.add_row vals
 
-      # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
       work_package = ''
-      @report.selected_services
-      services = @report.selected_services.sort_by(&:code)
       services.each do |s|
         if work_package == s.work_package_code
           label = nil
@@ -86,7 +93,7 @@ class FacilitiesManagement::Spreadsheet
             vals << u['title_text']
             vals << u['unit_text']
 
-            @report.building_data.each do |building|
+            selected_buildings.each do |building|
               # begin
               id = building.building_json['id']
               vals << @uom_values[id][s.code]['uom_value']
@@ -129,7 +136,7 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row ['Assessed Value', @report.assessed_value], style: [nil, ccy]
       sheet.add_row ['Assessed value estimated accuracy'], style: [nil, ccy]
       sheet.add_row
-      sheet.add_row ['Lot recommendation', @report.assessed_value]
+      sheet.add_row ['Lot recommendation', @report.current_lot]
       sheet.add_row ['Direct award option']
       sheet.add_row
       sheet.add_row ['4. Supplier Shortlist']
