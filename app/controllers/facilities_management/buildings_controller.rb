@@ -171,13 +171,11 @@ class FacilitiesManagement::BuildingsController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   # use
   #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
   # to copy the cached choices
   def set_current_choices
-    TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
-    TransientSessionInfo[session.id] = JSON.parse(flash['current_choices']) if flash['current_choices'] && params['current_choices'].nil?
+    super
 
     TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length'] if params['fm-contract-length']
     TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension'] if params['fm-extension']
@@ -186,7 +184,6 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
     TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
   end
-  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize
 
