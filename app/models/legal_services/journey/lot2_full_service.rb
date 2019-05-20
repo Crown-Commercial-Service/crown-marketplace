@@ -9,9 +9,9 @@ module LegalServices
     end
 
     private
+
     def validate_lot2_full_service
       errors.add(:lot2_full_service, :too_short) if lot2_full_service.nil?
     end
-
   end
 end
