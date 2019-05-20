@@ -47,6 +47,19 @@ function lot1_regional_service(form){
   });
 }
 
+function lot2_full_service(form){
+  $('#submit01').add('#submit02').click(function(e){
+    var state = form.find('input[name="lot2_full_service"]');
+
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
+
 function choose_organistion_type(form){
   $('#submit').click(function(e){
     var state = form.find('input[name="central_government"]');
@@ -111,6 +124,8 @@ jQuery(document).ready(function(){
       check_suitability2(f);
     }else if($('#lot1_regional_service').length){
       lot1_regional_service(f);
+    }else if($('#lot2_full_service').length){
+      lot2_full_service(f);
     }else if($('#choose_organistion_type').length){
       choose_organistion_type(f);
     }else if($('#requirement').length){
