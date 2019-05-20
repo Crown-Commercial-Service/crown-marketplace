@@ -73,7 +73,7 @@ gem 'slim', '~> 4.0.1'
 
 group :production do
   # for S3 storage of files
-  gem 'fog', '~> 2.1.0'
+  gem 'fog-aws', '~> 3.5.0'
 end
 
 group :development, :test do
