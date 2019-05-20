@@ -23,6 +23,7 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
+      @uom_values = uom_values
     end
 
     def calculate_services_for_buildings
@@ -34,7 +35,16 @@ module FacilitiesManagement
       @sum_benchmark = 0
 
       @building_data = CCS::FM::Building.buildings_for_user(@user_id)
-      @building_data.each do |building|
+
+      services = selected_services.sort_by(&:code)
+      selected_services = services.collect(&:code)
+      selected_services = selected_services.map { |s| s.gsub('.', '-') }
+      selected_buildings = @building_data.select do |b|
+        b_services = b.building_json['services'].collect { |s| s['code'] }
+        (selected_services & b_services).any?
+      end
+
+      selected_buildings.each do |building|
         services building.building_json
       end
     end
@@ -178,6 +188,8 @@ module FacilitiesManagement
 
     def services(building_data)
       copy_params building_data
+      id = building_data['id']
+
       @selected_services.each do |service|
         # puts service.code
         # puts service.name
@@ -189,10 +201,15 @@ module FacilitiesManagement
 
         occupants = occupants(service.code, building_data)
 
+        next unless @uom_values[id].key? service.code
+
+        uom_value = @uom_values[id][service.code]['uom_value']
+        uom_value = uom_value.to_f
+
         code = service.code.remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
-        @sum_uom += calc_fm.sumunitofmeasure(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
-        @sum_benchmark = calc_fm.benchmarkedcostssum(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        @sum_uom += calc_fm.sumunitofmeasure
+        @sum_benchmark = calc_fm.benchmarkedcostssum
       end
     rescue StandardError => e
       raise e
