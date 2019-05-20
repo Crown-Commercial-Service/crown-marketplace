@@ -1,7 +1,6 @@
 ---
 en:
   'No': 'No'
-  Scotland: Scotland
   'Yes': 'Yes'
   activemodel:
     errors:
@@ -46,6 +45,10 @@ en:
           attributes:
             services_area:
               inclusion: Select the services you need
+        legal_services/journey/legal_jurisdiction:
+          attributes:
+            legal_services:
+              inclusion: Select the jurisdiction you need
         legal_services/journey/lot1_regional_service:
           attributes:
             lot1_regional_service:
@@ -510,6 +513,11 @@ en:
         txt_link_text: central government departments, agencies and public bodies
       choose_regional_or_fullservice:
         question: Question
+      legal_jurisdiction:
+        eng_wales: England and Wales
+        ni: Northern Ireland
+        question: Which legal jurisdiction do you need?
+        scotland: Scotland
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
         hint: Select the services you need
