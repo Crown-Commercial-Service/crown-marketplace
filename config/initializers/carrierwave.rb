@@ -3,7 +3,7 @@ if Rails.env.production?
     config.storage    = :aws
     config.aws_bucket = ENV['CCS_APP_API_DATA_BUCKET']
     config.aws_acl    = 'private'
-    # The maximum period for authenticated_urls is only 7 days.
+
     config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
     config.aws_attributes = -> { {
       expires: 1.week.from_now.httpdate,
