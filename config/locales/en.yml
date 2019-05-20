@@ -134,15 +134,18 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date:
+              after_contract_start_date: The date you want to take the worker on permanently must be after the date the worker’s current contract started
               blank: Enter the date you want to take the worker on permanently, including the day, month and year
               invalid: Enter a real date
             holiday_1_end_date:
+              before_start_date: The end date of the first school holiday must be after the start date
               blank: Enter the date the first school holiday ended, including the day, month and year
               invalid: Enter a real date
             holiday_1_start_date:
               blank: Enter the date the first school holiday started, including the day, month and year
               invalid: Enter a real date
             holiday_2_end_date:
+              before_start_date: The end date of the second school holiday must be after the start date
               blank: Enter the date the second school holiday ended, including the day, month and yea
               invalid: Enter a real date
             holiday_2_start_date:
