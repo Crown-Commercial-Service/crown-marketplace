@@ -62,10 +62,10 @@ class FacilitiesManagement::Spreadsheet
 
       # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
       services = @report.selected_services.sort_by(&:code)
-      selected_services = services.collect {|s| s.code}
+      selected_services = services.collect(&:code)
       selected_services = selected_services.map { |s| s.gsub('.', '-') }
       selected_buildings = @report.building_data.select do |b|
-        b_services = b.building_json['services'].collect { |s| s['code'] }
+        b_services = b.building_json['services'].map { |s| s['code'] }
         (selected_services & b_services).any?
       end
 
