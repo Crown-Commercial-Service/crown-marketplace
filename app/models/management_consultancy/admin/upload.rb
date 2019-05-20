@@ -5,10 +5,10 @@ module ManagementConsultancy
       self.table_name = 'management_consultancy_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      SUPPLIERS_PATH = './lib/tasks/supply_teachers/input/Suppliers_.xlsx'.freeze
-      SUPPLIER_SERVICE_OFFERINGS_PATH = './lib/tasks/supply_teachers/input/Service offerings.xlsx'.freeze
-      SUPPLIER_REGIONAL_OFFERINGS_PATH = './lib/tasks/supply_teachers/input/Regional offerings.xlsx'.freeze
-      RATE_CARDS_PATH = './lib/tasks/supply_teachers/input/rate_cards.xlsx'.freeze
+      SUPPLIERS_PATH = './lib/tasks/management_consultancy/input/Suppliers.xlsx'.freeze
+      SUPPLIER_SERVICE_OFFERINGS_PATH = './lib/tasks/management_consultancy/input/Service offerings.xlsx'.freeze
+      SUPPLIER_REGIONAL_OFFERINGS_PATH = './lib/tasks/management_consultancy/input/Regional offerings.xlsx'.freeze
+      RATE_CARDS_PATH = './lib/tasks/management_consultancy/input/rate_cards.xlsx'.freeze
 
       mount_uploader :suppliers, ManagementConsultancyFileUploader
       mount_uploader :rate_cards, ManagementConsultancyFileUploader

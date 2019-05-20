@@ -1,0 +1,35 @@
+require 'roo'
+require 'json'
+require 'capybara'
+
+suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/management_consultancy/input/Suppliers.xlsx'
+
+headers = {
+  name: 'Supplier name',
+  contact_email: 'Email address',
+  telephone_number: 'Phone number',
+  website: 'Website URL',
+  address: 'Postal address',
+  sme: 'Is an SME?',
+  duns: 'DUNS Number',
+  clean: true
+}
+
+mcf_sheet = suppliers_workbook.sheet(0)
+
+suppliers = mcf_sheet.parse(headers)
+
+mcf2_sheet = suppliers_workbook.sheet(1)
+
+suppliers += mcf2_sheet.parse(headers)
+
+suppliers.uniq! { |supplier| supplier[:duns] }
+suppliers.delete_if { |supplier| supplier[:duns].nil? }
+
+suppliers.each do |supplier|
+  supplier[:sme] = ['YES', 'Y'].include? supplier[:sme].upcase
+end
+
+File.open('./lib/tasks/management_consultancy/output/suppliers.json', 'w') do |f|
+  f.write JSON.pretty_generate suppliers
+end
