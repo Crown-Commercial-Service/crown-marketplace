@@ -48,7 +48,7 @@ en:
               inclusion: Select the services you need
         legal_services/journey/lot1_regional_service:
           attributes:
-            regional_legal_service:
+            lot1_regional_service:
               too_short: Select the legal service or services you need
         legal_services/journey/lot1_regional_services:
           attributes:
@@ -61,7 +61,7 @@ en:
         legal_services/journey/regional_legal_service:
           attributes:
             lot:
-              too_short: Select at least one region
+              too_short: Select where you need the legal service or services
         legal_services/journey/regional_legal_services:
           attributes:
             region:
@@ -515,6 +515,7 @@ en:
         question: Question
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
+        hint: Select the services you need
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
@@ -528,6 +529,11 @@ en:
         remove_all: Remove all
         txt01: Txt01
         txt02: Txt02
+      regional_legal_service:
+        heading: Where do you need the regional legal services?
+        remove_all: Remove all
+        txt01: regions selected
+        txt02: No regions selected
       requirement:
         hint: For example, Greater London or East Midlands
         question: Is your requirement restricted to a small geographical area?
