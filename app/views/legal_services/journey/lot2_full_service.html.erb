@@ -20,7 +20,7 @@
       </div>
 
 
-      <%= form_tag @form_path, id: :'lot2_full_service', class: :'ccs-form', method: :get do %>
+      <%= form_tag @form_path, id: 'lot2_full_service', class: 'ccs-form', method: :get do %>
         <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
         <div class="govuk-grid-row">
@@ -56,20 +56,20 @@
 
               <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                <% lot1 = ['Administrative and public law', 'Banking and Finance','Contracts', 'Competition Law','Corporate M&A','Data protection and information law', 'Employment', 'Information Technology', 'Infrastructure', 'Intellectual Property', 'Litigation and dispute resolution', 'Outsourcing/insourcing', 'Partnerships', 'Pensions', 'Public procurement', 'Property, real estate &amp; construction', 'Tax', 'EU', 'Planning', 'Projects', 'Restructuring and insolvancy', 'Education law', 'Child law', 'Energy and natural resource', 'Food rural and environmental affairs', 'Francise law', 'Health and healthcare', 'Life sciences', 'Telecommunications','The law of international trade investment and regulation', 'Public international law', 'Charities law', 'Health and safetly law', 'Licensing law', 'Transport law (excluding rail)'] %>
+                <% lot1 = ['Administrative and public law', 'Banking and Finance','Contracts', 'Competition Law','Corporate M&A','Data protection and information law', 'Employment', 'Information Technology', 'Infrastructure', 'Intellectual Property', 'Litigation and dispute resolution', 'Outsourcing/insourcing', 'Partnerships', 'Pensions', 'Public procurement', 'Property, real estate & construction', 'Tax', 'EU', 'Planning', 'Projects', 'Restructuring and insolvancy', 'Education law', 'Child law', 'Energy and natural resource', 'Food rural and environmental affairs', 'Francise law', 'Health and healthcare', 'Life sciences', 'Telecommunications','The law of international trade investment and regulation', 'Public international law', 'Charities law', 'Health and safetly law', 'Licensing law', 'Transport law (excluding rail)'] %>
 
-                <% lot1.each do |lot_region| %>
+                <% lot1.each do |lot2_full_service| %>
                   <div class="govuk-checkboxes__item">
-                    <% lot_region_no_space = lot_region.gsub(' ', '_') %>
+                    <% lot_region_no_space = lot2_full_service.gsub(' ', '_') %>
                     <%= check_box_tag(
                               "lot2_full_service",
-                              lot_region,
+                              lot2_full_service,
                               false,
                               class: "govuk-checkboxes__input",
                               id: "lot_region_#{lot_region_no_space}"
                             ) %>
                     <label class="govuk-label govuk-checkboxes__label" for="lot_region_<%= lot_region_no_space %>">
-                      <%= lot_region %>
+                      <%= lot2_full_service %>
                     </label>
                   </div>
                 <% end %>
