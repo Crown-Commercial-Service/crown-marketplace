@@ -44,7 +44,7 @@
             </div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :central_government, 'yes', checked?(params[:central_government], 'no'), class: 'govuk-radios__input', id: 'gov_scot' %>
-              <%= label_tag :central_government, t('.scotland'), class: 'govuk-label govuk-radios__label', for: 'gov_scot' %>
+              <%= label_tag :central_government, t('.scot_land'), class: 'govuk-label govuk-radios__label', for: 'gov_scot' %>
             </div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :central_government, 'no', checked?(params[:central_government], 'no'), class: 'govuk-radios__input', id: 'gov_ni' %>
