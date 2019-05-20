@@ -23,7 +23,7 @@ function check_suitability(form){
 
 function check_suitability2(form){
   $('#submit').click(function(e){
-    var state = form.find('input[name="central_government"]');
+    var state = form.find('input[name="fees"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
