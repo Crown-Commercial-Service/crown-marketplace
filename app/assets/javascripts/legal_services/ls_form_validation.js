@@ -86,6 +86,19 @@ function regional_legal_service(form){
   });
 }
 
+function legal_jurisdiction(form){
+  $('#submit').click(function(e){
+
+    var state = form.find('input[name="central_government"]');
+
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
 
 
 jQuery(document).ready(function(){
@@ -104,6 +117,8 @@ jQuery(document).ready(function(){
       requirement(f);
     }else if($('#regional_legal_service').length){
       regional_legal_service(f);
+    }else if($('#legal_jurisdiction').length){
+      legal_jurisdiction(f);
     }
 
 });
