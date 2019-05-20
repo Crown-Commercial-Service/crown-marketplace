@@ -517,7 +517,7 @@ en:
         eng_wales: England and Wales
         ni: Northern Ireland
         question: Which legal jurisdiction do you need?
-        scotland: Scotland
+        scot_land: Scotland
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
         hint: Select the services you need
