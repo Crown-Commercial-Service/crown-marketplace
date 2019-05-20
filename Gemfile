@@ -71,10 +71,10 @@ gem 'sidekiq', '~> 5.2.7'
 gem 'sinatra', '~> 2.0.5', require: false
 gem 'slim', '~> 4.0.1'
 
-group :production do
+# group :production do
   # for S3 storage of files
   gem 'carrierwave-aws', '~> 1.3.0'
-end
+# end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
