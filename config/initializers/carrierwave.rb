@@ -4,10 +4,9 @@ if Rails.env.production?
     config.aws_bucket = ENV['CCS_APP_API_DATA_BUCKET']
     config.aws_acl    = 'private'
 
-    config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
     config.aws_attributes = -> { {
-      expires: 1.week.from_now.httpdate,
-      cache_control: 'max-age=#{365.days.to_i}'
+      expires: 1.year.from_now.httpdate,
+      cache_control: "max-age=#{365.days.to_i}"
     } }
 
     config.aws_credentials = {
