@@ -61,6 +61,18 @@ module FacilitiesManagement
       @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
     end
 
+    def selected_suppliers(for_lot)
+      suppliers = CCS::FM::Supplier.all.select do |s|
+        s.data['lots'].find do |l|
+          (l['lot_number'] == for_lot) &&
+            (@posted_locations & l['regions']).any? &&
+            (@posted_services & l['services']).any?
+        end
+      end
+
+      suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
+    end
+
     def assessed_value
       @sum_uom + @sum_benchmark
     end
