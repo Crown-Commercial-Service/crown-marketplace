@@ -59,8 +59,8 @@ en:
               too_short: Select the services you need
         legal_services/journey/lot2_full_service:
           attributes:
-            lot_region:
-              too_short: Select at least one service
+            lot2_full_service:
+              too_short: Select the legal service or services you need
         legal_services/journey/regional_legal_service:
           attributes:
             lot:
@@ -531,12 +531,14 @@ en:
         heading: Heading
         hint: Hint
         remove_all: Remove all
-        txt01: Txt01
-        txt02: Txt02
+        txt01: services selected
+        txt02: No services selected
       lot2_full_service:
+        heading: Lot2 Full Service firms
+        hint: Select the legal services you need
         remove_all: Remove all
-        txt01: Txt01
-        txt02: Txt02
+        txt01: services selected
+        txt02: No services selected
       regional_legal_service:
         heading: Where do you need the regional legal services?
         remove_all: Remove all
