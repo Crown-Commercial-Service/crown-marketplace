@@ -47,7 +47,6 @@ class FacilitiesManagement::Spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
 
-
     # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
     services = @report.selected_services.sort_by(&:code)
     selected_services = services.collect(&:code)

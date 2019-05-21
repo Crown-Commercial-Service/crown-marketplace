@@ -84,7 +84,7 @@ module FacilitiesManagement
     end
 
     def assessed_value
-      @sum_uom + @sum_benchmark
+      (@sum_uom + @sum_benchmark) / 2
     end
 
     def current_lot
