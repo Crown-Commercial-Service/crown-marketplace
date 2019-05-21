@@ -28,7 +28,7 @@ end
     next unless service_offerings.size.positive?
 
     supplier = suppliers.find { |s| s['name'] == supplier_name.strip }
-    supplier['lots'] << { 'lot_number': lot_number, 'services': service_offerings }
+    supplier['lots'] << { 'lot_number' => lot_number, 'services' => service_offerings }
   end
 end
 
