@@ -11,18 +11,20 @@ module FacilitiesManagement
     attr_accessor :report
 
     def index
+      set_current_choices
+
       build_report
 
       respond_to do |format|
         format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
         format.html
         format.xlsx do
-          spreadsheet = Spreadsheet.new(@report)
+          spreadsheet = Spreadsheet.new(@report, @current_lot, @data)
           render xlsx: spreadsheet.to_xlsx, filename: 'procurement_summary'
         end
       end
-    rescue StandardError => e
-      raise e
+    rescue StandardError
+      raise
     end
 
     private
@@ -56,7 +58,7 @@ module FacilitiesManagement
       str = "<strong>#{@supplier_count} suppliers found</strong>"
       str << ' to provide the chosen services in your regions.'
       str << '<br/>'
-      str << 'Your estimated cost is ' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, strip_insignificant_zeros: true) + " for the contract term of #{@contract_length_years} years."
+      str << 'Your estimated cost is ' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, precision: 0) + " for the contract term of #{@report.contract_length_years} years."
     end
 
     def services_and_suppliers_title
@@ -107,16 +109,7 @@ module FacilitiesManagement
     def list_suppliers
       str = "<p><strong>Lot #{@current_lot}</strong><p/>"
 
-      suppliers = CCS::FM::Supplier.all.select do |s|
-        s.data['lots'].find do |l|
-          (l['lot_number'] == @current_lot) &&
-            (@posted_locations & l['regions']).any? &&
-            (@posted_services & l['services']).any?
-        end
-      end
-
-      suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
-      suppliers.each do |supplier|
+      @report.selected_suppliers(@current_lot).each do |supplier|
         str << "<p>#{supplier.data['supplier_name']}</p><hr style='width: 50%;margin-left: 0;'/>"
       end
       str
@@ -149,14 +142,12 @@ module FacilitiesManagement
     end
 
     def set_current_choices
-      TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
-      data = TransientSessionInfo[session.id]
-      @supplier_count = data['supplier_count']
-      @posted_locations = data['posted_locations']
-      @posted_services = data['posted_services']
-      @contract_length_years = data['fm-contract-length']&.to_i
-      # @posted_locations ||= []
-      # @posted_services ||= []
+      super
+
+      @data = TransientSessionInfo[session.id]
+      @supplier_count = @data['supplier_count']
+      @posted_locations = @data['posted_locations']
+      @posted_services = @data['posted_services']
 
       set_start_date
     end

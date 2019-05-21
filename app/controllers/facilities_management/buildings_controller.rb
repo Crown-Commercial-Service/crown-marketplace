@@ -2,7 +2,7 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  require_permission :facilities_management, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
 
   def reset_buildings_tables
     fmd = FMBuildingData.new
@@ -18,7 +18,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def buildings
-    cache_choices
+    set_current_choices
 
     @uom_values = []
     current_login_email = current_login.email.to_s
@@ -42,12 +42,16 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def new_building
+    set_current_choices
+
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'error'
   end
 
   def manual_address_entry_form
+    set_current_choices
+
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'error'
@@ -85,9 +89,9 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def units_of_measurement
-    @inline_error_summary_title = 'The value entered is invalid'
-    @inline_error_summary_body_href = '#fm-uom-input'
-    @inline_summary_error_text = 'Enter a number in the correct format'
+    set_current_choices
+
+    uom_error_messages
 
     building_id = params['building_id']
     fm_service_data = FMServiceData.new
@@ -109,7 +113,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
       @uom_example = service_data['example_text']
       @unit_text = service_data['unit_text']
     else
-      redirect_to('/facilities-management/buildings-list')
+      redirect_to_building_list
     end
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController units_of_measurement(): #{e}"
@@ -132,6 +136,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def building_type
+    set_current_choices
+
     fm_building_data = FMBuildingData.new
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
@@ -142,23 +148,54 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     Rails.logger.warn "Error: BuildingsController building_type(): #{e}"
   end
 
+  def delete_building
+    raw_post = request.raw_post
+    raw_post_json = JSON.parse(raw_post)
+    building_id = raw_post_json['building_id']
+    fm_building_data = FMBuildingData.new
+    fm_building_data.delete_building(current_login.email.to_s, building_id)
+    j = { 'status': 200 }
+    render json: j, status: 200
+  rescue StandardError => e
+    Rails.logger.warn "Error: BuildingsController delete_building: #{e}"
+  end
+
   private
 
+  def redirect_to_building_list
+    # request.query_parameters['current_choices'] = params['current_choices'] if params['current_choices']
+    # p = params.permit('current_choices', 'building_id', 'authenticity_token', 'utf8').merge(building_id: request.query_parameters['building_id'])
+    # p = request.query_parameters.merge({:current_choices => params['current_choices']})
+    redirect_to('/facilities-management/buildings-list', current_choices: params['current_choices'], flash: { 'current_choices': params['current_choices'] })
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   # use
   #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
   # to copy the cached choices
-  def cache_choices
-    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length']
-    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension']
-    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
-    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost']
-    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio']
-    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio']
+  def set_current_choices
+    super
+
+    TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length'] if params['fm-contract-length']
+    TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension'] if params['fm-extension']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
+    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost'] if params['fm-contract-cost']
+    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
+    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 
   def set_error_messages
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'Error'
+  end
+
+  def uom_error_messages
+    @inline_error_summary_title = 'The value entered is invalid'
+    @inline_error_summary_body_href = '#fm-uom-input'
+    @inline_summary_error_text = 'Enter a number in the correct format'
   end
 end

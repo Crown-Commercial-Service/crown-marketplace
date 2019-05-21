@@ -47,6 +47,7 @@
     <input name="authenticity_token" type="hidden" value='<%= csrf_meta_tag %>' />
     <input id="postedlocations" name="postedlocations" type="hidden" value=""/>
     <input id="postedservices" name="postedservices" type="hidden" value=""/>
+    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
     <a role='button' class='govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' id='save-services-link'>Continue</a>
   </form>
 

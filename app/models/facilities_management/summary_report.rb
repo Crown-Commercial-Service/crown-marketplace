@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :building_data
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag
 
     def initialize(start_date, user_id, data)
       @start_date = start_date
@@ -9,6 +9,7 @@ module FacilitiesManagement
       @posted_services = @data['posted_services']
       @posted_locations = @data['posted_locations']
       @contract_length_years = @data['fm-contract-length'].to_i
+      @contract_cost = @data['fm-contract-cost'].to_f
 
       @tupe_flag =
         begin
@@ -23,6 +24,7 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
+      @uom_values = uom_values
     end
 
     def calculate_services_for_buildings
@@ -34,8 +36,17 @@ module FacilitiesManagement
       @sum_benchmark = 0
 
       @building_data = CCS::FM::Building.buildings_for_user(@user_id)
-      @building_data.each do |building|
-        services building
+
+      services = selected_services.sort_by(&:code)
+      selected_services = services.collect(&:code)
+      selected_services = selected_services.map { |s| s.gsub('.', '-') }
+      selected_buildings = @building_data.select do |b|
+        b_services = b.building_json['services'].collect { |s| s['code'] }
+        (selected_services & b_services).any?
+      end
+
+      selected_buildings.each do |building|
+        services building.building_json
       end
     end
 
@@ -61,8 +72,22 @@ module FacilitiesManagement
       @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
     end
 
+    def selected_suppliers(for_lot)
+      suppliers = CCS::FM::Supplier.all.select do |s|
+        s.data['lots'].find do |l|
+          (l['lot_number'] == for_lot) &&
+            (@posted_locations & l['regions']).any? &&
+            (@posted_services & l['services']).any?
+        end
+      end
+
+      suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
+    end
+
     def assessed_value
-      @sum_uom + @sum_benchmark
+      return (@sum_uom + @sum_benchmark + @contract_cost) / 3 unless @contract_cost.zero?
+
+      (@sum_uom + @sum_benchmark) / 2
     end
 
     def current_lot
@@ -164,9 +189,10 @@ module FacilitiesManagement
       end
     end
 
-    def services(building)
-      data = building.building_json
-      copy_params data
+    def services(building_data)
+      copy_params building_data
+      id = building_data['id']
+
       @selected_services.each do |service|
         # puts service.code
         # puts service.name
@@ -176,12 +202,17 @@ module FacilitiesManagement
         # puts service.work_package.code
         # puts service.work_package.name
 
-        occupants = occupants(service.code, data)
+        occupants = occupants(service.code, building_data)
+
+        next unless @uom_values[id].key? service.code
+
+        uom_value = @uom_values[id][service.code]['uom_value']
+        uom_value = uom_value.to_f
 
         code = service.code.remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
-        @sum_uom += calc_fm.sumunitofmeasure(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
-        @sum_benchmark = calc_fm.benchmarkedcostssum(@contract_length_years, code, @fm_gross_internal_area, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        @sum_uom += calc_fm.sumunitofmeasure
+        @sum_benchmark = calc_fm.benchmarkedcostssum
       end
     rescue StandardError => e
       raise e
