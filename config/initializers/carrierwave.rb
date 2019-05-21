@@ -1,13 +1,11 @@
 if Rails.env.production?
   CarrierWave.configure do |config|
-    config.fog_provider = 'fog/aws'
-    config.fog_credentials = {
-      provider:              'AWS',
-      use_iam_profile:       true,
-      aws_access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
-      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+    config.storage    = :aws
+    config.aws_bucket = ENV['CCS_APP_API_DATA_BUCKET']
+    config.aws_acl    = 'private'
+
+    config.aws_credentials = {
+      region: ENV['COGNITO_AWS_REGION']
     }
-    config.fog_directory  = ENV['CCS_APP_API_DATA_BUCKET']
-    config.fog_attributes = { cache_control: "public, max-age=#{365.days.to_i}" }
   end
 end
