@@ -46,8 +46,8 @@ namespace :st do
     mv "#{t.name}.tmp", t.name
   end
 
-  file Rails.root.join('lib', 'tasks', 'supply_teachers', 'output', 'data_with_vendors.json') => [Rails.root.join('lib', 'tasks', 'supply_teachers', 'output', 'data_only_accredited.json'), Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'neutral_vendor_contacts.csv'), Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'master_vendor_contacts.csv')] do |t|
-    sh "ruby #{Rails.root.join('lib', 'tasks', 'supply_teachers', 'scripts', 'add_vendor_contacts.rb')} #{t.sources.join(' ')} > #{t.name}.tmp"
+  file Rails.root.join('lib', 'tasks', 'supply_teachers', 'output', 'data_with_vendors.json') => Rails.root.join('lib', 'tasks', 'supply_teachers', 'output', 'data_only_accredited.json') do |t|
+    sh "ruby #{Rails.root.join('lib', 'tasks', 'supply_teachers', 'scripts', 'add_vendor_contacts.rb')} < #{t.source} > #{t.name}.tmp"
     mv "#{t.name}.tmp", t.name
   end
 

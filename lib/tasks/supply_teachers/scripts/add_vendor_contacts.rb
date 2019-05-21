@@ -2,15 +2,15 @@ require 'bundler/setup'
 require 'json'
 require 'csv'
 
-suppliers = JSON.parse(File.read(ARGV[0]))
+suppliers = JSON.parse(Rails.root.join('lib', 'tasks', 'supply_teachers', 'output', 'data_only_accredited.json'))
 
 neutral_details =
-  CSV.new(File.read(ARGV[1]), headers: :first_row)
+  CSV.new(Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'neutral_vendor_contacts.csv'), headers: :first_row)
     .map { |r| [r['supplier_name'], r] }
     .to_h
 
 master_details =
-  CSV.new(File.read(ARGV[2]), headers: :first_row)
+  CSV.new(Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'master_vendor_contacts.csv'), headers: :first_row)
   .map { |r| [r['supplier_name'], r] }
   .to_h
 
