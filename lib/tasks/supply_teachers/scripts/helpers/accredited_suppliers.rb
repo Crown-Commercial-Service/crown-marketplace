@@ -2,10 +2,10 @@ require 'csv'
 require 'roo'
 require 'json'
 
-accredited_suppliers_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Current_Accredited_Suppliers_.xlsx')
+accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'
 
 suppliers = []
-csv = CSV.open(Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'supplier_lookup.csv'), headers: true)
+csv = CSV.open('./lib/tasks/supply_teachers/input/supplier_lookup.csv', headers: true)
 csv.each do |row|
   suppliers << row.to_h.transform_keys!(&:to_sym)
 end
