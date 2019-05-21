@@ -7,9 +7,9 @@ require 'geocoder'
 require 'capybara'
 require 'pathname'
 require 'yaml'
-require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
+require Rails.root.join('lib', 'tasks', 'supply_teachers', 'scripts', 'helpers', 'accredited_suppliers.rb')
 
-price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricing for tool.xlsx'
+price_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'pricing for tool.xlsx')
 
 def subhead?(row)
   row[:number] =~ /Category Line/ || row[:number].nil?

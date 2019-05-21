@@ -9,10 +9,10 @@ require 'capybara'
 require 'pathname'
 require 'yaml'
 
-branch_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx'
-price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricing for tool.xlsx'
-mv_price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx'
-accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'
+branch_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Geographical Data all suppliers.xlsx')
+price_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'pricing for tool.xlsx')
+mv_price_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Lot_1_and_2_comparisons.xlsx')
+accredited_suppliers_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Current_Accredited_Suppliers_.xlsx')
 
 extra_supplier_names = []
 

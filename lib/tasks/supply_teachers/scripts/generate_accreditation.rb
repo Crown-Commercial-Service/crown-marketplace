@@ -9,7 +9,7 @@ require 'capybara'
 require 'pathname'
 require 'yaml'
 
-accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'
+accredited_suppliers_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Current_Accredited_Suppliers_.xlsx')
 
 header_map = {
   'Supplier Name - Accreditation Held' => :supplier_name,
