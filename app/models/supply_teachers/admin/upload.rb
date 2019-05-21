@@ -32,23 +32,19 @@ module SupplyTeachers
           transitions from: :in_progress, to: :in_review
         end
         event :fail do
-          after :cleanup_input_files
-          transitions from: %i[in_progress uploading], to: :failed
+          transitions from: %i[in_progress uploading], to: :failed, after: :cleanup_input_files
         end
         event :upload do
-          after :start_upload
           transitions from: :in_review, to: :uploading
         end
         event :approve do
           transitions from: :uploading, to: :approved
         end
         event :reject do
-          after :cleanup_input_files
-          transitions from: :in_review, to: :rejected
+          transitions from: :in_review, to: :rejected, after: :cleanup_input_files
         end
         event :cancel do
-          after :cleanup_input_files
-          transitions from: %i[in_review in_progress], to: :canceled
+          transitions from: %i[in_review in_progress], to: :canceled, after: :cleanup_input_files
         end
       end
 
@@ -86,11 +82,14 @@ module SupplyTeachers
         in_review.any? || in_progress.any?
       end
 
-      private
-
-      def start_upload
-        SupplyTeachers::DataUploadWorker.perform_async(id)
+      def self.perform_upload(upload_id)
+        upload_session = find(upload_id)
+        upload_session.upload!
+        SupplyTeachers::DataUploadWorker.perform_async(upload_id)
+        upload_session
       end
+
+      private
 
       def reject_uploads_and_cp_files
         reject_previous_uploads

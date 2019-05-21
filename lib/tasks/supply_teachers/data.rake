@@ -42,12 +42,12 @@ namespace :st do
   end
 
   file './lib/tasks/supply_teachers/output/data_only_accredited.json' => './lib/tasks/supply_teachers/output/data_merged.json' do |t|
-    sh "./lib/tasks/supply_teachers/scripts/exclude_suppliers_without_accreditation.rb < #{t.source} > #{t.name}.tmp"
+    sh "./lib/tasks/supply_teachers/scripts/exclude_suppliers_without_accreditation.rb < #{t.source} > #{t.name}.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
     mv "#{t.name}.tmp", t.name
   end
 
   file './lib/tasks/supply_teachers/output/data_with_vendors.json' => ['./lib/tasks/supply_teachers/output/data_only_accredited.json', './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv', './lib/tasks/supply_teachers/input/master_vendor_contacts.csv'] do |t|
-    sh "ruby ./lib/tasks/supply_teachers/scripts/add_vendor_contacts.rb #{t.sources.join(' ')} > #{t.name}.tmp"
+    sh "ruby ./lib/tasks/supply_teachers/scripts/add_vendor_contacts.rb #{t.sources.join(' ')} > #{t.name}.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
     mv "#{t.name}.tmp", t.name
   end
 
@@ -63,12 +63,12 @@ namespace :st do
   end
 
   file './lib/tasks/supply_teachers/output/anonymous.json' => './lib/tasks/supply_teachers/output/data.json' do |t|
-    sh "./lib/tasks/supply_teachers/scripts/anonymize.rb < #{t.source} > #{t.name}.tmp"
+    sh "./lib/tasks/supply_teachers/scripts/anonymize.rb < #{t.source} > #{t.name}.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
     mv "#{t.name}.tmp", t.name
   end
 
   file './lib/tasks/supply_teachers/input/supplier_lookup.csv' do |t|
-    sh "./lib/tasks/supply_teachers/scripts/bootstrap_supplier_lookup.rb > #{t.name}.tmp"
+    sh "./lib/tasks/supply_teachers/scripts/bootstrap_supplier_lookup.rb > #{t.name}.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
     mv "#{t.name}.tmp", t.name
   end
 
