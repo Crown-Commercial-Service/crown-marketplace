@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <%= form_tag @form_path, class: :'ccs-form', id: :'regional_legal_service', method: :get do %>
+      <%= form_tag @form_path, class: 'ccs-form', id: 'regional_legal_service', method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
       <%= govuk_form_group_with_optional_error(@journey, :lot1_region) do %>
