@@ -346,16 +346,7 @@ module FMCalculator
     end
 
     # entry point to calculate sum of the unit of measure
-    def sumunitofmeasure(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-      @service_ref = service_ref
-      @uom_vol = uom_vol
-      @occupants = occupants
-      @tupe_flag = tupe_flag
-      @london_flag = london_flag
-      @cafm_flag = cafm_flag
-      @helpdesk_flag = helpdesk_flag
-
-      initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    def sumunitofmeasure
       uomd
       clean
       subtotal1
@@ -371,20 +362,11 @@ module FMCalculator
       corporate
       year1total
       profit
-      year1totalcharges
-      subyearstotal
+      year1totalcharges + subyearstotal
     end
 
     # entry point to calculate bench marked sum
-    def benchmarkedcostssum(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
-      @service_ref = service_ref
-      @uom_vol = uom_vol
-      @occupants = occupants
-      @tupe_flag = tupe_flag
-      @london_flag = london_flag
-      @cafm_flag = cafm_flag
-      @helpdesk_flag = helpdesk_flag
-      initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    def benchmarkedcostssum
       benchmarkedcosts
       benchclean
       benchsubtotal1
@@ -400,8 +382,7 @@ module FMCalculator
       benchcorporate
       benchyear1total
       benchprofit
-      benchyear1totalcharges
-      benchsubyearstotal
+      benchyear1totalcharges + benchsubyearstotal
     end
   end
 end
