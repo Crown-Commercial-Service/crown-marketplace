@@ -17,7 +17,7 @@ module SupplyTeachers
         fail_upload(upload, 'There is an error with your files: ' + file.read)
       end
     rescue StandardError => e
-      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), 'There is an error with your files. Please try again. ' + e.message)
+      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), 'There is an error with your files. Please try again. ' + e.to_s)
     end
 
     private

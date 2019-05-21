@@ -42,12 +42,16 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def new_building
+    set_current_choices
+
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'error'
   end
 
   def manual_address_entry_form
+    set_current_choices
+
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'error'
@@ -85,9 +89,9 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def units_of_measurement
-    @inline_error_summary_title = 'The value entered is invalid'
-    @inline_error_summary_body_href = '#fm-uom-input'
-    @inline_summary_error_text = 'Enter a number in the correct format'
+    set_current_choices
+
+    uom_error_messages
 
     building_id = params['building_id']
     fm_service_data = FMServiceData.new
@@ -109,7 +113,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
       @uom_example = service_data['example_text']
       @unit_text = service_data['unit_text']
     else
-      redirect_to('/facilities-management/buildings-list')
+      redirect_to_building_list
     end
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController units_of_measurement(): #{e}"
@@ -132,6 +136,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   end
 
   def building_type
+    set_current_choices
+
     fm_building_data = FMBuildingData.new
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
@@ -156,14 +162,21 @@ class FacilitiesManagement::BuildingsController < ApplicationController
 
   private
 
+  def redirect_to_building_list
+    # request.query_parameters['current_choices'] = params['current_choices'] if params['current_choices']
+    # p = params.permit('current_choices', 'building_id', 'authenticity_token', 'utf8').merge(building_id: request.query_parameters['building_id'])
+    # p = request.query_parameters.merge({:current_choices => params['current_choices']})
+    redirect_to('/facilities-management/buildings-list', current_choices: params['current_choices'], flash: { 'current_choices': params['current_choices'] })
+  end
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   # use
   #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
   # to copy the cached choices
   def set_current_choices
-    TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
+    super
+
     TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length'] if params['fm-contract-length']
     TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension'] if params['fm-extension']
     TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
@@ -171,7 +184,6 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
     TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
   end
-  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize
 
@@ -179,5 +191,11 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'Error'
+  end
+
+  def uom_error_messages
+    @inline_error_summary_title = 'The value entered is invalid'
+    @inline_error_summary_body_href = '#fm-uom-input'
+    @inline_summary_error_text = 'Enter a number in the correct format'
   end
 end

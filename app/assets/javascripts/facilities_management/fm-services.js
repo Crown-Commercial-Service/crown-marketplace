@@ -186,7 +186,8 @@ $(() => {
 
             if (ref.indexOf('buildings/select-services') > -1) {
                 e.preventDefault();
-                location.href = document.referrer;
+                // location.href = document.referrer;
+                $('#fm-services-form').attr('action', document.referrer).submit()
             } else {
                 let locationCodes = pageUtils.getCodes(selectedLocations);
                 let serviceCodes = pageUtils.getCodes(selectedServices);

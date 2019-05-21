@@ -436,7 +436,7 @@ DEPENDENCIES
   byebug
   capybara
   carrierwave (~> 1.0)
-  carrierwave-aws
+  carrierwave-aws (~> 1.3.0)
   dotenv-rails
   factory_bot_rails
   faker
