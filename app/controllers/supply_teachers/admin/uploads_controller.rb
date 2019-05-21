@@ -30,8 +30,7 @@ module SupplyTeachers
       end
 
       def approve
-        upload = Upload.find(params[:upload_id])
-        upload.upload!
+        upload = Upload.perform_upload(params[:upload_id])
         redirect_to supply_teachers_admin_upload_uploading_path(upload_id: upload.id)
       end
 

@@ -5,13 +5,13 @@ module SupplyTeachers
       self.table_name = 'supply_teachers_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      CURRENT_ACCREDITED_PATH = './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'.freeze
-      GEOGRAPHICAL_DATA_PATH = './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx'.freeze
-      LOT_1_AND_LOT2_PATH = './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx'.freeze
-      MASTER_VENDOR_PATH = './lib/tasks/supply_teachers/input/master_vendor_contacts.csv'.freeze
-      NEUTRAL_VENDOR_PATH = './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv'.freeze
-      PRICING_TOOL_PATH = './lib/tasks/supply_teachers/input/pricing for tool.xlsx'.freeze
-      SUPPLIER_LOOKUP_PATH = './lib/tasks/supply_teachers/input/supplier_lookup.csv'.freeze
+      CURRENT_ACCREDITED_PATH = Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Current_Accredited_Suppliers_.xlsx').freeze
+      GEOGRAPHICAL_DATA_PATH = Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Geographical Data all suppliers.xlsx').freeze
+      LOT_1_AND_LOT2_PATH = Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Lot_1_and_2_comparisons.xlsx').freeze
+      MASTER_VENDOR_PATH = Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'master_vendor_contacts.csv').freeze
+      NEUTRAL_VENDOR_PATH = Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'neutral_vendor_contacts.csv').freeze
+      PRICING_TOOL_PATH = Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'pricing for tool.xlsx').freeze
+      SUPPLIER_LOOKUP_PATH = Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'supplier_lookup.csv').freeze
 
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
       mount_uploader :geographical_data_all_suppliers, SupplyTeachersFileUploader
@@ -32,23 +32,19 @@ module SupplyTeachers
           transitions from: :in_progress, to: :in_review
         end
         event :fail do
-          after :cleanup_input_files
-          transitions from: %i[in_progress uploading], to: :failed
+          transitions from: %i[in_progress uploading], to: :failed, after: :cleanup_input_files
         end
         event :upload do
-          after :start_upload
           transitions from: :in_review, to: :uploading
         end
         event :approve do
           transitions from: :uploading, to: :approved
         end
         event :reject do
-          after :cleanup_input_files
-          transitions from: :in_review, to: :rejected
+          transitions from: :in_review, to: :rejected, after: :cleanup_input_files
         end
         event :cancel do
-          after :cleanup_input_files
-          transitions from: %i[in_review in_progress], to: :canceled
+          transitions from: %i[in_review in_progress], to: :canceled, after: :cleanup_input_files
         end
       end
 
@@ -86,11 +82,14 @@ module SupplyTeachers
         in_review.any? || in_progress.any?
       end
 
-      private
-
-      def start_upload
-        SupplyTeachers::DataUploadWorker.perform_async(id)
+      def self.perform_upload(upload_id)
+        upload_session = find(upload_id)
+        upload_session.upload!
+        SupplyTeachers::DataUploadWorker.perform_async(upload_id)
+        upload_session
       end
+
+      private
 
       def reject_uploads_and_cp_files
         reject_previous_uploads
