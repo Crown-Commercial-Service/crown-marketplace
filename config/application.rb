@@ -33,6 +33,14 @@ module Marketplace
     config.generators.system_tests = nil
 
     config.action_controller.include_all_helpers = false
+
+    config.action_dispatch.default_headers = {
+        'X-Frame-Options' => 'SAMEORIGIN',
+        'X-XSS-Protection' => '1; mode=block',
+        'X-Content-Type-Options' => 'nosniff'
+    }
+
+      # config.action_dispatch.default_headers.merge!('X-Content-Type-Options' => 'nosniff')
   end
 
   def self.feedback_email_address
@@ -59,6 +67,7 @@ module Marketplace
   def self.http_basic_auth_password
     @http_basic_auth_password ||= ENV.fetch('HTTP_BASIC_AUTH_PASSWORD')
   end
+
   # :nocov:
 
   def self.cognito_user_pool_site
@@ -128,7 +137,7 @@ module Marketplace
     return unless dfe_signin_whitelist_enabled?
 
     @dfe_signin_whitelisted_email_addresses ||=
-      ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].split(',')
+        ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].split(',')
   end
 
   def self.upload_privileges?

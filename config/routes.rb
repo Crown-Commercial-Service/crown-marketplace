@@ -23,16 +23,16 @@ Rails.application.routes.draw do
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
     resources :branches, only: %i[index show]
     resources :downloads, only: :index
-    unless Rails.env.production? # not be available on production environments yet
-      namespace :admin do
-        resources :uploads, only: %i[index new create show] do
-          get 'approve'
-          get 'reject'
-          get 'uploading'
-        end
-        get '/in_progress', to: 'uploads#in_progress'
+    # unless Rails.env.production? # not be available on production environments yet
+    namespace :admin do
+      resources :uploads, only: %i[index new create show] do
+        get 'approve'
+        get 'reject'
+        get 'uploading'
       end
+      get '/in_progress', to: 'uploads#in_progress'
     end
+    # end
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -42,21 +42,24 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
-    get '/value-band', to: 'select_locations#select_location'
+    # get '/value-band', to: 'select_locations#select_location'
     get '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations'
-    get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
+    # get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
+    # post '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
+    match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
     get '/suppliers/long-list', to: 'long_list#long_list'
     post '/suppliers/longList' => 'long_list#long_list'
-    get '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
-    get '/buildings-list', to: 'buildings#buildings'
-    get '/buildings/new-building', to: 'buildings#new_building'
-    get '/buildings/new-building-address', to: 'buildings#manual_address_entry_form'
+    post '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
+    # post '/buildings-list', to: 'buildings#buildings'
+    match '/buildings-list', to: 'buildings#buildings', via: %i[get post]
+    post '/buildings/new-building', to: 'buildings#new_building'
+    post '/buildings/new-building-address', to: 'buildings#manual_address_entry_form'
     post '/buildings/new-building-address/save-building' => 'buildings#save_building'
-    get '/buildings/building-type', to: 'buildings#building_type'
+    post '/buildings/building-type', to: 'buildings#building_type'
     post '/buildings/update_building' => 'buildings#update_building'
-    get '/buildings/select-services', to: 'buildings#select_services_per_building'
+    post '/buildings/select-services', to: 'buildings#select_services_per_building'
 
-    get '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
+    post '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
     post '/buildings/save-uom-value' => 'buildings#save_uom_value'
     post '/services/save-lift-data' => 'select_services#save_lift_data'
     get '/buildings/region', to: 'buildings#region_info'
@@ -64,7 +67,8 @@ Rails.application.routes.draw do
     post '/buildings/delete_building' => 'buildings#delete_building'
 
     get '/start', to: 'journey#start', as: 'journey_start'
-    get '/contract-start', to: 'contract#start_of_contract'
+    # post '/contract-start', to: 'contract#start_of_contract'
+    match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]
 
     get '/summary', to: 'summary#index'
     post '/summary', to: 'summary#index'

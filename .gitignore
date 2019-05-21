@@ -38,6 +38,7 @@ logfile
 # SupplyTeachers data folders
 uploads/*
 public/data/*
+public/supply_teachers/*
 public/uploads/*
 lib/tasks/supply_teachers/.geocoder-cache.yml
 
