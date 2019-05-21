@@ -7,9 +7,9 @@ class FacilitiesManagement::Spreadsheet
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
-  def row(report, idx)
+  def row(buildings, idx)
     vals = []
-    report.building_data.each do |building|
+    buildings.each do |building|
       str =
         case idx
         when 0
@@ -47,11 +47,21 @@ class FacilitiesManagement::Spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
 
+
+    # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
+    services = @report.selected_services.sort_by(&:code)
+    selected_services = services.collect(&:code)
+    selected_services = selected_services.map { |s| s.gsub('.', '-') }
+    selected_buildings = @report.building_data.select do |b|
+      b_services = b.building_json['services'].map { |s| s['code'] }
+      (selected_services & b_services).any?
+    end
+
     @workbook.add_worksheet(name: 'Building Information') do |sheet|
       sheet.add_row ['Buildings information']
       i = 0
       ['Building Type', 'Name', 'Address', '', '', '', 'GIA'].each do |label|
-        vals = row(@report, i)
+        vals = row(selected_buildings, i)
         sheet.add_row [label] + vals
         i += 1
       end
@@ -59,15 +69,6 @@ class FacilitiesManagement::Spreadsheet
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       @uom_values = @report.uom_values
-
-      # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
-      services = @report.selected_services.sort_by(&:code)
-      selected_services = services.collect(&:code)
-      selected_services = selected_services.map { |s| s.gsub('.', '-') }
-      selected_buildings = @report.building_data.select do |b|
-        b_services = b.building_json['services'].map { |s| s['code'] }
-        (selected_services & b_services).any?
-      end
 
       i = 1
       vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement', 'Unit of Measure']
