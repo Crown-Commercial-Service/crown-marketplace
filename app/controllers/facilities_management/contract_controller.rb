@@ -8,5 +8,7 @@ class FacilitiesManagement::ContractController < ApplicationController
     # @journey = Journey.new(params[:slug], params)
     # @journey = FacilitiesManagement::Journey.new('contract-start', params)
     @start_form = 'About your contract'
+
+    set_current_choices
   end
 end

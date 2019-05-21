@@ -152,7 +152,7 @@ $(() => {
             for (let row of tableRows) {
                 //tableRows.each(function (rowIndex, row) {
                 let id = row.id;
-                let name = $('#' + '' + id).attr('name');
+                let name = $('#' + id).attr('name');
                 let operationalAreas = $('#' + id).attr('regioncode');
 
                 if (operationalAreas) {
@@ -190,7 +190,8 @@ $(() => {
 
         if (regionCount > 0 && serviceCount > 0) {
             pageUtils.toggleInlineErrorMessage(false);
-            location.href = '/facilities-management/standard-contract/questions';
+            // location.href = '/facilities-management/standard-contract/questions';
+            $('#fm-long-list-form').submit()
         } else {
             pageUtils.toggleInlineErrorMessage(true);
             $("html, body").animate({scrollTop: 0}, "1");
