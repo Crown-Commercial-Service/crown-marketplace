@@ -130,7 +130,7 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row
       sheet.add_row ['Tupe involvement', @report.tupe_flag]
       sheet.add_row
-      sheet.add_row ['Contract start date', @report.start_date.to_date], style: [nil, date]
+      sheet.add_row ['Contract start date', @report.start_date&.to_date], style: [nil, date]
       sheet.add_row
       sheet.add_row ['3. Price and sub-lot recommendation']
       sheet.add_row ['Assessed Value', @report.assessed_value], style: [nil, ccy]
