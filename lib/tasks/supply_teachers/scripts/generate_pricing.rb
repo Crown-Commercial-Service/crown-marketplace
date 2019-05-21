@@ -7,9 +7,9 @@ require 'geocoder'
 require 'capybara'
 require 'pathname'
 require 'yaml'
-require Rails.root.join('lib', 'tasks', 'supply_teachers', 'scripts', 'helpers', 'accredited_suppliers.rb')
+require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
 
-price_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'pricing for tool.xlsx')
+price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricing for tool.xlsx'
 
 def subhead?(row)
   row[:number] =~ /Category Line/ || row[:number].nil?
@@ -98,15 +98,15 @@ end
 
 mark_up_sheet = price_workbook.sheet('Lot 1 Pricing')
 pricing = mark_up_sheet
-          .map            { |row| add_headings(row) }
-          .map.with_index { |row, index| row.merge(line_no: index + 1) }
-          .reject         { |row| subhead?(row) }
-          .map            { |row| strip_fields(row) }
-          .map            { |row| symbolize_job_types(row) }
-          .flat_map       { |row| normalize_pricing(row) }
-          .map            { |row| remove_unused_keys(row) }
-          .reject         { |row| invalid_fee?(row) }
-          .map            { |row| nest(row, :pricing) }
+            .map            { |row| add_headings(row) }
+            .map.with_index { |row, index| row.merge(line_no: index + 1) }
+            .reject         { |row| subhead?(row) }
+            .map            { |row| strip_fields(row) }
+            .map            { |row| symbolize_job_types(row) }
+            .flat_map       { |row| normalize_pricing(row) }
+            .map            { |row| remove_unused_keys(row) }
+            .reject         { |row| invalid_fee?(row) }
+            .map            { |row| nest(row, :pricing) }
 
 collated = collate(pricing)
 # rubocop:disable Rails/Output

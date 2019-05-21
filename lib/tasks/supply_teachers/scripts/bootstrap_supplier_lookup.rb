@@ -9,10 +9,10 @@ require 'capybara'
 require 'pathname'
 require 'yaml'
 
-branch_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Geographical Data all suppliers.xlsx')
-price_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'pricing for tool.xlsx')
-mv_price_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Lot_1_and_2_comparisons.xlsx')
-accredited_suppliers_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Current_Accredited_Suppliers_.xlsx')
+branch_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx'
+price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricing for tool.xlsx'
+mv_price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx'
+accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'
 
 extra_supplier_names = []
 
@@ -90,9 +90,9 @@ end
 branch_sheet = branch_workbook.sheet(0)
 
 supplier_names = branch_sheet.parse(header_search: ['Supplier Name'])
-                             .map { |row| remap_headers(row, header_map) }
-                             .map { |row| strip_fields(row) }
-                             .map { |row| row[:supplier_name] }.uniq
+                   .map { |row| remap_headers(row, header_map) }
+                   .map { |row| strip_fields(row) }
+                   .map { |row| row[:supplier_name] }.uniq
 
 supplier_names += extra_supplier_names
 
@@ -102,64 +102,64 @@ suppliers_for_matching = supplier_csv.map { |k, v| [normalize_for_matching(k), v
 
 mark_up_sheet = price_workbook.sheet(0)
 pricing_names = mark_up_sheet
-                .map            { |row| add_headings(row) }
-                .map.with_index { |row, index| row.merge(line_no: index + 1) }
-                .reject         { |row| subhead?(row) }
-                .map            { |row| remap_names(row, name_map) }
-                .map            { |row| add_supplier_id(row, suppliers_for_matching) }
-                .map            { |row| original_name_only(row) }
-                .uniq
+                  .map            { |row| add_headings(row) }
+                  .map.with_index { |row, index| row.merge(line_no: index + 1) }
+                  .reject         { |row| subhead?(row) }
+                  .map            { |row| remap_names(row, name_map) }
+                  .map            { |row| add_supplier_id(row, suppliers_for_matching) }
+                  .map            { |row| original_name_only(row) }
+                  .uniq
 
 mv_mark_up_sheet = mv_price_workbook.sheet(0)
 mv_pricing_names = mv_mark_up_sheet
-                   .map            { |row| add_mv_headings(row) }
-                   .map.with_index { |row, index| row.merge(line_no: index + 1) }
-                   .reject         { |row| subhead?(row) }
-                   .map            { |row| remap_names(row, name_map) }
-                   .map            { |row| add_supplier_id(row, suppliers_for_matching) }
-                   .map            { |row| original_name_only(row) }
-                   .uniq
+                     .map            { |row| add_mv_headings(row) }
+                     .map.with_index { |row, index| row.merge(line_no: index + 1) }
+                     .reject         { |row| subhead?(row) }
+                     .map            { |row| remap_names(row, name_map) }
+                     .map            { |row| add_supplier_id(row, suppliers_for_matching) }
+                     .map            { |row| original_name_only(row) }
+                     .uniq
 
 nv_pricing_data = []
 
 nv_pricing_names = nv_pricing_data
-                   .map { |row| remap_names(row, name_map) }
-                   .map { |row| add_supplier_id(row, suppliers_for_matching) }
-                   .map { |row| original_name_only(row) }
-                   .uniq
+                     .map { |row| remap_names(row, name_map) }
+                     .map { |row| add_supplier_id(row, suppliers_for_matching) }
+                     .map { |row| original_name_only(row) }
+                     .uniq
 
 lot_1_accreditation_sheet = accredited_suppliers_workbook.sheet(0)
 lot_1_accreditation_names =
   lot_1_accreditation_sheet.parse(header_search: ['Supplier Name - Accreditation Held'])
-                           .map            { |row| remap_headers(row, header_map) }
-                           .map.with_index { |row, index| row.merge(line_no: index + 1) }
-                           .reject         { |row| row[:supplier_name].nil? || row[:supplier_name] == '' }
-                           .map            { |row| remap_names(row, name_map) }
-                           .map            { |row| strip_fields(row) }
-                           .map            { |row| add_supplier_id(row, suppliers_for_matching) }
-                           .map            { |row| original_name_only(row) }
+    .map            { |row| remap_headers(row, header_map) }
+    .map.with_index { |row, index| row.merge(line_no: index + 1) }
+    .reject         { |row| row[:supplier_name].nil? || row[:supplier_name] == '' }
+    .map            { |row| remap_names(row, name_map) }
+    .map            { |row| strip_fields(row) }
+    .map            { |row| add_supplier_id(row, suppliers_for_matching) }
+    .map            { |row| original_name_only(row) }
 
 lot_2_accreditation_sheet = accredited_suppliers_workbook.sheet(2)
 lot_2_accreditation_names =
   lot_2_accreditation_sheet.parse(header_search: ['Supplier Name - Accreditation Held'])
-                           .map            { |row| remap_headers(row, header_map) }
-                           .map.with_index { |row, index| row.merge(line_no: index + 1) }
-                           .reject         { |row| row[:supplier_name].nil? || row[:supplier_name] == '' }
-                           .map            { |row| remap_names(row, name_map) }
-                           .map            { |row| strip_fields(row) }
-                           .map            { |row| add_supplier_id(row, suppliers_for_matching) }
-                           .map            { |row| original_name_only(row) }
+    .map            { |row| remap_headers(row, header_map) }
+    .map.with_index { |row, index| row.merge(line_no: index + 1) }
+    .reject         { |row| row[:supplier_name].nil? || row[:supplier_name] == '' }
+    .map            { |row| remap_names(row, name_map) }
+    .map            { |row| strip_fields(row) }
+    .map            { |row| add_supplier_id(row, suppliers_for_matching) }
+    .map            { |row| original_name_only(row) }
 
 lot_3_accreditation_sheet = accredited_suppliers_workbook.sheet(3)
 lot_3_accreditation_names =
   lot_3_accreditation_sheet.parse(header_search: ['Supplier Name'])
-                           .map            { |row| remap_headers(row, header_map) }
-                           .map.with_index { |row, index| row.merge(line_no: index + 1) }
-                           .reject         { |row| row[:supplier_name].nil? || row[:supplier_name] == '' }
-                           .map            { |row| remap_names(row, name_map) }
-                           .map            { |row| strip_fields(row) }
-                           .map            { |row| add_supplier_id(row, suppliers_for_matching) }
-                           .map            { |row| original_name_only(row) }
+    .map            { |row| remap_headers(row, header_map) }
+    .map.with_index { |row, index| row.merge(line_no: index + 1) }
+    .reject         { |row| row[:supplier_name].nil? || row[:supplier_name] == '' }
+    .map            { |row| remap_names(row, name_map) }
+    .map            { |row| strip_fields(row) }
+    .map            { |row| add_supplier_id(row, suppliers_for_matching) }
+    .map            { |row| original_name_only(row) }
 
 accreditation_names = (lot_1_accreditation_names + lot_2_accreditation_names + lot_3_accreditation_names).uniq
 vendor_pricing_names = (mv_pricing_names + nv_pricing_names)
@@ -200,4 +200,3 @@ end
 # rubocop:disable Rails/Output
 puts csv_string
 # rubocop:enable Rails/Output
-
