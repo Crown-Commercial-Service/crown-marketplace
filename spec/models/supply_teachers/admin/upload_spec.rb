@@ -12,7 +12,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
   describe '#aasm state' do
     before do
       allow(admin_upload).to receive(:cleanup_input_files)
-      allow(admin_upload).to receive(:start_upload)
     end
 
     describe 'initial state' do
@@ -21,9 +20,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
       end
       it 'does not cleanup files' do
         expect(admin_upload).not_to have_received(:cleanup_input_files)
-      end
-      it 'does not start upload' do
-        expect(admin_upload).not_to have_received(:start_upload)
       end
     end
 
@@ -36,9 +32,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
       it 'does not cleanup files' do
         expect(admin_upload).not_to have_received(:cleanup_input_files)
       end
-      it 'does not start upload' do
-        expect(admin_upload).not_to have_received(:start_upload)
-      end
     end
 
     describe 'failed' do
@@ -50,9 +43,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
         end
         it 'does cleanup files' do
           expect(admin_upload).to have_received(:cleanup_input_files)
-        end
-        it 'does not start upload' do
-          expect(admin_upload).not_to have_received(:start_upload)
         end
       end
 
@@ -67,9 +57,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
         end
         it 'does cleanup files' do
           expect(admin_upload).to have_received(:cleanup_input_files)
-        end
-        it 'does not start upload' do
-          expect(admin_upload).not_to have_received(:start_upload)
         end
       end
     end
@@ -86,9 +73,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
       it 'does not cleanup files' do
         expect(admin_upload).not_to have_received(:cleanup_input_files)
       end
-      it 'does start upload' do
-        expect(admin_upload).to have_received(:start_upload)
-      end
     end
 
     describe 'approved' do
@@ -103,9 +87,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
       it 'does not cleanup files' do
         expect(admin_upload).not_to have_received(:cleanup_input_files)
       end
-      it 'does not start upload' do
-        expect(admin_upload).not_to have_received(:start_upload)
-      end
     end
 
     describe 'rejected' do
@@ -119,9 +100,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
       end
       it 'does cleanup files' do
         expect(admin_upload).to have_received(:cleanup_input_files)
-      end
-      it 'does not start upload' do
-        expect(admin_upload).not_to have_received(:start_upload)
       end
     end
 
@@ -138,9 +116,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
         it 'does cleanup files' do
           expect(admin_upload).to have_received(:cleanup_input_files)
         end
-        it 'does not start upload' do
-          expect(admin_upload).not_to have_received(:start_upload)
-        end
       end
 
       context 'when in progress' do
@@ -154,9 +129,6 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
         end
         it 'does cleanup files' do
           expect(admin_upload).to have_received(:cleanup_input_files)
-        end
-        it 'does not start upload' do
-          expect(admin_upload).not_to have_received(:start_upload)
         end
       end
     end
