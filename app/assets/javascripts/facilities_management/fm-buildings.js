@@ -38,6 +38,9 @@ $(() => {
 
     $('#fm-building-not-found').on('click', (e) => {
         pageUtils.clearCashedData('fm-new-address');
+
+        e.preventDefault()
+        $('#fm-new-building-continue-form').attr('action', 'new-building-address').submit()
     });
 
 
@@ -150,6 +153,8 @@ $(() => {
 
     $('#fm-buildings-add-building').click((e) => {
         fm.clearBuildingCache();
+        e.preventDefault()
+        $('#fm-new-building-form').submit()
     });
 
     $('#fm-internal-square-area').change((e) => {
@@ -205,6 +210,17 @@ $(() => {
         }
         e.preventDefault();
         return false;
+    });
+
+    //FM-delete-building-link
+
+    $('a[name=FM-delete-building-link]').on('click', (e) => {
+        e.preventDefault();
+        let id = e.target.id;
+        let id_elems = id.split('~');
+        let building_id = id_elems[1];
+        fm.services.delete_building(building_id);
+
     });
 
     $('#fm-building-type-continue').click((e) => {

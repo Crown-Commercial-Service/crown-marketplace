@@ -1,7 +1,6 @@
 ---
 en:
   'No': 'No'
-  Scotland: Scotland
   'Yes': 'Yes'
   activemodel:
     errors:
@@ -18,10 +17,6 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
-        apprenticeships/journey/lot1_regional_service:
-          attributes:
-            lot:
-              too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -36,7 +31,7 @@ en:
               inclusion: Select a legal service
         legal_services/journey/check_suitability2:
           attributes:
-            central_government:
+            fees:
               inclusion: Select yes if the fees will be under £20,000
         legal_services/journey/check_suitability3:
           attributes:
@@ -46,10 +41,38 @@ en:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
+        legal_services/journey/choose_services_area:
+          attributes:
+            services_area:
+              inclusion: Select the services you need
+        legal_services/journey/legal_jurisdiction:
+          attributes:
+            legal_services:
+              inclusion: Select the jurisdiction you need
         legal_services/journey/lot1_regional_service:
           attributes:
-            lot_region:
-              too_short: Select at least one checkbox
+            lot1_regional_service:
+              too_short: Select the legal service or services you need
+        legal_services/journey/lot1_regional_services:
+          attributes:
+            lot:
+              too_short: Select the services you need
+        legal_services/journey/lot2_full_service:
+          attributes:
+            lot2_full_service:
+              too_short: Select the legal service or services you need
+        legal_services/journey/regional_legal_service:
+          attributes:
+            lot:
+              too_short: Select where you need the legal service or services
+        legal_services/journey/regional_legal_services:
+          attributes:
+            region:
+              too_short: Select at least one region
+        legal_services/journey/requirement:
+          attributes:
+            legal_services:
+              inclusion: Select yes if your requirement is restricted to a small geographical area?
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -114,15 +137,18 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date:
+              after_contract_start_date: The date you want to take the worker on permanently must be after the date the worker’s current contract started
               blank: Enter the date you want to take the worker on permanently, including the day, month and year
               invalid: Enter a real date
             holiday_1_end_date:
+              before_start_date: The end date of the first school holiday must be after the start date
               blank: Enter the date the first school holiday ended, including the day, month and year
               invalid: Enter a real date
             holiday_1_start_date:
               blank: Enter the date the first school holiday started, including the day, month and year
               invalid: Enter a real date
             holiday_2_end_date:
+              before_start_date: The end date of the second school holiday must be after the start date
               blank: Enter the date the second school holiday ended, including the day, month and yea
               invalid: Enter a real date
             holiday_2_start_date:
@@ -485,13 +511,19 @@ en:
       check_suitability2:
         heading: Will the fees be under £20,000 per matter?
       choose_organisation_type:
-        central_government_search_link_title: central government departments, agencies and public bodies
         question: Do you work for central government?
-        search_central_government_html: Search %{central_government_search_link} if you’re unsure.
+        search_central_government_html: Search %{central_government_search_link} if you're unsure.
+        txt_link_text: central government departments, agencies and public bodies
       choose_regional_or_fullservice:
         question: Question
+      legal_jurisdiction:
+        eng_wales: England and Wales
+        ni: Northern Ireland
+        question: Which legal jurisdiction do you need?
+        scot_land: Scotland
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
+        hint: Select the services you need
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
@@ -499,15 +531,22 @@ en:
         heading: Heading
         hint: Hint
         remove_all: Remove all
-        txt01: Txt01
-        txt02: Txt02
+        txt01: services selected
+        txt02: No services selected
       lot2_full_service:
+        heading: Lot2 Full Service firms
+        hint: Select the legal services you need
         remove_all: Remove all
-        txt01: Txt01
-        txt02: Txt02
+        txt01: services selected
+        txt02: No services selected
+      regional_legal_service:
+        heading: Where do you need the regional legal services?
+        remove_all: Remove all
+        txt01: regions selected
+        txt02: No regions selected
       requirement:
-        central_government_search_link_title: Central government search link title
-        search_central_government_html: Search central government html
+        hint: For example, Greater London or East Midlands
+        question: Is your requirement restricted to a small geographical area?
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found

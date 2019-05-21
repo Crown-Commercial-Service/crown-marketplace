@@ -37,7 +37,12 @@
       <span>You can open a competition for suppliers after you have received an assessed value from us.</span>
     </div>
 
-    <a id="fm-suppliers-continue-button" href="#" class="govuk-button ccs-no-print" role="button">Continue</a><br>
+    <%= form_tag '/facilities-management/standard-contract/questions', id: 'fm-long-list-form', method: :post do %>
+      <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+      <a id="fm-suppliers-continue-button" href="#" class="govuk-button ccs-no-print" role="button">Continue</a><br>
+    <% end %>
+
+
     <p>
       <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="">Print this
         page</a>

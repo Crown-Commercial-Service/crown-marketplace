@@ -145,7 +145,8 @@ $(() => {
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 pageUtils.setCachedData('fm-current-building', building);
-                location.href = whereNext
+                // location.href = whereNext
+                $('#fm-new-building-continue-form').submit()
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
@@ -160,7 +161,8 @@ $(() => {
         if (isAddressValid(address)) {
             currentBuilding.address = address;
             pageUtils.setCachedData('fm-new-address', address);
-            location.href = '/facilities-management/buildings/new-building#fm-internal-square-area'
+            // location.href = '/facilities-management/buildings/new-building#fm-internal-square-area'
+            $('#fm-manual-address-entry-form').submit()
         }
 
     });
