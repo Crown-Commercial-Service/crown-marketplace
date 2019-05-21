@@ -23,8 +23,9 @@ mcf2_sheet = suppliers_workbook.sheet(1)
 
 suppliers += mcf2_sheet.parse(headers)
 
-suppliers.uniq! { |supplier| supplier[:duns] }
 suppliers.delete_if { |supplier| supplier[:duns].nil? }
+
+suppliers.uniq! { |supplier| supplier[:name] }
 
 suppliers.each do |supplier|
   supplier[:sme] = ['YES', 'Y'].include? supplier[:sme].upcase
