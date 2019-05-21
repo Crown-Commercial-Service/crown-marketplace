@@ -4,7 +4,7 @@ require 'roo'
 require 'json'
 require 'capybara'
 
-branch_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx'
+branch_workbook = Roo::Spreadsheet.open Rails.root.join('lib', 'tasks', 'supply_teachers', 'input', 'Geographical Data all suppliers.xlsx')
 
 header_map = {
   'Supplier Name' => :supplier_name,

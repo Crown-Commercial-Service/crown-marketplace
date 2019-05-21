@@ -5,7 +5,7 @@ require 'uk_postcode'
 require 'geocoder'
 require 'yaml'
 require 'pathname'
-require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
+require Rails.root.join('lib', 'tasks', 'supply_teachers', 'scripts', 'helpers', 'accredited_suppliers.rb')
 
 suppliers = JSON.parse($stdin.read)
 
