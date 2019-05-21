@@ -5,7 +5,7 @@ if Rails.env.production?
     config.aws_acl    = 'private'
 
     config.aws_credentials = {
-      region: 'eu-west-2'
+      region: ENV['COGNITO_AWS_REGION']
     }
   end
 end

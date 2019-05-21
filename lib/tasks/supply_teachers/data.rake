@@ -46,7 +46,7 @@ namespace :st do
     mv "#{t.name}.tmp", t.name
   end
 
-  file './lib/tasks/supply_teachers/output/data_with_vendors.json' => ['./lib/tasks/supply_teachers/output/data_only_accredited.json', './lib/tasks/supply_teachers/input/master_vendor_contacts.csv', './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv'] do |t|
+  file './lib/tasks/supply_teachers/output/data_with_vendors.json' => ['./lib/tasks/supply_teachers/output/data_only_accredited.json', './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv', './lib/tasks/supply_teachers/input/master_vendor_contacts.csv'] do |t|
     sh "ruby ./lib/tasks/supply_teachers/scripts/add_vendor_contacts.rb #{t.sources.join(' ')} > #{t.name}.tmp"
     mv "#{t.name}.tmp", t.name
   end
