@@ -9,6 +9,7 @@ module FacilitiesManagement
       @posted_services = @data['posted_services']
       @posted_locations = @data['posted_locations']
       @contract_length_years = @data['fm-contract-length'].to_i
+      @contract_cost = @data['fm-contract-cost'].to_f
 
       @tupe_flag =
         begin
@@ -84,6 +85,8 @@ module FacilitiesManagement
     end
 
     def assessed_value
+      return (@sum_uom + @sum_benchmark + @contract_cost) / 3 unless @contract_cost.zero?
+
       (@sum_uom + @sum_benchmark) / 2
     end
 
