@@ -82,7 +82,7 @@ class FacilitiesManagement::Spreadsheet
         if work_package == s.work_package_code
           label = nil
         else
-          label = 'Work Package ' + s.work_package_code + ' ' + s.work_package.name
+          label = 'Work Package ' + s.work_package_code + ' - ' + s.work_package.name
         end
         work_package = s.work_package_code
 
