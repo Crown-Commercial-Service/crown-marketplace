@@ -5,12 +5,12 @@ require 'csv'
 suppliers = JSON.parse(File.read(ARGV[0]))
 
 master_details =
-  CSV.new(File.read(ARGV[1]), headers: :first_row)
+  CSV.new(File.read('./lib/tasks/supply_teachers/input/master_vendor_contacts.csv'), headers: :first_row)
     .map { |r| [r['supplier_name'], r] }
     .to_h
 
 neutral_details =
-  CSV.new(File.read(ARGV[2]), headers: :first_row)
+  CSV.new(File.read('./lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv'), headers: :first_row)
     .map { |r| [r['supplier_name'], r] }
     .to_h
 
