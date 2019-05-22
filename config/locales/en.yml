@@ -63,7 +63,7 @@ en:
               too_short: Select the legal service or services you need
         legal_services/journey/regional_legal_service:
           attributes:
-            regional_legal_service: 
+            regional_legal_service:
               too_short: Select where you need the legal service or services
         legal_services/journey/regional_legal_services:
           attributes:
