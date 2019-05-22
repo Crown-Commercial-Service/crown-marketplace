@@ -519,7 +519,7 @@ en:
       choose_services_area:
         opt_01: Yes, Property And Construction (Lot 3)
         opt_02: Yes, rail (Lot 4)
-        opt_no: false
+        opt_no: 'No'
         question: Do you need legal services for property and construction or rail?
       legal_jurisdiction:
         eng_wales: England and Wales
