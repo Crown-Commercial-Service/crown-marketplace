@@ -31,11 +31,11 @@ end
   (2..sheet.last_row).each do |row_number|
     row = sheet.row(row_number)
     supplier_name = row.first
-    regional_offerings = []
+    regional_offerings = {}
     row.each_with_index do |value, index|
       next unless value.try(:downcase) == 'x'
 
-      regional_offerings << extract_region_code(region_names[index])
+      regional_offerings[extract_region_code(region_names[index])] = 'provided'
     end
 
     next unless regional_offerings.size.positive?
