@@ -9,6 +9,7 @@ module LegalServices
     end
 
     private
+
     def validate_lot1_regional_service
       errors.add(:lot1_regional_service, :too_short) if lot1_regional_service.nil?
     end
