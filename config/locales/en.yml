@@ -45,6 +45,10 @@ en:
           attributes:
             services_area:
               inclusion: Select no if you don't need legal services for property and construction or rail
+        legal_services/journey/choose_services_area2:
+          attributes:
+            services_area2:
+              inclusion: If you don't know which Lot you need select don't know
         legal_services/journey/legal_jurisdiction:
           attributes:
             legal_services:
@@ -521,6 +525,12 @@ en:
         opt_02: Yes, rail (Lot 4)
         opt_no: 'No'
         question: Do you need legal services for property and construction or rail?
+      choose_services_area2:
+        opt_01: Lot 1 Regional Service Provision
+        opt_02: Lot 2 Full Service Firms
+        opt_03: I Dont Know
+        or_txt: Or
+        question: What lot do you need?
       legal_jurisdiction:
         eng_wales: England and Wales
         ni: Northern Ireland
