@@ -88,15 +88,15 @@ end
 branch_sheet = branch_workbook.sheet('Branch details')
 
 branches = branch_sheet.parse(header_search: ['Supplier Name'])
-                       .map { |row| remap_headers(row, header_map) }
-                       .map.with_index { |row, index| row.merge(line_no: index + 3) }
-                       .map { |row| convert_html_fields_to_text(row) }
-                       .map { |row| convert_float_fields_to_int(row) }
-                       .map { |row| strip_fields(row) }
-                       .map { |row| match_email_to_contacts(row) }
-                       .map { |row| row }
-                       .map { |row| strip_keys_with_null_or_empty_values(row) }
-                       .map { |row| strip_punctuation_from_postcode(row) }
+             .map { |row| remap_headers(row, header_map) }
+             .map.with_index { |row, index| row.merge(line_no: index + 3) }
+             .map { |row| convert_html_fields_to_text(row) }
+             .map { |row| convert_float_fields_to_int(row) }
+             .map { |row| strip_fields(row) }
+             .map { |row| match_email_to_contacts(row) }
+             .map { |row| row }
+             .map { |row| strip_keys_with_null_or_empty_values(row) }
+             .map { |row| strip_punctuation_from_postcode(row) }
 
 collated = collate(branches.map { |row| nest(row, :branches) })
 # rubocop:disable Rails/Output

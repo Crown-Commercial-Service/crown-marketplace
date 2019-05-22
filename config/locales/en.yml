@@ -44,7 +44,7 @@ en:
         legal_services/journey/choose_services_area:
           attributes:
             services_area:
-              inclusion: Select the services you need
+              inclusion: Select no if you don't need legal services for property and construction or rail
         legal_services/journey/legal_jurisdiction:
           attributes:
             legal_services:
@@ -63,7 +63,7 @@ en:
               too_short: Select the legal service or services you need
         legal_services/journey/regional_legal_service:
           attributes:
-            lot:
+            regional_legal_service:
               too_short: Select where you need the legal service or services
         legal_services/journey/regional_legal_services:
           attributes:
@@ -516,6 +516,11 @@ en:
         txt_link_text: central government departments, agencies and public bodies
       choose_regional_or_fullservice:
         question: Question
+      choose_services_area:
+        opt_01: Yes, Property And Construction (Lot 3)
+        opt_02: Yes, rail (Lot 4)
+        opt_no: 'No'
+        question: Do you need legal services for property and construction or rail?
       legal_jurisdiction:
         eng_wales: England and Wales
         ni: Northern Ireland
