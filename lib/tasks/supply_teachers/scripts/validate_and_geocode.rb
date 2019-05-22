@@ -92,10 +92,10 @@ suppliers = suppliers.map do |supplier|
     next unless s['branches']
 
     s['branches'] = s['branches']
-                    .map { |b| check_contacts(b) }
-                    .map { |b| fix_telephone(b) }
-                    .map { |b| normalize_postcode(b) }
-                    .map { |b| geocode_branch(b) }
+                      .map { |b| check_contacts(b) }
+                      .map { |b| fix_telephone(b) }
+                      .map { |b| normalize_postcode(b) }
+                      .map { |b| geocode_branch(b) }
     add_empty_lists(s)
   end
 end
