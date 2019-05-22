@@ -193,7 +193,7 @@ module FacilitiesManagement
       copy_params building_data
       id = building_data['id']
 
-      @selected_services.each do |service|
+      with_pricing.each do |service|
         # puts service.code
         # puts service.name
         # puts service.mandatory
@@ -204,6 +204,7 @@ module FacilitiesManagement
 
         occupants = occupants(service.code, building_data)
 
+        next unless @uom_values[id]
         next unless @uom_values[id].key? service.code
 
         uom_value = @uom_values[id][service.code]['uom_value']
