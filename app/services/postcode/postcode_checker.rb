@@ -35,7 +35,7 @@ module Postcode
         result = db.exec_query "SELECT reltuples AS approximate_row_count FROM pg_class WHERE relname = 'os_address';"
         return 0 if result.nil?
 
-        result[0]['count']
+        result.rows[0][0].to_i
       end
     end
 
