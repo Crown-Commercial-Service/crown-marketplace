@@ -642,6 +642,58 @@ en:
         position: Position
         sub_title: Supplier details
         website: Website
+    job_titles:
+      mcf1:
+        lot_2:
+          director: Partner/Director Account/Auditor
+          junior: Junior Accountant/Auditor
+          managing: Managing Account/Auditor
+          principal: Principal Accountant/Auditor
+          senior: Senior Accountant/Auditor
+          standard: Accountant/Auditor
+        lot_3:
+          director: Partner/Director of Audit
+          junior: Junior Auditor
+          managing: Senior Audit Manager
+          principal: Audit Manager
+          senior: Senior Auditor
+          standard: Lead Auditor
+        lot_4:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_5:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_6:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_7:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_8:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+      mcf2: 
     journey:
       choose_expenses:
         answer_expenses_not_paid: We will not pay expenses
