@@ -204,17 +204,16 @@ module FacilitiesManagement
 
         occupants = occupants(service.code, building_data)
 
-        if @uom_values[id]
-          next unless @uom_values[id].key? service.code
+        next unless @uom_values[id]
+        next unless @uom_values[id].key? service.code
 
-          uom_value = @uom_values[id][service.code]['uom_value']
-          uom_value = uom_value.to_f
+        uom_value = @uom_values[id][service.code]['uom_value']
+        uom_value = uom_value.to_f
 
-          code = service.code.remove('.')
-          calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
-          @sum_uom += calc_fm.sumunitofmeasure
-          @sum_benchmark = calc_fm.benchmarkedcostssum
-        end
+        code = service.code.remove('.')
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        @sum_uom += calc_fm.sumunitofmeasure
+        @sum_benchmark = calc_fm.benchmarkedcostssum
       end
     rescue StandardError => e
       raise e
