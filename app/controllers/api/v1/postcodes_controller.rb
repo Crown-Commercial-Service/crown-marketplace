@@ -11,9 +11,9 @@ module Api
       # GET /postcodes/SW1A 2AA.json
       #
       # usage:
-      #      http://localhost:3000/postcodes/SW1A%202AA
-      #      http://localhost:3000/postcodes/in_london?postcode=SW1P%202AP
-      #      http://localhost:3000/postcodes/in_london?postcode=G69%206HB
+      #      http://localhost:3000/api/v1/postcodes/SW1A%202AA
+      #      http://localhost:3000/api/v1/postcodes/in_london?postcode=SW1P%202AP
+      #      http://localhost:3000/api/v1/postcodes/in_london?postcode=G69%206HB
       def show
         result = query(params[:id])
 
