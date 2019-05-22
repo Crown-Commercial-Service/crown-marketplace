@@ -113,6 +113,33 @@ function legal_jurisdiction(form){
   });
 }
 
+function choose_services_area(form){
+  $('#submit').click(function(e){
+
+    var state = form.find('input[name="services_area"]');
+
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
+
+function  choose_services_area2(form){
+  $('#submit').click(function(e){
+
+    var state = form.find('input[name="services_area2"]');
+
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
 
 jQuery(document).ready(function(){
 
@@ -134,6 +161,10 @@ jQuery(document).ready(function(){
       regional_legal_service(f);
     }else if($('#legal_jurisdiction').length){
       legal_jurisdiction(f);
+    }else if($('#choose_services_area').length){
+      choose_services_area(f);
+    }else if($('#choose_services_area2').length){
+      choose_services_area2(f);
     }
 
 });
