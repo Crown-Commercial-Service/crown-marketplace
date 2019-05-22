@@ -32,7 +32,7 @@ module Postcode
     # SELECT COUNT (*) FROM os_address;
     def self.count
       ActiveRecord::Base.connection_pool.with_connection do |db|
-        result = db.exec_query 'SELECT COUNT (postcode) FROM os_address;'
+        result = db.exec_query "SELECT reltuples AS approximate_row_count FROM pg_class WHERE relname = 'os_address';"
         return 0 if result.nil?
 
         result[0]['count']
