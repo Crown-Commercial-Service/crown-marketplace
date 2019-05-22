@@ -101,15 +101,15 @@ end
 
 mv_mark_up_sheet = mv_price_workbook.sheet('Sheet1')
 mv_pricing = mv_mark_up_sheet
-             .map            { |row| add_mv_headings(row) }
-             .map.with_index { |row, index| row.merge(line_no: index + 1) }
-             .reject         { |row| subhead?(row) }
-             .map            { |row| strip_fields(row) }
-             .map            { |row| symbolize_job_types(row) }
-             .flat_map       { |row| normalize_mv_pricing(row) }
-             .map            { |row| remove_unused_keys(row) }
-             .reject         { |row| invalid_fee?(row) }
-             .map            { |row| nest(row, :master_vendor_pricing) }
+               .map            { |row| add_mv_headings(row) }
+               .map.with_index { |row, index| row.merge(line_no: index + 1) }
+               .reject         { |row| subhead?(row) }
+               .map            { |row| strip_fields(row) }
+               .map            { |row| symbolize_job_types(row) }
+               .flat_map       { |row| normalize_mv_pricing(row) }
+               .map            { |row| remove_unused_keys(row) }
+               .reject         { |row| invalid_fee?(row) }
+               .map            { |row| nest(row, :master_vendor_pricing) }
 
 nv_pricing = [
   {
