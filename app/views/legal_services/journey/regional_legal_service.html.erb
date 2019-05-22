@@ -21,8 +21,8 @@
       <%= form_tag @form_path, class: 'ccs-form', id: 'regional_legal_service', method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
-      <%= govuk_form_group_with_optional_error(@journey, :lot1_region) do %>
-        <%= govuk_fieldset_with_optional_error(@journey, :lot1_region) do %>
+      <%= govuk_form_group_with_optional_error(@journey, :regional_legal_service) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :regional_legal_service) do %>
 
           <div id="ccs-dynamic-accordian" class="govuk-grid-row">
 
@@ -34,7 +34,7 @@
                 </h1>
               </legend>
 
-              <%= display_error(@journey, :lot1_region) %>
+              <%= display_error(@journey, :regional_legal_service) %>
 
               <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
 
@@ -43,25 +43,33 @@
 
               <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland','Full national coverage'] %>
+                <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland'] %>
 
-                <% lot1.each do |lot| %>
+                <% lot1.each do |region| %>
                   <div class="govuk-checkboxes__item">
+                    <% region_no_space = region.gsub(' ', '_') %>
                     <%= check_box_tag(
                                 "regional_legal_service",
-                                lot,
+                                region,
                                 false,
                                 class: "govuk-checkboxes__input",
-                                id: "lot_#{lot}"
+                                id: "region_#{region_no_space}"
                               ) %>
-                    <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot %>">
-                      <%= lot %>
+                    <label class="govuk-label govuk-checkboxes__label" for="region_<%= region_no_space %>">
+                      <%= region %>
                     </label>
                   </div>
 
                 <% end %>
 
                 <p class="govuk-body govuk-!-margin-top-4">Or</p>
+
+                <div class="govuk-checkboxes__item">
+                    <input type="checkbox" name="regional_legal_service" id="lot_Full national coverage" value="Full national coverage" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label" for="lot_Full national coverage">
+                      Full national coverage
+                    </label>
+                  </div>
 
               </div>
 
@@ -72,7 +80,6 @@
             <section class="govuk-grid-column-one-third">
               <div id="css-list-basket">
                 <%= submit_tag t('common.submit'), id: "submit02", class: "govuk-button" %>
-
                 <div>
                   <h3 class="govuk-heading-m" data-txt01="<%= t('.txt01') %>" data-txt02="<%= t('.txt02') %>"><span></span> <span></span></h3>
                   <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll"><%= t('.remove_all') %></a>
