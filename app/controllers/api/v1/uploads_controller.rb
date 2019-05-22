@@ -5,8 +5,8 @@ module Api
     # return json
     class UploadsController < ApplicationController
       protect_from_forgery with: :exception
-      require_permission :none, only: :show
-      skip_before_action :verify_authenticity_token, only: :show
+      require_permission :none, only: %i[show postcodes suppliers]
+      skip_before_action :verify_authenticity_token, only: %i[postcodes suppliers]
 
       # :nocov:
       if Rails.env.production?
@@ -18,9 +18,9 @@ module Api
       # :nocov:
 
       # usage:
-      # curl  --request POST   --header "Content-Type: application/json" --data @aws-secrets.json http://localhost:3000/api/v1/postcode/upload
-      def show
-        action = params[:id]
+      # curl --request POST --header "Content-Type: application/json" --data @aws-secrets-2.json http://localhost:3000/api/v1/postcode/upload
+      def postcodes
+        action = params[:slug]
 
         data = JSON.parse(request.body.read) unless request.body.read.size.zero?
 
@@ -33,6 +33,25 @@ module Api
           error: e.to_s
         }
         render json: summary, status: :unprocessable_entity
+      end
+
+      # ---------------------------
+      # usage:
+      # curl --request POST --header "Content-Type: application/json" --data @output/final-data.json http://localhost:3000/api/v1/supplier/upload
+      #
+      def suppliers
+        action = params[:slug]
+
+        if action == 'upload'
+          suppliers = JSON.parse(request.body.read)
+
+          FacilitiesManagement::Upload.upload_json!(suppliers)
+
+          # render json: {}, status: :create
+          render json: { status: 200, result: :create }
+        else
+          render json: { status: 404, error: "no such action: #{action}" }
+        end
       end
 
       # ---------------------------
