@@ -7,7 +7,7 @@ namespace :st do
   task data: ['./lib/tasks/supply_teachers/output/data.json', './lib/tasks/supply_teachers/output/anonymous.json']
 
   file './lib/tasks/supply_teachers/output/supplier_branches.json' => Dir['./lib/tasks/supply_teachers/input/**.xlsx'] do |t|
-    sh "./lib/tasks/supply_teachers/scripts/generate_branches.rb > #{t.name}.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
+    sh "ruby ./lib/tasks/supply_teachers/scripts/generate_branches.rb > #{t.name}.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
     mv "#{t.name}.tmp", t.name
   end
 
