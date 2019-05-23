@@ -69,7 +69,9 @@ module CCS
               "CREATE INDEX IF NOT EXISTS idxginlots ON fm_suppliers USING GIN ((data -> 'lots'));"
       db.query query
 
-      if ENV['SECRET_KEY_BASE']
+      is_dev =  ENV['CCS_DEFAULT_DB_HOST']
+      
+      if ENV['SECRET_KEY_BASE'] 
         data = self.fm_aws
         data = JSON data
       else
