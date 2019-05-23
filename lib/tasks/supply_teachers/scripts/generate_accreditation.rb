@@ -10,7 +10,7 @@ require 'pathname'
 require 'yaml'
 
 def generate_accreditation
-  accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/current_accredited_suppliers.xlsx'
+  accredited_suppliers_workbook = Roo::Spreadsheet.open './public/supply_teachers/input/current_accredited_suppliers.xlsx'
 
   header_map = {
     'Supplier Name - Accreditation Held' => :supplier_name,
@@ -60,7 +60,7 @@ def generate_accreditation
       .map            { |row| add_accreditation(row) }
 
   accreditation = lot_1_accreditation + lot_2_accreditation + lot_3_accreditation
-  File.open('./lib/tasks/supply_teachers/output/supplier_accreditation.json.tmp', 'w') do |f|
+  File.open('./public/supply_teachers/output/supplier_accreditation.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(accreditation)
   end
 end
