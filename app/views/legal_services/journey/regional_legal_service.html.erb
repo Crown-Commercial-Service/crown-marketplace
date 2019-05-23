@@ -19,10 +19,11 @@
       </div>
 
       <%= form_tag @form_path, class: 'ccs-form', id: 'regional_legal_service', method: :get do %>
-      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
       <%= govuk_form_group_with_optional_error(@journey, :regional_legal_service) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :regional_legal_service) do %>
+
+          <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
           <div id="ccs-dynamic-accordian" class="govuk-grid-row">
 
