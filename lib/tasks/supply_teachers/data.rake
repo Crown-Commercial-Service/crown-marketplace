@@ -1,3 +1,4 @@
+require './lib/tasks/supply_teachers/scripts/generate_branches.rb'
 namespace :st do
   task :clean do
     rm_f Dir['./lib/tasks/supply_teachers/output/*.json']
@@ -5,9 +6,14 @@ namespace :st do
   end
 
   task :data do
-    ruby "./lib/tasks/supply_teachers/scripts/generate_branches.rb > ./lib/tasks/supply_teachers/output/supplier_branches.json.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
+    "./lib/tasks/supply_teachers/output/errors.out" << generate_branches.to_s
     mv "./lib/tasks/supply_teachers/output/supplier_branches.json.tmp", "./lib/tasks/supply_teachers/output/supplier_branches.json"
   end
+
+end
+    # sh "./lib/tasks/supply_teachers/scripts/generate_branches.rb > ./lib/tasks/supply_teachers/output/supplier_branches.json.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
+    #
+
   #
   # file './lib/tasks/supply_teachers/output/supplier_pricing.json' => Dir['./lib/tasks/supply_teachers/input/**.xlsx'] do |t|
   #   sh "./lib/tasks/supply_teachers/scripts/generate_pricing.rb > #{t.name}.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
@@ -69,5 +75,3 @@ namespace :st do
   #   sh "./lib/tasks/supply_teachers/scripts/bootstrap_supplier_lookup.rb > #{t.name}.tmp"
   #   mv "#{t.name}.tmp", t.name
   # end
-
-end
