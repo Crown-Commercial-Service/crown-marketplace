@@ -1,4 +1,5 @@
-require './lib/tasks/supply_teachers/scripts/generate_branches.rb'
+require Rails.root.join('lib', 'tasks', 'supply_teachers', 'scripts', 'generate_branches.rb')
+
 namespace :st do
   task :clean do
     rm_f Dir['./lib/tasks/supply_teachers/output/*.json']
