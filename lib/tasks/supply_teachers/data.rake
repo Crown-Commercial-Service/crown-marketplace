@@ -1,5 +1,3 @@
-# require Rails.root.join('lib', 'tasks', 'supply_teachers', 'scripts', 'generate_branches.rb')
-
 namespace :st do
   task :clean do
     rm_f Dir['./lib/tasks/supply_teachers/output/*.json']
@@ -7,8 +5,11 @@ namespace :st do
   end
 
   task :data do
-    # "./lib/tasks/supply_teachers/output/errors.out" << generate_branches.to_s
-    # mv "./lib/tasks/supply_teachers/output/supplier_branches.json.tmp", "./lib/tasks/supply_teachers/output/supplier_branches.json"
+    require './lib/tasks/supply_teachers/scripts/generate_branches.rb'
+
+    
+    "./lib/tasks/supply_teachers/output/errors.out" << generate_branches.to_s
+    mv "./lib/tasks/supply_teachers/output/supplier_branches.json.tmp", "./lib/tasks/supply_teachers/output/supplier_branches.json"
   end
 
 end
