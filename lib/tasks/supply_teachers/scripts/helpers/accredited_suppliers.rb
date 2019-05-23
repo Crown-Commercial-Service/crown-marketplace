@@ -2,7 +2,7 @@ require 'csv'
 require 'roo'
 require 'json'
 
-accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'
+accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/current_accredited_suppliers.xlsx'
 
 suppliers = []
 csv = CSV.open('./lib/tasks/supply_teachers/input/supplier_lookup.csv', headers: true)

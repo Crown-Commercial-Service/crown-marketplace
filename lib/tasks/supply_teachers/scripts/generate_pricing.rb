@@ -10,7 +10,7 @@ require 'yaml'
 require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
 
 def generate_pricing
-  price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricing for tool.xlsx'
+  price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricing_for_tool.xlsx'
 
   def subhead?(row)
     row[:number] =~ /Category Line/ || row[:number].nil?
@@ -44,7 +44,7 @@ def generate_pricing
                when /Fixed Term/m
                  :fixed_term
                else
-                 warn "#{row[:supplier_name]}: Unknown job type in 'pricing for tool.xlsx': #{row[:job_type].inspect}" if supplier_accredited?(row[:supplier_name])
+                 warn "#{row[:supplier_name]}: Unknown job type in 'pricing_for_tool.xlsx': #{row[:job_type].inspect}" if supplier_accredited?(row[:supplier_name])
                  :unknown
                end
     row.merge(job_type: job_type)

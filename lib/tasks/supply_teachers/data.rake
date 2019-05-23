@@ -5,6 +5,7 @@ namespace :st do
   end
 
   task :data do
+    FileUtils.touch('./lib/tasks/supply_teachers/output/errors.out')
     require './lib/tasks/supply_teachers/scripts/generate_branches.rb'
     './lib/tasks/supply_teachers/output/errors.out' << generate_branches.to_s
     mv './lib/tasks/supply_teachers/output/supplier_branches.json.tmp', './lib/tasks/supply_teachers/output/supplier_branches.json'
