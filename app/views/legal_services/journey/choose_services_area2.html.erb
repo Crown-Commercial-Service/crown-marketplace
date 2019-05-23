@@ -21,10 +21,10 @@
 
     <%= form_tag @form_path, class: 'ccs-form', id: 'choose_services_area2', method: :get do %>
 
-      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-
       <%= govuk_form_group_with_optional_error(@journey, :services_area2) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :services_area2) do %>
+
+          <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
