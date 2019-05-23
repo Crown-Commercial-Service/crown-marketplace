@@ -5,7 +5,7 @@ namespace :st do
   end
 
   task :data do
-    sh "./lib/tasks/supply_teachers/scripts/generate_branches.rb > ./lib/tasks/supply_teachers/output/supplier_branches.json.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
+    ruby "./lib/tasks/supply_teachers/scripts/generate_branches.rb > ./lib/tasks/supply_teachers/output/supplier_branches.json.tmp 2>> ./lib/tasks/supply_teachers/output/errors.out"
     mv "./lib/tasks/supply_teachers/output/supplier_branches.json.tmp", "./lib/tasks/supply_teachers/output/supplier_branches.json"
   end
   #
