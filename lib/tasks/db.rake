@@ -69,9 +69,14 @@ module CCS
               "CREATE INDEX IF NOT EXISTS idxginlots ON fm_suppliers USING GIN ((data -> 'lots'));"
       db.query query
 
-      file = File.read('data/' + 'facilities_management/dummy_supplier_data.json')
-      data = JSON file
-      puts "Uploading #{data.size} suppliers"
+      if ENV['SECRET_KEY_BASE']
+        data = self.fm_aws
+        data = JSON data
+      else
+        file = File.read('data/' + 'facilities_management/dummy_supplier_data.json')
+        data = JSON file
+        puts "Uploading #{data.size} suppliers"
+      end
 
       data.each do |supplier|
         values = supplier.to_json.gsub("'") { "''" }
@@ -84,12 +89,67 @@ module CCS
   rescue PG::Error => e
     puts e.message
   end
+
+  def self.extend_timeout
+    Aws.config[:http_open_timeout] = 600
+    Aws.config[:http_read_timeout] = 600
+    Aws.config[:http_idle_timeout] = 600
+  end
+
+  def self.awd_credentials(access_key, secret_key, bucket, region)
+    Aws.config[:credentials] = Aws::Credentials.new(access_key, secret_key)
+    p "Importing from AWS bucket: #{bucket}, region: #{region}"
+
+    extend_timeout
+  end
+
+  # EDITOR=vim rails credentials:edit
+  def self.fm_aws
+    current_key = ENV['RAILS_MASTER_KEY']
+    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31]
+    # ENV["RAILS_MASTER_KEY"] = '1234567890ABCDEF1234567890ABCDEF'
+
+    access_key = Rails.application.credentials.aws[:access_key_id]
+    secret_key = Rails.application.credentials.aws[:secret_access_key]
+    bucket = Rails.application.credentials.aws[:bucket]
+    region = Rails.application.credentials.aws[:region]
+
+    val = import_suppliers(access_key, secret_key, bucket, region)
+
+    return val
+  rescue StandardError => e
+    puts e.message
+  ensure
+    ENV['RAILS_MASTER_KEY'] = current_key
+  end
+
+  def self.import_suppliers(access_key, secret_key, bucket, region)
+    awd_credentials access_key, secret_key, bucket, region
+
+    object = Aws::S3::Resource.new(region: region)
+    object.bucket(bucket).objects.each do |obj|
+      next unless obj.key.starts_with? 'suppliers/data/final'
+
+      p 'Loading ' + obj.key
+
+      data = obj.get.body
+      return data.string
+    rescue PG::Error => e
+      puts e.message
+    end
+  end
 end
+
 namespace :db do
   desc 'add NUTS static data to the database'
   task static: :environment do
     p 'Loading NUTS static'
     CCS.load_static
+    p 'Loading FM Suppliers static'
+    CCS.fm_suppliers
+  end
+  desc 'download from aws'
+  task aws: :environment do
     p 'Loading FM Suppliers static'
     CCS.fm_suppliers
   end
