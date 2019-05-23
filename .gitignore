@@ -38,9 +38,9 @@ logfile
 # SupplyTeachers data folders
 uploads/*
 public/data/*
-public/supply_teachers/*
+public/supply_teachers/data/*
 public/uploads/*
-lib/tasks/supply_teachers/.geocoder-cache.yml
+public/supply_teachers/.geocoder-cache.yml
 
 # Redis dump
 dump.rdb
