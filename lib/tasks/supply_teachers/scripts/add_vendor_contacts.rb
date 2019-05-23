@@ -2,7 +2,7 @@ require 'bundler/setup'
 require 'json'
 require 'csv'
 
-suppliers = JSON.parse(File.read(ARGV[0]))
+suppliers = JSON.parse(File.read('./lib/tasks/supply_teachers/output/data_only_accredited.json'))
 
 master_details =
   CSV.new(File.read('./lib/tasks/supply_teachers/input/master_vendor_contacts.csv'), headers: :first_row)
