@@ -10,10 +10,10 @@ require 'pathname'
 require 'yaml'
 
 def bootstrap_supplier_lookup
-  branch_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx'
-  price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricing for tool.xlsx'
-  mv_price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx'
-  accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'
+  branch_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/geographical_data_all_suppliers.xlsx'
+  price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/pricing_for_tool.xlsx'
+  mv_price_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/lot_1_and_2_comparisons.xlsx'
+  accredited_suppliers_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/current_accredited_suppliers.xlsx'
 
   extra_supplier_names = []
 

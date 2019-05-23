@@ -13,7 +13,7 @@ def anonymize
   hash =
     JsonPath
     .for(json)
-    .gsub('..supplier_name') { Faker::Company.unique.name }
+    .gsub('..supplier_name') { Faker::Company.name }
     .gsub('..supplier_id') { SecureRandom.uuid }
     .gsub('..telephone') { Faker::PhoneNumber.unique.phone_number }
     .gsub('..contacts.*.name') { Faker::Name.unique.name }
@@ -24,7 +24,7 @@ def anonymize
     .gsub('..neutral_vendor_contact.telephone') { Faker::PhoneNumber.unique.phone_number }
     .gsub('..neutral_vendor_contact.name') { Faker::Name.unique.name }
     .gsub('..neutral_vendor_contact.email') { Faker::Internet.unique.email }
-    .gsub('..branch_name'){ Faker::Company.unique.name }
+    .gsub('..branch_name'){ Faker::Company.name }
     .to_hash
 
   File.open('./lib/tasks/supply_teachers/output/anonymous.json.tmp', 'w') do |f|
