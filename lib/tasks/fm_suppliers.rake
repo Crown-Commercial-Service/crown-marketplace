@@ -56,10 +56,10 @@ module CCS
     current_key = ENV['RAILS_MASTER_KEY']
     ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31]
 
-    access_key = Rails.application.credentials.aws[:access_key_id]
-    secret_key = Rails.application.credentials.aws[:secret_access_key]
-    bucket = Rails.application.credentials.aws[:bucket]
-    region = Rails.application.credentials.aws[:region]
+    access_key = Rails.application.credentials.aws_suppliers[:access_key_id]
+    secret_key = Rails.application.credentials.aws_suppliers[:secret_access_key]
+    bucket = Rails.application.credentials.aws_suppliers[:bucket]
+    region = Rails.application.credentials.aws_suppliers[:region]
 
     import_suppliers(access_key, secret_key, bucket, region)
   rescue StandardError => e
