@@ -1,4 +1,4 @@
-function fireErrors(s){
+function fireErrors(s){//note: some long chckbox pgs require hidden_fields_for_previous_steps_and_responses' to be inside 'govuk_form_group_with_optional_error' (.govuk_form_group)
   s.parents('.govuk-form-group').addClass('govuk-form-group--error');
 
   $('#ccs-error-sum').attr('tabindex','-1').focus().add('#legal_services-error').removeClass('govuk-visually-hidden');
