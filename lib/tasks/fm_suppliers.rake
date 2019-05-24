@@ -55,7 +55,6 @@ module CCS
   def self.fm_aws
     current_key = ENV['RAILS_MASTER_KEY']
     ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31]
-    # ENV["RAILS_MASTER_KEY"] = '1234567890ABCDEF1234567890ABCDEF'
 
     access_key = Rails.application.credentials.aws[:access_key_id]
     secret_key = Rails.application.credentials.aws[:secret_access_key]
