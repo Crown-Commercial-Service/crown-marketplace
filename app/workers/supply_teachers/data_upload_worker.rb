@@ -29,9 +29,9 @@ module SupplyTeachers
 
     def data_file
       if Rails.env.production?
-        './lib/tasks/supply_teachers/output/data.json'
+        './public/supply_teachers/output/data.json'
       else
-        './lib/tasks/supply_teachers/output/anonymous.json'
+        './public/supply_teachers/output/anonymous.json'
       end
     end
   end
