@@ -1,4 +1,4 @@
-function fireErrors(s){
+function fireErrors(s){//note: some long chckbox pgs require hidden_fields_for_previous_steps_and_responses' to be inside 'govuk_form_group_with_optional_error' (.govuk_form_group)
   s.parents('.govuk-form-group').addClass('govuk-form-group--error');
 
   $('#ccs-error-sum').attr('tabindex','-1').focus().add('#legal_services-error').removeClass('govuk-visually-hidden');
@@ -113,6 +113,33 @@ function legal_jurisdiction(form){
   });
 }
 
+function choose_services_area(form){
+  $('#submit').click(function(e){
+
+    var state = form.find('input[name="services_area"]');
+
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
+
+function  choose_services_area2(form){
+  $('#submit').click(function(e){
+
+    var state = form.find('input[name="services_area2"]');
+
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
 
 jQuery(document).ready(function(){
 
@@ -134,6 +161,10 @@ jQuery(document).ready(function(){
       regional_legal_service(f);
     }else if($('#legal_jurisdiction').length){
       legal_jurisdiction(f);
+    }else if($('#choose_services_area').length){
+      choose_services_area(f);
+    }else if($('#choose_services_area2').length){
+      choose_services_area2(f);
     }
 
 });
