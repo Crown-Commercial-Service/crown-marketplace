@@ -3,15 +3,15 @@ require 'json'
 require 'csv'
 
 def add_vendor_contacts
-  suppliers = JSON.parse(File.read('./public/supply_teachers/output/data_only_accredited.json'))
+  suppliers = JSON.parse(File.read('./storage/supply_teachers/output/data_only_accredited.json'))
 
   master_details =
-    CSV.new(File.read('./public/supply_teachers/input/master_vendor_contacts.csv'), headers: :first_row)
+    CSV.new(File.read('./storage/supply_teachers/input/master_vendor_contacts.csv'), headers: :first_row)
       .map { |r| [r['supplier_name'], r] }
       .to_h
 
   neutral_details =
-    CSV.new(File.read('./public/supply_teachers/input/neutral_vendor_contacts.csv'), headers: :first_row)
+    CSV.new(File.read('./storage/supply_teachers/input/neutral_vendor_contacts.csv'), headers: :first_row)
       .map { |r| [r['supplier_name'], r] }
       .to_h
 
@@ -43,7 +43,7 @@ def add_vendor_contacts
     supplier
   end
 
-  File.open('./public/supply_teachers/output/data_with_vendors.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/output/data_with_vendors.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(suppliers)
   end
 end
