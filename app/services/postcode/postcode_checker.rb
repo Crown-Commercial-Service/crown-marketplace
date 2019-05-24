@@ -62,7 +62,7 @@ module Postcode
     # private class methods
     class << self
       def uploader(access_key, secret_access_key, bucket, region)
-        rake 'db:postcode', access_key, secret_access_key, bucket, region
+        rake 'db:webpostcode', access_key, secret_access_key, bucket, region
 
         { status: 200, result: "Uploading postcodes from AWS bucket #{bucket}, region: #{region}" }
       end
