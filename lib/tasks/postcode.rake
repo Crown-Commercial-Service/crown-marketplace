@@ -75,6 +75,22 @@ namespace :db do
     OrdnanceSurvey.import_postcodes args[:access_key], args[:secret_access_key], args[:bucket], args[:region]
   end
 
+  task postcode: :environment do
+    p 'Creating postcode database and import'
+    OrdnanceSurvey.create_postcode_table
+    OrdnanceSurvey.create_address_lookup_view
+
+    # current_key = ENV['RAILS_MASTER_KEY']
+    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31]
+
+    access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
+    secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
+    bucket = Rails.application.credentials.aws_postcodes[:bucket]
+    region = Rails.application.credentials.aws_postcodes[:region]
+
+    OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
+  end
+
   desc 'create OS postcode table'
   task pctable: :environment do
     p 'Creating postcode database and import'
