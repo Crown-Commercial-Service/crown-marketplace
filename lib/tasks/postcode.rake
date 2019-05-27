@@ -105,7 +105,7 @@ namespace :db do
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view
 
-    if Postcode::PostcodeChecker.positive?
+    if Postcode::PostcodeChecker.count.positive?
       puts "There are already #{Postcode::PostcodeChecker.count} postcodes in the table os_address!"
       puts 'Exitting upload process'
       return
