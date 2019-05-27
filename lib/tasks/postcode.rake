@@ -36,27 +36,32 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
   end
 
   def self.extend_timeout
-    Aws.config[:http_open_timeout] = 600
-    Aws.config[:http_read_timeout] = 600
-    Aws.config[:http_idle_timeout] = 600
+    Aws.config[:http_open_timeout] = 6000
+    Aws.config[:http_read_timeout] = 6000
+    Aws.config[:http_idle_timeout] = 6000
   end
 
   def self.import_postcodes(access_key, secret_key, bucket, region)
     awd_credentials access_key, secret_key, bucket, region
 
-    object = Aws::S3::Resource.new(region: region)
-    object.bucket(bucket).objects.each do |obj|
-      next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
+    ActiveRecord::Base.connection_pool.with_connection do |conn|
+      object = Aws::S3::Resource.new(region: region)
+      object.bucket(bucket).objects.each do |obj|
+        next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
 
-      p 'Loading ' + obj.key
-      ActiveRecord::Base.connection_pool.with_connection do |conn|
-        rc = conn.raw_connection
-        rc.exec('COPY os_address FROM STDIN WITH CSV')
+        p "Checking file #{obj.key}"
+
         # rc.put_copy_data(obj.get.body)
         # obj.get.body.each_line { |line| rc.put_copy_data(line) }
+        puts "*** Loading file #{obj.key}"
+        chunks = ''
         obj.get do |chunk|
-          rc.put_copy_data chunk
+          # rc.put_copy_data chunk
+          chunks << chunk
         end
+        rc = conn.raw_connection
+        rc.exec('COPY os_address FROM STDIN WITH CSV')
+        rc.put_copy_data chunks
         rc.put_copy_end
       end
     end
@@ -73,6 +78,38 @@ namespace :db do
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view
     OrdnanceSurvey.import_postcodes args[:access_key], args[:secret_access_key], args[:bucket], args[:region]
+  end
+
+  task postcode: :environment do
+    p 'Creating postcode database and import'
+    OrdnanceSurvey.create_postcode_table
+    OrdnanceSurvey.create_address_lookup_view
+
+    # current_key = ENV['RAILS_MASTER_KEY']
+    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+
+    access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
+    secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
+    bucket = Rails.application.credentials.aws_postcodes[:bucket]
+    region = Rails.application.credentials.aws_postcodes[:region]
+
+    # 'SELECT pg_try_advisory_lock_shared(1234);'
+    query = 'SELECT pg_try_advisory_lock(151);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts "Distributed lock #{result}"
+    end
+
+    OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
+
+    # 'SELECT pg_advisory_unlock_shared(1234);'
+    query = 'SELECT pg_advisory_unlock(151);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts "Distributed unlock #{result}"
+    end
   end
 
   desc 'create OS postcode table'
