@@ -36,9 +36,9 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
   end
 
   def self.extend_timeout
-    Aws.config[:http_open_timeout] = 600
-    Aws.config[:http_read_timeout] = 600
-    Aws.config[:http_idle_timeout] = 600
+    Aws.config[:http_open_timeout] = 6000
+    Aws.config[:http_read_timeout] = 6000
+    Aws.config[:http_idle_timeout] = 6000
   end
 
   def self.import_postcodes(access_key, secret_key, bucket, region)
@@ -47,19 +47,16 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
 
     ActiveRecord::Base.connection_pool.with_connection do |conn|
 
-      rc = conn.raw_connection
-      rc.exec('COPY os_address FROM STDIN WITH CSV')
-
       object = Aws::S3::Resource.new(region: region)
       object.bucket(bucket).objects.each do |obj|
         next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
 
-        p "Loading #{obj.key}"
+        p "Checking file #{obj.key}"
 
         # rc.put_copy_data(obj.get.body)
         # obj.get.body.each_line { |line| rc.put_copy_data(line) }
         count = 0
-        obj.get do |chunk|
+        obj.get(range: "bytes=0-1027") do |chunk|
           # check whether this file has already been loaded into os_address table
           # chunk.lines.first.split(',')w
           line = chunk.lines.first
@@ -67,7 +64,7 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
 
           file_first_line = CSV.parse(line, :liberal_parsing => true)
           pc = file_first_line[0][65]
-          puts "checking postcode #{pc} in file #{obj.key}"
+          puts "checking postcode #{pc} from file #{obj.key}"
 
           vals = conn.exec_query("select count(*) from os_address where POSTCODE = '#{pc}';")
           count = vals[0]['count']
@@ -75,14 +72,16 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
             puts "postcode #{pc} not found in file #{obj.key}"
           else
             puts "Skipping #{obj.key}"
-            break
           end
-
-
-          rc.put_copy_data chunk
-
+          break
         end
         if count.zero?
+          puts "*** Loading file #{obj.key}"
+          rc = conn.raw_connection
+          rc.exec('COPY os_address FROM STDIN WITH CSV')
+          obj.get do |chunk|
+            rc.put_copy_data chunk
+          end
           rc.put_copy_end
         end
         # conn.close
