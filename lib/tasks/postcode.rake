@@ -108,22 +108,21 @@ namespace :db do
     if Postcode::PostcodeChecker.count.positive?
       puts "There are already #{Postcode::PostcodeChecker.count} postcodes in the table os_address!"
       puts 'Exitting upload process'
-      return
+    else
+      # current_key = ENV['RAILS_MASTER_KEY']
+      ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+
+      access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
+      secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
+      bucket = Rails.application.credentials.aws_postcodes[:bucket]
+      region = Rails.application.credentials.aws_postcodes[:region]
+
+      distributed_lock
+
+      OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
+
+      distributed_unlock
     end
-
-    # current_key = ENV['RAILS_MASTER_KEY']
-    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
-
-    access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
-    secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
-    bucket = Rails.application.credentials.aws_postcodes[:bucket]
-    region = Rails.application.credentials.aws_postcodes[:region]
-
-    distributed_lock
-
-    OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
-
-    distributed_unlock
   end
 
   desc 'create OS postcode table'
