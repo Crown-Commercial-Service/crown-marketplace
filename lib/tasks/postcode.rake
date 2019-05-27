@@ -68,6 +68,26 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
   rescue PG::Error => e
     puts e.message
   end
+
+  def self.distributed_lock
+    # 'SELECT pg_try_advisory_lock_shared(1234);'
+    query = 'SELECT pg_try_advisory_lock(151);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts "Distributed lock #{result}"
+    end
+  end
+
+  def self.distributed_unlock
+    # 'SELECT pg_advisory_unlock_shared(1234);'
+    query = 'SELECT pg_advisory_unlock(151);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts "Distributed unlock #{result}"
+    end
+  end
 end
 
 namespace :db do
@@ -85,30 +105,23 @@ namespace :db do
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view
 
-    # current_key = ENV['RAILS_MASTER_KEY']
-    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+    if Postcode::PostcodeChecker.count.positive?
+      puts "There are already #{Postcode::PostcodeChecker.count} postcodes in the table os_address!"
+      puts 'Exitting upload process'
+    else
+      # current_key = ENV['RAILS_MASTER_KEY']
+      ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
 
-    access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
-    secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
-    bucket = Rails.application.credentials.aws_postcodes[:bucket]
-    region = Rails.application.credentials.aws_postcodes[:region]
+      access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
+      secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
+      bucket = Rails.application.credentials.aws_postcodes[:bucket]
+      region = Rails.application.credentials.aws_postcodes[:region]
 
-    # 'SELECT pg_try_advisory_lock_shared(1234);'
-    query = 'SELECT pg_try_advisory_lock(151);'
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query query
-      puts db
-      puts "Distributed lock #{result}"
-    end
+      OrdnanceSurvey.distributed_lock
 
-    OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
+      OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
 
-    # 'SELECT pg_advisory_unlock_shared(1234);'
-    query = 'SELECT pg_advisory_unlock(151);'
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query query
-      puts db
-      puts "Distributed unlock #{result}"
+      OrdnanceSurvey.distributed_unlock
     end
   end
 
