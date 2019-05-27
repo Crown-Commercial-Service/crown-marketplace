@@ -44,21 +44,46 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
   def self.import_postcodes(access_key, secret_key, bucket, region)
     awd_credentials access_key, secret_key, bucket, region
 
-    object = Aws::S3::Resource.new(region: region)
-    object.bucket(bucket).objects.each do |obj|
-      next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
 
-      p 'Loading ' + obj.key
-      ActiveRecord::Base.connection_pool.with_connection do |conn|
-        rc = conn.raw_connection
-        rc.exec('COPY os_address FROM STDIN WITH CSV')
+    ActiveRecord::Base.connection_pool.with_connection do |conn|
+
+      rc = conn.raw_connection
+      rc.exec('COPY os_address FROM STDIN WITH CSV')
+
+      object = Aws::S3::Resource.new(region: region)
+      object.bucket(bucket).objects.each do |obj|
+        next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
+
+        p "Loading #{obj.key}"
+
         # rc.put_copy_data(obj.get.body)
         # obj.get.body.each_line { |line| rc.put_copy_data(line) }
+        count = 0
         obj.get do |chunk|
+          # check whether this file has already been loaded into os_address table
+          # chunk.lines.first.split(',')w
+          line = chunk.lines.first
+          # line = "\"" + chunk.lines.first unless line[0] == "\""
+
+          file_first_line = CSV.parse(line, :liberal_parsing => true)
+          pc = file_first_line[0][65]
+          puts pc
+
+          vals = conn.exec_query("select count(*) from os_address where POSTCODE = '#{pc}';")
+          count = vals[0]['count']
+          if vals[0]['count'] > 0
+            puts "Skipping #{obj.key}"
+            break
+          end
+
+
           rc.put_copy_data chunk
+
         end
-        rc.put_copy_end
+        rc.put_copy_end if count.zero?
+        # conn.close
       end
+
     end
   rescue PG::Error => e
     puts e.message
@@ -81,15 +106,67 @@ namespace :db do
     OrdnanceSurvey.create_address_lookup_view
 
     # current_key = ENV['RAILS_MASTER_KEY']
-    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31]
+    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
 
     access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
     secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
     bucket = Rails.application.credentials.aws_postcodes[:bucket]
     region = Rails.application.credentials.aws_postcodes[:region]
 
+    query = 'SELECT pg_try_advisory_lock(151);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+       result = db.exec_query query
+       puts db
+       puts result
+    end
+
     OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
+
+    query = 'SELECT pg_advisory_unlock(151);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts result
+    end
   end
+
+
+  task lock: :environment do
+    p 'Test lock postcode database and import'
+
+    query = 'SELECT pg_try_advisory_lock(1234);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+       result = db.exec_query query
+       puts db
+       puts result
+    end
+=begin
+    query = 'SELECT pg_try_advisory_lock_shared(1234);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts result
+    end
+
+    query = 'SELECT pg_advisory_unlock_shared(1234);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts result
+    end
+=end
+  rescue StandardError => e
+    puts e.message
+  ensure
+    query = 'SELECT pg_advisory_unlock(1234);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts result
+    end
+
+  end
+
 
   desc 'create OS postcode table'
   task pctable: :environment do
