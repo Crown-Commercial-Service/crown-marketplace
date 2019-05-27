@@ -67,11 +67,13 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
 
           file_first_line = CSV.parse(line, :liberal_parsing => true)
           pc = file_first_line[0][65]
-          puts pc
+          puts "checking postcode #{pc} in file #{obj.key}"
 
           vals = conn.exec_query("select count(*) from os_address where POSTCODE = '#{pc}';")
           count = vals[0]['count']
-          if vals[0]['count'] > 0
+          if vals[0]['count'].zero?
+            puts "postcode #{pc} not found in file #{obj.key}"
+          else
             puts "Skipping #{obj.key}"
             break
           end
@@ -80,7 +82,9 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
           rc.put_copy_data chunk
 
         end
-        rc.put_copy_end if count.zero?
+        if count.zero?
+          rc.put_copy_end
+        end
         # conn.close
       end
 
@@ -117,7 +121,7 @@ namespace :db do
     ActiveRecord::Base.connection_pool.with_connection do |db|
        result = db.exec_query query
        puts db
-       puts result
+       puts "Distributed lock #{result}"
     end
 
     OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
@@ -126,7 +130,7 @@ namespace :db do
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query query
       puts db
-      puts result
+      puts "Distributed unlock #{result}"
     end
   end
 
