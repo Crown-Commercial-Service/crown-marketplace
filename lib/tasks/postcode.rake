@@ -44,9 +44,7 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
   def self.import_postcodes(access_key, secret_key, bucket, region)
     awd_credentials access_key, secret_key, bucket, region
 
-
     ActiveRecord::Base.connection_pool.with_connection do |conn|
-
       object = Aws::S3::Resource.new(region: region)
       object.bucket(bucket).objects.each do |obj|
         next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
@@ -55,38 +53,17 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
 
         # rc.put_copy_data(obj.get.body)
         # obj.get.body.each_line { |line| rc.put_copy_data(line) }
-        count = 0
-        obj.get(range: "bytes=0-1027") do |chunk|
-          # check whether this file has already been loaded into os_address table
-          # chunk.lines.first.split(',')w
-          line = chunk.lines.first
-          # line = "\"" + chunk.lines.first unless line[0] == "\""
-
-          file_first_line = CSV.parse(line, :liberal_parsing => true)
-          pc = file_first_line[0][65]
-          puts "checking postcode #{pc} from file #{obj.key}"
-
-          vals = conn.exec_query("select count(*) from os_address where POSTCODE = '#{pc}';")
-          count = vals[0]['count']
-          if vals[0]['count'].zero?
-            puts "postcode #{pc} not found in file #{obj.key}"
-          else
-            puts "Skipping #{obj.key}"
-          end
-          break
+        puts "*** Loading file #{obj.key}"
+        chunks = ''
+        obj.get do |chunk|
+          # rc.put_copy_data chunk
+          chunks << chunk
         end
-        if count.zero?
-          puts "*** Loading file #{obj.key}"
-          rc = conn.raw_connection
-          rc.exec('COPY os_address FROM STDIN WITH CSV')
-          obj.get do |chunk|
-            rc.put_copy_data chunk
-          end
-          rc.put_copy_end
-        end
-        # conn.close
+        rc = conn.raw_connection
+        rc.exec('COPY os_address FROM STDIN WITH CSV')
+        rc.put_copy_data chunks
+        rc.put_copy_end
       end
-
     end
   rescue PG::Error => e
     puts e.message
@@ -116,15 +93,17 @@ namespace :db do
     bucket = Rails.application.credentials.aws_postcodes[:bucket]
     region = Rails.application.credentials.aws_postcodes[:region]
 
+    # 'SELECT pg_try_advisory_lock_shared(1234);'
     query = 'SELECT pg_try_advisory_lock(151);'
     ActiveRecord::Base.connection_pool.with_connection do |db|
-       result = db.exec_query query
-       puts db
-       puts "Distributed lock #{result}"
+      result = db.exec_query query
+      puts db
+      puts "Distributed lock #{result}"
     end
 
     OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
 
+    # 'SELECT pg_advisory_unlock_shared(1234);'
     query = 'SELECT pg_advisory_unlock(151);'
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query query
@@ -132,44 +111,6 @@ namespace :db do
       puts "Distributed unlock #{result}"
     end
   end
-
-
-  task lock: :environment do
-    p 'Test lock postcode database and import'
-
-    query = 'SELECT pg_try_advisory_lock(1234);'
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-       result = db.exec_query query
-       puts db
-       puts result
-    end
-=begin
-    query = 'SELECT pg_try_advisory_lock_shared(1234);'
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query query
-      puts db
-      puts result
-    end
-
-    query = 'SELECT pg_advisory_unlock_shared(1234);'
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query query
-      puts db
-      puts result
-    end
-=end
-  rescue StandardError => e
-    puts e.message
-  ensure
-    query = 'SELECT pg_advisory_unlock(1234);'
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query query
-      puts db
-      puts result
-    end
-
-  end
-
 
   desc 'create OS postcode table'
   task pctable: :environment do
