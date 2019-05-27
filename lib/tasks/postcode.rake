@@ -69,7 +69,7 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
     puts e.message
   end
 
-  def distributed_lock
+  def self.distributed_lock
     # 'SELECT pg_try_advisory_lock_shared(1234);'
     query = 'SELECT pg_try_advisory_lock(151);'
     ActiveRecord::Base.connection_pool.with_connection do |db|
@@ -79,7 +79,7 @@ AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) 
     end
   end
 
-  def distributed_unlock
+  def self.distributed_unlock
     # 'SELECT pg_advisory_unlock_shared(1234);'
     query = 'SELECT pg_advisory_unlock(151);'
     ActiveRecord::Base.connection_pool.with_connection do |db|
@@ -117,11 +117,11 @@ namespace :db do
       bucket = Rails.application.credentials.aws_postcodes[:bucket]
       region = Rails.application.credentials.aws_postcodes[:region]
 
-      distributed_lock
+      OrdnanceSurvey.distributed_lock
 
       OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
 
-      distributed_unlock
+      OrdnanceSurvey.distributed_unlock
     end
   end
 
