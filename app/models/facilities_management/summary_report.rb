@@ -124,7 +124,10 @@ module FacilitiesManagement
         @uom_dict[values['building_id']] ||= {}
         @uom_dict[values['building_id']][values['service_code']] = values
       end
-      @lift_data = fm_service_data.get_lift_data(@user_id)
+      # @lift_data = fm_service_data.get_lift_data(@user_id)
+      #       # CCS::FM::Lift.all
+      #       #
+      @lift_data = CCS::FM::Lift.lifts_for_user(@user_id)
       @uom_dict
     end
 

@@ -78,12 +78,14 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row vals
 
       work_package = ''
-      services.each do |s|
+
+      services.sort_by { |s| s.code[s.code.index('.') + 1..-1].to_i }.each do |s|
         if work_package == s.work_package_code
           label = nil
         else
           label = 'Work Package ' + s.work_package_code + ' - ' + s.work_package.name
         end
+
         work_package = s.work_package_code
 
         uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
