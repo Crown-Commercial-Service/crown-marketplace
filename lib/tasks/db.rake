@@ -49,6 +49,7 @@ module CCS
   end
 
   def self.load_static(directory = 'data/')
+    distributed_lock
     p "Loading NUTS static data, Environment: #{Rails.env}"
     CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv'
     CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv'
@@ -58,41 +59,37 @@ module CCS
     CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv'
     p 'Loading FM rates static data'
     CCS.csv_to_fm_rates directory + 'facilities_management/rates.csv'
+    distributed_unlock
   end
 
-  def self.fm_suppliers
+  def self.distributed_lock
+    # 'SELECT pg_try_advisory_lock_shared(1234);'
+    query = 'SELECT pg_try_advisory_lock(150);'
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = 'CREATE TABLE IF NOT EXISTS fm_suppliers ( supplier_id UUID PRIMARY KEY, data jsonb,' \
-              '  created_at timestamp without time zone NOT NULL,  updated_at timestamp without time zone NOT NULL);' \
-              'CREATE INDEX IF NOT EXISTS idxgin ON fm_suppliers USING GIN (data);' \
-              'CREATE INDEX IF NOT EXISTS idxginp ON fm_suppliers USING GIN (data jsonb_path_ops);' \
-              "CREATE INDEX IF NOT EXISTS idxginlots ON fm_suppliers USING GIN ((data -> 'lots'));"
-      db.query query
-
-      file = File.read('data/' + 'facilities_management/dummy_supplier_data.json')
-      data = JSON file
-      puts "Uploading #{data.size} suppliers"
-
-      data.each do |supplier|
-        values = supplier.to_json.gsub("'") { "''" }
-        query = "DELETE FROM fm_suppliers where data->'supplier_id' ? '" + supplier['supplier_id'] + "' ; " \
-                'insert into fm_suppliers ( created_at, updated_at, supplier_id, data ) values ( now(), now(), \'' \
-                          + supplier['supplier_id'] + "', '" + values + "')"
-        db.query query
-      end
+      result = db.exec_query query
+      puts db
+      puts "Distributed lock #{result}"
     end
-  rescue PG::Error => e
-    puts e.message
+  end
+
+  def self.distributed_unlock
+    # 'SELECT pg_advisory_unlock_shared(1234);'
+    query = 'SELECT pg_advisory_unlock(150);'
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query query
+      puts db
+      puts "Distributed unlock #{result}"
+    end
   end
 end
+
 namespace :db do
   desc 'add NUTS static data to the database'
   task static: :environment do
     p 'Loading NUTS static'
     CCS.load_static
-    p 'Loading FM Suppliers static'
-    CCS.fm_suppliers
   end
+
   desc 'add static data to the database'
   task setup: :static do
   end
