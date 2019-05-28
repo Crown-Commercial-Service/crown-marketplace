@@ -43,12 +43,21 @@ $(() => {
         $('#fm-new-building-continue-form').attr('action', 'new-building-address').submit()
     });
 
+    const formatPostCode = (pc) => {
+
+        let outer = pc.substring(0, pc.length - 3);
+        let inner = pc.slice(-3);
+        return outer.trim().toUpperCase() + ' ' + inner.trim().toUpperCase();
+    };
+
 
     $('#fm-postcode-input').on('keyup', (e) => {
 
-        if (pageUtils.isPostCodeValid(e.target.value)) {
+        let postcode = formatPostCode(e.target.value);
+
+        if (pageUtils.isPostCodeValid(postcode)) {
             pageUtils.showPostCodeError(false);
-            postCode = e.target.value;
+            postCode = postcode;
         } else {
             postCode = "";
         }
