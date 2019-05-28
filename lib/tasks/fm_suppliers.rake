@@ -2,6 +2,7 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
+  require './lib/tasks/distributed_locks'
 
   def self.supplier_data
     is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
@@ -89,7 +90,9 @@ namespace :db do
   desc 'download from aws'
   task aws: :environment do
     p 'Loading FM Suppliers static'
-    CCS.fm_suppliers
+    DistributedLocks.distributed_lock(152) do
+      CCS.fm_suppliers
+    end
   end
 
   desc 'add static data to the database'
