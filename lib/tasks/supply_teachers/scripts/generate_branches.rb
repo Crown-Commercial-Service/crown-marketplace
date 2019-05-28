@@ -3,8 +3,9 @@
 require 'roo'
 require 'json'
 require 'capybara'
+
 def generate_branches
-  branch_workbook = Roo::Spreadsheet.open './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx'
+  branch_workbook = Roo::Spreadsheet.open "#{Rails.root}/storage/supply_teachers/input/geographical_data_all_suppliers.xlsx"
 
   header_map = {
     'Supplier Name' => :supplier_name,
@@ -100,7 +101,7 @@ def generate_branches
 
   collated = collate(branches.map { |row| nest(row, :branches) })
 
-  File.open('./lib/tasks/supply_teachers/output/supplier_branches.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/output/supplier_branches.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(collated)
   end
 end
