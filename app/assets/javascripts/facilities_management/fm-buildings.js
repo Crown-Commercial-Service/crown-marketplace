@@ -43,17 +43,11 @@ $(() => {
         $('#fm-new-building-continue-form').attr('action', 'new-building-address').submit()
     });
 
-    const formatPostCode = (pc) => {
-
-        let outer = pc.substring(0, pc.length - 3);
-        let inner = pc.slice(-3);
-        return outer.trim().toUpperCase() + ' ' + inner.trim().toUpperCase();
-    };
 
 
     $('#fm-postcode-input').on('keyup', (e) => {
 
-        let postcode = formatPostCode(e.target.value);
+        let postcode = pageUtils.formatPostCode(e.target.value);
 
         if (pageUtils.isPostCodeValid(postcode)) {
             pageUtils.showPostCodeError(false);
@@ -81,17 +75,18 @@ $(() => {
 
     const getRegion = ((post_code) => {
 
-        if (post_code && pageUtils.isPostCodeValid(post_code)) {
-            $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
-                .done(function (data) {
-                    if (data) {
-                        pageUtils.setCachedData('fm-current-region', data.result.region);
-                    }
-                })
-                .fail(function (data) {
-                    pageUtils.showPostCodeError(true, data.error);
-                });
-        }
+        //if (post_code && pageUtils.isPostCodeValid(post_code)) {
+        $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
+            .done(function (data) {
+                if (data) {
+                    pageUtils.setCachedData('fm-current-region', data.result.region);
+                }
+            })
+            .fail(function (data) {
+                pageUtils.setCachedData('fm-current-region', 'Region not found for this postcode');
+                pageUtils.showPostCodeError(true, data.error);
+            });
+        //}
     });
 
     $('#fm-postcode-lookup-results').on('change', (e) => {
