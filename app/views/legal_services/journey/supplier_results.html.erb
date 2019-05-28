@@ -1,20 +1,18 @@
-<%= content_for :page_title, t('.page_title')  %>
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
-<div class="govuk-body">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-0"><%= t('.heading') %></h1>
-
-      <p class="govuk-body govuk-!-margin-bottom-7"><%= t('.results_html', results: @suppliers_count) %></p>
-
-
-      <%= link_to 'Download the supplier list', legal_services_suppliers_download_shortlist_path, role: 'button', class: 'govuk-button govuk-!-margin-bottom-6' %>
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-      <% @suppliers.each do |supplier| %>
-        <%= render 'supplier', supplier: supplier%>
-      <% end %>
-      <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
-    </div>
-  </div>
-</div>
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<%= form_tag @form_path, method: :get do %>
+  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <%= govuk_form_group_with_optional_error(@journey, :central_government) do %>
+    <%= govuk_fieldset_with_optional_error(@journey, :central_government) do %>
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+		  <%= t('Supplier Results') %>
+        </h1>
+      </legend>
+     <p><%= t('127 firms can provide the legal services that meet your requirements ') %></p>
+      <%= display_error(@journey, :central_government) %>
+    <% end %>
+  <% end %>
+  <%= link_to 'Download the supplier list', legal_services_path , class: 'govuk-button' %>
+<% end %>
