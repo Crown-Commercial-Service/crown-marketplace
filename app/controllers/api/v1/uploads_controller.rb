@@ -5,14 +5,14 @@ module Api
     # return json
     class UploadsController < ApplicationController
       protect_from_forgery with: :exception
-      require_permission :none, only: %i[show postcodes suppliers]
-      skip_before_action :verify_authenticity_token, only: %i[postcodes suppliers]
+      require_permission :none, only: %i[postcodes]
+      skip_before_action :verify_authenticity_token, only: %i[postcodes]
 
       # :nocov:
       if Rails.env.production?
         http_basic_authenticate_with(
-          name: Marketplace.http_basic_auth_name,
-          password: Marketplace.http_basic_auth_password
+          name: ENV['SECRET_KEY_BASE'][42..52], # Marketplace.http_basic_auth_name,
+          password: ENV['SECRET_KEY_BASE'][99..127] # Marketplace.http_basic_auth_password
         )
       end
       # :nocov:
@@ -33,25 +33,6 @@ module Api
           error: e.to_s
         }
         render json: summary, status: :unprocessable_entity
-      end
-
-      # ---------------------------
-      # usage:
-      # curl --request POST --header "Content-Type: application/json" --data @output/final-data.json http://localhost:3000/api/v1/supplier/upload
-      #
-      def suppliers
-        action = params[:slug]
-
-        if action == 'upload'
-          suppliers = JSON.parse(request.body.read)
-
-          FacilitiesManagement::Upload.upload_json!(suppliers)
-
-          # render json: {}, status: :create
-          render json: { status: 200, result: :create }
-        else
-          render json: { status: 404, error: "no such action: #{action}" }
-        end
       end
 
       # ---------------------------
