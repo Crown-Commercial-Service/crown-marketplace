@@ -4,6 +4,7 @@ RSpec.describe 'shared/_google_analytics.html.erb' do
   before do
     allow(Marketplace).to receive(:google_analytics_tracking_id)
       .and_return(google_analytics_tracking_id)
+    allow(view).to receive(:a_supply_teachers_path?).and_return true
   end
 
   context 'when Google Analytics tracking ID is missing' do
@@ -24,6 +25,20 @@ RSpec.describe 'shared/_google_analytics.html.erb' do
 
       expect(rendered).to match(/script/)
       expect(rendered).to match(/UA-999-9/)
+    end
+  end
+
+  context 'when view is not a supply_teachers path' do
+    let(:google_analytics_tracking_id) { 'UA-999-9' }
+
+    before do
+      allow(view).to receive(:a_supply_teachers_path?).and_return false
+    end
+
+    it 'does not render anything' do
+      render partial: 'shared/google_analytics'
+
+      expect(rendered).to be_blank
     end
   end
 end
