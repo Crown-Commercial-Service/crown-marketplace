@@ -60,7 +60,7 @@
         <form id="fm-summary-spreadsheet-form" action="/facilities-management/summary?calculations=yes&amp;format=xlsx" method="post">
           <p class="govuk-body govuk-body-s supplier-record__print-option">
             <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-            <a onclick="document.getElementById('fm-summary-spreadsheet-form').submit();" class="supplier-record__file-download ga-download-calculator" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx">Download supplier list and Deliverables Matrix Lite</a>
+            <a onclick="document.getElementById('fm-summary-spreadsheet-form').submit();" class="supplier-record__file-download" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx">Download supplier list and Deliverables Matrix Lite</a>
           </p>
         </form>
       </div>
