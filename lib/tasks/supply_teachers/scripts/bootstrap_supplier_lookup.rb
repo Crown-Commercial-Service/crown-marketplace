@@ -10,10 +10,10 @@ require 'pathname'
 require 'yaml'
 
 def bootstrap_supplier_lookup
-  branch_workbook = Roo::Spreadsheet.open './public/supply_teachers/input/geographical_data_all_suppliers.xlsx'
-  price_workbook = Roo::Spreadsheet.open './public/supply_teachers/input/pricing_for_tool.xlsx'
-  mv_price_workbook = Roo::Spreadsheet.open './public/supply_teachers/input/lot_1_and_2_comparisons.xlsx'
-  accredited_suppliers_workbook = Roo::Spreadsheet.open './public/supply_teachers/input/current_accredited_suppliers.xlsx'
+  branch_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/geographical_data_all_suppliers.xlsx'
+  price_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/pricing_for_tool.xlsx'
+  mv_price_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/lot_1_and_2_comparisons.xlsx'
+  accredited_suppliers_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/current_accredited_suppliers.xlsx'
 
   extra_supplier_names = []
 
@@ -198,7 +198,7 @@ def bootstrap_supplier_lookup
     end
   end
 
-  File.open('./public/supply_teachers/output/supplier_lookup.csv.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/output/supplier_lookup.csv.tmp', 'w') do |f|
     f.puts csv_string
   end
 end

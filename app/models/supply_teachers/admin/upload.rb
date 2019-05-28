@@ -5,13 +5,13 @@ module SupplyTeachers
       self.table_name = 'supply_teachers_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      CURRENT_ACCREDITED_PATH = Rails.root.join('public', 'supply_teachers', 'input', 'current_accredited_suppliers.xlsx').freeze
-      GEOGRAPHICAL_DATA_PATH = Rails.root.join('public', 'supply_teachers', 'input', 'geographical_data_all_suppliers.xlsx').freeze
-      LOT_1_AND_LOT2_PATH = Rails.root.join('public', 'supply_teachers', 'input', 'lot_1_and_2_comparisons.xlsx').freeze
-      MASTER_VENDOR_PATH = Rails.root.join('public', 'supply_teachers', 'input', 'master_vendor_contacts.csv').freeze
-      NEUTRAL_VENDOR_PATH = Rails.root.join('public', 'supply_teachers', 'input', 'neutral_vendor_contacts.csv').freeze
-      PRICING_TOOL_PATH = Rails.root.join('public', 'supply_teachers', 'input', 'pricing_for_tool.xlsx').freeze
-      SUPPLIER_LOOKUP_PATH = Rails.root.join('public', 'supply_teachers', 'input', 'supplier_lookup.csv').freeze
+      CURRENT_ACCREDITED_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'current_accredited_suppliers.xlsx').freeze
+      GEOGRAPHICAL_DATA_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'geographical_data_all_suppliers.xlsx').freeze
+      LOT_1_AND_LOT2_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'lot_1_and_2_comparisons.xlsx').freeze
+      MASTER_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'master_vendor_contacts.csv').freeze
+      NEUTRAL_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'neutral_vendor_contacts.csv').freeze
+      PRICING_TOOL_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'pricing_for_tool.xlsx').freeze
+      SUPPLIER_LOOKUP_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'supplier_lookup.csv').freeze
 
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
       mount_uploader :geographical_data_all_suppliers, SupplyTeachersFileUploader
