@@ -2,6 +2,7 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
+  require './lib/tasks/distributed_locks'
 
   def self.csv_to_nuts_regions(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
@@ -49,36 +50,16 @@ module CCS
   end
 
   def self.load_static(directory = 'data/')
-    distributed_lock
-    p "Loading NUTS static data, Environment: #{Rails.env}"
-    CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv'
-    CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv'
-    CCS.csv_to_nuts_regions directory + 'nuts3_regions.csv'
-    p "Finished loading NUTS codes into db #{Rails.application.config.database_configuration[Rails.env]['database']}"
+    DistributedLocks.distributed_lock(150) do
+      p "Loading NUTS static data, Environment: #{Rails.env}"
+      CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv'
+      CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv'
+      CCS.csv_to_nuts_regions directory + 'nuts3_regions.csv'
+      p "Finished loading NUTS codes into db #{Rails.application.config.database_configuration[Rails.env]['database']}"
 
-    CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv'
-    p 'Loading FM rates static data'
-    CCS.csv_to_fm_rates directory + 'facilities_management/rates.csv'
-    distributed_unlock
-  end
-
-  def self.distributed_lock
-    # 'SELECT pg_try_advisory_lock_shared(1234);'
-    query = 'SELECT pg_try_advisory_lock(150);'
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query query
-      puts db
-      puts "Distributed lock #{result}"
-    end
-  end
-
-  def self.distributed_unlock
-    # 'SELECT pg_advisory_unlock_shared(1234);'
-    query = 'SELECT pg_advisory_unlock(150);'
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query query
-      puts db
-      puts "Distributed unlock #{result}"
+      CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv'
+      p 'Loading FM rates static data'
+      CCS.csv_to_fm_rates directory + 'facilities_management/rates.csv'
     end
   end
 end
