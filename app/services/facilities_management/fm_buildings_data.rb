@@ -84,6 +84,7 @@ class FMBuildingData
       request = Net::HTTP::Get.new uri
 
       response = http.request request # Net::HTTPResponse object
+      Rails.logger.info response.body
       response.body
     end
   rescue StandardError => e
