@@ -2,6 +2,7 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
+  require './lib/tasks/distributed_locks'
 
   def self.csv_to_nuts_regions(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
@@ -49,15 +50,17 @@ module CCS
   end
 
   def self.load_static(directory = 'data/')
-    p "Loading NUTS static data, Environment: #{Rails.env}"
-    CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv'
-    CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv'
-    CCS.csv_to_nuts_regions directory + 'nuts3_regions.csv'
-    p "Finished loading NUTS codes into db #{Rails.application.config.database_configuration[Rails.env]['database']}"
+    DistributedLocks.distributed_lock(150) do
+      p "Loading NUTS static data, Environment: #{Rails.env}"
+      CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv'
+      CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv'
+      CCS.csv_to_nuts_regions directory + 'nuts3_regions.csv'
+      p "Finished loading NUTS codes into db #{Rails.application.config.database_configuration[Rails.env]['database']}"
 
-    CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv'
-    p 'Loading FM rates static data'
-    CCS.csv_to_fm_rates directory + 'facilities_management/rates.csv'
+      CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv'
+      p 'Loading FM rates static data'
+      CCS.csv_to_fm_rates directory + 'facilities_management/rates.csv'
+    end
   end
 end
 

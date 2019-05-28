@@ -1,6 +1,7 @@
 module FM
   require 'pg'
   require 'json'
+  require './lib/tasks/distributed_locks'
 
   def self.create_uom_table
     ActiveRecord::Base.connection_pool.with_connection do |db|
@@ -81,14 +82,16 @@ end
 namespace :db do
   desc 'add FM static data to the database'
   task fmdata: :environment do
-    p 'Creating FM building database'
-    FM.facilities_management_buildings
-    p 'Creating FM UOM table'
-    FM.create_uom_table
-    p 'Creating FM UOM values table'
-    FM.create_uom_values_table
-    p 'Creating FM lift table'
-    FM.create_fm_lifts_table
+    DistributedLocks.distributed_lock(153) do
+      p 'Creating FM building database'
+      FM.facilities_management_buildings
+      p 'Creating FM UOM table'
+      FM.create_uom_table
+      p 'Creating FM UOM values table'
+      FM.create_uom_values_table
+      p 'Creating FM lift table'
+      FM.create_fm_lifts_table
+    end
   end
   desc 'add FM static data to the database'
   task static: :fmdata do
