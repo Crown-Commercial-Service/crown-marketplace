@@ -4,12 +4,12 @@
 
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
-    <h1 class="govuk-heading-xl">
-      Select your region
-    </h1>
+    <h2 class="govuk-heading-m">
+      Where are your buildings located?
+    </h2>
   </fieldset>
-  <p class="govuk-body">
-    Select/choose/pick/add one or multiple regions to give/provide<br> the location of your building/facilities
+  <p class="govuk-caption-m">
+    Select the regions, based on buildings's location where you require facilities <br>management services
   </p>
 </div>
 <div class="govuk-grid-column-two-thirds">
@@ -23,7 +23,8 @@
             <span class="govuk-accordion__section-button" id="region-<%= key %>"><%= value %></span>
           </h2>
         </div>
-        <div id="<% key %>-content" class="govuk-accordion__section-content CCS-fm-region-filter-check-box-label" aria-labelledby="<%= value %>">
+        <div id="
+          <% key %>-content" class="govuk-accordion__section-content CCS-fm-region-filter-check-box-label" aria-labelledby="<%= value %>">
 
           <% @subregions.each do |key2, value2| %>
 
@@ -70,7 +71,7 @@
   </div>
   <p>
     <%= form_tag '/facilities-management/buildings/select-services', id: 'save-locations-link-form', method: :post do %>
-      <%= link_to 'Continue', '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id:'save-locations-link', name:'save-locations-link'%>
+      <%= link_to 'Continue', '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-locations-link', name: 'save-locations-link' %>
     <% end %>
   </p>
 </div>
