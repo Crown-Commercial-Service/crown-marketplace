@@ -3,10 +3,10 @@ module LegalServices
     include Steppable
 
     attribute :legal_jurisdiction
-    validates :legal_jurisdiction, inclusion: ['yes', 'no']
+    validates :legal_jurisdiction, inclusion: ['E', 'S', 'N']
 
     def next_step_class
-      suppliers
+      Journey::SupplierResults
     end
   end
 end
