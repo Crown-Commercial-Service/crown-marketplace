@@ -3,64 +3,39 @@
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-  <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('.question') %>
-        </h1>
-      </legend>
-      <span class="govuk-hint">
-        <%= t('.question_hint') %>
-      </span>
-      <%= display_error(@journey, :lot) %>
-      <div class="govuk-radios">
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF2.1', checked?(params[:lot], 'MCF2.1'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF2.1", ManagementConsultancy::Lot['MCF2.1'].full_description, class: 'govuk-label govuk-radios__label' %>
+  <div class="ccs-titles-checkboxes">
+    <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
+      <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.question') %>
+          </h1>
+        </legend>
+        <%= display_error(@journey, :lot) %>
+        <div class="govuk-radios">
+          <% ManagementConsultancy::Journey::ChooseLot.lots.each do |lot| %>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :lot, lot.number, checked?(params[:lot], lot.number), class: 'govuk-radios__input' %>
+              <%= label_tag :"lot_#{lot.number}", "#{lot.description} (#{framework_and_number(lot.number)})", class: 'govuk-label govuk-radios__label' %>
+              <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">
+                    <%= lot.description %>
+                  </span>
+                </summary>
+                <div class="govuk-details__text">
+                  <ul class="govuk-list">
+                    <% lot.services.each do |service| %>
+                      <li><%= service.name %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          <% end %>
         </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF2.2', checked?(params[:lot], 'MCF2.2'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF2.2", ManagementConsultancy::Lot['MCF2.2'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF2.3', checked?(params[:lot], ' MCF2.3'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF2.3", ManagementConsultancy::Lot['MCF2.3'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF2.4', checked?(params[:lot], 'MCF2.4'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF2.4", ManagementConsultancy::Lot['MCF2.4'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF1.2', checked?(params[:lot], 'MCF1.2'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF1.3", ManagementConsultancy::Lot['MCF1.2'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF1.3', checked?(params[:lot], 'MCF1.3'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF1.3", ManagementConsultancy::Lot['MCF1.3'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF1.4', checked?(params[:lot], 'MCF1.4'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF1.4", ManagementConsultancy::Lot['MCF1.4'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF1.5', checked?(params[:lot], 'MCF1.5'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF1.5", ManagementConsultancy::Lot['MCF1.5'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF1.6', checked?(params[:lot], 'MCF1.6'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF1.6", ManagementConsultancy::Lot['MCF1.6'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF1.7', checked?(params[:lot], 'MCF1.7'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF1.7", ManagementConsultancy::Lot['MCF1.7'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :lot, 'MCF1.8', checked?(params[:lot], 'MCF1.8'), class: 'govuk-radios__input' %>
-          <%= label_tag :"lot_MCF1.8", ManagementConsultancy::Lot['MCF1.8'].full_description, class: 'govuk-label govuk-radios__label' %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+    <%= submit_tag t('common.submit'), class: "govuk-button" %>
+  </div>
 <% end %>
