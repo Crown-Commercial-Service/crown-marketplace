@@ -59,7 +59,8 @@
                   <% lot1.each do |lot2_full_service| %>
                     <div class="govuk-checkboxes__item">
                       <% lot2_full_service_no_slash = lot2_full_service.gsub('/', '_') %>
-                      <% lot_region_no_space = lot2_full_service_no_slash.gsub(' ', '_') %>
+                      <% lot2_full_service_no_and = lot2_full_service.gsub('&', '_') %>
+                      <% lot_region_no_space = lot2_full_service_no_and.gsub(' ', '_') %>
                       <%= check_box_tag(
                                 "lot2_full_service",
                                 lot2_full_service,
