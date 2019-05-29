@@ -19,13 +19,13 @@
                   <br>
                 <span class="govuk-caption-m govuk-!-font-size-18">
                   <% if building['address'].any? %>
-                    <% address = building['address']['fm-address-line-1'].to_s + ', ' +
-                        building['address']['fm-address-line-2'].to_s + ', ' +
-                        building['address']['fm-address-town'].to_s + ', ' +
-                        building['address']['fm-address-county'].to_s + ', ' +
+                    <% address = building['address']['fm-address-line-1'].to_s + (building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') +
+                        building['address']['fm-address-line-2'].to_s + (building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') +
+                        building['address']['fm-address-town'].to_s + (building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') +
+                        building['address']['fm-address-county'].to_s + (building['address']['fm-address-county'].to_s.length > 0 ? ', ' : ' ') +
                         building['address']['fm-address-postcode'].to_s
                     %>
-                    <%= address.sub(', , ', ', ') %>
+                    <%= address %>
                   <% end %>
                 </span>
               </span>
@@ -127,9 +127,9 @@
     <div>
       <%= form_tag '/facilities-management/buildings/new-building', id: 'fm-new-building-form', method: :post do %>
         <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-<!--
-        <a id="fm-buildings-add-building" href="buildings/new-building" class="govuk-link--no-visited-state ccs-no-print" role="button">+
--->
+        <!--
+                <a id="fm-buildings-add-building" href="buildings/new-building" class="govuk-link--no-visited-state ccs-no-print" role="button">+
+        -->
         <a id="fm-buildings-add-building" href="#" class="govuk-link--no-visited-state ccs-no-print" role="button">+
           Add a
           building
