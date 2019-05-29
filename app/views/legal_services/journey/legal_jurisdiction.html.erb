@@ -39,15 +39,15 @@
 
           <div class="govuk-radios">
             <div class="govuk-radios__item">
-              <%= radio_button_tag :legal_jurisdiction, 'yes', checked?(params[:legal_jurisdiction], 'yes'), class: 'govuk-radios__input', id: 'gov_eng_wales' %>
+              <%= radio_button_tag :legal_jurisdiction, 'E', checked?(params[:legal_jurisdiction], 'yes'), class: 'govuk-radios__input', id: 'gov_eng_wales' %>
               <%= label_tag :legal_jurisdiction, t('.eng_wales'), class: 'govuk-label govuk-radios__label', for: 'gov_eng_wales' %>
             </div>
             <div class="govuk-radios__item">
-              <%= radio_button_tag :legal_jurisdiction, 'yes', checked?(params[:legal_jurisdiction], 'no'), class: 'govuk-radios__input', id: 'gov_scot' %>
+              <%= radio_button_tag :legal_jurisdiction, 'S', checked?(params[:legal_jurisdiction], 'no'), class: 'govuk-radios__input', id: 'gov_scot' %>
               <%= label_tag :legal_jurisdiction, t('.scot_land'), class: 'govuk-label govuk-radios__label', for: 'gov_scot' %>
             </div>
             <div class="govuk-radios__item">
-              <%= radio_button_tag :legal_jurisdiction, 'no', checked?(params[:legal_jurisdiction], 'no'), class: 'govuk-radios__input', id: 'gov_ni' %>
+              <%= radio_button_tag :legal_jurisdiction, 'N', checked?(params[:legal_jurisdiction], 'no'), class: 'govuk-radios__input', id: 'gov_ni' %>
               <%= label_tag :legal_jurisdiction, t('.ni'), class: 'govuk-label govuk-radios__label', for: 'gov_ni' %>
             </div>
           </div>
