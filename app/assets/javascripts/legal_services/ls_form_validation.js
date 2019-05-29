@@ -127,7 +127,7 @@ function choose_services_area(form){
   });
 }
 
-function  choose_services_area2(form){
+function choose_services_area2(form){
   $('#submit').on('click', function(e){
 
     var state = form.find('input[name="services_area2"]');
