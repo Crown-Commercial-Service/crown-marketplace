@@ -1,11 +1,12 @@
 <% x = 0; %>
-<h2 class="govuk-caption-xl">Your buildings</h2>
-<h1 class="govuk-heading-xl">Add your buildings</h1>
-<h2 class="govuk-heading-m govuk-!-margin-0"><%= @building_count %> building(s) are on your list</h2>
+
+<h1 class="govuk-heading-xl">Manage buildings</h1>
+<h2 class="govuk-heading-m govuk-!-margin-0"><%= @building_count %> buildings</h2>
+<% if @building_count == 0 %><h2 class="govuk-caption-m govuk-!-margin-0">You must add at least one building</h2><% end %>
 
 <% if @building_count > 0 %>
-  <h2 class="govuk-caption-m govuk-!-margin-4">Browse the list of <%= @building_count %> building(s) in total so
-    far.</h2>
+  <h2 class="govuk-caption-m govuk-!-margin-0">All buildings on this list and their selected services will be included
+    in your contract</h2>
 
   <div id="fm-buildings-container">
     <div class="govuk-accordion" data-module="accordion" id="services-accordion">
@@ -130,12 +131,13 @@
         <!--
                 <a id="fm-buildings-add-building" href="buildings/new-building" class="govuk-link--no-visited-state ccs-no-print" role="button">+
         -->
-        <a id="fm-buildings-add-building" href="#" class="govuk-link--no-visited-state ccs-no-print" role="button">+
-          Add a
-          building
-        </a>
+
       <% end %>
     </div>
   </div>
+  <a id="fm-buildings-add-building" href="#" class="govuk-button ccs-no-print govuk-!-margin-3" role="button">+
+    Add a
+    building
+  </a>
 </div>
 
