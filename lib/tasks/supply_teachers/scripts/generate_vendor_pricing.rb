@@ -10,7 +10,7 @@ require 'yaml'
 require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
 
 def generate_vendor_pricing
-  mv_price_workbook = Roo::Spreadsheet.open './public/supply_teachers/input/lot_1_and_2_comparisons.xlsx'
+  mv_price_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/lot_1_and_2_comparisons.xlsx'
 
   def subhead?(row)
     row[:number] =~ /Category Line/ || row[:number].nil?
@@ -127,7 +127,7 @@ def generate_vendor_pricing
 
   collated = collate(mv_pricing + nv_pricing)
 
-  File.open('./public/supply_teachers/output/supplier_vendor_pricing.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/output/supplier_vendor_pricing.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(collated)
   end
 end

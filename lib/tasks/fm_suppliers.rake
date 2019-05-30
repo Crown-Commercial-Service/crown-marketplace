@@ -2,13 +2,14 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
+  require './lib/tasks/distributed_locks'
 
   def self.supplier_data
     is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
     # debug
     puts "CCS_DEFAULT_DB_HOST #{is_dev_db}"
     # nb reinstate || (is_dev_db.include? 'dev')
-    if is_dev_db.nil? # || (is_dev_db.include? 'dev')
+    if is_dev_db.nil? || (is_dev_db.include? 'dev.')
       puts 'dummy supplier data'
       JSON File.read('data/' + 'facilities_management/dummy_supplier_data.json')
     elsif ENV['SECRET_KEY_BASE']
@@ -89,7 +90,9 @@ namespace :db do
   desc 'download from aws'
   task aws: :environment do
     p 'Loading FM Suppliers static'
-    CCS.fm_suppliers
+    DistributedLocks.distributed_lock(152) do
+      CCS.fm_suppliers
+    end
   end
 
   desc 'add static data to the database'
