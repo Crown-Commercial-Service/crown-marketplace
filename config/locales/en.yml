@@ -533,8 +533,9 @@ en:
         question: What lot do you need?
       legal_jurisdiction:
         eng_wales: England and Wales
+        heading: Lot 2 - Full-service firms
         ni: Northern Ireland
-        question: Which legal jurisdiction do you need?
+        question: Select the jurisdiction you need
         scot_land: Scotland
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
