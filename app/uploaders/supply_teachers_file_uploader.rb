@@ -15,8 +15,9 @@ class SupplyTeachersFileUploader < CarrierWave::Uploader::Base
   def extension_whitelist
     %w[xls xlsx csv]
   end
-
-  def cache_dir
-    Rails.root.join('storage', 'supply_teachers', 'tmp', 'uploads')
+  if Rails.env.test?
+    def cache_dir
+      Rails.root.join('storage', 'supply_teachers', 'tmp', 'uploads')
+    end
   end
 end
