@@ -29,9 +29,9 @@ module SupplyTeachers
 
     def data_file
       if Rails.env.production?
-        './storage/supply_teachers/output/data.json'
+        Rails.root.join('storage', 'supply_teachers', 'output', 'data.json').freeze
       else
-        './storage/supply_teachers/output/anonymous.json'
+        Rails.root.join('storage', 'supply_teachers', 'output', 'anonymous.json').freeze
       end
     end
   end
