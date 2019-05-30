@@ -20,15 +20,17 @@
 
     <%= form_tag @form_path, class: :'ccs-form', id: :'legal_jurisdiction', method: :get do %>
 
-      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <h1 class="govuk-caption-m govuk-!-margin-bottom-1">
+        <%= t('.heading') %>
+      </h1>
 
       <%= govuk_form_group_with_optional_error(@journey, :legal_jurisdiction) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :legal_jurisdiction) do %>
 
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
-            <h1 class="govuk-fieldset__heading">
-              <%= t('.question') %>
-            </h1>
+          <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-1">
+            <%= t('.question') %>
           </legend>
 
           <%= display_error(@journey, :legal_jurisdiction) %>
