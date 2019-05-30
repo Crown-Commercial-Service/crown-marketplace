@@ -100,15 +100,13 @@ module SupplyTeachers
 
       # rubocop:disable Metrics/AbcSize
       def copy_files_to_input_folder
-        Rails.logger.info('Copy files to input started')
-        cp_file_to_input(current_accredited_suppliers.path, CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
-        cp_file_to_input(geographical_data_all_suppliers.path, GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
-        cp_file_to_input(lot_1_and_lot_2_comparisons.path, LOT_1_AND_LOT2_PATH, lot_1_and_lot_2_comparisons_changed?)
-        cp_file_to_input(master_vendor_contacts.path, MASTER_VENDOR_PATH, master_vendor_contacts_changed?)
-        cp_file_to_input(neutral_vendor_contacts.path, NEUTRAL_VENDOR_PATH, neutral_vendor_contacts_changed?)
-        cp_file_to_input(pricing_for_tool.path, PRICING_TOOL_PATH, pricing_for_tool_changed?)
-        cp_file_to_input(supplier_lookup.path, SUPPLIER_LOOKUP_PATH, supplier_lookup_changed?)
-        Rails.logger.info('Copy files to input ended')
+        cp_file_to_input(current_accredited_suppliers.url, CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
+        cp_file_to_input(geographical_data_all_suppliers.url, GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
+        cp_file_to_input(lot_1_and_lot_2_comparisons.url, LOT_1_AND_LOT2_PATH, lot_1_and_lot_2_comparisons_changed?)
+        cp_file_to_input(master_vendor_contacts.url, MASTER_VENDOR_PATH, master_vendor_contacts_changed?)
+        cp_file_to_input(neutral_vendor_contacts.url, NEUTRAL_VENDOR_PATH, neutral_vendor_contacts_changed?)
+        cp_file_to_input(pricing_for_tool.url, PRICING_TOOL_PATH, pricing_for_tool_changed?)
+        cp_file_to_input(supplier_lookup.url, SUPPLIER_LOOKUP_PATH, supplier_lookup_changed?)
       end
       # rubocop:enable Metrics/AbcSize
 
@@ -119,11 +117,10 @@ module SupplyTeachers
       def reject_previous_uploads
         self.class.in_review.map(&:cancel!)
         self.class.in_progress.map(&:cancel!)
-        Rails.logger.info('Reject done')
       end
 
       def cp_previous_uploaded_file(attr_name, file_path)
-        FileUtils.cp(self.class.previous_uploaded_file(attr_name).path, file_path) if available_for_cp(attr_name)
+        FileUtils.cp(self.class.previous_uploaded_file(attr_name).url, file_path) if available_for_cp(attr_name)
       end
 
       def available_for_cp(attr_name)
