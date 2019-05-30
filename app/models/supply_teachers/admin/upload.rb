@@ -120,7 +120,7 @@ module SupplyTeachers
       end
 
       def cp_previous_uploaded_file(attr_name, file_path)
-        FileUtils.cp(self.class.previous_uploaded_file(attr_name).path, file_path) if available_for_cp(attr_name)
+        FileUtils.cp(self.class.previous_uploaded_file(attr_name).url, file_path) if available_for_cp(attr_name)
       end
 
       def available_for_cp(attr_name)
