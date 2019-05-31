@@ -51,7 +51,7 @@ en:
               inclusion: If you don't know which Lot you need select don't know
         legal_services/journey/legal_jurisdiction:
           attributes:
-            legal_services:
+            legal_jurisdiction:
               inclusion: Select the jurisdiction you need
         legal_services/journey/lot1_regional_service:
           attributes:
@@ -554,7 +554,7 @@ en:
         txt01: services selected
         txt02: No services selected
       lot2_full_service:
-        heading: Lot2 Full Service firms
+        heading: Lot 2 Full Service firms
         hint: Select the legal services you need
         remove_all: Remove all
         txt01: services selected
