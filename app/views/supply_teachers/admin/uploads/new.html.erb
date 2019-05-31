@@ -3,12 +3,12 @@
     <%= render partial: 'shared/error_summary', locals: { errors: @upload.errors } %>
     <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-5 cmp-page-heading"><%= t('.heading') %></h1>
-    <% if @uploads_in_progress %>
+    <% if @uploads_in_progress.any? %>
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
           <span class="govuk-warning-text__assistive">Warning</span>
-          <%= t('.warning_text') %>
+          <%= warning_details(@uploads_in_progress) %>
         </strong>
       </div>
     <% end %>
@@ -57,7 +57,7 @@
         <%= f.file_field :supplier_lookup, class: css_classes_for_file_upload(@upload, :supplier_lookup) %>
         <%= f.hidden_field :supplier_lookup_cache %>
       <% end %>
-      <%= f.submit 'Upload data', class: 'govuk-button' %>
+      <%= f.submit t('.upload_button'), class: 'govuk-button' %>
     <% end %>
   </div>
 </div>

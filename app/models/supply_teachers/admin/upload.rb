@@ -12,6 +12,7 @@ module SupplyTeachers
       NEUTRAL_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'neutral_vendor_contacts.csv').freeze
       PRICING_TOOL_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'pricing_for_tool.xlsx').freeze
       SUPPLIER_LOOKUP_PATH = Rails.root.join('storage', 'supply_teachers', 'input', 'supplier_lookup.csv').freeze
+      ATTRIBUTES = %i[current_accredited_suppliers geographical_data_all_suppliers lot_1_and_lot_2_comparisons master_vendor_contacts neutral_vendor_contacts pricing_for_tool supplier_lookup].freeze
 
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
       mount_uploader :geographical_data_all_suppliers, SupplyTeachersFileUploader
@@ -78,8 +79,8 @@ module SupplyTeachers
         where(aasm_state: :approved).where.not("#{attr_name}": nil).first
       end
 
-      def self.in_review_or_in_progress?
-        in_review.any? || in_progress.any?
+      def self.in_review_or_in_progress
+        in_review + in_progress
       end
 
       def self.perform_upload(upload_id)
@@ -95,7 +96,7 @@ module SupplyTeachers
         reject_previous_uploads
         copy_files_to_input_folder
       rescue StandardError => e
-        errors.add(:base, 'There is an error with your files. Please try again: ' + e.message)
+        errors.add(:base, e.message)
       end
 
       # rubocop:disable Metrics/AbcSize
@@ -120,7 +121,7 @@ module SupplyTeachers
       end
 
       def cp_previous_uploaded_file(attr_name, file_path)
-        FileUtils.cp(self.class.previous_uploaded_file(attr_name).url, file_path) if available_for_cp(attr_name)
+        FileUtils.cp(self.class.previous_uploaded_file(attr_name).path, file_path) if available_for_cp(attr_name)
       end
 
       def available_for_cp(attr_name)
