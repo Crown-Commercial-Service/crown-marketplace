@@ -571,14 +571,14 @@ en:
         heading: Select the lot you need
         lot1_txt: Lot 1 - Regional service provision
         lot1_txt_details: Lot 1 legal services
-        lot1_txt_sub: These suppliers provide legal specialisms within a minimum of one of the 13 UK NUTS regions for low to medium value transactions.
+        lot1_txt_sub: Select lot 1 if your requirements have a regional focus or your budget is below £200,000. These suppliers provide services across 14 legal specialisms within at least one of the 13 UK NUTS regions.
         lot2_txt: Lot 2 - Full-service firms
         lot2_txt_details: Lot 2 legal services
-        lot2_txt_sub: Full-service suppliers provide commercial legal services for all 17 legal specialisms contained within a jurisdictional area.
+        lot2_txt_sub: Select lot 2 if your requirements needs a full-service supplier or your budget is over £200,000. Full-service firms can provide services in 35 specialisms. Suppliers have said which jurisdictional area of the UK they serve.
         lot3_txt: Lot 3 - Property and construction
-        lot3_txt_sub: Legal services covering the UK for property and construction.
+        lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
         lot4_txt: Lot 4 - Transport rail
-        lot4_txt_sub: Legal services covering the UK for transport rail.
+        lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
