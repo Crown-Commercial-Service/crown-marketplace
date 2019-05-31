@@ -1,4 +1,5 @@
-function fireErrors(s){//note: hidden_fields_for_previous_steps_and_responses' should be inside 'govuk_form_group_with_optional_error' (.govuk_form_group)
+function fireErrors(s){//note: 'hidden_fields_for_previous_steps_and_responses' should be inside 'govuk_form_group_with_optional_error' (.govuk_form_group)
+
   s.parents('.govuk-form-group').addClass('govuk-form-group--error');
 
   $('#ccs-error-sum').attr('tabindex','-1').focus().add('#legal_services-error').removeClass('govuk-visually-hidden');
@@ -141,12 +142,26 @@ function choose_services_area2(form){
   });
 }
 
+function select_lot(form){
+  $('#submit').on('click', function(e){
+
+    var state = form.find('input[name="select_lot"]');
+
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
+
 jQuery(document).ready(function(){
 
     var f = $('#main-content').find('form');
 
     if(f.length){
-      var formIDs = ['check_suitability','check_suitability2','lot1_regional_service','lot2_full_service','choose_organistion_type','requirement','regional_legal_service','legal_jurisdiction','choose_services_area','choose_services_area2'];
+      var formIDs = ['check_suitability','check_suitability2','lot1_regional_service','lot2_full_service','choose_organistion_type','requirement','regional_legal_service','legal_jurisdiction','choose_services_area','choose_services_area2','select_lot'];
 
       $.each(formIDs, function(i, val){
         if(f.is('#'+val)){//the form has this id
