@@ -103,7 +103,7 @@ function regional_legal_service(form){
 function legal_jurisdiction(form){
   $('#submit').on('click', function(e){
 
-    var state = form.find('input[name="central_government"]');
+    var state = form.find('input[name="legal_jurisdiction"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
