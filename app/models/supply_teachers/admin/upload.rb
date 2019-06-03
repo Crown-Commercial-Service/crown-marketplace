@@ -121,7 +121,14 @@ module SupplyTeachers
       end
 
       def cp_previous_uploaded_file(attr_name, file_path)
-        FileUtils.cp(self.class.previous_uploaded_file(attr_name).path, file_path) if available_for_cp(attr_name)
+        return unless available_for_cp(attr_name)
+
+        if Rails.env.production?
+          tempfile = Down.download(self.class.previous_uploaded_file(attr_name).file.url)
+          FileUtils.mv(tempfile.path, file_path)
+        else
+          FileUtils.cp(self.class.previous_uploaded_file(attr_name).file.path, file_path) if available_for_cp(attr_name)
+        end
       end
 
       def available_for_cp(attr_name)
