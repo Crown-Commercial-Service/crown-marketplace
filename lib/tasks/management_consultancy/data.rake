@@ -26,5 +26,5 @@ namespace :mc do
     mv "#{t.name}.tmp", t.name
   end
 
-  cp './lib/tasks/management_consultancy/output/suppliers_with_service_offerings_and_regional_availability_and_rate_cards.json', './lib/tasks/management_consultancy/output/data.json'
+  # cp './lib/tasks/management_consultancy/output/suppliers_with_service_offerings_and_regional_availability_and_rate_cards.json', './lib/tasks/management_consultancy/output/data.json'
 end
