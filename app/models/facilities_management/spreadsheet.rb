@@ -67,10 +67,8 @@ class FacilitiesManagement::Spreadsheet
     end
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
-      @uom_values = @report.uom_values
-
       i = 1
-      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement', 'Unit of Measure']
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement']
       selected_buildings.each do |building|
         vals << 'Building ' + i.to_s + ' - ' + building.building_json['name']
         i += 1
@@ -78,33 +76,34 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row vals
 
       work_package = ''
-      services.each do |s|
+
+      services.sort_by { |s| s.code[s.code.index('.') + 1..-1].to_i }.each do |s|
         if work_package == s.work_package_code
           label = nil
         else
           label = 'Work Package ' + s.work_package_code + ' - ' + s.work_package.name
         end
+
         work_package = s.work_package_code
 
-        uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
-        if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
-          vals = [label, s.code, s.name]
-          uom.each do |u|
-            vals << u['title_text']
-            vals << u['unit_text']
+        u = CCS::FM::UnitsOfMeasurement.service_usage(s.code).last
+        vals = [label, s.code, s.name]
+        vals << u['title_text']
 
-            selected_buildings.each do |building|
-              # begin
-              id = building.building_json['id']
-              vals << @uom_values[id][s.code]['uom_value']
-            rescue StandardError
-              vals << '=NA()'
-              # end
-            end
+        selected_buildings.each do |building|
+          # begin
+          id = building.building_json['id']
+          suv = @report.uom_values.select { |v| v['building_id'] == id && v['service_code'] == s.code }
+          j = 0
+          suv.each do |v|
+            vals << v['uom_value']
+
+            sheet.add_row vals
+            j += 1
+            vals = [nil, nil, nil, nil]
           end
-          sheet.add_row vals
-        else
-          sheet.add_row [label, s.code, s.name]
+        rescue StandardError
+          vals << '=NA()'
         end
 
         work_package = s.work_package_code
