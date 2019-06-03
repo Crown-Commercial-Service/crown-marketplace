@@ -10,14 +10,14 @@ module SupplyTeachers
       Rake::Task['st:clean'].invoke
       Rake::Task['st:data'].invoke
 
-      if File.zero?('./lib/tasks/supply_teachers/output/errors.out')
+      if File.zero?('./storage/supply_teachers/output/errors.out')
         upload.review!
       else
-        file = File.open('./lib/tasks/supply_teachers/output/errors.out')
-        fail_upload(upload, 'There is an error with your files: ' + file.read)
+        file = File.open('./storage/supply_teachers/output/errors.out')
+        fail_upload(upload, file.read)
       end
     rescue StandardError => e
-      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), 'There is an error with your files. Please try again. ' + e.message)
+      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), e.full_message)
     end
 
     private

@@ -1,7 +1,6 @@
 ---
 en:
   'No': 'No'
-  Scotland: Scotland
   'Yes': 'Yes'
   activemodel:
     errors:
@@ -18,10 +17,6 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
-        apprenticeships/journey/lot1_regional_service:
-          attributes:
-            lot_region:
-              too_short: Please select a checkbox
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -36,7 +31,7 @@ en:
               inclusion: Select a legal service
         legal_services/journey/check_suitability2:
           attributes:
-            central_government:
+            fees:
               inclusion: Select yes if the fees will be under £20,000
         legal_services/journey/check_suitability3:
           attributes:
@@ -49,10 +44,18 @@ en:
         legal_services/journey/choose_services_area:
           attributes:
             services_area:
-              inclusion: Select the services you need
+              inclusion: Select no if you don't need legal services for property and construction or rail
+        legal_services/journey/choose_services_area2:
+          attributes:
+            services_area2:
+              inclusion: If you don't know which Lot you need select don't know
+        legal_services/journey/legal_jurisdiction:
+          attributes:
+            legal_jurisdiction:
+              inclusion: Select the jurisdiction you need
         legal_services/journey/lot1_regional_service:
           attributes:
-            lot_region:
+            lot1_regional_service:
               too_short: Select the legal service or services you need
         legal_services/journey/lot1_regional_services:
           attributes:
@@ -60,16 +63,24 @@ en:
               too_short: Select the services you need
         legal_services/journey/lot2_full_service:
           attributes:
-            lot_region:
-              too_short: Select at least one service
+            lot2_full_service:
+              too_short: Select the legal service or services you need
         legal_services/journey/regional_legal_service:
           attributes:
-            lot:
-              too_short: Select at least one region
+            regional_legal_service:
+              too_short: Select where you need the legal service or services
         legal_services/journey/regional_legal_services:
           attributes:
             region:
               too_short: Select at least one region
+        legal_services/journey/requirement:
+          attributes:
+            legal_services:
+              inclusion: Select yes if your requirement is restricted to a small geographical area?
+        legal_services/journey/select_lot:
+          attributes:
+            select_lot:
+              inclusion: Select the lot you need
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -134,15 +145,18 @@ en:
               less_than_or_equal_to: The number of days worked per week must be between 0 and 5
               not_a_number: The number of days worked per week must be a number
             hire_date:
+              after_contract_start_date: The date you want to take the worker on permanently must be after the date the worker’s current contract started
               blank: Enter the date you want to take the worker on permanently, including the day, month and year
               invalid: Enter a real date
             holiday_1_end_date:
+              before_start_date: The end date of the first school holiday must be after the start date
               blank: Enter the date the first school holiday ended, including the day, month and year
               invalid: Enter a real date
             holiday_1_start_date:
               blank: Enter the date the first school holiday started, including the day, month and year
               invalid: Enter a real date
             holiday_2_end_date:
+              before_start_date: The end date of the second school holiday must be after the start date
               blank: Enter the date the second school holiday ended, including the day, month and yea
               invalid: Enter a real date
             holiday_2_start_date:
@@ -510,8 +524,26 @@ en:
         txt_link_text: central government departments, agencies and public bodies
       choose_regional_or_fullservice:
         question: Question
+      choose_services_area:
+        opt_01: Yes, Property And Construction (Lot 3)
+        opt_02: Yes, rail (Lot 4)
+        opt_no: 'No'
+        question: Do you need legal services for property and construction or rail?
+      choose_services_area2:
+        opt_01: Lot 1 Regional Service Provision
+        opt_02: Lot 2 Full Service Firms
+        opt_03: I Dont Know
+        or_txt: Or
+        question: What lot do you need?
+      legal_jurisdiction:
+        eng_wales: England and Wales
+        heading: Lot 2 - Full-service firms
+        ni: Northern Ireland
+        question: Select the jurisdiction you need
+        scot_land: Scotland
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
+        hint: Select the services you need
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
@@ -519,15 +551,34 @@ en:
         heading: Heading
         hint: Hint
         remove_all: Remove all
-        txt01: Txt01
-        txt02: Txt02
+        txt01: services selected
+        txt02: No services selected
       lot2_full_service:
+        heading: Lot 2 Full Service firms
+        hint: Select the legal services you need
         remove_all: Remove all
-        txt01: Txt01
-        txt02: Txt02
+        txt01: services selected
+        txt02: No services selected
+      regional_legal_service:
+        heading: Where do you need the regional legal services?
+        remove_all: Remove all
+        txt01: regions selected
+        txt02: No regions selected
       requirement:
-        central_government_search_link_title: Central government search link title
-        search_central_government_html: Search central government html
+        hint: For example, Greater London or East Midlands
+        question: Is your requirement restricted to a small geographical area?
+      select_lot:
+        heading: Select the lot you need
+        lot1_txt: Lot 1 - Regional service provision
+        lot1_txt_details: Lot 1 legal services
+        lot1_txt_sub: Select lot 1 if your requirements have a regional focus or your budget is below £200,000. These suppliers provide services across 14 legal specialisms within at least one of the 13 UK NUTS regions.
+        lot2_txt: Lot 2 - Full-service firms
+        lot2_txt_details: Lot 2 legal services
+        lot2_txt_sub: Select lot 2 if your requirements needs a full-service supplier or your budget is over £200,000. Full-service firms can provide services in 35 specialisms. Suppliers have said which jurisdictional area of the UK they serve.
+        lot3_txt: Lot 3 - Property and construction
+        lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
+        lot4_txt: Lot 4 - Transport rail
+        lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
@@ -811,42 +862,61 @@ en:
     admin:
       uploads:
         in_progress:
-          content: The spreadsheets have been uploaded and are now processing.
+          button: Return to manage supplier data
+          content: We are processing the uploaded spreadsheets.
           heading: Upload successful
         index:
+          approved: Published on live
+          canceled: Cancelled session
           caption: Manage supplier data
-          create_new: Create a new data upload
-          date: Date
-          heading: Agency Supply teachers and agency workers
+          create_new: Set up upload session
+          current_table_caption: Data currently used
+          date: Date and time
+          failed: Failed
+          heading: Supply teachers and agency workers
+          in_progress: Processing
+          in_review: Waiting to publish
           name: Name
           no_of_files: Number of files
+          rejected: Cancelled session
+          spreadsheet: Spreadsheet
           status: Status
-          table_caption: Previous uploads
+          table_caption: Upload sessions
+          upload_session: Upload session
+          uploading: Processing
         new:
-          caption: Agency supply teachers and agency workers
-          heading: New data upload
-          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
-          upload_title: Upload one or more of the following spreadsheets
-          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+          caption: Supply teachers and agency workers
+          heading: Upload session
+          upload_button: Upload spreadsheets
+          upload_caption: XLS, XLSX and CSV are supported. Maximum file size is 5mb.
+          upload_title: Choose one or more spreadsheets to upload
+        reject:
+          content: You can now create a new upload.
+          heading_html: Upload session %{number} has been cancelled
+          index_button: Return to manage supplier data
+          new_button: Set up a new upload session
         show:
-          caption: Agency supply teachers and agency workers
+          approve: Publish to live service
+          caption: Supply teachers and agency workers
           confirm_changes: 'Confirm these files are ready to be used by the live service:'
           current_accredited_suppliers: Current accredited suppliers
-          datetime: 'Date/time:'
-          download: Download
+          datetime: 'Date and time:'
+          error_heading: There is a problem
           files: Files
           geographical_data_all_suppliers: Geographical data all suppliers
-          heading: 'Upload session #%{number}'
+          heading: Upload session %{number}
           lot_1_and_lot_2_comparisons: Lot 1 and Lot 2 comparisons
           master_vendor_contacts: Master vendor contacts
           neutral_vendor_contacts: Neutral vendor contacts
           pricing_for_tool: Pricing for tool
+          reject: Cancel session
           spreadsheet: Spreadsheet
           status: 'Status:'
           supplier_lookup: Supplier lookup
         uploading:
-          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
-          heading: Data upload in progress
+          button: Return to manage supplier data
+          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently processing and will soon be published to the <strong>''Supply teachers and agency workers''</strong> service.'
+          heading: Data published
     branches:
       branch:
         address: Address

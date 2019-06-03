@@ -34,8 +34,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-heading-m govuk-!-margin-bottom-0">How many lifts do you have in this building?</h2>
-        <h2 class="govuk-caption-m govuk-!-margin-top-1">For example, 5. Enter the total number of lifts in your
-          building</h2>
+        <h2 class="govuk-caption-m govuk-!-margin-top-1">Enter a number</h2>
 
         <div id="fm-uom-number-of-lifts-error-form-group" class="govuk-form-group">
           <span id="fm-uom-number-of-lifts-error" class="govuk-error-message govuk-visually-hidden">
@@ -60,14 +59,17 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-form-group">
-        <hidden id="fm-building-uom-id" name="fm-building-uom-id" value="<%= @building_id %>"></hidden>
-        <hidden id="fm-service-uom-code" name="fm-service-uom-code" value="<%= @service_code %>"></hidden>
-        <hidden id="fm-is-lift" name="fm-is-lift" value="<%= @is_lift %>"></hidden>
-        <div class="govuk-!-margin-top-8">
-          <a id="fm-unit-of-measurement-submit" type="button" class="govuk-button" role="button">Continue</a>
+      <%= form_tag '', id: 'fm-units-of-measurement-form', method: :post do %>
+        <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+        <div class="govuk-form-group">
+          <hidden id="fm-building-uom-id" name="fm-building-uom-id" value="<%= @building_id %>"></hidden>
+          <hidden id="fm-service-uom-code" name="fm-service-uom-code" value="<%= @service_code %>"></hidden>
+          <hidden id="fm-is-lift" name="fm-is-lift" value="<%= @is_lift %>"></hidden>
+          <div class="govuk-!-margin-top-8">
+            <a id="fm-unit-of-measurement-submit" type="button" class="govuk-button" role="button">Continue</a>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>

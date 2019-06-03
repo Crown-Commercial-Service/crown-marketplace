@@ -18,11 +18,7 @@ module ApplicationHelper
   end
 
   def support_email_link(label)
-    govuk_email_link(
-      Marketplace.support_email_address,
-      label,
-      css_class: 'govuk-link ga-support-mailto'
-    )
+    govuk_email_link(Marketplace.support_email_address, label, css_class: 'govuk-link ga-support-mailto')
   end
 
   def dfe_account_request_url
@@ -126,5 +122,9 @@ module ApplicationHelper
 
   def landing_or_admin_page
     controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.underscore)
+  end
+
+  def a_supply_teachers_path?
+    controller.class.parent.name == 'SupplyTeachers'
   end
 end

@@ -3,12 +3,12 @@
 
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
-    <h1 class="govuk-heading-xl">
-      Add your FM services
-    </h1>
+    <h2 class="govuk-heading-m">
+      What facilities management services do you need?
+    </h2>
   </fieldset>
-  <p class="govuk-body">
-    Add/Choose/Select/Pick one or multiple FM services that you think/plan/prepare/consider/look to buy/purchase
+  <p class="govuk-caption-m">
+    Select all facilities management services required within your estate
   </p>
 </div>
 <div class="govuk-grid-column-two-thirds">
@@ -44,9 +44,10 @@
   </div>
   <p>
   <form id="fm-services-form" name="fm-services-form" action="/facilities-management/suppliers/longList" method="post">
-    <input name="authenticity_token" type="hidden" value='<%= csrf_meta_tag %>' />
+    <input name="authenticity_token" type="hidden" value='<%= csrf_meta_tag %>'/>
     <input id="postedlocations" name="postedlocations" type="hidden" value=""/>
     <input id="postedservices" name="postedservices" type="hidden" value=""/>
+    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
     <a role='button' class='govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' id='save-services-link'>Continue</a>
   </form>
 

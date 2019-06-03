@@ -57,9 +57,12 @@
             This list will be saved and it will be available for you later, for up to 60 days from today.
           </strong>
         </div>
-        <p class="govuk-body govuk-body-s supplier-record__print-option">
-          <a class="supplier-record__file-download ga-download-calculator" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx&amp;job_type=qt&amp;looking_for=worker&amp;payroll_provider=agency&amp;postcode=sw1p+2ba&amp;term=8_12&amp;worker_type=agency_supplied">Download supplier list and Deliverables Matrix Lite</a>
-        </p>
+        <form id="fm-summary-spreadsheet-form" action="/facilities-management/summary?calculations=yes&amp;format=xlsx" method="post">
+          <p class="govuk-body govuk-body-s supplier-record__print-option">
+            <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+            <a onclick="document.getElementById('fm-summary-spreadsheet-form').submit();" class="supplier-record__file-download" aria-label="Download the procurement summary" href="/facilities-management/summary?calculations=yes&amp;format=xlsx">Download the procurement summary</a>
+          </p>
+        </form>
       </div>
     </div>
   <% end %>
@@ -80,7 +83,7 @@
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="changed-name-1" name="sublot" type="radio" value="yes">
               <label class="govuk-label govuk-radios__label" for="changed-name-1">
-                Yes, it will go <%=@report.lot_limit%>
+                Yes, it will take over <%=@report.lot_limit%>
               </label>
             </div>
             <div class="govuk-radios__item">
@@ -100,12 +103,6 @@
 
 
   <div class="govuk-grid-row ccs-no-print">
-<!--
-        <a id="suppliers-summary-button" href="/facilities-management/summary" class="govuk-button ccs-no-print" role="button">XX Summary</a><br>
-        <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1a" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1a</a><br>
-        <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1b" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1b</a><br>
-        <a id="suppliers-summary-button" href="/facilities-management/summary?lot=1c" class="govuk-button ccs-no-print" role="button">XX Summary Lot 1c</a><br>
--->
     <p>
       <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" >Print this page</a>
     </p>

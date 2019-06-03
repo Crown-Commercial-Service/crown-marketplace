@@ -1,13 +1,15 @@
 class FacilitiesManagement::Spreadsheet
-  def initialize(report)
+  def initialize(report, current_lot, data)
     @report = report
+    @current_lot = current_lot
+    @data = data
     create_spreadsheet
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
-  def row(report, idx)
+  def row(buildings, idx)
     vals = []
-    report.building_data.each do |building|
+    buildings.each do |building|
       str =
         case idx
         when 0
@@ -45,57 +47,63 @@ class FacilitiesManagement::Spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
 
+    # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
+    services = @report.selected_services.sort_by(&:code)
+    selected_services = services.collect(&:code)
+    selected_services = selected_services.map { |s| s.gsub('.', '-') }
+    selected_buildings = @report.building_data.select do |b|
+      b_services = b.building_json['services'].map { |s| s['code'] }
+      (selected_services & b_services).any?
+    end
+
     @workbook.add_worksheet(name: 'Building Information') do |sheet|
       sheet.add_row ['Buildings information']
       i = 0
       ['Building Type', 'Name', 'Address', '', '', '', 'GIA'].each do |label|
-        vals = row(@report, i)
+        vals = row(selected_buildings, i)
         sheet.add_row [label] + vals
         i += 1
       end
     end
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
-      @uom_values = @report.uom_values
       i = 1
-      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement', 'Unit of Measure']
-      @report.building_data.each do |building|
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement']
+      selected_buildings.each do |building|
         vals << 'Building ' + i.to_s + ' - ' + building.building_json['name']
         i += 1
       end
       sheet.add_row vals
 
-      # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
       work_package = ''
-      @report.selected_services
-      services = @report.selected_services.sort_by(&:code)
-      services.each do |s|
+
+      services.sort_by { |s| s.code[s.code.index('.') + 1..-1].to_i }.each do |s|
         if work_package == s.work_package_code
           label = nil
         else
-          label = 'Work Package ' + s.work_package_code + ' ' + s.work_package.name
+          label = 'Work Package ' + s.work_package_code + ' - ' + s.work_package.name
         end
+
         work_package = s.work_package_code
 
-        uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
-        if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
-          vals = [label, s.code, s.name]
-          uom.each do |u|
-            vals << u['title_text']
-            vals << u['unit_text']
+        u = CCS::FM::UnitsOfMeasurement.service_usage(s.code).last
+        vals = [label, s.code, s.name]
+        vals << u['title_text']
 
-            @report.building_data.each do |building|
-              # begin
-              id = building.building_json['id']
-              vals << @uom_values[id][s.code]['uom_value']
-            rescue StandardError
-              vals << '=NA()'
-              # end
-            end
+        selected_buildings.each do |building|
+          # begin
+          id = building.building_json['id']
+          suv = @report.uom_values.select { |v| v['building_id'] == id && v['service_code'] == s.code }
+          j = 0
+          suv.each do |v|
+            vals << v['uom_value']
+
+            sheet.add_row vals
+            j += 1
+            vals = [nil, nil, nil, nil]
           end
-          sheet.add_row vals
-        else
-          sheet.add_row [label, s.code, s.name]
+        rescue StandardError
+          vals << '=NA()'
         end
 
         work_package = s.work_package_code
@@ -114,63 +122,41 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row ['Organisation']
       sheet.add_row ['Position']
       sheet.add_row ['Contact details']
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['2. Contract requirements']
       sheet.add_row ['Initial Contract length', @report.contract_length_years, 'years'], style: [nil, nil, left_align]
       sheet.add_row ['Extensions']
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['Tupe involvement', @report.tupe_flag]
-      sheet.add_row ['']
-      sheet.add_row ['Contract start date', @report.start_date.to_date], style: [nil, date]
-      sheet.add_row ['']
+      sheet.add_row
+      sheet.add_row ['Contract start date', @report.start_date&.to_date], style: [nil, date]
+      sheet.add_row
       sheet.add_row ['3. Price and sub-lot recommendation']
       sheet.add_row ['Assessed Value', @report.assessed_value], style: [nil, ccy]
       sheet.add_row ['Assessed value estimated accuracy'], style: [nil, ccy]
-      sheet.add_row ['']
-      sheet.add_row ['Lot recommendation', @report.assessed_value]
+      sheet.add_row
+      sheet.add_row ['Lot recommendation', @report.current_lot]
       sheet.add_row ['Direct award option']
-      sheet.add_row ['']
+      sheet.add_row
       sheet.add_row ['4. Supplier Shortlist']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
+      @report.selected_suppliers(@current_lot).each do |supplier|
+        sheet.add_row [nil, supplier.data['supplier_name']]
+      end
+      sheet.add_row
+
       sheet.add_row ['5. Regions summary']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
+      FacilitiesManagement::Region.all.select { |region| @data['posted_locations'].include? region.code }.each do |region|
+        sheet.add_row [nil, region.name]
+      end
+      sheet.add_row
+
       sheet.add_row ['6 Services summary']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
-      sheet.add_row ['']
+      services = FacilitiesManagement::Service.where(code: @data['posted_services'])
+      services.sort_by!(&:code)
+      services.each do |s|
+        sheet.add_row [nil, s.name]
+      end
+      sheet.add_row
     end
     # package.to_stream.read
   end

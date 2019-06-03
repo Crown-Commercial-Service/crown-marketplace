@@ -1,4 +1,4 @@
-<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+§<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>

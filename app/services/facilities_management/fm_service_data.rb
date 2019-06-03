@@ -787,7 +787,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
             "name": "Handyman services",
             "work_package_code": "H",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "H.2",
@@ -808,7 +808,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
             "name": "Move and space management - internal moves",
             "work_package_code": "H",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "H.15",
@@ -857,28 +857,28 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
             "name": "Car park management and booking",
             "work_package_code": "I",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "I.1",
             "name": "Reception service",
             "work_package_code": "I",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "I.2",
             "name": "Taxi booking service",
             "work_package_code": "I",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "I.4",
             "name": "Voice announcement system operation",
             "work_package_code": "I",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "J.8",
@@ -892,21 +892,21 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
             "name": "Cctv / alarm monitoring",
             "work_package_code": "J",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "J.3",
             "name": "Control of access and security passes",
             "work_package_code": "J",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "J.4",
             "name": "Emergency response",
             "work_package_code": "J",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "J.9",
@@ -920,7 +920,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
             "name": "Key holding",
             "work_package_code": "J",
             "mandatory": false,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "J.11",
@@ -934,7 +934,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
             "name": "Management of visitors and passes",
             "work_package_code": "J",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "J.1",
@@ -948,7 +948,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
             "name": "Patrols (fixed or static guarding)",
             "work_package_code": "J",
             "mandatory": true,
-            "unit_text": "hours per week"
+            "unit_text": "hours (each year)"
         },
         {
             "code": "J.12",

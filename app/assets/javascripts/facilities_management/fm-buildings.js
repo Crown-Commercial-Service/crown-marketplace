@@ -38,14 +38,20 @@ $(() => {
 
     $('#fm-building-not-found').on('click', (e) => {
         pageUtils.clearCashedData('fm-new-address');
+
+        e.preventDefault()
+        $('#fm-new-building-continue-form').attr('action', 'new-building-address').submit()
     });
+
 
 
     $('#fm-postcode-input').on('keyup', (e) => {
 
-        if (pageUtils.isPostCodeValid(e.target.value)) {
+        let postcode = pageUtils.formatPostCode(e.target.value);
+
+        if (pageUtils.isPostCodeValid(postcode)) {
             pageUtils.showPostCodeError(false);
-            postCode = e.target.value;
+            postCode = postcode;
         } else {
             postCode = "";
         }
@@ -69,17 +75,18 @@ $(() => {
 
     const getRegion = ((post_code) => {
 
-        if (post_code && pageUtils.isPostCodeValid(post_code)) {
-            $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
-                .done(function (data) {
-                    if (data) {
-                        pageUtils.setCachedData('fm-current-region', data.result.region);
-                    }
-                })
-                .fail(function (data) {
-                    pageUtils.showPostCodeError(true, data.error);
-                });
-        }
+        //if (post_code && pageUtils.isPostCodeValid(post_code)) {
+        $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
+            .done(function (data) {
+                if (data) {
+                    pageUtils.setCachedData('fm-current-region', data.result.region);
+                }
+            })
+            .fail(function (data) {
+                pageUtils.setCachedData('fm-current-region', 'Region not found for this postcode');
+                pageUtils.showPostCodeError(true, data.error);
+            });
+        //}
     });
 
     $('#fm-postcode-lookup-results').on('change', (e) => {
@@ -150,6 +157,8 @@ $(() => {
 
     $('#fm-buildings-add-building').click((e) => {
         fm.clearBuildingCache();
+        e.preventDefault()
+        $('#fm-new-building-form').submit()
     });
 
     $('#fm-internal-square-area').change((e) => {
