@@ -17,6 +17,6 @@ class SupplyTeachersFileUploader < CarrierWave::Uploader::Base
   end
 
   def cache_dir
-    './storage/supply_teachers/tmp/uploads'
+    Rails.root.join('storage', 'supply_teachers', 'tmp', 'uploads')
   end
 end
