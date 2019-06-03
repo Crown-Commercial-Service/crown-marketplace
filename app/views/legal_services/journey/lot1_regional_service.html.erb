@@ -24,8 +24,6 @@
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
 
-              <%= display_error(@journey, :lot1_region) %>
-
               <h1 class="govuk-caption-m govuk-!-margin-bottom-1">
                 <%= t('.heading') %>
               </h1>
@@ -39,7 +37,6 @@
             <section id="accordion-default" class="govuk-grid-column-two-thirds">
 
                 <%= govuk_fieldset_with_optional_error(@journey, :lot1_region) do %>
-                <!-- 'aria-describedby': 'hint' -->
 
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-1">
                   <%= t('.hint') %>
