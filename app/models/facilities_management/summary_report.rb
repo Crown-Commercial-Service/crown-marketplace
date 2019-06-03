@@ -24,12 +24,9 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
-      @uom_values = uom_values
     end
 
     def calculate_services_for_buildings
-      uom_values
-
       selected_services
 
       @sum_uom = 0
@@ -45,8 +42,11 @@ module FacilitiesManagement
         (selected_services & b_services).any?
       end
 
+      uvals = uom_values
+
       selected_buildings.each do |building|
-        services building.building_json
+        id = building['building_json']['id']
+        services building.building_json, (uvals.select { |u| u['building_id'] == id })
       end
     end
 
@@ -113,19 +113,21 @@ module FacilitiesManagement
     end
 
     def uom_values
-      @uom_dict = {}
+      uvals = CCS::FM::UnitOfMeasurementValues.values_for_user(@user_id)
+      uvals = uvals.map(&:attributes)
 
-      fm_service_data = FMServiceData.new
-
-      uom_values = fm_service_data.uom_values(@user_id)
-      uom_values.each do |values|
-        values['description'] = fm_service_data.work_package_description(values['service_code'])
-        values['unit_text'] = fm_service_data.work_package_unit_text(values['service_code'])
-        @uom_dict[values['building_id']] ||= {}
-        @uom_dict[values['building_id']][values['service_code']] = values
+      lifts_per_building.each do |b|
+        b['lift_data']['lift_data']['floor-data'].each do |l|
+          uvals << { 'user_id' => b['user_id'], 'service_code' => 'C.5', 'uom_value' => l.first[1], 'building_id' => b['building_id'] }
+        end
       end
-      @lift_data = fm_service_data.get_lift_data(@user_id)
-      @uom_dict
+
+      uvals.reject! { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
+    end
+
+    def lifts_per_building
+      lifts_per_building = CCS::FM::Lift.lifts_for_user(@user_id)
+      lifts_per_building.map(&:attributes)
     end
 
     private
@@ -176,24 +178,12 @@ module FacilitiesManagement
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
 
-    def occupants(code, building_json)
-      case code
-      when 'G.3'
-        begin
-          @uom_dict[building_json['id']][service.code]['uom_value'].to_i
-        rescue StandardError
-          0
-        end
-      else
-        0
-      end
-    end
-
-    def services(building_data)
+    def services(building_data, uvals)
       copy_params building_data
-      id = building_data['id']
+      # id = building_data['id']
 
-      with_pricing.each do |service|
+      # with_pricing.each do |service|
+      uvals.each do |v|
         # puts service.code
         # puts service.name
         # puts service.mandatory
@@ -201,17 +191,15 @@ module FacilitiesManagement
         # puts service.work_package
         # puts service.work_package.code
         # puts service.work_package.name
+        #
 
-        occupants = occupants(service.code, building_data)
+        # occupants = occupants(v['service_code'], building_data)
+        occupants = v['uom_value'] if v['service_code'] == 'G.3'
 
-        next unless @uom_values[id]
-        next unless @uom_values[id].key? service.code
+        uom_value = v['uom_value'].to_f
 
-        uom_value = @uom_values[id][service.code]['uom_value']
-        uom_value = uom_value.to_f
-
-        code = service.code.remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        code = v['service_code'].remove('.')
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants.to_i, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
         @sum_uom += calc_fm.sumunitofmeasure
         @sum_benchmark = calc_fm.benchmarkedcostssum
       end
