@@ -491,21 +491,19 @@ en:
   legal_services:
     home:
       index:
-        authorised_customer_list_link_text: authorised customer list
-        before_you_start:
-          heading: Before you start
-          use_this_service:
-            heading: 'You need to:'
-            item_1_html: be a recognised public sector body in the %{authorised_customer_list_link}
-            item_2_html: have read and understood the framework’s %{customer_guidance_document_link}
-            item_3: have put together a well-structured business case outlining the need for external legal support
-            item_4: have an estimate of your gross contract value
-        customer_guidance_document_link_text: customer guidance document
+        wps_url_html: https://www.crowncommercial.gov.uk/agreements/RM3788
+        ojeu_url_html: https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3788%20Contract%20notice%20OJEU.pdf
+        wps_link_text: WPS Legal Services panel specification
+        ojeu_link_text: OJEU contract notice
         heading: Find legal services for the wider public sector
         use_this_service:
-          description: Using this service means you’re adhering to the public service procurement procedures.
-          heading: Use this service to download a short list of law firms that provide the legal services you need.
-          item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less.
+          before_heading: Before you start
+          para01: Use this service to download a shortlist of suppliers that provide the legal services you need.
+          para02: Using this service means you’re following the public sector procurement procedures.
+          para03_html: Central government can use this service to buy transactional property and litigation services if your contract budget is &pound;20,000 or less per matter.
+          para04_html: If you need legal services in a non-UK jurisdiction, contact <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> for help.
+          para05_html: To use this service you need to be a recognised public sector body listed in the <a href="#####">authorised customer list</a>.
+          guidance_heading: Guidance and other useful documents
       service_not_suitable:
         better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
@@ -547,6 +545,7 @@ en:
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
+        links_text_html: If the services you need aren't listed here, the <a href="https:www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
       lot1_regional_service2:
         heading: Heading
         hint: Hint
@@ -554,7 +553,7 @@ en:
         txt01: services selected
         txt02: No services selected
       lot2_full_service:
-        heading: Lot 2 Full Service firms
+        heading: Lot 2 - Full-service firms
         hint: Select the legal services you need
         remove_all: Remove all
         txt01: services selected

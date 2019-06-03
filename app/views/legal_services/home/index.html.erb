@@ -1,27 +1,50 @@
-<div class="govuk-body">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
 
-      <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-      <p><%= t('.use_this_service.heading') %></p>
-      <p><%= t('.use_this_service.description') %></p>
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
 
-      <p class="govuk-inset-text"><%= t('.use_this_service.item_html') %></p>
+    <p class="govuk-body">
+      <%= t('.use_this_service.para01') %>
+    </p>
 
-      <h2 class="govuk-heading-m"><%= t('.before_you_start.heading') %></h2>
+    <p class="govuk-body">
+      <%= t('.use_this_service.para02') %>
+    </p>
 
-      <p><%= t('.before_you_start.use_this_service.heading') %></p>
+    <p class="govuk-body">
+      <%= t('.use_this_service.para03_html') %>
+    </p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li><%= t('.before_you_start.use_this_service.item_1_html', authorised_customer_list_link: link_to(t('.authorised_customer_list_link_text'), '/Authorised Customer List.docx')) %></li>
-        <li><%= t('.before_you_start.use_this_service.item_2_html', customer_guidance_document_link: link_to(t('.customer_guidance_document_link_text'), 'https://www.crowncommercial.gov.uk/agreements/RM3788')) %></li>
-        <li><%= t('.before_you_start.use_this_service.item_3') %></li>
-        <li><%= t('.before_you_start.use_this_service.item_4') %></li>
-      </ul>
+    <p class="govuk-body">
+      <%= t('.use_this_service.para04_html') %>
+    </p>
 
-      <%= link_to 'Start now', journey_start_path(journey: LegalServices::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+    <h2 class="govuk-heading-m govuk-!-margin-top-6 govuk-!-margin-bottom-2">
+      <%= t('.use_this_service.before_heading') %>
+    </h2>
 
-    </div>
+    <p class="govuk-body">
+      <%= t('.use_this_service.para05_html') %>
+    </p>
+
+    <%= link_to 'Start now', journey_start_path(journey: LegalServices::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-6 govuk-!-margin-bottom-9' %>
+
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+      <%= t('.use_this_service.guidance_heading') %>
+    </h3>
+
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-left-2 govuk-!-margin-bottom-7">
+      <li>
+        <a href="<%= t('.wps_url_html') %>"><%= t('.wps_link_text') %></a>
+      </li>
+      <li>
+        <a href="<%= t('.ojeu_url_html') %>"><%= t('.ojeu_link_text') %></a>
+      </li>
+    </ul>
+
   </div>
 </div>
+
