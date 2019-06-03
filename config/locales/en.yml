@@ -499,14 +499,14 @@ en:
           before_heading: Before you start
           guidance_heading: Guidance and other useful documents
           para01: Use this service to download a shortlist of suppliers that provide the legal services you need.
-          para02: Using this service means you’re following the public sector procurement procedures.
+          para02: Using this service means you're following the public sector procurement procedures.
           para03_html: Central government can use this service to buy transactional property and litigation services if your contract budget is &pound;20,000 or less per matter.
           para04_html: If you need legal services in a non-UK jurisdiction, contact <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> for help.
           para05_html: To use this service you need to be a recognised public sector body listed in the <a href="#">authorised customer list</a>.
         wps_link_text: WPS Legal Services panel specification
-        wps_url_html: https://www.crowncommercial.gov.uk/agreements/RM3788
+        wps_url: https://www.crowncommercial.gov.uk/agreements/RM3788
       service_not_suitable:
-        better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
+        better_suited_framework_html: The <a href="https://www.crowncommercial.gov.uk/agreements/rm3786" target="_blank">General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     journey:
       check_suitability:
@@ -560,7 +560,8 @@ en:
         txt01: services selected
         txt02: No services selected
       regional_legal_service:
-        heading: Where do you need the regional legal services?
+        heading: Lot 1 - Regional service provision
+        hint: Select the regions where you need legal services
         remove_all: Remove all
         txt01: regions selected
         txt02: No regions selected
