@@ -491,19 +491,19 @@ en:
   legal_services:
     home:
       index:
-        wps_url_html: https://www.crowncommercial.gov.uk/agreements/RM3788
-        ojeu_url_html: https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3788%20Contract%20notice%20OJEU.pdf
-        wps_link_text: WPS Legal Services panel specification
-        ojeu_link_text: OJEU contract notice
         heading: Find legal services for the wider public sector
+        ojeu_link_text: OJEU contract notice
+        ojeu_url_html: https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3788%20Contract%20notice%20OJEU.pdf
         use_this_service:
           before_heading: Before you start
+          guidance_heading: Guidance and other useful documents
           para01: Use this service to download a shortlist of suppliers that provide the legal services you need.
           para02: Using this service means you’re following the public sector procurement procedures.
           para03_html: Central government can use this service to buy transactional property and litigation services if your contract budget is &pound;20,000 or less per matter.
           para04_html: If you need legal services in a non-UK jurisdiction, contact <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> for help.
-          para05_html: To use this service you need to be a recognised public sector body listed in the <a href="#####">authorised customer list</a>.
-          guidance_heading: Guidance and other useful documents
+          para05_html: To use this service you need to be a recognised public sector body listed in the <a href="#">authorised customer list</a>.
+        wps_link_text: WPS Legal Services panel specification
+        wps_url_html: https://www.crowncommercial.gov.uk/agreements/RM3788
       service_not_suitable:
         better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
@@ -542,10 +542,10 @@ en:
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
         hint: Select the services you need
+        links_text_html: If the services you need aren't listed here, the <a href="https:www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
-        links_text_html: If the services you need aren't listed here, the <a href="https:www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
       lot1_regional_service2:
         heading: Heading
         hint: Hint
