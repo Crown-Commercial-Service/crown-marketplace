@@ -88,28 +88,33 @@ class FacilitiesManagement::Spreadsheet
 
         u = CCS::FM::UnitsOfMeasurement.service_usage(s.code).last
         vals = [label, s.code, s.name]
-        if u
-          vals << u['title_text']
-        else
-          vals << nil
-        end
+        next unless u
 
+        vals << u['title_text']
+        vals_v = []
+        vals_h = nil
         selected_buildings.each do |building|
           # begin
           id = building.building_json['id']
           suv = @report.uom_values.select { |v| v['building_id'] == id && v['service_code'] == s.code }
-          j = 0
+          vals_h = []
           suv.each do |v|
-            vals << v['uom_value']
-
-            sheet.add_row vals
-            j += 1
-            vals = [nil, nil, nil, nil]
+            vals_h << v['uom_value']
           end
+          vals_v << vals_h
         rescue StandardError
           vals << '=NA()'
         end
-
+        # vals << valsV
+        # sheet.add_row vals
+        max_j = vals_v.map(&:length).max
+        (0..max_j - 1).each do |j|
+          (0..vals_v.count - 1).each do |k|
+            vals << vals_v[k][j]
+          end
+          sheet.add_row vals
+          vals = [nil, nil, nil, nil]
+        end
         work_package = s.work_package_code
       end
     end
