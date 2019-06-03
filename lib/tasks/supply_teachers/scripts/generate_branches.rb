@@ -5,7 +5,7 @@ require 'json'
 require 'capybara'
 
 def generate_branches
-  branch_workbook = Roo::Spreadsheet.open "#{Rails.root}/storage/supply_teachers/input/geographical_data_all_suppliers.xlsx"
+  branch_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/geographical_data_all_suppliers.xlsx'
 
   header_map = {
     'Supplier Name' => :supplier_name,

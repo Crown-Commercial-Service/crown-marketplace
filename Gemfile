@@ -63,6 +63,9 @@ gem 'roo', '~> 2.8.0'
 # manipulating JSON for anonymisation
 gem 'jsonpath', '~> 0.5.8'
 
+# robust file download from URL using open-uri
+gem 'down'
+
 # state machine
 gem 'aasm', '~> 5.0'
 
