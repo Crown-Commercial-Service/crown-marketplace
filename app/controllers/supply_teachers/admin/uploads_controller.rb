@@ -21,6 +21,7 @@ module SupplyTeachers
 
       def create
         @upload = Upload.new(upload_params)
+        @uploads_in_progress = Upload.in_review_or_in_progress
 
         if @upload.save
           SupplyTeachers::DataScriptWorker.perform_async(@upload.id)

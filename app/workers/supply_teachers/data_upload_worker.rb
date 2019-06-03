@@ -29,7 +29,7 @@ module SupplyTeachers
 
     def data_file
       # always use anonymous.json for now - need to set this up for production to use data.json
-      Rails.root.join('storage', 'supply_teachers', 'output', 'anonymous.json')
+      './storage/supply_teachers/output/anonymous.json'
     end
   end
 end
