@@ -543,7 +543,7 @@ en:
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
         hint: Select the services you need
-        links_text_html: If the services you need aren't listed here, the <a href="https:www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
+        links_text_html: If the services you need aren't listed here, the <a href="https://www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
