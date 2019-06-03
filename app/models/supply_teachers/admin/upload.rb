@@ -99,17 +99,15 @@ module SupplyTeachers
         errors.add(:base, e.message)
       end
 
-      # rubocop:disable Metrics/AbcSize
       def copy_files_to_input_folder
-        cp_file_to_input(current_accredited_suppliers.path, CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
-        cp_file_to_input(geographical_data_all_suppliers.path, GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
-        cp_file_to_input(lot_1_and_lot_2_comparisons.path, LOT_1_AND_LOT2_PATH, lot_1_and_lot_2_comparisons_changed?)
-        cp_file_to_input(master_vendor_contacts.path, MASTER_VENDOR_PATH, master_vendor_contacts_changed?)
-        cp_file_to_input(neutral_vendor_contacts.path, NEUTRAL_VENDOR_PATH, neutral_vendor_contacts_changed?)
-        cp_file_to_input(pricing_for_tool.path, PRICING_TOOL_PATH, pricing_for_tool_changed?)
-        cp_file_to_input(supplier_lookup.path, SUPPLIER_LOOKUP_PATH, supplier_lookup_changed?)
+        cp_file_to_input(current_accredited_suppliers_url, CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
+        cp_file_to_input(geographical_data_all_suppliers_url, GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
+        cp_file_to_input(lot_1_and_lot_2_comparisons_url, LOT_1_AND_LOT2_PATH, lot_1_and_lot_2_comparisons_changed?)
+        cp_file_to_input(master_vendor_contacts_url, MASTER_VENDOR_PATH, master_vendor_contacts_changed?)
+        cp_file_to_input(neutral_vendor_contacts_url, NEUTRAL_VENDOR_PATH, neutral_vendor_contacts_changed?)
+        cp_file_to_input(pricing_for_tool_url, PRICING_TOOL_PATH, pricing_for_tool_changed?)
+        cp_file_to_input(supplier_lookup_url, SUPPLIER_LOOKUP_PATH, supplier_lookup_changed?)
       end
-      # rubocop:enable Metrics/AbcSize
 
       def cp_file_to_input(file_path, new_path, condition)
         FileUtils.cp(file_path, new_path) if condition
