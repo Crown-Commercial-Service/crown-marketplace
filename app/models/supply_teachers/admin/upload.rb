@@ -127,7 +127,7 @@ module SupplyTeachers
           tempfile = Down.download(self.class.previous_uploaded_file(attr_name).file.url)
           FileUtils.mv(tempfile.path, file_path)
         else
-          FileUtils.cp(self.class.previous_uploaded_file(attr_name).file.path, file_path) if available_for_cp(attr_name)
+          FileUtils.cp(self.class.previous_uploaded_file(attr_name).file.path, file_path)
         end
       end
 
