@@ -25,10 +25,11 @@ suppliers += mcf2_sheet.parse(headers)
 
 suppliers.delete_if { |supplier| supplier[:duns].nil? }
 
-suppliers.uniq! { |supplier| supplier[:name] }
+suppliers.uniq! { |supplier| supplier[:duns] }
 
 suppliers.each do |supplier|
-  supplier[:sme] = ['YES', 'Y'].include? supplier[:sme].upcase
+  supplier[:sme] = ['YES', 'Y'].include? supplier[:sme].to_s.upcase
+  supplier[:id] = SecureRandom.uuid
 end
 
 File.open('./lib/tasks/management_consultancy/output/suppliers.json', 'w') do |f|

@@ -92,9 +92,9 @@ module ManagementConsultancy
 
       def copy_files_to_input_folder
         cp_file_to_input(suppliers.file.try(:path), SUPPLIERS_PATH, suppliers_changed?)
-        cp_file_to_input(suppliers_service_offerings.file.try(:path), SUPPLIERS_SERVICE_OFFERINGS_PATH, suppliers_service_offerings_changed?)
-        cp_file_to_input(suppliers_regional_offerings.file.try(:path), SUPPLIERS_REGIONAL_OFFERINGS_PATH, suppliers_regional_offerings_changed?)
-        cp_file_to_input(rate_cards.file.try(:path), RATE_CARDS_PATH, suppliers_rate_cards_changed?)
+        cp_file_to_input(supplier_service_offerings.file.try(:path), SUPPLIER_SERVICE_OFFERINGS_PATH, supplier_service_offerings_changed?)
+        cp_file_to_input(supplier_regional_offerings.file.try(:path), SUPPLIER_REGIONAL_OFFERINGS_PATH, supplier_regional_offerings_changed?)
+        cp_file_to_input(rate_cards.file.try(:path), RATE_CARDS_PATH, rate_cards_changed?)
       end
 
       def cp_file_to_input(file_path, new_path, condition)

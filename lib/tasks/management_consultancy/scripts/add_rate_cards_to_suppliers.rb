@@ -24,14 +24,18 @@ def convert_price(price)
   price.to_s.gsub(',', '').to_i * 100
 end
 
+def extract_duns(supplier_name)
+  supplier_name.split('[')[1].split(']')[0].to_i
+end
+
 (0..10).each do |sheet_number|
   sheet = rate_cards_workbook.sheet(sheet_number)
   lot_number = sheet_names[sheet.default_sheet]
 
   (2..sheet.last_row).each do |row_number|
     row = sheet.row(row_number)
-    supplier_name = row.first
-    supplier = suppliers.find { |s| s['name'] == supplier_name.strip }
+    supplier_duns = extract_duns(row.first)
+    supplier = suppliers.find { |s| s['duns'] == supplier_duns }
     rate_card = {}
     rate_card['lot_number'] = lot_number
     rate_card['junior_rate_in_pence'] = convert_price(row[1])
@@ -44,7 +48,7 @@ end
     rate_card['email'] = row[8]
     rate_card['telephone_number'] = row[9]
 
-    supplier['rate_cards'] << rate_card
+    supplier['rate_cards'] << rate_card if supplier
   end
 end
 

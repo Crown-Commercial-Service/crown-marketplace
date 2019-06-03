@@ -10,6 +10,10 @@ def extract_service_number(service_name)
   service_name.split('[')[1].split(']')[0]
 end
 
+def extract_duns(supplier_name)
+  supplier_name.split('[')[1].split(']')[0].to_i
+end
+
 (0..10).each do |sheet_number|
   sheet = service_offerings_workbook.sheet(sheet_number)
   service_names = sheet.column(1)
@@ -17,18 +21,20 @@ end
 
   (2..sheet.last_column).each do |column_number|
     column = sheet.column(column_number)
-    supplier_name = column.first
+    supplier_duns = extract_duns(column.first)
     service_offerings = []
     column.each_with_index do |value, index|
-      next unless value.try(:downcase) == 'x'
+      next unless value.to_s.downcase == 'x'
+
+      next if service_names[index].nil?
 
       service_offerings << extract_service_number(service_names[index])
     end
 
     next unless service_offerings.size.positive?
 
-    supplier = suppliers.find { |s| s['name'] == supplier_name.strip }
-    supplier['lots'] << { 'lot_number' => lot_number, 'services' => service_offerings }
+    supplier = suppliers.find { |s| s['duns'] == supplier_duns }
+    supplier['lots'] << { 'lot_number' => lot_number, 'services' => service_offerings } if supplier
   end
 end
 

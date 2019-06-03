@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_155302) do
+ActiveRecord::Schema.define(version: 2019_05_21_111111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -73,6 +73,9 @@ ActiveRecord::Schema.define(version: 2019_05_17_155302) do
     t.integer "director_rate_in_pence"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contact_name"
+    t.string "telephone_number"
+    t.string "email"
     t.index ["management_consultancy_supplier_id"], name: "index_management_consultancy_rate_cards_on_supplier_id"
   end
 

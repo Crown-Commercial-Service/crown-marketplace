@@ -4,7 +4,6 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
   describe 'create' do
     let(:supplier_name) { Faker::Company.unique.name }
     let(:supplier_id) { SecureRandom.uuid }
-    let(:contact_name) { Faker::Name.unique.name }
     let(:contact_email) { Faker::Internet.unique.email }
     let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
 
@@ -15,9 +14,8 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
         {
           'supplier_name' => supplier_name,
           'supplier_id' => supplier_id,
-          'contact_name' => contact_name,
           'contact_email' => contact_email,
-          'contact_phone' => telephone_number,
+          'telephone_number' => telephone_number,
           'lots' => lots
         }
       ]
@@ -64,7 +62,6 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
         described_class.upload!(suppliers)
 
         supplier = ManagementConsultancy::Supplier.last
-        expect(supplier.contact_name).to eq(contact_name)
         expect(supplier.contact_email).to eq(contact_email)
         expect(supplier.telephone_number).to eq(telephone_number)
       end

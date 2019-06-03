@@ -18,11 +18,11 @@ module ManagementConsultancy
       end
 
       def create
-        @upload = Upload.new(upload_params)
+        @upload = ManagementConsultancy::Admin::Upload.new(upload_params)
 
         if @upload.save
           ManagementConsultancy::DataScriptWorker.perform_async(@upload.id)
-          redirect_to supply_teachers_admin_in_progress_path
+          redirect_to management_consultancy_admin_in_progress_path
         else
           @upload.cleanup_input_files
           render :new
@@ -50,7 +50,7 @@ module ManagementConsultancy
       private
 
       def upload_params
-        params.require(:management_consultanct_admin_upload).permit(:suppliers, :geographical_data_all_suppliers, :service_offerings, :supplier_details, :rate_card_details)
+        params.require(:management_consultancy_admin_upload).permit(:suppliers, :supplier_regional_offerings, :supplier_service_offerings, :rate_cards)
       end
     end
   end

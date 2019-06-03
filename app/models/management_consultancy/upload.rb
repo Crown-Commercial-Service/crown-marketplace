@@ -27,9 +27,11 @@ module ManagementConsultancy
       supplier = Supplier.create!(
         id: data['supplier_id'],
         name: data['supplier_name'],
-        contact_name: data['contact_name'],
         contact_email: data['contact_email'],
-        telephone_number: data['contact_phone']
+        telephone_number: data['telephone_number'],
+        address: data['address'],
+        website: data['website'],
+        duns: data['duns']
       )
 
       lots = data.fetch('lots', [])
@@ -50,6 +52,12 @@ module ManagementConsultancy
             service_code: service
           )
         end
+      end
+
+      rate_cards = data.fetch('rate_cards', [])
+
+      rate_cards.each do |rate_card|
+        supplier.rate_cards.create!(rate_card)
       end
     end
   end

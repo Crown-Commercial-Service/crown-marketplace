@@ -1,7 +1,7 @@
 require 'roo'
 require 'json'
 
-suppliers = JSON.parse(File.read('./lib/tasks/management_consultancy/output/suppliers_with_service_offering.json'))
+suppliers = JSON.parse(File.read('./lib/tasks/management_consultancy/output/suppliers_with_service_offerings.json'))
 
 regional_offerings_workbook = Roo::Spreadsheet.open './lib/tasks/management_consultancy/input/Regional offerings.xlsx'
 
@@ -23,6 +23,10 @@ def extract_region_code(region_name)
   region_name.split('(')[1].split(')')[0]
 end
 
+def extract_duns(supplier_name)
+  supplier_name.split('[')[1].split(']')[0].to_i
+end
+
 (0..10).each do |sheet_number|
   sheet = regional_offerings_workbook.sheet(sheet_number)
   region_names = sheet.row(1)
@@ -30,19 +34,21 @@ end
 
   (2..sheet.last_row).each do |row_number|
     row = sheet.row(row_number)
-    supplier_name = row.first
+    supplier_duns = extract_duns(row.first)
     regional_offerings = {}
     row.each_with_index do |value, index|
-      next unless value.try(:downcase) == 'x'
+      next unless value.to_s.downcase == 'x'
 
       regional_offerings[extract_region_code(region_names[index])] = 'provided'
     end
 
     next unless regional_offerings.size.positive?
 
-    supplier = suppliers.find { |s| s['name'] == supplier_name.strip }
-    supplier_lot = supplier['lots'].detect { |lot| lot['lot_number'] == lot_number }
-    supplier_lot['regions'] = regional_offerings
+    supplier = suppliers.find { |s| s['duns'] == supplier_duns }
+    if supplier
+      supplier_lot = supplier['lots'].detect { |lot| lot['lot_number'] == lot_number }
+      supplier_lot['regions'] = regional_offerings if supplier_lot
+    end
   end
 end
 
