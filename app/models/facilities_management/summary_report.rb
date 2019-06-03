@@ -122,7 +122,7 @@ module FacilitiesManagement
         end
       end
 
-      uvals.reject! { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
+      uvals.reject { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
     end
 
     def lifts_per_building

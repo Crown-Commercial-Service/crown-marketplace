@@ -88,7 +88,11 @@ class FacilitiesManagement::Spreadsheet
 
         u = CCS::FM::UnitsOfMeasurement.service_usage(s.code).last
         vals = [label, s.code, s.name]
-        vals << u['title_text']
+        if u
+          vals << u['title_text']
+        else
+          vals << nil
+        end
 
         selected_buildings.each do |building|
           # begin
