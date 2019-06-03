@@ -15,8 +15,6 @@ module SupplyTeachers
     def create
       suppliers = JSON.parse(request.body.read)
 
-      SupplyTeachers::Admin::Upload.destroy_all
-
       Upload.upload!(suppliers)
 
       render json: {}, status: :created
