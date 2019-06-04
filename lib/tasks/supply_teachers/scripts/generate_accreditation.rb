@@ -8,9 +8,13 @@ require 'geocoder'
 require 'capybara'
 require 'pathname'
 require 'yaml'
+require 'aws-sdk-s3'
 
 def generate_accreditation
-  accredited_suppliers_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/current_accredited_suppliers.xlsx'
+  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+  path = './storage/supply_teachers/current_data/input/current_accredited_suppliers.xlsx'
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH).get(response_target: path)
+  accredited_suppliers_workbook = Roo::Spreadsheet.open path
 
   header_map = {
     'Supplier Name - Accreditation Held' => :supplier_name,
@@ -60,7 +64,7 @@ def generate_accreditation
       .map            { |row| add_accreditation(row) }
 
   accreditation = lot_1_accreditation + lot_2_accreditation + lot_3_accreditation
-  File.open('./storage/supply_teachers/output/supplier_accreditation.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/current_data/output/supplier_accreditation.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(accreditation)
   end
 end

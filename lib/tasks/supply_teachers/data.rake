@@ -1,73 +1,71 @@
 namespace :st do
+  require 'aws-sdk-s3'
+
   task :clean do
-    rm_f Dir['./storage/supply_teachers/output/*.json']
-    rm_f Dir['./storage/supply_teachers/output/*.out']
+    rm_f Dir['./storage/supply_teachers/current_data/output/*.tmp']
+    rm_f Dir['./storage/supply_teachers/current_data/output/*.json']
+    rm_f Dir['./storage/supply_teachers/current_data/output/*.out']
+    s3 = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+    folder = 'supply_teachers/current_data/output'
+    objects = s3.bucket(ENV['CCS_APP_API_DATA_BUCKET']).objects({prefix: folder})
+    objects.batch_delete!
   end
 
-  task :data do
-    FileUtils.touch('./storage/supply_teachers/output/errors.out')
+  task data: :environment do
     require './lib/tasks/supply_teachers/scripts/generate_branches.rb'
-    './storage/supply_teachers/output/errors.out' << generate_branches.to_s
-    mv './storage/supply_teachers/output/supplier_branches.json.tmp', './storage/supply_teachers/output/supplier_branches.json'
-
     require './lib/tasks/supply_teachers/scripts/generate_pricing.rb'
-    './storage/supply_teachers/output/errors.out' << generate_pricing.to_s
-    mv './storage/supply_teachers/output/supplier_pricing.json.tmp', './storage/supply_teachers/output/supplier_pricing.json'
-
     require './lib/tasks/supply_teachers/scripts/generate_vendor_pricing.rb'
-    './storage/supply_teachers/output/errors.out' << generate_vendor_pricing.to_s
-    mv './storage/supply_teachers/output/supplier_vendor_pricing.json.tmp', './storage/supply_teachers/output/supplier_vendor_pricing.json'
-
     require './lib/tasks/supply_teachers/scripts/generate_accreditation.rb'
-    './storage/supply_teachers/output/errors.out' << generate_accreditation.to_s
-    mv './storage/supply_teachers/output/supplier_accreditation.json.tmp', './storage/supply_teachers/output/supplier_accreditation.json'
-
     require './lib/tasks/supply_teachers/scripts/merge_json.rb'
-    './storage/supply_teachers/output/errors.out' << merge_json(supplier_name_key: 'pricing supplier name',
-                                                                  destination_key: 'branches supplier name',
-                                                                  destination_file: './storage/supply_teachers/output/data_branches_pricing.json.tmp',
-                                                                  primary: './storage/supply_teachers/output/supplier_branches.json',
-                                                                  secondary: './storage/supply_teachers/output/supplier_pricing.json',
-                                                                  alias_file: './storage/supply_teachers/input/supplier_lookup.csv').to_s
-    mv './storage/supply_teachers/output/data_branches_pricing.json.tmp', './storage/supply_teachers/output/data_branches_pricing.json'
-    './storage/supply_teachers/output/errors.out' << merge_json(supplier_name_key: 'vendor supplier name',
-                                                                  destination_key: 'branches supplier name',
-                                                                  destination_file: './storage/supply_teachers/output/data_branches_pricing_vendors.json.tmp',
-                                                                  primary: './storage/supply_teachers/output/data_branches_pricing.json',
-                                                                  secondary: './storage/supply_teachers/output/supplier_vendor_pricing.json',
-                                                                  alias_file: './storage/supply_teachers/input/supplier_lookup.csv').to_s
-    mv './storage/supply_teachers/output/data_branches_pricing_vendors.json.tmp', './storage/supply_teachers/output/data_branches_pricing_vendors.json'
-    './storage/supply_teachers/output/errors.out' << merge_json(supplier_name_key: 'accreditation supplier name',
-                                                                  destination_key: 'branches supplier name',
-                                                                  destination_file: './storage/supply_teachers/output/data_merged.json.tmp',
-                                                                  primary: './storage/supply_teachers/output/data_branches_pricing_vendors.json',
-                                                                  secondary: './storage/supply_teachers/output/supplier_accreditation.json',
-                                                                  alias_file: './storage/supply_teachers/input/supplier_lookup.csv').to_s
-    mv './storage/supply_teachers/output/data_merged.json.tmp', './storage/supply_teachers/output/data_merged.json'
-
     require './lib/tasks/supply_teachers/scripts/exclude_suppliers_without_accreditation.rb'
-    './storage/supply_teachers/output/errors.out' << exclude_suppliers_without_accreditation.to_s
-    mv './storage/supply_teachers/output/data_only_accredited.json.tmp', './storage/supply_teachers/output/data_only_accredited.json'
-
     require './lib/tasks/supply_teachers/scripts/add_vendor_contacts.rb'
-    './storage/supply_teachers/output/errors.out' << add_vendor_contacts.to_s
-    mv './storage/supply_teachers/output/data_with_vendors.json.tmp', './storage/supply_teachers/output/data_with_vendors.json'
-
     require './lib/tasks/supply_teachers/scripts/validate_and_geocode.rb'
-    './storage/supply_teachers/output/errors.out' << validate_and_geocode.to_s
-    mv './storage/supply_teachers/output/data_with_line_numbers.json.tmp', './storage/supply_teachers/output/data_with_line_numbers.json'
-
     require './lib/tasks/supply_teachers/scripts/strip_line_numbers.rb'
-    './storage/supply_teachers/output/errors.out' << strip_line_numbers.to_s
-    mv './storage/supply_teachers/output/data.json.tmp', './storage/supply_teachers/output/data.json'
-
     require './lib/tasks/supply_teachers/scripts/anonymize.rb'
-    './storage/supply_teachers/output/errors.out' << anonymize.to_s
-    mv './storage/supply_teachers/output/anonymous.json.tmp', './storage/supply_teachers/output/anonymous.json'
-
     require './lib/tasks/supply_teachers/scripts/bootstrap_supplier_lookup.rb'
-    './storage/supply_teachers/output/errors.out' << bootstrap_supplier_lookup.to_s
-    mv './storage/supply_teachers/output/supplier_lookup.csv.tmp', './storage/supply_teachers/output/supplier_lookup.csv'
 
+    s3 = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+
+    FileUtils.touch('./storage/supply_teachers/current_data/output/errors.out.tmp')
+
+    run_script(s3, generate_branches, 'supply_teachers/current_data/output/supplier_branches.json')
+    run_script(s3, generate_pricing, 'supply_teachers/current_data/output/supplier_pricing.json')
+    run_script(s3, generate_vendor_pricing, 'supply_teachers/current_data/output/supplier_vendor_pricing.json')
+    run_script(s3, generate_accreditation, 'supply_teachers/current_data/output/supplier_accreditation.json')
+    run_script(s3,
+               merge_json(supplier_name_key: 'pricing supplier name',
+                          destination_key: 'branches supplier name',
+                          destination_file: './storage/supply_teachers/current_data/output/data_branches_pricing.json.tmp',
+                          primary: './storage/supply_teachers/current_data/output/supplier_branches.json.tmp',
+                          secondary: './storage/supply_teachers/current_data/output/supplier_pricing.json.tmp'),
+             'supply_teachers/current_data/output/data_branches_pricing.json')
+    run_script(s3,
+               merge_json(supplier_name_key: 'vendor supplier name',
+                          destination_key: 'branches supplier name',
+                          destination_file: './storage/supply_teachers/current_data/output/data_branches_pricing_vendors.json.tmp',
+                          primary: './storage/supply_teachers/current_data/output/data_branches_pricing.json.tmp',
+                          secondary: './storage/supply_teachers/current_data/output/supplier_vendor_pricing.json.tmp'),
+             'supply_teachers/current_data/output/data_branches_pricing_vendors.json')
+    run_script(s3,
+               merge_json(supplier_name_key: 'accreditation supplier name',
+                          destination_key: 'branches supplier name',
+                          destination_file: './storage/supply_teachers/current_data/output/data_merged.json.tmp',
+                          primary: './storage/supply_teachers/current_data/output/data_branches_pricing_vendors.json.tmp',
+                          secondary: './storage/supply_teachers/current_data/output/supplier_accreditation.json.tmp'),
+             'supply_teachers/current_data/output/data_merged.json')
+    run_script(s3, exclude_suppliers_without_accreditation, 'supply_teachers/current_data/output/data_only_accredited.json')
+    run_script(s3, add_vendor_contacts, 'supply_teachers/current_data/output/data_with_vendors.json')
+    run_script(s3, validate_and_geocode, 'supply_teachers/current_data/output/data_with_line_numbers.json')
+    run_script(s3, strip_line_numbers, 'supply_teachers/current_data/output/data.json')
+    run_script(s3, anonymize, 'supply_teachers/current_data/output/anonymous.json')
+    # run_script(s3, bootstrap_supplier_lookup, 'supply_teachers/current_data/output/supplier_lookup.json')
+
+    s3.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object('supply_teachers/current_data/output/errors.out').upload_file('./storage/supply_teachers/current_data/output/errors.out.tmp')
   end
+
+  def run_script(s3, script, file_path)
+    './storage/supply_teachers/current_data/output/errors.out.tmp' << script.to_s
+    s3.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(file_path).upload_file("./storage/#{file_path}.tmp")
+  end
+
 end
