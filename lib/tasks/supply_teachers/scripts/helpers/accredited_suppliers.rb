@@ -6,8 +6,10 @@ require 'aws-sdk-s3'
 
 object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
 accredited_suppliers_path = './storage/supply_teachers/current_data/input/current_accredited_suppliers.xlsx'
+FileUtils.touch(accredited_suppliers_path)
 object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH).get(response_target: accredited_suppliers_path)
 supplier_lookup_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
+FileUtils.touch(supplier_lookup_path)
 object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: supplier_lookup_path )
 
 accredited_suppliers_workbook = Roo::Spreadsheet.open accredited_suppliers_path
