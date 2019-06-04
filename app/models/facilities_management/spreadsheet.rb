@@ -77,7 +77,7 @@ class FacilitiesManagement::Spreadsheet
 
       work_package = ''
 
-      services.sort_by { |s| s.code[s.code.index('.') + 1..-1].to_i }.each do |s|
+      services.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s|
         if work_package == s.work_package_code
           label = nil
         else
@@ -88,28 +88,33 @@ class FacilitiesManagement::Spreadsheet
 
         u = CCS::FM::UnitsOfMeasurement.service_usage(s.code).last
         vals = [label, s.code, s.name]
-        if u
-          vals << u['title_text']
-        else
-          vals << nil
-        end
+        next unless u
 
+        vals << u['title_text']
+        vals_v = []
+        vals_h = nil
         selected_buildings.each do |building|
           # begin
           id = building.building_json['id']
           suv = @report.uom_values.select { |v| v['building_id'] == id && v['service_code'] == s.code }
-          j = 0
+          vals_h = []
           suv.each do |v|
-            vals << v['uom_value']
-
-            sheet.add_row vals
-            j += 1
-            vals = [nil, nil, nil, nil]
+            vals_h << v['uom_value']
           end
+          vals_v << vals_h
         rescue StandardError
           vals << '=NA()'
         end
-
+        # vals << valsV
+        # sheet.add_row vals
+        max_j = vals_v.map(&:length).max
+        (0..max_j - 1).each do |j|
+          (0..vals_v.count - 1).each do |k|
+            vals << vals_v[k][j]
+          end
+          sheet.add_row vals
+          vals = [nil, nil, nil, nil]
+        end
         work_package = s.work_package_code
       end
     end
@@ -142,23 +147,29 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row ['Lot recommendation', @report.current_lot]
       sheet.add_row ['Direct award option']
       sheet.add_row
-      sheet.add_row ['4. Supplier Shortlist']
+      # sheet.add_row ['4. Supplier Shortlist']
+      label = '4. Supplier Shortlist'
       @report.selected_suppliers(@current_lot).each do |supplier|
-        sheet.add_row [nil, supplier.data['supplier_name']]
+        sheet.add_row [label, supplier.data['supplier_name']]
+        label = nil
       end
       sheet.add_row
 
-      sheet.add_row ['5. Regions summary']
+      # sheet.add_row ['5. Regions summary']
+      label = '5. Regions summary'
       FacilitiesManagement::Region.all.select { |region| @data['posted_locations'].include? region.code }.each do |region|
-        sheet.add_row [nil, region.name]
+        sheet.add_row [label, region.name]
+        label = nil
       end
       sheet.add_row
 
-      sheet.add_row ['6 Services summary']
+      # sheet.add_row ['6 Services summary']
       services = FacilitiesManagement::Service.where(code: @data['posted_services'])
       services.sort_by!(&:code)
+      label = '6 Services summary'
       services.each do |s|
-        sheet.add_row [nil, s.name]
+        sheet.add_row [label, s.name]
+        label = nil
       end
       sheet.add_row
     end
