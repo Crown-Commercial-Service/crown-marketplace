@@ -14,10 +14,11 @@
       <div>
         <span class="govuk-!-font-size-27 ccs-font--wrap">
           <% if @current_lot.nil? %>
-            <%=raw list_services %>
+            option 1
+            <%= raw list_services %>
           <% else %>
-            <%=raw list_suppliers %>
-            <%=raw list_choices %>
+            <%= raw list_suppliers %>
+            <%= raw list_choices %>
           <% end %>
         </span>
       </div>
@@ -29,16 +30,16 @@
   <% if @current_lot.nil? %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full ccs-results-list__detail">
-        <p class="govuk-!-font-size-24"><strong>Calculation summary</strong></p>
+        <p class="govuk-heading-m">Calculation summary</p>
         <p>
-            Estimated costs for all services 
-            <span style="display:inline-block; position: relative; left: 170px;">
-              <%= number_to_currency(@report.assessed_value, strip_insignificant_zeros: true)%>
+          Estimated costs for all services
+          <span style="display:inline-block; position: relative; left: 170px;">
+              <%= number_to_currency(@report.assessed_value, strip_insignificant_zeros: true) %>
             </span>
         </p>
         <hr style='width: 50%;margin-left: 0;border-style: dotted;'/>
         <p>
-          <%=raw no_price_message%>
+          <%= raw no_price_message %>
         </p>
       </div>
     </div>
@@ -49,18 +50,19 @@
   <% if @current_lot %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full ccs-results-list__detail">
-        <p><strong>You can now download the supplier list and requirements document</strong></p>
+
         <div class="govuk-warning-text">
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
           <strong class="govuk-warning-text__text">
             <span class="govuk-warning-text__assistive">Warning</span>
-            This list will be saved and it will be available for you later, for up to 60 days from today.
+            You can download the shortlist of suppliers and selections you made, for your records and audit trail
           </strong>
         </div>
         <form id="fm-summary-spreadsheet-form" action="/facilities-management/summary?calculations=yes&amp;format=xlsx" method="post">
           <p class="govuk-body govuk-body-s supplier-record__print-option">
             <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-            <a onclick="document.getElementById('fm-summary-spreadsheet-form').submit();" class="supplier-record__file-download" aria-label="Download the procurement summary" href="/facilities-management/summary?calculations=yes&amp;format=xlsx">Download the procurement summary</a>
+            <a onclick="document.getElementById('fm-summary-spreadsheet-form').submit();" class="supplier-record__file-download" aria-label="Download the procurement summary" href="/facilities-management/summary?calculations=yes&amp;format=xlsx">Download
+              the procurement summary</a>
           </p>
         </form>
       </div>
@@ -74,22 +76,23 @@
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <p><strong>
-              Do you think the total value of your services will move your estimated costs over <%=@report.lot_limit%>?
-            </strong></p>
+            <p class="govuk-heading-m">
+              Do you think the total value of your services will move your estimated costs over <%= @report.lot_limit %>
+              ?
+            </p>
 
           </legend>
-          <div class="govuk-radios govuk-radios--inline">
+          <div class="govuk-radios">
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="changed-name-1" name="sublot" type="radio" value="yes">
               <label class="govuk-label govuk-radios__label" for="changed-name-1">
-                Yes, it will take over <%=@report.lot_limit%>
+                Yes, it will take over <%= @report.lot_limit %>
               </label>
             </div>
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="changed-name-2" name="sublot" type="radio" value="no">
               <label class="govuk-label govuk-radios__label" for="changed-name-2">
-                No, it will stay under <%=@report.lot_limit%>
+                No, it will stay under <%= @report.lot_limit %>
               </label>
             </div>
           </div>
@@ -102,10 +105,10 @@
   <% end %>
 
 
-  <div class="govuk-grid-row ccs-no-print">
+  <!--<div class="govuk-grid-row ccs-no-print">
     <p>
       <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" >Print this page</a>
     </p>
-  </div>
+  </div>-->
 </div>
 
