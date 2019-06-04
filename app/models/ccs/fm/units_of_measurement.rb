@@ -13,7 +13,7 @@ module CCS
       # CCS::FM::UnitsOfMeasurement.where("? = ANY(service_usage)", 'C.5')
       def self.service_usage(service)
         # CCS::FM::UnitsOfMeasurement.where(service_usage: service)
-        where('? = ANY(service_usage)', service)
+        where('? = ANY(service_usage)', service).order(:id)
       end
     end
   end
