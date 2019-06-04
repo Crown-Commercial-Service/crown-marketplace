@@ -46,11 +46,11 @@ module FacilitiesManagement
 
       str = '<strong>However, '
       str <<
-          if count == 1
-            '1 service does '
-          else
-            "#{count} services do "
-          end
+        if count == 1
+          '1 service does '
+        else
+          "#{count} services do "
+        end
       str << 'not have a price and we need you to estimate these costs'
     end
 
@@ -76,14 +76,14 @@ module FacilitiesManagement
       </strong>, subject to your total contract value and services without a price.</p>"
       str << '<p class="govuk-heading-m">'
       str <<
-          case @current_lot
-          when '1a'
-            'Total contract value up to £7m'
-          when '1b'
-            'Total contract value between £7m to £50m'
-          when '1c'
-            'Total contract value over £50m'
-          end
+        case @current_lot
+        when '1a'
+          'Total contract value up to £7m'
+        when '1b'
+          'Total contract value between £7m to £50m'
+        when '1c'
+          'Total contract value over £50m'
+        end
       str << '</p>'
     end
 
@@ -93,7 +93,7 @@ module FacilitiesManagement
 
     def list_services
       if @current_lot.nil?
-        str = '<p class="govuk-heading-m">Services without a price<p/>'
+        str = '<p class="govuk-!-font-size-24"><strong>Services without pricing</strong><p/>'
         @report.without_pricing.each do |service|
           str << "<p>#{service.name}</p><hr style='width: 50%;margin-left: 0;border-style: dotted;'/>"
         end
@@ -116,27 +116,17 @@ module FacilitiesManagement
     end
 
     def list_choices
-
-      str = '<p class="govuk-heading-m govuk-!-margin-top-8">Choices used to generate your shortlist</p>'
-      str << '<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
-      str << 'Regions (' + @subregions.count.to_s + ')</span></summary>'
-      str << '<div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
+      str = '<p class="govuk-heading-m govuk-!-margin-top-8">Choices used to generate your shortlist</p><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
+      str << 'Regions (' + @subregions.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
       @subregions.each do |location|
-        str << '<li>'
-        str << location[1]
-        str << '</li>'
+        str << '<li>' + location[1] + '</li>'
       end
-      str << '</ul></div></details><hr>'
-      # FacilitiesManagement::Service.all
       services = FacilitiesManagement::Service.where(code: @posted_services)
       services.sort_by!(&:code)
-      str << '<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
-      str << 'Services (' + services.count.to_s + ')</span></summary>'
-      str << '<div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
+      str << '</ul></div></details><hr><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
+      str << 'Services (' + services.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
       services.each do |s|
-        str << '<li>'
-        str << s.name
-        str << '</li>'
+        str << '<li>' + s.name + '</li>'
       end
       str << '</ul></div></details><hr>'
       str
