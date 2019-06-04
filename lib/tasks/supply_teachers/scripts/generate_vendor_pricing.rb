@@ -44,7 +44,9 @@ def generate_vendor_pricing
                when /Fixed Term/m
                  :fixed_term
                else
-                 warn "#{row[:supplier_name]}: Unknown job type in 'lot_1_and_2_comparisons.xlsx': #{row[:job_type].inspect}" if supplier_accredited?(row[:supplier_name])
+                 File.open('./storage/supply_teachers/output/errors.out', 'a') do |f|
+                   f.puts "#{row[:supplier_name]}: Unknown job type in 'lot_1_and_2_comparisons.xlsx': #{row[:job_type].inspect}" if supplier_accredited?(row[:supplier_name])
+                 end
                  :unknown
                end
     row.merge(job_type: job_type)

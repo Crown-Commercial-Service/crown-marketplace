@@ -14,10 +14,10 @@ module SupplyTeachers
         upload.review!
       else
         file = File.open('./storage/supply_teachers/output/errors.out')
-        fail_upload(upload, 'There is an error with your files: ' + file.read)
+        fail_upload(upload, file.read)
       end
     rescue StandardError => e
-      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), 'There is an error with your files. Please try again. ' + e.full_message)
+      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), e.full_message)
     end
 
     private

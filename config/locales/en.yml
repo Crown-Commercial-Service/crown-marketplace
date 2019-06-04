@@ -51,7 +51,7 @@ en:
               inclusion: If you don't know which Lot you need select don't know
         legal_services/journey/legal_jurisdiction:
           attributes:
-            legal_services:
+            legal_jurisdiction:
               inclusion: Select the jurisdiction you need
         legal_services/journey/lot1_regional_service:
           attributes:
@@ -77,6 +77,10 @@ en:
           attributes:
             legal_services:
               inclusion: Select yes if your requirement is restricted to a small geographical area?
+        legal_services/journey/select_lot:
+          attributes:
+            select_lot:
+              inclusion: Select the lot you need
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -473,8 +477,9 @@ en:
       cookie_link_aria_label: How we use cookies
       crown_copyright: "© Crown copyright"
       error_prefix: Error
+      feedback: feedback
       feedback_aria_label: Email your feedback on this service
-      feedback_html: This is a new service – your feedback (%{link}) will help us to improve it.
+      feedback_html: This is a new service – your (%{link}) will help us to improve it.
       having_problems: Having problems using this service?
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy
@@ -487,23 +492,21 @@ en:
   legal_services:
     home:
       index:
-        authorised_customer_list_link_text: authorised customer list
-        before_you_start:
-          heading: Before you start
-          use_this_service:
-            heading: 'You need to:'
-            item_1_html: be a recognised public sector body in the %{authorised_customer_list_link}
-            item_2_html: have read and understood the framework’s %{customer_guidance_document_link}
-            item_3: have put together a well-structured business case outlining the need for external legal support
-            item_4: have an estimate of your gross contract value
-        customer_guidance_document_link_text: customer guidance document
         heading: Find legal services for the wider public sector
+        ojeu_link_text: OJEU contract notice
+        ojeu_url_html: https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3788%20Contract%20notice%20OJEU.pdf
         use_this_service:
-          description: Using this service means you’re adhering to the public service procurement procedures.
-          heading: Use this service to download a short list of law firms that provide the legal services you need.
-          item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less.
+          before_heading: Before you start
+          guidance_heading: Guidance and other useful documents
+          para01: Use this service to download a shortlist of suppliers that provide the legal services you need.
+          para02: Using this service means you're following the public sector procurement procedures.
+          para03_html: Central government can use this service to buy transactional property and litigation services if your contract budget is &pound;20,000 or less per matter.
+          para04_html: If you need legal services in a non-UK jurisdiction, contact <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> for help.
+          para05_html: To use this service you need to be a recognised public sector body listed in the <a href="#">authorised customer list</a>.
+        wps_link_text: WPS Legal Services panel specification
+        wps_url: https://www.crowncommercial.gov.uk/agreements/RM3788
       service_not_suitable:
-        better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
+        better_suited_framework_html: The <a href="https://www.crowncommercial.gov.uk/agreements/rm3786" target="_blank">General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     journey:
       check_suitability:
@@ -533,12 +536,14 @@ en:
         question: What lot do you need?
       legal_jurisdiction:
         eng_wales: England and Wales
+        heading: Lot 2 - Full-service firms
         ni: Northern Ireland
-        question: Which legal jurisdiction do you need?
+        question: Select the jurisdiction you need
         scot_land: Scotland
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
         hint: Select the services you need
+        links_text_html: If the services you need aren't listed here, the <a href="https://www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
@@ -549,19 +554,32 @@ en:
         txt01: services selected
         txt02: No services selected
       lot2_full_service:
-        heading: Lot2 Full Service firms
+        heading: Lot 2 - Full-service firms
         hint: Select the legal services you need
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
       regional_legal_service:
-        heading: Where do you need the regional legal services?
+        heading: Lot 1 - Regional service provision
+        hint: Select the regions where you need legal services
         remove_all: Remove all
         txt01: regions selected
         txt02: No regions selected
       requirement:
         hint: For example, Greater London or East Midlands
         question: Is your requirement restricted to a small geographical area?
+      select_lot:
+        heading: Select the lot you need
+        lot1_txt: Lot 1 - Regional service provision
+        lot1_txt_details: Lot 1 legal services
+        lot1_txt_sub: Select lot 1 if your requirements have a regional focus or your budget is below £200,000. These suppliers provide services across 14 legal specialisms within at least one of the 13 UK NUTS regions.
+        lot2_txt: Lot 2 - Full-service firms
+        lot2_txt_details: Lot 2 legal services
+        lot2_txt_sub: Select lot 2 if your requirements needs a full-service supplier or your budget is over £200,000. Full-service firms can provide services in 35 specialisms. Suppliers have said which jurisdictional area of the UK they serve.
+        lot3_txt: Lot 3 - Property and construction
+        lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
+        lot4_txt: Lot 4 - Transport rail
+        lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
@@ -757,42 +775,61 @@ en:
     admin:
       uploads:
         in_progress:
-          content: The spreadsheets have been uploaded and are now processing.
+          button: Return to manage supplier data
+          content: We are processing the uploaded spreadsheets.
           heading: Upload successful
         index:
+          approved: Published on live
+          canceled: Cancelled session
           caption: Manage supplier data
-          create_new: Create a new data upload
-          date: Date
-          heading: Agency Supply teachers and agency workers
+          create_new: Set up upload session
+          current_table_caption: Data currently used
+          date: Date and time
+          failed: Failed
+          heading: Supply teachers and agency workers
+          in_progress: Processing
+          in_review: Waiting to publish
           name: Name
           no_of_files: Number of files
+          rejected: Cancelled session
+          spreadsheet: Spreadsheet
           status: Status
-          table_caption: Previous uploads
+          table_caption: Upload sessions
+          upload_session: Upload session
+          uploading: Processing
         new:
-          caption: Agency supply teachers and agency workers
-          heading: New data upload
-          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
-          upload_title: Upload one or more of the following spreadsheets
-          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+          caption: Supply teachers and agency workers
+          heading: Upload session
+          upload_button: Upload spreadsheets
+          upload_caption: XLS, XLSX and CSV are supported. Maximum file size is 5mb.
+          upload_title: Choose one or more spreadsheets to upload
+        reject:
+          content: You can now create a new upload.
+          heading_html: Upload session %{number} has been cancelled
+          index_button: Return to manage supplier data
+          new_button: Set up a new upload session
         show:
-          caption: Agency supply teachers and agency workers
+          approve: Publish to live service
+          caption: Supply teachers and agency workers
           confirm_changes: 'Confirm these files are ready to be used by the live service:'
           current_accredited_suppliers: Current accredited suppliers
-          datetime: 'Date/time:'
-          download: Download
+          datetime: 'Date and time:'
+          error_heading: There is a problem
           files: Files
           geographical_data_all_suppliers: Geographical data all suppliers
-          heading: 'Upload session #%{number}'
+          heading: Upload session %{number}
           lot_1_and_lot_2_comparisons: Lot 1 and Lot 2 comparisons
           master_vendor_contacts: Master vendor contacts
           neutral_vendor_contacts: Neutral vendor contacts
           pricing_for_tool: Pricing for tool
+          reject: Cancel session
           spreadsheet: Spreadsheet
           status: 'Status:'
           supplier_lookup: Supplier lookup
         uploading:
-          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
-          heading: Data upload in progress
+          button: Return to manage supplier data
+          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently processing and will soon be published to the <strong>''Supply teachers and agency workers''</strong> service.'
+          heading: Data published
     branches:
       branch:
         address: Address

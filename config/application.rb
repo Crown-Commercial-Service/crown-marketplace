@@ -33,6 +33,8 @@ module Marketplace
     config.generators.system_tests = nil
 
     config.action_controller.include_all_helpers = false
+
+    config.time_zone = 'London'
   end
 
   def self.feedback_email_address

@@ -1,11 +1,11 @@
 module LegalServices
   class Journey::SelectLot
     include Steppable
-    attribute :selected_lot
-    validates :selected_lot, inclusion: ['lot1', 'lot2', 'lot3', 'lot4']
+    attribute :select_lot
+    validates :select_lot, inclusion: ['lot1', 'lot2', 'lot3', 'lot4']
 
     def next_step_class
-      case selected_lot
+      case select_lot
       when 'lot1'
         Journey::Lot1RegionalService
       when 'lot2'
