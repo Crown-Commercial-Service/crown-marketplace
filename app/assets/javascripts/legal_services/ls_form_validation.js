@@ -1,4 +1,5 @@
-function fireErrors(s){//note: some long chckbox pgs require hidden_fields_for_previous_steps_and_responses' to be inside 'govuk_form_group_with_optional_error' (.govuk_form_group)
+function fireErrors(s){//note: 'hidden_fields_for_previous_steps_and_responses' should be inside 'govuk_form_group_with_optional_error' (.govuk_form_group)
+
   s.parents('.govuk-form-group').addClass('govuk-form-group--error');
 
   $('#ccs-error-sum').attr('tabindex','-1').focus().add('#legal_services-error').removeClass('govuk-visually-hidden');
@@ -9,7 +10,7 @@ function fireErrors(s){//note: some long chckbox pgs require hidden_fields_for_p
 
 
 function check_suitability(form){
-  $('#submit').click(function(e){
+  $('#submit').on('click', function(e){
     var state = form.find('input[name="legal_services"]');
 
     if(state.filter(':checked').length > 0){
@@ -22,7 +23,7 @@ function check_suitability(form){
 }
 
 function check_suitability2(form){
-  $('#submit').click(function(e){
+  $('#submit').on('click', function(e){
     var state = form.find('input[name="fees"]');
 
     if(state.filter(':checked').length > 0){
@@ -35,7 +36,7 @@ function check_suitability2(form){
 }
 
 function lot1_regional_service(form){
-  $('#submit01').add('#submit02').click(function(e){
+  $('#submit01').add('#submit02').on('click', function(e){
     var state = form.find('input[name="lot1_regional_service"]');
 
     if(state.filter(':checked').length > 0){
@@ -48,7 +49,7 @@ function lot1_regional_service(form){
 }
 
 function lot2_full_service(form){
-  $('#submit01').add('#submit02').click(function(e){
+  $('#submit01').add('#submit02').on('click', function(e){
     var state = form.find('input[name="lot2_full_service"]');
 
     if(state.filter(':checked').length > 0){
@@ -61,7 +62,7 @@ function lot2_full_service(form){
 }
 
 function choose_organistion_type(form){
-  $('#submit').click(function(e){
+  $('#submit').on('click', function(e){
     var state = form.find('input[name="central_government"]');
 
     if(state.filter(':checked').length > 0){
@@ -74,7 +75,7 @@ function choose_organistion_type(form){
 }
 
 function requirement(form){
-  $('#submit').click(function(e){
+  $('#submit').on('click', function(e){
     var state = form.find('input[name="central_government"]');
 
     if(state.filter(':checked').length > 0){
@@ -87,7 +88,7 @@ function requirement(form){
 }
 
 function regional_legal_service(form){
-  $('#submit01').add('#submit02').click(function(e){
+   $('#submit01').add('#submit02').on('click', function(e){
     var state = form.find('input[name="regional_legal_service"]');
 
     if(state.filter(':checked').length > 0){
@@ -100,9 +101,9 @@ function regional_legal_service(form){
 }
 
 function legal_jurisdiction(form){
-  $('#submit').click(function(e){
+  $('#submit').on('click', function(e){
 
-    var state = form.find('input[name="central_government"]');
+    var state = form.find('input[name="legal_jurisdiction"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
@@ -114,7 +115,7 @@ function legal_jurisdiction(form){
 }
 
 function choose_services_area(form){
-  $('#submit').click(function(e){
+  $('#submit').on('click', function(e){
 
     var state = form.find('input[name="services_area"]');
 
@@ -127,10 +128,24 @@ function choose_services_area(form){
   });
 }
 
-function  choose_services_area2(form){
-  $('#submit').click(function(e){
+function choose_services_area2(form){
+  $('#submit').on('click', function(e){
 
     var state = form.find('input[name="services_area2"]');
+
+    if(state.filter(':checked').length > 0){
+      form.submit();
+    }else{
+      e.preventDefault();
+      fireErrors(state);
+    }
+  });
+}
+
+function select_lot(form){
+  $('#submit').on('click', function(e){
+
+    var state = form.find('input[name="select_lot"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
@@ -145,26 +160,14 @@ jQuery(document).ready(function(){
 
     var f = $('#main-content').find('form');
 
-    if($('#check_suitability').length){//put into array if/when list of ids get too long
-      check_suitability(f);
-    }else if($('#check_suitability2').length){
-      check_suitability2(f);
-    }else if($('#lot1_regional_service').length){
-      lot1_regional_service(f);
-    }else if($('#lot2_full_service').length){
-      lot2_full_service(f);
-    }else if($('#choose_organistion_type').length){
-      choose_organistion_type(f);
-    }else if($('#requirement').length){
-      requirement(f);
-    }else if($('#regional_legal_service').length){
-      regional_legal_service(f);
-    }else if($('#legal_jurisdiction').length){
-      legal_jurisdiction(f);
-    }else if($('#choose_services_area').length){
-      choose_services_area(f);
-    }else if($('#choose_services_area2').length){
-      choose_services_area2(f);
+    if(f.length){
+      var formIDs = ['check_suitability','check_suitability2','lot1_regional_service','lot2_full_service','choose_organistion_type','requirement','regional_legal_service','legal_jurisdiction','choose_services_area','choose_services_area2','select_lot'];
+
+      $.each(formIDs, function(i, val){
+        if(f.is('#'+val)){//the form has this id
+          window[val](f);//call the function using this id as its name
+        }
+      });
     }
 
 });
