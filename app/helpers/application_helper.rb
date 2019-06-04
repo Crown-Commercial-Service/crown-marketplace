@@ -28,7 +28,7 @@ module ApplicationHelper
   end
 
   def govuk_email_link(email_address, aria_label, css_class: 'govuk-link')
-    mail_to(email_address, email_address, class: css_class, 'aria-label': aria_label)
+    mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
   def govuk_form_group_with_optional_error(journey, *attributes)

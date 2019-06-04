@@ -139,6 +139,7 @@ module FacilitiesManagement
       @supplier_count = @data['supplier_count']
       @posted_locations = @data['posted_locations']
       @posted_services = @data['posted_services']
+      @current_lot = @data['current_lot']
 
       set_start_date
     end
@@ -170,7 +171,7 @@ module FacilitiesManagement
     def set_start_date
       @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
       TransientSessionInfo[session.id, 'start_date'] = @start_date
-      TransientSessionInfo[session.id, 'current_lot'] = nil
+      # TransientSessionInfo[session.id, 'current_lot'] = nil
     rescue StandardError
       @start_date = TransientSessionInfo[session.id]['start_date']
     end
