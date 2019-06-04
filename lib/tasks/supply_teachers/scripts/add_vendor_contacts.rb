@@ -8,6 +8,8 @@ def add_vendor_contacts
   object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
   master_vendor_path = './storage/supply_teachers/current_data/input/master_vendor_contacts.csv'
   neutral_vendor_path = './storage/supply_teachers/current_data/input/neutral_vendor_contacts.csv'
+  FileUtils.touch(master_vendor_path)
+  FileUtils.touch(neutral_vendor_path)
   object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::MASTER_VENDOR_PATH).get(response_target: master_vendor_path)
   object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::NEUTRAL_VENDOR_PATH).get(response_target: neutral_vendor_path)
 

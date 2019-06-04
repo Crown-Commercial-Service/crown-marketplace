@@ -13,6 +13,7 @@ require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
 def generate_pricing
   object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
   path = './storage/supply_teachers/current_data/input/pricing.xlsx'
+  FileUtils.touch(path)
   object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::PRICING_TOOL_PATH).get(response_target: path)
   price_workbook = Roo::Spreadsheet.open path
 
