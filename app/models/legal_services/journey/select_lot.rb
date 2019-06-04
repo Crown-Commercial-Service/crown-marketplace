@@ -10,8 +10,10 @@ module LegalServices
         Journey::Lot1RegionalService
       when 'lot2'
         Journey::Lot2FullService
-      when 'lot3', 'lot4'
-        Journey::SupplierResults
+      when 'lot3'
+        Journey::Lot3Results
+      when 'lot4'
+        Journey::Lot4Results
       end
     end
   end
