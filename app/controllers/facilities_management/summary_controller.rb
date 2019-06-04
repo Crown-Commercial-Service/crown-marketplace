@@ -37,7 +37,7 @@ module FacilitiesManagement
       when nil
         "You have #{@report.without_pricing.count + @report.with_pricing.count} services selected"
       else
-        'Shorlist of Suppliers'
+        'Shortlist of suppliers'
       end
     end
 
@@ -46,11 +46,11 @@ module FacilitiesManagement
 
       str = '<strong>However, '
       str <<
-        if count == 1
-          '1 service does '
-        else
-          "#{count} services do "
-        end
+          if count == 1
+            '1 service does '
+          else
+            "#{count} services do "
+          end
       str << 'not have a price and we need you to estimate these costs'
     end
 
@@ -58,7 +58,7 @@ module FacilitiesManagement
       str = "<strong>#{@supplier_count} suppliers found</strong>"
       str << ' to provide the chosen services in your regions.'
       str << '<br/>'
-      str << 'Your estimated cost is ' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, precision: 0) + " for the contract term of #{@report.contract_length_years} years."
+      str << 'Your estimated cost is <strong>' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, precision: 0) + "</strong> for the contract term of #{@report.contract_length_years} years."
     end
 
     def services_and_suppliers_title
@@ -72,19 +72,19 @@ module FacilitiesManagement
     def lot_title
       return if @current_lot.nil?
 
-      str = "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
+      str = "<p class='govuk-!-font-size-24'>Based on your requirements, here are the shortlisted suppliers.<br>Your selected sub-lot is <strong>Lot #{@current_lot}
       </strong>, subject to your total contract value and services without a price.</p>"
-      str << '<br/><p><strong>'
+      str << '<p class="govuk-heading-m">'
       str <<
-        case @current_lot
-        when '1a'
-          'Total contract value up to £7m'
-        when '1b'
-          'Total contract value between £7m to £50m'
-        when '1c'
-          'Total contract value over £50m'
-        end
-      str << '</strong></p>'
+          case @current_lot
+          when '1a'
+            'Total contract value up to £7m'
+          when '1b'
+            'Total contract value between £7m to £50m'
+          when '1c'
+            'Total contract value over £50m'
+          end
+      str << '</p>'
     end
 
     def no_price_message
@@ -93,7 +93,7 @@ module FacilitiesManagement
 
     def list_services
       if @current_lot.nil?
-        str = '<p class="govuk-!-font-size-24"><strong>Services without pricing</strong><p/>'
+        str = '<p class="govuk-heading-m">Services without a price<p/>'
         @report.without_pricing.each do |service|
           str << "<p>#{service.name}</p><hr style='width: 50%;margin-left: 0;border-style: dotted;'/>"
         end
@@ -116,28 +116,29 @@ module FacilitiesManagement
     end
 
     def list_choices
-      str = '<p><strong>Choices used to generate your shortlist:</strong></p>'
-      str << '<p><strong>Filters used:</strong></p>'
-      str << "<p>Regions (#{@subregions.count})</p>"
-      @subregions.each do |location|
-        str << '<p>'
-        str << location[1]
-        str << '</p>'
-      end
 
-      str << "<hr style='width: 50%;margin-left: 0;border-style: dotted;'/>"
+      str = '<p class="govuk-heading-m govuk-!-margin-top-8">Choices used to generate your shortlist</p>'
+      str << '<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
+      str << 'Regions (' + @subregions.count.to_s + ')</span></summary>'
+      str << '<div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
+      @subregions.each do |location|
+        str << '<li>'
+        str << location[1]
+        str << '</li>'
+      end
+      str << '</ul></div></details><hr>'
       # FacilitiesManagement::Service.all
       services = FacilitiesManagement::Service.where(code: @posted_services)
-      str << '<p>'
-      str << "Services (#{services.count})"
-      str << '</p>'
       services.sort_by!(&:code)
+      str << '<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
+      str << 'Services (' + services.count.to_s + ')</span></summary>'
+      str << '<div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
       services.each do |s|
-        str << '<p>'
+        str << '<li>'
         str << s.name
-        str << '</p>'
+        str << '</li>'
       end
-
+      str << '</ul></div></details><hr>'
       str
     end
 

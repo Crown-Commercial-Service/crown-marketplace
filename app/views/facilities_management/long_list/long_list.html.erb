@@ -12,7 +12,7 @@
     provide the services in your regions
   </p>
   <p class="govuk-heading-m">Based on your selections, here are the shortlisted suppliers in all three sub-lots.<br>
-    The sub-lots are value banded, subject toy your total contract value.</p>
+    The sub-lots are value banded, subject to your total contract value.</p>
 
   <!-- Start of filter section -->
   <div class="govuk-grid-row">
@@ -30,15 +30,15 @@
     </div>
   </div>
   <div class="govuk-grid-row ccs-no-print">
-    <div class="govuk-inset-text">
-      <strong>Next steps</strong><br>
-      <span>We will now ask you questions about your requirements, buildings and services.</span><br>
-      <span>Based on your answers, we will present your estimated cost, recommended sub-lot and a shortlist of suppliers.</span>
+    <div class="govuk-!-margin-top-4">
+      <span class="govuk-heading-m">Next steps</span><br>
+      <span class="govuk-!-font-size-24">We will now ask you questions about your requirements, buildings and services.</span><br>
+      <span class="govuk-!-font-size-24">Based on your answers, we will present your estimated cost, recommended sub-lot and a shortlist of suppliers.</span>
     </div>
 
     <%= form_tag '/facilities-management/standard-contract/questions', id: 'fm-long-list-form', method: :post do %>
       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-      <a id="fm-suppliers-continue-button" href="#" class="govuk-button ccs-no-print" role="button">Continue</a><br>
+      <a id="fm-suppliers-continue-button" href="#" class="govuk-button ccs-no-print govuk-!-margin-top-4" role="button">Continue</a><br>
     <% end %>
 
 
