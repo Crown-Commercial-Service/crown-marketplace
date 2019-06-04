@@ -10,6 +10,7 @@ require 'pathname'
 require 'yaml'
 
 def bootstrap_supplier_lookup
+
   branch_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/geographical_data_all_suppliers.xlsx'
   price_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/pricing_for_tool.xlsx'
   mv_price_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/lot_1_and_2_comparisons.xlsx'
@@ -198,7 +199,7 @@ def bootstrap_supplier_lookup
     end
   end
 
-  File.open('./storage/supply_teachers/output/supplier_lookup.csv.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/current_data/output/supplier_lookup.csv.tmp', 'w') do |f|
     f.puts csv_string
   end
 end

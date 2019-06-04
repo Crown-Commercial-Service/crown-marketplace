@@ -1,11 +1,18 @@
 require 'csv'
 require 'roo'
 require 'json'
+require 'aws-sdk-s3'
 
-accredited_suppliers_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/current_accredited_suppliers.xlsx'
 
+object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+accredited_suppliers_path = './storage/supply_teachers/current_data/input/current_accredited_suppliers.xlsx'
+object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH).get(response_target: accredited_suppliers_path)
+supplier_lookup_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
+object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: supplier_lookup_path )
+
+accredited_suppliers_workbook = Roo::Spreadsheet.open accredited_suppliers_path
 suppliers = []
-csv = CSV.open('./storage/supply_teachers/input/supplier_lookup.csv', headers: true)
+csv = CSV.open(supplier_lookup_path, headers: true)
 csv.each do |row|
   suppliers << row.to_h.transform_keys!(&:to_sym)
 end

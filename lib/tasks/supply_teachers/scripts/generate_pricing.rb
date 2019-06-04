@@ -7,10 +7,14 @@ require 'geocoder'
 require 'capybara'
 require 'pathname'
 require 'yaml'
+require 'aws-sdk-s3'
 require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
 
 def generate_pricing
-  price_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/pricing_for_tool.xlsx'
+  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+  path = './storage/supply_teachers/current_data/input/pricing.xlsx'
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::PRICING_TOOL_PATH).get(response_target: path)
+  price_workbook = Roo::Spreadsheet.open path
 
   def subhead?(row)
     row[:number] =~ /Category Line/ || row[:number].nil?
@@ -113,7 +117,7 @@ def generate_pricing
 
   collated = collate(pricing)
 
-  File.open('./storage/supply_teachers/output/supplier_pricing.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/current_data/output/supplier_pricing.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(collated)
   end
 end
