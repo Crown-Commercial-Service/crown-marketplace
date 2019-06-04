@@ -7,10 +7,15 @@ require 'geocoder'
 require 'capybara'
 require 'pathname'
 require 'yaml'
+require 'aws-sdk-s3'
 require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
 
 def generate_vendor_pricing
-  mv_price_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/lot_1_and_2_comparisons.xlsx'
+  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+  path = './storage/supply_teachers/current_data/input/geographical_data.xlsx'
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH).get(response_target: path)
+
+  mv_price_workbook = Roo::Spreadsheet.open path
 
   def subhead?(row)
     row[:number] =~ /Category Line/ || row[:number].nil?
@@ -44,7 +49,7 @@ def generate_vendor_pricing
                when /Fixed Term/m
                  :fixed_term
                else
-                 File.open('./storage/supply_teachers/output/errors.out', 'a') do |f|
+                 File.open('./storage/supply_teachers/current_data/output/errors.out.tmp', 'a') do |f|
                    f.puts "#{row[:supplier_name]}: Unknown job type in 'lot_1_and_2_comparisons.xlsx': #{row[:job_type].inspect}" if supplier_accredited?(row[:supplier_name])
                  end
                  :unknown
@@ -129,7 +134,7 @@ def generate_vendor_pricing
 
   collated = collate(mv_pricing + nv_pricing)
 
-  File.open('./storage/supply_teachers/output/supplier_vendor_pricing.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/current_data/output/supplier_vendor_pricing.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(collated)
   end
 end

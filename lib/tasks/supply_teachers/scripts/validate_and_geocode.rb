@@ -8,11 +8,9 @@ require 'pathname'
 require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
 
 def validate_and_geocode
-  suppliers = JSON.parse(File.read('./storage/supply_teachers/output/data_with_vendors.json'))
-
-  root_path = Pathname.new(__dir__).join('..')
+  suppliers = JSON.parse(File.read('./storage/supply_teachers/current_data/output/data_with_vendors.json.tmp'))
   geocoder_cache = {}
-  geocoder_cache_path = ('./storage/supply_teachers/.geocoder-cache.yml')
+  geocoder_cache_path = ('./storage/supply_teachers/current_data/.geocoder-cache.yml')
 
   if File.exist?(geocoder_cache_path)
     File.open(geocoder_cache_path) do |file|
@@ -114,7 +112,7 @@ def validate_and_geocode
   end
 
   suppliers = suppliers.sort_by { |s| s['supplier_name'] }
-  File.open('./storage/supply_teachers/output/data_with_line_numbers.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/current_data/output/data_with_line_numbers.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(suppliers)
   end
   File.open(geocoder_cache_path, 'w') do |file|
