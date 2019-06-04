@@ -559,6 +559,18 @@ en:
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
+      lot3_results:
+        heading: Heading
+        hint: Hint
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
+      lot4_results:
+        heading: Heading
+        hint: Hint
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
       regional_legal_service:
         heading: Lot 1 - Regional service provision
         hint: Select the regions where you need legal services

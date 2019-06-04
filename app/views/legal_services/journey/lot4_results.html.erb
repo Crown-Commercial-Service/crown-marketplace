@@ -1,6 +1,5 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
@@ -20,11 +19,13 @@
       </div>
 
 
-      <%= form_tag @form_path, id: 'lot2_full_service', class: 'ccs-form', method: :get do %>
+      <%= form_tag @form_path, id: 'lot4_results', class: 'ccs-form', method: :get do %>
         <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
+
+            <%= display_error(@journey, :central_government) %>
 
             <h1 class="govuk-caption-m govuk-!-margin-bottom-1">
               <%= t('.heading') %>
@@ -44,7 +45,7 @@
                   <%= t('.hint') %>
                 </legend>
 
-                <%= display_error(@journey, :lot2_full_service) %>
+                <%= display_error(@journey, :lot4_results) %>
 
                 <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
                   <%= t('activemodel.errors.models.legal_services/journey/lot2_full_service.attributes.lot2_full_service.too_short') %>
@@ -52,23 +53,24 @@
 
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                  <% lot2 = LegalServices::Lot.all %>
 
-                  <% lot2.each do |lot2_full_service| %>
-                  <% if lot2_full_service.number == "2" %>
+                  <% lot1 = LegalServices::Lot.all %>
+
+                  <% lot1.each do |lot4_results| %>
+                  <% if lot4_results.number == "4" %>
                     <div class="govuk-checkboxes__item">
-                      <% lot2_full_service_no_slash = lot2_full_service.description.gsub('/', '_') %>
-                      <% lot2_full_service_no_and = lot2_full_service_no_slash.gsub('&', '_') %>
-                      <% lot_region_no_space = lot2_full_service_no_and.gsub(' ', '_') %>
+                      <% lot4_results_no_slash = lot4_results.description.gsub('/', '_') %>
+                      <% lot4_results_no_and = lot4_results_no_slash.gsub('&', '_') %>
+                      <% lot4_results_no_space = lot4_results_no_and.gsub(' ', '_') %>
                       <%= check_box_tag(
-                                "lot2_full_service",
-                                lot2_full_service.description,
+                                "lot4_results",
+                                lot4_results.description,
                                 false,
                                 class: "govuk-checkboxes__input",
-                                id: "lot_region_#{lot_region_no_space}"
+                                id: "lot4_results_#{lot4_results_no_space}"
                               ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="lot_region_<%= lot_region_no_space %>">
-                        <%= lot2_full_service.description %>
+                      <label class="govuk-label govuk-checkboxes__label" for="lot4_results_<%= lot4_results %>">
+                        <%= lot4_results.description %>
                       </label>
                     </div>
                   <% end %>
