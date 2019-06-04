@@ -1,13 +1,13 @@
 <div class="govuk-body">
   <div class="govuk-grid-row">
-    <h1 class="govuk-caption-xl">You have
+    <h1 class="govuk-caption-xl">You have chosen
       <span class="govuk-!-font-weight-bold" id="fm-selected-service-count">0</span>
       <span class="govuk-!-font-weight-bold"> services </span>
-      selected</h1>
+      so far</h1>
   </div>
   <div class="govuk-grid-row">
     <h1 class="govuk-caption-m">From the list of facilities management services required across your estate entered
-      earlier, <br>now select all services, you need at this building</h1>
+      earlier, <br>now select all services, you need at this building.</h1>
   </div>
   <div class="govuk-grid-row govuk-!-margin-top-6">
     <div class="govuk-form-group">
@@ -27,8 +27,7 @@
       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
 
       <a onclick="document.getElementById('fm-buldings-add-services-continue-link-form').submit();" id="fm-buldings-add-services-continue-link" href="/facilities-management/select-services" class="govuk-link--no-visited-state  ccs-no-print" role="button">+
-        Add
-        services</a>
+        Add new services</a>
 
       <!-- submit_tag '+ Add services', class: "govuk-link--no-visited-state ccs-no-print" -->
     <% end %>
