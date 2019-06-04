@@ -33,7 +33,7 @@
         <p>
             Estimated costs for all services 
             <span style="display:inline-block; position: relative; left: 170px;">
-              <%= number_to_currency(@report.assessed_value, strip_insignificant_zeros: true)%>
+              <%= number_to_currency(@report.assessed_value, precision: 0)%>
             </span>
         </p>
         <hr style='width: 50%;margin-left: 0;border-style: dotted;'/>
@@ -60,7 +60,7 @@
         <form id="fm-summary-spreadsheet-form" action="/facilities-management/summary?calculations=yes&amp;format=xlsx" method="post">
           <p class="govuk-body govuk-body-s supplier-record__print-option">
             <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-            <a onclick="document.getElementById('fm-summary-spreadsheet-form').submit();" class="supplier-record__file-download" aria-label="Download supplier list and Deliverables Matrix Lite" href="/facilities-management/summary?calculations=yes&amp;format=xlsx">Download supplier list and Deliverables Matrix Lite</a>
+            <a onclick="document.getElementById('fm-summary-spreadsheet-form').submit();" class="supplier-record__file-download" aria-label="Download the procurement summary" href="/facilities-management/summary?calculations=yes&amp;format=xlsx">Download the procurement summary</a>
           </p>
         </form>
       </div>
@@ -83,7 +83,7 @@
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="changed-name-1" name="sublot" type="radio" value="yes">
               <label class="govuk-label govuk-radios__label" for="changed-name-1">
-                Yes, it will go <%=@report.lot_limit%>
+                Yes, it will take over <%=@report.lot_limit%>
               </label>
             </div>
             <div class="govuk-radios__item">

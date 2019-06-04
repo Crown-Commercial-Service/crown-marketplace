@@ -67,10 +67,8 @@ class FacilitiesManagement::Spreadsheet
     end
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
-      @uom_values = @report.uom_values
-
       i = 1
-      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement', 'Unit of Measure']
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement']
       selected_buildings.each do |building|
         vals << 'Building ' + i.to_s + ' - ' + building.building_json['name']
         i += 1
@@ -78,35 +76,45 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row vals
 
       work_package = ''
-      services.each do |s|
+
+      services.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s|
         if work_package == s.work_package_code
           label = nil
         else
           label = 'Work Package ' + s.work_package_code + ' - ' + s.work_package.name
         end
+
         work_package = s.work_package_code
 
-        uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
-        if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
-          vals = [label, s.code, s.name]
-          uom.each do |u|
-            vals << u['title_text']
-            vals << u['unit_text']
+        u = CCS::FM::UnitsOfMeasurement.service_usage(s.code).last
+        vals = [label, s.code, s.name]
+        next unless u
 
-            selected_buildings.each do |building|
-              # begin
-              id = building.building_json['id']
-              vals << @uom_values[id][s.code]['uom_value']
-            rescue StandardError
-              vals << '=NA()'
-              # end
-            end
+        vals << u['title_text']
+        vals_v = []
+        vals_h = nil
+        selected_buildings.each do |building|
+          # begin
+          id = building.building_json['id']
+          suv = @report.uom_values.select { |v| v['building_id'] == id && v['service_code'] == s.code }
+          vals_h = []
+          suv.each do |v|
+            vals_h << v['uom_value']
+          end
+          vals_v << vals_h
+        rescue StandardError
+          vals << '=NA()'
+        end
+        # vals << valsV
+        # sheet.add_row vals
+        max_j = vals_v.map(&:length).max
+        (0..max_j - 1).each do |j|
+          (0..vals_v.count - 1).each do |k|
+            vals << vals_v[k][j]
           end
           sheet.add_row vals
-        else
-          sheet.add_row [label, s.code, s.name]
+          vals = [nil, nil, nil, nil]
         end
-
         work_package = s.work_package_code
       end
     end
@@ -139,23 +147,29 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row ['Lot recommendation', @report.current_lot]
       sheet.add_row ['Direct award option']
       sheet.add_row
-      sheet.add_row ['4. Supplier Shortlist']
+      # sheet.add_row ['4. Supplier Shortlist']
+      label = '4. Supplier Shortlist'
       @report.selected_suppliers(@current_lot).each do |supplier|
-        sheet.add_row [nil, supplier.data['supplier_name']]
+        sheet.add_row [label, supplier.data['supplier_name']]
+        label = nil
       end
       sheet.add_row
 
-      sheet.add_row ['5. Regions summary']
+      # sheet.add_row ['5. Regions summary']
+      label = '5. Regions summary'
       FacilitiesManagement::Region.all.select { |region| @data['posted_locations'].include? region.code }.each do |region|
-        sheet.add_row [nil, region.name]
+        sheet.add_row [label, region.name]
+        label = nil
       end
       sheet.add_row
 
-      sheet.add_row ['6 Services summary']
+      # sheet.add_row ['6 Services summary']
       services = FacilitiesManagement::Service.where(code: @data['posted_services'])
       services.sort_by!(&:code)
+      label = '6 Services summary'
       services.each do |s|
-        sheet.add_row [nil, s.name]
+        sheet.add_row [label, s.name]
+        label = nil
       end
       sheet.add_row
     end

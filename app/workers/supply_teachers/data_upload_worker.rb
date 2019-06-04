@@ -28,11 +28,8 @@ module SupplyTeachers
     end
 
     def data_file
-      if Rails.env.production?
-        './storage/supply_teachers/output/data.json'
-      else
-        './storage/supply_teachers/output/anonymous.json'
-      end
+      # always use anonymous.json for now - need to set this up for production to use data.json
+      './storage/supply_teachers/output/anonymous.json'
     end
   end
 end
