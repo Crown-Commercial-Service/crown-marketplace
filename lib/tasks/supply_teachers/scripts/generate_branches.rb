@@ -8,11 +8,11 @@ require 'fileutils'
 
 def generate_branches
   object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-  input = File.dirname('./storage/supply_teachers/current_data/input')
+  input = File.dirname("#{Rails.root}/storage/supply_teachers/current_data/input")
   unless File.directory?(input)
     FileUtils.mkdir_p(input)
   end
-  path = './storage/supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'
+  path = "#{Rails.root}/storage/supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx"
   FileUtils.touch(path)
   object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::GEOGRAPHICAL_DATA_PATH).get(response_target: path)
 
@@ -112,7 +112,7 @@ def generate_branches
 
   collated = collate(branches.map { |row| nest(row, :branches) })
 
-  File.open('./storage/supply_teachers/current_data/output/supplier_branches.json.tmp', 'w') do |f|
+  File.open("#{Rails.root}/storage/supply_teachers/current_data/output/supplier_branches.json.tmp", 'w') do |f|
     f.puts JSON.pretty_generate(collated)
   end
 end
