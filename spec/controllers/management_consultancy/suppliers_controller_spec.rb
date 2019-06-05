@@ -116,4 +116,26 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
       expect(response).to render_template('download')
     end
   end
+
+  describe 'GET show' do
+    before do
+      get :show, params: { id: supplier.id, lot: lot }
+    end
+
+    context 'when the lot answer is MCF2 lot1' do
+      let(:lot_number) { 'MCF2.1' }
+
+      it 'renders the show template' do
+        expect(response).to render_template('show')
+      end
+    end
+
+    context 'with no lot number set' do
+      let(:lot_number) { '' }
+
+      it 'renders the show template' do
+        expect(response).to render_template('show')
+      end
+    end
+  end
 end
