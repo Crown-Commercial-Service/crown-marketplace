@@ -5,7 +5,7 @@ module Api
   module V1
     class PostcodesController < ApplicationController
       protect_from_forgery with: :exception
-      require_permission :none, only: :show
+      before_action :authenticate_user!, except: :show
 
       # GET /postcodes/SW1A 2AA
       # GET /postcodes/SW1A 2AA.json

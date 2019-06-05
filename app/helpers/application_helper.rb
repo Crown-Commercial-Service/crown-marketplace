@@ -87,9 +87,7 @@ module ApplicationHelper
   end
 
   def add_optional_error_prefix_to_page_title(errors)
-    return if errors.empty?
-
-    content_for(:page_title_prefix) { t('layouts.application.error_prefix') }
+    content_for(:page_title_prefix) { t('layouts.application.error_prefix') } unless errors.empty?
   end
 
   def hidden_fields_for_previous_steps_and_responses(journey)
@@ -107,19 +105,23 @@ module ApplicationHelper
   end
 
   def link_to_service_start_page
-    return unless controller.class.parent_name
-
-    render partial: "#{controller.class.parent_name.underscore}/link_to_start_page"
+    render partial: "#{controller.class.parent_name.underscore}/link_to_start_page" if controller.class.parent_name
   end
 
   def service_start_page_path
-    return unless controller.class.parent_name
+    send controller.class.parent_name.underscore + '_path' if controller.class.parent_name
+  end
 
-    send controller.class.parent_name.underscore + '_path'
+  def service_gateway_path
+    send controller.class.parent_name.underscore + '_gateway_path' if controller.class.parent_name
+  end
+
+  def service_destroy_session_path
+    send controller.class.parent_name.underscore + '_destroy_user_session_path' if controller.class.parent_name
   end
 
   def landing_or_admin_page
-    controller.action_name == 'landing_page' || controller.class.parent_name.underscore == 'supply_teachers/admin'
+    controller.action_name == 'landing_page' || controller.class.parent_name.try(:underscore) == 'supply_teachers/admin'
   end
 
   def a_supply_teachers_path?

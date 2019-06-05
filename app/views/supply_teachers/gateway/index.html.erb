@@ -33,13 +33,10 @@
                 url: dfe_account_request_url) %>
         </p>
       <% end %>
-
-      <% if @cognito_enabled %>
-        <%= link_to('Sign in with beta credentials',
-                    cognito_sign_in_path,
+        <%= link_to('Sign in with Cognito',
+                    supply_teachers_new_user_session_path,
                     role: 'button',
                     class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8 ga-auth-cognito') %>
-      <% end %>
     </div>
   </div>
 </div>
