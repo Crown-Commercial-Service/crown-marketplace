@@ -1,0 +1,19 @@
+<h2>MFA code</h2>
+
+<%= form_tag legal_services_users_challenge_path, method: :post do %>
+
+  <div class="field">
+    <%= label_tag :access_code %><br />
+    <%= text_field_tag :access_code %>
+  </div>
+
+  <%= hidden_field_tag :session, params[:session] %>
+
+  <%= hidden_field_tag :username, params[:username] %>
+
+  <%= hidden_field_tag :challenge_name, params[:challenge_name] %>
+
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>

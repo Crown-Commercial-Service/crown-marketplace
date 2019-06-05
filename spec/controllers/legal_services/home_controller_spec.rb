@@ -1,10 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe LegalServices::HomeController, type: :controller, auth: true do
-  before do
-    permit_framework :legal_services
-  end
-
+RSpec.describe LegalServices::HomeController, type: :controller do
+  login_ls_buyer
   describe 'GET index' do
     it 'renders the index template' do
       get :index

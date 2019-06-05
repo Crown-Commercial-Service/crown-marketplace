@@ -8,7 +8,7 @@ function uReg(){
     return new RegExp("^(?=.*?[A-Z])");//requires an uppercase letter
 }
 function emailReg(){
-    return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;//validates email
+    return new RegExp("([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})");//validates email
 }
 
 function passwordStrength(t){
