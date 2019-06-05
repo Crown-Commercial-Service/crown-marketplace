@@ -126,13 +126,23 @@ module FacilitiesManagement
         u['example_text'] = uoms.last['example_text']
       end
 
+      # T.C.
+      lift_service = uvals.select { |s| s['service_code'] == 'C.5'}
+      lifts_title_text = lift_service.last['title_text']
+      lifts_example_text = lift_service.last['title_text']
+
+      uvals.reject! { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
+
       lifts_per_building.each do |b|
         b['lift_data']['lift_data']['floor-data'].each do |l|
-          uvals << { 'user_id' => b['user_id'], 'service_code' => 'C.5', 'uom_value' => l.first[1], 'building_id' => b['building_id'] }
+          uvals << { 'user_id' => b['user_id'],
+                     'service_code' => 'C.5',
+                     'uom_value' => l.first[1],
+                     'building_id' => b['building_id'],
+                     'title_text' => lifts_title_text,
+                     'example_text' => lifts_example_text}
         end
       end
-
-      uvals.reject { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
 
       selected_buildings.each do |b|
         selected_services.each do |s|
