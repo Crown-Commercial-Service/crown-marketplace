@@ -119,6 +119,13 @@ module FacilitiesManagement
       uvals = CCS::FM::UnitOfMeasurementValues.values_for_user(@user_id)
       uvals = uvals.map(&:attributes)
 
+      # add labels for spreadsheet
+      uvals.each do |u|
+        uoms = CCS::FM::UnitsOfMeasurement.service_usage(u['service_code'])
+        u['title_text'] = uoms.last['title_text']
+        u['example_text'] = uoms.last['example_text']
+      end
+
       lifts_per_building.each do |b|
         b['lift_data']['lift_data']['floor-data'].each do |l|
           uvals << { 'user_id' => b['user_id'], 'service_code' => 'C.5', 'uom_value' => l.first[1], 'building_id' => b['building_id'] }
@@ -129,10 +136,15 @@ module FacilitiesManagement
 
       selected_buildings.each do |b|
         selected_services.each do |s|
-          if @gia_services.include? s
-            s_dot = s.gsub('-', '.')
-            uvals << { 'user_id' => b['user_id'], 'service_code' => s_dot, 'uom_value' => b['building_json']['gia'].to_f, 'building_id' => b['building_json']['id'] }
-          end
+          next unless @gia_services.include? s
+
+          s_dot = s.gsub('-', '.')
+          uvals << { 'user_id' => b['user_id'],
+                     'service_code' => s_dot,
+                     'uom_value' => b['building_json']['gia'].to_f,
+                     'building_id' => b['building_json']['id'],
+                     'title_text' => 'What is the total internal area of this building?',
+                     'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm' }
         end
       end
 

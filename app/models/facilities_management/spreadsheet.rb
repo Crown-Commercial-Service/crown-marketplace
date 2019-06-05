@@ -86,9 +86,10 @@ class FacilitiesManagement::Spreadsheet
 
         work_package = s.work_package_code
 
-        uoms = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
+        # T.C.
+        # uoms = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
+        # next unless uoms
         vals = [label, s.code, s.name]
-        next unless uoms
 
         vals_v = []
         vals_h = nil
@@ -98,7 +99,7 @@ class FacilitiesManagement::Spreadsheet
           suv = @report.uom_values(selected_buildings, selected_services).select { |v| v['building_id'] == id && v['service_code'] == s.code }
           vals_h = []
           suv.each do |v|
-            vals_h << v['uom_value']
+            vals_h << v['title_text'] << v['uom_value']
           end
           vals_v << vals_h
         rescue StandardError
@@ -110,11 +111,10 @@ class FacilitiesManagement::Spreadsheet
 
         # uoms.each do |u|
         # vals << u['title_text']
-        vals << '---'
-        max_j = vals_v.map(&:length).max
+        max_j = vals_v.map(&:length).max - 1
         (0..max_j - 1).each do |j|
           (0..vals_v.count - 1).each do |k|
-            vals << vals_v[k][j]
+            vals << vals_v[k][j] << vals_v[k][j + 1]
           end
           sheet.add_row vals
           vals = [nil, nil, nil, nil]
