@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
   let(:admin_upload) { create(:supply_teachers_admin_upload) }
 
+  before do
+    Aws.config[:stub_responses] = true
+  end
+
   describe '#default scope' do
     it 'orders by descending created_at' do
       expect(described_class.all.to_sql).to eq described_class.all.order(created_at: :desc).to_sql

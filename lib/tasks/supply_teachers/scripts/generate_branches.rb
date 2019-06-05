@@ -3,9 +3,20 @@
 require 'roo'
 require 'json'
 require 'capybara'
+require 'aws-sdk-s3'
+require 'fileutils'
 
 def generate_branches
-  branch_workbook = Roo::Spreadsheet.open './storage/supply_teachers/input/geographical_data_all_suppliers.xlsx'
+  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+  input = File.dirname('./storage/supply_teachers/current_data/input')
+  unless File.directory?(input)
+    FileUtils.mkdir_p(input)
+  end
+  path = './storage/supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'
+  FileUtils.touch(path)
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::GEOGRAPHICAL_DATA_PATH).get(response_target: path)
+
+  branch_workbook = Roo::Spreadsheet.open path
 
   header_map = {
     'Supplier Name' => :supplier_name,
@@ -101,7 +112,7 @@ def generate_branches
 
   collated = collate(branches.map { |row| nest(row, :branches) })
 
-  File.open('./storage/supply_teachers/output/supplier_branches.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/current_data/output/supplier_branches.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(collated)
   end
 end
