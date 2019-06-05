@@ -109,7 +109,7 @@ class FacilitiesManagement::Spreadsheet
         #
 
         # uoms.each do |u|
-          # vals << u['title_text']
+        # vals << u['title_text']
         vals << '---'
         max_j = vals_v.map(&:length).max
         (0..max_j - 1).each do |j|

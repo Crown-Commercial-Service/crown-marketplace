@@ -22,7 +22,7 @@ module CCS
             {
               'title_text' => 'What is the total internal area of this building?',
               'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
-              'service_usage' =>[service]
+              'service_usage' => [service]
             }
         end
         vals
