@@ -96,7 +96,7 @@ class FacilitiesManagement::Spreadsheet
         selected_buildings.each do |building|
           # begin
           id = building.building_json['id']
-          suv = @report.uom_values.select { |v| v['building_id'] == id && v['service_code'] == s.code }
+          suv = @report.uom_values(selected_buildings, selected_services).select { |v| v['building_id'] == id && v['service_code'] == s.code }
           vals_h = []
           suv.each do |v|
             vals_h << v['uom_value']
