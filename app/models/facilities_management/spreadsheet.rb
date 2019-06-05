@@ -86,29 +86,25 @@ class FacilitiesManagement::Spreadsheet
 
         work_package = s.work_package_code
 
-        # T.C.
-        # uoms = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
-        # next unless uoms
         vals = [label, s.code, s.name]
 
         vals_v = []
         vals_h = nil
-        uom_label_flag = true
+        uom_labels_2d = []
         selected_buildings.each do |building|
           # begin
           id = building.building_json['id']
           suv = @report.uom_values(selected_buildings, selected_services).select { |v| v['building_id'] == id && v['service_code'] == s.code }
           vals_h = []
 
+          uom_labels = []
           suv.each do |v|
-            if uom_label_flag
-              vals << v['title_text']
-              uom_label_flag = false
-            end
+            uom_labels << v['title_text']
 
             vals_h << v['uom_value']
           end
           vals_v << vals_h
+          uom_labels_2d << uom_labels
         rescue StandardError
           vals << '=NA()'
         end
@@ -116,16 +112,18 @@ class FacilitiesManagement::Spreadsheet
         # sheet.add_row vals
         #
 
+        uom_labels_max = uom_labels_2d.max
         # uoms.each do |u|
         # vals << u['title_text']
         max_j = vals_v.map(&:length).max
         (0..max_j - 1).each do |j|
+          vals << uom_labels_max[j]
           (0..vals_v.count - 1).each do |k|
             vals << vals_v[k][j]
           end
           sheet.add_row vals
           # vals = [nil, nil, nil, nil]
-          vals = [nil, nil, nil, nil]
+          vals = [nil, nil, nil]
         end
         # end
         work_package = s.work_package_code
