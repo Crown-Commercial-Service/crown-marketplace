@@ -86,11 +86,10 @@ class FacilitiesManagement::Spreadsheet
 
         work_package = s.work_package_code
 
-        u = CCS::FM::UnitsOfMeasurement.service_usage(s.code).last
+        uoms = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
         vals = [label, s.code, s.name]
-        next unless u
+        next unless uoms
 
-        vals << u['title_text']
         vals_v = []
         vals_h = nil
         selected_buildings.each do |building|
@@ -107,6 +106,11 @@ class FacilitiesManagement::Spreadsheet
         end
         # vals << valsV
         # sheet.add_row vals
+        #
+
+        # uoms.each do |u|
+          # vals << u['title_text']
+        vals << '---'
         max_j = vals_v.map(&:length).max
         (0..max_j - 1).each do |j|
           (0..vals_v.count - 1).each do |k|
@@ -115,6 +119,7 @@ class FacilitiesManagement::Spreadsheet
           sheet.add_row vals
           vals = [nil, nil, nil, nil]
         end
+        # end
         work_package = s.work_package_code
       end
     end
