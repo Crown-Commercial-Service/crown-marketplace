@@ -93,13 +93,20 @@ class FacilitiesManagement::Spreadsheet
 
         vals_v = []
         vals_h = nil
+        uom_label_flag = true
         selected_buildings.each do |building|
           # begin
           id = building.building_json['id']
           suv = @report.uom_values(selected_buildings, selected_services).select { |v| v['building_id'] == id && v['service_code'] == s.code }
           vals_h = []
+
           suv.each do |v|
-            vals_h << v['title_text'] << v['uom_value']
+            if uom_label_flag
+              vals << v['title_text']
+              uom_label_flag = false
+            end
+
+            vals_h << v['uom_value']
           end
           vals_v << vals_h
         rescue StandardError
@@ -111,10 +118,10 @@ class FacilitiesManagement::Spreadsheet
 
         # uoms.each do |u|
         # vals << u['title_text']
-        max_j = vals_v.map(&:length).max - 1
+        max_j = vals_v.map(&:length).max
         (0..max_j - 1).each do |j|
           (0..vals_v.count - 1).each do |k|
-            vals << vals_v[k][j] << vals_v[k][j + 1]
+            vals << vals_v[k][j]
           end
           sheet.add_row vals
           vals = [nil, nil, nil, nil]
