@@ -30,12 +30,10 @@ namespace :st do
     unless File.directory?(input)
       FileUtils.mkdir_p(input)
     end
-    output = File.dirname('./storage/supply_teachers/current_data/output/')
+    output = File.dirname('./storage/supply_teachers/current_data/output/errors.out.tmp')
     unless File.directory?(output)
       FileUtils.mkdir_p(output)
     end
-
-    FileUtils.touch("./storage/supply_teachers/current_data/output/errors.out.tmp")
 
     run_script(s3, generate_branches, 'supply_teachers/current_data/output/supplier_branches.json')
     run_script(s3, generate_pricing, 'supply_teachers/current_data/output/supplier_pricing.json')
