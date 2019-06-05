@@ -158,6 +158,10 @@ form.ccs-form {
   &-in_review, &-in_progress, &-uploading {
     background-color: govuk-colour("grey-1");
   }
+
+  .ccs-results-list & {
+      padding: 0 govuk-spacing(2);
+  }
 }
 /* css-tag end ****** */
 
@@ -608,6 +612,7 @@ ul.ccs-pagination {
 
         a {
             text-decoration: none;
+            color: $govuk-link-colour !important;//no visited state
 
             &[aria-current] {
                 color: govuk-colour("grey-2") !important;
