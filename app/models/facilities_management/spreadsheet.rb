@@ -124,6 +124,7 @@ class FacilitiesManagement::Spreadsheet
             vals << vals_v[k][j]
           end
           sheet.add_row vals
+          # vals = [nil, nil, nil, nil]
           vals = [nil, nil, nil, nil]
         end
         # end

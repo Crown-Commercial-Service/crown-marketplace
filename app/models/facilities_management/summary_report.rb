@@ -127,7 +127,7 @@ module FacilitiesManagement
       end
 
       # T.C.
-      lift_service = uvals.select { |s| s['service_code'] == 'C.5'}
+      lift_service = uvals.select { |s| s['service_code'] == 'C.5' }
       lifts_title_text = lift_service.last['title_text']
       lifts_example_text = lift_service.last['title_text']
 
@@ -140,7 +140,7 @@ module FacilitiesManagement
                      'uom_value' => l.first[1],
                      'building_id' => b['building_id'],
                      'title_text' => lifts_title_text,
-                     'example_text' => lifts_example_text}
+                     'example_text' => lifts_example_text }
         end
       end
 
