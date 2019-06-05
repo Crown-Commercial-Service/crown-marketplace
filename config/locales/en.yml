@@ -857,7 +857,35 @@ en:
           principal: Principal Consultant
           senior: Senior Consultant/Manager
           standard: Consultant
-      mcf2: 
+      mcf2:
+        lot_1:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_2:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_3:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_4:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
     journey:
       choose_help_needed:
         contingent_labour_description: Staff for short-term projects with specific outcomes
@@ -903,6 +931,22 @@ en:
           heading: No suppliers were found
           text: No companies can provide consultants that can meet your requirements.
         suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
+      show:
+        based_on: and based on an 8 hour working day.
+        contact_details:
+          address: Address
+          email: Email
+          heading: Contact details
+          person: Name
+          phone_number: Phone number
+          website: Website
+        day_rates: Day rates
+        fixed_until_mcf1: Fixed until September 2020
+        fixed_until_mcf2: Fixed until December 2021
+        further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
+        is_an_sme: This supplier is a small or medium-sized enterprise
+        max_day_rate: Max day rate
+        sub_title: "%{framework} lot %{lot_number} - %{description}"
   miles:
     unit:
       one: mile
