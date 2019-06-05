@@ -7,10 +7,11 @@ require 'aws-sdk-s3'
 
 def generate_branches
   object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-  path = './storage/supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'
-  unless File.directory?(path)
-    FileUtils.mkdir_p(path)
+  input = File.dirname('./storage/supply_teachers/current_data/input')
+  unless File.directory?(input)
+    FileUtils.mkdir_p(input)
   end
+  path = './storage/supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'
   object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::GEOGRAPHICAL_DATA_PATH).get(response_target: path)
 
   branch_workbook = Roo::Spreadsheet.open path
