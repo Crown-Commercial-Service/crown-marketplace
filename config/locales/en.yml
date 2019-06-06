@@ -564,13 +564,13 @@ en:
         heading: Supplier results
         sub_heading: Lot 3 - Property and construction
         suppliers: suppliers
-        suppliers_pt2: can provice the legal services that meet your requirements
+        suppliers_pt2: can provide the legal services that meet your requirements
       lot4_results:
-        heading: Heading
-        hint: Hint
-        remove_all: Remove all
-        txt01: Txt01
-        txt02: Txt02
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 4 - Transport rail
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
       regional_legal_service:
         heading: Lot 1 - Regional service provision
         hint: Select the regions where you need legal services
