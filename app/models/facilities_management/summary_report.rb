@@ -86,7 +86,7 @@ module FacilitiesManagement
       suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
     end
 
-    # if services have no costings, just return the contract cost ()do not divide the contract cost by 3 or 2)
+    # if services have no costings, just return the contract cost (do not divide the contract cost by 3 or 2)
     def assessed_value
       buyer_input = @contract_cost * @contract_length_years.to_f
       return buyer_input if buyer_input != 0.0 && @sum_uom == 0.0 && @sum_benchmark == 0.0
