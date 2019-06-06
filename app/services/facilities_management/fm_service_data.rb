@@ -336,7 +336,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
         },
         {
             "code": "C.3",
-            "name": "Environmental cleaning service",
+            "name": "Environmental cleaning",
             "work_package_code": "C",
             "mandatory": true,
             "unit_text": ""
@@ -357,14 +357,14 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
         },
         {
             "code": "C.7",
-            "name": "Internal & external building fabric maintenance",
+            "name": "Internal and external building fabric maintenance",
             "work_package_code": "C",
             "mandatory": true,
             "unit_text": ""
         },
         {
             "code": "C.5",
-            "name": "Lifts, hoists & conveyance systems maintenance",
+            "name": "Lifts, hoists and conveyance systems maintenance",
             "work_package_code": "C",
             "mandatory": true,
             "unit_text": ""

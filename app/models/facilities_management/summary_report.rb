@@ -24,6 +24,8 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
+      @gia_services =
+        ['C-1', 'C-10', 'C-11', 'C-12', 'C-13', 'C-14', 'C-15', 'C-16', 'C-17', 'C-18', 'C-2', 'C-20', 'C-3', 'C-4', 'C-6', 'C-7', 'C-8', 'C-9', 'D-1', 'D-2', 'D-4', 'D-5', 'D-6', 'E-1', 'E-2', 'E-3', 'E-5', 'E-6', 'E-7', 'E-8', 'F-1', 'G-1', 'G-10', 'G-11', 'G-14', 'G-15', 'G-16', 'G-2', 'G-3', 'G-4', 'G-6', 'G-7', 'G-9', 'H-1', 'H-10', 'H-11', 'H-13', 'H-2', 'H-3', 'H-6', 'H-7', 'H-8', 'H-9', 'J-10', 'J-11', 'J-7', 'J-9', 'L-2', 'L-3', 'L-4', 'L-5']
     end
 
     def calculate_services_for_buildings
@@ -42,7 +44,7 @@ module FacilitiesManagement
         (selected_services & b_services).any?
       end
 
-      uvals = uom_values
+      uvals = uom_values(selected_buildings, selected_services)
 
       selected_buildings.each do |building|
         id = building['building_json']['id']
@@ -84,8 +86,12 @@ module FacilitiesManagement
       suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
     end
 
+    # if services have no costings, just return the contract cost (do not divide the contract cost by 3 or 2)
     def assessed_value
-      return (@sum_uom + @sum_benchmark + @contract_cost) / 3 unless @contract_cost.zero?
+      buyer_input = @contract_cost * @contract_length_years.to_f
+      return buyer_input if buyer_input != 0.0 && @sum_uom == 0.0 && @sum_benchmark == 0.0
+
+      return (@sum_uom + @sum_benchmark + buyer_input) / 3 unless buyer_input.zero?
 
       (@sum_uom + @sum_benchmark) / 2
     end
@@ -112,18 +118,55 @@ module FacilitiesManagement
       end
     end
 
-    def uom_values
+    # rubocop:disable Metrics/AbcSize
+    def uom_values(selected_buildings, selected_services)
       uvals = CCS::FM::UnitOfMeasurementValues.values_for_user(@user_id)
       uvals = uvals.map(&:attributes)
 
-      lifts_per_building.each do |b|
-        b['lift_data']['lift_data']['floor-data'].each do |l|
-          uvals << { 'user_id' => b['user_id'], 'service_code' => 'C.5', 'uom_value' => l.first[1], 'building_id' => b['building_id'] }
+      # add labels for spreadsheet
+      uvals.each do |u|
+        uoms = CCS::FM::UnitsOfMeasurement.service_usage(u['service_code'])
+        u['title_text'] = uoms.last['title_text']
+        u['example_text'] = uoms.last['example_text']
+      end
+
+      # T.C.
+      lift_service = uvals.select { |s| s['service_code'] == 'C.5' }
+      if lift_service.count.positive?
+        lifts_title_text = lift_service.last['title_text']
+        lifts_example_text = lift_service.last['title_text']
+
+        uvals.reject! { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
+
+        lifts_per_building.each do |b|
+          b['lift_data']['lift_data']['floor-data'].each do |l|
+            uvals << { 'user_id' => b['user_id'],
+                       'service_code' => 'C.5',
+                       'uom_value' => l.first[1],
+                       'building_id' => b['building_id'],
+                       'title_text' => lifts_title_text,
+                       'example_text' => lifts_example_text }
+          end
         end
       end
 
-      uvals.reject { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
+      selected_buildings.each do |b|
+        selected_services.each do |s|
+          next unless @gia_services.include? s
+
+          s_dot = s.gsub('-', '.')
+          uvals << { 'user_id' => b['user_id'],
+                     'service_code' => s_dot,
+                     'uom_value' => b['building_json']['gia'].to_f,
+                     'building_id' => b['building_json']['id'],
+                     'title_text' => 'What is the total internal area of this building?',
+                     'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm' }
+        end
+      end
+
+      uvals
     end
+    # rubocop:enable Metrics/AbcSize
 
     def lifts_per_building
       lifts_per_building = CCS::FM::Lift.lifts_for_user(@user_id)
@@ -194,7 +237,7 @@ module FacilitiesManagement
         #
 
         # occupants = occupants(v['service_code'], building_data)
-        occupants = v['uom_value'] if v['service_code'] == 'G.3'
+        occupants = v['uom_value'] if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
 
         uom_value = v['uom_value'].to_f
 
