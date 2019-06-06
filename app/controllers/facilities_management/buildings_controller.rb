@@ -180,7 +180,13 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length'] if params['fm-contract-length']
     TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension'] if params['fm-extension']
     TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
-    TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost'] if params['fm-contract-cost']
+
+    if params['contract-cost-radio'] == 'no'
+      TransientSessionInfo[session.id, 'fm-contract-cost'] = 0.0
+    else
+      TransientSessionInfo[session.id, 'fm-contract-cost'] = params['fm-contract-cost'] if params['fm-contract-cost']
+    end
+
     TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
     TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
   end
