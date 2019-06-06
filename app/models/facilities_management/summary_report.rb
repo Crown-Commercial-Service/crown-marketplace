@@ -88,9 +88,10 @@ module FacilitiesManagement
 
     # if services have no costings, just return the contract cost ()do not divide the contract cost by 3 or 2)
     def assessed_value
-      return @contract_cost if @contract_cost != 0.0 && @sum_uom == 0.0 && @sum_benchmark == 0.0
+      buyer_input = @contract_cost * @contract_length_years.to_f
+      return buyer_input if buyer_input != 0.0 && @sum_uom == 0.0 && @sum_benchmark == 0.0
 
-      return (@sum_uom + @sum_benchmark + @contract_cost) / 3 unless @contract_cost.zero?
+      return (@sum_uom + @sum_benchmark + buyer_input) / 3 unless buyer_input.zero?
 
       (@sum_uom + @sum_benchmark) / 2
     end
