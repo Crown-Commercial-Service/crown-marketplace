@@ -43,6 +43,7 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Style/ConditionalAssignment
   # rubocop:disable Metrics/BlockLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
@@ -86,21 +87,25 @@ class FacilitiesManagement::Spreadsheet
 
         work_package = s.work_package_code
 
-        uoms = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
         vals = [label, s.code, s.name]
-        next unless uoms
 
         vals_v = []
         vals_h = nil
+        uom_labels_2d = []
         selected_buildings.each do |building|
           # begin
           id = building.building_json['id']
           suv = @report.uom_values(selected_buildings, selected_services).select { |v| v['building_id'] == id && v['service_code'] == s.code }
           vals_h = []
+
+          uom_labels = []
           suv.each do |v|
+            uom_labels << v['title_text']
+
             vals_h << v['uom_value']
           end
           vals_v << vals_h
+          uom_labels_2d << uom_labels
         rescue StandardError
           vals << '=NA()'
         end
@@ -108,16 +113,25 @@ class FacilitiesManagement::Spreadsheet
         # sheet.add_row vals
         #
 
+        uom_labels_max = uom_labels_2d.max
         # uoms.each do |u|
         # vals << u['title_text']
-        vals << '---'
         max_j = vals_v.map(&:length).max
         (0..max_j - 1).each do |j|
+          if j.zero?
+            vals << uom_labels_max[j]
+          elsif uom_labels_max[j - 1] == uom_labels_max[j]
+            vals << nil
+          else
+            vals << uom_labels_max[j]
+          end
+
           (0..vals_v.count - 1).each do |k|
             vals << vals_v[k][j]
           end
           sheet.add_row vals
-          vals = [nil, nil, nil, nil]
+          # vals = [nil, nil, nil, nil]
+          vals = [nil, nil, nil]
         end
         # end
         work_package = s.work_package_code
@@ -180,6 +194,7 @@ class FacilitiesManagement::Spreadsheet
     end
     # package.to_stream.read
   end
+  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Style/ConditionalAssignment
