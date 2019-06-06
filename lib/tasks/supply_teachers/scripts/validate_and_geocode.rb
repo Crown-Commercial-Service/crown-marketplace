@@ -5,14 +5,58 @@ require 'uk_postcode'
 require 'geocoder'
 require 'yaml'
 require 'pathname'
-require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
+require 'csv'
+require 'roo'
+require 'aws-sdk-s3'
 
 def validate_and_geocode
-  suppliers = JSON.parse(File.read('./storage/supply_teachers/output/data_with_vendors.json'))
 
-  root_path = Pathname.new(__dir__).join('..')
+  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+  accredited_suppliers_path = './storage/supply_teachers/current_data/input/current_accredited_suppliers.xlsx'
+  FileUtils.touch(accredited_suppliers_path)
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH).get(response_target: accredited_suppliers_path)
+  supplier_lookup_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
+  FileUtils.touch(supplier_lookup_path)
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: supplier_lookup_path )
+
+  accredited_suppliers_workbook = Roo::Spreadsheet.open accredited_suppliers_path
+  suppliers = []
+  csv = CSV.open(supplier_lookup_path, headers: true)
+  csv.each do |row|
+    suppliers << row.to_h.transform_keys!(&:to_sym)
+  end
+
+  lot_1_accreditation_sheet = accredited_suppliers_workbook.sheet('Lot 1 - Preferred Supplier List')
+  lot_1_accreditation =
+    lot_1_accreditation_sheet.parse(header_search: ['Supplier Name - Accreditation Held'])
+
+  lot_2_accreditation_sheet = accredited_suppliers_workbook.sheet('Lot 2 - Master Vendor MSP')
+  lot_2_accreditation =
+    lot_2_accreditation_sheet.parse(header_search: ['Supplier Name - Accreditation Held'])
+
+  lot_3_accreditation_sheet = accredited_suppliers_workbook.sheet('Lot 3 - Neutral Vendor MSP')
+  lot_3_accreditation =
+    lot_3_accreditation_sheet.parse(header_search: ['Supplier Name'])
+
+  accredited_suppliers_hashes = lot_1_accreditation + lot_2_accreditation + lot_3_accreditation
+  accredited_supplier_names = accredited_suppliers_hashes.map(&:values).flatten
+
+  @accredited_suppliers = suppliers.select do |supplier|
+    accredited_supplier_names.include?(supplier[:'accreditation supplier name'])
+  end
+# rubocop:disable Style/PreferredHashMethods, Rails/Blank
+  def supplier_accredited?(id)
+    return false if id.nil? || id.empty?
+
+    @accredited_suppliers.select { |supplier| supplier.has_value?(id) }.any?
+  end
+# rubocop:enable Style/PreferredHashMethods, Rails/Blank
+
+
+
+  suppliers = JSON.parse(File.read('./storage/supply_teachers/current_data/output/data_with_vendors.json.tmp'))
   geocoder_cache = {}
-  geocoder_cache_path = ('./storage/supply_teachers/.geocoder-cache.yml')
+  geocoder_cache_path = ('./storage/supply_teachers/current_data/.geocoder-cache.yml')
 
   if File.exist?(geocoder_cache_path)
     File.open(geocoder_cache_path) do |file|
@@ -114,7 +158,7 @@ def validate_and_geocode
   end
 
   suppliers = suppliers.sort_by { |s| s['supplier_name'] }
-  File.open('./storage/supply_teachers/output/data_with_line_numbers.json.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/current_data/output/data_with_line_numbers.json.tmp', 'w') do |f|
     f.puts JSON.pretty_generate(suppliers)
   end
   File.open(geocoder_cache_path, 'w') do |file|
