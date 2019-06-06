@@ -5,13 +5,13 @@ module SupplyTeachers
       self.table_name = 'supply_teachers_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      CURRENT_ACCREDITED_PATH = './storage/supply_teachers/input/current_accredited_suppliers.xlsx'.freeze
-      GEOGRAPHICAL_DATA_PATH = './storage/supply_teachers/input/geographical_data_all_suppliers.xlsx'.freeze
-      LOT_1_AND_LOT2_PATH = './storage/supply_teachers/input/lot_1_and_2_comparisons.xlsx'.freeze
-      MASTER_VENDOR_PATH = './storage/supply_teachers/input/master_vendor_contacts.csv'.freeze
-      NEUTRAL_VENDOR_PATH = './storage/supply_teachers/input/neutral_vendor_contacts.csv'.freeze
-      PRICING_TOOL_PATH = './storage/supply_teachers/input/pricing_for_tool.xlsx'.freeze
-      SUPPLIER_LOOKUP_PATH = './storage/supply_teachers/input/supplier_lookup.csv'.freeze
+      CURRENT_ACCREDITED_PATH = 'supply_teachers/current_data/input/current_accredited_suppliers.xlsx'.freeze
+      GEOGRAPHICAL_DATA_PATH = 'supply_teachers/current_data/input/geographical_data_all_suppliers.xlsx'.freeze
+      LOT_1_AND_LOT2_PATH = 'supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'.freeze
+      MASTER_VENDOR_PATH = 'supply_teachers/current_data/input/master_vendor_contacts.csv'.freeze
+      NEUTRAL_VENDOR_PATH = 'supply_teachers/current_data/input/neutral_vendor_contacts.csv'.freeze
+      PRICING_TOOL_PATH = 'supply_teachers/current_data/input/pricing_for_tool.xlsx'.freeze
+      SUPPLIER_LOOKUP_PATH = 'supply_teachers/current_data/input/supplier_lookup.csv'.freeze
       ATTRIBUTES = %i[current_accredited_suppliers geographical_data_all_suppliers lot_1_and_lot_2_comparisons master_vendor_contacts neutral_vendor_contacts pricing_for_tool supplier_lookup].freeze
 
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
@@ -110,7 +110,12 @@ module SupplyTeachers
       end
 
       def cp_file_to_input(file_path, new_path, condition)
-        FileUtils.cp(file_path, new_path) if condition
+        upload_to_s3(file_path, new_path) if condition
+      end
+
+      def upload_to_s3(file_path, new_path)
+        object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+        object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(new_path).upload_file(file_path)
       end
 
       def reject_previous_uploads
@@ -123,9 +128,9 @@ module SupplyTeachers
 
         if Rails.env.production?
           tempfile = Down.download(self.class.previous_uploaded_file(attr_name).file.url)
-          FileUtils.mv(tempfile.path, file_path)
+          upload_to_s3(tempfile.path, file_path)
         else
-          FileUtils.cp(self.class.previous_uploaded_file(attr_name).file.path, file_path)
+          upload_to_s3(self.class.previous_uploaded_file(attr_name).file.path, file_path)
         end
       end
 

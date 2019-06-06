@@ -52,24 +52,26 @@
 
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                  <% lot1 = ['Administrative and public law', 'Banking and Finance','Charities law', 'Child law','Contracts','Competion law', 'Corporate and M&A','Data Protection and information law','Education law', 'Employment', 'Energy and natural resources','EU', 'Food,rural and enviromental affairs','Franchise law','Health and healthcare','Health and safety law', 'Information Technology', 'Infrastructure', 'Intellectual Property','Licensing','Life sciences', 'Litigation and dispute resolution', 'Outsourcing/insourcing', 'Partnerships', 'Pensions', 'Planning', 'Projects', 'Public international law', 'Public procurement', 'Property, real estate & construction', 'Restructuring and insolvancy', 'Tax', 'Telecommunications','The law of international trade investment and regulation', 'Transport law (excluding rail)'] %>
+                  <% lot2 = LegalServices::Lot.all %>
 
-                  <% lot1.each do |lot2_full_service| %>
+                  <% lot2.each do |lot2_full_service| %>
+                  <% if lot2_full_service.number == "2" %>
                     <div class="govuk-checkboxes__item">
-                      <% lot2_full_service_no_slash = lot2_full_service.gsub('/', '_') %>
-                      <% lot2_full_service_no_and = lot2_full_service.gsub('&', '_') %>
+                      <% lot2_full_service_no_slash = lot2_full_service.description.gsub('/', '_') %>
+                      <% lot2_full_service_no_and = lot2_full_service_no_slash.gsub('&', '_') %>
                       <% lot_region_no_space = lot2_full_service_no_and.gsub(' ', '_') %>
                       <%= check_box_tag(
                                 "lot2_full_service",
-                                lot2_full_service,
+                                lot2_full_service.description,
                                 false,
                                 class: "govuk-checkboxes__input",
                                 id: "lot_region_#{lot_region_no_space}"
                               ) %>
                       <label class="govuk-label govuk-checkboxes__label" for="lot_region_<%= lot_region_no_space %>">
-                        <%= lot2_full_service %>
+                        <%= lot2_full_service.description %>
                       </label>
                     </div>
+                  <% end %>
                   <% end %>
                 </div>
 

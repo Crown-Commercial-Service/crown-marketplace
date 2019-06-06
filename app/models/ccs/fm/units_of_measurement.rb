@@ -9,11 +9,13 @@ module CCS
     class UnitsOfMeasurement < ApplicationRecord
       self.table_name = 'fm_units_of_measurement'
       # usage:
-      # CCS::FM::UnitsOfMeasurement.where('C.5')
-      # CCS::FM::UnitsOfMeasurement.where("? = ANY(service_usage)", 'C.5')
+      #   CCS::FM::UnitsOfMeasurement.where('C.5')
+      #   CCS::FM::UnitsOfMeasurement.where("? = ANY(service_usage)", 'C.5')
+      #   CCS::FM::UnitsOfMeasurement.service_usage('H.5')
+      #   CCS::FM::UnitsOfMeasurement.service_usage('C.10')
       def self.service_usage(service)
-        # CCS::FM::UnitsOfMeasurement.where(service_usage: service)
-        where('? = ANY(service_usage)', service).order(:id)
+        vals = where('? = ANY(service_usage)', service).order(:id)
+        vals.as_json
       end
     end
   end

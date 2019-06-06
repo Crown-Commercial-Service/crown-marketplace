@@ -502,7 +502,7 @@ en:
           para02: Using this service means you're following the public sector procurement procedures.
           para03_html: Central government can use this service to buy transactional property and litigation services if your contract budget is &pound;20,000 or less per matter.
           para04_html: If you need legal services in a non-UK jurisdiction, contact <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> for help.
-          para05_html: To use this service you need to be a recognised public sector body listed in the <a href="#">authorised customer list</a>.
+          para05_html: To use this service you need to be a recognised public sector body listed in the <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3788-Contract-Notice-Authorised-Customer-List.docx">authorised customer list</a>.
         wps_link_text: WPS Legal Services panel specification
         wps_url: https://www.crowncommercial.gov.uk/agreements/RM3788
       service_not_suitable:
@@ -559,6 +559,18 @@ en:
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
+      lot3_results:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 3 - Property and construction
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
+      lot4_results:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 4 - Transport rail
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
       regional_legal_service:
         heading: Lot 1 - Regional service provision
         hint: Select the regions where you need legal services
@@ -580,6 +592,12 @@ en:
         lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
         lot4_txt: Lot 4 - Transport rail
         lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
+      supplier_results:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 1 - Regional service provision
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
