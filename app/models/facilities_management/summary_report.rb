@@ -28,6 +28,7 @@ module FacilitiesManagement
         ['C-1', 'C-10', 'C-11', 'C-12', 'C-13', 'C-14', 'C-15', 'C-16', 'C-17', 'C-18', 'C-2', 'C-20', 'C-3', 'C-4', 'C-6', 'C-7', 'C-8', 'C-9', 'D-1', 'D-2', 'D-4', 'D-5', 'D-6', 'E-1', 'E-2', 'E-3', 'E-5', 'E-6', 'E-7', 'E-8', 'F-1', 'G-1', 'G-10', 'G-11', 'G-14', 'G-15', 'G-16', 'G-2', 'G-3', 'G-4', 'G-6', 'G-7', 'G-9', 'H-1', 'H-10', 'H-11', 'H-13', 'H-2', 'H-3', 'H-6', 'H-7', 'H-8', 'H-9', 'J-10', 'J-11', 'J-7', 'J-9', 'L-2', 'L-3', 'L-4', 'L-5']
     end
 
+    # rubocop:disable Metrics/AbcSize
     def calculate_services_for_buildings
       selected_services
 
@@ -53,6 +54,7 @@ module FacilitiesManagement
         @sum_benchmark += vals_per_building[:sum_uom]
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def with_pricing
       # CCS::FM::Rate.non_zero_rate
@@ -132,7 +134,6 @@ module FacilitiesManagement
         u['example_text'] = uoms.last['example_text']
       end
 
-      # T.C.
       lift_service = uvals.select { |s| s['service_code'] == 'C.5' }
       if lift_service.count.positive?
         lifts_title_text = lift_service.last['title_text']
