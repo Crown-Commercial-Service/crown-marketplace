@@ -48,7 +48,9 @@ module FacilitiesManagement
 
       selected_buildings.each do |building|
         id = building['building_json']['id']
-        services building.building_json, (uvals.select { |u| u['building_id'] == id })
+        vals_per_building = services(building.building_json, (uvals.select { |u| u['building_id'] == id }))
+        @sum_uom += vals_per_building[:sum_uom]
+        @sum_benchmark += vals_per_building[:sum_uom]
       end
     end
 
@@ -222,6 +224,9 @@ module FacilitiesManagement
     # rubocop:enable Metrics/PerceivedComplexity
 
     def services(building_data, uvals)
+      sum_uom = 0.0
+      sum_benchmark = 0.0
+
       copy_params building_data
       # id = building_data['id']
 
@@ -243,11 +248,16 @@ module FacilitiesManagement
 
         code = v['service_code'].remove('.')
         calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants.to_i, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
-        @sum_uom += calc_fm.sumunitofmeasure
-        @sum_benchmark += calc_fm.benchmarkedcostssum
+        sum_uom += calc_fm.sumunitofmeasure
+        sum_benchmark += calc_fm.benchmarkedcostssum
       end
+      { sum_uom: sum_uom,
+        sum_benchmark: sum_benchmark }
     rescue StandardError => e
       raise e
+    ensure
+      { sum_uom: sum_uom,
+        sum_benchmark: sum_benchmark }
     end
   end
 end
