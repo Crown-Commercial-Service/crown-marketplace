@@ -598,6 +598,12 @@ en:
         sub_heading: Lot 1 - Regional service provision
         suppliers: suppliers
         suppliers_pt2: can provide the legal services that meet your requirements
+      supplier_results2:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 2 - Full service firms
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
