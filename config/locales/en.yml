@@ -597,26 +597,22 @@ en:
         lot4_txt: Lot 4 - Transport rail
         lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
       supplier_results:
-<<<<<<< HEAD
-        heading: Heading
+        download: Download the supplier list
+        heading: Supplier results
         hint: Hint
         links_text_html: Links text html
         remove_all: Remove all
-        txt01: Txt01
-        txt02: Txt02
-=======
-        download: Download the supplier list
-        heading: Supplier results
         sub_heading: Lot 1 - Regional service provision
         suppliers: suppliers
         suppliers_pt2: can provide the legal services that meet your requirements
+        txt01: Txt01
+        txt02: Txt02
       supplier_results2:
         download: Download the supplier list
         heading: Supplier results
         sub_heading: Lot 2 - Full service firms
         suppliers: suppliers
         suppliers_pt2: can provide the legal services that meet your requirements
->>>>>>> 0dcd705d92a52c071ae7e2aad368d09190e6c6ee
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
