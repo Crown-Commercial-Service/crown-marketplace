@@ -5,13 +5,14 @@ module SupplyTeachers
       self.table_name = 'supply_teachers_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      CURRENT_ACCREDITED_PATH = './lib/tasks/supply_teachers/input/Current_Accredited_Suppliers_.xlsx'.freeze
-      GEOGRAPHICAL_DATA_PATH = './lib/tasks/supply_teachers/input/Geographical Data all suppliers.xlsx'.freeze
-      LOT_1_AND_LOT2_PATH = './lib/tasks/supply_teachers/input/Lot_1_and_2_comparisons.xlsx'.freeze
-      MASTER_VENDOR_PATH = './lib/tasks/supply_teachers/input/master_vendor_contacts.csv'.freeze
-      NEUTRAL_VENDOR_PATH = './lib/tasks/supply_teachers/input/neutral_vendor_contacts.csv'.freeze
-      PRICING_TOOL_PATH = './lib/tasks/supply_teachers/input/pricing for tool.xlsx'.freeze
-      SUPPLIER_LOOKUP_PATH = './lib/tasks/supply_teachers/input/supplier_lookup.csv'.freeze
+      CURRENT_ACCREDITED_PATH = 'supply_teachers/current_data/input/current_accredited_suppliers.xlsx'.freeze
+      GEOGRAPHICAL_DATA_PATH = 'supply_teachers/current_data/input/geographical_data_all_suppliers.xlsx'.freeze
+      LOT_1_AND_LOT2_PATH = 'supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'.freeze
+      MASTER_VENDOR_PATH = 'supply_teachers/current_data/input/master_vendor_contacts.csv'.freeze
+      NEUTRAL_VENDOR_PATH = 'supply_teachers/current_data/input/neutral_vendor_contacts.csv'.freeze
+      PRICING_TOOL_PATH = 'supply_teachers/current_data/input/pricing_for_tool.xlsx'.freeze
+      SUPPLIER_LOOKUP_PATH = 'supply_teachers/current_data/input/supplier_lookup.csv'.freeze
+      ATTRIBUTES = %i[current_accredited_suppliers geographical_data_all_suppliers lot_1_and_lot_2_comparisons master_vendor_contacts neutral_vendor_contacts pricing_for_tool supplier_lookup].freeze
 
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
       mount_uploader :geographical_data_all_suppliers, SupplyTeachersFileUploader
@@ -32,23 +33,19 @@ module SupplyTeachers
           transitions from: :in_progress, to: :in_review
         end
         event :fail do
-          after :cleanup_input_files
-          transitions from: %i[in_progress uploading], to: :failed
+          transitions from: %i[in_progress uploading], to: :failed, after: :cleanup_input_files
         end
         event :upload do
-          after :start_upload
           transitions from: :in_review, to: :uploading
         end
         event :approve do
           transitions from: :uploading, to: :approved
         end
         event :reject do
-          after :cleanup_input_files
-          transitions from: :in_review, to: :rejected
+          transitions from: :in_review, to: :rejected, after: :cleanup_input_files
         end
         event :cancel do
-          after :cleanup_input_files
-          transitions from: %i[in_review in_progress], to: :canceled
+          transitions from: %i[in_review in_progress], to: :canceled, after: :cleanup_input_files
         end
       end
 
@@ -82,37 +79,43 @@ module SupplyTeachers
         where(aasm_state: :approved).where.not("#{attr_name}": nil).first
       end
 
-      def self.in_review_or_in_progress?
-        in_review.any? || in_progress.any?
+      def self.in_review_or_in_progress
+        in_review + in_progress
+      end
+
+      def self.perform_upload(upload_id)
+        upload_session = find(upload_id)
+        upload_session.upload!
+        SupplyTeachers::DataUploadWorker.perform_async(upload_id)
+        upload_session
       end
 
       private
-
-      def start_upload
-        SupplyTeachers::DataUploadWorker.perform_async(id)
-      end
 
       def reject_uploads_and_cp_files
         reject_previous_uploads
         copy_files_to_input_folder
       rescue StandardError => e
-        errors.add(:base, 'There is an error with your files. Please try again: ' + e.message)
+        errors.add(:base, e.message)
       end
 
-      # rubocop:disable Metrics/AbcSize
       def copy_files_to_input_folder
-        cp_file_to_input(current_accredited_suppliers.file.try(:path), CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
-        cp_file_to_input(geographical_data_all_suppliers.file.try(:path), GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
-        cp_file_to_input(lot_1_and_lot_2_comparisons.file.try(:path), LOT_1_AND_LOT2_PATH, lot_1_and_lot_2_comparisons_changed?)
-        cp_file_to_input(master_vendor_contacts.file.try(:path), MASTER_VENDOR_PATH, master_vendor_contacts_changed?)
-        cp_file_to_input(neutral_vendor_contacts.file.try(:path), NEUTRAL_VENDOR_PATH, neutral_vendor_contacts_changed?)
-        cp_file_to_input(pricing_for_tool.file.try(:path), PRICING_TOOL_PATH, pricing_for_tool_changed?)
-        cp_file_to_input(supplier_lookup.file.try(:path), SUPPLIER_LOOKUP_PATH, supplier_lookup_changed?)
+        cp_file_to_input(current_accredited_suppliers_url, CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
+        cp_file_to_input(geographical_data_all_suppliers_url, GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
+        cp_file_to_input(lot_1_and_lot_2_comparisons_url, LOT_1_AND_LOT2_PATH, lot_1_and_lot_2_comparisons_changed?)
+        cp_file_to_input(master_vendor_contacts_url, MASTER_VENDOR_PATH, master_vendor_contacts_changed?)
+        cp_file_to_input(neutral_vendor_contacts_url, NEUTRAL_VENDOR_PATH, neutral_vendor_contacts_changed?)
+        cp_file_to_input(pricing_for_tool_url, PRICING_TOOL_PATH, pricing_for_tool_changed?)
+        cp_file_to_input(supplier_lookup_url, SUPPLIER_LOOKUP_PATH, supplier_lookup_changed?)
       end
-      # rubocop:enable Metrics/AbcSize
 
       def cp_file_to_input(file_path, new_path, condition)
-        FileUtils.cp(file_path, new_path) if condition
+        upload_to_s3(file_path, new_path) if condition
+      end
+
+      def upload_to_s3(file_path, new_path)
+        object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+        object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(new_path).upload_file(file_path)
       end
 
       def reject_previous_uploads
@@ -121,7 +124,14 @@ module SupplyTeachers
       end
 
       def cp_previous_uploaded_file(attr_name, file_path)
-        FileUtils.cp(self.class.previous_uploaded_file(attr_name).file.path, file_path) if available_for_cp(attr_name)
+        return unless available_for_cp(attr_name)
+
+        if Rails.env.production?
+          tempfile = Down.download(self.class.previous_uploaded_file(attr_name).file.url)
+          upload_to_s3(tempfile.path, file_path)
+        else
+          upload_to_s3(self.class.previous_uploaded_file(attr_name).file.path, file_path)
+        end
       end
 
       def available_for_cp(attr_name)

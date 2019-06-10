@@ -2,45 +2,56 @@ require 'bundler/setup'
 require 'json'
 require 'csv'
 
-suppliers = JSON.parse(File.read(ARGV[0]))
+def add_vendor_contacts
+  suppliers = JSON.parse(File.read('./storage/supply_teachers/current_data/output/data_only_accredited.json.tmp'))
 
-master_details =
-  CSV.new(File.read(ARGV[1]), headers: :first_row)
-  .map { |r| [r['supplier_name'], r] }
-  .to_h
+  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+  master_vendor_path = './storage/supply_teachers/current_data/input/master_vendor_contacts.csv'
+  neutral_vendor_path = './storage/supply_teachers/current_data/input/neutral_vendor_contacts.csv'
+  FileUtils.touch(master_vendor_path)
+  FileUtils.touch(neutral_vendor_path)
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::MASTER_VENDOR_PATH).get(response_target: master_vendor_path)
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::NEUTRAL_VENDOR_PATH).get(response_target: neutral_vendor_path)
 
-neutral_details =
-  CSV.new(File.read(ARGV[2]), headers: :first_row)
-  .map { |r| [r['supplier_name'], r] }
-  .to_h
+  master_details =
+    CSV.new(File.read(master_vendor_path), headers: :first_row)
+      .map { |r| [r['supplier_name'], r] }
+      .to_h
 
-suppliers.map! do |supplier|
-  supplier_name = supplier.fetch('supplier_name')
+  neutral_details =
+    CSV.new(File.read(neutral_vendor_path), headers: :first_row)
+      .map { |r| [r['supplier_name'], r] }
+      .to_h
 
-  master = master_details[supplier_name]
-  if master
-    supplier.merge!(
-      'master_vendor_contact' => {
-        'name'      => master.fetch('contact_name'),
-        'telephone' => master.fetch('contact_telephone'),
-        'email'     => master.fetch('contact_email')
-      }
-    )
+  suppliers.map! do |supplier|
+    supplier_name = supplier.fetch('supplier_name')
+
+    master = master_details[supplier_name]
+    if master
+      supplier.merge!(
+        'master_vendor_contact' => {
+          'name'      => master.fetch('contact_name'),
+          'telephone' => master.fetch('contact_telephone'),
+          'email'     => master.fetch('contact_email')
+        }
+      )
+    end
+
+    neutral = neutral_details[supplier_name]
+    if neutral
+      supplier.merge!(
+        'neutral_vendor_contact' => {
+          'name'      => neutral.fetch('contact_name'),
+          'telephone' => neutral.fetch('contact_telephone'),
+          'email'     => neutral.fetch('contact_email')
+        }
+      )
+    end
+
+    supplier
   end
 
-  neutral = neutral_details[supplier_name]
-  if neutral
-    supplier.merge!(
-      'neutral_vendor_contact' => {
-        'name'      => neutral.fetch('contact_name'),
-        'telephone' => neutral.fetch('contact_telephone'),
-        'email'     => neutral.fetch('contact_email')
-      }
-    )
+  File.open('./storage/supply_teachers/current_data/output/data_with_vendors.json.tmp', 'w') do |f|
+    f.puts JSON.pretty_generate(suppliers)
   end
-
-  supplier
 end
-# rubocop:disable Rails/Output
-puts JSON.pretty_generate(suppliers)
-# rubocop:enable Rails/Output

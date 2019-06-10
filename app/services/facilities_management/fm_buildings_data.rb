@@ -84,6 +84,7 @@ class FMBuildingData
       request = Net::HTTP::Get.new uri
 
       response = http.request request # Net::HTTPResponse object
+      Rails.logger.info response.body
       response.body
     end
   rescue StandardError => e
@@ -104,7 +105,7 @@ class FMBuildingData
     { 'General office - Customer Facing' => 'General office areas and customer facing areas.',
       'General office - Non Customer Facing' => 'General office areas and non-customer facing areas.',
       'Call Centre Operations' => 'Call centre operations.',
-      'Warehouses' => 'Large storage facility with limited office space and low density occupation by Supplier Personnel.',
+      'Warehouses' => 'Large storage facility with limited office space and low density occupation by supplier personnel.',
       'Restaurant and Catering Facilities' => 'Areas including restaurants, deli-bars and coffee lounges areas used exclusively for consuming food and beverages.',
       'Pre-School' => 'Pre-school, including crèche, nursery and after-school facilities.',
       'Primary School' => 'Primary school facilities.',
@@ -114,7 +115,7 @@ class FMBuildingData
       'Doctors, Dentists and Health Clinics' => '	Community led facilities including doctors, dentists and health clinics.',
       'Nursery and Care Homes' => '	Nursery and care home facilities.',
       'Data Centre Operations' => 'Data centre operation.',
-      'External parks, grounds and car parks' => '	External car parks and grounds including externally fixed Assets - such as fences, gates, fountains etc.',
+      'External parks, grounds and car parks' => '	External car parks and grounds including externally fixed assets - such as fences, gates, fountains etc.',
       'Laboratory' => 'Includes all Government facilities where the standard of cleanliness is high, access is restricted and is not public facing.',
       'Heritage Buildings' => 'Buildings of historical or cultural significance.',
       'Nuclear Facilities' => 'Areas associated with Nuclear activities.',
@@ -124,7 +125,7 @@ class FMBuildingData
       'Production Facilities' => 'An environment centred around a fabrication or production facility, typically with restricted access.',
       'Workshops' => 'Areas where works are undertaken such as joinery or metal working facilities',
       'Garages' => 'Areas where motor vehicles are cleaned, serviced, repaired and maintained.',
-      'Shopping Centres' => 'Areas where retail services are delivered to the Public.',
+      'Shopping Centres' => 'Areas where retail services are delivered to the public.',
       'Museums /Galleries' => 'Areas are generally open to the public with some restrictions in place from time to time. Some facilities have no public access.',
       'Fitness / Training Establishments' => 'Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal / external sports facilities.',
       'Residential Buildings' => 'Residential accommodation / areas.',

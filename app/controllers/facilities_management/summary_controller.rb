@@ -37,7 +37,7 @@ module FacilitiesManagement
       when nil
         "You have #{@report.without_pricing.count + @report.with_pricing.count} services selected"
       else
-        'Shorlist of Suppliers'
+        'Shortlist of suppliers'
       end
     end
 
@@ -58,7 +58,7 @@ module FacilitiesManagement
       str = "<strong>#{@supplier_count} suppliers found</strong>"
       str << ' to provide the chosen services in your regions.'
       str << '<br/>'
-      str << 'Your estimated cost is ' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, strip_insignificant_zeros: true) + " for the contract term of #{@report.contract_length_years} years."
+      str << 'Your estimated cost is <strong>' + ActiveSupport::NumberHelper.number_to_currency(@report.assessed_value, precision: 0) + "</strong> for the contract term of #{@report.contract_length_years} years."
     end
 
     def services_and_suppliers_title
@@ -72,9 +72,9 @@ module FacilitiesManagement
     def lot_title
       return if @current_lot.nil?
 
-      str = "<p>Based on your requirements, here are the shortlisted suppliers.</p><p>Your selected sub-lot is <strong>Lot #{@current_lot}
+      str = "<p class='govuk-!-font-size-24'>Based on your requirements, here are the shortlisted suppliers.<br>Your selected sub-lot is <strong>Lot #{@current_lot}
       </strong>, subject to your total contract value and services without a price.</p>"
-      str << '<br/><p><strong>'
+      str << '<p class="govuk-heading-m">'
       str <<
         case @current_lot
         when '1a'
@@ -84,7 +84,7 @@ module FacilitiesManagement
         when '1c'
           'Total contract value over £50m'
         end
-      str << '</strong></p>'
+      str << '</p>'
     end
 
     def no_price_message
@@ -116,28 +116,19 @@ module FacilitiesManagement
     end
 
     def list_choices
-      str = '<p><strong>Choices used to generate your shortlist:</strong></p>'
-      str << '<p><strong>Filters used:</strong></p>'
-      str << "<p>Regions (#{@subregions.count})</p>"
+      str = '<p class="govuk-heading-m govuk-!-margin-top-8">Choices used to generate your shortlist</p><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
+      str << 'Regions (' + @subregions.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
       @subregions.each do |location|
-        str << '<p>'
-        str << location[1]
-        str << '</p>'
+        str << '<li>' + location[1] + '</li>'
       end
-
-      str << "<hr style='width: 50%;margin-left: 0;border-style: dotted;'/>"
-      # FacilitiesManagement::Service.all
       services = FacilitiesManagement::Service.where(code: @posted_services)
-      str << '<p>'
-      str << "Services (#{services.count})"
-      str << '</p>'
       services.sort_by!(&:code)
+      str << '</ul></div></details><hr><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
+      str << 'Services (' + services.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
       services.each do |s|
-        str << '<p>'
-        str << s.name
-        str << '</p>'
+        str << '<li>' + s.name + '</li>'
       end
-
+      str << '</ul></div></details><hr>'
       str
     end
 
@@ -148,6 +139,7 @@ module FacilitiesManagement
       @supplier_count = @data['supplier_count']
       @posted_locations = @data['posted_locations']
       @posted_services = @data['posted_services']
+      @current_lot = @data['current_lot']
 
       set_start_date
     end
@@ -179,7 +171,7 @@ module FacilitiesManagement
     def set_start_date
       @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
       TransientSessionInfo[session.id, 'start_date'] = @start_date
-      TransientSessionInfo[session.id, 'current_lot'] = nil
+      # TransientSessionInfo[session.id, 'current_lot'] = nil
     rescue StandardError
       @start_date = TransientSessionInfo[session.id]['start_date']
     end

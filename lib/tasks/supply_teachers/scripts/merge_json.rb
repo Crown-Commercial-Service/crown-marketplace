@@ -6,69 +6,55 @@ require 'csv'
 require 'optparse'
 require 'active_support'
 
-merge_key = nil
-alias_rows = []
-supplier_name_key = nil
-destination_key = nil
+def merge_json(supplier_name_key: , destination_key:, destination_file:, primary:, secondary:)
+  alias_rows = []
+  merge_key = 'supplier_name'
 
-OptionParser.new do |opts|
-  opts.banner = "Usage: #{__FILE__} a.json b.json [options]"
+  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+  alias_file_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
+  FileUtils.touch(alias_file_path)
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: alias_file_path)
 
-  opts.on('-k', '--key KEY', 'Key to merge arrays') do |v|
-    merge_key = v
+  alias_rows = CSV.parse(File.read(alias_file_path), headers: :first_row)
+
+  aliases = Hash.new { |_, k| k }
+  alias_rows.each_with_object(aliases) do |row, hash|
+    aliased_supplier_name = row[supplier_name_key]
+    hash[aliased_supplier_name] = row[destination_key || 'supplier_name']
+    hash
   end
 
-  opts.on('-a', '--aliases FILE', 'CSV file with aliases') do |f|
-    alias_rows = CSV.parse(File.read(f), headers: :first_row)
+  uuid_lookup = alias_rows.map { |row| [row[destination_key || 'supplier_name'], row['supplier_id']] }.to_h
+
+  augmentations = JSON.parse(File.read(secondary)).map do |item|
+    secondary_key = item.delete(merge_key)
+    [aliases[secondary_key], item]
+  end.to_h
+
+  merged = JSON.parse(File.read(primary)).map do |primary_item|
+    primary_key = primary_item.fetch(merge_key)
+    key = aliases[primary_key]
+
+    if augmentations.key?(key)
+      secondary_item = augmentations.delete(key)
+      primary_item.deep_merge(secondary_item).merge(supplier_id: uuid_lookup[primary_key])
+    else
+      primary_item
+    end
   end
 
-  opts.on('-s', '--source-name-key KEY', 'Which column in csv to take key from') do |v|
-    supplier_name_key = v
+  augmentations.each do |k, item|
+    supplier_id = uuid_lookup[k]
+    if supplier_id
+      merged << item.merge(supplier_id: supplier_id, supplier_name: k)
+    else
+      File.open('./storage/supply_teachers/current_data/output/errors.out.tmp', 'a') do |f|
+        f.puts "#{k}: does not appear in aliases file (input/supplier_lookup.csv). Make sure you include it in the column '#{supplier_name_key}'."
+      end
+    end
   end
-
-  opts.on('-d', '--dest-name-key KEY', 'Which column in csv to map key to') do |v|
-    destination_key = v
-  end
-end.parse!
-
-raise 'Key required' unless merge_key
-
-aliases = Hash.new { |_, k| k }
-alias_rows.each_with_object(aliases) do |row, hash|
-  aliased_supplier_name = row[supplier_name_key]
-  hash[aliased_supplier_name] = row[destination_key || 'supplier_name']
-  hash
-end
-
-uuid_lookup = alias_rows.map { |row| [row[destination_key || 'supplier_name'], row['supplier_id']] }.to_h
-
-primary, secondary = ARGV
-
-augmentations = JSON.parse(File.read(secondary)).map do |item|
-  secondary_key = item.delete(merge_key)
-  [aliases[secondary_key], item]
-end.to_h
-
-merged = JSON.parse(File.read(primary)).map do |primary_item|
-  primary_key = primary_item.fetch(merge_key)
-  key = aliases[primary_key]
-
-  if augmentations.key?(key)
-    secondary_item = augmentations.delete(key)
-    primary_item.deep_merge(secondary_item).merge(supplier_id: uuid_lookup[primary_key])
-  else
-    primary_item
+  File.open(destination_file, 'w') do |f|
+    f.puts JSON.pretty_generate(merged)
   end
 end
 
-augmentations.each do |k, item|
-  supplier_id = uuid_lookup[k]
-  if supplier_id
-    merged << item.merge(supplier_id: supplier_id, supplier_name: k)
-  else
-    warn "#{k}: does not appear in aliases file (input/supplier_lookup.csv). Make sure you include it in the column '#{supplier_name_key}'"
-  end
-end
-# rubocop:disable Rails/Output
-puts JSON.pretty_generate(merged)
-# rubocop:enable Rails/Output

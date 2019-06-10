@@ -173,7 +173,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :postcodes, only: :show
-      post '/postcode/:id', to: 'uploads#show'
+      post '/postcode/:slug', to: 'uploads#postcodes'
     end
   end
 

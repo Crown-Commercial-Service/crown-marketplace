@@ -1,5 +1,12 @@
 const pageUtils = {
 
+    formatPostCode: (pc) => {
+
+        let outer = pc.substring(0, pc.length - 3);
+        let inner = pc.slice(-3);
+        return outer.trim().toUpperCase() + ' ' + inner.trim().toUpperCase();
+    },
+
     /* Sort an un-ordered list */
     sortUnorderedList: ((listID) => {
         let list, i, switching, b, shouldSwitch;
@@ -181,12 +188,9 @@ const fm = {
                 success: function (data, textStatus, jQxhr) {
                     pageUtils.setCachedData('fm-current-building', building);
                     // location.href = whereNext
-                    if (whereNext == '/facilities-management/buildings/select-services')
-                    {
+                    if (whereNext == '/facilities-management/buildings/select-services') {
                         $('#fm-building-type-form').submit()
-                    }
-                    else
-                    {
+                    } else {
                         $('#fm-select-services-continue-btn-form').attr('action', whereNext).submit()
                     }
                 },

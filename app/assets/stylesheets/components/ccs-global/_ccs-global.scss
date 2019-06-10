@@ -58,6 +58,11 @@ abbr {
   top: -3000px;
 }
 
+legend + p.ccs-legend-download {
+    margin-top: -#{govuk-spacing(2)};
+    margin-bottom: govuk-spacing(6);
+}
+
 /* keep for .validate html version
 .ccs-fully-hidden,
 div.govuk-error-summary + div#ccs-error-summary,
@@ -158,6 +163,10 @@ form.ccs-form {
   &-in_review, &-in_progress, &-uploading {
     background-color: govuk-colour("grey-1");
   }
+
+  .ccs-results-list & {
+      padding: 0 govuk-spacing(2);
+  }
 }
 /* css-tag end ****** */
 
@@ -226,11 +235,12 @@ ul.ccs-checklist {
         }
 
     }
-}
-@media (max-width: 641px) {//mobile
-    ul.ccs-checklist li {
-        b, ul {
-            width: 100%;
+
+    @media (max-width: 641px) {//mobile
+        li {
+            b, ul {
+                width: 100%;
+            }
         }
     }
 }
@@ -360,27 +370,25 @@ ul.ccs-checklist {
             li:first-child {
                 border-bottom: none;
             }
-        }
 
-    }
-
-}
-@media (max-width: 641px) {//mobile
-    #css-list-basket {
-        & > .govuk-button {
-            display: none;
-        }
-    }
-}
-@media (max-width: 768px) {//tablet and smaller
-    ul.govuk-list {
-        li {
-            span, a {
-                width: 100% !important;
-                text-align: left !important;
+            @media (max-width: 768px) {//tablet and smaller
+                li {
+                    span, a {
+                        width: 100% !important;
+                        text-align: left !important;
+                    }
+                }
             }
         }
+
+        @media (max-width: 641px) {//mobile
+            & > .govuk-button {
+                display: none;
+            }
+        }
+
     }
+
 }
 
 body.js-enabled #ccs-dynamic-accordian {
@@ -475,6 +483,12 @@ body.js-enabled #ccs-dynamic-accordian {
         }
 
         @extend %clearfix;
+
+        @media (max-width: 641px) {//mobile
+            .ccs-results-list__detail div span span.ccs-font--wrap {
+                display: inline;
+            }
+        }
     }
 
     .govuk-table {
@@ -509,12 +523,6 @@ body.js-enabled #ccs-dynamic-accordian {
 
     }
 
-}
-
-@media (max-width: 641px) {//mobile
-    .ccs-search-results ul.ccs-results-list .ccs-results-list__detail div span span.ccs-font--wrap {
-        display: inline;
-    }
 }
 /* ccs supplier results v1 ends */
 
@@ -609,6 +617,7 @@ ul.ccs-pagination {
 
         a {
             text-decoration: none;
+            color: $govuk-link-colour !important;//no visited state
 
             &[aria-current] {
                 color: govuk-colour("grey-2") !important;
@@ -704,9 +713,8 @@ table.ccs-at-govuk-table--5050 {
         padding: govuk-spacing(4) govuk-spacing(4) govuk-spacing(2) govuk-spacing(3);
         margin: 0;
     }
-}
-@media (min-width: 40.0625em){//desktop
-    .ccs-right-panel-sticky {
+
+    @media (min-width: 40.0625em){//desktop
         position: -webkit-sticky;
         position: sticky;
         top: 30px;

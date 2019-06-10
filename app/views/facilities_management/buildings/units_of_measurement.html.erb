@@ -8,7 +8,9 @@
     <div class="govuk-grid-column-full">
       <%= render('errors/inline_error_summary') %>
       <h2 class="govuk-caption-xl">Building - <span id="fm-building-name"></span></h2>
-      <h1 class="govuk-heading-xl"><%= @service_title %> </h1>
+      <h1 class="govuk-heading-xl"><%= @service_title %>
+        <% if !@service_title.include? "service" %> service
+        <% end %></h1>
     </div>
   </div>
   <div class="govuk-grid-row"
@@ -34,8 +36,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-heading-m govuk-!-margin-bottom-0">How many lifts do you have in this building?</h2>
-        <h2 class="govuk-caption-m govuk-!-margin-top-1">For example, 5. Enter the total number of lifts in your
-          building</h2>
+        <h2 class="govuk-caption-m govuk-!-margin-top-1">Enter a number</h2>
 
         <div id="fm-uom-number-of-lifts-error-form-group" class="govuk-form-group">
           <span id="fm-uom-number-of-lifts-error" class="govuk-error-message govuk-visually-hidden">

@@ -2,16 +2,11 @@ module LegalServices
   class Journey::LegalJurisdiction
     include Steppable
 
-    attribute :central_government
-    validates :central_government, inclusion: ['yes', 'no']
+    attribute :legal_jurisdiction
+    validates :legal_jurisdiction, inclusion: ['E', 'S', 'N']
 
     def next_step_class
-      case central_government
-      when 'yes'
-        Journey::FeesUnder20k
-      else
-        Journey::Requirement
-      end
+      Journey::SupplierResults2
     end
   end
 end

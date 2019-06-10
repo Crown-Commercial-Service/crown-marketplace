@@ -7,9 +7,9 @@ class FacilitiesManagement::Spreadsheet
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
-  def row(report, idx)
+  def row(buildings, idx)
     vals = []
-    report.building_data.each do |building|
+    buildings.each do |building|
       str =
         case idx
         when 0
@@ -43,63 +43,97 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Style/ConditionalAssignment
   # rubocop:disable Metrics/BlockLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
+
+    # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
+    services = @report.selected_services.sort_by(&:code)
+    selected_services = services.collect(&:code)
+    selected_services = selected_services.map { |s| s.gsub('.', '-') }
+    selected_buildings = @report.building_data.select do |b|
+      b_services = b.building_json['services'].map { |s| s['code'] }
+      (selected_services & b_services).any?
+    end
 
     @workbook.add_worksheet(name: 'Building Information') do |sheet|
       sheet.add_row ['Buildings information']
       i = 0
       ['Building Type', 'Name', 'Address', '', '', '', 'GIA'].each do |label|
-        vals = row(@report, i)
+        vals = row(selected_buildings, i)
         sheet.add_row [label] + vals
         i += 1
       end
     end
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
-      @uom_values = @report.uom_values
       i = 1
-      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement', 'Unit of Measure']
-      @report.building_data.each do |building|
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement']
+      selected_buildings.each do |building|
         vals << 'Building ' + i.to_s + ' - ' + building.building_json['name']
         i += 1
       end
       sheet.add_row vals
 
-      # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
       work_package = ''
-      @report.selected_services
-      services = @report.selected_services.sort_by(&:code)
-      services.each do |s|
+
+      services.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s|
         if work_package == s.work_package_code
           label = nil
         else
-          label = 'Work Package ' + s.work_package_code + ' ' + s.work_package.name
+          label = 'Work Package ' + s.work_package_code + ' - ' + s.work_package.name
         end
+
         work_package = s.work_package_code
 
-        uom = CCS::FM::UnitsOfMeasurement.service_usage(s.code)
-        if uom.count.nonzero? # s.code == 'C.5' # uom.count.nonzero?
-          vals = [label, s.code, s.name]
-          uom.each do |u|
-            vals << u['title_text']
-            vals << u['unit_text']
+        vals = [label, s.code, s.name]
 
-            @report.building_data.each do |building|
-              # begin
-              id = building.building_json['id']
-              vals << @uom_values[id][s.code]['uom_value']
-            rescue StandardError
-              vals << '=NA()'
-              # end
-            end
+        vals_v = []
+        vals_h = nil
+        uom_labels_2d = []
+        selected_buildings.each do |building|
+          # begin
+          id = building.building_json['id']
+          suv = @report.uom_values(selected_buildings, selected_services).select { |v| v['building_id'] == id && v['service_code'] == s.code }
+          vals_h = []
+
+          uom_labels = []
+          suv.each do |v|
+            uom_labels << v['title_text']
+
+            vals_h << v['uom_value']
+          end
+          vals_v << vals_h
+          uom_labels_2d << uom_labels
+        rescue StandardError
+          vals << '=NA()'
+        end
+        # vals << valsV
+        # sheet.add_row vals
+        #
+
+        uom_labels_max = uom_labels_2d.max
+        # uoms.each do |u|
+        # vals << u['title_text']
+        max_j = vals_v.map(&:length).max
+        (0..max_j - 1).each do |j|
+          if j.zero?
+            vals << uom_labels_max[j]
+          elsif uom_labels_max[j - 1] == uom_labels_max[j]
+            vals << nil
+          else
+            vals << uom_labels_max[j]
+          end
+
+          (0..vals_v.count - 1).each do |k|
+            vals << vals_v[k][j]
           end
           sheet.add_row vals
-        else
-          sheet.add_row [label, s.code, s.name]
+          # vals = [nil, nil, nil, nil]
+          vals = [nil, nil, nil]
         end
-
+        # end
         work_package = s.work_package_code
       end
     end
@@ -123,37 +157,44 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row
       sheet.add_row ['Tupe involvement', @report.tupe_flag]
       sheet.add_row
-      sheet.add_row ['Contract start date', @report.start_date.to_date], style: [nil, date]
+      sheet.add_row ['Contract start date', @report.start_date&.to_date], style: [nil, date]
       sheet.add_row
       sheet.add_row ['3. Price and sub-lot recommendation']
       sheet.add_row ['Assessed Value', @report.assessed_value], style: [nil, ccy]
       sheet.add_row ['Assessed value estimated accuracy'], style: [nil, ccy]
       sheet.add_row
-      sheet.add_row ['Lot recommendation', @report.assessed_value]
+      sheet.add_row ['Lot recommendation', @report.current_lot]
       sheet.add_row ['Direct award option']
       sheet.add_row
-      sheet.add_row ['4. Supplier Shortlist']
+      # sheet.add_row ['4. Supplier Shortlist']
+      label = '4. Supplier Shortlist'
       @report.selected_suppliers(@current_lot).each do |supplier|
-        sheet.add_row [nil, supplier.data['supplier_name']]
+        sheet.add_row [label, supplier.data['supplier_name']]
+        label = nil
       end
       sheet.add_row
 
-      sheet.add_row ['5. Regions summary']
+      # sheet.add_row ['5. Regions summary']
+      label = '5. Regions summary'
       FacilitiesManagement::Region.all.select { |region| @data['posted_locations'].include? region.code }.each do |region|
-        sheet.add_row [nil, region.name]
+        sheet.add_row [label, region.name]
+        label = nil
       end
       sheet.add_row
 
-      sheet.add_row ['6 Services summary']
+      # sheet.add_row ['6 Services summary']
       services = FacilitiesManagement::Service.where(code: @data['posted_services'])
       services.sort_by!(&:code)
+      label = '6 Services summary'
       services.each do |s|
-        sheet.add_row [nil, s.name]
+        sheet.add_row [label, s.name]
+        label = nil
       end
       sheet.add_row
     end
     # package.to_stream.read
   end
+  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Style/ConditionalAssignment

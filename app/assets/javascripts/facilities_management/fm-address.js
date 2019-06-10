@@ -159,10 +159,25 @@ $(() => {
         e.preventDefault();
 
         if (isAddressValid(address)) {
+
             currentBuilding.address = address;
             pageUtils.setCachedData('fm-new-address', address);
-            // location.href = '/facilities-management/buildings/new-building#fm-internal-square-area'
-            $('#fm-manual-address-entry-form').submit()
+            pageUtils.setCachedData('fm-current-region', 'Region not found for this postcode');
+
+            let post_code = $('#fm-address-postcode').val();
+            post_code = pageUtils.formatPostCode(post_code);
+            pageUtils.setCachedData('fm-postcode', post_code);
+
+            $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
+                .done(function (data) {
+                    if (data && data.result && data.result.region) {
+                        pageUtils.setCachedData('fm-current-region', data.result.region);
+                    }
+                    $('#fm-manual-address-entry-form').submit();
+                })
+                .fail(function (data) {
+                    $('#fm-manual-address-entry-form').submit()
+                });
         }
 
     });

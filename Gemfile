@@ -63,6 +63,9 @@ gem 'roo', '~> 2.8.0'
 # manipulating JSON for anonymisation
 gem 'jsonpath', '~> 0.5.8'
 
+# robust file download from URL using open-uri
+gem 'down'
+
 # state machine
 gem 'aasm', '~> 5.0'
 
@@ -71,18 +74,20 @@ gem 'sidekiq', '~> 5.2.7'
 gem 'sinatra', '~> 2.0.5', require: false
 gem 'slim', '~> 4.0.1'
 
+# for rspec and ST data generation script
+gem 'capybara'
+gem 'faker'
+
 group :production do
   # for S3 storage of files
-  gem 'fog-aws', '~> 3.5.0'
+  gem 'carrierwave-aws', '~> 1.3.0'
 end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'capybara'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'faker'
   gem 'launchy'
   gem 'pry-rails'
   gem 'rails-controller-testing'

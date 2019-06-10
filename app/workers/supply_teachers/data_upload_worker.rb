@@ -1,4 +1,6 @@
 require 'rake'
+require 'aws-sdk-s3'
+
 module SupplyTeachers
   class DataUploadWorker
     include Sidekiq::Worker
@@ -28,11 +30,11 @@ module SupplyTeachers
     end
 
     def data_file
-      if Rails.env.production?
-        './lib/tasks/supply_teachers/output/data.json'
-      else
-        './lib/tasks/supply_teachers/output/anonymous.json'
-      end
+      # always use anonymous.json for now - need to set this up for production to use data.json
+      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+      file_path = './storage/supply_teachers/current_data/output/anonymous.json'
+      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object('supply_teachers/current_data/output/anonymous.json').get(response_target: file_path)
+      file_path
     end
   end
 end
