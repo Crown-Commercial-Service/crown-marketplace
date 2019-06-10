@@ -26,11 +26,11 @@ namespace :st do
 
     s3 = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
 
-    input = File.dirname('./storage/supply_teachers/current_data/input/')
+    input = File.dirname('./storage/supply_teachers/current_data/input')
     unless File.directory?(input)
       FileUtils.mkdir_p(input)
     end
-    output = File.dirname('./storage/supply_teachers/current_data/output/errors.out.tmp')
+    output = File.dirname('./storage/supply_teachers/current_data/output')
     unless File.directory?(output)
       FileUtils.mkdir_p(output)
     end
