@@ -206,7 +206,7 @@ $(() => {
 
     let tempServices;
 
-    $('#fm-select-all-services').change((e) => {
+    $('#fm-select-all-services').on('change', (e) => {
 
 
         let checked = $('#fm-select-all-services').is(':checked');
