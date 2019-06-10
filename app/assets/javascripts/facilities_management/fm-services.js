@@ -89,7 +89,7 @@ $(() => {
 
         /!* remove from the array that is saved *!/
         let filtered = selectedServices.filter((value, index, arr) => {
-            if (value !== id) {
+            if (value.code !== id) {
                 return true;
             } else {
                 return false;
