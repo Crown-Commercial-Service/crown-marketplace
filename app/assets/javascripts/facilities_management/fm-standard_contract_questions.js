@@ -47,7 +47,7 @@ $(() => {
                 return false;
             });
 
-            $('#fm-remove-extension-' + (index + 1)).click((e) => {
+            $('#fm-remove-extension-' + (index + 1)).on('click', (e) => {
                 e.preventDefault();
                 removeExtension(extension.id + '-container');
             });
@@ -108,7 +108,7 @@ $(() => {
 
     });
 
-    $('#fm-contract-length').keypress(function (event) {
+    $('#fm-contract-length').on('keypress', (event) => {
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
@@ -131,12 +131,12 @@ $(() => {
         updateFMExtensionCounts();
     });
 
-    $('#fm-contract-extension-yes').click((e) => {
+    $('#fm-contract-extension-yes').on('click', (e) => {
         $('#fm-contract-yes-container').attr('hidden', false);
         cacheExtensions();
     });
 
-    $('#fm-contract-extension-no').click((e) => {
+    $('#fm-contract-extension-no').on('click', (e) => {
         $('#fm-contract-yes-container').attr('hidden', true);
         pageUtils.clearCashedData('fm-contract-extensions');
         removeAllExtensions();
@@ -168,7 +168,7 @@ $(() => {
         return result;
     });
 
-    $('#fm-add-another-extension-link').click((e) => {
+    $('#fm-add-another-extension-link').on('click', (e) => {
         e.preventDefault();
         let totalExtensionYears = calcTotalExtensionYears();
 
@@ -251,7 +251,7 @@ $(() => {
         }
     });
 
-    $('input[name="contract-cost-radio"]').click((e) => {
+    $('input[name="contract-cost-radio"]').on('click', (e) => {
 
         let isContractValueKnown = e.target.value === 'yes' ? true : false;
 
@@ -269,7 +269,7 @@ $(() => {
         pageUtils.setCachedData('fm-contract-cost', e.target.value);
     });
 
-    $('input[name="contract-tupe-radio"]').click((e) => {
+    $('input[name="contract-tupe-radio"]').on('click', (e) => {
         let result = e.target.value === 'yes' ? true : false;
         pageUtils.setCachedData('fm-contract-tupe', result);
     });
@@ -296,7 +296,7 @@ $(() => {
         if (isValid === true) {
             // location.href = '/facilities-management/buildings-list';
             $('#fm-extension-sum').attr('value', calcTotalExtensionYears());
-            $('#fm-seq-form').submit()
+            $('#fm-seq-form').trigger('submit');
 
         } else {
             $("html, body").animate({scrollTop: 0}, "1");
