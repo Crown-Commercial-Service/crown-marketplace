@@ -36,7 +36,7 @@ RSpec.describe LegalServices::JourneyController, type: :controller, auth: true d
         central_government: 'yes'
       }
 
-      expect(response).to render_template('check_suitability')
+      expect(response).to render_template('check_suitability2')
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe LegalServices::JourneyController, type: :controller, auth: true d
         central_government: 'no'
       }
 
-      expect(response).to render_template('choose_services_area')
+      expect(response).to render_template('select_lot')
     end
   end
 end

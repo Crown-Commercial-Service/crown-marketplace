@@ -32,10 +32,10 @@ module Postcode
     # SELECT COUNT (*) FROM os_address;
     def self.count
       ActiveRecord::Base.connection_pool.with_connection do |db|
-        result = db.exec_query 'SELECT COUNT (postcode) FROM os_address;'
+        result = db.exec_query "SELECT reltuples AS approximate_row_count FROM pg_class WHERE relname = 'os_address';"
         return 0 if result.nil?
 
-        result[0]['count']
+        result.rows[0][0].to_i
       end
     end
 
@@ -62,7 +62,7 @@ module Postcode
     # private class methods
     class << self
       def uploader(access_key, secret_access_key, bucket, region)
-        rake 'db:postcode', access_key, secret_access_key, bucket, region
+        rake 'db:webpostcode', access_key, secret_access_key, bucket, region
 
         { status: 200, result: "Uploading postcodes from AWS bucket #{bucket}, region: #{region}" }
       end

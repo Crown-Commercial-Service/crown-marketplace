@@ -16,11 +16,7 @@ module ApplicationHelper
   end
 
   def support_email_link(label)
-    govuk_email_link(
-      Marketplace.support_email_address,
-      label,
-      css_class: 'govuk-link ga-support-mailto'
-    )
+    govuk_email_link(Marketplace.support_email_address, label, css_class: 'govuk-link ga-support-mailto')
   end
 
   def dfe_account_request_url
@@ -32,7 +28,7 @@ module ApplicationHelper
   end
 
   def govuk_email_link(email_address, aria_label, css_class: 'govuk-link')
-    mail_to(email_address, email_address, class: css_class, 'aria-label': aria_label)
+    mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
   def govuk_form_group_with_optional_error(journey, *attributes)
@@ -124,5 +120,9 @@ module ApplicationHelper
 
   def landing_or_admin_page
     controller.action_name == 'landing_page' || controller.class.parent_name.underscore == 'supply_teachers/admin'
+  end
+
+  def a_supply_teachers_path?
+    controller.class.parent.name == 'SupplyTeachers'
   end
 end

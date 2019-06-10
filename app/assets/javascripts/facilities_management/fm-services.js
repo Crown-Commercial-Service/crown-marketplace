@@ -204,13 +204,27 @@ $(() => {
         }
     });
 
-    $('#fm-select-all-services').on('change', (e) => {
+    let tempServices;
+
+    $('#fm-select-all-services').change((e) => {
+
+
         let checked = $('#fm-select-all-services').is(':checked');
+
+        if (!checked) {
+            tempServices = pageUtils.getCachedData('fm-services');
+            pageUtils.clearCashedData('fm-services');
+        } else {
+            pageUtils.setCachedData('fm-services', tempServices);
+        }
+
         $('input[name="fm-building-service-checkbox"]').prop("checked", checked);
         $('input[name="fm-building-service-checkbox"]').trigger({
             type: "change",
             checked: checked
         });
+
+
         updateServiceCount();
 
     });

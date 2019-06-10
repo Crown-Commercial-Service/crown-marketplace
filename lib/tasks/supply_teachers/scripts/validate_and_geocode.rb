@@ -5,116 +5,163 @@ require 'uk_postcode'
 require 'geocoder'
 require 'yaml'
 require 'pathname'
-require './lib/tasks/supply_teachers/scripts/helpers/accredited_suppliers.rb'
+require 'csv'
+require 'roo'
+require 'aws-sdk-s3'
 
-suppliers = JSON.parse($stdin.read)
+def validate_and_geocode
 
-root_path = Pathname.new(__dir__).join('..')
-geocoder_cache = {}
-geocoder_cache_path = root_path.join('.geocoder-cache.yml')
+  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+  accredited_suppliers_path = './storage/supply_teachers/current_data/input/current_accredited_suppliers.xlsx'
+  FileUtils.touch(accredited_suppliers_path)
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH).get(response_target: accredited_suppliers_path)
+  supplier_lookup_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
+  FileUtils.touch(supplier_lookup_path)
+  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: supplier_lookup_path )
 
-if File.exist?(geocoder_cache_path)
-  File.open(geocoder_cache_path) do |file|
-    geocoder_cache = YAML.safe_load(file.read)
+  accredited_suppliers_workbook = Roo::Spreadsheet.open accredited_suppliers_path
+  suppliers = []
+  csv = CSV.open(supplier_lookup_path, headers: true)
+  csv.each do |row|
+    suppliers << row.to_h.transform_keys!(&:to_sym)
   end
-end
 
-Geocoder.configure(
-  lookup: :google,
-  api_key: ENV['GOOGLE_GEOCODING_API_KEY'],
-  units: :mi,
-  distance: :spherical,
-  cache: geocoder_cache
-)
+  lot_1_accreditation_sheet = accredited_suppliers_workbook.sheet('Lot 1 - Preferred Supplier List')
+  lot_1_accreditation =
+    lot_1_accreditation_sheet.parse(header_search: ['Supplier Name - Accreditation Held'])
 
-def geocode(postcode)
-  Geocoder.coordinates(postcode, params: { region: 'uk' })
-end
+  lot_2_accreditation_sheet = accredited_suppliers_workbook.sheet('Lot 2 - Master Vendor MSP')
+  lot_2_accreditation =
+    lot_2_accreditation_sheet.parse(header_search: ['Supplier Name - Accreditation Held'])
 
-def add_error(branch, error)
-  branch['errors'] ||= []
-  branch['errors'] << error
-end
+  lot_3_accreditation_sheet = accredited_suppliers_workbook.sheet('Lot 3 - Neutral Vendor MSP')
+  lot_3_accreditation =
+    lot_3_accreditation_sheet.parse(header_search: ['Supplier Name'])
 
-def errors?(branch)
-  branch['errors'] && !branch['errors'].empty?
-end
+  accredited_suppliers_hashes = lot_1_accreditation + lot_2_accreditation + lot_3_accreditation
+  accredited_supplier_names = accredited_suppliers_hashes.map(&:values).flatten
 
-def fix_telephone(row)
-  telephone = row['telephone']
-  if telephone.is_a?(String)
-    row.merge('telephone' => telephone.gsub(/^#/, ''))
-  elsif telephone.is_a?(Integer)
-    row.merge('telephone' => "0#{telephone}")
-  elsif telephone.is_a?(Float)
-    row.merge('telephone' => "0#{telephone.to_i}")
-  else
-    add_error(row, "telephone is unexpected type: #{telephone.inspect}")
-    row
+  @accredited_suppliers = suppliers.select do |supplier|
+    accredited_supplier_names.include?(supplier[:'accreditation supplier name'])
   end
-end
+# rubocop:disable Style/PreferredHashMethods, Rails/Blank
+  def supplier_accredited?(id)
+    return false if id.nil? || id.empty?
 
-def normalize_postcode(row)
-  postcode = UKPostcode.parse(row['postcode'])
-  if postcode.valid?
-    row.merge 'postcode' => postcode.to_s
-  else
-    add_error(row, "postcode not valid #{row['postcode']}")
-    row
+    @accredited_suppliers.select { |supplier| supplier.has_value?(id) }.any?
   end
-end
+# rubocop:enable Style/PreferredHashMethods, Rails/Blank
 
-def geocode_branch(row)
-  lat, lon = geocode(row['postcode'])
-  if lat && lon
-    row.merge('lat' => lat, 'lon' => lon)
-  else
-    add_error(row, "Unable to geocode #{row['postcode']}")
-    row
-  end
-end
 
-def check_contacts(row)
-  empty_contacts = !row['contacts'] || row['contacts'].empty?
-  add_error(row, 'Missing/malformed contacts: amount of contact names and emails don’t match') if empty_contacts
-  row
-end
 
-def add_empty_lists(supplier)
-  supplier['branches'] ||= []
-  supplier['pricing'] ||= []
-  supplier['master_vendor_pricing'] ||= []
-  supplier['neutral_vendor_pricing'] ||= []
-end
+  suppliers = JSON.parse(File.read('./storage/supply_teachers/current_data/output/data_with_vendors.json.tmp'))
+  geocoder_cache = {}
+  geocoder_cache_path = ('./storage/supply_teachers/current_data/.geocoder-cache.yml')
 
-suppliers = suppliers.map do |supplier|
-  supplier.tap do |s|
-    next unless s['branches']
-
-    s['branches'] = s['branches']
-                    .map { |b| check_contacts(b) }
-                    .map { |b| fix_telephone(b) }
-                    .map { |b| normalize_postcode(b) }
-                    .map { |b| geocode_branch(b) }
-    add_empty_lists(s)
-  end
-end
-
-suppliers.map do |supplier|
-  supplier.tap do |s|
-    next unless s['branches']
-    branch_errors, branches = s['branches'].partition { |b| errors?(b) }
-    branch_errors.each do |branch|
-      warn "#{supplier['supplier_name']} - #{branch['branch_name']}: #{branch['errors'].inspect}. Check the branch row in the file 'input/Geographical Data all suppliers.xlsx'" if supplier_accredited?(supplier['supplier_name'])
+  if File.exist?(geocoder_cache_path)
+    File.open(geocoder_cache_path) do |file|
+      geocoder_cache = YAML.safe_load(file.read)
     end
-    s['branches'] = branches
+  else FileUtils.touch(geocoder_cache_path)
   end
-end
 
-suppliers = suppliers.sort_by { |s| s['supplier_name'] }
-# rubocop:disable Rails/Output
-puts JSON.pretty_generate(suppliers)
-# rubocop:enable Rails/Output
-File.open(geocoder_cache_path, 'w') do |file|
-  file.write(YAML.dump(geocoder_cache))
+  Geocoder.configure(
+    lookup: :google,
+    api_key: ENV['GOOGLE_GEOCODING_API_KEY'],
+    units: :mi,
+    distance: :spherical,
+    cache: geocoder_cache
+  )
+
+  def geocode(postcode)
+    Geocoder.coordinates(postcode, params: { region: 'uk' })
+  end
+
+  def add_error(branch, error)
+    branch['errors'] ||= []
+    branch['errors'] << error
+  end
+
+  def errors?(branch)
+    branch['errors'] && !branch['errors'].empty?
+  end
+
+  def fix_telephone(row)
+    telephone = row['telephone']
+    if telephone.is_a?(String)
+      row.merge('telephone' => telephone.gsub(/^#/, ''))
+    elsif telephone.is_a?(Integer)
+      row.merge('telephone' => "0#{telephone}")
+    elsif telephone.is_a?(Float)
+      row.merge('telephone' => "0#{telephone.to_i}")
+    else
+      add_error(row, "telephone is unexpected type: #{telephone.inspect}")
+      row
+    end
+  end
+
+  def normalize_postcode(row)
+    postcode = UKPostcode.parse(row['postcode'])
+    if postcode.valid?
+      row.merge 'postcode' => postcode.to_s
+    else
+      add_error(row, "postcode not valid #{row['postcode']}")
+      row
+    end
+  end
+
+  def geocode_branch(row)
+    lat, lon = geocode(row['postcode'])
+    if lat && lon
+      row.merge('lat' => lat, 'lon' => lon)
+    else
+      add_error(row, "Unable to geocode #{row['postcode']}")
+      row
+    end
+  end
+
+  def check_contacts(row)
+    empty_contacts = !row['contacts'] || row['contacts'].empty?
+    add_error(row, 'Missing/malformed contacts: amount of contact names and emails don’t match') if empty_contacts
+    row
+  end
+
+  def add_empty_lists(supplier)
+    supplier['branches'] ||= []
+    supplier['pricing'] ||= []
+    supplier['master_vendor_pricing'] ||= []
+    supplier['neutral_vendor_pricing'] ||= []
+  end
+
+  suppliers = suppliers.map do |supplier|
+    supplier.tap do |s|
+      next unless s['branches']
+
+      s['branches'] = s['branches']
+                        .map { |b| check_contacts(b) }
+                        .map { |b| fix_telephone(b) }
+                        .map { |b| normalize_postcode(b) }
+                        .map { |b| geocode_branch(b) }
+      add_empty_lists(s)
+    end
+  end
+
+  suppliers.map do |supplier|
+    supplier.tap do |s|
+      next unless s['branches']
+      branch_errors, branches = s['branches'].partition { |b| errors?(b) }
+      branch_errors.each do |branch|
+        warn "#{supplier['supplier_name']} - #{branch['branch_name']}: #{branch['errors'].inspect}. Check the branch row in the file 'input/Geographical Data all suppliers.xlsx'" if supplier_accredited?(supplier['supplier_name'])
+      end
+      s['branches'] = branches
+    end
+  end
+
+  suppliers = suppliers.sort_by { |s| s['supplier_name'] }
+  File.open('./storage/supply_teachers/current_data/output/data_with_line_numbers.json.tmp', 'w') do |f|
+    f.puts JSON.pretty_generate(suppliers)
+  end
+  File.open(geocoder_cache_path, 'w') do |file|
+    file.write(YAML.dump(geocoder_cache))
+  end
 end

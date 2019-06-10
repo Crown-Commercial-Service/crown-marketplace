@@ -5,19 +5,18 @@
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
     <strong class="govuk-heading-xl"> Supplier results</strong>
-    <div class="govuk-inset-text ccs-no-print">
-      <strong>On this page</strong><br>
-      <span>Based on your choices, we are showing suppliers in three different groups.</span>
-    </div>
+
   </fieldset>
   <p class="govuk-!-font-size-36">
-    <strong><span id="fm-long-list-supplier-count"><%= @supplier_count %></span> suppliers found</strong> based on total
-    contract value, when awarded.
+    <strong><span id="fm-long-list-supplier-count"><%= @supplier_count %></span> suppliers found</strong> who can
+    provide the services in your regions
   </p>
+  <p class="govuk-heading-m">Based on your selections, here are the shortlisted suppliers in all three sub-lots.<br>
+    The sub-lots are value banded, subject to your total contract value.</p>
 
   <!-- Start of filter section -->
   <div class="govuk-grid-row">
-    <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print" role="button">Hide
+    <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print govuk-!-margin-top-6" role="button">Hide
       filters</a><br>
     <div id="fm-filter-pane" class="govuk-grid-column-one-third">
       <%= render('facilities_management/long_list/filters') %>
@@ -31,15 +30,15 @@
     </div>
   </div>
   <div class="govuk-grid-row ccs-no-print">
-    <div class="govuk-inset-text">
-      <strong>Next steps</strong><br>
-      <span>We will now ask you questions about your procurement, buildings and costs.</span><br>
-      <span>You can open a competition for suppliers after you have received an assessed value from us.</span>
+    <div class="govuk-!-margin-top-4">
+      <span class="govuk-heading-m">Next steps</span><br>
+      <span class="govuk-!-font-size-24">We will now ask you questions about your requirements, buildings and services.</span><br>
+      <span class="govuk-!-font-size-24">Based on your answers, we will present your estimated cost, recommended sub-lot and a shortlist of suppliers.</span>
     </div>
 
     <%= form_tag '/facilities-management/standard-contract/questions', id: 'fm-long-list-form', method: :post do %>
       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-      <a id="fm-suppliers-continue-button" href="#" class="govuk-button ccs-no-print" role="button">Continue</a><br>
+      <a id="fm-suppliers-continue-button" href="#" class="govuk-button ccs-no-print govuk-!-margin-top-4" role="button">Continue</a><br>
     <% end %>
 
 
