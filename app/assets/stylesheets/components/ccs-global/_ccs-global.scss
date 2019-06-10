@@ -526,6 +526,15 @@ body.js-enabled #ccs-dynamic-accordian {
 }
 /* ccs supplier results v1 ends */
 
+/* supplier_details pg starts */
+.govuk-table {
+    th:first-child[class$="width-one-half"] + th:last-child {
+        border: 2px solid red !important;
+    }
+
+}
+/* supplier_details pg ends */
+
 
 /* small checkboxes starts */
 .ccs-govuk-checkboxes--s {
