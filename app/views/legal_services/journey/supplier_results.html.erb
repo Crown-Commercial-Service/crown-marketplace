@@ -48,9 +48,7 @@
                   <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service.attributes.lot1_regional_service.too_short') %>
                 </span>
 
-                  <% byebug %>
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
-                  <% byebug %>
                   <%sqlHash = {} %>
                   <% params[:lot1].each do | arg | %>
                     <% arg_no_slash = arg.gsub('/', '_') %>
@@ -59,18 +57,13 @@
                     <% sqlStr = "{:#{arg}=>'x'}" %>
                     <% sqlHash1 = eval(sqlStr) %>
                     <% sqlHash = sqlHash.merge(sqlHash1) %>
-                    <% byebug %>
                   <%end %>
-                  <%byebug %>
                   <% sqlStr ="{:region=>#{params[:region1]}}" %>
                   <% sqlHash1 = eval(sqlStr) %>
                   <% sqlHash = sqlHash.merge(sqlHash1) %>
-                  <% byebug %>
-                  <% byebug %>
                   <% lot1 =  LegalServices::Region.where(sqlHash) %>
                   <% sqlHash1 = eval(sqlStr) %>
                   <% sqlHash = sqlHash.merge(sqlHash1) %>
-                  <% byebug %>
                   <% lot1.each do |lot| %>
                     <div class="govuk-checkboxes__item">
                       <% lot_no_slash = lot.firm.gsub('/', '_') %>

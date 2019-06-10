@@ -592,6 +592,13 @@ en:
         lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
         lot4_txt: Lot 4 - Transport rail
         lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
+      supplier_results:
+        heading: Heading
+        hint: Hint
+        links_text_html: Links text html
+        remove_all: Remove all
+        txt01: Txt01
+        txt02: Txt02
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found
