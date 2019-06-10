@@ -599,14 +599,9 @@ en:
       supplier_results:
         download: Download the supplier list
         heading: Supplier results
-        hint: Hint
-        links_text_html: Links text html
-        remove_all: Remove all
         sub_heading: Lot 1 - Regional service provision
         suppliers: suppliers
         suppliers_pt2: can provide the legal services that meet your requirements
-        txt01: Txt01
-        txt02: Txt02
       supplier_results2:
         download: Download the supplier list
         heading: Supplier results

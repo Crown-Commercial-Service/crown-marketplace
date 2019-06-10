@@ -1,6 +1,5 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
-<<<<<<< HEAD
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
@@ -24,11 +23,9 @@
 
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
-
               <h1 class="govuk-caption-m govuk-!-margin-bottom-1">
                 <%= t('.heading') %>
               </h1>
-
             </div>
           </div>
 
@@ -49,7 +46,7 @@
                   <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service.attributes.lot1_regional_service.too_short') %>
                 </span>
 
-                <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
+                <div class="ccs-search-results">
                   <%sqlHash = {} %>
                   <% params[:lot1].each do | arg | %>
                     <% arg_no_slash = arg.gsub('/', '_') %>
@@ -62,9 +59,12 @@
                   <% sqlStr ="{:region=>#{params[:region1]}}" %>
                   <% sqlHash1 = eval(sqlStr) %>
                   <% sqlHash = sqlHash.merge(sqlHash1) %>
-                  <% lot1 =  LegalServices::Region.where(sqlHash) %>
+                  <% lot =  LegalServices::Region.where(sqlHash) %>
                   <% sqlHash1 = eval(sqlStr) %>
                   <% sqlHash = sqlHash.merge(sqlHash1) %>
+                  <% byebug %>
+                  <% lot1 = lot.shuffle %>
+                  <p><b><span class="govuk-!-font-size-27">lot1.count</span> <%= t('.suppliers') %></b> <%= t('.suppliers_pt2') %></p>
                   <% lot1.each do |lot| %>
                     <div class="govuk-checkboxes__item">
                       <% lot_no_slash = lot.firm.gsub('/', '_') %>
@@ -76,9 +76,12 @@
                                   class: "govuk-checkboxes__input",
                                   id: "lot_#{lot_no_space}"
                                 ) %>
-                      <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot_no_space %>">
-                        <%= lot.firm %>
-                      </label>
+                    
+                      <ul class="ccs-results-list govuk-!-margin-bottom-7">
+                        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+                          <%= lot.firm %>
+                        </li>
+                      </ul>
                     </div>
                   <% end %>
                 </div>
@@ -108,7 +111,6 @@
       <% end %>
 
     <% end %>
-=======
 
 
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
@@ -137,7 +139,6 @@
         <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
           <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
             Lorem ipsum
-
           </a>
         </li>
         <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
@@ -155,19 +156,16 @@
         <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
           <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
             Nunc et volutpat massa
-
           </a>
         </li>
         <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
           <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
             Duis placerat facilisis
-
           </a>
         </li>
         <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
           <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
             Morbi sit amet elit
-
           </a>
         </li>
         <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
@@ -193,7 +191,6 @@
       </nav><!-- numbered pagination HTML example two ends -->
 
     </div>
->>>>>>> 0dcd705d92a52c071ae7e2aad368d09190e6c6ee
 
   </div>
 </div>
