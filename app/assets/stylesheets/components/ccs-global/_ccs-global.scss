@@ -58,6 +58,11 @@ abbr {
   top: -3000px;
 }
 
+legend + p.ccs-legend-download {
+    margin-top: -#{govuk-spacing(2)};
+    margin-bottom: govuk-spacing(6);
+}
+
 /* keep for .validate html version
 .ccs-fully-hidden,
 div.govuk-error-summary + div#ccs-error-summary,
