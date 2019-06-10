@@ -1,5 +1,6 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
 
+<<<<<<< HEAD
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
@@ -107,6 +108,92 @@
       <% end %>
 
     <% end %>
+=======
+
+
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+
+
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <span class="govuk-caption-xl govuk-!-margin-bottom-0">
+      <%= t('.sub_heading') %>
+    </span>
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+      <%= t('.heading') %>
+    </h1>
+
+    <p><b><span class="govuk-!-font-size-27">5</span> <%= t('.suppliers') %></b> <%= t('.suppliers_pt2') %></p>
+
+    <a href="#" role="button" class="govuk-button govuk-!-padding-left-6 govuk-!-padding-right-6 govuk-!-margin-top-2"><%= t('.download') %></a>
+
+    <div class="ccs-search-results">
+
+      <ul class="ccs-results-list govuk-!-margin-bottom-7">
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Lorem ipsum
+
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Curabitur tellus enim
+            <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Nullam lobortis nibh
+            <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Nunc et volutpat massa
+
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Duis placerat facilisis
+
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Morbi sit amet elit
+
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Pellentesque posuere
+            <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
+          </a>
+        </li>
+      </ul>                 <!-- **** what message if there are no results? **** -->
+
+      <!-- numbered pagination HTML example two starts -->
+      <nav aria-label="Pagination Navigation">
+        <ul class="govuk-list ccs-pagination">
+            <li><a href="http://www.url.com" aria-current="true">1</a></li>
+            <li><a href="http://www.url.com">2</a></li>
+            <li><a href="http://www.url.com">3</a></li>
+            <li>&hellip;</li>
+            <li><a href="http://www.url.com">94</a></li>
+            <li class="ccs-last">
+                <a href="http://www.url.com" rel="next">Next page&nbsp;<b>&rarr;</b></a>
+            </li>
+        </ul>
+      </nav><!-- numbered pagination HTML example two ends -->
+
+    </div>
+>>>>>>> 0dcd705d92a52c071ae7e2aad368d09190e6c6ee
 
   </div>
 </div>
