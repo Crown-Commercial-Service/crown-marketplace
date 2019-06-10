@@ -57,6 +57,10 @@ en:
           attributes:
             lot1_regional_service:
               too_short: Select the legal service or services you need
+        legal_services/journey/lot1_regional_service2:
+          attributes:
+            lot1_regional_service2:
+              too_short: Select the legal service or services you need
         legal_services/journey/lot1_regional_services:
           attributes:
             lot:
@@ -477,8 +481,9 @@ en:
       cookie_link_aria_label: How we use cookies
       crown_copyright: "© Crown copyright"
       error_prefix: Error
+      feedback: feedback
       feedback_aria_label: Email your feedback on this service
-      feedback_html: This is a new service – your feedback (%{link}) will help us to improve it.
+      feedback_html: This is a new service – your (%{link}) will help us to improve it.
       having_problems: Having problems using this service?
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy
@@ -491,23 +496,21 @@ en:
   legal_services:
     home:
       index:
-        authorised_customer_list_link_text: authorised customer list
-        before_you_start:
-          heading: Before you start
-          use_this_service:
-            heading: 'You need to:'
-            item_1_html: be a recognised public sector body in the %{authorised_customer_list_link}
-            item_2_html: have read and understood the framework’s %{customer_guidance_document_link}
-            item_3: have put together a well-structured business case outlining the need for external legal support
-            item_4: have an estimate of your gross contract value
-        customer_guidance_document_link_text: customer guidance document
         heading: Find legal services for the wider public sector
+        ojeu_link_text: OJEU contract notice
+        ojeu_url_html: https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3788%20Contract%20notice%20OJEU.pdf
         use_this_service:
-          description: Using this service means you’re adhering to the public service procurement procedures.
-          heading: Use this service to download a short list of law firms that provide the legal services you need.
-          item_html: Central government can use this service to buy transactional property and litigation services if the value of the contract is &pound20,000 or less.
+          before_heading: Before you start
+          guidance_heading: Guidance and other useful documents
+          para01: Use this service to download a shortlist of suppliers that provide the legal services you need.
+          para02: Using this service means you're following the public sector procurement procedures.
+          para03_html: Central government can use this service to buy transactional property and litigation services if your contract budget is &pound;20,000 or less per matter.
+          para04_html: If you need legal services in a non-UK jurisdiction, contact <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> for help.
+          para05_html: To use this service you need to be a recognised public sector body listed in the <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3788-Contract-Notice-Authorised-Customer-List.docx">authorised customer list</a>.
+        wps_link_text: WPS Legal Services panel specification
+        wps_url: https://www.crowncommercial.gov.uk/agreements/RM3788
       service_not_suitable:
-        better_suited_framework_html: The <a href='https://www.crowncommercial.gov.uk/agreements/rm3786' target='_blank'>General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
+        better_suited_framework_html: The <a href="https://www.crowncommercial.gov.uk/agreements/rm3786" target="_blank">General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     journey:
       check_suitability:
@@ -544,23 +547,37 @@ en:
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
         hint: Select the services you need
+        links_text_html: If the services you need aren't listed here, the <a href="https://www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
       lot1_regional_service2:
-        heading: Heading
-        hint: Hint
-        remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot2_full_service:
-        heading: Lot 2 Full Service firms
+        heading: Lot 1 Regional service provision
         hint: Select the legal services you need
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
+      lot2_full_service:
+        heading: Lot 2 - Full-service firms
+        hint: Select the legal services you need
+        remove_all: Remove all
+        txt01: services selected
+        txt02: No services selected
+      lot3_results:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 3 - Property and construction
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
+      lot4_results:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 4 - Transport rail
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
       regional_legal_service:
-        heading: Where do you need the regional legal services?
+        heading: Lot 1 - Regional service provision
+        hint: Select the regions where you need legal services
         remove_all: Remove all
         txt01: regions selected
         txt02: No regions selected
@@ -579,6 +596,18 @@ en:
         lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
         lot4_txt: Lot 4 - Transport rail
         lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
+      supplier_results:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 1 - Regional service provision
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
+      supplier_results2:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 2 - Full service firms
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
     suppliers:
       cg_no_suppliers_found:
         heading: No suppliers were found

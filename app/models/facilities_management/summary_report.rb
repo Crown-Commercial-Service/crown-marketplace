@@ -24,8 +24,10 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
+      @gia_services = CCS::FM::Service.gia_services
     end
 
+    # rubocop:disable Metrics/AbcSize
     def calculate_services_for_buildings
       selected_services
 
@@ -42,13 +44,16 @@ module FacilitiesManagement
         (selected_services & b_services).any?
       end
 
-      uvals = uom_values
+      uvals = uom_values(selected_buildings, selected_services)
 
       selected_buildings.each do |building|
         id = building['building_json']['id']
-        services building.building_json, (uvals.select { |u| u['building_id'] == id })
+        vals_per_building = services(building.building_json, (uvals.select { |u| u['building_id'] == id }))
+        @sum_uom += vals_per_building[:sum_uom]
+        @sum_benchmark += vals_per_building[:sum_uom]
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def with_pricing
       # CCS::FM::Rate.non_zero_rate
@@ -84,8 +89,12 @@ module FacilitiesManagement
       suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
     end
 
+    # if services have no costings, just return the contract cost (do not divide the contract cost by 3 or 2)
     def assessed_value
-      return (@sum_uom + @sum_benchmark + @contract_cost) / 3 unless @contract_cost.zero?
+      buyer_input = @contract_cost * @contract_length_years.to_f
+      return buyer_input if buyer_input != 0.0 && @sum_uom == 0.0 && @sum_benchmark == 0.0
+
+      return (@sum_uom + @sum_benchmark + buyer_input) / 3 unless buyer_input.zero?
 
       (@sum_uom + @sum_benchmark) / 2
     end
@@ -112,18 +121,54 @@ module FacilitiesManagement
       end
     end
 
-    def uom_values
+    # rubocop:disable Metrics/AbcSize
+    def uom_values(selected_buildings, selected_services)
       uvals = CCS::FM::UnitOfMeasurementValues.values_for_user(@user_id)
       uvals = uvals.map(&:attributes)
 
-      lifts_per_building.each do |b|
-        b['lift_data']['lift_data']['floor-data'].each do |l|
-          uvals << { 'user_id' => b['user_id'], 'service_code' => 'C.5', 'uom_value' => l.first[1], 'building_id' => b['building_id'] }
+      # add labels for spreadsheet
+      uvals.each do |u|
+        uoms = CCS::FM::UnitsOfMeasurement.service_usage(u['service_code'])
+        u['title_text'] = uoms.last['title_text']
+        u['example_text'] = uoms.last['example_text']
+      end
+
+      lift_service = uvals.select { |s| s['service_code'] == 'C.5' }
+      if lift_service.count.positive?
+        lifts_title_text = lift_service.last['title_text']
+        lifts_example_text = lift_service.last['title_text']
+
+        uvals.reject! { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
+
+        lifts_per_building.each do |b|
+          b['lift_data']['lift_data']['floor-data'].each do |l|
+            uvals << { 'user_id' => b['user_id'],
+                       'service_code' => 'C.5',
+                       'uom_value' => l.first[1],
+                       'building_id' => b['building_id'],
+                       'title_text' => lifts_title_text,
+                       'example_text' => lifts_example_text }
+          end
         end
       end
 
-      uvals.reject! { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
+      selected_buildings.each do |b|
+        selected_services.each do |s|
+          next unless @gia_services.include? s
+
+          s_dot = s.gsub('-', '.')
+          uvals << { 'user_id' => b['user_id'],
+                     'service_code' => s_dot,
+                     'uom_value' => b['building_json']['gia'].to_f,
+                     'building_id' => b['building_json']['id'],
+                     'title_text' => 'What is the total internal area of this building?',
+                     'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm' }
+        end
+      end
+
+      uvals
     end
+    # rubocop:enable Metrics/AbcSize
 
     def lifts_per_building
       lifts_per_building = CCS::FM::Lift.lifts_for_user(@user_id)
@@ -179,6 +224,9 @@ module FacilitiesManagement
     # rubocop:enable Metrics/PerceivedComplexity
 
     def services(building_data, uvals)
+      sum_uom = 0.0
+      sum_benchmark = 0.0
+
       copy_params building_data
       # id = building_data['id']
 
@@ -194,17 +242,22 @@ module FacilitiesManagement
         #
 
         # occupants = occupants(v['service_code'], building_data)
-        occupants = v['uom_value'] if v['service_code'] == 'G.3'
+        occupants = v['uom_value'] if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
 
         uom_value = v['uom_value'].to_f
 
         code = v['service_code'].remove('.')
         calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants.to_i, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
-        @sum_uom += calc_fm.sumunitofmeasure
-        @sum_benchmark = calc_fm.benchmarkedcostssum
+        sum_uom += calc_fm.sumunitofmeasure
+        sum_benchmark += calc_fm.benchmarkedcostssum
       end
+      { sum_uom: sum_uom,
+        sum_benchmark: sum_benchmark }
     rescue StandardError => e
       raise e
+    ensure
+      { sum_uom: sum_uom,
+        sum_benchmark: sum_benchmark }
     end
   end
 end

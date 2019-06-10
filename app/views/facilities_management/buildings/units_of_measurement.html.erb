@@ -8,7 +8,9 @@
     <div class="govuk-grid-column-full">
       <%= render('errors/inline_error_summary') %>
       <h2 class="govuk-caption-xl">Building - <span id="fm-building-name"></span></h2>
-      <h1 class="govuk-heading-xl"><%= @service_title %> </h1>
+      <h1 class="govuk-heading-xl"><%= @service_title %>
+        <% if !@service_title.include? "service" %> service
+        <% end %></h1>
     </div>
   </div>
   <div class="govuk-grid-row"

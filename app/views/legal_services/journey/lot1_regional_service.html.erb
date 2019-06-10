@@ -24,8 +24,6 @@
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
 
-              <%= display_error(@journey, :lot1_region) %>
-
               <h1 class="govuk-caption-m govuk-!-margin-bottom-1">
                 <%= t('.heading') %>
               </h1>
@@ -39,7 +37,6 @@
             <section id="accordion-default" class="govuk-grid-column-two-thirds">
 
                 <%= govuk_fieldset_with_optional_error(@journey, :lot1_region) do %>
-                <!-- 'aria-describedby': 'hint' -->
 
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-1">
                   <%= t('.hint') %>
@@ -53,28 +50,29 @@
 
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                <% lot1 = ['Child law', 'Court of protection','Debt recovery','Education','Employment','Healthcare','Intellectual property', 'Licensing',  'Litigation / dispute resolution','Pensions','Planning and Environment','Primary care', 'Property and contruction','Social housing'] %>
-
+                  <% lot1 = LegalServices::Lot.all %>
                   <% lot1.each do |lot| %>
+                  <% if lot.number == "1" %>
                     <div class="govuk-checkboxes__item">
-                      <% lot_no_slash = lot.gsub('/', '_') %>
+                      <% lot_no_slash = lot.description.gsub('/', '_') %>
                       <% lot_no_space = lot_no_slash.gsub(' ', '_') %>
                       <%= check_box_tag(
                                   "lot1_regional_service",
-                                  lot,
+                                  lot.description,
                                   false,
                                   class: "govuk-checkboxes__input",
                                   id: "lot_#{lot_no_space}"
                                 ) %>
                       <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot_no_space %>">
-                        <%= lot %>
+                        <%= lot.description %>
                       </label>
                     </div>
+                  <% end %>
                   <% end %>
                 </div>
 
                 <p id="hint" class="govuk-body govuk-!-margin-top-7 govuk-!-margin-bottom-0">
-                  If the services you need aren't listed here, the <a href="https:www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
+                  <%= t('.links_text_html') %>
                 </p>
 
               <%= submit_tag t('common.submit'), id: 'submit01', class: "govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-8 govuk-!-padding-left-7 govuk-!-padding-right-7" %>
