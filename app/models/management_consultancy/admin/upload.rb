@@ -5,10 +5,10 @@ module ManagementConsultancy
       self.table_name = 'management_consultancy_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      SUPPLIERS_PATH = './lib/tasks/management_consultancy/input/Suppliers.xlsx'.freeze
-      SUPPLIER_SERVICE_OFFERINGS_PATH = './lib/tasks/management_consultancy/input/Service offerings.xlsx'.freeze
-      SUPPLIER_REGIONAL_OFFERINGS_PATH = './lib/tasks/management_consultancy/input/Regional offerings.xlsx'.freeze
-      RATE_CARDS_PATH = './lib/tasks/management_consultancy/input/rate_cards.xlsx'.freeze
+      SUPPLIERS_PATH = './storage/management_consultancy/current_data/input/Suppliers.xlsx'.freeze
+      SUPPLIER_SERVICE_OFFERINGS_PATH = './storage/management_consultancy/current_data/input/Service offerings.xlsx'.freeze
+      SUPPLIER_REGIONAL_OFFERINGS_PATH = './storage/management_consultancy/current_data/input/Regional offerings.xlsx'.freeze
+      RATE_CARDS_PATH = './storage/management_consultancy/current_data/input/rate_cards.xlsx'.freeze
 
       mount_uploader :suppliers, ManagementConsultancyFileUploader
       mount_uploader :rate_cards, ManagementConsultancyFileUploader
@@ -80,7 +80,7 @@ module ManagementConsultancy
       private
 
       def start_upload
-        SupplyTeachers::DataUploadWorker.perform_async(id)
+        ManagementConsultancy::DataUploadWorker.perform_async(id)
       end
 
       def reject_uploads_and_cp_files

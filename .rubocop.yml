@@ -12,6 +12,7 @@ AllCops:
         - 'vendor/**/*'
         - 'tmp/**/*'
         - 'lib/tasks/supply_teachers/**/*'
+        - 'lib/tasks/management_consultancy/**/*'
         - 'config/initializers/carrierwave.rb'
 
 Rails:

@@ -39,9 +39,13 @@ logfile
 uploads/*
 public/data/*
 public/supply_teachers/data/*
+#public/management_consultancy/data/*
 public/uploads/*
+storage/management_consultancy/data*
 storage/supply_teachers/data*
 storage/supply_teachers/.geocoder-cache.yml
+!/storage/management_consultancy/input/.gitignore
+!/storage/management_consultancy/output/.gitignore
 !/storage/supply_teachers/input/.gitignore
 !/storage/supply_teachers/output/.gitignore
 

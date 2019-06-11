@@ -12,7 +12,7 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
     let(:suppliers) do
       [
         {
-          'supplier_name' => supplier_name,
+          'name' => supplier_name,
           'supplier_id' => supplier_id,
           'contact_email' => contact_email,
           'telephone_number' => telephone_number,

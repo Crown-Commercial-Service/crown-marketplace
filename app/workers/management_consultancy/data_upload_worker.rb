@@ -29,9 +29,9 @@ module ManagementConsultancy
 
     def data_file
       if Rails.env.production?
-        './lib/tasks/management_consultancy/output/data.json'
+        './storage/management_consultancy/current_data/output/data.json'
       else
-        './lib/tasks/supply_teachers/management_consultancy/anonymous.json'
+        './storage/supply_teachers/management_consultancy/current_data/data.json'
       end
     end
   end

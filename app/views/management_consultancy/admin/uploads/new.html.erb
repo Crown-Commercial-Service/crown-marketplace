@@ -22,10 +22,10 @@
         <%= f.hidden_field :suppliers_cache %>
       <% end %>
       <%= govuk_form_group_with_optional_error(@upload, :supplier_service_offerings) do %>
-        <%= f.label :supplier_service_offerings, class: "govuk-label" %>
         <%= display_errors(@upload, :supplier_service_offerings)%>
+        <%= f.label :supplier_service_offerings, class: "govuk-label" %>
         <%= f.file_field :supplier_service_offerings, class: css_classes_for_file_upload(@upload, :supplier_service_offerings) %>
-        <%= f.hidden_field :supplier_service_offerings %>
+        <%= f.hidden_field :supplier_service_offerings_cache %>
       <% end %>
       <%= govuk_form_group_with_optional_error(@upload, :supplier_regional_offerings) do %>
         <%= display_errors(@upload, :supplier_regional_offerings) %>

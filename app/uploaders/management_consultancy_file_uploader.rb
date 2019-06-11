@@ -4,7 +4,7 @@ class ManagementConsultancyFileUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "data/management_consultancy/#{mounted_as}/#{model.id}"
+    "management_consultancy/data/#{mounted_as}/#{model.id}"
   end
 
   def size_range
@@ -15,5 +15,9 @@ class ManagementConsultancyFileUploader < CarrierWave::Uploader::Base
   # For images you might use something like this:
   def extension_whitelist
     %w[xls xlsx csv]
+  end
+
+  def cache_dir
+    Rails.root.join('storage', 'management_consultancy', 'tmp', 'uploads')
   end
 end

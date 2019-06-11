@@ -1,4 +1,6 @@
 require 'rake'
+require 'aws-sdk-s3'
+
 module ManagementConsultancy
   class DataScriptWorker
     include Sidekiq::Worker
@@ -10,10 +12,10 @@ module ManagementConsultancy
       Rake::Task['mc:clean'].invoke
       Rake::Task['mc:data'].invoke
 
-      if File.zero?('./lib/tasks/management_consultancy/output/errors.out')
+      if File.zero?('./storage/management_consultancy/current_data/output/errors.out')
         upload.review!
       else
-        file = File.open('./lib/tasks/management_consultancy/output/errors.out')
+        file = File.open('./storage/management_consultancy/current_data/output/errors.out')
         fail_upload(upload, 'There is an error with your files: ' + file.read)
       end
     rescue StandardError => e
