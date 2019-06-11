@@ -144,11 +144,13 @@ form.ccs-form {
         margin-left: govuk-spacing(1);
     }
     h1.govuk-heading-xl & {
-        padding: 0 govuk-spacing(3);
+        padding: 0 govuk-spacing(2);
         vertical-align: super;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
     }
     p.govuk-body & {
-        padding: 0 govuk-spacing(3);
+        padding: 0 govuk-spacing(2);
     }
 
     a.ccs-no-underline & {
@@ -528,7 +530,7 @@ body.js-enabled #ccs-dynamic-accordian {
 
 /* supplier_details pg starts */
 .govuk-table {
-    @media (min-width: 40.0625em){//desktop
+    @media (min-width: 992px){//desktop/large
         th:first-child[class$="width-one-half"] ~ :last-child {
             text-align: right;
         }
@@ -536,10 +538,12 @@ body.js-enabled #ccs-dynamic-accordian {
             padding-left: govuk-spacing(8);
         }
     }
-    @media (max-width: 40.0624em) {//not desktop
+    @media (max-width: 991px) {//not desktop
         th:first-child[class$="width-one-half"] ~ th,
         th:first-child[class$="width-one-half"] ~ td {
+            text-align: right;
             padding-left: govuk-spacing(2);
+            padding-right: govuk-spacing(0);
         }
     }
 }
@@ -760,8 +764,10 @@ table.ccs-at-govuk-table--5050 {
     padding: govuk-spacing(3);
     margin: 0 0 govuk-spacing(7) 0;
 
-    &.ccs-info-panel--pull-up {
-        margin-top: -#{govuk-spacing(3)} !important;
+    @media (min-width: 40.0625em){//desktop
+        &.ccs-info-panel--pull-up {
+            margin-top: -#{govuk-spacing(3)} !important;
+        }
     }
 
     dl.ccs-contact-details {
