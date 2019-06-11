@@ -108,7 +108,7 @@ $(() => {
 
     });
 
-    $('#fm-post-code-lookup-button').click((e) => {
+    $('#fm-post-code-lookup-button').on('click', (e) => {
         e.preventDefault();
         if (pageUtils.isPostCodeValid(postCode)) {
             pageUtils.setCachedData('fm-postcode', postCode.toUpperCase());
@@ -150,30 +150,31 @@ $(() => {
         }
     });
 
-    $('#fm-change-postcode').click((e) => {
+    $('#fm-change-postcode').on('click', (e) => {
         $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
         $('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
     });
 
-    $('#fm-buildings-add-building').click((e) => {
+    $('#fm-buildings-add-building').on('click', (e) => {
         fm.clearBuildingCache();
         e.preventDefault()
         $('#fm-new-building-form').submit()
     });
 
-    $('#fm-internal-square-area').change((e) => {
+    $('#fm-internal-square-area').on('change', (e) => {
 
-        let value = e.target.value;
-        value = (value && value.length > 0) ? parseInt(value) : 0;
-        pageUtils.setCachedData('fm-gia', value);
-        if (value > 0) {
-            pageUtils.showGIAError(false, '');
-        } else {
-            pageUtils.showGIAError(true, '');
+            let value = e.target.value;
+            value = (value && value.length > 0) ? parseInt(value) : 0;
+            pageUtils.setCachedData('fm-gia', value);
+            if (value > 0) {
+                pageUtils.showGIAError(false, '');
+            } else {
+                pageUtils.showGIAError(true, '');
+            }
         }
-    });
+    );
 
-    $('input[name="fm-builing-type-radio"]').click((e) => {
+    $('input[name="fm-builing-type-radio"]').on('click', (e) => {
         let value = e.target.value;
         let buildingTypeOther = $('#other-building-type').value;
         let currentBuilding = pageUtils.getCachedData('fm-current-building');
@@ -206,7 +207,7 @@ $(() => {
         return result;
     });
 
-    $('#other-building-type').keypress(function (e) {
+    $('#other-building-type').on('keypress', (e) => {
         let regex = new RegExp("^[a-zA-Z0-9 ]+$");
         let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         if (regex.test(str)) {
@@ -215,8 +216,6 @@ $(() => {
         e.preventDefault();
         return false;
     });
-
-    //FM-delete-building-link
 
     $('a[name=FM-delete-building-link]').on('click', (e) => {
         e.preventDefault();
@@ -227,7 +226,7 @@ $(() => {
 
     });
 
-    $('#fm-building-type-continue').click((e) => {
+    $('#fm-building-type-continue').on('click', (e) => {
         if (isBuildingTypeValid() === true) {
             pageUtils.toggleInlineErrorMessage(false);
             let currentBuilding = pageUtils.getCachedData('fm-current-building');
