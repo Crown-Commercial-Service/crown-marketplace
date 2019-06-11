@@ -55,8 +55,11 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
 
   def add_uom_value(email_address, building_id, service_code, value)
     Rails.logger.info '==> FMServiceData.add_uom_value()'
-    query = "INSERT INTO fm_uom_values (user_id, service_code, uom_value,building_id)
-             VALUES ('" + Base64.encode64(email_address) + "','" + service_code + "','" + value + "','" + building_id + "');"
+    query = "insert into fm_uom_values (user_id, service_code, uom_value, building_id)
+     select '" + Base64.encode64(email_address) + "', '" + service_code + "', '" + value + "', '" + building_id + "'
+		where not exists (select 1 from fm_uom_values where user_id = '" + Base64.encode64(email_address) + "'
+				and service_code = '" + service_code + "'
+				and building_id = '" + building_id + "');"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't add unit of measurement data: #{e}"
