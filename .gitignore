@@ -46,4 +46,5 @@ storage/supply_teachers/.geocoder-cache.yml
 !/storage/supply_teachers/output/.gitignore
 
 # Redis dump
-dump.rdb
+dump.rdblib/tasks/supply_teachers/input/
+nbproject/

@@ -45,7 +45,7 @@ $(() => {
         return isValid;
     });
 
-    $('#fm-uom-input').keypress(function (e) {
+    $('#fm-uom-input').on('keypress', (e) => {
         let regex = new RegExp("^[0-9]+$");
         let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         if (regex.test(str)) {
@@ -55,7 +55,7 @@ $(() => {
         return false;
     });
 
-    $('#fm-unit-of-measurement-submit').click((e) => {
+    $('#fm-unit-of-measurement-submit').on('click', (e) => {
         e.preventDefault();
         let building_id = $('#fm-building-uom-id').attr('value');
         let service_code = $('#fm-service-uom-code').attr('value');
