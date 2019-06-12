@@ -1,3 +1,12 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+
+
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+
+
+
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
@@ -9,72 +18,72 @@
       <%= t('.heading') %>
     </h1>
 
-      <%sqlHash = {} %>
-      <% params[:lot1].each do | arg | %>
-        <% arg_no_slash = arg.gsub('/', '_') %>
-        <% arg_no_space = arg_no_slash.gsub(' ', '_') %>
-        <% arg = arg_no_space.downcase %>
-        <% sqlStr = "{:#{arg}=>'x'}" %>
-        <% sqlHash1 = eval(sqlStr) %>
-        <% sqlHash = sqlHash.merge(sqlHash1) %>
-      <%end %>
-      <% sqlStr ="{:region=>#{params[:region1]}}" %>
-      <% sqlHash1 = eval(sqlStr) %>
-      <% sqlHash = sqlHash.merge(sqlHash1) %>
-      <% lot =  LegalServices::Region.where(sqlHash) %>
-      <% sqlHash1 = eval(sqlStr) %>
-      <% sqlHash = sqlHash.merge(sqlHash1) %>
-      <% firms = [] %>
-      <% lot1 = lot %>
-      <% lot1.each do |lot| %>
-        <% firms << lot.firm %>
-      <% end %>
-      <% firms.uniq! %>
-      <% firms.shuffle %>
-
-    <p><b><span class="govuk-!-font-size-27"><%= firms.count %></span> <%= t('.suppliers') %></b> <%= t('.suppliers_pt2') %></p>
+    <p><b><span class="govuk-!-font-size-27">5</span> <%= t('.suppliers') %></b> <%= t('.suppliers_pt2') %></p>
 
     <%= link_to t('.download'), legal_services_suppliers_download_shortlist_path, role: 'button', class: 'govuk-button govuk-!-padding-left-6 govuk-!-padding-right-6 govuk-!-margin-top-2' %>
 
-        <%= govuk_form_group_with_optional_error(@journey, :lot1_region) do %>
+    <div class="ccs-search-results">
 
-          <div class="ccs-search-results">
-            <ul class="ccs-results-list govuk-!-margin-bottom-7">
+      <ul class="ccs-results-list govuk-!-margin-bottom-7">
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Lorem ipsum
 
-              <% firms.each do |firm| %>
-                <% lot_no_slash = firm.gsub('/', '_') %>
-                <% lot_no_space = lot_no_slash.gsub(' ', '_') %>
-                <% detail =  LegalServices::Details.for_sme(firm) %>
-                <% sme_flag = detail.first.Is_an_SME %>
-                <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-                  <a href="journey/supplier-details" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
-                    <%= firm %>
-                    <% if sme_flag == "Yes" %>
-                    <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
-                    <% end %>
-                  </a>
-                </li>
-              <% end %>
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Curabitur tellus enim
+            <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Nullam lobortis nibh
+            <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Nunc et volutpat massa
 
-            </ul>                                                                                                                                                                                              
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Duis placerat facilisis
 
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Morbi sit amet elit
 
-            <nav aria-label="Pagination Navigation">
-              <ul class="govuk-list ccs-pagination">
-                  <li><a href="http://www.url.com" aria-current="true">1</a></li>
-                  <li><a href="http://www.url.com">2</a></li>
-                  <li><a href="http://www.url.com">3</a></li>
-                  <li>&hellip;</li>
-                  <li><a href="http://www.url.com">94</a></li>
-                  <li class="ccs-last">
-                      <a href="http://www.url.com" rel="next">Next page&nbsp;<b>&rarr;</b></a>
-                  </li>
-              </ul>
-            </nav>
+          </a>
+        </li>
+        <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+          <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+            Pellentesque posuere
+            <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
+          </a>
+        </li>
+      </ul>                 <!-- **** what message if there are no results? **** -->
 
-          </div>
+      <!-- numbered pagination HTML example two starts -->
+      <nav aria-label="Pagination Navigation">
+        <ul class="govuk-list ccs-pagination">
+            <li><a href="http://www.url.com" aria-current="true">1</a></li>
+            <li><a href="http://www.url.com">2</a></li>
+            <li><a href="http://www.url.com">3</a></li>
+            <li>&hellip;</li>
+            <li><a href="http://www.url.com">94</a></li>
+            <li class="ccs-last">
+                <a href="http://www.url.com" rel="next">Next page&nbsp;<b>&rarr;</b></a>
+            </li>
+        </ul>
+      </nav><!-- numbered pagination HTML example two ends -->
 
-        <% end %>
+    </div>
 
   </div>
 </div>
