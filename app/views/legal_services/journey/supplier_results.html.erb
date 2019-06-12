@@ -47,7 +47,7 @@
                 <% detail =  LegalServices::Details.for_sme(firm) %>
                 <% sme_flag = detail.first.Is_an_SME %>
                 <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-                  <a href="......." class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
+                  <a href="journey/supplier-details" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
                     <%= firm %>
                     <% if sme_flag == "Yes" %>
                     <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
@@ -56,7 +56,8 @@
                 </li>
               <% end %>
 
-            </ul>
+            </ul>                                                                                                                                                                                              
+
 
             <nav aria-label="Pagination Navigation">
               <ul class="govuk-list ccs-pagination">
