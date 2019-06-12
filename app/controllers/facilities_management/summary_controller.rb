@@ -115,6 +115,7 @@ module FacilitiesManagement
       str
     end
 
+    # rubocop:disable Metrics/AbcSize
     def list_choices
       str = '<p class="govuk-heading-m govuk-!-margin-top-8">Choices used to generate your shortlist</p><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
       str << 'Regions (' + @subregions.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
@@ -131,6 +132,7 @@ module FacilitiesManagement
       str << '</ul></div></details><hr>'
       str
     end
+    # rubocop:enable Metrics/AbcSize
 
     def set_current_choices
       super

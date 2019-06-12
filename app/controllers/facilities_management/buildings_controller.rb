@@ -166,7 +166,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     # request.query_parameters['current_choices'] = params['current_choices'] if params['current_choices']
     # p = params.permit('current_choices', 'building_id', 'authenticity_token', 'utf8').merge(building_id: request.query_parameters['building_id'])
     # p = request.query_parameters.merge({:current_choices => params['current_choices']})
-    redirect_to('/facilities-management/buildings-list', current_choices: params['current_choices'], 'fm-locations': params['fm-locations'], 'fm-services': params['fm-services'], flash: { 'current_choices': params['current_choices'], 'fm-locations': params['fm-locations'], 'fm-services': params['fm-services']})
+    redirect_to('/facilities-management/buildings-list', current_choices: params['current_choices'], 'fm-locations': params['fm-locations'], 'fm-services': params['fm-services'], flash: { 'current_choices': params['current_choices'], 'fm-locations': params['fm-locations'], 'fm-services': params['fm-services'] })
   end
 
   # rubocop:disable Metrics/AbcSize
