@@ -145,7 +145,6 @@ Rails.application.routes.draw do
   namespace 'legal_services', path: 'legal-services' do
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
-    get '/journey/supplier-details', to: 'journey#supplier_details'
     get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
     get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
     get '/suppliers/cg-no-suppliers-found', to: 'suppliers#cg_no_suppliers_found'
