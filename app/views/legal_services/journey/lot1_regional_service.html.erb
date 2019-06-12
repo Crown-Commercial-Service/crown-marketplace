@@ -57,9 +57,9 @@
                       <% lot_no_slash = lot.description.gsub('/', '_') %>
                       <% lot_no_space = lot_no_slash.gsub(' ', '_') %>
                       <%= check_box_tag(
-                                  "lot1[]",
+                                  "lot1_regional_service",
                                   lot.description,
-                                  @journey.current_step.lot1.include?(lot.description),
+                                  false,
                                   class: "govuk-checkboxes__input",
                                   id: "lot_#{lot_no_space}"
                                 ) %>
