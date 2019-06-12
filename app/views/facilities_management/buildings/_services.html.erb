@@ -33,7 +33,7 @@
     <% end %>
   </div>
   <%= form_tag '/facilities-management/buildings-list', id: 'fm-select-services-continue-btn-form', method: :post do %>
-    <%= hidden_field_tag 'current_choices', "" %>
+    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
     <%= hidden_field_tag 'fm-services', "" %>
     <%= hidden_field_tag 'fm-locations', "" %>
     <div class="govuk-grid-row govuk-!-margin-top-6">

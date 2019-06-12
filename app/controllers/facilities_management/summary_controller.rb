@@ -121,7 +121,7 @@ module FacilitiesManagement
       @subregions.each do |location|
         str << '<li>' + location[1] + '</li>'
       end
-      services = FacilitiesManagement::Service.where(code: @posted_services)
+      services = FacilitiesManagement::Service.where(code: @report.posted_services)
       services.sort_by!(&:code)
       str << '</ul></div></details><hr><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
       str << 'Services (' + services.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
@@ -137,8 +137,6 @@ module FacilitiesManagement
 
       @data = TransientSessionInfo[session.id]
       @supplier_count = @data['supplier_count']
-      @posted_locations = @data['posted_locations']
-      @posted_services = @data['posted_services']
       @current_lot = @data['current_lot']
 
       set_start_date
@@ -202,7 +200,8 @@ module FacilitiesManagement
       Nuts1Region.all.each { |x| @regions[x.code] = x.name }
       @subregions = {}
       FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
-      @subregions.select! { |k, _v| @posted_locations.include? k }
+      posted_locations = @report.posted_locations
+      @subregions.select! { |k, _v| posted_locations.include? k }
     end
   end
 end
