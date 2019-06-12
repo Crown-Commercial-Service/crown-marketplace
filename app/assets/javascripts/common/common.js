@@ -191,8 +191,8 @@ const fm = {
                     if (whereNext == '/facilities-management/buildings/select-services') {
                         $('#fm-building-type-form').submit()
                     } else {
-                        document.getElementById('fm-services').value = JSON.stringify(pageUtils.getCachedData('fm-services'))
-                        document.getElementById('fm-locations').value = JSON.stringify(pageUtils.getCachedData('fm-locations'))
+                        // document.getElementById('fm-services').value = JSON.stringify(pageUtils.getCachedData('fm-services'))
+                        // document.getElementById('fm-locations').value = JSON.stringify(pageUtils.getCachedData('fm-locations'))
                         $('#fm-select-services-continue-btn-form').attr('action', whereNext).submit()
                     }
                 },
