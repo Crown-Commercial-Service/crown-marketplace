@@ -166,7 +166,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     # request.query_parameters['current_choices'] = params['current_choices'] if params['current_choices']
     # p = params.permit('current_choices', 'building_id', 'authenticity_token', 'utf8').merge(building_id: request.query_parameters['building_id'])
     # p = request.query_parameters.merge({:current_choices => params['current_choices']})
-    redirect_to('/facilities-management/buildings-list', current_choices: params['current_choices'], flash: { 'current_choices': params['current_choices'] })
+    redirect_to('/facilities-management/buildings-list', current_choices: params['current_choices'], 'fm-locations': params['fm-locations'], 'fm-services': params['fm-services'], flash: { 'current_choices': params['current_choices'], 'fm-locations': params['fm-locations'], 'fm-services': params['fm-services']})
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -177,6 +177,9 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   # to copy the cached choices
   def set_current_choices
     super
+
+    TransientSessionInfo[session.id, 'fm-services'] = JSON.parse(flash['fm-services']) if flash['fm-services'] && params['fm-services'].nil?
+    TransientSessionInfo[session.id, 'fm-locations'] = JSON.parse(flash['fm-locations']) if flash['fm-services'] && params['fm-services'].nil?
 
     TransientSessionInfo[session.id, 'fm-contract-length'] = params['fm-contract-length'] if params['fm-contract-length']
     TransientSessionInfo[session.id, 'fm-extension'] = params['fm-extension'] if params['fm-extension']
