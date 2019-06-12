@@ -13,4 +13,3 @@ class FacilitiesManagement::DirectAwardController < ApplicationController
     render json: j, status: 200
   end
 end
-
