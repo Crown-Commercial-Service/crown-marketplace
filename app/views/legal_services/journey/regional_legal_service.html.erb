@@ -31,7 +31,7 @@
           </div>
         </div>
 
-        <%= govuk_form_group_with_optional_error(@journey, :regional_legal_service) do %>
+        <%= govuk_form_group_with_optional_error( @journey, :regional_legal_service) do %>
 
           <div id="ccs-dynamic-accordian" class="govuk-grid-row">
             <section id="accordion-default" class="govuk-grid-column-two-thirds">
@@ -54,20 +54,21 @@
 
               <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland'] %>
-
-                <% lot1.each do |region| %>
+                <% region1 = [['North East','NE'], ['North West','NW'],['Yorkshire and the Humber','YH'],['East Midlands','EM'], ['West Midlands','WM'],['East of England','EE'], ['Greater London','GL'], ['South East','SE'],['South West','SW'],['Wales','WA'],['Scotland','SC'],['Northern Ireland','NI']] %>
+                <% c=0 %>
+                <% region1.each do |region| %>
                   <div class="govuk-checkboxes__item">
-                    <% region_no_space = region.gsub(' ', '_') %>
+                    <% region_no_space = region[0].gsub(' ', '_') %>
                     <%= check_box_tag(
-                                "regional_legal_service",
-                                region,
-                                false,
+                                "region1[]",
+                                region[1],
+                                @journey.current_step.region1.include?(region[1]),
                                 class: "govuk-checkboxes__input",
                                 id: "region_#{region_no_space}"
                               ) %>
+                    <% c=c+1 %>
                     <label class="govuk-label govuk-checkboxes__label" for="region_<%= region_no_space %>">
-                      <%= region %>
+                      <%= region[0] %>
                     </label>
                   </div>
 
