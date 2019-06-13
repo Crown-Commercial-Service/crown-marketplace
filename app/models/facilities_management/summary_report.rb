@@ -1,19 +1,33 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def initialize(start_date, user_id, data)
       @start_date = start_date
       @user_id = user_id
-      @data = data
-      @posted_services = @data['posted_services']
-      @posted_locations = @data['posted_locations']
-      @contract_length_years = @data['fm-contract-length'].to_i
-      @contract_cost = @data['fm-contract-cost'].to_f
+      # @data = data
+
+      @posted_services =
+        if data['fm-services']
+          data['fm-services'].collect { |x| x['code'].gsub('-', '.') }
+        else
+          data['posted_services']
+        end
+
+      @posted_locations =
+        if data['fm-locations']
+          data['fm-locations'].collect { |x| x['code'] }
+        else
+          data['posted_locations']
+        end
+
+      @contract_length_years = data['fm-contract-length'].to_i
+      @contract_cost = data['fm-contract-cost'].to_f
 
       @tupe_flag =
         begin
-          if @data['contract-tupe-radio'] == 'yes'
+          if data['contract-tupe-radio'] == 'yes'
             'Y'
           else
             'N'
@@ -26,6 +40,7 @@ module FacilitiesManagement
       @sum_benchmark = 0
       @gia_services = CCS::FM::Service.gia_services
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
     # rubocop:disable Metrics/AbcSize
     def calculate_services_for_buildings
