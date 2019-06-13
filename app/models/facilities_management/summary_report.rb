@@ -290,6 +290,7 @@ module FacilitiesManagement
         sum_benchmark: sum_benchmark }
     end
 
+    # rubocop:disable Rails/FindEach
     def regions
       # Get nuts regions
       # @regions = {}
@@ -298,5 +299,6 @@ module FacilitiesManagement
       FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
       @subregions.select! { |k, _v| posted_locations.include? k }
     end
+    # rubocop:enable Rails/FindEach
   end
 end
