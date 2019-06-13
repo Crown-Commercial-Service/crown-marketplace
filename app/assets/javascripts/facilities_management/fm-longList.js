@@ -13,13 +13,14 @@ $(() => {
         /* Load selected locations to the filters */
         selectedLocations = pageUtils.sortByName(selectedLocations);
 
-        selectedLocations.forEach((value, index, array) => {
+        for (let value of selectedLocations) {
+            //selectedLocations.forEach((value, index, array) => {
             let checkbox = '<div class="govuk-checkboxes__item">' +
                 '<input class="govuk-checkboxes__input" checked id="' + value.code + '" name="fm-regions-checkbox" type="checkbox" value="' + value.name + '">' +
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label"  for="' + value.code + '">' + value.name + '</label></div>';
 
             regionCheckBoxes.append(checkbox);
-            $('#' + value.code).click((e) => {
+            $('#' + value.code).on('click', (e) => {
                 updateCounts();
                 if (!e.target.checked) {
                     let filtered = selectedLocations.filter((obj, index, arr) => {
@@ -40,8 +41,11 @@ $(() => {
 
                 pageUtils.setCachedData('fm-locations', selectedLocations);
                 filterSuppliers();
+
             });
-        });
+
+        }
+
 
         /* Load selected services to the filters */
         selectedServices = pageUtils.sortByName(selectedServices);
@@ -52,7 +56,7 @@ $(() => {
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label" for="' + value.code + '">' + value.name + '</label></div>';
 
             serviceCheckBoxes.append(checkbox);
-            $('#' + value.code).click((e) => {
+            $('#' + value.code).on('click', (e) => {
                 updateCounts();
                 if (!e.target.checked) {
                     let filtered = selectedServices.filter((service, index, arr) => {
@@ -83,6 +87,7 @@ $(() => {
         });
 
         filterSuppliers();
+        updateCounts();
 
     });
 
@@ -99,7 +104,7 @@ $(() => {
     });
 
     /* Click handler for the filter toggle button */
-    $('#filter-toggle-btn').click((e) => {
+    $('#filter-toggle-btn').on('click', (e) => {
         e.preventDefault();
 
         let filterPane = $('#fm-filter-pane');
@@ -137,45 +142,48 @@ $(() => {
     });
 
     /* Click handler for Print button */
-    $('#FM-print-supplier-list').click((e) => {
+    $('#FM-print-supplier-list').on('click', (e) => {
         e.preventDefault();
         window.print();
     });
 
 
-    const filterSuppliers = (() => {
+    const filterSuppliers = () => {
 
         let tableRows = $('tbody  > tr');
         visibleSuppliers = [];
-        tableRows.each(function (rowIndex, row) {
-            let id = row.id;
-            let name = $('#' + id).attr('name');
-            let operationalAreas = $('#' + id).attr('regioncode');
+        for (let row of tableRows) {
+            if (row.id) {
+                let id = '#' + row.id;
+                let name = $(id).attr('name');
+                let operationalAreas = $(id).attr('regioncode');
 
-            if (operationalAreas) {
-                operationalAreas = JSON.parse(operationalAreas);
-                let serviceOfferings = JSON.parse($('#' + id).attr('servicecode'));
+                if (operationalAreas) {
+                    operationalAreas = JSON.parse(operationalAreas);
+                    let serviceOfferings = JSON.parse($(id).attr('servicecode'));
 
-                let isServiceOfferingSelected = selectedServices.some(selectedService => {
-                    return serviceOfferings.includes(selectedService.code.replace('-', '.'));
-                });
+                    let isServiceOfferingSelected = selectedServices.some(selectedService => {
+                        return serviceOfferings.includes(selectedService.code.replace('-', '.'));
+                    });
 
-                let isOperationalAreaSelected = selectedLocations.some(selectedLocation => {
-                    return operationalAreas.includes(selectedLocation.code);
-                });
+                    let isOperationalAreaSelected = selectedLocations.some(selectedLocation => {
+                        return operationalAreas.includes(selectedLocation.code);
+                    });
 
-                if (isServiceOfferingSelected === true && isOperationalAreaSelected === true) {
-                    $('#' + id).attr('hidden', false);
-                    if (name && !visibleSuppliers.includes(name)) {
-                        visibleSuppliers.push(name);
+                    if (isServiceOfferingSelected === true && isOperationalAreaSelected === true) {
+                        $(id).attr('hidden', false);
+                        if (name && !visibleSuppliers.includes(name)) {
+                            visibleSuppliers.push(name);
+                        }
+                    } else {
+                        $(id).attr('hidden', true);
                     }
-                } else {
-                    $('#' + id).attr('hidden', true);
                 }
             }
-        });
+        }
+
         updateCounts();
-    });
+    };
 
 
     $('#fm-suppliers-continue-button').on('click', (e) => {
@@ -196,5 +204,5 @@ $(() => {
     });
 
     init();
-
+    updateCounts();
 });

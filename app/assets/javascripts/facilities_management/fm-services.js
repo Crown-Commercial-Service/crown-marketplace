@@ -16,7 +16,7 @@ $(() => {
         /!* Load and display cached values *!/
         if (selectedServices) {
             selectedServices.forEach((value, index, array) => {
-                $('input#' + value.code).click();
+                $('input#' + value.code).trigger('click');
             });
         }
 
@@ -89,7 +89,7 @@ $(() => {
 
         /!* remove from the array that is saved *!/
         let filtered = selectedServices.filter((value, index, arr) => {
-            if (value !== id) {
+            if (value.code !== id) {
                 return true;
             } else {
                 return false;
@@ -113,13 +113,13 @@ $(() => {
     });
 
     /!* Click handler to remove all services *!/
-    $('#remove-all-services-link').click((e) => {
+    $('#remove-all-services-link').on('click', (e) => {
         e.preventDefault();
         clearAll();
     });
 
     /!* click handler for check boxes *!/
-    $('#services-accordion .govuk-checkboxes__input').click((e) => {
+    $('#services-accordion .govuk-checkboxes__input').on('click', (e) => {
 
         let val = e.target.title;
 
@@ -142,7 +142,7 @@ $(() => {
                 '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
             $("#selected-fm-services").append(newLI);
 
-            $('#' + removeLinkID).click((e) => {
+            $('#' + removeLinkID).on('click', (e) => {
                 e.preventDefault();
                 removeSelectedItem(selectedID);
                 updateServiceCount();
@@ -174,7 +174,7 @@ $(() => {
     });
 
     /* Save and continue click handler */
-    $('#save-services-link').click((e) => {
+    $('#save-services-link').on('click', (e) => {
 
         pageUtils.toggleInlineErrorMessage(false);
         const servicesForm = $('#fm-services-form');
@@ -195,7 +195,7 @@ $(() => {
                 let postedServices = $('#postedservices');
                 postedLocations.val(JSON.stringify(locationCodes));
                 postedServices.val(JSON.stringify(serviceCodes));
-                servicesForm.submit();
+                servicesForm.trigger('submit');
             }
         } else {
             e.preventDefault();
@@ -206,7 +206,7 @@ $(() => {
 
     let tempServices;
 
-    $('#fm-select-all-services').change((e) => {
+    $('#fm-select-all-services').on('change', (e) => {
 
 
         let checked = $('#fm-select-all-services').is(':checked');

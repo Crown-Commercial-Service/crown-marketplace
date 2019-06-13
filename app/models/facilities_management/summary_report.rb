@@ -1,19 +1,33 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def initialize(start_date, user_id, data)
       @start_date = start_date
       @user_id = user_id
-      @data = data
-      @posted_services = @data['posted_services']
-      @posted_locations = @data['posted_locations']
-      @contract_length_years = @data['fm-contract-length'].to_i
-      @contract_cost = @data['fm-contract-cost'].to_f
+      # @data = data
+
+      @posted_services =
+        if data['fm-services']
+          data['fm-services'].collect { |x| x['code'].gsub('-', '.') }
+        else
+          data['posted_services']
+        end
+
+      @posted_locations =
+        if data['fm-locations']
+          data['fm-locations'].collect { |x| x['code'] }
+        else
+          data['posted_locations']
+        end
+
+      @contract_length_years = data['fm-contract-length'].to_i
+      @contract_cost = data['fm-contract-cost'].to_f
 
       @tupe_flag =
         begin
-          if @data['contract-tupe-radio'] == 'yes'
+          if data['contract-tupe-radio'] == 'yes'
             'Y'
           else
             'N'
@@ -24,10 +38,13 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
-      @gia_services =
-        ['C-1', 'C-10', 'C-11', 'C-12', 'C-13', 'C-14', 'C-15', 'C-16', 'C-17', 'C-18', 'C-2', 'C-20', 'C-3', 'C-4', 'C-6', 'C-7', 'C-8', 'C-9', 'D-1', 'D-2', 'D-4', 'D-5', 'D-6', 'E-1', 'E-2', 'E-3', 'E-5', 'E-6', 'E-7', 'E-8', 'F-1', 'G-1', 'G-10', 'G-11', 'G-14', 'G-15', 'G-16', 'G-2', 'G-3', 'G-4', 'G-6', 'G-7', 'G-9', 'H-1', 'H-10', 'H-11', 'H-13', 'H-2', 'H-3', 'H-6', 'H-7', 'H-8', 'H-9', 'J-10', 'J-11', 'J-7', 'J-9', 'L-2', 'L-3', 'L-4', 'L-5']
-    end
+      @gia_services = CCS::FM::Service.gia_services
 
+      regions
+    end
+    # rubocop:enable Metrics/PerceivedComplexity
+
+    # rubocop:disable Metrics/AbcSize
     def calculate_services_for_buildings
       selected_services
 
@@ -48,9 +65,12 @@ module FacilitiesManagement
 
       selected_buildings.each do |building|
         id = building['building_json']['id']
-        services building.building_json, (uvals.select { |u| u['building_id'] == id })
+        vals_per_building = services(building.building_json, (uvals.select { |u| u['building_id'] == id }))
+        @sum_uom += vals_per_building[:sum_uom]
+        @sum_benchmark += vals_per_building[:sum_benchmark]
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def with_pricing
       # CCS::FM::Rate.non_zero_rate
@@ -130,7 +150,6 @@ module FacilitiesManagement
         u['example_text'] = uoms.last['example_text']
       end
 
-      # T.C.
       lift_service = uvals.select { |s| s['service_code'] == 'C.5' }
       if lift_service.count.positive?
         lifts_title_text = lift_service.last['title_text']
@@ -171,6 +190,19 @@ module FacilitiesManagement
     def lifts_per_building
       lifts_per_building = CCS::FM::Lift.lifts_for_user(@user_id)
       lifts_per_building.map(&:attributes)
+    end
+
+    def move_upto_next_lot(lot)
+      case lot
+      when nil
+        '1a'
+      when '1a'
+        '1b'
+      when '1b'
+        '1c'
+      else
+        lot
+      end
     end
 
     private
@@ -222,6 +254,9 @@ module FacilitiesManagement
     # rubocop:enable Metrics/PerceivedComplexity
 
     def services(building_data, uvals)
+      sum_uom = 0.0
+      sum_benchmark = 0.0
+
       copy_params building_data
       # id = building_data['id']
 
@@ -243,11 +278,27 @@ module FacilitiesManagement
 
         code = v['service_code'].remove('.')
         calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants.to_i, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
-        @sum_uom += calc_fm.sumunitofmeasure
-        @sum_benchmark += calc_fm.benchmarkedcostssum
+        sum_uom += calc_fm.sumunitofmeasure
+        sum_benchmark += calc_fm.benchmarkedcostssum
       end
+      { sum_uom: sum_uom,
+        sum_benchmark: sum_benchmark }
     rescue StandardError => e
       raise e
+    ensure
+      { sum_uom: sum_uom,
+        sum_benchmark: sum_benchmark }
     end
+
+    # rubocop:disable Rails/FindEach
+    def regions
+      # Get nuts regions
+      # @regions = {}
+      # Nuts1Region.all.each { |x| @regions[x.code] = x.name }
+      @subregions = {}
+      FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
+      @subregions.select! { |k, _v| posted_locations.include? k }
+    end
+    # rubocop:enable Rails/FindEach
   end
 end

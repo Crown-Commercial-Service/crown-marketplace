@@ -98,4 +98,27 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
       end
     end
   end
+
+  describe 'GET download' do
+    before do
+      get :download, params: params
+    end
+
+    let(:lot_number) { '1' }
+
+    let(:params) do
+      {
+        journey: 'management-consultancy',
+        lot: lot_number,
+        services: services,
+        expenses: 'paid',
+        region_codes: region_codes,
+        help_needed: 'management_consultants'
+      }
+    end
+
+    it 'renders the download template' do
+      expect(response).to render_template('download')
+    end
+  end
 end
