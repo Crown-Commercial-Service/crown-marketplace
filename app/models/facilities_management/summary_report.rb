@@ -295,7 +295,7 @@ module FacilitiesManagement
       # @regions = {}
       # Nuts1Region.all.each { |x| @regions[x.code] = x.name }
       @subregions = {}
-      FacilitiesManagement::Region.all.find_each { |x| @subregions[x.code] = x.name }
+      FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
       @subregions.select! { |k, _v| posted_locations.include? k }
     end
   end
