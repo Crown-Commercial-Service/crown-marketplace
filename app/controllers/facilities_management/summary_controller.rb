@@ -33,7 +33,7 @@ module FacilitiesManagement
       super
 
       @data = TransientSessionInfo[session.id]
-      @supplier_count = @data['supplier_count']
+      # @supplier_count = @data['supplier_count']
       @current_lot = @data['current_lot']
 
       set_start_date
