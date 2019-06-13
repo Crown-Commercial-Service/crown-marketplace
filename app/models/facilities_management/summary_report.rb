@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions
 
     # rubocop:disable Metrics/PerceivedComplexity
     def initialize(start_date, user_id, data)
@@ -39,6 +39,8 @@ module FacilitiesManagement
       @sum_uom = 0
       @sum_benchmark = 0
       @gia_services = CCS::FM::Service.gia_services
+
+      regions
     end
     # rubocop:enable Metrics/PerceivedComplexity
 
@@ -190,6 +192,19 @@ module FacilitiesManagement
       lifts_per_building.map(&:attributes)
     end
 
+    def move_upto_next_lot(lot)
+      case lot
+      when nil
+        '1a'
+      when '1a'
+        '1b'
+      when '1b'
+        '1c'
+      else
+        lot
+      end
+    end
+
     private
 
     # rubocop:disable Metrics/CyclomaticComplexity
@@ -273,6 +288,15 @@ module FacilitiesManagement
     ensure
       { sum_uom: sum_uom,
         sum_benchmark: sum_benchmark }
+    end
+
+    def regions
+      # Get nuts regions
+      # @regions = {}
+      # Nuts1Region.all.each { |x| @regions[x.code] = x.name }
+      @subregions = {}
+      FacilitiesManagement::Region.all.find_each { |x| @subregions[x.code] = x.name }
+      @subregions.select! { |k, _v| posted_locations.include? k }
     end
   end
 end
