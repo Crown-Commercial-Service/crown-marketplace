@@ -67,7 +67,7 @@ module FacilitiesManagement
         id = building['building_json']['id']
         vals_per_building = services(building.building_json, (uvals.select { |u| u['building_id'] == id }))
         @sum_uom += vals_per_building[:sum_uom]
-        @sum_benchmark += vals_per_building[:sum_uom]
+        @sum_benchmark += vals_per_building[:sum_benchmark]
       end
     end
     # rubocop:enable Metrics/AbcSize
