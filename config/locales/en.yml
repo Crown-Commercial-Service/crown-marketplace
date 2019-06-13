@@ -533,8 +533,8 @@ en:
         opt_no: 'No'
         question: Do you need legal services for property and construction or rail?
       choose_services_area2:
-        opt_01: Lot 1 Regional Service Provision
-        opt_02: Lot 2 Full Service Firms
+        opt_01: Lot 1 Regional service provision
+        opt_02: Lot 2 Full-service firms
         opt_03: I Dont Know
         or_txt: Or
         question: What lot do you need?
@@ -605,7 +605,7 @@ en:
       supplier_results2:
         download: Download the supplier list
         heading: Supplier results
-        sub_heading: Lot 2 - Full service firms
+        sub_heading: Lot 2 - Full-service firms
         suppliers: suppliers
         suppliers_pt2: can provide the legal services that meet your requirements
     suppliers:
