@@ -57,6 +57,10 @@ en:
           attributes:
             lot1_regional_service:
               too_short: Select the legal service or services you need
+        legal_services/journey/lot1_regional_service2:
+          attributes:
+            lot1_regional_service2:
+              too_short: Select the legal service or services you need
         legal_services/journey/lot1_regional_services:
           attributes:
             lot:
@@ -529,8 +533,8 @@ en:
         opt_no: 'No'
         question: Do you need legal services for property and construction or rail?
       choose_services_area2:
-        opt_01: Lot 1 Regional Service Provision
-        opt_02: Lot 2 Full Service Firms
+        opt_01: Lot 1 Regional service provision
+        opt_02: Lot 2 Full-service firms
         opt_03: I Dont Know
         or_txt: Or
         question: What lot do you need?
@@ -542,14 +546,14 @@ en:
         scot_land: Scotland
       lot1_regional_service:
         heading: Lot 1 - Regional service provision
-        hint: Select the services you need
+        hint: Select the legal services you need
         links_text_html: If the services you need aren't listed here, the <a href="https://www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
       lot1_regional_service2:
-        heading: Heading
-        hint: Hint
+        heading: Lot 1 Regional service provision
+        hint: Select the legal services you need
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
@@ -592,19 +596,36 @@ en:
         lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
         lot4_txt: Lot 4 - Transport rail
         lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
+      sorry:
+        heading: Sorry, this panel isn't suitable for you
+        lead: This panel supports a range of legal services primarily for the wider public sector
+        txt01: The
+        txt02_link: General Legal Advice Services (RM3786)
+        txt03: agreement provides legal advice services for central government and arms-length bodies.
       supplier_results:
         download: Download the supplier list
         heading: Supplier results
         sub_heading: Lot 1 - Regional service provision
         suppliers: suppliers
         suppliers_pt2: can provide the legal services that meet your requirements
+      supplier_results2:
+        download: Download the supplier list
+        heading: Supplier results
+        sub_heading: Lot 2 - Full-service firms
+        suppliers: suppliers
+        suppliers_pt2: can provide the legal services that meet your requirements
     suppliers:
       cg_no_suppliers_found:
-        heading: No suppliers were found
+        header: No suppliers were found
+        link_click_text: Contact CCS Support
+        link_end_text: for help.
         statement_pt_1: The
         statement_pt_2_link_text: General Legal Advice Services (RM3786)
         statement_pt_3: agreement provides legal advice services for central government and arms-length bodies.
       download_shortlist:
+        back_to_start: Back to start
+        download_statement: The spreadsheet includes the selections you made, for your records and audit trail
+        download_supplier_shortlist_link: Download supplier shortlist
         heading: Download the supplier shortlist
         page_title: Download supplier list
       index:
@@ -709,6 +730,14 @@ en:
         heading: You need a different framework
         introduction: This service is for the management consultancy frameworks RM3745 and RM6008.
     suppliers:
+      download:
+        button_start_new_search: Start new search
+        download_supplier_shortlist: Download supplier shortlist
+        expression_of_interest_template: Expression of interest template
+        expression_of_interest_template_link: https://ccs-agreements.cabinetoffice.gov.uk/sites/default/files/contracts/RM6008%20MCF2%20Expression%20of%20Interest%20-%20%20V1.docx?format=doc
+        heading: Download the supplier shortlist
+        lead_text: The spreadsheet includes the selections you made, for your records and audit trail.
+        other_documents: Other documents
       index:
         download_suppliers_list: Download the supplier list
         heading: Supplier results

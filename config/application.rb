@@ -34,7 +34,13 @@ module Marketplace
 
     config.action_controller.include_all_helpers = false
 
-    config.time_zone = 'London'
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'SAMEORIGIN',
+      'X-XSS-Protection' => '1; mode=block',
+      'X-Content-Type-Options' => 'nosniff'
+    }
+
+    # config.action_dispatch.default_headers.merge!('X-Content-Type-Options' => 'nosniff')
   end
 
   def self.feedback_email_address
@@ -61,6 +67,7 @@ module Marketplace
   def self.http_basic_auth_password
     @http_basic_auth_password ||= ENV.fetch('HTTP_BASIC_AUTH_PASSWORD')
   end
+
   # :nocov:
 
   def self.cognito_user_pool_site

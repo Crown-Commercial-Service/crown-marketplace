@@ -55,8 +55,11 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
 
   def add_uom_value(email_address, building_id, service_code, value)
     Rails.logger.info '==> FMServiceData.add_uom_value()'
-    query = "INSERT INTO fm_uom_values (user_id, service_code, uom_value,building_id)
-             VALUES ('" + Base64.encode64(email_address) + "','" + service_code + "','" + value + "','" + building_id + "');"
+    query = "insert into fm_uom_values (user_id, service_code, uom_value, building_id)
+     select '" + Base64.encode64(email_address) + "', '" + service_code + "', '" + value + "', '" + building_id + "'
+		where not exists (select 1 from fm_uom_values where user_id = '" + Base64.encode64(email_address) + "'
+				and service_code = '" + service_code + "'
+				and building_id = '" + building_id + "');"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't add unit of measurement data: #{e}"
@@ -73,7 +76,10 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
 
   def save_lift_data(email_address, building_id, json_data)
     Rails.logger.info '==> FMServiceData.save_lift_data()'
-    query = "INSERT INTO fm_lifts (user_id, building_id, lift_data) VALUES('" + Base64.encode64(email_address) + "', '" + building_id + "', '" + json_data.to_json + "');"
+    query = "insert into fm_lifts (user_id, building_id,lift_data)
+		select '" + Base64.encode64(email_address) + "', '" + building_id + "', '" + json_data.to_json + "'
+		 where not exists (select 1 from fm_lifts where
+		 user_id = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "');"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     add_uom_value(email_address, building_id, 'C.5', 'Saved')
   rescue StandardError => e
@@ -83,7 +89,7 @@ where trim(replace(subcode, '-', '.')) not in (select v.service_code from fm_uom
   def get_lift_data(email_address)
     Rails.logger.info '==> FMServiceData.get_lift_data()'
     query = "select building_id, lift_data::jsonb->'lift_data'->>'lifts-qty' lift_qty, lift_data::jsonb->'lift_data'->>'total-floor-count' total_floor_count from fm_lifts
-   where user_id =  '" + Base64.encode64(email_address) + "';"
+   where user_id =  '" + Base64.encode64(email_address) + "' limit 1;"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't retrieve lift data : #{e}"
