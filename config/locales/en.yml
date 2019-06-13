@@ -616,7 +616,7 @@ en:
         suppliers_pt2: can provide the legal services that meet your requirements
     suppliers:
       cg_no_suppliers_found:
-        header: No suppliers were found
+        header: No suppliers were found -
         link_click_text: Contact CCS Support
         link_end_text: for help.
         statement_pt_1: The
