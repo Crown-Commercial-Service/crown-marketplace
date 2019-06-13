@@ -32,7 +32,7 @@ class FacilitiesManagement::LongListController < ApplicationController
 
   def set_current_choices
     TransientSessionInfo[session.id] = nil
-    TransientSessionInfo[session.id, 'supplier_count'] = @supplier_count
+    # TransientSessionInfo[session.id, 'supplier_count'] = @supplier_count
     TransientSessionInfo[session.id, 'posted_locations'] = @posted_locations
     TransientSessionInfo[session.id, 'posted_services'] = @posted_services
     TransientSessionInfo[session.id, 'locations'] = @locations
