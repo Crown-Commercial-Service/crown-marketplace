@@ -9,21 +9,21 @@
       <%= t('.heading') %>
     </h1>
 
-      <%sqlHash = {} %>
+      <% sql_hash = {} %>
       <% params[:lot1].each do | arg | %>
         <% arg_no_slash = arg.gsub('/', '_') %>
         <% arg_no_space = arg_no_slash.gsub(' ', '_') %>
         <% arg = arg_no_space.downcase %>
-        <% sqlStr = "{:#{arg}=>'x'}" %>
-        <% sqlHash1 = eval(sqlStr) %>
-        <% sqlHash = sqlHash.merge(sqlHash1) %>
+        <% sql_str = "{:#{arg}=>'x'}" %>
+        <% sql_hash1 = eval(sql_str) %>
+        <% sql_hash = sql_hash.merge(sql_hash1) %>
       <%end %>
-      <% sqlStr ="{:region=>#{params[:region1]}}" %>
-      <% sqlHash1 = eval(sqlStr) %>
-      <% sqlHash = sqlHash.merge(sqlHash1) %>
-      <% lot =  LegalServices::Region.where(sqlHash) %>
-      <% sqlHash1 = eval(sqlStr) %>
-      <% sqlHash = sqlHash.merge(sqlHash1) %>
+      <% sql_str ="{:region=>#{params[:region1]}}" %>
+      <% sql_hash1 = eval(sql_str) %>
+      <% sql_hash = sql_hash.merge(sql_hash1) %>
+      <% lot =  LegalServices::Region.where(sql_hash) %>
+      <% sql_hash1 = eval(sql_str) %>
+      <% sql_hash = sql_hash.merge(sql_hash1) %>
       <% firms = [] %>
       <% lot1 = lot %>
       <% lot1.each do |lot| %>
@@ -55,9 +55,7 @@
                   </a>
                 </li>
               <% end %>
-
-            </ul>                                                                                                                                                                                              
-
+            </ul>
 
             <nav aria-label="Pagination Navigation">
               <ul class="govuk-list ccs-pagination">

@@ -2,7 +2,7 @@ module LegalServices
   class Region
     include StaticRecord
 
-    attr_accessor :firm, :region, :property_and_construction, :social_housing, :child_law, :court_of_protection, :education, :debt_recovery, :planning_and_environment, :licensing, :pensions, :litigation_and_dispute_resolution, :intellectual_property, :employment, :health_care, :primary_care
+    attr_accessor :firm, :region, :property_and_construction, :social_housing, :child_law, :court_of_protection, :education, :debt_recovery, :planning_and_environment, :licensing, :pensions, :litigation_and_dispute_resolution, :intellectual_property, :employment, :health_care, :primary_careregions = [['North East','NE'], ['North West','NW'],['Yorkshire and the Humber','YH'],['East Midlands','EM'], ['West Midlands','WM'],['East of England','EE'], ['Greater London','GL'], ['South East','SE'],['South West','SW'],['Wales','WA'],['Scotland','SC'],['Northern Ireland','NI']]
 
     def self.for_region(region, child_law, court_of_protection)
       where(region: region, child_law: child_law, court_of_protection: court_of_protection)
