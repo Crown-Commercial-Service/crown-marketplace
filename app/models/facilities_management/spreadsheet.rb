@@ -44,6 +44,7 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Style/ConditionalAssignment
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
@@ -53,8 +54,12 @@ class FacilitiesManagement::Spreadsheet
     selected_services = services.collect(&:code)
     selected_services = selected_services.map { |s| s.gsub('.', '-') }
     selected_buildings = @report.building_data.select do |b|
-      b_services = b.building_json['services'].map { |s| s['code'] }
-      (selected_services & b_services).any?
+      if b.building_json['services']
+        b_services = b.building_json['services'].map { |s| s['code'] }
+        (selected_services & b_services).any?
+      else
+        false
+      end
     end
 
     @workbook.add_worksheet(name: 'Building Information') do |sheet|
@@ -115,23 +120,25 @@ class FacilitiesManagement::Spreadsheet
 
         uom_labels_max = uom_labels_2d.max
         # uoms.each do |u|
-        # vals << u['title_text']
+        # vals << u['title_text']building_json['services'].map { |s| s['code'] }
         max_j = vals_v.map(&:length).max
-        (0..max_j - 1).each do |j|
-          if j.zero?
-            vals << uom_labels_max[j]
-          elsif uom_labels_max[j - 1] == uom_labels_max[j]
-            vals << nil
-          else
-            vals << uom_labels_max[j]
-          end
+        if max_j
+          (0..max_j - 1).each do |j|
+            if j.zero?
+              vals << uom_labels_max[j]
+            elsif uom_labels_max[j - 1] == uom_labels_max[j]
+              vals << nil
+            else
+              vals << uom_labels_max[j]
+            end
 
-          (0..vals_v.count - 1).each do |k|
-            vals << vals_v[k][j]
+            (0..vals_v.count - 1).each do |k|
+              vals << vals_v[k][j]
+            end
+            sheet.add_row vals
+            # vals = [nil, nil, nil, nil]
+            vals = [nil, nil, nil]
           end
-          sheet.add_row vals
-          # vals = [nil, nil, nil, nil]
-          vals = [nil, nil, nil]
         end
         # end
         work_package = s.work_package_code
@@ -194,6 +201,7 @@ class FacilitiesManagement::Spreadsheet
     end
     # package.to_stream.read
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
