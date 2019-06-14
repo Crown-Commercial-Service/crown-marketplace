@@ -1,4 +1,4 @@
-require 'facilities_management/fm_direct_award_calculator'
+require 'fm_calculator/fm_direct_award_calculator.rb'
 class FacilitiesManagement::DirectAwardController < ApplicationController
   require_permission :facilities_management, only: %i[calc_eligibility].freeze
 
