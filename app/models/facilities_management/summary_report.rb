@@ -1,19 +1,32 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def initialize(start_date, user_id, data)
       @start_date = start_date
       @user_id = user_id
-      @data = data
-      @posted_services = @data['posted_services']
-      @posted_locations = @data['posted_locations']
-      @contract_length_years = @data['fm-contract-length'].to_i
-      @contract_cost = @data['fm-contract-cost'].to_f
+
+      @posted_services =
+        if data['fm-services']
+          data['fm-services'].collect { |x| x['code'].gsub('-', '.') }
+        else
+          data['posted_services']
+        end
+
+      @posted_locations =
+        if data['fm-locations']
+          data['fm-locations'].collect { |x| x['code'] }
+        else
+          data['posted_locations']
+        end
+
+      @contract_length_years = data['fm-contract-length'].to_i
+      @contract_cost = data['fm-contract-cost'].to_f
 
       @tupe_flag =
         begin
-          if @data['contract-tupe-radio'] == 'yes'
+          if data['contract-tupe-radio'] == 'yes'
             'Y'
           else
             'N'
@@ -24,8 +37,10 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
-      @gia_services = CCS::FM::Service.gia_services
+
+      regions
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
     # rubocop:disable Metrics/AbcSize
     def calculate_services_for_buildings
@@ -54,7 +69,7 @@ module FacilitiesManagement
         id = building['building_json']['id']
         vals_per_building = services(building.building_json, (uvals.select { |u| u['building_id'] == id }))
         @sum_uom += vals_per_building[:sum_uom]
-        @sum_benchmark += vals_per_building[:sum_uom]
+        @sum_benchmark += vals_per_building[:sum_benchmark]
       end
     end
     # rubocop:enable Metrics/AbcSize
@@ -158,7 +173,7 @@ module FacilitiesManagement
 
       selected_buildings.each do |b|
         selected_services.each do |s|
-          next unless @gia_services.include? s
+          next unless CCS::FM::Service.gia_services.include? s
 
           s_dot = s.gsub('-', '.')
           uvals << { 'user_id' => b['user_id'],
@@ -179,7 +194,31 @@ module FacilitiesManagement
       lifts_per_building.map(&:attributes)
     end
 
+    def move_upto_next_lot(lot)
+      case lot
+      when nil
+        '1a'
+      when '1a'
+        '1b'
+      when '1b'
+        '1c'
+      else
+        lot
+      end
+    end
+
     private
+
+    # rubocop:disable Rails/FindEach
+    def regions
+      # Get nuts regions
+      # @regions = {}
+      # Nuts1Region.all.each { |x| @regions[x.code] = x.name }
+      @subregions = {}
+      FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
+      @subregions.select! { |k, _v| posted_locations.include? k }
+    end
+    # rubocop:enable Rails/FindEach
 
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
