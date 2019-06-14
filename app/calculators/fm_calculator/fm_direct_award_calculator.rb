@@ -8,7 +8,7 @@ class DirectAward
 
   def calculate
     eligible = false
-    eligible = true if @building_type == 'STANDARD' && @service_standard == 'A' && @priced_at_framework.to_s == 'true' && Integer(@assessed_value) <= 1500000
+    eligible = true if @building_type == 'STANDARD' && (@service_standard == 'A' || @service_standard.nil?) && @priced_at_framework.to_s == 'true' && Integer(@assessed_value) <= 1500000
     eligible
   end
 end
