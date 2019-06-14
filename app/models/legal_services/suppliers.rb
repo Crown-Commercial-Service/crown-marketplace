@@ -3,4 +3,3 @@ module LegalServices
     include Steppable
   end
 end
-
