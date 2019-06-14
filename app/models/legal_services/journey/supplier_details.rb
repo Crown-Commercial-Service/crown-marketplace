@@ -1,5 +1,5 @@
 module LegalServices
-  class Journey::SupplierResults
+  class Journey::SupplierDetails
     include Steppable
     def next_step_class
       Journey::SupplierDetails
