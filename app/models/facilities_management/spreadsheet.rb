@@ -44,6 +44,7 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Style/ConditionalAssignment
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
@@ -54,8 +55,8 @@ class FacilitiesManagement::Spreadsheet
     selected_services = selected_services.map { |s| s.gsub('.', '-') }
     selected_buildings = @report.building_data.select do |b|
       if b.building_json['services']
-      b_services = b.building_json['services'].map { |s| s['code'] }
-      (selected_services & b_services).any?
+        b_services = b.building_json['services'].map { |s| s['code'] }
+        (selected_services & b_services).any?
       else
         false
       end
@@ -200,6 +201,7 @@ class FacilitiesManagement::Spreadsheet
     end
     # package.to_stream.read
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
