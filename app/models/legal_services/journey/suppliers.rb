@@ -1,5 +1,5 @@
 module LegalServices
-  class Suppliers
+  class Journey::Suppliers
     include Steppable
   end
 end
