@@ -144,6 +144,7 @@ module FacilitiesManagement
     def uom_values(selected_buildings, selected_services)
       uvals = CCS::FM::UnitOfMeasurementValues.values_for_user(@user_id)
       uvals = uvals.map(&:attributes)
+      uvals.select! { |u| selected_services.include? u['service_code'].gsub('.', '-') }
 
       # add labels for spreadsheet
       uvals.each do |u|
