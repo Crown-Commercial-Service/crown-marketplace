@@ -8,7 +8,8 @@ module LegalServices
     def next_step_class
       case fees
       when 'yes'
-        Journey::Lot1RegionalService
+        byebug
+        Journey::Lot1RegionalService2
       else
         Journey::Sorry
       end
