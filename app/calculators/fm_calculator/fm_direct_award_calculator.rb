@@ -1,7 +1,8 @@
 class DirectAward
   def initialize(building_type, service_standard, priced_at_framework, assessed_value)
+    standards = %w[A B C]
     @building_type = building_type
-    @service_standard = service_standard
+    @service_standard = standards.include?(service_standard) ? service_standard : nil
     @priced_at_framework = priced_at_framework
     @assessed_value = assessed_value
   end
