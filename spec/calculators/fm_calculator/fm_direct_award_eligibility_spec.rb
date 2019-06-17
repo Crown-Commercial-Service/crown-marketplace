@@ -27,6 +27,14 @@ RSpec.describe DirectAward do
   end
 
   describe '.calculate' do
+    it 'will return eligible for parameters when service standard is N/A' do
+      da = described_class.new('STANDARD', 'N/A', 'true', 100000)
+      result = da.calculate
+      expect(result).to eq true
+    end
+  end
+
+  describe '.calculate' do
     it 'will return un-eligible for parameters when assessed value is greater than £1.5M' do
       da = described_class.new('STANDARD', 'A', 'true', 1500010)
       result = da.calculate
