@@ -124,6 +124,13 @@ form.ccs-form {
         top: -3000px;
         left: -3000px;
     }
+    /* chrome background colours on autofill */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active  {
+        -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+    }
 }
 /* form.ccs-form overrides end */
 
