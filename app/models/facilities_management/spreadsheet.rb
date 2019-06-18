@@ -79,7 +79,7 @@ class FacilitiesManagement::Spreadsheet
       end
     end
 
-    selected_services = services_selected.map { |s| s['code'].gsub('-', '.') }
+    # selected_services = services_selected.map { |s| s['code'].gsub('-', '.') }
     services = @report.list_of_services # @report.selected_services(selected_services)
     uom_values_for_selected_buildings = @report.uom_values(selected_buildings)
 
