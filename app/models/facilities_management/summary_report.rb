@@ -54,22 +54,6 @@ module FacilitiesManagement
 
       selected_buildings = user_buildings
 
-      # services_selected = selected_buildings.collect { |b| b.building_json['services'] }.flatten.collect { |s| s['code'].gsub('-', '.') }
-
-      # services = services_selected.sort_by(&:code)
-
-      # selected_services = services.collect(&:code)
-      # selected_services = selected_services.map { |s| s.gsub('.', '-') }
-
-      # selected_buildings = @building_data.select do |b|
-      #   if b.building_json['services']
-      #     b_services = b.building_json['services'].collect { |s| s['code'] }
-      #     (selected_services & b_services).any?
-      #   else
-      #     false
-      #   end
-      # end
-
       uvals = uom_values(selected_buildings)
 
       selected_buildings.each do |building|
@@ -164,9 +148,6 @@ module FacilitiesManagement
       uvals = CCS::FM::UnitOfMeasurementValues.values_for_user(@user_id)
       uvals = uvals.map(&:attributes)
 
-      # include only selected services
-      # uvals.select! { |u| selected_services.include? u['service_code'].gsub('.', '-') }
-
       # add labels for spreadsheet
       uvals.each do |u|
         uoms = CCS::FM::UnitsOfMeasurement.service_usage(u['service_code'])
@@ -237,8 +218,6 @@ module FacilitiesManagement
     # rubocop:disable Rails/FindEach
     def regions
       # Get nuts regions
-      # @regions = {}
-      # Nuts1Region.all.each { |x| @regions[x.code] = x.name }
       @subregions = {}
       FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
       @subregions.select! { |k, _v| posted_locations.include? k }
@@ -296,9 +275,7 @@ module FacilitiesManagement
       sum_benchmark = 0.0
 
       copy_params building_data
-      # id = building_data['id']
 
-      # with_pricing.each do |service|
       uvals.each do |v|
         # puts service.code
         # puts service.name

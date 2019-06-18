@@ -54,21 +54,6 @@ class FacilitiesManagement::Spreadsheet
     services_selected = selected_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
     services_selected.uniq!
 
-    # services_selected.sort_by(&:code)
-
-    # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
-    # services = @report.selected_services(services_selected).sort_by(&:code)
-    # selected_services = services.collect(&:code)
-
-    # selected_buildings = @report.building_data.select do |b|
-    #   if b.building_json['services']
-    #     b_services = b.building_json['services'].map { |s| s['code'] }
-    #     (selected_services & b_services).any?
-    #   else
-    #     false
-    #   end
-    # end
-
     @workbook.add_worksheet(name: 'Building Information') do |sheet|
       sheet.add_row ['Buildings information']
       i = 0
@@ -109,7 +94,6 @@ class FacilitiesManagement::Spreadsheet
         vals_h = nil
         uom_labels_2d = []
         selected_buildings.each do |building|
-          # begin
           id = building.building_json['id']
           suv = uom_values_for_selected_buildings.select { |v| v['building_id'] == id && v['service_code'] == s.code }
           vals_h = []
@@ -125,13 +109,9 @@ class FacilitiesManagement::Spreadsheet
         rescue StandardError
           vals << '=NA()'
         end
-        # vals << valsV
-        # sheet.add_row vals
-        #
 
         uom_labels_max = uom_labels_2d.max
-        # uoms.each do |u|
-        # vals << u['title_text']building_json['services'].map { |s| s['code'] }
+
         max_j = vals_v.map(&:length).max
         if max_j
           (0..max_j - 1).each do |j|
