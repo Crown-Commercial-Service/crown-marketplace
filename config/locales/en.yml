@@ -180,6 +180,17 @@ en:
           attributes:
             worker_type:
               inclusion: Select yes if you want an agency to supply the worker
+        ccs_patterns/home/cog_sign_in:
+          attributes:
+            cog_sign_in:
+              please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
+              enter_your_password: Enter your password
+            cog_sign_in_password_prompt_change:
+              enter_a_password: Enter a password
+              password_must_be: Password must be 8 characters or more
+              passwords_dont_match: Passwords don't match
+              passwords_stronger: Password must include a number or a special character
+              password_must_match: Passwords don't match
   activerecord:
     errors:
       models:
@@ -378,6 +389,22 @@ en:
         page_title: Understanding what to buy
         title: Understanding what to buy
     page_section: Find apprenticeship training and related services
+  ccs_patterns:
+    home:
+      cog_sign_in:
+        heading_html: Sign in to your <abbr title="Crown Commercial Service">CCS</abbr> account
+        email_address: Email address
+        password: Password
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
+        problems_signing_in: Problems signing in
+        forgotten_password_html: I've forgotten my password
+        forgotten_email_html: I've forgotten my email address
+      cog_sign_in_password_prompt_change:
+        heading: Change your password
+        create_your_password: Create your password
+        confirm_your_password: Confirm your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   common:
     apply_filters: Apply filters
     back_to_start: Back to start
@@ -393,6 +420,8 @@ en:
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
+    sign_in: Sign in
+    change_password_and_sign_in: Change password and sign in
   companies:
     unit:
       one: company

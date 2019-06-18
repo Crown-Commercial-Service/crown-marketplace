@@ -17,21 +17,21 @@
 
 
         <h1 class="govuk-heading-xl">
-            Sign in to your <abbr title="Crown Commercial Service">CCS</abbr> account
+            <%= t('.heading_html') %>
         </h1>
 
         <%= form_tag @form_path, class: 'ccs-form', id: 'cop_sign_in_form', method: :get do %>
 
             <div class="govuk-form-group govuk-!-margin-bottom-4">
                 <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">
-                    Email address
+                    <%= t('.email_address') %>
                 </label>
                 <span id="email-hint" class="govuk-hint">
-                    Enter the email address you used to set up your <abbr>CCS</abbr> account.
+                    <%= t('.email_hint_html') %>
                 </span>
 
                 <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                    <%= t('.please_enter_a_valid_email_address') %>
+                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.please_enter_a_valid_email_address') %>
                 </span>
 
                 <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" aria-describedby="email-hint" autocomplete="email" spellcheck="false">
@@ -39,32 +39,34 @@
 
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="password">
-                    Password
+                    <%= t('.password') %>
                 </label>
 
                 <span id="password-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                    <%= t('.please_enter_your_password') %>
+                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.enter_your_password') %>
                 </span>
 
                 <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" autocomplete="new-password">
             </div>
 
-            <%= submit_tag t('common.submit'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+            <%= submit_tag t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
 
         <% end %>
 
         <p class="govuk-body govuk-!-margin-bottom-7">
-            <a href="#" class="govuk-link">Create a CCS account</a>
+            <%= t('.create_ccs_account_html') %>
         </p>
 
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Problems signing in</h2>
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <%= t('.problems_signing_in') %>
+        </h2>
 
         <ul class="govuk-list">
             <li>
-                <a class="govuk-link" href="#">I've forgotten my password</a>
+                <a class="govuk-link" href="#"><%= t('.forgotten_password_html') %></a>
             </li>
             <li>
-                <a class="govuk-link" href="#">I've forgotten my email address</a>
+                <a class="govuk-link" href="#"><%= t('.forgotten_email_html') %></a>
             </li>
         </ul>
 
