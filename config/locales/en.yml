@@ -104,7 +104,7 @@ en:
         management_consultancy/journey/choose_services:
           attributes:
             services:
-              too_short: Please choose the services you require
+              too_short: Select the service or services you need
         supply_teachers/journey/agency_payroll:
           attributes:
             job_type:
@@ -706,7 +706,7 @@ en:
         subtitle: Suppliers have said where they’ll provide consultants.
       choose_services:
         no_services_selected: No services selected
-        question: Select the business consultancy services you need
+        question: Select the services you need
         remove_all: Remove all
         services_selected: services selected
       other_framework:
