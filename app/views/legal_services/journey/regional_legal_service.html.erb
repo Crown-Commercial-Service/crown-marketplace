@@ -52,22 +52,22 @@
               </span>
 
               <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
+                <% region_all = Nuts1Region.all %>
+                <% region_all.each do |region| %>
 
-                <% region1 = [['North East','NE'], ['North West','NW'],['Yorkshire and the Humber','YH'],['East Midlands','EM'], ['West Midlands','WM'],['East of England','EE'], ['Greater London','GL'], ['South East','SE'],['South West','SW'],['Wales','WA'],['Scotland','SC'],['Northern Ireland','NI']] %>
-                <% c=0 %>
-                <% region1.each do |region| %>
-                  <div class="govuk-checkboxes__item">
-                    <% region_no_space = region[0].gsub(' ', '_') %>
+                <% byebug %>
+                    <div class="govuk-checkboxes__item">
+                    <% region_no_space = region.name.gsub(' ', '_') %>
+                    <% byebug %>
                     <%= check_box_tag(
-                                "region1[]",
-                                region[1],
-                                @journey.current_step.region1.include?(region[1]),
+                                "region_all",
+                                region_all,
+                                @journey.current_step.region_all.include?(region.code),
                                 class: "govuk-checkboxes__input",
                                 id: "region_#{region_no_space}"
                               ) %>
-                    <% c=c+1 %>
                     <label class="govuk-label govuk-checkboxes__label" for="region_<%= region_no_space %>">
-                      <%= region[0] %>
+                      <%= region.name %>
                     </label>
                   </div>
 
