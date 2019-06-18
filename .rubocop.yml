@@ -53,7 +53,7 @@ Style/WordArray:
 Style/ClassAndModuleChildren:
     Enabled: false
 
-Style/EndOfLine:
+Layout/EndOfLine:
    EnforcedStyle: lf
 
 Layout/TrailingBlankLines:
