@@ -141,6 +141,7 @@ Rails.application.routes.draw do
     get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
     get '/errors-requirements', to: 'home#errors_requirements'
     get '/cog-sign-in', to: 'home#cog_sign_in'
+    get '/cog-sign-in-password-prompt-change', to: 'home#cog_sign_in_password_prompt_change'
   end
 
   namespace 'legal_services', path: 'legal-services' do
