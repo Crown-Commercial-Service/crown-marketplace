@@ -723,7 +723,7 @@ en:
         expression_of_interest_template: Expression of interest template
         expression_of_interest_template_link: https://ccs-agreements.cabinetoffice.gov.uk/sites/default/files/contracts/RM6008%20MCF2%20Expression%20of%20Interest%20-%20%20V1.docx?format=doc
         heading: Download the supplier shortlist
-        lead_text: The spreadsheet includes the selections you made, for your records and audit trail.
+        lead_text: The spreadsheet includes the selections you made, for your records and audit trail
         other_documents: Other documents
       index:
         download_suppliers_list: Download the supplier list
