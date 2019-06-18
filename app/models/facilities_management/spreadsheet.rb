@@ -80,7 +80,8 @@ class FacilitiesManagement::Spreadsheet
     end
 
     selected_services = services_selected.map { |s| s['code'].gsub('-', '.') }
-    services = @report.selected_services(selected_services)
+    services = @report.list_of_services # @report.selected_services(selected_services)
+    uom_values_for_selected_buildings = @report.uom_values(selected_buildings)
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       i = 1
@@ -110,7 +111,7 @@ class FacilitiesManagement::Spreadsheet
         selected_buildings.each do |building|
           # begin
           id = building.building_json['id']
-          suv = @report.uom_values(selected_buildings).select { |v| v['building_id'] == id && v['service_code'] == s.code }
+          suv = uom_values_for_selected_buildings.select { |v| v['building_id'] == id && v['service_code'] == s.code }
           vals_h = []
 
           uom_labels = []

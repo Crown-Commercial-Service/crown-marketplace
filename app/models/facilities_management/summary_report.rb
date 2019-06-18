@@ -155,9 +155,9 @@ module FacilitiesManagement
       when 0..7000000
         '£7 Million'
       when 7000000..50000000
-        'above £7 Million'
+        '£50 Million'
       else
-        'above £50 Million'
+        '£50 Million'
       end
     end
 
