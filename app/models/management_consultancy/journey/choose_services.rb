@@ -10,7 +10,7 @@ module ManagementConsultancy
     end
 
     def next_step_class
-      Journey::ChooseExpenses
+      Journey::ChooseRegions
     end
   end
 end
