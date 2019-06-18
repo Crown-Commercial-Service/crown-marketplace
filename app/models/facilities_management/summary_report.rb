@@ -284,15 +284,17 @@ module FacilitiesManagement
         # puts service.work_package
         # puts service.work_package.code
         # puts service.work_package.name
-        #
-
-        # occupants = occupants(v['service_code'], building_data)
-        occupants = v['uom_value'] if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
 
         uom_value = v['uom_value'].to_f
 
+        # occupants = occupants(v['service_code'], building_data)
+        if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
+          occupants = v['uom_value'].to_i
+          uom_value = @fm_gross_internal_area
+        end
+
         code = v['service_code'].remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants.to_i, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum
       end
