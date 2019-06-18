@@ -7,7 +7,7 @@ module LegalServices
     def next_step_class
       case select_lot
       when 'lot1'
-        Journey::Lot1RegionalService2
+        Journey::Lot1RegionalService
       when 'lot2'
         Journey::Lot2FullService
       when 'lot3'

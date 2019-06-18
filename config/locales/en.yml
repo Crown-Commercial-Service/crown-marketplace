@@ -602,18 +602,6 @@ en:
         txt01: The
         txt02_link: General Legal Advice Services (RM3786)
         txt03: agreement provides legal advice services for central government and arms-length bodies.
-      supplier_results:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 1 - Regional service provision
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
-      supplier_results2:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 2 - Full-service firms
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
     suppliers:
       cg_no_suppliers_found:
         header: No suppliers were found
