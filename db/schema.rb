@@ -81,6 +81,12 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.index ["code"], name: "fm_regions_code_key", unique: true
   end
 
+  create_table "fm_static_data", id: false, force: :cascade do |t|
+    t.string "key", null: false
+    t.jsonb "value"
+    t.index ["key"], name: "fm_static_data_key_idx"
+  end
+
   create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
     t.jsonb "data"
     t.datetime "created_at", null: false
