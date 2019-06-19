@@ -56,8 +56,8 @@ function wipeInlineError(theName){
     $('#'+theName).parents('.govuk-form-group').removeClass('govuk-form-group--error').find('span.ccs-e-msg').addClass('govuk-visually-hidden');
 }
 
-function removeInlineError(theName){
-    $('span[id^="'+theName+'"]').addClass('govuk-visually-hidden').parents('.govuk-form-group').removeClass('govuk-form-group--error');
+function removeInlineError(theName, form){
+    form.find('span[id^="'+theName+'"]').addClass('govuk-visually-hidden').parents('.govuk-form-group').removeClass('govuk-form-group--error');
 }
 
 
@@ -81,16 +81,14 @@ function cop_change_password_form(form){
 
         for (var i = 0; i < arrayLength; i++) {//console.log(inputs[i]);
 
-            if(inputs[i][0] === ''){//empty inputs
+            if(inputs[i][0] === ''){// = empty inputs
                 e.preventDefault();//stop the form.submit()
                 fireErrorSummary(inputs[i][1]);
                 wipeInlineError(inputs[i][1]);
                 fireInlineError(inputs[i][1]);
             }else{//has a value
                 removeErrorSummary(inputs[i][1]);//clean up ...
-                removeInlineError(inputs[i][1]);// error displays
-
-
+                removeInlineError(inputs[i][1], form);
 
                 if(inputs[i][1] == pass01){//run on the first/main password input
 
@@ -109,9 +107,11 @@ function cop_change_password_form(form){
                     }
 
                 }else if(firstPassword != inputs[i][0]){
+
                     e.preventDefault();//stop the form.submit()
                     fireErrorSummary(inputs[i][1],'match');
                     fireInlineError(inputs[i][1],'match');
+
                 }
 
                 form.submit();
@@ -143,7 +143,7 @@ function cop_sign_in_form(form){
                 fireInlineError(inputs[i][1]);
             }else{//has a value
                 removeErrorSummary(inputs[i][1]);//clean up ...
-                removeInlineError(inputs[i][1]);// error displays
+                removeInlineError(inputs[i][1], form);
 
                 if(inputs[i][1] == emailF){//test the email address
                     if(!emailReg.test(inputs[i][0])) {
