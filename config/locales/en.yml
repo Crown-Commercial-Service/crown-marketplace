@@ -17,6 +17,17 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
+        ccs_patterns/home/cog_sign_in:
+          attributes:
+            cog_sign_in:
+              enter_your_password: Enter your password
+              please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
+            cog_sign_in_password_prompt_change:
+              enter_a_password: Enter a password
+              password_must_be: Password must be 8 characters or more
+              password_must_match: Passwords don't match
+              passwords_dont_match: Passwords don't match
+              passwords_stronger: Password must include a number or a special character
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -378,11 +389,28 @@ en:
         page_title: Understanding what to buy
         title: Understanding what to buy
     page_section: Find apprenticeship training and related services
+  ccs_patterns:
+    home:
+      cog_sign_in:
+        create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_email_html: I've forgotten my email address
+        forgotten_password_html: I've forgotten my password
+        heading_html: Sign in to your <abbr title="Crown Commercial Service">CCS</abbr> account
+        password: Password
+        problems_signing_in: Problems signing in
+      cog_sign_in_password_prompt_change:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   common:
     apply_filters: Apply filters
     back_to_start: Back to start
     browse: Browse
     ccs_contact_url: https://www.crowncommercial.gov.uk/contact
+    change_password_and_sign_in: Change password and sign in
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
@@ -390,6 +418,7 @@ en:
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     search: Search
+    sign_in: Sign in
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
@@ -533,8 +562,8 @@ en:
         opt_no: 'No'
         question: Do you need legal services for property and construction or rail?
       choose_services_area2:
-        opt_01: Lot 1 Regional service provision
-        opt_02: Lot 2 Full-service firms
+        opt_01: Lot 1 - Regional service provision
+        opt_02: Lot 2 - Full-service firms
         opt_03: I Dont Know
         or_txt: Or
         question: What lot do you need?
