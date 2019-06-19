@@ -171,7 +171,7 @@ function select_lot(form){
 
 jQuery(document).ready(function(){
 
-    var f = $('#main-content').find('form');
+    var f = $('#main-content').find('form.ccs-form');
 
     if(f.length){
       var formIDs = ['check_suitability','check_suitability2','lot1_regional_service', 'lot1_regional_service2','lot2_full_service','choose_organistion_type','requirement','regional_legal_service','legal_jurisdiction','choose_services_area','choose_services_area2','select_lot'];
