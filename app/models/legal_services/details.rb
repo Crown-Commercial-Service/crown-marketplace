@@ -39,6 +39,4 @@ module LegalServices
       all.map(&:region)
     end
   end
-
-  Details.load_csv('legal_service/supplierdetails.csv')
 end

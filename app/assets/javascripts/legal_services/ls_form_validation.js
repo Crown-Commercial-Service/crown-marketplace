@@ -102,7 +102,7 @@ function requirement(form){
 
 function regional_legal_service(form){
    $('#submit01').add('#submit02').on('click', function(e){
-    var state = form.find('input[name="region1[]"]');
+    var state = form.find('input[name="region_all[]"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();

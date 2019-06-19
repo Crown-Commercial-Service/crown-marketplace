@@ -58,8 +58,8 @@
                     <div class="govuk-checkboxes__item">
                     <% region_no_space = region.name.gsub(' ', '_') %>
                     <%= check_box_tag(
-                                "region_all",
-                                region_all,
+                                "region_all[]",
+                                region.code,
                                 @journey.current_step.region_all.include?(region.code),
                                 class: "govuk-checkboxes__input",
                                 id: "region_#{region_no_space}"
