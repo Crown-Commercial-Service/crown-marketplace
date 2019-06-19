@@ -62,9 +62,6 @@ function removeInlineError(theName, form){
 
 
 
-
-
-
 function cop_change_password_form(form){
     var firstPassword;
 
