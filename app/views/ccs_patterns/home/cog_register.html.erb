@@ -1,0 +1,170 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+
+
+
+        <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+                <%= t('common.error_summary_title') %>
+            </h2>
+            <div class="govuk-error-summary__body">
+                <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list"></ul>
+            </div>
+        </div>
+
+
+
+
+
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            <%= t('.heading_html') %>
+        </h1>
+
+        <p class="govuk-body-l govuk-!-margin-bottom-8">
+            <%= t('.lead') %>
+        </p>
+
+        <%= form_tag @form_path, class: 'ccs-form', id: 'cop_register', method: :get do %>
+
+            <!-- your details start -->
+            <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    Your details
+                </legend>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="firstname">
+                        First name
+                    </label>
+
+                    <span id="firstname-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Enter your first name
+                    </span>
+
+                    <input class="govuk-input govuk-!-width-three-quarters" id="firstname" name="firstname" type="text">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="lastname">
+                        Last name
+                    </label>
+
+                    <span id="lastname-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Enter your last name
+                    </span>
+
+                    <input class="govuk-input govuk-!-width-three-quarters" id="lastname" name="lastname" type="text">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="jobtitle">
+                        Job title (optional)
+                    </label>
+                    <input class="govuk-input govuk-!-width-three-quarters" id="jobtitle" name="jobtitle" type="text">
+                </div>
+
+            </fieldset>
+            <!-- you details end -->
+
+            <!-- organisation details start -->
+            <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    Organisation details
+                </legend>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="organisationname">
+                        Organisation name
+                    </label>
+
+                    <span id="organisationname-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Enter your organisation name
+                    </span>
+
+                    <input class="govuk-input govuk-!-width-three-quarters" id="organisationname" name="organisationname" type="text">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="email">
+                        Email address
+                    </label>
+
+                    <span id="email-hint" class="govuk-hint govuk-!-width-three-quarters">
+                        We will send a confirmation code to this address.
+                    </span>
+
+                    <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Enter an email address in the correct format, like name@example.com
+                    </span>
+
+                    <input class="govuk-input govuk-!-width-three-quarters" id="email" name="email" type="email" aria-describedby="email-hint" autocomplete="email" spellcheck="false">
+                </div>
+
+                <!--div class="govuk-form-group">
+                    <label class="govuk-label" for="phone">
+                        Phone number (optional)
+                    </label>
+                    <input class="govuk-input govuk-!-width-three-quarters" id="phone" name="phone" type="tel">
+                </div-->
+
+                <!--div class="govuk-form-group">
+                    <label class="govuk-label" for="organisation">
+                        Organisation name
+                    </label>
+                    <input class="govuk-input govuk-!-width-three-quarters" id="organisation" name="organisation" type="text">
+                </div-->
+
+            </fieldset>
+            <!-- organisation details end -->
+
+            <!-- password start -->
+            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--m" for="password01">
+                        Create a password you'll remember
+                    </label>
+
+                    <span id="password01-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Enter a password
+                    </span>
+
+                    <span id="password01-eighterror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Password must be 8 characters or more
+                    </span>
+
+                    <span id="password01-Serror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Password must include a number or a special character
+                    </span>
+
+                    <input class="govuk-input govuk-!-width-three-quarters" id="password01" name="password01" type="password" autocomplete="new-password">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="password02">
+                        Confirm your password
+                    </label>
+
+                    <span id="password02-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Enter your password
+                    </span>
+
+                    <span id="password02-matcherror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        Passwords don't match
+                    </span>
+
+                    <input class="govuk-input govuk-!-width-three-quarters" id="password02" name="password02" type="password" autocomplete="new-password">
+                </div>
+
+            </fieldset>
+            <!-- password end -->
+
+            <%= submit_tag t('common.create_account'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7 govuk-!-margin-bottom-8" %>
+
+        <% end %>
+
+    </div>
+</div>

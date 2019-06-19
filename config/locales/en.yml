@@ -405,6 +405,9 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      cog_register:
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
   common:
     apply_filters: Apply filters
     back_to_start: Back to start
@@ -422,6 +425,7 @@ en:
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
+    create_account: Create account
   companies:
     unit:
       one: company
