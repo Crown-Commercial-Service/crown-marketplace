@@ -402,7 +402,7 @@ en:
         problems_signing_in: Problems signing in
       cog_sign_in_password_prompt_change:
         confirm_your_password: Confirm your password
-        create_your_password: Create your password
+        create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
   common:
