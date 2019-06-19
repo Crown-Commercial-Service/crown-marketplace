@@ -42,7 +42,8 @@
               </legend>
 
               <p class="govuk-body ccs-legend-download">
-                <a href="#" class="govuk-link govuk-link--no-visited-state">View locations (<abbr title="Portable Document Format">PDF</abbr> 267<abbr title="Kilobyte">KB</abbr>)</a>
+                 <p><%= link_to "legal_services/RegionMap.pdf", kase_path(@kase, :format => 'pdf') %></p>
+               # <a href="<%= asset_path('/legal_services/RegionMap.pdf') %>" class="govuk-link govuk-link--no-visited-state">View locations (<abbr title="Portable Document Format">PDF</abbr> 267<abbr title="Kilobyte">KB</abbr>)</a>
               </p>
 
               <%= display_error(@journey, :regional_legal_service) %>
