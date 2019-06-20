@@ -1,7 +1,6 @@
 require 'json'
 require 'base64'
 class FMCacheData
-
   def create_cache_table
     query = 'CREATE TABLE if not exists fm_cache (user_id varchar NOT NULL,"key" varchar NOT NULL,value varchar NULL);'
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
