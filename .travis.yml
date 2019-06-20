@@ -20,7 +20,7 @@ addons:
   postgresql: "11"
 before_script:
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
-  - psql -U postgres -c "create extension postgis"
+  - sudo psql -U postgres -c "create extension postgis"
 before_install:
   - gem install --force --conservative -v 1.16.6 bundler
   - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
