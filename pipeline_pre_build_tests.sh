@@ -5,10 +5,10 @@ sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >> /
 apt update
 apt-get install -y build-essential
 apt install -y postgresql-11-postgis-2.5
-sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
-sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
-sudo service postgresql stop
-service postgresql start 11
+# sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
+# sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
+# sudo service postgresql stop
+# service postgresql start 11
 sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
 curl -sL https://deb.nodesource.com/setup_8.x | bash -
 apt-get install -y nodejs
