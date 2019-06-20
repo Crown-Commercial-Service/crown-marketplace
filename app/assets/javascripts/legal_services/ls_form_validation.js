@@ -37,7 +37,7 @@ function check_suitability2(form){
 
 function lot1_regional_service(form){
   $('#submit01').add('#submit02').on('click', function(e){
-    var state = form.find('input[name="lot1[]"]');
+    var state = form.find('input[name="lot1_regional_service[]"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
@@ -50,7 +50,7 @@ function lot1_regional_service(form){
 
 function lot1_regional_service2(form){
   $('#submit01').add('#submit02').on('click', function(e){
-    var state = form.find('input[name="lot1_regional_service"]');
+    var state = form.find('input[name="lot1_regional_service2[]"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
