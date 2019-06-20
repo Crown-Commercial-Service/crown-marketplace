@@ -1,7 +1,7 @@
 module LegalServices
   class Journey::Lot1RegionalService2
     include Steppable
-    attribute :lot1_regional_service, :string
+    attribute :lot1_regional_service
     validate :validate_lot1_regional_service2
 
     def next_step_class
