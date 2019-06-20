@@ -4,13 +4,18 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key a
 sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >> /etc/apt/sources.list.d/postgresql.list'
 apt update
 apt-get install -y build-essential
+
+# apt install -y postgresql-11-postgis-2.5
+# sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
+# sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
+# sudo service postgresql stop
+# service postgresql start 11
+# sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
+# sudo psql -U postgres -c "create extension postgis"
 apt install -y postgresql-11-postgis-2.5
-sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
-cp /etc/postgresql/{10,11}/main/pg_hba.conf
-service postgresql stop
 service postgresql start 11
 sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
-psql -U postgres -c "create extension postgis"
+
 curl -sL https://deb.nodesource.com/setup_8.x | bash -
 apt-get install -y nodejs
 alias node=nodejs
