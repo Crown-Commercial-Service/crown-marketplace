@@ -285,10 +285,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-govuk-frontend@^2.11.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.11.0.tgz#f9eb4497a55d22b7eab8364323266680e17be188"
-  integrity sha512-kZR0ZrSju+Jqh8o5niKklj8/m5XmsNNUSQLL4M4urnMcrLypwW2dU3RkR8UCnzS2DDy4BTHb7CZw0VjQPoi3jg==
+govuk-frontend@^2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.13.0.tgz#0273f7c92070abd6450c73a006ebb3ddc793463a"
+  integrity sha512-6XDtTt5plSrPQvPgLFN4LCtb9ULuqoXCgkHy5c7XE/70/sVm47RPbLR11tYGPcmV8cOApBhW0wL8y8ryspHfpw==
 
 har-schema@^2.0.0:
   version "2.0.0"
