@@ -74,7 +74,7 @@ function cop_register(form){
         var fname = 'firstname';//firstname field name & id, ... etc
         var lname = 'lastname';
         var orgname = 'organisationname';
-        var emailF = 'email';//job title is optional!
+        var emailF = 'email';//job title is optional
 
         var val01 = form.find('input[name="'+pass01+'"]').val();
         var val02 = form.find('input[name="'+pass02+'"]').val();

@@ -31,16 +31,16 @@
             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
 
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                    Your details
+                    <%= t('.your_details') %>
                 </legend>
 
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="firstname">
-                        First name
+                        <%= t('.first_name') %>
                     </label>
 
                     <span id="firstname-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Enter your first name
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.enter_first_name') %>
                     </span>
 
                     <input class="govuk-input govuk-!-width-three-quarters" id="firstname" name="firstname" type="text">
@@ -48,11 +48,11 @@
 
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="lastname">
-                        Last name
+                        <%= t('.last_name') %>
                     </label>
 
                     <span id="lastname-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Enter your last name
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.enter_last_name') %>
                     </span>
 
                     <input class="govuk-input govuk-!-width-three-quarters" id="lastname" name="lastname" type="text">
@@ -60,7 +60,7 @@
 
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="jobtitle">
-                        Job title (optional)
+                        <%= t('.last_name') %>
                     </label>
                     <input class="govuk-input govuk-!-width-three-quarters" id="jobtitle" name="jobtitle" type="text">
                 </div>
@@ -72,16 +72,16 @@
             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
 
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                    Organisation details
+                    <%= t('.org_details') %>
                 </legend>
 
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="organisationname">
-                        Organisation name
+                        <%= t('.org_name') %>
                     </label>
 
                     <span id="organisationname-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Enter your organisation name
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.enter_org_name') %>
                     </span>
 
                     <input class="govuk-input govuk-!-width-three-quarters" id="organisationname" name="organisationname" type="text">
@@ -89,33 +89,19 @@
 
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email">
-                        Email address
+                        <%= t('.email') %>
                     </label>
 
                     <span id="email-hint" class="govuk-hint govuk-!-width-three-quarters">
-                        We will send a confirmation code to this address.
+                        <%= t('.email_hint') %>
                     </span>
 
                     <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Enter an email address in the correct format, like name@example.com
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.email_format') %>
                     </span>
 
                     <input class="govuk-input govuk-!-width-three-quarters" id="email" name="email" type="email" aria-describedby="email-hint" autocomplete="email" spellcheck="false">
                 </div>
-
-                <!--div class="govuk-form-group">
-                    <label class="govuk-label" for="phone">
-                        Phone number (optional)
-                    </label>
-                    <input class="govuk-input govuk-!-width-three-quarters" id="phone" name="phone" type="tel">
-                </div-->
-
-                <!--div class="govuk-form-group">
-                    <label class="govuk-label" for="organisation">
-                        Organisation name
-                    </label>
-                    <input class="govuk-input govuk-!-width-three-quarters" id="organisation" name="organisation" type="text">
-                </div-->
 
             </fieldset>
             <!-- organisation details end -->
@@ -125,19 +111,19 @@
 
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-label--m" for="password01">
-                        Create a password you'll remember
+                        <%= t('.create_password') %>
                     </label>
 
                     <span id="password01-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Enter a password
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.enter_a_password') %>
                     </span>
 
                     <span id="password01-eighterror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Password must be 8 characters or more
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.password_must_be') %>
                     </span>
 
                     <span id="password01-Serror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Password must include a number or a special character
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.eight_characters') %>
                     </span>
 
                     <input class="govuk-input govuk-!-width-three-quarters" id="password01" name="password01" type="password" autocomplete="new-password">
@@ -145,15 +131,15 @@
 
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="password02">
-                        Confirm your password
+                        <%= t('.confirm_password') %>
                     </label>
 
                     <span id="password02-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Enter your password
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.enter_your_password') %>
                     </span>
 
                     <span id="password02-matcherror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        Passwords don't match
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.passwords_dont_match') %>
                     </span>
 
                     <input class="govuk-input govuk-!-width-three-quarters" id="password02" name="password02" type="password" autocomplete="new-password">

@@ -17,17 +17,29 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
+        ccs_patterns/home/cog_register:
+          attributes:
+            email_format: Enter an email address in the correct format, like name@example.com
+            enter_a_password: Enter a password
+            enter_first_name: Enter your first name
+            enter_last_name: Enter your last name
+            enter_org_name: Enter your organisation name
+            enter_your_password: Enter your password
+            password_must_be: Password must be 8 characters or more
+            passwords_dont_match: Passwords don't match
+            passwords_stronger: Password must include a number or a special character
         ccs_patterns/home/cog_sign_in:
           attributes:
             cog_sign_in:
               enter_your_password: Enter your password
               please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
-            cog_sign_in_password_prompt_change:
-              enter_a_password: Enter a password
-              password_must_be: Password must be 8 characters or more
-              password_must_match: Passwords don't match
-              passwords_dont_match: Passwords don't match
-              passwords_stronger: Password must include a number or a special character
+        ccs_patterns/home/cog_sign_in_password_prompt_change:
+          attributes:
+            enter_a_password: Enter a password
+            password_must_be: Password must be 8 characters or more
+            password_must_match: Passwords don't match
+            passwords_dont_match: Passwords don't match
+            passwords_stronger: Password must include a number or a special character
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -391,6 +403,18 @@ en:
     page_section: Find apprenticeship training and related services
   ccs_patterns:
     home:
+      cog_register:
+        confirm_password: Confirm your password
+        create_password: Create password
+        email: Email
+        email_hint: We will send a confirmation code to this address.
+        first_name: First name
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        last_name: Last name
+        lead: You must be employed by, or represent, a public sector organisation.
+        org_details: Organisation details
+        org_name: Organisation name
+        your_details: Your details
       cog_sign_in:
         create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
         email_address: Email address
@@ -405,9 +429,6 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
-      cog_register:
-        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
-        lead: You must be employed by, or represent, a public sector organisation.
   common:
     apply_filters: Apply filters
     back_to_start: Back to start
@@ -415,6 +436,7 @@ en:
     ccs_contact_url: https://www.crowncommercial.gov.uk/contact
     change_password_and_sign_in: Change password and sign in
     continue: Continue
+    create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
@@ -425,7 +447,6 @@ en:
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
-    create_account: Create account
   companies:
     unit:
       one: company
