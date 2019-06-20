@@ -12,7 +12,15 @@ apt-get install -y build-essential
 # service postgresql start 11
 # sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
 # sudo psql -U postgres -c "create extension postgis"
+
+# # apt install -y postgresql-11-postgis-2.5
+# # service postgresql start 11
+# # sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
+
 apt install -y postgresql-11-postgis-2.5
+sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
+cp /etc/postgresql/{10,11}/main/pg_hba.conf
+service postgresql stop
 service postgresql start 11
 sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
 
