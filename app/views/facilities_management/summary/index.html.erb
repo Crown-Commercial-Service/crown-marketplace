@@ -76,7 +76,7 @@
         <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <p class="govuk-heading-m">
-              Do you think the total value of your services will move your estimated costs over <%= @report.lot_limit %>
+              Do you think the total value of your services will move your estimated cost <%= @report.lot_limit %>
               ?
             </p>
 
@@ -85,7 +85,7 @@
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="changed-name-1" name="sublot" type="radio" value="yes">
               <label class="govuk-label govuk-radios__label" for="changed-name-1">
-                Yes, it will take over <%= @report.lot_limit %>
+                Yes, it will go above <%= @report.lot_limit %>
               </label>
             </div>
             <div class="govuk-radios__item">
