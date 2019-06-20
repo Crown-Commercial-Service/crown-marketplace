@@ -44,6 +44,29 @@ const pageUtils = {
             const dataString = JSON.stringify(data);
             localStorage.setItem(key, dataString);
         }
+
+        let params = {
+            key: key,
+            value: data
+        };
+
+        let url = '/facilities-management/cache/set';
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(params),
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
     }),
 
     getCachedData: ((key) => {
