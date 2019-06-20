@@ -40,7 +40,7 @@ RSpec.feature 'Management consultancy', type: :feature do
     )
   end
 
-  scenario 'Buyer wants to buy business services (Lot 1) and pays expenses' do
+  scenario 'Buyer wants to buy business services (Lot 1)' do
     visit_management_consultancy_start
 
     required_service = ManagementConsultancy::Service.where(code: '1.1').first
@@ -53,9 +53,6 @@ RSpec.feature 'Management consultancy', type: :feature do
     click_on I18n.t('common.submit')
 
     check required_service.name
-    click_on I18n.t('common.submit')
-
-    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
@@ -66,30 +63,6 @@ RSpec.feature 'Management consultancy', type: :feature do
     expect(page).to have_text(/Aardvark Ltd/)
   end
 
-  scenario 'Buyer wants to buy business services (Lot 1) and does not pay expenses' do
-    visit_management_consultancy_start
-
-    required_service = ManagementConsultancy::Service.where(code: '1.1').first
-    required_region = Nuts2Region.find_by(code: 'UKC1')
-
-    choose 'help_needed_management_consultants'
-    click_on 'Continue'
-
-    choose 'Lot 1 - business services'
-    click_on I18n.t('common.submit')
-
-    check required_service.name
-    click_on I18n.t('common.submit')
-
-    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_not_paid')
-    click_on I18n.t('common.submit')
-
-    check required_region.name
-    click_on I18n.t('common.submit')
-
-    expect(page).to have_css('h1', text: 'No suppliers were found')
-    expect(page).to have_text('No companies can provide consultants that can meet your requirements')
-  end
   scenario 'Buyer wants to buy procurement, supply chain and commercial services (Lot 2)' do
     visit_management_consultancy_start
 
@@ -103,9 +76,6 @@ RSpec.feature 'Management consultancy', type: :feature do
     click_on I18n.t('common.submit')
 
     check required_service.name
-    click_on I18n.t('common.submit')
-
-    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_not_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name
@@ -131,9 +101,6 @@ RSpec.feature 'Management consultancy', type: :feature do
     check required_service.name
     click_on I18n.t('common.submit')
 
-    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_not_paid')
-    click_on I18n.t('common.submit')
-
     check required_region.name
     click_on I18n.t('common.submit')
 
@@ -155,9 +122,6 @@ RSpec.feature 'Management consultancy', type: :feature do
     click_on I18n.t('common.submit')
 
     check required_service.name
-    click_on I18n.t('common.submit')
-
-    choose I18n.t('management_consultancy.journey.choose_expenses.answer_expenses_not_paid')
     click_on I18n.t('common.submit')
 
     check required_region.name

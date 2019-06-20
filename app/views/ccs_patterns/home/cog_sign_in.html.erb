@@ -1,0 +1,74 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+
+
+
+        <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+                <%= t('common.error_summary_title') %>
+            </h2>
+            <div class="govuk-error-summary__body">
+                <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list"></ul>
+            </div>
+        </div>
+
+
+
+
+        <h1 class="govuk-heading-xl">
+            <%= t('.heading_html') %>
+        </h1>
+
+        <%= form_tag @form_path, class: 'ccs-form', id: 'cop_sign_in_form', method: :get do %>
+
+            <div class="govuk-form-group govuk-!-margin-bottom-4">
+                <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">
+                    <%= t('.email_address') %>
+                </label>
+                <span id="email-hint" class="govuk-hint">
+                    <%= t('.email_hint_html') %>
+                </span>
+
+                <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.please_enter_a_valid_email_address') %>
+                </span>
+
+                <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" aria-describedby="email-hint" autocomplete="email" spellcheck="false">
+            </div>
+
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="password">
+                    <%= t('.password') %>
+                </label>
+
+                <span id="password-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.enter_your_password') %>
+                </span>
+
+                <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" autocomplete="new-password">
+            </div>
+
+            <%= submit_tag t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+
+        <% end %>
+
+        <p class="govuk-body govuk-!-margin-bottom-7">
+            <%= t('.create_ccs_account_html') %>
+        </p>
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <%= t('.problems_signing_in') %>
+        </h2>
+
+        <ul class="govuk-list">
+            <li>
+                <a class="govuk-link" href="#"><%= t('.forgotten_password_html') %></a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#"><%= t('.forgotten_email_html') %></a>
+            </li>
+        </ul>
+
+    </div>
+</div>

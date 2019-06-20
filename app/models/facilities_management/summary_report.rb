@@ -54,22 +54,6 @@ module FacilitiesManagement
 
       selected_buildings = user_buildings
 
-      # services_selected = selected_buildings.collect { |b| b.building_json['services'] }.flatten.collect { |s| s['code'].gsub('-', '.') }
-
-      # services = services_selected.sort_by(&:code)
-
-      # selected_services = services.collect(&:code)
-      # selected_services = selected_services.map { |s| s.gsub('.', '-') }
-
-      # selected_buildings = @building_data.select do |b|
-      #   if b.building_json['services']
-      #     b_services = b.building_json['services'].collect { |s| s['code'] }
-      #     (selected_services & b_services).any?
-      #   else
-      #     false
-      #   end
-      # end
-
       uvals = uom_values(selected_buildings)
 
       selected_buildings.each do |building|
@@ -154,10 +138,8 @@ module FacilitiesManagement
       case assessed_value
       when 0..7000000
         '£7 Million'
-      when 7000000..50000000
-        'above £7 Million'
-      else
-        'above £50 Million'
+      else # when 7000000..50000000
+        '£50 Million'
       end
     end
 
@@ -165,9 +147,6 @@ module FacilitiesManagement
     def uom_values(selected_buildings)
       uvals = CCS::FM::UnitOfMeasurementValues.values_for_user(@user_id)
       uvals = uvals.map(&:attributes)
-
-      # include only selected services
-      # uvals.select! { |u| selected_services.include? u['service_code'].gsub('.', '-') }
 
       # add labels for spreadsheet
       uvals.each do |u|
@@ -239,8 +218,6 @@ module FacilitiesManagement
     # rubocop:disable Rails/FindEach
     def regions
       # Get nuts regions
-      # @regions = {}
-      # Nuts1Region.all.each { |x| @regions[x.code] = x.name }
       @subregions = {}
       FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
       @subregions.select! { |k, _v| posted_locations.include? k }
@@ -298,9 +275,7 @@ module FacilitiesManagement
       sum_benchmark = 0.0
 
       copy_params building_data
-      # id = building_data['id']
 
-      # with_pricing.each do |service|
       uvals.each do |v|
         # puts service.code
         # puts service.name
@@ -309,15 +284,19 @@ module FacilitiesManagement
         # puts service.work_package
         # puts service.work_package.code
         # puts service.work_package.name
-        #
-
-        # occupants = occupants(v['service_code'], building_data)
-        occupants = v['uom_value'] if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
 
         uom_value = v['uom_value'].to_f
 
+        # occupants = occupants(v['service_code'], building_data)
+        if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
+          occupants = v['uom_value'].to_i
+          uom_value = @fm_gross_internal_area
+        else
+          occupants = 0
+        end
+
         code = v['service_code'].remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants.to_i, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum
       end
