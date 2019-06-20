@@ -291,6 +291,8 @@ module FacilitiesManagement
         if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
           occupants = v['uom_value'].to_i
           uom_value = @fm_gross_internal_area
+        else
+          occupants = 0
         end
 
         code = v['service_code'].remove('.')
