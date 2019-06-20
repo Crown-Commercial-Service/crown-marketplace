@@ -583,6 +583,7 @@ en:
       lot1_regional_service2:
         heading: Lot 1 Regional service provision
         hint: Select the legal services you need
+        links_text_html: Links text html
         remove_all: Remove all
         txt01: services selected
         txt02: No services selected
