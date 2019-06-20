@@ -10,8 +10,8 @@
       <div class="govuk-error-summary__body">
         <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
           <li>
-            <a href="#lot_Child_law">
-              <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service2.attributes.lot1_regional_service2.too_short') %>
+            <a href="#lot_Property_and_construction">
+              <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service2.attributes.lot1_regional_service.too_short') %>
             </a>
           </li>
         </ul>
@@ -45,31 +45,34 @@
                 <%= display_error(@journey, :lot1_region) %>
 
                 <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                  <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service2.attributes.lot1_regional_service2.too_short') %>
+                  <%= t('activemodel.errors.models.legal_services/journey/lot1_regional_service22.attributes.lot1_regional_service.too_short') %>
                 </span>
 
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                  <% lot1 = [Employment','Litigation / dispute resolution','Property and contruction'] %>
+                <% lot1 = ['Employment','Litigation / dispute resolution','Property and contruction'] %>
+
                   <% lot1.each do |lot| %>
-                  <% if lot.number == "1" %>
                     <div class="govuk-checkboxes__item">
-                      <% lot_no_slash = lot.description.gsub('/', '_') %>
+                      <% lot_no_slash = lot.gsub('/', '_') %>
                       <% lot_no_space = lot_no_slash.gsub(' ', '_') %>
                       <%= check_box_tag(
-                                  "lot1_regional_service",
-                                  lot.description,
+                                  "lot1_regional_service2",
+                                  lot,
                                   false,
                                   class: "govuk-checkboxes__input",
                                   id: "lot_#{lot_no_space}"
                                 ) %>
                       <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot_no_space %>">
-                        <%= lot.description %>
+                        <%= lot %>
                       </label>
                     </div>
                   <% end %>
-                  <% end %>
                 </div>
+
+                <p id="hint" class="govuk-body govuk-!-margin-top-7 govuk-!-margin-bottom-0">
+                  <%= t('.links_text_html') %>
+                </p>
 
               <%= submit_tag t('common.submit'), id: 'submit01', class: "govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-8 govuk-!-padding-left-7 govuk-!-padding-right-7" %>
             </section>
