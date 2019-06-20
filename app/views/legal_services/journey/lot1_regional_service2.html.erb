@@ -50,7 +50,7 @@
 
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                  <% lot1 = LegalServices::Lot.all %>
+                  <% lot1 = [Employment','Litigation / dispute resolution','Property and contruction'] %>
                   <% lot1.each do |lot| %>
                   <% if lot.number == "1" %>
                     <div class="govuk-checkboxes__item">

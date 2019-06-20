@@ -2,7 +2,6 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-
       <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 
       <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
@@ -31,7 +30,7 @@
           </div>
         </div>
 
-        <%= govuk_form_group_with_optional_error(@journey, :regional_legal_service) do %>
+        <%= govuk_form_group_with_optional_error( @journey, :regional_legal_service) do %>
 
           <div id="ccs-dynamic-accordian" class="govuk-grid-row">
             <section id="accordion-default" class="govuk-grid-column-two-thirds">
@@ -43,7 +42,7 @@
               </legend>
 
               <p class="govuk-body ccs-legend-download">
-                <a href="#" class="govuk-link govuk-link--no-visited-state">View locations (<abbr title="Portable Document Format">PDF</abbr> 267<abbr title="Kilobyte">KB</abbr>)</a>
+                 <%= link_to "View locations" ,asset_path('legal_services/Region Map.pdf') %> (<abbr title="Portable Document Format">PDF)</abbr></a>
               </p>
 
               <%= display_error(@journey, :regional_legal_service) %>
@@ -53,21 +52,20 @@
               </span>
 
               <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
+                <% region_all = Nuts1Region.all %>
+                <% region_all.each do |region| %>
 
-                <% lot1 = ['North East', 'North West','Yorkshire and the Humber','East Midlands', 'West Midlands','East of England', 'Greater London', 'South East','South West','Wales','Scotland','Northern Ireland'] %>
-
-                <% lot1.each do |region| %>
-                  <div class="govuk-checkboxes__item">
-                    <% region_no_space = region.gsub(' ', '_') %>
+                    <div class="govuk-checkboxes__item">
+                    <% region_no_space = region.name.gsub(' ', '_') %>
                     <%= check_box_tag(
-                                "regional_legal_service",
-                                region,
-                                false,
+                                "region_all[]",
+                                region.code,
+                                @journey.current_step.region_all.include?(region.code),
                                 class: "govuk-checkboxes__input",
                                 id: "region_#{region_no_space}"
                               ) %>
                     <label class="govuk-label govuk-checkboxes__label" for="region_<%= region_no_space %>">
-                      <%= region %>
+                      <%= region.name %>
                     </label>
                   </div>
 

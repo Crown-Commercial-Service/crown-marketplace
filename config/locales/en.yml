@@ -17,6 +17,17 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
+        ccs_patterns/home/cog_sign_in:
+          attributes:
+            cog_sign_in:
+              enter_your_password: Enter your password
+              please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
+            cog_sign_in_password_prompt_change:
+              enter_a_password: Enter a password
+              password_must_be: Password must be 8 characters or more
+              password_must_match: Passwords don't match
+              passwords_dont_match: Passwords don't match
+              passwords_stronger: Password must include a number or a special character
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -104,7 +115,7 @@ en:
         management_consultancy/journey/choose_services:
           attributes:
             services:
-              too_short: Please choose the services you require
+              too_short: Select the service or services you need
         supply_teachers/journey/agency_payroll:
           attributes:
             job_type:
@@ -378,11 +389,28 @@ en:
         page_title: Understanding what to buy
         title: Understanding what to buy
     page_section: Find apprenticeship training and related services
+  ccs_patterns:
+    home:
+      cog_sign_in:
+        create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_email_html: I've forgotten my email address
+        forgotten_password_html: I've forgotten my password
+        heading_html: Sign in to your <abbr title="Crown Commercial Service">CCS</abbr> account
+        password: Password
+        problems_signing_in: Problems signing in
+      cog_sign_in_password_prompt_change:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   common:
     apply_filters: Apply filters
     back_to_start: Back to start
     browse: Browse
     ccs_contact_url: https://www.crowncommercial.gov.uk/contact
+    change_password_and_sign_in: Change password and sign in
     continue: Continue
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
@@ -390,6 +418,7 @@ en:
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     search: Search
+    sign_in: Sign in
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
@@ -533,8 +562,8 @@ en:
         opt_no: 'No'
         question: Do you need legal services for property and construction or rail?
       choose_services_area2:
-        opt_01: Lot 1 Regional service provision
-        opt_02: Lot 2 Full-service firms
+        opt_01: Lot 1 - Regional service provision
+        opt_02: Lot 2 - Full-service firms
         opt_03: I Dont Know
         or_txt: Or
         question: What lot do you need?
@@ -602,18 +631,6 @@ en:
         txt01: The
         txt02_link: General Legal Advice Services (RM3786)
         txt03: agreement provides legal advice services for central government and arms-length bodies.
-      supplier_results:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 1 - Regional service provision
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
-      supplier_results2:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 2 - Full-service firms
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
     suppliers:
       cg_no_suppliers_found:
         header: No suppliers were found
@@ -698,10 +715,6 @@ en:
         sub_title: Supplier details
         website: Website
     journey:
-      choose_expenses:
-        answer_expenses_not_paid: We will not pay expenses
-        answer_expenses_paid: We will pay expenses
-        question: Do you pay expenses?
       choose_help_needed:
         contingent_labour_description: Staff for short-term projects with specific outcomes
         corporate_financial_services_description: Advice on complex corporate financial matters
@@ -722,7 +735,7 @@ en:
         subtitle: Suppliers have said where they’ll provide consultants.
       choose_services:
         no_services_selected: No services selected
-        question: Select the business consultancy services you need
+        question: Select the services you need
         remove_all: Remove all
         services_selected: services selected
       other_framework:
@@ -731,12 +744,11 @@ en:
         introduction: This service is for the management consultancy frameworks RM3745 and RM6008.
     suppliers:
       download:
-        button_start_new_search: Start new search
         download_supplier_shortlist: Download supplier shortlist
         expression_of_interest_template: Expression of interest template
         expression_of_interest_template_link: https://ccs-agreements.cabinetoffice.gov.uk/sites/default/files/contracts/RM6008%20MCF2%20Expression%20of%20Interest%20-%20%20V1.docx?format=doc
         heading: Download the supplier shortlist
-        lead_text: The spreadsheet includes the selections you made, for your records and audit trail.
+        lead_text: The spreadsheet includes the selections you made, for your records and audit trail
         other_documents: Other documents
       index:
         download_suppliers_list: Download the supplier list
