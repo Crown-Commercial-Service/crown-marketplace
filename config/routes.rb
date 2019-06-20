@@ -143,6 +143,7 @@ Rails.application.routes.draw do
     get '/cog-sign-in', to: 'home#cog_sign_in'
     get '/cog-sign-in-password-prompt-change', to: 'home#cog_sign_in_password_prompt_change'
     get '/cog-register', to: 'home#cog_register'
+    get '/cog-register-enter-confirmation-code', to: 'home#cog_register_enter_confirmation_code'
   end
 
   namespace 'legal_services', path: 'legal-services' do

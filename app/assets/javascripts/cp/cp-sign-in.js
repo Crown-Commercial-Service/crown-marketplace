@@ -63,7 +63,9 @@ function removeInlineError(theName, form){
 
 
 
-
+function cop_confirmation_code(form){
+    alert('fired');
+}
 
 function cop_register(form){
     var firstPassword;
@@ -243,7 +245,7 @@ jQuery(document).ready(function(){
     var f = $('#main-content').find('form.ccs-form');
 
     if(f.length){
-      var formIDs = ['cop_sign_in_form','cop_change_password_form','cop_register'];
+      var formIDs = ['cop_sign_in_form','cop_change_password_form','cop_register','cop_confirmation_code'];
 
       $.each(formIDs, function(i, val){
         if(f.is('#'+val)){//the form has this id
