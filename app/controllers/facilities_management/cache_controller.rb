@@ -38,9 +38,6 @@ class FacilitiesManagement::CacheController < ApplicationController
   end
 
   def clear_all
-    raw_post = request.raw_post
-    post_json = JSON.parse(raw_post)
-    key = post_json['key']
     current_login_email = current_login.email.to_s
     cache = FMCacheData.new
     cache.clear_all(current_login_email)
