@@ -44,19 +44,98 @@ const pageUtils = {
             const dataString = JSON.stringify(data);
             localStorage.setItem(key, dataString);
         }
+
+        let params = {
+            key: key,
+            value: data
+        };
+
+        let url = '/facilities-management/cache/set';
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(params),
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
     }),
 
     getCachedData: ((key) => {
         if (localStorage) {
             return JSON.parse(localStorage.getItem(key)) || [];
         }
+
+        let params = {
+            key: key
+        };
+
+        let url = '/facilities-management/cache/get';
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(params),
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                console.log(data);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
     }),
 
     clearCashedData: ((key) => {
         if (key) {
             localStorage.removeItem(key);
+            let params = {
+                key: key
+            };
+
+            let url = '/facilities-management/cache/clear_by_key';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(params),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    console.log(data);
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
         } else {
             localStorage.clear();
+            let url = '/facilities-management/cache/clear';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    console.log(data);
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
         }
     }),
 
