@@ -60,6 +60,13 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "fm_cache", id: false, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.string "key", null: false
+    t.string "value"
+    t.index ["user_id", "key"], name: "fm_cache_user_id_idx"
+  end
+
   create_table "fm_lifts", id: false, force: :cascade do |t|
     t.string "user_id", null: false
     t.string "building_id", null: false
