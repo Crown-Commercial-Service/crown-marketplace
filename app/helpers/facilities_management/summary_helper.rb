@@ -65,8 +65,8 @@ module FacilitiesManagement::SummaryHelper
     @report.subregions.each do |location|
       str << '<li>' + location[1] + '</li>'
     end
-    services = FacilitiesManagement::Service.where(code: @report.posted_services)
-    services.sort_by!(&:code)
+    services = @report.list_of_services
+    services.sort_by!(&:name)
     str << '</ul></div></details><hr><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
     str << 'Services (' + services.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
     services.each do |s|

@@ -35,7 +35,8 @@ module CCS
 
   def self.csv_to_fm_rates(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = 'create table IF NOT EXISTS fm_rates (code varchar(255) UNIQUE, framework numeric, benchmark numeric );'
+      query = 'create table IF NOT EXISTS fm_rates (code varchar(255) UNIQUE, framework numeric, benchmark numeric );
+      TRUNCATE TABLE fm_rates;'
       db.query query
       CSV.read(file_name, headers: true).each do |row|
         column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')

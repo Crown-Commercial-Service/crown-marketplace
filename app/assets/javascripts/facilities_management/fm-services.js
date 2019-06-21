@@ -85,7 +85,7 @@ $(() => {
     const removeSelectedItem = ((id) => {
         $('li#' + id).remove();
         id = id.replace('_selected', '');
-        $("input#" + id).removeAttr("checked");
+        $("input#" + id).prop('checked', false);
 
         /!* remove from the array that is saved *!/
         let filtered = selectedServices.filter((value, index, arr) => {
@@ -105,7 +105,7 @@ $(() => {
     /!* uncheck all check boxes and clear list *!/
     const clearAll = (() => {
         $("#selected-fm-services li").remove();
-        $("#services-accordion input:checkbox").removeAttr("checked");
+        $("#services-accordion input:checkbox").prop('checked', false);
 
         selectedServices = [];
         pageUtils.setCachedData('fm-services', selectedServices);

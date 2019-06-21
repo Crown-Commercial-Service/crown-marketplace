@@ -3,13 +3,13 @@
           <%= t('.apply_filters_label') %>
         </h2>
         <%= link_to t('.clear_filters_link'), apprenticeships_search_path, role: 'button', class: 'govuk-!-width-one-third govuk-link--no-visited-state ccs-no-print', id: 'ccs-clear-filters' %>
-      </div>    
-      
+      </div>
+
       <!--1 overall ofsted rating start-->
       <div class="govuk-form-group ccs-at-results-filters__panel">
         <fieldset class="govuk-fieldset ccs-at-checkbox-accordian" aria-describedby="c1-hint">
           <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c1">
-            <%= t('.overall_ofsted_rating_label') %> 
+            <%= t('.overall_ofsted_rating_label') %>
             <span>&nbsp;Show</span>
           </button>
 
@@ -36,20 +36,20 @@
                     <%= rating %>
                   </label>
                 </div>
-              <% end %>            
+              <% end %>
             </div>
 
             <%= render 'layouts/button', text: t('common.apply_filters')%>
 
           </div>
         </fieldset>
-      </div>  
-      
+      </div>
+
       <!--2 apprenticeship ofsted rating start -->
       <div class="govuk-form-group ccs-at-results-filters__panel">
         <fieldset class="govuk-fieldset ccs-at-checkbox-accordian" aria-describedby="c2-hint">
           <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c2">
-            <%= t('.apprenticeship_ofsted_rating_label') %> 
+            <%= t('.apprenticeship_ofsted_rating_label') %>
             <span>&nbsp;Show</span>
           </button>
 
@@ -58,7 +58,7 @@
               <span class="ccs-remove"><%= t('.list_of_filter_options_label') %>: </span>
               <span class="ccs-filter-no"></span> <span class="ccs-filter-txt"></span>
             </span>
-          </span>          
+          </span>
 
           <div id="c2" class="ccs-at-checkboxes-wrap">
             <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
@@ -67,7 +67,7 @@
               <div class="govuk-checkboxes__item">
                 <input type="checkbox" name="x" id="x" value="x" class="govuk-checkboxes__input" disabled="disabled">
                 <label class="govuk-label govuk-checkboxes__label" for="x">
-                  Example of disabled checkbox 
+                  Example of disabled checkbox
                 </label>
               </div>
               <!-- temp example of disabled attribute end -->
@@ -85,20 +85,20 @@
                     <%= course %>
                   </label>
                 </div>
-              <% end %>           
+              <% end %>
             </div>
 
             <%= render 'layouts/button', text: t('common.apply_filters')%>
 
           </div>
         </fieldset>
-      </div>  
+      </div>
 
       <!--3 provider experience start-->
       <div class="govuk-form-group ccs-at-results-filters__panel">
         <fieldset class="govuk-fieldset ccs-at-checkbox-accordian" aria-describedby="c3-hint">
           <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c3">
-            <%= t('.provider_experience_label') %> 
+            <%= t('.provider_experience_label') %>
             <span>&nbsp;Show</span>
           </button>
 
@@ -107,7 +107,7 @@
               <span class="ccs-remove"><%= t('.list_of_filter_options_label') %>: </span>
               <span class="ccs-filter-no"></span> <span class="ccs-filter-txt"></span>
             </span>
-          </span>          
+          </span>
 
           <div id="c3" class="ccs-at-checkboxes-wrap">
             <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
@@ -116,16 +116,16 @@
               <div class="govuk-checkboxes__item">
                 <input type="checkbox" name="xx" id="xx" value="x" class="govuk-checkboxes__input" checked="checked">
                 <label class="govuk-label govuk-checkboxes__label" for="xx">
-                  Example pre-selected checkbox 
+                  Example pre-selected checkbox
                 </label>
               </div>
               <div class="govuk-checkboxes__item">
                 <input type="checkbox" name="xxx" id="xxx" value="x" class="govuk-checkboxes__input" checked="checked">
                 <label class="govuk-label govuk-checkboxes__label" for="xxx">
-                  Example pre-selected checkbox 
+                  Example pre-selected checkbox
                 </label>
-              </div>              
-              <!-- temp example of 2 selected attribute end -->            
+              </div>
+              <!-- temp example of 2 selected attribute end -->
 
               <% provider_experience.each do |course| %>
                 <div class="govuk-checkboxes__item">
@@ -140,20 +140,20 @@
                     <%= course %>
                   </label>
                 </div>
-              <% end %>           
+              <% end %>
             </div>
 
             <%= render 'layouts/button', text: t('common.apply_filters')%>
 
           </div>
         </fieldset>
-      </div> 
+      </div>
 
       <!--4 delivery method start-->
       <div class="govuk-form-group ccs-at-results-filters__panel">
         <fieldset class="govuk-fieldset ccs-at-checkbox-accordian" aria-describedby="c4-hint">
           <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c4">
-            <%= t('.delivery_method_label') %> 
+            <%= t('.delivery_method_label') %>
             <span>&nbsp;Show</span>
           </button>
 
@@ -162,7 +162,7 @@
               <span class="ccs-remove"><%= t('.list_of_filter_options_label') %>: </span>
               <span class="ccs-filter-no"></span> <span class="ccs-filter-txt"></span>
             </span>
-          </span>          
+          </span>
 
           <div id="c4" class="ccs-at-checkboxes-wrap">
             <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
@@ -180,20 +180,20 @@
                     <%= course %>
                   </label>
                 </div>
-              <% end %>           
+              <% end %>
             </div>
 
             <%= render 'layouts/button', text: t('common.apply_filters')%>
 
           </div>
         </fieldset>
-      </div> 
+      </div>
 
       <!--5 time demand start-->
       <div class="govuk-form-group ccs-at-results-filters__panel">
         <fieldset class="govuk-fieldset ccs-at-checkbox-accordian" aria-describedby="c5-hint">
           <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c5">
-            <%= t('.time_demand_label') %> 
+            <%= t('.time_demand_label') %>
             <span>&nbsp;Show</span>
           </button>
 
@@ -202,7 +202,7 @@
               <span class="ccs-remove"><%= t('.list_of_filter_options_label') %>: </span>
               <span class="ccs-filter-no"></span> <span class="ccs-filter-txt"></span>
             </span>
-          </span>          
+          </span>
 
           <div id="c5" class="ccs-at-checkboxes-wrap">
             <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
@@ -220,7 +220,7 @@
                     <%= course %>
                   </label>
                 </div>
-              <% end %>           
+              <% end %>
             </div>
 
             <%= render 'layouts/button', text: t('common.apply_filters')%>
@@ -239,13 +239,13 @@
           </div>
         </details>
 
-      </div>   
+      </div>
 
       <!--6 classroom sharing start-->
       <div class="govuk-form-group ccs-at-results-filters__panel">
         <fieldset class="govuk-fieldset ccs-at-checkbox-accordian" aria-describedby="c6-hint">
           <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c6">
-            <%= t('.classroom_sharing_label') %> 
+            <%= t('.classroom_sharing_label') %>
             <span>&nbsp;Show</span>
           </button>
 
@@ -254,7 +254,7 @@
               <span class="ccs-remove"><%= t('.list_of_filter_options_label') %>: </span>
               <span class="ccs-filter-no"></span> <span class="ccs-filter-txt"></span>
             </span>
-          </span>          
+          </span>
 
           <div id="c6" class="ccs-at-checkboxes-wrap">
             <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
@@ -272,7 +272,7 @@
                     <%= course %>
                   </label>
                 </div>
-              <% end %>          
+              <% end %>
             </div>
 
             <%= render 'layouts/button', text: t('common.apply_filters')%>
@@ -291,13 +291,13 @@
           </div>
         </details>
 
-      </div>  
+      </div>
 
       <!--7 training availability start-->
       <div class="govuk-form-group ccs-at-results-filters__panel">
         <fieldset class="govuk-fieldset ccs-at-checkbox-accordian" aria-describedby="c7-hint">
           <button type="button" class="ccs-at-btn-toggle" aria-expanded="true" aria-controls="c7">
-            <%= t('.training_availability_label') %> 
+            <%= t('.training_availability_label') %>
             <span>&nbsp;Show</span>
           </button>
 
@@ -306,7 +306,7 @@
               <span class="ccs-remove"><%= t('.list_of_filter_options_label') %>: </span>
               <span class="ccs-filter-no"></span> <span class="ccs-filter-txt"></span>
             </span>
-          </span>          
+          </span>
 
           <div id="c7" class="ccs-at-checkboxes-wrap">
             <div class="govuk-checkboxes ccs-govuk-checkboxes--s">
@@ -324,7 +324,7 @@
                     <%= course %>
                   </label>
                 </div>
-              <% end %>          
+              <% end %>
             </div>
 
             <%= render 'layouts/button', text: t('common.apply_filters')%>
@@ -343,4 +343,4 @@
           </div>
         </details>
 
-      </div> 
+      </div>
