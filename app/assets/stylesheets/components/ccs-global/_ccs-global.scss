@@ -802,3 +802,36 @@ table.ccs-at-govuk-table--5050 {
         }
     }
 }
+
+/* password strength starts */
+#passwordrules {
+    li {
+
+        &.correct {
+            border: 1px solid green;
+        }
+
+        &.wrong {
+            border: 1px solid red;
+        }
+
+        &.correct,
+        &.wrong {
+            b {
+                position: absolute;
+                left: -3000px;
+                top: -3000px;
+            }
+        }
+
+        span {
+            display: inline-block;
+
+            b {
+                display: inline-block;
+                margin-right: 0.3rem;
+            }
+        }
+    }
+}
+/* password strength ends */
