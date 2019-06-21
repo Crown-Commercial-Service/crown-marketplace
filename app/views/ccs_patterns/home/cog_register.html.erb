@@ -114,6 +114,20 @@
                         <%= t('.create_password') %>
                     </label>
 
+                    <p class="govuk-body govuk-!-margin-bottom-1">Your password must have:</p>
+
+                    <ul id="passwordrules" class="govuk-list govuk-!-margin-left-2  govuk-!-margin-bottom-6">
+                        <li id="passeight">
+                            <span><b>&bullet;</b></span>&nbsp;at least 8 characters
+                        </li>
+                        <li id="passsymbol">
+                            <span><b>&bullet;</b></span>&nbsp;at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+                        </li>
+                        <li id="passcap">
+                            <span><b>&bullet;</b></span>&nbsp;at least one capital letter
+                        </li>
+                    </ul>
+
                     <span id="password01-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.enter_a_password') %>
                     </span>
@@ -123,7 +137,11 @@
                     </span>
 
                     <span id="password01-Serror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.eight_characters') %>
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.passwords_stronger') %>
+                    </span>
+
+                    <span id="password01-uppererror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.passwords_upper') %>
                     </span>
 
                     <input class="govuk-input govuk-!-width-three-quarters" id="password01" name="password01" type="password" autocomplete="new-password">

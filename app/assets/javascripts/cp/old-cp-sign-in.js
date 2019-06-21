@@ -1,23 +1,3 @@
-function passwordStrength(v, regNum, regChar, regUpper, liEight, liChar, liCap){
-    /*var regNum = new RegExp ("^.{8,}");//requires 8 characters
-    var regChar = new RegExp("^(?=.*?[#?!@£$%^&*-])");//requires special character
-    var regUpper = new RegExp("^(?=.*?[A-Z])");//requires an uppercase letter
-    var liEight = $('#passeight');
-    var liChar = $('#passsymbol');
-    var liCap = $('#passcap');*/
-
-    var theTests = [ [regNum, liEight], [regChar, liChar], [regUpper, liCap] ];
-    var arrayLength = theTests.length;
-
-    for (var i = 0; i < arrayLength; i++) {//console.log(inputs[i][0]);
-        if(theTests[i][0].test(v)){
-            theTests[i][1].removeClass('wrong').addClass('correct');
-        }else{
-            theTests[i][1].removeClass('correct').addClass('wrong');
-        }
-    }
-}
-
 function fireErrorSummary(theTarget, v){
     var linktxt;
 
@@ -25,17 +5,14 @@ function fireErrorSummary(theTarget, v){
         case 'eight':
             linktxt = $('#'+theTarget+'-eighterror').text();
             break;
+        case 'six':
+            linktxt = $('#'+theTarget+'-sixerror').text();
+            break;
         case 'strength':
             linktxt = $('#'+theTarget+'-Serror').text();
             break;
-        case 'upper':
-            linktxt = $('#'+theTarget+'-uppererror').text();
-            break;
         case 'match':
             linktxt = $('#'+theTarget+'-matcherror').text();
-            break;
-        case 'six':
-            linktxt = $('#'+theTarget+'-sixerror').text();
             break;
         default:
             linktxt = $('#'+theTarget+'-error').text();
@@ -64,17 +41,14 @@ function fireInlineError(theName, v){
         case 'eight':
             errorid = '-eighterror';
             break;
+        case 'six':
+            errorid = '-sixerror';
+            break;
         case 'strength':
             errorid = '-Serror';
             break;
-        case 'upper':
-            errorid = '-uppererror';
-            break;
         case 'match':
             errorid = '-matcherror';
-            break;
-        case 'six':
-            errorid = '-sixerror';
             break;
         default:
             errorid = '-error';
@@ -108,8 +82,8 @@ function cop_confirmation_code(form){
             removeErrorSummary(inputName);//clean up ...
             removeInlineError(inputName, form);
 
-            var characterReg = new RegExp ("^.{6,}");//requires 6 characters
-            if(!characterReg.test(inputVal)) {
+            var characterReg = /^([a-zA-Z0-9]{0,5})$/;
+            if(characterReg.test(inputVal)) {
                 e.preventDefault();//stop the form.submit()
                 fireErrorSummary(inputName,'six');
                 fireInlineError(inputName,'six');
@@ -122,33 +96,23 @@ function cop_confirmation_code(form){
 
 function cop_register(form){
     var firstPassword;
-    var characterReg = new RegExp ("^.{8,}");//requires 8 characters
-    var passwordReg = new RegExp("^(?=.*?[#?!@£$%^&*-])");//requires a special character
-    var upperReg = new RegExp("^(?=.*?[A-Z])");//requires an uppercase letter
-    var liEight = $('#passeight');
-    var liChar = $('#passsymbol');
-    var liCap = $('#passcap');
-
-    $('#password01').on('keyup', function(){//the dynamic password strength list
-        passwordStrength($(this).val(), characterReg, passwordReg, upperReg, liEight, liChar, liCap);
-    });
-
-    var pass01 = 'password01'; //password 1 field name & id
-    var pass02 = 'password02';//password 2 field name & id
-    var fname = 'firstname';//firstname field name & id, ... etc
-    var lname = 'lastname';
-    var orgname = 'organisationname';
-    var emailF = 'email';//job title is optional
 
     $('#submit').on('click', function(e){
-        var inputs = [
-            [$('#'+fname).val(), fname],
-            [$('#'+lname).val(), lname],
-            [$('#'+orgname).val(), orgname],
-            [$('#'+emailF).val(), emailF],
-            [$('#'+pass01).val(), pass01],
-            [$('#'+pass02).val(), pass02]
-        ];
+        var pass01 = 'password01'; //password 1 field name & id
+        var pass02 = 'password02';//password 2 field name & id
+        var fname = 'firstname';//firstname field name & id, ... etc
+        var lname = 'lastname';
+        var orgname = 'organisationname';
+        var emailF = 'email';//job title is optional
+
+        var val01 = form.find('input[name="'+pass01+'"]').val();
+        var val02 = form.find('input[name="'+pass02+'"]').val();
+        var val03 = form.find('input[name="'+fname+'"]').val();
+        var val04 = form.find('input[name="'+lname+'"]').val();
+        var val05 = form.find('input[name="'+orgname+'"]').val();
+        var val06 = form.find('input[name="'+emailF+'"]').val();
+        var inputs = [ [val03, fname], [val04, lname], [val05, orgname], [val06, emailF], [val01, pass01], [val02, pass02] ];
+
         var arrayLength = inputs.length;
         refreshErrorSummary();
 
@@ -167,22 +131,18 @@ function cop_register(form){
 
                 if(inputs[i][1] == pass01){//run on the first/main password input
 
+                    var characterReg = /^([a-zA-Z0-9]{0,7})$/;
+                    var passwordReg = new RegExp("^(?=.*[0-9])|(?=.[!@#\$%\^&])");//requires a number or special character
                     firstPassword = inputs[i][0];
 
-                    if(!characterReg.test(inputs[i][0])) {
+                    if(characterReg.test(inputs[i][0])) {
                         e.preventDefault();//stop the form.submit()
                         fireErrorSummary(inputs[i][1],'eight');
                         fireInlineError(inputs[i][1],'eight');
-                    }/*else */
-                    if(!passwordReg.test(inputs[i][0])) {
+                    }else if(!passwordReg.test(inputs[i][0])) {
                         e.preventDefault();//stop the form.submit()
                         fireErrorSummary(inputs[i][1],'strength');
                         fireInlineError(inputs[i][1],'strength');
-                    }
-                    if(!upperReg.test(inputs[i][0])) {
-                        e.preventDefault();//stop the form.submit()
-                        fireErrorSummary(inputs[i][1],'upper');
-                        fireInlineError(inputs[i][1],'upper');
                     }
 
                 }else if(inputs[i][1] == pass02){
@@ -218,8 +178,8 @@ function cop_change_password_form(form){
         var pass01 = 'password01'; //password 1 field name & id
         var pass02 = 'password02';//password 2 field name & id
 
-        var val01 = $('#'+pass01).val();
-        var val02 = $('#'+pass02).val();
+        var val01 = form.find('input[name="'+pass01+'"]').val();
+        var val02 = form.find('input[name="'+pass02+'"]').val();
         var inputs = [ [val01, pass01], [val02, pass02] ];
 
         var arrayLength = inputs.length;
@@ -238,16 +198,15 @@ function cop_change_password_form(form){
 
                 if(inputs[i][1] == pass01){//run on the first/main password input
 
-                    var characterReg  = new RegExp ("^.{8,}");//requires 8 characters
+                    var characterReg = /^([a-zA-Z0-9]{0,7})$/;
                     var passwordReg = new RegExp("^(?=.*[0-9])|(?=.[!@#\$%\^&])");//requires a number or special character
                     firstPassword = inputs[i][0];
 
-                    if(!characterReg.test(inputs[i][0])) {
+                    if(characterReg.test(inputs[i][0])) {
                         e.preventDefault();//stop the form.submit()
                         fireErrorSummary(inputs[i][1],'eight');
                         fireInlineError(inputs[i][1],'eight');
-                    }/*else */
-                    if(!passwordReg.test(inputs[i][0])) {
+                    }else if(!passwordReg.test(inputs[i][0])) {
                         e.preventDefault();//stop the form.submit()
                         fireErrorSummary(inputs[i][1],'strength');
                         fireInlineError(inputs[i][1],'strength');
@@ -275,8 +234,8 @@ function cop_sign_in_form(form){
         var emailF = 'email'; //email field name & id
         var passwordF = 'password';//password field name & id
 
-        var val01 = $('#'+pasemailFs01).val();
-        var val02 = $('#'+passwordF).val();
+        var val01 = form.find('input[name="'+emailF+'"]').val();
+        var val02 = form.find('input[name="'+passwordF+'"]').val();
         var inputs = [ [val01, emailF], [val02, passwordF] ];
 
         var arrayLength = inputs.length;

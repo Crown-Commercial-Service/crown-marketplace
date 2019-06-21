@@ -27,7 +27,8 @@ en:
             enter_your_password: Enter your password
             password_must_be: Password must be 8 characters or more
             passwords_dont_match: Passwords don't match
-            passwords_stronger: Password must include a number or a special character
+            passwords_stronger: Password must include a special character
+            passwords_upper: Password must include a capital letter
         ccs_patterns/home/cog_register_enter_confirmation_code:
           attributes:
             enter_confirmation_code: Enter the confirmation code
@@ -43,7 +44,7 @@ en:
             password_must_be: Password must be 8 characters or more
             password_must_match: Passwords don't match
             passwords_dont_match: Passwords don't match
-            passwords_stronger: Password must include a number or a special character
+            passwords_stronger: Password must include a special character
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -415,7 +416,7 @@ en:
         sign_off_html: Kind regards, <br>Customer Services Team <br><small>Crown Commercial Service</small>
       cog_register:
         confirm_password: Confirm your password
-        create_password: Create password
+        create_password: Create a password you'll remember
         email: Email address
         email_hint: We will send a confirmation code to this address.
         first_name: First name
