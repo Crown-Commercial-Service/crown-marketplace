@@ -16,25 +16,29 @@
 
 
         <h1 class="govuk-heading-xl">
-            Activate your account
+            <%= t('.heading') %>
         </h1>
 
         <p class="govuk-body-l">
-            An email has been sent to <span>email@domain.com</span> with a confirmation code.
+            <%= t('.lead_start') %> <span class="ccs-email-example">email@domain.com</span> <%= t('.lead_end') %>
         </p>
 
         <%= form_tag @form_path, class: 'ccs-form', id: 'cop_confirmation_code', method: :get do %>
 
             <div class="govuk-form-group govuk-!-margin-bottom-7">
-                <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="confirmationcode">
-                    Confirmation code
+                <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="confirmation">
+                    <%= t('.confirmation_code') %>
                 </label>
 
-                <span id="password-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                    error message
+                <span id="confirmation-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_code') %>
                 </span>
 
-                <input class="govuk-input govuk-!-width-one-third" id="confirmationcode" name="confirmationcode" type="number" max="6">
+                <span id="confirmation-sixerror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_six') %>
+                </span>
+
+                <input class="govuk-input govuk-!-width-one-third" id="confirmation" name="confirmation" type="number">
             </div>
 
             <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
@@ -44,8 +48,6 @@
         <p class="govuk-body govuk-!-margin-bottom-7">
             <%= t('.resend_the_confirmation_email_html') %>
         </p>
-
-        check agains anthonys updated content/text
 
     </div>
 </div>

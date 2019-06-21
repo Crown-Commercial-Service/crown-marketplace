@@ -28,6 +28,10 @@ en:
             password_must_be: Password must be 8 characters or more
             passwords_dont_match: Passwords don't match
             passwords_stronger: Password must include a number or a special character
+        ccs_patterns/home/cog_register_enter_confirmation_code:
+          attributes:
+            enter_confirmation_code: Enter the confirmation code
+            enter_confirmation_six: Confirmation code must be 6 characters
         ccs_patterns/home/cog_sign_in:
           attributes:
             cog_sign_in:
@@ -403,18 +407,38 @@ en:
     page_section: Find apprenticeship training and related services
   ccs_patterns:
     home:
+      cog_email:
+        greeting: Hello,
+        line_01: You have requested a new CCS buyer account. Your confirmation code is
+        line_02: You must use this code within 7 days of receiving this email.
+        line_03_html: This is an automated message. Email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if you need help.
+        sign_off_html: Kind regards, <br>Customer Services Team <br><small>Crown Commercial Service</small>
       cog_register:
         confirm_password: Confirm your password
         create_password: Create password
-        email: Email
+        email: Email address
         email_hint: We will send a confirmation code to this address.
         first_name: First name
         heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        job_title: Job title (optional)
         last_name: Last name
         lead: You must be employed by, or represent, a public sector organisation.
         org_details: Organisation details
         org_name: Organisation name
         your_details: Your details
+      cog_register_domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      cog_register_enter_confirmation_code:
+        confirmation_code: Confirmation code
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
       cog_sign_in:
         create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
         email_address: Email address
