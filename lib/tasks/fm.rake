@@ -47,7 +47,7 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
 
   def self.create_fm_lifts_table
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = "create table if not exists fm_lifts (user_id varchar not null, building_id varchar not null, lift_data jsonb not null); drop index if exists fm_lifts_user_id_idx; create index if not exists fm_lifts_user_id_idx on fm_lifts using btree (user_id, building_id); drop index if exists fm_lifts_lift_json; create index if not exists fm_lifts_lift_json on fm_lifts using GIN ((lift_data -> 'floor-data'));"
+      query = "create table if not exists fm_lifts (user_id varchar not null, building_id varchar not null, lift_data jsonb not null); drop index if exists fm_lifts_user_id_idx; create index fm_lifts_user_id_idx on fm_lifts using btree (user_id, building_id); drop index if exists fm_lifts_lift_json; create index if not exists fm_lifts_lift_json on fm_lifts using GIN ((lift_data -> 'floor-data'));"
       db.query query
     end
   rescue PG::Error => e
