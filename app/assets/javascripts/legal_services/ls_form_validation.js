@@ -37,7 +37,7 @@ function check_suitability2(form){
 
 function lot1_regional_service(form){
   $('#submit01').add('#submit02').on('click', function(e){
-    var state = form.find('input[name="lot1_regional_service"]');
+    var state = form.find('input[name="lot1_regional_service[]"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
@@ -50,7 +50,7 @@ function lot1_regional_service(form){
 
 function lot1_regional_service2(form){
   $('#submit01').add('#submit02').on('click', function(e){
-    var state = form.find('input[name="lot1_regional_service"]');
+    var state = form.find('input[name="lot1_regional_service2[]"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
@@ -102,7 +102,7 @@ function requirement(form){
 
 function regional_legal_service(form){
    $('#submit01').add('#submit02').on('click', function(e){
-    var state = form.find('input[name="regional_legal_service"]');
+    var state = form.find('input[name="region_all[]"]');
 
     if(state.filter(':checked').length > 0){
       form.submit();
@@ -171,7 +171,7 @@ function select_lot(form){
 
 jQuery(document).ready(function(){
 
-    var f = $('#main-content').find('form');
+    var f = $('#main-content').find('form.ccs-form');
 
     if(f.length){
       var formIDs = ['check_suitability','check_suitability2','lot1_regional_service', 'lot1_regional_service2','lot2_full_service','choose_organistion_type','requirement','regional_legal_service','legal_jurisdiction','choose_services_area','choose_services_area2','select_lot'];

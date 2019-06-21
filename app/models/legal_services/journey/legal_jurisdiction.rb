@@ -6,7 +6,7 @@ module LegalServices
     validates :legal_jurisdiction, inclusion: ['E', 'S', 'N']
 
     def next_step_class
-      Journey::SupplierResults2
+      Journey::Suppliers
     end
   end
 end
