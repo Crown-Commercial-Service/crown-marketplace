@@ -99,10 +99,15 @@ class FacilitiesManagement::Spreadsheet
           vals_h = []
 
           uom_labels = []
-          suv.each do |v|
-            uom_labels << v['title_text']
+          if suv.empty?
+            uom_labels << 'service (per annum)'
+            vals_h << nil
+          else
+            suv.each do |v|
+              uom_labels << v['title_text']
 
-            vals_h << v['uom_value']
+              vals_h << v['uom_value']
+            end
           end
           vals_v << vals_h
           uom_labels_2d << uom_labels
