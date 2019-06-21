@@ -106,10 +106,13 @@ form.ccs-form {
     .js-enabled .govuk-tabs__list,
     .js-enabled .govuk-tabs__panel,
     .js-enabled .govuk-tabs__tab[aria-selected="true"] {
-        border-width: 1.5px !important;
+        border-width: 1px !important;
     }
     .govuk-radios__input + .govuk-radios__label::before {
         border-width: 1.6px;
+    }
+    .govuk-input[type="number"] {
+        border-width: 1px !important;
     }
     .ccs-govuk-checkboxes--thin {
         .govuk-checkboxes__input + .govuk-checkboxes__label::before {

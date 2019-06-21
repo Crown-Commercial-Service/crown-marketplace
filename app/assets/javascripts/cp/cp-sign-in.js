@@ -5,6 +5,9 @@ function fireErrorSummary(theTarget, v){
         case 'eight':
             linktxt = $('#'+theTarget+'-eighterror').text();
             break;
+        case 'six':
+            linktxt = $('#'+theTarget+'-sixerror').text();
+            break;
         case 'strength':
             linktxt = $('#'+theTarget+'-Serror').text();
             break;
@@ -38,6 +41,9 @@ function fireInlineError(theName, v){
         case 'eight':
             errorid = '-eighterror';
             break;
+        case 'six':
+            errorid = '-sixerror';
+            break;
         case 'strength':
             errorid = '-Serror';
             break;
@@ -64,7 +70,28 @@ function removeInlineError(theName, form){
 
 
 function cop_confirmation_code(form){
-    alert('fired');
+    $('#submit').on('click', function(e){
+        var inputName = 'confirmation';
+        var inputVal = form.find('input[name="'+inputName+'"]').val();
+
+        if(inputVal === ''){//empty value
+            e.preventDefault();//stop the form.submit()
+            fireErrorSummary(inputName);
+            fireInlineError(inputName);
+        }else{//has a value
+            removeErrorSummary(inputName);//clean up ...
+            removeInlineError(inputName, form);
+
+            var characterReg = /^([a-zA-Z0-9]{0,5})$/;
+            if(characterReg.test(inputVal)) {
+                e.preventDefault();//stop the form.submit()
+                fireErrorSummary(inputName,'six');
+                fireInlineError(inputName,'six');
+            }
+
+            form.submit();
+        }
+    });
 }
 
 function cop_register(form){
