@@ -6,7 +6,6 @@ module FacilitiesManagement
     def initialize(start_date, user_id, data)
       @start_date = start_date
       @user_id = user_id
-      # @data = data
 
       @posted_services =
         if data['fm-services']
@@ -38,30 +37,24 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
-      @gia_services = CCS::FM::Service.gia_services
 
       regions
     end
     # rubocop:enable Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/AbcSize
+    def user_buildings
+      CCS::FM::Building.buildings_for_user(@user_id)
+    end
+
     def calculate_services_for_buildings
-      selected_services
+      # selected_services
 
       @sum_uom = 0
       @sum_benchmark = 0
 
-      @building_data = CCS::FM::Building.buildings_for_user(@user_id)
+      selected_buildings = user_buildings
 
-      services = selected_services.sort_by(&:code)
-      selected_services = services.collect(&:code)
-      selected_services = selected_services.map { |s| s.gsub('.', '-') }
-      selected_buildings = @building_data.select do |b|
-        b_services = b.building_json['services'].collect { |s| s['code'] }
-        (selected_services & b_services).any?
-      end
-
-      uvals = uom_values(selected_buildings, selected_services)
+      uvals = uom_values(selected_buildings)
 
       selected_buildings.each do |building|
         id = building['building_json']['id']
@@ -70,14 +63,18 @@ module FacilitiesManagement
         @sum_benchmark += vals_per_building[:sum_benchmark]
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def with_pricing
       # CCS::FM::Rate.non_zero_rate
       services_with_pricing = CCS::FM::Rate.non_zero_rate.map(&:code)
 
+      services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
+      services_selected = services_selected.map { |s| s['code'] }
+      services_selected.uniq!
+
       FacilitiesManagement::Service.all.select do |service|
-        (@posted_services.include? service.code) && (services_with_pricing.include? service.code)
+        # (@posted_services.include? service.code) && (services_with_pricing.include? service.code)
+        (services_selected.include? service.code) && (services_with_pricing.include? service.code)
       end
     end
 
@@ -85,13 +82,23 @@ module FacilitiesManagement
       # CCS::FM::Rate.zero_rate
       services_without_pricing = CCS::FM::Rate.zero_rate.map(&:code)
 
+      services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
+      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') }
+      services_selected.uniq!
+
       FacilitiesManagement::Service.all.select do |service|
-        (@posted_services.include? service.code) && (services_without_pricing.include? service.code)
+        # (@posted_services.include? service.code) && (services_without_pricing.include? service.code)
+        (services_selected.include? service.code) && (services_without_pricing.include? service.code)
       end
     end
 
-    def selected_services
-      @selected_services = FacilitiesManagement::Service.all.select { |service| @posted_services.include? service.code }
+    # usage:
+    #   ["K.1", "K.5"]
+    def list_of_services
+      services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
+      services_selected.map! { |s| s['code'].gsub('-', '.') }.uniq!
+
+      FacilitiesManagement::Service.all.select { |service| services_selected.include? service.code }
     end
 
     def selected_suppliers(for_lot)
@@ -131,15 +138,13 @@ module FacilitiesManagement
       case assessed_value
       when 0..7000000
         '£7 Million'
-      when 7000000..50000000
-        'above £7 Million'
-      else
-        'above £50 Million'
+      else # when 7000000..50000000
+        '£50 Million'
       end
     end
 
     # rubocop:disable Metrics/AbcSize
-    def uom_values(selected_buildings, selected_services)
+    def uom_values(selected_buildings)
       uvals = CCS::FM::UnitOfMeasurementValues.values_for_user(@user_id)
       uvals = uvals.map(&:attributes)
 
@@ -170,10 +175,13 @@ module FacilitiesManagement
       end
 
       selected_buildings.each do |b|
-        selected_services.each do |s|
-          next unless @gia_services.include? s
+        next unless b.building_json['services']
 
-          s_dot = s.gsub('-', '.')
+        b.building_json['services'].each do |s|
+          # selected_services.each do |s|
+          next unless CCS::FM::Service.gia_services.include? s['code']
+
+          s_dot = s['code'].gsub('-', '.')
           uvals << { 'user_id' => b['user_id'],
                      'service_code' => s_dot,
                      'uom_value' => b['building_json']['gia'].to_f,
@@ -206,6 +214,15 @@ module FacilitiesManagement
     end
 
     private
+
+    # rubocop:disable Rails/FindEach
+    def regions
+      # Get nuts regions
+      @subregions = {}
+      FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
+      @subregions.select! { |k, _v| posted_locations.include? k }
+    end
+    # rubocop:enable Rails/FindEach
 
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
@@ -258,9 +275,7 @@ module FacilitiesManagement
       sum_benchmark = 0.0
 
       copy_params building_data
-      # id = building_data['id']
 
-      # with_pricing.each do |service|
       uvals.each do |v|
         # puts service.code
         # puts service.name
@@ -269,15 +284,19 @@ module FacilitiesManagement
         # puts service.work_package
         # puts service.work_package.code
         # puts service.work_package.name
-        #
-
-        # occupants = occupants(v['service_code'], building_data)
-        occupants = v['uom_value'] if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
 
         uom_value = v['uom_value'].to_f
 
+        # occupants = occupants(v['service_code'], building_data)
+        if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
+          occupants = v['uom_value'].to_i
+          uom_value = @fm_gross_internal_area
+        else
+          occupants = 0
+        end
+
         code = v['service_code'].remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants.to_i, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum
       end
@@ -289,16 +308,5 @@ module FacilitiesManagement
       { sum_uom: sum_uom,
         sum_benchmark: sum_benchmark }
     end
-
-    # rubocop:disable Rails/FindEach
-    def regions
-      # Get nuts regions
-      # @regions = {}
-      # Nuts1Region.all.each { |x| @regions[x.code] = x.name }
-      @subregions = {}
-      FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
-      @subregions.select! { |k, _v| posted_locations.include? k }
-    end
-    # rubocop:enable Rails/FindEach
   end
 end
