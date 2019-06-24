@@ -44,18 +44,15 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Style/ConditionalAssignment
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
 
-    # (FacilitiesManagement::Service.all.sort_by (&:code)).each { |s| sheet.add_row [ s.work_package_code s.code ] }
-    services = @report.selected_services.sort_by(&:code)
-    selected_services = services.collect(&:code)
-    selected_services = selected_services.map { |s| s.gsub('.', '-') }
-    selected_buildings = @report.building_data.select do |b|
-      b_services = b.building_json['services'].map { |s| s['code'] }
-      (selected_services & b_services).any?
-    end
+    selected_buildings = @report.user_buildings
+
+    services_selected = selected_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
+    services_selected.uniq!
 
     @workbook.add_worksheet(name: 'Building Information') do |sheet|
       sheet.add_row ['Buildings information']
@@ -66,6 +63,10 @@ class FacilitiesManagement::Spreadsheet
         i += 1
       end
     end
+
+    # selected_services = services_selected.map { |s| s['code'].gsub('-', '.') }
+    services = @report.list_of_services # @report.selected_services(selected_services)
+    uom_values_for_selected_buildings = @report.uom_values(selected_buildings)
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       i = 1
@@ -93,45 +94,47 @@ class FacilitiesManagement::Spreadsheet
         vals_h = nil
         uom_labels_2d = []
         selected_buildings.each do |building|
-          # begin
           id = building.building_json['id']
-          suv = @report.uom_values(selected_buildings, selected_services).select { |v| v['building_id'] == id && v['service_code'] == s.code }
+          suv = uom_values_for_selected_buildings.select { |v| v['building_id'] == id && v['service_code'] == s.code }
           vals_h = []
 
           uom_labels = []
-          suv.each do |v|
-            uom_labels << v['title_text']
+          if suv.empty?
+            uom_labels << 'service (per annum)'
+            vals_h << nil
+          else
+            suv.each do |v|
+              uom_labels << v['title_text']
 
-            vals_h << v['uom_value']
+              vals_h << v['uom_value']
+            end
           end
           vals_v << vals_h
           uom_labels_2d << uom_labels
         rescue StandardError
           vals << '=NA()'
         end
-        # vals << valsV
-        # sheet.add_row vals
-        #
 
         uom_labels_max = uom_labels_2d.max
-        # uoms.each do |u|
-        # vals << u['title_text']
-        max_j = vals_v.map(&:length).max
-        (0..max_j - 1).each do |j|
-          if j.zero?
-            vals << uom_labels_max[j]
-          elsif uom_labels_max[j - 1] == uom_labels_max[j]
-            vals << nil
-          else
-            vals << uom_labels_max[j]
-          end
 
-          (0..vals_v.count - 1).each do |k|
-            vals << vals_v[k][j]
+        max_j = vals_v.map(&:length).max
+        if max_j
+          (0..max_j - 1).each do |j|
+            if j.zero?
+              vals << uom_labels_max[j]
+            elsif uom_labels_max[j - 1] == uom_labels_max[j]
+              vals << nil
+            else
+              vals << uom_labels_max[j]
+            end
+
+            (0..vals_v.count - 1).each do |k|
+              vals << vals_v[k][j]
+            end
+            sheet.add_row vals
+            # vals = [nil, nil, nil, nil]
+            vals = [nil, nil, nil]
           end
-          sheet.add_row vals
-          # vals = [nil, nil, nil, nil]
-          vals = [nil, nil, nil]
         end
         # end
         work_package = s.work_package_code
@@ -194,6 +197,7 @@ class FacilitiesManagement::Spreadsheet
     end
     # package.to_stream.read
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength

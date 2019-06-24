@@ -72,7 +72,11 @@ Rails.application.routes.draw do
 
     get '/summary', to: 'summary#index'
     post '/summary', to: 'summary#index'
-
+    get '/directaward', to: 'direct_award#calc_eligibility'
+    post '/cache/set', to: 'cache#set'
+    post '/cache/get', to: 'cache#retrieve'
+    post '/cache/clear_by_key', to: 'cache#clear_by_key'
+    post '/cache/clear', to: 'cache#clear_all'
     get '/reset', to: 'buildings#reset_buildings_tables'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -150,6 +154,8 @@ Rails.application.routes.draw do
     get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
     get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
     get '/errors-requirements', to: 'home#errors_requirements'
+    get '/cog-sign-in', to: 'home#cog_sign_in'
+    get '/cog-sign-in-password-prompt-change', to: 'home#cog_sign_in_password_prompt_change'
   end
 
   namespace 'legal_services', path: 'legal-services' do

@@ -54,6 +54,9 @@ Style/WordArray:
 Style/ClassAndModuleChildren:
     Enabled: false
 
+Layout/EndOfLine:
+   EnforcedStyle: lf
+
 Layout/TrailingBlankLines:
     Enabled: true
 

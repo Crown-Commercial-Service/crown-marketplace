@@ -73,13 +73,13 @@ span.govuk-error-message + span.ccs-client-error-message {
     width: 0 !important;
 }*/
 
-div.govuk-error-summary + div.ccs-e-msg,
+/*div.govuk-error-summary + div.ccs-e-msg,
 span.govuk-error-message + span.ccs-e-msg {
     display: none !important;
     visibility: hidden !important;
     height: 0 !important;
     width: 0 !important;
-}
+}*/
 
 .ccs-next {
     text-decoration: none !important;
@@ -123,6 +123,13 @@ form.ccs-form {
         position: absolute;
         top: -3000px;
         left: -3000px;
+    }
+    /* chrome background colours on autofill */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active  {
+        -webkit-box-shadow: 0 0 0 30px #fff inset !important;
     }
 }
 /* form.ccs-form overrides end */
