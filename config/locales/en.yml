@@ -41,6 +41,7 @@ en:
         ccs_patterns/home/cog_sign_in_password_prompt_change:
           attributes:
             enter_a_password: Enter a password
+            enter_your_password: Enter your password
             password_must_be: Password must be 8 characters or more
             password_must_match: Passwords don't match
             passwords_dont_match: Passwords don't match
@@ -468,6 +469,9 @@ en:
     error_summary_title: There is a problem
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
+    passcap: at least one capital letter
+    passeight: at least 8 characters
+    passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     search: Search
     sign_in: Sign in
     submit: Continue
