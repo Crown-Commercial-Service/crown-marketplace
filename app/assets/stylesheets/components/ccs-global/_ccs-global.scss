@@ -654,6 +654,7 @@ ul.ccs-pagination {
 
             &[aria-current] {
                 color: govuk-colour("grey-2") !important;
+                font-weight: 600;
             }
 
             b {
