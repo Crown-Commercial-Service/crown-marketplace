@@ -41,7 +41,9 @@ $(() => {
 
                 pageUtils.setCachedData('fm-locations', selectedLocations);
                 filterSuppliers();
+
             });
+
         }
 
 
@@ -85,6 +87,7 @@ $(() => {
         });
 
         filterSuppliers();
+        updateCounts();
 
     });
 
@@ -150,30 +153,31 @@ $(() => {
         let tableRows = $('tbody  > tr');
         visibleSuppliers = [];
         for (let row of tableRows) {
-            //tableRows.each(function (rowIndex, row) {
-            let id = '#' + row.id;
-            let name = $(id).attr('name');
-            let operationalAreas = $(id).attr('regioncode');
+            if (row.id) {
+                let id = '#' + row.id;
+                let name = $(id).attr('name');
+                let operationalAreas = $(id).attr('regioncode');
 
-            if (operationalAreas) {
-                operationalAreas = JSON.parse(operationalAreas);
-                let serviceOfferings = JSON.parse($(id).attr('servicecode'));
+                if (operationalAreas) {
+                    operationalAreas = JSON.parse(operationalAreas);
+                    let serviceOfferings = JSON.parse($(id).attr('servicecode'));
 
-                let isServiceOfferingSelected = selectedServices.some(selectedService => {
-                    return serviceOfferings.includes(selectedService.code.replace('-', '.'));
-                });
+                    let isServiceOfferingSelected = selectedServices.some(selectedService => {
+                        return serviceOfferings.includes(selectedService.code.replace('-', '.'));
+                    });
 
-                let isOperationalAreaSelected = selectedLocations.some(selectedLocation => {
-                    return operationalAreas.includes(selectedLocation.code);
-                });
+                    let isOperationalAreaSelected = selectedLocations.some(selectedLocation => {
+                        return operationalAreas.includes(selectedLocation.code);
+                    });
 
-                if (isServiceOfferingSelected === true && isOperationalAreaSelected === true) {
-                    $(id).attr('hidden', false);
-                    if (name && !visibleSuppliers.includes(name)) {
-                        visibleSuppliers.push(name);
+                    if (isServiceOfferingSelected === true && isOperationalAreaSelected === true) {
+                        $(id).attr('hidden', false);
+                        if (name && !visibleSuppliers.includes(name)) {
+                            visibleSuppliers.push(name);
+                        }
+                    } else {
+                        $(id).attr('hidden', true);
                     }
-                } else {
-                    $(id).attr('hidden', true);
                 }
             }
         }
@@ -200,6 +204,5 @@ $(() => {
     });
 
     init();
-
-})
-;
+    updateCounts();
+});

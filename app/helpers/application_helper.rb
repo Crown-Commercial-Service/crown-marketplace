@@ -10,15 +10,15 @@ module ApplicationHelper
   end
 
   def feedback_email_link
-    govuk_email_link(
-      Marketplace.feedback_email_address,
-      t('layouts.application.feedback_aria_label'),
-      css_class: 'govuk-link ga-feedback-mailto'
-    )
+    govuk_email_link(Marketplace.feedback_email_address, t('layouts.application.feedback_aria_label'), css_class: 'govuk-link ga-feedback-mailto')
   end
 
   def support_email_link(label)
     govuk_email_link(Marketplace.support_email_address, label, css_class: 'govuk-link ga-support-mailto')
+  end
+
+  def footer_email_link(label)
+    mail_to(Marketplace.support_email_address, Marketplace.support_email_address, class: 'govuk-link ga-support-mailto', 'aria-label': label)
   end
 
   def dfe_account_request_url

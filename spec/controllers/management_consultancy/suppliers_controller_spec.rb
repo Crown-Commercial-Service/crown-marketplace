@@ -9,7 +9,7 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
 
   before do
     allow(ManagementConsultancy::Supplier).to receive(:offering_services_in_regions)
-      .with(lot_number, services, region_codes, true).and_return(suppliers)
+      .with(lot_number, services, region_codes).and_return(suppliers)
     permit_framework :management_consultancy
   end
 
@@ -26,7 +26,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           journey: 'management-consultancy',
           lot: lot_number,
           services: services,
-          expenses: 'paid',
           region_codes: region_codes,
           help_needed: 'management_consultants'
         }
@@ -50,7 +49,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           slug: 'choose-regions',
           lot: lot_number,
           services: services,
-          expenses: 'paid',
           region_codes: region_codes,
           help_needed: 'management_consultants'
         )
@@ -66,7 +64,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           journey: 'management-consultancy',
           lot: lot_number,
           services: services,
-          expenses: 'paid',
           region_codes: region_codes,
           help_needed: 'management_consultants'
         }
@@ -90,12 +87,33 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           slug: 'choose-regions',
           lot: lot_number,
           services: services,
-          expenses: 'paid',
           region_codes: region_codes,
           help_needed: 'management_consultants'
         )
         expect(assigns(:back_path)).to eq(expected_path)
       end
+    end
+  end
+
+  describe 'GET download' do
+    before do
+      get :download, params: params
+    end
+
+    let(:lot_number) { '1' }
+
+    let(:params) do
+      {
+        journey: 'management-consultancy',
+        lot: lot_number,
+        services: services,
+        region_codes: region_codes,
+        help_needed: 'management_consultants'
+      }
+    end
+
+    it 'renders the download template' do
+      expect(response).to render_template('download')
     end
   end
 end

@@ -50,24 +50,23 @@
 
                 <div class="govuk-checkboxes ccs-govuk-checkboxes--thin">
 
-                  <% lot1 = LegalServices::Lot.all %>
+                <% lot1 = ['Child law', 'Court of protection','Debt recovery','Education','Employment','Healthcare','Intellectual property', 'Licensing',  'Litigation / dispute resolution','Pensions','Planning and Environment','Primary care', 'Property and contruction','Social housing'] %>
+
                   <% lot1.each do |lot| %>
-                  <% if lot.number == "1" %>
                     <div class="govuk-checkboxes__item">
-                      <% lot_no_slash = lot.description.gsub('/', '_') %>
+                      <% lot_no_slash = lot.gsub('/', '_') %>
                       <% lot_no_space = lot_no_slash.gsub(' ', '_') %>
                       <%= check_box_tag(
-                                  "lot1_regional_service",
-                                  lot.description,
+                                  "lot1_regional_service[]",
+                                  lot,
                                   false,
                                   class: "govuk-checkboxes__input",
                                   id: "lot_#{lot_no_space}"
                                 ) %>
                       <label class="govuk-label govuk-checkboxes__label" for="lot_<%= lot_no_space %>">
-                        <%= lot.description %>
+                        <%= lot %>
                       </label>
                     </div>
-                  <% end %>
                   <% end %>
                 </div>
 
