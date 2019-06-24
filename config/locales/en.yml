@@ -45,6 +45,7 @@ en:
             password_must_match: Passwords don't match
             passwords_dont_match: Passwords don't match
             passwords_stronger: Password must include a special character
+            passwords_uppper: Password must include a capital letter
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
