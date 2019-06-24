@@ -44,6 +44,7 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Style/ConditionalAssignment
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
@@ -77,7 +78,6 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row vals
 
       work_package = ''
-
       services.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s|
         if work_package == s.work_package_code
           label = nil
@@ -95,11 +95,14 @@ class FacilitiesManagement::Spreadsheet
         selected_buildings.each do |building|
           id = building.building_json['id']
           suv = uom_values_for_selected_buildings.select { |v| v['building_id'] == id && v['service_code'] == s.code }
-          vals_h = []
 
+          any_suv = uom_values_for_selected_buildings.select { |v| v['service_code'] == s.code }
+
+          vals_h = []
           uom_labels = []
           if suv.empty?
-            uom_labels << 'service (per annum)'
+            uom_labels << 'service (per annum)' if any_suv.empty?
+
             vals_h << nil
           else
             suv.each do |v|
@@ -179,8 +182,9 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row
 
       # sheet.add_row ['6 Services summary']
-      services = FacilitiesManagement::Service.where(code: @data['posted_services'])
-      services.sort_by!(&:code)
+      # services = FacilitiesManagement::Service.where(code: @data['posted_services'])
+      services = @report.list_of_services
+      services.sort_by!(&:name)
       label = '6 Services summary'
       services.each do |s|
         sheet.add_row [label, s.name]
@@ -188,8 +192,8 @@ class FacilitiesManagement::Spreadsheet
       end
       sheet.add_row
     end
-    # package.to_stream.read
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
