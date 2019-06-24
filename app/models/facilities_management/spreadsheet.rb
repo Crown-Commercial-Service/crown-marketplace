@@ -44,7 +44,6 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Style/ConditionalAssignment
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/CyclomaticComplexity
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
@@ -120,20 +119,14 @@ class FacilitiesManagement::Spreadsheet
         max_j = vals_v.map(&:length).max
         if max_j
           (0..max_j - 1).each do |j|
-            if j.zero?
-              vals << uom_labels_max[j]
-            elsif uom_labels_max[j - 1] == uom_labels_max[j]
-              vals << nil
-            else
-              vals << uom_labels_max[j]
-            end
+            vals << uom_labels_max[j]
 
             (0..vals_v.count - 1).each do |k|
               vals << vals_v[k][j]
             end
             sheet.add_row vals
-            # vals = [nil, nil, nil, nil]
-            vals = [nil, nil, nil]
+
+            vals = [nil, s.code, s.name]
           end
         end
         # end
@@ -197,7 +190,6 @@ class FacilitiesManagement::Spreadsheet
     end
     # package.to_stream.read
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
