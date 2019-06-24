@@ -26,6 +26,7 @@ before_install:
   - sudo service postgresql start 11
 before_script:
   - sudo apt-get install postgresql-11-postgis-2.5 postgis -y -q
+  - export LD_LIBRARY_PATH=/opt/postgres:$LD_LIBRARY_PATH
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
   - psql -U postgres -c "create extension postgis" -d root
   - psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
