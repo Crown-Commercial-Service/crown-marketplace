@@ -68,6 +68,10 @@ class FacilitiesManagement::Spreadsheet
     services = @report.list_of_services # @report.selected_services(selected_services)
     uom_values_for_selected_buildings = @report.uom_values(selected_buildings)
 
+    uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
+    uom2 = {}
+    uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
+
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       i = 1
       vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement']
@@ -101,12 +105,20 @@ class FacilitiesManagement::Spreadsheet
           vals_h = []
           uom_labels = []
           if suv.empty?
-            uom_labels << 'service (per annum)' if any_suv.empty?
+            if uom2[s.code]
+              uom_labels << uom2[s.code].last.spreadsheet_label
+            elsif any_suv.empty?
+              uom_labels << 'service (per annum)'
+            end
 
             vals_h << nil
           else
             suv.each do |v|
-              uom_labels << v['title_text']
+              if v['spreadsheet_label']
+                uom_labels << v['spreadsheet_label']
+              elsif uom2[s.code]
+                uom_labels << uom2[s.code].last.spreadsheet_label
+              end
 
               vals_h << v['uom_value']
             end
