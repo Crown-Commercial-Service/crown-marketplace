@@ -150,6 +150,7 @@ Rails.application.routes.draw do
     get '/cog-register-enter-confirmation-code', to: 'home#cog_register_enter_confirmation_code'
     get '/cog-email', to: 'home#cog_email'
     get '/cog-register-domain-not-on-whitelist', to: 'home#cog_register_domain_not_on_whitelist'
+    get '/cog-forgot-password-request', to: 'home#cog_forgot_password_request'
   end
 
   namespace 'legal_services', path: 'legal-services' do
