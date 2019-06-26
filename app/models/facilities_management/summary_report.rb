@@ -83,7 +83,7 @@ module FacilitiesManagement
       services_without_pricing = CCS::FM::Rate.zero_rate.map(&:code)
 
       services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
-      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') }
+      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') if s }
       services_selected = services_selected.uniq
 
       FacilitiesManagement::Service.all.select do |service|
