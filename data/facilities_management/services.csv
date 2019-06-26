@@ -1,22 +1,6 @@
 code,name,work_package_code,mandatory
-A.7,Accessibility services,A,true
-A.12,Business continuity and disaster recovery (“BCDR”) plans,A,true
-A.9,Customer satisfaction,A,true
-A.5,Fire safety,A,true
-A.2,Health and safety,A,true
-A.1,Integration,A,true
-A.3,Management services,A,false
-A.11,Performance self-monitoring,A,true
-A.6,Permit to work,A,true
-A.16,Property information mapping service (EPIMS),A,true
-A.13,Quality management system         ,A,true
-A.10,Reporting,A,true
-A.8,Risk management,A,true
-A.15,Selection and management of sub-contractors,A,true
-A.4,Service delivery plans,A,false
+A.1 - A.17,Contract Mgt,A,true
 A.18,Social value,A,true
-A.14,Staff and training,A,true
-A.17,Sustainability,A,true
 B.1,Contract mobilisation,B,true
 C.21,Airport and aerodrome maintenance services,C,false
 C.15,Audio visual (AV) equipment maintenance,C,false
