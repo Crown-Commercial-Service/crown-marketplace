@@ -32,7 +32,7 @@ module ManagementConsultancy
       def approve
         upload = ManagementConsultancy::Admin::Upload.find(params[:upload_id])
         upload.upload!
-        redirect_to supply_teachers_admin_upload_uploading_path(upload_id: upload.id)
+        redirect_to management_consultancy_admin_upload_uploading_path(upload_id: upload.id)
       end
 
       def reject
