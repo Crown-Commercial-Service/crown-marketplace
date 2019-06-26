@@ -29,6 +29,7 @@ module ManagementConsultancy
         name: data['name'],
         contact_email: data['contact_email'],
         telephone_number: data['telephone_number'],
+        sme: data['sme'],
         address: data['address'],
         website: data['website'],
         duns: data['duns']
