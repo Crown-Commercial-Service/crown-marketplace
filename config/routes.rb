@@ -156,6 +156,10 @@ Rails.application.routes.draw do
     get '/errors-requirements', to: 'home#errors_requirements'
     get '/cog-sign-in', to: 'home#cog_sign_in'
     get '/cog-sign-in-password-prompt-change', to: 'home#cog_sign_in_password_prompt_change'
+    get '/cog-register', to: 'home#cog_register'
+    get '/cog-register-enter-confirmation-code', to: 'home#cog_register_enter_confirmation_code'
+    get '/cog-email', to: 'home#cog_email'
+    get '/cog-register-domain-not-on-whitelist', to: 'home#cog_register_domain_not_on_whitelist'
   end
 
   namespace 'legal_services', path: 'legal-services' do
