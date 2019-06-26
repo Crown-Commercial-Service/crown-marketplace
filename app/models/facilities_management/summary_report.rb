@@ -99,8 +99,8 @@ module FacilitiesManagement
       services_selected.map! { |s| s['code'].gsub('-', '.') }.uniq!
 
       services = FacilitiesManagement::Service.all.select { |service| services_selected.include? service.code }
-      mandatory = FacilitiesManagement::Service.all.select { |service| service.work_package_code == 'A' || service.work_package_code == 'B' }
-      services + mandatory
+      mandatory = FacilitiesManagement::Service.all.select { |service| service.code == 'A.18' || service.work_package_code == 'B' }
+      services + mandatory << FacilitiesManagement::Service.new(code: 'A.1 - A.17', name: 'Contract Mgt', work_package_code: 'A', mandatory: true)
     end
 
     def selected_suppliers(for_lot)
