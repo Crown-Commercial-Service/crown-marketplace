@@ -1,4 +1,6 @@
 require 'rake'
+require 'aws-sdk-s3'
+
 module ManagementConsultancy
   class DataUploadWorker
     include Sidekiq::Worker
@@ -28,11 +30,12 @@ module ManagementConsultancy
     end
 
     def data_file
+      file_path = './storage/management_consultancy/current_data/output/data.json'
       if Rails.env.production?
-        './storage/management_consultancy/current_data/output/data.json'
-      else
-        './storage/supply_teachers/management_consultancy/current_data/data.json'
+        object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+        object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object('management_consultancy/current_data/output/data.json').get(response_target: file_path)
       end
+      file_path
     end
   end
 end

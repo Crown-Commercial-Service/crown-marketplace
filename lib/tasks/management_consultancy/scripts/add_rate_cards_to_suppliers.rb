@@ -45,7 +45,7 @@ def add_rate_cards_to_suppliers
     end
   end
 
-  File.open('./storage/management_consultancy/current_data/output/suppliers_with_service_offerings_and_regional_availability_and_rate_cards.json', 'w') do |f|
+  File.open('./storage/management_consultancy/current_data/output/data.json', 'w') do |f|
     f.write JSON.pretty_generate suppliers
   end
 end

@@ -12,14 +12,16 @@ module ManagementConsultancy
       Rake::Task['mc:clean'].invoke
       Rake::Task['mc:data'].invoke
 
-      if File.zero?('./storage/management_consultancy/current_data/output/errors.out')
-        upload.review!
-      else
-        file = File.open('./storage/management_consultancy/current_data/output/errors.out')
-        fail_upload(upload, 'There is an error with your files: ' + file.read)
+      begin
+        if File.zero?('./storage/management_consultancy/current_data/output/errors.out')
+          upload.review!
+        else
+          file = File.open('./storage/management_consultancy/current_data/output/errors.out')
+          fail_upload(upload, 'There is an error with your files: ' + file.read)
+        end
+      rescue StandardError => e
+        fail_upload(ManagementConsultancy::Admin::Upload.find(upload_id), 'There is an error with your files. Please try again. ' + e.message)
       end
-    rescue StandardError => e
-      fail_upload(ManagementConsultancy::Admin::Upload.find(upload_id), 'There is an error with your files. Please try again. ' + e.message)
     end
 
     private
