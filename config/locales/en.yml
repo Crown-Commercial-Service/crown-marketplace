@@ -20,6 +20,15 @@ en:
         ccs_patterns/home/cog_forgot_password_request:
           attributes:
             please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
+        ccs_patterns/home/cog_forgot_password_reset:
+          attributes:
+            confirm_new_password: Enter your new password
+            enter_a_new_password: Enter a new password
+            password_must_be: Password must be 8 characters or more
+            password_must_match: Passwords don't match
+            passwords_dont_match: Passwords don't match
+            passwords_stronger: Password must include a special character
+            passwords_upper: Password must include a capital letter
         ccs_patterns/home/cog_register:
           attributes:
             email_format: Enter an email address in the correct format, like name@example.com
@@ -424,6 +433,12 @@ en:
         email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
         heading: Reset password
         lead: Enter your email address and we'll send you a link so you can reset your password. Password reset links are only valid for 24 hours.
+      cog_forgot_password_reset:
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
       cog_register:
         confirm_password: Confirm your password
         create_password: Create a password you'll remember
@@ -480,6 +495,7 @@ en:
     passcap: at least one capital letter
     passeight: at least 8 characters
     passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    resend_password: Resend password
     search: Search
     send_reset_email: Send reset email
     sign_in: Sign in
