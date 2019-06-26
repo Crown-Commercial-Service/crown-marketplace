@@ -2,7 +2,7 @@ module FacilitiesManagement::SummaryHelper
   def title
     case @current_lot
     when nil
-      "You have #{@report.without_pricing.count + @report.with_pricing.count} services selected"
+      "You have #{@report.list_of_services.count} services selected"
     else
       'Shortlist of suppliers'
     end

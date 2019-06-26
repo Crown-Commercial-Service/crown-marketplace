@@ -68,6 +68,10 @@ class FacilitiesManagement::Spreadsheet
     services = @report.list_of_services # @report.selected_services(selected_services)
     uom_values_for_selected_buildings = @report.uom_values(selected_buildings)
 
+    uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
+    uom2 = {}
+    uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
+
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       i = 1
       vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement']
@@ -78,7 +82,6 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row vals
 
       work_package = ''
-
       services.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s|
         if work_package == s.work_package_code
           label = nil
@@ -96,15 +99,26 @@ class FacilitiesManagement::Spreadsheet
         selected_buildings.each do |building|
           id = building.building_json['id']
           suv = uom_values_for_selected_buildings.select { |v| v['building_id'] == id && v['service_code'] == s.code }
-          vals_h = []
 
+          any_suv = uom_values_for_selected_buildings.select { |v| v['service_code'] == s.code }
+
+          vals_h = []
           uom_labels = []
           if suv.empty?
-            uom_labels << 'service (per annum)'
+            if uom2[s.code]
+              uom_labels << uom2[s.code].last.spreadsheet_label
+            elsif any_suv.empty?
+              uom_labels << 'service (per annum)'
+            end
+
             vals_h << nil
           else
             suv.each do |v|
-              uom_labels << v['title_text']
+              if v['spreadsheet_label']
+                uom_labels << v['spreadsheet_label']
+              elsif uom2[s.code]
+                uom_labels << uom2[s.code].last.spreadsheet_label
+              end
 
               vals_h << v['uom_value']
             end
@@ -120,20 +134,14 @@ class FacilitiesManagement::Spreadsheet
         max_j = vals_v.map(&:length).max
         if max_j
           (0..max_j - 1).each do |j|
-            if j.zero?
-              vals << uom_labels_max[j]
-            elsif uom_labels_max[j - 1] == uom_labels_max[j]
-              vals << nil
-            else
-              vals << uom_labels_max[j]
-            end
+            vals << uom_labels_max[j]
 
             (0..vals_v.count - 1).each do |k|
               vals << vals_v[k][j]
             end
             sheet.add_row vals
-            # vals = [nil, nil, nil, nil]
-            vals = [nil, nil, nil]
+
+            vals = [nil, s.code, s.name]
           end
         end
         # end
@@ -186,8 +194,9 @@ class FacilitiesManagement::Spreadsheet
       sheet.add_row
 
       # sheet.add_row ['6 Services summary']
-      services = FacilitiesManagement::Service.where(code: @data['posted_services'])
-      services.sort_by!(&:code)
+      # services = FacilitiesManagement::Service.where(code: @data['posted_services'])
+      services = @report.list_of_services
+      services.sort_by!(&:name)
       label = '6 Services summary'
       services.each do |s|
         sheet.add_row [label, s.name]
@@ -195,7 +204,6 @@ class FacilitiesManagement::Spreadsheet
       end
       sheet.add_row
     end
-    # package.to_stream.read
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
