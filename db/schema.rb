@@ -103,11 +103,13 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_units_of_measurement", id: :serial, force: :cascade do |t|
+  create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
+    t.serial "id", null: false
     t.string "title_text", null: false
     t.string "example_text"
     t.string "unit_text"
     t.string "data_type"
+    t.string "spreadsheet_label"
     t.text "service_usage", array: true
   end
 
