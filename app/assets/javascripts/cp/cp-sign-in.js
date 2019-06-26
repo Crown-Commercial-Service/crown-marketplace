@@ -132,6 +132,72 @@ function cop_confirmation_code(form){
     });
 }
 
+function cog_forgot_password_reset_form(form){
+    var firstPassword;
+    var pass01 = 'password01'; //password 1 field name & id
+    var pass02 = 'password02';//password 2 field name & id
+
+    passwordStrength($('#'+pass01));
+
+    var cRegv = cReg();
+    var pRegv = pReg();
+    var uRegv = uReg();
+
+    $('#submit').on('click', function(e){
+        var inputs = [
+            [$('#'+pass01).val(), pass01],
+            [$('#'+pass02).val(), pass02]
+        ];
+
+        var arrayLength = inputs.length;
+        refreshErrorSummary();
+
+        for (var i = 0; i < arrayLength; i++) {//console.log(inputs[i]);
+
+            if(inputs[i][0] === ''){// = empty inputs
+                e.preventDefault();//stop the form.submit()
+                fireErrorSummary(inputs[i][1]);
+                wipeInlineError(inputs[i][1]);
+                fireInlineError(inputs[i][1]);
+            }else{//has a value
+                removeErrorSummary(inputs[i][1]);//clean up ...
+                removeInlineError(inputs[i][1], form);
+
+                if(inputs[i][1] == pass01){//run on the first/main password input
+
+                    firstPassword = inputs[i][0];
+
+                    if(!cRegv.test(inputs[i][0])) {
+                        e.preventDefault();//stop the form.submit()
+                        fireErrorSummary(inputs[i][1],'eight');
+                        fireInlineError(inputs[i][1],'eight');
+                    }/*else */
+                    if(!pRegv.test(inputs[i][0])) {
+                        e.preventDefault();//stop the form.submit()
+                        fireErrorSummary(inputs[i][1],'strength');
+                        fireInlineError(inputs[i][1],'strength');
+                    }
+                    if(!uRegv.test(inputs[i][0])) {
+                        e.preventDefault();//stop the form.submit()
+                        fireErrorSummary(inputs[i][1],'upper');
+                        fireInlineError(inputs[i][1],'upper');
+                    }
+
+                }else if(firstPassword != inputs[i][0]){
+
+                    e.preventDefault();//stop the form.submit()
+                    fireErrorSummary(inputs[i][1],'match');
+                    fireInlineError(inputs[i][1],'match');
+
+                }
+
+                form.submit();
+            }
+
+        }
+    });
+}
+
 function cog_forgot_password_request_form(form){
     $('#submit').on('click', function(e){
         var inputName = 'email';
@@ -356,7 +422,7 @@ jQuery(document).ready(function(){
     var f = $('#main-content').find('form.ccs-form');
 
     if(f.length){
-      var formIDs = ['cop_sign_in_form','cop_change_password_form','cop_register','cop_confirmation_code','cog_forgot_password_request_form'];
+      var formIDs = ['cop_sign_in_form','cop_change_password_form','cop_register','cop_confirmation_code','cog_forgot_password_request_form','cog_forgot_password_reset_form'];
 
       $.each(formIDs, function(i, val){
         if(f.is('#'+val)){//the form has this id
