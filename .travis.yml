@@ -16,7 +16,7 @@ addons:
     packages:
       - postgresql-11
       - postgresql-11-postgis-2.5
-#      - postgresql-11-postgis-2.5-scripts
+      - postgresql-11-postgis-2.5-scripts
   postgresql: "11"
 before_install:
   - gem install --force --conservative -v 1.16.6 bundler
