@@ -84,7 +84,7 @@ module FacilitiesManagement
 
       services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
       services_selected = services_selected.map { |s| s['code'].gsub('-', '.') }
-      services_selected.uniq!
+      services_selected = services_selected.uniq
 
       FacilitiesManagement::Service.all.select do |service|
         # (@posted_services.include? service.code) && (services_without_pricing.include? service.code)
