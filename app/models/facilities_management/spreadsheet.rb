@@ -9,13 +9,14 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Metrics/CyclomaticComplexity
   def row(buildings, idx)
     vals = []
+    i = 1
     buildings.each do |building|
       str =
         case idx
         when 0
-          building.building_json['fm-building-type']
+          "Building #{i} - #{building.building_json['name']}"
         when 1
-          building.building_json['name']
+          building.building_json['fm-building-type']
         when 2
           building.building_json['address']['fm-address-line-1']
         when 3
@@ -28,6 +29,8 @@ class FacilitiesManagement::Spreadsheet
           building.building_json['gia']
         end
       vals << str
+
+      i += 1
     end
     vals
   end
@@ -55,11 +58,17 @@ class FacilitiesManagement::Spreadsheet
     services_selected.uniq!
 
     @workbook.add_worksheet(name: 'Building Information') do |sheet|
-      sheet.add_row ['Buildings information']
+      # sheet.add_row ['Buildings information']
       i = 0
-      ['Building Type', 'Name', 'Address', '', '', '', 'GIA'].each do |label|
-        vals = row(selected_buildings, i)
-        sheet.add_row [label] + vals
+      [['Buildings information', nil],
+       ['Building Type', 'eg. General office - customer facing, non customer facing, call centre operations.'],
+       ['Address', ''],
+       [nil, nil], [nil, nil], [nil, nil],
+       ['GIA', 'Gross Internal Area: Square Metre (GIA) per annum']].each do |label|
+        vals = []
+        vals << label[0] << label[1] << row(selected_buildings, i)
+        vals.flatten!
+        sheet.add_row vals
         i += 1
       end
     end
