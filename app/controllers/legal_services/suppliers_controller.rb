@@ -1,7 +1,5 @@
 module LegalServices
   class SuppliersController < FrameworkController
-    require_permission :none, only: :index
-
     def index
       @back_path = :back
       suppliers_array = mocked_suppliers.shuffle

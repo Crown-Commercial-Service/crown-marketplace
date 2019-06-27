@@ -6,11 +6,38 @@ Rails.application.routes.draw do
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
   get '/landing-page', to: 'home#landing_page'
+  get '/not-permitted', to: 'home#not_permitted'
 
   mount Sidekiq::Web => '/sidekiq-log', :constraints => UserConstraint.new
 
+  devise_for :users, skip: %i[sessions registrations]
+  devise_scope :user do
+    get '/supply-teachers/sign-in', to: 'supply_teachers/sessions#new', as: :supply_teachers_new_user_session
+    post '/supply-teachers/sign-in', to: 'supply_teachers/sessions#create', as: :supply_teachers_user_session
+    delete '/supply-teachers/sign-out', to: 'supply_teachers/sessions#destroy', as: :supply_teachers_destroy_user_session
+
+    get '/facilities-management/sign-in', to: 'facilities_management/sessions#new', as: :facilities_management_new_user_session
+    post '/facilities-management/sign-in', to: 'facilities_management/sessions#create', as: :facilities_management_user_session
+    delete '/facilities-management/sign-out', to: 'facilities_management/sessions#destroy', as: :facilities_management_destroy_user_session
+
+    get '/management-consultancy/sign-in', to: 'management_consultancy/sessions#new', as: :management_consultancy_new_user_session
+    post '/management-consultancy/sign-in', to: 'management_consultancy/sessions#create', as: :management_consultancy_user_session
+    delete '/management-consultancy/sign-out', to: 'management_consultancy/sessions#destroy', as: :management_consultancy_destroy_user_session
+
+    get '/legal-services/sign-in', to: 'legal_services/sessions#new', as: :legal_services_new_user_session
+    post '/legal-services/sign-in', to: 'legal_services/sessions#create', as: :legal_services_user_session
+    delete '/legal-services/sign-out', to: 'legal_services/sessions#destroy', as: :legal_services_destroy_user_session
+
+    get '/apprenticeships/sign-in', to: 'apprenticeships/sessions#new', as: :apprenticeships_new_user_session
+    post '/apprenticeships/sign-in', to: 'apprenticeships/sessions#create', as: :apprenticeships_user_session
+    delete '/apprenticeships/sign-out', to: 'apprenticeships/sessions#destroy', as: :apprenticeships_destroy_user_session
+  end
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
+    get '/users/confirm', to: 'users#confirm_new'
+    post '/users/confirm', to: 'users#confirm'
+    get '/users/challenge', to: 'users#challenge_new'
+    post '/users/challenge', to: 'users#challenge'
     get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
@@ -38,8 +65,11 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
-
   namespace 'facilities_management', path: 'facilities-management' do
+    get '/users/confirm', to: 'users#confirm_new'
+    post '/users/confirm', to: 'users#confirm'
+    get '/users/challenge', to: 'users#challenge_new'
+    post '/users/challenge', to: 'users#challenge'
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     # get '/value-band', to: 'select_locations#select_location'
@@ -85,6 +115,10 @@ Rails.application.routes.draw do
 
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
+    get '/users/confirm', to: 'users#confirm_new'
+    post '/users/confirm', to: 'users#confirm'
+    get '/users/challenge', to: 'users#challenge_new'
+    post '/users/challenge', to: 'users#challenge'
     get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
     get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
@@ -102,6 +136,10 @@ Rails.application.routes.draw do
 
   namespace 'apprenticeships', path: 'apprenticeships' do
     get '/', to: 'home#index'
+    get '/users/confirm', to: 'users#confirm_new'
+    post '/users/confirm', to: 'users#confirm'
+    get '/users/challenge', to: 'users#challenge_new'
+    post '/users/challenge', to: 'users#challenge'
     get '/gateway', to: 'gateway#index'
     get '/search', to: 'home#search'
     get '/search_results', to: 'home#search_results'
@@ -153,6 +191,10 @@ Rails.application.routes.draw do
   end
 
   namespace 'legal_services', path: 'legal-services' do
+    get '/users/confirm', to: 'users#confirm_new'
+    post '/users/confirm', to: 'users#confirm'
+    get '/users/challenge', to: 'users#challenge_new'
+    post '/users/challenge', to: 'users#challenge'
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
     get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
@@ -169,13 +211,10 @@ Rails.application.routes.draw do
   get '/errors/500'
   get '/errors/maintenance'
 
-  get '/auth/cognito', as: :cognito_sign_in
-  get '/auth/cognito/callback' => 'auth#callback'
   if Marketplace.dfe_signin_enabled?
     get '/auth/dfe', as: :dfe_sign_in
     get '/auth/dfe/callback' => 'auth#callback'
   end
-  post '/sign-out' => 'auth#sign_out', as: :sign_out
 
   # scope module: :postcode do
   #  resources :postcodes, only: :show

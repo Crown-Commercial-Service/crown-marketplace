@@ -8,7 +8,7 @@ class FacilitiesManagement::CacheController < ApplicationController
     post_json = JSON.parse(raw_post)
     key = post_json['key']
     value = post_json['value']
-    current_login_email = current_login.email.to_s
+    current_login_email = current_user.email.to_s
     cache = FMCacheData.new
     cache.cache_data(current_login_email, key, value)
     j = { 'status': 200 }
@@ -19,7 +19,7 @@ class FacilitiesManagement::CacheController < ApplicationController
     raw_post = request.raw_post
     post_json = JSON.parse(raw_post)
     key = post_json['key']
-    current_login_email = current_login.email.to_s
+    current_login_email = current_user.email.to_s
     cache = FMCacheData.new
     result = cache.retrieve_cache_data(current_login_email, key)
     j = { 'status': 200, result: result }
@@ -30,7 +30,7 @@ class FacilitiesManagement::CacheController < ApplicationController
     raw_post = request.raw_post
     post_json = JSON.parse(raw_post)
     key = post_json['key']
-    current_login_email = current_login.email.to_s
+    current_login_email = current_user.email.to_s
     cache = FMCacheData.new
     cache.clear(current_login_email, key)
     j = { 'status': 200 }
@@ -38,7 +38,7 @@ class FacilitiesManagement::CacheController < ApplicationController
   end
 
   def clear_all
-    current_login_email = current_login.email.to_s
+    current_login_email = current_user.email.to_s
     cache = FMCacheData.new
     cache.clear_all(current_login_email)
     j = { 'status': 200 }

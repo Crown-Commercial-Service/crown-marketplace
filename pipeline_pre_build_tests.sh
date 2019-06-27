@@ -14,7 +14,7 @@ apt-get install -y build-essential
 # sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
 # sudo psql -U postgres -c "create extension postgis"
 
-apt install -y postgresql-9.6-postgis-2.4
+apt install -y postgresql-9.6-postgis-2.5
 service postgresql start 9.6
 sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
 

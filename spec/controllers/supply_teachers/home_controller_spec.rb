@@ -1,9 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::HomeController, type: :controller, auth: true do
-  before do
-    permit_framework :supply_teachers
-  end
+RSpec.describe SupplyTeachers::HomeController, type: :controller do
+  login_st_buyer
 
   describe 'GET index' do
     it 'renders the index template' do

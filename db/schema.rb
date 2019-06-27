@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_12_144942) do
+ActiveRecord::Schema.define(version: 2019_06_05_110142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -139,6 +139,9 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.integer "director_rate_in_pence"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contact_name"
+    t.string "telephone_number"
+    t.string "email"
     t.index ["management_consultancy_supplier_id"], name: "index_management_consultancy_rate_cards_on_supplier_id"
   end
 
@@ -336,6 +339,20 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
   create_table "supply_teachers_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.string "mobile_number"
+    t.datetime "confirmed_at"
+    t.string "cognito_uuid"
+    t.integer "roles_mask"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
