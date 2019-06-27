@@ -1,6 +1,5 @@
 class AuthController < ApplicationController
   before_action :authenticate_user!, except: :callback
-
   def callback
     login = Login.from_omniauth(request.env['omniauth.auth'])
     raise CanCan::AccessDenied.new('Not authorized!', :read, SupplyTeachers) unless login.permit?(:supply_teachers)

@@ -98,6 +98,7 @@ RSpec.feature 'Authentication', type: :feature do
     click_on 'Sign in with DfE Sign-in'
 
     expect(page).to have_text(I18n.t('shared.not_permitted.supply_teachers.title'))
+    OmniAuth.config.mock_auth[:dfe] = nil
   end
 
   scenario 'DfE users cannot see school pages if they are not on the whitelist', dfe: true do
