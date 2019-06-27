@@ -85,6 +85,7 @@ gem 'faker'
 
 # for authorization
 gem 'cancan', '~> 1.6.10'
+
 gem 'role_model', '~> 0.8.2'
 
 group :production do
