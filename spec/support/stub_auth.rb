@@ -37,6 +37,10 @@ module SpecSupport
       )
     end
 
+    def unstub_dfe
+      OmniAuth.config.mock_auth[:dfe] = nil
+    end
+
     def unstub_auth
       Warden.test_reset!
     end
@@ -58,5 +62,6 @@ RSpec.configure do |config|
   config.around(:example, type: :feature, dfe: true) do |example|
     stub_dfe
     example.run
+    unstub_dfe
   end
 end
