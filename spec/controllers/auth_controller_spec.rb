@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe AuthController, type: :controller do
   describe 'GET #callback' do
     before do
+      OmniAuth.config.test_mode = false
+      OmniAuth.config.mock_auth[:dfe] = nil
       request.env['omniauth.auth'] = {
         'info' => {
-          'email' => 'user@example.com'
+          'email' => 'dfe@example.com'
         },
         'provider' => 'dfe',
         'extra' => {
@@ -35,7 +37,7 @@ RSpec.describe AuthController, type: :controller do
 
     it 'stores the email in the session' do
       get :callback
-      expect(controller.current_user.email).to eq('user@example.com')
+      expect(controller.current_user.email).to eq('dfe@example.com')
     end
 
     it 'redirects to the page stored in the session' do
