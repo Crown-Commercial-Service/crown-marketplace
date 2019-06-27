@@ -1,4 +1,3 @@
-require 'aws-sdk'
 require 'devise/strategies/authenticatable'
 
 module Devise
