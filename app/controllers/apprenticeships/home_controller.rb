@@ -1,6 +1,7 @@
 module Apprenticeships
   class HomeController < FrameworkController
-    require_permission :none, only: :index
+    before_action :authenticate_user!, except: :index
+    before_action :authorize_user, except: :index
     before_action :set_back_path, except: :index
 
     def index; end

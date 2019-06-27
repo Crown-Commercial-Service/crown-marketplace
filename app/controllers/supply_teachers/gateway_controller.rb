@@ -1,12 +1,10 @@
 module SupplyTeachers
   class GatewayController < FrameworkController
-    require_permission :none, only: :index
+    before_action :authenticate_user!, except: :index
+    before_action :authorize_user, except: :index
 
     def index
-      @cognito_enabled =
-        Marketplace.supply_teachers_cognito_enabled? ||
-        params[:cognito_enabled]
-      redirect_to supply_teachers_path if logged_in?
+      redirect_to supply_teachers_path if user_signed_in?
     end
   end
 end

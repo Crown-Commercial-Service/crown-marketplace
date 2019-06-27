@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature 'Managed service providers', type: :feature do
+  before do
+    user = FactoryBot.create(:user, roles: %i[buyer st_access])
+    login_as(user, scope: :user)
+  end
+
   scenario 'Answers should not be pre-selected' do
     visit_supply_teachers_start
 
