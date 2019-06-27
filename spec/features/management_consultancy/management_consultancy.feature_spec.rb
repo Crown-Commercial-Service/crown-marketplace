@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Management consultancy', type: :feature do
+RSpec.feature 'Management consultancy', type: :feature, management_consultancy: true do
   before do
     supplier1 = create(:management_consultancy_supplier, name: 'Aardvark Ltd')
     supplier2 = create(:management_consultancy_supplier, name: 'Mega Group PLC')

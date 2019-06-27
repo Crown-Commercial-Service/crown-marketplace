@@ -1,7 +1,8 @@
 require 'json'
 require 'facilities_management/fm_service_data'
 class FacilitiesManagement::SelectServicesController < ApplicationController
-  require_permission :facilities_management, only: %i[select_services save_lift_data].freeze
+  before_action :authenticate_user!, only: %i[select_services save_lift_data].freeze
+  before_action :authorize_user, only: %i[select_services save_lift_data].freeze
 
   def select_services
     # Inline error text for this page
@@ -20,9 +21,9 @@ class FacilitiesManagement::SelectServicesController < ApplicationController
     lift_data_json = JSON.parse(raw_post)
     building_id = lift_data_json['building_id']
     fm_service_data = FMServiceData.new
-    fm_service_data.save_lift_data(current_login.email.to_s, building_id, lift_data_json)
+    fm_service_data.save_lift_data(current_user.email.to_s, building_id, lift_data_json)
 
-    count = fm_service_data.unset_service_count(current_login.email.to_s, building_id)
+    count = fm_service_data.unset_service_count(current_user.email.to_s, building_id)
 
     url = count.positive? ? '/facilities-management/buildings/units-of-measurement?building_id=' + building_id : '/facilities-management/buildings-list'
 
@@ -31,5 +32,11 @@ class FacilitiesManagement::SelectServicesController < ApplicationController
     render json: j, status: 200
   rescue StandardError => e
     Rails.logger.warn "Error: SelectServicesController save_lift_data(): #{e}"
+  end
+
+  protected
+
+  def authorize_user
+    authorize! :read, FacilitiesManagement
   end
 end

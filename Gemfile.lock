@@ -66,6 +66,9 @@ GEM
     attr_required (1.0.1)
     aws-eventstream (1.0.3)
     aws-partitions (1.166.0)
+    aws-sdk-cognitoidentityprovider (1.22.0)
+      aws-sdk-core (~> 3, >= 3.53.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-core (3.53.1)
       aws-eventstream (~> 1.0, >= 1.0.2)
       aws-partitions (~> 1.0)
@@ -84,11 +87,13 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    bcrypt (3.1.13)
     bindata (2.4.4)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (11.0.1)
+    cancan (1.6.10)
     capybara (3.20.2)
       addressable
       mini_mime (>= 0.1.3)
@@ -104,6 +109,8 @@ GEM
     carrierwave-aws (1.3.0)
       aws-sdk-s3 (~> 1.0)
       carrierwave (>= 0.7, < 2.0)
+    childprocess (0.9.0)
+      ffi (~> 1.0, >= 1.0.11)
     cliver (0.3.2)
     coderay (1.1.2)
     coercible (1.0.0)
@@ -115,6 +122,12 @@ GEM
     crass (1.0.4)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    devise (4.6.2)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 6.0)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.3)
     docile (1.3.1)
     dotenv (2.7.2)
@@ -243,6 +256,7 @@ GEM
       validate_email
       validate_url
       webfinger (>= 1.0.1)
+    orm_adapter (0.5.0)
     parallel (1.17.0)
     parser (2.6.3.0)
       ast (~> 2.4.0)
@@ -308,10 +322,14 @@ GEM
       ffi (~> 1.0)
     redis (4.1.1)
     regexp_parser (1.5.0)
+    responders (2.4.1)
+      actionpack (>= 4.2.0, < 6.0)
+      railties (>= 4.2.0, < 6.0)
     rgeo (2.0.1)
     rgeo-activerecord (6.2.0)
       activerecord (>= 5.0)
       rgeo (>= 1.0.0)
+    role_model (0.8.2)
     roo (2.8.2)
       nokogiri (~> 1)
       rubyzip (>= 1.2.1, < 2.0.0)
@@ -359,6 +377,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (3.142.3)
+      childprocess (>= 0.5, < 2.0)
+      rubyzip (~> 1.2, >= 1.2.2)
     sidekiq (5.2.7)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
@@ -411,6 +432,8 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
+    warden (1.2.8)
+      rack (>= 2.0.6)
     webfinger (1.1.0)
       activesupport
       httpclient (>= 2.4)
@@ -430,13 +453,16 @@ PLATFORMS
 DEPENDENCIES
   aasm (~> 5.0)
   activerecord-postgis-adapter
+  aws-sdk-cognitoidentityprovider (~> 1.22.0)
   aws-sdk-s3 (~> 1)
   axlsx!
   bootsnap (>= 1.1.0)
   byebug
+  cancan (~> 1.6.10)
   capybara
   carrierwave (~> 1.0)
   carrierwave-aws (~> 1.3.0)
+  devise (~> 4.6.2)
   dotenv-rails
   down
   factory_bot_rails
@@ -462,12 +488,14 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.2)
   rails-controller-testing
+  role_model (~> 0.8.2)
   roo (~> 2.8.0)
   rspec-rails
   rubocop
   rubocop-rspec
   rubyXL
   sass-rails (~> 5.0)
+  selenium-webdriver
   sidekiq (~> 5.2.7)
   simplecov
   sinatra (~> 2.0.5)

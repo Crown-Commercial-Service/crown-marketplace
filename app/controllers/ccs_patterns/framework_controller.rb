@@ -1,6 +1,6 @@
 module CcsPatterns
   class FrameworkController < ::ApplicationController
-    require_permission :ccs_patterns
+    before_action :authenticate_user!
 
     prepend_before_action do
       session[:last_visited_framework] = 'ccs_patterns'

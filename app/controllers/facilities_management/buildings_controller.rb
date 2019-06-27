@@ -2,7 +2,8 @@ require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
 class FacilitiesManagement::BuildingsController < ApplicationController
-  require_permission :facilities_management, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  before_action :authenticate_user!, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
+  before_action :authorize_user, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
 
   def reset_buildings_tables
     fmd = FMBuildingData.new
@@ -21,7 +22,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     set_current_choices
 
     @uom_values = []
-    current_login_email = current_login.email.to_s
+    current_login_email = current_user.email.to_s
     set_error_messages
     @fm_building_data = FMBuildingData.new
     @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
@@ -60,7 +61,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
   def save_building
     @new_building_json = request.raw_post
     @fm_building_data = FMBuildingData.new
-    @fm_building_data.save_building(current_login.email.to_s, @new_building_json)
+    @fm_building_data.save_building(current_user.email.to_s, @new_building_json)
     j = { 'status': 200 }
     render json: j, status: 200
   rescue StandardError => e
@@ -72,7 +73,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     obj = JSON.parse(@new_building_json)
     id = obj['id']
     @fm_building_data = FMBuildingData.new
-    @fm_building_data.update_building(current_login.email.to_s, id, @new_building_json)
+    @fm_building_data.update_building(current_user.email.to_s, id, @new_building_json)
     j = { 'status': 200 }
     render json: j, status: 200
   rescue StandardError => e
@@ -95,7 +96,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
 
     building_id = params['building_id']
     fm_service_data = FMServiceData.new
-    service_data = fm_service_data.unit_of_measurement_unset(current_login.email.to_s, building_id)
+    service_data = fm_service_data.unit_of_measurement_unset(current_user.email.to_s, building_id)
     @building_id = building_id
 
     if service_data['hasService'] == true
@@ -126,8 +127,8 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     service_code = uom_json['service_code']
     uom_value = uom_json['uom_value']
     fm_service_data = FMServiceData.new
-    fm_service_data.add_uom_value(current_login.email.to_s, building_id, service_code, uom_value)
-    count = fm_service_data.unset_service_count(current_login.email.to_s, building_id)
+    fm_service_data.add_uom_value(current_user.email.to_s, building_id, service_code, uom_value)
+    count = fm_service_data.unset_service_count(current_user.email.to_s, building_id)
     url = count.positive? ? '/facilities-management/buildings/units-of-measurement?building_id=' + building_id : '/facilities-management/buildings-list'
     j = { 'status': 200, 'next': url }
     render json: j, status: 200
@@ -153,7 +154,7 @@ class FacilitiesManagement::BuildingsController < ApplicationController
     raw_post_json = JSON.parse(raw_post)
     building_id = raw_post_json['building_id']
     fm_building_data = FMBuildingData.new
-    fm_building_data.delete_building(current_login.email.to_s, building_id)
+    fm_building_data.delete_building(current_user.email.to_s, building_id)
     j = { 'status': 200 }
     render json: j, status: 200
   rescue StandardError => e

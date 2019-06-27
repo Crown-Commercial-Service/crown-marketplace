@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Agency workers', type: :feature do
+RSpec.feature 'Agency workers', type: :feature, supply_teachers: true do
   scenario 'Answers should not be pre-selected' do
     visit_supply_teachers_start
 
