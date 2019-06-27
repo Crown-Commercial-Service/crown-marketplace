@@ -41,7 +41,7 @@ RSpec.describe Cognito::CreateUserFromCognito do
 
       it 'returns the newly created resource' do
         response = described_class.call(username)
-        expect(response.user).to eq User.last
+        expect(response.user).to eq User.order(created_at: :asc).last
       end
 
       it 'returns the newly created resource with the right email' do
