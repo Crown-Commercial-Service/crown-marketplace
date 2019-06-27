@@ -10,7 +10,7 @@ module ManagementConsultancy
 
     validates :service_code, presence: true,
                              uniqueness: { scope: %i[supplier lot_number] },
-                             inclusion: { in: Service.all_codes }
+                             inclusion: { in: Service.all_codes + Subservice.all_codes }
 
     def self.for_lot(lot_number)
       where(lot_number: lot_number)
