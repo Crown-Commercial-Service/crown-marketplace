@@ -826,10 +826,15 @@ table.ccs-at-govuk-table--5050 {
 
         &.correct,
         &.wrong {
-            b {
-                position: absolute;
-                left: -3000px;
-                top: -3000px;
+            span:first-child {
+                position: relative;
+                top: 0.2rem;
+
+                b {
+                    position: absolute;
+                    left: -3000px;
+                    top: -3000px;
+                }
             }
         }
 

@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  require_permission :none, only: %i[status index cookies landing_page]
+  before_action :authenticate_user!, except: %i[status index cookies landing_page not_permitted]
 
   def index
     redirect_to ccs_homepage_url
@@ -12,4 +12,8 @@ class HomeController < ApplicationController
   def cookies; end
 
   def landing_page; end
+
+  def not_permitted
+    @permission_required = params[:permission_required]
+  end
 end

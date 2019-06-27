@@ -35,6 +35,8 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -58,36 +60,4 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-end
-
-if Marketplace.cognito_user_pool_site.blank?
-  OmniAuth.config.test_mode = true
-
-  OmniAuth.config.mock_auth[:cognito] = OmniAuth::AuthHash.new(
-    'provider' => 'cognito',
-    'info' => { 'email' => 'cognito@example.com' }
-  )
-
-  OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-    'provider' => 'dfe',
-    'info' => { 'email' => 'dfe@example.com' },
-    'extra' => {
-      'raw_info' => {
-        'organisation' => {
-          'id' => '047F32E7-FDD5-46E9-89D4-2498C2E77364',
-          'name' => 'St Custard’s',
-          'urn' => '900002',
-          'ukprn' => '90000002',
-          'category' => {
-            'id' => '001',
-            'name' => 'Establishment'
-          },
-          'type' => {
-            'id' => '01',
-            'name' => 'Community school'
-          }
-        }
-      }
-    }
-  )
 end

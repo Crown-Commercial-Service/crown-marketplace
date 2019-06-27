@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, auth: true do
+RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
   let(:supplier) { create(:management_consultancy_supplier) }
   let(:suppliers) { ManagementConsultancy::Supplier.where(id: supplier.id) }
   let(:lot) { ManagementConsultancy::Lot.find_by(number: lot_number) }
   let(:services) { ManagementConsultancy::Service.all.sample(5).map(&:code) }
   let(:region_codes) { Nuts2Region.all.sample(5).map(&:code) }
 
+  login_mc_buyer
   before do
     allow(ManagementConsultancy::Supplier).to receive(:offering_services_in_regions)
       .with(lot_number, services, region_codes).and_return(suppliers)
-    permit_framework :management_consultancy
   end
 
   describe 'GET index' do

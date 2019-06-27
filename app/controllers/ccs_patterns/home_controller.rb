@@ -1,6 +1,6 @@
 module CcsPatterns
   class HomeController < FrameworkController
-    require_permission :none, only: %i[index dynamic_accordian supplier_results_v1 supplier_results_v2 small_checkboxes]
+    before_action :authenticate_user!, except: %i[index dynamic_accordian supplier_results_v1 supplier_results_v2 small_checkboxes cog_sign_in cog_sign_in_password_prompt_change]
     before_action :set_back_path, except: :index
 
     def index; end
@@ -29,7 +29,9 @@ module CcsPatterns
 
     def errors_find_apprentices4; end
 
-    def errors_requirements; end
+    def cog_sign_in; end
+
+    def cog_sign_in_password_prompt_change; end
 
     private
 

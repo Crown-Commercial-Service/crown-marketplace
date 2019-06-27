@@ -17,6 +17,18 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
+        ccs_patterns/home/cog_forgot_password_request:
+          attributes:
+            please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
+        ccs_patterns/home/cog_forgot_password_reset:
+          attributes:
+            confirm_new_password: Enter your new password
+            enter_a_new_password: Enter a new password
+            password_must_be: Password must be 8 characters or more
+            password_must_match: Passwords don't match
+            passwords_dont_match: Passwords don't match
+            passwords_stronger: Password must include a special character
+            passwords_upper: Password must include a capital letter
         ccs_patterns/home/cog_register:
           attributes:
             email_format: Enter an email address in the correct format, like name@example.com
@@ -47,6 +59,16 @@ en:
             passwords_dont_match: Passwords don't match
             passwords_stronger: Password must include a special character
             passwords_uppper: Password must include a capital letter
+        cognito/respond_to_challenge:
+          attributes:
+            new_password:
+              blank: Enter a password
+              invalid_no_capitals: Password must include a capital letter
+              invalid_no_symbol: Password must include a special character
+              too_short: Password must be 8 characters or more
+            new_password_confirmation:
+              blank: Enter your password
+              confirmation: Passwords don't match
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -408,6 +430,17 @@ en:
         page_title: Understanding what to buy
         title: Understanding what to buy
     page_section: Find apprenticeship training and related services
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   ccs_patterns:
     home:
       cog_email:
@@ -416,6 +449,31 @@ en:
         line_02: You must use this code within 7 days of receiving this email.
         line_03_html: This is an automated message. Email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if you need help.
         sign_off_html: Kind regards, <br>Customer Services Team <br><small>Crown Commercial Service</small>
+      cog_email2:
+        greeting: Hello,
+        line_01: You recently asked to reset your Crown Commercial Service password.
+        line_02: You can change your password now using the link below
+        line_03: You must click this link within 24 hours of receiving this email.
+        sign_off_html: Kind regards, <br>Customer Services Team <br><small>Crown Commercial Service</small>
+      cog_forgot_password_confirmation:
+        heading: A reset email has been sent
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      cog_forgot_password_request:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you a link so you can reset your password. Password reset links are only valid for 24 hours.
+      cog_forgot_password_reset:
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
+      cog_forgot_password_reset2:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
       cog_register:
         confirm_password: Confirm your password
         create_password: Create a password you'll remember
@@ -472,7 +530,9 @@ en:
     passcap: at least one capital letter
     passeight: at least 8 characters
     passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    resend_password: Resend password
     search: Search
+    send_reset_email: Send reset email
     sign_in: Sign in
     submit: Continue
     type_csv: text/csv
@@ -528,6 +588,17 @@ en:
         question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
         question_hint: This can be current costs, or estimated annual costs.
         submit: Continue
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   faker:
     company:
       name:
@@ -687,6 +758,11 @@ en:
         txt01: The
         txt02_link: General Legal Advice Services (RM3786)
         txt03: agreement provides legal advice services for central government and arms-length bodies.
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
     suppliers:
       cg_no_suppliers_found:
         header: No suppliers were found
@@ -714,6 +790,12 @@ en:
       show:
         caption: Supplier details
         heading: Supplier details
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   management_consultancy:
     admin:
       uploads:
@@ -914,6 +996,11 @@ en:
         back_to_start: Back to start
         heading: You need a different framework
         introduction: This service is for the management consultancy frameworks RM3745 and RM6008.
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
     suppliers:
       download:
         download_supplier_shortlist: Download supplier shortlist
@@ -947,6 +1034,12 @@ en:
         is_an_sme: This supplier is a small or medium-sized enterprise
         max_day_rate: Max day rate
         sub_title: "%{framework} lot %{lot_number} - %{description}"
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   miles:
     unit:
       one: mile
@@ -1004,6 +1097,9 @@ en:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
+      auth:
+        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
+        title: Not permitted
       facilities_management:
         details: You don’t have permission to view this page.
         title: Not permitted
@@ -1280,6 +1376,11 @@ en:
         page_title: Do you want an agency to supply the worker?
         question: Do you want an agency to supply the worker?
     page_section: Find supply teachers and agency staff
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
     suppliers:
       all_suppliers:
         branch: Branch
@@ -1309,6 +1410,12 @@ en:
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   views:
     pagination:
       next: Next <b>→</b>
