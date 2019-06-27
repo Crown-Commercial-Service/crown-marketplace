@@ -1,5 +1,3 @@
-require 'aws-sdk'
-
 module Base
   class RegistrationsController < Devise::RegistrationsController
     protect_from_forgery
