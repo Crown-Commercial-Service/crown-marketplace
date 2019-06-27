@@ -45,8 +45,10 @@ gem 'omniauth-oauth2'
 gem 'omniauth_openid_connect'
 gem 'json-jwt'
 
+# for authentication
 gem 'devise'
-gem 'aws-sdk', '~> 3'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.22.0'
+
 # for pagination
 gem 'kaminari', '~> 1.1.1'
 
