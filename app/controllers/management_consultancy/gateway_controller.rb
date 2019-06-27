@@ -1,9 +1,10 @@
 module ManagementConsultancy
   class GatewayController < FrameworkController
-    require_permission :none, only: :index
+    before_action :authenticate_user!, except: :index
+    before_action :authorize_user, except: :index
 
     def index
-      redirect_to management_consultancy_path if logged_in?
+      redirect_to management_consultancy_path if user_signed_in?
     end
   end
 end
