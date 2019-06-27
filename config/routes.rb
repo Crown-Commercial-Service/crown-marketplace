@@ -187,7 +187,12 @@ Rails.application.routes.draw do
     get '/cog-register', to: 'home#cog_register'
     get '/cog-register-enter-confirmation-code', to: 'home#cog_register_enter_confirmation_code'
     get '/cog-email', to: 'home#cog_email'
+    get '/cog-email2', to: 'home#cog_email2'
     get '/cog-register-domain-not-on-whitelist', to: 'home#cog_register_domain_not_on_whitelist'
+    get '/cog-forgot-password-request', to: 'home#cog_forgot_password_request'
+    get '/cog-forgot-password-reset', to: 'home#cog_forgot_password_reset'
+    get '/cog-forgot-password-reset2', to: 'home#cog_forgot_password_reset2'
+    get '/cog-forgot-password-confirmation', to: 'home#cog_forgot_password_confirmation'
   end
 
   namespace 'legal_services', path: 'legal-services' do
