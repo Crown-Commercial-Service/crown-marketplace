@@ -83,7 +83,7 @@ module FacilitiesManagement
       services_without_pricing = CCS::FM::Rate.zero_rate.map(&:code)
 
       services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
-      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') }
+      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') if s }
       services_selected = services_selected.uniq
 
       FacilitiesManagement::Service.all.select do |service|
@@ -99,8 +99,8 @@ module FacilitiesManagement
       services_selected.map! { |s| s['code'].gsub('-', '.') }.uniq!
 
       services = FacilitiesManagement::Service.all.select { |service| services_selected.include? service.code }
-      mandatory = FacilitiesManagement::Service.all.select { |service| service.work_package_code == 'A' || service.work_package_code == 'B' }
-      services + mandatory
+      mandatory = FacilitiesManagement::Service.all.select { |service| service.code == 'A.18' || service.work_package_code == 'B' }
+      services + mandatory << FacilitiesManagement::Service.new(code: 'A.1 - A.17', name: 'Contract Mgt', work_package_code: 'A', mandatory: true)
     end
 
     def selected_suppliers(for_lot)

@@ -6,7 +6,8 @@ require 'transient_session_info'
 # config.user ||= {}
 # session.id
 class FacilitiesManagement::LongListController < ApplicationController
-  require_permission :facilities_management, only: :long_list
+  before_action :authenticate_user!, only: :long_list
+  before_action :authorize_user, only: :long_list
 
   def long_list
     @select_fm_locations = '/facilities-management/select-locations'
@@ -37,5 +38,11 @@ class FacilitiesManagement::LongListController < ApplicationController
     TransientSessionInfo[session.id, 'posted_services'] = @posted_services
     TransientSessionInfo[session.id, 'locations'] = @locations
     TransientSessionInfo[session.id, 'services'] = @services
+  end
+
+  protected
+
+  def authorize_user
+    authorize! :read, FacilitiesManagement
   end
 end

@@ -70,26 +70,6 @@ module Marketplace
 
   # :nocov:
 
-  def self.cognito_user_pool_site
-    @cognito_user_pool_site ||= ENV.fetch('COGNITO_USER_POOL_SITE')
-  end
-
-  def self.cognito_user_pool_id
-    @cognito_user_pool_id ||= ENV.fetch('COGNITO_USER_POOL_ID')
-  end
-
-  def self.cognito_client_id
-    @cognito_client_id ||= ENV.fetch('COGNITO_CLIENT_ID')
-  end
-
-  def self.cognito_client_secret
-    @cognito_client_secret ||= ENV.fetch('COGNITO_CLIENT_SECRET')
-  end
-
-  def self.cognito_aws_region
-    @cognito_aws_region ||= ENV.fetch('COGNITO_AWS_REGION')
-  end
-
   def self.google_analytics_tracking_id
     @google_analytics_tracking_id ||= ENV['GA_TRACKING_ID']
   end
