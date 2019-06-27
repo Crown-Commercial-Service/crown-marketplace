@@ -1,0 +1,45 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/error_summary', locals: { errors: @upload.errors } %>
+    <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5 cmp-page-heading"><%= t('.heading') %></h1>
+    <% if @uploads_in_progress %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          <%= t('.warning_text') %>
+        </strong>
+      </div>
+    <% end %>
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.upload_title') %></h3>
+    <span class="govuk-caption-m govuk-!-margin-bottom-7"><%= t('.upload_caption') %></span>
+    <%= form_for @upload, html: { multipart: true } do |f| %>
+      <%= govuk_form_group_with_optional_error(@upload, :suppliers) do %>
+        <%= display_errors(@upload, :current_accredited_suppliers) %>
+        <%= f.label :suppliers, class: "govuk-label" %>
+        <%= f.file_field :suppliers, class: css_classes_for_file_upload(@upload, :suppliers) %>
+        <%= f.hidden_field :suppliers_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :supplier_service_offerings) do %>
+        <%= display_errors(@upload, :supplier_service_offerings)%>
+        <%= f.label :supplier_service_offerings, class: "govuk-label" %>
+        <%= f.file_field :supplier_service_offerings, class: css_classes_for_file_upload(@upload, :supplier_service_offerings) %>
+        <%= f.hidden_field :supplier_service_offerings_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :supplier_regional_offerings) do %>
+        <%= display_errors(@upload, :supplier_regional_offerings) %>
+        <%= f.label :supplier_regional_offerings, class: "govuk-label" %>
+        <%= f.file_field :supplier_regional_offerings, class: css_classes_for_file_upload(@upload, :supplier_regional_offerings) %>
+        <%= f.hidden_field :supplier_regional_offerings_cache %>
+      <% end %>
+      <%= govuk_form_group_with_optional_error(@upload, :rate_cards) do %>
+        <%= display_errors(@upload, :rate_cards) %>
+        <%= f.label :rate_cards, class: "govuk-label" %>
+        <%= f.file_field :rate_cards, class: css_classes_for_file_upload(@upload, :rate_cards) %>
+        <%= f.hidden_field :rate_cards_cache %>
+      <% end %>
+      <%= f.submit 'Upload data', class: 'govuk-button' %>
+    <% end %>
+  </div>
+</div>

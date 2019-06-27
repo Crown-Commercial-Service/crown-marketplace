@@ -7,13 +7,13 @@ RSpec.describe ManagementConsultancy::Subservice, type: :model do
   let(:all_codes) { described_class.all_codes }
 
   it 'loads services from CSV' do
-    expect(subservices.count).to eq(2)
+    expect(subservices.count).to eq(103)
   end
 
   it 'populates attributes of first service' do
-    expect(first_subservice.code).to eq('MCF2.3.2.a')
-    expect(first_subservice.name).to eq('Testing')
-    expect(first_subservice.service).to eq('MCF2.3.2')
+    expect(first_subservice.code).to eq('MCF2.1.7.1')
+    expect(first_subservice.name).to eq('Outsourcing')
+    expect(first_subservice.service).to eq('MCF2.1.7')
   end
 
   it 'only has unique codes' do

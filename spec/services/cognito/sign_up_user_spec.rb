@@ -29,7 +29,7 @@ RSpec.describe Cognito::SignUpUser do
 
       it 'returns the newly created resource' do
         response = described_class.call(params, roles)
-        expect(response.user).to eq User.last
+        expect(response.user).to eq User.order(created_at: :asc).last
       end
 
       it 'returns success' do

@@ -4,7 +4,6 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
   describe 'create' do
     let(:supplier_name) { Faker::Company.unique.name }
     let(:supplier_id) { SecureRandom.uuid }
-    let(:contact_name) { Faker::Name.unique.name }
     let(:contact_email) { Faker::Internet.unique.email }
     let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
 
@@ -13,11 +12,10 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
     let(:suppliers) do
       [
         {
-          'supplier_name' => supplier_name,
+          'name' => supplier_name,
           'supplier_id' => supplier_id,
-          'contact_name' => contact_name,
           'contact_email' => contact_email,
-          'contact_phone' => telephone_number,
+          'telephone_number' => telephone_number,
           'lots' => lots
         }
       ]
@@ -64,7 +62,6 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
         described_class.upload!(suppliers)
 
         supplier = ManagementConsultancy::Supplier.last
-        expect(supplier.contact_name).to eq(contact_name)
         expect(supplier.contact_email).to eq(contact_email)
         expect(supplier.telephone_number).to eq(telephone_number)
       end
@@ -73,11 +70,11 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
         let(:lots) do
           [
             {
-              'lot_number' => '1',
+              'lot_number' => 'MCF2.1',
               'regions' => { 'UKC1' => 'provided', 'UKC2' => 'provided_if_expenses' }
             },
             {
-              'lot_number' => '2',
+              'lot_number' => 'MCF2.2',
               'regions' => { 'UKD1' => 'provided' }
             },
           ]
@@ -99,7 +96,7 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
           described_class.upload!(suppliers)
 
           availability = regional_availabilities.first
-          expect(availability.lot_number).to eq('1')
+          expect(availability.lot_number).to eq('MCF2.1')
           expect(availability.region_code).to eq('UKC1')
           expect(availability).not_to be_expenses_required
         end
@@ -108,7 +105,7 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
           described_class.upload!(suppliers)
 
           availability = regional_availabilities.second
-          expect(availability.lot_number).to eq('1')
+          expect(availability.lot_number).to eq('MCF2.1')
           expect(availability.region_code).to eq('UKC2')
           expect(availability).to be_expenses_required
         end
@@ -117,7 +114,7 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
           described_class.upload!(suppliers)
 
           availability = regional_availabilities.third
-          expect(availability.lot_number).to eq('2')
+          expect(availability.lot_number).to eq('MCF2.2')
           expect(availability.region_code).to eq('UKD1')
           expect(availability).not_to be_expenses_required
         end
@@ -127,12 +124,12 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
         let(:lots) do
           [
             {
-              'lot_number' => '1',
-              'services' => %w[1.1 1.2]
+              'lot_number' => 'MCF2.1',
+              'services' => %w[MCF2.1.1 MCF2.1.2]
             },
             {
-              'lot_number' => '2',
-              'services' => %w[2.1]
+              'lot_number' => 'MCF2.2',
+              'services' => %w[MCF2.2.1]
             },
           ]
         end
@@ -153,24 +150,24 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
           described_class.upload!(suppliers)
 
           offering = service_offerings.first
-          expect(offering.lot_number).to eq('1')
-          expect(offering.service_code).to eq('1.1')
+          expect(offering.lot_number).to eq('MCF2.1')
+          expect(offering.service_code).to eq('MCF2.1.1')
         end
 
         it 'assigns attributes to second service offering' do
           described_class.upload!(suppliers)
 
           offering = service_offerings.second
-          expect(offering.lot_number).to eq('1')
-          expect(offering.service_code).to eq('1.2')
+          expect(offering.lot_number).to eq('MCF2.1')
+          expect(offering.service_code).to eq('MCF2.1.2')
         end
 
         it 'assigns attributes to third service offering' do
           described_class.upload!(suppliers)
 
           offering = service_offerings.third
-          expect(offering.lot_number).to eq('2')
-          expect(offering.service_code).to eq('2.1')
+          expect(offering.lot_number).to eq('MCF2.2')
+          expect(offering.service_code).to eq('MCF2.2.1')
         end
       end
     end
@@ -249,12 +246,12 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
       let(:lots) do
         [
           {
-            'lot_number' => '1',
-            'services' => %w[1.1 1.2]
+            'lot_number' => 'MCF2.1',
+            'services' => %w[MCF2.1.1 MCF2.1.2]
           },
           {
             'lot_number' => '',
-            'services' => %w[2.1]
+            'services' => %w[MCF2.2.1]
           },
         ]
       end
@@ -278,11 +275,11 @@ RSpec.describe ManagementConsultancy::Upload, type: :model do
       let(:lots) do
         [
           {
-            'lot_number' => '1',
-            'services' => %w[1.1 1.2]
+            'lot_number' => 'MCF2.1',
+            'services' => %w[MCF2.1.1 MCF2.1.2]
           },
           {
-            'lot_number' => '2',
+            'lot_number' => 'MCF2.2',
             'services' => ['']
           },
         ]
