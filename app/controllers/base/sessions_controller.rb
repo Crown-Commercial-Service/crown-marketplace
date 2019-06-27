@@ -18,7 +18,7 @@ module Base
         @result.challenge? ? redirect_to(challenge_path) : super
       else
         flash[:error] = @result.error
-        redirect_to new_user_session_path
+        redirect_to new_session_path
       end
     end
 
@@ -27,10 +27,6 @@ module Base
     end
 
     protected
-
-    def challenge_path
-      users_challenge_path(challenge_name: @result.challenge_name, session: @result.session, username: @result.cognito_uuid)
-    end
 
     def after_sign_in_path_for(resource)
       stored_location_for(resource) || home_page_url
@@ -42,10 +38,6 @@ module Base
 
     def authorize_user
       authorize! :read, SupplyTeachers
-    end
-
-    def new_session_path
-      new_user_session_path
     end
   end
 end
