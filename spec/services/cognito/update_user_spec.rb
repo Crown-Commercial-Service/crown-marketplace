@@ -5,9 +5,9 @@ RSpec.describe Cognito::UpdateUser do
     let(:user) { create(:user, roles: %i[mc_access fm_acess ls_access]) }
     let(:cognito_groups) do
       OpenStruct.new(groups: [
-          OpenStruct.new(group_name: 'buyer'),
-          OpenStruct.new(group_name: 'st_access')
-      ])
+                       OpenStruct.new(group_name: 'buyer'),
+                       OpenStruct.new(group_name: 'st_access')
+                     ])
     end
     let(:roles) { %i[buyer st_access] }
 
