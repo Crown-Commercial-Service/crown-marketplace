@@ -148,7 +148,7 @@ en:
         management_consultancy/journey/choose_lot:
           attributes:
             lot:
-              inclusion: Please choose a lot for the services you require
+              inclusion: Select the lot you need
         management_consultancy/journey/choose_regions:
           attributes:
             region_codes:
@@ -979,8 +979,7 @@ en:
         research_marketplace_description: Social, economic or market research for projects of all size and budgets
         technology_services_description: Technology services all government security classifcation levels
       choose_lot:
-        question: What kind of management consultancy do you want to procure?
-        question_hint: The lot you choose here will affect the services offered and the suppliers presented.
+        question: Select the lot you need
       choose_regions:
         no_regions_selected: No regions selected
         question: Where do you want the consultants to work?
