@@ -29,7 +29,7 @@ module Devise
       end
 
       def update_if_needed(user)
-        # TODO: update user if details on cognito changed (e.g. was added to new group)
+        Cognito::UpdateUser.call(user)
         success!(user)
       end
 
@@ -38,7 +38,7 @@ module Devise
         if user.try(:valid?)
           success!(user)
         else
-          fail!('Failed to create user.')
+          fail!(:unkown_cognito_error)
         end
       end
     end

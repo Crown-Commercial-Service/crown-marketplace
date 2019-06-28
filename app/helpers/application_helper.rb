@@ -120,7 +120,7 @@ module ApplicationHelper
   end
 
   def service_destroy_session_path
-    send controller.class.parent_name.underscore + '_destroy_user_session_path' if controller.class.parent_name
+    send controller.class.parent_name.underscore.tr("/", "_") + '_destroy_user_session_path' if controller.class.parent_name
   end
 
   def landing_or_admin_page

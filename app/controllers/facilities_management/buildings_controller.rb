@@ -1,7 +1,7 @@
 require 'facilities_management/fm_buildings_data'
 require 'facilities_management/fm_service_data'
 require 'json'
-class FacilitiesManagement::BuildingsController < ApplicationController
+class FacilitiesManagement::BuildingsController < FacilitiesManagement::FrameworkController
   before_action :authenticate_user!, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
   before_action :authorize_user, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
 
