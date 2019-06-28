@@ -17,6 +17,15 @@ ActiveRecord::Schema.define(version: 2019_06_05_110142) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
+  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.jsonb "building_json", null: false
+    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
+    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
+    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.index ["user_id"], name: "idx_buildings_user_id"
+  end
+
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_supplier_id", null: false
     t.text "lot_number", null: false
