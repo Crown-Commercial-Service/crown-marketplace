@@ -1,4 +1,4 @@
-class FacilitiesManagement::SelectLocationsController < ApplicationController
+class FacilitiesManagement::SelectLocationsController < FacilitiesManagement::FrameworkController
   before_action :authenticate_user!, only: :select_location
   before_action :authorize_user, only: :select_location
 

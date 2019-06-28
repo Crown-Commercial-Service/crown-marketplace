@@ -2,10 +2,18 @@ require 'rails_helper'
 
 RSpec.feature 'Authentication', type: :feature do
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
+  let(:cognito_groups) do
+    OpenStruct.new(groups: [
+                     OpenStruct.new(group_name: 'buyer'),
+                     OpenStruct.new(group_name: 'st_access'),
+                     OpenStruct.new(group_name: 'mc_access')
+                   ])
+  end
 
   before do
     allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
     allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(session: '1234667'))
+    allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
   end
 
   scenario 'Unauthenticated users cannot access protected pages' do

@@ -19,6 +19,10 @@ module Cognito
       errors.add(:base, e.message)
     end
 
+    def success?
+      @auth_response.present? && @error.nil?
+    end
+
     def challenge?
       @auth_response.challenge_name.present?
     end

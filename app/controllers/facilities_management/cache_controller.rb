@@ -1,6 +1,6 @@
 require 'json'
 require 'facilities_management/fm_cache_data'
-class FacilitiesManagement::CacheController < ApplicationController
+class FacilitiesManagement::CacheController < FacilitiesManagement::FrameworkController
   before_action :authenticate_user!, only: %i[set retrieve clear_all clear_by_key].freeze
   before_action :authorize_user, only: %i[set retrieve clear_all clear_by_key].freeze
 
