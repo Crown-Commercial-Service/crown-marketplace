@@ -6,8 +6,7 @@ class Ability
     if user.has_role? :ccs_admin
       can :manage, :all
     elsif user.has_role? :ccs_employee
-      can :read, :all
-      can :manage, SupplyTeachers::Admin::Upload
+      admin_tool_specific_auth(user)
     elsif user.has_role? :supplier
       cannot :manage, :all
       can :read, :all
@@ -29,5 +28,14 @@ class Ability
       can :read, Apprenticeships
     end
     can :read, SupplyTeachers if user.has_role? :st_access
+  end
+
+  def admin_tool_specific_auth(user)
+    can :read, :all
+    if user.has_any_role? :fm_access, :mc_access, :ls_access, :at_access
+      can :manage, ManagementConsultancy::Admin::Upload
+      # can :manage, LegalServices::Admin::Upload
+    end
+    can :manage, SupplyTeachers::Admin::Upload if user.has_role? :st_access
   end
 end

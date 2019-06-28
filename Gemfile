@@ -47,6 +47,7 @@ gem 'json-jwt'
 
 # for authentication
 gem 'devise', '~> 4.6.2'
+
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.22.0'
 
 # for pagination
@@ -84,6 +85,7 @@ gem 'faker'
 
 # for authorization
 gem 'cancan', '~> 1.6.10'
+
 gem 'role_model', '~> 0.8.2'
 
 group :production do

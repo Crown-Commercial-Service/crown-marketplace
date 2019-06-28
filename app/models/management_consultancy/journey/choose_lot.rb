@@ -21,6 +21,10 @@ module ManagementConsultancy
       ]
     }
 
+    def self.lots
+      Lot.all.sort_by(&:description)
+    end
+
     def next_step_class
       Journey::ChooseServices
     end

@@ -49,7 +49,7 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     choose 'help_needed_management_consultants'
     click_on 'Continue'
 
-    choose 'Lot MCF2.1 - Business Consultancy Services'
+    choose 'Business Consultancy Services (MCF2 Lot 1)'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -72,7 +72,7 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     choose 'help_needed_management_consultants'
     click_on 'Continue'
 
-    choose 'Lot MCF2.2 - Procurement, Supply Chain and Commercial Consultancy Services'
+    choose 'Procurement, Supply Chain and Commercial Consultancy Services (MCF2 Lot 2)'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -95,7 +95,7 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     choose 'help_needed_management_consultants'
     click_on 'Continue'
 
-    choose 'Lot MCF2.3 - Complex and Transformation Consultancy Services'
+    choose 'Complex and Transformation Consultancy Services (MCF2 Lot 3)'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -118,7 +118,7 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     choose 'help_needed_management_consultants'
     click_on 'Continue'
 
-    choose 'Lot MCF2.4 - Strategic Consultancy Services'
+    choose 'Strategic Consultancy Services (MCF2 Lot 4)'
     click_on I18n.t('common.submit')
 
     check required_service.name
