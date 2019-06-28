@@ -1,6 +1,6 @@
 require 'facilities_management/fm_buildings_data'
 require 'json'
-class FacilitiesManagement::ContractController < ApplicationController
+class FacilitiesManagement::ContractController < FacilitiesManagement::FrameworkController
   before_action :authenticate_user!, only: %i[start_of_contract].freeze
   before_action :authorize_user, only: %i[start_of_contract].freeze
 

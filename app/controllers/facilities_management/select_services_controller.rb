@@ -1,6 +1,6 @@
 require 'json'
 require 'facilities_management/fm_service_data'
-class FacilitiesManagement::SelectServicesController < ApplicationController
+class FacilitiesManagement::SelectServicesController < FacilitiesManagement::FrameworkController
   before_action :authenticate_user!, only: %i[select_services save_lift_data].freeze
   before_action :authorize_user, only: %i[select_services save_lift_data].freeze
 

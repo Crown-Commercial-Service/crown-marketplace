@@ -243,14 +243,14 @@ ActiveRecord::Schema.define(version: 2019_06_05_110142) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.string "phone_number"
-    t.string "mobile_number"
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email", limit: 255, default: "", null: false
+    t.string "first_name", limit: 255
+    t.string "last_name", limit: 255
+    t.string "phone_number", limit: 255
+    t.string "mobile_number", limit: 255
     t.datetime "confirmed_at"
-    t.string "cognito_uuid"
+    t.string "cognito_uuid", limit: 255
     t.integer "roles_mask"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
