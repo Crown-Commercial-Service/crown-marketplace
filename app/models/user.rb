@@ -10,6 +10,8 @@ class User < ApplicationRecord
   # roles later, always append them at the end!
   roles :buyer, :supplier, :ccs_employee, :ccs_admin, :st_access, :fm_access, :ls_access, :mc_access, :at_access
 
+  attr_accessor :password, :password_confirmation
+
   def confirmed?
     confirmed_at.present?
   end
