@@ -4,10 +4,10 @@ RSpec.feature 'Authentication', type: :feature do
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
   let(:cognito_groups) do
     OpenStruct.new(groups: [
-      OpenStruct.new(group_name: 'buyer'),
-      OpenStruct.new(group_name: 'st_access'),
-      OpenStruct.new(group_name: 'mc_access')
-    ])
+                     OpenStruct.new(group_name: 'buyer'),
+                     OpenStruct.new(group_name: 'st_access'),
+                     OpenStruct.new(group_name: 'mc_access')
+                   ])
   end
 
   before do
