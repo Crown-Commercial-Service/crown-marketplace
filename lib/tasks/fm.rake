@@ -5,24 +5,25 @@ module FM
 
   def self.create_uom_table
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = "CREATE TABLE IF NOT EXISTS public.fm_units_of_measurement (
+      query = "DROP TABLE IF EXISTS public.fm_units_of_measurement; CREATE TABLE public.fm_units_of_measurement (
 	id serial NOT NULL,
 	title_text varchar NOT NULL,
 	example_text varchar NULL,
 	unit_text varchar NULL,
-	data_type varchar NULL,
+  data_type varchar NULL,
+  spreadsheet_label varchar NULL,
 	service_usage text[] NULL
 );
-TRUNCATE TABLE public.fm_units_of_measurement;
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(2, 'How many lifts do you have in this building?', 'For example, 5', '', 'numeric', '{C.5}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(3, 'What''s the number of floors each lift can access?', 'For example, 10. A lift going up between floor 6 and floor 16, gives a total of 10 floors', '', 'numeric', '{C.5}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(4, 'How many appliances do you have for testing each year?', 'For example, 150. When 100 PC computers, 50 laptops needs PAT service each year', 'units (each year)', 'numeric', '{E.4}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(5, 'What''s the number of building users (occupants) in this building?', 'For example, 56. What''s the maximum capacity of this building.', 'occupants (each year)', 'numeric', '{G.1,G.3}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(6, 'What''s the total external area of this building?', 'For example, 21000 sqm. When the total external area measures 21000 sqm', 'sqm (square metres)', 'numeric', '{G.5}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(8, 'How many tonnes of waste need disposal each year?', ' ', 'tonnes (each year)', 'numeric', '{K.2,K.3}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(7, 'How many hours are required each year?', 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)', '', 'numeric', '{H.4,H.5,I.1,I.2,I.3,I.4,J.1,J.2,J.3,J.4,J.5,J.6}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(9, 'How many classified waste consoles need emptying each year?', 'Example 60. When 5 consoles are emptied monthly, enter 60 consoles each year', 'units (each year)', 'numeric', '{K.1}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, service_usage) VALUES(10, 'How many units of feminine hygiene waste need to be emptied each year?', 'Example, 600. When 50 units per month need emptying, enter 600 units each year', 'units (each year)', 'numeric', '{K.7}'); "
+-- TRUNCATE TABLE public.fm_units_of_measurement;
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(2, 'How many lifts do you have in this building?', 'For example, 5', '', 'numeric', '', '{C.5}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(3, 'What''s the number of floors each lift can access?', 'For example, 10. A lift going up between floor 6 and floor 16, gives a total of 10 floors', '', 'numeric', 'The sum total of number of floors per lift', '{C.5}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(4, 'How many appliances do you have for testing each year?', 'For example, 150. When 100 PC computers, 50 laptops needs PAT service each year', 'units (each year)', 'numeric', 'Number of appliances in the building to be tested per annum', '{E.4}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(5, 'What''s the number of building users (occupants) in this building?', 'For example, 56. What''s the maximum capacity of this building.', 'occupants (each year)', 'numeric', 'Number of Building Users (Occupants)', '{G.1,G.3}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(6, 'What''s the total external area of this building?', 'For example, 21000 sqm. When the total external area measures 21000 sqm', 'sqm (square metres)', 'numeric', 'Square Metre (GIA) per annum', '{G.5}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(8, 'How many tonnes of waste need disposal each year?', 'Number of tonnes per annum', 'tonnes (each year)', 'numeric', 'Number of tonnes per annum', '{K.2,K.3}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(7, 'How many hours are required each year?', 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)', '', 'numeric', 'Number of hours required per annum', '{H.4,H.5,I.1,I.2,I.3,I.4,J.1,J.2,J.3,J.4,J.5,J.6}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(9, 'How many classified waste consoles need emptying each year?', 'Example 60. When 5 consoles are emptied monthly, enter 60 consoles each year', 'units (each year)', 'numeric', 'Number of consoles per annum', '{K.1}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(10, 'How many units of feminine hygiene waste need to be emptied each year?', 'Example, 600. When 50 units per month need emptying, enter 600 units each year', 'units (each year)', 'numeric', 'Number of units per annum', '{K.7}');"
       db.query query
     end
   rescue PG::Error => e
@@ -47,7 +48,7 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
 
   def self.create_fm_lifts_table
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = "create table if not exists fm_lifts (user_id varchar not null, building_id varchar not null, lift_data jsonb not null); drop index if exists fm_lifts_user_id_idx; create index fm_lifts_user_id_idx on fm_lifts using btree (user_id, building_id); drop index if exists fm_lifts_lift_json; create index if not exists fm_lifts_lift_json on fm_lifts using GIN ((lift_data -> 'floor-data'));"
+      query = "create table if not exists fm_lifts (user_id varchar not null, building_id varchar not null, lift_data jsonb not null); drop index if exists fm_lifts_user_id_idx; create index fm_lifts_user_id_idx on fm_lifts using btree (user_id, building_id); drop index if exists fm_lifts_lift_json; create index fm_lifts_lift_json on fm_lifts using GIN ((lift_data -> 'floor-data'));"
       db.query query
     end
   rescue PG::Error => e
@@ -76,7 +77,7 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "DELETE FROM fm_static_data WHERE key = 'services';"
       db.query query
-      query = "INSERT INTO public.fm_static_data (key, value) VALUES('services', " + '\'[{"code": "A", "name": "Contract Management"}, {"code": "B", "name": "Contract Mobilisation"}, {"code": "C", "name": "Maintenance services"}, {"code": "D", "name": "Horticultural services"}, {"code": "E", "name": "Statutory obligations"}, {"code": "F", "name": "Catering services"}, {"code": "G", "name": "Cleaning services"}, {"code": "H", "name": "Workplace FM services"}, {"code": "I", "name": "Reception services"}, {"code": "J", "name": "Security services"}, {"code": "K", "name": "Waste services"}, {"code": "L", "name": "Miscellaneous FM services"}, {"code": "M", "name": "Computer-aided facilities management (CAFM)"}, {"code": "N", "name": "Helpdesk services"}, {"code": "O", "name": "Management of billable works"}]\');'
+      query = "INSERT INTO public.fm_static_data (key, value) VALUES('services', " + '\'[{"code": "C", "name": "Maintenance services"}, {"code": "D", "name": "Horticultural services"}, {"code": "E", "name": "Statutory obligations"}, {"code": "F", "name": "Catering services"}, {"code": "G", "name": "Cleaning services"}, {"code": "H", "name": "Workplace FM services"}, {"code": "I", "name": "Reception services"}, {"code": "J", "name": "Security services"}, {"code": "K", "name": "Waste services"}, {"code": "L", "name": "Miscellaneous FM services"}, {"code": "M", "name": "Computer-aided facilities management (CAFM)"}, {"code": "N", "name": "Helpdesk services"}, {"code": "O", "name": "Management of billable works"}]\');'
       db.query query
     end
   rescue PG::Error => e

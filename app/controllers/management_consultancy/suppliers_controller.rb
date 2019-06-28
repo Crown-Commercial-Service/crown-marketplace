@@ -12,6 +12,8 @@ module ManagementConsultancy
 
     def show
       @supplier = Supplier.find(params[:id])
+      @lot = Lot.find_by(number: params[:lot])
+      @rate_card = @supplier.rate_cards.where(lot: params[:lot]).first
     end
 
     def download; end

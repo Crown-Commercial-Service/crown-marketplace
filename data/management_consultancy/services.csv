@@ -1,88 +1,243 @@
 code,name,lot_number
-1.1,Business case development,1
-1.2,Capability development,1
-1.3,Best practice tools and techniques,1
-1.4,Business review,1
-1.5,Business and disaster recovery,1
-1.6,Business policy / strategy review,1
-1.7,Business sourcing,1
-1.8,Change management,1
-1.9,Value for money review,1
-1.10,Continuity planning,1
-1.11,Corporate planning,1
-1.12,Government policy,1
-1.13,"Forecasting, planning and development",1
-1.14,HR,1
-1.15,ICT,1
-1.16,Programmes / initatives,1
-1.17,Options appraisal,1
-1.18,Policy,1
-1.19,Project management,1
-1.20,Risk and opportunity management,1
-1.21,Sustainability,1
-1.22,Risk and compliance,1
-1.23,Sales and marketing,1
-1.24,GDPR,1
-1.25,International / cross border,1
-2.1,Market analysis,2
-2.2,Financial advice,2
-2.3,In / outsourcing,2
-2.4,Procurement efficiencies,2
-2.5,Procurement methodologies,2
-2.6,Outsourcing - specific category,2
-2.7,Category management,2
-2.8,Procurement support,2
-2.9,Policy,2
-2.10,Procurement outsourcing,2
-2.11,Complex commercial procurement assignments,2
-2.12,Strategic sourcing,2
-2.13,Supplier relationship management,2
-2.14,Opex / Capex,2
-2.15,Budget management,2
-2.16,E-procurement,2
-2.17,Stakeholder management,2
-2.18,Procurement processs - tender,2
-2.19,Offshoring / onsourcing,2
-2.20,Options apprasial,2
-2.21,Procurement process,2
-2.22,Risk mitigation,2
-2.23,Savings identification,2
-2.24,Supplier performance management,2
-2.25,Project and programme review,2
-2.26,Outsourcing of procurement and supply chain resources,2
-2.27,Commercial models,2
-2.28,Transactional procurement services,2
-2.29,Contract management,2
-2.30,Financial risk,2
-2.31,Cost reduction,2
-2.32,Supply chain and logistics,2
-3.1,Change Management,3
-3.2,Complex programmes,3
-3.3,Stakeholder management,3
-3.4,Portfolio management,3
-3.5,Programme management,3
-3.6,Risk and compliance,3
-3.7,Supplier advisory services,3
-3.8,Supplier programme delivery,3
-3.9,Transformation management,3
-3.10,Asset management,3
-3.11,Performance improvement,3
-3.12,Thought leadership,3
-3.13,Crisis and contingency management,3
-3.14,Corporate responsibility,3
-3.15,Environmental sustainability,3
-4.1,Join ventures and strategic alliances,4
-4.2,"Mergers, acquisitions and disposals support",4
-4.3,Performance review,4
-4.4,Business case creation,4
-4.5,Business process reengineering,4
-4.6,Change management,4
-4.7,Competition policy,4
-4.8,Regulatory advice,4
-4.9,Data and analytics,4
-4.10,Corporate responsibility,4
-4.11,Environmental strategy and policy,4
-4.12,Sustainability,4
-4.13,Strategic advice,4
-MCF2.3.1,Test service without subservices,MCF2.3
-MCF2.3.2,Test service with subservices,MCF2.3
+MCF1.2.1,Accounting advice & risk,MCF1.2
+MCF1.2.2,Acquisition finance solutions,MCF1.2
+MCF1.2.3,Asset financial management,MCF1.2
+MCF1.2.4,Business analysis,MCF1.2
+MCF1.2.5,"Capital fund raising, derivatives & hedging",MCF1.2
+MCF1.2.6,Cash management,MCF1.2
+MCF1.2.7,Commercial benefits,MCF1.2
+MCF1.2.8,Competition policy,MCF1.2
+MCF1.2.9,Complex cost benefit studies and analysis,MCF1.2
+MCF1.2.10,Corporate restructuring and flotation,MCF1.2
+MCF1.2.11,Costing review and evaluation,MCF1.2
+MCF1.2.12,Creditor management,MCF1.2
+MCF1.2.13,Debt restructuring and management,MCF1.2
+MCF1.2.14,Developing and assessing project proposals,MCF1.2
+MCF1.2.15,Due diligence,MCF1.2
+MCF1.2.16,Economic analysis,MCF1.2
+MCF1.2.17,Financial accounting and reporting,MCF1.2
+MCF1.2.18,Financial performance review,MCF1.2
+MCF1.2.19,Financial policy and strategy advice,MCF1.2
+MCF1.2.20,Financing public infrastructure projects,MCF1.2
+MCF1.2.21,Forecasting and budgeting,MCF1.2
+MCF1.2.22,Foreign exchange,MCF1.2
+MCF1.2.23,Funding management,MCF1.2
+MCF1.2.24,"Investment, financial advice and market services",MCF1.2
+MCF1.2.25,"Mergers, acquisitions and divestment",MCF1.2
+MCF1.2.26,Payment structure advice and risk,MCF1.2
+MCF1.2.27,Pensions and actuarial consultancy services,MCF1.2
+MCF1.2.28,Policy impact assessments,MCF1.2
+MCF1.2.29,Private finance structures and financial products,MCF1.2
+MCF1.2.30,Regulation benchmarking and statistical analysis,MCF1.2
+MCF1.2.31,Risk management,MCF1.2
+MCF1.2.32,Statutory reporting,MCF1.2
+MCF1.2.33,Taxation,MCF1.2
+MCF1.2.34,Treasury and risk management,MCF1.2
+MCF1.3.1,Audit of financial statements & related documents,MCF1.3
+MCF1.3.2,Financial document advice,MCF1.3
+MCF1.3.3,Quality assurance of internal audit performance,MCF1.3
+MCF1.3.4,Compliance and quality audit,MCF1.3
+MCF1.3.5,Corporate social responsibility,MCF1.3
+MCF1.3.6,Anti-bribery and corrupt practices investigations,MCF1.3
+MCF1.3.7,Development of internal audit strategy and methodology,MCF1.3
+MCF1.3.8,External audit service,MCF1.3
+MCF1.3.9,Financial irregularity,MCF1.3
+MCF1.3.10,Fraud investigations,MCF1.3
+MCF1.3.11,"Forensic assessments, accounting Investigations",MCF1.3
+MCF1.3.12,Governance,MCF1.3
+MCF1.3.13,Grant audit and certification,MCF1.3
+MCF1.3.14,Internal audit,MCF1.3
+MCF1.3.15,Risk management & internal audit control,MCF1.3
+MCF1.3.16,Special purpose reviews,MCF1.3
+MCF1.3.17,Supplier audit & supply chain assurance,MCF1.3
+MCF1.3.18,Sustainability assurance,MCF1.3
+MCF1.4.1,Cultural transformation,MCF1.4
+MCF1.4.2,Dispute management,MCF1.4
+MCF1.4.3,Employee relations and communications,MCF1.4
+MCF1.4.4,"Human resource functions, process and design",MCF1.4
+MCF1.4.5,HR terms and conditions,MCF1.4
+MCF1.4.6,"Advice on managing temporary staff, including IR35",MCF1.4
+MCF1.4.7,Organisational training and development,MCF1.4
+MCF1.4.8,Performance management,MCF1.4
+MCF1.4.9,Recruitment policy and strategy,MCF1.4
+MCF1.4.10,Staffing,MCF1.4
+MCF1.4.11,Talent management,MCF1.4
+MCF1.5.1,Social housing policy,MCF1.5
+MCF1.5.2,Revenue optimisation,MCF1.5
+MCF1.5.3,Tenant participation schemes,MCF1.5
+MCF1.5.4,"Housing, landlord and tenancy regulation",MCF1.5
+MCF1.5.5,"Forecasting, planning and strategy",MCF1.5
+MCF1.5.6,Programme and project management,MCF1.5
+MCF1.5.7,Business case development,MCF1.5
+MCF1.5.8,HR and organisational strategy,MCF1.5
+MCF1.5.9,Operational modelling,MCF1.5
+MCF1.5.10,Commissioning services,MCF1.5
+MCF1.5.11,Procurement and supply,MCF1.5
+MCF1.5.12,Risk and opportunity management,MCF1.5
+MCF1.5.13,Capability development,MCF1.5
+MCF1.5.14,"Transformation, change and delivery",MCF1.5
+MCF1.5.15,Policy advice and review,MCF1.5
+MCF1.5.16,"Economics, analysis and research",MCF1.5
+MCF1.5.17,Alternative delivery models,MCF1.5
+MCF1.5.18,Capital asset strategy,MCF1.5
+MCF1.5.19,Review of community services,MCF1.5
+MCF1.5.20,"Regeneration, regional and economic development",MCF1.5
+MCF1.5.21,Social care,MCF1.5
+MCF1.5.22,Healthcare management,MCF1.5
+MCF1.6.1,Curriculum planning and development,MCF1.6
+MCF1.6.2,Qualification management advice,MCF1.6
+MCF1.6.3,Academy conversions,MCF1.6
+MCF1.6.4,Behavioural programmes,MCF1.6
+MCF1.6.5,Special Needs Educational support programmes,MCF1.6
+MCF1.6.6,Ofsted audit planning,MCF1.6
+MCF1.6.7,Alternative delivery models,MCF1.6
+MCF1.6.8,National policy roll out,MCF1.6
+MCF1.6.9,Special educational needs,MCF1.6
+MCF1.6.10,Apprenticeships,MCF1.6
+MCF1.6.11,Funding assessment,MCF1.6
+MCF1.6.12,Institution management,MCF1.6
+MCF1.6.13,Early years development,MCF1.6
+MCF1.6.14,All education levels,MCF1.6
+MCF1.6.15,Healthy schools,MCF1.6
+MCF1.6.16,Schools of excellence,MCF1.6
+MCF1.6.17,Admission processes and planning,MCF1.6
+MCF1.6.18,Excellence policies and initiatives,MCF1.6
+MCF1.6.19,"Forecasting, planning & strategy",MCF1.6
+MCF1.6.20,Programme and project management,MCF1.6
+MCF1.6.21,Business case development,MCF1.6
+MCF1.6.22,HR & organisational strategy,MCF1.6
+MCF1.6.23,Operational modelling,MCF1.6
+MCF1.6.24,Commissioning services,MCF1.6
+MCF1.6.25,Procurement and supply,MCF1.6
+MCF1.6.26,Risk and opportunity management,MCF1.6
+MCF1.6.27,Capability development,MCF1.6
+MCF1.6.28,"Transformation, change & assurance",MCF1.6
+MCF1.6.29,Policy advice and review,MCF1.6
+MCF1.6.30,"Economics, analysis and research",MCF1.6
+MCF1.7.1,Energy,MCF1.7
+MCF1.7.2,Utilities,MCF1.7
+MCF1.7.3,Highways and roads,MCF1.7
+MCF1.7.4,Infrastructure modelling,MCF1.7
+MCF1.7.5,National emergency,MCF1.7
+MCF1.7.6,Offshore,MCF1.7
+MCF1.7.7,Infrastructure planning strategies,MCF1.7
+MCF1.7.8,Population and demographic review,MCF1.7
+MCF1.7.9,Rail,MCF1.7
+MCF1.7.10,Sector and geographical review,MCF1.7
+MCF1.7.11,Shipping,MCF1.7
+MCF1.7.12,Telecommunications,MCF1.7
+MCF1.7.13,Transport policies & strategies,MCF1.7
+MCF1.7.14,Waste infrastructure,MCF1.7
+MCF1.7.15,"Forecasting, planning and strategy",MCF1.7
+MCF1.7.16,Programme and project management,MCF1.7
+MCF1.7.17,Business case development,MCF1.7
+MCF1.7.18,HR and organisational strategy,MCF1.7
+MCF1.7.19,Operational modelling,MCF1.7
+MCF1.7.20,Commissioning services,MCF1.7
+MCF1.7.21,Procurement and supply,MCF1.7
+MCF1.7.22,Risk and opportunity management,MCF1.7
+MCF1.7.23,Capability development,MCF1.7
+MCF1.7.24,"Transformation, change & delivery",MCF1.7
+MCF1.7.25,Policy advice and review,MCF1.7
+MCF1.7.26,"Economics, analysis and research",MCF1.7
+MCF1.8.1,"Conceptualisation, inception and viability studies",MCF1.8
+MCF1.8.2,Continuity and disaster recovery planning,MCF1.8
+MCF1.8.3,Current systems appraisal and opportunity definition,MCF1.8
+MCF1.8.4,Digital services strategy,MCF1.8
+MCF1.8.5,"Information and document structure, management and strategy",MCF1.8
+MCF1.8.6,Security and risk management planning,MCF1.8
+MCF1.8.7,System roadmap development,MCF1.8
+MCF1.8.8,"Forecasting, planning and strategy",MCF1.8
+MCF1.8.9,Programme and project management,MCF1.8
+MCF1.8.10,Business case development,MCF1.8
+MCF1.8.11,HR and organisational strategy,MCF1.8
+MCF1.8.12,Operational modelling,MCF1.8
+MCF1.8.13,Commissioning services,MCF1.8
+MCF1.8.14,Procurement and supply,MCF1.8
+MCF1.8.15,Risk and opportunity management,MCF1.8
+MCF1.8.16,Capability development,MCF1.8
+MCF1.8.17,"Transformation, change and delivery",MCF1.8
+MCF1.8.18,Policy advice and review,MCF1.8
+MCF1.8.19,"Economics, analysis and research",MCF1.8
+MCF2.1.1,Business case development,MCF2.1
+MCF2.1.2,Capability development,MCF2.1
+MCF2.1.3,Application of best practice tools and techniques,MCF2.1
+MCF2.1.4,Appraising business structures, architecture, performance and operating models,MCF2.1
+MCF2.1.5,Business and disaster recovery planning,MCF2.1
+MCF2.1.6,Business policy and strategy appraisal,MCF2.1
+MCF2.1.7,Business sourcing strategies,MCF2.1
+MCF2.1.8,Change management,MCF2.1
+MCF2.1.9,Value for money review,MCF2.1
+MCF2.1.10,Continuity planning,MCF2.1
+MCF2.1.11,Corporate planning,MCF2.1
+MCF2.1.12,Operational planning supporting,MCF2.1
+MCF2.1.13,Development and implementation of change management policies and strategies,MCF2.1
+MCF2.1.14,Development or review of government policy and or objectives,MCF2.1
+MCF2.1.15,"Forecasting, planning and development.",MCF2.1
+MCF2.1.16,"Workforce, human resources and benefits.",MCF2.1
+MCF2.1.17,ICT,MCF2.1
+MCF2.1.18,"Identification and development of new services, programmes or initiatives",MCF2.1
+MCF2.1.19,"Options appraisal to assess desirability, feasibility and viability",MCF2.1
+MCF2.1.20,Policy,MCF2.1
+MCF2.1.21,Project management,MCF2.1
+MCF2.1.22,Risk and opportunity management,MCF2.1
+MCF2.1.23,Sustainable development policies and strategies,MCF2.1
+MCF2.1.24,Risk and compliance,MCF2.1
+MCF2.1.25,Sales and marketing,MCF2.1
+MCF2.1.26,General data protection regulation,MCF2.1
+MCF2.1.27,International / cross border,MCF2.1
+MCF2.2.1,"Market research, analysis and testing",MCF2.2
+MCF2.2.2,Financial advice on projects and infrastructure finance,MCF2.2
+MCF2.2.3,In / out sourcing of customer services,MCF2.2
+MCF2.2.4,Procurement efficiencies and delivery of strategic sourcing,MCF2.2
+MCF2.2.5,Procurement methodologies and research,MCF2.2
+MCF2.2.6,Outsourcing, management of procurement assignments,MCF2.2
+MCF2.2.7,"Category management, benchmarking reviews and make or buy assessments",MCF2.2
+MCF2.2.8,"Analysis of bids, tenders and spend",MCF2.2
+MCF2.2.9,UK and international procurement policy,MCF2.2
+MCF2.2.10,Outsourcing of procurement or supply chain services,MCF2.2
+MCF2.2.11,Complex commercial procurement assignments,MCF2.2
+MCF2.2.12,Structuring of procurement and evaluation,MCF2.2
+MCF2.2.13,Supplier relationship management,MCF2.2
+MCF2.2.14,UK and international sourcing strategy,MCF2.2
+MCF2.2.15,Capital and operational expenditure,MCF2.2
+MCF2.2.16,"E-commerce and procurement technologies for end-to-end solutions",MCF2.2
+MCF2.2.17,"Stakeholder mapping, influencing and customer relationship development",MCF2.2
+MCF2.2.18,Request for information and invitation to tender,MCF2.2
+MCF2.2.19,Off-shoring and on-shoring,MCF2.2
+MCF2.2.20,"Options appraisal to assess desirability, feasibility and viability",MCF2.2
+MCF2.2.21,Procurement process including public finance initiative,MCF2.2
+MCF2.2.22,Risk mitigation and implementation of appropriate strategies,MCF2.2
+MCF2.2.23,Budget impact savings and recognition,MCF2.2
+MCF2.2.24,Supplier performance management,MCF2.2
+MCF2.2.25,"Project and programme review, analysis and recommendation",MCF2.2
+MCF2.2.26,Advice on outsourcing of procurement and supply chain,MCF2.2
+MCF2.2.27,Commercial model and strategy review,MCF2.2
+MCF2.2.28,Transactional procurement services,MCF2.2
+MCF2.2.29,Contract management,MCF2.2
+MCF2.2.30,Risk and payment profiles,MCF2.2
+MCF2.2.31,Opportunity review for cost reduction and commercial benefits,MCF2.2
+MCF2.2.32,Supply chain and logistics,MCF2.2
+MCF2.3.1,Change management,MCF2.3
+MCF2.3.2,Complex programme advice,MCF2.3
+MCF2.3.3,Portfolio management advice on strategic objective ensuring financial viability,MCF2.3
+MCF2.3.4,Programme management advice,MCF2.3
+MCF2.3.5,Risk and compliance,MCF2.3
+MCF2.3.6,Supplier side advisory services,MCF2.3
+MCF2.3.7,Supplier side programme delivery,MCF2.3
+MCF2.3.8,Transformation management,MCF2.3
+MCF2.3.9,Asset management,MCF2.3
+MCF2.3.10,Performance improvement,MCF2.3
+MCF2.4.1,Joint ventures and strategic alliances,MCF2.4
+MCF2.4.2,"Advice on mergers, acquisitions and disposals",MCF2.4
+MCF2.4.3,Appraising business structures, architecture and operating models,MCF2.4
+MCF2.4.4,Business case creation including performance metrics,MCF2.4
+MCF2.4.5,Business process reengineering,MCF2.4
+MCF2.4.6,Change management,MCF2.4
+MCF2.4.7,Competition policy,MCF2.4
+MCF2.4.8,Regulatory advice,MCF2.4
+MCF2.4.9,Data and analytics,MCF2.4
+MCF2.4.10,Corporate responsibility,MCF2.4
+MCF2.4.11,Environmental strategy and policy,MCF2.4
+MCF2.4.12,Sustainability,MCF2.4
+MCF2.4.13,Strategic advice,MCF2.4
