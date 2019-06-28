@@ -31,6 +31,14 @@ Rails.application.routes.draw do
     get '/apprenticeships/sign-in', to: 'apprenticeships/sessions#new', as: :apprenticeships_new_user_session
     post '/apprenticeships/sign-in', to: 'apprenticeships/sessions#create', as: :apprenticeships_user_session
     delete '/apprenticeships/sign-out', to: 'apprenticeships/sessions#destroy', as: :apprenticeships_destroy_user_session
+
+    get '/supply_teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#new', as: :supply_teachers_admin_new_user_session
+    post '/supply_teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#create', as: :supply_teachers_admin_user_session
+    delete '/supply_teachers/admin/sign-out', to: 'supply_teachers/admin/sessions#destroy', as: :supply_teachers_admin_destroy_user_session
+
+    get '/management_consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#new', as: :management_consultancy_admin_new_user_session
+    post '/management_consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#create', as: :management_consultancy_admin_user_session
+    delete '/management_consultancy/admin/sign-out', to: 'management_consultancy/admin/sessions#destroy', as: :management_consultancy_admin_destroy_user_session
   end
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
@@ -52,6 +60,10 @@ Rails.application.routes.draw do
     resources :downloads, only: :index
     # unless Rails.env.production? # not be available on production environments yet
     namespace :admin do
+      get '/users/confirm', to: 'users#confirm_new'
+      post '/users/confirm', to: 'users#confirm'
+      get '/users/challenge', to: 'users#challenge_new'
+      post '/users/challenge', to: 'users#challenge'
       resources :uploads, only: %i[index new create show] do
         get 'approve'
         get 'reject'
@@ -130,6 +142,10 @@ Rails.application.routes.draw do
     get '/html/download-the-supplier-list', to: 'html#download_the_supplier_list'
     # unless Rails.env.production? # not be available on production environments yet
     namespace :admin do
+      get '/users/confirm', to: 'users#confirm_new'
+      post '/users/confirm', to: 'users#confirm'
+      get '/users/challenge', to: 'users#challenge_new'
+      post '/users/challenge', to: 'users#challenge'
       resources :uploads, only: %i[index new create show] do
         get 'approve'
         get 'reject'
