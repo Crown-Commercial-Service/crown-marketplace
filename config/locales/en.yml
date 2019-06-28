@@ -493,12 +493,52 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      select:
+        heading: Confirm you need management consultancy
+        line01_href_txt: Public sector resourcing
+        line01_text: contingent labour for short-term projects with specific outcomes
+        line01_url_html: <a href="#">
+        line02_href_txt: Corporate financial services
+        line02_text: advice on complex corporate financial matters
+        line02_url_html: <a href="#">
+        line03_href_txt: Research marketplace
+        line03_text: social, economic or market research for projects of all sizes and budgets
+        line03_url_html: <a href="#">
+        line04_href_txt: Technology services 2
+        line04_text: technology services at all government security classification levels
+        line04_url_html: <a href="#">
+        line05_href_txt: Digital outcomes and specialists 3
+        line05_text: support to design, build and deliver digital outcomes using the agile approach
+        line05_url_html: <a href="#">
+        line06_href_txt: G-Cloud 10
+        line06_text: cloud hosting, software and support
+        line06_url_html: <a href="#">
+        text01: Check that you don't need one of these other frameworks offered by Commercial Service
+      start:
+        heading: Find management consultants
+        heading02: Before you start
+        heading03: Guidance and other useful documents
+        href_txt01: Management Consultancy Framework
+        href_txt02: Management Consultancy Framework Two
+        href_url01_html: <a href="#">
+        href_url02_html: <a href="#">
+        line_txt01_html: Management Consultancy Framework (<abbr>MCF</abbr>) specification
+        line_txt02_html: Management Consultancy Framework Two (<abbr>MCF</abbr>2) specification
+        line_txt03_html: "<abbr>OJEU</abbr> contract notice"
+        line_url01_html: <a href="#">
+        line_url02_html: <a href="#">
+        line_url03_html: <a href="#">
+        text01: Use this service to download a shortlist of suppliers that provide the management consultancy services you need.
+        text02: Using this service means you're following the public sector procurement procedures.
+        text03: You need to know which lot the management consultancy services you need are in. Review the lot description documents for
+        text04: and
   common:
     apply_filters: Apply filters
     back_to_start: Back to start
     browse: Browse
     ccs_contact_url: https://www.crowncommercial.gov.uk/contact
     change_password_and_sign_in: Change password and sign in
+    confirm_and_continue: Confirm and continue
     continue: Continue
     create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
@@ -513,6 +553,7 @@ en:
     search: Search
     send_reset_email: Send reset email
     sign_in: Sign in
+    start_now: Start now
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
