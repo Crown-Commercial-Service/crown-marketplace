@@ -1,9 +1,12 @@
 require 'transient_session_info'
 
 module FacilitiesManagement
-  class SummaryController < FrameworkController
+  class SummaryController < FacilitiesManagement::FrameworkController
+    skip_before_action :verify_authenticity_token
+    # protect_from_forgery with: :exception
     before_action :authenticate_user!, except: :index
     before_action :authorize_user, except: :index
+
     # :nocov:
     attr_accessor :start_date
     attr_accessor :current_lot
