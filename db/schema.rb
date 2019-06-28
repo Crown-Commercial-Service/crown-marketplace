@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_12_144942) do
+ActiveRecord::Schema.define(version: 2019_06_05_110142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -103,11 +103,13 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_units_of_measurement", id: :serial, force: :cascade do |t|
+  create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
+    t.serial "id", null: false
     t.string "title_text", null: false
     t.string "example_text"
     t.string "unit_text"
     t.string "data_type"
+    t.string "spreadsheet_label"
     t.text "service_usage", array: true
   end
 
@@ -126,9 +128,20 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.text "Last updated"
   end
 
+  create_table "management_consultancy_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "aasm_state", limit: 15
+    t.string "suppliers", limit: 255
+    t.string "supplier_service_offerings", limit: 255
+    t.string "supplier_regional_offerings", limit: 255
+    t.string "rate_cards", limit: 255
+    t.text "fail_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "management_consultancy_supplier_id", null: false
-    t.integer "lot"
+    t.string "lot"
     t.integer "junior_rate_in_pence"
     t.integer "standard_rate_in_pence"
     t.integer "senior_rate_in_pence"
@@ -137,6 +150,9 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.integer "director_rate_in_pence"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contact_name"
+    t.string "telephone_number"
+    t.string "email"
     t.index ["management_consultancy_supplier_id"], name: "index_management_consultancy_rate_cards_on_supplier_id"
   end
 
@@ -167,6 +183,9 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
     t.text "contact_email"
     t.text "telephone_number"
     t.boolean "sme"
+    t.string "address"
+    t.string "website"
+    t.integer "duns"
   end
 
   create_table "management_consultancy_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -334,6 +353,20 @@ ActiveRecord::Schema.define(version: 2019_04_12_144942) do
   create_table "supply_teachers_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email", limit: 255, default: "", null: false
+    t.string "first_name", limit: 255
+    t.string "last_name", limit: 255
+    t.string "phone_number", limit: 255
+    t.string "mobile_number", limit: 255
+    t.datetime "confirmed_at"
+    t.string "cognito_uuid", limit: 255
+    t.integer "roles_mask"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"

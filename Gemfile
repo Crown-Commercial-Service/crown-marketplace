@@ -45,6 +45,11 @@ gem 'omniauth-oauth2'
 gem 'omniauth_openid_connect'
 gem 'json-jwt'
 
+# for authentication
+gem 'devise', '~> 4.6.2'
+
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.22.0'
+
 # for pagination
 gem 'kaminari', '~> 1.1.1'
 
@@ -78,6 +83,11 @@ gem 'slim', '~> 4.0.1'
 gem 'capybara'
 gem 'faker'
 
+# for authorization
+gem 'cancan', '~> 1.6.10'
+
+gem 'role_model', '~> 0.8.2'
+
 group :production do
   # for S3 storage of files
   gem 'carrierwave-aws', '~> 1.3.0'
@@ -107,4 +117,5 @@ end
 group :test do
   gem 'webmock'
   gem 'simplecov', require: false
+  gem 'selenium-webdriver'
 end

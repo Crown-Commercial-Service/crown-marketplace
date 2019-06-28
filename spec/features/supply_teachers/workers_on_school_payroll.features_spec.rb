@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Workers on school payroll', type: :feature do
+RSpec.feature 'Workers on school payroll', type: :feature, supply_teachers: true do
   before do
     Geocoder::Lookup::Test.add_stub(
       'WC2B 6TE', [{ 'coordinates' => [51.5149666, -0.119098] }]

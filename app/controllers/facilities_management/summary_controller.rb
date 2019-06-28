@@ -1,10 +1,12 @@
 require 'transient_session_info'
 
 module FacilitiesManagement
-  class SummaryController < FrameworkController
-    skip_before_action :verify_authenticity_token, only: :index
+  class SummaryController < FacilitiesManagement::FrameworkController
+    skip_before_action :verify_authenticity_token
+    # protect_from_forgery with: :exception
+    before_action :authenticate_user!, except: :index
+    before_action :authorize_user, except: :index
 
-    require_permission :none, only: :index
     # :nocov:
     attr_accessor :start_date
     attr_accessor :current_lot
@@ -55,7 +57,7 @@ module FacilitiesManagement
     def build_report
       set_current_choices
 
-      @report = SummaryReport.new(@start_date, current_login.email.to_s, TransientSessionInfo[session.id])
+      @report = SummaryReport.new(@start_date, current_user.email.to_s, TransientSessionInfo[session.id])
       @report.calculate_services_for_buildings
 
       workout_current_lot

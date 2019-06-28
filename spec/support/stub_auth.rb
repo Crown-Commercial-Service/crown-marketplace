@@ -1,12 +1,18 @@
 module SpecSupport
   module StubAuth
-    def stub_auth
+    def stub_auth_st
+      user = FactoryBot.create(:user, roles: %i[buyer st_access])
+      login_as(user, scope: :user)
+    end
+
+    def stub_auth_mc
+      user = FactoryBot.create(:user, roles: %i[buyer mc_access])
+      login_as(user, scope: :user)
+    end
+
+    def stub_dfe
       OmniAuth.config.test_mode = true
 
-      OmniAuth.config.mock_auth[:cognito] = OmniAuth::AuthHash.new(
-        'provider' => 'cognito',
-        'info' => { 'email' => 'cognito@example.com' }
-      )
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
         'provider' => 'dfe',
         'info' => { 'email' => 'dfe@example.com' },
@@ -31,23 +37,31 @@ module SpecSupport
       )
     end
 
+    def unstub_dfe
+      OmniAuth.config.mock_auth[:dfe] = nil
+    end
+
     def unstub_auth
-      OmniAuth.config.test_mode = false
+      Warden.test_reset!
     end
   end
 end
 
 RSpec.configure do |config|
   config.include SpecSupport::StubAuth, type: :feature
-
-  config.before(type: :feature) do
-    allow(Marketplace).to receive(:dfe_signin_whitelisted_email_addresses)
-      .and_return(['dfe@example.com'])
-  end
-
-  config.around(:example, type: :feature) do |example|
-    stub_auth
+  config.around(:example, type: :feature, supply_teachers: true) do |example|
+    stub_auth_st
     example.run
     unstub_auth
+  end
+  config.around(:example, type: :feature, management_consultancy: true) do |example|
+    stub_auth_mc
+    example.run
+    unstub_auth
+  end
+  config.around(:example, type: :feature, dfe: true) do |example|
+    stub_dfe
+    example.run
+    unstub_dfe
   end
 end

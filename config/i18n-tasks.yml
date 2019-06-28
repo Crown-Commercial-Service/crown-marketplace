@@ -109,6 +109,7 @@ ignore_unused:
   - suppliers.*
   - companies.*
   - management_consultancy.journey.choose_help_needed.*
+  - management_consultancy.job_titles.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
 # - 'simple_form.{yes,no}'

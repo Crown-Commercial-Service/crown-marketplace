@@ -1,11 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true do
-  before do
-    permit_framework :supply_teachers
-  end
-
+RSpec.describe SupplyTeachers::JourneyController, type: :controller do
   describe 'GET #start' do
+    login_st_buyer
     it 'redirects to the first step in the journey' do
       get :start, params: {
         journey: 'supply-teachers'
@@ -19,10 +16,6 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
 
   describe 'GET #question for looking-for' do
     context 'when not logged in' do
-      before do
-        ensure_not_logged_in
-      end
-
       it 'redirects to gateway page' do
         get :question, params: {
           journey: 'supply-teachers',
@@ -32,16 +25,20 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
       end
     end
 
-    it 'renders template' do
-      get :question, params: {
-        journey: 'supply-teachers',
-        slug: 'looking-for'
-      }
-      expect(response).to render_template('looking_for')
+    context 'when logged in' do
+      login_st_buyer
+      it 'renders template' do
+        get :question, params: {
+          journey: 'supply-teachers',
+          slug: 'looking-for'
+        }
+        expect(response).to render_template('looking_for')
+      end
     end
   end
 
   describe 'GET #answer for looking-for' do
+    login_st_buyer
     before do
       get :answer, params: {
         journey: 'supply-teachers',
@@ -102,6 +99,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #question for managed-service-provider' do
+    login_st_buyer
     it 'renders template' do
       get :question, params: {
         journey: 'supply-teachers',
@@ -113,6 +111,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #answer for managed-service-provider' do
+    login_st_buyer
     before do
       get :answer, params: {
         journey: 'supply-teachers',
@@ -173,6 +172,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #question for worker-type' do
+    login_st_buyer
     it 'renders template' do
       get :question, params: {
         journey: 'supply-teachers',
@@ -184,6 +184,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #answer for worker-type' do
+    login_st_buyer
     let(:params) do
       {
         looking_for: 'worker',
@@ -233,6 +234,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #question for school-postcode-nominated-worker' do
+    login_st_buyer
     it 'renders template' do
       get :question, params: {
         journey: 'supply-teachers',
@@ -279,6 +281,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #answer for school-postcode' do
+    login_st_buyer
     let(:postcode) { valid_fake_postcode }
 
     before do
@@ -304,6 +307,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #question for payroll-provider' do
+    login_st_buyer
     it 'sets the form path to payroll-provider answer' do
       params = {
         journey: 'supply-teachers',
@@ -330,6 +334,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #answer for payroll-provider' do
+    login_st_buyer
     context 'when looking for the school to provide payroll' do
       it 'redirects to postcode form' do
         params = {
@@ -381,6 +386,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller, auth: true 
   end
 
   describe 'GET #question for agency-payroll' do
+    login_st_buyer
     it 'sets the back link to the payroll-provider question' do
       params = {
         journey: 'supply-teachers',

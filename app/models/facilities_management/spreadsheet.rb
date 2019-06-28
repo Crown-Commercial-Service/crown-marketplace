@@ -9,13 +9,14 @@ class FacilitiesManagement::Spreadsheet
   # rubocop:disable Metrics/CyclomaticComplexity
   def row(buildings, idx)
     vals = []
+    i = 1
     buildings.each do |building|
       str =
         case idx
         when 0
-          building.building_json['fm-building-type']
+          "Building #{i} - #{building.building_json['name']}"
         when 1
-          building.building_json['name']
+          building.building_json['fm-building-type']
         when 2
           building.building_json['address']['fm-address-line-1']
         when 3
@@ -28,6 +29,8 @@ class FacilitiesManagement::Spreadsheet
           building.building_json['gia']
         end
       vals << str
+
+      i += 1
     end
     vals
   end
@@ -55,11 +58,17 @@ class FacilitiesManagement::Spreadsheet
     services_selected.uniq!
 
     @workbook.add_worksheet(name: 'Building Information') do |sheet|
-      sheet.add_row ['Buildings information']
+      # sheet.add_row ['Buildings information']
       i = 0
-      ['Building Type', 'Name', 'Address', '', '', '', 'GIA'].each do |label|
-        vals = row(selected_buildings, i)
-        sheet.add_row [label] + vals
+      [['Buildings information', nil],
+       ['Building Type', 'eg. General office - customer facing, non customer facing, call centre operations.'],
+       ['Address', ''],
+       [nil, nil], [nil, nil], [nil, nil],
+       ['GIA', 'Gross Internal Area: Square Metre (GIA) per annum']].each do |label|
+        vals = []
+        vals << label[0] << label[1] << row(selected_buildings, i)
+        vals.flatten!
+        sheet.add_row vals
         i += 1
       end
     end
@@ -68,9 +77,13 @@ class FacilitiesManagement::Spreadsheet
     services = @report.list_of_services # @report.selected_services(selected_services)
     uom_values_for_selected_buildings = @report.uom_values(selected_buildings)
 
+    uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
+    uom2 = {}
+    uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
+
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       i = 1
-      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement']
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Unit of Measure']
       selected_buildings.each do |building|
         vals << 'Building ' + i.to_s + ' - ' + building.building_json['name']
         i += 1
@@ -101,12 +114,22 @@ class FacilitiesManagement::Spreadsheet
           vals_h = []
           uom_labels = []
           if suv.empty?
-            uom_labels << 'service (per annum)' if any_suv.empty?
+            if uom2[s.code]
+              uom_labels << uom2[s.code].last.spreadsheet_label
+            elsif s.work_package_code == 'A' || s.work_package_code == 'B'
+              uom_labels << nil
+            elsif any_suv.empty?
+              uom_labels << 'service (per annum)'
+            end
 
             vals_h << nil
           else
             suv.each do |v|
-              uom_labels << v['title_text']
+              if v['spreadsheet_label']
+                uom_labels << v['spreadsheet_label']
+              elsif uom2[s.code]
+                uom_labels << uom2[s.code].last.spreadsheet_label
+              end
 
               vals_h << v['uom_value']
             end
