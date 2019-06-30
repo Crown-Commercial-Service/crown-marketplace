@@ -208,6 +208,8 @@ Rails.application.routes.draw do
     get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
     get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
     get '/errors-requirements', to: 'home#errors_requirements'
+    get '/start', to: 'home#start'
+    get '/select', to: 'home#select'
     get '/cog-sign-in', to: 'home#cog_sign_in'
     get '/cog-sign-in-password-prompt-change', to: 'home#cog_sign_in_password_prompt_change'
     get '/cog-register', to: 'home#cog_register'
