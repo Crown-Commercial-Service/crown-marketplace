@@ -118,6 +118,8 @@ class FacilitiesManagement::Spreadsheet
               uom_labels << uom2[s.code].last.spreadsheet_label
             elsif s.work_package_code == 'A' || s.work_package_code == 'B'
               uom_labels << nil
+            elsif s.work_package_code == 'M' || s.work_package_code == 'N'
+              uom_labels << 'Percentage of Year 1 Deliverables Value (excluding Management and Corporate Overhead, and Profit) at call-off'
             elsif any_suv.empty?
               uom_labels << 'service (per annum)'
             end
