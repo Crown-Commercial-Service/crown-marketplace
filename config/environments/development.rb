@@ -61,3 +61,30 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
+
+if Rails.env.development?
+  OmniAuth.config.test_mode = true
+
+  OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
+    'provider' => 'dfe',
+    'info' => { 'email' => 'dfe@example.com' },
+    'extra' => {
+      'raw_info' => {
+        'organisation' => {
+          'id' => '047F32E7-FDD5-46E9-89D4-2498C2E77364',
+          'name' => 'St Custard’s',
+          'urn' => '900002',
+          'ukprn' => '90000002',
+          'category' => {
+            'id' => '001',
+            'name' => 'Establishment'
+          },
+          'type' => {
+            'id' => '01',
+            'name' => 'Community school'
+          }
+        }
+      }
+    }
+  )
+end

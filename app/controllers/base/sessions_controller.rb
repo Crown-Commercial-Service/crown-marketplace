@@ -33,7 +33,7 @@ module Base
     end
 
     def after_sign_out_path_for(_resource)
-      home_page_url
+      gateway_url
     end
 
     def authorize_user
