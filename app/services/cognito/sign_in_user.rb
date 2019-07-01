@@ -2,7 +2,7 @@ module Cognito
   class SignInUser < BaseService
     include ActiveModel::Validations
     attr_reader :email, :password
-    attr_accessor :error
+    attr_accessor :error, :needs_password_reset
 
     validates_presence_of :email, :password
 
@@ -10,10 +10,15 @@ module Cognito
       @email = email
       @password = password
       @error = nil
+      @needs_password_reset = false
     end
 
     def call
       initiate_auth
+    rescue Aws::CognitoIdentityProvider::Errors::PasswordResetRequiredException => e
+      @error = e.message
+      errors.add(:base, e.message)
+      @needs_password_reset = true
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       @error = e.message
       errors.add(:base, e.message)
