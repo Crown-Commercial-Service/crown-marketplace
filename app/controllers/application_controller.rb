@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     when 'legal_services'
       legal_services_url
     else
-      ccs_homepage_url
+      supply_teachers_gateway_url
     end
   end
 
