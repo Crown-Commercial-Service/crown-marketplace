@@ -83,7 +83,7 @@ class FacilitiesManagement::Spreadsheet
 
     @workbook.add_worksheet(name: 'Service Matrix') do |sheet|
       i = 1
-      vals = ['Work Package', 'Service Reference', 'Service Name', 'Measurement']
+      vals = ['Work Package', 'Service Reference', 'Service Name', 'Unit of Measure']
       selected_buildings.each do |building|
         vals << 'Building ' + i.to_s + ' - ' + building.building_json['name']
         i += 1
@@ -116,6 +116,8 @@ class FacilitiesManagement::Spreadsheet
           if suv.empty?
             if uom2[s.code]
               uom_labels << uom2[s.code].last.spreadsheet_label
+            elsif s.work_package_code == 'A' || s.work_package_code == 'B'
+              uom_labels << nil
             elsif any_suv.empty?
               uom_labels << 'service (per annum)'
             end
