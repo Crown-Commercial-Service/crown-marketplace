@@ -115,16 +115,12 @@ module ApplicationHelper
     send controller.class.parent_name.underscore + '_path' if controller.class.parent_name
   end
 
-  def service_destroy_user_session_path
-    send controller.class.parent_name.underscore.tr('/', '_') + '_destroy_user_session_path' if controller.class.parent_name
-  end
-
   def service_gateway_path
-    send controller.class.parent_name.underscore + '_gateway_path' if controller.class.parent_name
+    send controller.class.parent_name.underscore + '_gateway_path' if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
   end
 
-  def service_destroy_session_path
-    if controller.class.parent_name
+  def service_destroy_user_session_path
+    if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
       send controller.class.parent_name.underscore.tr('/', '_') + '_destroy_user_session_path'
     else
       send 'destroy_user_session_path'
