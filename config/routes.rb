@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   devise_for :users, skip: %i[sessions registrations]
   devise_scope :user do
+    delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
+
     get '/supply-teachers/sign-in', to: 'supply_teachers/sessions#new', as: :supply_teachers_new_user_session
     post '/supply-teachers/sign-in', to: 'supply_teachers/sessions#create', as: :supply_teachers_user_session
     delete '/supply-teachers/sign-out', to: 'supply_teachers/sessions#destroy', as: :supply_teachers_destroy_user_session
