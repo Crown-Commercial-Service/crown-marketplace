@@ -8,7 +8,7 @@ module SupplyTeachers
       CURRENT_ACCREDITED_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'current_accredited_suppliers.xlsx').freeze
       GEOGRAPHICAL_DATA_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'geographical_data_all_suppliers.xlsx').freeze
       LOT_1_AND_LOT2_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'lot_1_and_2_comparisons.xlsx').freeze
-      MASTER_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data','input', 'master_vendor_contacts.csv').freeze
+      MASTER_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'master_vendor_contacts.csv').freeze
       NEUTRAL_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'neutral_vendor_contacts.csv').freeze
       PRICING_TOOL_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'pricing_for_tool.xlsx').freeze
       SUPPLIER_LOOKUP_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'supplier_lookup.csv').freeze
@@ -111,10 +111,7 @@ module SupplyTeachers
       end
 
       def cp_file_to_input(file_path, new_path, condition)
-        if condition
-          FileUtils.cp(file_path, new_path)
-          # upload_to_s3(file_path, new_path)
-        end
+        FileUtils.cp(file_path, new_path) if condition
       end
 
       def upload_to_s3(file_path, new_path)
