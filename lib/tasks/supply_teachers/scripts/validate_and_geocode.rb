@@ -7,7 +7,6 @@ require 'yaml'
 require 'pathname'
 require 'csv'
 require 'roo'
-require 'aws-sdk-s3'
 
 def validate_and_geocode
   accredited_suppliers_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH, extension: :xlsx)

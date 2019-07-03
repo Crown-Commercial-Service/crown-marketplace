@@ -3,7 +3,6 @@
 require 'roo'
 require 'json'
 require 'capybara'
-require 'aws-sdk-s3'
 require 'fileutils'
 
 def generate_branches

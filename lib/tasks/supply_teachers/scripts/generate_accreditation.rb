@@ -8,7 +8,6 @@ require 'geocoder'
 require 'capybara'
 require 'pathname'
 require 'yaml'
-require 'aws-sdk-s3'
 
 def generate_accreditation
   accredited_suppliers_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH, extension: :xlsx)
