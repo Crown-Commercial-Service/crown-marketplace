@@ -59,7 +59,6 @@ module SupplyTeachers
         else
           redirect_to :back
         end
-
       end
 
       private
