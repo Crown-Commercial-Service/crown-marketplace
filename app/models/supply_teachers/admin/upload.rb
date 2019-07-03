@@ -5,13 +5,13 @@ module SupplyTeachers
       self.table_name = 'supply_teachers_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      CURRENT_ACCREDITED_PATH = 'supply_teachers/current_data/input/current_accredited_suppliers.xlsx'.freeze
-      GEOGRAPHICAL_DATA_PATH = 'supply_teachers/current_data/input/geographical_data_all_suppliers.xlsx'.freeze
-      LOT_1_AND_LOT2_PATH = 'supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'.freeze
-      MASTER_VENDOR_PATH = 'supply_teachers/current_data/input/master_vendor_contacts.csv'.freeze
-      NEUTRAL_VENDOR_PATH = 'supply_teachers/current_data/input/neutral_vendor_contacts.csv'.freeze
-      PRICING_TOOL_PATH = 'supply_teachers/current_data/input/pricing_for_tool.xlsx'.freeze
-      SUPPLIER_LOOKUP_PATH = 'supply_teachers/current_data/input/supplier_lookup.csv'.freeze
+      CURRENT_ACCREDITED_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'current_accredited_suppliers.xlsx').freeze
+      GEOGRAPHICAL_DATA_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'geographical_data_all_suppliers.xlsx').freeze
+      LOT_1_AND_LOT2_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'lot_1_and_2_comparisons.xlsx').freeze
+      MASTER_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'master_vendor_contacts.csv').freeze
+      NEUTRAL_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'neutral_vendor_contacts.csv').freeze
+      PRICING_TOOL_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'pricing_for_tool.xlsx').freeze
+      SUPPLIER_LOOKUP_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'supplier_lookup.csv').freeze
       ATTRIBUTES = %i[current_accredited_suppliers geographical_data_all_suppliers lot_1_and_lot_2_comparisons master_vendor_contacts neutral_vendor_contacts pricing_for_tool supplier_lookup].freeze
 
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
@@ -100,6 +100,7 @@ module SupplyTeachers
       end
 
       def copy_files_to_input_folder
+        FileUtils.makedirs(Rails.root.join('storage', 'supply_teachers', 'current_data', 'input'))
         cp_file_to_input(current_accredited_suppliers_url, CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
         cp_file_to_input(geographical_data_all_suppliers_url, GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
         cp_file_to_input(lot_1_and_lot_2_comparisons_url, LOT_1_AND_LOT2_PATH, lot_1_and_lot_2_comparisons_changed?)
@@ -110,7 +111,7 @@ module SupplyTeachers
       end
 
       def cp_file_to_input(file_path, new_path, condition)
-        upload_to_s3(file_path, new_path) if condition
+        FileUtils.cp(file_path, new_path) if condition
       end
 
       def upload_to_s3(file_path, new_path)
