@@ -1,6 +1,5 @@
 # rubocop:disable Metrics/BlockLength
 require 'sidekiq/web'
-require 'user_constraint.rb'
 Rails.application.routes.draw do
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
@@ -8,10 +7,14 @@ Rails.application.routes.draw do
   get '/landing-page', to: 'home#landing_page'
   get '/not-permitted', to: 'home#not_permitted'
 
-  mount Sidekiq::Web => '/sidekiq-log', :constraints => UserConstraint.new
+  authenticate :user, ->(u) { u.has_role? :ccs_employee } do
+    mount Sidekiq::Web => '/sidekiq-log'
+  end
 
   devise_for :users, skip: %i[sessions registrations]
   devise_scope :user do
+    delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
+
     get '/supply-teachers/sign-in', to: 'supply_teachers/sessions#new', as: :supply_teachers_new_user_session
     post '/supply-teachers/sign-in', to: 'supply_teachers/sessions#create', as: :supply_teachers_user_session
     delete '/supply-teachers/sign-out', to: 'supply_teachers/sessions#destroy', as: :supply_teachers_destroy_user_session

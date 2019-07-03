@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_05_110142) do
+ActiveRecord::Schema.define(version: 2019_07_03_092720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -73,6 +73,13 @@ ActiveRecord::Schema.define(version: 2019_06_05_110142) do
     t.jsonb "lift_data", null: false
     t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
     t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
+  end
+
+  create_table "fm_rate_cards", force: :cascade do |t|
+    t.jsonb "data"
+    t.text "source_file", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "fm_rates", id: false, force: :cascade do |t|

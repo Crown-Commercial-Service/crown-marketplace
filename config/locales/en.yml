@@ -1143,6 +1143,9 @@ en:
       facilities_management:
         details: You don’t have permission to view this page.
         title: Not permitted
+      legal_services:
+        details: You don’t have permission to view this page.
+        title: Not permitted
       management_consultancy:
         details: You don’t have permission to view this page.
         title: Not permitted

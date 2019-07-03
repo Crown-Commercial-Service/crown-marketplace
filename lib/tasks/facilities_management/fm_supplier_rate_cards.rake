@@ -4,7 +4,8 @@ module FM
   require 'json'
 
   def self.add_rate_cards_to_suppliers
-    rate_cards_workbook = Roo::Spreadsheet.open 'data/facilities_management/Direct Award Rate Cards - anonymised1.xlsx'
+    spreadsheet_name = 'facilities_management/Direct Award Rate Cards - anonymised1.xlsx'
+    rate_cards_workbook = Roo::Spreadsheet.open 'data/' + spreadsheet_name
 
     data = {}
 
@@ -20,15 +21,20 @@ module FM
 
         rate_card = labels.zip(row).to_h
 
-        p rate_card
+        # p rate_card
         data[sheet_name][rate_card['Supplier']] = [] unless data[sheet_name][rate_card['Supplier']]
 
         data[sheet_name][rate_card['Supplier']] << rate_card
 
       end
-    end
 
-    p data
+      # CCS::FM::RateCard.all
+      CCS::FM::RateCard.create(data: data, source_file: spreadsheet_name)
+
+      # all_data.save
+      p "FM rate cards spreadsheet #{spreadsheet_name} imported into database"
+
+    end
 
   end
 
