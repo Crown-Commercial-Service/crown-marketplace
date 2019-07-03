@@ -4,13 +4,19 @@
 
       <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-      <p><%= t('.use_this_service') %></p>
+      <p class="govuk-body">
+        <%= t('.use_this_service') %>
+      </p>
 
-      <p><%= t('.using_this_service') %></p>
+      <p class="govuk-body">
+        <%= t('.using_this_service') %>
+      </p>
 
       <h2 class="govuk-heading-m"><%= t('.before_you_start.heading') %></h2>
 
-      <p><%= t('.before_you_start.text_html', mcf_link: link_to(t('.before_you_start.mcf_link_text'), 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm3745'), mcf2_link: link_to(t('.before_you_start.mcf2_link_text'), 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm6008')) %></p>
+      <p class="govuk-body">
+        <%= t('.before_you_start.text_html', mcf_link: link_to(t('.before_you_start.mcf_link_text'), 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm3745'), mcf2_link: link_to(t('.before_you_start.mcf2_link_text'), 'https://ccs-agreements.cabinetoffice.gov.uk/contracts/rm6008')) %>
+      </p>
 
       <%= link_to 'Start now', journey_start_path(journey: ManagementConsultancy::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
 
