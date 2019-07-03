@@ -76,3 +76,5 @@ namespace :db do
   task setup: :static do
   end
 end
+
+

@@ -5,7 +5,7 @@ def add_rate_cards_to_suppliers
   suppliers = JSON.parse(File.read('./storage/management_consultancy/current_data/output/suppliers_with_service_offerings_and_regional_availability.json'))
   suppliers.each { |supplier| supplier['rate_cards'] = [] }
 
-  rate_cards_workbook = Roo::Spreadsheet.open './storage/management_consultancy/current_data/input/rate_cards.xlsx'
+  rate_cards_workbook = Roo::Spreadsheet.open './storage/management_consultancy/current_data/input/rate_cards.  x'
 
   sheet_names = {
     'MCF Lot 2 (Finance)' => 'MCF1.2',

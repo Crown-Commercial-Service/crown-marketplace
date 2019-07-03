@@ -1,4 +1,4 @@
-module CCS
+ module CCS
   require 'pg'
   require 'csv'
   require 'json'
