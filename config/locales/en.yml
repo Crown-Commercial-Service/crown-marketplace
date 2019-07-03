@@ -578,6 +578,8 @@ en:
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
+    type_xlsx: application/msexcel
+    xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
   companies:
     unit:
       one: company

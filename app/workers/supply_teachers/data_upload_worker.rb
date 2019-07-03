@@ -31,10 +31,7 @@ module SupplyTeachers
 
     def data_file
       # always use anonymous.json for now - need to set this up for production to use data.json
-      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      file_path = './storage/supply_teachers/current_data/output/anonymous.json'
-      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object('supply_teachers/current_data/output/anonymous.json').get(response_target: file_path)
-      file_path
+      Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', 'anonymous.json')
     end
   end
 end

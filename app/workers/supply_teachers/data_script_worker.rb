@@ -11,9 +11,9 @@ module SupplyTeachers
       Rails.application.load_tasks
       Rake::Task['st:clean'].invoke
       Rake::Task['st:data'].invoke
-      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      error_file_path = './storage/supply_teachers/current_data/output/errors.out.tmp'
-      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object('supply_teachers/current_data/output/errors.out').get(response_target: error_file_path)
+      # object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+      error_file_path = Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', 'errors.out')
+      # object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object('supply_teachers/current_data/output/errors.out').get(response_target: error_file_path)
 
       if File.zero?(error_file_path)
         upload.review!
