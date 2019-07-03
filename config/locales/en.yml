@@ -1013,14 +1013,26 @@ en:
           standard: Consultant
     journey:
       choose_help_needed:
-        contingent_labour_description: Staff for short-term projects with specific outcomes
-        corporate_financial_services_description: Advice on complex corporate financial matters
-        digital_outcomes_and_specialists_description: Support to design, build and deliver digital outcomes using the agile approach
-        g_cloud_description: Cloud hosting, software and support
-        management_consultants_description: Specific areas of expertise for longer running projects
-        question: What do you need to procure?
-        research_marketplace_description: Social, economic or market research for projects of all size and budgets
-        technology_services_description: Technology services all government security classifcation levels
+        body: Check that you don’t need one of these other frameworks offered by the Crown Commercial Service.
+        contingent_labour_html: "%{contingent_labour_link} - staff for short-term projects with specific outcomes"
+        contingent_labour_link: https://www.crowncommercial.gov.uk/agreements/RM3749
+        contingent_labour_link_text: Public sector resourcing
+        corporate_financial_services_html: "%{corporate_financial_services_link} - advice on complex corporate financial matters"
+        corporate_financial_services_link: https://www.crowncommercial.gov.uk/agreements/RM3719
+        corporate_financial_services_link_text: Corporate financial services
+        digital_outcomes_and_specialists_html: "%{digital_outcomes_and_specialists_link} - support to design, build and deliver digital outcomes using the agile approach"
+        digital_outcomes_and_specialists_link: https://www.crowncommercial.gov.uk/agreements/RM1043.5
+        digital_outcomes_and_specialists_link_text: Digital outcomes and specialists 3
+        g_cloud_html: "%{g_cloud_link} - cloud hosting, software and support"
+        g_cloud_link: https://www.crowncommercial.gov.uk/agreements/RM1557.10
+        g_cloud_link_text: G-Cloud 10
+        headline: Confirm you need management consultancy
+        research_marketplace_html: "%{research_marketplace_link} - social, economic or market research for projects of all size and budgets"
+        research_marketplace_link: https://www.crowncommercial.gov.uk/agreements/RM6018
+        research_marketplace_link_text: Research marketplace
+        technology_services_html: "%{technology_services_link} - technology services all government security classifcation levels"
+        technology_services_link: https://www.crowncommercial.gov.uk/agreements/RM3804
+        technology_services_link_text: Technology services 2
       choose_lot:
         question: Select the lot you need
       choose_regions:
