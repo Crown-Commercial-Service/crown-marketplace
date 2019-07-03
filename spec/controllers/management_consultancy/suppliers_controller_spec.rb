@@ -27,7 +27,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         }
       end
 
@@ -50,7 +49,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         )
         expect(assigns(:back_path)).to eq(expected_path)
       end
@@ -65,7 +63,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         }
       end
 
@@ -88,7 +85,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         )
         expect(assigns(:back_path)).to eq(expected_path)
       end
@@ -108,7 +104,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
         lot: lot_number,
         services: services,
         region_codes: region_codes,
-        help_needed: 'management_consultants'
       }
     end
 
