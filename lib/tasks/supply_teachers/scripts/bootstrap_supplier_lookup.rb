@@ -199,7 +199,7 @@ def bootstrap_supplier_lookup
     end
   end
 
-  File.open('./storage/supply_teachers/current_data/output/supplier_lookup.csv.tmp', 'w') do |f|
+  File.open('./storage/supply_teachers/current_data/output/supplier_lookup.csv', 'w') do |f|
     f.puts csv_string
   end
 end

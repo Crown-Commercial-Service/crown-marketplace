@@ -1,4 +1,4 @@
-if Rails.env.production?
+# if Rails.env.production?
   CarrierWave.configure do |config|
     config.storage    = :aws
     config.aws_bucket = ENV['CCS_APP_API_DATA_BUCKET']
@@ -15,10 +15,12 @@ if Rails.env.production?
     } }
 
     config.aws_credentials = {
-      region: ENV['COGNITO_AWS_REGION']
+      region: ENV['COGNITO_AWS_REGION'],
+      access_key_id: ENV['AWS_ACCESS_KEY'],
+      secret_access_key: ENV['AWS_SECRET_KEY']
     }
   end
-end
+# end
 
 if Rails.env.test? or Rails.env.cucumber?
   CarrierWave.configure do |config|
