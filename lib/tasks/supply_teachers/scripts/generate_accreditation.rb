@@ -11,10 +11,6 @@ require 'yaml'
 require 'aws-sdk-s3'
 
 def generate_accreditation
-  # object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-  # path = './storage/supply_teachers/current_data/input/current_accredited_suppliers.xlsx'
-  # FileUtils.touch(path)
-  # object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH).get(response_target: path)
   accredited_suppliers_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH, extension: :xlsx)
 
   header_map = {

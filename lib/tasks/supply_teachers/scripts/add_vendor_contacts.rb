@@ -5,13 +5,8 @@ require 'csv'
 def add_vendor_contacts
   suppliers = JSON.parse(File.read(get_output_file_path'data_only_accredited.json'))
 
-  # object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
   master_vendor_path = SupplyTeachers::Admin::Upload::MASTER_VENDOR_PATH
   neutral_vendor_path = SupplyTeachers::Admin::Upload::NEUTRAL_VENDOR_PATH
-  # FileUtils.touch(master_vendor_path)
-  # FileUtils.touch(neutral_vendor_path)
-  # object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::MASTER_VENDOR_PATH).get(response_target: master_vendor_path)
-  # object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::NEUTRAL_VENDOR_PATH).get(response_target: neutral_vendor_path)
 
   master_details =
     CSV.new(File.read(master_vendor_path), headers: :first_row)

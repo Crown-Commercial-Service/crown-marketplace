@@ -10,11 +10,6 @@ def merge_json(supplier_name_key: , destination_key:, destination_file:, primary
   alias_rows = []
   merge_key = 'supplier_name'
 
-  # object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-  # alias_file_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
-  # FileUtils.touch(alias_file_path)
-  # object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: alias_file_path)
-
   alias_rows = CSV.parse(File.read(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH, extension: :csv), headers: :first_row)
 
   aliases = Hash.new { |_, k| k }
