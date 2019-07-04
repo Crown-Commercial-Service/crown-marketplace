@@ -25,13 +25,13 @@ module FM
 
         data[sheet_name][rate_card['Supplier']] << rate_card
       end
-
-      # CCS::FM::RateCard.all
-      CCS::FM::RateCard.create(data: data, source_file: spreadsheet_name)
-
-      # all_data.save
-      p "FM rate cards spreadsheet #{spreadsheet_name} imported into database"
     end
+
+    # CCS::FM::RateCard.all
+    CCS::FM::RateCard.create(data: data, source_file: spreadsheet_name)
+
+    # all_data.save
+    p "FM rate cards spreadsheet #{spreadsheet_name} imported into database"
   end
 end
 
