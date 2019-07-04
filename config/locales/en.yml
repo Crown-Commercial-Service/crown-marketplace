@@ -890,8 +890,8 @@ en:
           text_html: You need to know which lot the management consultancy services you need are in. Review the lot descriptions documents for %{mcf_link} and %{mcf2_link}.
         guidance:
           heading: Guidance and other useful documents
-          mcf2_link_text: Management Consultancy Framework Two (MCF2) specifications
-          mcf_link_text: Management Consultancy Framework (MCF) specifications
+          mcf2_link_text: Management Consultancy Framework Two (MCF2) specification
+          mcf_link_text: Management Consultancy Framework (MCF) specification
           ojeu_contract_link_text: OJEU contract notice
         heading: Find management consultants
         use_this_service: Use this service to download a shortlist of suppliers that provide the management consultancy services you need.
