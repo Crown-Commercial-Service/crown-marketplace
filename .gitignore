@@ -34,6 +34,8 @@ logfile
 /coverage/*
 .idea/
 /nbproject/private/
+/.vscode
+.vscode/*
 
 # SupplyTeachers data folders
 uploads/*
@@ -55,3 +57,4 @@ public/management_consultancy/data/*
 dump.rdb
 lib/tasks/supply_teachers/input/
 nbproject/
+~$Direct Award Rate Cards - anonymised1.xlsx
