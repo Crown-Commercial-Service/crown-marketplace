@@ -1202,6 +1202,7 @@ en:
           confirm_changes: 'Confirm these files are ready to be used by the live service:'
           current_accredited_suppliers: Current accredited suppliers
           datetime: 'Date and time:'
+          delete: Delete session
           error_heading: There is a problem
           files: Files
           geographical_data_all_suppliers: Geographical data all suppliers
