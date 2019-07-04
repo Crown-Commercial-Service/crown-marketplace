@@ -14,7 +14,6 @@ class ManagementConsultancy::SupplierSpreadsheetCreator
       end
 
       p.workbook.add_worksheet(name: 'Audit trail') do |sheet|
-        sheet.add_row ['Help needed', I18n.t('management_consultancy.journey.choose_help_needed.management_consultants_description')]
         sheet.add_row ['Lot', @params['lot']]
         add_audit_trail(sheet)
       end
