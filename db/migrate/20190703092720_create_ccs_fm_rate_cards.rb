@@ -7,9 +7,8 @@ class CreateCcsFmRateCards < ActiveRecord::Migration[5.2]
 
       t.timestamps
 
-      # execute 'CREATE INDEX IF NOT EXISTS idxgin ON fm_suppliers USING GIN (data)'
-      t.index ['data'], name: 'idxgin', using: :gin
-      t.index ['data'], name: 'idxginp', opclass: :jsonb_path_ops, using: :gin
+      t.index ['data'], name: 'idx_fm_rate_cards_gin', using: :gin
+      t.index ['data'], name: 'idx_fm_rate_cards_ginp', opclass: :jsonb_path_ops, using: :gin
     end
   end
 end
