@@ -2,7 +2,24 @@ module FM
   require 'roo'
   require 'json'
 
+  def self.create_fm_rate_cards_table
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      query =
+        'CREATE TABLE IF NOT EXISTS fm_rate_cards ( id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+          data jsonb, source_file text NOT NULL,
+                                     created_at timestamp without time zone NOT NULL,
+                                     updated_at timestamp without time zone NOT NULL);
+         CREATE UNIQUE INDEX IF NOT EXISTS fm_rate_cards_pkey ON fm_rate_cards(id uuid_ops);
+         CREATE INDEX IF NOT EXISTS idx_fm_rate_cards_gin ON fm_rate_cards USING GIN (data jsonb_ops);
+         CREATE INDEX IF NOT EXISTS idx_fm_rate_cards_ginp ON fm_rate_cards USING GIN (data jsonb_path_ops);'
+
+      db.query query
+    end
+  end
+
   def self.add_rate_cards_to_suppliers
+    create_fm_rate_cards_table
+
     spreadsheet_name = 'facilities_management/Direct Award Rate Cards - anonymised1.xlsx'
     rate_cards_workbook = Roo::Spreadsheet.open 'data/' + spreadsheet_name
 
