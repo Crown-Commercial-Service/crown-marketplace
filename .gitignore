@@ -34,7 +34,7 @@ logfile
 /coverage/*
 .idea/
 /nbproject/private/
-.vscode/
+.vscode/*
 
 # SupplyTeachers data folders
 uploads/*
