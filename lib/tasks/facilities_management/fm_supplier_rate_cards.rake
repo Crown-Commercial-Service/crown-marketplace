@@ -1,5 +1,4 @@
 module FM
-
   require 'roo'
   require 'json'
 
@@ -25,7 +24,6 @@ module FM
         data[sheet_name][rate_card['Supplier']] = [] unless data[sheet_name][rate_card['Supplier']]
 
         data[sheet_name][rate_card['Supplier']] << rate_card
-
       end
 
       # CCS::FM::RateCard.all
@@ -33,12 +31,8 @@ module FM
 
       # all_data.save
       p "FM rate cards spreadsheet #{spreadsheet_name} imported into database"
-
     end
-
   end
-
-
 end
 
 namespace :db do
@@ -54,4 +48,3 @@ namespace :db do
   task static: :fmcards do
   end
 end
-
