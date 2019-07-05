@@ -1032,6 +1032,8 @@ en:
         technology_services_link: https://www.crowncommercial.gov.uk/agreements/RM3804
         technology_services_link_text: Technology services 2
       choose_lot:
+        mcf2_heading: Management Consultancy Framework (MCF2)
+        mcf_heading: Management Consultancy Framework (MCF)
         question: Select the lot you need
       choose_regions:
         no_regions_selected: No regions selected
