@@ -4,58 +4,56 @@
 
 ### Ubuntu
 
-Install PostGIS
+#### Install PostGIS
 
-```
+
 sudo apt install postgresql
 sudo apt install postgresql-{postgresql-version}-postgis-{postgis-version}
-```
+
+Ensure the default Ports are correct (/etc/postgres/11/main/postgresql.conf)
+
+Follow this:
+https://www.cyberciti.biz/faq/how-to-install-setup-postgresql-9-6-on-debian-linux-9/
+https://tutorials.technology/tutorials/How-to-change-postgresql-database-encoding-to-UTF8-from-SQL_ASCII.html
+https://dev.to/ironfroggy/wsl-tips-starting-linux-background-services-on-windows-login-3o98
+
+Also, sudo service postgresql start|stop
+
 
 Install PhantomJS by following the instructions [in this gist](https://gist.github.com/julionc/7476620)
 
 Install Redis (for Sidekiq background jobs)
 
-```
 wget http://download.redis.io/redis-stable.tar.gz
 tar xvzf redis-stable.tar.gz
 cd redis-stable
 make
-```
+
 
 ### MacOS
 
-Install PostGIS
+#### Install PostGIS
 
-```
 $ brew install postgis
-```
 
 Install PhantomJS (for Javascript tests)
 
-```
 $ brew install phantomjs
-```
 
 Install Redis (for Sidekiq background jobs)
 
-```
 $ brew install redis
-```
 
 ## Set up
 
 To install dependencies:
 
-```
 $ yarn install
 $ bundle
-```
 
 To create, migrate & seed the database:
 
-```
 $ rake db:setup
-```
 
 ### Environment variables
 
