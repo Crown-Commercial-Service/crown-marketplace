@@ -3,7 +3,8 @@ require 'json'
 require 'capybara'
 
 def add_suppliers
-  suppliers_workbook = Roo::Spreadsheet.open './storage/management_consultancy/current_data/input/Suppliers.xlsx'
+  suppliers_workbook_filepath = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Suppliers.xlsx')
+  suppliers_workbook = Roo::Spreadsheet.open(suppliers_workbook_filepath, extension: :xlsx)
 
   headers = {
     name: 'Supplier name',
@@ -33,7 +34,7 @@ def add_suppliers
     supplier[:id] = SecureRandom.uuid
   end
 
-  File.open('./storage/management_consultancy/current_data/output/suppliers.json', 'w') do |f|
+  File.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'suppliers.json'), 'w') do |f|
     f.write JSON.pretty_generate suppliers
   end
 end

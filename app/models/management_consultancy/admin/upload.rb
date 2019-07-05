@@ -5,10 +5,10 @@ module ManagementConsultancy
       self.table_name = 'management_consultancy_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      SUPPLIERS_PATH = './storage/management_consultancy/current_data/input/Suppliers.xlsx'.freeze
-      SUPPLIER_SERVICE_OFFERINGS_PATH = './storage/management_consultancy/current_data/input/Service offerings.xlsx'.freeze
-      SUPPLIER_REGIONAL_OFFERINGS_PATH = './storage/management_consultancy/current_data/input/Regional offerings.xlsx'.freeze
-      RATE_CARDS_PATH = './storage/management_consultancy/current_data/input/rate_cards.xlsx'.freeze
+      SUPPLIERS_PATH = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Suppliers.xlsx').freeze
+      SUPPLIER_SERVICE_OFFERINGS_PATH = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Service offerings.xlsx').freeze
+      SUPPLIER_REGIONAL_OFFERINGS_PATH = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Regional offerings.xlsx').freeze
+      RATE_CARDS_PATH = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'rate_cards.xlsx').freeze
 
       mount_uploader :suppliers, ManagementConsultancyFileUploader
       mount_uploader :rate_cards, ManagementConsultancyFileUploader
