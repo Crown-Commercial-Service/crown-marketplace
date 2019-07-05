@@ -1,15 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe AuthController, type: :controller do
-  let(:current_login) { controller.instance_eval { current_login } }
-
   describe 'GET #callback' do
     before do
+      OmniAuth.config.test_mode = false
+      OmniAuth.config.mock_auth[:dfe] = nil
       request.env['omniauth.auth'] = {
         'info' => {
-          'email' => 'user@example.com'
+          'email' => 'dfe@example.com'
         },
-        'provider' => 'cognito'
+        'provider' => 'dfe',
+        'extra' => {
+          'raw_info' => {
+            'organisation' => {
+              'id' => '047F32E7-FDD5-46E9-89D4-2498C2E77364',
+              'name' => 'St Custard’s',
+              'urn' => '900002',
+              'ukprn' => '90000002',
+              'category' => {
+                'id' => '001',
+                'name' => 'Establishment'
+              },
+              'type' => {
+                'id' => '01',
+                'name' => 'Community school'
+              }
+            }
+          }
+        }
       }
 
       controller.instance_eval do
@@ -19,110 +37,12 @@ RSpec.describe AuthController, type: :controller do
 
     it 'stores the email in the session' do
       get :callback
-      expect(current_login.email).to eq('user@example.com')
+      expect(controller.current_user.email).to eq('dfe@example.com')
     end
 
     it 'redirects to the page stored in the session' do
       get :callback
       expect(response).to redirect_to('/REQUESTED')
-    end
-  end
-
-  describe 'POST #sign_out' do
-    before do
-      controller.instance_eval do
-        self.current_login = Login::CognitoLogin.new(email: 'user@example.com', extra: {})
-      end
-    end
-
-    context 'when signed in using cognito' do
-      context 'when the last visited framework was facilities management' do
-        before do
-          controller.instance_eval do
-            session[:last_visited_framework] = 'facilities_management'
-          end
-        end
-
-        it 'redirects to the Cognito logout path for the framework' do
-          post :sign_out
-          expect(response).to redirect_to(Cognito.logout_url(facilities_management_gateway_url))
-        end
-      end
-
-      context 'when the last visited framework was management consultancy' do
-        before do
-          controller.instance_eval do
-            session[:last_visited_framework] = 'management_consultancy'
-          end
-        end
-
-        it 'redirects to the Cognito logout path for the framework' do
-          post :sign_out
-          expect(response).to redirect_to(Cognito.logout_url(management_consultancy_gateway_url))
-        end
-      end
-
-      context 'when the last visited framework was supply teachers' do
-        before do
-          controller.instance_eval do
-            session[:last_visited_framework] = 'supply_teachers'
-          end
-        end
-
-        it 'redirects to the Cognito logout path for the framework' do
-          post :sign_out
-          expect(response).to redirect_to(Cognito.logout_url(supply_teachers_gateway_url))
-        end
-      end
-
-      context 'when pool_site is nil' do
-        before do
-          controller.instance_eval do
-            session[:last_visited_framework] = 'supply_teachers'
-          end
-
-          allow(Cognito).to receive(:pool_site).and_return(nil)
-        end
-
-        it 'redirects to the Cognito logout path for the framework' do
-          post :sign_out
-          expect(response).to redirect_to(Cognito.logout_url(supply_teachers_gateway_url))
-        end
-      end
-
-      it 'deletes the login from the session' do
-        post :sign_out
-        expect(current_login).to be_nil
-      end
-    end
-
-    context 'when signed in using dfe signin' do
-      before do
-        controller.instance_eval do
-          self.current_login = Login::DfeLogin.new(email: 'user@example.com', extra: {})
-        end
-      end
-
-      it 'redirects to the supply teachers start page' do
-        post :sign_out
-        expect(response).to redirect_to(supply_teachers_gateway_url)
-      end
-
-      it 'deletes the login from the session' do
-        post :sign_out
-        expect(current_login).to be_nil
-      end
-    end
-
-    context 'when there is no valid current_login (fallback)' do
-      before do
-        session.delete :login
-      end
-
-      it 'redirects to the supply teachers start page' do
-        post :sign_out
-        expect(response).to redirect_to(controller.gateway_url)
-      end
     end
   end
 end

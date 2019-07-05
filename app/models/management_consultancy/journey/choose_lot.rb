@@ -5,8 +5,25 @@ module ManagementConsultancy
     attribute :lot
     attribute :framework
     validates :lot, inclusion: {
-      in: ['1', '2', '3', '4', 'MCF2.3']
+      in: [
+        'MCF1.2',
+        'MCF1.3',
+        'MCF2.3',
+        'MCF1.4',
+        'MCF1.5',
+        'MCF1.6',
+        'MCF1.7',
+        'MCF1.8',
+        'MCF2.1',
+        'MCF2.2',
+        'MCF2.3',
+        'MCF2.4'
+      ]
     }
+
+    def self.lots
+      Lot.all.sort_by(&:description)
+    end
 
     def next_step_class
       Journey::ChooseServices

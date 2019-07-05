@@ -5,7 +5,7 @@ module Api
     # return json
     class UploadsController < ApplicationController
       protect_from_forgery with: :exception
-      require_permission :none, only: %i[postcodes]
+      before_action :authenticate_user!, except: %i[postcodes]
       skip_before_action :verify_authenticity_token, only: %i[postcodes]
 
       # :nocov:

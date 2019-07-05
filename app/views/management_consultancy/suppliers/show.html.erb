@@ -1,1 +1,87 @@
-<%= @supplier.name %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-xl"><%= t('.sub_title', framework: @lot.framework, lot_number: @lot.number.split('.')[1], description: @lot.description ) if @lot %></span>
+    <h1 class="govuk-heading-xl">
+      <%= @supplier.name %>
+      <% if @supplier.sme? %>
+        <span class="govuk-!-font-size-19 govuk-!-font-weight-bold ccs-tag"><%= t(:sme) %></span>
+      <% end %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-padding-right-8">
+    <% if @rate_card %>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.day_rates') %></h2>
+      <p class="govuk-body">
+        <% if params[:lot].split('.')[0] == 'MCF1' %>
+          <%= t('.fixed_until_mcf1') %>
+        <% else %>
+          <%= t('.fixed_until_mcf2') %>
+        <% end %>
+        <%= t('.based_on') %>
+      </p>
+      <p class="govuk-body"><%= t('.further_competition') %></p>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-visually-hidden"><%= t('.day_rates') %></caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"><%= t('.max_day_rate') %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{mc_lot_key(params[:lot])}.junior") %></th>
+            <td class="govuk-table__cell"><%= number_to_currency(@rate_card.junior_rate_in_pence/100, precision: 0) %></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{mc_lot_key(params[:lot])}.standard") %></th>
+            <td class="govuk-table__cell"><%= number_to_currency(@rate_card.standard_rate_in_pence/100, precision: 0) %></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{mc_lot_key(params[:lot])}.senior") %></th>
+            <td class="govuk-table__cell"><%= number_to_currency(@rate_card.senior_rate_in_pence/100, precision: 0) %></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{mc_lot_key(params[:lot])}.principal") %></th>
+            <td class="govuk-table__cell"><%= number_to_currency(@rate_card.principal_rate_in_pence/100, precision: 0) %></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{mc_lot_key(params[:lot])}.managing") %></th>
+            <td class="govuk-table__cell"><%= number_to_currency(@rate_card.managing_rate_in_pence/100, precision: 0) %></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{mc_lot_key(params[:lot])}.director") %></th>
+            <td class="govuk-table__cell"><%= number_to_currency(@rate_card.director_rate_in_pence/100, precision: 0) %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @supplier.sme? %>
+      <p class="govuk-body">
+        <span class="govuk-!-font-size-19 govuk-!-font-weight-bold ccs-tag"><%= t(:sme) %></span> <%= t('.is_an_sme') %>
+      </p>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="ccs-info-panel ccs-info-panel--pull-up">
+      <h3 class="govuk-heading-m"><%= t('.contact_details.heading') %></h3>
+      <dl class="ccs-contact-details">
+        <% if @rate_card %>
+          <dt><%= t('.contact_details.person') %></dt>
+          <dd><%= @rate_card.contact_name %></dd>
+        <% end %>
+        <dt><%= t('.contact_details.email') %></dt>
+        <dd><%= mail_to(@supplier.contact_email) %></dd>
+        <dt><%= t('.contact_details.phone_number') %></dt>
+        <dd><%= @supplier.telephone_number %></dd>
+        <dt><%= t('.contact_details.website') %></dt>
+        <dd><%= link_to(@supplier.website, @supplier.website) if @supplier.website %></dd>
+        <dt><%= t('.contact_details.address') %></dt>
+        <dd><%= @supplier.address %></dd>
+      </dl>
+    </div>
+  </div>
+</div>

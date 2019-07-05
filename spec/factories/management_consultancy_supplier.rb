@@ -6,8 +6,11 @@ FactoryBot.define do
     telephone_number { Faker::PhoneNumber.unique.phone_number }
 
     after :create do |supplier|
+      (2..8).each do |lot|
+        create_list :management_consultancy_rate_card, 1, supplier: supplier, lot: "MCF1.#{lot}"
+      end
       (1..4).each do |lot|
-        create_list :management_consultancy_rate_card, 1, supplier: supplier, lot: lot
+        create_list :management_consultancy_rate_card, 1, supplier: supplier, lot: "MCF2.#{lot}"
       end
     end
   end

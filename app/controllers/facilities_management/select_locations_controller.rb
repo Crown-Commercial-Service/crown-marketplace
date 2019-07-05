@@ -1,5 +1,6 @@
-class FacilitiesManagement::SelectLocationsController < ApplicationController
-  require_permission :facilities_management, only: :select_location
+class FacilitiesManagement::SelectLocationsController < FacilitiesManagement::FrameworkController
+  before_action :authenticate_user!, only: :select_location
+  before_action :authorize_user, only: :select_location
 
   def select_location
     # Inline error text for this page
@@ -13,5 +14,11 @@ class FacilitiesManagement::SelectLocationsController < ApplicationController
     h = {}
     FacilitiesManagement::Region.all.each { |x| h[x.code] = x.name }
     @subregions = h
+  end
+
+  protected
+
+  def authorize_user
+    authorize! :read, FacilitiesManagement
   end
 end

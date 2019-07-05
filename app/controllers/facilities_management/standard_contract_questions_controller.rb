@@ -1,5 +1,6 @@
 class FacilitiesManagement::StandardContractQuestionsController < ApplicationController
-  require_permission :facilities_management, only: :standard_contract_questions
+  before_action :authenticate_user!, only: :standard_contract_questions
+  before_action :authorize_user, only: :standard_contract_questions
   def standard_contract_questions
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
@@ -10,5 +11,11 @@ class FacilitiesManagement::StandardContractQuestionsController < ApplicationCon
 
   def set_current_choices
     TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
+  end
+
+  protected
+
+  def authorize_user
+    authorize! :read, FacilitiesManagement
   end
 end

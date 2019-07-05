@@ -1,10 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe LegalServices::JourneyController, type: :controller, auth: true do
-  before do
-    permit_framework :legal_services
-  end
-
+RSpec.describe LegalServices::JourneyController, type: :controller do
+  login_ls_buyer
   describe 'GET #start' do
     it 'redirects to the first step in the journey' do
       get :start, params: {

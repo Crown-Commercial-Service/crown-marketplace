@@ -3,8 +3,8 @@
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <p class="govuk-heading-m govuk-!-margin-bottom-8"><%= t('.lead_text') %></p>
     <p class="govuk-body">
-      <a href="/downloads/example?format=csv" class="supplier-record__file-download" type="<%= t('common.type_csv') %>" download>
-        <%= t('.download_supplier_shortlist') %> <span class="govuk-visually-hidden"><%= t('common.csv_html') %></span>
+      <a href="<%=  management_consultancy_suppliers_download_path(lot: params[:lot], services: params[:services], region_codes: params[:region_codes])%>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+        <%= t('.download_supplier_shortlist') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
       </a>
     </p>
 

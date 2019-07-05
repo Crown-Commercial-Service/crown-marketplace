@@ -1,6 +1,7 @@
 require 'fm_calculator/fm_direct_award_calculator.rb'
-class FacilitiesManagement::DirectAwardController < ApplicationController
-  require_permission :facilities_management, only: %i[calc_eligibility].freeze
+class FacilitiesManagement::DirectAwardController < FacilitiesManagement::FrameworkController
+  before_action :authenticate_user!, only: %i[calc_eligibility].freeze
+  before_action :authorize_user, only: %i[calc_eligibility].freeze
 
   def calc_eligibility
     @building_type = params['building_type']
