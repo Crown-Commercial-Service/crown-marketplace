@@ -55,5 +55,6 @@
       <%= link_to t('.approve'), supply_teachers_admin_upload_approve_path(@upload), class: 'govuk-button' %>
       <%= link_to t('.reject'), supply_teachers_admin_upload_reject_path(@upload), class: 'govuk-button govuk-button--warning' %>
     <% end %>
+    <%= link_to t('.delete'), supply_teachers_admin_upload_destroy_path(@upload), method: :delete, class: 'govuk-button govuk-button--warning' %>
   </div>
 </div>
