@@ -21,13 +21,6 @@ module JourneyHelper
     ]
   end
 
-  def framework_and_number(number)
-    framework = number.split('.')[0].gsub('1', '')
-    lot_number = number.split('.')[1]
-
-    "#{framework} Lot #{lot_number}"
-  end
-
   def production_env?
     Rails.env.production?
   end
