@@ -30,9 +30,6 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-# For TimeZone data source
-gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
-gem 'tzinfo-data', platforms: %i[x64_mingw]
 gem 'geocoder'
 gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
@@ -108,6 +105,9 @@ group :development, :test do
   gem 'rubyXL'
   gem 'i18n-tasks'
   gem 'poltergeist'
+# For TimeZone data source
+  gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
+  gem 'tzinfo-data', platforms: %i[x64_mingw]
 end
 
 group :development do
