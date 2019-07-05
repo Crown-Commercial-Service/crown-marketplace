@@ -31,8 +31,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # For TimeZone data source
-gem 'wdm', '>= 0.1.0' if Gem.win_platform?
-gem 'tzinfo-data' if Gem.win_platform?
+gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
+gem 'tzinfo-data', platforms: %i[x64_mingw]
 gem 'geocoder'
 gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
