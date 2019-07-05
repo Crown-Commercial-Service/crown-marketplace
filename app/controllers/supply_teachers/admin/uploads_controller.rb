@@ -51,6 +51,16 @@ module SupplyTeachers
         @upload = Upload.find(params[:upload_id])
       end
 
+      def destroy
+        upload = Upload.find(params[:upload_id])
+
+        if upload.destroy
+          redirect_to supply_teachers_admin_uploads_path
+        else
+          redirect_to :back
+        end
+      end
+
       private
 
       def upload_params

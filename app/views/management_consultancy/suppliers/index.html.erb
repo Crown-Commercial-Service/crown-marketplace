@@ -17,7 +17,7 @@
               suppliers: number_to_human(@all_suppliers.count, units: :companies, format: '%u')) %>
       </p>
       <p>
-        <%= link_to(t('.download_suppliers_list'), management_consultancy_suppliers_download_path, class: 'govuk-button') unless @suppliers.empty? %>
+        <%= link_to(t('.download_suppliers_list'), management_consultancy_suppliers_download_path(lot: params[:lot], services: params[:services], region_codes: params[:region_codes]), class: 'govuk-button') unless @suppliers.empty? %>
       </p>
       <section class="govuk-grid-column-two-thirds ccs-search-results">
         <ul class="ccs-results-list">

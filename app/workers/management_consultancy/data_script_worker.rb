@@ -13,10 +13,10 @@ module ManagementConsultancy
       Rake::Task['mc:data'].invoke
 
       begin
-        if File.zero?('./storage/management_consultancy/current_data/output/errors.out')
+        if File.zero?(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'errors.out'))
           upload.review!
         else
-          file = File.open('./storage/management_consultancy/current_data/output/errors.out')
+          file = File.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'errors.out'))
           fail_upload(upload, 'There is an error with your files: ' + file.read)
         end
       rescue StandardError => e
