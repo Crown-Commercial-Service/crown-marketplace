@@ -105,7 +105,6 @@ group :development, :test do
   gem 'rubyXL'
   gem 'i18n-tasks'
   gem 'poltergeist'
-# For TimeZone data source
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
 end
