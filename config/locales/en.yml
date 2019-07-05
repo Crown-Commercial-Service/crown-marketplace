@@ -152,7 +152,7 @@ en:
         management_consultancy/journey/choose_regions:
           attributes:
             region_codes:
-              too_short: Select at least one region
+              too_short: Select the region or regions you want the consultants to work
         management_consultancy/journey/choose_services:
           attributes:
             services:
@@ -1037,10 +1037,9 @@ en:
         question: Select the lot you need
       choose_regions:
         no_regions_selected: No regions selected
-        question: Where do you want the consultants to work?
+        question: Select the regions you want the consultants to work
         regions_selected: Regions selected
         remove_all: Remove all
-        subtitle: Suppliers have said where they’ll provide consultants.
       choose_services:
         no_services_selected: No services selected
         question: Select the services you need
