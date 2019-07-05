@@ -3,20 +3,40 @@
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 <%= form_tag @form_path, method: :get do %>
   <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+  <h1 class="govuk-heading-xl">
+    <%= t('.question') %>
+  </h1>
   <div class="ccs-titles-checkboxes">
     <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
       <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h1 class="govuk-fieldset__heading">
-            <%= t('.question') %>
-          </h1>
-        </legend>
         <%= display_error(@journey, :lot) %>
         <div class="govuk-radios">
-          <% ManagementConsultancy::Journey::ChooseLot.lots.each do |lot| %>
+          <h2 class="govuk-heading-m"><%= t('.mcf_heading') %></h2>
+          <% ManagementConsultancy::Journey::ChooseLot.mcf_lots.each do |lot| %>
             <div class="govuk-radios__item">
               <%= radio_button_tag :lot, lot.number, checked?(params[:lot], lot.number), class: 'govuk-radios__input' %>
-              <%= label_tag :"lot_#{lot.number}", "#{lot.description} (#{framework_and_number(lot.number)})", class: 'govuk-label govuk-radios__label' %>
+              <%= label_tag :"lot_#{lot.number}", "#{lot_number_and_description(lot.number,lot.description)}", class: 'govuk-label govuk-radios__label' %>
+              <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">
+                    <%= lot.description + ' services' %>
+                  </span>
+                </summary>
+                <div class="govuk-details__text">
+                  <ul class="govuk-list">
+                    <% lot.services.each do |service| %>
+                      <li><%= service.name %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          <% end %>
+          <h2 class="govuk-heading-m"><%= t('.mcf2_heading') %></h2>
+          <% ManagementConsultancy::Journey::ChooseLot.mcf2_lots.each do |lot| %>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :lot, lot.number, checked?(params[:lot], lot.number), class: 'govuk-radios__input' %>
+              <%= label_tag :"lot_#{lot.number}", "#{lot_number_and_description(lot.number,lot.description)}", class: 'govuk-label govuk-radios__label' %>
               <details class="govuk-details">
                 <summary class="govuk-details__summary">
                   <span class="govuk-details__summary-text">
