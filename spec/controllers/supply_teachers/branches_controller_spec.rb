@@ -1,26 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe SupplyTeachers::BranchesController, type: :controller, auth: true do
-  before do
-    permit_framework :supply_teachers
-  end
-
+RSpec.describe SupplyTeachers::BranchesController, type: :controller do
   describe 'GET index' do
     let(:first_branch) { create(:supply_teachers_branch) }
     let(:second_branch) { create(:supply_teachers_branch) }
     let(:branches) { [first_branch, second_branch] }
 
     context 'when not logged in' do
-      before do
-        ensure_not_logged_in
-      end
-
       it 'redirects to gateway page' do
         expect(get(:index)).to redirect_to(supply_teachers_gateway_url)
       end
     end
 
     context 'with a valid postcode' do
+      login_st_buyer
       let(:postcode) { 'W1A 1AA' }
       let(:params) do
         {
@@ -118,6 +111,7 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller, auth: true
     end
 
     context 'when postcode parsing fails' do
+      login_st_buyer
       let(:params) do
         {
           journey: 'supply-teachers',
@@ -137,6 +131,7 @@ RSpec.describe SupplyTeachers::BranchesController, type: :controller, auth: true
     end
 
     context 'when postcode geocoding fails' do
+      login_st_buyer
       let(:postcode) { valid_fake_postcode }
 
       before do

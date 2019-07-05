@@ -1,0 +1,52 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-m">
+            <%= t('.heading') %>
+        </h1>
+
+        <p class="govuk-body">
+            <%= t('.text01') %>:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-left-2 govuk-!-margin-top-7 govuk-!-margin-bottom-8">
+            <li class="govuk-!-margin-bottom-5">
+                <%= t('.line01_url_html') %>
+                    <%= t('.line01_href_txt') %>
+                </a> - <%= t('.line01_text') %>
+            </li>
+            <li class="govuk-!-margin-bottom-5">
+                <%= t('.line02_url_html') %>
+                    <%= t('.line02_href_txt') %>
+                </a> - <%= t('.line02_text') %>
+            </li>
+            <li class="govuk-!-margin-bottom-5">
+                <%= t('.line03_url_html') %>
+                    <%= t('.line03_href_txt') %>
+                </a> - <%= t('.line03_text') %>
+            </li>
+            <li class="govuk-!-margin-bottom-5">
+                <%= t('.line04_url_html') %>
+                    <%= t('.line04_href_txt') %>
+                </a> - <%= t('.line04_text') %>
+            </li>
+            <li class="govuk-!-margin-bottom-5">
+                <%= t('.line05_url_html') %>
+                    <%= t('.line05_href_txt') %>
+                </a> - <%= t('.line05_text') %>
+            </li>
+            <li class="govuk-!-margin-bottom-5">
+                <%= t('.line06_url_html') %>
+                    <%= t('.line06_href_txt') %>
+                </a> - <%= t('.line06_text') %>
+            </li>
+        </ul>
+
+
+
+                <!-- ***************** "legal services path" needs changing *************** -->
+        <%= link_to t('common.confirm_and_continue'), legal_services_path, class: 'govuk-button govuk-!-margin-bottom-9 govuk-!-padding-left-5 govuk-!-padding-right-5' %>
+
+
+    </div>
+</div>

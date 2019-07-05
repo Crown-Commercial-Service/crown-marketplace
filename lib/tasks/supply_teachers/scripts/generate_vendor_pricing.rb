@@ -8,20 +8,11 @@ require 'capybara'
 require 'pathname'
 require 'yaml'
 require 'csv'
-require 'aws-sdk-s3'
 
 def generate_vendor_pricing
-  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-  accredited_suppliers_path = './storage/supply_teachers/current_data/input/current_accredited_suppliers.xlsx'
-  FileUtils.touch(accredited_suppliers_path)
-  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH).get(response_target: accredited_suppliers_path)
-  supplier_lookup_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
-  FileUtils.touch(supplier_lookup_path)
-  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: supplier_lookup_path )
-
-  accredited_suppliers_workbook = Roo::Spreadsheet.open accredited_suppliers_path
+  accredited_suppliers_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH, extension: :xlsx)
   suppliers = []
-  csv = CSV.open(supplier_lookup_path, headers: true)
+  csv = CSV.open(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH, headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
   end
@@ -52,10 +43,10 @@ def generate_vendor_pricing
   end
 # rubocop:enable Style/PreferredHashMethods, Rails/Blank
 
-  path = './storage/supply_teachers/current_data/input/geographical_data.xlsx'
-  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH).get(response_target: path)
+  # path = './storage/supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'
+  # object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH).get(response_target: path)
 
-  mv_price_workbook = Roo::Spreadsheet.open path
+  mv_price_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH, extension: :xlsx)
 
   def subhead?(row)
     row[:number] =~ /Category Line/ || row[:number].nil?
@@ -89,7 +80,7 @@ def generate_vendor_pricing
                when /Fixed Term/m
                  :fixed_term
                else
-                 File.open('./storage/supply_teachers/current_data/output/errors.out.tmp', 'a') do |f|
+                 File.open(get_output_file_path('errors.out'), 'a') do |f|
                    f.puts "#{row[:supplier_name]}: Unknown job type in 'lot_1_and_2_comparisons.xlsx': #{row[:job_type].inspect}" if supplier_accredited?(row[:supplier_name])
                  end
                  :unknown
@@ -174,7 +165,7 @@ def generate_vendor_pricing
 
   collated = collate(mv_pricing + nv_pricing)
 
-  File.open('./storage/supply_teachers/current_data/output/supplier_vendor_pricing.json.tmp', 'w') do |f|
+  File.open(get_output_file_path('supplier_vendor_pricing.json'), 'w') do |f|
     f.puts JSON.pretty_generate(collated)
   end
 end

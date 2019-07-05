@@ -35,6 +35,8 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -60,13 +62,8 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
 
-if Marketplace.cognito_user_pool_site.blank?
+if Rails.env.development?
   OmniAuth.config.test_mode = true
-
-  OmniAuth.config.mock_auth[:cognito] = OmniAuth::AuthHash.new(
-    'provider' => 'cognito',
-    'info' => { 'email' => 'cognito@example.com' }
-  )
 
   OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
     'provider' => 'dfe',

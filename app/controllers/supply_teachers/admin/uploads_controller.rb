@@ -1,6 +1,9 @@
 module SupplyTeachers
   module Admin
     class UploadsController < FrameworkController
+      before_action :authenticate_user!
+      before_action :authorize_user
+
       def index
         @back_path = :back
         @uploads = Upload.all.page params[:page]
@@ -48,6 +51,16 @@ module SupplyTeachers
         @upload = Upload.find(params[:upload_id])
       end
 
+      def destroy
+        upload = Upload.find(params[:upload_id])
+
+        if upload.destroy
+          redirect_to supply_teachers_admin_uploads_path
+        else
+          redirect_to :back
+        end
+      end
+
       private
 
       def upload_params
@@ -67,6 +80,10 @@ module SupplyTeachers
             short_uuid: object.short_uuid
           }
         end
+      end
+
+      def authorize_user
+        authorize! :manage, SupplyTeachers::Admin::Upload
       end
     end
   end

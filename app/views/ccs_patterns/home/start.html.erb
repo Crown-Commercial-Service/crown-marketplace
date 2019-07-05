@@ -1,0 +1,57 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">
+            <%= t('.heading') %>
+        </h1>
+
+        <p class="govuk-body">
+            <%= t('.text01') %>
+        </p>
+
+        <p class="govuk-body">
+            <%= t('.text02') %>
+        </p>
+
+        <h2 class="govuk-heading-m">
+            <%= t('.heading02') %>
+        </h2>
+
+        <p class="govuk-body">
+            <%= t('.text03') %>
+            <%= t('.href_url01_html') %><%= t('.href_txt01') %></a>
+
+            <%= t('.text04') %>
+
+            <%= t('.href_url02_html') %><%= t('.href_txt02') %></a>.
+        </p>
+
+
+                <!-- ***************** "legal services path" needs changing *************** -->
+        <%= link_to t('common.start_now'), legal_services_path, class: 'govuk-button govuk-!-margin-top-7  govuk-!-margin-bottom-9 govuk-!-padding-left-5 govuk-!-padding-right-5' %>
+
+
+        <h2 class="govuk-heading-m">
+            <%= t('.heading03') %>
+        </h2>
+
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-left-2 govuk-!-margin-bottom-8">
+            <li>
+                <%= t('.line_url01_html') %>
+                    <%= t('.line_txt01_html') %>
+                </a>
+            </li>
+            <li>
+                <%= t('.line_url02_html') %>
+                    <%= t('.line_txt02_html') %>
+                </a>
+            </li>
+            <li>
+                <%= t('.line_url03_html') %>
+                    <%= t('.line_txt03_html') %>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</div>

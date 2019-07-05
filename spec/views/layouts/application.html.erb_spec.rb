@@ -5,12 +5,9 @@ RSpec.describe 'layouts/application.html.erb' do
     view.extend(ApplicationHelper)
     allow(view).to receive(:link_to_service_start_page).and_return('')
     allow(view).to receive(:service_start_page_path).and_return('')
+    allow(view).to receive(:service_gateway_path).and_return('')
+    allow(view).to receive(:user_signed_in?).and_return(false)
     controller.singleton_class.class_eval do
-      def logged_in?
-        true
-      end
-      helper_method :logged_in?
-
       def ccs_homepage_url
         'https://CCSHOMEPAGE'
       end

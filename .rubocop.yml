@@ -12,6 +12,7 @@ AllCops:
         - 'vendor/**/*'
         - 'tmp/**/*'
         - 'lib/tasks/supply_teachers/**/*'
+        - 'lib/tasks/management_consultancy/**/*'
         - 'config/initializers/carrierwave.rb'
 
 Rails:
@@ -103,10 +104,6 @@ RSpec/DescribeClass:
         - 'spec/models/db_seeds_spec.rb'
         - 'spec/views/**/*'
         - 'spec/i18n_spec.rb'
-
-RSpec/FilePath:
-    Exclude:
-        - 'spec/lib/omniauth/strategies/cognito_spec.rb'
 
 Capybara/FeatureMethods:
     Exclude:

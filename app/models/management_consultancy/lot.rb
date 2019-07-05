@@ -9,11 +9,15 @@ module ManagementConsultancy
     end
 
     def full_description
-      "Lot #{number} - #{description}"
+      "#{description} (#{number})"
     end
 
     def self.all_numbers
       all.map(&:number)
+    end
+
+    def services
+      ManagementConsultancy::Service.where(lot_number: number).sort_by(&:name)
     end
   end
 
