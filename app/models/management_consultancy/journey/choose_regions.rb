@@ -9,6 +9,10 @@ module ManagementConsultancy
       Nuts2Region.where(code: region_codes)
     end
 
+    def lot(lot_number)
+      ManagementConsultancy::Lot.find_by(number: lot_number)
+    end
+
     def next_step_class
       Journey::Suppliers
     end
