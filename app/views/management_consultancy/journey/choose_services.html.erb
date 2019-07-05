@@ -7,6 +7,9 @@
       <%= govuk_form_group_with_optional_error(@journey, :services) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :services) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <span class="govuk-caption-m">
+              <%= framework_lot_and_description(@journey.current_step.lot(params['lot']).number, @journey.current_step.lot(params['lot']).description) %>
+            </span>
             <h1 class="govuk-fieldset__heading">
               <%= t('.question') %>
             </h1>
