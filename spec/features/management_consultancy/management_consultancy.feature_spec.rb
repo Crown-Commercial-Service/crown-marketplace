@@ -48,7 +48,7 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
 
     click_on 'Confirm and continue'
 
-    choose 'Lot 1 - Business Consultancy'
+    choose 'Lot 1 - Business consultancy'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -70,7 +70,7 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
 
     click_on 'Confirm and continue'
 
-    choose 'Lot 2 - Procurement, Supply Chain and Commercial Consultancy'
+    choose 'Lot 2 - Procurement, supply chain and commercial consultancy'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -92,7 +92,7 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
 
     click_on 'Confirm and continue'
 
-    choose 'Lot 3 - Complex and Transformation Consultancy'
+    choose 'Lot 3 - Complex and transformation consultancy'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -114,7 +114,7 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
 
     click_on 'Confirm and continue'
 
-    choose 'Lot 4 - Strategic Consultancy'
+    choose 'Lot 4 - Strategic consultancy'
     click_on I18n.t('common.submit')
 
     check required_service.name
