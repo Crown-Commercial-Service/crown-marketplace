@@ -2,7 +2,7 @@ require 'roo'
 require 'json'
 
 def add_rate_cards_to_suppliers
-  suppliers = JSON.parse(File.read(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'suppliers_with_service_offerings_and_regional_availability.json')))
+  suppliers = JSON.parse(File.read(get_mc_output_file_path('suppliers_with_service_offerings_and_regional_availability.json')))
   suppliers.each { |supplier| supplier['rate_cards'] = [] }
 
   rate_cards_workbook = Roo::Spreadsheet.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'rate_cards.xlsx'), extension: :xlsx)
@@ -45,8 +45,8 @@ def add_rate_cards_to_suppliers
     end
   end
 
-  File.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'data.json'), 'w') do |f|
-    f.write JSON.pretty_generate suppliers
+  File.open(get_mc_output_file_path('data.json'), 'w') do |f|
+    f.puts JSON.pretty_generate(suppliers)
   end
 end
 
