@@ -17,6 +17,9 @@ module FM
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
   def self.add_rate_cards_to_suppliers
     create_fm_rate_cards_table
 
@@ -38,9 +41,15 @@ module FM
         rate_card = labels.zip(row).to_h
 
         # p rate_card
-        data[sheet_name][rate_card['Supplier']] = [] unless data[sheet_name][rate_card['Supplier']]
+        data[sheet_name][rate_card['Supplier']] = {} unless data[sheet_name][rate_card['Supplier']]
 
-        data[sheet_name][rate_card['Supplier']] << rate_card
+        if sheet_name == 'Prices'
+          data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
+        elsif sheet_name == 'Discount'
+          data[sheet_name][rate_card['Supplier']][rate_card['Ref']] = rate_card if rate_card['Ref']
+        elsif sheet_name == 'Variances'
+          data[sheet_name][rate_card['Supplier']] = rate_card
+        end
       end
     end
 
@@ -51,6 +60,9 @@ module FM
     p "FM rate cards spreadsheet #{spreadsheet_name} imported into database"
   end
 end
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
 
 namespace :db do
   desc 'uploading supplier rates cards'
