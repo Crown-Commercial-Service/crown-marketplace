@@ -2,7 +2,7 @@ require 'roo'
 require 'json'
 
 def add_service_offerings_per_supplier
-  suppliers = JSON.parse(File.read(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'suppliers.json')))
+  suppliers = JSON.parse(File.read(get_mc_output_file_path('suppliers.json')))
   suppliers.each { |supplier| supplier['lots'] = [] }
 
   service_offerings_workbook = Roo::Spreadsheet.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Service offerings.xlsx'), extension: :xlsx)
@@ -33,8 +33,8 @@ def add_service_offerings_per_supplier
     end
   end
 
-  File.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'suppliers_with_service_offerings.json'), 'w') do |f|
-    f.write JSON.pretty_generate suppliers
+  File.open(get_mc_output_file_path('suppliers_with_service_offerings.json'), 'w') do |f|
+    f.puts JSON.pretty_generate(suppliers)
   end
 end
 

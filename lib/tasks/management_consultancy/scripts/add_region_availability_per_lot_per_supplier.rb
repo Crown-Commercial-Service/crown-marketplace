@@ -2,7 +2,7 @@ require 'roo'
 require 'json'
 
 def add_region_availability_per_lot_per_supplier
-  suppliers = JSON.parse(File.read(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'suppliers_with_service_offerings.json')))
+  suppliers = JSON.parse(File.read(get_mc_output_file_path('suppliers_with_service_offerings.json')))
 
   regional_offerings_workbook = Roo::Spreadsheet.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Regional offerings.xlsx'), extension: :xlsx)
 
@@ -47,8 +47,8 @@ def add_region_availability_per_lot_per_supplier
     end
   end
 
-  File.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'suppliers_with_service_offerings_and_regional_availability.json'), 'w') do |f|
-    f.write JSON.pretty_generate suppliers
+  File.open(get_mc_output_file_path('suppliers_with_service_offerings_and_regional_availability.json'), 'w') do |f|
+    f.puts JSON.pretty_generate(suppliers)
   end
 end
 
