@@ -8,7 +8,8 @@ RSpec.describe CCS::FM::RateCard, type: :model do
   end
 
   it 'can retrieve latest entry' do
-    current = CCS::FM::RateCard.last
-    expect(current.data['Prices'].count).to be > 0
+    expect(CCS::FM::RateCard.last.data['Prices'].count).to be > 0
+    expect(CCS::FM::RateCard.last.data['Discount'].count).to be > 0
+    expect(CCS::FM::RateCard.last.data['Variances'].count).to be > 0
   end
 end
