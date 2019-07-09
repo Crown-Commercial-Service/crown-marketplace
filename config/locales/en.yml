@@ -240,6 +240,11 @@ en:
             postcode:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       download_provider:
         button_label: Start new search
@@ -692,6 +697,11 @@ en:
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
   legal_services:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       index:
         heading: Find legal services for the wider public sector
