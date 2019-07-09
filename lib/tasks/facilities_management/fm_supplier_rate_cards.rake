@@ -28,7 +28,7 @@ module FM
 
     data = {}
 
-    ['Prices', 'Discount', 'Variances'].each do |sheet_name|
+    ['Variances', 'Discount', 'Prices'].each do |sheet_name|
       sheet = rate_cards_workbook.sheet(sheet_name)
 
       data[sheet_name] = {}
@@ -54,10 +54,10 @@ module FM
     end
 
     # CCS::FM::RateCard.all
-    CCS::FM::RateCard.create(data: data, source_file: spreadsheet_name)
+    v = CCS::FM::RateCard.create(data: data, source_file: spreadsheet_name)
 
     # all_data.save
-    p "FM rate cards spreadsheet #{spreadsheet_name} imported into database"
+    p "FM rate cards spreadsheet #{spreadsheet_name} (#{v.data.count} sheets) imported into database"
   end
 end
 # rubocop:enable Metrics/AbcSize
