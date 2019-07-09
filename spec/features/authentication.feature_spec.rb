@@ -32,7 +32,7 @@ RSpec.feature 'Authentication', type: :feature do
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
     expect(page).not_to have_text('Not permitted')
-    expect(page).to have_text('What do you need to procure?')
+    expect(page).to have_text('Confirm you need management consultancy')
   end
 
   scenario 'Users signed in using AWS Cognito can sign out' do

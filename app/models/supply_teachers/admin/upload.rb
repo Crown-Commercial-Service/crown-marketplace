@@ -114,25 +114,14 @@ module SupplyTeachers
         FileUtils.cp(file_path, new_path) if condition
       end
 
-      def upload_to_s3(file_path, new_path)
-        object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-        object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(new_path).upload_file(file_path)
-      end
-
       def reject_previous_uploads
         self.class.in_review.map(&:cancel!)
-        self.class.in_progress.map(&:cancel!)
       end
 
       def cp_previous_uploaded_file(attr_name, file_path)
         return unless available_for_cp(attr_name)
 
-        if Rails.env.production?
-          tempfile = Down.download(self.class.previous_uploaded_file(attr_name).file.url)
-          upload_to_s3(tempfile.path, file_path)
-        else
-          upload_to_s3(self.class.previous_uploaded_file(attr_name).file.path, file_path)
-        end
+        cp_file_to_input(self.class.previous_uploaded_file(attr_name).file.path, file_path, true)
       end
 
       def available_for_cp(attr_name)
