@@ -1,7 +1,8 @@
 # rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin'].freeze
-
+  PLATFORM_LANDINGPAGES = ['','supply_teachers','facilities_management','management_consultancy','apprenticeships',''].freeze
+  
   def miles_to_metres(miles)
     DistanceConverter.miles_to_metres(miles)
   end
@@ -128,7 +129,7 @@ module ApplicationHelper
   end
 
   def landing_or_admin_page
-    controller.action_name == 'index' || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
+    (PLATFORM_LANDINGPAGES.include?(controller.class.parent_name.try(:underscore)) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
   end
 
   def a_supply_teachers_path?
