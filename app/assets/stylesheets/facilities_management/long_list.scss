@@ -26,11 +26,10 @@
 
 .CCS-fm-supplier-filter-check-box-label {
   background-color: white;
-  height: 26px;
   overflow-wrap: break-word;
   max-width: 230px;
-  margin-left: 0px !important;
-  padding-left: 5px;
+  margin:auto 0 !important;
+  min-height:1em;
 }
 
 @media only screen and (orientation: portrait) {
