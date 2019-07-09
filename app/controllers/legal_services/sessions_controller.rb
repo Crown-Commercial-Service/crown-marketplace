@@ -11,7 +11,7 @@ module LegalServices
     end
 
     def after_sign_out_path_for(_resource)
-      legal_services_journey_start_path
+      legal_services_path
     end
 
     def new_session_path
