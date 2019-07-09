@@ -230,6 +230,7 @@ Rails.application.routes.draw do
     post '/users/confirm', to: 'users#confirm'
     get '/users/challenge', to: 'users#challenge_new'
     post '/users/challenge', to: 'users#challenge'
+    get '/gateway', to: 'gateway#index'
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
     get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
