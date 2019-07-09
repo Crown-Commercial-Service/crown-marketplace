@@ -7,9 +7,13 @@ module FMCalculator
 
       current = CCS::FM::RateCard.last
       logger.debug current.data['Prices']
-      current.data[current.data.keys[0]].keys.each do |x|
+      current.data[current.data.keys[0]].each do |k, x|
+        logger.debug k
         logger.debug x
       end
+
+      pp = current.data['Prices'].select { |p| p['Service Ref'] == 'C.13' }
+      logger.debug pp
     end
   end
 end
