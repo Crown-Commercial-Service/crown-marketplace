@@ -1,6 +1,6 @@
 const pageUtils = {
 
-    formatPostCode: (pc) => {
+    formatPostCode: function (pc) {
 
         let outer = pc.substring(0, pc.length - 3);
         let inner = pc.slice(-3);
@@ -8,7 +8,7 @@ const pageUtils = {
     },
 
     /* Sort an un-ordered list */
-    sortUnorderedList: ((listID) => {
+    sortUnorderedList: function (listID) {
         let list, i, switching, b, shouldSwitch;
         list = document.getElementById(listID);
         switching = true;
@@ -37,9 +37,9 @@ const pageUtils = {
                 switching = true;
             }
         }
-    }),
+    },
 
-    setCachedData: ((key, data) => {
+    setCachedData: function (key, data) {
         if (localStorage) {
             const dataString = JSON.stringify(data);
             localStorage.setItem(key, dataString);
@@ -67,9 +67,9 @@ const pageUtils = {
             }
         });
 
-    }),
+    },
 
-    getCachedData: ((key) => {
+    getCachedData: function (key) {
         if (localStorage) {
             return JSON.parse(localStorage.getItem(key)) || [];
         }
@@ -94,9 +94,9 @@ const pageUtils = {
                 console.log(errorThrown);
             }
         });
-    }),
+    },
 
-    clearCashedData: ((key) => {
+    clearCashedData: function (key) {
         if (key) {
             localStorage.removeItem(key);
             let params = {
@@ -137,10 +137,10 @@ const pageUtils = {
                 }
             });
         }
-    }),
+    },
 
-    sortByName: ((arr) => {
-        return arr.sort((a, b) => {
+    sortByName: function (arr) {
+        return arr.sort(function (a, b) {
             const nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
             if (nameA < nameB) //sort string ascending
                 return -1;
@@ -148,17 +148,17 @@ const pageUtils = {
                 return 1;
             return 0;
         });
-    }),
+    },
 
-    getCodes: ((arr) => {
+    getCodes: function (arr) {
         let result = [];
-        arr.forEach((value, index, array) => {
+        arr.forEach( function(value, index, array) {
             result.push(value.code.replace('-', '.'));
         });
         return result;
-    }),
+    },
 
-    generateGuid: (() => {
+    generateGuid: function () {
         let result, i, j;
         result = '';
         for (j = 0; j < 32; j++) {
@@ -168,9 +168,9 @@ const pageUtils = {
             result = result + i;
         }
         return result;
-    }),
+    },
 
-    isPostCodeValid: ((postCodeInput) => {
+    isPostCodeValid: function (postCodeInput) {
         let result;
         if (postCodeInput) {
             postCodeInput = postCodeInput.replace(/\s/g, "");
@@ -180,9 +180,9 @@ const pageUtils = {
             result = false;
         }
         return result;
-    }),
+    },
 
-    toggleInlineErrorMessage: ((show) => {
+    toggleInlineErrorMessage: function (show) {
         let inLineErrorMessage = $('#inline-error-message');
 
         if (inLineErrorMessage && show === true) {
@@ -192,9 +192,9 @@ const pageUtils = {
         if (inLineErrorMessage && show === false) {
             $('#inline-error-message').addClass('govuk-visually-hidden');
         }
-    }),
+    },
 
-    showGIAError: ((show, errorMsg) => {
+    showGIAError: function (show, errorMsg) {
 
         errorMsg = errorMsg || "The total internal area value entered is invalid";
         if (show === true) {
@@ -205,9 +205,9 @@ const pageUtils = {
             $('#fm-internal-square-area-error').addClass('govuk-visually-hidden');
             $('#fm-internal-square-area-error-form-group').removeClass('govuk-form-group--error');
         }
-    }),
+    },
 
-    showPostCodeError: ((show, errorMsg) => {
+    showPostCodeError: function (show, errorMsg) {
 
         errorMsg = errorMsg || "The postcode entered is invalid";
         if (show === true) {
@@ -218,9 +218,9 @@ const pageUtils = {
             $('#fm-postcode-error').addClass('govuk-visually-hidden');
             $('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');
         }
-    }),
+    },
 
-    showAddressError: ((show, errorMsg) => {
+    showAddressError: function (show, errorMsg) {
 
         errorMsg = errorMsg || "No address selected";
         if (show === true) {
@@ -233,8 +233,7 @@ const pageUtils = {
             $('#fm-address-error-form-group').removeClass('govuk-form-group--error');
             pageUtils.showPostCodeError(false);
         }
-    })
-
+    }
 };
 
 const fm = {
