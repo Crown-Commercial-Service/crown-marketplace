@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     when 'apprenticeships'
       apprenticeships_gateway_url
     when 'legal_services'
-      legal_services_url
+      legal_services_gateway_url
     else
       supply_teachers_gateway_url
     end
