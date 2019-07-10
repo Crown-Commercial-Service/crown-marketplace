@@ -1,30 +1,11 @@
 class ApplicationController < ActionController::Base
-  Unauthorized = Class.new(StandardError)
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  protect_from_forgery with: :exception
+  before_action :authenticate_user!
 
-  PERMISSIONS = %i[
-    none
-    facilities_management
-    management_consultancy
-    supply_teachers
-    apprenticeships
-    ccs_patterns
-    legal_services
-  ].freeze
-
-  def self.require_permission(label, **kwargs)
-    raise "Invalid permission #{label.inspect}" unless PERMISSIONS.include?(label)
-
-    prepend_before_action(**kwargs) do
-      # We need to prepend so that it is set before verify_permission;
-      # this means that subsequent, overriding calls will be inserted above,
-      # so we use ||= to make the first value stick.
-      @permission_required ||= label
-    end
+  rescue_from CanCan::AccessDenied do
+    redirect_to not_permitted_path(permission_required: request.path_parameters[:controller].split('/').first)
   end
-
-  before_action :verify_permission
-
-  rescue_from Unauthorized, with: :deny_access
 
   def gateway_url
     case session[:last_visited_framework]
@@ -37,6 +18,23 @@ class ApplicationController < ActionController::Base
     when 'apprenticeships'
       apprenticeships_gateway_url
     when 'legal_services'
+      legal_services_gateway_url
+    else
+      supply_teachers_gateway_url
+    end
+  end
+
+  def home_page_url
+    case session[:last_visited_framework]
+    when 'supply_teachers'
+      supply_teachers_gateway_url
+    when 'management_consultancy'
+      management_consultancy_url
+    when 'facilities_management'
+      facilities_management_url
+    when 'apprenticeships'
+      apprenticeships_url
+    when 'legal_services'
       legal_services_url
     else
       ccs_homepage_url
@@ -44,40 +42,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def current_login
-    Login.from_session(session[:login])
-  end
-
-  def current_login=(login)
-    session[:login] = login.to_session
-  end
-
-  def delete_current_login
-    session.delete :login
-  end
-
-  def verify_permission
-    raise 'please specify framework permission required' unless @permission_required
-    return if @permission_required == :none
-
-    unless logged_in?
-      session[:requested_path] = request.fullpath
-      redirect_to gateway_url
-      return
-    end
-
-    raise Unauthorized unless current_login.permit?(@permission_required)
-  end
-
-  def logged_in?
-    current_login.present?
-  end
-  helper_method :logged_in?
-
-  def deny_access
-    render template: 'shared/not_permitted', status: 403, locals: { permission_required: @permission_required }
-  end
 
   delegate :ccs_homepage_url, to: Marketplace
   helper_method :ccs_homepage_url
@@ -87,5 +51,21 @@ class ApplicationController < ActionController::Base
   def set_current_choices
     TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
     TransientSessionInfo[session.id] = JSON.parse(flash['current_choices']) if flash['current_choices'] && params['current_choices'].nil?
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    attributes = %i[first_name last_name email phone_number mobile_number]
+    devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
+    devise_parameter_sanitizer.permit(:account_update, keys: attributes)
+  end
+
+  def authenticate_user!
+    if user_signed_in?
+      super
+    else
+      redirect_to gateway_url
+    end
   end
 end

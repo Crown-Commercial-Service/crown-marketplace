@@ -74,3 +74,20 @@ $offset: 4;
     background-size: 29px 18px;
   }
 }
+
+.govuk-button--warning {
+  background-color: #b10e1e;
+  box-shadow: 0 2px 0 #47060c;
+}
+
+.govuk-button--warning, .govuk-button--warning:link, .govuk-button--warning:visited, .govuk-button--warning:active, .govuk-button--warning:hover {
+  color: #ffffff;
+}
+
+.govuk-button--warning:hover, .govuk-button--warning:focus {
+  background-color: #8e0b18;
+}
+
+.govuk-button--warning:hover[disabled], .govuk-button--warning:focus[disabled] {
+  background-color: #b10e1e;
+}

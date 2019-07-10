@@ -17,17 +17,58 @@ en:
           attributes:
             rating:
               too_short: Please select a checkbox
+        ccs_patterns/home/cog_forgot_password_request:
+          attributes:
+            please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
+        ccs_patterns/home/cog_forgot_password_reset:
+          attributes:
+            confirm_new_password: Enter your new password
+            enter_a_new_password: Enter a new password
+            password_must_be: Password must be 8 characters or more
+            password_must_match: Passwords don't match
+            passwords_dont_match: Passwords don't match
+            passwords_stronger: Password must include a special character
+            passwords_upper: Password must include a capital letter
+        ccs_patterns/home/cog_register:
+          attributes:
+            email_format: Enter an email address in the correct format, like name@example.com
+            enter_a_password: Enter a password
+            enter_first_name: Enter your first name
+            enter_last_name: Enter your last name
+            enter_org_name: Enter your organisation name
+            enter_your_password: Enter your password
+            password_must_be: Password must be 8 characters or more
+            passwords_dont_match: Passwords don't match
+            passwords_stronger: Password must include a special character
+            passwords_upper: Password must include a capital letter
+        ccs_patterns/home/cog_register_enter_confirmation_code:
+          attributes:
+            enter_confirmation_code: Enter the confirmation code
+            enter_confirmation_six: Confirmation code must be 6 characters
         ccs_patterns/home/cog_sign_in:
           attributes:
             cog_sign_in:
               enter_your_password: Enter your password
               please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
-            cog_sign_in_password_prompt_change:
-              enter_a_password: Enter a password
-              password_must_be: Password must be 8 characters or more
-              password_must_match: Passwords don't match
-              passwords_dont_match: Passwords don't match
-              passwords_stronger: Password must include a number or a special character
+        ccs_patterns/home/cog_sign_in_password_prompt_change:
+          attributes:
+            enter_a_password: Enter a password
+            enter_your_password: Enter your password
+            password_must_be: Password must be 8 characters or more
+            password_must_match: Passwords don't match
+            passwords_dont_match: Passwords don't match
+            passwords_stronger: Password must include a special character
+            passwords_uppper: Password must include a capital letter
+        cognito/respond_to_challenge:
+          attributes:
+            new_password:
+              blank: Enter a password
+              invalid_no_capitals: Password must include a capital letter
+              invalid_no_symbol: Password must include a special character
+              too_short: Password must be 8 characters or more
+            new_password_confirmation:
+              blank: Enter your password
+              confirmation: Passwords don't match
         facilities_management/journey/supplier_region:
           attributes:
             region_codes:
@@ -107,11 +148,11 @@ en:
         management_consultancy/journey/choose_lot:
           attributes:
             lot:
-              inclusion: Please choose a lot for the services you require
+              inclusion: Select the lot you need
         management_consultancy/journey/choose_regions:
           attributes:
             region_codes:
-              too_short: Select at least one region
+              too_short: Select the region or regions you want the consultants to work
         management_consultancy/journey/choose_services:
           attributes:
             services:
@@ -199,6 +240,11 @@ en:
             postcode:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       download_provider:
         button_label: Start new search
@@ -389,8 +435,76 @@ en:
         page_title: Understanding what to buy
         title: Understanding what to buy
     page_section: Find apprenticeship training and related services
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   ccs_patterns:
     home:
+      cog_email:
+        greeting: Hello,
+        line_01: You have requested a new CCS buyer account. Your confirmation code is
+        line_02: You must use this code within 7 days of receiving this email.
+        line_03_html: This is an automated message. Email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if you need help.
+        sign_off_html: Kind regards, <br>Customer Services Team <br><small>Crown Commercial Service</small>
+      cog_email2:
+        greeting: Hello,
+        line_01: You recently asked to reset your Crown Commercial Service password.
+        line_02: You can change your password now using the link below
+        line_03: You must click this link within 24 hours of receiving this email.
+        sign_off_html: Kind regards, <br>Customer Services Team <br><small>Crown Commercial Service</small>
+      cog_forgot_password_confirmation:
+        heading: A reset email has been sent
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      cog_forgot_password_request:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you a link so you can reset your password. Password reset links are only valid for 24 hours.
+      cog_forgot_password_reset:
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
+      cog_forgot_password_reset2:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
+      cog_register:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        first_name: First name
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        job_title: Job title (optional)
+        last_name: Last name
+        lead: You must be employed by, or represent, a public sector organisation.
+        org_details: Organisation details
+        org_name: Organisation name
+        your_details: Your details
+      cog_register_domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      cog_register_enter_confirmation_code:
+        confirmation_code: Confirmation code
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
       cog_sign_in:
         create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
         email_address: Email address
@@ -405,23 +519,72 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      select:
+        heading: Confirm you need management consultancy
+        line01_href_txt: Public sector resourcing
+        line01_text: contingent labour for short-term projects with specific outcomes
+        line01_url_html: <a href="#">
+        line02_href_txt: Corporate financial services
+        line02_text: advice on complex corporate financial matters
+        line02_url_html: <a href="#">
+        line03_href_txt: Research marketplace
+        line03_text: social, economic or market research for projects of all sizes and budgets
+        line03_url_html: <a href="#">
+        line04_href_txt: Technology services 2
+        line04_text: technology services at all government security classification levels
+        line04_url_html: <a href="#">
+        line05_href_txt: Digital outcomes and specialists 3
+        line05_text: support to design, build and deliver digital outcomes using the agile approach
+        line05_url_html: <a href="#">
+        line06_href_txt: G-Cloud 10
+        line06_text: cloud hosting, software and support
+        line06_url_html: <a href="#">
+        text01: Check that you don't need one of these other frameworks offered by Commercial Service
+      start:
+        heading: Find management consultants
+        heading02: Before you start
+        heading03: Guidance and other useful documents
+        href_txt01: Management Consultancy Framework
+        href_txt02: Management Consultancy Framework Two
+        href_url01_html: <a href="#">
+        href_url02_html: <a href="#">
+        line_txt01_html: Management Consultancy Framework (<abbr>MCF</abbr>) specification
+        line_txt02_html: Management Consultancy Framework Two (<abbr>MCF</abbr>2) specification
+        line_txt03_html: "<abbr>OJEU</abbr> contract notice"
+        line_url01_html: <a href="#">
+        line_url02_html: <a href="#">
+        line_url03_html: <a href="#">
+        text01: Use this service to download a shortlist of suppliers that provide the management consultancy services you need.
+        text02: Using this service means you're following the public sector procurement procedures.
+        text03: You need to know which lot the management consultancy services you need are in. Review the lot description documents for
+        text04: and
   common:
     apply_filters: Apply filters
     back_to_start: Back to start
     browse: Browse
     ccs_contact_url: https://www.crowncommercial.gov.uk/contact
     change_password_and_sign_in: Change password and sign in
+    confirm_and_continue: Confirm and continue
     continue: Continue
+    create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
+    passcap: at least one capital letter
+    passeight: at least 8 characters
+    passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    resend_password: Resend password
     search: Search
+    send_reset_email: Send reset email
     sign_in: Sign in
+    start_now: Start now
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
+    type_xlsx: application/msexcel
+    xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
   companies:
     unit:
       one: company
@@ -473,6 +636,17 @@ en:
         question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
         question_hint: This can be current costs, or estimated annual costs.
         submit: Continue
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   faker:
     company:
       name:
@@ -523,6 +697,11 @@ en:
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
   legal_services:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       index:
         heading: Find legal services for the wider public sector
@@ -632,6 +811,11 @@ en:
         txt01: The
         txt02_link: General Legal Advice Services (RM3786)
         txt03: agreement provides legal advice services for central government and arms-length bodies.
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
     suppliers:
       cg_no_suppliers_found:
         header: No suppliers were found
@@ -659,7 +843,49 @@ en:
       show:
         caption: Supplier details
         heading: Supplier details
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   management_consultancy:
+    admin:
+      uploads:
+        in_progress:
+          content: The spreadsheets have been uploaded and are now processing.
+          heading: Upload successful
+        index:
+          caption: Manage supplier data
+          create_new: Create a new data upload
+          date: Date
+          heading: Management Consultancy
+          name: Name
+          no_of_files: Number of files
+          status: Status
+          table_caption: Previous uploads
+        new:
+          caption: Management Consultancy
+          heading: New data upload
+          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_title: Upload one or more of the following spreadsheets
+          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+        show:
+          caption: Management consultancy
+          confirm_changes: 'Confirm these files are ready to be used by the live service:'
+          datetime: 'Date/time:'
+          download: Download
+          files: Files
+          heading: 'Upload session #%{number}'
+          rate_cards: Rate Cards
+          spreadsheet: Spreadsheet
+          status: 'Status:'
+          supplier_regional_offerings: Supplier Regional Offerings
+          supplier_service_offerings: Supplier Service Offerings
+          suppliers: Suppliers
+        uploading:
+          content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
+          heading: Data upload in progress
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -669,19 +895,17 @@ en:
       index:
         before_you_start:
           heading: Before you start
-          use_this_service:
-            heading: 'To use this service, you need to:'
-            item_1: know the location where the work will be carried out
-            item_2_html: review the %{ojeu_contract_link} and framework specification to ensure your requirements are within the scope of this agreement
-            item_3_html: 'know the lot (or lots) the consultancy services belong to - see the documents ''Lot descriptions MCF2 RM6008'' and ''RM3745 MCF Lot desfriptions'' listed on the following agreements: %{mcf_link} and %{mcf2_link}'
+          mcf2_link_text: Management Consultancy Framework Two
+          mcf_link_text: Management Consultancy Framework
+          text_html: You need to know which lot the management consultancy services you need are in. Review the lot descriptions documents for %{mcf_link} and %{mcf2_link}.
+        guidance:
+          heading: Guidance and other useful documents
+          mcf2_link_text: Management Consultancy Framework Two (MCF2) specification
+          mcf_link_text: Management Consultancy Framework (MCF) specification
+          ojeu_contract_link_text: OJEU contract notice
         heading: Find management consultants
-        mcf2_link_text: Management Consultancy Framework Two
-        mcf_link_text: Management Consultancy Framework
-        ojeu_contract_link_text: OJEU contract notice
-        use_this_service:
-          heading: 'Use this service to:'
-          item_1: produce a list of Crown Commercial Service approved management consultants based on your requirements
-          item_2: adhere to the public procurement procedures
+        use_this_service: Use this service to download a shortlist of suppliers that provide the management consultancy services you need.
+        using_this_service: Using this service means you're following the public sector procurement procedures.
     html:
       download_the_supplier_list:
         button_start_new_search: Start new search
@@ -715,34 +939,128 @@ en:
         position: Position
         sub_title: Supplier details
         website: Website
+    job_titles:
+      mcf1:
+        lot_2:
+          director: Partner/Director Account/Auditor
+          junior: Junior Accountant/Auditor
+          managing: Managing Account/Auditor
+          principal: Principal Accountant/Auditor
+          senior: Senior Accountant/Auditor
+          standard: Accountant/Auditor
+        lot_3:
+          director: Partner/Director of Audit
+          junior: Junior Auditor
+          managing: Senior Audit Manager
+          principal: Audit Manager
+          senior: Senior Auditor
+          standard: Lead Auditor
+        lot_4:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_5:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_6:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_7:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_8:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+      mcf2:
+        lot_1:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_2:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_3:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
+        lot_4:
+          director: Partner/Managing Director
+          junior: Junior Consultant
+          managing: Managing Consultant/Associate Director/Director
+          principal: Principal Consultant
+          senior: Senior Consultant/Manager
+          standard: Consultant
     journey:
       choose_help_needed:
-        contingent_labour_description: Staff for short-term projects with specific outcomes
-        corporate_financial_services_description: Advice on complex corporate financial matters
-        digital_outcomes_and_specialists_description: Support to design, build and deliver digital outcomes using the agile approach
-        g_cloud_description: Cloud hosting, software and support
-        management_consultants_description: Specific areas of expertise for longer running projects
-        question: What do you need to procure?
-        research_marketplace_description: Social, economic or market research for projects of all size and budgets
-        technology_services_description: Technology services all government security classifcation levels
+        body: Check that you don’t need one of these other frameworks offered by the Crown Commercial Service.
+        contingent_labour_html: "%{contingent_labour_link} - contingent labour for short-term projects with specific outcomes"
+        contingent_labour_link: https://www.crowncommercial.gov.uk/agreements/RM3749
+        contingent_labour_link_text: Public sector resourcing
+        corporate_financial_services_html: "%{corporate_financial_services_link} - advice on complex corporate financial matters"
+        corporate_financial_services_link: https://www.crowncommercial.gov.uk/agreements/RM3719
+        corporate_financial_services_link_text: Corporate financial services
+        digital_outcomes_and_specialists_html: "%{digital_outcomes_and_specialists_link} - support to design, build and deliver digital outcomes using the agile approach"
+        digital_outcomes_and_specialists_link: https://www.crowncommercial.gov.uk/agreements/RM1043.5
+        digital_outcomes_and_specialists_link_text: Digital outcomes and specialists 3
+        g_cloud_html: "%{g_cloud_link} - cloud hosting, software and support"
+        g_cloud_link: https://www.crowncommercial.gov.uk/agreements/RM1557.10
+        g_cloud_link_text: G-Cloud 10
+        headline: Confirm you need management consultancy
+        research_marketplace_html: "%{research_marketplace_link} - social, economic or market research for projects of all sizes and budgets"
+        research_marketplace_link: https://www.crowncommercial.gov.uk/agreements/RM6018
+        research_marketplace_link_text: Research marketplace
+        technology_services_html: "%{technology_services_link} - technology services at all government security classifcation levels"
+        technology_services_link: https://www.crowncommercial.gov.uk/agreements/RM3804
+        technology_services_link_text: Technology services 2
       choose_lot:
-        question: What kind of management consultancy do you want to procure?
-        question_hint: The lot you choose here will affect the services offered and the suppliers presented.
+        mcf2_heading: Management Consultancy Framework (MCF2)
+        mcf_heading: Management Consultancy Framework (MCF)
+        question: Select the lot you need
       choose_regions:
         no_regions_selected: No regions selected
-        question: Where do you want the consultants to work?
+        question: Select the regions you want the consultants to work
         regions_selected: Regions selected
         remove_all: Remove all
-        subtitle: Suppliers have said where they’ll provide consultants.
+        subtitle: Suppliers have said where they’ll provide consultants
       choose_services:
         no_services_selected: No services selected
         question: Select the services you need
         remove_all: Remove all
         services_selected: services selected
-      other_framework:
-        back_to_start: Back to start
-        heading: You need a different framework
-        introduction: This service is for the management consultancy frameworks RM3745 and RM6008.
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
     suppliers:
       download:
         download_supplier_shortlist: Download supplier shortlist
@@ -760,6 +1078,28 @@ en:
           heading: No suppliers were found
           text: No companies can provide consultants that can meet your requirements.
         suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
+      show:
+        based_on: and based on an 8 hour working day.
+        contact_details:
+          address: Address
+          email: Email
+          heading: Contact details
+          person: Name
+          phone_number: Phone number
+          website: Website
+        day_rates: Day rates
+        fixed_until_mcf1: Fixed until September 2020
+        fixed_until_mcf2: Fixed until December 2021
+        further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
+        is_an_sme: This supplier is a small or medium-sized enterprise
+        max_day_rate: Max day rate
+        sub_title: "%{framework} lot %{lot_number} - %{description}"
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   miles:
     unit:
       one: mile
@@ -817,7 +1157,13 @@ en:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
+      auth:
+        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
+        title: Not permitted
       facilities_management:
+        details: You don’t have permission to view this page.
+        title: Not permitted
+      legal_services:
         details: You don’t have permission to view this page.
         title: Not permitted
       management_consultancy:
@@ -874,6 +1220,7 @@ en:
           confirm_changes: 'Confirm these files are ready to be used by the live service:'
           current_accredited_suppliers: Current accredited suppliers
           datetime: 'Date and time:'
+          delete: Delete session
           error_heading: There is a problem
           files: Files
           geographical_data_all_suppliers: Geographical data all suppliers
@@ -1093,6 +1440,11 @@ en:
         page_title: Do you want an agency to supply the worker?
         question: Do you want an agency to supply the worker?
     page_section: Find supply teachers and agency staff
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        password: Password
     suppliers:
       all_suppliers:
         branch: Branch
@@ -1122,6 +1474,12 @@ en:
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
+    users:
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
   views:
     pagination:
       next: Next <b>→</b>

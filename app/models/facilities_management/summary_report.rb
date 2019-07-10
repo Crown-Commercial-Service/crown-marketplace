@@ -83,8 +83,8 @@ module FacilitiesManagement
       services_without_pricing = CCS::FM::Rate.zero_rate.map(&:code)
 
       services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
-      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') }
-      services_selected.uniq!
+      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') if s }
+      services_selected = services_selected.uniq
 
       FacilitiesManagement::Service.all.select do |service|
         # (@posted_services.include? service.code) && (services_without_pricing.include? service.code)
@@ -98,7 +98,11 @@ module FacilitiesManagement
       services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
       services_selected.map! { |s| s['code'].gsub('-', '.') }.uniq!
 
-      FacilitiesManagement::Service.all.select { |service| services_selected.include? service.code }
+      services = FacilitiesManagement::Service.all.select { |service| services_selected.include? service.code }
+      mandatory = FacilitiesManagement::Service.all.select { |service| service.code == 'A.18' || service.work_package_code == 'B' }
+      services +
+        mandatory <<
+        FacilitiesManagement::Service.new(code: 'A.1 - A.17', name: 'Contract management', work_package_code: 'A', mandatory: true)
     end
 
     def selected_suppliers(for_lot)
@@ -169,7 +173,8 @@ module FacilitiesManagement
                        'uom_value' => l.first[1],
                        'building_id' => b['building_id'],
                        'title_text' => lifts_title_text,
-                       'example_text' => lifts_example_text }
+                       'example_text' => lifts_example_text,
+                       'spreadsheet_label' => 'The sum total of number of floors per lift' }
           end
         end
       end
@@ -187,7 +192,8 @@ module FacilitiesManagement
                      'uom_value' => b['building_json']['gia'].to_f,
                      'building_id' => b['building_json']['id'],
                      'title_text' => 'What is the total internal area of this building?',
-                     'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm' }
+                     'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
+                     'spreadsheet_label' => 'Square Metre (GIA) per annum' }
         end
       end
 

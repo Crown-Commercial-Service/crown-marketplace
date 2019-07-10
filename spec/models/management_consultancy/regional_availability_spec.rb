@@ -45,7 +45,7 @@ RSpec.describe ManagementConsultancy::RegionalAvailability, type: :model do
     new_availability = build(
       :management_consultancy_regional_availability,
       supplier: regional_availability.supplier,
-      lot_number: '2',
+      lot_number: 'MCF2.2',
       region_code: regional_availability.region_code
     )
     expect(new_availability).to be_valid

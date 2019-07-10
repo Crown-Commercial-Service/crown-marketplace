@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, auth: true do
+RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
   let(:supplier) { create(:management_consultancy_supplier) }
   let(:suppliers) { ManagementConsultancy::Supplier.where(id: supplier.id) }
   let(:lot) { ManagementConsultancy::Lot.find_by(number: lot_number) }
   let(:services) { ManagementConsultancy::Service.all.sample(5).map(&:code) }
   let(:region_codes) { Nuts2Region.all.sample(5).map(&:code) }
 
+  login_mc_buyer
   before do
     allow(ManagementConsultancy::Supplier).to receive(:offering_services_in_regions)
       .with(lot_number, services, region_codes).and_return(suppliers)
-    permit_framework :management_consultancy
   end
 
   describe 'GET index' do
@@ -18,8 +18,8 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
       get :index, params: params
     end
 
-    context 'when the lot answer is lot1' do
-      let(:lot_number) { '1' }
+    context 'when the lot answer is MCF2 lot1' do
+      let(:lot_number) { 'MCF2.1' }
 
       let(:params) do
         {
@@ -27,7 +27,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         }
       end
 
@@ -50,14 +49,13 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         )
         expect(assigns(:back_path)).to eq(expected_path)
       end
     end
 
-    context 'when the lot answer is lot2' do
-      let(:lot_number) { '2' }
+    context 'when the lot answer is MCF2 lot2' do
+      let(:lot_number) { 'MCF2.2' }
 
       let(:params) do
         {
@@ -65,7 +63,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         }
       end
 
@@ -88,7 +85,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         )
         expect(assigns(:back_path)).to eq(expected_path)
       end
@@ -108,12 +104,33 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller, au
         lot: lot_number,
         services: services,
         region_codes: region_codes,
-        help_needed: 'management_consultants'
       }
     end
 
     it 'renders the download template' do
       expect(response).to render_template('download')
+    end
+  end
+
+  describe 'GET show' do
+    before do
+      get :show, params: { id: supplier.id, lot: lot }
+    end
+
+    context 'when the lot answer is MCF2 lot1' do
+      let(:lot_number) { 'MCF2.1' }
+
+      it 'renders the show template' do
+        expect(response).to render_template('show')
+      end
+    end
+
+    context 'with no lot number set' do
+      let(:lot_number) { '' }
+
+      it 'renders the show template' do
+        expect(response).to render_template('show')
+      end
     end
   end
 end

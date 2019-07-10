@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Temp to Perm fee calculator', type: :feature do
+RSpec.feature 'Temp to Perm fee calculator', type: :feature, supply_teachers: true do
   include_context 'with friendly dates'
 
   scenario 'Making a worker permanent after 12 weeks and giving at least 4 weeks notice' do
