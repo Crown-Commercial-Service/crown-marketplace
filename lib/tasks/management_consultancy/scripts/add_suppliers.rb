@@ -34,7 +34,7 @@ def add_suppliers
     supplier[:id] = SecureRandom.uuid
   end
 
-  File.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'suppliers.json'), 'w') do |f|
-    f.write JSON.pretty_generate suppliers
+  File.open(get_mc_output_file_path('suppliers.json'), 'w') do |f|
+    f.puts JSON.pretty_generate(suppliers)
   end
 end

@@ -152,7 +152,7 @@ en:
         management_consultancy/journey/choose_regions:
           attributes:
             region_codes:
-              too_short: Select at least one region
+              too_short: Select the region or regions you want the consultants to work
         management_consultancy/journey/choose_services:
           attributes:
             services:
@@ -240,6 +240,11 @@ en:
             postcode:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       download_provider:
         button_label: Start new search
@@ -692,6 +697,11 @@ en:
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
   legal_services:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       index:
         heading: Find legal services for the wider public sector
@@ -1032,13 +1042,15 @@ en:
         technology_services_link: https://www.crowncommercial.gov.uk/agreements/RM3804
         technology_services_link_text: Technology services 2
       choose_lot:
+        mcf2_heading: Management Consultancy Framework (MCF2)
+        mcf_heading: Management Consultancy Framework (MCF)
         question: Select the lot you need
       choose_regions:
         no_regions_selected: No regions selected
-        question: Where do you want the consultants to work?
+        question: Select the regions you want the consultants to work
         regions_selected: Regions selected
         remove_all: Remove all
-        subtitle: Suppliers have said where they’ll provide consultants.
+        subtitle: Suppliers have said where they’ll provide consultants
       choose_services:
         no_services_selected: No services selected
         question: Select the services you need

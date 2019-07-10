@@ -105,6 +105,8 @@ group :development, :test do
   gem 'rubyXL'
   gem 'i18n-tasks'
   gem 'poltergeist'
+  gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
+  gem 'tzinfo-data', platforms: %i[x64_mingw]
 end
 
 group :development do
