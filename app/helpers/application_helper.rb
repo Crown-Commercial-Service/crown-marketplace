@@ -116,7 +116,7 @@ module ApplicationHelper
   end
 
   def service_destroy_user_session_path
-    send controller.class.parent_name.underscore + '_destroy_user_session_path' if controller.class.parent_name
+    send controller.class.parent_name.underscore.sub('/', '_') + '_destroy_user_session_path' if controller.class.parent_name
   end
 
   def service_gateway_path
