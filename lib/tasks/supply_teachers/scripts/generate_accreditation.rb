@@ -10,7 +10,7 @@ require 'pathname'
 require 'yaml'
 
 def generate_accreditation
-  current_accredited_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH : s3_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH.to_s)
+  current_accredited_path = file_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH)
   accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
 
   header_map = {

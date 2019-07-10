@@ -6,7 +6,7 @@ require 'capybara'
 require 'fileutils'
 
 def generate_branches
-  geographical_data_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::GEOGRAPHICAL_DATA_PATH : s3_path(SupplyTeachers::Admin::Upload::GEOGRAPHICAL_DATA_PATH.to_s)
+  geographical_data_path = file_path(SupplyTeachers::Admin::Upload::GEOGRAPHICAL_DATA_PATH)
   branch_workbook = Roo::Spreadsheet.open(geographical_data_path, extension: :xlsx)
 
   header_map = {
