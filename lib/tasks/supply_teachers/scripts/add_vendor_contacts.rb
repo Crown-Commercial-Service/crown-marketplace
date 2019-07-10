@@ -5,16 +5,16 @@ require 'csv'
 def add_vendor_contacts
   suppliers = JSON.parse(File.read(get_output_file_path'data_only_accredited.json'))
 
-  master_vendor_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::MASTER_VENDOR_PATH : s3_path(SupplyTeachers::Admin::Upload::MASTER_VENDOR_PATH.to_s)
-  neutral_vendor_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::NEUTRAL_VENDOR_PATH : s3_path(SupplyTeachers::Admin::Upload::NEUTRAL_VENDOR_PATH.to_s)
+  master_vendor_path = file_path(SupplyTeachers::Admin::Upload::MASTER_VENDOR_PATH)
+  neutral_vendor_path = file_path(SupplyTeachers::Admin::Upload::NEUTRAL_VENDOR_PATH)
 
   master_details =
-    CSV.new(File.read(master_vendor_path), headers: :first_row)
+    CSV.new(URI.open(master_vendor_path), headers: :first_row)
       .map { |r| [r['supplier_name'], r] }
       .to_h
 
   neutral_details =
-    CSV.new(File.read(neutral_vendor_path), headers: :first_row)
+    CSV.new(URI.open(neutral_vendor_path), headers: :first_row)
       .map { |r| [r['supplier_name'], r] }
       .to_h
 

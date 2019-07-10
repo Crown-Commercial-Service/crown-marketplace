@@ -10,11 +10,11 @@ require 'yaml'
 require 'csv'
 
 def generate_vendor_pricing
-  current_accredited_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH : s3_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH.to_s)
+  current_accredited_path = file_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH)
   accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
   suppliers = []
-  supplier_lookup_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH : s3_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH.to_s)
-  csv = CSV.open(supplier_lookup_path, headers: true)
+  supplier_lookup_path = file_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH)
+  csv = CSV.open(URI.open(supplier_lookup_path), headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
   end
@@ -44,7 +44,7 @@ def generate_vendor_pricing
     @accredited_suppliers.select { |supplier| supplier.has_value?(id) }.any?
   end
 # rubocop:enable Style/PreferredHashMethods, Rails/Blank
-  lot1_and_lot2_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH : s3_path(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH.to_s)
+  lot1_and_lot2_path = file_path(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH)
   mv_price_workbook = Roo::Spreadsheet.open(lot1_and_lot2_path, extension: :xlsx)
 
   def subhead?(row)

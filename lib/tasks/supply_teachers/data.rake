@@ -67,6 +67,11 @@ namespace :st do
     Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', file_name)
   end
 
+  def file_path(path)
+    return path if Rails.env.development?
+    s3_path(path.to_s)
+  end
+
   def s3_path(path)
     "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{s3_path_folder(path)}"
   end
@@ -77,8 +82,8 @@ namespace :st do
 
   def upload_data_and_errors_to_s3
     object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('data.json').to_s)).upload_file(get_output_file_path('data.json'))
-    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('errors.out').to_s)).upload_file(get_output_file_path('errors.out'))
+    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('data.json').to_s)).upload_file(get_output_file_path('data.json'), {acl:'public-read'})
+    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('errors.out').to_s)).upload_file(get_output_file_path('errors.out'), {acl:'public-read'}) unless File.zero?(get_output_file_path('errors.out'))
   end
 
 end
