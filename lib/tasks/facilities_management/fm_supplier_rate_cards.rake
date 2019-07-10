@@ -23,7 +23,7 @@ module FM
   def self.add_rate_cards_to_suppliers
     create_fm_rate_cards_table
 
-    spreadsheet_name = 'facilities_management/Direct Award Rate Cards - anonymised.xlsx'
+    spreadsheet_name = 'facilities_management/RM3830 Direct Award Data - anonymised.xlsx'
     rate_cards_workbook = Roo::Spreadsheet.open 'data/' + spreadsheet_name
 
     data = {}
