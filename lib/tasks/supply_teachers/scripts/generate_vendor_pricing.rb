@@ -10,9 +10,11 @@ require 'yaml'
 require 'csv'
 
 def generate_vendor_pricing
-  accredited_suppliers_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH, extension: :xlsx)
+  current_accredited_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH : s3_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH.to_s)
+  accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
   suppliers = []
-  csv = CSV.open(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH, headers: true)
+  supplier_lookup_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH : s3_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH.to_s)
+  csv = CSV.open(supplier_lookup_path, headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
   end
@@ -42,11 +44,8 @@ def generate_vendor_pricing
     @accredited_suppliers.select { |supplier| supplier.has_value?(id) }.any?
   end
 # rubocop:enable Style/PreferredHashMethods, Rails/Blank
-
-  # path = './storage/supply_teachers/current_data/input/lot_1_and_2_comparisons.xlsx'
-  # object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH).get(response_target: path)
-
-  mv_price_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH, extension: :xlsx)
+  lot1_and_lot2_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH : s3_path(SupplyTeachers::Admin::Upload::LOT_1_AND_LOT2_PATH.to_s)
+  mv_price_workbook = Roo::Spreadsheet.open(lot1_and_lot2_path, extension: :xlsx)
 
   def subhead?(row)
     row[:number] =~ /Category Line/ || row[:number].nil?

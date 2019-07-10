@@ -9,8 +9,8 @@ require 'active_support'
 def merge_json(supplier_name_key: , destination_key:, destination_file:, primary:, secondary:)
   alias_rows = []
   merge_key = 'supplier_name'
-
-  alias_rows = CSV.parse(File.read(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH, extension: :csv), headers: :first_row)
+  supplier_lookup_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH : s3_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH.to_s)
+  alias_rows = CSV.parse(File.read(supplier_lookup_path, extension: :csv), headers: :first_row)
 
   aliases = Hash.new { |_, k| k }
   alias_rows.each_with_object(aliases) do |row, hash|

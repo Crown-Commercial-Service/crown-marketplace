@@ -11,7 +11,7 @@ module SupplyTeachers
       Rails.application.load_tasks
       Rake::Task['st:clean'].invoke
       Rake::Task['st:data'].invoke
-      error_file_path = Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', 'errors.out')
+      error_file_path = Rails.env.development? ? Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', 'errors.out') : "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/supply_teachers/current_data/output/errors.out"
       if File.zero?(error_file_path)
         upload.review!
       else
