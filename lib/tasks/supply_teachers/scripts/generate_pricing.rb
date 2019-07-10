@@ -10,9 +10,11 @@ require 'yaml'
 require 'csv'
 
 def generate_pricing
-  accredited_suppliers_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH, extension: :xlsx)
+  current_accredited_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH : s3_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH.to_s)
+  accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
   suppliers = []
-  csv = CSV.open(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH, headers: true)
+  supplier_lookup_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH : s3_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH.to_s)
+  csv = CSV.open(supplier_lookup_path, headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
   end
@@ -42,7 +44,9 @@ def generate_pricing
     @accredited_suppliers.select { |supplier| supplier.has_value?(id) }.any?
   end
 # rubocop:enable Style/PreferredHashMethods, Rails/Blank
-  price_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::PRICING_TOOL_PATH, extension: :xlsx)
+
+  pricing_for_tool_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::PRICING_TOOL_PATH : s3_path(SupplyTeachers::Admin::Upload::PRICING_TOOL_PATH.to_s)
+  price_workbook = Roo::Spreadsheet.open(pricing_for_tool_path, extension: :xlsx)
 
   def subhead?(row)
     row[:number] =~ /Category Line/ || row[:number].nil?
