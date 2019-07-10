@@ -2,9 +2,14 @@ require 'fileutils'
 
 namespace :st do
   task :clean do
-    rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.tmp')]
-    rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.json')]
-    rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.out')]
+    if Rails.env.development?
+      rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.tmp')]
+      rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.json')]
+      rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.out')]
+    else
+      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).objects({prefix: 'supply_teachers/current_data/output/'}).batch_delete!
+    end
   end
 
   task data: :environment do
