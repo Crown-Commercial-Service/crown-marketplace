@@ -55,3 +55,4 @@ public/management_consultancy/data/*
 dump.rdb
 lib/tasks/supply_teachers/input/
 nbproject/
+launch.json
