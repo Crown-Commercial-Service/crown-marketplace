@@ -7,7 +7,7 @@ module SupplyTeachers
 
     def perform(upload_id)
       upload = SupplyTeachers::Admin::Upload.find(upload_id)
-      suppliers = JSON.parse(File.read(data_file))
+      suppliers = JSON.parse(File.read(URI.open(data_file)))
 
       SupplyTeachers::Upload.upload!(suppliers)
 
@@ -30,11 +30,11 @@ module SupplyTeachers
     end
 
     def data_file
-      # always use anonymous.json for now - need to set this up for production to use data.json
-      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      file_path = './storage/supply_teachers/current_data/output/anonymous.json'
-      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object('supply_teachers/current_data/output/anonymous.json').get(response_target: file_path)
-      file_path
+      if Rails.env.development?
+        Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', 'data.json')
+      else
+        "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/supply_teachers/current_data/output/data.json"
+      end
     end
   end
 end

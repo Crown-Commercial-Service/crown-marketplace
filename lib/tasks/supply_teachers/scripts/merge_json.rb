@@ -9,13 +9,8 @@ require 'active_support'
 def merge_json(supplier_name_key: , destination_key:, destination_file:, primary:, secondary:)
   alias_rows = []
   merge_key = 'supplier_name'
-
-  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-  alias_file_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
-  FileUtils.touch(alias_file_path)
-  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: alias_file_path)
-
-  alias_rows = CSV.parse(File.read(alias_file_path), headers: :first_row)
+  supplier_lookup_path = file_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH)
+  alias_rows = CSV.parse(URI.open(supplier_lookup_path), headers: :first_row)
 
   aliases = Hash.new { |_, k| k }
   alias_rows.each_with_object(aliases) do |row, hash|
@@ -48,7 +43,7 @@ def merge_json(supplier_name_key: , destination_key:, destination_file:, primary
     if supplier_id
       merged << item.merge(supplier_id: supplier_id, supplier_name: k)
     else
-      File.open('./storage/supply_teachers/current_data/output/errors.out.tmp', 'a') do |f|
+      File.open(get_output_file_path('errors.out'), 'a') do |f|
         f.puts "#{k}: does not appear in aliases file (input/supplier_lookup.csv). Make sure you include it in the column '#{supplier_name_key}'."
       end
     end

@@ -1,6 +1,5 @@
 # rubocop:disable Metrics/BlockLength
 require 'sidekiq/web'
-require 'user_constraint.rb'
 Rails.application.routes.draw do
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
@@ -8,10 +7,14 @@ Rails.application.routes.draw do
   get '/landing-page', to: 'home#landing_page'
   get '/not-permitted', to: 'home#not_permitted'
 
-  mount Sidekiq::Web => '/sidekiq-log', :constraints => UserConstraint.new
+  authenticate :user, ->(u) { u.has_role? :ccs_employee } do
+    mount Sidekiq::Web => '/sidekiq-log'
+  end
 
   devise_for :users, skip: %i[sessions registrations]
   devise_scope :user do
+    delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
+
     get '/supply-teachers/sign-in', to: 'supply_teachers/sessions#new', as: :supply_teachers_new_user_session
     post '/supply-teachers/sign-in', to: 'supply_teachers/sessions#create', as: :supply_teachers_user_session
     delete '/supply-teachers/sign-out', to: 'supply_teachers/sessions#destroy', as: :supply_teachers_destroy_user_session
@@ -58,20 +61,19 @@ Rails.application.routes.draw do
     get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
     resources :branches, only: %i[index show]
     resources :downloads, only: :index
-    # unless Rails.env.production? # not be available on production environments yet
     namespace :admin do
       get '/users/confirm', to: 'users#confirm_new'
       post '/users/confirm', to: 'users#confirm'
       get '/users/challenge', to: 'users#challenge_new'
       post '/users/challenge', to: 'users#challenge'
-      resources :uploads, only: %i[index new create show] do
+      resources :uploads, only: %i[index new create show destroy] do
         get 'approve'
         get 'reject'
         get 'uploading'
+        delete 'destroy'
       end
       get '/in_progress', to: 'uploads#in_progress'
     end
-    # end
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -228,6 +230,7 @@ Rails.application.routes.draw do
     post '/users/confirm', to: 'users#confirm'
     get '/users/challenge', to: 'users#challenge_new'
     post '/users/challenge', to: 'users#challenge'
+    get '/gateway', to: 'gateway#index'
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
     get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'

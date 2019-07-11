@@ -1,6 +1,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <span class="govuk-caption-xl"><%= t('.sub_title', framework: @lot.framework, lot_number: @lot.number.split('.')[1], description: @lot.description ) if @lot %></span>
+    <span class="govuk-caption-xl">
+      <%= framework_lot_and_description(@lot.number, @lot.description) if @lot %>
+    </span>
     <h1 class="govuk-heading-xl">
       <%= @supplier.name %>
       <% if @supplier.sme? %>

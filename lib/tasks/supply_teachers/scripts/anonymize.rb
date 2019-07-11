@@ -8,7 +8,7 @@ require 'securerandom'
 def anonymize
   Faker::Config.locale = 'en-GB'
 
-  json = File.read('./storage/supply_teachers/current_data/output/data.json.tmp')
+  json = File.read(get_output_file_path('data.json'))
 
   hash =
     JsonPath
@@ -27,7 +27,7 @@ def anonymize
     .gsub('..branch_name'){ Faker::Company.name }
     .to_hash
 
-  File.open('./storage/supply_teachers/current_data/output/anonymous.json.tmp', 'w') do |f|
+  File.open(get_output_file_path('anonymous.json'), 'w') do |f|
     f.puts JSON.pretty_generate(hash)
   end
 end

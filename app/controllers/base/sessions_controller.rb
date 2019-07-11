@@ -7,11 +7,12 @@ module Base
     def new
       @result = Cognito::SignInUser.new(nil, nil)
       @result.errors.add(:base, flash[:error]) if flash[:error]
+      @result.errors.add(:base, flash[:alert]) if flash[:alert]
       super
     end
 
     def create
-      self.resource = User.new
+      self.resource ||= User.new
       @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password])
       @result.call
       if @result.success?
@@ -33,7 +34,7 @@ module Base
     end
 
     def after_sign_out_path_for(_resource)
-      home_page_url
+      gateway_url
     end
 
     def authorize_user

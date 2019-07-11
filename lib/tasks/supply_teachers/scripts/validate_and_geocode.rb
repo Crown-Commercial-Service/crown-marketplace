@@ -7,21 +7,13 @@ require 'yaml'
 require 'pathname'
 require 'csv'
 require 'roo'
-require 'aws-sdk-s3'
 
 def validate_and_geocode
-
-  object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-  accredited_suppliers_path = './storage/supply_teachers/current_data/input/current_accredited_suppliers.xlsx'
-  FileUtils.touch(accredited_suppliers_path)
-  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH).get(response_target: accredited_suppliers_path)
-  supplier_lookup_path = './storage/supply_teachers/current_data/input/supplier_lookup.csv'
-  FileUtils.touch(supplier_lookup_path)
-  object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH).get(response_target: supplier_lookup_path )
-
-  accredited_suppliers_workbook = Roo::Spreadsheet.open accredited_suppliers_path
+  current_accredited_path = file_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH)
+  accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
   suppliers = []
-  csv = CSV.open(supplier_lookup_path, headers: true)
+  supplier_lookup_path = file_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH)
+  csv = CSV.open(URI.open(supplier_lookup_path), headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
   end
@@ -54,9 +46,9 @@ def validate_and_geocode
 
 
 
-  suppliers = JSON.parse(File.read('./storage/supply_teachers/current_data/output/data_with_vendors.json.tmp'))
+  suppliers = JSON.parse(File.read(get_output_file_path('data_with_vendors.json')))
   geocoder_cache = {}
-  geocoder_cache_path = ('./storage/supply_teachers/current_data/.geocoder-cache.yml')
+  geocoder_cache_path = (Rails.root.join('storage', 'supply_teachers', 'current_data', '.geocoder-cache.yml'))
 
   if File.exist?(geocoder_cache_path)
     File.open(geocoder_cache_path) do |file|
@@ -158,7 +150,7 @@ def validate_and_geocode
   end
 
   suppliers = suppliers.sort_by { |s| s['supplier_name'] }
-  File.open('./storage/supply_teachers/current_data/output/data_with_line_numbers.json.tmp', 'w') do |f|
+  File.open(get_output_file_path('data_with_line_numbers.json'), 'w') do |f|
     f.puts JSON.pretty_generate(suppliers)
   end
   File.open(geocoder_cache_path, 'w') do |file|

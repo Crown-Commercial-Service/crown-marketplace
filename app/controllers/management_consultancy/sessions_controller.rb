@@ -11,7 +11,7 @@ module ManagementConsultancy
     end
 
     def after_sign_out_path_for(_resource)
-      management_consultancy_journey_start_path
+      management_consultancy_path
     end
 
     def new_session_path

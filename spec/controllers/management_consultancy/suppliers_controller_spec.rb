@@ -27,7 +27,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         }
       end
 
@@ -41,18 +40,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
 
       it 'assigns lot to the correct lot' do
         expect(assigns(:lot)).to eq(lot)
-      end
-
-      it 'sets the back path to the choose regions question' do
-        expected_path = journey_question_path(
-          journey: 'management-consultancy',
-          slug: 'choose-regions',
-          lot: lot_number,
-          services: services,
-          region_codes: region_codes,
-          help_needed: 'management_consultants'
-        )
-        expect(assigns(:back_path)).to eq(expected_path)
       end
     end
 
@@ -65,7 +52,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
           lot: lot_number,
           services: services,
           region_codes: region_codes,
-          help_needed: 'management_consultants'
         }
       end
 
@@ -79,18 +65,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
 
       it 'assigns suppliers available in lot & regions, with services' do
         expect(assigns(:suppliers)).to eq(suppliers)
-      end
-
-      it 'sets the back path to the choose regions question' do
-        expected_path = journey_question_path(
-          journey: 'management-consultancy',
-          slug: 'choose-regions',
-          lot: lot_number,
-          services: services,
-          region_codes: region_codes,
-          help_needed: 'management_consultants'
-        )
-        expect(assigns(:back_path)).to eq(expected_path)
       end
     end
   end
@@ -108,7 +82,6 @@ RSpec.describe ManagementConsultancy::SuppliersController, type: :controller do
         lot: lot_number,
         services: services,
         region_codes: region_codes,
-        help_needed: 'management_consultants'
       }
     end
 
