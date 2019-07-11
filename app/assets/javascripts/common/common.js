@@ -1,6 +1,6 @@
 const pageUtils = {
 
-    formatPostCode: function (pc) {
+    formatPostCode: (pc) => {
 
         let outer = pc.substring(0, pc.length - 3);
         let inner = pc.slice(-3);
@@ -8,7 +8,7 @@ const pageUtils = {
     },
 
     /* Sort an un-ordered list */
-    sortUnorderedList: function (listID) {
+    sortUnorderedList: (listID) => {
         let list, i, switching, b, shouldSwitch;
         list = document.getElementById(listID);
         switching = true;
@@ -39,7 +39,7 @@ const pageUtils = {
         }
     },
 
-    setCachedData: function (key, data) {
+    setCachedData: (key, data) => {
         if (localStorage) {
             const dataString = JSON.stringify(data);
             localStorage.setItem(key, dataString);
@@ -69,11 +69,7 @@ const pageUtils = {
 
     },
 
-    getCachedData: function (key) {
-        if (localStorage) {
-            return JSON.parse(localStorage.getItem(key)) || [];
-        }
-
+    getCachedData: (key) => {
         let params = {
             key: key
         };
@@ -88,15 +84,19 @@ const pageUtils = {
             data: JSON.stringify(params),
             processData: false,
             success: function (data, textStatus, jQxhr) {
+
                 console.log(data);
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
             }
         });
+        if (localStorage) {
+            return JSON.parse(localStorage.getItem(key)) || [];
+        }
     },
 
-    clearCashedData: function (key) {
+    clearCashedData: (key) => {
         if (key) {
             localStorage.removeItem(key);
             let params = {
@@ -139,8 +139,8 @@ const pageUtils = {
         }
     },
 
-    sortByName: function (arr) {
-        return arr.sort(function (a, b) {
+    sortByName: (arr) => {
+        return arr.sort((a, b) => {
             const nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
             if (nameA < nameB) //sort string ascending
                 return -1;
@@ -150,15 +150,15 @@ const pageUtils = {
         });
     },
 
-    getCodes: function (arr) {
+    getCodes: (arr) => {
         let result = [];
-        arr.forEach( function(value, index, array) {
+        arr.forEach((value, index, array) => {
             result.push(value.code.replace('-', '.'));
         });
         return result;
     },
 
-    generateGuid: function () {
+    generateGuid: () => {
         let result, i, j;
         result = '';
         for (j = 0; j < 32; j++) {
@@ -170,7 +170,7 @@ const pageUtils = {
         return result;
     },
 
-    isPostCodeValid: function (postCodeInput) {
+    isPostCodeValid: (postCodeInput) => {
         let result;
         if (postCodeInput) {
             postCodeInput = postCodeInput.replace(/\s/g, "");
@@ -182,7 +182,7 @@ const pageUtils = {
         return result;
     },
 
-    toggleInlineErrorMessage: function (show) {
+    toggleInlineErrorMessage: (show) => {
         let inLineErrorMessage = $('#inline-error-message');
 
         if (inLineErrorMessage && show === true) {
@@ -194,7 +194,7 @@ const pageUtils = {
         }
     },
 
-    showGIAError: function (show, errorMsg) {
+    showGIAError: (show, errorMsg) => {
 
         errorMsg = errorMsg || "The total internal area value entered is invalid";
         if (show === true) {
@@ -207,7 +207,7 @@ const pageUtils = {
         }
     },
 
-    showPostCodeError: function (show, errorMsg) {
+    showPostCodeError: (show, errorMsg) => {
 
         errorMsg = errorMsg || "The postcode entered is invalid";
         if (show === true) {
@@ -220,7 +220,7 @@ const pageUtils = {
         }
     },
 
-    showAddressError: function (show, errorMsg) {
+    showAddressError: (show, errorMsg) => {
 
         errorMsg = errorMsg || "No address selected";
         if (show === true) {
@@ -234,10 +234,11 @@ const pageUtils = {
             pageUtils.showPostCodeError(false);
         }
     }
+
 };
 
 const fm = {
-    clearBuildingCache: (() => {
+    clearBuildingCache: () => {
         pageUtils.clearCashedData('fm-current-building');
         pageUtils.clearCashedData('fm-current-region');
         pageUtils.clearCashedData('fm-new-building-name');
@@ -246,9 +247,9 @@ const fm = {
         pageUtils.clearCashedData('fm-new-address');
         pageUtils.clearCashedData('fm-postcode-is-in-london');
         pageUtils.clearCashedData('fm-postcode');
-    }),
+    },
     services: {
-        updateBuilding: ((building, isUpdate, whereNext) => {
+        updateBuilding: (building, isUpdate, whereNext) => {
 
             let url = '/facilities-management/buildings/new-building-address/save-building';
 
@@ -278,9 +279,9 @@ const fm = {
                     console.log(errorThrown);
                 }
             });
-        }),
+        },
 
-        save_uom: ((building_id, service_code, uom_value) => {
+        save_uom: (building_id, service_code, uom_value) => {
 
             let url = '/facilities-management/buildings/save-uom-value';
 
@@ -308,9 +309,9 @@ const fm = {
                 }
             });
 
-        }),
+        },
 
-        delete_building: ((building_id) => {
+        delete_building: (building_id) => {
 
             let url = '/facilities-management/buildings/delete_building';
 
@@ -333,9 +334,9 @@ const fm = {
                 }
             });
 
-        }),
+        },
 
-        saveLiftData: ((building_id, liftData) => {
+        saveLiftData: (building_id, liftData) => {
 
             let url = '/facilities-management/services/save-lift-data';
 
@@ -362,9 +363,9 @@ const fm = {
                 }
             });
 
-        }),
+        },
 
-        isDateInFuture: ((day, month, year) => {
+        isDateInFuture: (day, month, year) => {
             let result = false;
             if (fm.services.isDateValid(day, month, year) === true) {
                 let date_today = new Date();
@@ -376,17 +377,17 @@ const fm = {
             }
             return result;
 
-        }),
+        },
 
         isDateValid:
-            ((day, month, year) => {
+            (day, month, year) => {
                 const d = new Date(year, month - 1, day);
                 let result = d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month) && d.getDate() === parseInt(day);
                 return result;
-            }),
+            },
 
-        addressLookUp: ((postcode) => {
+        addressLookUp: (postcode) => {
 
-        })
+        }
     }
 };
