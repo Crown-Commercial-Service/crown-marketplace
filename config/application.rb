@@ -41,6 +41,12 @@ module Marketplace
     }
 
     # config.action_dispatch.default_headers.merge!('X-Content-Type-Options' => 'nosniff')
+
+    extend Sprockets::BumbleD::DSL
+
+    configure_sprockets_bumble_d do |config|
+      config.babel_config_version = 1
+    end
   end
 
   def self.feedback_email_address
@@ -116,8 +122,7 @@ module Marketplace
   def self.dfe_signin_whitelisted_email_addresses
     return unless dfe_signin_whitelist_enabled?
 
-    @dfe_signin_whitelisted_email_addresses ||=
-      ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].split(',')
+    @dfe_signin_whitelisted_email_addresses ||= ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].split(',')
   end
 
   def self.upload_privileges?
