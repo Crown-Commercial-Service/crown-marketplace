@@ -1,23 +1,27 @@
+<div class="govuk-grid-row">
 <li class="govuk-list">
-  <div class="govuk-grid-column-three-quarters">
-    <h2 class="govuk-heading-m">
-      <%= link_to supplier.name, management_consultancy_supplier_path(id: supplier.id, lot: params[:lot]), class: "govuk-!-font-size-20 ccs-no-underline" %>
-      <% if supplier.sme? %>
-        <span class="ccs-tag"><%= t('sme') %></span>
-      <% end %>
-    </h2>
-  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h2 class="govuk-heading-m">
+        <%= link_to supplier.name, management_consultancy_supplier_path(id: supplier.id, lot: params[:lot]), class: "govuk-!-font-size-20 ccs-no-underline" %>
+        <% if supplier.sme? %>
+          <span class="ccs-tag"><%= t('sme') %></span>
+        <% end %>
+      </h2>
+    </div>
 
-  <div class="govuk-grid-column-one-quarter ccs-results-list__detail">
-    <% supplier.rate_cards.select do |rate_card| %>
-      <% if rate_card.lot == params[:lot].to_i %>
-        <strong class="govuk-!-font-size-36 ccs-font--wrap">
-          <%= number_to_currency(rate_card.average_daily_rate, precision: 0) %>
-        </strong><br />
-        <span class="govuk-!-font-size-16">
-          Average day rate
-        </span>
-      <% end %>
-    <% end%>
+    <div class="govuk-grid-column-one-quarter mc-suppliers-average-day-rate">
+      <% supplier.rate_cards.select do |rate_card| %>
+        <% if rate_card.lot == @lot.try(:number) %>
+          <strong class="govuk-!-font-size-12">
+            <%= t('.average_day_rate') %>
+          </strong><br>
+          <strong class="govuk-!-font-size-36">
+            <%= number_to_currency(rate_card.average_daily_rate, precision: 0) %>
+          </strong><br>
+        <% end %>
+      <% end%>
+    </div>
   </div>
 </li>
+</div>
