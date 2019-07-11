@@ -5,10 +5,10 @@ module ManagementConsultancy
       self.table_name = 'management_consultancy_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      SUPPLIERS_PATH = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Suppliers.xlsx').freeze
-      SUPPLIER_SERVICE_OFFERINGS_PATH = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Service offerings.xlsx').freeze
-      SUPPLIER_REGIONAL_OFFERINGS_PATH = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Regional offerings.xlsx').freeze
-      RATE_CARDS_PATH = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'rate_cards.xlsx').freeze
+      SUPPLIERS_PATH = 'storage/management_consultancy/current_data/input/Suppliers.xlsx'.freeze
+      SUPPLIER_SERVICE_OFFERINGS_PATH = 'storage/management_consultancy/current_data/input/Service offerings.xlsx'.freeze
+      SUPPLIER_REGIONAL_OFFERINGS_PATH = 'storage/management_consultancy/current_data/input/Regional offerings.xlsx'.freeze
+      RATE_CARDS_PATH = 'storage/management_consultancy/current_data/input/rate_cards.xlsx'.freeze
 
       mount_uploader :suppliers, ManagementConsultancyFileUploader
       mount_uploader :rate_cards, ManagementConsultancyFileUploader
@@ -99,7 +99,16 @@ module ManagementConsultancy
       end
 
       def cp_file_to_input(file_path, new_path, condition)
-        FileUtils.cp(file_path, new_path) if condition
+        if Rails.env.development?
+          FileUtils.cp(file_path, new_path) if condition
+        else
+          object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+          object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path)).upload_file(file_path, acl: 'public-read')
+        end
+      end
+
+      def s3_path(path)
+        path.slice((path.index('storage/') + 8)..path.length)
       end
 
       def reject_previous_uploads
