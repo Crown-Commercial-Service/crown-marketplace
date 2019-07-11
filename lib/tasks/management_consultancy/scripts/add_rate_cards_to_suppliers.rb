@@ -2,10 +2,10 @@ require 'roo'
 require 'json'
 
 def add_rate_cards_to_suppliers
-  suppliers = JSON.parse(File.read('./storage/management_consultancy/current_data/output/suppliers_with_service_offerings_and_regional_availability.json'))
+  suppliers = JSON.parse(File.read(get_mc_output_file_path('suppliers_with_service_offerings_and_regional_availability.json')))
   suppliers.each { |supplier| supplier['rate_cards'] = [] }
 
-  rate_cards_workbook = Roo::Spreadsheet.open './storage/management_consultancy/current_data/input/rate_cards.xlsx'
+  rate_cards_workbook = Roo::Spreadsheet.open(rate_cards_workbook_filepath, extension: :xlsx)
 
   sheet_names = {
     'MCF Lot 2 (Finance)' => 'MCF1.2',
@@ -45,9 +45,7 @@ def add_rate_cards_to_suppliers
     end
   end
 
-  File.open('./storage/management_consultancy/current_data/output/data.json', 'w') do |f|
-    f.write JSON.pretty_generate suppliers
-  end
+  write_output_file(get_mc_output_file_path('data.json'), suppliers)
 end
 
 def convert_price(price)
@@ -56,4 +54,8 @@ end
 
 def extract_duns(supplier_name)
   supplier_name.split('[')[1].split(']')[0].to_i
+end
+
+def rate_cards_workbook_filepath
+  get_mc_input_file_path ManagementConsultancy::Admin::Upload::RATE_CARDS_PATH
 end

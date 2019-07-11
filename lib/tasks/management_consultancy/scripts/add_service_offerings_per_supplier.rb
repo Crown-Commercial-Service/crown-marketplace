@@ -2,10 +2,10 @@ require 'roo'
 require 'json'
 
 def add_service_offerings_per_supplier
-  suppliers = JSON.parse(File.read('./storage/management_consultancy/current_data/output/suppliers.json'))
+  suppliers = JSON.parse(File.read(get_mc_output_file_path('suppliers.json')))
   suppliers.each { |supplier| supplier['lots'] = [] }
 
-  service_offerings_workbook = Roo::Spreadsheet.open './storage/management_consultancy/current_data/input/Service offerings.xlsx'
+  service_offerings_workbook = Roo::Spreadsheet.open(service_offerings_workbook_filepath, extension: :xlsx)
 
   (0..10).each do |sheet_number|
     sheet = service_offerings_workbook.sheet(sheet_number)
@@ -33,9 +33,7 @@ def add_service_offerings_per_supplier
     end
   end
 
-  File.open('./storage/management_consultancy/current_data/output/suppliers_with_service_offerings.json', 'w') do |f|
-    f.write JSON.pretty_generate suppliers
-  end
+  write_output_file(get_mc_output_file_path('suppliers_with_service_offerings.json'), suppliers)
 end
 
 def extract_service_number(service_name)
@@ -49,4 +47,8 @@ end
 
 def extract_duns(supplier_name)
   supplier_name.split('[')[1].split(']')[0].to_i
+end
+
+def service_offerings_workbook_filepath
+  get_mc_input_file_path ManagementConsultancy::Admin::Upload::SUPPLIER_SERVICE_OFFERINGS_PATH
 end

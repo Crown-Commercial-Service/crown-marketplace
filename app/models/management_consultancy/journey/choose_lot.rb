@@ -21,8 +21,12 @@ module ManagementConsultancy
       ]
     }
 
-    def self.lots
-      Lot.all.sort_by(&:description)
+    def self.mcf_lots
+      Lot.where(framework: 'MCF').sort_by(&:number)
+    end
+
+    def self.mcf2_lots
+      Lot.where(framework: 'MCF2').sort_by(&:number)
     end
 
     def next_step_class

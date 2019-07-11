@@ -8,7 +8,7 @@ const pageUtils = {
     },
 
     /* Sort an un-ordered list */
-    sortUnorderedList: ((listID) => {
+    sortUnorderedList: (listID) => {
         let list, i, switching, b, shouldSwitch;
         list = document.getElementById(listID);
         switching = true;
@@ -37,9 +37,9 @@ const pageUtils = {
                 switching = true;
             }
         }
-    }),
+    },
 
-    setCachedData: ((key, data) => {
+    setCachedData: (key, data) => {
         if (localStorage) {
             const dataString = JSON.stringify(data);
             localStorage.setItem(key, dataString);
@@ -67,13 +67,9 @@ const pageUtils = {
             }
         });
 
-    }),
+    },
 
-    getCachedData: ((key) => {
-        if (localStorage) {
-            return JSON.parse(localStorage.getItem(key)) || [];
-        }
-
+    getCachedData: (key) => {
         let params = {
             key: key
         };
@@ -88,15 +84,19 @@ const pageUtils = {
             data: JSON.stringify(params),
             processData: false,
             success: function (data, textStatus, jQxhr) {
+
                 console.log(data);
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
             }
         });
-    }),
+        if (localStorage) {
+            return JSON.parse(localStorage.getItem(key)) || [];
+        }
+    },
 
-    clearCashedData: ((key) => {
+    clearCashedData: (key) => {
         if (key) {
             localStorage.removeItem(key);
             let params = {
@@ -137,9 +137,9 @@ const pageUtils = {
                 }
             });
         }
-    }),
+    },
 
-    sortByName: ((arr) => {
+    sortByName: (arr) => {
         return arr.sort((a, b) => {
             const nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
             if (nameA < nameB) //sort string ascending
@@ -148,17 +148,17 @@ const pageUtils = {
                 return 1;
             return 0;
         });
-    }),
+    },
 
-    getCodes: ((arr) => {
+    getCodes: (arr) => {
         let result = [];
         arr.forEach((value, index, array) => {
             result.push(value.code.replace('-', '.'));
         });
         return result;
-    }),
+    },
 
-    generateGuid: (() => {
+    generateGuid: () => {
         let result, i, j;
         result = '';
         for (j = 0; j < 32; j++) {
@@ -168,9 +168,9 @@ const pageUtils = {
             result = result + i;
         }
         return result;
-    }),
+    },
 
-    isPostCodeValid: ((postCodeInput) => {
+    isPostCodeValid: (postCodeInput) => {
         let result;
         if (postCodeInput) {
             postCodeInput = postCodeInput.replace(/\s/g, "");
@@ -180,9 +180,9 @@ const pageUtils = {
             result = false;
         }
         return result;
-    }),
+    },
 
-    toggleInlineErrorMessage: ((show) => {
+    toggleInlineErrorMessage: (show) => {
         let inLineErrorMessage = $('#inline-error-message');
 
         if (inLineErrorMessage && show === true) {
@@ -192,9 +192,9 @@ const pageUtils = {
         if (inLineErrorMessage && show === false) {
             $('#inline-error-message').addClass('govuk-visually-hidden');
         }
-    }),
+    },
 
-    showGIAError: ((show, errorMsg) => {
+    showGIAError: (show, errorMsg) => {
 
         errorMsg = errorMsg || "The total internal area value entered is invalid";
         if (show === true) {
@@ -205,9 +205,9 @@ const pageUtils = {
             $('#fm-internal-square-area-error').addClass('govuk-visually-hidden');
             $('#fm-internal-square-area-error-form-group').removeClass('govuk-form-group--error');
         }
-    }),
+    },
 
-    showPostCodeError: ((show, errorMsg) => {
+    showPostCodeError: (show, errorMsg) => {
 
         errorMsg = errorMsg || "The postcode entered is invalid";
         if (show === true) {
@@ -218,9 +218,9 @@ const pageUtils = {
             $('#fm-postcode-error').addClass('govuk-visually-hidden');
             $('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');
         }
-    }),
+    },
 
-    showAddressError: ((show, errorMsg) => {
+    showAddressError: (show, errorMsg) => {
 
         errorMsg = errorMsg || "No address selected";
         if (show === true) {
@@ -233,12 +233,12 @@ const pageUtils = {
             $('#fm-address-error-form-group').removeClass('govuk-form-group--error');
             pageUtils.showPostCodeError(false);
         }
-    })
+    }
 
 };
 
 const fm = {
-    clearBuildingCache: (() => {
+    clearBuildingCache: () => {
         pageUtils.clearCashedData('fm-current-building');
         pageUtils.clearCashedData('fm-current-region');
         pageUtils.clearCashedData('fm-new-building-name');
@@ -247,9 +247,9 @@ const fm = {
         pageUtils.clearCashedData('fm-new-address');
         pageUtils.clearCashedData('fm-postcode-is-in-london');
         pageUtils.clearCashedData('fm-postcode');
-    }),
+    },
     services: {
-        updateBuilding: ((building, isUpdate, whereNext) => {
+        updateBuilding: (building, isUpdate, whereNext) => {
 
             let url = '/facilities-management/buildings/new-building-address/save-building';
 
@@ -279,9 +279,9 @@ const fm = {
                     console.log(errorThrown);
                 }
             });
-        }),
+        },
 
-        save_uom: ((building_id, service_code, uom_value) => {
+        save_uom: (building_id, service_code, uom_value) => {
 
             let url = '/facilities-management/buildings/save-uom-value';
 
@@ -309,9 +309,9 @@ const fm = {
                 }
             });
 
-        }),
+        },
 
-        delete_building: ((building_id) => {
+        delete_building: (building_id) => {
 
             let url = '/facilities-management/buildings/delete_building';
 
@@ -334,9 +334,9 @@ const fm = {
                 }
             });
 
-        }),
+        },
 
-        saveLiftData: ((building_id, liftData) => {
+        saveLiftData: (building_id, liftData) => {
 
             let url = '/facilities-management/services/save-lift-data';
 
@@ -363,9 +363,9 @@ const fm = {
                 }
             });
 
-        }),
+        },
 
-        isDateInFuture: ((day, month, year) => {
+        isDateInFuture: (day, month, year) => {
             let result = false;
             if (fm.services.isDateValid(day, month, year) === true) {
                 let date_today = new Date();
@@ -377,17 +377,17 @@ const fm = {
             }
             return result;
 
-        }),
+        },
 
         isDateValid:
-            ((day, month, year) => {
+            (day, month, year) => {
                 const d = new Date(year, month - 1, day);
                 let result = d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month) && d.getDate() === parseInt(day);
                 return result;
-            }),
+            },
 
-        addressLookUp: ((postcode) => {
+        addressLookUp: (postcode) => {
 
-        })
+        }
     }
 };

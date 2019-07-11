@@ -88,10 +88,11 @@ gem 'cancan', '~> 1.6.10'
 
 gem 'role_model', '~> 0.8.2'
 
-group :production do
-  # for S3 storage of files
-  gem 'carrierwave-aws', '~> 1.3.0'
-end
+# for S3 storage of files
+gem 'carrierwave-aws', '~> 1.3.0'
+
+gem 'sprockets'
+gem 'sprockets-bumble_d'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -107,6 +108,8 @@ group :development, :test do
   gem 'rubyXL'
   gem 'i18n-tasks'
   gem 'poltergeist'
+  gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
+  gem 'tzinfo-data', platforms: %i[x64_mingw]
 end
 
 group :development do

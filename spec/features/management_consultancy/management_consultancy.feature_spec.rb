@@ -46,10 +46,9 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     required_service = ManagementConsultancy::Service.where(code: 'MCF2.1.1').first
     required_region = Nuts2Region.find_by(code: 'UKC1')
 
-    choose 'help_needed_management_consultants'
-    click_on 'Continue'
+    click_on 'Confirm and continue'
 
-    choose 'Business Consultancy Services (MCF2 Lot 1)'
+    choose 'Lot 1 - Business consultancy'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -69,10 +68,9 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     required_service = ManagementConsultancy::Service.where(code: 'MCF2.2.1').first
     required_region = Nuts2Region.find_by(code: 'UKC2')
 
-    choose 'help_needed_management_consultants'
-    click_on 'Continue'
+    click_on 'Confirm and continue'
 
-    choose 'Procurement, Supply Chain and Commercial Consultancy Services (MCF2 Lot 2)'
+    choose 'Lot 2 - Procurement, supply chain and commercial consultancy'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -92,10 +90,9 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     required_service = ManagementConsultancy::Service.where(code: 'MCF2.3.10').first
     required_region = Nuts2Region.find_by(code: 'UKD1')
 
-    choose 'help_needed_management_consultants'
-    click_on 'Continue'
+    click_on 'Confirm and continue'
 
-    choose 'Complex and Transformation Consultancy Services (MCF2 Lot 3)'
+    choose 'Lot 3 - Complex and transformation consultancy'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -115,10 +112,9 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     required_service = ManagementConsultancy::Service.where(code: 'MCF2.4.10').first
     required_region = Nuts2Region.find_by(code: 'UKD3')
 
-    choose 'help_needed_management_consultants'
-    click_on 'Continue'
+    click_on 'Confirm and continue'
 
-    choose 'Strategic Consultancy Services (MCF2 Lot 4)'
+    choose 'Lot 4 - Strategic consultancy'
     click_on I18n.t('common.submit')
 
     check required_service.name
@@ -130,21 +126,5 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     expect(page).to have_css('h1', text: 'Supplier results')
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Aardvark Ltd/)
-  end
-
-  scenario 'Buyer needs a different framework' do
-    visit_management_consultancy_start
-
-    choose 'help_needed_g_cloud'
-    click_on 'Continue'
-
-    expect(page).to have_css('h1', text: 'You need a different framework')
-  end
-
-  scenario 'Buyer doesn’t pick a framework' do
-    visit_management_consultancy_start
-    click_on 'Continue'
-
-    expect(page).to have_css('.govuk-error-message', text: 'Select what you need')
   end
 end

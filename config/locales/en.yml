@@ -152,7 +152,7 @@ en:
         management_consultancy/journey/choose_regions:
           attributes:
             region_codes:
-              too_short: Select at least one region
+              too_short: Select the region or regions you want the consultants to work
         management_consultancy/journey/choose_services:
           attributes:
             services:
@@ -240,6 +240,11 @@ en:
             postcode:
               invalid_postcode: Enter a valid postcode
   apprenticeships:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       download_provider:
         button_label: Start new search
@@ -578,6 +583,8 @@ en:
     submit: Continue
     type_csv: text/csv
     type_doc: application/msword
+    type_xlsx: application/msexcel
+    xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
   companies:
     unit:
       one: company
@@ -678,8 +685,8 @@ en:
       crown_copyright: "© Crown copyright"
       error_prefix: Error
       feedback: feedback
-      feedback_aria_label: Email your feedback on this service
-      feedback_html: This is a new service – your (%{link}) will help us to improve it.
+      feedback_aria_label: Email your feedback on this service.
+      feedback_html: This is a new service – your %{link} will help us to improve it.
       having_problems: To ask a question or report a problem,
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy
@@ -690,6 +697,11 @@ en:
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
   legal_services:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       index:
         heading: Find legal services for the wider public sector
@@ -855,7 +867,7 @@ en:
         new:
           caption: Management Consultancy
           heading: New data upload
-          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_caption: Supported file format is XLSX. Maximum file size is 5mb.
           upload_title: Upload one or more of the following spreadsheets
           warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
         show:
@@ -883,19 +895,17 @@ en:
       index:
         before_you_start:
           heading: Before you start
-          use_this_service:
-            heading: 'To use this service, you need to:'
-            item_1: know the location where the work will be carried out
-            item_2_html: review the %{ojeu_contract_link} and framework specification to ensure your requirements are within the scope of this agreement
-            item_3_html: 'know the lot (or lots) the consultancy services belong to - see the documents ''Lot descriptions MCF2 RM6008'' and ''RM3745 MCF Lot desfriptions'' listed on the following agreements: %{mcf_link} and %{mcf2_link}'
+          mcf2_link_text: Management Consultancy Framework Two
+          mcf_link_text: Management Consultancy Framework
+          text_html: You need to know which lot the management consultancy services you need are in. Review the lot descriptions documents for %{mcf_link} and %{mcf2_link}.
+        guidance:
+          heading: Guidance and other useful documents
+          mcf2_link_text: Management Consultancy Framework Two (MCF2) specification
+          mcf_link_text: Management Consultancy Framework (MCF) specification
+          ojeu_contract_link_text: OJEU contract notice
         heading: Find management consultants
-        mcf2_link_text: Management Consultancy Framework Two
-        mcf_link_text: Management Consultancy Framework
-        ojeu_contract_link_text: OJEU contract notice
-        use_this_service:
-          heading: 'Use this service to:'
-          item_1: produce a list of Crown Commercial Service approved management consultants based on your requirements
-          item_2: adhere to the public procurement procedures
+        use_this_service: Use this service to download a shortlist of suppliers that provide the management consultancy services you need.
+        using_this_service: Using this service means you're following the public sector procurement procedures.
     html:
       download_the_supplier_list:
         button_start_new_search: Start new search
@@ -1011,31 +1021,41 @@ en:
           standard: Consultant
     journey:
       choose_help_needed:
-        contingent_labour_description: Staff for short-term projects with specific outcomes
-        corporate_financial_services_description: Advice on complex corporate financial matters
-        digital_outcomes_and_specialists_description: Support to design, build and deliver digital outcomes using the agile approach
-        g_cloud_description: Cloud hosting, software and support
-        management_consultants_description: Specific areas of expertise for longer running projects
-        question: What do you need to procure?
-        research_marketplace_description: Social, economic or market research for projects of all size and budgets
-        technology_services_description: Technology services all government security classifcation levels
+        body: Check that you don’t need one of these other frameworks offered by the Crown Commercial Service.
+        contingent_labour_html: "%{contingent_labour_link} - contingent labour for short-term projects with specific outcomes"
+        contingent_labour_link: https://www.crowncommercial.gov.uk/agreements/RM3749
+        contingent_labour_link_text: Public sector resourcing
+        corporate_financial_services_html: "%{corporate_financial_services_link} - advice on complex corporate financial matters"
+        corporate_financial_services_link: https://www.crowncommercial.gov.uk/agreements/RM3719
+        corporate_financial_services_link_text: Corporate financial services
+        digital_outcomes_and_specialists_html: "%{digital_outcomes_and_specialists_link} - support to design, build and deliver digital outcomes using the agile approach"
+        digital_outcomes_and_specialists_link: https://www.crowncommercial.gov.uk/agreements/RM1043.5
+        digital_outcomes_and_specialists_link_text: Digital outcomes and specialists 3
+        g_cloud_html: "%{g_cloud_link} - cloud hosting, software and support"
+        g_cloud_link: https://www.crowncommercial.gov.uk/agreements/RM1557.10
+        g_cloud_link_text: G-Cloud 10
+        headline: Confirm you need management consultancy
+        research_marketplace_html: "%{research_marketplace_link} - social, economic or market research for projects of all sizes and budgets"
+        research_marketplace_link: https://www.crowncommercial.gov.uk/agreements/RM6018
+        research_marketplace_link_text: Research marketplace
+        technology_services_html: "%{technology_services_link} - technology services at all government security classifcation levels"
+        technology_services_link: https://www.crowncommercial.gov.uk/agreements/RM3804
+        technology_services_link_text: Technology services 2
       choose_lot:
+        mcf2_heading: Management Consultancy Framework (MCF2)
+        mcf_heading: Management Consultancy Framework (MCF)
         question: Select the lot you need
       choose_regions:
         no_regions_selected: No regions selected
-        question: Where do you want the consultants to work?
+        question: Select the regions you want the consultants to work
         regions_selected: Regions selected
         remove_all: Remove all
-        subtitle: Suppliers have said where they’ll provide consultants.
+        subtitle: Suppliers have said where they’ll provide consultants
       choose_services:
         no_services_selected: No services selected
         question: Select the services you need
         remove_all: Remove all
         services_selected: services selected
-      other_framework:
-        back_to_start: Back to start
-        heading: You need a different framework
-        introduction: This service is for the management consultancy frameworks RM3745 and RM6008.
     sessions:
       new:
         email_address: Email address
@@ -1050,6 +1070,7 @@ en:
         lead_text: The spreadsheet includes the selections you made, for your records and audit trail
         other_documents: Other documents
       index:
+        average_day_rate_html: We calculate the <b>average day rate</b> using the pay grades provided by the suppliers.
         download_suppliers_list: Download the supplier list
         heading: Supplier results
         no_suppliers_found:
@@ -1068,12 +1089,13 @@ en:
           phone_number: Phone number
           website: Website
         day_rates: Day rates
-        fixed_until_mcf1: Fixed until September 2020
-        fixed_until_mcf2: Fixed until December 2021
+        fixed_until_mcf1: Fixed until September 2021
+        fixed_until_mcf2: Fixed until September 2020
         further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
         is_an_sme: This supplier is a small or medium-sized enterprise
         max_day_rate: Max day rate
-        sub_title: "%{framework} lot %{lot_number} - %{description}"
+      supplier:
+        average_day_rate: Average day rate
     users:
       new_password_required:
         confirm_your_password: Confirm your password
@@ -1143,6 +1165,9 @@ en:
       facilities_management:
         details: You don’t have permission to view this page.
         title: Not permitted
+      legal_services:
+        details: You don’t have permission to view this page.
+        title: Not permitted
       management_consultancy:
         details: You don’t have permission to view this page.
         title: Not permitted
@@ -1197,6 +1222,7 @@ en:
           confirm_changes: 'Confirm these files are ready to be used by the live service:'
           current_accredited_suppliers: Current accredited suppliers
           datetime: 'Date and time:'
+          delete: Delete session
           error_heading: There is a problem
           files: Files
           geographical_data_all_suppliers: Geographical data all suppliers

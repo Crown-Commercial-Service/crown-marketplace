@@ -1,25 +1,25 @@
-<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
-
-<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-<%= form_tag @form_path, method: :get do %>
-  <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-  <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
-    <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('.question') %>
-        </h1>
-      </legend>
-      <%= display_error(@journey, :help_needed) %>
-      <div class="govuk-radios">
-        <% ManagementConsultancy::Journey::ChooseHelpNeeded::FRAMEWORKS.each do |framework| %>
-          <div class="govuk-radios__item">
-            <%= radio_button_tag :help_needed, framework, checked?(params[:help_needed], framework), class: 'govuk-radios__input' %>
-            <%= label_tag :help_needed, t(".#{framework}_description"), class: 'govuk-label govuk-radios__label' %>
-          </div>
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-m">
+        <%= t('.headline') %>
+      </h1>
+      <p class="govuk-body">
+        <%= t('.body') %>
+      </p>
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-left-2 govuk-!-margin-top-7 govuk-!-margin-bottom-8">
+        <% %w(contingent_labour corporate_financial_services research_marketplace technology_services digital_outcomes_and_specialists g_cloud).each do |service| %>
+          <li class="govuk-!-margin-bottom-5">
+            <%= t(".#{service}_html", "#{service}_link": link_to(t(".#{service}_link_text"), t(".#{service}_link"))) %>
+          </li>
         <% end %>
-      </div>
-    <% end %>
-  <% end %>
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
-<% end %>
+      </ul>
+      <%= form_tag @form_path, method: :get do %>
+        <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+        <%= govuk_form_group_with_optional_error(@journey, :help_needed) do %>
+          <%= submit_tag t('common.confirm_and_continue'), class: "govuk-button" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

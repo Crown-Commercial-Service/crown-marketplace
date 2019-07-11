@@ -30,12 +30,10 @@ module ManagementConsultancy
     end
 
     def data_file
-      file_path = './storage/management_consultancy/current_data/output/data.json'
-      if Rails.env.production?
-        object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-        object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object('management_consultancy/current_data/output/data.json').get(response_target: file_path)
-      end
-      file_path
+      file_path = 'management_consultancy/current_data/output/data.json'
+      return 'storage/' + file_path if Rails.env.development?
+
+      URI.open("https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{file_path}")
     end
   end
 end
