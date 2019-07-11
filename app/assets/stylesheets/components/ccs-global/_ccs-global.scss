@@ -494,6 +494,11 @@ body.js-enabled #ccs-dynamic-accordian {
             }
         }
 
+        .mc-suppliers-average-day-rate {
+            list-style: none;
+            text-align: right;
+        }
+
         @extend %clearfix;
 
         @media (max-width: 641px) {//mobile
