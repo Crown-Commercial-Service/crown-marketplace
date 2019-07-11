@@ -36,18 +36,20 @@ namespace :mc do
 
   def get_mc_input_file_path(file_path)
     return file_path if Rails.env.development?
-    object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(file_path))
+    s3_path(file_path)
   end
 
   def get_mc_output_file_path(file_name)
     file_path = "storage/management_consultancy/current_data/output/#{file_name}"
     return file_path if Rails.env.development?
-    object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(file_path))
+    s3_path(file_path)
   end
 
   def s3_path(path)
+    "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{s3_path_folder(path)}"
+  end
+
+  def s3_path_folder(path)
     path.slice((path.index('storage/') + 8)..path.length)
   end
 
@@ -58,7 +60,7 @@ namespace :mc do
       end
     else
       object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(file_path)).put(json_output, options: { acl: 'public-read' })
+      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(file_path)).put(json_output, { acl: 'public-read' })
     end
   end
 end
