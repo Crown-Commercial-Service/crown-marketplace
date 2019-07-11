@@ -9,9 +9,11 @@ require 'csv'
 require 'roo'
 
 def validate_and_geocode
-  accredited_suppliers_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH, extension: :xlsx)
+  current_accredited_path = file_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH)
+  accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
   suppliers = []
-  csv = CSV.open(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH, headers: true)
+  supplier_lookup_path = file_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH)
+  csv = CSV.open(URI.open(supplier_lookup_path), headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
   end

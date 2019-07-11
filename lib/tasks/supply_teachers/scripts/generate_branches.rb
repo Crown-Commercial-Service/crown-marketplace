@@ -6,7 +6,8 @@ require 'capybara'
 require 'fileutils'
 
 def generate_branches
-  branch_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::GEOGRAPHICAL_DATA_PATH, extension: :xlsx)
+  geographical_data_path = file_path(SupplyTeachers::Admin::Upload::GEOGRAPHICAL_DATA_PATH)
+  branch_workbook = Roo::Spreadsheet.open(geographical_data_path, extension: :xlsx)
 
   header_map = {
     'Supplier Name' => :supplier_name,
