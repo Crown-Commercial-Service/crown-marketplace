@@ -34,11 +34,12 @@ module Devise
       end
 
       def create_user_in_database
-        user = Cognito::CreateUserFromCognito.call(email).user
-        if user.try(:valid?)
-          success!(user)
+        resp = Cognito::CreateUserFromCognito.call(email)
+
+        if resp.success?
+          success!(resp.user)
         else
-          fail!(:unkown_cognito_error)
+          fail!(resp.error)
         end
       end
     end
