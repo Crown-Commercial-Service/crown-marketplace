@@ -867,7 +867,7 @@ en:
         new:
           caption: Management Consultancy
           heading: New data upload
-          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_caption: Supported file format is XLSX. Maximum file size is 5mb.
           upload_title: Upload one or more of the following spreadsheets
           warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
         show:
