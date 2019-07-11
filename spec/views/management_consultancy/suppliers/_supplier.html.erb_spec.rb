@@ -19,7 +19,7 @@ RSpec.describe 'management_consultancy/suppliers/_supplier.html.erb' do
 
   before do
     allow(supplier).to receive(:services_in_lot).and_return(services)
-    render 'management_consultancy/suppliers/supplier', supplier: supplier, lot_number: '1'
+    render 'management_consultancy/suppliers/supplier', supplier: supplier
   end
 
   it 'displays the supplier name' do
@@ -29,7 +29,7 @@ RSpec.describe 'management_consultancy/suppliers/_supplier.html.erb' do
   context 'when the supplier is an SME' do
     before do
       supplier.update(sme: true)
-      render 'management_consultancy/suppliers/supplier', supplier: supplier, lot_number: '1'
+      render 'management_consultancy/suppliers/supplier', supplier: supplier
     end
 
     it 'displays the SME label' do
