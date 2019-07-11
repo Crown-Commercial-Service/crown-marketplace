@@ -30,11 +30,10 @@ module ManagementConsultancy
     end
 
     def data_file
-      if Rails.env.development?
-        'storage/management_consultancy/current_data/output/data.json'
-      else
-        "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/management_consultancy/current_data/output/data.json"
-      end
+      file_path = 'management_consultancy/current_data/output/data.json'
+      return 'storage/' + file_path if Rails.env.development?
+
+      URI.open("https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{file_path}")
     end
   end
 end

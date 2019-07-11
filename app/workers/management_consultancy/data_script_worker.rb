@@ -32,11 +32,10 @@ module ManagementConsultancy
     end
 
     def error_file_path
-      file_path = 'storage/management_consultancy/current_data/output/errors.out'
-      return file_path if Rails.env.development?
+      file_path = 'management_consultancy/current_data/output/errors.out'
+      return 'storage/' + file_path if Rails.env.development?
 
-      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(file_path))
+      URI.open("https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{file_path}")
     end
   end
 end
