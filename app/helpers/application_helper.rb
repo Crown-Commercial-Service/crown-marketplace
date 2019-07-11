@@ -132,8 +132,8 @@ module ApplicationHelper
   end
 
   def landing_or_admin_page
-    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index')  ||
-        controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
+    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') ||
+      controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
   end
 
   def a_supply_teachers_path?
