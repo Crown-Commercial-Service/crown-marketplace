@@ -30,7 +30,11 @@ module ManagementConsultancy
     end
 
     def data_file
-      Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'data.json')
+      if Rails.env.development?
+        'storage/management_consultancy/current_data/output/data.json'
+      else
+        "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/management_consultancy/current_data/output/data.json"
+      end
     end
   end
 end
