@@ -685,8 +685,8 @@ en:
       crown_copyright: "© Crown copyright"
       error_prefix: Error
       feedback: feedback
-      feedback_aria_label: Email your feedback on this service
-      feedback_html: This is a new service – your (%{link}) will help us to improve it.
+      feedback_aria_label: Email your feedback on this service.
+      feedback_html: This is a new service – your %{link} will help us to improve it.
       having_problems: To ask a question or report a problem,
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy
@@ -1070,6 +1070,7 @@ en:
         lead_text: The spreadsheet includes the selections you made, for your records and audit trail
         other_documents: Other documents
       index:
+        average_day_rate_html: We calculate the <b>average day rate</b> using the pay grades provided by the suppliers.
         download_suppliers_list: Download the supplier list
         heading: Supplier results
         no_suppliers_found:
@@ -1094,6 +1095,8 @@ en:
         is_an_sme: This supplier is a small or medium-sized enterprise
         max_day_rate: Max day rate
         sub_title: "%{framework} lot %{lot_number} - %{description}"
+      supplier:
+        average_day_rate: Average day rate
     users:
       new_password_required:
         confirm_your_password: Confirm your password
