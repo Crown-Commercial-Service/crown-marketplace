@@ -96,7 +96,7 @@ module FacilitiesManagement
     #   ["K.1", "K.5"]
     def list_of_services
       services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
-      services_selected.map! { |s| s['code'].gsub('-', '.') }.uniq!
+      services_selected.map! { |s| s['code'].gsub('-', '.') if s }.uniq!
 
       services = FacilitiesManagement::Service.all.select { |service| services_selected.include? service.code }
       mandatory = FacilitiesManagement::Service.all.select { |service| service.code == 'A.18' || service.work_package_code == 'B' }

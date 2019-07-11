@@ -1,5 +1,5 @@
 class ManagementConsultancyFileUploader < CarrierWave::Uploader::Base
-  storage :file
+  storage Rails.env.production? ? :aws : :file
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -14,7 +14,7 @@ class ManagementConsultancyFileUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_whitelist
-    %w[xls xlsx csv]
+    %w[xlsx]
   end
 
   def cache_dir
