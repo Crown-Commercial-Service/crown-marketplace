@@ -10,7 +10,8 @@ require 'pathname'
 require 'yaml'
 
 def generate_accreditation
-  accredited_suppliers_workbook = Roo::Spreadsheet.open(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH, extension: :xlsx)
+  current_accredited_path = file_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH)
+  accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
 
   header_map = {
     'Supplier Name - Accreditation Held' => :supplier_name,
