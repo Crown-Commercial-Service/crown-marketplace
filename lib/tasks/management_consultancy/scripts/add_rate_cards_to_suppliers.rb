@@ -45,7 +45,7 @@ def add_rate_cards_to_suppliers
     end
   end
 
-  write_output_file(get_mc_output_file_path('data.json'), suppliers)
+  write_output_file('data.json', suppliers)
 end
 
 def convert_price(price)

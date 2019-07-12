@@ -48,7 +48,7 @@ def add_region_availability_per_lot_per_supplier
     end
   end
 
-  write_output_file(get_mc_output_file_path('suppliers_with_service_offerings_and_regional_availability.json'), suppliers)
+  write_output_file('suppliers_with_service_offerings_and_regional_availability.json', suppliers)
 end
 
 def nuts1_region?(region_name)
