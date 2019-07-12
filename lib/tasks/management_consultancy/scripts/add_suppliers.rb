@@ -34,7 +34,7 @@ def add_suppliers
     supplier[:id] = SecureRandom.uuid
   end
 
-  write_output_file(get_mc_output_file_path('suppliers.json'), suppliers)
+  write_output_file('suppliers.json', suppliers)
 end
 
 def suppliers_workbook_filepath
