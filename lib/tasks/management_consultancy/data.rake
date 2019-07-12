@@ -26,6 +26,8 @@ namespace :mc do
     run_script add_service_offerings_per_supplier
     run_script add_region_availability_per_lot_per_supplier
     run_script add_rate_cards_to_suppliers
+
+    upload_data_and_errors_to_s3 unless Rails.env.development?
   end
 
   def run_script(script)
@@ -34,15 +36,8 @@ namespace :mc do
     end
   end
 
-  def get_mc_input_file_path(file_path)
-    return file_path if Rails.env.development?
-    s3_path(file_path)
-  end
-
   def get_mc_output_file_path(file_name)
-    file_path = "storage/management_consultancy/current_data/output/#{file_name}"
-    return file_path if Rails.env.development?
-    s3_path(file_path)
+    Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', file_name)
   end
 
   def s3_path(path)
@@ -64,5 +59,11 @@ namespace :mc do
       object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(file_path)).upload_file(file_path, acl: 'public-read')
       File.delete(file_path)
     end
+  end
+
+  def upload_data_and_errors_to_s3
+    object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_mc_output_file_path('data.json').to_s)).upload_file(get_output_file_path('data.json'), {acl:'public-read'})
+    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_mc_output_file_path('errors.out').to_s)).upload_file(get_output_file_path('errors.out'), {acl:'public-read'}) unless File.zero?(get_output_file_path('errors.out'))
   end
 end
