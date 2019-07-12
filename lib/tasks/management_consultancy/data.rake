@@ -53,7 +53,8 @@ namespace :mc do
     path.slice((path.index('storage/') + 8)..path.length)
   end
 
-  def write_output_file(file_path, json_output)
+  def write_output_file(file_name, json_output)
+    file_path = "storage/management_consultancy/current_data/output/#{file_name}"
     File.open(file_path, 'w') do |f|
       f.puts JSON.pretty_generate(json_output)
     end
