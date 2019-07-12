@@ -33,7 +33,7 @@ def add_service_offerings_per_supplier
     end
   end
 
-  write_output_file(get_mc_output_file_path('suppliers_with_service_offerings.json'), suppliers)
+  write_output_file('suppliers_with_service_offerings.json', suppliers)
 end
 
 def extract_service_number(service_name)
@@ -50,5 +50,5 @@ def extract_duns(supplier_name)
 end
 
 def service_offerings_workbook_filepath
-  get_mc_input_file_path ManagementConsultancy::Admin::Upload::SUPPLIER_SERVICE_OFFERINGS_PATH
+  ManagementConsultancy::Admin::Upload::SUPPLIER_SERVICE_OFFERINGS_PATH
 end

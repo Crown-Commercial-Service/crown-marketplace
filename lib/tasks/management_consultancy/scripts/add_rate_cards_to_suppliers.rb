@@ -45,7 +45,7 @@ def add_rate_cards_to_suppliers
     end
   end
 
-  write_output_file(get_mc_output_file_path('data.json'), suppliers)
+  write_output_file('data.json', suppliers)
 end
 
 def convert_price(price)
@@ -57,5 +57,5 @@ def extract_duns(supplier_name)
 end
 
 def rate_cards_workbook_filepath
-  get_mc_input_file_path ManagementConsultancy::Admin::Upload::RATE_CARDS_PATH
+  ManagementConsultancy::Admin::Upload::RATE_CARDS_PATH
 end

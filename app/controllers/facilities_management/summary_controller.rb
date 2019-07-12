@@ -59,6 +59,7 @@ module FacilitiesManagement
 
       @report = SummaryReport.new(@start_date, current_user.email.to_s, TransientSessionInfo[session.id])
 
+      # move this into the model
       rates = CCS::FM::Rate.read_benchmark_rates
 
       @report.calculate_services_for_buildings rates
