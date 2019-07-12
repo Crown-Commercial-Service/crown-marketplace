@@ -19,7 +19,7 @@ module FMCalculator
     @benchmark_rates = nil
     @framework_rates = nil
 
-    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    def initialize(rates, contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
@@ -52,22 +52,9 @@ module FMCalculator
       @benchsubtotal2 = 0
       @benchsubtotal3 = 0
       @benchvariance = 0
-      read_benchmark_rates if @benchmark_rates.nil?
-    end
 
-    # read in the benchmark and framework rates - these were taken from the Damolas spreadsheet and put in the postgres database numbers are to 15dp
-    def read_benchmark_rates
-      query = 'SELECT code, framework, benchmark FROM fm_rates;'
-      rs = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-      @benchmark_rates = {}
-      @framework_rates = {}
-      rs.each do |row|
-        @code = row['code'].remove('.')
-        framework = row['framework']
-        benchmark = row['benchmark']
-        @benchmark_rates[@code] = benchmark.to_f
-        @framework_rates[@code] = framework.to_f
-      end
+      @benchmark_rates = rates[:benchmark_rates]
+      @framework_rates = rates[:framework_rates]
     end
 
     # unit of measurable deliverables = framework_rate * unit of measure volume

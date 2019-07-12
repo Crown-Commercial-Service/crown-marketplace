@@ -2,8 +2,8 @@ module FMCalculator
   class CalculatorDirectAward
     # rubocop:disable Metrics/AbcSize
     def initialize
-      logger = Logger.new(STDOUT)
-      logger.info 'Twisty'
+      # logger = Logger.new(STDOUT)
+      # logger.info 'Twisty'
 
       # current = CCS::FM::RateCard.last
       # logger.debug current.data['Prices']
