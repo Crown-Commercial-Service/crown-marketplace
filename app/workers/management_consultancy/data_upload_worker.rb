@@ -7,7 +7,7 @@ module ManagementConsultancy
 
     def perform(upload_id)
       upload = ManagementConsultancy::Admin::Upload.find(upload_id)
-      suppliers = JSON.parse(File.read(data_file))
+      suppliers = JSON.parse(File.read(URI.open(data_file)))
 
       ManagementConsultancy::Upload.upload!(suppliers)
 
@@ -30,10 +30,11 @@ module ManagementConsultancy
     end
 
     def data_file
-      file_path = 'management_consultancy/current_data/output/data.json'
-      return 'storage/' + file_path if Rails.env.development?
-
-      URI.open("https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{file_path}")
+      if Rails.env.development?
+        Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'data.json')
+      else
+        "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/management_consultancy/current_data/output/data.json"
+      end
     end
   end
 end

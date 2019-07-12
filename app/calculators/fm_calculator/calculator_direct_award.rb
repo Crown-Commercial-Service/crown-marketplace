@@ -1,6 +1,5 @@
 module FMCalculator
   class CalculatorDirectAward
-    # rubocop:disable Metrics/AbcSize
     def initialize
       # logger = Logger.new(STDOUT)
       # logger.info 'Twisty'
@@ -29,11 +28,12 @@ module FMCalculator
       @variances = rate_card.data['Variances'].keys.map { |k| rate_card.data['Discount'][k] }
       # logger.debug @variances
     end
-    # rubocop:enable Metrics/AbcSize
 
     def test
       # puts 'Twisty'
       # eligible = true if @building_type == 'STANDARD' && (@service_standard == 'A' || @service_standard.nil?) && @priced_at_framework.to_s == 'true' && Integer(@assessed_value) <= 1500000
+
+      rates = CCS::FM::Rate.read_benchmark_rates
 
       sum_uom = 0
       sum_benchmark = 0
@@ -47,7 +47,7 @@ module FMCalculator
       @cafm_flag = 'Y'
       @helpdesk_flag = 'Y'
 
-      calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+      calc_fm = FMCalculator::Calculator.new(rates, @contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
       sum_uom += calc_fm.sumunitofmeasure
       sum_benchmark += calc_fm.benchmarkedcostssum
 
