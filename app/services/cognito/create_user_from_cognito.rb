@@ -17,6 +17,10 @@ module Cognito
       @error = e.message
     end
 
+    def success?
+      @error.nil?
+    end
+
     private
 
     def create_user
