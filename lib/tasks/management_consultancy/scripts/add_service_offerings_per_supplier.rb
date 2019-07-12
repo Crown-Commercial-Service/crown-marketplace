@@ -33,7 +33,7 @@ def add_service_offerings_per_supplier
     end
   end
 
-  write_output_file(get_mc_output_file_path('suppliers_with_service_offerings.json'), suppliers)
+  write_output_file('suppliers_with_service_offerings.json', suppliers)
 end
 
 def extract_service_number(service_name)
