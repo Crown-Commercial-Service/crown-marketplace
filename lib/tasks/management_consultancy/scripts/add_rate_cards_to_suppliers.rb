@@ -57,5 +57,5 @@ def extract_duns(supplier_name)
 end
 
 def rate_cards_workbook_filepath
-  get_mc_input_file_path ManagementConsultancy::Admin::Upload::RATE_CARDS_PATH
+  ManagementConsultancy::Admin::Upload::RATE_CARDS_PATH
 end
