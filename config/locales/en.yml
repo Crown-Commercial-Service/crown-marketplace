@@ -685,8 +685,8 @@ en:
       crown_copyright: "© Crown copyright"
       error_prefix: Error
       feedback: feedback
-      feedback_aria_label: Email your feedback on this service
-      feedback_html: This is a new service – your (%{link}) will help us to improve it.
+      feedback_aria_label: Email your feedback on this service.
+      feedback_html: This is a new service – your %{link} will help us to improve it.
       having_problems: To ask a question or report a problem,
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy
@@ -867,7 +867,7 @@ en:
         new:
           caption: Management Consultancy
           heading: New data upload
-          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_caption: Supported file format is XLSX. Maximum file size is 5mb.
           upload_title: Upload one or more of the following spreadsheets
           warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
         show:
@@ -1070,6 +1070,7 @@ en:
         lead_text: The spreadsheet includes the selections you made, for your records and audit trail
         other_documents: Other documents
       index:
+        average_day_rate_html: We calculate the <b>average day rate</b> using the pay grades provided by the suppliers.
         download_suppliers_list: Download the supplier list
         heading: Supplier results
         no_suppliers_found:
@@ -1088,12 +1089,13 @@ en:
           phone_number: Phone number
           website: Website
         day_rates: Day rates
-        fixed_until_mcf1: Fixed until September 2020
-        fixed_until_mcf2: Fixed until December 2021
+        fixed_until_mcf1: Fixed until September 2021
+        fixed_until_mcf2: Fixed until September 2020
         further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
         is_an_sme: This supplier is a small or medium-sized enterprise
         max_day_rate: Max day rate
-        sub_title: "%{framework} lot %{lot_number} - %{description}"
+      supplier:
+        average_day_rate: Average day rate
     users:
       new_password_required:
         confirm_your_password: Confirm your password

@@ -1,5 +1,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
+    <span class="govuk-caption-xl">
+      <%= framework_lot_and_description(@lot.number, @lot.description) %>
+    </span>
     <% if @all_suppliers.count.zero? %>
       <h1 class="govuk-heading-xl"><%= t('.no_suppliers_found.heading') %></h1>
       <p class="govuk-body govuk-!-font-size-24">
@@ -16,15 +19,24 @@
               number: @all_suppliers.count,
               suppliers: number_to_human(@all_suppliers.count, units: :companies, format: '%u')) %>
       </p>
-      <p>
-        <%= link_to(t('.download_suppliers_list'), management_consultancy_suppliers_download_path(lot: params[:lot], services: params[:services], region_codes: params[:region_codes]), class: 'govuk-button') unless @suppliers.empty? %>
+      <%= link_to(
+        t('.download_suppliers_list'),
+        management_consultancy_suppliers_download_path(
+          lot: params[:lot],
+          services: params[:services],
+          region_codes: params[:region_codes]
+          ),
+          class: 'govuk-button'
+        ) %>
+      <p class="govuk-body">
+        <%= t('.average_day_rate_html') %>
       </p>
       <section class="govuk-grid-column-two-thirds ccs-search-results">
         <ul class="ccs-results-list">
-          <%= render partial: 'supplier', collection: @suppliers, locals: { lot_number: @lot.number } %>
+          <%= render partial: 'supplier', collection: @suppliers %>
         </ul>
+        <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
       </section>
     <% end %>
   </div>
-  <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
 </div>
