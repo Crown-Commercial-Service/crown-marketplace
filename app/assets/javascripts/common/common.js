@@ -85,7 +85,6 @@ const pageUtils = {
             processData: false,
             success: function (data, textStatus, jQxhr) {
 
-                console.log(data);
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
@@ -113,7 +112,7 @@ const pageUtils = {
                 data: JSON.stringify(params),
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
-                    console.log(data);
+
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
