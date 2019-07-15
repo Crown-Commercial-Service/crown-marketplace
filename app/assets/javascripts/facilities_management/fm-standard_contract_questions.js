@@ -293,22 +293,25 @@ $(() => {
 
         let exts = $('input[name=fm-extension]');
         let result = true;
+        let hasExtensions = $('#fm-contract-extension-yes').prop('checked');
+        
+        if (hasExtensions === true) {
+            $.each(exts, function (index, ext) {
+                if (!ext.value || ext.value === '') {
+                    result = false;
+                    $('#' + ext.id).focus();
+                    $('#' + ext.id + '-error').prop('hidden', false);
 
-        $.each(exts, function (index, ext) {
-            if (!ext.value || ext.value === '') {
-                result = false;
-                $('#' + ext.id).focus();
-                $('#' + ext.id + '-error').prop('hidden', false);
-
-                $('#' + ext.id + '-container').addClass('govuk-form-group--error');
-                $('#fm-contract-length-error-form-group').removeClass('govuk-form-group--error');
-                $('#fm-contract-length-error').addClass('govuk-visually-hidden');
-                $('body').animate({
-                    scrollTop: $('#' + ext.id).offset().top - $('body').offset().top + $('body').scrollTop()
-                }, 'fast');
-                return false;
-            }
-        });
+                    $('#' + ext.id + '-container').addClass('govuk-form-group--error');
+                    $('#fm-contract-length-error-form-group').removeClass('govuk-form-group--error');
+                    $('#fm-contract-length-error').addClass('govuk-visually-hidden');
+                    $('body').animate({
+                        scrollTop: $('#' + ext.id).offset().top - $('body').offset().top + $('body').scrollTop()
+                    }, 'fast');
+                    return false;
+                }
+            });
+        }
 
         return result;
 
@@ -317,8 +320,9 @@ $(() => {
     $('#fm-questions-continue').on('click', (e) => {
         e.preventDefault();
         let isValid = validateTotalContractLength();
-
         let isExtValid = validateExtensions();
+        let hasExtensions = $('#fm-contract-extension-yes').prop('checked');
+
 
         if (isValid === true) {
             if (isExtValid === true) {
