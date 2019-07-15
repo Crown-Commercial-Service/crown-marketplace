@@ -40,8 +40,13 @@ namespace :mc do
     Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', file_name)
   end
 
+  def file_path(path)
+    return path if Rails.env.development?
+    s3_path(path.to_s)
+  end
+
   def s3_path(path)
-    "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{s3_path_folder(path)}"
+    "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{s3_path_folder(path.to_s)}"
   end
 
   def s3_path_folder(path)
