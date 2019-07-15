@@ -38,5 +38,5 @@ def add_suppliers
 end
 
 def suppliers_workbook_filepath
-  ManagementConsultancy::Admin::Upload::SUPPLIERS_PATH
+  file_path ManagementConsultancy::Admin::Upload::SUPPLIERS_PATH
 end
