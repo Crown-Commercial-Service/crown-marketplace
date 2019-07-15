@@ -1,4 +1,4 @@
-module ManagementConsultancy
+module LegalServices
   class Service
     include StaticRecord
 
@@ -9,9 +9,9 @@ module ManagementConsultancy
     end
 
     def subservices
-      ManagementConsultancy::Subservice.where(service: code)
+      LegalServices::Subservice.where(service: code)
     end
   end
 
-  Service.load_csv('management_consultancy/services.csv')
+  Service.load_csv('legal_services/services.csv')
 end
