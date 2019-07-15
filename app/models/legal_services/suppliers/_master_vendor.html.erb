@@ -1,0 +1,40 @@
+<div class="master-vendor-record">
+  <h2 class="govuk-heading-m"><%= master_vendor.name %></h2>
+
+  <% if master_vendor.master_vendor_contact_name.present? %>
+    <p class="govuk-body">
+      <strong><%= master_vendor.master_vendor_contact_name %></strong><br />
+      <%= format_telephone_number(master_vendor.master_vendor_telephone_number) %><br />
+      <%= mail_to(master_vendor.master_vendor_contact_email,
+                  master_vendor.master_vendor_contact_email,
+                  'aria-label': "Email #{master_vendor.master_vendor_contact_name} from #{master_vendor.name}") %>
+    </p>
+  <% end %>
+
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col"><strong><%= t('.column1') %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['one_week'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['twelve_weeks'] %></strong></th>
+        <th class="govuk-table__header govuk-table__header--numeric master-vendor-record__markup-column" scope="col"><strong><%= t('.column2') %><br><%= SupplyTeachers::RateTerm['more_than_twelve_weeks'] %></strong></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% master_vendor.master_vendor_rates_grouped_by_job_type.each do |job_type, rates| %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row"><%= SupplyTeachers::JobType[job_type] %></th>
+          <% if rates.length == 1 %>
+            <% 3.times do %>
+              <td class="govuk-table__cell govuk-table__cell--numeric master-vendor-record__markup-column"><%= number_to_percentage(rates.first.mark_up * 100, precision: 1) %></td>
+            <% end %>
+          <% elsif rates.length == 3 %>
+            <% rates.each do |rate| %>
+              <td class="govuk-table__cell govuk-table__cell--numeric"><%= number_to_percentage(rate.mark_up * 100, precision: 1) %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
