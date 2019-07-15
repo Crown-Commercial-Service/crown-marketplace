@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     get '/legal-services/sign-in', to: 'legal_services/sessions#new', as: :legal_services_new_user_session
     post '/legal-services/sign-in', to: 'legal_services/sessions#create', as: :legal_services_user_session
     delete '/legal-services/sign-out', to: 'legal_services/sessions#destroy', as: :legal_services_destroy_user_session
+    delete '/legal-services/admin/sign-out', to: 'legal-services/admin/sessions#destroy', as: :legal_services_admin_destroy_user_session
 
     get '/apprenticeships/sign-in', to: 'apprenticeships/sessions#new', as: :apprenticeships_new_user_session
     post '/apprenticeships/sign-in', to: 'apprenticeships/sessions#create', as: :apprenticeships_user_session
@@ -240,6 +241,20 @@ Rails.application.routes.draw do
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    # unless Rails.env.production? # not be available on production environments yet
+    namespace :admin do
+      get '/users/confirm', to: 'users#confirm_new'
+      post '/users/confirm', to: 'users#confirm'
+      get '/users/challenge', to: 'users#challenge_new'
+      post '/users/challenge', to: 'users#challenge'
+      resources :uploads, only: %i[index new create show] do
+        get 'approve'
+        get 'reject'
+        get 'uploading'
+      end
+      get '/in_progress', to: 'uploads#in_progress'
+    end
+    # end
   end
 
   get '/errors/404'
