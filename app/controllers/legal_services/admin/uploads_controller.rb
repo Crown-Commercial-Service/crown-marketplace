@@ -19,7 +19,6 @@ module LegalServices
       def new
         @back_path = :back
         @upload = Upload.new
-        byebug
         @uploads_in_progress = Upload.in_review_or_in_progress?
       end
 

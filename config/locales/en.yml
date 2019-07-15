@@ -697,6 +697,50 @@ en:
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
   legal_services:
+    admin:
+      uploads:
+        in_progress:
+          button: Button
+          content: Content
+          heading: Heading
+        index:
+          caption: Caption
+          create_new: Create new
+          current_table_caption: Current table caption
+          date: Date
+          heading: Heading
+          name: Name
+          no_of_files: No of files
+          spreadsheet: Spreadsheet
+          status: Status
+          table_caption: Table caption
+          upload_session: Upload session
+        new:
+          caption: Caption
+          heading: Heading
+          upload_button: Upload button
+          upload_caption: Upload caption
+          upload_title: Upload title
+        reject:
+          content: Content
+          heading_html: Heading html
+          index_button: Index button
+          new_button: New button
+        show:
+          approve: Approve
+          caption: Caption
+          confirm_changes: Confirm changes
+          datetime: Datetime
+          error_heading: Error heading
+          files: Files
+          heading: Heading
+          reject: Reject
+          spreadsheet: Spreadsheet
+          status: Status
+        uploading:
+          button: Button
+          content_html: Content html
+          heading: Heading
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
