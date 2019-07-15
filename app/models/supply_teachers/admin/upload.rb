@@ -93,6 +93,8 @@ module SupplyTeachers
       private
 
       def reject_uploads_and_cp_files
+        return if errors.any?
+
         reject_previous_uploads
         copy_files_to_input_folder
       rescue StandardError => e
