@@ -46,7 +46,7 @@ namespace :mc do
   end
 
   def s3_path(path)
-    "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{s3_path_folder(path)}"
+    "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{s3_path_folder(path.to_s)}"
   end
 
   def s3_path_folder(path)
