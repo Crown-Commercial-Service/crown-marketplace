@@ -44,7 +44,7 @@ def merge_json(supplier_name_key: , destination_key:, destination_file:, primary
       merged << item.merge(supplier_id: supplier_id, supplier_name: k)
     else
       File.open(get_output_file_path('errors.out'), 'a') do |f|
-        f.puts "#{k}: does not appear in aliases file (input/supplier_lookup.csv). Make sure you include it in the column '#{supplier_name_key}'."
+        f.puts "#{k}: does not appear in aliases file (Supplier lookup). Make sure you include it in the column '#{supplier_name_key}'."
       end
     end
   end
