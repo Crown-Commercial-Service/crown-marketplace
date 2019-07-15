@@ -1,7 +1,8 @@
- LegalServices
+module ManagementConsultancy
   class Upload < ApplicationRecord
     def self.upload!(suppliers)
       error = all_or_none(Supplier) do
+        Supplier.delete_all_with_dependents
 
         suppliers.map do |supplier_data|
           create_supplier!(supplier_data)
@@ -28,17 +29,37 @@
         name: data['name'],
         contact_email: data['contact_email'],
         telephone_number: data['telephone_number'],
-        website: data['website'],
-        address: data['address'],
         sme: data['sme'],
-        duns: data['duns'],
-        lot1: data['lot1'],
-        lot2: data['lot2'],
-        lot3: data['lot3'],
-        lot4: data['lot4']
+        address: data['address'],
+        website: data['website'],
+        duns: data['duns']
       )
 
-      services.save!
+      lots = data.fetch('lots', [])
+      lots.each do |lot|
+        lot_number = lot['lot_number']
+        regions = lot.fetch('regions', {})
+        regions.each do |region, policy|
+          supplier.regional_availabilities.create!(
+            lot_number: lot_number,
+            region_code: region,
+            expenses_required: policy == 'provided_if_expenses'
+          )
+        end
+        services = lot.fetch('services', [])
+        services.each do |service|
+          supplier.service_offerings.create!(
+            lot_number: lot_number,
+            service_code: service
+          )
+        end
+      end
+
+      rate_cards = data.fetch('rate_cards', [])
+
+      rate_cards.each do |rate_card|
+        supplier.rate_cards.create!(rate_card)
+      end
     end
   end
 end
