@@ -1,7 +1,7 @@
-module ManagementConsultancy
+module LegalServices
   class ServiceOffering < ApplicationRecord
     belongs_to :supplier,
-               foreign_key: :management_consultancy_supplier_id,
+               foreign_key: :legal_services_supplier_id,
                inverse_of: :service_offerings
 
     validates :lot_number, presence: true,
@@ -26,9 +26,9 @@ module ManagementConsultancy
 
     def self.supplier_ids_for_service_codes(service_codes)
       for_service_code(service_codes)
-        .group(:management_consultancy_supplier_id)
+        .group(:legal_services_supplier_id)
         .having("COUNT(service_code) = #{service_codes.count}")
-        .pluck(:management_consultancy_supplier_id)
+        .pluck(:legal_services_supplier_id)
     end
   end
 end

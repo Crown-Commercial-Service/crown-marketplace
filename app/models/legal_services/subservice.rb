@@ -1,4 +1,4 @@
-module ManagementConsultancy
+module LegalServices
   class Subservice
     include StaticRecord
 
@@ -9,5 +9,5 @@ module ManagementConsultancy
     end
   end
 
-  Subservice.load_csv('management_consultancy/subservices.csv')
+  Subservice.load_csv('legal_services/subservices.csv')
 end

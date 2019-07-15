@@ -1,4 +1,4 @@
-module ManagementConsultancy
+module LegalServices
   class Upload < ApplicationRecord
     def self.upload!(suppliers)
       error = all_or_none(Supplier) do

@@ -1,17 +1,17 @@
-module ManagementConsultancy
+module LegalServies
   class Supplier < ApplicationRecord
     has_many :regional_availabilities,
-             foreign_key: :management_consultancy_supplier_id,
+             foreign_key: :legal_services_supplier_id,
              inverse_of: :supplier,
              dependent: :destroy
 
     has_many :service_offerings,
-             foreign_key: :management_consultancy_supplier_id,
+             foreign_key: :legal_services_supplier_id,
              inverse_of: :supplier,
              dependent: :destroy
 
     has_many :rate_cards,
-             foreign_key: :management_consultancy_supplier_id,
+             foreign_key: :legal_services_supplier_id,
              inverse_of: :supplier,
              dependent: :destroy
 
