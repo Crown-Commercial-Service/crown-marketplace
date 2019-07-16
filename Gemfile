@@ -48,7 +48,7 @@ gem 'json-jwt'
 # for authentication
 gem 'devise', '~> 4.6.2'
 
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.22.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
 
 # for pagination
 gem 'kaminari', '~> 1.1.1'
