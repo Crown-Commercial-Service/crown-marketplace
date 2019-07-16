@@ -25,8 +25,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # end
 
   it 'creates summary report' do
-    report = FacilitiesManagement::SummaryReport.new(start_date,
-       'test@example.com', data)
+    report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data)
 
     rates = CCS::FM::Rate.read_benchmark_rates
 
