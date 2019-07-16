@@ -69,14 +69,6 @@ en:
             new_password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
-        facilities_management/journey/supplier_region:
-          attributes:
-            region_codes:
-              too_short: Select at least one region
-        facilities_management/journey/value_band:
-          attributes:
-            value_band:
-              inclusion: Select a value band to see a list of suppliers
         legal_services/journey/check_suitability:
           attributes:
             legal_services:
@@ -610,32 +602,6 @@ en:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
-    journey:
-      supplier_region:
-        nuts1:
-          OS0: International
-          UKC: North East England
-          UKD: North West England
-          UKE: Yorkshire and The Humber
-          UKF: East Midlands (England)
-          UKG: West Midlands (England)
-          UKH: East of England
-          UKI: London
-          UKJ: South East England
-          UKK: South West England
-          UKL: Wales
-          UKM: Scotland
-          UKN: Northern Ireland
-        question: Which regions do you need the service in?
-      value_band:
-        answer_over50m: Over £50 million
-        answer_under1_5m: Up to £1.5 million
-        answer_under50m: "£7 million – £50 million"
-        answer_under7m: "£1.5 million – £7 million"
-        direct_award: Direct award to a supplier is only an option for the first of these spending bands.
-        question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
-        question_hint: This can be current costs, or estimated annual costs.
-        submit: Continue
     sessions:
       new:
         email_address: Email address
