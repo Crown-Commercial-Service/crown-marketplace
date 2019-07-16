@@ -1,6 +1,6 @@
 module CcsPatterns
   class HomeController < FrameworkController
-    before_action :authenticate_user!, except: %i[index dynamic_accordian supplier_results_v1 supplier_results_v2 small_checkboxes cog_sign_in cog_sign_in_password_prompt_change]
+    skip_before_action :authenticate_user!
     before_action :set_back_path, except: :index
 
     def index; end
