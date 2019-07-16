@@ -46,19 +46,19 @@ module FacilitiesManagement
       CCS::FM::Building.buildings_for_user(@user_id)
     end
 
-    def calculate_services_for_buildings
+    def calculate_services_for_buildings(rates, selected_buildings)
       # selected_services
 
       @sum_uom = 0
       @sum_benchmark = 0
 
-      selected_buildings = user_buildings
+      # selected_buildings = user_buildings
 
       uvals = uom_values(selected_buildings)
 
       selected_buildings.each do |building|
         id = building['building_json']['id']
-        vals_per_building = services(building.building_json, (uvals.select { |u| u['building_id'] == id }))
+        vals_per_building = services(rates, building.building_json, (uvals.select { |u| u['building_id'] == id }))
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark]
       end
@@ -96,7 +96,7 @@ module FacilitiesManagement
     #   ["K.1", "K.5"]
     def list_of_services
       services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
-      services_selected.map! { |s| s['code'].gsub('-', '.') if s }.uniq!
+      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') if s }.uniq
 
       services = FacilitiesManagement::Service.all.select { |service| services_selected.include? service.code }
       mandatory = FacilitiesManagement::Service.all.select { |service| service.code == 'A.18' || service.work_package_code == 'B' }
@@ -276,7 +276,7 @@ module FacilitiesManagement
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
 
-    def services(building_data, uvals)
+    def services(rates, building_data, uvals)
       sum_uom = 0.0
       sum_benchmark = 0.0
 
@@ -302,7 +302,7 @@ module FacilitiesManagement
         end
 
         code = v['service_code'].remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        calc_fm = FMCalculator::Calculator.new(rates, @contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum
       end
