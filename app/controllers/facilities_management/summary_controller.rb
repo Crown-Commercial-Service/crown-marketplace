@@ -58,7 +58,9 @@ module FacilitiesManagement
       set_current_choices
 
       @report = SummaryReport.new(@start_date, current_user.email.to_s, TransientSessionInfo[session.id])
-      @report.calculate_services_for_buildings
+
+      # move this into the model
+      @report.calculate_services_for_buildings CCS::FM::Rate.read_benchmark_rates, CCS::FM::Building.buildings_for_user(@user_id)
 
       workout_current_lot
     end
