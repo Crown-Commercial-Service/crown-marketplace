@@ -34,4 +34,33 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # report.workout_current_lot
     p report.assessed_value
   end
+
+  # rubocop:disable RSpec/ExampleLength
+  it 'can calculate prices' do
+    # eligible = true if @building_type == 'STANDARD' && (@service_standard == 'A' || @service_standard.nil?) && @priced_at_framework.to_s == 'true' && Integer(@assessed_value) <= 1500000
+
+    rates = CCS::FM::Rate.read_benchmark_rates
+
+    sum_uom = 0
+    sum_benchmark = 0
+
+    contract_length_years = 7
+    code = 'A1'
+    uom_value = 100
+    occupants = 0
+    tupe_flag = 'N'
+    london_flag = 'N'
+    cafm_flag = 'Y'
+    helpdesk_flag = 'Y'
+
+    calc_fm = FMCalculator::Calculator.new(rates, contract_length_years, code, uom_value, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    sum_uom += calc_fm.sumunitofmeasure
+    sum_benchmark += calc_fm.benchmarkedcostssum
+
+    {
+      sum_uom: sum_uom,
+      sum_benchmark: sum_benchmark
+    }
+  end
+  # rubocop:enable RSpec/ExampleLength
 end
