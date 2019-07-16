@@ -11,37 +11,67 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq-log'
   end
 
-  devise_for :users, skip: %i[sessions registrations]
+  devise_for :users
   devise_scope :user do
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
 
     get '/supply-teachers/sign-in', to: 'supply_teachers/sessions#new', as: :supply_teachers_new_user_session
     post '/supply-teachers/sign-in', to: 'supply_teachers/sessions#create', as: :supply_teachers_user_session
     delete '/supply-teachers/sign-out', to: 'supply_teachers/sessions#destroy', as: :supply_teachers_destroy_user_session
+    get '/supply-teachers/users/forgot-password', to: 'supply_teachers/passwords#new', as: :supply_teachers_new_user_password
+    post '/supply-teachers/users/password', to: 'supply_teachers/passwords#create'
+    get '/supply-teachers/users/forgot-password-confirmation', to: 'supply_teachers/passwords#confirm_new', as: :supply_teachers_confirm_new_user_password
+    get '/supply-teachers/users/password', to: 'supply_teachers/passwords#edit', as: :supply_teachers_edit_user_password
+    put '/supply-teachers/users/password', to: 'supply_teachers/passwords#update'
+    get '/supply-teachers/users/password-reset-success', to: 'supply_teachers/passwords#password_reset_success', as: :supply_teachers_password_reset_success
 
     get '/facilities-management/sign-in', to: 'facilities_management/sessions#new', as: :facilities_management_new_user_session
     post '/facilities-management/sign-in', to: 'facilities_management/sessions#create', as: :facilities_management_user_session
     delete '/facilities-management/sign-out', to: 'facilities_management/sessions#destroy', as: :facilities_management_destroy_user_session
+    get '/facilities-management/users/forgot-password', to: 'facilities_management/passwords#new', as: :facilities_management_new_user_password
+    post '/facilities-management/users/password', to: 'facilities_management/passwords#create'
+    get '/facilities-management/users/forgot-password-confirmation', to: 'facilities_management/passwords#confirm_new', as: :facilities_management_confirm_new_user_password
+    get '/facilities-management/users/password', to: 'facilities_management/passwords#edit', as: :facilities_management_edit_user_password
+    put '/facilities-management/users/password', to: 'facilities_management/passwords#update'
+    get '/facilities-management/users/password-reset-success', to: 'facilities_management/passwords#password_reset_success', as: :facilities_management_password_reset_success
 
     get '/management-consultancy/sign-in', to: 'management_consultancy/sessions#new', as: :management_consultancy_new_user_session
     post '/management-consultancy/sign-in', to: 'management_consultancy/sessions#create', as: :management_consultancy_user_session
     delete '/management-consultancy/sign-out', to: 'management_consultancy/sessions#destroy', as: :management_consultancy_destroy_user_session
+    get '/management-consultancy/users/forgot-password', to: 'management_consultancy/passwords#new', as: :management_consultancy_new_user_password
+    post '/management-consultancy/users/password', to: 'management_consultancy/passwords#create'
+    get '/management-consultancy/users/forgot-password-confirmation', to: 'management_consultancy/passwords#confirm_new', as: :management_consultancy_confirm_new_user_password
+    get '/management-consultancy/users/password', to: 'management_consultancy/passwords#edit', as: :management_consultancy_edit_user_password
+    put '/management-consultancy/users/password', to: 'management_consultancy/passwords#update'
+    get '/management-consultancy/users/password-reset-success', to: 'management_consultancy/passwords#password_reset_success', as: :management_consultancy_password_reset_success
 
     get '/legal-services/sign-in', to: 'legal_services/sessions#new', as: :legal_services_new_user_session
     post '/legal-services/sign-in', to: 'legal_services/sessions#create', as: :legal_services_user_session
     delete '/legal-services/sign-out', to: 'legal_services/sessions#destroy', as: :legal_services_destroy_user_session
+    get '/legal-services/users/forgot-password', to: 'legal_services/passwords#new', as: :legal_services_new_user_password
+    post '/legal-services/users/password', to: 'legal_services/passwords#create'
+    get '/legal-services/users/forgot-password-confirmation', to: 'legal_services/passwords#confirm_new', as: :legal_services_confirm_new_user_password
+    get '/legal-services/users/password', to: 'legal_services/passwords#edit', as: :legal_services_edit_user_password
+    put '/legal-services/users/password', to: 'legal_services/passwords#update'
+    get '/legal-services/users/password-reset-success', to: 'legal_services/passwords#password_reset_success', as: :legal_services_password_reset_success
 
     get '/apprenticeships/sign-in', to: 'apprenticeships/sessions#new', as: :apprenticeships_new_user_session
     post '/apprenticeships/sign-in', to: 'apprenticeships/sessions#create', as: :apprenticeships_user_session
     delete '/apprenticeships/sign-out', to: 'apprenticeships/sessions#destroy', as: :apprenticeships_destroy_user_session
+    get '/apprenticeships/users/forgot-password', to: 'apprenticeships/passwords#new', as: :apprenticeships_new_user_password
+    post '/apprenticeships/users/password', to: 'apprenticeships/passwords#create'
+    get '/apprenticeships/users/forgot-password-confirmation', to: 'apprenticeships/passwords#confirm_new', as: :apprenticeships_confirm_new_user_password
+    get '/apprenticeships/users/password', to: 'apprenticeships/passwords#edit', as: :apprenticeships_edit_user_password
+    put '/apprenticeships/users/password', to: 'apprenticeships/passwords#update'
+    get '/apprenticeships/users/password-reset-success', to: 'apprenticeships/passwords#password_reset_success', as: :apprenticeships_password_reset_success
 
-    get '/supply_teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#new', as: :supply_teachers_admin_new_user_session
-    post '/supply_teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#create', as: :supply_teachers_admin_user_session
-    delete '/supply_teachers/admin/sign-out', to: 'supply_teachers/admin/sessions#destroy', as: :supply_teachers_admin_destroy_user_session
+    get '/supply-teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#new', as: :supply_teachers_admin_new_user_session
+    post '/supply-teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#create', as: :supply_teachers_admin_user_session
+    delete '/supply-teachers/admin/sign-out', to: 'supply_teachers/admin/sessions#destroy', as: :supply_teachers_admin_destroy_user_session
 
-    get '/management_consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#new', as: :management_consultancy_admin_new_user_session
-    post '/management_consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#create', as: :management_consultancy_admin_user_session
-    delete '/management_consultancy/admin/sign-out', to: 'management_consultancy/admin/sessions#destroy', as: :management_consultancy_admin_destroy_user_session
+    get '/management-consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#new', as: :management_consultancy_admin_new_user_session
+    post '/management-consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#create', as: :management_consultancy_admin_user_session
+    delete '/management-consultancy/admin/sign-out', to: 'management_consultancy/admin/sessions#destroy', as: :management_consultancy_admin_destroy_user_session
   end
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'

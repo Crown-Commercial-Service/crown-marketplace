@@ -17,5 +17,9 @@ module SupplyTeachers
     def new_session_path
       supply_teachers_new_user_session_path
     end
+
+    def confirm_forgot_password_path(username)
+      supply_teachers_edit_user_password_path(username: username)
+    end
   end
 end
