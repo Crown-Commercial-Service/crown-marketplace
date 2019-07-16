@@ -260,6 +260,7 @@ Rails.application.routes.draw do
     post '/users/confirm', to: 'users#confirm'
     get '/users/challenge', to: 'users#challenge_new'
     post '/users/challenge', to: 'users#challenge'
+    get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
@@ -270,6 +271,17 @@ Rails.application.routes.draw do
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    resources :downloads, only: :index
+    # unless Rails.env.production? # not be available on production environments yet
+    namespace :admin do
+      resources :uploads, only: %i[index new create show] do
+        get 'approve'
+        get 'reject'
+        get 'uploading'
+      end
+      get '/in_progress', to: 'uploads#in_progress'
+    end
+    resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
   get '/errors/404'
