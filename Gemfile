@@ -81,7 +81,6 @@ gem 'slim', '~> 4.0.1'
 
 # for rspec and ST data generation script
 gem 'capybara'
-
 gem 'faker'
 
 # for authorization

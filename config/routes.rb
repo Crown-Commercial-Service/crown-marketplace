@@ -110,7 +110,7 @@ Rails.application.routes.draw do
     get '/suppliers', to: 'suppliers#index'
     post '/buildings/delete_building' => 'buildings#delete_building'
 
-    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/start', to: 'home#index'
     # post '/contract-start', to: 'contract#start_of_contract'
     match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]
 
@@ -122,8 +122,8 @@ Rails.application.routes.draw do
     post '/cache/clear_by_key', to: 'cache#clear_by_key'
     post '/cache/clear', to: 'cache#clear_all'
     get '/reset', to: 'buildings#reset_buildings_tables'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    get '/:slug', to: '/errors#404'
+
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
