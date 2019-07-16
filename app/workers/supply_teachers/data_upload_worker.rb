@@ -4,6 +4,7 @@ require 'aws-sdk-s3'
 module SupplyTeachers
   class DataUploadWorker
     include Sidekiq::Worker
+    sidekiq_options queue: 'st'
 
     def perform(upload_id)
       upload = SupplyTeachers::Admin::Upload.find(upload_id)
