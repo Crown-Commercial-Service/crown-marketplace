@@ -46,13 +46,13 @@ module FacilitiesManagement
       CCS::FM::Building.buildings_for_user(@user_id)
     end
 
-    def calculate_services_for_buildings(rates)
+    def calculate_services_for_buildings(rates, selected_buildings)
       # selected_services
 
       @sum_uom = 0
       @sum_benchmark = 0
 
-      selected_buildings = user_buildings
+      # selected_buildings = user_buildings
 
       uvals = uom_values(selected_buildings)
 
