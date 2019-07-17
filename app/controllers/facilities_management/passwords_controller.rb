@@ -1,6 +1,5 @@
 module FacilitiesManagement
   class PasswordsController < Base::PasswordsController
-
     protected
 
     def new_password_path
