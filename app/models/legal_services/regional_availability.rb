@@ -1,4 +1,4 @@
-module RegionalServices
+module LegalServices
   class RegionalAvailability < ApplicationRecord
     belongs_to :supplier,
                foreign_key: :legal_services_supplier_id,
