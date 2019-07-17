@@ -1,6 +1,7 @@
 require 'roo'
 require 'json'
 
+# rubocop:disable Metrics/AbcSize
 def add_service_offerings_per_supplier
   suppliers = JSON.parse(File.read(Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'suppliers.json')))
   suppliers.each { |supplier| supplier['lots'] = [] }
@@ -49,3 +50,4 @@ def extract_duns(supplier_name)
 end
 
 add_service_offerings_per_supplier
+# rubocop:enable Metrics/AbcSize

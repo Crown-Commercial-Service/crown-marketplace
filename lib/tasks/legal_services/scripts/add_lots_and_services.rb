@@ -23,9 +23,9 @@ def add_suppliers
     about: 'About the supplier'
   }
 
-  options = { col_sep: ',', encoding: Encoding::ISO_8859_1, liberal_parsing: true }
+  # options = { col_sep: ',', encoding: Encoding::ISO_8859_1, liberal_parsing: true }
 
-  CSV.foreach(filename, options) { |row| puts row }
+  # CSV.foreach(filename, options) { |row| puts row }
 
   ls_sheet = suppliers_workbook.sheet(0)
 

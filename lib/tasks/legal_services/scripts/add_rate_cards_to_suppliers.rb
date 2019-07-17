@@ -1,6 +1,7 @@
 require 'roo'
 require 'json'
 
+# rubocop:disable Metrics/AbcSize
 def add_rate_cards_to_suppliers
   suppliers = JSON.parse(File.read('./storage/management_consultancy/current_data/output/suppliers_with_service_offerings_and_regional_availability.json'))
   suppliers.each { |supplier| supplier['rate_cards'] = [] }
@@ -57,3 +58,4 @@ end
 def extract_duns(supplier_name)
   supplier_name.split('[')[1].split(']')[0].to_i
 end
+# rubocop:enable Metrics/AbcSize

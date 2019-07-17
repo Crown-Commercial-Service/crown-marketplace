@@ -1,6 +1,7 @@
 require 'roo'
 require 'json'
 
+# rubocop:disable Metrics/AbcSize
 def add_region_availability_per_lot_per_supplier
   suppliers = JSON.parse(File.read('./storage/management_consultancy/current_data/output/suppliers_with_service_offerings.json'))
 
@@ -64,3 +65,4 @@ end
 def extract_duns(supplier_name)
   supplier_name.split('[')[1].split(']')[0].to_i
 end
+# rubocop:enable Metrics/AbcSize
