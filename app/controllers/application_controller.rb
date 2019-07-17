@@ -68,4 +68,8 @@ class ApplicationController < ActionController::Base
       redirect_to gateway_url
     end
   end
+
+  def set_end_of_journey
+    @end_of_journey = true
+  end
 end

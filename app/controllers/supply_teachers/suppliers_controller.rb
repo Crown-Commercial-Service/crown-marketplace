@@ -1,5 +1,7 @@
 module SupplyTeachers
   class SuppliersController < FrameworkController
+    before_action :set_end_of_journey, only: %i[master_vendors neutral_vendors]
+
     helper :telephone_number
 
     def master_vendors
