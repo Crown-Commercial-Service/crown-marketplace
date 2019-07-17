@@ -1,5 +1,11 @@
 module FacilitiesManagement
   class PasswordsController < Base::PasswordsController
+
+    def create
+      binding.pry
+      super
+    end
+
     protected
 
     def new_password_path

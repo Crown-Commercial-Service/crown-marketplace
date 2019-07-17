@@ -600,7 +600,7 @@ en:
     passcap: at least one capital letter
     passeight: at least 8 characters
     passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
-    resend_password: Resend password
+    resent_password: Resent password
     search: Search
     send_reset_email: Send reset email
     sign_in: Sign in

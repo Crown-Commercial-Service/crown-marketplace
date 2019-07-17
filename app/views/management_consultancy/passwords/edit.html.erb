@@ -25,7 +25,7 @@
       <%= t('.lead') %> <span class="ccs-email-example"><%= @response.email %></span>
     </p>
 
-    <%= form_tag supply_teachers_edit_user_password_path, class: 'ccs-form', id: 'cog_forgot_password_reset_form', method: :put do %>
+    <%= form_tag management_consultancy_edit_user_password_path, class: 'ccs-form', id: 'cog_forgot_password_reset_form', method: :put do %>
 
       <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
 
@@ -96,7 +96,7 @@
 
       <%= hidden_field_tag :username, @response.email %>
 
-      <%= submit_tag t('common.resend_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.resent_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
 
     <% end %>
 
