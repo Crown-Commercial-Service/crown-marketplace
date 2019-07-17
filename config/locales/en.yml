@@ -593,9 +593,9 @@ en:
     continue: Continue
     create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
-    feedback: feedback
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
+    feedback: feedback
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     passcap: at least one capital letter
@@ -707,6 +707,7 @@ en:
       error_prefix: Error
       feedback: feedback
       feedback_aria_label: Email your feedback on this service.
+      feedback_end_journey_html: <b> This is a new service - how did you find it? </b> Please complete <a href="%{link}" target="_blank" >a short survey</a> to help us improve it.
       feedback_html: This is a new service – your %{link} will help us to improve it.
       having_problems: To ask a question or report a problem,
       privacy_link: Privacy policy

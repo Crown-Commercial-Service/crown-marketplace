@@ -1,5 +1,6 @@
 module SupplyTeachers
   class BranchesController < FrameworkController
+    before_action :set_end_of_journey
     SEARCH_RADIUSES = [50, 25, 10, 5, 1].freeze
 
     helper :telephone_number
