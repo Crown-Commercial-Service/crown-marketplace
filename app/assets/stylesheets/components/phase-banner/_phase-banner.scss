@@ -1,1 +1,21 @@
 @import "govuk-frontend/components/phase-banner/phase-banner";
+
+.ccs-end-of-journey-banner{
+  background: #005ea5;
+  .govuk-phase-banner__content__tag {
+    color: #005ea5;
+    background-color: white;
+  }
+  .govuk-phase-banner {
+    border: none;
+  }
+  .govuk-phase-banner__text {
+    color: white;
+    a {
+      color: white;
+    }
+    a:hover {
+      opacity: 0.9;
+    }
+  }
+}
