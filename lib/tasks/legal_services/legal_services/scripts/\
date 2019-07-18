@@ -1,0 +1,54 @@
+require 'roo'
+require 'json'
+require 'capybara'
+require 'byebug'
+require 'utf8-cleaner'
+
+def add_suppliers
+  use UTF8Cleaner::Middleware
+  byebug
+  filename='/Users/mike/crown-marketplace-LS-101-data-transformation/storage/legal_services/current_data/input/Suppliers.csv'
+  suppliers_workbook = Roo::CSV.new(filename, csv_options: {encoding: Encoding::ISO_8859_1})
+
+  byebug
+  headers = {
+    name: 'Firm Name',
+    contact_email: 'Generic Contact:  Email address',
+    telephone_number: 'Generic Contact Phone number',
+    website: 'Generic Contact: Website URL',
+    address: 'Generic Contact: Postal address',
+    sme: 'Is an SME?',
+    duns: 'DUNS Number',
+    lot1: 'Lot 1: Prospectus Link',
+    lot2: 'Lot 2: Prospectus Link',
+    lot3: 'Lot 3: Prospectus Link',
+    lot4: 'Lot 4: Prospectus Link',
+    about: 'About the supplier'
+  }
+  CSV.foreach(filename, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+    puts row 
+  end
+
+  mcf_sheet = suppliers_workbook.sheet(0)
+
+  suppliers = mcf_sheet.parse(headers: true)
+
+  mcf2_sheet = suppliers_workbook.sheet(1)
+
+  suppliers += mcf2_sheet.parse(headers)
+
+  suppliers.delete_if { |supplier| supplier[:duns].nil? }
+
+  suppliers.uniq! { |supplier| supplier[:duns] }
+
+  suppliers.each do |supplier|
+    supplier[:sme] = ['YES', 'Y'].include? supplier[:sme].to_s.upcase
+    supplier[:id] = SecureRandom.uuid
+  end
+
+  File.open('./storage/legal_services/current_data/output/suppliers.json', 'w') do |f|
+    f.write JSON.pretty_generate suppliers
+  end
+end
+
+add_suppliers
