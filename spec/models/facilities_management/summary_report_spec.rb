@@ -64,6 +64,13 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     expect(report.assessed_value.round(2)).to be 0.00
   end
 
+  it 'with rate card' do
+    rate_card = CCS::FM::RateCard.latest
+
+    # p rate_card
+    expect(rate_card.nil?).to be false
+  end
+
   # rubocop:disable RSpec/ExampleLength
   it 'can calculate prices' do
     # eligible = true if @building_type == 'STANDARD' && (@service_standard == 'A' || @service_standard.nil?) && @priced_at_framework.to_s == 'true' && Integer(@assessed_value) <= 1500000
