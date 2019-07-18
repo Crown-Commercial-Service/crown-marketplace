@@ -11,6 +11,8 @@ module ApplicationHelper
   end
 
   def feedback_email_link
+    return link_to(t('common.feedback'), Marketplace.supply_teachers_survey_link, target: '_blank', rel: 'noopener') if controller.class.try(:parent_name) == 'SupplyTeachers'
+
     govuk_email_link(Marketplace.feedback_email_address, t('layouts.application.feedback_aria_label'), css_class: 'govuk-link ga-feedback-mailto')
   end
 
