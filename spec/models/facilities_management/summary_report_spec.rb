@@ -70,7 +70,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     rates = CCS::FM::Rate.read_benchmark_rates
     supplier_names = rate_card.data['Prices'].keys
     supplier_names.each do |s|
-      p s
+      # p s
 
       report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data)
       # prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
