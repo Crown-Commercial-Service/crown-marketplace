@@ -1,9 +1,10 @@
 require 'roo'
 require 'json'
 require 'capybara'
+require 'byebug'
 
 def add_suppliers
-  suppliers_workbook = Roo::Spreadsheet.open '/Users/mike/feature/LS-143/storage/legal_services/current_data/input/Suppliers3.xlsx'
+  suppliers_workbook = Roo::Spreadsheet.open '/users/milomia/master/storage/legal_services/current_data/input/SupplierDetails4.xlsx'
 
   headers = {
     name: 'Supplier Name',
@@ -24,11 +25,9 @@ def add_suppliers
 
   suppliers = ls_sheet.parse(headers)
 
-  suppliers.delete_if { |supplier| supplier[:duns].nil? }
-
-  suppliers.uniq! { |supplier| supplier[:duns] }
-
-  File.open('/users/mike/feature/LS-143/storage/legal_services/current_data/output/suppliers.json', 'w') do |f|
+  File.open('/users/milomia/master/storage/legal_services/current_data/output/suppliers2.json', 'w') do |f|
     f.write JSON.pretty_generate suppliers
   end
 end
+
+add_suppliers
