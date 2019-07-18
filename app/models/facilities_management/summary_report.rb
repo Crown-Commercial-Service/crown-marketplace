@@ -46,7 +46,7 @@ module FacilitiesManagement
       CCS::FM::Building.buildings_for_user(@user_id)
     end
 
-    def calculate_services_for_buildings(rates, selected_buildings)
+    def calculate_services_for_buildings(selected_buildings, rates, rate_card = nil, supplier_name = nil)
       # selected_services
 
       @sum_uom = 0
@@ -58,7 +58,8 @@ module FacilitiesManagement
 
       selected_buildings.each do |building|
         id = building['building_json']['id']
-        vals_per_building = services(rates, building.building_json, (uvals.select { |u| u['building_id'] == id }))
+        vals_per_building = services(building.building_json, (uvals.select { |u| u['building_id'] == id }),
+                                     rates, rate_card, supplier_name)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark]
       end
@@ -276,7 +277,7 @@ module FacilitiesManagement
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
 
-    def services(rates, building_data, uvals)
+    def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil)
       sum_uom = 0.0
       sum_benchmark = 0.0
 
@@ -302,7 +303,8 @@ module FacilitiesManagement
         end
 
         code = v['service_code'].remove('.')
-        calc_fm = FMCalculator::Calculator.new(rates, @contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag)
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag,
+                                               rates, rate_card, supplier_name)
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum
       end
