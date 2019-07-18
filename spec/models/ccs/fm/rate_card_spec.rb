@@ -14,7 +14,7 @@ RSpec.describe CCS::FM::RateCard, type: :model do
   end
 
   it 'can retrieve latest entry' do
-    is_this_the_last_dated_record = CCS::FM::RateCard.last
+    is_this_the_last_dated_record = CCS::FM::RateCard.latest
     actual_last_record = CCS::FM::RateCard.where(updated_at: CCS::FM::RateCard.select('max(updated_at)'))
 
     expect(is_this_the_last_dated_record.id).to eq(actual_last_record.first.id)

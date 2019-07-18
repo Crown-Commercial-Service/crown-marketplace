@@ -19,7 +19,7 @@ module FMCalculator
     @benchmark_rates = nil
     @framework_rates = nil
 
-    def initialize(rates, contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
@@ -55,6 +55,7 @@ module FMCalculator
 
       @benchmark_rates = rates[:benchmark_rates]
       @framework_rates = rates[:framework_rates]
+      @rate_card = rate_card
     end
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
