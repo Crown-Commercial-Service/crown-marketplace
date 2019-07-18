@@ -74,7 +74,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data)
       # prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
-      report.calculate_services_for_buildings buildings, rates, rate_card
+      report.calculate_services_for_buildings buildings, rates, rate_card, s
 
       expect(report.assessed_value.round(2)).to be 0.00
     end
