@@ -67,7 +67,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   it 'with rate card' do
     rate_card = CCS::FM::RateCard.last
 
-    p rate_card
+    # p rate_card
   end
 
   # rubocop:disable RSpec/ExampleLength
