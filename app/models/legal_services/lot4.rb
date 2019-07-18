@@ -8,6 +8,4 @@ module LegalServices
       all.map(&:suppliers).map(&:to_s)
     end
   end
-
-  Lot4.load_csv('legal_service/lots4.csv')
 end
