@@ -2,6 +2,7 @@ module SupplyTeachers
   class HomeController < FrameworkController
     before_action :authenticate_user!, except: :index
     before_action :authorize_user, except: :index
+    before_action :set_end_of_journey, only: :temp_to_perm_fee
 
     def index; end
 

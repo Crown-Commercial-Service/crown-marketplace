@@ -57,6 +57,10 @@ module Marketplace
     'info@crowncommercial.gov.uk'
   end
 
+  def self.supply_teachers_survey_link
+    'https://www.smartsurvey.co.uk/s/S4MVR/'
+  end
+
   def self.support_telephone_number
     '0345 410 2222'
   end
