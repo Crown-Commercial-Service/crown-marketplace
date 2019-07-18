@@ -9,5 +9,5 @@ module LegalServices
     end
   end
 
-  Lot.load_csv('legal_service/lots.csv')
+  Lot.load_csv('legal_services/lots.csv')
 end
