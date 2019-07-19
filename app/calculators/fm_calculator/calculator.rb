@@ -57,6 +57,7 @@ module FMCalculator
       @benchmark_rates = rates[:benchmark_rates]
       @framework_rates = rates[:framework_rates]
       @rate_card = rate_card
+      @supplier_name = supplier_name
     end
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
