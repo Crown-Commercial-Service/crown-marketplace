@@ -61,8 +61,14 @@ module FacilitiesManagement
 
       @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
 
+      selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
+
+      uvals = @report.uom_values(selected_buildings)
+
       # move this into the model
-      @report.calculate_services_for_buildings CCS::FM::Building.buildings_for_user(user_email), CCS::FM::Rate.read_benchmark_rates
+      @report.calculate_services_for_buildings selected_buildings,
+                                               uvals,
+                                               CCS::FM::Rate.read_benchmark_rates
 
       workout_current_lot
     end
