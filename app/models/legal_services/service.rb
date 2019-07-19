@@ -1,4 +1,3 @@
-
 module LegalServices
   class Service
     include StaticRecord
