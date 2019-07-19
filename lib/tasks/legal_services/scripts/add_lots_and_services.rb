@@ -1,7 +1,6 @@
 require 'roo'
 require 'json'
 require 'capybara'
-require 'byebug'
 
 def add_suppliers
   filename = '/Users/mike/feature/LS-143/storage/legal_services/current_data/input/Suppliers.csv'

@@ -1,4 +1,4 @@
-module SupplyTeachers
+module LegalServices
   class RateTerm
     include StaticRecord
 

@@ -26,7 +26,6 @@
     <div class="ccs-search-results">
 
       <ul class="ccs-results-list govuk-!-margin-bottom-7">
-        <% byebug %>
         <% lots3 = LegalServices::Lot3 %>
         <% lots3 = lots3[0] %>
         <% lots3 = lots3[1..-1] %>
@@ -34,7 +33,6 @@
         <% lots3.each do |lot3| %>
             <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
               <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
-                <% byebug %>
                   <%= lot3 %>
                   <br\> 
                 <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
