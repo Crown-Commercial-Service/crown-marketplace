@@ -19,7 +19,8 @@ module FMCalculator
     @benchmark_rates = nil
     @framework_rates = nil
 
-    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card = nil)
+    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag,
+                   rates, rate_card = nil, supplier_name = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref

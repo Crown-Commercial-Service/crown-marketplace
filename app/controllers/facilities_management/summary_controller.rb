@@ -63,7 +63,7 @@ module FacilitiesManagement
 
       selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
 
-      uvals = uom_values(selected_buildings)
+      uvals = @report.uom_values(selected_buildings)
 
       # move this into the model
       @report.calculate_services_for_buildings selected_buildings,
