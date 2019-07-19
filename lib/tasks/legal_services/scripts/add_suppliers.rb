@@ -1,7 +1,6 @@
 require 'roo'
 require 'json'
 require 'capybara'
-require 'byebug'
 
 def add_suppliers
   suppliers_workbook = Roo::Spreadsheet.open '/users/milomia/master/storage/legal_services/current_data/input/SupplierDetails4.xlsx'
