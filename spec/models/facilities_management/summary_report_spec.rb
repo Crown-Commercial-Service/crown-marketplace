@@ -43,6 +43,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       OpenStruct.new(building_json: building3)
     ]
   end
+
+  let(:uvals) do
+    []
+  end
   # after do
   # end
 
@@ -57,7 +61,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     rates = CCS::FM::Rate.read_benchmark_rates
 
-    report.calculate_services_for_buildings buildings, rates
+    # uvals = uom_values(selected_buildings)
+
+    report.calculate_services_for_buildings buildings, uvals, rates
 
     # report.workout_current_lot
     # p report.assessed_value
@@ -74,7 +80,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data)
       # prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
-      report.calculate_services_for_buildings buildings, rates, rate_card, s
+      report.calculate_services_for_buildings buildings, uvals, rates, rate_card, s
 
       expect(report.assessed_value.round(2)).to be 0.00
     end
