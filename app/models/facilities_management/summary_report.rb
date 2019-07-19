@@ -46,15 +46,14 @@ module FacilitiesManagement
       CCS::FM::Building.buildings_for_user(@user_id)
     end
 
-    def calculate_services_for_buildings(selected_buildings, rates, rate_card = nil, supplier_name = nil)
+    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil)
       # selected_services
 
       @sum_uom = 0
       @sum_benchmark = 0
 
       # selected_buildings = user_buildings
-
-      uvals = uom_values(selected_buildings)
+      uvals ||= uom_values(selected_buildings) unless
 
       selected_buildings.each do |building|
         id = building['building_json']['id']
