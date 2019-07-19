@@ -3,28 +3,14 @@ require 'json'
 
 # rubocop:disable Metrics/AbcSize
 def add_region_availability_per_lot_per_supplier
-  suppliers = JSON.parse(File.read('./storage/management_consultancy/current_data/output/suppliers_with_service_offerings.json'))
+  suppliers = JSON.parse(File.read('/users/milomia/master/storage/legal_services/current_data/output/suppliers2.json'))
 
-  regional_offerings_workbook = Roo::Spreadsheet.open './storage/management_consultancy/current_data/input/Regional offerings.xlsx'
+  workbook = Roo::Spreadsheet.open '/users/milomia/master/storage/legal_services/current_data/input/Regional offerings.xlsx'
 
-  sheet_names = {
-    'MCF Lot 2 (Finance)' => 'MCF1.2',
-    'MCF Lot 3 (Audit)' => 'MCF1.3',
-    'MCF Lot 4 (HR)' => 'MCF1.4',
-    'MCF Lot 5 (Health & Community)' => 'MCF1.5',
-    'MCF Lot 6 (Education)' => 'MCF1.6',
-    'MCF Lot 7 (Infrastructure)' => 'MCF1.7',
-    'MCF Lot 8 (ICT & Digital Servic' => 'MCF1.8',
-    'MCF2 Lot 1 (Business Consultanc' => 'MCF2.1',
-    'MCF2 Lot 2 (Procurement, Supply' => 'MCF2.2',
-    'MCF2 Lot 3 (Complex & Transform' => 'MCF2.3',
-    'MCF2 Lot 4 (Strategic)' => 'MCF2.4'
-  }
-
-  (0..10).each do |sheet_number|
-    sheet = regional_offerings_workbook.sheet(sheet_number)
+  workbook.sheets.each do |sheet_name|
+    sheet = workbook.sheet(sheet_name)
     region_names = sheet.row(1)
-    lot_number = sheet_names[sheet.default_sheet]
+    lot_number = 1
 
     (2..sheet.last_row).each do |row_number|
       row = sheet.row(row_number)
@@ -48,7 +34,7 @@ def add_region_availability_per_lot_per_supplier
     end
   end
 
-  File.open('./storage/management_consultancy/current_data/output/suppliers_with_service_offerings_and_regional_availability.json', 'w') do |f|
+  File.open('/users/milomia/master/storage/legal_services/current_data/regional_availability.json', 'w') do |f|
     f.write JSON.pretty_generate suppliers
   end
 end
@@ -59,10 +45,12 @@ def nuts1_region?(region_name)
 end
 
 def extract_region_code(region_name)
-  region_name.split('(')[1].split(')')[0]
+  # region_name.split('(')[1].split(')')[0]
 end
 
 def extract_duns(supplier_name)
   supplier_name.split('[')[1].split(']')[0].to_i
 end
 # rubocop:enable Metrics/AbcSize
+
+add_region_availability_per_lot_per_supplier
