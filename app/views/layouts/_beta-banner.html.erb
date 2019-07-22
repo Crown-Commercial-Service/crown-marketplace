@@ -1,6 +1,8 @@
-        <div class="govuk-phase-banner ccs-no-print">
-          <p class="govuk-phase-banner__content">
-            <strong class="govuk-tag govuk-phase-banner__content__tag"><%= t('layouts.application.beta') %></strong>
-            <span class="govuk-phase-banner__text"><%= t('layouts.application.feedback_html', link: feedback_email_link) %></span>
-          </p>
-        </div>
+<div class="ccs-phase-banner-wrapper <%= 'ccs-end-of-journey-banner' if end_of_journey %>">
+  <div class="govuk-phase-banner govuk-width-container ccs-no-print">
+    <p class="govuk-phase-banner__content">
+      <strong class="govuk-tag govuk-phase-banner__content__tag"><%= t('layouts.application.beta') %></strong>
+      <span class="govuk-phase-banner__text"><%= end_of_journey ? t('layouts.application.feedback_end_journey_html', link: Marketplace.supply_teachers_survey_link) : t('layouts.application.feedback_html', link: feedback_email_link)%> </span>
+    </p>
+  </div>
+</div>

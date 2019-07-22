@@ -1,7 +1,7 @@
 # rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin'].freeze
-  PLATFORM_LANDINGPAGES = ['', 'supply_teachers', 'facilities_management', 'management_consultancy', 'apprenticeships'].freeze
+  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'facilities_management/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
   def miles_to_metres(miles)
     DistanceConverter.miles_to_metres(miles)
   end
@@ -11,6 +11,8 @@ module ApplicationHelper
   end
 
   def feedback_email_link
+    return link_to(t('common.feedback'), Marketplace.supply_teachers_survey_link, target: '_blank', rel: 'noopener') if controller.class.try(:parent_name) == 'SupplyTeachers'
+
     govuk_email_link(Marketplace.feedback_email_address, t('layouts.application.feedback_aria_label'), css_class: 'govuk-link ga-feedback-mailto')
   end
 
@@ -115,16 +117,12 @@ module ApplicationHelper
     send controller.class.parent_name.underscore + '_path' if controller.class.parent_name
   end
 
-  def service_destroy_user_session_path
-    send controller.class.parent_name.underscore + '_destroy_user_session_path' if controller.class.parent_name
-  end
-
   def service_gateway_path
-    send controller.class.parent_name.underscore + '_gateway_path' if controller.class.parent_name
+    send controller.class.parent_name.underscore + '_gateway_path' if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
   end
 
-  def service_destroy_session_path
-    if controller.class.parent_name
+  def service_destroy_user_session_path
+    if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
       send controller.class.parent_name.underscore.tr('/', '_') + '_destroy_user_session_path'
     else
       send 'destroy_user_session_path'
@@ -132,7 +130,8 @@ module ApplicationHelper
   end
 
   def landing_or_admin_page
-    (PLATFORM_LANDINGPAGES.include?(controller.class.parent_name.try(:underscore)) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
+    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') ||
+      controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
   end
 
   def a_supply_teachers_path?

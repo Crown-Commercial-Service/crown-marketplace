@@ -19,28 +19,25 @@
       <%= t('.heading') %>
     </h1>
 
-    <p><b><span class="govuk-!-font-size-27">127</span> <%= t('.suppliers') %></b> <%= t('.suppliers_pt2') %></p>
+    <p><b><span class="govuk-!-font-size-27"><%= LegalServices::Lot3[0].count - 1 %></span> <%= t('.suppliers') %></b> <%= t('.suppliers_pt2') %></p>
 
     <a href="#" role="button" class="govuk-button govuk-!-padding-left-6 govuk-!-padding-right-6 govuk-!-margin-top-2"><%= t('.download') %></a>
 
     <div class="ccs-search-results">
 
       <ul class="ccs-results-list govuk-!-margin-bottom-7">
+        <% lots3 = LegalServices::Lot3 %>
+        <% lots3 = lots3[0] %>
+        <% lots3 = lots3[1..-1] %>
 
-        <% lot1 = LegalServices::Lot.all %>
-
-        <% lot1.each do |lot3_results| %>
-          <% if lot3_results.number == "3" %>
+        <% lots3.each do |lot3| %>
             <li class="govuk-list govuk-!-padding-top-4 govuk-!-padding-bottom-4">
               <a href="#" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">
-
-                <%= lot3_results.description %>
-
+                  <%= lot3 %>
+                  <br\> 
                 <abbr class="govuk-!-font-size-14 ccs-tag" title="Small and medium enterprise">SME</abbr>
-
               </a>
             </li>
-          <% end %>
         <% end %><!-- **** what message if there are no results? **** -->
 
       </ul>

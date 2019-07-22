@@ -1,17 +1,17 @@
 require 'rake'
-require 'aws-sdk-s3'
 
 module ManagementConsultancy
   class DataUploadWorker
     include Sidekiq::Worker
+    sidekiq_options queue: 'mc'
 
     def perform(upload_id)
       upload = ManagementConsultancy::Admin::Upload.find(upload_id)
-      suppliers = JSON.parse(File.read(data_file))
+      suppliers = JSON.parse(File.read(upload.suppliers_data.file.path))
 
       ManagementConsultancy::Upload.upload!(suppliers)
 
-      upload.approve!
+      upload.upload!
     rescue ActiveRecord::RecordInvalid => e
       summary = {
         record: e.record,
@@ -27,10 +27,6 @@ module ManagementConsultancy
     def fail_upload(upload, fail_reason)
       upload.fail!
       upload.update(fail_reason: fail_reason)
-    end
-
-    def data_file
-      Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'data.json')
     end
   end
 end

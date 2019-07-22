@@ -30,41 +30,18 @@
       <caption class="govuk-table__caption"><%= t('.files') %></caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col"><%= t('.spreadsheet') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('.file') %></th>
           <th class="govuk-table__header" scope="col"><%= t('.download') %></th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-      <% if @upload.suppliers.file.present? %>
+      <% if @upload.suppliers_data.file.present? %>
         <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="row"><%= t('.suppliers') %></th>
-          <td class="govuk-table__cell"><%= link_to 'Download', @upload.suppliers_url %></td>
-        </tr>
-      <% end %>
-      <% if @upload.supplier_service_offerings.file.present? %>
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="row"><%= t('.supplier_service_offerings') %></th>
-          <td class="govuk-table__cell"><%= link_to 'Download', @upload.supplier_service_offerings_url %></td>
-        </tr>
-      <% end %>
-      <% if @upload.supplier_regional_offerings.file.present? %>
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="row"><%= t('.supplier_regional_offerings') %></th>
-          <td class="govuk-table__cell"><%= link_to 'Download', @upload.supplier_regional_offerings_url %></td>
-        </tr>
-      <% end %>
-      <% if @upload.rate_cards.file.present? %>
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="row"><%= t('.rate_cards') %></th>
-          <td class="govuk-table__cell"><%= link_to 'Download', @upload.rate_cards_url %></td>
+          <th class="govuk-table__header" scope="row"><%= t('.suppliers_data') %></th>
+          <td class="govuk-table__cell"><%= link_to 'Download', @upload.suppliers_data_url %></td>
         </tr>
       <% end %>
       </tbody>
     </table>
-    <% if @upload.in_review? %>
-      <p class="govuk-body govuk-!-margin-top-8"><%= t('.confirm_changes') %></p>
-      <%= link_to "Approve and publish to live services", management_consultancy_admin_upload_approve_path(@upload), class: 'govuk-button' %>
-      <%= link_to "Reject", management_consultancy_admin_upload_reject_path(@upload), class: 'govuk-button govuk-button--warning' %>
-    <% end %>
   </div>
 </div>

@@ -47,6 +47,15 @@
 
     <% end %>
 
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+      <%= t('ccs_patterns.home.cog_sign_in.problems_signing_in') %>
+    </h2>
+
+    <ul class="govuk-list">
+      <li>
+        <%= link_to t('ccs_patterns.home.cog_sign_in.forgotten_password_html'), facilities_management_new_user_password_path, class: 'govuk-link' %>
+      </li>
+    </ul>
   </div>
 </div>
 
