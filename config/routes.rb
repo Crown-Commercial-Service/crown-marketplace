@@ -68,6 +68,12 @@ Rails.application.routes.draw do
     get '/supply-teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#new', as: :supply_teachers_admin_new_user_session
     post '/supply-teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#create', as: :supply_teachers_admin_user_session
     delete '/supply-teachers/admin/sign-out', to: 'supply_teachers/admin/sessions#destroy', as: :supply_teachers_admin_destroy_user_session
+    get '/supply-teachers/admin/users/forgot-password', to: 'supply_teachers/admin/passwords#new', as: :supply_teachers_admin_new_user_password
+    post '/supply-teachers/admin/users/password', to: 'supply_teachers/admin/passwords#create'
+    get '/supply-teachers/admin/users/forgot-password-confirmation', to: 'supply_teachers/admin/passwords#confirm_new', as: :supply_teachers_admin_confirm_new_user_password
+    get '/supply-teachers/admin/users/password', to: 'supply_teachers/admin/passwords#edit', as: :supply_teachers_admin_edit_user_password
+    put '/supply-teachers/admin/users/password', to: 'supply_teachers/admin/passwords#update'
+    get '/supply-teachers/admin/users/password-reset-success', to: 'supply_teachers/admin/passwords#password_reset_success', as: :supply_teachers_admin_password_reset_success
 
     get '/management-consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#new', as: :management_consultancy_admin_new_user_session
     post '/management-consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#create', as: :management_consultancy_admin_user_session

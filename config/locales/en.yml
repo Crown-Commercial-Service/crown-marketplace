@@ -464,6 +464,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     users:
       new_password_required:
@@ -661,6 +662,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     users:
       new_password_required:
@@ -902,6 +904,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
       cg_no_suppliers_found:
@@ -1168,6 +1171,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
       download:
@@ -1289,6 +1293,33 @@ en:
       other: agencies
   supply_teachers:
     admin:
+      passwords:
+        edit:
+          confirm_code: Confirm Code
+          confirm_new_password: Confirm new password
+          heading: Reset your password
+          lead: Reset password for
+          new_password: New password
+          password: Your password must have
+        forgot_password_confirmation:
+          heading: A reset email has been sent
+          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+          text01: If you don't receive this, email
+          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        new:
+          email: Email address
+          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+          heading: Reset password
+          lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        password_reset_success:
+          heading: You have successfully changed your password
+          lead: You can now sign in to your Crown Commercial Service account
+      sessions:
+        new:
+          email_address: Email address
+          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          forgotten_password_html: I've forgotten my password
+          password: Password
       uploads:
         in_progress:
           button: Return to manage supplier data

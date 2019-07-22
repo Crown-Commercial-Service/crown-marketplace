@@ -1,0 +1,106 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless @response.errors.any? %>  ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+      <h2 class="govuk-error-summary__title" id="error-summary-title">
+        <%= t('common.error_summary_title') %>
+      </h2>
+      <div class="govuk-error-summary__body">
+        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
+          <% @response.errors.keys.each do |attribute| %>
+            <li>
+              <%= link_to @response.errors[attribute].first, "##{error_id(attribute)}" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+
+    <p class="govuk-body-l">
+      <%= t('.lead') %> <span class="ccs-email-example"><%= @response.email %></span>
+    </p>
+
+    <%= form_tag supply_teachers_admin_edit_user_password_path, class: 'ccs-form', id: 'cog_forgot_password_reset_form', method: :put do %>
+
+      <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+
+        <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:password].any? %>">
+
+          <p class="govuk-body govuk-!-margin-bottom-1"><%= t('.password') %>:</p>
+
+          <%= render '/layouts/password-strength', text: 'password01' %>
+
+          <label class="govuk-label" for="password01">
+            <%= t('.new_password') %>
+          </label>
+
+          <span id="password01-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.enter_a_new_password') %>
+                    </span>
+
+          <span id="password01-eighterror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.password_must_be') %>
+                    </span>
+
+          <span id="password01-Serror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.passwords_stronger') %>
+                    </span>
+
+          <span id="password01-uppererror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.passwords_upper') %>
+                    </span>
+          <%= display_error(@response, :password) %>
+          <%= password_field_tag :password, nil, class: "govuk-input govuk-!-width-three-quarters", id: "password01", autocomplete: "new-password" %>
+        </div>
+
+        <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:password_confirmation].any? %>">
+          <label class="govuk-label" for="password02">
+            <%= t('.confirm_new_password') %>
+          </label>
+
+          <span id="password02-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.confirm_new_password') %>
+                    </span>
+
+          <span id="password02-matcherror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.passwords_dont_match') %>
+                    </span>
+
+          <%= display_error(@response, :password_confirmation) %>
+          <%= password_field_tag :password_confirmation, nil, class: "govuk-input govuk-!-width-three-quarters", id: "password02", autocomplete: "new-password" %>
+        </div>
+
+        <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:confirmation_code].any? %>">
+          <label class="govuk-label" for="password02">
+            <%= t('.confirm_code') %>
+          </label>
+
+          <span id="password02-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.confirm_new_password') %>
+                    </span>
+
+          <span id="password02-matcherror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+                        <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.passwords_dont_match') %>
+                    </span>
+
+          <%= display_error(@response, :confirmation_code) %>
+          <%= text_field_tag :confirmation_code, nil, class: "govuk-input govuk-!-width-three-quarters" %>
+        </div>
+
+      </fieldset>
+
+      <%= hidden_field_tag :username, @response.email %>
+
+      <%= submit_tag t('common.reset_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+
+    <% end %>
+
+
+
+  </div>
+</div>
