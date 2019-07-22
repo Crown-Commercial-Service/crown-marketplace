@@ -14,14 +14,13 @@ module ManagementConsultancy
       def new
         @back_path = :back
         @upload = ManagementConsultancy::Admin::Upload.new
-        @uploads_in_progress = ManagementConsultancy::Admin::Upload.in_review_or_in_progress?
       end
 
       def create
         @upload = ManagementConsultancy::Admin::Upload.new(upload_params)
 
         if @upload.save
-          ManagementConsultancy::DataScriptWorker.perform_async(@upload.id)
+          ManagementConsultancy::DataUploadWorker.perform_async(@upload.id)
           redirect_to management_consultancy_admin_in_progress_path
         else
           @upload.cleanup_input_files
@@ -50,7 +49,7 @@ module ManagementConsultancy
       private
 
       def upload_params
-        params.require(:management_consultancy_admin_upload).permit(:suppliers, :supplier_regional_offerings, :supplier_service_offerings, :rate_cards)
+        params.require(:management_consultancy_admin_upload).permit(:suppliers_data)
       end
     end
   end
