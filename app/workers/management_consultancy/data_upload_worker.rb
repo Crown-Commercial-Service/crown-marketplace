@@ -4,10 +4,11 @@ require 'aws-sdk-s3'
 module ManagementConsultancy
   class DataUploadWorker
     include Sidekiq::Worker
+    sidekiq_options queue: 'mc'
 
     def perform(upload_id)
       upload = ManagementConsultancy::Admin::Upload.find(upload_id)
-      suppliers = JSON.parse(File.read(data_file))
+      suppliers = JSON.parse(File.read(URI.open(data_file)))
 
       ManagementConsultancy::Upload.upload!(suppliers)
 
@@ -30,7 +31,11 @@ module ManagementConsultancy
     end
 
     def data_file
-      Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'data.json')
+      if Rails.env.development?
+        Rails.root.join('storage', 'management_consultancy', 'current_data', 'output', 'data.json')
+      else
+        "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/management_consultancy/current_data/output/data.json"
+      end
     end
   end
 end

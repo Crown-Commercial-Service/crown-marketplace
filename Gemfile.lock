@@ -65,11 +65,11 @@ GEM
     ast (2.4.0)
     attr_required (1.0.1)
     aws-eventstream (1.0.3)
-    aws-partitions (1.166.0)
-    aws-sdk-cognitoidentityprovider (1.22.0)
-      aws-sdk-core (~> 3, >= 3.53.0)
+    aws-partitions (1.182.0)
+    aws-sdk-cognitoidentityprovider (1.23.0)
+      aws-sdk-core (~> 3, >= 3.56.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-core (3.53.1)
+    aws-sdk-core (3.57.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.1)
@@ -467,7 +467,7 @@ PLATFORMS
 DEPENDENCIES
   aasm (~> 5.0)
   activerecord-postgis-adapter
-  aws-sdk-cognitoidentityprovider (~> 1.22.0)
+  aws-sdk-cognitoidentityprovider (~> 1.23.0)
   aws-sdk-s3 (~> 1)
   axlsx!
   bootsnap (>= 1.1.0)

@@ -1,9 +1,9 @@
 require 'roo'
 require 'json'
 require 'capybara'
+require 'aws-sdk-s3'
 
 def add_suppliers
-  suppliers_workbook_filepath = Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Suppliers.xlsx')
   suppliers_workbook = Roo::Spreadsheet.open(suppliers_workbook_filepath, extension: :xlsx)
 
   headers = {
@@ -34,7 +34,9 @@ def add_suppliers
     supplier[:id] = SecureRandom.uuid
   end
 
-  File.open(get_mc_output_file_path('suppliers.json'), 'w') do |f|
-    f.puts JSON.pretty_generate(suppliers)
-  end
+  write_output_file('suppliers.json', suppliers)
+end
+
+def suppliers_workbook_filepath
+  file_path ManagementConsultancy::Admin::Upload::SUPPLIERS_PATH
 end

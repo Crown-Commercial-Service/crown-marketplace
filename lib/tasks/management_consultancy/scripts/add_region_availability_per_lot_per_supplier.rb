@@ -1,10 +1,11 @@
 require 'roo'
 require 'json'
+require 'aws-sdk-s3'
 
 def add_region_availability_per_lot_per_supplier
   suppliers = JSON.parse(File.read(get_mc_output_file_path('suppliers_with_service_offerings.json')))
 
-  regional_offerings_workbook = Roo::Spreadsheet.open(Rails.root.join('storage', 'management_consultancy', 'current_data', 'input', 'Regional offerings.xlsx'), extension: :xlsx)
+  regional_offerings_workbook = Roo::Spreadsheet.open(regional_offerings_workbook_filepath, extension: :xlsx)
 
   sheet_names = {
     'MCF Lot 2 (Finance)' => 'MCF1.2',
@@ -47,9 +48,7 @@ def add_region_availability_per_lot_per_supplier
     end
   end
 
-  File.open(get_mc_output_file_path('suppliers_with_service_offerings_and_regional_availability.json'), 'w') do |f|
-    f.puts JSON.pretty_generate(suppliers)
-  end
+  write_output_file('suppliers_with_service_offerings_and_regional_availability.json', suppliers)
 end
 
 def nuts1_region?(region_name)
@@ -63,4 +62,8 @@ end
 
 def extract_duns(supplier_name)
   supplier_name.split('[')[1].split(']')[0].to_i
+end
+
+def regional_offerings_workbook_filepath
+  file_path ManagementConsultancy::Admin::Upload::SUPPLIER_REGIONAL_OFFERINGS_PATH
 end

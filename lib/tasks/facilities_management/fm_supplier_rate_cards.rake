@@ -17,15 +17,18 @@ module FM
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
   def self.add_rate_cards_to_suppliers
     create_fm_rate_cards_table
 
-    spreadsheet_name = 'facilities_management/Direct Award Rate Cards - anonymised1.xlsx'
+    spreadsheet_name = 'facilities_management/RM3830 Direct Award Data - anonymised.xlsx'
     rate_cards_workbook = Roo::Spreadsheet.open 'data/' + spreadsheet_name
 
     data = {}
 
-    ['Prices', 'Discount', 'Variances'].each do |sheet_name|
+    ['Variances', 'Discount', 'Prices'].each do |sheet_name|
       sheet = rate_cards_workbook.sheet(sheet_name)
 
       data[sheet_name] = {}
@@ -38,19 +41,28 @@ module FM
         rate_card = labels.zip(row).to_h
 
         # p rate_card
-        data[sheet_name][rate_card['Supplier']] = [] unless data[sheet_name][rate_card['Supplier']]
+        data[sheet_name][rate_card['Supplier']] = {} unless data[sheet_name][rate_card['Supplier']]
 
-        data[sheet_name][rate_card['Supplier']] << rate_card
+        if sheet_name == 'Prices'
+          data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
+        elsif sheet_name == 'Discount'
+          data[sheet_name][rate_card['Supplier']][rate_card['Ref']] = rate_card if rate_card['Ref']
+        elsif sheet_name == 'Variances'
+          data[sheet_name][rate_card['Supplier']] = rate_card
+        end
       end
     end
 
     # CCS::FM::RateCard.all
-    CCS::FM::RateCard.create(data: data, source_file: spreadsheet_name)
+    v = CCS::FM::RateCard.create(data: data, source_file: spreadsheet_name)
 
     # all_data.save
-    p "FM rate cards spreadsheet #{spreadsheet_name} imported into database"
+    p "FM rate cards spreadsheet #{spreadsheet_name} (#{v.data.count} sheets) imported into database"
   end
 end
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
 
 namespace :db do
   desc 'uploading supplier rates cards'
