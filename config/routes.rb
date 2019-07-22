@@ -78,6 +78,13 @@ Rails.application.routes.draw do
     get '/management-consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#new', as: :management_consultancy_admin_new_user_session
     post '/management-consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#create', as: :management_consultancy_admin_user_session
     delete '/management-consultancy/admin/sign-out', to: 'management_consultancy/admin/sessions#destroy', as: :management_consultancy_admin_destroy_user_session
+    get '/management-consultancy/admin/users/forgot-password', to: 'management_consultancy/admin/passwords#new', as: :management_consultancy_admin_new_user_password
+    post '/management-consultancy/admin/users/password', to: 'management_consultancy/admin/passwords#create'
+    get '/management-consultancy/admin/users/forgot-password-confirmation', to: 'management_consultancy/admin/passwords#confirm_new', as: :management_consultancy_admin_confirm_new_user_password
+    get '/management-consultancy/admin/users/password', to: 'management_consultancy/admin/passwords#edit', as: :management_consultancy_admin_edit_user_password
+    put '/management-consultancy/admin/users/password', to: 'management_consultancy/admin/passwords#update'
+    get '/management-consultancy/admin/users/password-reset-success', to: 'management_consultancy/admin/passwords#password_reset_success', as: :management_consultancy_admin_password_reset_success
+
   end
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'

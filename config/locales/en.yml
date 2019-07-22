@@ -472,6 +472,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        content: It may take a few minutes to arrive.
+        resend_the_confirmation_code_html: Resend access code
   ccs_patterns:
     home:
       cog_email:
@@ -670,6 +676,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        content: It may take a few minutes to arrive.
+        resend_the_confirmation_code_html: Resend access code
   faker:
     company:
       name:
@@ -939,6 +951,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        content: It may take a few minutes to arrive.
+        resend_the_confirmation_code_html: Resend access code
   management_consultancy:
     admin:
       uploads:
@@ -1214,6 +1232,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        content: It may take a few minutes to arrive.
+        resend_the_confirmation_code_html: Resend access code
   miles:
     unit:
       one: mile
@@ -1378,6 +1402,18 @@ en:
           button: Return to manage supplier data
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently processing and will soon be published to the <strong>''Supply teachers and agency workers''</strong> service.'
           heading: Data published
+      users:
+        new_password_required:
+          confirm_your_password: Confirm your password
+          create_your_password: Create a password you'll remember
+          heading: Change your password
+          intro: This is the first time you've signed in to your account. You need to reset your password.
+        sms_mfa:
+          access_code: Access code
+          heading: Enter your access code
+          lead: 'We just sent a 6 digit access code by text to:'
+          content: It may take a few minutes to arrive.
+          resend_the_confirmation_code_html: Resend access code
     branches:
       branch:
         address: Address
@@ -1643,6 +1679,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        content: It may take a few minutes to arrive.
+        resend_the_confirmation_code_html: Resend access code
   views:
     pagination:
       next: Next <b>→</b>
