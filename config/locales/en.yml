@@ -940,7 +940,7 @@ en:
     admin:
       uploads:
         in_progress:
-          content: The spreadsheets have been uploaded and are now processing.
+          content: The data have been uploaded and are now being processed.
           heading: Upload successful
         index:
           caption: Manage supplier data
@@ -948,28 +948,22 @@ en:
           date: Date
           heading: Management Consultancy
           name: Name
-          no_of_files: Number of files
           status: Status
           table_caption: Previous uploads
         new:
           caption: Management Consultancy
           heading: New data upload
-          upload_caption: Supported file format is XLSX. Maximum file size is 5mb.
-          upload_title: Upload one or more of the following spreadsheets
-          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+          upload_caption: Supported file format is JSON Maximum file size is 10mb.
+          upload_title: Upload the complete supplier data
         show:
           caption: Management consultancy
-          confirm_changes: 'Confirm these files are ready to be used by the live service:'
           datetime: 'Date/time:'
           download: Download
+          file: File
           files: Files
           heading: 'Upload session #%{number}'
-          rate_cards: Rate Cards
-          spreadsheet: Spreadsheet
           status: 'Status:'
-          supplier_regional_offerings: Supplier Regional Offerings
-          supplier_service_offerings: Supplier Service Offerings
-          suppliers: Suppliers
+          suppliers_data: Suppliers data
         uploading:
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
           heading: Data upload in progress
