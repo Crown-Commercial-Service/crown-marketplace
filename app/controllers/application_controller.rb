@@ -10,7 +10,11 @@ class ApplicationController < ActionController::Base
   def gateway_url
     case session[:last_visited_framework]
     when 'supply_teachers'
-      supply_teachers_gateway_url
+      if request.headers["REQUEST_PATH"].include?('/supply-teachers/admin')
+        supply_teachers_admin_user_session_url
+      else
+        supply_teachers_gateway_url
+      end
     when 'management_consultancy'
       management_consultancy_gateway_url
     when 'facilities_management'
