@@ -9,8 +9,8 @@ require 'active_support'
 def merge_json(supplier_name_key: , destination_key:, destination_file:, primary:, secondary:)
   alias_rows = []
   merge_key = 'supplier_name'
-
-  alias_rows = CSV.parse(File.read(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH, extension: :csv), headers: :first_row)
+  supplier_lookup_path = file_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH)
+  alias_rows = CSV.parse(URI.open(supplier_lookup_path), headers: :first_row)
 
   aliases = Hash.new { |_, k| k }
   alias_rows.each_with_object(aliases) do |row, hash|
@@ -44,7 +44,7 @@ def merge_json(supplier_name_key: , destination_key:, destination_file:, primary
       merged << item.merge(supplier_id: supplier_id, supplier_name: k)
     else
       File.open(get_output_file_path('errors.out'), 'a') do |f|
-        f.puts "#{k}: does not appear in aliases file (input/supplier_lookup.csv). Make sure you include it in the column '#{supplier_name_key}'."
+        f.puts "#{k}: does not appear in aliases file (Supplier lookup). Make sure you include it in the column '#{supplier_name_key}'."
       end
     end
   end

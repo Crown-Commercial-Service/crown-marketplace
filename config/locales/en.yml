@@ -59,6 +59,18 @@ en:
             passwords_dont_match: Passwords don't match
             passwords_stronger: Password must include a special character
             passwords_uppper: Password must include a capital letter
+        cognito/confirm_password_reset:
+          attributes:
+            confirmation_code:
+              blank: Enter your confirmation code
+            password:
+              blank: Enter a password
+              invalid_no_capitals: Password must include a capital letter
+              invalid_no_symbol: Password must include a special character
+              too_short: Password must be 8 characters or more
+            password_confirmation:
+              blank: Enter your password
+              confirmation: Passwords don't match
         cognito/respond_to_challenge:
           attributes:
             new_password:
@@ -69,14 +81,6 @@ en:
             new_password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
-        facilities_management/journey/supplier_region:
-          attributes:
-            region_codes:
-              too_short: Select at least one region
-        facilities_management/journey/value_band:
-          attributes:
-            value_band:
-              inclusion: Select a value band to see a list of suppliers
         legal_services/journey/check_suitability:
           attributes:
             legal_services:
@@ -435,6 +439,27 @@ en:
         page_title: Understanding what to buy
         title: Understanding what to buy
     page_section: Find apprenticeship training and related services
+    passwords:
+      edit:
+        confirm_code: Confirm Code
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
+      forgot_password_confirmation:
+        heading: A reset email has been sent
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
     sessions:
       new:
         email_address: Email address
@@ -570,12 +595,13 @@ en:
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
+    feedback: feedback
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
     next: Next
     passcap: at least one capital letter
     passeight: at least 8 characters
     passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
-    resend_password: Resend password
+    reset_password: Reset password
     search: Search
     send_reset_email: Send reset email
     sign_in: Sign in
@@ -610,32 +636,27 @@ en:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
-    journey:
-      supplier_region:
-        nuts1:
-          OS0: International
-          UKC: North East England
-          UKD: North West England
-          UKE: Yorkshire and The Humber
-          UKF: East Midlands (England)
-          UKG: West Midlands (England)
-          UKH: East of England
-          UKI: London
-          UKJ: South East England
-          UKK: South West England
-          UKL: Wales
-          UKM: Scotland
-          UKN: Northern Ireland
-        question: Which regions do you need the service in?
-      value_band:
-        answer_over50m: Over £50 million
-        answer_under1_5m: Up to £1.5 million
-        answer_under50m: "£7 million – £50 million"
-        answer_under7m: "£1.5 million – £7 million"
-        direct_award: Direct award to a supplier is only an option for the first of these spending bands.
-        question: What is the maximum amount you will be spending overall, taking into account all buildings and services, and the total contract length?
-        question_hint: This can be current costs, or estimated annual costs.
-        submit: Continue
+    passwords:
+      edit:
+        confirm_code: Confirm Code
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
+      forgot_password_confirmation:
+        heading: A reset email has been sent
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
     sessions:
       new:
         email_address: Email address
@@ -686,6 +707,7 @@ en:
       error_prefix: Error
       feedback: feedback
       feedback_aria_label: Email your feedback on this service.
+      feedback_end_journey_html: <b> This is a new service - how did you find it? </b> Please complete <a href="%{link}" target="_blank" >a short survey</a> to help us improve it.
       feedback_html: This is a new service – your %{link} will help us to improve it.
       having_problems: To ask a question or report a problem,
       privacy_link: Privacy policy
@@ -697,6 +719,50 @@ en:
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
   legal_services:
+    admin:
+      uploads:
+        in_progress:
+          button: Button
+          content: Content
+          heading: Heading
+        index:
+          caption: Caption
+          create_new: Create new
+          current_table_caption: Current table caption
+          date: Date
+          heading: Heading
+          name: Name
+          no_of_files: No of files
+          spreadsheet: Spreadsheet
+          status: Status
+          table_caption: Table caption
+          upload_session: Upload session
+        new:
+          caption: Caption
+          heading: Heading
+          upload_button: Upload button
+          upload_caption: Upload caption
+          upload_title: Upload title
+        reject:
+          content: Content
+          heading_html: Heading html
+          index_button: Index button
+          new_button: New button
+        show:
+          approve: Approve
+          caption: Caption
+          confirm_changes: Confirm changes
+          datetime: Datetime
+          error_heading: Error heading
+          files: Files
+          heading: Heading
+          reject: Reject
+          spreadsheet: Spreadsheet
+          status: Status
+        uploading:
+          button: Button
+          content_html: Content html
+          heading: Heading
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -811,6 +877,27 @@ en:
         txt01: The
         txt02_link: General Legal Advice Services (RM3786)
         txt03: agreement provides legal advice services for central government and arms-length bodies.
+    passwords:
+      edit:
+        confirm_code: Confirm Code
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
+      forgot_password_confirmation:
+        heading: A reset email has been sent
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
     sessions:
       new:
         email_address: Email address
@@ -867,7 +954,7 @@ en:
         new:
           caption: Management Consultancy
           heading: New data upload
-          upload_caption: Supported file formats are XLS, XLSX and CSV. Maximum file size is 5mb.
+          upload_caption: Supported file format is XLSX. Maximum file size is 5mb.
           upload_title: Upload one or more of the following spreadsheets
           warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
         show:
@@ -1056,6 +1143,27 @@ en:
         question: Select the services you need
         remove_all: Remove all
         services_selected: services selected
+    passwords:
+      edit:
+        confirm_code: Confirm Code
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
+      forgot_password_confirmation:
+        heading: A reset email has been sent
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
     sessions:
       new:
         email_address: Email address
@@ -1089,12 +1197,11 @@ en:
           phone_number: Phone number
           website: Website
         day_rates: Day rates
-        fixed_until_mcf1: Fixed until September 2020
-        fixed_until_mcf2: Fixed until December 2021
+        fixed_until_mcf1: Fixed until September 2021
+        fixed_until_mcf2: Fixed until September 2020
         further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
         is_an_sme: This supplier is a small or medium-sized enterprise
         max_day_rate: Max day rate
-        sub_title: "%{framework} lot %{lot_number} - %{description}"
       supplier:
         average_day_rate: Average day rate
     users:
@@ -1443,10 +1550,32 @@ en:
         page_title: Do you want an agency to supply the worker?
         question: Do you want an agency to supply the worker?
     page_section: Find supply teachers and agency staff
+    passwords:
+      edit:
+        confirm_code: Confirm Code
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
+      forgot_password_confirmation:
+        heading: A reset email has been sent
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
     sessions:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
       all_suppliers:

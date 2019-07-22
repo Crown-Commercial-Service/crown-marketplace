@@ -2,10 +2,10 @@ module ManagementConsultancy
   class SuppliersController < FrameworkController
     helper :telephone_number
     before_action :fetch_suppliers, only: %i[index download]
+    before_action :set_back_path
 
     def index
       @journey = Journey.new(params[:slug], params)
-      @back_path = @journey.previous_step_path
       @lot = Lot.find_by(number: params[:lot])
       @suppliers = Kaminari.paginate_array(@all_suppliers).page(params[:page])
     end
@@ -37,6 +37,10 @@ module ManagementConsultancy
       ).joins(:rate_cards)
                                .where(management_consultancy_rate_cards: { lot: params[:lot] })
                                .sort_by { |supplier| supplier.rate_cards.first.average_daily_rate }
+    end
+
+    def set_back_path
+      @back_path = :back
     end
   end
 end

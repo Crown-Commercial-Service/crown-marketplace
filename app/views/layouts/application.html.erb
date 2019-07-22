@@ -41,9 +41,9 @@
         <%= render partial: '/layouts/header-banner' %>
       </header>
 
-      <div class="govuk-width-container">
+      <%= render partial: '/layouts/beta-banner', locals: {end_of_journey: @end_of_journey.present?} %>
 
-        <%= render partial: '/layouts/beta-banner' %>
+      <div class="govuk-width-container">
 
         <% if @back_path.present? %>
           <%= render partial: '/layouts/back-link' %>

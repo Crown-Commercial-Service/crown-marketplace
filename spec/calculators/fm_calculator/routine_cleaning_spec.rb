@@ -9,7 +9,8 @@ require 'fm_calculator/calculator'
 
     before(:each) do
       # args  Service ref, uom_vol, occupants, tuoe involved, london_location, CAFM, helpdesk
-      @calc = described_class.new(3, 'G1', 23000, 125, 'Y', 'Y', 'Y', 'N')
+      rates = CCS::FM::Rate.read_benchmark_rates
+      @calc = described_class.new(3, 'G1', 23000, 125, 'Y', 'Y', 'Y', 'N', rates)
     end
 
     describe 'calculate routine cleaning'

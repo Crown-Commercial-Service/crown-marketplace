@@ -93,6 +93,8 @@ module SupplyTeachers
       private
 
       def reject_uploads_and_cp_files
+        return if errors.any?
+
         reject_previous_uploads
         copy_files_to_input_folder
       rescue StandardError => e
@@ -111,7 +113,18 @@ module SupplyTeachers
       end
 
       def cp_file_to_input(file_path, new_path, condition)
-        FileUtils.cp(file_path, new_path) if condition
+        return unless condition
+
+        if Rails.env.development?
+          FileUtils.cp(file_path, new_path)
+        else
+          object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+          object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path.to_s)).upload_file(file_path, acl: 'public-read')
+        end
+      end
+
+      def s3_path(path)
+        path.slice((path.index('storage/') + 8)..path.length)
       end
 
       def reject_previous_uploads

@@ -289,19 +289,51 @@ $(() => {
         }
     });
 
+    const validateExtensions = () => {
+
+        let exts = $('input[name=fm-extension]');
+        let result = true;
+        let hasExtensions = $('#fm-contract-extension-yes').prop('checked');
+        
+        if (hasExtensions === true) {
+            $.each(exts, function (index, ext) {
+                if (!ext.value || ext.value === '') {
+                    result = false;
+                    $('#' + ext.id).focus();
+                    $('#' + ext.id + '-error').prop('hidden', false);
+
+                    $('#' + ext.id + '-container').addClass('govuk-form-group--error');
+                    $('#fm-contract-length-error-form-group').removeClass('govuk-form-group--error');
+                    $('#fm-contract-length-error').addClass('govuk-visually-hidden');
+                    $('body').animate({
+                        scrollTop: $('#' + ext.id).offset().top - $('body').offset().top + $('body').scrollTop()
+                    }, 'fast');
+                    return false;
+                }
+            });
+        }
+
+        return result;
+
+    };
+
     $('#fm-questions-continue').on('click', (e) => {
         e.preventDefault();
         let isValid = validateTotalContractLength();
+        let isExtValid = validateExtensions();
+        let hasExtensions = $('#fm-contract-extension-yes').prop('checked');
+
 
         if (isValid === true) {
-            // location.href = '/facilities-management/buildings-list';
-            $('#fm-extension-sum').attr('value', calcTotalExtensionYears());
-            $('#fm-seq-form').trigger('submit');
-
+            if (isExtValid === true) {
+                $('#fm-extension-sum').attr('value', calcTotalExtensionYears());
+                $('#fm-seq-form').trigger('submit');
+            }
         } else {
             $("html, body").animate({scrollTop: 0}, "1");
             $('html, body').stop(true, true);
         }
+
     });
 
     init();
