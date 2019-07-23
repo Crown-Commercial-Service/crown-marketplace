@@ -84,7 +84,6 @@ Rails.application.routes.draw do
     get '/management-consultancy/admin/users/password', to: 'management_consultancy/admin/passwords#edit', as: :management_consultancy_admin_edit_user_password
     put '/management-consultancy/admin/users/password', to: 'management_consultancy/admin/passwords#update'
     get '/management-consultancy/admin/users/password-reset-success', to: 'management_consultancy/admin/passwords#password_reset_success', as: :management_consultancy_admin_password_reset_success
-
   end
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'

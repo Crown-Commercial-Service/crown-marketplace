@@ -41,11 +41,11 @@
         </label>
 
         <span id="confirmation-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_code') %>
+                    <%= t('activemodel.errors.models.cognito/respond_to_challenge.attributes.access_code.blank') %>
                 </span>
 
         <span id="confirmation-sixerror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_six') %>
+                    <%= t('activemodel.errors.models.cognito/respond_to_challenge.attributes.access_code.invalid_length') %>
                 </span>
         <%= display_error(@challenge, :access_code) %>
         <%= text_field_tag :access_code, nil, class: 'govuk-input govuk-!-width-one-third', id: 'confirmation', type: 'number' %>

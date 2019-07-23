@@ -3,6 +3,7 @@ module Cognito
     include ActiveModel::Validations
     attr_reader :challenge_name, :username, :session, :new_password, :new_password_confirmation, :access_code, :roles
 
+    # new password validations
     validates :new_password,
               presence: true,
               confirmation: { case_sensitive: true },
@@ -11,6 +12,13 @@ module Cognito
     validates_presence_of :new_password_confirmation, if: :new_password_challenge?
     validates_format_of :new_password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals, if: :new_password_challenge?
     validates_format_of :new_password, with: /(?=.*\W)/, message: :invalid_no_symbol, if: :new_password_challenge?
+
+    # sms mfa validations
+    validates :access_code,
+              presence: true,
+              format: { with: /\A\d+\z/, message: :invalid_format },
+              length: { is: 6, message: :invalid_length },
+              if: :sms_mfa_challenge?
 
     def initialize(challenge_name, username, session, **options)
       @challenge_name = challenge_name
@@ -59,11 +67,11 @@ module Cognito
     end
 
     def respond_to_challenge
+      return unless valid?
+
       if new_password_challenge?
-        if valid?
-          @response = client.respond_to_auth_challenge(client_id: ENV['COGNITO_CLIENT_ID'], challenge_name: 'NEW_PASSWORD_REQUIRED', session: session, challenge_responses: { 'NEW_PASSWORD' => new_password, 'USERNAME' => username })
-          Cognito::CreateUserFromCognito.call(username) if User.find_by(cognito_uuid: username).nil?
-        end
+        @response = client.respond_to_auth_challenge(client_id: ENV['COGNITO_CLIENT_ID'], challenge_name: 'NEW_PASSWORD_REQUIRED', session: session, challenge_responses: { 'NEW_PASSWORD' => new_password, 'USERNAME' => username })
+        Cognito::CreateUserFromCognito.call(username) if User.find_by(cognito_uuid: username).nil?
       elsif sms_mfa_challenge?
         @response = client.respond_to_auth_challenge(client_id: ENV['COGNITO_CLIENT_ID'], challenge_name: 'SMS_MFA', session: session, challenge_responses: { 'SMS_MFA_CODE' => access_code, 'USERNAME' => username })
       end
