@@ -22,7 +22,7 @@ module ManagementConsultancy
         format.xlsx do
           spreadsheet_builder = ManagementConsultancy::SupplierSpreadsheetCreator.new(@all_suppliers, params)
           spreadsheet = spreadsheet_builder.build
-          render xlsx: spreadsheet.to_stream.read, filename: 'shortlist.xlsx', format: 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
+          render xlsx: spreadsheet.to_stream.read, filename: "shortlist_of_management_consultancy_suppliers.xlsx_#{DateTime.now.getlocal.strftime '%H-%M-%d-%m-%Y'}", format: 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
         end
       end
     end
