@@ -2,6 +2,7 @@ module Base
   class UsersController < ApplicationController
     before_action :authenticate_user!, except: %i[confirm_new confirm challenge_new challenge]
     before_action :authorize_user, except: %i[confirm_new confirm challenge_new challenge]
+    before_action :set_user_phone, only: %i[challenge_new challenge]
 
     def confirm_new; end
 
@@ -43,6 +44,10 @@ module Base
     def sign_in_user(user)
       sign_in(user)
       redirect_to after_sign_in_path_for(user)
+    end
+
+    def set_user_phone
+      @user_phone = User.find_by(cognito_uuid: params[:username]).try(:phone_number) || Cognito::CreateUserFromCognito.call(params[:username]).try(:user).try(:phone_number)
     end
   end
 end
