@@ -6,6 +6,7 @@ module ManagementConsultancy
 
     def index
       @journey = Journey.new(params[:slug], params)
+      @back_path = @journey.previous_step_path
       @lot = Lot.find_by(number: params[:lot])
       @suppliers = Kaminari.paginate_array(@all_suppliers).page(params[:page])
     end
