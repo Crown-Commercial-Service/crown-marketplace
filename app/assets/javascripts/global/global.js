@@ -222,6 +222,8 @@ function initDynamicAccordian(){
             updateList(govcheckboxes, id, basketheader);
         });
     });
+
+    updateList(govcheckboxes, id, basketheader);
 }
 
 
