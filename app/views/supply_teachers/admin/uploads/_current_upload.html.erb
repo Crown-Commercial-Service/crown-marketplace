@@ -1,7 +1,7 @@
 <% current_uploads.each do |current_upload| %>
   <tr class="govuk-table__row">
     <td class="govuk-table__cell"><%= current_upload[:attribute_name].to_s.humanize %></td>
-    <td class="govuk-table__cell"><%= link_to 'Upload session ' + current_upload[:short_uuid], supply_teachers_admin_upload_path(id: current_upload[:upload_id]) %></td>
+    <td class="govuk-table__cell"><%= link_to current_upload[:datetime], supply_teachers_admin_upload_path(id: current_upload[:upload_id]) %></td>
     <td class="govuk-table__cell"><%= link_to 'Download', current_upload[:file_path] %></td>
   </tr>
 <% end %>
