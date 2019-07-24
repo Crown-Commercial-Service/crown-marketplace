@@ -243,6 +243,10 @@ en:
   activerecord:
     errors:
       models:
+        supply_teachers/admin/upload:
+          attributes:
+            base:
+              none_present: Upload at least one file
         supply_teachers/branch:
           attributes:
             postcode:
@@ -1407,7 +1411,7 @@ en:
           uploading: Processing
         new:
           caption: Supply teachers and agency workers
-          heading: Upload session
+          heading: Set up a new upload session
           upload_button: Upload spreadsheets
           upload_caption: XLS, XLSX and CSV are supported. Maximum file size is 5mb.
           upload_title: Choose one or more spreadsheets to upload

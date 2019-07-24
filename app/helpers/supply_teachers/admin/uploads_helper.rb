@@ -9,6 +9,6 @@ module SupplyTeachers::Admin::UploadsHelper
 
   def warning_details(uploads)
     uploads_more_than_one = uploads.count > 1
-    "Upload session #{uploads.map(&:short_uuid).to_sentence} #{uploads_more_than_one ? 'are' : 'is'} #{uploads.map { |u| t("supply_teachers.admin.uploads.index.#{u.aasm_state}") }.to_sentence.downcase}. Uploading new spreadsheets will cancel #{uploads_more_than_one ? 'those sessions' : 'that session'}."
+    "Upload session #{uploads.map(&:datetime).to_sentence} #{uploads_more_than_one ? 'are' : 'is'} #{uploads.map { |u| t("supply_teachers.admin.uploads.index.#{u.aasm_state}") }.to_sentence.downcase}. Uploading new spreadsheets will cancel #{uploads_more_than_one ? 'those sessions' : 'that session'}."
   end
 end

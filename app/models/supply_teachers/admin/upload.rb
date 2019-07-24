@@ -24,6 +24,7 @@ module SupplyTeachers
 
       attr_accessor :current_accredited_suppliers_cache, :geographical_data_all_suppliers_cache, :lot_1_and_lot_2_comparisons_cache, :master_vendor_contacts_cache, :neutral_vendor_contacts_cache, :pricing_for_tool_cache, :supplier_lookup_cache
 
+      validate :any_present?, on: :create
       validate :reject_uploads_and_cp_files, on: :create
 
       aasm do
@@ -67,8 +68,8 @@ module SupplyTeachers
         count
       end
 
-      def short_uuid
-        id[0..7]
+      def datetime
+        created_at.strftime('%d %b %Y at %l:%M%P')
       end
 
       def self.previous_uploaded_file(attr_name)
@@ -95,6 +96,10 @@ module SupplyTeachers
       end
 
       private
+
+      def any_present?
+        errors.add :base, :none_present if ATTRIBUTES.all? { |attr| self[attr].blank? }
+      end
 
       def reject_uploads_and_cp_files
         return if errors.any?

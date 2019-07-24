@@ -80,7 +80,7 @@ module SupplyTeachers
             file_path: object.send(attr).url,
             upload_id: object.id,
             attribute_name: attr,
-            short_uuid: object.short_uuid
+            datetime: object.datetime
           }
         end
       end
