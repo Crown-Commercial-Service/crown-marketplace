@@ -13,8 +13,9 @@ class ManagementConsultancy::SupplierSpreadsheetCreator
         add_supplier_details(sheet)
       end
 
-      p.workbook.add_worksheet(name: 'Audit trail') do |sheet|
-        sheet.add_row ['Lot', @params['lot']]
+      p.workbook.add_worksheet(name: 'Shortlist audit') do |sheet|
+        lot = ManagementConsultancy::Lot.find_by(number: @params['lot'])
+        sheet.add_row ['Lot', "#{lot.number} - #{lot.description}"]
         add_audit_trail(sheet)
       end
     end
@@ -40,7 +41,13 @@ class ManagementConsultancy::SupplierSpreadsheetCreator
   def add_audit_trail(sheet)
     services = []
     @params['services'].each do |service|
-      services << ManagementConsultancy::Service.find_by(code: service).name
+      if service =~ /^MCF\d[.]\d+[.]\d+[.]\d$/
+        subservice =  ManagementConsultancy::Subservice.find_by(code: service)
+        parent_service = ManagementConsultancy::Service.find_by(code: subservice.service)
+        services << "#{parent_service.name} - #{subservice.name}"
+      else
+        services << ManagementConsultancy::Service.find_by(code: service).name
+      end
     end
     sheet.add_row ['Services', services.join(', ')]
 
