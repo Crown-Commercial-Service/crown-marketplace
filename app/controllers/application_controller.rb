@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
   end
 
   def st_gateway_path
-    if request.headers['REQUEST_PATH'].include?('/supply-teachers/admin')
+    if request.headers['REQUEST_PATH']&.include?('/supply-teachers/admin')
       supply_teachers_admin_user_session_url
     else
       supply_teachers_gateway_url
@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
   end
 
   def st_home_url
-    if request.headers['REQUEST_PATH'].include?('/supply-teachers/admin')
+    if request.headers['REQUEST_PATH']&.include?('/supply-teachers/admin')
       supply_teachers_admin_uploads_path
     else
       supply_teachers_gateway_url
