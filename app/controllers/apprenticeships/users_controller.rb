@@ -1,4 +1,4 @@
-module FacilitiesManagement
+module Apprenticeships
   class UsersController < Base::UsersController
     private
 

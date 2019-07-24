@@ -33,7 +33,7 @@
       <%= t('.content') %>
     </p>
 
-    <%= form_tag supply_teachers_admin_users_challenge_path, class: 'ccs-form', id: 'cop_confirmation_code', method: :post do %>
+    <%= form_tag management_consultancy_admin_users_challenge_path, class: 'ccs-form', id: 'cop_confirmation_code', method: :post do %>
 
       <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @challenge.errors[:access_code].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="confirmation">
@@ -63,7 +63,7 @@
     <% end %>
 
     <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= link_to t('.resend_the_confirmation_code_html'), supply_teachers_admin_user_session_path %>
+      <%= link_to t('.resend_the_confirmation_code_html'), management_consultancy_admin_user_session_path %>
     </p>
 
   </div>

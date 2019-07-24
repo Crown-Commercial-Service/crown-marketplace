@@ -14,7 +14,7 @@
         </ul>
       </div>
     </div>
-    <%= form_for resource, as: resource_name, url: apprenticeships_new_user_session_path, method: :post, html: { class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
+    <%= form_for resource, as: resource_name, url: management_consultancy_admin_new_user_session_path, method: :post, html: { class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
       <div class="govuk-form-group govuk-!-margin-bottom-4 <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">
           <%= t('.email_address') %>
@@ -53,7 +53,7 @@
 
     <ul class="govuk-list">
       <li>
-        <%= link_to t('.forgotten_password_html'), apprenticeships_new_user_password_path, class: 'govuk-link' %>
+        <%= link_to t('.forgotten_password_html'), management_consultancy_admin_new_user_password_path, class: 'govuk-link' %>
       </li>
     </ul>
   </div>
