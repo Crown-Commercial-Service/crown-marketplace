@@ -8,7 +8,7 @@ class ManagementConsultancy::SupplierSpreadsheetCreator
 
   def build
     Axlsx::Package.new do |p|
-      p.workbook.add_worksheet(name: 'Suppliers') do |sheet|
+      p.workbook.add_worksheet(name: 'Supplier shortlist') do |sheet|
         sheet.add_row ['Supplier name', 'Contact name', 'Phone number', 'Email', 'Supplier average day rate (£)']
         add_supplier_details(sheet)
       end
