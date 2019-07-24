@@ -73,6 +73,10 @@ en:
               confirmation: Passwords don't match
         cognito/respond_to_challenge:
           attributes:
+            access_code:
+              blank: Enter the access code
+              invalid_format: Access code must contain numeric characters only
+              invalid_length: Access code must be 6 characters
             new_password:
               blank: Enter a password
               invalid_no_capitals: Password must include a capital letter
@@ -464,6 +468,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     users:
       new_password_required:
@@ -471,6 +476,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: Resend access code
   ccs_patterns:
     home:
       cog_email:
@@ -661,6 +672,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     users:
       new_password_required:
@@ -668,6 +680,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: Resend access code
   faker:
     company:
       name:
@@ -902,6 +920,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
       cg_no_suppliers_found:
@@ -936,11 +955,44 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: Resend access code
   management_consultancy:
     admin:
+      passwords:
+        edit:
+          confirm_code: Confirm Code
+          confirm_new_password: Confirm new password
+          heading: Reset your password
+          lead: Reset password for
+          new_password: New password
+          password: Your password must have
+        forgot_password_confirmation:
+          heading: A reset email has been sent
+          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+          text01: If you don't receive this, email
+          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        new:
+          email: Email address
+          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+          heading: Reset password
+          lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        password_reset_success:
+          heading: You have successfully changed your password
+          lead: You can now sign in to your Crown Commercial Service account
+      sessions:
+        new:
+          email_address: Email address
+          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          forgotten_password_html: I've forgotten my password
+          password: Password
       uploads:
         in_progress:
-          content: The spreadsheets have been uploaded and are now processing.
+          content: The data have been uploaded and are now being processed.
           heading: Upload successful
         index:
           caption: Manage supplier data
@@ -948,31 +1000,37 @@ en:
           date: Date
           heading: Management Consultancy
           name: Name
-          no_of_files: Number of files
           status: Status
           table_caption: Previous uploads
         new:
           caption: Management Consultancy
           heading: New data upload
-          upload_caption: Supported file format is XLSX. Maximum file size is 5mb.
-          upload_title: Upload one or more of the following spreadsheets
-          warning_text: You currently have an upload session in review or in progress. Starting a new data upload will cancel this.
+          upload_caption: Supported file format is JSON Maximum file size is 10mb.
+          upload_title: Upload the complete supplier data
         show:
           caption: Management consultancy
-          confirm_changes: 'Confirm these files are ready to be used by the live service:'
           datetime: 'Date/time:'
           download: Download
+          file: File
           files: Files
           heading: 'Upload session #%{number}'
-          rate_cards: Rate Cards
-          spreadsheet: Spreadsheet
           status: 'Status:'
-          supplier_regional_offerings: Supplier Regional Offerings
-          supplier_service_offerings: Supplier Service Offerings
-          suppliers: Suppliers
+          suppliers_data: Suppliers data
         uploading:
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
           heading: Data upload in progress
+      users:
+        new_password_required:
+          confirm_your_password: Confirm your password
+          create_your_password: Create a password you'll remember
+          heading: Change your password
+          intro: This is the first time you've signed in to your account. You need to reset your password.
+        sms_mfa:
+          access_code: Access code
+          content: It may take a few minutes to arrive.
+          heading: Enter your access code
+          lead: 'We just sent a 6 digit access code by text to:'
+          resend_the_confirmation_code_html: Resend access code
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -1168,6 +1226,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
       download:
@@ -1210,6 +1269,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: Resend access code
   miles:
     unit:
       one: mile
@@ -1289,6 +1354,33 @@ en:
       other: agencies
   supply_teachers:
     admin:
+      passwords:
+        edit:
+          confirm_code: Confirm Code
+          confirm_new_password: Confirm new password
+          heading: Reset your password
+          lead: Reset password for
+          new_password: New password
+          password: Your password must have
+        forgot_password_confirmation:
+          heading: A reset email has been sent
+          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+          text01: If you don't receive this, email
+          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        new:
+          email: Email address
+          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+          heading: Reset password
+          lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        password_reset_success:
+          heading: You have successfully changed your password
+          lead: You can now sign in to your Crown Commercial Service account
+      sessions:
+        new:
+          email_address: Email address
+          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          forgotten_password_html: I've forgotten my password
+          password: Password
       uploads:
         in_progress:
           button: Return to manage supplier data
@@ -1347,6 +1439,18 @@ en:
           button: Return to manage supplier data
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently processing and will soon be published to the <strong>''Supply teachers and agency workers''</strong> service.'
           heading: Data published
+      users:
+        new_password_required:
+          confirm_your_password: Confirm your password
+          create_your_password: Create a password you'll remember
+          heading: Change your password
+          intro: This is the first time you've signed in to your account. You need to reset your password.
+        sms_mfa:
+          access_code: Access code
+          content: It may take a few minutes to arrive.
+          heading: Enter your access code
+          lead: 'We just sent a 6 digit access code by text to:'
+          resend_the_confirmation_code_html: Resend access code
     branches:
       branch:
         address: Address
@@ -1612,6 +1716,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: Resend access code
   views:
     pagination:
       next: Next <b>→</b>

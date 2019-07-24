@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   def gateway_url
     case session[:last_visited_framework]
     when 'supply_teachers'
-      supply_teachers_gateway_url
+      st_gateway_path
     when 'management_consultancy'
       management_consultancy_gateway_url
     when 'facilities_management'
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   def home_page_url
     case session[:last_visited_framework]
     when 'supply_teachers'
-      supply_teachers_gateway_url
+      st_home_url
     when 'management_consultancy'
       management_consultancy_url
     when 'facilities_management'
@@ -71,5 +71,21 @@ class ApplicationController < ActionController::Base
 
   def set_end_of_journey
     @end_of_journey = true
+  end
+
+  def st_gateway_path
+    if request.headers['REQUEST_PATH']&.include?('/supply-teachers/admin')
+      supply_teachers_admin_user_session_url
+    else
+      supply_teachers_gateway_url
+    end
+  end
+
+  def st_home_url
+    if request.headers['REQUEST_PATH']&.include?('/supply-teachers/admin')
+      supply_teachers_admin_uploads_path
+    else
+      supply_teachers_gateway_url
+    end
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe Cognito::RespondToChallenge do
   let(:session) { 'Session' }
   let(:new_password) { 'ValidPass123!' }
   let(:new_password_confirmation) { 'ValidPass123!' }
-  let(:access_code) { '1234' }
+  let(:access_code) { '123467' }
   let(:new_challenge_name) { 'NEW CHALLENGE' }
   let(:new_session) { 'New session' }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
