@@ -75,6 +75,10 @@ module SupplyTeachers
         previous_uploaded_file_object(attr_name).try(:send, attr_name)
       end
 
+      def self.previous_uploaded_file_url(attr_name)
+        previous_uploaded_file_object(attr_name).try(:send, attr_name.to_s + '_url')
+      end
+
       def self.previous_uploaded_file_object(attr_name)
         where(aasm_state: :approved).where.not("#{attr_name}": nil).first
       end
@@ -134,7 +138,7 @@ module SupplyTeachers
       def cp_previous_uploaded_file(attr_name, file_path)
         return unless available_for_cp(attr_name)
 
-        cp_file_to_input(self.class.previous_uploaded_file(attr_name).file.path, file_path, true)
+        cp_file_to_input(self.class.previous_uploaded_file_url(attr_name), file_path, true)
       end
 
       def available_for_cp(attr_name)
