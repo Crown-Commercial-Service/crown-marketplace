@@ -77,7 +77,7 @@ module SupplyTeachers
       end
 
       def self.previous_uploaded_file_url(attr_name)
-        previous_uploaded_file_object(attr_name).try(:send, attr_name.to_s + '_url')
+        previous_uploaded_file(attr_name).path
       end
 
       def self.previous_uploaded_file_object(attr_name)
