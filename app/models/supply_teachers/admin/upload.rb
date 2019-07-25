@@ -77,7 +77,7 @@ module SupplyTeachers
       end
 
       def self.previous_uploaded_file_url(attr_name)
-        previous_uploaded_file_object(attr_name).try(:send, attr_name.to_s + '_url')
+        previous_uploaded_file(attr_name).path
       end
 
       def self.previous_uploaded_file_object(attr_name)
@@ -98,7 +98,7 @@ module SupplyTeachers
       private
 
       def any_present?
-        errors.add :base, :none_present if ATTRIBUTES.all? { |attr| self[attr].try(:file).try(:nil?) }
+        errors.add :base, :none_present unless ATTRIBUTES.any? { |attr| send(attr).try(:present?) }
       end
 
       def reject_uploads_and_cp_files
