@@ -45,8 +45,8 @@ module FM
 
         if sheet_name == 'Prices'
           data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
-        elsif sheet_name == 'Discount'
-          data[sheet_name][rate_card['Supplier']][rate_card['Ref']] = rate_card if rate_card['Ref']
+        elsif sheet_name == 'Discounts'
+          data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
         elsif sheet_name == 'Variances'
           data[sheet_name][rate_card['Supplier']] = rate_card
         end
