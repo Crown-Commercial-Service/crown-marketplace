@@ -128,7 +128,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # report.workout_current_lot
     # p report.assessed_value
-    expect(report.assessed_value.round(2)).to be 0.00
+    expect(report.assessed_value.round(2)).to be 355.49
   end
 
   it 'buildings with rate card' do
