@@ -98,7 +98,7 @@ module SupplyTeachers
       private
 
       def any_present?
-        errors.add :base, :none_present if ATTRIBUTES.all? { |attr| self[attr].blank? }
+        errors.add :base, :none_present if ATTRIBUTES.all? { |attr| self[attr].try(:file).try(:nil?) }
       end
 
       def reject_uploads_and_cp_files
