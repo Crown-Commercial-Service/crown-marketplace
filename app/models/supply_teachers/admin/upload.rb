@@ -97,7 +97,7 @@ module SupplyTeachers
 
       private
 
-      def any_present?  
+      def any_present?
         errors.add :base, :none_present unless ATTRIBUTES.any? { |attr| send(attr).try(:present?) }
       end
 
