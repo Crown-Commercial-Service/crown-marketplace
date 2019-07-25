@@ -67,7 +67,12 @@ module FMCalculator
       # benchmark rate set here
       @benchmark_rate = @benchmark_rates[@service_ref].to_f
 
-      @uomd = @uom_vol * @framework_rate
+      @uomd =
+        if @supplier_name && @rate_card.data['Discounts'][@supplier_name][@service_ref]
+          (1 + @rate_card.data['Discounts'][@supplier_name][@service_ref]['Disc %']) * @uom_vol * @rate_card.data['Prices'][@supplier_name][@service_ref]['General office - Customer Facing']
+        else
+          @uom_vol * @framework_rate
+        end
     rescue StandardError => e
       raise e
     end
