@@ -1,23 +1,11 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: new_user_registration_path) do |f| %>
+<%= form_for(resource, as: resource_name, url: facilities_management_new_user_registration_path) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "given-name" %>
-  </div>
-  <div class="field">
-    <%= f.label :surname %><br />
-    <%= f.text_field :surname, autofocus: true, autocomplete: "family-name" %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br />
-    <%= f.text_field :phone, autofocus: true, autocomplete: "tel" %>
   </div>
 
   <div class="field">

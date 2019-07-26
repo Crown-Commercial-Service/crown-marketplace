@@ -5,7 +5,7 @@ module Cognito
 
     def initialize(params, roles)
       @params = params
-      @roles = roles
+      @roles = roles.compact
       @error = nil
       @user = nil
     end
@@ -34,18 +34,6 @@ module Cognito
           {
             name: 'email',
             value: params['email']
-          },
-          {
-            name: 'name',
-            value: params['first_name']
-          },
-          {
-            name: 'family_name',
-            value: params['last_name']
-          },
-          {
-            name: 'phone_number',
-            value: params['phone_number']
           }
         ]
       )
