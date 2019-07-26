@@ -10,8 +10,8 @@ module Base
 
     def create
       result = Cognito::SignUpUser.call(sign_up_params, roles)
-      resource = result.user
-
+      self.resource = result.user || User.new(sign_up_params)
+      
       if result.success?
         set_flash_message! :notice, :signed_up
         respond_with resource, location: after_sign_up_path_for(resource)
@@ -46,14 +46,6 @@ module Base
 
     def at_access
       nil
-    end
-
-    def after_sign_up_path_for(resource)
-      supply_teachers_users_confirm_path(email: resource.email)
-    end
-
-    def authorize_user
-      authorize! :read, SupplyTeachers
     end
   end
 end
