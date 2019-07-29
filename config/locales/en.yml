@@ -1352,20 +1352,20 @@ en:
       there_is_a_problem: There is a problem
     not_permitted:
       auth:
-        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       facilities_management:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       legal_services:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       management_consultancy:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       supply_teachers:
-        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
   sme: SME
   suppliers:
     unit:

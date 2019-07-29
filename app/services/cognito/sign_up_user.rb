@@ -1,26 +1,40 @@
 module Cognito
   class SignUpUser < BaseService
-    attr_reader :params, :roles
+    include ActiveModel::Validations
+    validates :password,
+              presence: true,
+              confirmation: { case_sensitive: true },
+              length: { within: 8..200 }
+
+    validates_presence_of :password_confirmation, :email
+    validates_format_of :password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals
+    validates_format_of :password, with: /(?=.*\W)/, message: :invalid_no_symbol
+
+    attr_reader :email, :password, :password_confirmation, :roles
     attr_accessor :error, :user
 
-    def initialize(params, roles)
-      @params = params
+    def initialize(email, password, password_confirmation, roles)
+      @email = email
+      @password = password
+      @password_confirmation = password_confirmation
       @roles = roles.compact
       @error = nil
       @user = nil
     end
 
     def call
-      resp = create_cognito_user
-      @cognito_uuid = resp['user_sub']
-      add_user_to_groups
-      create_user_object
+      if valid?
+        resp = create_cognito_user
+        @cognito_uuid = resp['user_sub']
+        add_user_to_groups
+        create_user_object
+      end
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       @error = e.message
     end
 
     def success?
-      @error.nil? && @user.persisted?
+      @error.nil? && @user.try(:persisted?)
     end
 
     private
@@ -28,12 +42,12 @@ module Cognito
     def create_cognito_user
       client.sign_up(
         client_id: ENV['COGNITO_CLIENT_ID'],
-        username: params['email'],
-        password: params['password'],
+        username: email,
+        password: password,
         user_attributes: [
           {
             name: 'email',
-            value: params['email']
+            value: email
           }
         ]
       )
@@ -54,13 +68,11 @@ module Cognito
     end
 
     def user_params
-      params.except(
-        :password,
-        :password_confirmation
-      ).merge(
+      {
+        email: email,
         cognito_uuid: @cognito_uuid,
         roles: roles
-      )
+      }
     end
   end
 end

@@ -4,12 +4,18 @@
 
 
 
-    <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+    <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless @challenge.errors.any? %>  ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
       <h2 class="govuk-error-summary__title" id="error-summary-title">
         <%= t('common.error_summary_title') %>
       </h2>
       <div class="govuk-error-summary__body">
-        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list"></ul>
+        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
+          <% @challenge.errors.keys.each do |attribute| %>
+            <li>
+              <%= link_to @challenge.errors[attribute].first, "##{error_id(attribute)}" %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
 
@@ -23,9 +29,9 @@
       <%= t('.lead_start') %> <span class="ccs-email-example"><%= params[:email] %></span> <%= t('.lead_end') %>
     </p>
 
-    <%= form_tag facilities_management_users_confirm_path, class: 'ccs-form', id: 'cop_confirmation_code', method: :post do %>
+    <%= form_tag facilities_management_users_confirm_path, html: {class: 'ccs-form', id: 'cop_confirmation_code'}, method: :post do %>
 
-      <div class="govuk-form-group govuk-!-margin-bottom-7">
+      <div class="govuk-form-group govuk-!-margin-bottom-7  <%= 'govuk-form-group--error' if @challenge.errors[:confirmation_code].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="confirmation">
           <%= t('.confirmation_code') %>
         </label>
