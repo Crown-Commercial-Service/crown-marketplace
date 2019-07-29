@@ -7,7 +7,7 @@ module FacilitiesManagement
     end
 
     def after_sign_in_path_for(resource)
-      stored_location_for(resource) || facilities_management_journey_start_path
+      stored_location_for(resource) || facilities_management_path
     end
   end
 end
