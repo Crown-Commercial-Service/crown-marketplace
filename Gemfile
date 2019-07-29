@@ -4,13 +4,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 5.2.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 4.3', '>= 4.3.3'
+gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.1', '>= 5.1.0'
+gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -30,27 +30,23 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'geocoder', '>= 1.6.1'
+gem 'geocoder'
 gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
 gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
-gem 'rubyzip', '>= 1.2.1'
-gem 'caxlsx', '>= 3.0.1'
-gem 'axlsx_rails', '>= 0.6.0'
 gem 'phonejack'
 gem 'holidays'
 gem 'virtus'
 gem 'jquery-rails', '~> 4.3.5'
 
 # for cognito authentication
-gem 'omniauth', '~> 1.9.0'
-gem 'omniauth-oauth2', '~> 1.6.0'
-# updating to the latest gem version causes an error when response_type is :code. A fix is coming but has not been merged in yet, so will be using this forked repo until then
-gem 'omniauth_openid_connect', git: 'https://github.com/iceraluk/omniauth_openid_connect.git'
-gem 'json-jwt', '>= 1.11.0'
+gem 'omniauth'
+gem 'omniauth-oauth2'
+gem 'omniauth_openid_connect'
+gem 'json-jwt'
 
 # for authentication
-gem 'devise', '~> 4.7.1'
+gem 'devise', '~> 4.6.2'
 
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
 
@@ -67,7 +63,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'carrierwave', '~> 1.0'
 
 # handles spreadsheets
-gem 'roo', '~> 2.8.2'
+gem 'roo', '~> 2.8.0'
 
 # manipulating JSON for anonymisation
 gem 'jsonpath', '~> 0.5.8'
@@ -84,10 +80,9 @@ gem 'sinatra', '~> 2.0.5', require: false
 gem 'slim', '~> 4.0.1'
 
 # for rspec and ST data generation script
-gem 'capybara', '>= 3.20.2'
-gem 'show_me_the_cookies', '>= 5.0.0'
+gem 'capybara'
 
-gem 'faker', '~> 2.10.2'
+gem 'faker'
 
 # for authorization
 gem 'cancan', '~> 1.6.10'
@@ -98,39 +93,22 @@ gem 'role_model', '~> 0.8.2'
 gem 'carrierwave-aws', '~> 1.3.0'
 
 gem 'sprockets'
-gem 'sprockets-bumble_d', '>= 2.2.0'
-
-# for date layout and validation
-gem 'gov_uk_date_fields', '>= 4.1.0'
-gem 'date_validator'
-
-# for clamav
-gem 'ratonvirus'
-gem 'ratonvirus-clamby'
-# for active storage validation
-gem 'active_storage_validations'
-# gem for  bulk inserts
-gem 'activerecord-import', '~> 0.15.0'
-# gov notify
-gem 'notifications-ruby-client'
-# DOCX generation
-gem 'caracal-rails'
+gem 'sprockets-bumble_d'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails', '>= 2.7.5'
-  gem 'factory_bot_rails', '>= 5.1.1'
+  gem 'dotenv-rails'
+  gem 'factory_bot_rails'
   gem 'launchy'
   gem 'pry-rails'
-  gem 'rails-controller-testing', '>= 1.0.4'
-  gem 'rspec-rails', '>= 3.9.0'
-  gem 'shoulda-matchers', '>= 4.2.0'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'rubyXL', '>= 3.4.6'
-  gem 'i18n-tasks', '>= 0.9.29'
-  gem 'poltergeist', '>= 1.18.1'
+  gem 'rubyXL'
+  gem 'i18n-tasks'
+  gem 'poltergeist'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
 end
@@ -143,5 +121,5 @@ end
 group :test do
   gem 'webmock'
   gem 'simplecov', require: false
-  gem 'selenium-webdriver', '>= 3.142.3'
+  gem 'selenium-webdriver'
 end
