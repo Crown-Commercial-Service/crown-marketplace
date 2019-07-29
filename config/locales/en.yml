@@ -546,7 +546,7 @@ en:
         lead_start: An email has been sent to
         resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
       cog_sign_in:
-        create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
+        create_ccs_account_html: Create a CCS account
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_email_html: I've forgotten my email address
