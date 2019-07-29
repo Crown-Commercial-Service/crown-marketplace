@@ -24,7 +24,7 @@
     <p class="govuk-body-l govuk-!-margin-bottom-8">
       <%= t('.lead') %>
     </p>
-    <%= form_for resource, as: resource_name, url: facilities_management_new_user_registration_path, class: 'ccs-form', id: 'cop_register' do |f| %>
+    <%= form_for resource, as: resource_name, url: facilities_management_new_user_registration_path, html: {class: 'ccs-form', id: 'cop_register'}, method: :post do |f| %>
       <!-- organisation details start -->
       <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
 
