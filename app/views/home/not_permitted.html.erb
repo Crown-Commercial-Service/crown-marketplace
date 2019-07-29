@@ -4,7 +4,7 @@
 
       <h1 class="govuk-heading-xl"><%= t("shared.not_permitted.#{@permission_required.to_s}.title") %></h1>
 
-      <p><%= t("shared.not_permitted.#{@permission_required.to_s}.details") %></p>
+      <p><%= t("shared.not_permitted.#{@permission_required.to_s}.details_html", link: Marketplace.support_email_address) %></p>
     </div>
   </div>
 </div>

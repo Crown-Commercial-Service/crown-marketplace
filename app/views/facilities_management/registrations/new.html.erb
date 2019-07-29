@@ -4,12 +4,18 @@
 
 
 
-    <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+    <div id="ccs-error-sum" class="govuk-error-summary <%= 'govuk-visually-hidden' unless @result.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
       <h2 class="govuk-error-summary__title" id="error-summary-title">
         <%= t('common.error_summary_title') %>
       </h2>
       <div class="govuk-error-summary__body">
-        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list"></ul>
+        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
+          <% @result.errors.keys.each do |attribute| %>
+            <li>
+              <%= link_to @result.errors[attribute].first, "##{error_id(attribute)}" %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
 
@@ -28,7 +34,7 @@
       <!-- organisation details start -->
       <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
           <label class="govuk-label" for="email">
             <%= t('.email') %>
           </label>
@@ -40,6 +46,7 @@
           <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.email_format') %>
                     </span>
+          <%= display_error(@result, :email) %>
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"govuk-input govuk-!-width-three-quarters", id: "email", spellcheck: false, aria: {describedby: "email-hint"} %>
         </div>
 
@@ -54,7 +61,7 @@
           <%= t('.create_password') %>
         </label>
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group <%= 'govuk-form-group--error' if @result.errors[:password].any? %>">
 
           <p class="govuk-body govuk-!-margin-bottom-1">Your password must have:</p>
 
@@ -75,10 +82,11 @@
           <span id="password01-uppererror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.passwords_upper') %>
                     </span>
+          <%= display_error(@result, :password) %>
           <%= f.password_field :password, autocomplete: "new-password", id: "password01", class: "govuk-input govuk-!-width-three-quarters"  %>
         </div>
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group  <%= 'govuk-form-group--error' if @result.errors[:password_confirmation].any? %>">
           <label class="govuk-label" for="password02">
             <%= t('.confirm_password') %>
           </label>
@@ -90,6 +98,7 @@
           <span id="password02-matcherror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.passwords_dont_match') %>
                     </span>
+          <%= display_error(@result, :password_confirmation) %>
           <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password02", class: "govuk-input govuk-!-width-three-quarters"  %>
         </div>
 

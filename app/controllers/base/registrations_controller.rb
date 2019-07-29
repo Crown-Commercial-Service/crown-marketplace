@@ -5,20 +5,23 @@ module Base
     before_action :authorize_user, except: %i[new create]
 
     def new
+      @result = Cognito::SignUpUser.new(nil, nil, nil, roles)
+      @result.errors.add(:base, flash[:error]) if flash[:error]
+      @result.errors.add(:base, flash[:alert]) if flash[:alert]
       super
     end
 
     def create
-      result = Cognito::SignUpUser.call(sign_up_params, roles)
-      self.resource = result.user || User.new(sign_up_params)
-      
-      if result.success?
+      @result = Cognito::SignUpUser.call(sign_up_params[:email], sign_up_params[:password], sign_up_params[:password_confirmation], roles)
+      self.resource = @result.user || User.new(sign_up_params)
+
+      if @result.success?
         set_flash_message! :notice, :signed_up
         respond_with resource, location: after_sign_up_path_for(resource)
       else
         clean_up_passwords resource
         set_minimum_password_length
-        render :new, erorr: result.error
+        render :new, erorr: @result.error
       end
     end
 
