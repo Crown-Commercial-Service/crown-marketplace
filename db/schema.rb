@@ -94,8 +94,8 @@ ActiveRecord::Schema.define(version: 2019_07_24_080439) do
     t.text "code"
     t.decimal "framework"
     t.decimal "benchmark"
-    t.datetime "created_at", null: true
-    t.datetime "updated_at", null: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["code"], name: "fm_rates_code_key", unique: true
   end
 
