@@ -672,6 +672,14 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
         email_address: Email address
@@ -679,6 +687,13 @@ en:
         forgotten_password_html: I've forgotten my password
         password: Password
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
