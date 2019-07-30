@@ -9,9 +9,10 @@ module Cognito
     validates_presence_of :password_confirmation, :email
     validates_format_of :password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals
     validates_format_of :password, with: /(?=.*\W)/, message: :invalid_no_symbol
+    validate :domain_in_whitelist
 
     attr_reader :email, :password, :password_confirmation, :roles
-    attr_accessor :error, :user
+    attr_accessor :error, :user, :not_on_whitelist
 
     def initialize(email, password, password_confirmation, roles)
       @email = email
@@ -20,6 +21,7 @@ module Cognito
       @roles = roles.compact
       @error = nil
       @user = nil
+      @not_on_whitelist = nil
     end
 
     def call
@@ -73,6 +75,25 @@ module Cognito
         cognito_uuid: @cognito_uuid,
         roles: roles
       }
+    end
+
+    def domain_in_whitelist
+      return unless File.readlines(whitelist_path).grep(/#{domain_name}/).empty?
+
+      errors.add(:email, :not_on_whitelist)
+      @not_on_whitelist = true
+    end
+
+    def whitelist_path
+      if Rails.env.development?
+        Rails.root.join('storage', 'buyer-email-domains.txt')
+      else
+        # s3 file path
+      end
+    end
+
+    def domain_name
+      email.split('@').last
     end
   end
 end

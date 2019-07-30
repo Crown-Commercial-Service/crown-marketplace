@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     concern :registrable do
       get '/sign-up', to: 'registrations#new', as: :new_user_registration
       post '/sign-up', to: 'registrations#create', as: :user_registration
+      get '/domain-not-on-whitelist', to: 'registrations#domain_not_on_whitelist', as: :domain_not_on_whitelist
     end
 
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session

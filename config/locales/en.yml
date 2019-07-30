@@ -85,6 +85,19 @@ en:
             new_password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+        cognito/sign_up_user:
+          attributes:
+            email:
+              not_on_whitelist: You must use a public sector email
+              blank: Enter your email
+            password:
+              blank: Enter a password
+              invalid_no_capitals: Password must include a capital letter
+              invalid_no_symbol: Password must include a special character
+              too_short: Password must be 8 characters or more
+            password_confirmation:
+              blank: Enter your password
+              confirmation: Passwords don't match
         legal_services/journey/check_suitability:
           attributes:
             legal_services:
@@ -680,6 +693,13 @@ en:
         email_hint: We will send a confirmation code to this address.
         heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
         lead: You must be employed by, or represent, a public sector organisation.
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
     sessions:
       new:
         email_address: Email address
