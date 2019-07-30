@@ -1,8 +1,8 @@
 module Base
   class RegistrationsController < Devise::RegistrationsController
     protect_from_forgery
-    before_action :authenticate_user!, except: %i[new create]
-    before_action :authorize_user, except: %i[new create]
+    before_action :authenticate_user!, except: %i[new create domain_not_on_whitelist]
+    before_action :authorize_user, except: %i[new create domain_not_on_whitelist]
 
     def new
       @result = Cognito::SignUpUser.new(nil, nil, nil, roles)
@@ -18,12 +18,16 @@ module Base
       if @result.success?
         set_flash_message! :notice, :signed_up
         respond_with resource, location: after_sign_up_path_for(resource)
+      elsif @result.not_on_whitelist
+        redirect_to facilities_management_domain_not_on_whitelist_path
       else
         clean_up_passwords resource
         set_minimum_password_length
         render :new, erorr: @result.error
       end
     end
+
+    def domain_not_on_whitelist; end
 
     private
 
