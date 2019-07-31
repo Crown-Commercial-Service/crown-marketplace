@@ -4,15 +4,15 @@
 
 
 
-    <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless @challenge.errors.any? %>  ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+    <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless @result.errors.any? %>  ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
       <h2 class="govuk-error-summary__title" id="error-summary-title">
         <%= t('common.error_summary_title') %>
       </h2>
       <div class="govuk-error-summary__body">
         <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
-          <% @challenge.errors.keys.each do |attribute| %>
+          <% @result.errors.keys.each do |attribute| %>
             <li>
-              <%= link_to @challenge.errors[attribute].first, "##{error_id(attribute)}" %>
+              <%= link_to @result.errors[attribute].first, "##{error_id(attribute)}" %>
             </li>
           <% end %>
         </ul>
@@ -29,27 +29,28 @@
       <%= t('.lead_start') %> <span class="ccs-email-example"><%= params[:email] %></span> <%= t('.lead_end') %>
     </p>
 
-    <%= form_tag management_consultancy_users_confirm_path, html: {class: 'ccs-form', id: 'cop_confirmation_code'}, method: :post do %>
+    <%= form_tag management_consultancy_users_confirm_path, class: 'ccs-form', id: 'cop_confirmation_code', method: :post do %>
 
-      <div class="govuk-form-group govuk-!-margin-bottom-7  <%= 'govuk-form-group--error' if @challenge.errors[:confirmation_code].any? %>">
+      <div class="govuk-form-group govuk-!-margin-bottom-7  <%= 'govuk-form-group--error' if @result.errors[:confirmation_code].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="confirmation">
           <%= t('.confirmation_code') %>
         </label>
 
         <span id="confirmation-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_code') %>
-                </span>
+          <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_code') %>
+        </span>
 
         <span id="confirmation-sixerror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-                    <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_six') %>
-                </span>
+            <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_six') %>
+        </span>
+        <%= display_error(@result, :confirmation_code) %>
         <%= text_field_tag :confirmation_code, nil, class: "govuk-input govuk-!-width-one-third", id: 'confirmation', type: 'number' %>
       </div>
 
       <% if params[:email] %>
         <%= hidden_field_tag :email, params[:email] %>
       <% else %>
-        <div class="govuk-form-group">
+        <div class="govuk-form-group <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
           <label class="govuk-label" for="email">
             <%= t('.email') %>
           </label>
@@ -57,6 +58,7 @@
           <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.email_format') %>
                     </span>
+          <%= display_error(@result, :email) %>
           <%= text_field_tag :email, nil, autofocus: true, autocomplete: "email", class:"govuk-input govuk-!-width-three-quarters", id: "email", spellcheck: false, aria: {describedby: "email-hint"} %>
         </div>
       <% end %>
@@ -65,10 +67,10 @@
 
     <% end %>
 
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= t('.resend_the_confirmation_email_html') %>
-    </p>
-
+    <% if params[:email] %>
+      <p class="govuk-body govuk-!-margin-bottom-7">
+        <%= t('.resend_the_confirmation_email_html', link: management_consultancy_resend_confirmation_email_path(email: params[:email])) %>
+      </p>
+    <% end %>
   </div>
 </div>
-

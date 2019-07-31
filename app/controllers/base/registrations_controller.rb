@@ -18,12 +18,8 @@ module Base
       if @result.success?
         set_flash_message! :notice, :signed_up
         respond_with resource, location: after_sign_up_path_for(resource)
-      elsif @result.not_on_whitelist
-        redirect_to facilities_management_domain_not_on_whitelist_path
       else
-        clean_up_passwords resource
-        set_minimum_password_length
-        render :new, erorr: @result.error
+        fail_create(@result)
       end
     end
 
@@ -53,6 +49,14 @@ module Base
 
     def at_access
       nil
+    end
+
+    def fail_create(result)
+      redirect_to facilities_management_domain_not_on_whitelist_path if result.not_on_whitelist
+
+      clean_up_passwords resource
+      set_minimum_password_length
+      render :new, erorr: result.error
     end
   end
 end

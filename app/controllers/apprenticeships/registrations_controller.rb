@@ -1,6 +1,5 @@
 module Apprenticeships
   class RegistrationsController < Base::RegistrationsController
-
     private
 
     def at_access

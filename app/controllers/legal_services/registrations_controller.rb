@@ -1,6 +1,5 @@
 module LegalServices
   class RegistrationsController < Base::RegistrationsController
-
     private
 
     def ls_access

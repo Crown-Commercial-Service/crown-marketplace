@@ -1,6 +1,5 @@
 module FacilitiesManagement
   class RegistrationsController < Base::RegistrationsController
-
     private
 
     def fm_access

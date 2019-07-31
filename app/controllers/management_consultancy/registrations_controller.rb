@@ -1,6 +1,5 @@
 module ManagementConsultancy
   class RegistrationsController < Base::RegistrationsController
-
     private
 
     def mc_access
