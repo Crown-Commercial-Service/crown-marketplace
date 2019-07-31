@@ -23,6 +23,11 @@ Rails.application.routes.draw do
       get '/users/password', to: 'passwords#edit', as: :edit_user_password
       put '/users/password', to: 'passwords#update'
       get '/users/password-reset-success', to: 'passwords#password_reset_success', as: :password_reset_success
+      get '/users/confirm', to: 'users#confirm_new'
+      post '/users/confirm', to: 'users#confirm'
+      get '/users/challenge', to: 'users#challenge_new'
+      post '/users/challenge', to: 'users#challenge'
+      get '/resend_confirmation_email', to: 'users#resend_confirmation_email', as: :resend_confirmation_email
     end
     concern :registrable do
       get '/sign-up', to: 'registrations#new', as: :new_user_registration
@@ -61,12 +66,9 @@ Rails.application.routes.draw do
       concerns %i[authenticatable registrable]
     end
   end
+
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
@@ -80,10 +82,6 @@ Rails.application.routes.draw do
     resources :branches, only: %i[index show]
     resources :downloads, only: :index
     namespace :admin do
-      get '/users/confirm', to: 'users#confirm_new'
-      post '/users/confirm', to: 'users#confirm'
-      get '/users/challenge', to: 'users#challenge_new'
-      post '/users/challenge', to: 'users#challenge'
       resources :uploads, only: %i[index new create show destroy] do
         get 'approve'
         get 'reject'
@@ -98,10 +96,6 @@ Rails.application.routes.draw do
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
   namespace 'facilities_management', path: 'facilities-management' do
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     # get '/value-band', to: 'select_locations#select_location'
@@ -147,10 +141,6 @@ Rails.application.routes.draw do
 
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
     get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
@@ -162,10 +152,6 @@ Rails.application.routes.draw do
     get '/html/download-the-supplier-list', to: 'html#download_the_supplier_list'
     # unless Rails.env.production? # not be available on production environments yet
     namespace :admin do
-      get '/users/confirm', to: 'users#confirm_new'
-      post '/users/confirm', to: 'users#confirm'
-      get '/users/challenge', to: 'users#challenge_new'
-      post '/users/challenge', to: 'users#challenge'
       resources :uploads, only: %i[index new create show] do
         get 'approve'
         get 'reject'
@@ -182,10 +168,6 @@ Rails.application.routes.draw do
 
   namespace 'apprenticeships', path: 'apprenticeships' do
     get '/', to: 'home#index'
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/gateway', to: 'gateway#index'
     get '/search', to: 'home#search'
     get '/search_results', to: 'home#search_results'
@@ -244,10 +226,6 @@ Rails.application.routes.draw do
   end
 
   namespace 'legal_services', path: 'legal-services' do
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/', to: 'home#index'

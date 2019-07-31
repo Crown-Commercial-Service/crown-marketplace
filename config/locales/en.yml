@@ -509,7 +509,7 @@ en:
         heading: Activate your account
         lead_end: containing your confirmation code.
         lead_start: An email has been sent to
-        resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
@@ -520,7 +520,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   ccs_patterns:
     home:
       cog_email:
@@ -735,7 +735,7 @@ en:
         heading: Activate your account
         lead_end: containing your confirmation code.
         lead_start: An email has been sent to
-        resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
@@ -746,7 +746,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   faker:
     company:
       name:
@@ -1032,7 +1032,7 @@ en:
         heading: Activate your account
         lead_end: containing your confirmation code.
         lead_start: An email has been sent to
-        resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
@@ -1043,7 +1043,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   management_consultancy:
     admin:
       passwords:
@@ -1113,7 +1113,7 @@ en:
           content: It may take a few minutes to arrive.
           heading: Enter your access code
           lead: 'We just sent a 6 digit access code by text to:'
-          resend_the_confirmation_code_html: Resend access code
+          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -1368,7 +1368,7 @@ en:
         heading: Activate your account
         lead_end: containing your confirmation code.
         lead_start: An email has been sent to
-        resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
@@ -1379,7 +1379,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   miles:
     unit:
       one: mile
@@ -1555,7 +1555,7 @@ en:
           content: It may take a few minutes to arrive.
           heading: Enter your access code
           lead: 'We just sent a 6 digit access code by text to:'
-          resend_the_confirmation_code_html: Resend access code
+          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     branches:
       branch:
         address: Address
@@ -1826,7 +1826,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   views:
     pagination:
       next: Next <b>→</b>

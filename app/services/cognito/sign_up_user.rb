@@ -12,14 +12,13 @@ module Cognito
     validate :domain_in_whitelist
 
     attr_reader :email, :password, :password_confirmation, :roles
-    attr_accessor :error, :user, :not_on_whitelist
+    attr_accessor :user, :not_on_whitelist
 
     def initialize(email, password, password_confirmation, roles)
       @email = email
       @password = password
       @password_confirmation = password_confirmation
       @roles = roles.compact
-      @error = nil
       @user = nil
       @not_on_whitelist = nil
     end
@@ -32,11 +31,11 @@ module Cognito
         create_user_object
       end
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
-      @error = e.message
+      errors.add(:base, e.message)
     end
 
     def success?
-      @error.nil? && @user.try(:persisted?)
+      errors.empty? && @user.try(:persisted?)
     end
 
     private
@@ -85,11 +84,7 @@ module Cognito
     end
 
     def whitelist_path
-      if Rails.env.development?
-        Rails.root.join('storage', 'buyer-email-domains.txt')
-      else
-        # s3 file path
-      end
+      Rails.root.join('data', 'buyer-email-domains.txt')
     end
 
     def domain_name
