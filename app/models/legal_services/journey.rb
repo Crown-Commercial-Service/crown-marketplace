@@ -18,5 +18,14 @@ module LegalServices
     def start_path
       legal_services_path
     end
+
+    def next_step_path
+      case next_slug
+      when 'suppliers'
+        legal_services_suppliers_path(journey: self.class.journey_name, params: params)
+      else
+        super
+      end
+    end
   end
 end
