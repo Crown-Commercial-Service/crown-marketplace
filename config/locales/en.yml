@@ -663,6 +663,7 @@ en:
     unit:
       one: company
       other: companies
+  england_wales: England and Wales
   errors:
     '404':
       explanation: You may have mistyped the address or the page may have moved.
@@ -869,17 +870,19 @@ en:
       check_suitability2:
         heading: Will the fees be under £20,000 per matter?
       choose_jurisdiction:
-        eng_wales: England and Wales
         heading: Lot 2 - Full-service firms
-        ni: Northern Ireland
         question: Select the jurisdiction you need
-        scot_land: Scotland
       choose_organisation_type:
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you're unsure.
         txt_link_text: central government departments, agencies and public bodies
       choose_regional_or_fullservice:
         question: Question
+      choose_services:
+        no_services_selected: No services selected
+        question: Select the legal services you need
+        remove_all: Remove all
+        services_selected: services selected
       choose_services_area:
         opt_01: Yes, Property And Construction (Lot 3)
         opt_02: Yes, rail (Lot 4)
@@ -1373,6 +1376,7 @@ en:
       one: mile
       other: miles
   'no': 'No'
+  northern_ireland: Northern Ireland
   number:
     currency:
       format:
@@ -1421,6 +1425,7 @@ en:
     unit:
       one: result
       other: results
+  scotland: Scotland
   shared:
     error_summary:
       there_is_a_problem: There is a problem
