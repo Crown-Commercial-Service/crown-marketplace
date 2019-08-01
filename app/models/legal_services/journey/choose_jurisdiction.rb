@@ -2,8 +2,8 @@ module LegalServices
   class Journey::ChooseJurisdiction
     include Steppable
 
-    attribute :lot
-    validates :lot, inclusion: ['2a', '2b', '2c']
+    attribute :jurisdiction
+    validates :jurisdiction, inclusion: ['a', 'b', 'c']
 
     def next_step_class
       Journey::ChooseServices
