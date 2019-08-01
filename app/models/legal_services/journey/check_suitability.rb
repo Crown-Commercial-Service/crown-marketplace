@@ -1,14 +1,14 @@
 module LegalServices
   class Journey::CheckSuitability
     include Steppable
-    attribute :legal_services
-    validates :legal_services, inclusion: ['yes', 'no', 'other']
+    attribute :under_threshold
+    validates :under_threshold, inclusion: ['yes', 'no']
 
     def next_step_class
-      case legal_services
-      when 'yes', 'no'
-        Journey::CheckSuitability
-      when 'other'
+      case under_threshold
+      when 'yes'
+        Journey::ChooseServices
+      when 'no'
         Journey::Sorry
       end
     end
