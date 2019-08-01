@@ -878,6 +878,13 @@ en:
         txt_link_text: central government departments, agencies and public bodies
       choose_regional_or_fullservice:
         question: Question
+      choose_regions:
+        full_national_coverage: Full national coverage
+        no_regions_selected: No regions selected
+        or: or
+        question: Select the regions where you need legal services
+        regions_selected: Regions selected
+        remove_all: Remove all
       choose_services:
         no_services_selected: No services selected
         question: Select the legal services you need
