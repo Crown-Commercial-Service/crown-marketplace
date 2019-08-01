@@ -48,7 +48,6 @@ RSpec.describe Cognito::ConfirmSignUp do
   end
 
   describe '#call' do
-
     context 'when success' do
       let(:response) { described_class.call(user.email, confirmation_code) }
 
