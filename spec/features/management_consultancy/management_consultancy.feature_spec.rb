@@ -127,4 +127,29 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
     expect(page).to have_text('1 company')
     expect(page).to have_text(/Aardvark Ltd/)
   end
+
+  scenario 'check that only the correct options remain ticked' do
+    visit_management_consultancy_start
+
+    required_service = ManagementConsultancy::Service.where(code: 'MCF2.1.1').first
+    wrong_service = ManagementConsultancy::Service.where(code: 'MCF2.1.2').first
+
+    click_on 'Confirm and continue'
+
+    choose 'Lot 1 - Business consultancy'
+    click_on I18n.t('common.submit')
+
+    check required_service.name
+    check wrong_service.name
+    click_on I18n.t('common.submit')
+
+    click_on I18n.t('layouts.application.back')
+
+    uncheck wrong_service.name
+    click_on I18n.t('common.submit')
+
+    click_on I18n.t('layouts.application.back')
+
+    expect(page.find('input#service_MCF2-1-2')).not_to be_checked
+  end
 end

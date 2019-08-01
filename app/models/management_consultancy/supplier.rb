@@ -25,7 +25,7 @@ module ManagementConsultancy
     end
 
     def self.offering_services(lot_number, service_codes)
-      lot_service_codes = Service.where(lot_number: lot_number).map(&:code)
+      lot_service_codes = Service.where(lot_number: lot_number).map(&:code) + Subservice.all.map(&:code)
       valid_service_codes = service_codes & lot_service_codes
       ids = ServiceOffering.supplier_ids_for_service_codes(valid_service_codes)
       where(id: ids)

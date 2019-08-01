@@ -7,7 +7,7 @@ module ManagementConsultancy
 
     def perform(upload_id)
       upload = ManagementConsultancy::Admin::Upload.find(upload_id)
-      suppliers = JSON.parse(File.read(upload.suppliers_data.file.path))
+      suppliers = JSON.parse(upload.suppliers_data.file.read)
 
       ManagementConsultancy::Upload.upload!(suppliers)
 

@@ -14,7 +14,7 @@
         </ul>
       </div>
     </div>
-    <%= form_for resource, as: resource_name, url: facilities_management_new_user_session_path, method: :post, html: { class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
+    <%= form_for resource, as: resource_name, url: facilities_management_new_user_session_path, html: {class: 'ccs-form', id: 'cop_sign_in_form'}, method: :post  do |f| %>
       <div class="govuk-form-group govuk-!-margin-bottom-4 <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">
           <%= t('.email_address') %>
@@ -47,13 +47,17 @@
 
     <% end %>
 
+    <p class="govuk-body govuk-!-margin-bottom-7">
+      <%= link_to t('ccs_patterns.home.cog_sign_in.create_ccs_account_html'), facilities_management_new_user_registration_path, class: "govuk-link" %>
+    </p>
+
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
       <%= t('ccs_patterns.home.cog_sign_in.problems_signing_in') %>
     </h2>
 
     <ul class="govuk-list">
       <li>
-        <%= link_to t('ccs_patterns.home.cog_sign_in.forgotten_password_html'), facilities_management_new_user_password_path, class: 'govuk-link' %>
+        <%= link_to t('.forgotten_password_html'), facilities_management_new_user_password_path, class: 'govuk-link' %>
       </li>
     </ul>
   </div>
