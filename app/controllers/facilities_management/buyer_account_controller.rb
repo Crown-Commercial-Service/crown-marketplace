@@ -6,7 +6,6 @@ class FacilitiesManagement::BuyerAccountController < FacilitiesManagement::Frame
 
   def buyer_account
     @current_login_email = current_user.email.to_s
-    @current_login_email
     render 'facilities_management/home/buyer_account_landing_page'
   end
 end
