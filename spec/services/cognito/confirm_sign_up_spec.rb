@@ -15,7 +15,7 @@ RSpec.describe Cognito::ConfirmSignUp do
     end
 
     context 'when confirmation_code shorter than 6 characters' do
-      let(:cofirmation_code) { '123' }
+      let(:confirmation_code) { '123' }
 
       it 'is invalid' do
         expect(response.valid?).to eq false
@@ -31,7 +31,7 @@ RSpec.describe Cognito::ConfirmSignUp do
     end
 
     context 'when confirmation_code is nil' do
-      let(:confirmaton_code) { '' }
+      let(:confirmation_code) { '' }
 
       it 'is invalid' do
         expect(response.valid?).to eq false
@@ -84,7 +84,7 @@ RSpec.describe Cognito::ConfirmSignUp do
 
       it 'does returns cognito error' do
         response = described_class.call(user.email, confirmation_code)
-        expect(response.error).to eq 'Oops'
+        expect(response.errors.any?).to eq true
       end
 
       it 'does not confirm user' do
