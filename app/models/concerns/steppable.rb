@@ -13,6 +13,10 @@ module Steppable
         attribute_set.partition { |a| a.type.primitive == Array }
       single_params.map(&:name) + [array_params.map { |a| [a.name, []] }.to_h]
     end
+
+    def permitted_keys
+      attribute_set.map(&:name)
+    end
   end
 
   def slug

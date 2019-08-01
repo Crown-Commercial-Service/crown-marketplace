@@ -92,8 +92,9 @@ Metrics/ParameterLists:
         - 'app/calculators/temp_to_perm_calculator/calculator.rb'
 
 Migration/RequireUUIDPrimaryKeys:
-    Include:
-        - 'db/migrate/*.rb'
+  Enabled: false
+  Include:
+    - 'db/migrate/*.rb'
 
 Migration/RequireLimitOnString:
     Include:

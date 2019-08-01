@@ -1,6 +1,7 @@
 module SupplyTeachers
   module Admin
     class UploadsController < FrameworkController
+      skip_before_action :verify_authenticity_token, only: :create
       before_action :authenticate_user!
       before_action :authorize_user
       before_action :set_back_path
@@ -79,7 +80,7 @@ module SupplyTeachers
             file_path: object.send(attr).url,
             upload_id: object.id,
             attribute_name: attr,
-            short_uuid: object.short_uuid
+            datetime: object.datetime
           }
         end
       end

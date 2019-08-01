@@ -301,8 +301,8 @@ module FacilitiesManagement
           occupants = 0
         end
 
-        code = v['service_code'].remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag,
+        # code = v['service_code'].remove('.')
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years, v['service_code'], uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag,
                                                rates, rate_card, supplier_name)
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum

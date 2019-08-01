@@ -24,6 +24,7 @@ module SupplyTeachers
 
       attr_accessor :current_accredited_suppliers_cache, :geographical_data_all_suppliers_cache, :lot_1_and_lot_2_comparisons_cache, :master_vendor_contacts_cache, :neutral_vendor_contacts_cache, :pricing_for_tool_cache, :supplier_lookup_cache
 
+      validate :any_present?, on: :create
       validate :reject_uploads_and_cp_files, on: :create
 
       aasm do
@@ -67,12 +68,16 @@ module SupplyTeachers
         count
       end
 
-      def short_uuid
-        id[0..7]
+      def datetime
+        created_at.strftime('%d %b %Y at %l:%M%P')
       end
 
       def self.previous_uploaded_file(attr_name)
         previous_uploaded_file_object(attr_name).try(:send, attr_name)
+      end
+
+      def self.previous_uploaded_file_url(attr_name)
+        previous_uploaded_file(attr_name).path
       end
 
       def self.previous_uploaded_file_object(attr_name)
@@ -91,6 +96,10 @@ module SupplyTeachers
       end
 
       private
+
+      def any_present?
+        errors.add :base, :none_present unless ATTRIBUTES.any? { |attr| send(attr).try(:present?) }
+      end
 
       def reject_uploads_and_cp_files
         return if errors.any?
@@ -134,7 +143,7 @@ module SupplyTeachers
       def cp_previous_uploaded_file(attr_name, file_path)
         return unless available_for_cp(attr_name)
 
-        cp_file_to_input(self.class.previous_uploaded_file(attr_name).file.path, file_path, true)
+        cp_file_to_input(self.class.previous_uploaded_file_url(attr_name), file_path, true)
       end
 
       def available_for_cp(attr_name)
