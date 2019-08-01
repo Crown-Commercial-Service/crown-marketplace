@@ -7,7 +7,11 @@ module FacilitiesManagement
     end
 
     def after_sign_in_path_for(resource)
-      stored_location_for(resource) || facilities_management_journey_start_path
+      stored_location_for(resource) || facilities_management_path
+    end
+
+    def confirm_user_registration_path
+      facilities_management_users_confirm_path(email: params[:email])
     end
   end
 end

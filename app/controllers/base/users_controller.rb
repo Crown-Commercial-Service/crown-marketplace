@@ -1,17 +1,19 @@
 module Base
   class UsersController < ApplicationController
-    before_action :authenticate_user!, except: %i[confirm_new confirm challenge_new challenge]
-    before_action :authorize_user, except: %i[confirm_new confirm challenge_new challenge]
+    before_action :authenticate_user!, except: %i[confirm_new confirm challenge_new challenge resend_confirmation_email]
+    before_action :authorize_user, except: %i[confirm_new confirm challenge_new challenge resend_confirmation_email]
     before_action :set_user_phone, only: %i[challenge_new challenge]
 
-    def confirm_new; end
+    def confirm_new
+      @result = Cognito::ConfirmSignUp.new(nil, nil)
+    end
 
     def confirm
-      result = Cognito::ConfirmSignUp.call(params[:email], params[:confirmation_code])
-      if result.success?
-        sign_in_user(result.user)
+      @result = Cognito::ConfirmSignUp.call(params[:email], params[:confirmation_code])
+      if @result.success?
+        sign_in_user(@result.user)
       else
-        render :confirm_new, erorr: result.error
+        render :confirm_new
       end
     end
 
@@ -27,6 +29,12 @@ module Base
       else
         render :challenge_new
       end
+    end
+
+    def resend_confirmation_email
+      result = Cognito::ResendConfirmationCode.call(params[:email])
+
+      redirect_to confirm_user_registration_path, error: result.error
     end
 
     private
