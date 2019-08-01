@@ -33,7 +33,7 @@ RSpec.describe LegalServices::JourneyController, type: :controller do
         central_government: 'yes'
       }
 
-      expect(response).to render_template('check_suitability2')
+      expect(response).to render_template('check_suitability')
     end
   end
 

@@ -106,16 +106,8 @@ en:
               confirmation: Passwords don't match
         legal_services/journey/check_suitability:
           attributes:
-            legal_services:
-              inclusion: Select a legal service
-        legal_services/journey/check_suitability2:
-          attributes:
-            fees:
+            under_threshold:
               inclusion: Select yes if the fees will be under £20,000
-        legal_services/journey/check_suitability3:
-          attributes:
-            lot:
-              too_short: Select at least one checkbox
         legal_services/journey/choose_organisation_type:
           attributes:
             central_government:
@@ -873,11 +865,7 @@ en:
         heading: You need a different framework
     journey:
       check_suitability:
-        heading: Select the legal services you need
-        label_01: Transactional property, including noncomplex conveyancing and work relating to leases and licences
-        label_02: Litigation work, including employment
-        label_03: Other
-        or: or
+        heading: Will the fees be under £20,000 per matter?
       check_suitability2:
         heading: Will the fees be under £20,000 per matter?
       choose_organisation_type:
