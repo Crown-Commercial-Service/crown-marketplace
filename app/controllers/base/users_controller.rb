@@ -13,7 +13,7 @@ module Base
       if @result.success?
         sign_in_user(@result.user)
       else
-        render :confirm_new, result_errors: @result.errors
+        render :confirm_new
       end
     end
 
