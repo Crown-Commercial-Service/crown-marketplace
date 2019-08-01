@@ -71,6 +71,12 @@ en:
             password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+        cognito/confirm_sign_up:
+          attributes:
+            confirmation_code:
+              blank: Enter your confirmation code
+              invalid_format: Confirmation code must contain numeric characters only
+              invalid_length: Confirmation code must be 6 characters
         cognito/respond_to_challenge:
           attributes:
             access_code:
