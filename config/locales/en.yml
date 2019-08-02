@@ -106,50 +106,18 @@ en:
           attributes:
             under_threshold:
               inclusion: Select yes if the fees will be under £20,000
+        legal_services/journey/choose_jurisdiction:
+          attributes:
+            legal_jurisdiction:
+              inclusion: Select the jurisdiction you need
         legal_services/journey/choose_organisation_type:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
-        legal_services/journey/choose_services_area:
+        legal_services/journey/choose_regions:
           attributes:
-            services_area:
-              inclusion: Select no if you don't need legal services for property and construction or rail
-        legal_services/journey/choose_services_area2:
-          attributes:
-            services_area2:
-              inclusion: If you don't know which Lot you need select don't know
-        legal_services/journey/legal_jurisdiction:
-          attributes:
-            legal_jurisdiction:
-              inclusion: Select the jurisdiction you need
-        legal_services/journey/lot1_regional_service:
-          attributes:
-            lot1_regional_service:
-              too_short: Select the legal service or services you need
-        legal_services/journey/lot1_regional_service2:
-          attributes:
-            lot1_regional_service2:
-              too_short: Select the legal service or services you need
-        legal_services/journey/lot1_regional_services:
-          attributes:
-            lot:
-              too_short: Select the services you need
-        legal_services/journey/lot2_full_service:
-          attributes:
-            lot2_full_service:
-              too_short: Select the legal service or services you need
-        legal_services/journey/regional_legal_service:
-          attributes:
-            regional_legal_service:
-              too_short: Select where you need the legal service or services
-        legal_services/journey/regional_legal_services:
-          attributes:
-            region:
-              too_short: Select at least one region
-        legal_services/journey/requirement:
-          attributes:
-            legal_services:
-              inclusion: Select yes if your requirement is restricted to a small geographical area?
+            region_codes:
+              too_short: Select the region or regions you require the services in
         legal_services/journey/select_lot:
           attributes:
             select_lot:
