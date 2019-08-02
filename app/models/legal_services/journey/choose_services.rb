@@ -6,11 +6,11 @@ module LegalServices
     attribute :services, Array
     validates :services, length: { minimum: 1 }
 
-    def services_for_lot(lot, jurisdiction)
+    def services_for_lot(lot, jurisdiction, central_government = 'no')
       if lot == '2'
         LegalServices::Service.where(lot_number: lot + jurisdiction).sort_by(&:code)
       else
-        LegalServices::Service.where(lot_number: lot).sort_by(&:code)
+        LegalServices::Service.where(lot_number: lot, central_government: central_government).sort_by(&:code)
       end
     end
 
