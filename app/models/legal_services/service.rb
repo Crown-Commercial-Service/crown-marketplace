@@ -2,7 +2,7 @@ module LegalServices
   class Service
     include StaticRecord
 
-    attr_accessor :code, :name, :lot_number
+    attr_accessor :code, :name, :lot_number, :central_government
 
     def self.all_codes
       all.map(&:code)

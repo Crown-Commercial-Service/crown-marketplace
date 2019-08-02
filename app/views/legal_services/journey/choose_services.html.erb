@@ -19,7 +19,7 @@
           <div id="accordion-default">
             <div class="govuk-form-group">
               <div class="govuk-checkboxes">
-                <% @journey.current_step.services_for_lot(@journey.params['lot'], @journey.params['jurisdiction']).each do |service| %>
+                <% @journey.current_step.services_for_lot(@journey.params['lot'], @journey.params['jurisdiction'], @journey.params['central_government']).each do |service| %>
                   <div class="govuk-checkboxes__item">
                     <%= check_box_tag(
                       "services[]",

@@ -6,6 +6,7 @@
 
     <%= form_tag @form_path, method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <input type="hidden" name="lot" id="lot" value='1' >
       <%= govuk_form_group_with_optional_error(@journey, :under_threshold) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :under_threshold) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">

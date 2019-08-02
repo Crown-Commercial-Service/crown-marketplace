@@ -1,7 +1,5 @@
 ---
 en:
-  'No': 'No'
-  'Yes': 'Yes'
   activemodel:
     errors:
       models:
@@ -867,8 +865,6 @@ en:
     journey:
       check_suitability:
         heading: Will the fees be under £20,000 per matter?
-      check_suitability2:
-        heading: Will the fees be under £20,000 per matter?
       choose_jurisdiction:
         heading: Lot 2 - Full-service firms
         question: Select the jurisdiction you need
@@ -876,8 +872,6 @@ en:
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you're unsure.
         txt_link_text: central government departments, agencies and public bodies
-      choose_regional_or_fullservice:
-        question: Question
       choose_regions:
         full_national_coverage: Full national coverage
         no_regions_selected: No regions selected
@@ -890,58 +884,6 @@ en:
         question: Select the legal services you need
         remove_all: Remove all
         services_selected: services selected
-      choose_services_area:
-        opt_01: Yes, Property And Construction (Lot 3)
-        opt_02: Yes, rail (Lot 4)
-        opt_no: 'No'
-        question: Do you need legal services for property and construction or rail?
-      choose_services_area2:
-        opt_01: Lot 1 - Regional service provision
-        opt_02: Lot 2 - Full-service firms
-        opt_03: I Dont Know
-        or_txt: Or
-        question: What lot do you need?
-      lot1_regional_service:
-        heading: Lot 1 - Regional service provision
-        hint: Select the legal services you need
-        links_text_html: If the services you need aren't listed here, the <a href="https://www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
-        remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot1_regional_service2:
-        heading: Lot 1 Regional service provision
-        hint: Select the legal services you need
-        links_text_html: Links text html
-        remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot2_full_service:
-        heading: Lot 2 - Full-service firms
-        hint: Select the legal services you need
-        remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot3_results:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 3 - Property and construction
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
-      lot4_results:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 4 - Transport rail
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
-      regional_legal_service:
-        heading: Lot 1 - Regional service provision
-        hint: Select the regions where you need legal services
-        remove_all: Remove all
-        txt01: regions selected
-        txt02: No regions selected
-      requirement:
-        hint: For example, Greater London or East Midlands
-        question: Is your requirement restricted to a small geographical area?
       select_lot:
         heading: Select the lot you need
         lot1_extended_description: Select lot 1 if your requirements have a regional focus or your budget is below £200,000. These suppliers provide services across 14 legal specialisms within at least one of the 13 UK NUTS regions.
