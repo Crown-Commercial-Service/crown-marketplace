@@ -37,15 +37,84 @@ RSpec.describe LegalServices::JourneyController, type: :controller do
     end
   end
 
-  describe 'GET #choose-services-area' do
+  describe 'GET #sorry' do
     it 'renders template' do
       get :question, params: {
         journey: 'legal-services',
-        slug: 'choose-services-area',
+        slug: 'sorry',
+        central_government: 'yes',
+        under_threshold: 'no'
+      }
+
+      expect(response).to render_template('sorry')
+    end
+  end
+
+  describe 'GET #select-lot' do
+    it 'renders template' do
+      get :question, params: {
+        journey: 'legal-services',
+        slug: 'select-lot',
         central_government: 'no'
       }
 
       expect(response).to render_template('select_lot')
+    end
+  end
+
+  describe 'GET #choose-jurisdiction' do
+    it 'renders template' do
+      get :question, params: {
+        journey: 'legal-services',
+        slug: 'choose-jurisdiction',
+        central_government: 'no',
+        lot: '2'
+      }
+
+      expect(response).to render_template('choose_jurisdiction')
+    end
+  end
+
+  describe 'GET #choose-services' do
+    context 'when buyer works for central government' do
+      it 'renders template' do
+        get :question, params: {
+          journey: 'legal-services',
+          slug: 'choose-services',
+          central_government: 'yes',
+          under_threshold: 'yes',
+          lot: '1'
+        }
+
+        expect(response).to render_template('choose_services')
+      end
+    end
+
+    context 'when buyer doesn’t work for central government' do
+      it 'renders template' do
+        get :question, params: {
+          journey: 'legal-services',
+          slug: 'choose-services',
+          central_government: 'no',
+          lot: '1'
+        }
+
+        expect(response).to render_template('choose_services')
+      end
+    end
+  end
+
+  describe 'GET #choose-regions' do
+    it 'renders template' do
+      get :question, params: {
+        journey: 'legal-services',
+        slug: 'choose-regions',
+        central_government: 'no',
+        lot: '1',
+        services: ['WPSLS1.1']
+      }
+
+      expect(response).to render_template('choose_regions')
     end
   end
 end
