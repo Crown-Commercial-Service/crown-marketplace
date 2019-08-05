@@ -17,14 +17,14 @@
 
           <%= display_error(@journey, :under_threshold) %>
 
-          <div class="govuk-radios">
+          <div class="govuk-radios--inline">
             <div class="govuk-radios__item">
               <%= radio_button_tag :under_threshold, 'yes', checked?(params[:under_threshold], 'yes'), class: 'govuk-radios__input' %>
               <%= label_tag :under_threshold, t('yes'), class: 'govuk-label govuk-radios__label' %>
             </div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :under_threshold, 'no', checked?(params[:under_threshold], 'no'), class: 'govuk-radios__input' %>
-              <%= label_tag :under_threshold, t('no'), class: 'govuk-label govuk-radios__label', for: 'under_thresold_no' %>
+              <%= label_tag :under_threshold, t('no'), class: 'govuk-label govuk-radios__label' %>
             </div>
           </div>
         <% end %>

@@ -847,7 +847,12 @@ en:
         question: Select the regions where you need legal services
         regions_selected: Regions selected
         remove_all: Remove all
+        view_locations: View locations (PDF 266 KB)
       choose_services:
+        ccs_support_link_text: Contact CCS Support
+        general_legal_advice_services_html: If the services you need aren't listed here, the %{general_legal_advice_services_link} agreement provides legal services for central government and arms-length bodies. %{ccs_support_link} for help.
+        general_legal_advice_services_link: https://www.crowncommercial.gov.uk/agreements/RM3786
+        general_legal_advice_services_link_text: General Legal Advice Services (RM3786)
         no_services_selected: No services selected
         question: Select the legal services you need
         remove_all: Remove all
