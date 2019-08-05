@@ -38,6 +38,17 @@
           </div>
         <% end %>
       <% end %>
+      <% if params['central_government'] == 'yes' %>
+        <p>
+          <%= t(
+            '.general_legal_advice_services_html',
+            general_legal_advice_services_link: link_to(t('.general_legal_advice_services_link_text'), t('.general_legal_advice_services_link')),
+            ccs_support_link: mail_to(Marketplace.support_email_address, t('.ccs_support_link_text'), class: 'govuk-link ga-support-mailto', 'aria-label': t('.ccs_support_link_text'))
+            )
+          %>
+        </p>
+      <% end %>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
     </section>
     <section class="govuk-grid-column-one-third govuk-!-margin-top-9">
       <div id="css-list-basket">
