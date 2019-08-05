@@ -12,7 +12,7 @@ module Cognito
       @cognito_user = client.admin_get_user(user_pool_id: ENV['COGNITO_USER_POOL_ID'], username: username)
       @cognito_uuid = cognito_attribute('sub')
       @cognito_user_groups = client.admin_list_groups_for_user(user_pool_id: ENV['COGNITO_USER_POOL_ID'], username: @cognito_uuid)
-      create_user
+      create_or_update_user
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       @error = e.message
     end
@@ -23,15 +23,25 @@ module Cognito
 
     private
 
-    def create_user
-      @user = User.create(
-        email: cognito_attribute('email'),
-        cognito_uuid: @cognito_uuid,
-        first_name: cognito_attribute('name'),
-        last_name: cognito_attribute('family_name'),
-        phone_number: cognito_attribute('phone_number'),
-        roles: roles
-      )
+    def create_or_update_user
+      if @user = User.find_by(email: cognito_attribute('email'))
+        @user.update(
+          cognito_uuid: @cognito_uuid,
+          first_name: cognito_attribute('name'),
+          last_name: cognito_attribute('family_name'),
+          phone_number: cognito_attribute('phone_number'),
+          roles: roles
+        )
+      else
+        @user = User.create(
+          email: cognito_attribute('email'),
+          cognito_uuid: @cognito_uuid,
+          first_name: cognito_attribute('name'),
+          last_name: cognito_attribute('family_name'),
+          phone_number: cognito_attribute('phone_number'),
+          roles: roles
+        )
+      end
     end
 
     def cognito_attribute(attr)
