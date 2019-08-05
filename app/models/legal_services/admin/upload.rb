@@ -105,7 +105,7 @@ module LegalServices
           FileUtils.cp(file_path, new_path) if condition
         else
           object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-          object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path)).upload_file(file_path, acl: 'private')
+          object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path)).upload_file(file_path, acl: 'public-read')
         end
       end
 
