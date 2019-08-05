@@ -24,7 +24,7 @@ module Cognito
     private
 
     def create_or_update_user
-      if @user = User.find_by(email: cognito_attribute('email'))
+      if (@user = User.find_by(email: cognito_attribute('email')))
         @user.update(
           cognito_uuid: @cognito_uuid,
           first_name: cognito_attribute('name'),

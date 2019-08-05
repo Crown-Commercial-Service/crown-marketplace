@@ -1443,6 +1443,9 @@ en:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
+      apprenticeships:
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       auth:
         details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
         title: Sorry, you are not authorised to view this page
@@ -1453,9 +1456,6 @@ en:
         details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
         title: Sorry, you are not authorised to view this page
       management_consultancy:
-        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
-        title: Sorry, you are not authorised to view this page
-      apprenticeships:
         details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
         title: Sorry, you are not authorised to view this page
       supply_teachers:
