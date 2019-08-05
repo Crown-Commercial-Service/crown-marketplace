@@ -7,7 +7,6 @@ $(() => {
         alert('The manage procurements feature is not available yet');
     });
 
-
     $('#fm-manage-buildings-link').on('click', (e) => {
         location.href = 'buildings-list'
     });
