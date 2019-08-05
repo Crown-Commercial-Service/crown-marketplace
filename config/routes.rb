@@ -133,6 +133,7 @@ Rails.application.routes.draw do
     post '/cache/get', to: 'cache#retrieve'
     post '/cache/clear_by_key', to: 'cache#clear_by_key'
     post '/cache/clear', to: 'cache#clear_all'
+    get '/my-buyer-account', to: 'buyer_account#buyer_account'
     get '/reset', to: 'buildings#reset_buildings_tables'
     get '/:slug', to: '/errors#404'
 
