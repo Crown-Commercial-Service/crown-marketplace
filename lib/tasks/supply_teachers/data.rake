@@ -82,8 +82,8 @@ namespace :st do
 
   def upload_data_and_errors_to_s3
     object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('data.json').to_s)).upload_file(get_output_file_path('data.json'), {acl:'private'})
-    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('errors.out').to_s)).upload_file(get_output_file_path('errors.out'), {acl:'private'}) unless File.zero?(get_output_file_path('errors.out'))
+    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('data.json').to_s)).upload_file(get_output_file_path('data.json'), {acl:'public-read'})
+    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('errors.out').to_s)).upload_file(get_output_file_path('errors.out'), {acl:'public-read'}) unless File.zero?(get_output_file_path('errors.out'))
   end
 
 end
