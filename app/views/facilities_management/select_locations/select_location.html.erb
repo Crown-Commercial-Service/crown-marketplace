@@ -43,7 +43,15 @@
               </div>
             <% end %>
           <% end %>
+          <p>or</p>
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="<%= key + '_all' %>" name="<%= key + '_all' %>" locationid="<%= value + '_all' %>" type="checkbox" value="<%= key + '_all' %>">
+            <label class="govuk-label govuk-checkboxes__label CCS-fm-region-filter-check-box-label" for="<%= key + '_all' %>">
+              Select All
+            </label>
+          </div>
         </div>
+
       </div>
     <% end %>
 
