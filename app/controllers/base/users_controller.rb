@@ -44,8 +44,7 @@ module Base
     end
 
     def find_and_sign_in_user
-      # TODO: fix if user is already in database but with a different Cognito uuid but same email (in this case the user must have been deleted and re-added in Cognito)
-      user = User.find_by(cognito_uuid: params[:username]) || Cognito::CreateUserFromCognito.call(params[:username]).user
+      user = Cognito::CreateUserFromCognito.call(params[:username]).user
       sign_in_user(user)
     end
 

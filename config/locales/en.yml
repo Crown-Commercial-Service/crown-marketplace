@@ -656,7 +656,7 @@ en:
     next: Next
     passcap: at least one capital letter
     passeight: at least 8 characters
-    passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     reset_password: Reset password
     search: Search
     send_reset_email: Send reset email
@@ -1443,6 +1443,9 @@ en:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
+      apprenticeships:
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       auth:
         details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
         title: Sorry, you are not authorised to view this page
