@@ -93,7 +93,17 @@ $(() => {
                 $('input[name="' + ns + '"]').trigger("click");
                 $('input[name="' + ns + '"]').prop("checked", false);
             }
+        } else {
+            let total_count = $('input[name="' + n + '"]').length;
+            let count = $('input[name="' + n + '"]').filter(':checked').length;
+
+            if (count === total_count) {
+                $('#' + n + '_all').prop("checked", true);
+            } else {
+                $('#' + n + '_all').prop("checked", false);
+            }
         }
+
 
         let labelID = '#' + e.target.id + '_label';
 
