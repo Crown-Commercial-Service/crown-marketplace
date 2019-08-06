@@ -52,11 +52,13 @@ module Base
     end
 
     def fail_create(result)
-      redirect_to facilities_management_domain_not_on_whitelist_path if result.not_on_whitelist
-
-      clean_up_passwords resource
-      set_minimum_password_length
-      render :new, erorr: result.error
+      if result.not_on_whitelist
+        redirect_to facilities_management_domain_not_on_whitelist_path
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        render :new, erorr: result.error
+      end
     end
   end
 end
