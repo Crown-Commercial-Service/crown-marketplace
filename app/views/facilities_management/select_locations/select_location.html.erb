@@ -1,4 +1,4 @@
-<a href="/facilities-management" class="govuk-back-link">Back</a>
+<a href="/facilities-management/select-services" class="govuk-back-link">Back</a>
 
 <%= render('errors/inline_error_summary') %>
 
@@ -13,8 +13,6 @@
   </p>
 </div>
 <div class="govuk-grid-column-two-thirds">
-
-
   <div class="govuk-accordion" data-module="accordion" id="region-accordion">
     <% @regions.each do |key, value| %>
       <div class="govuk-accordion__section ">
@@ -69,20 +67,21 @@
       </div>
     </div>
   </div>
-  <p>
-    <%= form_tag '/facilities-management/buildings/select-services', id: 'save-locations-link-form', method: :post do %>
-      <%= link_to 'Continue', '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-locations-link', name: 'save-locations-link' %>
-    <% end %>
-  </p>
+  <form id="fm-services-form" name="fm-services-form" action="/facilities-management/suppliers/longList" method="post">
+    <input name="authenticity_token" type="hidden" value='<%= csrf_meta_tag %>' />
+    <input id="postedlocations" name="postedlocations" type="hidden" value="" />
+    <input id="postedservices" name="postedservices" type="hidden" value="" />
+    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+    <a role='button' class='govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' id='save-locations-link'><%= t('common.continue') %></a>
+  </form>
 </div>
 <div class="govuk-grid-column-one-third">
   <div class="filter-selection">
     <header>
       <div class="filter-selection__header">
-        <a id="remove-all-locations-link" name="remove-all-link" class="remove-all js-filter" href="">Remove all</a>
-        <h2 class="font-weight-700">
-          <span id="selected-location-count" class="font-size--18">0</span>
-          Locations selected
+        <a id="remove-all-locations-link" name="remove-all-link" class="remove-all js-filter" href=""><%= t('facilities_management.basket.removeall_text') %></a>
+        <h2 class="govuk-heading-s font-weight-700">
+          <span id="selected-location-count" class="font-size--18"><%= t('facilities_management.basket.none') %></span> selected
         </h2>
       </div>
     </header>

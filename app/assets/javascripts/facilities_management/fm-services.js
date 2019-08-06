@@ -1,10 +1,10 @@
 /*
-* filename: location.js
+* filename: fm-services.js
 * Description: Click handlers for the select services page
 * */
 $(() => {
 
-    /!* govuk-accordion__controls event handlers *!/
+    /* govuk-accordion__controls event handlers */
     let selectedServices = pageUtils.getCachedData('fm-services');
     let selectedLocations = pageUtils.getCachedData('fm-locations');
     let selectedServicesForThisBuilding = selectedServices;
@@ -13,17 +13,16 @@ $(() => {
 
     const initialize = (() => {
 
-        /!* Load and display cached values *!/
+        /* Load and display cached values */
         if (selectedServices) {
             selectedServices.forEach((value, index, array) => {
                 $('input#' + value.code).trigger('click');
             });
         }
 
-        /!* set the initial count *!/
+        /* set the initial count */
         updateServiceCount();
         renderSelectedServices();
-
     });
 
     const renderSelectedServices = (() => {
@@ -67,6 +66,7 @@ $(() => {
         let serviceCount = $('#selected-service-count');
         let selectedServiceCount = $('#fm-selected-service-count');
 
+        count = ((count > 0) ? "" + count : "none");
         if (selectedServiceCount) {
             selectedServiceCount.text(count);
         }
@@ -81,13 +81,13 @@ $(() => {
     });
 
 
-    /!* remove a service from the selected list *!/
+    /* remove a service from the selected list */
     const removeSelectedItem = ((id) => {
         $('li#' + id).remove();
         id = id.replace('_selected', '');
         $("input#" + id).prop('checked', false);
 
-        /!* remove from the array that is saved *!/
+        /* remove from the array that is saved */
         let filtered = selectedServices.filter((value, index, arr) => {
             if (value.code !== id) {
                 return true;
@@ -102,7 +102,7 @@ $(() => {
         updateServiceCount();
     });
 
-    /!* uncheck all check boxes and clear list *!/
+    /* uncheck all check boxes and clear list */
     const clearAll = (() => {
         $("#selected-fm-services li").remove();
         $("#services-accordion input:checkbox").prop('checked', false);
@@ -112,15 +112,38 @@ $(() => {
         updateServiceCount();
     });
 
-    /!* Click handler to remove all services *!/
+    /* Click handler to remove all services */
     $('#remove-all-services-link').on('click', (e) => {
         e.preventDefault();
         clearAll();
     });
 
-    /!* click handler for check boxes *!/
+    /* click handler for check boxes */
     $('#services-accordion .govuk-checkboxes__input').on('click', (e) => {
+        var serviceId = e.target.getAttribute("serviceid");
 
+        if (serviceId !== null )    // only !select-all checkboxes
+        {
+            if ( !e.target.checked) {
+                $("input[forserviceid='" + serviceId + "']").prop("checked", false);
+            } else {
+                var allServiceWorkItems = $("input[serviceid='" + serviceId + "']") ;
+                var allServiceSelectionStates = [] ;
+                allServiceWorkItems.each(function() {
+                    var value = $(this).prop("checked") ;
+                    allServiceSelectionStates.push( value )
+                });
+
+                if (allServiceSelectionStates.some ( (elem) => {
+                    elem  === true;
+                }) ) {
+                    $("input[forserviceid='" + serviceId + "']").prop("checked", false);
+                } else {
+                    $("input[forserviceid='" + serviceId + "']").prop("checked", true);
+                }
+            }
+        }
+        
         let val = e.target.title;
 
         let selectedID = e.target.id + '_selected';
@@ -206,27 +229,16 @@ $(() => {
 
     let tempServices;
 
-    $('#fm-select-all-services').on('change', (e) => {
+    $('[name="fm-building-service-checkbox_select_all"]').on('change', (e) => {
+        let serviceId = e.currentTarget.getAttribute("forserviceid") ;
+        let checked = e.currentTarget.checked;
 
-
-        let checked = $('#fm-select-all-services').is(':checked');
-
-        if (!checked) {
-            tempServices = pageUtils.getCachedData('fm-services');
-            pageUtils.clearCashedData('fm-services');
-        } else {
-            pageUtils.setCachedData('fm-services', tempServices);
-        }
-
-        $('input[name="fm-building-service-checkbox"]').prop("checked", checked);
-        $('input[name="fm-building-service-checkbox"]').trigger({
+        $('input[serviceid="' + serviceId + '"]').prop("checked", checked);
+        $('input[serviceid="' + serviceId + '"]').trigger({
             type: "change",
             checked: checked
         });
-
-
         updateServiceCount();
-
     });
 
     $('#fm-select-services-continue-btn').on('click', (e) => {
