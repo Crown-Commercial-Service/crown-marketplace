@@ -27,6 +27,7 @@ $(() => {
     /* Update the count of selected locations */
     const updateLocationCount = (() => {
         let count = $("#selected-fm-locations li").length;
+        count = ((count > 0) ? "" + count : "none");
 
         $('#selected-location-count').text(count);
     });

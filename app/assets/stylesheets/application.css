@@ -7876,7 +7876,8 @@ li code, td code, p code {
 .filter-selection__header a {
     float: right;
     text-align: right;
-    padding: 0
+    padding: 0;
+    padding-top:4px;
 }
 
 .filter-selection ul {
