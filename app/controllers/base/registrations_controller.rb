@@ -1,26 +1,29 @@
 module Base
   class RegistrationsController < Devise::RegistrationsController
     protect_from_forgery
-    before_action :authenticate_user!, except: %i[new create]
-    before_action :authorize_user, except: %i[new create]
+    before_action :authenticate_user!, except: %i[new create domain_not_on_whitelist]
+    before_action :authorize_user, except: %i[new create domain_not_on_whitelist]
 
     def new
+      @result = Cognito::SignUpUser.new(nil, nil, nil, roles)
+      @result.errors.add(:base, flash[:error]) if flash[:error]
+      @result.errors.add(:base, flash[:alert]) if flash[:alert]
       super
     end
 
     def create
-      result = Cognito::SignUpUser.call(sign_up_params, roles)
-      resource = result.user
+      @result = Cognito::SignUpUser.call(sign_up_params[:email], sign_up_params[:password], sign_up_params[:password_confirmation], roles)
+      self.resource = @result.user || User.new(sign_up_params)
 
-      if result.success?
+      if @result.success?
         set_flash_message! :notice, :signed_up
         respond_with resource, location: after_sign_up_path_for(resource)
       else
-        clean_up_passwords resource
-        set_minimum_password_length
-        render :new, erorr: result.error
+        fail_create(@result)
       end
     end
+
+    def domain_not_on_whitelist; end
 
     private
 
@@ -48,12 +51,12 @@ module Base
       nil
     end
 
-    def after_sign_up_path_for(resource)
-      supply_teachers_users_confirm_path(email: resource.email)
-    end
+    def fail_create(result)
+      redirect_to facilities_management_domain_not_on_whitelist_path if result.not_on_whitelist
 
-    def authorize_user
-      authorize! :read, SupplyTeachers
+      clean_up_passwords resource
+      set_minimum_password_length
+      render :new, erorr: result.error
     end
   end
 end

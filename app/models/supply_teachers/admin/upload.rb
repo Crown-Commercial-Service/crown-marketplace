@@ -46,7 +46,7 @@ module SupplyTeachers
           transitions from: :in_review, to: :rejected, after: :cleanup_input_files
         end
         event :cancel do
-          transitions from: %i[in_review in_progress], to: :canceled, after: :cleanup_input_files
+          transitions from: %i[in_review in_progress uploading], to: :canceled, after: :cleanup_input_files
         end
       end
 
@@ -77,7 +77,7 @@ module SupplyTeachers
       end
 
       def self.previous_uploaded_file_url(attr_name)
-        previous_uploaded_file(attr_name).path
+        previous_uploaded_file_object(attr_name).try(:send, attr_name.to_s + '_url')
       end
 
       def self.previous_uploaded_file_object(attr_name)
@@ -85,7 +85,7 @@ module SupplyTeachers
       end
 
       def self.in_review_or_in_progress
-        in_review + in_progress
+        in_review + in_progress + uploading
       end
 
       def self.perform_upload(upload_id)
@@ -128,7 +128,11 @@ module SupplyTeachers
           FileUtils.cp(file_path, new_path)
         else
           object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-          object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path.to_s)).upload_file(file_path, acl: 'public-read')
+          if file_path.include?(ENV['CCS_APP_API_DATA_BUCKET']) # if an S3 path use copy_object not upload_file
+            object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).client.copy_object(bucket: ENV['CCS_APP_API_DATA_BUCKET'], copy_source: file_path, key: s3_path(new_path.to_s))
+          else
+            object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path.to_s)).upload_file(file_path, acl: 'public-read')
+          end
         end
       end
 
@@ -138,6 +142,8 @@ module SupplyTeachers
 
       def reject_previous_uploads
         self.class.in_review.map(&:cancel!)
+        self.class.in_progress.map(&:cancel!)
+        self.class.uploading.map(&:cancel!)
       end
 
       def cp_previous_uploaded_file(attr_name, file_path)
