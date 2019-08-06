@@ -4,8 +4,12 @@ module LegalServices
 
     attr_accessor :number, :description
 
+    def self.[](number)
+      Lot.find_by(number: number)
+    end
+
     def self.all_numbers
-      all.map(&:number).map(&:to_i)
+      all.map(&:number)
     end
   end
 

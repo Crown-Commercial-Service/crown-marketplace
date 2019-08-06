@@ -1,17 +1,19 @@
 module Base
   class UsersController < ApplicationController
-    before_action :authenticate_user!, except: %i[confirm_new confirm challenge_new challenge]
-    before_action :authorize_user, except: %i[confirm_new confirm challenge_new challenge]
+    before_action :authenticate_user!, except: %i[confirm_new confirm challenge_new challenge resend_confirmation_email]
+    before_action :authorize_user, except: %i[confirm_new confirm challenge_new challenge resend_confirmation_email]
     before_action :set_user_phone, only: %i[challenge_new challenge]
 
-    def confirm_new; end
+    def confirm_new
+      @result = Cognito::ConfirmSignUp.new(nil, nil)
+    end
 
     def confirm
-      result = Cognito::ConfirmSignUp.call(params[:email], params[:confirmation_code])
-      if result.success?
-        sign_in_user(result.user)
+      @result = Cognito::ConfirmSignUp.call(params[:email], params[:confirmation_code])
+      if @result.success?
+        sign_in_user(@result.user)
       else
-        render :confirm_new, erorr: result.error
+        render :confirm_new
       end
     end
 
@@ -29,6 +31,12 @@ module Base
       end
     end
 
+    def resend_confirmation_email
+      result = Cognito::ResendConfirmationCode.call(params[:email])
+
+      redirect_to confirm_user_registration_path, error: result.error
+    end
+
     private
 
     def new_challenge_path
@@ -36,8 +44,7 @@ module Base
     end
 
     def find_and_sign_in_user
-      # TODO: fix if user is already in database but with a different Cognito uuid but same email (in this case the user must have been deleted and re-added in Cognito)
-      user = User.find_by(cognito_uuid: params[:username]) || Cognito::CreateUserFromCognito.call(params[:username]).user
+      user = Cognito::CreateUserFromCognito.call(params[:username]).user
       sign_in_user(user)
     end
 

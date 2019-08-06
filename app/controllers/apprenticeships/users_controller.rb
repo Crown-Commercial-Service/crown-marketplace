@@ -9,5 +9,9 @@ module Apprenticeships
     def after_sign_in_path_for(resource)
       stored_location_for(resource) || facilities_management_journey_start_path
     end
+
+    def confirm_user_registration_path
+      apprenticeships_users_confirm_path(email: params[:email])
+    end
   end
 end

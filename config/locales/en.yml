@@ -71,6 +71,12 @@ en:
             password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+        cognito/confirm_sign_up:
+          attributes:
+            confirmation_code:
+              blank: Enter your confirmation code
+              invalid_format: Confirmation code must contain numeric characters only
+              invalid_length: Confirmation code must be 6 characters
         cognito/respond_to_challenge:
           attributes:
             access_code:
@@ -83,6 +89,19 @@ en:
               invalid_no_symbol: Password must include a special character
               too_short: Password must be 8 characters or more
             new_password_confirmation:
+              blank: Enter your password
+              confirmation: Passwords don't match
+        cognito/sign_up_user:
+          attributes:
+            email:
+              blank: Enter your email
+              not_on_whitelist: You must use a public sector email
+            password:
+              blank: Enter a password
+              invalid_no_capitals: Password must include a capital letter
+              invalid_no_symbol: Password must include a special character
+              too_short: Password must be 8 characters or more
+            password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
         legal_services/journey/check_suitability:
@@ -468,6 +487,21 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
         email_address: Email address
@@ -475,6 +509,13 @@ en:
         forgotten_password_html: I've forgotten my password
         password: Password
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
@@ -485,7 +526,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   ccs_patterns:
     home:
       cog_email:
@@ -546,7 +587,7 @@ en:
         lead_start: An email has been sent to
         resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
       cog_sign_in:
-        create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
+        create_ccs_account_html: Create a CCS account
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_email_html: I've forgotten my email address
@@ -615,7 +656,7 @@ en:
     next: Next
     passcap: at least one capital letter
     passeight: at least 8 characters
-    passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     reset_password: Reset password
     search: Search
     send_reset_email: Send reset email
@@ -672,6 +713,21 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
         email_address: Email address
@@ -679,6 +735,13 @@ en:
         forgotten_password_html: I've forgotten my password
         password: Password
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
@@ -689,7 +752,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   faker:
     company:
       name:
@@ -920,6 +983,21 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
         email_address: Email address
@@ -954,6 +1032,13 @@ en:
         caption: Supplier details
         heading: Supplier details
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
@@ -964,7 +1049,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   management_consultancy:
     admin:
       passwords:
@@ -1034,7 +1119,7 @@ en:
           content: It may take a few minutes to arrive.
           heading: Enter your access code
           lead: 'We just sent a 6 digit access code by text to:'
-          resend_the_confirmation_code_html: Resend access code
+          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -1226,6 +1311,21 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
         email_address: Email address
@@ -1268,6 +1368,13 @@ en:
       supplier:
         average_day_rate: Average day rate
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
@@ -1278,7 +1385,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   miles:
     unit:
       one: mile
@@ -1336,21 +1443,24 @@ en:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
+      apprenticeships:
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       auth:
-        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       facilities_management:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       legal_services:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       management_consultancy:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       supply_teachers:
-        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
   sme: SME
   suppliers:
     unit:
@@ -1454,7 +1564,7 @@ en:
           content: It may take a few minutes to arrive.
           heading: Enter your access code
           lead: 'We just sent a 6 digit access code by text to:'
-          resend_the_confirmation_code_html: Resend access code
+          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     branches:
       branch:
         address: Address
@@ -1725,7 +1835,7 @@ en:
         content: It may take a few minutes to arrive.
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: Resend access code
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   views:
     pagination:
       next: Next <b>→</b>
