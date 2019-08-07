@@ -292,7 +292,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       'fm-building-type' => 'Residential Buildings' }
   end
 
-
   let(:building3) do
     { 'id' => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'gia' => 12345, 'name' => 'ccs', 'region' => 'London',
       'address' => { 'fm-address-town' => 'London', 'fm-address-line-1' => '151 Buckingham Palace Road', 'fm-address-postcode' => 'SW1W 9SZ' },
@@ -417,7 +416,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       ],
       'fm-building-type' => 'General office - Customer Facing' }
   end
-
 
   let(:buildings) do
     [
@@ -615,7 +613,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # report.workout_current_lot
     # p report.assessed_value
-    expect(report.assessed_value.round(2)).to be 355.49
+    expect(report.assessed_value.round(2)).to be 17383.64
   end
 
   it 'buildings with rate card' do
@@ -640,52 +638,51 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # p rate_card
     expect(sorted_results.first[0]).to eq 'Walsh, Murphy and Gaylord'
 
-    expect(sorted_results.first[1].round(2)).to equal 21404.32
+    expect(sorted_results.first[1].round(2)).to equal 1387649.74
   end
 
+  # rubocop:disable RSpec/ExampleLength
   it 'uses ratecard for dummy supplier' do
-
     id = SecureRandom.uuid
-    # p id
-    b = {
-          'id' => id,
-          'gia' => 21000,
-          'name' => 'ccs',
-          'region' => 'London',
-          'address' =>
-            {
-              'fm-address-town' => 'London',
-              'fm-address-line-1' => '151 Buckingham Palace Road',
-              'fm-address-postcode' => 'SW1W 9SZ'
-            },
-          'isLondon' => 'No',
-          'services' =>
-            [
-              { 'code' => 'G-1', 'name' => 'Airport and aerodrome maintenance services' },
-              { 'code' => 'M-1', 'name' => 'CAFM system' },
-              # { 'code' => 'N-1', 'name' => 'Helpdesk services' },
-              { 'code' => 'O-1', 'name' => 'Management of billable works' }
-            ],
-          'fm-building-type' => 'General office - Customer Facing'
-        }
 
-    p b
+    b =
+      {
+        'id' => id,
+        'gia' => 21000,
+        'name' => 'ccs',
+        'region' => 'London',
+        'address' =>
+          {
+            'fm-address-town' => 'London',
+            'fm-address-line-1' => '151 Buckingham Palace Road',
+            'fm-address-postcode' => 'SW1W 9SZ'
+          },
+        'isLondon' => 'No',
+        'services' =>
+          [
+            { 'code' => 'G-1', 'name' => 'Airport and aerodrome maintenance services' },
+            { 'code' => 'M-1', 'name' => 'CAFM system' },
+            # { 'code' => 'N-1', 'name' => 'Helpdesk services' },
+            { 'code' => 'O-1', 'name' => 'Management of billable works' }
+          ],
+        'fm-building-type' => 'General office - Customer Facing'
+      }
 
     all_buildings =
-                    [
-                      OpenStruct.new(building_json: b)
-                    ]
-    uom_vals = [
-                 {
-                   'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n',
-                   'service_code' => 'G.1',
-                   'uom_value' => '125',
-                   'building_id' => id,
-                   'title_text' => "What's the number of building users (occupants) in this building?",
-                   'example_text' => "For example, 56. What's the maximum capacity of this building."
-                 },
-
-               ]
+      [
+        OpenStruct.new(building_json: b)
+      ]
+    uom_vals =
+      [
+        {
+          'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n',
+          'service_code' => 'G.1',
+          'uom_value' => '125',
+          'building_id' => id,
+          'title_text' => "What's the number of building users (occupants) in this building?",
+          'example_text' => "For example, 56. What's the maximum capacity of this building."
+        }
+      ]
     # data
     dummy_supplier_name = 'Hickle-Schinner'
 
@@ -693,8 +690,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
     report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
 
-    p report.assessed_value
+    # p report.assessed_value
   end
+  # rubocop:enable RSpec/ExampleLength
 
   # rubocop:disable RSpec/ExampleLength
   it 'can calculate prices' do
