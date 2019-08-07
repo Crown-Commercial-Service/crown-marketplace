@@ -2,15 +2,28 @@ module LegalServices
   class Journey::ChooseServices
     include Steppable
 
-    attribute :central_government
-    validates :central_government, inclusion: ['yes', 'no']
+    attribute :lot
+    attribute :services, Array
+    validates :services, length: { minimum: 1 }
+
+    def services_for_lot(lot, jurisdiction, central_government = 'no')
+      if lot == '2'
+        LegalServices::Service.where(lot_number: lot + jurisdiction).sort_by(&:code)
+      else
+        LegalServices::Service.where(lot_number: lot, central_government: central_government).sort_by(&:code)
+      end
+    end
+
+    def selected_lot
+      LegalServices::Lot.find_by(number: lot)
+    end
 
     def next_step_class
-      case central_government
-      when 'yes'
-        Journey::FeesUnder20k
+      case lot
+      when '1'
+        Journey::ChooseRegions
       else
-        Journey::ChooseServicesArea
+        Journey::Suppliers
       end
     end
   end
