@@ -16,7 +16,11 @@ module Base
       @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password])
       @result.call
 
-      respond_to_on_create
+      if @result.success?
+        @result.challenge? ? redirect_to(challenge_path) : super
+      else
+        result_unsuccessful_path
+      end
     end
 
     def destroy
@@ -37,10 +41,8 @@ module Base
       authorize! :read, SupplyTeachers
     end
 
-    def respond_to_on_create
-      if @result.success?
-        @result.challenge? ? redirect_to(challenge_path) : super
-      elsif @result.needs_password_reset
+    def result_unsuccessful_path
+      if @result.needs_password_reset
         redirect_to confirm_forgot_password_path(params[:user][:email])
       elsif @result.needs_confirmation
         redirect_to confirm_email_path(params[:user][:email])
