@@ -44,7 +44,6 @@ $(() => {
 
                 if (isChecked === true) {
                     selectedServicesForThisBuilding.push(service);
-                    updateServiceCount();
                 } else {
                     /* remove the item */
                     selectedServicesForThisBuilding = selectedServicesForThisBuilding.filter((currentService) => {
@@ -52,7 +51,6 @@ $(() => {
                             return true;
                         }
                     });
-                    updateServiceCount();
                 }
             });
             //}
@@ -66,6 +64,12 @@ $(() => {
         let serviceCount = $('#selected-service-count');
         let selectedServiceCount = $('#fm-selected-service-count');
 
+        if ( count < 2 ) {
+            $('#remove-all-services-link').hide();
+        } else {
+            $('#remove-all-services-link').show();
+        }
+
         count = ((count > 0) ? "" + count : "none");
         if (selectedServiceCount) {
             selectedServiceCount.text(count);
@@ -73,7 +77,6 @@ $(() => {
 
         if (serviceCount) {
             serviceCount.text(count);
-            $('#fm-select-all-services').prop('checked', (count === selectedServices.length) ? true : false);
             if (count > 0) {
                 pageUtils.toggleInlineErrorMessage(false);
             }
@@ -83,6 +86,7 @@ $(() => {
 
     /* remove a service from the selected list */
     const removeSelectedItem = ((id) => {
+        id = id + "_selected";
         $('li#' + id).remove();
         id = id.replace('_selected', '');
         $("input#" + id).prop('checked', false);
@@ -102,6 +106,51 @@ $(() => {
         updateServiceCount();
     });
 
+    // add a selected service from the selected list
+    const addSelectedItem = ( (serviceId, workItemId, title) => {
+        let val = title;
+
+        let selectedID = workItemId + '_selected';
+        let removeLinkID = workItemId + '_removeLink';
+
+        let obj = selectedServices.filter(function (obj) {
+            return obj.code === workItemId;
+        });
+
+        if (obj.length === 0) {
+            let service = {code: workItemId, name: val};
+            selectedServices.push(service);
+        }
+
+        let newLI = '<li serviceid="' + serviceId + '" style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
+            '<span class="govuk-!-padding-0">' + val + '</span><span class="remove-link">' +
+            '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
+        $("#selected-fm-services").append(newLI);
+
+        $('#' + removeLinkID).on('click', (e) => {
+            e.preventDefault();
+            removeSelectedItem(selectedID);
+        }) ;
+    }) ;
+
+    const synchroniseServiceSelectAllCheckBox = ( (serviceId, bAllIsChecked) => {
+        var allServiceWorkItems = $("input[serviceid='" + serviceId + "']");
+
+        //correctly toggle select-all state for the service sub-set
+        if (!bAllIsChecked) {
+            $("input[forserviceid='" + serviceId + "']").prop("checked", false);
+        } else {
+            var allServiceSelectionStates = [];
+            allServiceWorkItems.each(function () {
+                var value = $(this).prop("checked");
+                allServiceSelectionStates.push(value)
+            });
+            let bCheckCheckAllBox = false;
+            bCheckCheckAllBox = allServiceSelectionStates.every(x => x == true);
+            $("input[forserviceid='" + serviceId + "']").prop("checked", bCheckCheckAllBox);
+        }
+    }) ;
+
     /* uncheck all check boxes and clear list */
     const clearAll = (() => {
         $("#selected-fm-services li").remove();
@@ -110,6 +159,14 @@ $(() => {
         selectedServices = [];
         pageUtils.setCachedData('fm-services', selectedServices);
         updateServiceCount();
+    });
+
+    const showSelectedServicesInBasket = ( (serviceId) => {
+        $("#selected-fm-services li[serviceid=" + serviceId + "]").remove();
+
+        $('input[serviceid=' + serviceId + ']:checked').each( function()  {
+            addSelectedItem(serviceId, $(this).prop("id"), $(this).prop("title"));
+        }) ;
     });
 
     /* Click handler to remove all services */
@@ -122,62 +179,16 @@ $(() => {
     $('#services-accordion .govuk-checkboxes__input').on('click', (e) => {
         var serviceId = e.target.getAttribute("serviceid");
 
-        if (serviceId !== null )    // only !select-all checkboxes
-        {
-            if ( !e.target.checked) {
-                $("input[forserviceid='" + serviceId + "']").prop("checked", false);
+        if (serviceId !== null ) {   // only !select-all checkboxes
+            if (e.target.checked === true) {
+                addSelectedItem(serviceId, e.target.id, e.target.title);
             } else {
-                var allServiceWorkItems = $("input[serviceid='" + serviceId + "']") ;
-                var allServiceSelectionStates = [] ;
-                allServiceWorkItems.each(function() {
-                    var value = $(this).prop("checked") ;
-                    allServiceSelectionStates.push( value )
-                });
-
-                if (allServiceSelectionStates.some ( (elem) => {
-                    elem  === true;
-                }) ) {
-                    $("input[forserviceid='" + serviceId + "']").prop("checked", false);
-                } else {
-                    $("input[forserviceid='" + serviceId + "']").prop("checked", true);
-                }
+                removeSelectedItem(e.target.id);
             }
-        }
-        
-        let val = e.target.title;
-
-        let selectedID = e.target.id + '_selected';
-        let removeLinkID = e.target.id + '_removeLink';
-
-        if (e.target.checked === true) {
-
-            let obj = selectedServices.filter(function (obj) {
-                return obj.code === e.target.id;
-            });
-
-            if (obj.length === 0) {
-                let service = {code: e.target.id, name: val};
-                selectedServices.push(service);
-            }
-
-            let newLI = '<li style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
-                '<span class="govuk-!-padding-0">' + val + '</span><span class="remove-link">' +
-                '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
-            $("#selected-fm-services").append(newLI);
-
-            $('#' + removeLinkID).on('click', (e) => {
-                e.preventDefault();
-                removeSelectedItem(selectedID);
-                updateServiceCount();
-            });
-
-        } else {
-            removeSelectedItem(selectedID);
-            updateServiceCount();
-        }
+            synchroniseServiceSelectAllCheckBox(serviceId, e.target.checked);
+        } 
 
         isValid();
-
         updateServiceCount();
         pageUtils.sortUnorderedList('selected-fm-services');
 
@@ -238,6 +249,7 @@ $(() => {
             type: "change",
             checked: checked
         });
+        showSelectedServicesInBasket(serviceId);
         updateServiceCount();
     });
 

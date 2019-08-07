@@ -15,7 +15,7 @@ module SupplyTeachers
 
       check_for_errors
     rescue StandardError => e
-      fail_upload(@upload, e.full_message)
+      fail_upload(@upload, e.message)
     end
 
     private
