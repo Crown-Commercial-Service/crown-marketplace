@@ -53,7 +53,7 @@ module Base
 
     def fail_create(result)
       if result.not_on_whitelist
-        redirect_to facilities_management_domain_not_on_whitelist_path
+        redirect_to domain_not_on_whitelist_path
       else
         clean_up_passwords resource
         set_minimum_password_length
