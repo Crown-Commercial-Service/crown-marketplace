@@ -2,29 +2,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-    <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
-
-    <div id="ccs-error-sum" class="govuk-error-summary govuk-visually-hidden ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title"><%= t('common.error_summary_title') %></h2>
-      <div class="govuk-error-summary__body">
-        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
-          <li>
-            <a href="#lot_1">
-              <%= t('activemodel.errors.models.legal_services/journey/select_lot.attributes.select_lot.inclusion') %>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <%= form_tag @form_path, class: 'ccs-form', id: 'select_lot', method: :get do %>
-
+    <%= form_tag @form_path, method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-
-      <%= govuk_form_group_with_optional_error(@journey, :select_lot) do %>
-        <%= govuk_fieldset_with_optional_error(@journey, :select_lot) do %>
-
+      <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
               <%= t('.heading') %>
@@ -33,86 +14,35 @@
 
           <%= display_error(@journey, :select_lot) %>
 
-          <span id="legal_services-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-            <%= t('activemodel.errors.models.legal_services/journey/select_lot.attributes.select_lot.inclusion') %>
-          </span>
-
           <div class="govuk-radios">
-            <div class="govuk-radios__item">
-              <%= radio_button_tag :select_lot, 'lot1', checked?(params[:select_lot], 'lot1'), class: 'govuk-radios__input', id: 'lot_1', 'aria-describedby': 'lot-1-item-hint' %>
-              <%= label_tag :select_lot, t('.lot1_txt'), class: 'govuk-label govuk-radios__label govuk-!-font-weight-bold', for: 'lot_1' %>
+            <% LegalServices::Journey::SelectLot.lots.each do |lot| %>
+              <div class="govuk-radios__item">
+                <%= radio_button_tag :lot, lot.number, checked?(params[:lot], lot.number), class: 'govuk-radios__input' %>
+                <%= label_tag :lot, lot_full_description(lot), class: 'govuk-label govuk-radios__label govuk-!-font-weight-bold' %>
 
-              <span id="lot-1-item-hint" class="govuk-hint govuk-radios__hint">
-                <%= t('.lot1_txt_sub') %>
-              </span>
+                <span id=<%= "lot-#{lot.number}-item-hint" %> class="govuk-hint govuk-radios__hint">
+                  <%= t(".lot#{lot.number}_extended_description") %>
+                </span>
 
-              <details class="govuk-details govuk-!-margin-bottom-5 govuk-!-margin-left-4">
-                <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">
-                    <%= t('.lot1_txt_details') %>
-                  </span>
-                </summary>
-                <div class="govuk-details__text">
-
-                  <% lot1 = ['Child law', 'Court of protection','Debt recovery','Education','Employment','Healthcare','Intellectual property', 'Licensing',  'Litigation / dispute resolution','Pensions','Planning and Environment','Primary care', 'Property and contruction','Social housing'] %>
-
-                  <ul class="govuk-list">
-                    <% lot1.each do |lot| %>
-                      <li><%= lot %></li>
-                    <% end %>
-                  </ul>
-
-                </div>
-              </details>
-            </div>
-            <div class="govuk-radios__item">
-              <%= radio_button_tag :select_lot, 'lot2', checked?(params[:select_lot], 'lot2'), class: 'govuk-radios__input', id: 'lot_2', 'aria-describedby': 'lot-2-item-hint' %>
-
-              <%= label_tag :select_lot, t('.lot2_txt'), class: 'govuk-label govuk-radios__label govuk-!-font-weight-bold', for: 'lot_2' %>
-
-              <span id="lot-2-item-hint" class="govuk-hint govuk-radios__hint">
-                <%= t('.lot2_txt_sub') %>
-              </span>
-
-              <details class="govuk-details govuk-!-margin-bottom-5 govuk-!-margin-left-4">
-                <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">
-                    <%= t('.lot2_txt_details') %>
-                  </span>
-                </summary>
-                <div class="govuk-details__text">
-
-                  <% lot2 = ['Administrative and public law', 'Banking and Finance','Charities law', 'Child law','Contracts','Competion law', 'Corporate and M&A','Data Protection and information law','Education law', 'Employment', 'Energy and natural resources','EU', 'Food,rural and enviromental affairs','Franchise law','Health and healthcare','Health and safety law', 'Information Technology', 'Infrastructure', 'Intellectual Property','Licensing','Life sciences', 'Litigation and dispute resolution', 'Outsourcing/insourcing', 'Partnerships', 'Pensions', 'Planning', 'Projects', 'Public international law', 'Public procurement', 'Property, real estate & construction', 'Restructuring and insolvancy', 'Tax', 'Telecommunications','The law of international trade investment and regulation', 'Transport law (excluding rail)'] %>
-
-                  <ul class="govuk-list">
-                    <% lot2.each do |lot| %>
-                      <li><%= lot %></li>
-                    <% end %>
-                  </ul>
-
-                </div>
-              </details>
-            </div>
-            <div class="govuk-radios__item">
-              <%= radio_button_tag :select_lot, 'lot3', checked?(params[:select_lot], 'lot2'), class: 'govuk-radios__input', id: 'lot_3', 'aria-describedby': 'lot-3-item-hint' %>
-
-              <%= label_tag :select_lot, t('.lot3_txt'), class: 'govuk-label govuk-radios__label govuk-!-font-weight-bold', for: 'lot_3' %>
-
-              <span id="lot-3-item-hint" class="govuk-hint govuk-radios__hint">
-                <%= t('.lot3_txt_sub') %>
-              </span>
-            </div>
-            <div class="govuk-radios__item">
-              <%= radio_button_tag :select_lot, 'lot4', checked?(params[:select_lot], 'lot2'), class: 'govuk-radios__input', id: 'lot_4', 'aria-describedby': 'lot-4-item-hint' %>
-
-              <%= label_tag :select_lot, t('.lot4_txt'), class: 'govuk-label govuk-radios__label govuk-!-font-weight-bold', for: 'lot_4' %>
-
-              <span id="lot-4-item-hint" class="govuk-hint govuk-radios__hint">
-                <%= t('.lot4_txt_sub') %>
-              </span>
-            </div>
+                <% if ['1', '2'].include? lot.number %>
+                  <details class="govuk-details govuk-!-margin-bottom-5 govuk-!-margin-left-4">
+                    <summary class="govuk-details__summary">
+                      <span class="govuk-details__summary-text">
+                        <%= lot_legal_services(lot) %>
+                      </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                      <ul class="govuk-list">
+                        <% LegalServices::Service.services_for_lot(lot.number).each do |service| %>
+                          <li><%= service.name %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </details>
+                <% end %>
+              </div>
+            <% end %>
           </div>
-
         <% end %>
       <% end %>
 

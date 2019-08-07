@@ -1,6 +1,10 @@
 module ManagementConsultancy
   module Admin
     class UploadsController < FrameworkController
+      skip_before_action :verify_authenticity_token, only: :create
+      before_action :authenticate_user!
+      before_action :authorize_user
+
       def index
         @back_path = :back
         @uploads = ManagementConsultancy::Admin::Upload.all.page params[:page]
@@ -50,6 +54,10 @@ module ManagementConsultancy
 
       def upload_params
         params.require(:management_consultancy_admin_upload).permit(:suppliers_data)
+      end
+
+      def authorize_user
+        authorize! :manage, ManagementConsultancy::Admin::Upload
       end
     end
   end

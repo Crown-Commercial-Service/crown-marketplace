@@ -1,0 +1,27 @@
+
+.fm-buyer-account-heading {
+  color: white;
+}
+
+.fm-buyer-account-panel {
+  height: 80px;
+  border: 1px gray solid;
+  padding: 10px;
+  background: #F8F8F8;
+}
+
+.fm-buyer-account-panel__title {
+  color: #007196;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.fm-buyer-account-panel__title__disabled {
+  color: gray;
+  cursor: none;
+  margin-bottom: 5px;
+}
+
+.fm-buyer-account-panel__body {
+  color: black;
+}

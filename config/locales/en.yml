@@ -1,7 +1,5 @@
 ---
 en:
-  'No': 'No'
-  'Yes': 'Yes'
   activemodel:
     errors:
       models:
@@ -106,60 +104,20 @@ en:
               confirmation: Passwords don't match
         legal_services/journey/check_suitability:
           attributes:
-            legal_services:
-              inclusion: Select a legal service
-        legal_services/journey/check_suitability2:
-          attributes:
-            fees:
+            under_threshold:
               inclusion: Select yes if the fees will be under £20,000
-        legal_services/journey/check_suitability3:
+        legal_services/journey/choose_jurisdiction:
           attributes:
-            lot:
-              too_short: Select at least one checkbox
+            legal_jurisdiction:
+              inclusion: Select the jurisdiction you need
         legal_services/journey/choose_organisation_type:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
-        legal_services/journey/choose_services_area:
+        legal_services/journey/choose_regions:
           attributes:
-            services_area:
-              inclusion: Select no if you don't need legal services for property and construction or rail
-        legal_services/journey/choose_services_area2:
-          attributes:
-            services_area2:
-              inclusion: If you don't know which Lot you need select don't know
-        legal_services/journey/legal_jurisdiction:
-          attributes:
-            legal_jurisdiction:
-              inclusion: Select the jurisdiction you need
-        legal_services/journey/lot1_regional_service:
-          attributes:
-            lot1_regional_service:
-              too_short: Select the legal service or services you need
-        legal_services/journey/lot1_regional_service2:
-          attributes:
-            lot1_regional_service2:
-              too_short: Select the legal service or services you need
-        legal_services/journey/lot1_regional_services:
-          attributes:
-            lot:
-              too_short: Select the services you need
-        legal_services/journey/lot2_full_service:
-          attributes:
-            lot2_full_service:
-              too_short: Select the legal service or services you need
-        legal_services/journey/regional_legal_service:
-          attributes:
-            regional_legal_service:
-              too_short: Select where you need the legal service or services
-        legal_services/journey/regional_legal_services:
-          attributes:
-            region:
-              too_short: Select at least one region
-        legal_services/journey/requirement:
-          attributes:
-            legal_services:
-              inclusion: Select yes if your requirement is restricted to a small geographical area?
+            region_codes:
+              too_short: Select the region or regions you require the services in
         legal_services/journey/select_lot:
           attributes:
             select_lot:
@@ -656,7 +614,7 @@ en:
     next: Next
     passcap: at least one capital letter
     passeight: at least 8 characters
-    passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     reset_password: Reset password
     search: Search
     send_reset_email: Send reset email
@@ -671,6 +629,7 @@ en:
     unit:
       one: company
       other: companies
+  england_wales: England and Wales
   errors:
     '404':
       explanation: You may have mistyped the address or the page may have moved.
@@ -873,89 +832,37 @@ en:
         heading: You need a different framework
     journey:
       check_suitability:
-        heading: Select the legal services you need
-        label_01: Transactional property, including noncomplex conveyancing and work relating to leases and licences
-        label_02: Litigation work, including employment
-        label_03: Other
-        or: or
-      check_suitability2:
         heading: Will the fees be under £20,000 per matter?
+      choose_jurisdiction:
+        heading: Lot 2 - Full-service firms
+        question: Select the jurisdiction you need
       choose_organisation_type:
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you're unsure.
         txt_link_text: central government departments, agencies and public bodies
-      choose_regional_or_fullservice:
-        question: Question
-      choose_services_area:
-        opt_01: Yes, Property And Construction (Lot 3)
-        opt_02: Yes, rail (Lot 4)
-        opt_no: 'No'
-        question: Do you need legal services for property and construction or rail?
-      choose_services_area2:
-        opt_01: Lot 1 - Regional service provision
-        opt_02: Lot 2 - Full-service firms
-        opt_03: I Dont Know
-        or_txt: Or
-        question: What lot do you need?
-      legal_jurisdiction:
-        eng_wales: England and Wales
-        heading: Lot 2 - Full-service firms
-        ni: Northern Ireland
-        question: Select the jurisdiction you need
-        scot_land: Scotland
-      lot1_regional_service:
-        heading: Lot 1 - Regional service provision
-        hint: Select the legal services you need
-        links_text_html: If the services you need aren't listed here, the <a href="https://www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
+      choose_regions:
+        full_national_coverage: Full national coverage
+        no_regions_selected: No regions selected
+        or: or
+        question: Select the regions where you need legal services
+        regions_selected: Regions selected
         remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot1_regional_service2:
-        heading: Lot 1 Regional service provision
-        hint: Select the legal services you need
-        links_text_html: Links text html
+        view_locations: View locations (PDF 266 KB)
+      choose_services:
+        ccs_support_link_text: Contact CCS Support
+        general_legal_advice_services_html: If the services you need aren't listed here, the %{general_legal_advice_services_link} agreement provides legal services for central government and arms-length bodies. %{ccs_support_link} for help.
+        general_legal_advice_services_link: https://www.crowncommercial.gov.uk/agreements/RM3786
+        general_legal_advice_services_link_text: General Legal Advice Services (RM3786)
+        no_services_selected: No services selected
+        question: Select the legal services you need
         remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot2_full_service:
-        heading: Lot 2 - Full-service firms
-        hint: Select the legal services you need
-        remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot3_results:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 3 - Property and construction
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
-      lot4_results:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 4 - Transport rail
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
-      regional_legal_service:
-        heading: Lot 1 - Regional service provision
-        hint: Select the regions where you need legal services
-        remove_all: Remove all
-        txt01: regions selected
-        txt02: No regions selected
-      requirement:
-        hint: For example, Greater London or East Midlands
-        question: Is your requirement restricted to a small geographical area?
+        services_selected: services selected
       select_lot:
         heading: Select the lot you need
-        lot1_txt: Lot 1 - Regional service provision
-        lot1_txt_details: Lot 1 legal services
-        lot1_txt_sub: Select lot 1 if your requirements have a regional focus or your budget is below £200,000. These suppliers provide services across 14 legal specialisms within at least one of the 13 UK NUTS regions.
-        lot2_txt: Lot 2 - Full-service firms
-        lot2_txt_details: Lot 2 legal services
-        lot2_txt_sub: Select lot 2 if your requirements needs a full-service supplier or your budget is over £200,000. Full-service firms can provide services in 35 specialisms. Suppliers have said which jurisdictional area of the UK they serve.
-        lot3_txt: Lot 3 - Property and construction
-        lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
-        lot4_txt: Lot 4 - Transport rail
-        lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
+        lot1_extended_description: Select lot 1 if your requirements have a regional focus or your budget is below £200,000. These suppliers provide services across 14 legal specialisms within at least one of the 13 UK NUTS regions.
+        lot2_extended_description: Select lot 2 if your requirements needs a full-service supplier or your budget is over £200,000. Full-service firms can provide services in 35 specialisms. Suppliers have said which jurisdictional area of the UK they serve.
+        lot3_extended_description: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
+        lot4_extended_description: Suppliers in lot 4 provide legal services for transport rail across the UK.
       sorry:
         heading: Sorry, this panel isn't suitable for you
         lead: This panel supports a range of legal services primarily for the wider public sector
@@ -1391,6 +1298,7 @@ en:
       one: mile
       other: miles
   'no': 'No'
+  northern_ireland: Northern Ireland
   number:
     currency:
       format:
@@ -1439,10 +1347,14 @@ en:
     unit:
       one: result
       other: results
+  scotland: Scotland
   shared:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
+      apprenticeships:
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       auth:
         details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
         title: Sorry, you are not authorised to view this page
