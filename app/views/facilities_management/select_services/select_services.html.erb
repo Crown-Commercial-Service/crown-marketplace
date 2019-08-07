@@ -46,26 +46,21 @@
               </div>
             <% end %>
           <% end %>
-          <div class="govuk-!-margin-bottom-4">
-            <label class="govuk-label">
-              or
-            </label>
-            <br />
-            <div id="services-checkboxes" class="govuk-checkboxes">
-              <div class="govuk-checkboxes__item">
-                <input title="Select all code-<%= service['code'] %> services"
-                       style="margin-top:4px"
-                       class="govuk-checkboxes__input"
-                       id="<%= service['code'].sub('.', '-')%>_all"
-                       name="fm-building-service-checkbox_select_all"
-                       forserviceid="<%= service['code'] %>"
-                       type="checkbox"
-                       value="<%= service['code'] %>">
-                <label class="govuk-label govuk-checkboxes__label"
-                       for="<%= service['code'].sub('.', '-') %>_all">
-                  Select all
-                </label>
-              </div>
+          <p><%= t('facilities_management.basket.or_text') %></p>
+          <div id="services-checkboxes" class="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input title="Select all code-<%= service['code'] %> services"
+                     style="margin-top:4px"
+                     class="govuk-checkboxes__input"
+                     id="<%= service['code'].sub('.', '-')%>_all"
+                     name="fm-building-service-checkbox_select_all"
+                     forserviceid="<%= service['code'] %>"
+                     type="checkbox"
+                     value="<%= service['code'] %>">
+              <label class="govuk-label govuk-checkboxes__label"
+                     for="<%= service['code'].sub('.', '-') %>_all">
+                <%= t('facilities_management.basket.selectall_text') %>
+              </label>
             </div>
           </div>
         </div>
@@ -83,7 +78,7 @@
         <a id="remove-all-services-link" class="remove-all js-filter" href=""><%= t('facilities_management.basket.removeall_text') %></a>
         <h2 class="govuk-heading-s font-weight-700">
           <span id="selected-service-count" class="font-size--18"><%= t('facilities_management.basket.none') %></span>
-          <%= t('facilities_management.select_services.basket_header') %>
+          <%= t('facilities_management.basket.basket_header') %>
         </h2>
       </div>
     </header>

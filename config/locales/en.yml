@@ -717,6 +717,9 @@ en:
     basket:
       none: none
       removeall_text: Remove all
+      selectall_text: Select all
+      or_text: or
+      basket_header: selected
     home:
       heading: Find Facilities Management services
       subheading: >
@@ -738,7 +741,9 @@ en:
       servicespec_link_text: Read the service specification document
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
       openall_link_text: Open all
-      basket_header: selected
+    select_locations:
+      heading: Where are your buildings located?
+      subheading: Choose one or more regions, based on building's location where you require facilities management services.
   faker:
     company:
       name:

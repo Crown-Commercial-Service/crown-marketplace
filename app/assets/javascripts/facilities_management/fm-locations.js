@@ -27,9 +27,9 @@ $(() => {
     /* Update the count of selected locations */
     const updateLocationCount = (() => {
         let count = $("#selected-fm-locations li").length;
-        let msg = count > 0 ? (count === 1 ? "1 region selected" : count + " regions selected") : "None selected";
+        let msg = count > 0 ? (count === 1 ? "1 region" : count + " regions") : "None";
 
-        if (count === 0) {
+        if (count < 2) {
             $('#remove-all-locations-link').prop('hidden', true);
         } else {
             $('#remove-all-locations-link').prop('hidden', false);
