@@ -54,6 +54,8 @@
       <p class="govuk-body govuk-!-margin-top-8"><%= t('.confirm_changes') %></p>
       <%= link_to t('.approve'), supply_teachers_admin_upload_approve_path(@upload), class: 'govuk-button' %>
       <%= link_to t('.reject'), supply_teachers_admin_upload_reject_path(@upload), class: 'govuk-button govuk-button--warning' %>
+    <% end %>
+    <% if @upload.in_progress? %>
       <%= link_to t('.delete'), supply_teachers_admin_upload_destroy_path(@upload), method: :delete, class: 'govuk-button govuk-button--warning' %>
     <% end %>
   </div>
