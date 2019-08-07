@@ -27,9 +27,16 @@ $(() => {
     /* Update the count of selected locations */
     const updateLocationCount = (() => {
         let count = $("#selected-fm-locations li").length;
-        count = ((count > 0) ? "" + count : "none");
+        let msg = count > 0 ? (count === 1 ? "1 region selected" : count + " regions selected") : "None selected";
 
-        $('#selected-location-count').text(count);
+        if (count === 0) {
+            $('#remove-all-locations-link').prop('hidden', true);
+        } else {
+            $('#remove-all-locations-link').prop('hidden', false);
+        }
+
+        $('#selected-location-count').text(msg);
+
     });
 
     /* remove a location from the selected list */
@@ -72,31 +79,53 @@ $(() => {
     /* click handler for check boxes */
     $('#region-accordion .govuk-checkboxes__input').on('click', (e) => {
 
-        let labelID = '#' + e.target.id + '_label';
-        let val = $(labelID)[0].innerText;
-        let selectedID = e.target.id + '_selected';
-        let removeLinkID = e.target.id + '_removeLink'
+        let n = e.target.name;
+        let id = e.target.id;
 
-        if (e.target.checked === true) {
+        if (id.endsWith('_all')) {
+            let sid = n.split('_');
+            let ns = sid[0];
+            if (e.target.checked === true) {
+                $('input[name="' + ns + '"]').trigger("click");
+                $('input[name="' + ns + '"]').prop("checked", true);
+                return;
+            } else {
+                $('input[name="' + ns + '"]').trigger("click");
+                $('input[name="' + ns + '"]').prop("checked", false);
+            }
+        }
+
+        let labelID = '#' + e.target.id + '_label';
+
+        let selectedID = e.target.id + '_selected';
+        let removeLinkID = e.target.id + '_removeLink';
+
+        if (!id.endsWith('_all') && e.target.checked === true) {
+
+            let val = $(labelID)[0].innerText;
 
             let obj = selectedLocations.filter(function (obj) {
                 return obj.code === e.target.id;
             });
 
             if (obj.length === 0) {
-                let location = {code: e.target.id, name: val}
-                selectedLocations.push(location);
+                let selectedLocation = {code: e.target.id, name: val};
+                selectedLocations.push(selectedLocation);
             }
 
             let newLI = '<li style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
                 '<span class="govuk-!-padding-0 CCS-fm-regions-selected-label">' + val + '</span><span class="remove-link">' +
-                '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
-            $("#selected-fm-locations").append(newLI);
+                '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>';
 
-            $('#' + removeLinkID).on('click', (e) => {
-                e.preventDefault();
-                removeSelectedItem(selectedID);
-            });
+
+            if ($('#' + selectedID).length === 0) {
+                $("#selected-fm-locations").append(newLI);
+
+                $('#' + removeLinkID).on('click', (e) => {
+                    e.preventDefault();
+                    removeSelectedItem(selectedID);
+                });
+            }
 
         } else {
             removeSelectedItem(selectedID);
