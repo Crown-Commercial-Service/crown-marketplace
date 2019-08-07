@@ -138,6 +138,10 @@ module ApplicationHelper
     request.path_info.include? 'my-buyer-account'
   end
 
+  def not_permitted_page
+    controller.action_name == 'not_permitted'
+  end
+
   def a_supply_teachers_path?
     controller.class.parent.name == 'SupplyTeachers'
   end
