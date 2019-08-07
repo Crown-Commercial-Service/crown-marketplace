@@ -85,6 +85,7 @@ $(() => {
         if (id.endsWith('_all')) {
             let sid = n.split('_');
             let ns = sid[0];
+
             if (e.target.checked === true) {
                 $('input[name="' + ns + '"]').trigger("click");
                 $('input[name="' + ns + '"]').prop("checked", true);
@@ -93,17 +94,11 @@ $(() => {
                 $('input[name="' + ns + '"]').trigger("click");
                 $('input[name="' + ns + '"]').prop("checked", false);
             }
-        } else {
-            let total_count = $('input[name="' + n + '"]').length;
-            let count = $('input[name="' + n + '"]').filter(':checked').length;
-
-            if (count === total_count) {
-                $('#' + n + '_all').prop("checked", true);
-            } else {
-                $('#' + n + '_all').prop("checked", false);
-            }
         }
 
+        let total_count = $('input[name="' + n + '"]').length;
+        let count = $('input[name="' + n + '"]').filter(':checked').length;
+        $('#' + n + '_all').prop("checked", (count === total_count) ? true : false);
 
         let labelID = '#' + e.target.id + '_label';
 
