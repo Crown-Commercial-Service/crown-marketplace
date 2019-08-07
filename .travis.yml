@@ -24,6 +24,7 @@ before_install:
   - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
   - sudo service postgresql stop
   - sudo service postgresql start 11
+  - sleep 15
 before_script:
 #  - sudo apt-get install postgresql-11-postgis-2.4 postgis -y -q
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
