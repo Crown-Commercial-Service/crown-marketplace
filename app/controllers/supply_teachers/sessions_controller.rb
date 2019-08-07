@@ -21,5 +21,9 @@ module SupplyTeachers
     def confirm_forgot_password_path(username)
       supply_teachers_edit_user_password_path(username: username)
     end
+
+    def confirm_email_path(email)
+      supply_teachers_users_confirm_path(email: email)
+    end
   end
 end
