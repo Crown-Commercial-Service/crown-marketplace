@@ -25,7 +25,7 @@
                 </li>
               <% end %>
 
-              <% if user_signed_in? && !(not_permitted_page) %>
+              <% if user_signed_in? && !not_permitted_page %>
                   <li class="govuk-header__navigation-item">
                     <%= link_to 'Sign out', service_destroy_user_session_path, method: :delete, class: 'govuk-header__link ccs-header__signout' %>
                   </li>
