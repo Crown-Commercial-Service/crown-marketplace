@@ -19,13 +19,13 @@
 
           <nav>
             <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-              <% unless landing_or_admin_page || fm_buyer_landing_page %>
+              <% unless landing_or_admin_page || fm_buyer_landing_page || not_permitted_page %>
                 <li class="govuk-header__navigation-item">
                   <%= link_to 'Back to start', service_start_page_path, class: 'govuk-header__link' %>
                 </li>
               <% end %>
 
-              <% if user_signed_in? %>
+              <% if user_signed_in? && !not_permitted_page %>
                   <li class="govuk-header__navigation-item">
                     <%= link_to 'Sign out', service_destroy_user_session_path, method: :delete, class: 'govuk-header__link ccs-header__signout' %>
                   </li>
