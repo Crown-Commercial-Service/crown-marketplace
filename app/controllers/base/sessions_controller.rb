@@ -19,6 +19,8 @@ module Base
         @result.challenge? ? redirect_to(challenge_path) : super
       elsif @result.needs_password_reset
         redirect_to confirm_forgot_password_path(params[:user][:email])
+      elsif @result.needs_confirmation
+        redirect_to confirm_email_path(params[:user][:email])
       else
         flash[:error] = @result.error
         redirect_to new_session_path
