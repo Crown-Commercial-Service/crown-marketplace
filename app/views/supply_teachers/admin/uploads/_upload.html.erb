@@ -1,6 +1,5 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell"><%= link_to upload.datetime, upload %></td>
-  <td class="govuk-table__cell"><%= upload.created_at.in_time_zone.strftime('%d %b %Y at %l:%M%P') %></td>
   <td class="govuk-table__cell"><%= upload.files_count %></td>
   <td class="govuk-table__cell"><strong class="govuk-tag ccs-tag-<%= upload.aasm_state %>"><%= t("supply_teachers.admin.uploads.index.#{upload.aasm_state}") %></strong></td>
 </tr>
