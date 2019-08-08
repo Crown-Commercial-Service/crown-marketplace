@@ -1,4 +1,4 @@
-$(() => {
+$(function () {
 
     let liftData = {};
     let liftFloorData = [];
@@ -6,7 +6,7 @@ $(() => {
 
     let numberOfLifts = 0;
 
-    const getFloorCount = (() => {
+    const getFloorCount = (function () {
         let result = 0;
         for (let x = 1; x <= numberOfLifts; x++) {
             let elem = $('#fm-uom-input-lift-' + x);
@@ -16,13 +16,13 @@ $(() => {
         return result;
     });
 
-    $('#fm-uom-number-of-lifts').on('keypress', (event) => {
+    $('#fm-uom-number-of-lifts').on('keypress', function (event) {
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
     });
 
-    $('#fm-uom-number-of-lifts').on('keyup', (e) => {
+    $('#fm-uom-number-of-lifts').on('keyup', function (e) {
         $('#fm-uom-number-of-lifts-error').addClass('govuk-visually-hidden');
         $('#fm-uom-number-of-lifts-error-form-group').removeClass('govuk-form-group--error');
 
@@ -50,13 +50,13 @@ $(() => {
 
                 $('#fm-lift-floors-input-container').append(lift);
 
-                $('#fm-uom-input-lift-' + x).on('keypress', (event) => {
+                $('#fm-uom-input-lift-' + x).on('keypress', function (event) {
                     if ((event.which < 48 || event.which > 57)) {
                         event.preventDefault();
                     }
                 });
 
-                $('#fm-uom-input-lift-' + x).on('change', (e) => {
+                $('#fm-uom-input-lift-' + x).on('change', function (e) {
 
                     let value = e.target.value;
                     value = value ? parseInt(e.target.value) : 0;
