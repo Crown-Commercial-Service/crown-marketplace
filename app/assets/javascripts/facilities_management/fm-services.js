@@ -211,7 +211,7 @@ $(() => {
     $('#save-services-link').on('click', (e) => {
 
         pageUtils.toggleInlineErrorMessage(false);
-        const servicesForm = $('#fm-services-form');
+        const servicesForm = $('#save-services-link-form');
 
         if (isValid() === true) {
             pageUtils.setCachedData('fm-services', selectedServices);
@@ -221,15 +221,9 @@ $(() => {
             if (ref.indexOf('buildings/select-services') > -1) {
                 e.preventDefault();
                 // location.href = document.referrer;
-                $('#fm-services-form').attr('action', document.referrer).submit()
+                $('#save-services-link-form').attr('action', document.referrer).submit()
             } else {
-                let locationCodes = pageUtils.getCodes(selectedLocations);
-                let serviceCodes = pageUtils.getCodes(selectedServices);
-                let postedLocations = $('#postedlocations');
-                let postedServices = $('#postedservices');
-                postedLocations.val(JSON.stringify(locationCodes));
-                postedServices.val(JSON.stringify(serviceCodes));
-                servicesForm.trigger('submit');
+                $('#save-services-link-form').attr('action', "/facilities-management/select-locations").submit()
             }
         } else {
             e.preventDefault();

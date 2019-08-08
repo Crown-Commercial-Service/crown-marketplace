@@ -621,11 +621,11 @@ en:
     sign_in: Sign in
     start_now: Start now
     submit: Continue
+    therewasaproblem: There was a problem
     type_csv: text/csv
     type_doc: application/msword
     type_xlsx: application/msexcel
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
-    therewasaproblem: There was a problem
     youmustselect: You must select at least one service before clicking the continue button
   companies:
     unit:
@@ -648,11 +648,33 @@ en:
       explanation: You will be able to use the service later.
       title: Service unavailable
   facilities_management:
+    basket:
+      basket_header: selected
+      none: none
+      or_text: or
+      removeall_text: Remove all
+      selectall_text: Select all
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
+    home:
+      beforeyoustart: Before you start
+      heading: Find Facilities Management services
+      startlist: |
+        <li>what services you are looking for</li>
+        <li>building locations and information</li>
+        <li>details of how long you want the services for</li>
+      startnow: Start now
+      subheading: 'Use this tool to:
+
+'
+      usagelist: |
+        <li>find a supplier for your facilities management requirements</li>
+        <li>see a shortlist of suppliers available in your region</li>
+        <li>download a spreadsheet with your requirements and list of potential suppliers</li>
+      youneedtoknow: 'You need to know:'
     passwords:
       edit:
         confirm_code: Confirm Code
@@ -689,6 +711,14 @@ en:
         email_hint: We will send a confirmation code to this address.
         heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
         lead: You must be employed by, or represent, a public sector organisation.
+    select_locations:
+      heading: Where are your buildings located?
+      subheading: Choose one or more regions, based on building's location where you require facilities management services.
+    select_services:
+      heading: Select the facilities management services do you need
+      servicespec_link_alttext: RM3830 Facilities Management Marketplace
+      servicespec_link_text: Read the service specification document
+      subheading: Choose all facilities management services required within your estate, even if you want services in just one building.
     sessions:
       new:
         email_address: Email address
@@ -714,36 +744,6 @@ en:
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
         resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
-    basket:
-      none: none
-      removeall_text: Remove all
-      selectall_text: Select all
-      or_text: or
-      basket_header: selected
-    home:
-      heading: Find Facilities Management services
-      subheading: >
-        Use this tool to:
-      usagelist: |
-        <li>find a supplier for your facilities management requirements</li>
-        <li>see a shortlist of suppliers available in your region</li>
-        <li>download a spreadsheet with your requirements and list of potential suppliers</li>
-      beforeyoustart: Before you start
-      youneedtoknow: "You need to know:"
-      startlist: |
-        <li>what services you are looking for</li>
-        <li>building locations and information</li>
-        <li>details of how long you want the services for</li>
-      startnow: Start now
-    select_services:
-      heading: Select the facilities management services do you need
-      subheading: Choose all facilities management services required within your estate, even if you want services in just one building.
-      servicespec_link_text: Read the service specification document
-      servicespec_link_alttext: RM3830 Facilities Management Marketplace
-      openall_link_text: Open all
-    select_locations:
-      heading: Where are your buildings located?
-      subheading: Choose one or more regions, based on building's location where you require facilities management services.
   faker:
     company:
       name:
