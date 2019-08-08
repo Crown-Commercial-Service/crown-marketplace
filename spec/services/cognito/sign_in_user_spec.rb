@@ -55,5 +55,49 @@ RSpec.describe Cognito::SignInUser do
         expect(response.error).to eq 'Oops'
       end
     end
+
+    context 'when user not confirmed' do
+      before do
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+        allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::UserNotConfirmedException.new('oops', 'Oops'))
+      end
+
+      it 'does not return success' do
+        response = described_class.call(email, password)
+        expect(response.success?).to eq false
+      end
+
+      it 'does returns cognito error' do
+        response = described_class.call(email, password)
+        expect(response.error).to eq 'Oops'
+      end
+
+      it 'returns needs_confirmation true' do
+        response = described_class.call(email, password)
+        expect(response.needs_confirmation).to eq true
+      end
+    end
+
+    context 'when password reset required' do
+      before do
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+        allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::PasswordResetRequiredException.new('oops', 'Oops'))
+      end
+
+      it 'does not return success' do
+        response = described_class.call(email, password)
+        expect(response.success?).to eq false
+      end
+
+      it 'does returns cognito error' do
+        response = described_class.call(email, password)
+        expect(response.error).to eq 'Oops'
+      end
+
+      it 'returns need_password_reset true' do
+        response = described_class.call(email, password)
+        expect(response.needs_password_reset).to eq true
+      end
+    end
   end
 end
