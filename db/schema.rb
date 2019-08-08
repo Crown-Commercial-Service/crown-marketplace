@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_24_080439) do
+ActiveRecord::Schema.define(version: 2019_08_07_111201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -136,6 +136,39 @@ ActiveRecord::Schema.define(version: 2019_07_24_080439) do
     t.string "uom_value"
     t.string "building_id"
     t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
+  end
+
+  create_table "legal_services_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "legal_services_supplier_id", null: false
+    t.text "region_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["legal_services_supplier_id"], name: "index_ls_regional_availabilities_on_ls_supplier_id"
+  end
+
+  create_table "legal_services_service_offerings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "legal_services_supplier_id", null: false
+    t.text "lot_number", null: false
+    t.text "service_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["legal_services_supplier_id"], name: "index_ls_service_offerings_on_ls_supplier_id"
+  end
+
+  create_table "legal_services_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "name", null: false
+    t.text "email"
+    t.text "phone_number"
+    t.text "website"
+    t.text "address"
+    t.boolean "sme"
+    t.integer "duns"
+    t.text "lot_1_prospectus_link"
+    t.text "lot_2_prospectus_link"
+    t.text "lot_3_prospectus_link"
+    t.text "lot_4_prospectus_link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "london_postcodes", id: false, force: :cascade do |t|
@@ -385,6 +418,8 @@ ActiveRecord::Schema.define(version: 2019_07_24_080439) do
 
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
+  add_foreign_key "legal_services_regional_availabilities", "legal_services_suppliers"
+  add_foreign_key "legal_services_service_offerings", "legal_services_suppliers"
   add_foreign_key "management_consultancy_rate_cards", "management_consultancy_suppliers"
   add_foreign_key "management_consultancy_regional_availabilities", "management_consultancy_suppliers"
   add_foreign_key "management_consultancy_service_offerings", "management_consultancy_suppliers"
