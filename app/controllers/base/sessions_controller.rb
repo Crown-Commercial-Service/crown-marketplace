@@ -15,13 +15,11 @@ module Base
       self.resource ||= User.new
       @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password])
       @result.call
+
       if @result.success?
         @result.challenge? ? redirect_to(challenge_path) : super
-      elsif @result.needs_password_reset
-        redirect_to confirm_forgot_password_path(params[:user][:email])
       else
-        flash[:error] = @result.error
-        redirect_to new_session_path
+        result_unsuccessful_path
       end
     end
 
@@ -41,6 +39,17 @@ module Base
 
     def authorize_user
       authorize! :read, SupplyTeachers
+    end
+
+    def result_unsuccessful_path
+      if @result.needs_password_reset
+        redirect_to confirm_forgot_password_path(params[:user][:email])
+      elsif @result.needs_confirmation
+        redirect_to confirm_email_path(params[:user][:email])
+      else
+        flash[:error] = @result.error
+        redirect_to new_session_path
+      end
     end
   end
 end
