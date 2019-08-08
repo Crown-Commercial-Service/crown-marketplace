@@ -127,7 +127,10 @@ $(function () {
                         $('#fm-postcode-lookup-results').find('option').remove();
                         $('#fm-postcode-lookup-results').append('<option value="status-option" selected>' + data.result.length + ' addresses found</option>');
                         let addresses = data.result;
-                        addresses.forEach(function (address, index) {
+
+                        for (let x = 0; x < addresses.length; x++) {
+                            let address = addresses[x];
+
                             let add1 = address['add1'] ? address['add1'] + ', ' : '';
                             let add2 = address['village'] ? address['village'] + ', ' : '';
                             let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
@@ -138,7 +141,7 @@ $(function () {
                             $('#fm-postcode-lookup-results').append(newOption);
                             $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
                             $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
-                        })
+                        }
                     }
                 })
                 .fail(function (data) {
