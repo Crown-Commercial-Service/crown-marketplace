@@ -15,9 +15,10 @@ $(function () {
 
         /!* Load and display cached values *!/
         if (selectedServices) {
-            selectedServices.forEach(function (value, index, array) {
+            for (let x = 0; x < selectedServices.length; x++) {
+                let value = selectedServices[x];
                 $('input#' + value.code).trigger('click');
-            });
+            }
         }
 
         /!* set the initial count *!/
@@ -28,11 +29,10 @@ $(function () {
 
     const renderSelectedServices = (function () {
 
-        selectedServices.forEach(function (service, index) {
-
+        for (let x = 0; x < selectedServices.length; x++) {
+            let service = selectedServices[x];
             let id = service.code;
-//
-            //if (!$('#' + id)) {
+
             let newCheckBoxItem = '<div class="govuk-checkboxes__item">\n' +
                 '                <input class="govuk-checkboxes__input" checked id="' + id + '" name="fm-building-service-checkbox" type="checkbox" value="' + id + '">\n' +
                 '                <label class="govuk-label govuk-checkboxes__label" for="' + service.code + '">\n' + service.name + '</label></div>'
@@ -56,8 +56,7 @@ $(function () {
                     updateServiceCount();
                 }
             });
-            //}
-        });
+        }
         updateServiceCount();
     });
 
