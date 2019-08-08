@@ -2,7 +2,7 @@ module Cognito
   class SignInUser < BaseService
     include ActiveModel::Validations
     attr_reader :email, :password
-    attr_accessor :error, :needs_password_reset
+    attr_accessor :error, :needs_password_reset, :needs_confirmation
 
     validates_presence_of :email, :password
 
@@ -19,6 +19,10 @@ module Cognito
       @error = e.message
       errors.add(:base, e.message)
       @needs_password_reset = true
+    rescue Aws::CognitoIdentityProvider::Errors::UserNotConfirmedException => e
+      @error = e.message
+      errors.add(:base, e.message)
+      @needs_confirmation = true
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       @error = e.message
       errors.add(:base, e.message)
