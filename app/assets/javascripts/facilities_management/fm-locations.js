@@ -15,9 +15,10 @@ $(function () {
 
             /* Load and display cached values */
             if (selectedLocations) {
-                selectedLocations.forEach(function (value, index, array) {
+                for (let x = 0; x < selectedLocations.length; x++) {
+                    let value = selectedLocations[x];
                     $('input#' + value.code).trigger("click");
-                });
+                }
             }
 
             /* set the initial count */
