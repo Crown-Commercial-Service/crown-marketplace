@@ -1,6 +1,6 @@
-$(() => {
+$(function () {
 
-    const validateDate = (() => {
+    const validateDate = (function () {
         const day = $('#day').val();
         const month = $('#month').val();
         const year = $('#year').val();
@@ -26,19 +26,19 @@ $(() => {
     });
 
 
-    $('#day').on('keyup', ((e) => {
+    $('#day').on('keyup', (function (e) {
         validateDate();
     }));
 
-    $('#month').on('keyup', ((e) => {
+    $('#month').on('keyup', (function (e) {
         validateDate();
     }));
 
-    $('#year').on('keyup', ((e) => {
+    $('#year').on('keyup', (function (e) {
         validateDate();
     }));
 
-    $('#fm-save-contract-start-date-link').on('click', ((e) => {
+    $('#fm-save-contract-start-date-link').on('click', (function (e) {
         e.preventDefault();
         if (validateDate() === true) {
             const day = $('#day').val();
