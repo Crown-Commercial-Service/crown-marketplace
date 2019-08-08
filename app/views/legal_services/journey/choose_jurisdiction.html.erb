@@ -1,0 +1,45 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+
+    <%= form_tag @form_path, method: :get do %>
+
+      <h1 class="govuk-caption-m govuk-!-margin-bottom-1">
+        <%= t('.heading') %>
+      </h1>
+
+      <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
+
+          <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-1">
+            <%= t('.question') %>
+          </legend>
+
+          <%= display_error(@journey, :lot) %>
+
+          <div class="govuk-radios">
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :jurisdiction, 'a', checked?(params[:jurisdiction], 'a'), class: 'govuk-radios__input'%>
+              <%= label_tag :jurisdiction, t('england_wales'), class: 'govuk-label govuk-radios__label' %>
+            </div>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :jurisdiction, 'b', checked?(params[:jurisdiction], 'b'), class: 'govuk-radios__input' %>
+              <%= label_tag :jurisdiction, t('scotland'), class: 'govuk-label govuk-radios__label'%>
+            </div>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :jurisdiction, 'c', checked?(params[:jurisdiction], 'c'), class: 'govuk-radios__input' %>
+              <%= label_tag :jurisdiction, t('northern_ireland'), class: 'govuk-label govuk-radios__label' %>
+            </div>
+          </div>
+
+        <% end %>
+      <% end %>
+      <%= submit_tag t('common.submit'), id: "submit", class: "govuk-button govuk-!-margin-top-1 govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+    <% end %>
+  </div>
+</div>

@@ -110,6 +110,10 @@ ignore_unused:
   - companies.*
   - management_consultancy.journey.choose_help_needed.*
   - management_consultancy.job_titles.*
+  - legal_services.journey.select_lot.lot1_extended_description
+  - legal_services.journey.select_lot.lot2_extended_description
+  - legal_services.journey.select_lot.lot3_extended_description
+  - legal_services.journey.select_lot.lot4_extended_description
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
 # - 'simple_form.{yes,no}'

@@ -12,7 +12,7 @@ RSpec.describe LegalServices::Lot, type: :model do
 
   it 'populates attributes of first lot' do
     expect(first_lot.number).to eq('1')
-    expect(first_lot.description).to eq('Regional Service Provision')
+    expect(first_lot.description).to eq('Regional service provision')
   end
 
   it 'only has unique numbers' do
