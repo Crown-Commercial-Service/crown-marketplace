@@ -151,9 +151,12 @@ const pageUtils = {
 
     getCodes: function (arr) {
         let result = [];
-        arr.forEach(function (value, index, array) {
+
+        for (let x = 0; x < arr.length; x++) {
+            let value = arr[x];
             result.push(value.code.replace('-', '.'));
-        });
+        }
+
         return result;
     },
 
