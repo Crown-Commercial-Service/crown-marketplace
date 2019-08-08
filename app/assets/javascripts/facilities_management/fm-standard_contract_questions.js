@@ -22,7 +22,8 @@ $(function () {
             $('#fm-extension-1-container').remove();
         }
 
-        extensions.forEach(function (extension, index) {
+        for (let index = 0; extensions.length; x++) {
+            let extension = extensions[x];
             let newDiv = '<div name="fm-extension-container" id="' + extension.id + '-container"' + '>' +
                 '<div id="' + extension.id + '-error" hidden><span class="govuk-error-message" >This field can not be empty and contracts, including extensions, must be 10 years or less</span></div>' +
                 '<input id="' + extension.id + '" name="fm-extension" type="number" min="0" placeholder="Extension ' + (index + 1) + '"  value="' + extension.value + '"/>&nbsp;';
@@ -51,7 +52,7 @@ $(function () {
                 e.preventDefault();
                 removeExtension(extension.id + '-container');
             });
-        });
+        }
 
         let isContractValueKnown = pageUtils.getCachedData('fm-contract-cost-is-known');
         if (isContractValueKnown && isContractValueKnown === true) {
