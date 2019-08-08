@@ -174,14 +174,19 @@ $(() => {
 
     /* Click handler for save and continue button */
     $('#save-locations-link').on('click', (e) => {
-
+        pageUtils.setCachedData('fm-locations', selectedLocations);
+        e.preventDefault();
         pageUtils.toggleInlineErrorMessage(false);
 
         if (isLocationValid() === true) {
-            // $('#save-locations-link-form').attr('action', "/facilities-management/buildings/select-services").submit()
-            pageUtils.setCachedData('fm-locations', selectedLocations);
+            const locationsForm = $('#save-locations-link-form');
+            let locationCodes = pageUtils.getCachedData('fm-locations').map(x => x.code) ;
+            let serviceCodes = pageUtils.getCachedData('fm-services').map(x => x.code) ;
+
+            $('#postedlocations').val(JSON.stringify(locationCodes));
+            $('#postedservices').val(JSON.stringify(serviceCodes));
+            locationsForm.trigger('submit');
         } else {
-            e.preventDefault();
             pageUtils.toggleInlineErrorMessage(true);
             window.location = '#';
         }

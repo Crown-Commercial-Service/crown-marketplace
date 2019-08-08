@@ -54,8 +54,10 @@
     <% end %>
   </div>
   <p>
-    <%= form_tag '/facilities-management/buildings/select-services', id: 'save-locations-link-form', method: :post do %>
-      <%= link_to 'Continue', '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-locations-link', name: 'save-locations-link' %>
+    <%= form_tag '/facilities-management/suppliers/long-list', id: 'save-locations-link-form', method: :post do %>
+      <%= hidden_field_tag  'postedlocations' %>
+      <%= hidden_field_tag 'postedservices' %>
+      <%= link_to 'Continue', '/facilities-management/suppliers/long-list', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-locations-link', name: 'save-locations-link' %>
     <% end %>
   </p>
 </div>

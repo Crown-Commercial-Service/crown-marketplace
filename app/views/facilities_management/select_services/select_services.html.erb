@@ -9,7 +9,7 @@
 </div>
 <div class="govuk-grid-column-two-thirds" style="padding-left:0">
     <p class="govuk-caption-m"><%= t('facilities_management.select_services.subheading') %></p>
-    <p><a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="facilities_management.select_services.servicespec_link_alttext"><%= t('facilities_management.select_services.servicespec_link_text') %></a></p>
+    <p><a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="<%= t('facilities_management.select_services.servicespec_link_alttext')%>"><%= t('facilities_management.select_services.servicespec_link_text') %></a></p>
   <div class="govuk-accordion" data-module="accordion" id="services-accordion">
     <% @services.each do |service| %>
       <div class="govuk-accordion__section ">
@@ -67,7 +67,7 @@
       </div>
     <% end %>
   </div>
-  <%= form_tag '/facilities-management/buildings/select-locations', id: 'save-locations-link-form', method: :post do %>
+  <%= form_tag '/facilities-management/buildings/select-locations', id: 'save-services-link-form', method: :post do %>
     <%= link_to t('common.continue'), '/facilities-management/select-locations', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-services-link', name: 'save-services-link' %>
   <% end %>
 </div>
