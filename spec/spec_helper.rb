@@ -17,7 +17,10 @@ require 'simplecov'
 require 'capybara'
 
 SimpleCov.start do
-  add_filter '/spec/'
+  add_filter '/bin/'
+  add_filter '/db/'
+  add_filter '/spec/' # for rspec
+  add_filter '/test/' # for minitest
 end
 
 Capybara.register_driver :poltergeist_no_errors do |app|
