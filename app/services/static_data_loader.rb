@@ -1,10 +1,10 @@
 class StaticDataLoader
   @queries = {
-    Region: 'SELECT code, name FROM fm_regions order by name ASC;',
+    Region: 'SELECT code, name FROM fm_regions;',
     Rates: 'SELECT code, framework, benchmark FROM fm_rates',
-    Nuts1Region: 'SELECT code, name FROM nuts_regions where  nuts1_code is null and nuts2_code is null order by name ASC;',
-    Nuts2Region: 'SELECT code, nuts1_code, name FROM nuts_regions where not nuts1_code is null order by name ASC;',
-    Nuts3Region: 'SELECT code, name, nuts2_code FROM nuts_regions where not nuts2_code is null order by name ASC;',
+    Nuts1Region: 'SELECT code, name FROM nuts_regions where  nuts1_code is null and nuts2_code is null',
+    Nuts2Region: 'SELECT code, nuts1_code, name FROM nuts_regions where not nuts1_code is null',
+    Nuts3Region: 'SELECT code, name, nuts2_code FROM nuts_regions where not nuts2_code is null',
   }
 
   def self.load_static_data(static_data_class)
