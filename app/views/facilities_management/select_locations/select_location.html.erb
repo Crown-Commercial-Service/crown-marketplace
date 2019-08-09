@@ -1,20 +1,18 @@
-<a href="/facilities-management" class="govuk-back-link">Back</a>
+<a href="/facilities-management/select-services" class="govuk-back-link">Back</a>
 
 <%= render('errors/inline_error_summary') %>
 
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
     <h2 class="govuk-heading-m">
-      Where are your buildings located?
+      <%= t('facilities_management.select_locations.heading') %>
     </h2>
   </fieldset>
   <p class="govuk-caption-m">
-    Choose one or more regions, based on building's location where you require facilities <br>management services.
+    <%= t('facilities_management.select_locations.subheading') %>
   </p>
 </div>
 <div class="govuk-grid-column-two-thirds">
-
-
   <div class="govuk-accordion" data-module="accordion" id="region-accordion">
     <% @regions.each do |key, value| %>
       <div class="govuk-accordion__section ">
@@ -43,11 +41,11 @@
               </div>
             <% end %>
           <% end %>
-          <p>or</p>
+          <p><%= t('facilities_management.basket.or_text') %></p>
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="<%= key + '_all' %>" name="<%= key + '_all' %>" locationid="<%= value + '_all' %>" type="checkbox" value="<%= key + '_all' %>">
             <label class="govuk-label govuk-checkboxes__label CCS-fm-region-filter-check-box-label" for="<%= key + '_all' %>">
-              Select All
+              <%= t('facilities_management.basket.selectall_text') %>
             </label>
           </div>
         </div>
@@ -56,8 +54,10 @@
     <% end %>
   </div>
   <p>
-    <%= form_tag '/facilities-management/buildings/select-services', id: 'save-locations-link-form', method: :post do %>
-      <%= link_to 'Continue', '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-locations-link', name: 'save-locations-link' %>
+    <%= form_tag '/facilities-management/suppliers/long-list', id: 'save-locations-link-form', method: :post do %>
+      <%= hidden_field_tag  'postedlocations' %>
+      <%= hidden_field_tag 'postedservices' %>
+      <%= link_to 'Continue', '/facilities-management/suppliers/long-list', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-locations-link', name: 'save-locations-link' %>
     <% end %>
   </p>
 </div>
@@ -65,8 +65,11 @@
   <div class="filter-selection">
     <header>
       <div class="filter-selection__header">
-        <a id="remove-all-locations-link" name="remove-all-link" class="remove-all js-filter" hidden href="">Remove all</a>
-        <h2 id="selected-location-count" class="font-weight-700"></h2>
+        <a id="remove-all-locations-link" name="remove-all-link" class="remove-all js-filter" hidden href=""><%= t('facilities_management.basket.removeall_text') %></a>
+        <h2 class="govuk-heading-s font-weight-700">
+          <span id="selected-location-count" class="font-size--18"><%= t('facilities_management.basket.none') %></span>
+          <%= t('facilities_management.basket.basket_header') %>
+        </h2>
       </div>
     </header>
     <ul id="selected-fm-locations" class="govuk-!-padding-0 font-size--10"></ul>
