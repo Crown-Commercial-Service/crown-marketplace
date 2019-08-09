@@ -1,30 +1,47 @@
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">CCS Tests</h1>
 
-      <h1 class="govuk-heading-xl">CCS Tests</h1>
+    <p class="govuk-body">CCS Facilities Management - Direct Award Calculator Test Harness</p>
 
-      <p class="govuk-body">CCS Facilities Management - Direct Award Calculator Test Harness</p>
+    <%= form_tag 'test', class: 'ccs-form', id: 'test_calc_form', method: :post do %>
 
+      <div style="position: absolute; left: 1100px; border: 0">
+        <%= submit_tag 'Calculate', id: 'submit'  %>
+      </div>
+
+      <%= hidden_field_tag :assignmentId, 12345 %>
+      <%= hidden_field_tag 'current_choices', 'abcde' %>
       <!--
       <hr style="margin: 0px 0 10px 0;">
       -->
 
 
-      <div style="border-style: solid; width: 500px; position: absolute; top: 110px; left: 0px"">
-        <p>Regions</p>
+      <!-- -->
+      <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 0px"">
+      <p>  <b>Regions</b> ( select all
+          <input type="checkbox" name="select-all-regions" id="select-all-regions" onClick="selectAll(this,'[name^=region-]')">
+          )
+        </p>
+
         <% Nuts3Region.all.each do |x| %>
-          <input type="checkbox" name="<% x.code %>" id="<% x.code %>" value="<% x.code %>" checked="checked" class="govuk-checkboxes__input">
+          <input type="checkbox" name="region-<%= "#{x.code}" %>" id=<%= "#{x.code}" %> value=<%= "#{x.code}" %> class="govuk-checkboxes__input">
           <label class="govuk-label govuk-checkboxes__label" for="x">
             <%= x.name %>
           </label>
           <br/>
         <% end %>
+
       </div>
 
-      <div style="border-style: solid; width: 500px; position: absolute; top: 110px; left: 520px">
-        <p>Services</p>
+      <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 520px">
+        <p>  <b>Services</b> ( select all
+          <input type="checkbox" name="select-all-services" id="select-all-services" onClick="selectAll(this,'[name^=service-]')">
+          )
+        </p>
+
 
         <% work_package_code = nil %>
         <% FacilitiesManagement::Service.all.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s| %>
@@ -37,18 +54,31 @@
             <%   work_package_code = s.work_package_code %>
             <br/>
           <% end %>
-          <input type="checkbox" name="<% s.code %>" id="<% s.code %>" value="<% s.code %>" checked="checked" class="govuk-checkboxes__input">
+
+          <input type="checkbox" name="service-<%= "#{s.code}" %>" id=<%= "#{s.code}" %> value=<%= "#{s.code}" %> class="govuk-checkboxes__input">
           <label class="govuk-label govuk-checkboxes__label" for="x">
             <%= "#{s.name} #{s.work_package_code}  #{s.code}" %>
           </label>
+
           <br/>
         <% end %>
 
       </div>
 
 
+    <% end %>
 
 
 
     </div>
-  </div>
+
+<script language="JavaScript">
+    function selectAll(source, pattern) {
+        // checkboxes = document.getElementsById('service');
+        checkboxes = document.querySelectorAll(pattern)
+        for(var i in checkboxes)
+            checkboxes[i].checked = source.checked;
+    }
+</script>
+
+
