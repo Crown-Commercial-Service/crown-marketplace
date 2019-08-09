@@ -1,0 +1,54 @@
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">CCS Tests</h1>
+
+      <p class="govuk-body">CCS Facilities Management - Direct Award Calculator Test Harness</p>
+
+      <!--
+      <hr style="margin: 0px 0 10px 0;">
+      -->
+
+
+      <div style="border-style: solid; width: 500px; position: absolute; top: 110px; left: 0px"">
+        <p>Regions</p>
+        <% Nuts3Region.all.each do |x| %>
+          <input type="checkbox" name="<% x.code %>" id="<% x.code %>" value="<% x.code %>" checked="checked" class="govuk-checkboxes__input">
+          <label class="govuk-label govuk-checkboxes__label" for="x">
+            <%= x.name %>
+          </label>
+          <br/>
+        <% end %>
+      </div>
+
+      <div style="border-style: solid; width: 500px; position: absolute; top: 110px; left: 520px">
+        <p>Services</p>
+
+        <% work_package_code = nil %>
+        <% FacilitiesManagement::Service.all.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s| %>
+
+          <% if work_package_code != s.work_package_code %>
+            <% if work_package_code %>
+              <br/>
+            <% end %>
+            <%=   "#{s.work_package_code}" %>
+            <%   work_package_code = s.work_package_code %>
+            <br/>
+          <% end %>
+          <input type="checkbox" name="<% s.code %>" id="<% s.code %>" value="<% s.code %>" checked="checked" class="govuk-checkboxes__input">
+          <label class="govuk-label govuk-checkboxes__label" for="x">
+            <%= "#{s.name} #{s.work_package_code}  #{s.code}" %>
+          </label>
+          <br/>
+        <% end %>
+
+      </div>
+
+
+
+
+
+    </div>
+  </div>

@@ -1,4 +1,4 @@
-module CcsPatterns
+module Tests
   class FrameworkController < ::ApplicationController
     before_action :authenticate_user!
 
