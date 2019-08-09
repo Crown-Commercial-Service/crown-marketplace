@@ -2,17 +2,14 @@
 * filename: fm-services.js
 * Description: Click handlers for the select services page
 * */
-$(() => {
-
+$(function() {
     /* govuk-accordion__controls event handlers */
     let selectedServices = pageUtils.getCachedData('fm-services');
     let selectedLocations = pageUtils.getCachedData('fm-locations');
     let selectedServicesForThisBuilding = selectedServices;
     let currentBuilding = pageUtils.getCachedData('fm-current-building');
 
-
-    const initialize = (() => {
-
+    const initialize = (function() {
         /* Load and display cached values */
         if (selectedServices) {
             selectedServices.forEach((value, index, array) => {
@@ -25,7 +22,7 @@ $(() => {
         renderSelectedServices();
     });
 
-    const renderSelectedServices = (() => {
+    const renderSelectedServices = (function()  {
 
         selectedServices.forEach((service, index) => {
 
@@ -58,7 +55,7 @@ $(() => {
         updateServiceCount();
     });
 
-    const updateServiceCount = (() => {
+    const updateServiceCount = (function()  {
 
         let count = $('input[name=fm-building-service-checkbox]:checked').length;
         let serviceCount = $('#selected-service-count');
@@ -85,14 +82,14 @@ $(() => {
 
 
     /* remove a service from the selected list */
-    const removeSelectedItem = ((id) => {
+    const removeSelectedItem = (function(id) {
         id = id + "_selected";
         $('li#' + id).remove();
         id = id.replace('_selected', '');
         $("input#" + id).prop('checked', false);
 
         /* remove from the array that is saved */
-        let filtered = selectedServices.filter((value, index, arr) => {
+        let filtered = selectedServices.filter(function(value, index, arr) {
             if (value.code !== id) {
                 return true;
             } else {
@@ -107,7 +104,7 @@ $(() => {
     });
 
     // add a selected service from the selected list
-    const addSelectedItem = ( (serviceId, workItemId, title) => {
+    const addSelectedItem = ( function (serviceId, workItemId, title) {
         let val = title;
 
         let selectedID = workItemId + '_selected';
@@ -127,7 +124,7 @@ $(() => {
             '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
         $("#selected-fm-services").append(newLI);
 
-        $('#' + removeLinkID).on('click', (e) => {
+        $('#' + removeLinkID).on('click', function(e) {
             e.preventDefault();
             removeSelectedItem(selectedID);
         }) ;
@@ -141,18 +138,28 @@ $(() => {
             $("input[forserviceid='" + serviceId + "']").prop("checked", false);
         } else {
             var allServiceSelectionStates = [];
-            allServiceWorkItems.each(function () {
+            let svcItemCount = 0; let svcItemMax = allServiceWorkItems.length;
+            for ( ; svcItemCount < svcItemMax; svcItemCount++) {
+                let workItemCtrl = allServiceWorkItems[svcItemCount];
+                allServiceSelectionStates.push($(workItemCtrl).prop("checked"));
+            }
+            /*allServiceWorkItems.each(function () {
                 var value = $(this).prop("checked");
                 allServiceSelectionStates.push(value)
-            });
-            let bCheckCheckAllBox = false;
-            bCheckCheckAllBox = allServiceSelectionStates.every(x => x == true);
+            });*/
+            var bCheckCheckAllBox = true;
+            let chkStateCounter = 0; let chkStateMaxPos = allServiceSelectionStates.length;
+            while ( bCheckCheckAllBox && chkStateCounter < chkStateMaxPos) {
+                bCheckCheckAllBox = bCheckCheckAllBox && allServiceSelectionStates[chkStateCounter];
+                if ( chkStateCounter < chkStateMaxPos ) chkStateCounter++;
+            }
+
             $("input[forserviceid='" + serviceId + "']").prop("checked", bCheckCheckAllBox);
         }
     }) ;
 
     /* uncheck all check boxes and clear list */
-    const clearAll = (() => {
+    const clearAll = (function()  {
         $("#selected-fm-services li").remove();
         $("#services-accordion input:checkbox").prop('checked', false);
 
@@ -170,13 +177,13 @@ $(() => {
     });
 
     /* Click handler to remove all services */
-    $('#remove-all-services-link').on('click', (e) => {
+    $('#remove-all-services-link').on('click', function(e) {
         e.preventDefault();
         clearAll();
     });
 
     /* click handler for check boxes */
-    $('#services-accordion .govuk-checkboxes__input').on('click', (e) => {
+    $('#services-accordion .govuk-checkboxes__input').on('click', function (e) {
         var serviceId = e.target.getAttribute("serviceid");
 
         if (serviceId !== null ) {   // only !select-all checkboxes
@@ -195,7 +202,7 @@ $(() => {
     });
 
     /* Check for at least one service has been selected */
-    const isValid = (() => {
+    const isValid = (function()  {
 
         let result = selectedServices && selectedServices.length > 0 ? true : false;
 
@@ -208,7 +215,7 @@ $(() => {
     });
 
     /* Save and continue click handler */
-    $('#save-services-link').on('click', (e) => {
+    $('#save-services-link').on('click', function(e) {
 
         pageUtils.toggleInlineErrorMessage(false);
         const servicesForm = $('#save-services-link-form');
@@ -234,7 +241,7 @@ $(() => {
 
     let tempServices;
 
-    $('[name="fm-building-service-checkbox_select_all"]').on('change', (e) => {
+    $('[name="fm-building-service-checkbox_select_all"]').on('change', function(e) {
         let serviceId = e.currentTarget.getAttribute("forserviceid") ;
         let checked = e.currentTarget.checked;
 
@@ -247,7 +254,7 @@ $(() => {
         updateServiceCount();
     });
 
-    $('#fm-select-services-continue-btn').on('click', (e) => {
+    $('#fm-select-services-continue-btn').on('click', function(e) {
         e.preventDefault();
 
         if (selectedServicesForThisBuilding && selectedServicesForThisBuilding.length > 0) {
@@ -261,8 +268,5 @@ $(() => {
             pageUtils.toggleInlineErrorMessage(true);
         }
     });
-
-
     initialize();
-
 });
