@@ -1,8 +1,8 @@
-$(() => {
+$(function () {
 
     let postCode = "";
 
-    const init = (() => {
+    const init = (function () {
 
         let newBuildingName = pageUtils.getCachedData('fm-new-building-name');
 
@@ -36,7 +36,7 @@ $(() => {
 
     });
 
-    $('#fm-building-not-found').on('click', (e) => {
+    $('#fm-building-not-found').on('click', function (e) {
         pageUtils.clearCashedData('fm-new-address');
 
         e.preventDefault()
@@ -44,8 +44,7 @@ $(() => {
     });
 
 
-
-    $('#fm-postcode-input').on('keyup', (e) => {
+    $('#fm-postcode-input').on('keyup', function (e) {
 
         let postcode = pageUtils.formatPostCode(e.target.value);
 
@@ -57,7 +56,7 @@ $(() => {
         }
     });
 
-    const isPostCodeInLondon = ((postcode) => {
+    const isPostCodeInLondon = (function (postcode) {
 
         pageUtils.clearCashedData('fm-postcode-is-in-london');
 
@@ -73,7 +72,7 @@ $(() => {
             });
     });
 
-    const getRegion = ((post_code) => {
+    const getRegion = (function (post_code) {
 
         //if (post_code && pageUtils.isPostCodeValid(post_code)) {
         $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
@@ -89,7 +88,7 @@ $(() => {
         //}
     });
 
-    $('#fm-postcode-lookup-results').on('change', (e) => {
+    $('#fm-postcode-lookup-results').on('change', function (e) {
         let selectedAddress = $("select#fm-postcode-lookup-results > option:selected").val();
         if (selectedAddress) {
             let addressElements = selectedAddress.split(',');
@@ -108,7 +107,7 @@ $(() => {
 
     });
 
-    $('#fm-post-code-lookup-button').on('click', (e) => {
+    $('#fm-post-code-lookup-button').on('click', function (e) {
         e.preventDefault();
         if (pageUtils.isPostCodeValid(postCode)) {
             pageUtils.setCachedData('fm-postcode', postCode.toUpperCase());
@@ -128,7 +127,10 @@ $(() => {
                         $('#fm-postcode-lookup-results').find('option').remove();
                         $('#fm-postcode-lookup-results').append('<option value="status-option" selected>' + data.result.length + ' addresses found</option>');
                         let addresses = data.result;
-                        addresses.forEach((address, index) => {
+
+                        for (let x = 0; x < addresses.length; x++) {
+                            let address = addresses[x];
+
                             let add1 = address['add1'] ? address['add1'] + ', ' : '';
                             let add2 = address['village'] ? address['village'] + ', ' : '';
                             let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
@@ -139,7 +141,7 @@ $(() => {
                             $('#fm-postcode-lookup-results').append(newOption);
                             $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
                             $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
-                        })
+                        }
                     }
                 })
                 .fail(function (data) {
@@ -150,18 +152,18 @@ $(() => {
         }
     });
 
-    $('#fm-change-postcode').on('click', (e) => {
+    $('#fm-change-postcode').on('click', function (e) {
         $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
         $('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
     });
 
-    $('#fm-buildings-add-building').on('click', (e) => {
+    $('#fm-buildings-add-building').on('click', function (e) {
         fm.clearBuildingCache();
         e.preventDefault()
         $('#fm-new-building-form').submit()
     });
 
-    $('#fm-internal-square-area').on('change', (e) => {
+    $('#fm-internal-square-area').on('change', function (e) {
 
             let value = e.target.value;
             value = (value && value.length > 0) ? parseInt(value) : 0;
@@ -174,7 +176,7 @@ $(() => {
         }
     );
 
-    $('input[name="fm-builing-type-radio"]').on('click', (e) => {
+    $('input[name="fm-builing-type-radio"]').on('click', function (e) {
         let value = e.target.value;
         let buildingTypeOther = $('#other-building-type').value;
         let currentBuilding = pageUtils.getCachedData('fm-current-building');
@@ -189,7 +191,7 @@ $(() => {
         pageUtils.setCachedData('fm-current-building', currentBuilding);
     });
 
-    const isBuildingTypeValid = (() => {
+    const isBuildingTypeValid = (function () {
         let len = $('input[name="fm-builing-type-radio"]:radio:checked').length;
         let result = true;
 
@@ -207,7 +209,7 @@ $(() => {
         return result;
     });
 
-    $('#other-building-type').on('keypress', (e) => {
+    $('#other-building-type').on('keypress', function (e) {
         let regex = new RegExp("^[a-zA-Z0-9 ]+$");
         let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         if (regex.test(str)) {
@@ -217,7 +219,7 @@ $(() => {
         return false;
     });
 
-    $('a[name=FM-delete-building-link]').on('click', (e) => {
+    $('a[name=FM-delete-building-link]').on('click', function (e) {
         e.preventDefault();
         let id = e.target.id;
         let id_elems = id.split('~');
@@ -226,7 +228,7 @@ $(() => {
 
     });
 
-    $('#fm-building-type-continue').on('click', (e) => {
+    $('#fm-building-type-continue').on('click', function (e) {
         if (isBuildingTypeValid() === true) {
             pageUtils.toggleInlineErrorMessage(false);
             let currentBuilding = pageUtils.getCachedData('fm-current-building');

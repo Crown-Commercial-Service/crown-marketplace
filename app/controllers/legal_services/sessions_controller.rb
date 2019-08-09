@@ -17,5 +17,13 @@ module LegalServices
     def new_session_path
       legal_services_new_user_session_path
     end
+
+    def confirm_forgot_password_path(username)
+      legal_services_edit_user_password_path(username: username)
+    end
+
+    def confirm_email_path(email)
+      legal_services_users_confirm_path(email: email)
+    end
   end
 end
