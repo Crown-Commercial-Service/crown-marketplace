@@ -28,9 +28,9 @@ $(function () {
         /* Update the count of selected locations */
         const updateLocationCount = (function () {
             let count = $("#selected-fm-locations li").length;
-            let msg = count > 0 ? (count === 1 ? "1 region selected" : count + " regions selected") : "None selected";
+        let msg = count > 0 ? (count === 1 ? "1 region" : count + " regions") : "None";
 
-            if (count === 0) {
+        if (count < 2) {
                 $('#remove-all-locations-link').prop('hidden', true);
             } else {
                 $('#remove-all-locations-link').prop('hidden', false);
@@ -175,14 +175,19 @@ $(function () {
 
         /* Click handler for save and continue button */
         $('#save-locations-link').on('click', function (e) {
+        pageUtils.setCachedData('fm-locations', selectedLocations);
+        e.preventDefault();
+        pageUtils.toggleInlineErrorMessage(false);
 
-            pageUtils.toggleInlineErrorMessage(false);
+        if (isLocationValid() === true) {
+            const locationsForm = $('#save-locations-link-form');
+            let locationCodes = pageUtils.getCachedData('fm-locations').map(x => x.code) ;
+            let serviceCodes = pageUtils.getCachedData('fm-services').map(x => x.code) ;
 
-            if (isLocationValid() === true) {
-                // $('#save-locations-link-form').attr('action', "/facilities-management/buildings/select-services").submit()
-                pageUtils.setCachedData('fm-locations', selectedLocations);
+            $('#postedlocations').val(JSON.stringify(locationCodes));
+            $('#postedservices').val(JSON.stringify(serviceCodes));
+            locationsForm.trigger('submit');
             } else {
-                e.preventDefault();
                 pageUtils.toggleInlineErrorMessage(true);
                 window.location = '#';
             }
