@@ -1,9 +1,12 @@
-module CcsPatterns
-  class HomeController < FrameworkController
+module Tests
+  class TestController < FrameworkController
     skip_before_action :authenticate_user!
     before_action :set_back_path, except: :index
+    respond_to :html, :json
 
-    def index; end
+    def index
+      render layout: false
+    end
 
     def dynamic_accordian; end
 
