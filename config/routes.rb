@@ -274,7 +274,7 @@ Rails.application.routes.draw do
   is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
   if is_dev_db.nil? || (is_dev_db.include? 'dev.')
     namespace 'tests', path: 'test' do
-      get '/', to: 'test#index'
+      match '/', to: 'test#index', via: %i[get post]
     end
   end
 
