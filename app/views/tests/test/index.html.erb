@@ -1,31 +1,23 @@
-
+<body onload="pageInit()">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
     <h1 class="govuk-heading-xl">CCS Tests</h1>
-
     <p class="govuk-body">CCS Facilities Management - Direct Award Calculator Test Harness</p>
-
     <%= form_tag 'test', class: 'ccs-form', id: 'test_calc_form', method: :post do %>
-
       <div style="position: absolute; left: 1100px; border: 0">
         <%= submit_tag 'Calculate', id: 'submit'  %>
       </div>
-
       <%= hidden_field_tag :assignmentId, 12345 %>
       <%= hidden_field_tag 'current_choices', 'abcde' %>
       <!--
-      <hr style="margin: 0px 0 10px 0;">
-      -->
-
-
+         <hr style="margin: 0px 0 10px 0;">
+         -->
       <!-- -->
-      <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 0px"">
-      <p>  <b>Regions</b> ( select all
+      <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 0px;padding-left: 20px;">
+        <p><b>Regions</b> ( select all
           <input type="checkbox" name="select-all-regions" id="select-all-regions" onClick="selectAll(this,'[name^=region-]')">
           )
         </p>
-
         <% Nuts3Region.all.each do |x| %>
           <input type="checkbox" name="region-<%= "#{x.code}" %>" id=<%= "#{x.code}" %> value=<%= "#{x.code}" %> class="govuk-checkboxes__input">
           <label class="govuk-label govuk-checkboxes__label" for="x">
@@ -33,19 +25,14 @@
           </label>
           <br/>
         <% end %>
-
       </div>
-
-      <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 520px">
+      <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 530px;padding-left: 20px;">
         <p>  <b>Services</b> ( select all
           <input type="checkbox" name="select-all-services" id="select-all-services" onClick="selectAll(this,'[name^=service-]')">
           )
         </p>
-
-
         <% work_package_code = nil %>
         <% FacilitiesManagement::Service.all.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s| %>
-
           <% if work_package_code != s.work_package_code %>
             <% if work_package_code %>
               <br/>
@@ -54,31 +41,42 @@
             <%   work_package_code = s.work_package_code %>
             <br/>
           <% end %>
-
           <input type="checkbox" name="service-<%= "#{s.code}" %>" id=<%= "#{s.code}" %> value=<%= "#{s.code}" %> class="govuk-checkboxes__input">
           <label class="govuk-label govuk-checkboxes__label" for="x">
             <%= "#{s.name} #{s.work_package_code}  #{s.code}" %>
           </label>
-
           <br/>
         <% end %>
-
       </div>
+      <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 1060px;padding-left: 20px;">
+        <p><b>Inputs</b>
+        </p>
+        <label>
+          Start Date
+          <input type="textbox" name="startdate" id="startdate" value="">
+          <!--  this.value = new Date().toLocaleString() -->
+        </label>
+        <label>Contract Length
+          <input type="textbox" name="contract-length" id="contract-length" value="3">
+          years
+        </label>
+        <div>
+    <% end %> <!-- form -->
+</body>
 
-
-    <% end %>
-
-
-
-    </div>
 
 <script language="JavaScript">
-    function selectAll(source, pattern) {
+    //alert('hello')
+    function pageInit()
+    {
+        document.getElementById('startdate').value = '2014-02-09'
+    }
+
+    function selectAll(source, pattern)
+    {
         // checkboxes = document.getElementsById('service');
         checkboxes = document.querySelectorAll(pattern)
         for(var i in checkboxes)
             checkboxes[i].checked = source.checked;
     }
 </script>
-
-
