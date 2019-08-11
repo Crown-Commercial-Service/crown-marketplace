@@ -9,6 +9,15 @@
   <%= hidden_field_tag 'current_choices', 'abcde' %>
 
 
+  <div style="border-style: solid; width: 500px; position: absolute; top: 530px; left: 1100px;padding-left: 20px;">
+    <%
+      uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
+      uom2 = {}
+      uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
+    %>
+    <%= "#{uom2}" %>
+  </div>
+
   <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 0px;padding-left: 20px;">
     <p><b>Regions</b> ( select all
       <input type="checkbox" name="select-all-regions" id="select-all-regions" onClick="selectAll(this,'[name^=region-]')">
@@ -56,6 +65,27 @@
         <%= "#{s.name} #{s.work_package_code}  #{s.code}" %>
       </label>
       <br/>
+      <!--
+      <%= "#{uom2[s.code]}" if uom2[s.code] %>
+      -->
+
+      <% if uom2[s.code] %>
+        <br>----------</br>
+        <% uom2[s.code].each do |x| %>
+          <%= x['title_text'] %>
+          <input type="textbox"/>
+           <br/>
+          <%= x['example_text'] %>
+          <br/>
+          <%= x['unit_text'] %>
+          <br/>
+          <%= x['data_type'] %>
+          <br/>
+          <%= x[:spreadsheet_label] %>
+
+          <br>========</br>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 
