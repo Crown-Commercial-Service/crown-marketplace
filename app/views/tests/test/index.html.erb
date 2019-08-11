@@ -3,10 +3,16 @@
 <p>CCS Facilities Management - Direct Award Calculator Test Harness</p>
 <%= form_tag '', id: 'test_calc_form', onsubmit: 'return submit()', method: :post do %>
   <div style="position: absolute; left: 1100px; border: 0">
-    <button type="submit">Submit</button>
+
   </div>
 
   <%= hidden_field_tag 'current_choices', 'abcde' %>
+
+  <div style="border-style: solid; width: 200px; position: absolute; top: 30px; left: 500px;padding-left: 20px;">
+    <button type="submit">Submit</button>
+    Value:&nbsp;
+      <%= number_to_currency(@assessed_value, precision: 2) %>
+  </div>
 
   <%
     uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)

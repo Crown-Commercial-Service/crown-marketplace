@@ -691,6 +691,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
 
     # p report.assessed_value
+    expect(report.assessed_value.round(2)).to be 498881.62
   end
   # rubocop:enable RSpec/ExampleLength
 

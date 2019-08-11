@@ -9,7 +9,7 @@ module Tests
     def index
       # params.permit!
 
-      calculate params
+      calculate params if params['gia']
 
       render layout: false
     end
@@ -23,18 +23,34 @@ module Tests
     def calculate(vals)
       id = SecureRandom.uuid
 
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
+
+      start_date = Time.zone.today + 1
+
+      data2 =
+        {
+          'posted_locations' => ['UKC1', 'UKC2'],
+          'posted_services' => ['G.1', 'C.5', 'C.19', 'E.4', 'K.1', 'H.4', 'G.5', 'K.2', 'K.7'],
+          'locations' => "('\"UKC1\"','\"UKC2\"')",
+          'services' => "('\"G.1\"','\"C.5\"','\"C.19\"','\"E.4\"','\"K.1\"','\"H.4\"','\"G.5\"','\"K.2\"','\"K.7\"')",
+          'start_date' => start_date,
+          'contract-tupe-radio' => 'yes',
+          'fm-contract-length' => 3
+        }
+
       b =
         {
           'id' => id,
-          'gia' => vals['gia'],
-          'name' => 'ccs',
-          'region' => 'London',
-          'address' =>
-            {
-              'fm-address-town' => 'London',
-              'fm-address-line-1' => '151 Buckingham Palace Road',
-              'fm-address-postcode' => 'SW1W 9SZ'
-            },
+          'gia' => vals['gia'].to_f,
+          # 'name' => 'ccs',
+          # 'region' => 'London',
+          # 'address' =>
+          #   {
+          #     'fm-address-town' => 'London',
+          #     'fm-address-line-1' => '151 Buckingham Palace Road',
+          #     'fm-address-postcode' => 'SW1W 9SZ'
+          #   },
           'isLondon' => 'No',
           'services' =>
             [
@@ -67,6 +83,11 @@ module Tests
       report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data2)
       # prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
       report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
+
+      # p report.assessed_value
+      # expect(report.assessed_value.round(2)).to be 498881.62
+
+      @assessed_value = report.assessed_value.round
     end
   end
 end
