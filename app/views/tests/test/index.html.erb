@@ -1,11 +1,11 @@
 <body onload="pageInit()">
 <h1>CCS Tests</h1>
-<p class="govuk-body">CCS Facilities Management - Direct Award Calculator Test Harness</p>
-<%= form_tag 'test', class: 'ccs-form', id: 'test_calc_form', method: :post do %>
+<p>CCS Facilities Management - Direct Award Calculator Test Harness</p>
+<%= form_tag '', id: 'test_calc_form', onsubmit: 'return submit()', method: :post do %>
   <div style="position: absolute; left: 1100px; border: 0">
-    <%= submit_tag 'Calculate', id: 'submit'  %>
+    <button type="submit">Submit</button>
   </div>
-  <%= hidden_field_tag :assignmentId, 12345 %>
+
   <%= hidden_field_tag 'current_choices', 'abcde' %>
 
   <%
@@ -76,7 +76,7 @@
         <% uom2[s.code].each do |x| %>
           <label>
             <%= x['title_text'] %>
-            <input type="number" style="width: 50px;" min = "0"/>
+            <input type="number" name="uom-<%= "#{s.code}" %>"  style="width: 50px;" min = "0"/>
             <%= x['unit_text'] %>
             <br/>
             [<%= x['example_text'] %>]
@@ -104,7 +104,7 @@
       </label>
       <label>
         General Internal Area
-        <input type="number" name="gia" id="gia" value="" min = "0">
+        <input type="number" name="gia" id="gia" value="" min = "1">
         (square metres)
       </label>
       <br/>
@@ -143,6 +143,7 @@
     //alert('hello')
     function pageInit()
     {
+        test_calc_form.onsubmit = submit
         document.getElementById('startdate').value = new Date().toISOString().split('T')[0]
     }
 
@@ -152,5 +153,24 @@
         checkboxes = document.querySelectorAll(pattern)
         for(var i in checkboxes)
             checkboxes[i].checked = source.checked;
+    }
+
+    function submit(event)
+    {
+
+        var gia = test_calc_form.gia.value || 0
+
+        if (isNaN(test_calc_form.gia.value) || gia == 0)
+        {
+            test_calc_form.gia.focus()
+            alert('Please enter a number for Gross Internam Area (GIA)')
+            return false
+        }
+        // event.preventDefault()
+
+        // document.getElementById('test_calc_form').trigger('submit')
+
+        return true
+
     }
 </script>
