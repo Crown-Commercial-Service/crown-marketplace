@@ -8,15 +8,11 @@
   <%= hidden_field_tag :assignmentId, 12345 %>
   <%= hidden_field_tag 'current_choices', 'abcde' %>
 
-
-  <div style="border-style: solid; width: 500px; position: absolute; top: 530px; left: 1100px;padding-left: 20px;">
-    <%
-      uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
-      uom2 = {}
-      uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
-    %>
-    <%= "#{uom2}" %>
-  </div>
+  <%
+    uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
+    uom2 = {}
+    uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
+  %>
 
   <div style="border-style: solid; width: 500px; position: absolute; top: 130px; left: 0px;padding-left: 20px;">
     <p><b>Regions</b> ( select all
@@ -51,18 +47,25 @@
       )
     </p>
     <% work_package_code = nil %>
+    <% topline = true %>
     <% FacilitiesManagement::Service.all.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |s| %>
       <% if work_package_code != s.work_package_code %>
         <% if work_package_code %>
           <br/>
         <% end %>
+        <% if uom2[s.code] && topline%>
+          <hr style="border-style: none;"/>
+        <% end %>
+
         <%=   "#{s.work_package_code}" %>
         <%   work_package_code = s.work_package_code %>
         <br/>
       <% end %>
+
+
       <input type="checkbox" name="service-<%= "#{s.code}" %>" id=<%= "#{s.code}" %> value=<%= "#{s.code}" %> >
       <label>
-        <%= "#{s.name} #{s.work_package_code}  #{s.code}" %>
+        <%= "#{s.code} #{s.name}" %>
       </label>
       <br/>
       <!--
@@ -70,20 +73,18 @@
       -->
 
       <% if uom2[s.code] %>
-        <br>----------</br>
         <% uom2[s.code].each do |x| %>
-          <%= x['title_text'] %>
-          <input type="textbox"/>
-           <br/>
-          <%= x['example_text'] %>
-          <br/>
-          <%= x['unit_text'] %>
-          <br/>
-          <%= x['data_type'] %>
-          <br/>
-          <%= x[:spreadsheet_label] %>
+          <label>
+            <%= x['title_text'] %>
+            <input type="number" style="width: 50px;" min = "0"/>
+            <%= x['unit_text'] %>
+            <br/>
+            [<%= x['example_text'] %>]
+          </label>
 
-          <br>========</br>
+          <hr style="border-style: groove;"/>
+          <% topline = false %>
+
         <% end %>
       <% end %>
     <% end %>
@@ -103,7 +104,7 @@
       </label>
       <label>
         General Internal Area
-        <input type="textbox" name="gia" id="gia" value="">
+        <input type="number" name="gia" id="gia" value="" min = "0">
         (square metres)
       </label>
       <br/>
