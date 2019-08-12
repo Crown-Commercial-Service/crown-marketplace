@@ -629,7 +629,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       # expect(report.assessed_value.round(2)).to be 0.00
 
-      results[s] = report.assessed_value
+      results[s] = report.direct_award_value
       # p s, report.assessed_value
     end
 
@@ -638,7 +638,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # p rate_card
     expect(sorted_results.first[0]).to eq 'Walsh, Murphy and Gaylord'
 
-    expect(sorted_results.first[1].round(2)).to equal 1387649.74
+    expect(sorted_results.first[1].round(2)).to equal 2757915.85
   end
 
   # rubocop:disable RSpec/ExampleLength
@@ -691,7 +691,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
 
     # p report.assessed_value
-    expect(report.assessed_value.round(2)).to be 498881.62
+    expect(report.direct_award_value.round(2)).to be 984243.25
   end
   # rubocop:enable RSpec/ExampleLength
 

@@ -8,10 +8,18 @@
 
   <%= hidden_field_tag 'current_choices', 'abcde' %>
 
-  <div style="border-style: solid; width: 200px; position: absolute; top: 30px; left: 500px;padding-left: 20px;">
+  <div style="border-style: solid; width: 500px; position: absolute; top: 300px; left: 1060px;padding-left: 20px;">
     <button type="submit">Submit</button>
-    Value:&nbsp;
-      <%= number_to_currency(@report.direct_award_value, precision: 2) %>
+      <% if @results  %>
+        <table>
+        <% @results.sort_by { |k,v| @results[k]}.each do |k,v| %>
+          <tr>
+            <td><%= "#{k}" %></td>
+            <td align="right"><%= "#{number_to_currency(v, precision: 2)}" %></td>
+          </tr>
+        <% end %>
+        </table>
+      <% end %>
   </div>
 
   <%
@@ -163,9 +171,7 @@
 
     function submit(event)
     {
-
         var gia = test_calc_form.gia.value || 0
-
         if (isNaN(test_calc_form.gia.value) || gia == 0)
         {
             test_calc_form.gia.focus()
@@ -174,7 +180,24 @@
         }
         // event.preventDefault()
 
-        // document.getElementById('test_calc_form').trigger('submit')
+        // selectAll(this,'[name^=region-]')
+        // selectAll(this,'[name^=service-]')
+
+        region_checkboxes = document.querySelectorAll('[name^=region-]:checked')
+        service_checkboxes = document.querySelectorAll('[name^=service-]:checked')
+
+        if (!region_checkboxes.length)
+        {
+            alert('Please select at least one region')
+            return false
+        }
+
+        if (!service_checkboxes.length)
+        {
+            alert('Please select at least one service')
+            return false
+        }
+
 
         return true
 
