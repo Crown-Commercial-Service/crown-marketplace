@@ -3,20 +3,25 @@
     <div class="govuk-grid-column-full">
       <div class="govuk-panel govuk-panel--confirmation">
         <h1 class="govuk-panel__title">
-          <%= t('.header') %>
+          <% if @previous_step.try(:no_fee_reason) %>
+            <%= t('.header_no_fee') %>
+          <% else %>
+            <%= t('.header') %> <%= number_to_currency(@calculator.fee) %>
+          <% end %>
         </h1>
         <div class="govuk-panel__body">
-          <%= t('.panel_body') %>
-          <strong><%= number_to_currency(@calculator.fee) %></strong>
+          <% if @previous_step.try(:no_fee_reason) %>
+            <%= t("no_fee.#{@previous_step.no_fee_reason}") %>
+          <% else %>
+            <%= t('.panel_body', date: @previous_step.hire_by_date.strftime('%d %b %Y')) %>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <p>
-        <%= @calculator.fee > 0 ? t('.avoid_fee') : t('.no_fee') %>
-      </p>
+    <div class="govuk-grid-column-two-thirds govuk-!-margin-top-7">
+      <%= link_to t('.check_another_fixed_term_contract'), supply_teachers_journey_question_path(slug: 'fta-to-perm-contract-start', looking_for: 'calculate_fta_to_perm_fee'),class: "govuk-button" %>
     </div>
   </div>
 </div>
