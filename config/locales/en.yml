@@ -150,6 +150,25 @@ en:
               invalid_location: Enter a valid postcode
             term:
               blank: Select how long you need the worker for
+        supply_teachers/journey/fta_to_perm_contract_end:
+          attributes:
+            contract_end_date:
+              blank: Enter the contract end date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_contract_start:
+          attributes:
+            contract_start_date:
+              blank: Enter the contract start date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_fixed_term_fee:
+          attributes:
+            fixed_term_fee:
+              blank: Enter the fixed term fee
+        supply_teachers/journey/fta_to_perm_hire_date:
+          attributes:
+            hire_date:
+              blank: Enter the date, including the day, month and year
+              invalid: Enter a real date
         supply_teachers/journey/looking_for:
           attributes:
             looking_for:
@@ -170,25 +189,6 @@ en:
           attributes:
             location:
               invalid_location: Enter a valid postcode
-        supply_teachers/journey/fta_to_perm_contract_start:
-          attributes:
-            contract_start_date:
-              blank: Enter the contract start date, including the day, month and year
-              invalid: Enter a real date
-        supply_teachers/journey/fta_to_perm_hire_date:
-          attributes:
-            hire_date:
-              blank: Enter the date, including the day, month and year
-              invalid: Enter a real date
-        supply_teachers/journey/fta_to_perm_contract_end:
-          attributes:
-            contract_end_date:
-              blank: Enter the contract end date, including the day, month and year
-              invalid: Enter a real date
-        supply_teachers/journey/fta_to_perm_fixed_term_fee:
-          attributes:
-            fixed_term_fee:
-              blank: Enter the fixed term fee
         supply_teachers/journey/temp_to_perm_calculator:
           attributes:
             contract_start_date:
@@ -1595,8 +1595,8 @@ en:
         header_no_fee: No transfer fee required
         no_fee:
           hire_not_within_6_months: Based on the information you have provided, no fee is required as the gap between the employee's contract finishing and fully permanent position starting is greater than or equal to 6 months.
-          not_within_12_months: Based on the information you have provided, no fee is required as the employee has been continually employed for more than 12 months.
-          not_within_6_months: Based on the information you have provided, no fee is required as the employee's contract ended more than 6 months ago.
+          length_not_within_12_months: Based on the information you have provided, no fee is required as the employee has been continually employed for more than 12 months.
+          end_not_within_6_months: Based on the information you have provided, no fee is required as the employee's contract ended more than 6 months ago.
         panel_body: if you choose to hire the worker before %{date}
       index:
         accreditation_of_agencies: Accreditation of agencies
