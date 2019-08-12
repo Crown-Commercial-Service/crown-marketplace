@@ -27,16 +27,18 @@ module Tests
       rate_card = CCS::FM::RateCard.latest
 
       start_date = Time.zone.today + 1
+      # start_date = DateTime.strptime('2011-03-09',"%Y-%m-%d")
+      start_date = DateTime.strptime(vals['startdate'],"%Y-%m-%d")
 
       data2 =
         {
           'posted_locations' => ['UKC1', 'UKC2'],
           'posted_services' => ['G.1', 'C.5', 'C.19', 'E.4', 'K.1', 'H.4', 'G.5', 'K.2', 'K.7'],
-          'locations' => "('\"UKC1\"','\"UKC2\"')",
-          'services' => "('\"G.1\"','\"C.5\"','\"C.19\"','\"E.4\"','\"K.1\"','\"H.4\"','\"G.5\"','\"K.2\"','\"K.7\"')",
+          # 'locations' => "('\"UKC1\"','\"UKC2\"')",
+          # 'services' => "('\"G.1\"','\"C.5\"','\"C.19\"','\"E.4\"','\"K.1\"','\"H.4\"','\"G.5\"','\"K.2\"','\"K.7\"')",
           'start_date' => start_date,
-          'contract-tupe-radio' => 'yes',
-          'fm-contract-length' => 3
+          'contract-tupe-radio' => vals['tupe'] ? 'yes' : 'no',
+          'fm-contract-length' => vals['contract-length']
         }
 
       b =
@@ -51,7 +53,7 @@ module Tests
           #     'fm-address-line-1' => '151 Buckingham Palace Road',
           #     'fm-address-postcode' => 'SW1W 9SZ'
           #   },
-          'isLondon' => 'No',
+          'isLondon' => vals['isLondon'] ? 'Yes' : 'No',
           'services' =>
             [
               { 'code' => 'G-1', 'name' => 'Airport and aerodrome maintenance services' },
@@ -80,14 +82,11 @@ module Tests
       # data
       dummy_supplier_name = 'Hickle-Schinner'
 
-      report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data2)
+      @report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data2)
       # prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
-      report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
+      @report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
 
-      # p report.assessed_value
-      # expect(report.assessed_value.round(2)).to be 498881.62
-
-      @assessed_value = report.assessed_value.round
+      # @report.direct_award_value,
     end
   end
 end

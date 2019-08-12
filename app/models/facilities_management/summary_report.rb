@@ -127,6 +127,10 @@ module FacilitiesManagement
       (@sum_uom + @sum_benchmark) / 2
     end
 
+    def direct_award_value
+      @sum_uom
+    end
+
     def current_lot
       case assessed_value
       when 0..7000000
@@ -315,7 +319,7 @@ module FacilitiesManagement
                                                supplier_name,
                                                building_data,)
         sum_uom += calc_fm.sumunitofmeasure
-        sum_benchmark += calc_fm.benchmarkedcostssum
+        sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
       end
       { sum_uom: sum_uom,
         sum_benchmark: sum_benchmark }

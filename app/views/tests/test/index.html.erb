@@ -11,7 +11,7 @@
   <div style="border-style: solid; width: 200px; position: absolute; top: 30px; left: 500px;padding-left: 20px;">
     <button type="submit">Submit</button>
     Value:&nbsp;
-      <%= number_to_currency(@assessed_value, precision: 2) %>
+      <%= number_to_currency(@report.direct_award_value, precision: 2) %>
   </div>
 
   <%
@@ -102,7 +102,7 @@
     </p>
       <label>
         Start Date
-        <input type="text" id="startdate" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" title="Enter a date in this format YYYY/MM/DD"/>
+        <input type="text" id="startdate" name="startdate" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" title="Enter a date in this format YYYY/MM/DD"/>
       </label>
       <label>Contract Length
         <input type="textbox" name="contract-length" id="contract-length" value="3">
