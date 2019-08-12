@@ -638,7 +638,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # p rate_card
     expect(sorted_results.first[0]).to eq 'Cartwright and Sons'
 
-    expect(sorted_results.first[1].round(2)).to equal 2757915.85
+    expect(sorted_results.first[1].round(2)).to equal 2566970.06
   end
 
   # rubocop:disable RSpec/ExampleLength
