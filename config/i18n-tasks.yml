@@ -115,8 +115,8 @@ ignore_unused:
   - legal_services.journey.select_lot.lot3_extended_description
   - legal_services.journey.select_lot.lot4_extended_description
   - supply_teachers.home.fta_to_perm_fee.no_fee.hire_not_within_6_months
-  - supply_teachers.home.fta_to_perm_fee.no_fee.not_within_12_months
-  - supply_teachers.home.fta_to_perm_fee.no_fee.not_within_6_months
+  - supply_teachers.home.fta_to_perm_fee.no_fee.length_not_within_12_months
+  - supply_teachers.home.fta_to_perm_fee.no_fee.end_not_within_6_months
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
 # - 'simple_form.{yes,no}'

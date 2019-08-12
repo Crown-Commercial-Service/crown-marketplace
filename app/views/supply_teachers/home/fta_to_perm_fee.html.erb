@@ -11,7 +11,7 @@
         </h1>
         <div class="govuk-panel__body">
           <% if @previous_step.try(:no_fee_reason) %>
-            <%= t("no_fee.#{@previous_step.no_fee_reason}") %>
+            <%= t(".no_fee.#{@previous_step.no_fee_reason}") %>
           <% else %>
             <%= t('.panel_body', date: @previous_step.hire_by_date.strftime('%d %b %Y')) %>
           <% end %>
