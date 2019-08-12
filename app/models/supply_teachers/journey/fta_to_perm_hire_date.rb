@@ -10,9 +10,9 @@ module SupplyTeachers
     attribute :hire_date_month
     attribute :hire_date_year
     attribute :no_fee_reason
+    validates :hire_date, presence: true
     validate :ensure_hire_date_valid
     validate :ensure_hire_date_after_contract_start_date
-    validates :contract_end_date, presence: true
 
     PARSED_DATE_FORMAT = '%Y-%m-%d'.freeze
 

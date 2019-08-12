@@ -170,6 +170,25 @@ en:
           attributes:
             location:
               invalid_location: Enter a valid postcode
+        supply_teachers/journey/fta_to_perm_contract_start:
+          attributes:
+            contract_start_date:
+              blank: Enter the contract start date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_hire_date:
+          attributes:
+            hire_date:
+              blank: Enter the date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_contract_end:
+          attributes:
+            contract_end_date:
+              blank: Enter the contract end date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_fixed_term_fee:
+          attributes:
+            fixed_term_fee:
+              blank: Enter the fixed term fee
         supply_teachers/journey/temp_to_perm_calculator:
           attributes:
             contract_start_date:
