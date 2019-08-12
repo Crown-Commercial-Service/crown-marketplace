@@ -24,7 +24,7 @@ $(function () {
 
     const renderSelectedServices = (function () {
 
-        for (let x = 0; selectedServices.length; x++) {
+        for (let x = 0; x < selectedServices.length; x++) {
             let service = selectedServices[x];
             let id = service.code;
             let newCheckBoxItem = '<div class="govuk-checkboxes__item">\n' +
