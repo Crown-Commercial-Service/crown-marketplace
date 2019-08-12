@@ -1594,9 +1594,9 @@ en:
         header: You could be charged
         header_no_fee: No transfer fee required
         no_fee:
+          end_not_within_6_months: Based on the information you have provided, no fee is required as the employee's contract ended more than 6 months ago.
           hire_not_within_6_months: Based on the information you have provided, no fee is required as the gap between the employee's contract finishing and fully permanent position starting is greater than or equal to 6 months.
           length_not_within_12_months: Based on the information you have provided, no fee is required as the employee has been continually employed for more than 12 months.
-          end_not_within_6_months: Based on the information you have provided, no fee is required as the employee's contract ended more than 6 months ago.
         panel_body: if you choose to hire the worker before %{date}
       index:
         accreditation_of_agencies: Accreditation of agencies
