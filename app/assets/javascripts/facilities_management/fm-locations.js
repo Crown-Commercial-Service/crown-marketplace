@@ -196,5 +196,4 @@ $(function () {
         initialize();
 
     }
-)
-;                     cd 
+);
