@@ -1,6 +1,7 @@
 module SupplyTeachers
   class Journey::FTAToPermContractEnd < GenericJourney
     include Steppable
+    include Dateable
 
     attribute :contract_start_date_day
     attribute :contract_start_date_month
@@ -8,6 +9,7 @@ module SupplyTeachers
     attribute :contract_end_date_day
     attribute :contract_end_date_month
     attribute :contract_end_date_year
+    attribute :no_fee_reason
     validate :ensure_contract_end_date_valid
     validate :ensure_contract_end_date_after_contract_start_date
     validates :contract_end_date, presence: true
@@ -18,7 +20,7 @@ module SupplyTeachers
       if contract_end_date && contract_end_within_6_months && contract_length_within_12_months
         Journey::FTAToPermHireDate
       else
-        #no fee
+        @no_fee_reason = contract_end_within_6_months ? 'length_not_within_12_months' : 'end_not_within_6_months'
         Journey::FTAToPermFee
       end
     end
@@ -64,12 +66,16 @@ module SupplyTeachers
     end
 
     def contract_end_within_6_months
-      today = Date.today
-      ((today.year * 12 + today.month) - (contract_end_date_year.to_i * 12 + contract_end_date_month.to_i)) <= 6
+      return unless contract_end_date
+
+      today = Time.zone.today
+      difference_in_months(contract_end_date, today) <= 6
     end
 
     def contract_length_within_12_months
-      ((contract_end_date_year.to_i * 12 + contract_end_date_month.to_i) - (contract_start_date_year.to_i * 12 + contract_start_date_month.to_i)) < 12
+      return unless contract_end_date && contract_start_date
+
+      difference_in_months(contract_start_date, contract_end_date) < 12
     end
   end
 end
