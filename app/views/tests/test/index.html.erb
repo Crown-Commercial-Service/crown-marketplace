@@ -154,7 +154,6 @@
 <% end %>
 </body>
 <script language="JavaScript">
-    //alert('hello')
     function pageInit()
     {
         test_calc_form.onsubmit = submit
@@ -163,7 +162,6 @@
 
     function selectAll(source, pattern)
     {
-        // checkboxes = document.getElementsById('service');
         checkboxes = document.querySelectorAll(pattern)
         for(var i in checkboxes)
             checkboxes[i].checked = source.checked;
@@ -178,10 +176,6 @@
             alert('Please enter a number for Gross Internam Area (GIA)')
             return false
         }
-        // event.preventDefault()
-
-        // selectAll(this,'[name^=region-]')
-        // selectAll(this,'[name^=service-]')
 
         region_checkboxes = document.querySelectorAll('[name^=region-]:checked')
         service_checkboxes = document.querySelectorAll('[name^=service-]:checked')
@@ -198,8 +192,6 @@
             return false
         }
 
-
         return true
-
     }
 </script>
