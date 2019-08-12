@@ -16,10 +16,6 @@ module Tests
 
     private
 
-    def set_back_path
-      @back_path = :back
-    end
-
     # rubocop:disable Metrics/AbcSize
     def calculate(vals)
       id = SecureRandom.uuid
