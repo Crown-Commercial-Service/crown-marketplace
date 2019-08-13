@@ -1,8 +1,3 @@
-/*
-* filename: location.js
-* Description: Click handlers for the select location page
-* */
-
 $(function () {
 
         /* govuk-accordion__controls event handlers */
@@ -181,8 +176,8 @@ $(function () {
 
         if (isLocationValid() === true) {
             const locationsForm = $('#save-locations-link-form');
-            let locationCodes = pageUtils.getCodes(pageUtils.getCachedData('fm-locations')); //.map(x => x.code) ;
-            let serviceCodes =pageUtils.getCodes( pageUtils.getCachedData('fm-services')); //.map(x => x.code) ;
+            let locationCodes = pageUtils.getCodes(pageUtils.getCachedData('fm-locations'));
+            let serviceCodes =pageUtils.getCodes( pageUtils.getCachedData('fm-services'));
 
             $('#postedlocations').val(JSON.stringify(locationCodes));
             $('#postedservices').val(JSON.stringify(serviceCodes));
