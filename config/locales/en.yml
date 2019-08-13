@@ -862,6 +862,30 @@ en:
       service_not_suitable:
         better_suited_framework_html: The <a href="https://www.crowncommercial.gov.uk/agreements/rm3786" target="_blank">General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
+    job_titles:
+      '1':
+        junior: Legal Support Practitioner/Executive
+        managing: Managing Practitioner
+        senior: Senior Practitioner
+        solicitor: Solicitor/Associate
+      '2':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
+      '3':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
+      '4':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
     journey:
       check_suitability:
         heading: Will the fees be under £20,000 per matter?
@@ -944,32 +968,41 @@ en:
         forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
-      cg_no_suppliers_found:
-        header: No suppliers were found
-        link_click_text: Contact CCS Support
-        link_end_text: for help.
-        statement_pt_1: The
-        statement_pt_2_link_text: General Legal Advice Services (RM3786)
-        statement_pt_3: agreement provides legal advice services for central government and arms-length bodies.
-      download_shortlist:
+      download:
         back_to_start: Back to start
         download_statement: The spreadsheet includes the selections you made, for your records and audit trail
         download_supplier_shortlist_link: Download supplier shortlist
         heading: Download the supplier shortlist
         page_title: Download supplier list
       index:
+        download_suppliers_list: Download the supplier list
         heading: Supplier results
+        no_suppliers_found:
+          contact_html: "%{contact_link} for help."
+          contact_link_text: Contact CCS Support
+          general_legal_advice_services_link_text: General Legal Advice Services (RM3786)
+          general_legal_advice_services_link_url: https://www.crowncommercial.gov.uk/agreements/RM3786
+          heading: No suppliers were found
+          text: There are no suppliers on this panel that can provide the law services you need
+          text_central_government_users_html: The %{general_legal_advice_service_link} agreement provides legal services for central government and arms-length bodies.
         page_title: Supplier results
-        results_html: <strong class="govuk-!-font-size-27">%{results}</strong> <strong>firms</strong> can provide the legal services that meet your requirements.
         sme: SME
-      no_suppliers_found:
-        heading: No suppliers were found
-        link_click_text: Contact CCS Support
-        link_end_text: for help.
-        statement: No companies can provide suppliers that can meet your requirements.
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
       show:
-        caption: Supplier details
-        heading: Supplier details
+        contact_details:
+          address: Address
+          email: Email
+          heading: Contact details
+          person: Name
+          phone_number: Phone number
+          website: Website
+        daily: Daily
+        day_rates: Day rates
+        fixed_until: Fixed until September 2021 and based on an 8 hour working day.
+        further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
+        hourly: Hourly
+        is_an_sme: This supplier is a small or medium-sized enterprise
+        monthly: Monthly
     users:
       confirm_new:
         confirmation_code: Confirmation code
