@@ -3,9 +3,6 @@
 <div class="govuk-body">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-0"><%= t('.heading') %></h1>
-
       <% if @all_suppliers.count.zero? %>
         <h1 class="govuk-heading-xl"><%= t('.no_suppliers_found.heading') %></h1>
         <p class="govuk-body govuk-!-font-size-24">
@@ -26,7 +23,7 @@
           <%= t('.no_suppliers_found.contact_html', contact_link: link_to(t('.no_suppliers_found.contact_link_text'), t('common.ccs_contact_url'))) %>
         </p>
       <% else %>
-        <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-0"><%= t('.heading') %></h1>
         <p class="govuk-body">
           <%= t('.suppliers_found_html',
                 number: @all_suppliers.count,
