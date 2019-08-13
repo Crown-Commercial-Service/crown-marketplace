@@ -181,8 +181,8 @@ $(function () {
 
         if (isLocationValid() === true) {
             const locationsForm = $('#save-locations-link-form');
-            let locationCodes = pageUtils.getCachedData('fm-locations').map(x => x.code) ;
-            let serviceCodes = pageUtils.getCachedData('fm-services').map(x => x.code) ;
+            let locationCodes = pageUtils.getCodes(pageUtils.getCachedData('fm-locations')); //.map(x => x.code) ;
+            let serviceCodes =pageUtils.getCodes( pageUtils.getCachedData('fm-services')); //.map(x => x.code) ;
 
             $('#postedlocations').val(JSON.stringify(locationCodes));
             $('#postedservices').val(JSON.stringify(serviceCodes));
@@ -196,5 +196,4 @@ $(function () {
         initialize();
 
     }
-)
-;
+);
