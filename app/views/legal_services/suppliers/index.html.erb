@@ -2,27 +2,32 @@
 
 <div class="govuk-body">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <% if @all_suppliers.count.zero? %>
+    <% if @all_suppliers.count.zero? %>
+      <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl"><%= t('.no_suppliers_found.heading') %></h1>
-        <p class="govuk-body govuk-!-font-size-24">
-          <% if params[:central_government] == 'yes' %>
+        <% if params[:central_government] == 'yes' %>
+          <p class="govuk-body govuk-!-font-size-24">
             <%= t(
               '.no_suppliers_found.text_central_government_users_html',
                general_legal_advice_service_link: link_to(
-                 t('.no_suppliers_found.general_legal_advice_services_link_text'),
+                  t('.no_suppliers_found.general_legal_advice_services_link_text'),
                  t('.no_suppliers_found.general_legal_advice_services_link_url')
                 )
               ) %>
-          <% else %>
+          </p>
+          <br>
+          <p class="govuk-body">
+            <%= t('.no_suppliers_found.contact_html', contact_link: link_to(t('.no_suppliers_found.contact_link_text'), t('common.ccs_contact_url'))) %>
+          </p>
+        <% else %>
+          <p class="govuk-body govuk-!-font-size-24">
             <%=t('.no_suppliers_found.text') %>
-          <% end %>
-        </p>
-        <br>
-        <p class="govuk-body">
-          <%= t('.no_suppliers_found.contact_html', contact_link: link_to(t('.no_suppliers_found.contact_link_text'), t('common.ccs_contact_url'))) %>
-        </p>
-      <% else %>
+          </p>
+        <% end %>
+        <%= link_to 'Back to start', legal_services_path, class: 'govuk-button govuk-!-margin-top-4 govuk-!-padding-left-4 govuk-!-padding-right-4' %>
+      </div>
+    <% else %>
+      <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-0"><%= t('.heading') %></h1>
         <p class="govuk-body">
           <%= t('.suppliers_found_html',
@@ -44,7 +49,7 @@
           </ul>
           <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
         </section>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
