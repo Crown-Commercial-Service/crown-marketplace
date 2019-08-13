@@ -44,14 +44,14 @@
         <% if nuts2_code %>
           <br/>
         <% end %>
-        <%=   "#{region_code_names[x.nuts2_code]}" %>
+        <%=   "#{region_code_names[x.nuts2_code]} (#{x.nuts2_code})" %>
         <%   nuts2_code = x.nuts2_code %>
         <br/>
       <% end %>
 
-      <input type="checkbox" name="region-<%= "#{x.code}" %>" id=<%= "#{x.code}" %> value=<%= "#{x.code}" %> >
       <label>
-        <%= x.name %>
+        <input type="checkbox" name="region-<%= "#{x.code}" %>" id=<%= "#{x.code}" %> value=<%= "#{x.code}" %> >
+        <%= "#{x.name} (#{x.code})"%>
       </label>
       <br/>
     <% end %>
