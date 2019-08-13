@@ -16,6 +16,7 @@ module JourneyControllerActions
 
   def answer
     @journey = build_journey
+
     if @journey.valid?
       redirect_to @journey.next_step_path
     else

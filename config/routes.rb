@@ -272,6 +272,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace 'tests', path: 'test' do
+    is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
+    match '/', to: 'test#index', via: %i[get post] if is_dev_db.nil? || (is_dev_db.include? 'dev.')
+  end
+
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
   get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
   get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'
