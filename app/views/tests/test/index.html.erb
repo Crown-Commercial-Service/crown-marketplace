@@ -12,8 +12,10 @@
     <button type="submit">Submit</button>
       <% if @results  %>
         <table>
+        <% i = 0 %>
         <% @results.sort_by { |k,v| @results[k]}.each do |k,v| %>
           <tr>
+            <td align="right"><%= "#{i += 1}."%>&nbsp;&nbsp;</td>
             <td><%= "#{k}" %></td>
             <td align="right"><%= "#{number_to_currency(v, precision: 2)}" %></td>
           </tr>
