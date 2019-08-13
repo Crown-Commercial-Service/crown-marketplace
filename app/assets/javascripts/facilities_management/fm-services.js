@@ -45,9 +45,9 @@ $(function () {
                         if (currentService && currentService.code !== service.code) {
                             return true;
                         }
-                    };
+                    });
                 }
-            };
+            });
         }
         updateServiceCount();
     });
@@ -152,7 +152,7 @@ $(function () {
 
             $("input[forserviceid='" + serviceId + "']").prop("checked", bCheckCheckAllBox);
         }
-    };
+    });
 
     /* uncheck all check boxes and clear list */
     const clearAll = (function () {
@@ -170,7 +170,7 @@ $(function () {
         $('input[serviceid=' + serviceId + ']:checked').each(function () {
             addSelectedItem(serviceId, $(this).prop("id"), $(this).prop("title"));
         });
-    };
+    });
 
     /* Click handler to remove all services */
     $('#remove-all-services-link').on('click', function (e) {
