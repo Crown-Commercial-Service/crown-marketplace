@@ -34,20 +34,20 @@ $(function () {
             $('#fm-buildings-selected-services').prepend(newCheckBoxItem);
 
             /* add a change handler for the new check box item */
-            $('#' + service.code).on('change', (e) => {
+            $('#' + service.code).on('change', function (e) {
                 let isChecked = e.target.checked;
 
                 if (isChecked === true) {
                     selectedServicesForThisBuilding.push(service);
                 } else {
                     /* remove the item */
-                    selectedServicesForThisBuilding = selectedServicesForThisBuilding.filter((currentService) => {
+                    selectedServicesForThisBuilding = selectedServicesForThisBuilding.filter(function (currentService) {
                         if (currentService && currentService.code !== service.code) {
                             return true;
                         }
-                    });
+                    };
                 }
-            });
+            };
         }
         updateServiceCount();
     });
@@ -127,7 +127,7 @@ $(function () {
         });
     });
 
-    const synchroniseServiceSelectAllCheckBox = ((serviceId, bAllIsChecked) => {
+    const synchroniseServiceSelectAllCheckBox = (function (serviceId, bAllIsChecked) {
         let allServiceWorkItems = $("input[serviceid='" + serviceId + "']");
 
         //correctly toggle select-all state for the service sub-set
@@ -152,7 +152,7 @@ $(function () {
 
             $("input[forserviceid='" + serviceId + "']").prop("checked", bCheckCheckAllBox);
         }
-    });
+    };
 
     /* uncheck all check boxes and clear list */
     const clearAll = (function () {
@@ -164,13 +164,13 @@ $(function () {
         updateServiceCount();
     });
 
-    const showSelectedServicesInBasket = ((serviceId) => {
+    const showSelectedServicesInBasket = (function (serviceId) {
         $("#selected-fm-services li[serviceid=" + serviceId + "]").remove();
 
         $('input[serviceid=' + serviceId + ']:checked').each(function () {
             addSelectedItem(serviceId, $(this).prop("id"), $(this).prop("title"));
         });
-    });
+    };
 
     /* Click handler to remove all services */
     $('#remove-all-services-link').on('click', function (e) {
