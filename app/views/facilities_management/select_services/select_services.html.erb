@@ -19,7 +19,8 @@
           </h2>
         </div>
         <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
-          <% @work_packages.each do |workPackage| %>
+          <% filteredCollection = @work_packages.select { |wp| wp['work_package_code'].starts_with?(service['code'])} %>
+          <% filteredCollection.each do |workPackage| %>
             <% if workPackage['work_package_code'].start_with?(service['code']) %>
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" aria-describedby="<%= workPackage['name'] %>">
@@ -46,23 +47,25 @@
               </div>
             <% end %>
           <% end %>
-          <p><%= t('facilities_management.basket.or_text') %></p>
-          <div id="services-checkboxes" class="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input title="Select all code-<%= service['code'] %> services"
-                     style="margin-top:4px"
-                     class="govuk-checkboxes__input"
-                     id="<%= service['code'].sub('.', '-')%>_all"
-                     name="fm-building-service-checkbox_select_all"
-                     forserviceid="<%= service['code'] %>"
-                     type="checkbox"
-                     value="<%= service['code'] %>">
-              <label class="govuk-label govuk-checkboxes__label"
-                     for="<%= service['code'].sub('.', '-') %>_all">
-                <%= t('facilities_management.basket.selectall_text') %>
-              </label>
+          <% if filteredCollection.count > 1 %>
+            <p><%= t('facilities_management.basket.or_text') %></p>
+            <div id="services-checkboxes" class="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input title="Select all code-<%= service['code'] %> services"
+                       style="margin-top:4px"
+                       class="govuk-checkboxes__input"
+                       id="<%= service['code'].sub('.', '-')%>_all"
+                       name="fm-building-service-checkbox_select_all"
+                       forserviceid="<%= service['code'] %>"
+                       type="checkbox"
+                       value="<%= service['code'] %>">
+                <label class="govuk-label govuk-checkboxes__label"
+                       for="<%= service['code'].sub('.', '-') %>_all">
+                  <%= t('facilities_management.basket.selectall_text') %>
+                </label>
+              </div>
             </div>
-          </div>
+            <%end %>
         </div>
       </div>
     <% end %>
