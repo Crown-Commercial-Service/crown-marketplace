@@ -80,7 +80,6 @@ $(function () {
 
     /* remove a service from the selected list */
     const removeSelectedItem = (function (id) {
-        id = id + "_selected";
         $('li#' + id).remove();
         id = id.replace('_selected', '');
         $("input#" + id).prop('checked', false);
