@@ -1,6 +1,7 @@
 module SupplyTeachers
   class Journey::FTAToPermFixedTermFee
     include Steppable
+    include Dateable
 
     attribute :fixed_term_fee
     attribute :contract_start_date_day
@@ -24,7 +25,7 @@ module SupplyTeachers
     def current_contract_length
       return unless contract_start_date && contract_end_date
 
-      ((contract_end_date - contract_start_date).to_f / 365 * 12).round
+      difference_in_months(contract_start_date, contract_end_date)
     end
 
     def hire_by_date
