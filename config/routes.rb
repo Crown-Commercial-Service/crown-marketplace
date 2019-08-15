@@ -95,7 +95,13 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
+
   namespace 'facilities_management', path: 'facilities-management' do
+    namespace 'public_beta', path: 'public-beta' do
+      get '/', to: 'home#index'
+      get '/buildings-management', to: 'buildings_management#buildings_management'
+    end
+
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     # get '/value-band', to: 'select_locations#select_location'
