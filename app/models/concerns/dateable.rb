@@ -6,13 +6,12 @@ module Dateable
     no_of_months + half_month(start_date, end_date, no_of_months)
   end
 
+  # no of days in the last month divided by no of extra days should be more or equal to 0.5
+  # eg. 15/07 - 31/08 = 1 month and 16 days; 16/31 = 0.52 - this means 1.5 months
   def half_month(start_date, end_date, no_of_months)
     last_month = (start_date + no_of_months.months)
     no_of_extra_days = end_date - last_month
-    no_of_extra_days >= no_of_days_for_half_month(last_month) ? 0.5 : 0
-  end
 
-  def no_of_days_for_half_month(date)
-    date.month == 2 ? 14 : 15
+    no_of_extra_days / last_month.end_of_month.day.to_f >= 0.5 ? 0.5 : 0
   end
 end
