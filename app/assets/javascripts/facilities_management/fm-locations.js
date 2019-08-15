@@ -23,9 +23,9 @@ $(function () {
         /* Update the count of selected locations */
         const updateLocationCount = (function () {
             let count = $("#selected-fm-locations li").length;
-        let msg = count > 0 ? (count === 1 ? "1 region" : count + " regions") : "None";
+            let msg = count > 0 ? (count === 1 ? "1 region" : count + " regions") : "None";
 
-        if (count < 2) {
+            if (count < 2) {
                 $('#remove-all-locations-link').prop('hidden', true);
             } else {
                 $('#remove-all-locations-link').prop('hidden', false);
@@ -85,15 +85,21 @@ $(function () {
                 if (e.target.checked === true) {
                     $('input[name="' + ns + '"]').trigger("click");
                     $('input[name="' + ns + '"]').prop("checked", true);
-                    return;
+
                 } else {
                     $('input[name="' + ns + '"]').trigger("click");
                     $('input[name="' + ns + '"]').prop("checked", false);
                 }
             }
 
+
             let total_count = $('input[name="' + n + '"]').length;
             let count = $('input[name="' + n + '"]').filter(':checked').length;
+
+
+            console.log(count + ' checked of ' + total_count + ' for ' + n);
+
+
             $('#' + n + '_all').prop("checked", (count === total_count) ? true : false);
 
             let labelID = '#' + e.target.id + '_label';
@@ -170,18 +176,18 @@ $(function () {
 
         /* Click handler for save and continue button */
         $('#save-locations-link').on('click', function (e) {
-        pageUtils.setCachedData('fm-locations', selectedLocations);
-        e.preventDefault();
-        pageUtils.toggleInlineErrorMessage(false);
+            pageUtils.setCachedData('fm-locations', selectedLocations);
+            e.preventDefault();
+            pageUtils.toggleInlineErrorMessage(false);
 
-        if (isLocationValid() === true) {
-            const locationsForm = $('#save-locations-link-form');
-            let locationCodes = pageUtils.getCodes(pageUtils.getCachedData('fm-locations'));
-            let serviceCodes =pageUtils.getCodes( pageUtils.getCachedData('fm-services'));
+            if (isLocationValid() === true) {
+                const locationsForm = $('#save-locations-link-form');
+                let locationCodes = pageUtils.getCodes(pageUtils.getCachedData('fm-locations'));
+                let serviceCodes = pageUtils.getCodes(pageUtils.getCachedData('fm-services'));
 
-            $('#postedlocations').val(JSON.stringify(locationCodes));
-            $('#postedservices').val(JSON.stringify(serviceCodes));
-            locationsForm.trigger('submit');
+                $('#postedlocations').val(JSON.stringify(locationCodes));
+                $('#postedservices').val(JSON.stringify(serviceCodes));
+                locationsForm.trigger('submit');
             } else {
                 pageUtils.toggleInlineErrorMessage(true);
                 window.location = '#';
