@@ -111,7 +111,7 @@ $(function () {
             let sid = id.split('_');
             let ns = sid[0];
             let regionItems = $('input[name="' + ns + '"]').get();
-            for ( var n = 0; n < regionItems.length; n++ ) {
+            for ( let n = 0; n < regionItems.length; n++ ) {
                 showOrRemoveBasketLinks(regionItems[n], regionItems[n].id) ;
             }
         } else {
