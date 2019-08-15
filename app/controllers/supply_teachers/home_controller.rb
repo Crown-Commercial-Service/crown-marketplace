@@ -31,7 +31,7 @@ module SupplyTeachers
       @back_path = journey.previous_step_path
 
       @calculator = FTAToPermCalculator::Calculator.new(
-        fixed_term_contract_fee: @previous_step.try(:fixed_term_fee).try(:to_i),
+        fixed_term_contract_fee: @previous_step.try(:fixed_term_fee).try(:to_f),
         current_contract_length: @previous_step.try(:current_contract_length).try(:to_f),
       )
     end
