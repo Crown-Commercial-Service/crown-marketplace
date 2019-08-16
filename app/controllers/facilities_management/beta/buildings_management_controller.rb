@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class PublicBeta::BuildingsManagementController < FacilitiesManagement::BuildingsController
+  class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
     before_action :authenticate_user!, only: %i[buildings_management].freeze
     before_action :authorize_user, only: %i[buildings_management].freeze
 
