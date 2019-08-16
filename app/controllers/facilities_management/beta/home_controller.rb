@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class PublicBeta::HomeController < FacilitiesManagement::HomeController
+  class Beta::HomeController < FacilitiesManagement::HomeController
 
   end
 end
