@@ -97,7 +97,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'facilities_management', path: 'facilities-management' do
-    namespace 'public_beta', path: 'public-beta' do
+    namespace 'beta', path: 'beta' do
       get '/', to: 'home#index'
       get '/buildings-management', to: 'buildings_management#buildings_management'
     end
