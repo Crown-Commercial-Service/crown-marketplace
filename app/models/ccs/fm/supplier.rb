@@ -22,6 +22,17 @@ module CCS
       def self.contact_name(name)
         where("data->>'contact_name' = '#{name}'")
       end
+
+      def self.selected_suppliers(for_lot, for_regions, for_services)
+        suppliers = CCS::FM::Supplier.all.select do |s|
+          s.data['lots'].find do |l|
+            (l['lot_number'] == for_lot) &&
+              (for_regions & l['regions']).any? &&
+              (for_services & l['services']).any?
+          end
+        end
+      end
+
     end
   end
 end
