@@ -6,8 +6,8 @@
         <thead>
           <tr>
             <th style="max-width:25%;"><%=t('facilities_management.beta.index.column_name_header') %></th>
-            <th style="min-width:35%;"><%=t('facilities_management.beta.index.column_desc_header') %></th>
-            <th><%=t('facilities_management.beta.index.column_lstup_header') %></th>
+            <th style="min-width:25%;"><%=t('facilities_management.beta.index.column_desc_header') %></th>
+            <th style="min-width:12ex"><%=t('facilities_management.beta.index.column_lstup_header') %></th>
             <th><%=t('facilities_management.beta.index.column_status_header') %></th>
           </tr>
         </thead>
@@ -18,12 +18,12 @@
             <td><%= link_to building['name'].to_s, 'facilities-management/beta/building_details_summary/'+building['id'].to_s, { class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
             </td>
             <td><%= building['description'].to_s.length > 0 ? building['description'].to_s : '-'%></td>
-            <td><%= record['updated_at'].to_s %></td>
+            <td><%= record['updated_at'].to_datetime.strftime("%F") %></td>
             <td><%= record['status'].to_s %></td>
           </tr>
         <% end %>
         </tbody>
-        <%if @building_count > 10 %>
+        <%if @building_count > 0 %>
           <tfoot>
             <tr>
               <th><%=t('facilities_management.beta.index.column_name_header') %></th>
