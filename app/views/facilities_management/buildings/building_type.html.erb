@@ -26,7 +26,7 @@
                name="fm-builing-type-radio" type="radio" value="<%= building_type %>">
         <label class="govuk-label govuk-radios__label" for="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>">
           <%= building_type %><br>
-          <span class="govuk-caption-m"><%= @type_list_descriptions[building_type] %></span>
+          <span class="govuk-caption-m"><%= @type_list_titles[building_type] %></span>
         </label>
       </div>
     <% end %>
