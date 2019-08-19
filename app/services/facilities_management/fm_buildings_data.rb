@@ -101,7 +101,7 @@ class FMBuildingData
      'Port and Airport buildings', 'List X Property', 'Hospitals', 'Mothballed / Vacant / Disposal']
   end
 
-  def building_type_list_descriptions
+  def building_type_list_titles
     { 'General office - Customer Facing' => 'General office areas and customer facing areas.',
       'General office - Non Customer Facing' => 'General office areas and non-customer facing areas.',
       'Call Centre Operations' => 'Call centre operations.',
