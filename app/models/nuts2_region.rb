@@ -14,6 +14,10 @@ class Nuts2Region
   def self.all_codes
     all.map(&:code)
   end
+
+  def self.to_h
+    Nuts2Region.all.map(&:code).zip(Nuts2Region.all.map(&:name)).to_h
+  end
 end
 
 StaticDataLoader.load_static_data(Nuts2Region)

@@ -1,6 +1,6 @@
 const pageUtils = {
 
-    formatPostCode: (pc) => {
+    formatPostCode: function (pc) {
 
         let outer = pc.substring(0, pc.length - 3);
         let inner = pc.slice(-3);
@@ -8,13 +8,13 @@ const pageUtils = {
     },
 
     /* Sort an un-ordered list */
-    sortUnorderedList: (listID) => {
+    sortUnorderedList: function (listID) {
         let list, i, switching, b, shouldSwitch;
         list = document.getElementById(listID);
         switching = true;
-        /* Loop until no switching has been done: */
+        /* Loop until no switching has been done: function */
         while (switching) {
-            // Start by saying: no switching is done:
+            // Start by saying: function no switching is done:
             switching = false;
             b = list.getElementsByTagName("LI");
             // Loop through all list items:
@@ -39,107 +39,32 @@ const pageUtils = {
         }
     },
 
-    setCachedData: (key, data) => {
+    setCachedData: function (key, data) {
         if (localStorage) {
             const dataString = JSON.stringify(data);
             localStorage.setItem(key, dataString);
         }
 
-        let params = {
-            key: key,
-            value: data
-        };
-
-        let url = '/facilities-management/cache/set';
-
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify(params),
-            processData: false,
-            success: function (data, textStatus, jQxhr) {
-
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
-            }
-        });
-
     },
 
-    getCachedData: (key) => {
-        let params = {
-            key: key
-        };
+    getCachedData: function (key) {
 
-        let url = '/facilities-management/cache/get';
-
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify(params),
-            processData: false,
-            success: function (data, textStatus, jQxhr) {
-
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
-            }
-        });
         if (localStorage) {
             return JSON.parse(localStorage.getItem(key)) || [];
         }
     },
 
-    clearCashedData: (key) => {
+    clearCashedData: function (key) {
         if (key) {
             localStorage.removeItem(key);
-            let params = {
-                key: key
-            };
-
-            let url = '/facilities-management/cache/clear_by_key';
-
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                type: 'post',
-                contentType: 'application/json',
-                data: JSON.stringify(params),
-                processData: false,
-                success: function (data, textStatus, jQxhr) {
-
-                },
-                error: function (jqXhr, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }
-            });
         } else {
             localStorage.clear();
-            let url = '/facilities-management/cache/clear';
-
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                type: 'post',
-                contentType: 'application/json',
-                processData: false,
-                success: function (data, textStatus, jQxhr) {
-                    console.log(data);
-                },
-                error: function (jqXhr, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }
-            });
         }
+
     },
 
-    sortByName: (arr) => {
-        return arr.sort((a, b) => {
+    sortByName: function (arr) {
+        return arr.sort(function (a, b) {
             const nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
             if (nameA < nameB) //sort string ascending
                 return -1;
@@ -149,15 +74,18 @@ const pageUtils = {
         });
     },
 
-    getCodes: (arr) => {
+    getCodes: function (arr) {
         let result = [];
-        arr.forEach((value, index, array) => {
+
+        for (let x = 0; x < arr.length; x++) {
+            let value = arr[x];
             result.push(value.code.replace('-', '.'));
-        });
+        }
+
         return result;
     },
 
-    generateGuid: () => {
+    generateGuid: function () {
         let result, i, j;
         result = '';
         for (j = 0; j < 32; j++) {
@@ -169,7 +97,7 @@ const pageUtils = {
         return result;
     },
 
-    isPostCodeValid: (postCodeInput) => {
+    isPostCodeValid: function (postCodeInput) {
         let result;
         if (postCodeInput) {
             postCodeInput = postCodeInput.replace(/\s/g, "");
@@ -181,7 +109,7 @@ const pageUtils = {
         return result;
     },
 
-    toggleInlineErrorMessage: (show) => {
+    toggleInlineErrorMessage: function (show) {
         let inLineErrorMessage = $('#inline-error-message');
 
         if (inLineErrorMessage && show === true) {
@@ -193,7 +121,7 @@ const pageUtils = {
         }
     },
 
-    showGIAError: (show, errorMsg) => {
+    showGIAError: function (show, errorMsg) {
 
         errorMsg = errorMsg || "The total internal area value entered is invalid";
         if (show === true) {
@@ -206,7 +134,7 @@ const pageUtils = {
         }
     },
 
-    showPostCodeError: (show, errorMsg) => {
+    showPostCodeError: function (show, errorMsg) {
 
         errorMsg = errorMsg || "The postcode entered is invalid";
         if (show === true) {
@@ -219,7 +147,7 @@ const pageUtils = {
         }
     },
 
-    showAddressError: (show, errorMsg) => {
+    showAddressError: function (show, errorMsg) {
 
         errorMsg = errorMsg || "No address selected";
         if (show === true) {
@@ -237,7 +165,7 @@ const pageUtils = {
 };
 
 const fm = {
-    clearBuildingCache: () => {
+    clearBuildingCache: function () {
         pageUtils.clearCashedData('fm-current-building');
         pageUtils.clearCashedData('fm-current-region');
         pageUtils.clearCashedData('fm-new-building-name');
@@ -248,7 +176,7 @@ const fm = {
         pageUtils.clearCashedData('fm-postcode');
     },
     services: {
-        updateBuilding: (building, isUpdate, whereNext) => {
+        updateBuilding: function (building, isUpdate, whereNext) {
 
             let url = '/facilities-management/buildings/new-building-address/save-building';
 
@@ -280,7 +208,7 @@ const fm = {
             });
         },
 
-        save_uom: (building_id, service_code, uom_value) => {
+        save_uom: function (building_id, service_code, uom_value) {
 
             let url = '/facilities-management/buildings/save-uom-value';
 
@@ -310,7 +238,7 @@ const fm = {
 
         },
 
-        delete_building: (building_id) => {
+        delete_building: function (building_id) {
 
             let url = '/facilities-management/buildings/delete_building';
 
@@ -335,7 +263,7 @@ const fm = {
 
         },
 
-        saveLiftData: (building_id, liftData) => {
+        saveLiftData: function (building_id, liftData) {
 
             let url = '/facilities-management/services/save-lift-data';
 
@@ -364,7 +292,7 @@ const fm = {
 
         },
 
-        isDateInFuture: (day, month, year) => {
+        isDateInFuture: function (day, month, year) {
             let result = false;
             if (fm.services.isDateValid(day, month, year) === true) {
                 let date_today = new Date();
@@ -378,15 +306,28 @@ const fm = {
 
         },
 
-        isDateValid:
-            (day, month, year) => {
-                const d = new Date(year, month - 1, day);
-                let result = d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month) && d.getDate() === parseInt(day);
-                return result;
-            },
+        isDateValid: function (day, month, year) {
+            const d = new Date(year, month - 1, day);
+            let result = d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month) && d.getDate() === parseInt(day);
+            return result;
+        },
 
-        addressLookUp: (postcode) => {
+        addressLookUp: function (postcode) {
 
         }
     }
 };
+
+$(function () {
+    if (!String.prototype.endsWith) {
+        String.prototype.endsWith = function (searchString, position) {
+            let subjectString = this.toString();
+            if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
+                position = subjectString.length;
+            }
+            position -= searchString.length;
+            let lastIndex = subjectString.indexOf(searchString, position);
+            return lastIndex !== -1 && lastIndex === position;
+        };
+    }
+});

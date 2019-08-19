@@ -2,7 +2,7 @@ module SupplyTeachers
   class HomeController < FrameworkController
     before_action :authenticate_user!, except: :index
     before_action :authorize_user, except: :index
-    before_action :set_end_of_journey, only: :temp_to_perm_fee
+    before_action :set_end_of_journey, only: %i[temp_to_perm_fee fta_to_perm_fee]
 
     def index; end
 
@@ -27,13 +27,12 @@ module SupplyTeachers
 
     def fta_to_perm_fee
       journey = Journey.new(params[:slug], params)
-      previous_step = journey.previous_step
+      @previous_step = journey.previous_step
       @back_path = journey.previous_step_path
 
       @calculator = FTAToPermCalculator::Calculator.new(
-        within_6_months: ActiveModel::Type::Boolean.new.cast(previous_step.within_6_months),
-        fixed_term_contract_fee: previous_step.fixed_term_contract_fee.to_i,
-        current_contract_length: previous_step.current_contract_length.to_i
+        fixed_term_contract_fee: @previous_step.try(:fixed_term_fee).try(:to_f),
+        current_contract_length: @previous_step.try(:current_contract_length).try(:to_f),
       )
     end
   end
