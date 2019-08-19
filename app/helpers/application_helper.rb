@@ -116,7 +116,6 @@ module ApplicationHelper
   end
 
   def service_start_page_path
-    p controller.class.parent_name.underscore.tr('/', '_') + '_path'
     # send controller.class.parent_name.underscore + '_path' if controller.class.parent_name
     send controller.class.parent_name.underscore.tr('/', '_') + '_path' if controller.class.parent_name
   end
