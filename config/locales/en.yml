@@ -153,6 +153,7 @@ en:
         supply_teachers/journey/fta_to_perm_contract_end:
           attributes:
             contract_end_date:
+              after_contract_start_date: The date the contract ended must be after the date the worker’s current contract started.
               blank: Enter the contract end date, including the day, month and year
               invalid: Enter a real date
         supply_teachers/journey/fta_to_perm_contract_start:
@@ -167,6 +168,7 @@ en:
         supply_teachers/journey/fta_to_perm_hire_date:
           attributes:
             hire_date:
+              after_contract_end_date: The date that you wish to hire the worker must be after the date the fixed term contract ended.
               blank: Enter the date, including the day, month and year
               invalid: Enter a real date
         supply_teachers/journey/looking_for:
