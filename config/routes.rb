@@ -95,7 +95,23 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
+
   namespace 'facilities_management', path: 'facilities-management' do
+    namespace 'beta', path: 'beta' do
+      get '/', to: 'buyer_account#buyer_account'
+      get '/buyer_account', to: 'buyer_account#buyer_account'
+      get '/buildings-management', to: 'buildings_management#buildings_management'
+      get '/building', to: 'buildings_management#building'
+      get '/building-type', to: 'buildings_management#building_type'
+      get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
+      get '/building-details-summary', to: 'buildings_management#building_details_summary'
+      get '/building_address', to: 'buildings_management#building_address'
+      get '/building-security-type', to: 'buildings_management#building_security-type'
+      match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
+      match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
+      match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
+    end
+
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     # get '/value-band', to: 'select_locations#select_location'
@@ -134,7 +150,7 @@ Rails.application.routes.draw do
     post '/cache/get', to: 'cache#retrieve'
     post '/cache/clear_by_key', to: 'cache#clear_by_key'
     post '/cache/clear', to: 'cache#clear_all'
-    get '/my-buyer-account', to: 'buyer_account#buyer_account'
+    get '/buyer-account', to: 'buyer_account#buyer_account'
     get '/reset', to: 'buildings#reset_buildings_tables'
     get '/:slug', to: '/errors#404'
 
