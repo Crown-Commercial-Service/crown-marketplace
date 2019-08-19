@@ -100,8 +100,8 @@ Rails.application.routes.draw do
     namespace 'beta', path: 'beta' do
       get '/', to: 'buyer_account#buyer_account'
       get '/buyer_account', to: 'buyer_account#buyer_account'
-      get '/buildings-management', to: 'buildings_management#buildings_management'
-      get '/building', to: 'buildings_management#building'
+      get '/buildings-management', to: 'buildings_management#index'
+      get '/building', to: 'buildings_management#detail'
       get '/building-type', to: 'buildings_management#building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
       get '/building-details-summary', to: 'buildings_management#building_details_summary'
