@@ -100,7 +100,8 @@ Rails.application.routes.draw do
     namespace 'beta', path: 'beta' do
       get '/', to: 'buyer_account#buyer_account'
       get '/buyer_account', to: 'buyer_account#buyer_account'
-      get '/buildings-management', to: 'buildings_management#buildings_management'
+      get '/buildings-management', to: 'buildings_management#index'
+      get '/building-details-summary/:id', to: 'buildings_management#details'
     end
 
     get '/', to: 'home#index'
