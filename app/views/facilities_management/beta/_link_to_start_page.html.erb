@@ -1,0 +1,5 @@
+<% if request.path_info.include? 'my-buyer-account' %>
+  <span class="govuk-heading-m fm-buyer-account-heading"><%= 'Buyer account' %></span>
+<% else %>
+  <%= link_to t('home.index.facilities_management_link'), 'facilities-management/beta/', { class: 'govuk-header__link govuk-header__link--service-name', 'aria-label' => t('layouts.header.go_start_page_aria_label', service_name: t('home.index.facilities_management_link')) } %>
+<% end %>
