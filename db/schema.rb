@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_08_132209) do
+ActiveRecord::Schema.define(version: 2019_08_16_162029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
   enable_extension "postgis"
 
   create_table "facilities_management_buildings", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
+    t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at", default: "2019-08-19 12:00:37"
+    t.string "status", default: "Incomplete", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
@@ -63,20 +63,16 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
   end
 
   create_table "fm_cache", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "key", null: false
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "user_id", null: false
+    t.string "key", null: false
+    t.string "value"
     t.index ["user_id", "key"], name: "fm_cache_user_id_idx"
   end
 
   create_table "fm_lifts", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "building_id", null: false
+    t.string "user_id", null: false
+    t.string "building_id", null: false
     t.jsonb "lift_data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
     t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
   end
@@ -91,11 +87,9 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
   end
 
   create_table "fm_rates", id: false, force: :cascade do |t|
-    t.text "code"
+    t.string "code", limit: 255
     t.decimal "framework"
     t.decimal "benchmark"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.index ["code"], name: "fm_rates_code_key", unique: true
   end
 
