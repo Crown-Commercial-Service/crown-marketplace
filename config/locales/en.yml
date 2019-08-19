@@ -150,6 +150,27 @@ en:
               invalid_location: Enter a valid postcode
             term:
               blank: Select how long you need the worker for
+        supply_teachers/journey/fta_to_perm_contract_end:
+          attributes:
+            contract_end_date:
+              after_contract_start_date: The date the contract ended must be after the date the worker’s current contract started.
+              blank: Enter the contract end date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_contract_start:
+          attributes:
+            contract_start_date:
+              blank: Enter the contract start date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_fixed_term_fee:
+          attributes:
+            fixed_term_fee:
+              blank: Enter the fixed term fee
+        supply_teachers/journey/fta_to_perm_hire_date:
+          attributes:
+            hire_date:
+              after_contract_end_date: The date that you wish to hire the worker must be after the date the fixed term contract ended.
+              blank: Enter the date, including the day, month and year
+              invalid: Enter a real date
         supply_teachers/journey/looking_for:
           attributes:
             looking_for:
@@ -448,7 +469,7 @@ en:
     registrations:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
-        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
         line_01: The email you used doesn't belong to a recognised public sector domain.
         line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
         list_01: you think your domain should be recognised
@@ -533,7 +554,7 @@ en:
         your_details: Your details
       cog_register_domain_not_on_whitelist:
         heading: You must use a public sector email address
-        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
         line_01: The email you used doesn't belong to a recognised public sector domain.
         line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
         list_01: you think your domain should be recognised
@@ -621,10 +642,12 @@ en:
     sign_in: Sign in
     start_now: Start now
     submit: Continue
+    therewasaproblem: There was a problem
     type_csv: text/csv
     type_doc: application/msword
     type_xlsx: application/msexcel
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
+    youmustselect: You must select at least one service before clicking the continue button
   companies:
     unit:
       one: company
@@ -646,11 +669,31 @@ en:
       explanation: You will be able to use the service later.
       title: Service unavailable
   facilities_management:
+    basket:
+      basket_header: selected
+      none: none
+      or_text: or
+      removeall_text: Remove all
+      selectall_text: Select all
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
+    home:
+      beforeyoustart: Before you start
+      heading: Find Facilities Management services
+      startlist: |
+        <li>what services you are looking for</li>
+        <li>building locations and information</li>
+        <li>details of how long you want the services for</li>
+      startnow: Start now
+      subheading: 'Use this tool to:'
+      usagelist: |
+        <li>find a supplier for your facilities management requirements</li>
+        <li>see a shortlist of suppliers available in your region</li>
+        <li>download a spreadsheet with your requirements and list of potential suppliers</li>
+      youneedtoknow: 'You need to know:'
     passwords:
       edit:
         confirm_code: Confirm Code
@@ -675,7 +718,7 @@ en:
     registrations:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
-        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
         line_01: The email you used doesn't belong to a recognised public sector domain.
         line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
         list_01: you think your domain should be recognised
@@ -687,6 +730,14 @@ en:
         email_hint: We will send a confirmation code to this address.
         heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
         lead: You must be employed by, or represent, a public sector organisation.
+    select_locations:
+      heading: Where are your buildings located?
+      subheading: Choose one or more regions, based on building's location where you require facilities management services.
+    select_services:
+      heading: Select the facilities management services do you need
+      servicespec_link_alttext: RM3830 Facilities Management Marketplace
+      servicespec_link_text: Read the service specification document
+      subheading: Choose all facilities management services required within your estate, even if you want services in just one building.
     sessions:
       new:
         email_address: Email address
@@ -830,6 +881,30 @@ en:
       service_not_suitable:
         better_suited_framework_html: The <a href="https://www.crowncommercial.gov.uk/agreements/rm3786" target="_blank">General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
+    job_titles:
+      '1':
+        junior: Legal Support Practitioner/Executive
+        managing: Managing Practitioner
+        senior: Senior Practitioner
+        solicitor: Solicitor/Associate
+      '2':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
+      '3':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
+      '4':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
     journey:
       check_suitability:
         heading: Will the fees be under £20,000 per matter?
@@ -893,7 +968,7 @@ en:
     registrations:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
-        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
         line_01: The email you used doesn't belong to a recognised public sector domain.
         line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
         list_01: you think your domain should be recognised
@@ -912,32 +987,41 @@ en:
         forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
-      cg_no_suppliers_found:
-        header: No suppliers were found
-        link_click_text: Contact CCS Support
-        link_end_text: for help.
-        statement_pt_1: The
-        statement_pt_2_link_text: General Legal Advice Services (RM3786)
-        statement_pt_3: agreement provides legal advice services for central government and arms-length bodies.
-      download_shortlist:
+      download:
         back_to_start: Back to start
         download_statement: The spreadsheet includes the selections you made, for your records and audit trail
         download_supplier_shortlist_link: Download supplier shortlist
         heading: Download the supplier shortlist
         page_title: Download supplier list
       index:
+        download_suppliers_list: Download the supplier list
         heading: Supplier results
+        no_suppliers_found:
+          contact_html: "%{contact_link} for help."
+          contact_link_text: Contact CCS Support
+          general_legal_advice_services_link_text: General Legal Advice Services (RM3786)
+          general_legal_advice_services_link_url: https://www.crowncommercial.gov.uk/agreements/RM3786
+          heading: No suppliers were found
+          text: There are no suppliers on this panel that can provide the law services you need
+          text_central_government_users_html: The %{general_legal_advice_service_link} agreement provides legal services for central government and arms-length bodies.
         page_title: Supplier results
-        results_html: <strong class="govuk-!-font-size-27">%{results}</strong> <strong>firms</strong> can provide the legal services that meet your requirements.
         sme: SME
-      no_suppliers_found:
-        heading: No suppliers were found
-        link_click_text: Contact CCS Support
-        link_end_text: for help.
-        statement: No companies can provide suppliers that can meet your requirements.
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
       show:
-        caption: Supplier details
-        heading: Supplier details
+        contact_details:
+          address: Address
+          email: Email
+          heading: Contact details
+          person: Name
+          phone_number: Phone number
+          website: Website
+        daily: Daily
+        day_rates: Day rates
+        fixed_until: Fixed until September 2021 and based on an 8 hour working day.
+        further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
+        hourly: Hourly
+        is_an_sme: This supplier is a small or medium-sized enterprise
+        monthly: Monthly
     users:
       confirm_new:
         confirmation_code: Confirmation code
@@ -1221,7 +1305,7 @@ en:
     registrations:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
-        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
         line_01: The email you used doesn't belong to a recognised public sector domain.
         line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
         list_01: you think your domain should be recognised
@@ -1539,10 +1623,14 @@ en:
         subheading: If you don’t have a DfE Sign-in account
     home:
       fta_to_perm_fee:
-        avoid_fee: To avoid this fee you can hire the worker permanently 6 months after current contract with you ends.
-        header: Fixed-term to permanent fee
-        no_fee: You cannot be charged a fee if you hire the worker 6 months after their contract ends
-        panel_body: Based on the information provided you could be charged
+        check_another_fixed_term_contract: Check another fixed term contract
+        header: You could be charged
+        header_no_fee: No transfer fee required
+        no_fee:
+          end_not_within_6_months: Based on the information you have provided, no fee is required as the employee's contract ended more than 6 months ago.
+          hire_not_within_6_months: Based on the information you have provided, no fee is required as the gap between the employee's contract finishing and fully permanent position starting is greater than or equal to 6 months.
+          length_not_within_12_months: Based on the information you have provided, no fee is required as the employee has been continually employed for more than 12 months.
+        panel_body: if you choose to hire the worker before %{date}
       index:
         accreditation_of_agencies: Accreditation of agencies
         all_suppliers_have_undergone: All agencies have undergone background screening and safeguarding to DfE’s Keeping Children Safe in Education standards. They are audited and accredited against best practice standards in education recruitment.
@@ -1608,16 +1696,27 @@ en:
         question_hint: We use this to find agencies near to your school
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
-      fta_to_perm_calculator:
-        answer_within_6_months_false: 'No'
-        answer_within_6_months_true: 'Yes'
-        current_contract_length_question: How many months long is the worker's current fixed-term contract?
-        current_contract_length_question_hint: For example, 6
-        fixed_term_contract_fee_icon: "£"
-        fixed_term_contract_fee_question: What fixed-term contract fee did you originally pay for the worker
-        fixed_term_contract_fee_question_hint: An amount in pounds. For example, 15000
-        header: Work out what fixed-term worker transfer fee you could be charged
-        within_6_months_question: Do you intend to hire the worker within 6 months of their fixed term contract coming to an end?
+      fta_to_perm_contract_end:
+        contract_end_question: What date did the workers fixed term contract end?
+        contract_end_question_hint: For example, 12 05 2019
+        page_title: What date did the workers fixed term contract end?
+      fta_to_perm_contract_start:
+        contract_start_question: What date did the workers fixed term contract start?
+        contract_start_question_hint: For example, 01 03 2018
+        page_title: What date did the workers fixed term contract start?
+      fta_to_perm_fixed_term_fee:
+        fixed_term_fee_icon: "£"
+        fixed_term_fee_question: What fixed term fee did you pay the worker?
+        page_title: What fixed term fee did you pay the worker?
+      fta_to_perm_hire_date:
+        hire_date_question: What date do you want their fully permanent employment to start?
+        hire_date_question_hint: For example, 12 05 2019
+        page_title: What date do you want their fully permanent employment to start?
+      fta_to_perm_hire_date_notice:
+        body: If you make a fixed-term worker provided by an agency on the deal permanent up to 6 months after their temporary assignment ends, the agency may be charged a "worker transfer fee"
+        header_html: If you wait and do not employ until %{date}, you won't be charged a transfer fee.
+        page_title: Fixed term contract notice
+        submit: I don't want to wait that long - continue to calculate fee
       looking_for:
         all_suppliers: A list of all agencies
         answer_calculate_fta_to_perm_fee: To work out what fixed-term worker transfer fee I could be charged

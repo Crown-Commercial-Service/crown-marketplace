@@ -1,4 +1,4 @@
-$(() => {
+$(function () {
 
     let contractLength = 7;
     let extensionCount = 1;
@@ -6,7 +6,7 @@ $(() => {
     const max_contract_years = 10;
 
     /* validate and cache contract length */
-    const init = (() => {
+    const init = (function () {
 
         contractLength = pageUtils.getCachedData('fm-contractlength');
         contractLength = contractLength && contractLength.length !== 0 ? parseInt(contractLength) : 7;
@@ -22,7 +22,8 @@ $(() => {
             $('#fm-extension-1-container').remove();
         }
 
-        extensions.forEach((extension, index) => {
+        for (let index = 0; extensions.length; x++) {
+            let extension = extensions[x];
             let newDiv = '<div name="fm-extension-container" id="' + extension.id + '-container"' + '>' +
                 '<div id="' + extension.id + '-error" hidden><span class="govuk-error-message" >This field can not be empty and contracts, including extensions, must be 10 years or less</span></div>' +
                 '<input id="' + extension.id + '" name="fm-extension" type="number" min="0" placeholder="Extension ' + (index + 1) + '"  value="' + extension.value + '"/>&nbsp;';
@@ -33,11 +34,11 @@ $(() => {
             newDiv += '</div>';
             $('#fm-extensions').append(newDiv);
 
-            $('#' + extension.id).on('keyup', (e) => {
+            $('#' + extension.id).on('keyup', function (e) {
                 processExtensionKeyUp(e);
             });
 
-            $('#' + extension.id).on('keypress', (e) => {
+            $('#' + extension.id).on('keypress', function (e) {
                 let regex = new RegExp("^[0-9]+$");
                 let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {
@@ -47,11 +48,11 @@ $(() => {
                 return false;
             });
 
-            $('#fm-remove-extension-' + (index + 1)).on('click', (e) => {
+            $('#fm-remove-extension-' + (index + 1)).on('click', function (e) {
                 e.preventDefault();
                 removeExtension(extension.id + '-container');
             });
-        });
+        }
 
         let isContractValueKnown = pageUtils.getCachedData('fm-contract-cost-is-known');
         if (isContractValueKnown && isContractValueKnown === true) {
@@ -83,10 +84,10 @@ $(() => {
         updateFMExtensionCounts();
     });
 
-    const cacheExtensions = (() => {
+    const cacheExtensions = (function () {
         let extensionsElems = $('input[name="fm-extension"]');
         extensions = [];
-        extensionsElems.each((i, elem) => {
+        extensionsElems.each(function (i, elem) {
             const extension = {'id': elem.id, value: elem.value};
             extensions.push(extension);
         });
@@ -97,10 +98,10 @@ $(() => {
 
     });
 
-    const calcTotalExtensionYears = (() => {
+    const calcTotalExtensionYears = (function () {
         let result = 0;
         let extensionsElems = $('input[name="fm-extension"]');
-        extensionsElems.each((i, elem) => {
+        extensionsElems.each(function (i, elem) {
             result += elem.value ? parseInt(elem.value) : 0;
         });
 
@@ -108,13 +109,13 @@ $(() => {
 
     });
 
-    $('#fm-contract-length').on('keypress', (event) => {
+    $('#fm-contract-length').on('keypress', function (event) {
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
     });
 
-    $('#fm-contract-length').on('keyup', (e) => {
+    $('#fm-contract-length').on('keyup', function (e) {
         let value = e.target.value;
 
         value = value ? parseInt(value) : 0;
@@ -131,24 +132,24 @@ $(() => {
         updateFMExtensionCounts();
     });
 
-    $('#fm-contract-extension-yes').on('click', (e) => {
+    $('#fm-contract-extension-yes').on('click', function (e) {
         $('#fm-contract-yes-container').attr('hidden', false);
         cacheExtensions();
     });
 
-    $('#fm-contract-extension-no').on('click', (e) => {
+    $('#fm-contract-extension-no').on('click', function (e) {
         $('#fm-contract-yes-container').attr('hidden', true);
         pageUtils.clearCashedData('fm-contract-extensions');
         removeAllExtensions();
     });
 
-    const updateFMExtensionCounts = (() => {
+    const updateFMExtensionCounts = (function () {
         let totalExtensionYears = calcTotalExtensionYears();
         let remainingExtensionCount = (max_contract_years - (contractLength + totalExtensionYears));
         $('#fm-remaining-extension-count').text(remainingExtensionCount);
     });
 
-    const validateTotalContractLength = (() => {
+    const validateTotalContractLength = (function () {
         let totalExtensionYears = calcTotalExtensionYears();
         let contractLength = $('#fm-contract-length').val();
         contractLength = contractLength ? parseInt(contractLength) : 0;
@@ -168,7 +169,7 @@ $(() => {
         return result;
     });
 
-    $('#fm-add-another-extension-link').on('click', (e) => {
+    $('#fm-add-another-extension-link').on('click', function (e) {
         e.preventDefault();
         let totalExtensionYears = calcTotalExtensionYears();
 
@@ -180,11 +181,11 @@ $(() => {
                 '<input id="' + id + '" name="fm-extension" type="number" placeholder="Extension ' + extensionCount + '"  value=""/>&nbsp;' +
                 '<a role="button" class="govuk-link govuk-link--no-visited-state" id="fm-remove-extension-' + extensionCount + '" name="fm-remove-extension" href="">Remove</a></div>';
             $('#fm-extensions').append(newDiv);
-            $('#' + id).on('keyup', (e) => {
+            $('#' + id).on('keyup', function (e) {
                 processExtensionKeyUp(e);
             });
 
-            $('#' + id).on('keypress', (e) => {
+            $('#' + id).on('keypress', function (e) {
                 let regex = new RegExp("^[0-9]+$");
                 let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {
@@ -196,7 +197,7 @@ $(() => {
         }
     });
 
-    const removeExtension = ((id) => {
+    const removeExtension = (function (id) {
 
         $('#' + id).remove();
 
@@ -207,7 +208,7 @@ $(() => {
 
     });
 
-    const removeAllExtensions = (() => {
+    const removeAllExtensions = (function () {
 
         $('[name="fm-extension-container"]').each(function (index, value) {
             if (index !== 0) {
@@ -216,7 +217,7 @@ $(() => {
         });
     });
 
-    const processExtensionKeyUp = ((e) => {
+    const processExtensionKeyUp = (function (e) {
 
         if ((e.which < 48 || e.which > 57)) {
             e.preventDefault();
@@ -240,18 +241,18 @@ $(() => {
         }
     });
 
-    $('input[name="fm-extension"]').on('keyup', (e) => {
+    $('input[name="fm-extension"]').on('keyup', function (e) {
         processExtensionKeyUp(e);
     });
 
-    $('input[name="fm-extension"]').on('keypress', (event) => {
+    $('input[name="fm-extension"]').on('keypress', function (event) {
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
             return false;
         }
     });
 
-    $('input[name="contract-cost-radio"]').on('click', (e) => {
+    $('input[name="contract-cost-radio"]').on('click', function (e) {
 
         let isContractValueKnown = e.target.value === 'yes' ? true : false;
 
@@ -265,16 +266,16 @@ $(() => {
 
     });
 
-    $('#fm-contract-cost').on('keyup', (e) => {
+    $('#fm-contract-cost').on('keyup', function (e) {
         pageUtils.setCachedData('fm-contract-cost', e.target.value);
     });
 
-    $('input[name="contract-tupe-radio"]').on('click', (e) => {
+    $('input[name="contract-tupe-radio"]').on('click', function (e) {
         let result = e.target.value === 'yes' ? true : false;
         pageUtils.setCachedData('fm-contract-tupe', result);
     });
 
-    $('input[name="fm-extension"]').on('keyup', (e) => {
+    $('input[name="fm-extension"]').on('keyup', function (e) {
         if (!((e.keyCode > 95 && e.keyCode < 106)
             || (e.keyCode > 47 && e.keyCode < 58)
             || e.keyCode == 8
@@ -283,18 +284,18 @@ $(() => {
         }
     });
 
-    $('#fm-internal-square-area').on('keypress', (event) => {
+    $('#fm-internal-square-area').on('keypress', function (event) {
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
     });
 
-    const validateExtensions = () => {
+    const validateExtensions = function () {
 
         let exts = $('input[name=fm-extension]');
         let result = true;
         let hasExtensions = $('#fm-contract-extension-yes').prop('checked');
-        
+
         if (hasExtensions === true) {
             $.each(exts, function (index, ext) {
                 if (!ext.value || ext.value === '') {
@@ -317,7 +318,7 @@ $(() => {
 
     };
 
-    $('#fm-questions-continue').on('click', (e) => {
+    $('#fm-questions-continue').on('click', function (e) {
         e.preventDefault();
         let isValid = validateTotalContractLength();
         let isExtValid = validateExtensions();
