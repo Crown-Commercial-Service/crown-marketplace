@@ -24,15 +24,30 @@ module CCS
       end
 
       def self.selected_suppliers(for_lot, for_regions, for_services)
-        suppliers = CCS::FM::Supplier.all.select do |s|
+        CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
-            (l['lot_number'] == for_lot) &&
-              (for_regions & l['regions']).any? &&
-              (for_services & l['services']).any?
+            # ([2, 6, 13, 99, 27] & [2, 6]).any?
+            (for_regions - l['regions']).empty? && (for_services - l['services']).empty? if l['lot_number'] == for_lot
           end
         end
       end
 
+      # CCS::FM::Supplier.long_list_suppliers_lot('Xuan Durgan')
+      def self.long_list_suppliers_lot(locations, services, lot)
+        vals = selected_suppliers(lot, locations, services)
+
+        result =
+          vals.map do |s|
+            lot = s.data['lots'].select do |x|
+              x['lot_number'] = lot
+            end
+            lot = lot&.first
+            { 'name' => s.data['supplier_name'],
+              'service_code' => lot['services'],
+              'region_code' => lot['regions'] }
+          end
+        result
+      end
     end
   end
 end
