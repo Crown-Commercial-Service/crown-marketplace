@@ -669,23 +669,23 @@ en:
       explanation: You will be able to use the service later.
       title: Service unavailable
   facilities_management:
-    beta:
-      index:
-        create_new_button: + Create Single Building
-        start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
-        start_warning: Only buildings that are ready can be used in your procurement.
-        mybuildings_header: My buildings
-        column_name_header: Name
-        column_desc_header: Description
-        column_lstup_header: Last updated
-        column_status_header: Status
-        link_to_building_summary: View details for building '' 
     basket:
       basket_header: selected
       none: none
       or_text: or
       removeall_text: Remove all
       selectall_text: Select all
+    beta:
+      index:
+        column_desc_header: Description
+        column_lstup_header: Last updated
+        column_name_header: Name
+        column_status_header: Status
+        create_new_button: "+ Create Single Building"
+        link_to_building_summary: View details for building
+        my_buildings_header: My buildings
+        start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
+        start_warning: Only buildings that are ready can be used in your procurement.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
