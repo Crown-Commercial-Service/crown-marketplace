@@ -17,5 +17,13 @@ module ManagementConsultancy
     def new_session_path
       management_consultancy_new_user_session_path
     end
+
+    def confirm_forgot_password_path(username)
+      management_consultancy_edit_user_password_path(username: username)
+    end
+
+    def confirm_email_path(email)
+      management_consultancy_users_confirm_path(email: email)
+    end
   end
 end

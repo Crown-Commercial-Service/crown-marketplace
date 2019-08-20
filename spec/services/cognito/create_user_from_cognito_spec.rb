@@ -101,6 +101,30 @@ RSpec.describe Cognito::CreateUserFromCognito do
       end
     end
 
+    context 'when user already exists' do
+      before do
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+        allow(aws_client).to receive(:admin_get_user).and_return(cognito_user)
+        allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+        create(:user, cognito_uuid: '0987', email: email, roles: %i[buyer fm_access])
+      end
+
+      it 'does not create a new user' do
+        expect { described_class.call(username) }.to change(User, :count).by 0
+      end
+
+      it 'updates cognito_uuid' do
+        response = described_class.call(username)
+        expect(response.user.cognito_uuid).to eq username
+      end
+
+      it 'updates roles' do
+        response = described_class.call(username)
+        expect(response.user.has_role?(:st_access)).to eq true
+        expect(response.user.has_role?(:buyer)).to eq true
+      end
+    end
+
     context 'when cognito error' do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)

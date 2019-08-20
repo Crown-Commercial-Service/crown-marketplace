@@ -1,11 +1,11 @@
-$(() => {
+$(function () {
 
     let selectedLocations = pageUtils.getCachedData('fm-locations');
     let selectedServices = pageUtils.getCachedData('fm-services');
     let supplierCount = parseInt($('#fm-long-list-supplier-count').innerText);
     let visibleSuppliers = [];
 
-    const init = (() => {
+    const init = (function () {
 
         const regionCheckBoxes = $('#fm-region-check-boxes');
         const serviceCheckBoxes = $('#fm-service-check-boxes');
@@ -13,17 +13,17 @@ $(() => {
         /* Load selected locations to the filters */
         selectedLocations = pageUtils.sortByName(selectedLocations);
 
-        for (let value of selectedLocations) {
-            //selectedLocations.forEach((value, index, array) => {
+        for (let x = 0; x < selectedLocations.length; x++) {
+            let value = selectedLocations[x];
             let checkbox = '<div class="govuk-checkboxes__item">' +
                 '<input class="govuk-checkboxes__input" checked id="' + value.code + '" name="fm-regions-checkbox" type="checkbox" value="' + value.name + '">' +
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label"  for="' + value.code + '">' + value.name + '</label></div>';
 
             regionCheckBoxes.append(checkbox);
-            $('#' + value.code).on('click', (e) => {
+            $('#' + value.code).on('click', function (e) {
                 updateCounts();
                 if (!e.target.checked) {
-                    let filtered = selectedLocations.filter((obj, index, arr) => {
+                    let filtered = selectedLocations.filter(function (obj, index, arr) {
                         if (obj.code !== value.code) {
                             return true;
                         } else {
@@ -46,20 +46,21 @@ $(() => {
 
         }
 
-
         /* Load selected services to the filters */
         selectedServices = pageUtils.sortByName(selectedServices);
 
-        selectedServices.forEach((value, index, array) => {
+        for (let x = 0; x < selectedServices.length; x++) {
+            let value = selectedServices[x];
+
             let checkbox = '<div class="govuk-checkboxes__item">' +
                 '<input class="govuk-checkboxes__input" checked id="' + value.code + '" name="fm-services-checkbox" type="checkbox" value="' + value.name + '">' +
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label" for="' + value.code + '">' + value.name + '</label></div>';
 
             serviceCheckBoxes.append(checkbox);
-            $('#' + value.code).on('click', (e) => {
+            $('#' + value.code).on('click', function (e) {
                 updateCounts();
                 if (!e.target.checked) {
-                    let filtered = selectedServices.filter((service, index, arr) => {
+                    let filtered = selectedServices.filter(function (service, index, arr) {
                         if (service.code !== value.code) {
                             return true;
                         } else {
@@ -84,14 +85,16 @@ $(() => {
                 pageUtils.setCachedData('fm-services', selectedServices);
                 filterSuppliers();
             });
-        });
 
-        filterSuppliers();
-        updateCounts();
 
+            filterSuppliers();
+            updateCounts();
+
+        }
     });
 
-    const updateCounts = (() => {
+
+    const updateCounts = (function () {
         let regionCount = $("input[name='fm-regions-checkbox']:checked").length;
         let serviceCount = $("input[name='fm-services-checkbox']:checked").length;
         $('#region-count').text(regionCount + " selected");
@@ -104,7 +107,7 @@ $(() => {
     });
 
     /* Click handler for the filter toggle button */
-    $('#filter-toggle-btn').on('click', (e) => {
+    $('#filter-toggle-btn').on('click', function (e) {
         e.preventDefault();
 
         let filterPane = $('#fm-filter-pane');
@@ -125,7 +128,7 @@ $(() => {
 
     });
 
-    $('#fm-suppliers-long-list-clear-filters').on('click', (e) => {
+    $('#fm-suppliers-long-list-clear-filters').on('click', function (e) {
         e.preventDefault();
 
         $('input[name="fm-regions-checkbox"]').prop("checked", false);
@@ -142,17 +145,20 @@ $(() => {
     });
 
     /* Click handler for Print button */
-    $('#FM-print-supplier-list').on('click', (e) => {
+    $('#FM-print-supplier-list').on('click', function (e) {
         e.preventDefault();
         window.print();
     });
 
 
-    const filterSuppliers = () => {
+    const filterSuppliers = function () {
 
         let tableRows = $('tbody  > tr');
         visibleSuppliers = [];
-        for (let row of tableRows) {
+
+        for (let x = 0; x < tableRows.length; x++) {
+            let row = tableRows[x];
+
             if (row.id) {
                 let id = '#' + row.id;
                 let name = $(id).attr('name');
@@ -162,11 +168,11 @@ $(() => {
                     operationalAreas = JSON.parse(operationalAreas);
                     let serviceOfferings = JSON.parse($(id).attr('servicecode'));
 
-                    let isServiceOfferingSelected = selectedServices.some(selectedService => {
+                    let isServiceOfferingSelected = selectedServices.some(function (selectedService) {
                         return serviceOfferings.includes(selectedService.code.replace('-', '.'));
                     });
 
-                    let isOperationalAreaSelected = selectedLocations.some(selectedLocation => {
+                    let isOperationalAreaSelected = selectedLocations.some(function (selectedLocation) {
                         return operationalAreas.includes(selectedLocation.code);
                     });
 
@@ -186,7 +192,7 @@ $(() => {
     };
 
 
-    $('#fm-suppliers-continue-button').on('click', (e) => {
+    $('#fm-suppliers-continue-button').on('click', function (e) {
         e.preventDefault();
         let regionCount = $("input[name='fm-regions-checkbox']:checked").length;
         let serviceCount = $("input[name='fm-services-checkbox']:checked").length;
@@ -205,4 +211,6 @@ $(() => {
 
     init();
     updateCounts();
+
+
 });

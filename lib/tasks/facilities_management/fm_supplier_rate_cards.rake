@@ -23,12 +23,12 @@ module FM
   def self.add_rate_cards_to_suppliers
     create_fm_rate_cards_table
 
-    spreadsheet_name = 'facilities_management/RM3830 Direct Award Data - anonymised.xlsx'
+    spreadsheet_name = 'facilities_management/RM3830 Direct Award Data (for Dev & Test).xlsx'
     rate_cards_workbook = Roo::Spreadsheet.open 'data/' + spreadsheet_name
 
     data = {}
 
-    ['Variances', 'Discount', 'Prices'].each do |sheet_name|
+    ['Variances', 'Discounts', 'Prices'].each do |sheet_name|
       sheet = rate_cards_workbook.sheet(sheet_name)
 
       data[sheet_name] = {}
@@ -45,8 +45,8 @@ module FM
 
         if sheet_name == 'Prices'
           data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
-        elsif sheet_name == 'Discount'
-          data[sheet_name][rate_card['Supplier']][rate_card['Ref']] = rate_card if rate_card['Ref']
+        elsif sheet_name == 'Discounts'
+          data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
         elsif sheet_name == 'Variances'
           data[sheet_name][rate_card['Supplier']] = rate_card
         end

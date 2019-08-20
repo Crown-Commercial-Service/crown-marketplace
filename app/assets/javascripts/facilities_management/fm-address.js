@@ -1,11 +1,11 @@
-$(() => {
+$(function () {
 
     let address = {};
     let buildingName = pageUtils.getCachedData('fm-new-building-name');
     let postCode = pageUtils.getCachedData('fm-postcode');
     let currentBuilding = pageUtils.getCachedData('fm-current-building');
 
-    const init = (() => {
+    const init = (function () {
 
         if (buildingName) {
             $('#fm-building-name').text(buildingName);
@@ -43,42 +43,42 @@ $(() => {
     });
 
 
-    $('#fm-address-line-1').on('change', (e) => {
+    $('#fm-address-line-1').on('change', function (e) {
         let value = e.target.value;
         if (value) {
             address['fm-address-line-1'] = value;
         }
     });
 
-    $('#fm-address-line-2').on('change', (e) => {
+    $('#fm-address-line-2').on('change', function (e) {
         let value = e.target.value;
         if (value) {
             address['fm-address-line-2'] = value;
         }
     });
 
-    $('#fm-address-town').on('change', (e) => {
+    $('#fm-address-town').on('change', function (e) {
         let value = e.target.value;
         if (value) {
             address['fm-address-town'] = value;
         }
     });
 
-    $('#fm-address-county').on('change', (e) => {
+    $('#fm-address-county').on('change', function (e) {
         let value = e.target.value;
         if (value) {
             address['fm-address-county'] = value;
         }
     });
 
-    $('#fm-address-postcode').on('change', (e) => {
+    $('#fm-address-postcode').on('change', function (e) {
         let value = e.target.value;
         if (value) {
             address['fm-address-postcode'] = value;
         }
     });
 
-    const clearErrors = (() => {
+    const clearErrors = (function () {
 
         $('#fm-address-line-1-container').removeClass('govuk-form-group--error');
         $('#fm-address-line-1-error').addClass('govuk-visually-hidden');
@@ -93,7 +93,7 @@ $(() => {
         $('#fm-address-postcode-error').addClass('govuk-visually-hidden');
     });
 
-    const isAddressValid = ((address) => {
+    const isAddressValid = (function (address) {
 
         let result = true;
         let id;
@@ -128,7 +128,7 @@ $(() => {
 
     });
 
-    const saveBuilding = ((building, isUpdate, whereNext) => {
+    const saveBuilding = (function (building, isUpdate, whereNext) {
 
         let url = '/facilities-management/buildings/new-building-address/save-building';
 
@@ -155,7 +155,7 @@ $(() => {
 
     });
 
-    $('#fm-new-address-continue').on('click', (e) => {
+    $('#fm-new-address-continue').on('click', function (e) {
         e.preventDefault();
 
         if (isAddressValid(address)) {
@@ -182,7 +182,7 @@ $(() => {
 
     });
 
-    const validateBuildingName = ((value) => {
+    const validateBuildingName = (function (value) {
         let result = false;
         if (value) {
             pageUtils.setCachedData('fm-new-building-name', value);
@@ -199,18 +199,18 @@ $(() => {
 
     });
 
-    $('#fm-new-building-name').on('keyup', (e) => {
+    $('#fm-new-building-name').on('keyup', function (e) {
         let value = e.target.value;
         validateBuildingName(value);
     });
 
-    $('#fm-postcode-input').on('focus', (e) => {
+    $('#fm-postcode-input').on('focus', function(e) {
         let newBuildingValue = $('#fm-new-building-name');
         validateBuildingName(newBuildingValue.val());
     });
 
 
-    $('#fm-new-building-continue').on('click', (e) => {
+    $('#fm-new-building-continue').on('click', function(e)  {
 
         e.preventDefault();
 

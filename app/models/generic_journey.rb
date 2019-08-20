@@ -63,9 +63,9 @@ class GenericJourney
   end
 
   def previous_questions_and_answers
-    return params if current_step.final?
+    return params if current_step.final? || current_step.try(:all_keys_needed?)
 
-    params.except(*current_step.class.permit_list)
+    params.except(*current_step.class.permitted_keys)
   end
 
   def template

@@ -24,6 +24,7 @@ module SupplyTeachers
 
       attr_accessor :current_accredited_suppliers_cache, :geographical_data_all_suppliers_cache, :lot_1_and_lot_2_comparisons_cache, :master_vendor_contacts_cache, :neutral_vendor_contacts_cache, :pricing_for_tool_cache, :supplier_lookup_cache
 
+      validate :any_present?, on: :create
       validate :reject_uploads_and_cp_files, on: :create
 
       aasm do
@@ -45,7 +46,7 @@ module SupplyTeachers
           transitions from: :in_review, to: :rejected, after: :cleanup_input_files
         end
         event :cancel do
-          transitions from: %i[in_review in_progress], to: :canceled, after: :cleanup_input_files
+          transitions from: %i[in_review in_progress uploading], to: :canceled, after: :cleanup_input_files
         end
       end
 
@@ -67,12 +68,16 @@ module SupplyTeachers
         count
       end
 
-      def short_uuid
-        id[0..7]
+      def datetime
+        created_at.strftime('%d %b %Y at %l:%M%P')
       end
 
       def self.previous_uploaded_file(attr_name)
         previous_uploaded_file_object(attr_name).try(:send, attr_name)
+      end
+
+      def self.previous_uploaded_file_url(attr_name)
+        previous_uploaded_file_object(attr_name).try(:send, attr_name.to_s + '_url')
       end
 
       def self.previous_uploaded_file_object(attr_name)
@@ -80,7 +85,7 @@ module SupplyTeachers
       end
 
       def self.in_review_or_in_progress
-        in_review + in_progress
+        in_review + in_progress + uploading
       end
 
       def self.perform_upload(upload_id)
@@ -91,6 +96,10 @@ module SupplyTeachers
       end
 
       private
+
+      def any_present?
+        errors.add :base, :none_present unless ATTRIBUTES.any? { |attr| send(attr).try(:present?) }
+      end
 
       def reject_uploads_and_cp_files
         return if errors.any?
@@ -119,7 +128,11 @@ module SupplyTeachers
           FileUtils.cp(file_path, new_path)
         else
           object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-          object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path.to_s)).upload_file(file_path, acl: 'public-read')
+          if file_path.include?(ENV['CCS_APP_API_DATA_BUCKET']) # if an S3 path use copy_object not upload_file
+            object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).client.copy_object(bucket: ENV['CCS_APP_API_DATA_BUCKET'], copy_source: file_path, key: s3_path(new_path.to_s))
+          else
+            object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path.to_s)).upload_file(file_path, acl: 'public-read')
+          end
         end
       end
 
@@ -129,12 +142,14 @@ module SupplyTeachers
 
       def reject_previous_uploads
         self.class.in_review.map(&:cancel!)
+        self.class.in_progress.map(&:cancel!)
+        self.class.uploading.map(&:cancel!)
       end
 
       def cp_previous_uploaded_file(attr_name, file_path)
         return unless available_for_cp(attr_name)
 
-        cp_file_to_input(self.class.previous_uploaded_file(attr_name).file.path, file_path, true)
+        cp_file_to_input(self.class.previous_uploaded_file_url(attr_name), file_path, true)
       end
 
       def available_for_cp(attr_name)

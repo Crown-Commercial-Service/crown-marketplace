@@ -127,6 +127,10 @@ module FacilitiesManagement
       (@sum_uom + @sum_benchmark) / 2
     end
 
+    def direct_award_value
+      @sum_uom
+    end
+
     def current_lot
       case assessed_value
       when 0..7000000
@@ -232,7 +236,7 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
-    def copy_params(building_json)
+    def copy_params(building_json, uvals)
       @fm_gross_internal_area =
         begin
           building_json['gia'].to_i
@@ -253,7 +257,7 @@ module FacilitiesManagement
 
       @cafm_flag =
         begin
-          if building_json['services'].any? { |x| x['name'] == 'CAFM system' }
+          if uvals.any? { |x| x['service_code'] == 'M.1' }
             'Y'
           else
             'N'
@@ -264,7 +268,7 @@ module FacilitiesManagement
 
       @helpdesk_flag =
         begin
-          if building_json['services'].any? { |x| x['name'] == 'Helpdesk services' }
+          if uvals.any? { |x| x['service_code'] == 'N.1' }
             'Y'
           else
             'N'
@@ -280,7 +284,7 @@ module FacilitiesManagement
       sum_uom = 0.0
       sum_benchmark = 0.0
 
-      copy_params building_data
+      copy_params building_data, uvals
 
       uvals.each do |v|
         # puts service.code
@@ -296,16 +300,26 @@ module FacilitiesManagement
         # occupants = occupants(v['service_code'], building_data)
         if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
           occupants = v['uom_value'].to_i
-          uom_value = @fm_gross_internal_area
+          uom_value = building_data['gia']
         else
           occupants = 0
         end
 
-        code = v['service_code'].remove('.')
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years, code, uom_value, occupants, @tupe_flag, @london_flag, @cafm_flag, @helpdesk_flag,
-                                               rates, rate_card, supplier_name)
+        # code = v['service_code'].remove('.')
+        calc_fm = FMCalculator::Calculator.new(@contract_length_years,
+                                               v['service_code'],
+                                               uom_value,
+                                               occupants,
+                                               @tupe_flag,
+                                               @london_flag,
+                                               @cafm_flag,
+                                               @helpdesk_flag,
+                                               rates,
+                                               rate_card,
+                                               supplier_name,
+                                               building_data,)
         sum_uom += calc_fm.sumunitofmeasure
-        sum_benchmark += calc_fm.benchmarkedcostssum
+        sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
       end
       { sum_uom: sum_uom,
         sum_benchmark: sum_benchmark }

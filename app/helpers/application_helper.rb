@@ -2,6 +2,7 @@
 module ApplicationHelper
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin'].freeze
   PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'facilities_management/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
+
   def miles_to_metres(miles)
     DistanceConverter.miles_to_metres(miles)
   end
@@ -97,6 +98,7 @@ module ApplicationHelper
 
   def hidden_fields_for_previous_steps_and_responses(journey)
     html = ActiveSupport::SafeBuffer.new
+
     journey.previous_questions_and_answers.each do |(key, value)|
       if value.is_a? Array
         value.each do |v|
@@ -114,7 +116,8 @@ module ApplicationHelper
   end
 
   def service_start_page_path
-    send controller.class.parent_name.underscore + '_path' if controller.class.parent_name
+    # send controller.class.parent_name.underscore + '_path' if controller.class.parent_name
+    send controller.class.parent_name.underscore.tr('/', '_') + '_path' if controller.class.parent_name
   end
 
   def service_gateway_path
@@ -129,9 +132,24 @@ module ApplicationHelper
     end
   end
 
+  def facilities_management_beta_destroy_user_session_path
+    controller.class.parent.name == 'FacilitiesManagement'
+  end
+
   def landing_or_admin_page
-    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') ||
-      controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
+    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
+  end
+
+  def fm_buyer_landing_page
+    request.path_info.include? 'buyer-account'
+  end
+
+  def facilities_management_beta_path
+    controller.class.parent.name == 'FacilitiesManagement'
+  end
+
+  def not_permitted_page
+    controller.action_name == 'not_permitted'
   end
 
   def a_supply_teachers_path?

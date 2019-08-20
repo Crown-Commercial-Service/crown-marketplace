@@ -20,7 +20,7 @@ module FMCalculator
     @framework_rates = nil
 
     def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag,
-                   rates, rate_card = nil, supplier_name = nil)
+                   rates, rate_card = nil, supplier_name = nil, building_data = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
@@ -58,6 +58,7 @@ module FMCalculator
       @framework_rates = rates[:framework_rates]
       @rate_card = rate_card
       @supplier_name = supplier_name
+      @building_data = building_data
     end
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
@@ -67,14 +68,24 @@ module FMCalculator
       # benchmark rate set here
       @benchmark_rate = @benchmark_rates[@service_ref].to_f
 
-      @uomd = @uom_vol * @framework_rate
+      @uomd =
+        if @supplier_name && @rate_card.data['Discounts'][@supplier_name][@service_ref]
+          (1 - @rate_card.data['Discounts'][@supplier_name][@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card.data['Prices'][@supplier_name][@service_ref][@building_data['fm-building-type']].to_f
+        else
+          @uom_vol * @framework_rate
+        end
     rescue StandardError => e
       raise e
     end
 
     # cleaning consumables
     def clean
-      @clean = @occupants * @framework_rates['M146']
+      @clean =
+        if @supplier_name
+          @occupants * @rate_card.data['Variances'][@supplier_name]['Cleaning Consumables per Building User (£)']
+        else
+          @occupants * @framework_rates['M146']
+        end
     end
 
     # subtotal1 = unit of measurable deliverables + cleaning consumables
@@ -85,7 +96,12 @@ module FMCalculator
     # London location variance based on being in london and a framework rate multiplied by subtotal1
     def variance
       if @london_flag == 'Y'
-        @variance = @subtotal1 * @benchmark_rates['M144'].to_f
+        @variance =
+          if @supplier_name
+            @subtotal1 * @rate_card.data['Variances'][@supplier_name]['London Location Variance Rate (%)'].to_f
+          else
+            @subtotal1 * @benchmark_rates['M144'].to_f
+          end
       else
         0
       end
@@ -99,7 +115,12 @@ module FMCalculator
     # if cafm flag is set then subtotal * framework rate
     def cafm
       if @cafm_flag == 'Y'
-        @cafm = @subtotal2 * @framework_rates['M136']
+        @cafm =
+          if @supplier_name
+            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data['fm-building-type']].to_f
+          else
+            @subtotal2 * @framework_rates['M136']
+          end
       else
         0
       end
@@ -108,7 +129,12 @@ module FMCalculator
     # if helpdesk_flag is set then multiply by subtotal2
     def helpdesk
       if @helpdesk_flag == 'Y'
-        @helpdesk = @subtotal2 * @framework_rates['M138']
+        @helpdesk =
+          if @supplier_name
+            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data['fm-building-type']].to_f
+          else
+            @subtotal2 * @framework_rates['M138']
+          end
       else
         0
       end
@@ -121,13 +147,23 @@ module FMCalculator
 
     # mobilisation = subtotal3 * framework_rate
     def mobilisation
-      @mobilisation = @subtotal3 * @framework_rates['M5']
+      @mobilisation =
+        if @supplier_name
+          @subtotal3 * @rate_card.data['Variances'][@supplier_name]['Mobilisation Cost (DA %)'].to_f
+        else
+          @subtotal3 * @framework_rates['M5']
+        end
     end
 
     # if tupe_flag set then calculate tupe risk premium = subtotal3 * framework rate
     def tupe
       if @tupe_flag == 'Y'
-        @tupe = @subtotal3 * @framework_rates['M148']
+        @tupe =
+          if @supplier_name
+            @subtotal3 * @rate_card.data['Variances'][@supplier_name]['TUPE Risk Premium (DA %)'].to_f
+          else
+            @subtotal3 * @framework_rates['M148']
+          end
       else
         0
       end
@@ -140,12 +176,22 @@ module FMCalculator
 
     # Management overhead
     def manage
-      @manage = @year1 * @framework_rates['M140']
+      @manage =
+        if @supplier_name
+          @year1 * @rate_card.data['Variances'][@supplier_name]['Management Overhead %']
+        else
+          @year1 * @framework_rates['M140']
+        end
     end
 
     # Corporate overhead
     def corporate
-      @corporate = @year1 * @framework_rates['M141']
+      @corporate =
+        if @supplier_name
+          @year1 * @rate_card.data['Variances'][@supplier_name]['Corporate Overhead %']
+        else
+          @year1 * @framework_rates['M141']
+        end
     end
 
     # Year 1 total charges subtotal
@@ -155,7 +201,12 @@ module FMCalculator
 
     # framework profit
     def profit
-      @profit = @year1 * @framework_rates['M142']
+      @profit =
+        if @supplier_name
+          @year1 * @rate_card.data['Variances'][@supplier_name]['Profit %']
+        else
+          @year1 * @framework_rates['M142']
+        end
     end
 
     # year 1 total charges
@@ -165,7 +216,16 @@ module FMCalculator
 
     # subsequent year(s) total charges
     def subyearstotal
-      @subyearstotal = @subsequent_length_years * (@year1totalcharges - (((@mobilisation + (@mobilisation * @framework_rates['M140']) + (@mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
+      @subyearstotal =
+        if @supplier_name
+          @subsequent_length_years *
+            (@year1totalcharges -
+              (((@mobilisation + (@mobilisation * @rate_card.data['Variances'][@supplier_name]['Management Overhead %']) +
+                (@mobilisation * @rate_card.data['Variances'][@supplier_name]['Corporate Overhead %'])) *
+                  (@rate_card.data['Variances'][@supplier_name]['Profit %'] + 1))))
+        else
+          @subsequent_length_years * (@year1totalcharges - (((@mobilisation + (@mobilisation * @framework_rates['M140']) + (@mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
+        end
     end
 
     # total charges

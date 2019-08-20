@@ -1,157 +1,208 @@
-/*
-* filename: location.js
-* Description: Click handlers for the select location page
-* */
+$(function () {
 
-$(() => {
+        /* govuk-accordion__controls event handlers */
+        let selectedLocations = pageUtils.getCachedData('fm-locations');
 
-    /* govuk-accordion__controls event handlers */
-    let selectedLocations = pageUtils.getCachedData('fm-locations');
+        /* add a link to select all on the accordion */
+        $('#region-accordion .govuk-accordion__controls').append("<a role='button' class='govuk-accordion__open-all' data-no-turbolink id=\"select-all-link\" name=\"select-all-link\" href=\"\">Select all</a>");
 
-    /* add a link to select all on the accordion */
-    $('#region-accordion .govuk-accordion__controls').append("<a role='button' class='govuk-accordion__open-all' data-no-turbolink id=\"select-all-link\" name=\"select-all-link\" href=\"\">Select all</a>");
+        const initialize = (function () {
 
-    const initialize = (() => {
-
-        /* Load and display cached values */
-        if (selectedLocations) {
-            selectedLocations.forEach((value, index, array) => {
-                $('input#' + value.code).trigger("click");
-            });
-        }
-
-        /* set the initial count */
-        updateLocationCount();
-    });
-
-    /* Update the count of selected locations */
-    const updateLocationCount = (() => {
-        let count = $("#selected-fm-locations li").length;
-
-        $('#selected-location-count').text(count);
-    });
-
-    /* remove a location from the selected list */
-    const removeSelectedItem = ((id) => {
-        $('li#' + id).remove();
-        id = id.replace('_selected', '');
-        $("input#" + id).prop("checked", false);
-
-        /* remove from the array that is saved */
-        let filtered = selectedLocations.filter((value, index, arr) => {
-            if (value.code !== id) {
-                return true;
-            } else {
-                return false;
+            /* Load and display cached values */
+            if (selectedLocations) {
+                for (let x = 0; x < selectedLocations.length; x++) {
+                    let value = selectedLocations[x];
+                    $('input#' + value.code).trigger("click");
+                }
             }
+
+            /* set the initial count */
+            updateLocationCount();
         });
 
-        selectedLocations = filtered;
+        /* Update the count of selected locations */
+        const updateLocationCount = (function () {
+            let count = $("#selected-fm-locations li").length;
+            let msg = count > 0 ? (count === 1 ? "1 region" : count + " regions") : "None";
 
-        updateLocationCount();
-    });
+            if (count < 2) {
+                $('#remove-all-locations-link').prop('hidden', true);
+            } else {
+                $('#remove-all-locations-link').prop('hidden', false);
+            }
 
-    /* uncheck all check boxes and clear list */
-    const clearAllLocations = (() => {
-        $("#selected-fm-locations li").remove();
-        $("#region-accordion input:checkbox").prop("checked", false);
+            $('#selected-location-count').text(msg);
 
-        selectedLocations = [];
-        pageUtils.setCachedData('fm-locations', selectedLocations);
+        });
 
-        updateLocationCount();
-    });
+        /* remove a location from the selected list */
+        const removeSelectedItem = (function (id) {
+            $('li#' + id).remove();
+            id = id.replace('_selected', '');
+            $("input#" + id).prop("checked", false);
 
-    /* Click handler to remove all locations */
-    $('#remove-all-locations-link').on('click', (e) => {
-        e.preventDefault();
-        clearAllLocations();
-    });
+            /* remove from the array that is saved */
+            let filtered = selectedLocations.filter(function (value, index, arr) {
+                if (value.code !== id) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
 
-    /* click handler for check boxes */
-    $('#region-accordion .govuk-checkboxes__input').on('click', (e) => {
+            selectedLocations = filtered;
 
-        let labelID = '#' + e.target.id + '_label';
-        let val = $(labelID)[0].innerText;
-        let selectedID = e.target.id + '_selected';
-        let removeLinkID = e.target.id + '_removeLink'
+            updateLocationCount();
+        });
 
-        if (e.target.checked === true) {
+        /* uncheck all check boxes and clear list */
+        const clearAllLocations = (function () {
+            $("#selected-fm-locations li").remove();
+            $("#region-accordion input:checkbox").prop("checked", false);
+
+            selectedLocations = [];
+            pageUtils.setCachedData('fm-locations', selectedLocations);
+
+            updateLocationCount();
+        });
+
+        /* Click handler to remove all locations */
+        $('#remove-all-locations-link').on('click', function (e) {
+            e.preventDefault();
+            clearAllLocations();
+        });
+
+        /* click handler for check boxes */
+
+
+    const showOrRemoveBasketLinks = function(e, id) {
+        let labelID = '#' + e.id + '_label';
+
+        let selectedID = e.id + '_selected';
+        let removeLinkID = e.id + '_removeLink';
+
+        if (!id.endsWith('_all') && e.checked === true) {
+
+            let val = $(labelID)[0].innerText;
 
             let obj = selectedLocations.filter(function (obj) {
-                return obj.code === e.target.id;
+                return obj.code === e.id;
             });
 
             if (obj.length === 0) {
-                let location = {code: e.target.id, name: val}
-                selectedLocations.push(location);
+                let selectedLocation = {code: e.id, name: val};
+                selectedLocations.push(selectedLocation);
             }
 
             let newLI = '<li style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
                 '<span class="govuk-!-padding-0 CCS-fm-regions-selected-label">' + val + '</span><span class="remove-link">' +
-                '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
-            $("#selected-fm-locations").append(newLI);
+                '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>';
 
-            $('#' + removeLinkID).on('click', (e) => {
-                e.preventDefault();
-                removeSelectedItem(selectedID);
-            });
 
+            if ($('#' + selectedID).length === 0) {
+                $("#selected-fm-locations").append(newLI);
+
+                $('#' + removeLinkID).on('click', function (e) {
+                    e.preventDefault();
+                    removeSelectedItem(selectedID);
+                });
+            }
+        } else if ( id.endsWith('_all')) {
+            let sid = id.split('_');
+            let ns = sid[0];
+            let regionItems = $('input[name="' + ns + '"]').get();
+            for ( let n = 0; n < regionItems.length; n++ ) {
+                showOrRemoveBasketLinks(regionItems[n], regionItems[n].id) ;
+            }
         } else {
             removeSelectedItem(selectedID);
         }
+    };
 
-        isLocationValid();
+    $('#region-accordion .govuk-checkboxes__input').on('click', function (e) {
+            let n = e.target.name;
+            let id = e.target.id;
+            let total_count = 0;
+            let selected_count = 0 ;
 
-        updateLocationCount();
-        pageUtils.sortUnorderedList('selected-fm-locations');
+            if ( n.endsWith('_all')) n = n.substring(0, n.length-4) ;
 
-    });
+            if (id.endsWith('_all')) {
+                let sid = n.split('_');
+                let ns = sid[0];
 
-    /* click handler for select all on accordion */
-    $('#select-all-link').on('click', (e) => {
-        e.preventDefault();
+                if (e.target.checked === true) {
+                    $('input[name="' + ns + '"]').prop("checked", true);
+                } else {
+                    $('input[name="' + ns + '"]').prop("checked", false);
+                }
 
-        isLocationValid();
+                total_count = $('input[name="' + ns + '"]').length
+                selected_count = $('input[name="' + ns + '"]').filter(':checked').length;
+            } else {
+                total_count = $('input[name="' + n + '"]').length
+                selected_count = $('input[name="' + n + '"]').filter(':checked').length;
+            }
 
-        clearAllLocations();
+            $('#' + n + '_all').prop("checked", (selected_count === total_count) ? true : false);
 
-        $('input:checkbox').prop("checked", true);
-        $('input:checkbox').trigger("click");
+            showOrRemoveBasketLinks(e.target, id);
 
-        pageUtils.sortUnorderedList('selected-fm-locations');
-        updateLocationCount();
+            isLocationValid();
+            updateLocationCount();
+            pageUtils.sortUnorderedList('selected-fm-locations');
+        });
 
-    });
-
-    /* must have at least one location selected */
-    const isLocationValid = (() => {
-
-        let result = selectedLocations && selectedLocations.length > 0 ? true : false;
-
-        if (result === true) {
-            pageUtils.toggleInlineErrorMessage(false);
-        }
-
-        return result;
-
-    });
-
-    /* Click handler for save and continue button */
-    $('#save-locations-link').on('click', (e) => {
-
-        pageUtils.toggleInlineErrorMessage(false);
-
-        if (isLocationValid() === true) {
-            // $('#save-locations-link-form').attr('action', "/facilities-management/buildings/select-services").submit()
-            pageUtils.setCachedData('fm-locations', selectedLocations);
-        } else {
+        /* click handler for select all on accordion */
+        $('#select-all-link').on('click', function (e) {
             e.preventDefault();
-            pageUtils.toggleInlineErrorMessage(true);
-            window.location = '#';
-        }
-    });
 
-    initialize();
+            isLocationValid();
 
-});
+            clearAllLocations();
+
+            $('input:checkbox').prop("checked", true);
+            $('input:checkbox').trigger("click");
+
+            pageUtils.sortUnorderedList('selected-fm-locations');
+            updateLocationCount();
+
+        });
+
+        /* must have at least one location selected */
+        const isLocationValid = (function () {
+
+            let result = selectedLocations && selectedLocations.length > 0 ? true : false;
+
+            if (result === true) {
+                pageUtils.toggleInlineErrorMessage(false);
+            }
+
+            return result;
+
+        });
+
+        /* Click handler for save and continue button */
+        $('#save-locations-link').on('click', function (e) {
+            pageUtils.setCachedData('fm-locations', selectedLocations);
+            e.preventDefault();
+            pageUtils.toggleInlineErrorMessage(false);
+
+            if (isLocationValid() === true) {
+                const locationsForm = $('#save-locations-link-form');
+                let locationCodes = pageUtils.getCodes(pageUtils.getCachedData('fm-locations'));
+                let serviceCodes = pageUtils.getCodes(pageUtils.getCachedData('fm-services'));
+
+                $('#postedlocations').val(JSON.stringify(locationCodes));
+                $('#postedservices').val(JSON.stringify(serviceCodes));
+                locationsForm.trigger('submit');
+            } else {
+                pageUtils.toggleInlineErrorMessage(true);
+                window.location = '#';
+            }
+        });
+
+        initialize();
+
+    }
+);

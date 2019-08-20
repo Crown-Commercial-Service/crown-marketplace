@@ -11,74 +11,64 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq-log'
   end
 
-  devise_for :users
+  devise_for :users, skip: %i[registrations passwords sessions]
   devise_scope :user do
+    concern :authenticatable do
+      get '/sign-in', to: 'sessions#new', as: :new_user_session
+      post '/sign-in', to: 'sessions#create', as: :user_session
+      delete '/sign-out', to: 'sessions#destroy', as: :destroy_user_session
+      get '/users/forgot-password', to: 'passwords#new', as: :new_user_password
+      post '/users/password', to: 'passwords#create'
+      get '/users/forgot-password-confirmation', to: 'passwords#confirm_new', as: :confirm_new_user_password
+      get '/users/password', to: 'passwords#edit', as: :edit_user_password
+      put '/users/password', to: 'passwords#update'
+      get '/users/password-reset-success', to: 'passwords#password_reset_success', as: :password_reset_success
+      get '/users/confirm', to: 'users#confirm_new'
+      post '/users/confirm', to: 'users#confirm'
+      get '/users/challenge', to: 'users#challenge_new'
+      post '/users/challenge', to: 'users#challenge'
+      get '/resend_confirmation_email', to: 'users#resend_confirmation_email', as: :resend_confirmation_email
+    end
+    concern :registrable do
+      get '/sign-up', to: 'registrations#new', as: :new_user_registration
+      post '/sign-up', to: 'registrations#create', as: :user_registration
+      get '/domain-not-on-whitelist', to: 'registrations#domain_not_on_whitelist', as: :domain_not_on_whitelist
+    end
+
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
 
-    get '/supply-teachers/sign-in', to: 'supply_teachers/sessions#new', as: :supply_teachers_new_user_session
-    post '/supply-teachers/sign-in', to: 'supply_teachers/sessions#create', as: :supply_teachers_user_session
-    delete '/supply-teachers/sign-out', to: 'supply_teachers/sessions#destroy', as: :supply_teachers_destroy_user_session
-    get '/supply-teachers/users/forgot-password', to: 'supply_teachers/passwords#new', as: :supply_teachers_new_user_password
-    post '/supply-teachers/users/password', to: 'supply_teachers/passwords#create'
-    get '/supply-teachers/users/forgot-password-confirmation', to: 'supply_teachers/passwords#confirm_new', as: :supply_teachers_confirm_new_user_password
-    get '/supply-teachers/users/password', to: 'supply_teachers/passwords#edit', as: :supply_teachers_edit_user_password
-    put '/supply-teachers/users/password', to: 'supply_teachers/passwords#update'
-    get '/supply-teachers/users/password-reset-success', to: 'supply_teachers/passwords#password_reset_success', as: :supply_teachers_password_reset_success
+    namespace 'supply_teachers', path: 'supply-teachers' do
+      concerns :authenticatable
+      namespace :admin do
+        concerns :authenticatable
+      end
+    end
 
-    get '/facilities-management/sign-in', to: 'facilities_management/sessions#new', as: :facilities_management_new_user_session
-    post '/facilities-management/sign-in', to: 'facilities_management/sessions#create', as: :facilities_management_user_session
-    delete '/facilities-management/sign-out', to: 'facilities_management/sessions#destroy', as: :facilities_management_destroy_user_session
-    get '/facilities-management/users/forgot-password', to: 'facilities_management/passwords#new', as: :facilities_management_new_user_password
-    post '/facilities-management/users/password', to: 'facilities_management/passwords#create'
-    get '/facilities-management/users/forgot-password-confirmation', to: 'facilities_management/passwords#confirm_new', as: :facilities_management_confirm_new_user_password
-    get '/facilities-management/users/password', to: 'facilities_management/passwords#edit', as: :facilities_management_edit_user_password
-    put '/facilities-management/users/password', to: 'facilities_management/passwords#update'
-    get '/facilities-management/users/password-reset-success', to: 'facilities_management/passwords#password_reset_success', as: :facilities_management_password_reset_success
+    namespace 'facilities_management', path: 'facilities-management' do
+      concerns %i[authenticatable registrable]
+    end
 
-    get '/management-consultancy/sign-in', to: 'management_consultancy/sessions#new', as: :management_consultancy_new_user_session
-    post '/management-consultancy/sign-in', to: 'management_consultancy/sessions#create', as: :management_consultancy_user_session
-    delete '/management-consultancy/sign-out', to: 'management_consultancy/sessions#destroy', as: :management_consultancy_destroy_user_session
-    get '/management-consultancy/users/forgot-password', to: 'management_consultancy/passwords#new', as: :management_consultancy_new_user_password
-    post '/management-consultancy/users/password', to: 'management_consultancy/passwords#create'
-    get '/management-consultancy/users/forgot-password-confirmation', to: 'management_consultancy/passwords#confirm_new', as: :management_consultancy_confirm_new_user_password
-    get '/management-consultancy/users/password', to: 'management_consultancy/passwords#edit', as: :management_consultancy_edit_user_password
-    put '/management-consultancy/users/password', to: 'management_consultancy/passwords#update'
-    get '/management-consultancy/users/password-reset-success', to: 'management_consultancy/passwords#password_reset_success', as: :management_consultancy_password_reset_success
+    namespace 'management_consultancy', path: 'management-consultancy' do
+      concerns %i[authenticatable registrable]
+      namespace :admin do
+        concerns :authenticatable
+      end
+    end
 
-    get '/legal-services/sign-in', to: 'legal_services/sessions#new', as: :legal_services_new_user_session
-    post '/legal-services/sign-in', to: 'legal_services/sessions#create', as: :legal_services_user_session
-    delete '/legal-services/sign-out', to: 'legal_services/sessions#destroy', as: :legal_services_destroy_user_session
-    get '/legal-services/users/forgot-password', to: 'legal_services/passwords#new', as: :legal_services_new_user_password
-    post '/legal-services/users/password', to: 'legal_services/passwords#create'
-    get '/legal-services/users/forgot-password-confirmation', to: 'legal_services/passwords#confirm_new', as: :legal_services_confirm_new_user_password
-    get '/legal-services/users/password', to: 'legal_services/passwords#edit', as: :legal_services_edit_user_password
-    put '/legal-services/users/password', to: 'legal_services/passwords#update'
-    get '/legal-services/users/password-reset-success', to: 'legal_services/passwords#password_reset_success', as: :legal_services_password_reset_success
+    namespace 'legal_services', path: 'legal-services' do
+      concerns %i[authenticatable registrable]
+      namespace :admin do
+        concerns :authenticatable
+      end
+    end
 
-    get '/apprenticeships/sign-in', to: 'apprenticeships/sessions#new', as: :apprenticeships_new_user_session
-    post '/apprenticeships/sign-in', to: 'apprenticeships/sessions#create', as: :apprenticeships_user_session
-    delete '/apprenticeships/sign-out', to: 'apprenticeships/sessions#destroy', as: :apprenticeships_destroy_user_session
-    get '/apprenticeships/users/forgot-password', to: 'apprenticeships/passwords#new', as: :apprenticeships_new_user_password
-    post '/apprenticeships/users/password', to: 'apprenticeships/passwords#create'
-    get '/apprenticeships/users/forgot-password-confirmation', to: 'apprenticeships/passwords#confirm_new', as: :apprenticeships_confirm_new_user_password
-    get '/apprenticeships/users/password', to: 'apprenticeships/passwords#edit', as: :apprenticeships_edit_user_password
-    put '/apprenticeships/users/password', to: 'apprenticeships/passwords#update'
-    get '/apprenticeships/users/password-reset-success', to: 'apprenticeships/passwords#password_reset_success', as: :apprenticeships_password_reset_success
-
-    get '/supply-teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#new', as: :supply_teachers_admin_new_user_session
-    post '/supply-teachers/admin/sign-in', to: 'supply_teachers/admin/sessions#create', as: :supply_teachers_admin_user_session
-    delete '/supply-teachers/admin/sign-out', to: 'supply_teachers/admin/sessions#destroy', as: :supply_teachers_admin_destroy_user_session
-
-    get '/management-consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#new', as: :management_consultancy_admin_new_user_session
-    post '/management-consultancy/admin/sign-in', to: 'management_consultancy/admin/sessions#create', as: :management_consultancy_admin_user_session
-    delete '/management-consultancy/admin/sign-out', to: 'management_consultancy/admin/sessions#destroy', as: :management_consultancy_admin_destroy_user_session
+    namespace 'apprenticeships' do
+      concerns %i[authenticatable registrable]
+    end
   end
+
   namespace 'supply_teachers', path: 'supply-teachers' do
     get '/', to: 'home#index'
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
@@ -92,10 +82,6 @@ Rails.application.routes.draw do
     resources :branches, only: %i[index show]
     resources :downloads, only: :index
     namespace :admin do
-      get '/users/confirm', to: 'users#confirm_new'
-      post '/users/confirm', to: 'users#confirm'
-      get '/users/challenge', to: 'users#challenge_new'
-      post '/users/challenge', to: 'users#challenge'
       resources :uploads, only: %i[index new create show destroy] do
         get 'approve'
         get 'reject'
@@ -109,11 +95,23 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
+
   namespace 'facilities_management', path: 'facilities-management' do
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
+    namespace 'beta', path: 'beta' do
+      get '/', to: 'buyer_account#buyer_account'
+      get '/buyer_account', to: 'buyer_account#buyer_account'
+      get '/buildings-management', to: 'buildings_management#buildings_management'
+      get '/building', to: 'buildings_management#building'
+      get '/building-type', to: 'buildings_management#building_type'
+      get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
+      get '/building-details-summary', to: 'buildings_management#building_details_summary'
+      get '/building_address', to: 'buildings_management#building_address'
+      get '/building-security-type', to: 'buildings_management#building_security-type'
+      match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
+      match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
+      match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
+    end
+
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     # get '/value-band', to: 'select_locations#select_location'
@@ -123,6 +121,7 @@ Rails.application.routes.draw do
     match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
     get '/suppliers/long-list', to: 'long_list#long_list'
     post '/suppliers/longList' => 'long_list#long_list'
+    post '/suppliers/long-list' => 'long_list#long_list'
     post '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
     # post '/buildings-list', to: 'buildings#buildings'
     match '/buildings-list', to: 'buildings#buildings', via: %i[get post]
@@ -151,6 +150,7 @@ Rails.application.routes.draw do
     post '/cache/get', to: 'cache#retrieve'
     post '/cache/clear_by_key', to: 'cache#clear_by_key'
     post '/cache/clear', to: 'cache#clear_all'
+    get '/buyer-account', to: 'buyer_account#buyer_account'
     get '/reset', to: 'buildings#reset_buildings_tables'
     get '/:slug', to: '/errors#404'
 
@@ -159,10 +159,6 @@ Rails.application.routes.draw do
 
   namespace 'management_consultancy', path: 'management-consultancy' do
     get '/', to: 'home#index'
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/gateway', to: 'gateway#index'
     get '/suppliers', to: 'suppliers#index'
     get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
@@ -174,10 +170,6 @@ Rails.application.routes.draw do
     get '/html/download-the-supplier-list', to: 'html#download_the_supplier_list'
     # unless Rails.env.production? # not be available on production environments yet
     namespace :admin do
-      get '/users/confirm', to: 'users#confirm_new'
-      post '/users/confirm', to: 'users#confirm'
-      get '/users/challenge', to: 'users#challenge_new'
-      post '/users/challenge', to: 'users#challenge'
       resources :uploads, only: %i[index new create show] do
         get 'approve'
         get 'reject'
@@ -194,10 +186,6 @@ Rails.application.routes.draw do
 
   namespace 'apprenticeships', path: 'apprenticeships' do
     get '/', to: 'home#index'
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/gateway', to: 'gateway#index'
     get '/search', to: 'home#search'
     get '/search_results', to: 'home#search_results'
@@ -256,10 +244,6 @@ Rails.application.routes.draw do
   end
 
   namespace 'legal_services', path: 'legal-services' do
-    get '/users/confirm', to: 'users#confirm_new'
-    post '/users/confirm', to: 'users#confirm'
-    get '/users/challenge', to: 'users#challenge_new'
-    post '/users/challenge', to: 'users#challenge'
     get '/cognito', to: 'gateway#index', cognito_enabled: true
     get '/gateway', to: 'gateway#index'
     get '/', to: 'home#index'
@@ -302,6 +286,11 @@ Rails.application.routes.draw do
       resources :postcodes, only: :show
       post '/postcode/:slug', to: 'uploads#postcodes'
     end
+  end
+
+  namespace 'tests', path: 'test' do
+    is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
+    match '/', to: 'test#index', via: %i[get post] if is_dev_db.nil? || (is_dev_db.include? 'dev.')
   end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'

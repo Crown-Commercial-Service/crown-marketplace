@@ -1,7 +1,5 @@
 ---
 en:
-  'No': 'No'
-  'Yes': 'Yes'
   activemodel:
     errors:
       models:
@@ -71,8 +69,18 @@ en:
             password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+        cognito/confirm_sign_up:
+          attributes:
+            confirmation_code:
+              blank: Enter your confirmation code
+              invalid_format: Confirmation code must contain numeric characters only
+              invalid_length: Confirmation code must be 6 characters
         cognito/respond_to_challenge:
           attributes:
+            access_code:
+              blank: Enter the access code
+              invalid_format: Access code must contain numeric characters only
+              invalid_length: Access code must be 6 characters
             new_password:
               blank: Enter a password
               invalid_no_capitals: Password must include a capital letter
@@ -81,62 +89,35 @@ en:
             new_password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+        cognito/sign_up_user:
+          attributes:
+            email:
+              blank: Enter your email
+              not_on_whitelist: You must use a public sector email
+            password:
+              blank: Enter a password
+              invalid_no_capitals: Password must include a capital letter
+              invalid_no_symbol: Password must include a special character
+              too_short: Password must be 8 characters or more
+            password_confirmation:
+              blank: Enter your password
+              confirmation: Passwords don't match
         legal_services/journey/check_suitability:
           attributes:
-            legal_services:
-              inclusion: Select a legal service
-        legal_services/journey/check_suitability2:
-          attributes:
-            fees:
+            under_threshold:
               inclusion: Select yes if the fees will be under £20,000
-        legal_services/journey/check_suitability3:
+        legal_services/journey/choose_jurisdiction:
           attributes:
-            lot:
-              too_short: Select at least one checkbox
+            legal_jurisdiction:
+              inclusion: Select the jurisdiction you need
         legal_services/journey/choose_organisation_type:
           attributes:
             central_government:
               inclusion: Select yes if you work for central government
-        legal_services/journey/choose_services_area:
+        legal_services/journey/choose_regions:
           attributes:
-            services_area:
-              inclusion: Select no if you don't need legal services for property and construction or rail
-        legal_services/journey/choose_services_area2:
-          attributes:
-            services_area2:
-              inclusion: If you don't know which Lot you need select don't know
-        legal_services/journey/legal_jurisdiction:
-          attributes:
-            legal_jurisdiction:
-              inclusion: Select the jurisdiction you need
-        legal_services/journey/lot1_regional_service:
-          attributes:
-            lot1_regional_service:
-              too_short: Select the legal service or services you need
-        legal_services/journey/lot1_regional_service2:
-          attributes:
-            lot1_regional_service2:
-              too_short: Select the legal service or services you need
-        legal_services/journey/lot1_regional_services:
-          attributes:
-            lot:
-              too_short: Select the services you need
-        legal_services/journey/lot2_full_service:
-          attributes:
-            lot2_full_service:
-              too_short: Select the legal service or services you need
-        legal_services/journey/regional_legal_service:
-          attributes:
-            regional_legal_service:
-              too_short: Select where you need the legal service or services
-        legal_services/journey/regional_legal_services:
-          attributes:
-            region:
-              too_short: Select at least one region
-        legal_services/journey/requirement:
-          attributes:
-            legal_services:
-              inclusion: Select yes if your requirement is restricted to a small geographical area?
+            region_codes:
+              too_short: Select the region or regions you require the services in
         legal_services/journey/select_lot:
           attributes:
             select_lot:
@@ -169,6 +150,27 @@ en:
               invalid_location: Enter a valid postcode
             term:
               blank: Select how long you need the worker for
+        supply_teachers/journey/fta_to_perm_contract_end:
+          attributes:
+            contract_end_date:
+              after_contract_start_date: The date the contract ended must be after the date the worker’s current contract started.
+              blank: Enter the contract end date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_contract_start:
+          attributes:
+            contract_start_date:
+              blank: Enter the contract start date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_to_perm_fixed_term_fee:
+          attributes:
+            fixed_term_fee:
+              blank: Enter the fixed term fee
+        supply_teachers/journey/fta_to_perm_hire_date:
+          attributes:
+            hire_date:
+              after_contract_end_date: The date that you wish to hire the worker must be after the date the fixed term contract ended.
+              blank: Enter the date, including the day, month and year
+              invalid: Enter a real date
         supply_teachers/journey/looking_for:
           attributes:
             looking_for:
@@ -239,6 +241,10 @@ en:
   activerecord:
     errors:
       models:
+        supply_teachers/admin/upload:
+          attributes:
+            base:
+              none_present: Upload at least one file
         supply_teachers/branch:
           attributes:
             postcode:
@@ -460,17 +466,46 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   ccs_patterns:
     home:
       cog_email:
@@ -519,7 +554,7 @@ en:
         your_details: Your details
       cog_register_domain_not_on_whitelist:
         heading: You must use a public sector email address
-        lead_html: You must be employed by, or present, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
         line_01: The email you used doesn't belong to a recognised public sector domain.
         line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
         list_01: you think your domain should be recognised
@@ -531,7 +566,7 @@ en:
         lead_start: An email has been sent to
         resend_the_confirmation_email_html: <a href="#" class="govuk-link">Resend the email</a>
       cog_sign_in:
-        create_ccs_account_html: <a href="#" class="govuk-link">Create a CCS account</a>
+        create_ccs_account_html: Create a CCS account
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_email_html: I've forgotten my email address
@@ -600,21 +635,24 @@ en:
     next: Next
     passcap: at least one capital letter
     passeight: at least 8 characters
-    passsymbol_html: at least one symbol (eg &commat;<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     reset_password: Reset password
     search: Search
     send_reset_email: Send reset email
     sign_in: Sign in
     start_now: Start now
     submit: Continue
+    therewasaproblem: There was a problem
     type_csv: text/csv
     type_doc: application/msword
     type_xlsx: application/msexcel
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
+    youmustselect: You must select at least one service before clicking the continue button
   companies:
     unit:
       one: company
       other: companies
+  england_wales: England and Wales
   errors:
     '404':
       explanation: You may have mistyped the address or the page may have moved.
@@ -631,11 +669,31 @@ en:
       explanation: You will be able to use the service later.
       title: Service unavailable
   facilities_management:
+    basket:
+      basket_header: selected
+      none: none
+      or_text: or
+      removeall_text: Remove all
+      selectall_text: Select all
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
+    home:
+      beforeyoustart: Before you start
+      heading: Find Facilities Management services
+      startlist: |
+        <li>what services you are looking for</li>
+        <li>building locations and information</li>
+        <li>details of how long you want the services for</li>
+      startnow: Start now
+      subheading: 'Use this tool to:'
+      usagelist: |
+        <li>find a supplier for your facilities management requirements</li>
+        <li>see a shortlist of suppliers available in your region</li>
+        <li>download a spreadsheet with your requirements and list of potential suppliers</li>
+      youneedtoknow: 'You need to know:'
     passwords:
       edit:
         confirm_code: Confirm Code
@@ -657,17 +715,54 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
+    select_locations:
+      heading: Where are your buildings located?
+      subheading: Choose one or more regions, based on building's location where you require facilities management services.
+    select_services:
+      heading: Select the facilities management services do you need
+      servicespec_link_alttext: RM3830 Facilities Management Marketplace
+      servicespec_link_text: Read the service specification document
+      subheading: Choose all facilities management services required within your estate, even if you want services in just one building.
     sessions:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   faker:
     company:
       name:
@@ -786,91 +881,63 @@ en:
       service_not_suitable:
         better_suited_framework_html: The <a href="https://www.crowncommercial.gov.uk/agreements/rm3786" target="_blank">General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
+    job_titles:
+      '1':
+        junior: Legal Support Practitioner/Executive
+        managing: Managing Practitioner
+        senior: Senior Practitioner
+        solicitor: Solicitor/Associate
+      '2':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
+      '3':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
+      '4':
+        junior: Junior Solicitor
+        managing: Partner including Managing Partner
+        senior: Senior Solicitor/Senior Associate/Legal Director
+        solicitor: Solicitor/Associate
+        trainee: Trainee/Paralegal
     journey:
       check_suitability:
-        heading: Select the legal services you need
-        label_01: Transactional property, including noncomplex conveyancing and work relating to leases and licences
-        label_02: Litigation work, including employment
-        label_03: Other
-        or: or
-      check_suitability2:
         heading: Will the fees be under £20,000 per matter?
+      choose_jurisdiction:
+        heading: Lot 2 - Full-service firms
+        question: Select the jurisdiction you need
       choose_organisation_type:
         question: Do you work for central government?
         search_central_government_html: Search %{central_government_search_link} if you're unsure.
         txt_link_text: central government departments, agencies and public bodies
-      choose_regional_or_fullservice:
-        question: Question
-      choose_services_area:
-        opt_01: Yes, Property And Construction (Lot 3)
-        opt_02: Yes, rail (Lot 4)
-        opt_no: 'No'
-        question: Do you need legal services for property and construction or rail?
-      choose_services_area2:
-        opt_01: Lot 1 - Regional service provision
-        opt_02: Lot 2 - Full-service firms
-        opt_03: I Dont Know
-        or_txt: Or
-        question: What lot do you need?
-      legal_jurisdiction:
-        eng_wales: England and Wales
-        heading: Lot 2 - Full-service firms
-        ni: Northern Ireland
-        question: Select the jurisdiction you need
-        scot_land: Scotland
-      lot1_regional_service:
-        heading: Lot 1 - Regional service provision
-        hint: Select the legal services you need
-        links_text_html: If the services you need aren't listed here, the <a href="https://www.crowncommercial.gov.uk/agreements/RM3786">General Legal Advice Services (RM3786)</a> agreement provides legal services for central government and arms-length bodies. <a href="https://www.crowncommercial.gov.uk/contact">Contact CCS Support</a> for help.
+      choose_regions:
+        full_national_coverage: Full national coverage
+        no_regions_selected: No regions selected
+        or: or
+        question: Select the regions where you need legal services
+        regions_selected: Regions selected
         remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot1_regional_service2:
-        heading: Lot 1 Regional service provision
-        hint: Select the legal services you need
-        links_text_html: Links text html
+        view_locations: View locations (PDF 266 KB)
+      choose_services:
+        ccs_support_link_text: Contact CCS Support
+        general_legal_advice_services_html: If the services you need aren't listed here, the %{general_legal_advice_services_link} agreement provides legal services for central government and arms-length bodies. %{ccs_support_link} for help.
+        general_legal_advice_services_link: https://www.crowncommercial.gov.uk/agreements/RM3786
+        general_legal_advice_services_link_text: General Legal Advice Services (RM3786)
+        no_services_selected: No services selected
+        question: Select the legal services you need
         remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot2_full_service:
-        heading: Lot 2 - Full-service firms
-        hint: Select the legal services you need
-        remove_all: Remove all
-        txt01: services selected
-        txt02: No services selected
-      lot3_results:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 3 - Property and construction
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
-      lot4_results:
-        download: Download the supplier list
-        heading: Supplier results
-        sub_heading: Lot 4 - Transport rail
-        suppliers: suppliers
-        suppliers_pt2: can provide the legal services that meet your requirements
-      regional_legal_service:
-        heading: Lot 1 - Regional service provision
-        hint: Select the regions where you need legal services
-        remove_all: Remove all
-        txt01: regions selected
-        txt02: No regions selected
-      requirement:
-        hint: For example, Greater London or East Midlands
-        question: Is your requirement restricted to a small geographical area?
+        services_selected: services selected
       select_lot:
         heading: Select the lot you need
-        lot1_txt: Lot 1 - Regional service provision
-        lot1_txt_details: Lot 1 legal services
-        lot1_txt_sub: Select lot 1 if your requirements have a regional focus or your budget is below £200,000. These suppliers provide services across 14 legal specialisms within at least one of the 13 UK NUTS regions.
-        lot2_txt: Lot 2 - Full-service firms
-        lot2_txt_details: Lot 2 legal services
-        lot2_txt_sub: Select lot 2 if your requirements needs a full-service supplier or your budget is over £200,000. Full-service firms can provide services in 35 specialisms. Suppliers have said which jurisdictional area of the UK they serve.
-        lot3_txt: Lot 3 - Property and construction
-        lot3_txt_sub: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
-        lot4_txt: Lot 4 - Transport rail
-        lot4_txt_sub: Suppliers in lot 4 provide legal services for transport rail across the UK.
+        lot1_extended_description: Select lot 1 if your requirements have a regional focus or your budget is below £200,000. These suppliers provide services across 14 legal specialisms within at least one of the 13 UK NUTS regions.
+        lot2_extended_description: Select lot 2 if your requirements needs a full-service supplier or your budget is over £200,000. Full-service firms can provide services in 35 specialisms. Suppliers have said which jurisdictional area of the UK they serve.
+        lot3_extended_description: Suppliers in lot 3 provide legal services for large property developments and projects across the UK. You can also select lot 3 if you need a specialist understanding of the property sector. Property law is available in lot 1 and lot 2.
+        lot4_extended_description: Suppliers in lot 4 provide legal services for transport rail across the UK.
       sorry:
         heading: Sorry, this panel isn't suitable for you
         lead: This panel supports a range of legal services primarily for the wider public sector
@@ -898,46 +965,111 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
-      cg_no_suppliers_found:
-        header: No suppliers were found
-        link_click_text: Contact CCS Support
-        link_end_text: for help.
-        statement_pt_1: The
-        statement_pt_2_link_text: General Legal Advice Services (RM3786)
-        statement_pt_3: agreement provides legal advice services for central government and arms-length bodies.
-      download_shortlist:
+      download:
         back_to_start: Back to start
         download_statement: The spreadsheet includes the selections you made, for your records and audit trail
         download_supplier_shortlist_link: Download supplier shortlist
         heading: Download the supplier shortlist
         page_title: Download supplier list
       index:
+        download_suppliers_list: Download the supplier list
         heading: Supplier results
+        no_suppliers_found:
+          contact_html: "%{contact_link} for help."
+          contact_link_text: Contact CCS Support
+          general_legal_advice_services_link_text: General Legal Advice Services (RM3786)
+          general_legal_advice_services_link_url: https://www.crowncommercial.gov.uk/agreements/RM3786
+          heading: No suppliers were found
+          text: There are no suppliers on this panel that can provide the law services you need
+          text_central_government_users_html: The %{general_legal_advice_service_link} agreement provides legal services for central government and arms-length bodies.
         page_title: Supplier results
-        results_html: <strong class="govuk-!-font-size-27">%{results}</strong> <strong>firms</strong> can provide the legal services that meet your requirements.
         sme: SME
-      no_suppliers_found:
-        heading: No suppliers were found
-        link_click_text: Contact CCS Support
-        link_end_text: for help.
-        statement: No companies can provide suppliers that can meet your requirements.
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
       show:
-        caption: Supplier details
-        heading: Supplier details
+        contact_details:
+          address: Address
+          email: Email
+          heading: Contact details
+          person: Name
+          phone_number: Phone number
+          website: Website
+        daily: Daily
+        day_rates: Day rates
+        fixed_until: Fixed until September 2021 and based on an 8 hour working day.
+        further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
+        hourly: Hourly
+        is_an_sme: This supplier is a small or medium-sized enterprise
+        monthly: Monthly
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   management_consultancy:
     admin:
+      passwords:
+        edit:
+          confirm_code: Confirm Code
+          confirm_new_password: Confirm new password
+          heading: Reset your password
+          lead: Reset password for
+          new_password: New password
+          password: Your password must have
+        forgot_password_confirmation:
+          heading: A reset email has been sent
+          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+          text01: If you don't receive this, email
+          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        new:
+          email: Email address
+          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+          heading: Reset password
+          lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        password_reset_success:
+          heading: You have successfully changed your password
+          lead: You can now sign in to your Crown Commercial Service account
+      sessions:
+        new:
+          email_address: Email address
+          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          forgotten_password_html: I've forgotten my password
+          password: Password
       uploads:
         in_progress:
           content: The data have been uploaded and are now being processed.
@@ -967,6 +1099,18 @@ en:
         uploading:
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
           heading: Data upload in progress
+      users:
+        new_password_required:
+          confirm_your_password: Confirm your password
+          create_your_password: Create a password you'll remember
+          heading: Change your password
+          intro: This is the first time you've signed in to your account. You need to reset your password.
+        sms_mfa:
+          access_code: Access code
+          content: It may take a few minutes to arrive.
+          heading: Enter your access code
+          lead: 'We just sent a 6 digit access code by text to:'
+          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -1158,10 +1302,26 @@ en:
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_whitelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can't create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
         password: Password
     suppliers:
       download:
@@ -1199,16 +1359,30 @@ en:
       supplier:
         average_day_rate: Average day rate
     users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   miles:
     unit:
       one: mile
       other: miles
   'no': 'No'
+  northern_ireland: Northern Ireland
   number:
     currency:
       format:
@@ -1257,25 +1431,29 @@ en:
     unit:
       one: result
       other: results
+  scotland: Scotland
   shared:
     error_summary:
       there_is_a_problem: There is a problem
     not_permitted:
+      apprenticeships:
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       auth:
-        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       facilities_management:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       legal_services:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       management_consultancy:
-        details: You don’t have permission to view this page.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
       supply_teachers:
-        details: It looks like you're from a school that's not able to use this service. Only not-for-profit and schools with charitable status are able to get access to the service.
-        title: Not permitted
+        details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
+        title: Sorry, you are not authorised to view this page
   sme: SME
   suppliers:
     unit:
@@ -1283,6 +1461,33 @@ en:
       other: agencies
   supply_teachers:
     admin:
+      passwords:
+        edit:
+          confirm_code: Confirm Code
+          confirm_new_password: Confirm new password
+          heading: Reset your password
+          lead: Reset password for
+          new_password: New password
+          password: Your password must have
+        forgot_password_confirmation:
+          heading: A reset email has been sent
+          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+          text01: If you don't receive this, email
+          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        new:
+          email: Email address
+          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+          heading: Reset password
+          lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        password_reset_success:
+          heading: You have successfully changed your password
+          lead: You can now sign in to your Crown Commercial Service account
+      sessions:
+        new:
+          email_address: Email address
+          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          forgotten_password_html: I've forgotten my password
+          password: Password
       uploads:
         in_progress:
           button: Return to manage supplier data
@@ -1309,7 +1514,7 @@ en:
           uploading: Processing
         new:
           caption: Supply teachers and agency workers
-          heading: Upload session
+          heading: Set up a new upload session
           upload_button: Upload spreadsheets
           upload_caption: XLS, XLSX and CSV are supported. Maximum file size is 5mb.
           upload_title: Choose one or more spreadsheets to upload
@@ -1341,6 +1546,18 @@ en:
           button: Return to manage supplier data
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently processing and will soon be published to the <strong>''Supply teachers and agency workers''</strong> service.'
           heading: Data published
+      users:
+        new_password_required:
+          confirm_your_password: Confirm your password
+          create_your_password: Create a password you'll remember
+          heading: Change your password
+          intro: This is the first time you've signed in to your account. You need to reset your password.
+        sms_mfa:
+          access_code: Access code
+          content: It may take a few minutes to arrive.
+          heading: Enter your access code
+          lead: 'We just sent a 6 digit access code by text to:'
+          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     branches:
       branch:
         address: Address
@@ -1406,10 +1623,14 @@ en:
         subheading: If you don’t have a DfE Sign-in account
     home:
       fta_to_perm_fee:
-        avoid_fee: To avoid this fee you can hire the worker permanently 6 months after current contract with you ends.
-        header: Fixed-term to permanent fee
-        no_fee: You cannot be charged a fee if you hire the worker 6 months after their contract ends
-        panel_body: Based on the information provided you could be charged
+        check_another_fixed_term_contract: Check another fixed term contract
+        header: You could be charged
+        header_no_fee: No transfer fee required
+        no_fee:
+          end_not_within_6_months: Based on the information you have provided, no fee is required as the employee's contract ended more than 6 months ago.
+          hire_not_within_6_months: Based on the information you have provided, no fee is required as the gap between the employee's contract finishing and fully permanent position starting is greater than or equal to 6 months.
+          length_not_within_12_months: Based on the information you have provided, no fee is required as the employee has been continually employed for more than 12 months.
+        panel_body: if you choose to hire the worker before %{date}
       index:
         accreditation_of_agencies: Accreditation of agencies
         all_suppliers_have_undergone: All agencies have undergone background screening and safeguarding to DfE’s Keeping Children Safe in Education standards. They are audited and accredited against best practice standards in education recruitment.
@@ -1475,16 +1696,27 @@ en:
         question_hint: We use this to find agencies near to your school
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
-      fta_to_perm_calculator:
-        answer_within_6_months_false: 'No'
-        answer_within_6_months_true: 'Yes'
-        current_contract_length_question: How many months long is the worker's current fixed-term contract?
-        current_contract_length_question_hint: For example, 6
-        fixed_term_contract_fee_icon: "£"
-        fixed_term_contract_fee_question: What fixed-term contract fee did you originally pay for the worker
-        fixed_term_contract_fee_question_hint: An amount in pounds. For example, 15000
-        header: Work out what fixed-term worker transfer fee you could be charged
-        within_6_months_question: Do you intend to hire the worker within 6 months of their fixed term contract coming to an end?
+      fta_to_perm_contract_end:
+        contract_end_question: What date did the workers fixed term contract end?
+        contract_end_question_hint: For example, 12 05 2019
+        page_title: What date did the workers fixed term contract end?
+      fta_to_perm_contract_start:
+        contract_start_question: What date did the workers fixed term contract start?
+        contract_start_question_hint: For example, 01 03 2018
+        page_title: What date did the workers fixed term contract start?
+      fta_to_perm_fixed_term_fee:
+        fixed_term_fee_icon: "£"
+        fixed_term_fee_question: What fixed term fee did you pay the worker?
+        page_title: What fixed term fee did you pay the worker?
+      fta_to_perm_hire_date:
+        hire_date_question: What date do you want their fully permanent employment to start?
+        hire_date_question_hint: For example, 12 05 2019
+        page_title: What date do you want their fully permanent employment to start?
+      fta_to_perm_hire_date_notice:
+        body: If you make a fixed-term worker provided by an agency on the deal permanent up to 6 months after their temporary assignment ends, the agency may be charged a "worker transfer fee"
+        header_html: If you wait and do not employ until %{date}, you won't be charged a transfer fee.
+        page_title: Fixed term contract notice
+        submit: I don't want to wait that long - continue to calculate fee
       looking_for:
         all_suppliers: A list of all agencies
         answer_calculate_fta_to_perm_fee: To work out what fixed-term worker transfer fee I could be charged
@@ -1606,6 +1838,12 @@ en:
         create_your_password: Create a password you'll remember
         heading: Change your password
         intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   views:
     pagination:
       next: Next <b>→</b>

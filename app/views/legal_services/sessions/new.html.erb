@@ -46,6 +46,9 @@
       <%= f.submit t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
 
     <% end %>
+    <p class="govuk-body govuk-!-margin-bottom-7">
+      <%= link_to t('ccs_patterns.home.cog_sign_in.create_ccs_account_html'),legal_services_new_user_registration_path, class: "govuk-link" %>
+    </p>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
       <%= t('ccs_patterns.home.cog_sign_in.problems_signing_in') %>
@@ -53,7 +56,7 @@
 
     <ul class="govuk-list">
       <li>
-        <%= link_to t('ccs_patterns.home.cog_sign_in.forgotten_password_html'), legal_services_new_user_password_path, class: 'govuk-link' %>
+        <%= link_to t('.forgotten_password_html'), legal_services_new_user_password_path, class: 'govuk-link' %>
       </li>
     </ul>
   </div>

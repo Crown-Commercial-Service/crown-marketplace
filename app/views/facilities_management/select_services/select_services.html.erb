@@ -1,17 +1,15 @@
-<a href="/facilities-management/select-locations" class="govuk-back-link">Back</a>
+<a href="/facilities-management/" class="govuk-back-link">Back</a>
 <%= render('errors/inline_error_summary') %>
-
 <div>
   <fieldset class="govuk-fieldset" aria-describedby="">
     <h2 class="govuk-heading-m">
-      What facilities management services do you need?
+      <%= t('facilities_management.select_services.heading') %>
     </h2>
   </fieldset>
-  <p class="govuk-caption-m">
-    Select all facilities management services required within your estate
-  </p>
 </div>
-<div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-column-two-thirds" style="padding-left:0">
+    <p class="govuk-caption-m"><%= t('facilities_management.select_services.subheading') %></p>
+    <p><a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="<%= t('facilities_management.select_services.servicespec_link_alttext')%>"><%= t('facilities_management.select_services.servicespec_link_text') %></a></p>
   <div class="govuk-accordion" data-module="accordion" id="services-accordion">
     <% @services.each do |service| %>
       <div class="govuk-accordion__section ">
@@ -21,16 +19,27 @@
           </h2>
         </div>
         <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
-          <% @work_packages.each do |workPackage| %>
-
+          <% filteredCollection = @work_packages.select { |wp| wp['work_package_code'].starts_with?(service['code'])} %>
+          <% filteredCollection.each do |workPackage| %>
             <% if workPackage['work_package_code'].start_with?(service['code']) %>
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" aria-describedby="<%= workPackage['name'] %>">
                   <div id="services-checkboxes" class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
-                      <input title="<%= workPackage['name'] %>" class="govuk-checkboxes__input" id="<%= workPackage['code'].sub('.', '-') %>" name="fm-building-service-checkbox" serviceid="<%= workPackage['name'] %>" type="checkbox" value="<%= workPackage['code'] %>">
-                      <label class="govuk-label govuk-checkboxes__label" for="<%= workPackage['code'] %>">
+                      <input title="<%= workPackage['name'] %>"
+                             style="margin-top:4px"
+                             class="govuk-checkboxes__input"
+                             id="<%= workPackage['code'].sub('.', '-') %>"
+                             name="fm-building-service-checkbox"
+                             serviceid="<%= service['code'] %>"
+                             type="checkbox"
+                             value="<%= workPackage['code'] %>">
+                      <label style="padding-top:0"
+                             class="govuk-label govuk-checkboxes__label"
+                             for="<%= workPackage['code'].sub('.', '-') %>">
                         <%= workPackage['name'] %>
+                        <br />
+                        <span style="font-weight:lighter;"><%=workPackage['description'] %></span>
                       </label>
                     </div>
                   </div>
@@ -38,29 +47,41 @@
               </div>
             <% end %>
           <% end %>
+          <% if filteredCollection.count > 1 %>
+            <p><%= t('facilities_management.basket.or_text') %></p>
+            <div id="services-checkboxes" class="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input title="Select all code-<%= service['code'] %> services"
+                       style="margin-top:4px"
+                       class="govuk-checkboxes__input"
+                       id="<%= service['code'].sub('.', '-')%>_all"
+                       name="fm-building-service-checkbox_select_all"
+                       forserviceid="<%= service['code'] %>"
+                       type="checkbox"
+                       value="<%= service['code'] %>">
+                <label class="govuk-label govuk-checkboxes__label"
+                       for="<%= service['code'].sub('.', '-') %>_all">
+                  <%= t('facilities_management.basket.selectall_text') %>
+                </label>
+              </div>
+            </div>
+            <%end %>
         </div>
       </div>
     <% end %>
   </div>
-  <p>
-  <form id="fm-services-form" name="fm-services-form" action="/facilities-management/suppliers/longList" method="post">
-    <input name="authenticity_token" type="hidden" value='<%= csrf_meta_tag %>'/>
-    <input id="postedlocations" name="postedlocations" type="hidden" value=""/>
-    <input id="postedservices" name="postedservices" type="hidden" value=""/>
-    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-    <a role='button' class='govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' id='save-services-link'>Continue</a>
-  </form>
-
-  </p>
+  <%= form_tag '/facilities-management/buildings/select-locations', id: 'save-services-link-form', method: :post do %>
+    <%= link_to t('common.continue'), '/facilities-management/select-locations', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-services-link', name: 'save-services-link' %>
+  <% end %>
 </div>
 <div class="govuk-grid-column-one-third">
   <div class="filter-selection">
     <header>
       <div class="filter-selection__header">
-        <a id="remove-all-services-link" class="remove-all js-filter" href="">Remove all</a>
-        <h2 class="font-weight-700">
-          <span id="selected-service-count" class="font-size--18">0</span>
-          Services selected
+        <a id="remove-all-services-link" class="remove-all js-filter" href=""><%= t('facilities_management.basket.removeall_text') %></a>
+        <h2 class="govuk-heading-s font-weight-700">
+          <span id="selected-service-count" class="font-size--18"><%= t('facilities_management.basket.none') %></span>
+          <%= t('facilities_management.basket.basket_header') %>
         </h2>
       </div>
     </header>
