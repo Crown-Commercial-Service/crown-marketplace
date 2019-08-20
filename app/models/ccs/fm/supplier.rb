@@ -34,18 +34,18 @@ module CCS
 
       # usage:
       # CCS::FM::Supplier.long_list_suppliers_lot(["UKM21", "UKC1"], ["C.1", "L.1"], "1a")
-      def self.long_list_suppliers_lot(locations, services, lot)
-        vals = selected_suppliers(lot, locations, services)
+      def self.long_list_suppliers_lot(locations, services, for_lot)
+        vals = selected_suppliers(for_lot, locations, services)
 
         result =
           vals.map do |s|
-            lot = s.data['lots'].select do |x|
-              x['lot_number'] = lot
+            selected_lot = s.data['lots'].select do |x|
+              x['lot_number'] = for_lot
             end
-            lot = lot&.first
+            first_selected_lot = selected_lot&.first
             { 'name' => s.data['supplier_name'],
-              'service_code' => lot['services'],
-              'region_code' => lot['regions'] }
+              'service_code' => first_selected_lot['services'],
+              'region_code' => first_selected_lot['regions'] }
           end
         result
       end
