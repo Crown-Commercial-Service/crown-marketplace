@@ -13,6 +13,8 @@ module SupplyTeachers
           result.daily_rate = daily_rates.fetch(branch.id, nil)
           result.worker_cost = supplier_mark_up(result.daily_rate, result.rate)&.worker_cost
           result.agency_fee = supplier_mark_up(result.daily_rate, result.rate)&.agency_fee
+          result.fixed_term_length = supplier_finders_fee(result.fixed_term_length, result.rate)&.fixed_term_length
+          result.finders_fee = supplier_finders_fee(result.fixed_term_length, result.rate)&.finders_fee
         end
       end
     end
@@ -36,6 +38,13 @@ module SupplyTeachers
       return if daily_rate.empty?
 
       SupplierMarkUp.new(daily_rate: daily_rate, markup_rate: markup_rate)
+    end
+
+    def supplier_finders_fee(fixed_term_length, rate)
+      return unless fixed_term_length && rate
+      return if fixed_term_length.empty?
+
+      SupplierMarkUp.new(fixed_term_length: fixed_term_length, rate: rate)
     end
   end
 end

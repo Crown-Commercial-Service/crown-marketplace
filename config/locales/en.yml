@@ -1584,6 +1584,13 @@ en:
         miles: Miles
         phone_number: Phone number
         region: Region
+      fta_calculator:
+        daily_rate: Enter daily rate
+        error: 'Error:'
+        error_message: Daily rate is invalid
+        finders_fee: finders fee based on
+        fixed_term_length: fixed term length
+        heading: 'Update the salary to see what their finders fee will be:'
       index:
         calculate_markup_button_label: Calculate the fee
         calculate_markup_description: 'See how much the worker makes and what fee the agency will get using the figure they quoted you:'
@@ -1599,7 +1606,7 @@ en:
         download_aria_label: Download shortlist as Microsoft Excel file
         download_with_calculator: Download shortlist (with markup calculator)
         download_with_calculator_aria_label: Download shortlist (with markup calculator) as Microsoft Excel file
-        header: Agency list
+        header: Agency results
         inputs:
           job_type: Job type
           looking_for: Looking for
