@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_16_162029) do
+ActiveRecord::Schema.define(version: 2019_08_20_101225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,9 +22,11 @@ ActiveRecord::Schema.define(version: 2019_08_16_162029) do
     t.jsonb "building_json", null: false
     t.datetime "updated_at", default: "2019-08-19 12:00:37"
     t.string "status", default: "Incomplete", null: false
+    t.uuid "id"
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
