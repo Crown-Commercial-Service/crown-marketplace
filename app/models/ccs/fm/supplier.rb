@@ -49,6 +49,15 @@ module CCS
           end
         result
       end
+
+      #  (@suppliers_lot1a.map { |s| s['name'] } << @suppliers_lot1b.map { |s| s['name'] } << @suppliers_lot1c.map { |s| s['name'] }).flatten.uniq.count
+      def self.supplier_count(locations, services)
+        vals_1a = selected_suppliers('1a', locations, services)
+        vals_1b = selected_suppliers('1b', locations, services)
+        vals_1c = selected_suppliers('1c', locations, services)
+
+        (vals_1a + vals_1b + vals_1c).uniq.count
+      end
     end
   end
 end
