@@ -21,12 +21,6 @@ class FacilitiesManagement::LongListController < ApplicationController
     @locations = '(' + @posted_locations.map { |x| "'\"#{x}\"'" }.join(',') + ')'
     @services = '(' + @posted_services.map { |x| "'\"#{x}\"'" }.join(',') + ')'
 
-    # fm_supplier_data = FMSupplierData.new
-    # @supplier_count = fm_supplier_data.long_list_supplier_count(@locations, @services)
-    # @suppliers_lot1a = fm_supplier_data.long_list_suppliers_lot(@locations, @services, '1a')
-    # @suppliers_lot1b = fm_supplier_data.long_list_suppliers_lot(@locations, @services, '1b')
-    # @suppliers_lot1c = fm_supplier_data.long_list_suppliers_lot(@locations, @services, '1c')
-
     @suppliers_lot1a  = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1a')
     @suppliers_lot1b  = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1b')
     @suppliers_lot1c  = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1c')
@@ -40,7 +34,6 @@ class FacilitiesManagement::LongListController < ApplicationController
 
   def set_current_choices
     TransientSessionInfo[session.id] = nil
-    # TransientSessionInfo[session.id, 'supplier_count'] = @supplier_count
     TransientSessionInfo[session.id, 'posted_locations'] = @posted_locations
     TransientSessionInfo[session.id, 'posted_services'] = @posted_services
     TransientSessionInfo[session.id, 'locations'] = @locations
