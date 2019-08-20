@@ -1585,9 +1585,9 @@ en:
         phone_number: Phone number
         region: Region
       fta_calculator:
-        daily_rate: Enter daily rate
+        annual_salary: Enter annual salary
         error: 'Error:'
-        error_message: Daily rate is invalid
+        error_message: Annual salary is invalid.
         finders_fee: finders fee based on
         fixed_term_length: fixed term length
         heading: 'Update the salary to see what their finders fee will be:'

@@ -4,7 +4,7 @@ module SupplyTeachers
     include BranchesHelper
     include Geolocatable
 
-    def branches(daily_rates = {})
+    def branches(daily_rates = {}, salary = nil, fixed_term_length = nil)
       point = location.point
       Branch.search(point, rates: rates, radius: radius).map do |branch|
         search_result_for(branch).tap do |result|
@@ -13,8 +13,7 @@ module SupplyTeachers
           result.daily_rate = daily_rates.fetch(branch.id, nil)
           result.worker_cost = supplier_mark_up(result.daily_rate, result.rate)&.worker_cost
           result.agency_fee = supplier_mark_up(result.daily_rate, result.rate)&.agency_fee
-          result.fixed_term_length = supplier_finders_fee(result.fixed_term_length, result.rate)&.fixed_term_length
-          result.finders_fee = supplier_finders_fee(result.fixed_term_length, result.rate)&.finders_fee
+          result.finders_fee = supplier_finders_fee(fixed_term_length, branch_salary(salary, branch.id), result.rate)
         end
       end
     end
@@ -40,11 +39,23 @@ module SupplyTeachers
       SupplierMarkUp.new(daily_rate: daily_rate, markup_rate: markup_rate)
     end
 
-    def supplier_finders_fee(fixed_term_length, rate)
-      return unless fixed_term_length && rate
-      return if fixed_term_length.empty?
+    def supplier_finders_fee(fixed_term_length, salary, fixed_term_rate)
+      return unless fixed_term_length && salary
+      return if fixed_term_length.nil?
 
-      SupplierMarkUp.new(fixed_term_length: fixed_term_length, rate: rate)
+      raise 'invalid' if salary.to_f == 0
+
+      if fixed_term_length > 12
+        salary.to_f * fixed_term_rate
+      else
+        salary.to_f * fixed_term_length / 12 * fixed_term_rate
+      end
+    end
+
+    def branch_salary(salary, branch_id)
+      return unless salary
+
+      salary.is_a?(String) ? salary : salary.fetch(branch_id, nil)
     end
   end
 end
