@@ -32,6 +32,7 @@ module CCS
         end
       end
 
+      # usage:
       # CCS::FM::Supplier.long_list_suppliers_lot(["UKM21", "UKC1"], ["C.1", "L.1"], "1a")
       def self.long_list_suppliers_lot(locations, services, lot)
         vals = selected_suppliers(lot, locations, services)
