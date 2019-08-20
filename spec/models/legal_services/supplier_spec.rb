@@ -44,9 +44,9 @@ RSpec.describe LegalServices::Supplier, type: :model do
     before do
       supplier1.service_offerings.create!(lot_number: '1', service_code: 'WPSLS.1.1')
       supplier1.service_offerings.create!(lot_number: '1', service_code: 'WPSLS.1.2')
-      supplier1.service_offerings.create!(lot_number: '2', service_code: 'WPSLS.2a.1')
+      supplier1.service_offerings.create!(lot_number: '2a', service_code: 'WPSLS.2a.1')
 
-      supplier2.service_offerings.create!(lot_number: '2', service_code: 'WPSLS.2a.1')
+      supplier2.service_offerings.create!(lot_number: '2a', service_code: 'WPSLS.2a.1')
       supplier2.service_offerings.create!(lot_number: '3', service_code: 'WPSLS.3.1')
       supplier2.service_offerings.create!(lot_number: '4', service_code: 'WPSLS.4.1')
     end
@@ -63,7 +63,7 @@ RSpec.describe LegalServices::Supplier, type: :model do
 
     it 'ignores services when there is a lot mismatch' do
       expect(described_class.offering_services('1', ['WPSLS.1.1'])).to contain_exactly(supplier1)
-      expect(described_class.offering_services('3', ['WPSLS.1.1'])).to be_empty
+      expect(described_class.offering_services('2a', ['WPSLS.1.1'])).to be_empty
     end
   end
 
@@ -89,13 +89,13 @@ RSpec.describe LegalServices::Supplier, type: :model do
         lot_number: '1', service_code: 'WPSLS.1.2'
       )
       supplier1.service_offerings.create!(
-        lot_number: '2', service_code: 'WPSLS.2a.1'
+        lot_number: '2a', service_code: 'WPSLS.2a.1'
       )
       supplier2.service_offerings.create!(
         lot_number: '1', service_code: 'WPSLS.1.2'
       )
       supplier3.service_offerings.create!(
-        lot_number: '2', service_code: 'WPSLS.2a.1'
+        lot_number: '2a', service_code: 'WPSLS.2a.1'
       )
       supplier4.service_offerings.create!(
         lot_number: '1', service_code: 'WPSLS.1.1'
@@ -107,7 +107,7 @@ RSpec.describe LegalServices::Supplier, type: :model do
     end
 
     it 'returns suppliers with availability in lot and regions' do
-      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.1'], ['UKC']))
+      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.1'], nil, ['UKC']))
         .to contain_exactly(supplier1, supplier4)
     end
   end
@@ -177,7 +177,7 @@ RSpec.describe LegalServices::Supplier, type: :model do
       supplier1.regional_availabilities.create!(region_code: 'UKC')
       supplier1.service_offerings.create!(lot_number: '1', service_code: 'WPSLS.1.1')
       supplier2.regional_availabilities.create!(region_code: 'UKD')
-      supplier2.service_offerings.create!(lot_number: '2', service_code: 'WPSLS.2a.1')
+      supplier2.service_offerings.create!(lot_number: '2a', service_code: 'WPSLS.2a.1')
     end
 
     it 'deletes all regional availabilities' do

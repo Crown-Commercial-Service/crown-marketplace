@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_08_132209) do
+ActiveRecord::Schema.define(version: 2019_08_15_101211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -171,6 +171,11 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
     t.datetime "updated_at", null: false
     t.jsonb "rate_cards"
     t.index ["rate_cards"], name: "index_legal_services_suppliers_on_rate_cards", using: :gin
+  end
+
+  create_table "legal_services_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "london_postcodes", id: false, force: :cascade do |t|
