@@ -66,15 +66,24 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get building data: #{e}"
   end
 
-  def get_building_data_by_id(email_address, id)
+  def get_building_data_by_id(email_address, building_id)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
-    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and building::jsonb --> 'id'= '" + id + "'"
-    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    to_query = %Q(select updated_at, status, id, building_json as building from facilities_management_buildings where user_id = '#{Base64.encode64(email_address)}' and building_json @> '{"id" : "#{building_id}"}')
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(to_query) }
     Rails.logger.info(result.to_json.to_s)
     JSON.parse(result.to_json)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
+  end
+
+  def get_count_of_buildings_by_id(user_id, building_id)
+    Rails.logger.info '==> FMBuildingData.get_count_of_building_data_by_id()'
+    ActiveRecord::Base.include_root_in_json = false
+
+    to_query = %Q|select count(*) as record_count from facilities_management_buildings where user_id= '#{Base64.encode64(user_id)}' and building_json @> '{"id" : "#{building_id}"}'|
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(to_query) }
+    result[0]['record_count']
   end
 
   def get_count_of_buildings(email_address)

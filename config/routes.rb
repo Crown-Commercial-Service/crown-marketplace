@@ -104,7 +104,7 @@ Rails.application.routes.draw do
       get '/building', to: 'buildings_management#building'
       get '/building-type', to: 'buildings_management#building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      get '/building-details-summary', to: 'buildings_management#building_details_summary'
+      get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
       get '/building_address', to: 'buildings_management#building_address'
       get '/building-security-type', to: 'buildings_management#building_security-type'
       match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]

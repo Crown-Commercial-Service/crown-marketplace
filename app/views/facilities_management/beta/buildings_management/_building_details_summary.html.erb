@@ -1,0 +1,104 @@
+<h2><%= t('facilities_management.beta.building-details-summary.section-header') %></h2>
+<div id="fm-buildings-container">
+  <div class="govuk-table" data-module="table" id="buildings-list">
+    <table class="govuk-!-width-three-quarters" style="border-collapse: collapse;">
+      <thead>
+      <tr>
+        <th style="min-width: 12em"><%= t('facilities_management.beta.building-details-summary.caption_reference') %></th>
+        <td><%= @building['id'] %></td>
+        <td></td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th><%= t('facilities_management.beta.building-details-summary.caption_name') %></th>
+        <td>
+          <% if @building['name'] %>
+            <%= @building['name'] %>
+          <% else %>
+            <%= t('facilities_management.beta.building-details-summary.add_name_text') %>
+          <% end %>
+        </td>
+        <td>
+          <% if @building['name'] %>
+            <%= t('facilities_management.beta.building-details-summary.change_text') %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= t('facilities_management.beta.building-details-summary.caption_desc') %></th>
+        <td>
+          <% if @building['description'] %>
+            <%= @building['description'] %>
+          <% else %>
+            <%= t('facilities_management.beta.building-details-summary.add_desc_text') %>
+          <% end %>
+        </td>
+        <td>
+          <% if @building['description'] %>
+            <%= t('facilities_management.beta.building-details-summary.change_text') %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= t('facilities_management.beta.building-details-summary.caption_addr') %></th>
+        <td>
+          <% if @building['address'].any? %>
+            <% address = @building['address']['fm-address-line-1'].to_s + (@building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-line-2'].to_s + (@building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-town'].to_s + (@building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-county'].to_s + (@building['address']['fm-address-county'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-postcode'].to_s %>
+            <%= address %>
+          <% else %>
+            <%= t('facilities_management.beta.building-details-summary.add_address_text') %>
+          <% end %>
+        </td>
+        <td>
+          <% if @building['address'].any? %><%= t('facilities_management.beta.building-details-summary.change_text') %>
+          <% end %></td>
+      </tr>
+      <tr>
+        <th><%= t('facilities_management.beta.building-details-summary.caption_gia') %></th>
+        <td>
+          <% if @building['gia'] %><%= @building['gia'] %>
+          <% else %>
+            <%= t('facilities_management.beta.building-details-summary.answer_a_question_text') %>
+          <% end %></td>
+        <td>
+          <% if @building['gia'] %>
+            <%= t('facilities_management.beta.building-details-summary.change_text') %>
+          <% end %></td>
+      </tr>
+      <tr>
+        <th><%= t('facilities_management.beta.building-details-summary.caption_type') %></th>
+        <td>
+          <% if @building['fm-building-type'] %><%= @building['fm-building-type'] %>
+          <% else %>
+            <%= t('facilities_management.beta.building-details-summary.select_one_option_text') %>
+          <% end %></td>
+        <td>
+          <% if @building['fm-building-type'] %>
+            <%= t('facilities_management.beta.building-details-summary.change_text') %>
+          <% end %></td>
+      </tr>
+      <tr>
+        <th><%= t('facilities_management.beta.building-details-summary.caption_sec') %></th>
+        <td>
+          <% if @building['security-clearance'] %>
+            <%= @building['security-clearance'] %>
+          <% else %>
+            <%= t('facilities_management.beta.building-details-summary.select_one_option_text') %>
+          <% end %>
+        </td>
+        <td>
+          <% if @building['security-clearance'] %>
+            <%= t('facilities_management.beta.building-details-summary.change_text') %>
+          <% end %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<a id="fm-buildings-add-building" href="#" class="govuk-button ccs-no-print govuk-!-margin-right-6" role="button">
+  <%= t('facilities_management.beta.index.create_new_button') %>
+</a>
+<a id="fm-buildings-add-building" href="../buildings-management" class="govuk-button muted ccs-no-print" role="button">
+  <%= t('facilities_management.beta.building-details-summary.return_to_management_text') %>
+</a>
