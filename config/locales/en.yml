@@ -683,9 +683,28 @@ en:
         column_status_header: Status
         create_new_button: "+ Create Single Building"
         link_to_building_summary: View details for building
+        manage_buildings_header: Manage buildings
         my_buildings_header: My buildings
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
+      building-details-summary:
+        no_data_message: There are no buildings
+        section-header: Building details summary
+        status_warning_message: You cannot use this building in a procurement until you have answered all the questions.
+        return_to_management_text: Return to manage buildings
+        change_text: Change
+        select_one_option_text: Select one option
+        answer_a_question_text: Answer a question
+        add_address_text: Add address
+        add_desc_text: Add description
+        add_name_text: Add name
+        caption_reference: Reference
+        caption_name: Name
+        caption_desc: Description
+        caption_addr: Address
+        caption_gia: Gross internal area
+        caption_type: Building type
+        caption_sec: Security clearance
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
