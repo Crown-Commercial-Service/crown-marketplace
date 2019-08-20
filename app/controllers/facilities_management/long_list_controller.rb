@@ -9,7 +9,6 @@ class FacilitiesManagement::LongListController < ApplicationController
   before_action :authenticate_user!, only: :long_list
   before_action :authorize_user, only: :long_list
 
-  # rubocop:disable Metrics/AbcSize
   def long_list
     @select_fm_locations = '/facilities-management/select-locations'
     @select_fm_services = '/facilities-management/select-services'
@@ -21,14 +20,14 @@ class FacilitiesManagement::LongListController < ApplicationController
     @locations = '(' + @posted_locations.map { |x| "'\"#{x}\"'" }.join(',') + ')'
     @services = '(' + @posted_services.map { |x| "'\"#{x}\"'" }.join(',') + ')'
 
-    @suppliers_lot1a  = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1a')
-    @suppliers_lot1b  = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1b')
-    @suppliers_lot1c  = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1c')
-    @supplier_count = (@suppliers_lot1a.map { |s| s['name'] } << @suppliers_lot1b.map { |s| s['name'] } << @suppliers_lot1c.map { |s| s['name'] }).flatten.uniq.count
+    @suppliers_lot1a = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1a')
+    @suppliers_lot1b = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1b')
+    @suppliers_lot1c = CCS::FM::Supplier.long_list_suppliers_lot(@posted_locations, @posted_services, '1c')
+
+    @supplier_count = CCS::FM::Supplier.supplier_count(@posted_locations, @posted_services)
 
     set_current_choices
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 
