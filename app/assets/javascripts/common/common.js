@@ -319,6 +319,14 @@ const fm = {
 };
 
 $(function () {
+
+    window.FM = window.FM || {};
+
+    FM.calcCharsLeft = function (value, maxChars) {
+        return maxChars - value.length;
+    };
+
+
     if (!String.prototype.endsWith) {
         String.prototype.endsWith = function (searchString, position) {
             let subjectString = this.toString();

@@ -11,7 +11,10 @@ module FacilitiesManagement
     end
 
     def building
-      @error_msg = ''
+      @back_link = '/facilities-management/beta/'
+      @step = 1
+      @next_step = "What's the internal area of the building?"
+      @page_title = 'Create single building'
     end
 
     def building_type

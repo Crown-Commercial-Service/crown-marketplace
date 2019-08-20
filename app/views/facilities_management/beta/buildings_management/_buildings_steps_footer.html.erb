@@ -3,6 +3,8 @@
   <a id="fm-save-and-continue" class="govuk-button">Save and continue</a>
   <a id="fm-save-return-to-manage-buildings" class="govuk-button govuk-button--secondary">Save and return to manage buildings</a>
   <br>
-  <a id="fm-skip-step-link" class="govuk-link-colour">Skip this step</a>
-  <span class="govuk-caption-m">Next: <%= @next_step %></span>
+  <% if @step > 1 then %>
+    <a id="fm-skip-step-link" class="govuk-link-colour">Skip this step</a>
+  <% end %>
+  <span class="govuk-caption-m govuk-!-margin-top-0">Next: <%= @next_step %></span>
 </div>
