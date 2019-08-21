@@ -11,8 +11,6 @@ $(function () {
             data: JSON.stringify(building),
             processData: false,
             success: function (data, textStatus, jQxhr) {
-
-
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
