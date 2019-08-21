@@ -31,6 +31,11 @@ class FMBuildingData
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{id}', to_json(id::text)::jsonb) where building_json ->> 'id' is null;"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    query = "select id from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    id = result.rows[0].to_s
+    Rails.logger.info id
+    id
   rescue StandardError => e
     Rails.logger.warn "Couldn't save new building: #{e}"
   end

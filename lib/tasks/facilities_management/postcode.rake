@@ -5,7 +5,7 @@ module OrdnanceSurvey
 
   def self.create_postcode_table
     str = File.read(Rails.root + 'data/postcode/PostgreSQL_AddressBase_Plus_CreateTable.sql')
-    query = str.slice str.index('CREATE TABLE')..str.length
+    query = str.slice str.index('CREATE TABLE') .. str.length
     query.sub!('<INSERTTABLENAME>', 'os_address')
     query.sub!('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS')
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
@@ -14,16 +14,13 @@ module OrdnanceSurvey
   end
 
   def self.create_address_lookup_view
-    query = "CREATE OR REPLACE VIEW public.os_address_view
-AS SELECT ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) || adds.street_description::text AS add1,
-    adds.town_name AS village,
-    adds.post_town,
-    adds.administrative_area AS county,
-    adds.postcode
-   FROM os_address adds
-  WHERE ((adds.pao_start_number || adds.pao_start_suffix::text) || adds.street_description::text) IS NOT NULL AND adds.post_town IS NOT NULL
-  ORDER BY adds.pao_start_number, adds.street_description;
-"
+    query = "create or replace view os_address_view as select
+            ((adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) || adds.street_description::text as add1,
+            adds.town_name as village, adds.post_town, adds.administrative_area as county, adds.postcode,
+            replace(adds.postcode::text, ' '::text, ''::text) as formated_postcode,
+            replace(adds.postcode::text, ' '::text, adds.delivery_point_suffix::text) as building_ref
+            from os_address adds where ((adds.pao_start_number || adds.pao_start_suffix::text) || adds.street_description::text) is not null
+            and adds.post_town is not null order by adds.pao_start_number,adds.street_description;"
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
   rescue PG::Error => e
     puts e.message
@@ -139,7 +136,7 @@ namespace :db do
     OrdnanceSurvey.create_upload_log
 
     # current_key = ENV['RAILS_MASTER_KEY']
-    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0 .. 31] if ENV['SECRET_KEY_BASE']
 
     access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
     secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
