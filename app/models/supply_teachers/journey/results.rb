@@ -7,14 +7,7 @@ module SupplyTeachers
     def branches(daily_rates = {}, salary = nil, fixed_term_length = nil)
       point = location.point
       Branch.search(point, rates: rates, radius: radius).map do |branch|
-        search_result_for(branch).tap do |result|
-          result.rate = rate(branch)
-          result.distance = point.distance(branch.location)
-          result.daily_rate = daily_rates.fetch(branch.id, nil)
-          result.worker_cost = supplier_mark_up(result.daily_rate, result.rate)&.worker_cost
-          result.agency_fee = supplier_mark_up(result.daily_rate, result.rate)&.agency_fee
-          result.finders_fee = supplier_finders_fee(fixed_term_length, branch_salary(salary, branch.id), result.rate)
-        end
+        search_result_attributes(branch, point, daily_rates, fixed_term_length, salary)
       end
     end
 
@@ -43,7 +36,7 @@ module SupplyTeachers
       return unless fixed_term_length && salary
       return if fixed_term_length.nil?
 
-      raise 'invalid' if salary.to_f == 0
+      raise 'invalid' if salary.to_f.zero?
 
       if fixed_term_length > 12
         salary.to_f * fixed_term_rate
@@ -56,6 +49,17 @@ module SupplyTeachers
       return unless salary
 
       salary.is_a?(String) ? salary : salary.fetch(branch_id, nil)
+    end
+
+    def search_result_attributes(branch, point, daily_rates, fixed_term_length, salary)
+      search_result_for(branch).tap do |result|
+        result.rate = rate(branch)
+        result.distance = point.distance(branch.location)
+        result.daily_rate = daily_rates.fetch(branch.id, nil)
+        result.worker_cost = supplier_mark_up(result.daily_rate, result.rate)&.worker_cost
+        result.agency_fee = supplier_mark_up(result.daily_rate, result.rate)&.agency_fee
+        result.finders_fee = supplier_finders_fee(fixed_term_length, branch_salary(salary, branch.id), result.rate)
+      end
     end
   end
 end

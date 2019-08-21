@@ -1708,19 +1708,19 @@ en:
         question_hint: We use this to find agencies near to your school
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
-      fta_calculator_contract_start:
-        contract_start_question: What date do you want the employee to start?
-        contract_start_question_hint: For example, 01 03 2018. An estimate is fine.
-        page_title: What date do you want the employee to start?
       fta_calculator_contract_end:
         contract_end_question: What date do you want the employee to stop working?
         contract_end_question_hint: For example, 01 03 2018. An estimate is fine.
         page_title: What date do you want the employee to stop working?
+      fta_calculator_contract_start:
+        contract_start_question: What date do you want the employee to start?
+        contract_start_question_hint: For example, 01 03 2018. An estimate is fine.
+        page_title: What date do you want the employee to start?
       fta_calculator_salary:
+        page_title: What would the employee's annual salary be?
         salary_icon: "£"
         salary_question: What would the employee's annual salary be?
         salary_question_hint: Even if the fixed term agreement is less than a year, please provide the salary as if it were for an entire year
-        page_title: What would the employee's annual salary be?
       fta_to_perm_contract_end:
         contract_end_question: What date did the workers fixed term contract end?
         contract_end_question_hint: For example, 12 05 2019
