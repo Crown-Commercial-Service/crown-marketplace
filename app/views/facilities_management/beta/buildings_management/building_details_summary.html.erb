@@ -2,11 +2,13 @@
   <a href="/facilities-management/building-management" class="govuk-back-link">Back</a>
   <%= render('errors/inline_error_summary') %>
   <% if @building_data %>
-    <span class="govuk-heading-m" style="margin-bottom:0; color:#AAAAAA"><%= t('facilities_management.beta.index.manage_buildings_header') %></span>
+    <span class="govuk-heading-m" style="position:relative; top:1ex; margin-bottom:0; color:#AAAAAA"><%= t('facilities_management.beta.index.manage_buildings_header') %></span>
     <h1 class="govuk-heading-xl">
       <%= @building['name'] %>
       <% if @display_warning %>
-        <p class="govuk-caption-m"><%= t('facilities_management.beta.building-details-summary.status_warning_message') %></p>
+        <p class="govuk-caption-m govuk-!-margin-top-5"><%= t('facilities_management.beta.building-details-summary.status_warning_message', :name => @building['name']) %></p>
+      <%else %>
+        <p class="govuk-caption-m govuk-!-margin-top-5"><%= t('facilities_management.beta.building-details-summary.building_was_saved', :name => @building['name']) %></p>
       <% end %>
     </h1>
     <%= render partial: 'building_details_summary' %>
@@ -16,4 +18,12 @@
       <%= t('facilities_management.beta.building-details-summary.no_data_message') %>
     </p>
   <% end %>
+  <p class="govuk-!-margin-top-9">
+    <a id="fm-buildings-add-building" href="../building" class="govuk-button ccs-no-print govuk-!-margin-right-6" role="button">
+      <%= t('facilities_management.beta.index.create_new_button') %>
+    </a>
+    <a id="fm-buildings-add-building" href="../buildings-management" class="govuk-button muted ccs-no-print" role="button">
+    <%= t('facilities_management.beta.building-details-summary.return_to_management_text') %>
+  </a>
+  </p>
 </div>
