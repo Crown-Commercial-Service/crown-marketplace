@@ -36,6 +36,7 @@ $(function () {
             address['fm-address-county'] = addressElements[3];
             address['fm-address-postcode'] = addressElements[4];
             newBuilding.address = address;
+            newBuilding.buidling_ref = addressElements[5];
             FM.building = newBuilding;
         }
 
@@ -60,8 +61,10 @@ $(function () {
                         let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
                         let county = address['county'] ? address['county'] + ', ' : '';
                         let postCode = address['postcode'] ? address['postcode'] : '';
+                        let buildingRef = address['building_ref'] ? address['building_ref'] : '';
                         let newOptionData = add1 + add2 + postTown + county + postCode;
-                        let newOption = '<option value="' + newOptionData + '">' + newOptionData + '</option>';
+                        let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + buildingRef;
+                        let newOption = '<option value="' + newOptionValue + '">' + newOptionData + '</option>';
                         $('#fm-find-address-results').append(newOption);
                         $('#fm-address-sub-title').text('Select an address');
                         $('#fm-find-address-results').removeClass('govuk-visually-hidden');
