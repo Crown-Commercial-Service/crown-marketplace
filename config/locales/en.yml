@@ -150,11 +150,22 @@ en:
               invalid_location: Enter a valid postcode
             term:
               blank: Select how long you need the worker for
+        supply_teachers/journey/fta_calculator_contract_end:
+          attributes:
+            contract_end_date:
+              after_contract_start_date: The date the contract ended must be after the date the worker’s current contract started
+              blank: Enter the contract end date, including the day, month and year
+              invalid: Enter a real date
         supply_teachers/journey/fta_calculator_contract_start:
           attributes:
             contract_start_date:
               blank: Enter the contract start date, including the day, month and year
               invalid: Enter a real date
+        supply_teachers/journey/fta_calculator_salary:
+          attributes:
+            salary:
+              blank: Enter the annual salary
+              invalid: Enter a valid salary
         supply_teachers/journey/fta_to_perm_contract_end:
           attributes:
             contract_end_date:
