@@ -140,10 +140,10 @@ namespace :db do
 
     ENV['RAILS_MASTER_KEY_2'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
     creds = ActiveSupport::EncryptedConfiguration.new(
-        config_path: Rails.root.join('config/credentials.yml.enc'),
-        key_path: 'config/master.key',
-        env_key: 'RAILS_MASTER_KEY_2',
-        raise_if_missing_key: false # config.require_master_key
+      config_path: Rails.root.join('config', 'credentials.yml.enc'),
+      key_path: 'config/master.key',
+      env_key: 'RAILS_MASTER_KEY_2',
+      raise_if_missing_key: false
     )
 
     access_key = creds.aws_postcodes[:access_key_id]
