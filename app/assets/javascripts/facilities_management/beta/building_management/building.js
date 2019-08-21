@@ -11,6 +11,7 @@ $(function () {
 
     $('#fm-building-name-input').on('change', function (e) {
         newBuilding.name = e.target.value;
+        FM.building = newBuilding;
     });
 
     $('#fm-building-desc-input').on('keyup', function (e) {
@@ -19,25 +20,25 @@ $(function () {
 
     $('#fm-building-desc-input').on('change', function (e) {
         newBuilding.description = e.target.value;
+        FM.building = newBuilding;
     });
 
     $('#fm-find-address-results').on('change', function (e) {
         let selectedAddress = $("select#fm-find-address-results > option:selected").val();
 
         //$('#fm-find-address-results').css("background", '#28a197');
-
+        let address = {};
         if (selectedAddress) {
             let addressElements = selectedAddress.split(',');
-            let address = {};
-
             address['fm-address-line-1'] = addressElements[0];
             address['fm-address-line-2'] = addressElements[1];
             address['fm-address-town'] = addressElements[2];
             address['fm-address-county'] = addressElements[3];
             address['fm-address-postcode'] = addressElements[4];
             newBuilding.address = address;
+            FM.building = newBuilding;
         }
-        console.log(newBuilding);
+
     });
 
     $('#fm-find-address-btn').on('click', function (e) {
