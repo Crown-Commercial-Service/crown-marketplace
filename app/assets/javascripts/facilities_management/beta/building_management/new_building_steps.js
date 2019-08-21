@@ -1,9 +1,7 @@
 $(function () {
 
     const saveStep = function (building) {
-
-
-        let url = '/facilities-management/beta/buildings-management/save-building';
+        let url = '/facilities-management/beta/buildings-management/save-new-building';
 
         $.ajax({
             url: url,
@@ -23,10 +21,8 @@ $(function () {
 
     };
 
-
     $('#fm-bm-save-and-continue').on('click', function (e) {
         let step = $('#fm-manage-building-step').val();
-        let building = {};
 
         if (step) {
 
@@ -34,9 +30,9 @@ $(function () {
 
             switch (step) {
                 case 1:
-                    saveStep(building);
+                    console.log(FM.building);
+                    saveStep(FM.building);
                     break;
-
                 case 2:
 
                     break;

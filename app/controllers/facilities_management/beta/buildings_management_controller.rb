@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_type save_building].freeze
-    before_action :authorize_user, only: %i[buildings_management building_type save_building].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building].freeze
 
     def buildings_management
       @error_msg = ''
@@ -50,10 +50,10 @@ module FacilitiesManagement
       @error_msg = ''
     end
 
-    def save_building
+    def save_new_building
       @new_building_json = request.raw_post
       @fm_building_data = FMBuildingData.new
-      @fm_building_data.save_building(current_user.email.to_s, @new_building_json)
+      @fm_building_data.save_new_building(current_user.email.to_s, @new_building_json)
       j = { 'status': 200 }
       render json: j, status: 200
     rescue StandardError => e

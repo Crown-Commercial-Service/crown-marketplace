@@ -15,11 +15,24 @@ class FMBuildingData
   end
 
   def save_building(email_address, building)
-    Rails.logger.info '==> FMBuildingData.save_building()'
-    query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
+    # Private beta legacy function to accommodate database changes
+    save_new_building(email_address, building)
+  end
+
+  def save_building_property
+    # Key/Value properties associated with a building such as GIA, etc
+  end
+
+  def save_new_building(email_address, building)
+    # Beta code for step 1 saving a new building
+    Rails.logger.info '==> FMBuildingData.save_new_building()'
+    query = 'insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by) ' \
+            "values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "' , now()," + "'Incomplete', gen_random_uuid(), '" + email_address + "');"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{id}', to_json(id::text)::jsonb) where building_json ->> 'id' is null;"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
-    Rails.logger.warn "Couldn't save building: #{e}"
+    Rails.logger.warn "Couldn't save new building: #{e}"
   end
 
   def delete_uom_for_building(email_address, building_id)
