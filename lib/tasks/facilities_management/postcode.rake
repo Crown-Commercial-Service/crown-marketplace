@@ -138,13 +138,18 @@ namespace :db do
     OrdnanceSurvey.create_address_lookup_view
     OrdnanceSurvey.create_upload_log
 
-    # current_key = ENV['RAILS_MASTER_KEY']
-    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+    ENV['RAILS_MASTER_KEY_2'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+    creds = ActiveSupport::EncryptedConfiguration.new(
+        config_path: Rails.root.join('config/credentials.yml.enc'),
+        key_path: 'config/master.key',
+        env_key: 'RAILS_MASTER_KEY_2',
+        raise_if_missing_key: false # config.require_master_key
+    )
 
-    access_key = Rails.application.credentials.aws_postcodes[:access_key_id]
-    secret_key = Rails.application.credentials.aws_postcodes[:secret_access_key]
-    bucket = Rails.application.credentials.aws_postcodes[:bucket]
-    region = Rails.application.credentials.aws_postcodes[:region]
+    access_key = creds.aws_postcodes[:access_key_id]
+    secret_key = creds.aws_postcodes[:secret_access_key]
+    bucket = creds.aws_postcodes[:bucket]
+    region = creds.aws_postcodes[:region]
 
     DistributedLocks.distributed_lock(151) do
       OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
