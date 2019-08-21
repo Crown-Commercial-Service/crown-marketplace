@@ -687,14 +687,16 @@ en:
         my_buildings_header: My buildings
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
+        no_buildings_text: You have no saved buildings.
       building-details-summary:
         no_data_message: There are no buildings
         section-header: Building details summary
-        status_warning_message: You cannot use this building in a procurement until you have answered all the questions.
+        status_warning_message: Your building was saved.  "%{name}" is incomplete.  You need to answer all questions to be used in procurement.
         return_to_management_text: Return to manage buildings
         change_text: Change
         select_one_option_text: Select one option
         answer_a_question_text: Answer a question
+        answer_question_text: Answer question
         add_address_text: Add address
         add_desc_text: Add description
         add_name_text: Add name
@@ -705,6 +707,7 @@ en:
         caption_gia: Gross internal area
         caption_type: Building type
         caption_sec: Security clearance
+        building_was_saved: Your building was saved.  "%{name}" is ready for procurement.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service

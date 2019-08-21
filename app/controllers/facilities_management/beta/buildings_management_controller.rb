@@ -25,10 +25,25 @@ module FacilitiesManagement
 
       @display_warning = true
       @display_warning = (@building_data[0][:status] if building_count.positive?)
-      @thedata = @building_data.to_s
       @building = (JSON.parse(@building_data[0]['building']) if building_count.positive?)
+
+      @current_caption = @current_link_target = @current_name = @current_change_link = ''
       @thebuildingdata = @building.to_s
     end
+
+    def row_valid?(property_name, caption, link_new_text, link_change_text, link_target)
+      @current_caption = self.class.helpers.t(%Q|facilities_management.beta.building-details-summary.%{caption}|)
+      current_new_link_text = self.class.helpers.t(%Q|facilities_management.beta.building-details-summary.%{link_new_text}|)
+      current_change_link_text = self.class.helpers.t(%Q|facilities_management.beta.building-details-summary.%{link_change_text}|)
+      @current_link_target = link_target
+      @current_name = @building[property_name] if @building[property_name].present?
+      @current_name = self.class.helpers.link_to current_new_link_text, link_target, class: 'govuk-link' if @building[property_name].blank?
+      @current_change_link = ''
+      @current_change_link = self.class.helpers.link_to current_change_link_text, link_target, class: 'govuk-link' if @building[property_name].present?
+      @building[property_name].present?
+    end
+    helper_method :row_valid?
+
     def building
       @error_msg = ''
     end
