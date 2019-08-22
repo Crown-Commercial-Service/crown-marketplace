@@ -62,6 +62,19 @@ RSpec.feature 'Workers on school payroll', type: :feature, supply_teachers: true
     choose 'No, I want to put the worker on our payroll'
     click_on I18n.t('common.submit')
 
+    fill_in 'contract_start_date_day', with: 10
+    fill_in 'contract_start_date_month', with: 9
+    fill_in 'contract_start_date_year', with: 2019
+    click_on I18n.t('common.submit')
+
+    fill_in 'contract_end_date_day', with: 10
+    fill_in 'contract_end_date_month', with: 12
+    fill_in 'contract_end_date_year', with: 2019
+    click_on I18n.t('common.submit')
+
+    fill_in 'salary', with: 25000
+    click_on I18n.t('common.submit')
+
     fill_in 'postcode', with: 'WC2B 6TE'
     click_on I18n.t('common.submit')
 
@@ -73,12 +86,137 @@ RSpec.feature 'Workers on school payroll', type: :feature, supply_teachers: true
 
     expect(cheaper_branch.find('h2').text).to eq('westminster')
     expect(cheaper_branch).to have_css('.supplier-record__distance', text: '1.1')
-    expect(cheaper_branch).to have_css('.supplier-record__markup-rate', text: '30.0%')
+    expect(cheaper_branch).to have_css('.supplier-record__finders-fee', text: '£1,875.00')
 
     expect(costlier_branch.find('h2').text).to eq('holborn')
     expect(costlier_branch).to have_css('.supplier-record__distance', text: '0.0')
-    expect(costlier_branch).to have_css('.supplier-record__markup-rate', text: '35.0%')
+    expect(costlier_branch).to have_css('.supplier-record__finders-fee', text: '£2,187.5')
 
     expect(page).not_to have_text('liverpool')
+  end
+
+  scenario 'Buyer finds suppliers within search range with correct finders fee when contract length is longer than 12months' do
+    holborn = create(:supply_teachers_supplier, name: 'holborn')
+    create(
+      :supply_teachers_rate,
+      supplier: holborn,
+      lot_number: 1,
+      job_type: 'fixed_term',
+      mark_up: 0.35
+    )
+    create(
+      :supply_teachers_branch,
+      supplier: holborn,
+      location: Geocoding.point(latitude: 51.5149666, longitude: -0.119098)
+    )
+    westminster = create(:supply_teachers_supplier, name: 'westminster')
+    create(
+      :supply_teachers_rate,
+      supplier: westminster,
+      lot_number: 1,
+      job_type: 'fixed_term',
+      mark_up: 0.30
+    )
+    create(
+      :supply_teachers_branch,
+      supplier: westminster,
+      location: Geocoding.point(latitude: 51.5185614, longitude: -0.1437991)
+    )
+    visit_supply_teachers_start
+
+    choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
+    click_on I18n.t('common.submit')
+
+    choose 'Yes'
+    click_on I18n.t('common.submit')
+
+    choose 'No, I want to put the worker on our payroll'
+    click_on I18n.t('common.submit')
+
+    fill_in 'contract_start_date_day', with: 10
+    fill_in 'contract_start_date_month', with: 9
+    fill_in 'contract_start_date_year', with: 2019
+    click_on I18n.t('common.submit')
+
+    fill_in 'contract_end_date_day', with: 10
+    fill_in 'contract_end_date_month', with: 11
+    fill_in 'contract_end_date_year', with: 2020
+    click_on I18n.t('common.submit')
+
+    fill_in 'salary', with: 25000
+    click_on I18n.t('common.submit')
+
+    fill_in 'postcode', with: 'WC2B 6TE'
+    click_on I18n.t('common.submit')
+
+    branches = page.all('.supplier-record')
+    cheaper_branch = branches.first
+    costlier_branch = branches.last
+
+    expect(cheaper_branch).to have_css('.supplier-record__finders-fee', text: '£7,500.00')
+
+    expect(costlier_branch).to have_css('.supplier-record__finders-fee', text: '£8,750.0')
+  end
+  scenario 'Buyer finds suppliers within search range with correct finders fee when contract length is 4.5 months' do
+    holborn = create(:supply_teachers_supplier, name: 'holborn')
+    create(
+      :supply_teachers_rate,
+      supplier: holborn,
+      lot_number: 1,
+      job_type: 'fixed_term',
+      mark_up: 0.35
+    )
+    create(
+      :supply_teachers_branch,
+      supplier: holborn,
+      location: Geocoding.point(latitude: 51.5149666, longitude: -0.119098)
+    )
+    westminster = create(:supply_teachers_supplier, name: 'westminster')
+    create(
+      :supply_teachers_rate,
+      supplier: westminster,
+      lot_number: 1,
+      job_type: 'fixed_term',
+      mark_up: 0.30
+    )
+    create(
+      :supply_teachers_branch,
+      supplier: westminster,
+      location: Geocoding.point(latitude: 51.5185614, longitude: -0.1437991)
+    )
+    visit_supply_teachers_start
+
+    choose I18n.t('supply_teachers.journey.looking_for.answer_worker')
+    click_on I18n.t('common.submit')
+
+    choose 'Yes'
+    click_on I18n.t('common.submit')
+
+    choose 'No, I want to put the worker on our payroll'
+    click_on I18n.t('common.submit')
+
+    fill_in 'contract_start_date_day', with: 10
+    fill_in 'contract_start_date_month', with: 9
+    fill_in 'contract_start_date_year', with: 2019
+    click_on I18n.t('common.submit')
+
+    fill_in 'contract_end_date_day', with: 30
+    fill_in 'contract_end_date_month', with: 1
+    fill_in 'contract_end_date_year', with: 2020
+    click_on I18n.t('common.submit')
+
+    fill_in 'salary', with: 25000
+    click_on I18n.t('common.submit')
+
+    fill_in 'postcode', with: 'WC2B 6TE'
+    click_on I18n.t('common.submit')
+
+    branches = page.all('.supplier-record')
+    cheaper_branch = branches.first
+    costlier_branch = branches.last
+
+    expect(cheaper_branch).to have_css('.supplier-record__finders-fee', text: '£2,812.50')
+
+    expect(costlier_branch).to have_css('.supplier-record__finders-fee', text: '£3,281.25')
   end
 end

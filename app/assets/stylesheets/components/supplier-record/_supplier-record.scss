@@ -89,6 +89,10 @@
   font-size: 24px;
 }
 
+strong.supplier-record__finders-fee-percentage {
+  line-height: 1 !important;
+}
+
 @media print {
   .supplier-record {
     page-break-inside: avoid;
