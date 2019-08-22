@@ -57,9 +57,21 @@ class FMBuildingData
 
   def get_building_data(email_address)
     Rails.logger.info '==> FMBuildingData.get_building_data()'
-    ActiveRecord::Base.include_root_in_json = false
-    query = "select building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
+    ActiveRecord::Base.include_root_in_json = true
+    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    Rails.logger.info '<== FMBuildingData.get_building_data()'
+    JSON.parse(result.to_json)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get building data: #{e}"
+  end
+
+  def get_building_data_by_id(email_address, id)
+    Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
+    ActiveRecord::Base.include_root_in_json = false
+    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and building::jsonb --> 'id'= '" + id + "'"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    Rails.logger.info(result.to_json.to_s)
     JSON.parse(result.to_json)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
@@ -72,6 +84,7 @@ class FMBuildingData
     result[0]['record_count']
   rescue StandardError => e
     Rails.logger.warn "Couldn't get count of buildings: #{e}"
+    0
   end
 
   def region_info_for_post_town(post_code)
