@@ -1,0 +1,42 @@
+<div class="govuk-!-padding-3 supplier-record__calculator <%= 'supplier-record__calculator--muted' unless branch.finders_fee %>">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h4 class="govuk-heading-s"><%= t('.heading') %></h4>
+    </div>
+  </div>
+  <span class="govuk-error-message govuk-visually-hidden">
+    <span class="govuk-visually-hidden"><%= t('.error') %></span><%= t('.error_message') %>
+  </span>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <div class="govuk-form-group govuk-!-margin-0">
+        <label class="govuk-label govuk-!-font-size-16" for="annual_salary_<%= branch.id %>">
+          <%= t('.annual_salary') %>
+        </label>
+        <div class="calculator-form__annual-salary">
+          <%= text_field_tag "annual_salary[#{branch.id}]", @salary, class: 'govuk-input govuk-input--width-10 calculator-form__annual-salary-input' %>
+          <i class="govuk-body calculator-form__annual-salary-icon">£</i>
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <p class="govuk-body supplier-record__fixed-term-length govuk-!-font-size-24 govuk-!-margin-bottom-0 govuk-!-margin-top-3">
+        <strong><%= @fixed_term_length ? "<span class='supplier-record__fixed-term-length-number govuk-!-font-size-36'>#{@fixed_term_length}</span> months".html_safe : '&nbsp;'.html_safe %></strong>
+      </p>
+      <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">
+        <%= t('.fixed_term_length') %>
+      </p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+
+        <p class="govuk-body govuk-!-font-size-36 govuk-!-margin-bottom-0 govuk-!-margin-top-3">
+          <strong class="supplier-record__finders-fee">
+            <%= branch.finders_fee ? number_to_currency(branch.finders_fee) : '&nbsp;'.html_safe %>
+          </strong>
+        </p>
+      <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">
+        <%= t('.finders_fee') %>  <%= number_to_percentage(branch.rate * 100, precision: 1, format: "<strong class='supplier-record__finders-fee-percentage'>%n%</strong>".html_safe) %>
+      </p>
+    </div>
+  </div>
+</div>

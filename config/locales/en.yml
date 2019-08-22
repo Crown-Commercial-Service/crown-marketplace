@@ -150,6 +150,22 @@ en:
               invalid_location: Enter a valid postcode
             term:
               blank: Select how long you need the worker for
+        supply_teachers/journey/fta_calculator_contract_end:
+          attributes:
+            contract_end_date:
+              after_contract_start_date: The date the contract ended must be after the date the worker’s current contract started
+              blank: Enter the contract end date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_calculator_contract_start:
+          attributes:
+            contract_start_date:
+              blank: Enter the contract start date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_calculator_salary:
+          attributes:
+            salary:
+              blank: Enter the annual salary
+              invalid: Enter a valid salary
         supply_teachers/journey/fta_to_perm_contract_end:
           attributes:
             contract_end_date:
@@ -1612,6 +1628,13 @@ en:
         miles: Miles
         phone_number: Phone number
         region: Region
+      fta_calculator:
+        annual_salary: Enter annual salary
+        error: 'Error:'
+        error_message: Annual salary is invalid.
+        finders_fee: finders fee based on
+        fixed_term_length: fixed term length
+        heading: 'Update the salary to see what their finders fee will be:'
       index:
         calculate_markup_button_label: Calculate the fee
         calculate_markup_description: 'See how much the worker makes and what fee the agency will get using the figure they quoted you:'
@@ -1627,7 +1650,7 @@ en:
         download_aria_label: Download shortlist as Microsoft Excel file
         download_with_calculator: Download shortlist (with markup calculator)
         download_with_calculator_aria_label: Download shortlist (with markup calculator) as Microsoft Excel file
-        header: Agency list
+        header: Agency results
         inputs:
           job_type: Job type
           looking_for: Looking for
@@ -1729,6 +1752,19 @@ en:
         question_hint: We use this to find agencies near to your school
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
+      fta_calculator_contract_end:
+        contract_end_question: What date do you want the employee to stop working?
+        contract_end_question_hint: For example, 01 03 2018. An estimate is fine.
+        page_title: What date do you want the employee to stop working?
+      fta_calculator_contract_start:
+        contract_start_question: What date do you want the employee to start?
+        contract_start_question_hint: For example, 01 03 2018. An estimate is fine.
+        page_title: What date do you want the employee to start?
+      fta_calculator_salary:
+        page_title: What would the employee's annual salary be?
+        salary_icon: "£"
+        salary_question: What would the employee's annual salary be?
+        salary_question_hint: Even if the fixed term agreement is less than a year, please provide the salary as if it were for an entire year
       fta_to_perm_contract_end:
         contract_end_question: What date did the workers fixed term contract end?
         contract_end_question_hint: For example, 12 05 2019

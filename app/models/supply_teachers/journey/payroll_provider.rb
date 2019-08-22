@@ -8,7 +8,7 @@ module SupplyTeachers
     def next_step_class
       case payroll_provider
       when 'school'
-        Journey::SchoolPostcodeAgencySuppliedWorker
+        Journey::FTACalculatorContractStart
       when 'agency'
         Journey::AgencyPayroll
       end

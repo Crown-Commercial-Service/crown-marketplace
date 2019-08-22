@@ -29,11 +29,12 @@ module SupplyTeachers
       @location = step.location
       @radius_in_miles = step.radius
       @alternative_radiuses = SEARCH_RADIUSES - [@radius_in_miles]
-      @branches = step.branches daily_rates
+      @salary = params[:annual_salary] || params[:salary]
+      @fixed_term_length = step.try(:fixed_term_length)
+      @branches = step.branches(daily_rates, @salary, @fixed_term_length)
       flash[:notice] = 'Calculated mark-up updated' if daily_rates.present? && !request.xhr?
-
       respond_to do |format|
-        format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
+        format.js { render json: @branches.find { |branch| rate_params(step.class.name.include?('FixedTermResults'))[branch.id].present? } }
         format.html
         format.xlsx do
           spreadsheet = Spreadsheet.new(@branches, with_calculations: params[:calculations].present?)
@@ -45,6 +46,10 @@ module SupplyTeachers
 
     def daily_rates
       params[:daily_rate] || {}
+    end
+
+    def rate_params(is_fixed_term_results)
+      is_fixed_term_results ? params[:annual_salary] : params[:daily_rate]
     end
   end
 end
