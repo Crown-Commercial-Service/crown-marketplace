@@ -113,24 +113,66 @@ RSpec.describe SupplyTeachers::Journey, type: :model do
 
           it { is_expected.to have_attributes(current_slug: slug) }
           it { is_expected.to have_attributes(previous_slug: 'worker-type') }
-          it { is_expected.to have_attributes(next_slug: 'school-postcode-agency-supplied-worker') }
+          it { is_expected.to have_attributes(next_slug: 'fta-calculator-contract-start') }
           it { is_expected.to be_valid }
 
           it 'collects the supplied parameters' do
             expect(journey.params).to eq(params)
           end
 
-          context 'when entering a postcode' do
-            let(:slug) { 'school-postcode-agency-supplied-worker' }
-            let(:params) { super().merge('postcode' => 'W1A 1AA') }
+          context 'when entering contract start date' do
+            let(:slug) { 'fta-calculator-contract-start' }
+            let(:params) { super().merge('contract_start_date_day' => '10', 'contract_start_date_month' => '9', 'contract_start_date_year' => '2019') }
 
             it { is_expected.to have_attributes(current_slug: slug) }
             it { is_expected.to have_attributes(previous_slug: 'payroll-provider') }
-            it { is_expected.to have_attributes(next_slug: 'fixed-term-results') }
+            it { is_expected.to have_attributes(next_slug: 'fta-calculator-contract-end') }
             it { is_expected.to be_valid }
 
             it 'collects the supplied parameters' do
               expect(journey.params).to eq(params)
+            end
+
+            context 'when entering contract end date' do
+              let(:slug) { 'fta-calculator-contract-end' }
+              let(:params) { super().merge('contract_end_date_day' => '10', 'contract_end_date_month' => '9', 'contract_end_date_year' => '2019') }
+
+              it { is_expected.to have_attributes(current_slug: slug) }
+              it { is_expected.to have_attributes(previous_slug: 'fta-calculator-contract-start') }
+              it { is_expected.to have_attributes(next_slug: 'fta-calculator-salary') }
+              it { is_expected.to be_valid }
+
+              it 'collects the supplied parameters' do
+                expect(journey.params).to eq(params)
+              end
+
+              context 'when entering annual salary' do
+                let(:slug) { 'fta-calculator-salary' }
+                let(:params) { super().merge('salary' => '25000') }
+
+                it { is_expected.to have_attributes(current_slug: slug) }
+                it { is_expected.to have_attributes(previous_slug: 'fta-calculator-contract-end') }
+                it { is_expected.to have_attributes(next_slug: 'school-postcode-agency-supplied-worker') }
+                it { is_expected.to be_valid }
+
+                it 'collects the supplied parameters' do
+                  expect(journey.params).to eq(params)
+                end
+
+                context 'when entering a postcode' do
+                  let(:slug) { 'school-postcode-agency-supplied-worker' }
+                  let(:params) { super().merge('postcode' => 'W1A 1AA') }
+
+                  it { is_expected.to have_attributes(current_slug: slug) }
+                  it { is_expected.to have_attributes(previous_slug: 'fta-calculator-salary') }
+                  it { is_expected.to have_attributes(next_slug: 'fixed-term-results') }
+                  it { is_expected.to be_valid }
+
+                  it 'collects the supplied parameters' do
+                    expect(journey.params).to eq(params)
+                  end
+                end
+              end
             end
           end
         end
