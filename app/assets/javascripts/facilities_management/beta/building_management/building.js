@@ -82,9 +82,11 @@ $(function () {
             .fail(function (data) {
                 //pageUtils.showPostCodeError(true, data.error);
             });
-
-
     });
+
+    $('#fm-cant-find-address-link').on('click', function () {
+        alert('not yet implemented');
+    })
 
 });
 
