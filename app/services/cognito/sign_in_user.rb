@@ -1,20 +1,22 @@
 module Cognito
   class SignInUser < BaseService
     include ActiveModel::Validations
-    attr_reader :email, :password
+    attr_reader :email, :password, :cookies_disabled
     attr_accessor :error, :needs_password_reset, :needs_confirmation
 
     validates_presence_of :email, :password
+    validate :cookies_should_be_enabled
 
-    def initialize(email, password)
+    def initialize(email, password, cookies_disabled)
       @email = email
       @password = password
       @error = nil
       @needs_password_reset = false
+      @cookies_disabled = cookies_disabled
     end
 
     def call
-      initiate_auth
+      initiate_auth if valid?
     rescue Aws::CognitoIdentityProvider::Errors::PasswordResetRequiredException => e
       @error = e.message
       errors.add(:base, e.message)
@@ -59,6 +61,10 @@ module Cognito
           'PASSWORD' => password
         }
       )
+    end
+
+    def cookies_should_be_enabled
+      errors.add(:base, :cookies_disabled) if @cookies_disabled
     end
   end
 end
