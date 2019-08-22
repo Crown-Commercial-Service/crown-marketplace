@@ -1,8 +1,8 @@
 <div class="govuk-body">
-  <a href="/facilities-management/building-management" class="govuk-back-link">Back</a>
+  <a href="../buildings-management" class="govuk-back-link">Back</a>
   <%= render('errors/inline_error_summary') %>
-  <% if @building_data %>
-    <span class="govuk-heading-m" style="position:relative; top:1ex; margin-bottom:0; color:#AAAAAA"><%= t('facilities_management.beta.index.manage_buildings_header') %></span>
+  <% if !@building.nil? %>
+    <span class="govuk-caption-l" style="position:relative; top:1ex; margin-bottom:0; color:#AAAAAA"><%= t('facilities_management.beta.index.manage_buildings_header') %></span>
     <h1 class="govuk-heading-xl">
       <%= @building['name'] %>
       <% if @display_warning %>

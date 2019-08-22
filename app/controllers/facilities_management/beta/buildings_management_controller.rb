@@ -17,21 +17,9 @@ module FacilitiesManagement
 
     def building_details_summary
       @error_msg = ''
-      current_login_email = current_user.email.to_s
-      @fm_building_data = FMBuildingData.new
-      building_count = @fm_building_data.get_count_of_buildings_by_id(current_login_email, params['id'])
-      @building_data = if building_count.positive?
-                         @fm_building_data.get_building_data_by_id(current_login_email, params['id'])
-                       else
-                         @building_data = nil
-                       end
-
-      @display_warning = true
-      @display_warning = (@building_data[0][:status] if building_count.positive?)
-      @building = (JSON.parse(@building_data[0]['building']) if building_count.positive?)
-
-      @current_caption = @current_link_target = @current_name = @current_change_link = ''
-      @thebuildingdata = @building.to_s
+      @building = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
+                                                              "' and building_json->>'building-ref' = '#{params['id']}'")&.building_json
+      @display_warning = @building.nil?
     end
 
     def building
