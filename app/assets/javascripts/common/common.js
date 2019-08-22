@@ -12,22 +12,26 @@ const pageUtils = {
         let errorID = id + '-error';
 
         if (show === true) {
-            /* Create an element to hold the message gds style */
-            let errorElem = '<span id="' + errorID + '" class="govuk-error-message">' +
-                '<span>Error: ' + msg + '</span></span>';
 
-            /* Wrap the offending element in a container and GDS style it*/
-            $('#' + id).wrap('<div id="' + id + '-container' + '" class="govuk-form-group govuk-form-group--error"></div>');
-            /* prepend the error message in the container */
-            $('#' + id + '-container').prepend(errorElem);
-            /* add error styling to the offending element */
-            $('#' + id).addClass('govuk-input--error');
+            if (!$('#' + id + '-container').length) {
+                /* Create an element to hold the message gds style */
+                let errorElem = '<span id="' + errorID + '" class="govuk-error-message">' +
+                    '<span>Error: ' + msg + '</span></span>';
+
+                /* Wrap the offending element in a container and GDS style it*/
+                $('#' + id).wrap('<div id="' + id + '-container' + '" class="govuk-form-group govuk-form-group--error"></div>');
+                /* prepend the error message in the container */
+                $('#' + id + '-container').prepend(errorElem);
+                /* add error styling to the offending element */
+                $('#' + id).addClass('govuk-input--error');
+            }
             /* scroll to the offending element */
             $('body').animate({
                 scrollTop: $('#' + id).offset().top - $('body').offset().top + $('body').scrollTop()
             }, 'fast');
             /* focus on the offending input */
             $('#' + id).focus();
+
         } else {
             /* Undo above if present */
             if ($('#' + id + '-container').length) {
