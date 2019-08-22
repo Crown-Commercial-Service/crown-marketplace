@@ -10,8 +10,14 @@ $(function () {
     });
 
     $('#fm-building-name-input').on('change', function (e) {
-        newBuilding.name = e.target.value;
-        FM.building = newBuilding;
+
+        if (e.target.value) {
+            newBuilding.name = e.target.value;
+            FM.building = newBuilding;
+            pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
+        } else {
+            pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
+        }
     });
 
     $('#fm-building-desc-input').on('keyup', function (e) {
