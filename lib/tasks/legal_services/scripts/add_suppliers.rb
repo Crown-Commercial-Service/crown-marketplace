@@ -1,8 +1,8 @@
 require 'roo'
 require 'json'
-require 'capybara'
 
-def add_suppliers
+def add_suppliers(upload_id)
+  upload = LegalServices::Admin::Upload.find(upload_id)
   suppliers_workbook = Roo::Spreadsheet.open '/users/milomia/master/storage/legal_services/current_data/input/SupplierDetails4.xlsx'
 
   headers = {
@@ -20,13 +20,8 @@ def add_suppliers
     clean: true
   }
 
-  ls_sheet = suppliers_workbook.sheet(0)
+  sheet = suppliers_workbook.sheet(0)
 
-  suppliers = ls_sheet.parse(headers)
-
-  File.open('/users/milomia/master/storage/legal_services/current_data/output/suppliers2.json', 'w') do |f|
-    f.write JSON.pretty_generate suppliers
-  end
+  suppliers = sheet.parse(headers)
+  upload.data = JSON.pretty_generate suppliers
 end
-
-add_suppliers
