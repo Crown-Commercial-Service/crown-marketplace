@@ -108,7 +108,7 @@ class FMBuildingData
   def get_building_data_by_id(email_address, building_id)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
-    to_query = %Q(select updated_at, status, id, building_json as building from facilities_management_buildings where user_id = '#{Base64.encode64(email_address)}' and building_json @> '{"id" : "#{building_id}"}')
+    to_query = %Q(select updated_at, status, id, building_json as building from facilities_management_buildings where user_id = '#{Base64.encode64(email_address)}' and building_json @> '{"building-ref" : "#{building_id}"}')
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(to_query) }
     Rails.logger.info(result.to_json.to_s)
     JSON.parse(result.to_json)
@@ -120,7 +120,7 @@ class FMBuildingData
     Rails.logger.info '==> FMBuildingData.get_count_of_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
 
-    to_query = %Q|select count(*) as record_count from facilities_management_buildings where user_id= '#{Base64.encode64(user_id)}' and building_json @> '{"id" : "#{building_id}"}'|
+    to_query = %Q|select count(*) as record_count from facilities_management_buildings where user_id= '#{Base64.encode64(user_id)}' and building_json @> '{"building-ref" : "#{building_id}"}'|
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(to_query) }
     result[0]['record_count']
   end

@@ -689,7 +689,7 @@ en:
         start_warning: Only buildings that are ready can be used in your procurement.
         no_buildings_text: You have no saved buildings.
       building-details-summary:
-        no_data_message: There are no buildings
+        no_data_message: There are no building details to view
         section-header: Building details summary
         status_warning_message: Your building was saved.  "%{name}" is incomplete.  You need to answer all questions to be used in procurement.
         return_to_management_text: Return to manage buildings

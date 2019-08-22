@@ -15,7 +15,7 @@
         <% @building_data.sort_by { |a| a['name'] }.each do |record| %>
           <% building = JSON.parse(record['building'].to_s) %>
           <tr>
-            <td><%= link_to building['name'].to_s, 'building-details-summary/'+building['id'].to_s, { class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
+            <td><%= link_to building['name'].to_s, 'building-details-summary/'+building['building-ref'].to_s, { class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
             <td><%= building['description'].to_s.length > 0 ? building['description'].to_s : '-'%></td>
             <td><%= record['updated_at'].to_datetime.strftime("%F") %></td>
             <td><%= record['status'].to_s %></td>
