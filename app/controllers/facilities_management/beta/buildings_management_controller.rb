@@ -1,7 +1,10 @@
+require 'facilities_management/fm_buildings_data'
+require 'facilities_management/fm_service_data'
+require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management].freeze
-    before_action :authorize_user, only: %i[buildings_management].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building].freeze
 
     def buildings_management
       @error_msg = ''
@@ -31,29 +34,31 @@ module FacilitiesManagement
       @thebuildingdata = @building.to_s
     end
 
-    def row_valid?(property_name, caption, link_new_text, link_change_text, link_target)
-      @current_caption = self.class.helpers.t(%Q|facilities_management.beta.building-details-summary.%{caption}|)
-      current_new_link_text = self.class.helpers.t(%Q|facilities_management.beta.building-details-summary.%{link_new_text}|)
-      current_change_link_text = self.class.helpers.t(%Q|facilities_management.beta.building-details-summary.%{link_change_text}|)
-      @current_link_target = link_target
-      @current_name = @building[property_name] if @building[property_name].present?
-      @current_name = self.class.helpers.link_to current_new_link_text, link_target, class: 'govuk-link' if @building[property_name].blank?
-      @current_change_link = ''
-      @current_change_link = self.class.helpers.link_to current_change_link_text, link_target, class: 'govuk-link' if @building[property_name].present?
-      @building[property_name].present?
-    end
-    helper_method :row_valid?
-
     def building
-      @error_msg = ''
+      @back_link = '/facilities-management/beta/'
+      @step = 1
+      @next_step = "What's the internal area of the building?"
+      @page_title = 'Create single building'
     end
 
     def building_type
-      @error_msg = ''
+      @back_link = '/facilities-management/beta/'
+      @step = 3
+      @next_step = 'Select the level of security clearance needed'
+      fm_building_data = FMBuildingData.new
+      @type_list = fm_building_data.building_type_list
+      @type_list_titles = fm_building_data.building_type_list_titles
+      @building_name = ''
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
 
     def building_gross_internal_area
-      @error_msg = ''
+      @back_link = ''
+      @step = 2
+      @next_step = ''
+      fm_building_data = FMBuildingData.new
+      @building_details = fm_building_data.new_building_details(current_user.email.to_s)
     end
 
     def building_address
@@ -62,6 +67,16 @@ module FacilitiesManagement
 
     def building_security_type
       @error_msg = ''
+    end
+
+    def save_new_building
+      @new_building_json = request.raw_post
+      @fm_building_data = FMBuildingData.new
+      @fm_building_data.save_new_building(current_user.email.to_s, @new_building_json)
+      j = { 'status': 200 }
+      render json: j, status: 200
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
     end
   end
 end
