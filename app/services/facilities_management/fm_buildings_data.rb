@@ -15,11 +15,50 @@ class FMBuildingData
   end
 
   def save_building(email_address, building)
-    Rails.logger.info '==> FMBuildingData.save_building()'
-    query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
+    # Private beta legacy function to accommodate database changes
+    save_new_building(email_address, building)
+  end
+
+  def save_building_property
+    # Key/Value properties associated with a building such as GIA, etc
+  end
+
+  def update_building_id
+    # required for legacy private beta solution
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{id}', to_json(id::text)::jsonb) where building_json ->> 'id' is null;"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
-    Rails.logger.warn "Couldn't save building: #{e}"
+    Rails.logger.warn "Couldn't update new building id: #{e}"
+  end
+
+  def new_building_id(email_address)
+    # returns the latest building id
+    query = "select id from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    result.rows[0].to_s
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get new building id: #{e}"
+  end
+
+  def new_building_details(email_address)
+    # returns the latest building details JSON
+    query = "select building_json from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    JSON.parse(result[0].to_json)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get new building details: #{e}"
+  end
+
+  def save_new_building(email_address, building)
+    # Beta code for step 1 saving a new building
+    Rails.logger.info '==> FMBuildingData.save_new_building()'
+    query = 'insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by) ' \
+            "values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "' , now()," + "'Incomplete', gen_random_uuid(), '" + email_address + "');"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    update_building_id
+    new_building_id(email_address)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't save new building: #{e}"
   end
 
   def delete_uom_for_building(email_address, building_id)
@@ -123,7 +162,7 @@ class FMBuildingData
      'Port and Airport buildings', 'List X Property', 'Hospitals', 'Mothballed / Vacant / Disposal']
   end
 
-  def building_type_list_descriptions
+  def building_type_list_titles
     { 'General office - Customer Facing' => 'General office areas and customer facing areas.',
       'General office - Non Customer Facing' => 'General office areas and non-customer facing areas.',
       'Call Centre Operations' => 'Call centre operations.',
