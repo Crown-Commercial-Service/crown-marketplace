@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_15_101211) do
+ActiveRecord::Schema.define(version: 2019_08_20_133209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -136,6 +136,20 @@ ActiveRecord::Schema.define(version: 2019_08_15_101211) do
     t.string "uom_value"
     t.string "building_id"
     t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
+  end
+
+  create_table "legal_services_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "aasm_state", limit: 15
+    t.string "suppliers", limit: 255
+    t.string "supplier_lot_1_service_offerings", limit: 255
+    t.string "supplier_lot_2_service_offerings", limit: 255
+    t.string "supplier_lot_3_service_offerings", limit: 255
+    t.string "supplier_lot_4_service_offerings", limit: 255
+    t.string "rate_cards", limit: 255
+    t.jsonb "data"
+    t.text "fail_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "legal_services_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

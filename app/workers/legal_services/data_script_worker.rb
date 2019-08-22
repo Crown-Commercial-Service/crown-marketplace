@@ -1,5 +1,9 @@
 require 'rake'
 require 'aws-sdk-s3'
+require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_suppliers')
+require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_service_offerings_per_supplier')
+require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_region_availability_per_lot_per_supplier')
+require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_rate_cards_to_suppliers')
 
 module LegalServices
   class DataScriptWorker
@@ -7,15 +11,14 @@ module LegalServices
     sidekiq_options queue: 'ls'
 
     def perform(upload_id)
-      @upload = LegalServices::Admin::Upload.find(upload_id)
+      upload = LegalServices::Admin::Upload.find(upload_id)
       Rake::Task.clear
       Rails.application.load_tasks
       Rake::Task['ls:clean'].invoke
-      Rake::Task['ls:data'].invoke
 
       check_for_errors
     rescue StandardError => e
-      fail_upload(@upload, e.full_message)
+      fail_upload(upload, e.full_message)
     end
 
     private
