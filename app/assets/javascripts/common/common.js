@@ -1,5 +1,35 @@
 const pageUtils = {
 
+    toggleFieldValidationError: function (show, id, msg) {
+        /* Show or hide a field validation error messages adding
+        * or removing GDS style field validation html on the fly
+        * Params :
+        * show, boolean (show or hide)
+        * id: The offending field id (without a #) that requires an error message
+        * msg: The error message to show
+        * */
+
+        let errorID = id + '-error';
+
+        if (show === true) {
+            let errorElem = '<span id="' + errorID + '" class="govuk-error-message">' +
+                '<span>Error: ' + msg + '</span></span>';
+
+            $('#' + id).wrap('<div id="' + id + '-container' + '" class="govuk-form-group govuk-form-group--error"></div>');
+            $('#' + id + '-container').prepend(errorElem);
+            $('#' + id).addClass('govuk-input--error');
+            $('body').animate({
+                scrollTop: $('#' + id).offset().top - $('body').offset().top + $('body').scrollTop()
+            }, 'fast');
+            $('#' + id).focus();
+        } else {
+            $('#' + id).unwrap();
+            $('#' + errorID).remove();
+            $('#' + id).removeClass('govuk-input--error');
+        }
+
+    },
+
     formatPostCode: function (pc) {
 
         let outer = pc.substring(0, pc.length - 3);
