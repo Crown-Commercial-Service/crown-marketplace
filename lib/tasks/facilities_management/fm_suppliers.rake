@@ -54,19 +54,22 @@ module CCS
 
   # EDITOR=vim rails credentials:edit
   def self.fm_aws
-    current_key = ENV['RAILS_MASTER_KEY']
-    ENV['RAILS_MASTER_KEY'] = ENV['SECRET_KEY_BASE'][0..31]
+    ENV['RAILS_MASTER_KEY_2'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+    creds = ActiveSupport::EncryptedConfiguration.new(
+      config_path: Rails.root.join('config', 'credentials.yml.enc'),
+      key_path: 'config/master.key',
+      env_key: 'RAILS_MASTER_KEY_2',
+      raise_if_missing_key: false # config.require_master_key
+    )
 
-    access_key = Rails.application.credentials.aws_suppliers[:access_key_id]
-    secret_key = Rails.application.credentials.aws_suppliers[:secret_access_key]
-    bucket = Rails.application.credentials.aws_suppliers[:bucket]
-    region = Rails.application.credentials.aws_suppliers[:region]
+    access_key = creds.aws_suppliers[:access_key_id]
+    secret_key = creds.aws_suppliers[:secret_access_key]
+    bucket = creds.aws_suppliers[:bucket]
+    region = creds.aws_suppliers[:region]
 
     import_suppliers(access_key, secret_key, bucket, region)
   rescue StandardError => e
     puts e.message
-  ensure
-    ENV['RAILS_MASTER_KEY'] = current_key
   end
 
   def self.import_suppliers(access_key, secret_key, bucket, region)
