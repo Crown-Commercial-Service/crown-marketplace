@@ -101,6 +101,7 @@ Rails.application.routes.draw do
       get '/', to: 'buyer_account#buyer_account'
       get '/buyer_account', to: 'buyer_account#buyer_account'
       get '/buildings-management', to: 'buildings_management#buildings_management'
+      get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
       get '/building', to: 'buildings_management#building'
       get '/building-type', to: 'buildings_management#building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
