@@ -16,14 +16,22 @@ module FacilitiesManagement
     end
 
     def building
-      @back_link = '/facilities-management/beta/'
+      @back_link_href = 'buildings-management'
       @step = 1
       @next_step = "What's the internal area of the building?"
       @page_title = 'Create single building'
     end
 
+    def building_gross_internal_area
+      @back_link_href = 'buildings-management'
+      @step = 2
+      @next_step = 'Building type'
+      fm_building_data = FMBuildingData.new
+      @building_details = fm_building_data.new_building_details(current_user.email.to_s)
+    end
+
     def building_type
-      @back_link = '/facilities-management/beta/'
+      @back_link_href = 'buildings-management'
       @step = 3
       @next_step = 'Select the level of security clearance needed'
       fm_building_data = FMBuildingData.new
@@ -32,14 +40,6 @@ module FacilitiesManagement
       @building_name = ''
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
-    end
-
-    def building_gross_internal_area
-      @back_link = ''
-      @step = 2
-      @next_step = ''
-      fm_building_data = FMBuildingData.new
-      @building_details = fm_building_data.new_building_details(current_user.email.to_s)
     end
 
     def building_details_summary
