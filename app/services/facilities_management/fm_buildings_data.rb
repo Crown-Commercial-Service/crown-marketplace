@@ -40,6 +40,15 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get new building id: #{e}"
   end
 
+  def new_building_details(email_address)
+    # returns the latest building details JSON
+    query = "select building_json from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    JSON.parse(result[0].to_json)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get new building details: #{e}"
+  end
+
   def save_new_building(email_address, building)
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
