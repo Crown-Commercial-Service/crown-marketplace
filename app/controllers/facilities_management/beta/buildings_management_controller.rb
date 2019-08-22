@@ -29,13 +29,17 @@ module FacilitiesManagement
       fm_building_data = FMBuildingData.new
       @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
-      @building_name = 'Phoenix house'
+      @building_name = ''
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
 
     def building_gross_internal_area
-      @error_msg = ''
+      @back_link = ''
+      @step = 2
+      @next_step = ''
+      fm_building_data = FMBuildingData.new
+      @building_details = fm_building_data.new_building_details(current_user.email.to_s)
     end
 
     def building_details_summary
