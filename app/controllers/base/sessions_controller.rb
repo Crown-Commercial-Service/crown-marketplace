@@ -5,15 +5,13 @@ module Base
     before_action :authorize_user, except: %i[new create destroy]
 
     def new
-      @result = Cognito::SignInUser.new(nil, nil)
-      @result.errors.add(:base, flash[:error]) if flash[:error]
-      @result.errors.add(:base, flash[:alert]) if flash[:alert]
+      @result = Cognito::SignInUser.new(nil, nil, nil)
       super
     end
 
     def create
       self.resource ||= User.new
-      @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password])
+      @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password], request.cookies.blank?)
       @result.call
 
       if @result.success?
@@ -47,8 +45,7 @@ module Base
       elsif @result.needs_confirmation
         redirect_to confirm_email_path(params[:user][:email])
       else
-        flash[:error] = @result.error
-        redirect_to new_session_path
+        render :new
       end
     end
   end
