@@ -727,6 +727,7 @@ en:
         my_buildings_header: My buildings
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
+        no_buildings_text: You have no saved buildings
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
