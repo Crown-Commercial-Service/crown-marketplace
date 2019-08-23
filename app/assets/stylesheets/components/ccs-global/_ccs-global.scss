@@ -92,6 +92,9 @@ span.govuk-error-message + span.ccs-e-msg {
 
 #cookie_banner {
     display: none;
+  div {
+    border: 0;
+  }
 }
 
 .govuk-accordion .govuk-accordion__section-button {
