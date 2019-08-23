@@ -8,7 +8,7 @@ RSpec.describe LegalServices::Upload, type: :model do
     let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }
 
     let(:lots) { [] }
-    let(:regions) { [] }
+    let(:lot_1_services) { [] }
 
     let(:suppliers) do
       [
@@ -18,7 +18,7 @@ RSpec.describe LegalServices::Upload, type: :model do
           'email' => contact_email,
           'phone_number' => telephone_number,
           'lots' => lots,
-          'regions' => regions,
+          'lot_1_services' => lot_1_services,
         }
       ]
     end
@@ -68,8 +68,23 @@ RSpec.describe LegalServices::Upload, type: :model do
         expect(supplier.phone_number).to eq(telephone_number)
       end
 
-      context 'and supplier has lots with regions' do
-        let(:regions) { ['UKC', 'UKD', 'UKE'] }
+      context 'and supplier is offering lot 1 services in regions' do
+        let(:lot_1_services) do
+          [
+            {
+              'service_code' => 'WPSLS.1.1',
+              'region_code' => 'UKC'
+            },
+            {
+              'service_code' => 'WPSLS.1.2',
+              'region_code' => 'UKD'
+            },
+            {
+              'service_code' => 'WPSLS.1.1',
+              'region_code' => 'UKD'
+            },
+          ]
+        end
 
         let(:supplier) { LegalServices::Supplier.last }
 
@@ -102,12 +117,12 @@ RSpec.describe LegalServices::Upload, type: :model do
         let(:lots) do
           [
             {
-              'lot_number' => '1',
-              'services' => %w[WPSLS.1.1 WPSLS.1.2]
+              'lot_number' => '2a',
+              'services' => %w[WPSLS.2a.1 WPSLS.2a.2]
             },
             {
-              'lot_number' => '2a',
-              'services' => %w[WPSLS.2a.1]
+              'lot_number' => '3',
+              'services' => %w[WPSLS.3.1]
             },
           ]
         end
@@ -128,21 +143,21 @@ RSpec.describe LegalServices::Upload, type: :model do
           described_class.upload!(suppliers)
 
           offering = service_offerings.first
-          expect(offering.service_code).to eq('WPSLS.1.1')
+          expect(offering.service_code).to eq('WPSLS.2a.1')
         end
 
         it 'assigns attributes to second service offering' do
           described_class.upload!(suppliers)
 
           offering = service_offerings.second
-          expect(offering.service_code).to eq('WPSLS.1.2')
+          expect(offering.service_code).to eq('WPSLS.2a.2')
         end
 
         it 'assigns attributes to third service offering' do
           described_class.upload!(suppliers)
 
           offering = service_offerings.third
-          expect(offering.service_code).to eq('WPSLS.2a.1')
+          expect(offering.service_code).to eq('WPSLS.3.1')
         end
       end
     end
@@ -221,11 +236,11 @@ RSpec.describe LegalServices::Upload, type: :model do
       let(:lots) do
         [
           {
-            'lot_number' => '1',
-            'services' => %w[WPSLS.1.1 WPSLS.1.2]
+            'lot_number' => '2a',
+            'services' => %w[WPSLS.2a.1 WPSLS.2a.2]
           },
           {
-            'lot_number' => '2a',
+            'lot_number' => '2b',
             'services' => %w[invalid]
           }
         ]
