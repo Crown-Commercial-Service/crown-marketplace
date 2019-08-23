@@ -80,6 +80,9 @@ RSpec.describe LegalServices::Supplier, type: :model do
     let(:supplier4) do
       create(:legal_services_supplier, name: 'Supplier 4')
     end
+    let(:supplier5) do
+      create(:legal_services_supplier, name: 'Supplier 5')
+    end
 
     before do
       supplier1.service_offerings.create!(
@@ -106,6 +109,12 @@ RSpec.describe LegalServices::Supplier, type: :model do
       supplier2.regional_availabilities.create!(service_code: 'WPSLS.1.2', region_code: 'UKD')
       supplier3.regional_availabilities.create!(service_code: 'WPSLS.1.1', region_code: 'UKD')
       supplier4.regional_availabilities.create!(service_code: 'WPSLS.1.1', region_code: 'UKC')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.4', region_code: 'UKC')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.5', region_code: 'UKC')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.6', region_code: 'UKC')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.4', region_code: 'UKD')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.5', region_code: 'UKD')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.6', region_code: 'UKD')
     end
 
     it 'returns suppliers with availability in lot 1 for a single region' do
@@ -124,9 +133,14 @@ RSpec.describe LegalServices::Supplier, type: :model do
         .to contain_exactly(supplier1)
     end
 
-    it 'returns suppliers with availability in lot 1 for a single region' do
+    it 'returns suppliers with availability for multiple services in lot 1 for a single region' do
       expect(described_class.offering_services_in_regions('1', ['WPSLS.1.1', 'WPSLS.1.2'], nil, ['UKC']))
         .to contain_exactly(supplier1)
+    end
+
+    it 'returns only suppliers who can provide all services in all regions' do
+      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.4', 'WPSLS.1.5', 'WPSLS.1.6'], nil, ['UKC', 'UKD']))
+        .to contain_exactly(supplier5)
     end
 
     it 'returns suppliers with availability in lot 2 for the selected jurisdiction' do
