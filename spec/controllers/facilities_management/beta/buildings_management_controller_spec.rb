@@ -7,4 +7,11 @@ RSpec.describe FacilitiesManagement::Beta::BuildingsManagementController do
       expect(response).to have_http_status(:found)
     end
   end
+
+  describe 'GET #building' do
+    it 'returns http success' do
+      get :building
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end
