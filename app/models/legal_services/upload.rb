@@ -35,10 +35,11 @@ module LegalServices
         duns: data['duns']
       )
 
-      regions = data.fetch('regions', {})
-      regions.each do |region|
+      lot_1_services = data.fetch('lot_1_services', {})
+      lot_1_services.each do |service|
         supplier.regional_availabilities.create!(
-          region_code: region,
+          region_code: service['region_code'],
+          service_code: service['service_code']
         )
       end
 

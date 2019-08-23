@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_20_135101) do
+ActiveRecord::Schema.define(version: 2019_08_22_085512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 2019_08_20_135101) do
     t.text "region_code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "service_code"
     t.index ["legal_services_supplier_id"], name: "index_ls_regional_availabilities_on_ls_supplier_id"
   end
 
