@@ -89,6 +89,10 @@ en:
             new_password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+        cognito/sign_in_user:
+          attributes:
+            base:
+              cookies_disabled: Your browser must have cookies enabled
         cognito/sign_up_user:
           attributes:
             email:
