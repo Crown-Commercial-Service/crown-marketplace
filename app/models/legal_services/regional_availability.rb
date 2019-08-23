@@ -15,7 +15,9 @@ module LegalServices
     def self.supplier_ids_for_service_codes_and_region_codes(service_codes, region_codes)
       where(service_code: service_codes, region_code: region_codes)
         .group(:legal_services_supplier_id)
-        .having("COUNT(DISTINCT(region_code)) + COUNT(DISTINCT(service_code))= #{region_codes.count + service_codes.count}")
+        .having("COUNT(DISTINCT(region_code))= #{region_codes.count}")
+        .having("COUNT(DISTINCT(service_code))= #{service_codes.count}")
+        .having("COUNT(region_code)= #{region_codes.count * service_codes.count}")
         .pluck(:legal_services_supplier_id)
     end
   end
