@@ -1,39 +1,47 @@
-<% if @building_count == 0 %><h2 class="govuk-caption-m govuk-!-margin-0">You must add at least one building</h2><% end %>
-<% if @building_count > 0 %>
-  <div id="fm-buildings-container">
-    <div class="govuk-table" data-module="table" id="buildings-list">
-      <table class="govuk-!-width-three-quarters" style="border-collapse: collapse;">
-        <thead>
+<div id="fm-buildings-container">
+  <% if @building_count.zero? %>
+  <table class="govuk-!-width-three-quarters" style="border-collapse: collapse;">
+    <thead>
+    <tr>
+      <th><span class="govuk-caption-m"><%= t('facilities_management.beta.index.no_buildings_text') %></span></th>
+    </tr>
+    </thead>
+  </table>
+<% end %>
+<% if @building_count.positive? %>
+  <div class="govuk-table" data-module="table" id="buildings-list">
+    <table class="govuk-!-width-three-quarters" style="border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="max-width:25%;"><%=t('facilities_management.beta.index.column_name_header') %></th>
+          <th style="min-width:25%;"><%=t('facilities_management.beta.index.column_desc_header') %></th>
+          <th style="min-width:12ex"><%=t('facilities_management.beta.index.column_lstup_header') %></th>
+          <th><%=t('facilities_management.beta.index.column_status_header') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <% @building_data.sort_by { |a| a['name'] }.each do |record| %>
+        <% building = JSON.parse(record['building'].to_s) %>
+        <tr>
+          <td><%= link_to building['name'].to_s, 'building-details-summary/'+building['building-ref'].to_s, { class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
+          </td>
+          <td><%= building['description'].to_s.length > 0 ? building['description'].to_s : '-'%></td>
+          <td><%= record['updated_at'].to_datetime.strftime("%d/%m/%Y") %></td>
+          <td><%= record['status'].to_s %></td>
+        </tr>
+      <% end %>
+      </tbody>
+      <%if @building_count > 20 %>
+        <tfoot>
           <tr>
-            <th style="max-width:25%;"><%=t('facilities_management.beta.index.column_name_header') %></th>
-            <th style="min-width:25%;"><%=t('facilities_management.beta.index.column_desc_header') %></th>
-            <th style="min-width:12ex"><%=t('facilities_management.beta.index.column_lstup_header') %></th>
+            <th><%=t('facilities_management.beta.index.column_name_header') %></th>
+            <th><%=t('facilities_management.beta.index.column_desc_header') %></th>
+            <th><%=t('facilities_management.beta.index.column_lstup_header') %></th>
             <th><%=t('facilities_management.beta.index.column_status_header') %></th>
           </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-        <% @building_data.sort_by { |a| a['name'] }.each do |record| %>
-          <% building = JSON.parse(record['building'].to_s) %>
-          <tr>
-            <td><%= link_to building['name'].to_s, 'facilities-management/beta/building_details_summary/'+building['id'].to_s, { class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
-            </td>
-            <td><%= building['description'].to_s.length > 0 ? building['description'].to_s : '-'%></td>
-            <td><%= record['updated_at'].to_datetime.strftime("%F") %></td>
-            <td><%= record['status'].to_s %></td>
-          </tr>
-        <% end %>
-        </tbody>
-        <%if @building_count > 0 %>
-          <tfoot>
-            <tr>
-              <th><%=t('facilities_management.beta.index.column_name_header') %></th>
-              <th><%=t('facilities_management.beta.index.column_desc_header') %></th>
-              <th><%=t('facilities_management.beta.index.column_lstup_header') %></th>
-              <th><%=t('facilities_management.beta.index.column_status_header') %></th>
-            </tr>
-          </tfoot>
-        <% end %>
-      </table>
-    </div>
+        </tfoot>
+      <% end %>
+    </table>
   </div>
 <% end %>
+</div>
