@@ -15,6 +15,14 @@ module FacilitiesManagement
       @building_data = @fm_building_data.get_building_data(current_login_email)
     end
 
+    def building_details_summary
+      @error_msg = ''
+      building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
+                                                                    "' and building_json->>'building-ref' = '#{params['id']}'")
+      @building = building_record&.building_json
+      @display_warning = building_record.blank? ? false : building_record&.status == 'Incomplete'
+    end
+
     def building
       @back_link_href = 'buildings-management'
       @step = 1
@@ -40,10 +48,6 @@ module FacilitiesManagement
       @building_name = ''
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
-    end
-
-    def building_details_summary
-      @error_msg = ''
     end
 
     def building_address

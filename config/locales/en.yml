@@ -696,6 +696,25 @@ en:
       removeall_text: Remove all
       selectall_text: Select all
     beta:
+      building-details-summary:
+        add_address_text: Add address
+        add_desc_text: Add description
+        add_name_text: Add name
+        answer_question_text: Answer question
+        building_was_saved: Your building was saved.  "%{name}" is ready for procurement.
+        caption_addr: Address
+        caption_desc: Description
+        caption_gia: Gross internal area
+        caption_name: Name
+        caption_reference: Reference
+        caption_sec: Security clearance
+        caption_type: Building type
+        change_text: Change
+        no_data_message: There are no building details to view
+        return_to_management_text: Return to manage buildings
+        section-header: Building details summary
+        select_one_option_text: Select one option
+        status_warning_message: Your building was saved.  "%{name}" is incomplete.  You need to answer all questions to be used in procurement.
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -704,8 +723,9 @@ en:
         create_new_button: "+ Create Single Building"
         link_to_building_summary: View details for building
         manage_building: Manage buildings
+        manage_buildings_header: Manage buildings
         my_buildings_header: My buildings
-        no_saved_buildings: You have no saved buildings
+        no_buildings_text: You have no saved buildings
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
     gateway:
