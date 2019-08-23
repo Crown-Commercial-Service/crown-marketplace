@@ -10,8 +10,14 @@ $(function () {
     });
 
     $('#fm-building-name-input').on('change', function (e) {
-        newBuilding.name = e.target.value;
-        FM.building = newBuilding;
+
+        if (e.target.value) {
+            newBuilding.name = e.target.value;
+            FM.building = newBuilding;
+            pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
+        } else {
+            pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
+        }
     });
 
     $('#fm-building-desc-input').on('keyup', function (e) {
@@ -34,9 +40,9 @@ $(function () {
             address['fm-address-line-2'] = addressElements[1];
             address['fm-address-town'] = addressElements[2];
             address['fm-address-county'] = addressElements[3];
-            address['fm-address-postcode'] = addressElements[4];
+            address['fm-address-postcode'] = addressElements[4].trim();
             newBuilding.address = address;
-            newBuilding.buidling_ref = addressElements[5];
+            newBuilding['building-ref'] = addressElements[5].trim();
             FM.building = newBuilding;
         }
 
@@ -76,9 +82,11 @@ $(function () {
             .fail(function (data) {
                 //pageUtils.showPostCodeError(true, data.error);
             });
-
-
     });
+
+    $('#fm-cant-find-address-link').on('click', function () {
+        alert('not yet implemented');
+    })
 
 });
 

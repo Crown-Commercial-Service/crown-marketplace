@@ -16,18 +16,12 @@ class FMBuildingData
   end
 
   def save_building(email_address, building)
-    # Private beta legacy function to accommodate database changes
-    save_new_building(email_address, building)
-  end
+    Rails.logger.info '==> FMBuildingData.save_building()'
 
-  def save_building_property
-    # Key/Value properties associated with a building such as GIA, etc
-  end
-
-  def update_building_id
-    # required for legacy private beta solution
-    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{id}', to_json(id::text)::jsonb) where building_json ->> 'id' is null;"
-    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    CCS::FM::Building.create(id: building['id'],
+                             user_id: Base64.encode64(email_address),
+                             updated_by: Base64.encode64(email_address),
+                             building_json: building)
   rescue StandardError => e
     Rails.logger.warn "Couldn't update new building id: #{e}"
   end
