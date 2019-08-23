@@ -59,9 +59,8 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
   end
 
   def save_building
-    @new_building_json = request.raw_post
     @fm_building_data = FMBuildingData.new
-    @fm_building_data.save_building(current_user.email.to_s, @new_building_json)
+    @fm_building_data.save_building(current_user.email.to_s, JSON.parse(request.raw_post))
     j = { 'status': 200 }
     render json: j, status: 200
   rescue StandardError => e

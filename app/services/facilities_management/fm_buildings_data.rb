@@ -16,8 +16,11 @@ class FMBuildingData
 
   def save_building(email_address, building)
     Rails.logger.info '==> FMBuildingData.save_building()'
-    query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
-    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+
+    CCS::FM::Building.create(id: building['id'],
+                             user_id: Base64.encode64(email_address),
+                             updated_by: Base64.encode64(email_address),
+                             building_json: building)
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building: #{e}"
   end
