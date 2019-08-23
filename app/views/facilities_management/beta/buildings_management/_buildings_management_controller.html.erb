@@ -1,9 +1,11 @@
-<!-- FM-172 Manage buildings page -->
+<a href="/facilities-management/beta" class="govuk-back-link ccs-no-print">Back</a>
 <div class="govuk-grid-column-full">
   <%= render('errors/inline_error_summary') %>
 </div>
-<h1 class="govuk-heading-xl">Manage buildings</h1>
-<a id="fm-buildings-add-building" href="#" class="govuk-button ccs-no-print govuk-!-margin-bottom-6" role="button">
+<h1 class="govuk-heading-xl"><%= t('facilities_management.beta.index.manage_building') %></h1>
+<a href="/facilities-management/beta/building"
+   class="govuk-button ccs-no-print govuk-!-margin-bottom-6"
+   role="button">
   <%= t('facilities_management.beta.index.create_new_button') %>
 </a>
 <p class="govuk-caption-l">
