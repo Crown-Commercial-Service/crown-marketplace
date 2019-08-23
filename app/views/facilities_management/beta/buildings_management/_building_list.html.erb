@@ -26,12 +26,12 @@
           <td><%= link_to building['name'].to_s, 'building-details-summary/'+building['building-ref'].to_s, { class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
           </td>
           <td><%= building['description'].to_s.length > 0 ? building['description'].to_s : '-'%></td>
-          <td><%= record['updated_at'].to_datetime.strftime("%F") %></td>
+          <td><%= record['updated_at'].to_datetime.strftime("%d/%m/%Y") %></td>
           <td><%= record['status'].to_s %></td>
         </tr>
       <% end %>
       </tbody>
-      <%if @building_count > 10 %>
+      <%if @building_count > 20 %>
         <tfoot>
           <tr>
             <th><%=t('facilities_management.beta.index.column_name_header') %></th>
