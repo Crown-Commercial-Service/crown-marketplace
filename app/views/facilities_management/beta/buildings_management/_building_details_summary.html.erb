@@ -31,7 +31,7 @@
           <% if !@building['description'].blank? %>
             <%= @building['description'] %>
           <% else %>
-            <%= link_to t('facilities_management.beta.building-details-summary.add_address_text'), "../building/#{@building['building-ref']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.add_desc_text'), "../building/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %>
         </td>
         <td>
