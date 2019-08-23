@@ -16,12 +16,12 @@
           <% if !@building['name'].blank? %>
             <%= @building['name'] %>
           <% else %>
-            <%= link_to t('facilities_management.beta.building-details-summary.add_name_text'), "../building/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.add_name_text'), "../building/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %>
         </td>
         <td>
           <% if !@building['name'].blank? %>
-            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %>
         </td>
       </tr>
@@ -31,12 +31,12 @@
           <% if !@building['description'].blank? %>
             <%= @building['description'] %>
           <% else %>
-            <%= link_to t('facilities_management.beta.building-details-summary.add_address_text'), "../building/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.add_address_text'), "../building/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %>
         </td>
         <td>
           <% if !@building['description'].blank? %>
-            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %>
         </td>
       </tr>
@@ -47,12 +47,12 @@
             <% address = @building['address']['fm-address-line-1'].to_s + (@building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-line-2'].to_s + (@building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-town'].to_s + (@building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-county'].to_s + (@building['address']['fm-address-county'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-postcode'].to_s %>
             <%= address %>
           <% else %>
-            <%= link_to t('facilities_management.beta.building-details-summary.add_address_text'), "../building/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.add_address_text'), "../building/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %>
         </td>
         <td>
           <% if !@building['address'].blank? %>
-            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %></td>
       </tr>
       <tr>
@@ -60,11 +60,11 @@
         <td>
           <% if !@building['gia'].blank? %><%= @building['gia'] %>
           <% else %>
-            <%= link_to t('facilities_management.beta.building-details-summary.answer_question_text'), "../building-gross-internal-area/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.answer_question_text'), "../building-gross-internal-area/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %></td>
         <td>
           <% if !@building['gia'].blank? %>
-            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building-gross-internal-area/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building-gross-internal-area/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %></td>
       </tr>
       <tr>
@@ -72,11 +72,11 @@
         <td>
           <% if !@building['fm-building-type'].blank? %><%= @building['fm-building-type'] %>
           <% else %>
-            <%= link_to t('facilities_management.beta.building-details-summary.select_one_option_text'), "../building-type/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.select_one_option_text'), "../building-type/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %></td>
         <td>
           <% if !@building['fm-building-type'].blank? %>
-            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building-type/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building-type/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %></td>
       </tr>
       <tr>
@@ -85,12 +85,12 @@
           <% if !@building['security-clearance'].blank? %>
             <%= @building['security-clearance'] %>
           <% else %>
-            <%= link_to t('facilities_management.beta.building-details-summary.select_one_option_text'), "../building-security-type/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.select_one_option_text'), "../building-security-type/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %>
         </td>
         <td>
           <% if !@building['security-clearance'].blank? %>
-            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building-security-type/#{@building['id']}", { class: 'govuk-link' }%>
+            <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "../building-security-type/#{@building['building-ref']}", { class: 'govuk-link' }%>
           <% end %></td>
       </tr>
       </tbody>

@@ -17,9 +17,10 @@ module FacilitiesManagement
 
     def building_details_summary
       @error_msg = ''
-      @building = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
-                                                              "' and building_json->>'building-ref' = '#{params['id']}'")&.building_json
-      @display_warning = @building.nil?
+      building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
+                                                                    "' and building_json->>'building-ref' = '#{params['id']}'")
+      @building = building_record&.building_json
+      @display_warning = building_record.blank? ? false : building_record&.status == "Incomplete"
     end
 
     def building
