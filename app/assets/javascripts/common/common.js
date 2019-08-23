@@ -1,5 +1,47 @@
 const pageUtils = {
 
+    toggleFieldValidationError: function (show, id, msg) {
+        /* Show or hide a field validation error messages adding
+        * or removing GDS style field validation html on the fly
+        * Params :
+        * show, boolean (show or hide)
+        * id: The offending field id (without a #) that requires an error message
+        * msg: The error message to show
+        * */
+
+        let errorID = id + '-error';
+
+        if (show === true) {
+
+            if (!$('#' + id + '-container').length) {
+                /* Create an element to hold the message gds style */
+                let errorElem = '<span id="' + errorID + '" class="govuk-error-message">' +
+                    '<span>Error: ' + msg + '</span></span>';
+
+                /* Wrap the offending element in a container and GDS style it*/
+                $('#' + id).wrap('<div id="' + id + '-container' + '" class="govuk-form-group govuk-form-group--error"></div>');
+                /* prepend the error message in the container */
+                $('#' + id + '-container').prepend(errorElem);
+                /* add error styling to the offending element */
+                $('#' + id).addClass('govuk-input--error');
+            }
+            /* scroll to the offending element */
+            $('body').animate({
+                scrollTop: $('#' + id).offset().top - $('body').offset().top + $('body').scrollTop()
+            }, 'fast');
+            /* focus on the offending input */
+            $('#' + id).focus();
+
+        } else {
+            /* Undo above if present */
+            if ($('#' + id + '-container').length) {
+                $('#' + id).unwrap();
+                $('#' + errorID).remove();
+                $('#' + id).removeClass('govuk-input--error');
+            }
+        }
+    },
+
     formatPostCode: function (pc) {
 
         let outer = pc.substring(0, pc.length - 3);
@@ -319,6 +361,14 @@ const fm = {
 };
 
 $(function () {
+
+    window.FM = window.FM || {};
+
+    FM.calcCharsLeft = function (value, maxChars) {
+        return maxChars - value.length;
+    };
+
+
     if (!String.prototype.endsWith) {
         String.prototype.endsWith = function (searchString, position) {
             let subjectString = this.toString();

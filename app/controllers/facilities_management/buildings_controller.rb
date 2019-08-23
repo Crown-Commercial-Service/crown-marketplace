@@ -143,7 +143,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'Please select an option before continuing'
     @type_list = fm_building_data.building_type_list
-    @type_list_descriptions = fm_building_data.building_type_list_descriptions
+    @type_list_titles = fm_building_data.building_type_list_titles
   rescue StandardError => e
     Rails.logger.warn "Error: BuildingsController building_type(): #{e}"
   end
