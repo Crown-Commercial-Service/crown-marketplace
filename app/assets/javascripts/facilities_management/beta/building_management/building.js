@@ -40,9 +40,9 @@ $(function () {
             address['fm-address-line-2'] = addressElements[1];
             address['fm-address-town'] = addressElements[2];
             address['fm-address-county'] = addressElements[3];
-            address['fm-address-postcode'] = addressElements[4];
+            address['fm-address-postcode'] = addressElements[4].trim();
             newBuilding.address = address;
-            newBuilding.buidling_ref = addressElements[5];
+            newBuilding['building-ref'] = addressElements[5].trim();
             FM.building = newBuilding;
         }
 
