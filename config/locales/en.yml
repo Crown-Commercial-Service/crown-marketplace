@@ -693,6 +693,7 @@ en:
       selectall_text: Select all
     beta:
       index:
+        manage_building: Manage buildings
         column_desc_header: Description
         column_lstup_header: Last updated
         column_name_header: Name
@@ -703,7 +704,7 @@ en:
         my_buildings_header: My buildings
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
-        no_buildings_text: You have no saved buildings.
+        no_buildings_text: You have no saved buildings
       building-details-summary:
         no_data_message: There are no building details to view
         section-header: Building details summary
@@ -853,13 +854,15 @@ en:
       feedback_aria_label: Email your feedback on this service.
       feedback_end_journey_html: <b> This is a new service - how did you find it? </b> Please complete <a href="%{link}" target="_blank" >a short survey</a> to help us improve it.
       feedback_html: This is a new service – your %{link} will help us to improve it.
-      having_problems: To ask a question or report a problem,
+      having_problems: Having problems with this service?
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy
       skip: Skip to main content
       support_html: email %{link} or call %{phone}.
       support_link_aria_label: Email us for support with this service
       title: Crown Commercial Service
+      to_ask_a_question: To ask a question or report a problem,
+      support_email_html: Email %{link}.
     header:
       go_start_page_aria_label: Go to start page of %{service_name}
   legal_services:
