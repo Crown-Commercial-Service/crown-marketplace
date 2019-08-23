@@ -30,7 +30,28 @@ $(function () {
 
             switch (step) {
                 case 1:
-                    saveStep(FM.building, redirect_uri);
+                    if (!FM.building.name || !FM.building.address || FM.building.address === {}) {
+                        let id;
+                        let msg;
+                        if (!FM.building.name) {
+                            id = 'fm-building-name-input';
+                            msg = 'A building name is required';
+                        }
+
+                        if (!FM.building.address || FM.building.address === {}) {
+                            id = 'fm-bm-postcode';
+                            msg = 'An address is required';
+                        }
+
+                        pageUtils.toggleFieldValidationError(true, id, msg);
+
+                    } else {
+                        pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
+                        pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
+                        saveStep(FM.building, redirect_uri);
+                    }
+
+
                     break;
                 case 2:
 
@@ -49,6 +70,7 @@ $(function () {
             }
         }
     };
+
 
     $('#fm-bm-save-return-to-manage-buildings').on('click', function (e) {
         e.preventDefault();
