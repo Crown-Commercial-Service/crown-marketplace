@@ -36,8 +36,6 @@
   <hr/>
   <hr/>
 
-
-  <!-- <form> -->
   <%= form_tag '/facilities-management/beta/summary/guidance', class: :'ccs-form', method: :post do %>
     <p class="govuk-!-font-size-24"><strong>How would you like to continue?</strong>
       <div class="govuk-radios">
@@ -61,6 +59,7 @@
     <p>
       <%= submit_tag t('common.submit'), class: "govuk-button" %>
     </p>
+    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
   <% end %>
   <!--</form>-->
 
@@ -72,6 +71,6 @@
     </div>
   </p>
 
-  <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+
 
 </div>
