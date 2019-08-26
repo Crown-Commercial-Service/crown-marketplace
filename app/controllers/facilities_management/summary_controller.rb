@@ -15,11 +15,15 @@ module FacilitiesManagement
     def index
       set_current_choices
 
-      build_assessed_value_report
+      build_report
 
       respond_to do |format|
-        format.json { render json: { result: "summary page: #{@data['env']}" } }
+        format.json { render json: { result: "summary page: #{@data['env']}"} }
         format.html
+          if @data['env'] == 'public-beta'
+            render 'facilities_management/beta/summary/index'
+          end
+          # render default private beta template if 'public-beta' is not set
         format.xlsx do
           spreadsheet = Spreadsheet.new(@report, @current_lot, @data)
           render xlsx: spreadsheet.to_xlsx, filename: 'procurement_summary'
@@ -36,7 +40,7 @@ module FacilitiesManagement
 
       @data = TransientSessionInfo[session.id]
       # @supplier_count = @data['supplier_count']
-      @current_lot = @data['current_lot'] if @data
+      @current_lot = @data['current_lot']
 
       set_start_date
     end
@@ -54,17 +58,21 @@ module FacilitiesManagement
       TransientSessionInfo[session.id]['current_lot'] = @current_lot
     end
 
-    def build_assessed_value_report
+    def build_report
+      set_current_choices
+
       user_email = current_user.email.to_s
 
-      @report = SummaryReport.new(start_date: @start_date, user_email: user_email, data: TransientSessionInfo[session.id])
+      @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
 
       selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
 
       uvals = @report.uom_values(selected_buildings)
 
       # move this into the model
-      @report.calculate_services_for_buildings selected_buildings, uvals
+      @report.calculate_services_for_buildings selected_buildings,
+                                               uvals,
+                                               CCS::FM::Rate.read_benchmark_rates
 
       workout_current_lot
     end
