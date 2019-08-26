@@ -18,8 +18,12 @@ module FacilitiesManagement
       build_report
 
       respond_to do |format|
-        format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
+        format.json { render json: { result: "summary page: #{@data['env']}"} }
         format.html
+          if @data['env'] == 'public-beta'
+            render 'facilities_management/beta/summary/index'
+          end
+          # render default private beta template if 'public-beta' is not set
         format.xlsx do
           spreadsheet = Spreadsheet.new(@report, @current_lot, @data)
           render xlsx: spreadsheet.to_xlsx, filename: 'procurement_summary'
