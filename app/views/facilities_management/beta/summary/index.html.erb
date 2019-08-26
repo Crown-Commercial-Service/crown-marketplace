@@ -37,30 +37,32 @@
   <hr/>
 
 
-
-  <p class="govuk-!-font-size-24"><strong>How would you like to continue?</strong>
-
-    <div class="govuk-radios">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-1" name="next" type="radio" value="yes">
-        <label class="govuk-label govuk-radios__label" for="changed-name-1">
-        Download results
-        </label>
+  <!-- <form> -->
+  <%= form_tag '/facilities-management/beta/summary/guidance', class: :'ccs-form', method: :post do %>
+    <p class="govuk-!-font-size-24"><strong>How would you like to continue?</strong>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="changed-name-1" name="next" type="radio" value="yes">
+          <label class="govuk-label govuk-radios__label" for="changed-name-1">
+          Download results
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="changed-name-2" name="next" type="radio" value="no">
+          <label class="govuk-label govuk-radios__label" for="changed-name-2">
+          Direct award route
+          </label>
+        </div>
       </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="changed-name-2" name="next" type="radio" value="no">
-        <label class="govuk-label govuk-radios__label" for="changed-name-2">
-        Direct award route
-        </label>
-      </div>
-    </div>
-  </p>
+    </p>
 
-  <br/><br>
+    <br/><br>
 
-  <p>
-    <%= submit_tag t('common.submit'), class: "govuk-button" %>
-  </p>
+    <p>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+    </p>
+  <% end %>
+  <!--</form>-->
 
   <p>
     <div class="govuk-grid-row ccs-no-print">
