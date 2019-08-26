@@ -46,15 +46,6 @@ Rails.application.routes.draw do
 
     namespace 'facilities_management', path: 'facilities-management' do
       concerns %i[authenticatable registrable]
-      namespace :beta do
-        concerns :authenticatable
-        namespace :supplier do
-          concerns :authenticatable
-        end
-        namespace :admin do
-          concerns :authenticatable
-        end
-      end
     end
 
     namespace 'management_consultancy', path: 'management-consultancy' do
@@ -108,75 +99,20 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management' do
     namespace 'beta', path: 'beta' do
       get '/', to: 'buyer_account#buyer_account'
-      get '/start', to: 'home#index'
-      get '/gateway', to: 'gateway#index'
       get '/buyer_account', to: 'buyer_account#buyer_account'
       get '/buildings-management', to: 'buildings_management#buildings_management'
       get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
-      get '/building-details-summary', to: 'buildings_management#building_details_summary'
-      post '/building-details-summary', to: 'buildings_management#building_details_summary'
       get '/building', to: 'buildings_management#building'
-      post '/building', to: 'buildings_management#building'
-      put '/building', to: 'buildings_management#update_building_details'
       get '/building-type', to: 'buildings_management#building_type'
-      post '/building-type', to: 'buildings_management#building_type'
-      put '/building-type', to: 'buildings_management#update_building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      put '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
-      get '/building-address', to: 'buildings_management#building_address'
-      get '/building-security-type', to: 'buildings_management#building_security_type'
-      post '/building-security-type', to: 'buildings_management#building_security_type'
-      put '/building-security-type', to: 'buildings_management#update_security_type'
+      get '/building-details-summary', to: 'buildings_management#building_details_summary'
+      get '/building_address', to: 'buildings_management#building_address'
+      get '/building-security-type', to: 'buildings_management#building_security-type'
       match '/buildings-management/save-new-building', to: 'buildings_management#save_new_building', via: %i[get post]
       match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
       match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
       match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
-      match '/save-address', to: 'buildings_management#save_building_address', via: %i[get post]
-      match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
-      match '/save-building-gia', to: 'buildings_management#save_building_gia', via: %i[get post]
-      match '/save-building-security-type', to: 'buildings_management#save_security_type', via: %i[get post]
-      # post '/summary', to: 'summary#index'
-      match '/summary', to: 'summary#index', via: %i[get post]
       post '/summary/guidance', to: 'summary#guidance'
-      post '/summary/suppliers', to: 'summary#sorted_suppliers'
-      get '/start', to: 'journey#start', as: 'journey_start'
-      get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
-      get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
-      resources :procurements do
-        get 'results'
-        get 'further_competition_spreadsheet'
-        post 'da_spreadsheets'
-        resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
-          resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
-          resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
-          get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
-        end
-      end
-      resources :procurement_buildings, only: %i[show edit update]
-      resources :procurement_buildings_services, only: %i[show update]
-      resources :buyer_details, only: %i[edit update] do
-        get 'edit_address'
-      end
-      namespace :supplier do
-        get '/', to: 'home#index'
-        get 'offer-declined', to: 'offer#declined'
-        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
-        get 'offer-accepted', to: 'offer#accepted'
-        resources :dashboard, only: :index
-        resources :contracts, only: %i[show edit update], controller: 'contracts' do
-          resources :sent, only: %i[index], controller: 'sent'
-        end
-      end
-      namespace :admin, path: 'admin' do
-        get '/', to: 'admin_account#admin_account'
-        get '/start', to: 'dashboard#index'
-        get '/gateway', to: 'gateway#index'
-        get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-        get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
-        get 'supplier-framework-data', to: 'suppliers_framework_data#index'
-        get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
-      end
     end
 
     get '/', to: 'home#index'
@@ -206,7 +142,6 @@ Rails.application.routes.draw do
     get '/suppliers', to: 'suppliers#index'
     post '/buildings/delete_building' => 'buildings#delete_building'
 
-    get '/admin/start', to: 'dashboard#index'
     get '/start', to: 'home#index'
     # post '/contract-start', to: 'contract#start_of_contract'
     match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]
@@ -220,8 +155,6 @@ Rails.application.routes.draw do
     post '/cache/clear', to: 'cache#clear_all'
     get '/buyer-account', to: 'buyer_account#buyer_account'
     get '/reset', to: 'buildings#reset_buildings_tables'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     get '/:slug', to: '/errors#404'
 
     resources :uploads, only: :create if Marketplace.upload_privileges?
@@ -254,17 +187,37 @@ Rails.application.routes.draw do
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
+  namespace 'apprenticeships', path: 'apprenticeships' do
+    get '/', to: 'home#index'
+    get '/gateway', to: 'gateway#index'
+    get '/search', to: 'home#search'
+    get '/search_results', to: 'home#search_results'
+    get '/supplier_search', to: 'home#supplier_search'
+    get '/supplier_search2', to: 'home#supplier_search2'
+    get '/find_apprentices', to: 'home#find_apprentices'
+    get '/find_apprentices2', to: 'home#find_apprentices2'
+    get '/find_apprentices3', to: 'home#find_apprentices3'
+    get '/find_apprentices4', to: 'home#find_apprentices4'
+    get '/find_apprentices5', to: 'journey#find_apprentices5'
+    get '/outline', to: 'home#outline'
+    get '/requirements', to: 'home#requirements'
+    get '/requirement', to: 'home#requirement'
+    get '/building_services', to: 'home#building_services'
+    get '/training_provider', to: 'home#training_provider'
+    get '/training_provider_list', to: 'home#training_provider_list'
+    get '/sorry', to: 'home#sorry'
+    get '/signup', to: 'home#signup'
+    get '/understanding', to: 'home#understanding'
+    get '/training_details', to: 'home#training_details'
+    get '/download_provider', to: 'home#download_provider'
+    resources :suppliers, only: %i[index show]
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+  end
+
   namespace 'ccs_patterns', path: 'ccs-patterns' do
     get '/', to: 'home#index'
-    get '/new_layout', to: 'home#new_layout'
-    get '/prototypes', to: 'prototype#index'
-    get '/prototypes/no-response', to: 'prototype#no_response'
-    get '/prototypes/closed', to: 'prototype#closed'
-    get '/prototypes/accepted-not-signed', to: 'prototype#accepted_not_signed'
-    get '/prototypes/declined', to: 'prototype#declined'
-    get '/prototypes/next-supplier', to: 'prototype#next_supplier'
-    get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
-    get '/prototypes/create-a-copy', to: 'prototype#create_a_copy'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
@@ -298,7 +251,7 @@ Rails.application.routes.draw do
     get '/gateway', to: 'gateway#index'
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
-    get '/suppliers/download', to: 'suppliers#download'
+    get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
     get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
     get '/suppliers/cg-no-suppliers-found', to: 'suppliers#cg_no_suppliers_found'
     resources :suppliers, only: %i[index show]
@@ -328,16 +281,13 @@ Rails.application.routes.draw do
     get '/auth/dfe/callback' => 'auth#callback'
   end
 
+  # scope module: :postcode do
+  #  resources :postcodes, only: :show
+  # end
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :postcodes, only: :show
       post '/postcode/:slug', to: 'uploads#postcodes'
-      get '/search-postcode/:postcode', to: 'nuts#show_post_code'
-      get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
-      get '/find-region/:postcode', to: 'nuts#find_region_query'
-      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
-      get '/test-notification', to: 'api_test_notifications#send_notification'
-      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
     end
   end
 
