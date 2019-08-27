@@ -12,6 +12,8 @@ module SupplyTeachers
     attr_accessor :daily_rate
     attr_accessor :worker_cost
     attr_accessor :agency_fee
+    # fta_calculator attr_accessors
+    attr_accessor :finders_fee
 
     def initialize(id:, supplier_name:, name:, contact_name:,
                    telephone_number:, contact_email:, slug:)

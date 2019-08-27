@@ -11,5 +11,12 @@ class FacilitiesManagement::ContractController < FacilitiesManagement::Framework
     @start_form = 'About your contract'
 
     set_current_choices
+
+    @next_page =
+      if TransientSessionInfo[session.id]['env'] == 'public-beta'
+        '/facilities-management/beta/summary'
+      else
+        '/facilities-management/summary'
+      end
   end
 end

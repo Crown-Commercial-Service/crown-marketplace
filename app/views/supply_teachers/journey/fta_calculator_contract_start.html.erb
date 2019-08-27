@@ -1,0 +1,54 @@
+<%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+<%= content_for :page_title, t('.page_title') %>
+<%= content_for :page_section, t('supply_teachers.page_section') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+    <%= form_tag @form_path, method: :get do %>
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <%= govuk_form_group_with_optional_error(@journey, :contract_start_date) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :contract_start_date) do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              <%= t('.contract_start_question') %>
+            </h2>
+          </legend>
+          <%= display_errors(@journey, :contract_start_date) %>
+          <span id="contract-start-hint" class="govuk-hint">
+            <%= t('.contract_start_question_hint') %>
+          </span>
+          <div class="govuk-date-input" id="contract-start">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="contract_start_date_day">
+                  Day
+                </label>
+                <%= text_field_tag :contract_start_date_day, @journey.current_step.contract_start_date_day, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="contract_start_date_month">
+                  Month
+                </label>
+                <%= text_field_tag :contract_start_date_month, @journey.current_step.contract_start_date_month, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date, %w[govuk-date-input__input govuk-input--width-2]) %>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="contract_start_date_year">
+                  Year
+                </label>
+                <%= text_field_tag :contract_start_date_year, @journey.current_step.contract_start_date_year, pattern: '[0-9]*', class: css_classes_for_input(@journey, :contract_start_date, %w[govuk-date-input__input govuk-input--width-4]) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+  </div>
+</div>
