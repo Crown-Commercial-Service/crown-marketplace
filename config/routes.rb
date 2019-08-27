@@ -114,6 +114,7 @@ Rails.application.routes.draw do
       match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
+      post '/summary/', to: 'summary#index'
     end
 
     get '/', to: 'home#index'
