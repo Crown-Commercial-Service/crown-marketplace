@@ -25,8 +25,12 @@ class FMBuildingData
     Rails.logger.warn "Couldn't update new building id: #{e}"
   end
 
-  def save_building_property
+  def save_building_property(building_id, key, value)
     # Key/Value properties associated with a building such as GIA, etc
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{" + key + "}', '" + value + "'::jsonb) where id = '" + building_id + "';"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't save building property: #{e}"
   end
 
   def update_building_id
@@ -46,11 +50,11 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get new building id: #{e}"
   end
 
-  def new_building_details(email_address)
-    # returns the latest building details
-    query = "select building_json from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+  def new_building_details(building_id)
+    # returns building details for a given building_id
+    query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    JSON.parse(result.to_json)
+    JSON.parse(result[0].to_json)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get new building details: #{e}"
   end

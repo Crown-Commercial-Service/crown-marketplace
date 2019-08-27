@@ -4,5 +4,27 @@
 </div>
 
 <div>
-  <%= @building_id %>
+  <span class="govuk-heading-m govuk-!-margin-bottom-0">Address</span>
+  <span class="govuk-caption-m govuk-!-margin-top-0">We'll use this UK address to assess which region your building belongs to.</span>
+  <p></p>
+
+  <span class="govuk-heading-s govuk-heading-m govuk-!-margin-bottom-0">Building and street</span>
+  <input id="fm-bm-address-line-1" type="text" class="govuk-input govuk-!-width-two-thirds">
+  <input id="fm-bm-address-line-2" type="text" class="govuk-input govuk-!-margin-top-3 govuk-!-width-two-thirds">
+
+  <span class="govuk-heading-s govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-0">Town or city</span>
+  <input id="fm-bm-address-town" type="text" class="govuk-input govuk-!-width-one-half">
+
+  <span class="govuk-heading-s govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-0">County (optional)</span>
+  <input id="fm-bm-address-county" type="text" class="govuk-input govuk-!-width-one-half">
+
+  <span class="govuk-heading-s govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-0">Postcode</span>
+  <input id="fm-bm-address-postcode" type="text" class="govuk-input fm-postcode-input">
+</div>
+
+<div class="govuk-!-padding-top-5">
+  <a id="fm-bm-address-save-and-continue" class="govuk-button">Save and continue</a>
+  <a id="fm-bm-address-save-return-to-manage-buildings" class="govuk-button govuk-button--secondary">Save and return to manage buildings</a>
+  <br>
+  <span class="govuk-caption-m govuk-!-margin-top-0">Next: <%= @next_step %></span>
 </div>
