@@ -51,7 +51,14 @@ module FacilitiesManagement
     end
 
     def building_address
-      @error_msg = ''
+      @building_id = cookies['fm_building_id']
+      @back_link_href = 'buildings-management'
+      @step = 1
+      @next_step = nil
+      @page_title = 'Add missing address'
+      # fm_building_data = FMBuildingData.new
+      # fm_building_data.new_building_details
+
     end
 
     def building_security_type
@@ -59,10 +66,13 @@ module FacilitiesManagement
     end
 
     def save_new_building
-      @new_building_json = request.raw_post
-      @fm_building_data = FMBuildingData.new
-      @fm_building_data.save_new_building(current_user.email.to_s, @new_building_json)
-      j = { 'status': 200 }
+      new_building_json = request.raw_post
+      fm_building_data = FMBuildingData.new
+      building_id = fm_building_data.save_new_building(current_user.email.to_s, new_building_json)
+      j = { 'status': 200, 'fm_building-id': building_id.to_s }
+      p Rails.env
+      secure_cookie = Rails.env.development? ? false : true
+      cookies['building_id'] = { value: building_id.to_s, secure: secure_cookie }
       render json: j, status: 200
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
