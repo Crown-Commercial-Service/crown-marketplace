@@ -17,14 +17,9 @@ module FacilitiesManagement
 
       build_assessed_value_report
 
-      # build_direct_award_report if @data['env'] == 'public-beta'
-
       respond_to do |format|
         format.json { render json: { result: "summary page: #{@data['env']}" } }
-        format.html do
-          render 'facilities_management/beta/summary/index' if @data['env'] == 'public-beta'
-          # render default private beta template if 'public-beta' is not set
-        end
+        format.html
         format.xlsx do
           spreadsheet = Spreadsheet.new(@report, @current_lot, @data)
           render xlsx: spreadsheet.to_xlsx, filename: 'procurement_summary'
