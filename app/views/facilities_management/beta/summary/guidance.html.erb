@@ -20,6 +20,7 @@
 
   <%= form_tag '/facilities-management/beta/summary/suppliers', class: :'ccs-form', method: :post do %>
 
+
     <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
     <p>
       <%= submit_tag t('common.submit'), class: "govuk-button" %>
