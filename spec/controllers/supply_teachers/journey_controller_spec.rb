@@ -283,6 +283,21 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller do
   describe 'GET #answer for school-postcode' do
     login_st_buyer
     let(:postcode) { valid_fake_postcode }
+    let(:params) do
+      {
+        looking_for: 'worker',
+        worker_type: 'agency_supplied',
+        payroll_provider: 'school',
+        contract_start_date_day: '10',
+        contract_start_date_month: '09',
+        contract_start_date_year: '2019',
+        contract_end_date_day: '10',
+        contract_end_date_month: '12',
+        contract_end_date_year: '2019',
+        salary: '25000',
+        postcode: postcode
+      }
+    end
 
     before do
       Geocoder::Lookup::Test.add_stub(
@@ -295,12 +310,6 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller do
     end
 
     it 'redirects to fixed term results path' do
-      params = {
-        looking_for: 'worker',
-        worker_type: 'agency_supplied',
-        payroll_provider: 'school',
-        postcode: postcode
-      }
       get :answer, params: params.merge(journey: 'supply-teachers', slug: 'school-postcode-agency-supplied-worker')
       expect(response).to redirect_to(supply_teachers_fixed_term_results_path(params))
     end
@@ -345,7 +354,7 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller do
         }
         get :answer, params: params.merge(slug: 'payroll-provider')
         expect(response).to redirect_to(
-          journey_question_path(params.merge(slug: 'school-postcode-agency-supplied-worker'))
+          journey_question_path(params.merge(slug: 'fta-calculator-contract-start'))
         )
       end
     end

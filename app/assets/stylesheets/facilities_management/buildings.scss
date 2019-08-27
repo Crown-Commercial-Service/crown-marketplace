@@ -13,3 +13,29 @@
 .fm-delete-building-link {
   float: right;
 }
+
+#fm-buildings-container thead tr {
+  border-top:2px solid #CCCCCC; border-bottom:2px solid #CCCCCC; padding-top:4px; padding-bottom:4px;
+}
+#fm-buildings-container tfoot tr {
+  border-bottom:2px solid #CCCCCC; padding-top:-6px; padding-bottom:1px;
+}
+#fm-buildings-container th {
+  text-align:left;
+  padding: 1ex 1ex 1ex 0;
+}
+
+#fm-buildings-container tbody td {
+  text-align:left;
+  padding: 1ex 1ex 1ex 0;
+}
+
+#fm-buildings-container tbody tr {
+  padding:1ex 1ex 1ex 0;
+  border-bottom: 2px solid #CCCCCC;
+}
+
+.govuk-button.muted {
+  background-color: #CCCCCC ;
+  color: #000000;
+}

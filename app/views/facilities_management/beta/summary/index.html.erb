@@ -1,0 +1,77 @@
+<a href="/facilities-management/contract-start" class="govuk-back-link ccs-no-print">Back</a>
+<%= render('errors/inline_error_summary') %>
+<div>
+  <fieldset class="govuk-fieldset" aria-describedby="">
+    <strong class="govuk-heading-xl">Shortlist results</strong>
+  </fieldset>
+  <p class="govuk-!-font-size-36">
+      <strong>You may be eligible to the following sub-lot.</strong>
+  </p>
+  <p class="govuk-!-font-size-24">
+      This is based on the details you've entered and could change if your selections change.
+      <br/><br/>
+      You're eligible for
+      <br/><br/>
+      <b>Recommended sub-lot</b>
+      <br/>
+  </p>
+  <p class="govuk-!-font-size-18">
+    <strong>
+      <b class="govuk-!-font-size-36">Lot 1a</b> when your total contract value is up to £7,000,000
+    </strong>
+  </p>
+  <br/><br/>
+
+
+  <p>Shortlisted DA supplier</p>
+  <% sorted_list = @results.sort_by { |k,v| @results[k]} %>
+
+  <p class="govuk-!-font-size-24"><b>Direct award is available</b></p>
+  <p class="govuk-!-font-size-18"><b class="govuk-!-font-size-36"><%= "#{number_to_currency(sorted_list.first[1], precision: 0)}" %></b><strong> is the best value</strong></p>
+
+  <br/><br/>
+  <p class="govuk-!-font-size-24"><b>Shortlist of suppliers</b></p>
+  <p class="govuk-!-font-size-18"><b class="govuk-!-font-size-36"><%= sorted_list.count %></b><strong> suppliers are available</strong></p>
+
+  <p class="govuk-!-font-size-24"><b>Choices used to generate your shortlist</b></p>
+  <hr/>
+  <hr/>
+
+  <%= form_tag '/facilities-management/beta/summary/guidance', class: :'ccs-form', method: :post do %>
+    <p class="govuk-!-font-size-24"><strong>How would you like to continue?</strong>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="changed-name-1" name="next" type="radio" value="yes">
+          <label class="govuk-label govuk-radios__label" for="changed-name-1">
+          Download results
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="changed-name-2" name="next" type="radio" value="no">
+          <label class="govuk-label govuk-radios__label" for="changed-name-2">
+          Direct award route
+          </label>
+        </div>
+      </div>
+    </p>
+
+    <br/><br>
+
+    <p>
+      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+    </p>
+    <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+  <% end %>
+  <!--</form>-->
+
+  <p>
+    <div class="govuk-grid-row ccs-no-print">
+        <p>
+        <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="">Print this page</a>
+        </p>
+    </div>
+  </p>
+
+
+
+</div>
