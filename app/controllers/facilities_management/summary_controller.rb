@@ -15,7 +15,9 @@ module FacilitiesManagement
     def index
       set_current_choices
 
-      build_report
+      build_assessed_value_report
+
+      # build_direct_award_report if @data['env'] == 'public-beta'
 
       respond_to do |format|
         format.json { render json: { result: "summary page: #{@data['env']}" } }
@@ -57,9 +59,7 @@ module FacilitiesManagement
       TransientSessionInfo[session.id]['current_lot'] = @current_lot
     end
 
-    def build_report
-      set_current_choices
-
+    def build_assessed_value_report
       user_email = current_user.email.to_s
 
       @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
