@@ -76,7 +76,6 @@ module FacilitiesManagement
     def set_start_date
       @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
       TransientSessionInfo[session.id, 'start_date'] = @start_date
-      # TransientSessionInfo[session.id, 'current_lot'] = nil
     rescue StandardError
       @start_date = TransientSessionInfo[session.id]['start_date']
     end
