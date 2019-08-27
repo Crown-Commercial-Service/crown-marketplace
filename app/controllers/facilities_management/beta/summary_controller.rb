@@ -1,5 +1,9 @@
 module FacilitiesManagement
   class Beta::SummaryController < FacilitiesManagement::HomeController
+    def index
+      build_direct_award_report
+    end
+
     def guidance
       # render plain: 'guidance test'
     end
