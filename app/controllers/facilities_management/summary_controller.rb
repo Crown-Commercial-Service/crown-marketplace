@@ -15,10 +15,10 @@ module FacilitiesManagement
     def index
       set_current_choices
 
-      build_report
+      build_assessed_value_report
 
       respond_to do |format|
-        format.js { render json: @branches.find { |branch| params[:daily_rate][branch.id].present? } }
+        format.json { render json: { result: "summary page: #{@data['env']}" } }
         format.html
         format.xlsx do
           spreadsheet = Spreadsheet.new(@report, @current_lot, @data)
@@ -54,9 +54,7 @@ module FacilitiesManagement
       TransientSessionInfo[session.id]['current_lot'] = @current_lot
     end
 
-    def build_report
-      set_current_choices
-
+    def build_assessed_value_report
       user_email = current_user.email.to_s
 
       @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
