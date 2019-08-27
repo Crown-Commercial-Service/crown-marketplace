@@ -21,12 +21,17 @@
     </strong>
   </p>
   <br/><br/>
+
+
+  <p>Shortlisted DA supplier</p>
+  <% sorted_list = @results.sort_by { |k,v| @results[k]} %>
+
   <p class="govuk-!-font-size-24"><b>Direct award is available</b></p>
-  <p class="govuk-!-font-size-18"><b class="govuk-!-font-size-36">£1,450,000</b><strong> is the best value</strong></p>
+  <p class="govuk-!-font-size-18"><b class="govuk-!-font-size-36"><%= "#{number_to_currency(sorted_list.first[1], precision: 0)}" %></b><strong> is the best value</strong></p>
 
   <br/><br/>
   <p class="govuk-!-font-size-24"><b>Shortlist of suppliers</b></p>
-  <p class="govuk-!-font-size-18"><b class="govuk-!-font-size-36">8</b><strong> suppliers are available</strong></p>
+  <p class="govuk-!-font-size-18"><b class="govuk-!-font-size-36"><%= sorted_list.count %></b><strong> suppliers are available</strong></p>
 
   <p class="govuk-!-font-size-24"><b>Choices used to generate your shortlist</b></p>
   <hr/>
