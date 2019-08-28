@@ -13,6 +13,8 @@ module FacilitiesManagement
       @fm_building_data = FMBuildingData.new
       @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
       @building_data = @fm_building_data.get_building_data(current_login_email)
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController buildings_management(): #{e}"
     end
 
     def building_details_summary
@@ -21,6 +23,8 @@ module FacilitiesManagement
                                                                     "' and building_json->>'building-ref' = '#{params['id']}'")
       @building = building_record&.building_json
       @display_warning = building_record.blank? ? false : building_record&.status == 'Incomplete'
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController building_details_summary(): #{e}"
     end
 
     def building
@@ -28,6 +32,8 @@ module FacilitiesManagement
       @step = 1
       @next_step = "What's the internal area of the building?"
       @page_title = 'Create single building'
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController building(): #{e}"
     end
 
     def building_gross_internal_area
@@ -37,16 +43,21 @@ module FacilitiesManagement
       @next_step = 'Building type'
       fm_building_data = FMBuildingData.new
       @building_details = fm_building_data.new_building_details(@building_id)
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController building_gross_internal_area(): #{e}"
     end
 
     def building_type
+      building_id = cookies['fm_building_id']
       @back_link_href = 'buildings-management'
       @step = 3
       @next_step = 'Select the level of security clearance needed'
       fm_building_data = FMBuildingData.new
       @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
-      @building_name = ''
+      building_details = fm_building_data.new_building_details(building_id)
+      building = JSON.parse(building_details['building_json'])
+      @building_name = building['name']
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
@@ -65,22 +76,45 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsManagementController building_address(): #{e}"
     end
 
-    def save_building_address
+    def save_building_property(key, value)
       building_id = cookies['fm_building_id']
-      new_address = request.raw_post
       fm_building_data = FMBuildingData.new
-      fm_building_data.save_building_property(building_id, 'address', new_address.gsub('\\', ''))
+      fm_building_data.save_building_property(building_id, key, value)
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_building_property(): #{e}"
+    end
+
+    def save_building_type
+      key = 'building-type'
+      building_type = request.raw_post
+      save_building_property(key, building_type)
       j = { 'status': 200 }
       render json: j, status: 200
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_building_type(): #{e}"
+    end
+
+    def save_building_address
+      key = 'address'
+      new_address = request.raw_post
+      save_building_property(key, new_address)
+      j = { 'status': 200 }
+      render json: j, status: 200
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_building_address(): #{e}"
     end
 
     def building_security_type
       @error_msg = ''
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
     end
 
     def cache_new_building_id(building_id)
       secure_cookie = Rails.env.development? ? false : true
       cookies['fm_building_id'] = { value: building_id.to_s, secure: secure_cookie }
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController building_security_type(): #{e}"
     end
 
     def save_new_building
@@ -91,7 +125,7 @@ module FacilitiesManagement
       j = { 'status': 200, 'fm_building-id': building_id.to_s }
       render json: j, status: 200
     rescue StandardError => e
-      Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
+      Rails.logger.warn "Error: BuildingsController save_new_building(): #{e}"
     end
   end
 end
