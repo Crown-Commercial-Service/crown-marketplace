@@ -1,10 +1,10 @@
 require 'rake'
 require 'aws-sdk-s3'
-require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_suppliers')
-require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_lot_1_services_per_supplier')
-require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_lot_2_services_per_supplier')
-require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_lot_3_and_4_services_per_supplier')
-require Rails.root.join('lib', 'tasks', 'legal_services', 'scripts', 'add_rate_cards_to_suppliers')
+require './lib/tasks/legal_services/scripts/add_suppliers'
+require './lib/tasks/legal_services/scripts/add_lot_1_services_per_supplier'
+require './lib/tasks/legal_services/scripts/add_lot_2_services_per_supplier'
+require './lib/tasks/legal_services/scripts/add_lot_3_and_4_services_per_supplier'
+require './lib/tasks/legal_services/scripts/add_rate_cards_to_suppliers'
 
 module LegalServices
   class DataScriptWorker
