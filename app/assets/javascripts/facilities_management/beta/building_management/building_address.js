@@ -24,19 +24,19 @@ $(function () {
         clearErrors();
 
         if (!postcode || pageUtils.isPostCodeValid(postcode) === false) {
-            errorMsg = 'A valid postcode is required';
+            errorMsg = 'Enter a real postcode, like AA1 1AA';
             isValid = false;
             elemID = 'fm-bm-address-postcode';
         }
 
         if (!town) {
-            errorMsg = 'A town is required';
+            errorMsg = 'Town or city name for this building must be 30 characters or less';
             isValid = false;
             elemID = 'fm-bm-address-town';
         }
 
         if ((address_line_one + address_line_two).length === 0) {
-            errorMsg = 'Building and street are required';
+            errorMsg = 'Building and street name must be 100 characters or less';
             isValid = false;
             elemID = 'fm-bm-address-line-1';
         }
