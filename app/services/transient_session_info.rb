@@ -1,5 +1,4 @@
 class TransientSessionInfo
-  # @tsi = TransientSessionInfo.new
   @dict = {}
 
   class << self

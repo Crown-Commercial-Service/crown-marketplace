@@ -26,18 +26,34 @@ class FMBuildingData
     Rails.logger.warn "Couldn't update new building id: #{e}"
   end
 
+  def save_building_property(building_id, key, value)
+    # Key/Value properties associated with a building such as GIA, etc
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{" + key + "}', '" + value + "'::jsonb) where id = '" + building_id + "';"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't save building property: #{e}"
+  end
+
+  def update_building_id
+    # required for legacy private beta solution
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{id}', to_json(id::text)::jsonb) where building_json ->> 'id' is null;"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't update new building id: #{e}"
+  end
+
   def new_building_id(email_address)
     # returns the latest building id
     query = "select id from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    result.rows[0].to_s
+    result[0]['id']
   rescue StandardError => e
     Rails.logger.warn "Couldn't get new building id: #{e}"
   end
 
-  def new_building_details(email_address)
-    # returns the latest building details JSON
-    query = "select building_json from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+  def new_building_details(building_id)
+    # returns building details for a given building_id
+    query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(result[0].to_json)
   rescue StandardError => e
@@ -99,11 +115,11 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get building data: #{e}"
   end
 
-  def get_building_data_by_id(email_address, building_id)
+  def get_building_data_by_id(email_address, id)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
-    to_query = %|select updated_at, status, id, building_json as building from facilities_management_buildings where user_id = '#{Base64.encode64(email_address)}' and building_json @> '{"id" : "#{building_id}"}')|
-    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(to_query) }
+    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     Rails.logger.info(result.to_json.to_s)
     JSON.parse(result.to_json)
   rescue StandardError => e

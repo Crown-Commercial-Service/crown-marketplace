@@ -1,5 +1,6 @@
 <a class="govuk-back-link" href="<%= @back_link_href %>">Back</a>
-<br />
-<span class="govuk-caption-m govuk-!-padding-bottom-3">Step <%= @step %> of 4</span>
-<span class="govuk-caption-l govuk-!-padding-top-0">Manage buildings</span>
-<h1 class="govuk-heading-xl" style="position:relative; top:-0.5ex; margin-bottom:1ex"><%= @step == 1 ? @page_title : @building_name%></h1>
+<p>
+  <span class="govuk-caption-m govuk-!-padding-bottom-0">Step <%= @step %> of 4</span>
+  <span class="govuk-caption-l govuk-!-padding-top-0">Manage buildings <%= " : #{@building_name}" unless @building_name.blank? %></span>
+  <span class="govuk-heading-xl govuk-!-padding-top-0"><%= @page_title %></span>
+</p>
