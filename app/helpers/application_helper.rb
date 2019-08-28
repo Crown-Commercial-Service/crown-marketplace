@@ -1,6 +1,6 @@
 # rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
-  ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin'].freeze
+  ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
   PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'facilities_management/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
 
   def miles_to_metres(miles)
