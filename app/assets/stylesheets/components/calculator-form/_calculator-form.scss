@@ -1,10 +1,10 @@
-.calculator-form__day-rate {
+.calculator-form__day-rate, .calculator-form__annual-salary {
 	position: relative;
 }
-.calculator-form__day-rate-input {
+.calculator-form__day-rate-input, .calculator-form__annual-salary-input {
 	padding-left: 25px;
 }
-.calculator-form__day-rate-icon {
+.calculator-form__day-rate-icon, .calculator-form__annual-salary-icon {
 	font-style: normal;
 	left: 12px;
 	margin-bottom: 0;

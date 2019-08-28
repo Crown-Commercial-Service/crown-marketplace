@@ -26,6 +26,9 @@
 //= require facilities_management/fm-contract.js
 //= require facilities_management/fm-lifts.js
 //= require facilities_management/fm-buyer-account.js
-//=require legal_services/ls_form_validation.js
-//=require cp/cp-sign-in.js
+//= require facilities_management/beta/building_management/building.js
+//= require facilities_management/beta/building_management/new_building_steps.js
+//= require facilities_management/beta/building_management/building_address.js
+//= require legal_services/ls_form_validation.js
+//= require cp/cp-sign-in.js
 //= require global/global.js
