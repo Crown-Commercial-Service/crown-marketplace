@@ -2,6 +2,12 @@ module FacilitiesManagement
   class Beta::SummaryController < FacilitiesManagement::HomeController
     def guidance
       # render plain: 'guidance test'
+
+      if params['download-spreadsheet'] == 'yes'
+        redirect_to '/facilities-management/summary?calculations=yes&format=xlsx'
+      else
+        render 'facilities_management/beta/summary/guidance'
+      end
     end
 
     def sorted_suppliers
