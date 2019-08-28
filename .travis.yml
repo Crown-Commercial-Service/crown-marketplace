@@ -23,9 +23,11 @@ before_install:
   - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
   - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
   - sudo service postgresql stop
-  - sleep 20
+  - sudo apt-get remove postgresql* -y
+  - sudo apt-get install -y --allow-unauthenticated --no-install-recommends --no-install-suggests postgresql-11 postgresql-client-11 postgresql-server-dev-11 postgresql-common
+  - sudo apt-get install -y --allow-unauthenticated postgresql-11-postgis-2.5 postgresql-11-postgis-2.5-scripts postgis
   - sudo service postgresql start 11
-  - sleep 10
+
 before_script:
 #  - sudo apt-get install postgresql-11-postgis-2.4 postgis -y -q
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
