@@ -29,7 +29,7 @@ before_install:
 before_script:
 #  - sudo apt-get install postgresql-11-postgis-2.4 postgis -y -q
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
-  - psql -U postgres -c "create extension postgis" -d root
+#  - psql -U postgres -c "create extension postgis" -d root
   - psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
 script:
   - bundle exec rake db:test:prepare
