@@ -16,15 +16,17 @@ RSpec.describe LegalServices::RegionalAvailability, type: :model do
     expect(regional_availability.errors[:region_code]).to include('is not included in the list')
   end
 
-  it 'is not valid if availability exists for same region_code & supplier' do
+  it 'is not valid if availability exists for same region_code, supplier and service code' do
     regional_availability.save!
     new_availability = build(
       :legal_services_regional_availability,
       supplier: regional_availability.supplier,
-      region_code: regional_availability.region_code
+      region_code: regional_availability.region_code,
+      service_code: regional_availability.service_code
     )
     expect(new_availability).not_to be_valid
     expect(new_availability.errors[:region_code]).to include('has already been taken')
+    expect(new_availability.errors[:service_code]).to include('has already been taken')
   end
 
   it 'is valid even if availability exists for same lot_number & region_code, but different supplier' do
@@ -32,7 +34,8 @@ RSpec.describe LegalServices::RegionalAvailability, type: :model do
     new_availability = build(
       :legal_services_regional_availability,
       supplier: build(:legal_services_supplier),
-      region_code: regional_availability.region_code
+      region_code: regional_availability.region_code,
+      service_code: regional_availability.service_code
     )
     expect(new_availability).to be_valid
   end
@@ -42,7 +45,8 @@ RSpec.describe LegalServices::RegionalAvailability, type: :model do
     new_availability = build(
       :legal_services_regional_availability,
       supplier: regional_availability.supplier,
-      region_code: 'UKD'
+      region_code: 'UKD',
+      service_code: regional_availability.service_code
     )
     expect(new_availability).to be_valid
   end

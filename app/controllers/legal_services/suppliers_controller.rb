@@ -30,6 +30,7 @@ module LegalServices
       @all_suppliers = Supplier.offering_services_in_regions(
         params[:lot],
         params[:services],
+        params[:jurisdiction],
         params[:region_codes]
       )
     end

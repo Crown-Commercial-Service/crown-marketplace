@@ -1,5 +1,4 @@
-require 'rake'
-require 'aws-sdk-s3'
+require 'json'
 
 module LegalServices
   class DataUploadWorker
@@ -8,11 +7,9 @@ module LegalServices
 
     def perform(upload_id)
       upload = LegalServices::Admin::Upload.find(upload_id)
-      suppliers = JSON.parse(File.read(URI.open(data_file)))
+      suppliers = upload.data
 
       LegalServices::Upload.upload!(suppliers)
-
-      upload.approve!
     rescue ActiveRecord::RecordInvalid => e
       summary = {
         record: e.record,
@@ -28,14 +25,6 @@ module LegalServices
     def fail_upload(upload, fail_reason)
       upload.fail!
       upload.update(fail_reason: fail_reason)
-    end
-
-    def data_file
-      if Rails.env.development?
-        Rails.root.join('storage', 'legal_services', 'current_data', 'output', 'data.json')
-      else
-        "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/management_consultancy/current_data/output/data.json"
-      end
     end
   end
 end
