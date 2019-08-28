@@ -20,8 +20,18 @@ addons:
   postgresql: "11"
 before_install:
   - gem install --force --conservative -v 1.16.6 bundler
+  - sudo /etc/init.d/postgresql stop
+  - sudo apt-get -y remove --purge postgresql-*
+  - sudo apt-get -y autoremove
+  - sudo apt-key adv --keyserver keys.gnupg.net --recv-keys 7FCC7D46ACCC4CF8
+  - sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main 11" >> /etc/apt/sources.list.d/postgresql.list'
+  - sudo apt-get update
+  - sudo apt-get -y install postgresql-11
+  - sudo sh -c 'echo "local all postgres trust" > /etc/postgresql/{10,11}/main/pg_hba.conf'
   - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
-  - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
+  - sudo sh -c 'echo -n "host all all 127.0.0.1/32 trust" >> /etc/postgresql/11/main/pg_hba.conf'
+  - sudo /etc/init.d/postgresql restart
+  - psql --version
   - sudo service postgresql stop
   - sudo service postgresql start 11
 
