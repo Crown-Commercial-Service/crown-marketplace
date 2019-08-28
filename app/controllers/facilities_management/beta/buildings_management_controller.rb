@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building].freeze
-    before_action :authorize_user, only: %i[buildings_management building_type save_new_building].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address].freeze
 
     def buildings_management
       @error_msg = ''
@@ -31,11 +31,12 @@ module FacilitiesManagement
     end
 
     def building_gross_internal_area
+      @building_id = cookies['fm_building_id']
       @back_link_href = 'buildings-management'
       @step = 2
       @next_step = 'Building type'
       fm_building_data = FMBuildingData.new
-      @building_details = fm_building_data.new_building_details(current_user.email.to_s)
+      @building_details = fm_building_data.new_building_details(@building_id)
     end
 
     def building_type
@@ -51,18 +52,43 @@ module FacilitiesManagement
     end
 
     def building_address
-      @error_msg = ''
+      @building_id = cookies['fm_building_id']
+      fm_building_data = FMBuildingData.new
+      building_details = fm_building_data.new_building_details(@building_id)
+      building = JSON.parse(building_details['building_json'])
+      @back_link_href = 'building'
+      @step = 1
+      @next_step = "What's the internal area of the building?"
+      @page_title = 'Add missing address'
+      @building_name = building['name']
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsManagementController building_address(): #{e}"
+    end
+
+    def save_building_address
+      building_id = cookies['fm_building_id']
+      new_address = request.raw_post
+      fm_building_data = FMBuildingData.new
+      fm_building_data.save_building_property(building_id, 'address', new_address.gsub('\\', ''))
+      j = { 'status': 200 }
+      render json: j, status: 200
     end
 
     def building_security_type
       @error_msg = ''
     end
 
+    def cache_new_building_id(building_id)
+      secure_cookie = Rails.env.development? ? false : true
+      cookies['fm_building_id'] = { value: building_id.to_s, secure: secure_cookie }
+    end
+
     def save_new_building
-      @new_building_json = request.raw_post
-      @fm_building_data = FMBuildingData.new
-      @fm_building_data.save_new_building(current_user.email.to_s, @new_building_json)
-      j = { 'status': 200 }
+      new_building_json = request.raw_post
+      fm_building_data = FMBuildingData.new
+      building_id = fm_building_data.save_new_building(current_user.email.to_s, new_building_json)
+      cache_new_building_id building_id
+      j = { 'status': 200, 'fm_building-id': building_id.to_s }
       render json: j, status: 200
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"

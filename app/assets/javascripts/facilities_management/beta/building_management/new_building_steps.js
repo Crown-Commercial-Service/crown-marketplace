@@ -11,6 +11,7 @@ $(function () {
             data: JSON.stringify(building),
             processData: false,
             success: function (data, textStatus, jQxhr) {
+                console.log(data);
                 location.href = redirect_uri || '#';
             },
             error: function (jqXhr, textStatus, errorThrown) {

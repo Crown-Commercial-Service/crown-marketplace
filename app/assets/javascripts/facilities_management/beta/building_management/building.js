@@ -77,6 +77,9 @@ $(function () {
                         $('#fm-bm-postcode').addClass('govuk-visually-hidden');
                         $('#fm-find-address-btn').addClass('govuk-visually-hidden');
                     }
+                } else {
+                    $('#fm-cant-find-address-link').removeClass('govuk-visually-hidden')
+                    //$('#fm-cant-find-address-link').trigger('click');
                 }
             })
             .fail(function (data) {
@@ -85,8 +88,33 @@ $(function () {
     });
 
     $('#fm-cant-find-address-link').on('click', function () {
-        alert('not yet implemented');
-    })
+
+        let id;
+        let msg;
+
+        if (!FM.building.name) {
+            id = 'fm-building-name-input';
+            msg = 'A building name is required';
+            pageUtils.toggleFieldValidationError(true, id, msg);
+        } else {
+            let url = '/facilities-management/beta/buildings-management/save-new-building';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(FM.building),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.href = 'building-address';
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    });
 
 });
 

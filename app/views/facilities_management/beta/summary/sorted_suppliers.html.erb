@@ -1,0 +1,61 @@
+<a href="/facilities-management/contract-start" class="govuk-back-link ccs-no-print">Back</a>
+<%= render('errors/inline_error_summary') %>
+<div>
+  <fieldset class="govuk-fieldset" aria-describedby="">
+    <strong class="govuk-heading-xl">Shortlist results</strong>
+  </fieldset>
+
+
+
+<% if @results  %>
+
+<p>Shortlisted DA supplier</p>
+<% sorted_list = @results.sort_by { |k,v| @results[k]} %>
+<p><%= "#{sorted_list.first[0]}  #{number_to_currency(sorted_list.first[1], precision: 0)}" %></p>
+
+
+<div style="border-style: solid; width: 500px">
+  <p>&nbsp;&nbsp;Other supplier's prices:</p>
+  <table class="govuk-body govuk-!-font-size-18">
+
+  <% i = 0 %>
+  <% sorted_list[1..-1].sort_by { |k,v| @results[k]}.each do |k,v| %>
+    <tr>
+      <td width="50px"/>
+      <td width="300px"><%= k %></td>
+      <td align="right"><%= "#{number_to_currency(v, precision: 0)}" %></td>
+    </tr>
+  <% end %>
+  </table>
+  <% end %>
+</div>
+
+<br/><br/>
+<p class="govuk-body govuk-!-font-size-24"><b>Acceptance criteria</b></p>
+
+<p>
+Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. Ut aliquam purus sit amet luctus venenatis. Mauris nunc congue nisi vitae suscipit tellus mauris a diam. Neque convallis a cras semper auctor neque vitae tempus quam. Blandit libero volutpat sed cras. Tincidunt vitae semper quis lectus nulla at volutpat diam ut. Aliquam etiam erat velit scelerisque in dictum non consectetur. Sit amet risus nullam eget. Egestas pretium aenean pharetra magna ac placerat vestibulum. Bibendum arcu vitae elementum curabitur vitae nunc sed. Ut morbi tincidunt augue interdum velit. Augue mauris augue neque gravida in fermentum et.
+</p>
+
+<div class="govuk-checkboxes ccs-govuk-checkboxes--s">
+  <div class="govuk-checkboxes__item">
+      <input type="checkbox" name="box" id="box01" value="box_01" class="govuk-checkboxes__input" checked="checked">
+      <label class="govuk-label govuk-checkboxes__label" for="box01">
+        I agree with all criteria, let's proceed.
+      </label>
+  </div>
+</div>
+
+<%= form_tag '/facilities-management/beta/summary/suppliers', class: :'ccs-form', method: :post do %>
+
+<%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+<p>
+  <%= submit_tag t('common.submit'), class: "govuk-button" %>
+  <%= button_tag 'Switch to further competition', class: "govuk-button", style: 'color: black; background-color: lightgrey; -webkit-box-shadow: 0 3px 0 grey;', disabled: true %>
+</p>
+
+
+<% end %>
+<!--</form>-->
+
+</div>

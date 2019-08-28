@@ -60,19 +60,22 @@ module FacilitiesManagement::SummaryHelper
 
   # rubocop:disable Metrics/AbcSize
   def list_choices
-    str = '<p class="govuk-heading-m govuk-!-margin-top-8">Choices used to generate your shortlist</p><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
-    str << 'Regions (' + @report.subregions.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
+    str = '<p class="govuk-heading-m govuk-!-margin-top-4">Choices used to generate your shortlist</p>'
+    str << '<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
+    str << 'Regions (' + @report.subregions.count.to_s + ')</span></summary><div class="govuk-details__text">'
+    str << '<ul class="govuk-!-margin-top-0">'
     @report.subregions.each do |location|
       str << '<li>' + location[1] + '</li>'
     end
+    str << '</ul></details>'
     services = @report.list_of_services
     services.sort_by!(&:name)
-    str << '</ul></div></details><hr><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
+    str << '<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">'
     str << 'Services (' + services.count.to_s + ')</span></summary><div class="govuk-details__text"><ul class="govuk-!-margin-top-0">'
     services.each do |s|
       str << '<li>' + s.name + '</li>'
     end
-    str << '</ul></div></details><hr>'
+    str << '</ul></details><hr/>'
     str
   end
   # rubocop:enable Metrics/AbcSize
