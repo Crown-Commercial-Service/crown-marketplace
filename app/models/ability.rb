@@ -34,7 +34,7 @@ class Ability
     can :read, :all
     if user.has_any_role? :fm_access, :mc_access, :ls_access, :at_access
       can :manage, ManagementConsultancy::Admin::Upload
-      # can :manage, LegalServices::Admin::Upload
+      can :manage, LegalServices::Admin::Upload
     end
     can :manage, SupplyTeachers::Admin::Upload if user.has_role? :st_access
   end

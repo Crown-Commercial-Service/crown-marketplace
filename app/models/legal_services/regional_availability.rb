@@ -10,7 +10,7 @@ module LegalServices
 
     validates :region_code, presence: true,
                             uniqueness: { scope: %i[supplier service_code] },
-                            inclusion: { in: Nuts1Region.all_codes }
+                            inclusion: { in: Nuts1Region.all_codes + ['UK'] }
 
     def self.supplier_ids_for_service_codes_and_region_codes(service_codes, region_codes)
       where(service_code: service_codes, region_code: region_codes)
