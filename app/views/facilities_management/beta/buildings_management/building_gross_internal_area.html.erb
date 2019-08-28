@@ -1,12 +1,29 @@
-<!-- FM-174 Building GIA -->
-<% building = JSON.parse(@building_details['building_json']) %>
 <div>
   <%= render 'buildings_steps_header' %>
 </div>
-
-<h1 class="govuk-heading-xl"><%= building['name'].to_s %> </h1>
-
-<!-- footer -->
-<div class="govuk-!-margin-top-0">
-  <%= render 'buildings_steps_footer' %>
+<div class="govuk-grid-column-full">
+  <%= render('errors/inline_error_summary') %>
 </div>
+<h2 class="govuk-heading-m"><%= t('facilities_management.beta.building-gross-internal-area.heading') %></h2>
+<p class="govuk-caption-m govuk-!-margin-top-0"><%= t('facilities_management.beta.building-gross-internal-area.guidance_1') %></p>
+<p class="govuk-caption-m govuk-!-margin-top-0"><%= t('facilities_management.beta.building-gross-internal-area.guidance_2') %></p>
+<p><%=t('facilities_management.beta.building-gross-internal-area.guidance_3') %> <%= link_to t('facilities_management.beta.building-gross-internal-area.guidance_link_text'), 'https://www.rics.org/uk/upholding-professional-standards/sector-standards/real-estate/code-of-measuring-practice/', :target => '_blank' %></p>
+<form name="fm-bm-internal-square-area-form" id="fm-internal-square-area-form" action="." method="POST">
+  <div id="fm-internal-square-area-error-form-group" class="govuk-form-group">
+    <p class="govuk-caption-m govuk-!-margin-top-0">
+      <input type="hidden" id="fm-redirect-url" value="<%= @back_link_href %>"/>
+      <input type="hidden" id="fm-building-id" value="<%= @building_id %>"/>
+      <input id="fm-internal-square-area" required class="govuk-input govuk-input--width-10"
+             type="text" min="0" max="99999999" maxlength="10"
+             value="<%= @building['gia']%>"/>
+      <label for="fm-internal-square-area" class="govuk-label-wrapper govuk-!-margin-left-3"><%= t('facilities_management.beta.building-gross-internal-area.input_label') %></label>
+      <span class="govuk-caption-m">You have <span id="fm-internal-square-area-chars-left">10</span> characters remaining</span>
+      <span id="fm-internal-square-area-error" class="govuk-error-message govuk-visually-hidden"></span>
+    </p>
+  </div>
+  <!-- footer -->
+  <div class="govuk-!-margin-top-0">
+    <%= render partial:'buildings_steps_footer' unless @editing%>
+    <%= render partial:'buildings_steps_editing_footer' if @editing%>
+  </div>
+</form>

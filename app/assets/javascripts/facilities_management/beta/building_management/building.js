@@ -88,5 +88,25 @@ $(function () {
         alert('not yet implemented');
     })
 
+    $('#fm-internal-square-area').on('keyup', function (e) {
+        $('#fm-internal-square-area-chars-left').text(FM.calcCharsLeft(e.target.value, 10));
+    });
+    $('#fm-internal-square-area').on('keypress', function (event) {
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+    $('#fm-internal-square-area').on('change', function (e) {
+
+        if (e.target.value) {
+            newBuilding.name = e.target.value;
+            FM.building = newBuilding;
+            pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
+        } else {
+            pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
+        }
+    });
+
+
 });
 

@@ -696,6 +696,13 @@ en:
       removeall_text: Remove all
       selectall_text: Select all
     beta:
+      building-gross-internal-area:
+        heading: What's the internal area of the building?
+        guidance_1: Gross internal area (GIA) is the area of the building measured to the internal face of the perimeter walls at each floor area.
+        guidance_2: For example, 18000 square metres.
+        guidance_3: Use
+        guidance_link_text: this guidance on how to measure GIA
+        input_label: sqm (square metres)
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description

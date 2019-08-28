@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building].freeze
-    before_action :authorize_user, only: %i[buildings_management building_type save_new_building].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_gia].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_gia].freeze
 
     def buildings_management
       @error_msg = ''
@@ -31,11 +31,34 @@ module FacilitiesManagement
     end
 
     def building_gross_internal_area
-      @back_link_href = 'buildings-management'
+      @back_link_href = %"../building-details-summary/#{params['id']}"
       @step = 2
+      @page_title = 'Add building GIA'
       @next_step = 'Building type'
+
       fm_building_data = FMBuildingData.new
-      @building_details = fm_building_data.new_building_details(current_user.email.to_s)
+      building_details = fm_building_data.new_building_details(current_user.email.to_s) if params['id'].blank?
+      building_details = fm_building_data.get_building_data_by_ref(current_user.email.to_s, params['id']) if params['id'].present?
+
+      @building_name = building_details['building_json']['name'] if building_details['building_json'].present?
+      @building_id = building_details['id']
+      @building = building_details['building_json'] if building_details['building_json'].present?
+      @building = building_details if building_details['name'].present?
+      @editing = params['id'].present?
+    end
+
+    def save_building_gia
+      id = params['building-id']
+      gia = params[:gia]
+
+      fm_building_data = FMBuildingData.new
+
+
+      return_data = {}
+      return_data[:gia] = gia
+      return_data['building-id'] = id
+
+      render json: {status: 200, result: retData}
     end
 
     def building_type
@@ -43,9 +66,12 @@ module FacilitiesManagement
       @step = 3
       @next_step = 'Select the level of security clearance needed'
       fm_building_data = FMBuildingData.new
+      @building_details = fm_building_data.new_building_details(current_user.email.to_s) if params['id'].blank?
       @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
-      @building_name = ''
+      @page_title = 'Add building GIA'
+
+      @building_name = @building_details['building_json']['name']
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
