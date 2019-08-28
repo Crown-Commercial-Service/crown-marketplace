@@ -14,14 +14,15 @@
 <p><%= "#{sorted_list.first[0]}  #{number_to_currency(sorted_list.first[1], precision: 0)}" %></p>
 
 
-<div style="border-style: solid; width: 220px">
+<div style="border-style: solid; width: 500px">
   <p>&nbsp;&nbsp;Other supplier's prices:</p>
   <table class="govuk-body govuk-!-font-size-18">
 
   <% i = 0 %>
   <% sorted_list[1..-1].sort_by { |k,v| @results[k]}.each do |k,v| %>
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;</td>
+      <td width="50px"/>
+      <td width="300px"><%= k %></td>
       <td align="right"><%= "#{number_to_currency(v, precision: 0)}" %></td>
     </tr>
   <% end %>
