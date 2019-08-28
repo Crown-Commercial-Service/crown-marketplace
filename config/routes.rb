@@ -107,12 +107,13 @@ Rails.application.routes.draw do
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
       get '/building-details-summary', to: 'buildings_management#building_details_summary'
       get '/building-address', to: 'buildings_management#building_address'
-      get '/building-security-type', to: 'buildings_management#building_security-type'
+      get '/building-security-type', to: 'buildings_management#building_security_type'
       match '/buildings-management/save-new-building', to: 'buildings_management#save_new_building', via: %i[get post]
       match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
       match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
       match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
       match '/save-address', to: 'buildings_management#save_building_address', via: %i[get post]
+      match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
       post '/summary', to: 'summary#index'
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
@@ -188,35 +189,6 @@ Rails.application.routes.draw do
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
-  end
-
-  namespace 'apprenticeships', path: 'apprenticeships' do
-    get '/', to: 'home#index'
-    get '/gateway', to: 'gateway#index'
-    get '/search', to: 'home#search'
-    get '/search_results', to: 'home#search_results'
-    get '/supplier_search', to: 'home#supplier_search'
-    get '/supplier_search2', to: 'home#supplier_search2'
-    get '/find_apprentices', to: 'home#find_apprentices'
-    get '/find_apprentices2', to: 'home#find_apprentices2'
-    get '/find_apprentices3', to: 'home#find_apprentices3'
-    get '/find_apprentices4', to: 'home#find_apprentices4'
-    get '/find_apprentices5', to: 'journey#find_apprentices5'
-    get '/outline', to: 'home#outline'
-    get '/requirements', to: 'home#requirements'
-    get '/requirement', to: 'home#requirement'
-    get '/building_services', to: 'home#building_services'
-    get '/training_provider', to: 'home#training_provider'
-    get '/training_provider_list', to: 'home#training_provider_list'
-    get '/sorry', to: 'home#sorry'
-    get '/signup', to: 'home#signup'
-    get '/understanding', to: 'home#understanding'
-    get '/training_details', to: 'home#training_details'
-    get '/download_provider', to: 'home#download_provider'
-    resources :suppliers, only: %i[index show]
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do

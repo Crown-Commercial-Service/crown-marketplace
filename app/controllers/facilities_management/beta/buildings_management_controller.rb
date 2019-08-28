@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address].freeze
-    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address save_building_type].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address save_building_type].freeze
 
     def buildings_management
       @error_msg = ''
@@ -42,12 +42,17 @@ module FacilitiesManagement
       @step = 2
       @next_step = 'Building type'
       fm_building_data = FMBuildingData.new
-      @building_details = fm_building_data.new_building_details(@building_id)
+      building_details = fm_building_data.new_building_details(@building_id)
+      building = JSON.parse(building_details['building_json'])
+      @building_name = building['name']
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController building_gross_internal_area(): #{e}"
     end
 
     def building_type
+      @inline_error_summary_title = 'You must select type of building'
+      @inline_error_summary_body_href = '#'
+      @inline_summary_error_text = 'Choose the building type that best describes your building'
       building_id = cookies['fm_building_id']
       @back_link_href = 'buildings-management'
       @step = 3
@@ -58,6 +63,7 @@ module FacilitiesManagement
       building_details = fm_building_data.new_building_details(building_id)
       building = JSON.parse(building_details['building_json'])
       @building_name = building['name']
+      @page_title = 'Building type'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
@@ -68,7 +74,7 @@ module FacilitiesManagement
       building_details = fm_building_data.new_building_details(@building_id)
       building = JSON.parse(building_details['building_json'])
       @back_link_href = 'building'
-      @step = 1
+      @step = 1.5
       @next_step = "What's the internal area of the building?"
       @page_title = 'Add missing address'
       @building_name = building['name']
