@@ -25,7 +25,9 @@ before_install:
   - sudo service postgresql stop
   - sudo apt-get remove postgresql* -y
   - sudo apt-get install -y --allow-unauthenticated --no-install-recommends --no-install-suggests postgresql-11 postgresql-client-11 postgresql-server-dev-11 postgresql-common
-  - sudo apt-get install -y --allow-unauthenticated postgresql-11-postgis-2.5 postgresql-11-postgis-2.5-scripts postgis
+  - sudo apt-get install -y --allow-unauthenticated postgresql-11-postgis-2.5 
+  - sudo apt-get install -y --allow-unauthenticated postgresql-11-postgis-2.5-scripts
+  - sudo apt-get install -y --allow-unauthenticated postgis
   - sudo service postgresql start 11
 
 before_script:
