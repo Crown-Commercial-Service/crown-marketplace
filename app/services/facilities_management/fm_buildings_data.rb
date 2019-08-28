@@ -132,7 +132,8 @@ class FMBuildingData
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
   end
-  def get_building_id_by_ref ( email_address, building_ref)
+
+  def get_building_id_by_ref(email_address, building_ref)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_ref()'
     (FacilitiesManagement::Buildings.building_by_reference email_address, building_ref)
   end
