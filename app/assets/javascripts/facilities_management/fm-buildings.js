@@ -163,18 +163,53 @@ $(function () {
         $('#fm-new-building-form').submit()
     });
 
-    $('#fm-internal-square-area').on('change', function (e) {
+    // GIA
+    const validateGIAForm = (function (value) {
+        let isValid = false;
+        value = (value && value.length > 0) ? parseInt(value) : 0;
+        pageUtils.setCachedData('fm-gia', value);
+        if (value > 0) {
+            isValid  = true ;
+            pageUtils.showGIAError(false, '');
+        } else {
+            pageUtils.showGIAError(true, 'Total internal area must be a number, like 2000');
+        }
 
-            let value = e.target.value;
-            value = (value && value.length > 0) ? parseInt(value) : 0;
-            pageUtils.setCachedData('fm-gia', value);
-            if (value > 0) {
-                pageUtils.showGIAError(false, '');
-            } else {
-                pageUtils.showGIAError(true, '');
+        return isValid;
+    });
+    const saveGIA =(function(id,value, redirectURL) {
+        let jsonValue = {};
+        jsonValue["gia"] = value;
+        jsonValue["building-id"] = id;
+        
+        $.ajax( {
+            url: '.',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(jsonValue),
+            processData: false,
+            success: function(data, status, jQxhr ) {
+                alert(data);
+                location.href = redirectURL;
+            },
+            error: function (jQxhr, status, errorThrown ) {
+                console.log(errorThrown);
             }
+        });
+    });
+    
+    $('#fm-internal-square-area').on('change', function (e) {
+            validateGIAForm(e.target.value);
         }
     );
+    $('#fm-internal-square-area-form #fm-bm-save-and-return').on('click', function (e) {
+        if (!validateGIAForm($('#fm-internal-square-area').val())) {
+            e.preventDefault();
+        } else {
+            saveGIA ( $('#fm-building-id').val(), $('#fm-internal-square-area').val(), $('#fm-redirect-url').val());
+        }
+    });
 
     $('input[name="fm-builing-type-radio"]').on('click', function (e) {
         let value = e.target.value;
