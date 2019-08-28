@@ -71,7 +71,7 @@
     <% end %>
   </div>
   <%= form_tag '/facilities-management/buildings/select-locations', id: 'save-services-link-form', method: :post do %>
-    <%= link_to t('common.continue'), '/facilities-management/select-locations', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-services-link', name: 'save-services-link' %>
+    <%= link_to t('common.continue'), "/facilities-management/select-locations?#{request.query_string}", role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-services-link', name: 'save-services-link' %>
   <% end %>
 </div>
 <div class="govuk-grid-column-one-third">
