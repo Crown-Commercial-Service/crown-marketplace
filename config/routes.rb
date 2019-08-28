@@ -254,7 +254,7 @@ Rails.application.routes.draw do
     get '/gateway', to: 'gateway#index'
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
-    get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
+    get '/suppliers/download', to: 'suppliers#download'
     get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
     get '/suppliers/cg-no-suppliers-found', to: 'suppliers#cg_no_suppliers_found'
     resources :suppliers, only: %i[index show]
