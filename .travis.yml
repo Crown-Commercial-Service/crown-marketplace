@@ -20,8 +20,6 @@ addons:
   postgresql: "11"
 before_install:
   - gem install --force --conservative -v 1.16.6 bundler
-  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
-  - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
   - sudo service postgresql stop
   - sudo apt-get remove postgresql* -y
   - sudo apt-get install -y --allow-unauthenticated --no-install-recommends --no-install-suggests postgresql-11 
@@ -31,6 +29,8 @@ before_install:
   - sudo apt-get install -y --allow-unauthenticated postgresql-11-postgis-2.5 
   - sudo apt-get install -y --allow-unauthenticated postgresql-11-postgis-2.5-scripts
   - sudo apt-get install -y --allow-unauthenticated postgis
+  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
+  - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
   - sudo service postgresql start 11
 
 before_script:
