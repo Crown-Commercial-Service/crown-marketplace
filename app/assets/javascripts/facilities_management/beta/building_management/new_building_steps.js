@@ -25,7 +25,7 @@ $(function () {
         let radioValue = $("input[name='fm-building-type-radio']:checked").val();
 
         if (!radioValue) {
-            //show an error message
+            $('#inline-error-message').removeClass('govuk-visually-hidden');
         } else {
             let url = 'save-building-type';
 
@@ -77,13 +77,11 @@ $(function () {
                         saveStep(FM.building, redirect_uri);
                     }
                     break;
+
                 case 2:
-
                     break;
-
                 case 3:
                     saveBuildingType(redirect_uri);
-                    break;
                 case 4:
 
                     break;
@@ -104,7 +102,29 @@ $(function () {
 
     $('#fm-bm-save-and-continue').on('click', function (e) {
         e.preventDefault();
-        const redirect_uri = 'building-gross-internal-area';
-        processStep(redirect_uri);
+
+        let redirect_uri;
+        let step = $('#fm-manage-building-step').val();
+
+        if (step) {
+
+            step = parseInt(step);
+
+            switch (step) {
+                case 1:
+                    redirect_uri = 'building-gross-internal-area';
+                    break;
+                case 2:
+                    redirect_uri = 'building-type';
+                    break;
+                case 3:
+                    redirect_uri = 'building-security-type';
+                    break;
+                default:
+                    redirect_uri = 'buildings-management';
+                    break;
+            }
+            processStep(redirect_uri);
+        }
     });
 });

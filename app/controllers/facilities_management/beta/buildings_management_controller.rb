@@ -50,6 +50,9 @@ module FacilitiesManagement
     end
 
     def building_type
+      @inline_error_summary_title = 'You must select type of building'
+      @inline_error_summary_body_href = '#'
+      @inline_summary_error_text = 'Choose the building type that best describes your building'
       building_id = cookies['fm_building_id']
       @back_link_href = 'buildings-management'
       @step = 3
