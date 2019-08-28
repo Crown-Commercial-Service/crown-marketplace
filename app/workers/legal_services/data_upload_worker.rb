@@ -1,5 +1,4 @@
-require 'rake'
-require 'aws-sdk-s3'
+require 'json'
 
 module LegalServices
   class DataUploadWorker
@@ -7,12 +6,10 @@ module LegalServices
     sidekiq_options queue: 'ls'
 
     def perform(upload_id)
-      upload = SupplyTeachers::Admin::Upload.find(upload_id)
+      upload = LegalServices::Admin::Upload.find(upload_id)
       suppliers = upload.data
 
-      SupplyTeachers::Upload.upload!(suppliers)
-
-      upload.approve!
+      LegalServices::Upload.upload!(suppliers)
     rescue ActiveRecord::RecordInvalid => e
       summary = {
         record: e.record,
@@ -20,7 +17,7 @@ module LegalServices
         errors: e.record.errors
       }
 
-      fail_upload(SupplyTeachers::Admin::Upload.find(upload_id), summary)
+      fail_upload(LegalServices::Admin::Upload.find(upload_id), summary)
     end
 
     private

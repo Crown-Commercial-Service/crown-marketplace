@@ -51,7 +51,7 @@
       </tbody>
     </table>
     <% if @upload.in_review? %>
-      <p class="govuk-body govuk-!-margin-top-8"><%= t('.confirm_changes') %></p>
+      <p class="govuk-body govuk-!-margin-top-8"><%= t('.confirm') %></p>
       <%= link_to t('.approve'), legal_services_admin_upload_approve_path(@upload), class: 'govuk-button' %>
       <%= link_to t('.reject'), legal_services_admin_upload_reject_path(@upload), class: 'govuk-button govuk-button--warning' %>
     <% end %>

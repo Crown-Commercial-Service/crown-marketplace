@@ -3,7 +3,7 @@ require 'json'
 
 def add_suppliers(upload_id)
   upload = LegalServices::Admin::Upload.find(upload_id)
-  suppliers_workbook = Roo::Spreadsheet.open '/users/milomia/master/storage/legal_services/current_data/input/SupplierDetails4.xlsx'
+  suppliers_workbook = Roo::Spreadsheet.open upload.suppliers.path
 
   headers = {
     name: 'Supplier Name',
@@ -13,15 +13,22 @@ def add_suppliers(upload_id)
     address: 'Postal address',
     sme: 'Is an SME',
     duns: 'DUNS Number',
-    lot1: 'Lot 1 Prospectus Link',
-    lot2: 'Lot 2 Prospectus Link',
-    lot3: 'Lot 3 Prospectus Link',
-    lot4: 'Lot 4 Prospectus Link',
+    lot_1_prospectus_link: 'Lot 1: Prospectus Link',
+    lot_2_prospectus_link: 'Lot 2: Prospectus Link',
+    lot_3_prospectus_link: 'Lot 3: Prospectus Link',
+    lot_4_prospectus_link: 'Lot 4: Prospectus Link',
     clean: true
   }
 
   sheet = suppliers_workbook.sheet(0)
 
   suppliers = sheet.parse(headers)
-  upload.data = JSON.pretty_generate suppliers
+
+  suppliers.each do |supplier|
+    supplier[:sme] = ['YES', 'Y'].include? supplier[:sme].to_s.upcase
+    supplier[:id] = SecureRandom.uuid
+  end
+
+  upload.data = suppliers
+  upload.save!
 end

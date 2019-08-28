@@ -51,6 +51,10 @@ public/management_consultancy/data/*
 !/storage/management_consultancy/input/.gitignore
 !/storage/management_consultancy/output/.gitignore
 
+# LegalServices data folders
+
+public/legal_services/data/*
+
 # Redis dump
 dump.rdb
 lib/tasks/supply_teachers/input/
