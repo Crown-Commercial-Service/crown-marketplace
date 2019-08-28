@@ -14,4 +14,11 @@ RSpec.describe FacilitiesManagement::Beta::BuildingsManagementController do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe 'GET #building address' do
+    it 'returns http success' do
+      get :building_address
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end
