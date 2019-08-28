@@ -21,6 +21,31 @@ $(function () {
 
     };
 
+    const saveBuildingType = function (redirectURI) {
+        let radioValue = $("input[name='fm-building-type-radio']:checked").val();
+
+        if (!radioValue) {
+            //show an error message
+        } else {
+            let url = 'save-building-type';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(radioValue),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.href = redirectURI
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    };
+
     const processStep = function (redirect_uri) {
 
         let step = $('#fm-manage-building-step').val();
@@ -51,15 +76,13 @@ $(function () {
                         pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
                         saveStep(FM.building, redirect_uri);
                     }
-
-
                     break;
                 case 2:
 
                     break;
 
                 case 3:
-
+                    saveBuildingType(redirect_uri);
                     break;
                 case 4:
 

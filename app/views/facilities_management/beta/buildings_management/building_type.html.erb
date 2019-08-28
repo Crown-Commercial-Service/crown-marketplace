@@ -1,59 +1,63 @@
 <!-- FM-175 -->
 <div>
-  <%= render 'buildings_steps_header' %>
-  <span class="govuk-heading-m govuk-!-margin-bottom-0">Choose the building type that best describes your building</span>
-  <span class="govuk-caption-m">You can change your selection later.</span>
-</div>
-<p></p>
-
-<!-- Radio's -->
-<div class="govuk-radios">
-  <div class="govuk-radios__item">
-    <input class="govuk-radios__input" id="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>"
-           name="fm-builing-type-radio" type="radio" value="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>">
-    <label class="govuk-label govuk-radios__label" for="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>">
-      <%= @type_list[0] %><br>
-      <span class="govuk-caption-m"><%= @type_list_titles[@type_list[0]] %></span>
-    </label>
-  </div>
-  <div class="govuk-radios__item">
-    <input class="govuk-radios__input" id="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>"
-           name="fm-builing-type-radio" type="radio" value="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>">
-    <label class="govuk-label govuk-radios__label" for="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>">
-      <%= @type_list[1] %><br>
-      <span class="govuk-caption-m"><%= @type_list_titles[@type_list[1]] %></span>
-    </label>
+  <div>
+    <%= render 'buildings_steps_header' %>
+    <span class="govuk-heading-m govuk-!-margin-bottom-0">Choose the building type that best describes your building</span>
+    <span class="govuk-caption-m">You can change your selection later.</span>
   </div>
   <p></p>
-  <details class="govuk-details" data-module="govuk-details">
-    <summary class="govuk-details__summary">
+
+  <!-- Radio's -->
+  <div class="govuk-radios">
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>"
+             name="fm-building-type-radio" type="radio" value="<%= @type_list[0] %>">
+      <label class="govuk-label govuk-radios__label" for="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>">
+        <%= @type_list[0] %><br>
+        <span class="govuk-caption-m"><%= @type_list_titles[@type_list[0]] %></span>
+      </label>
+    </div>
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>"
+             name="fm-building-type-radio" type="radio" value="<%= @type_list[1] %>">
+      <label class="govuk-label govuk-radios__label" for="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>">
+        <%= @type_list[1] %><br>
+        <span class="govuk-caption-m"><%= @type_list_titles[@type_list[1]] %></span>
+      </label>
+    </div>
+    <p></p>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
       More
     </span>
-    </summary>
-    <div class="govuk-details__text">
-      <% @type_list.drop(2).each do |building_type| %>
+      </summary>
+      <div class="govuk-details__text">
+        <% @type_list.drop(2).each do |building_type| %>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>"
+                   name="fm-building-type-radio" type="radio" value="<%= building_type %>">
+            <label class="govuk-label govuk-radios__label" for="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>">
+              <%= building_type %><br>
+              <span class="govuk-caption-m"><%= @type_list_titles[building_type] %></span>
+            </label>
+          </div>
+        <% end %>
+
+        <div class="govuk-!-margin-6">
+          or
+        </div>
+
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>"
-                 name="fm-builing-type-radio" type="radio" value="<%= building_type %>">
-          <label class="govuk-label govuk-radios__label" for="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>">
-            <%= building_type %><br>
-            <span class="govuk-caption-m"><%= @type_list_titles[building_type] %></span>
+          <input class="govuk-radios__input" id="not-in-list" name="fm-builing-type-radio" type="radio" value="not-in-list">
+          <label class="govuk-label govuk-radios__label" for="not-in-list">
+            <span class="govuk-caption-m">Other</span>
           </label>
         </div>
-      <% end %>
-
-      <div class="govuk-!-margin-6">
-        or
       </div>
-
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="not-in-list" name="fm-builing-type-radio" type="radio" value="not-in-list">
-        <label class="govuk-label govuk-radios__label" for="not-in-list">
-          <span class="govuk-caption-m">Other</span>
-        </label>
-      </div>
-    </div>
-  </details>
+    </details>
+  </div>
+  <div>
+    <%= render ('buildings_steps_footer') %>
+  </div>
 </div>
-<%= render 'buildings_steps_footer' %>

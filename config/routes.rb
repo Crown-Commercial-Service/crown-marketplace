@@ -113,6 +113,7 @@ Rails.application.routes.draw do
       match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
       match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
       match '/save-address', to: 'buildings_management#save_building_address', via: %i[get post]
+      match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
       post '/summary', to: 'summary#index'
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
@@ -190,6 +191,7 @@ Rails.application.routes.draw do
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
+=begin
   namespace 'apprenticeships', path: 'apprenticeships' do
     get '/', to: 'home#index'
     get '/gateway', to: 'gateway#index'
@@ -218,6 +220,7 @@ Rails.application.routes.draw do
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
+=end
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
     get '/', to: 'home#index'
