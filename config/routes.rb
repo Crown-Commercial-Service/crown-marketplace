@@ -113,6 +113,9 @@ Rails.application.routes.draw do
       match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
       match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
       match '/save-address', to: 'buildings_management#save_building_address', via: %i[get post]
+      post '/summary', to: 'summary#index'
+      post '/summary/guidance', to: 'summary#guidance'
+      post '/summary/suppliers', to: 'summary#sorted_suppliers'
     end
 
     get '/', to: 'home#index'
