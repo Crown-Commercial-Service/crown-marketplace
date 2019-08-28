@@ -1,4 +1,3 @@
-dist: bionic
 language: ruby
 cache:
   bundler: true
@@ -9,20 +8,28 @@ cache:
     - /home/travis/.rvm/gems
     - /home/travis/.cache/rubocop_cache
 env:
-  global:
-    - RAILS_ENV=test
+  - RAILS_ENV=test
 services:
   - postgresql
 addons:
-  postgresql: '9.6'
-sudo: true
+  apt:
+    packages:
+      - postgresql-11
+      - postgresql-11-postgis-2.4
+      - postgresql-11-postgis-2.4-scripts
+  postgresql: "11"
 before_install:
-  - gem install bundler
+  - gem install --force --conservative -v 1.16.6 bundler
+  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
+  - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
+  - sudo service postgresql stop
+  - sudo service postgresql start 11
+  - sleep 20
 before_script:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y postgresql-9.6-postgis-2.4
-  - psql -U postgres -c 'create database marketplace_test'
-  - psql -U postgres -d marketplace_test -c 'create extension postgis'
+#  - sudo apt-get install postgresql-11-postgis-2.4 postgis -y -q
+  - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
+  - psql -U postgres -c "create extension postgis" -d root
+  - psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
