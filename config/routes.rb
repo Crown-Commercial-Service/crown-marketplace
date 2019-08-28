@@ -190,7 +190,7 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
-  
+
   namespace 'ccs_patterns', path: 'ccs-patterns' do
     get '/', to: 'home#index'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
