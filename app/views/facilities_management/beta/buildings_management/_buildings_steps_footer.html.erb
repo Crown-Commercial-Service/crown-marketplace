@@ -1,8 +1,12 @@
 <div class="govuk-!-padding-top-5">
-  <hidden id="fm-manage-building-step" value="<%= @step %>"></hidden>
-  <a id="fm-save-and-continue" class="govuk-button">Save and continue</a>
-  <a id="fm-save-return-to-manage-buildings" class="govuk-button govuk-button--secondary">Save and return to manage buildings</a>
+  <input type="hidden" id="fm-manage-building-step" value="<%= @step %>"></input>
+  <a id="fm-bm-save-and-continue" class="govuk-button">Save and continue</a>
+  <a id="fm-bm-save-return-to-manage-buildings" class="govuk-button govuk-button--secondary">Save and return to manage buildings</a>
   <br>
-  <a id="fm-skip-step-link" class="govuk-link-colour">Skip this step</a>
-  <span class="govuk-caption-m">Next: <%= @next_step %></span>
+  <% if @step > 1 then %>
+    <a id="fm-skip-step-link" class="govuk-link-colour">Skip this step</a>
+  <% end %>
+  <% unless @next_step.nil? %>
+    <span class="govuk-caption-m govuk-!-margin-top-0">Next: <%= @next_step %></span>
+  <% end %>
 </div>

@@ -1,2 +1,12 @@
 <!-- FM-174 Building GIA -->
-<h1 class="govuk-heading-xl">GIA</h1>
+<% building = JSON.parse(@building_details['building_json']) %>
+<div>
+  <%= render 'buildings_steps_header' %>
+</div>
+
+<h1 class="govuk-heading-xl"><%= building['name'].to_s %> </h1>
+
+<!-- footer -->
+<div class="govuk-!-margin-top-0">
+  <%= render 'buildings_steps_footer' %>
+</div>

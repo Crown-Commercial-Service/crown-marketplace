@@ -1,5 +1,13 @@
-<a class="govuk-back-link" href="<%= @back_link %>">Back</a>
+<a class="govuk-back-link" href="<%= @back_link_href %>">Back</a>
 <p>
   <span class="govuk-caption-m govuk-!-padding-bottom-0">Step <%= @step %> of 4</span>
-  <span class="govuk-caption-l govuk-!-padding-top-0">Manage buildings</span>
-  <span class="govuk-heading-xl govuk-!-padding-top-0"><%= @building_name %></span>
+  <span class="govuk-caption-l govuk-!-padding-top-0"><%= if @building_name then
+                                                            @building_name
+                                                          else
+                                                            'Manage buildings'
+                                                          end %></span>
+  <span class="govuk-heading-xl govuk-!-padding-top-0"><%= if @step = 1 then
+                                                             @page_title
+                                                           else
+                                                             @building_name
+                                                           end %></span>

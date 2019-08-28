@@ -16,10 +16,59 @@ class FMBuildingData
 
   def save_building(email_address, building)
     Rails.logger.info '==> FMBuildingData.save_building()'
-    query = "insert into facilities_management_buildings values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "')"
+
+    CCS::FM::Building.create(id: building['id'],
+                             user_id: Base64.encode64(email_address),
+                             updated_by: Base64.encode64(email_address),
+                             building_json: building)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't update new building id: #{e}"
+  end
+
+  def save_building_property(building_id, key, value)
+    # Key/Value properties associated with a building such as GIA, etc
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{" + key + "}', '" + value + "'::jsonb) where id = '" + building_id + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
-    Rails.logger.warn "Couldn't save building: #{e}"
+    Rails.logger.warn "Couldn't save building property: #{e}"
+  end
+
+  def update_building_id
+    # required for legacy private beta solution
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{id}', to_json(id::text)::jsonb) where building_json ->> 'id' is null;"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't update new building id: #{e}"
+  end
+
+  def new_building_id(email_address)
+    # returns the latest building id
+    query = "select id from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    result[0]['id']
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get new building id: #{e}"
+  end
+
+  def new_building_details(building_id)
+    # returns building details for a given building_id
+    query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    JSON.parse(result[0].to_json)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get new building details: #{e}"
+  end
+
+  def save_new_building(email_address, building)
+    # Beta code for step 1 saving a new building
+    Rails.logger.info '==> FMBuildingData.save_new_building()'
+    query = 'insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by) ' \
+            "values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "' , now()," + "'Incomplete', gen_random_uuid(), '" + email_address + "');"
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    update_building_id
+    new_building_id(email_address)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't save new building: #{e}"
   end
 
   def delete_uom_for_building(email_address, building_id)
@@ -57,9 +106,21 @@ class FMBuildingData
 
   def get_building_data(email_address)
     Rails.logger.info '==> FMBuildingData.get_building_data()'
-    ActiveRecord::Base.include_root_in_json = false
-    query = "select building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
+    ActiveRecord::Base.include_root_in_json = true
+    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    Rails.logger.info '<== FMBuildingData.get_building_data()'
+    JSON.parse(result.to_json)
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get building data: #{e}"
+  end
+
+  def get_building_data_by_id(email_address, id)
+    Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
+    ActiveRecord::Base.include_root_in_json = false
+    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and building::jsonb --> 'id'= '" + id + "'"
+    result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    Rails.logger.info(result.to_json.to_s)
     JSON.parse(result.to_json)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
@@ -72,6 +133,7 @@ class FMBuildingData
     result[0]['record_count']
   rescue StandardError => e
     Rails.logger.warn "Couldn't get count of buildings: #{e}"
+    0
   end
 
   def region_info_for_post_town(post_code)
