@@ -6,5 +6,7 @@
   <% if @step > 1 then %>
     <a id="fm-skip-step-link" class="govuk-link-colour">Skip this step</a>
   <% end %>
-  <span class="govuk-caption-m govuk-!-margin-top-0">Next: <%= @next_step %></span>
+  <% unless @next_step.nil? %>
+    <span class="govuk-caption-m govuk-!-margin-top-0">Next: <%= @next_step %></span>
+  <% end %>
 </div>

@@ -77,6 +77,9 @@ $(function () {
                         $('#fm-bm-postcode').addClass('govuk-visually-hidden');
                         $('#fm-find-address-btn').addClass('govuk-visually-hidden');
                     }
+                } else {
+                    $('#fm-cant-find-address-link').removeClass('govuk-visually-hidden')
+                    //$('#fm-cant-find-address-link').trigger('click');
                 }
             })
             .fail(function (data) {
@@ -85,9 +88,35 @@ $(function () {
     });
 
     $('#fm-cant-find-address-link').on('click', function () {
-        alert('not yet implemented');
-    })
 
+        let id;
+        let msg;
+
+        if (!FM.building.name) {
+            id = 'fm-building-name-input';
+            msg = 'A building name is required';
+            pageUtils.toggleFieldValidationError(true, id, msg);
+        } else {
+            let url = '/facilities-management/beta/buildings-management/save-new-building';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(FM.building),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.href = 'building-address';
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    });
+
+    // GIA
     $('#fm-internal-square-area').on('keyup', function (e) {
         $('#fm-internal-square-area-chars-left').text(FM.calcCharsLeft(e.target.value, 10));
     });
@@ -96,17 +125,50 @@ $(function () {
             event.preventDefault();
         }
     });
-    $('#fm-internal-square-area').on('change', function (e) {
-
-        if (e.target.value) {
-            newBuilding.name = e.target.value;
-            FM.building = newBuilding;
-            pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
+    $('#fm-internal-square-area-form #fm-bm-save-and-return').on('click', function (e) {
+        if (!validateGIAForm($('#fm-internal-square-area').val())) {
+            e.preventDefault();
         } else {
-            pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
+            saveGIA ( $('#fm-building-id').val(), $('#fm-internal-square-area').val(), $('#fm-redirect-url').val());
         }
     });
+    $('#fm-internal-square-area').on('change', function (e) {
+            validateGIAForm(e.target.value);
+        }
+    );
+    const validateGIAForm = (function (value) {
+        let isValid = false;
+        value = (value && value.length > 0) ? parseInt(value) : 0;
+        pageUtils.setCachedData('fm-gia', value);
+        if (value > 0) {
+            isValid  = true ;
+            pageUtils.showGIAError(false, '');
+        } else {
+            pageUtils.showGIAError(true, 'Total internal area must be a number, like 2000');
+        }
 
+        return isValid;
+    });
+    const saveGIA =(function(id,value, redirectURL) {
+        let jsonValue = {};
+        jsonValue["gia"] = value;
+        jsonValue["building-id"] = id;
 
+        $.ajax( {
+            url: '.',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(jsonValue),
+            processData: false,
+            success: function(data, status, jQxhr ) {
+                location.href = redirectURL;
+            },
+            error: function (jQxhr, status, errorThrown ) {
+                console.log(errorThrown);
+                pageUtils.showGIAError(true, 'The building could not be saved.  Please try again');
+            }
+        });
+    });
 });
 

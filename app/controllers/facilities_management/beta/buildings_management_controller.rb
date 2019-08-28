@@ -40,7 +40,7 @@ module FacilitiesManagement
       building_details = fm_building_data.new_building_details(current_user.email.to_s) if params['id'].blank?
       building_details = fm_building_data.get_building_data_by_ref(current_user.email.to_s, params['id']) if params['id'].present?
 
-      @building_name = building_details['building_json']['name'] if building_details['building_json'].present?
+      @building_name = building_details['building_json']['name']
       @building_id = building_details['id']
       @building = building_details['building_json'] if building_details['building_json'].present?
       @building = building_details if building_details['name'].present?
@@ -50,15 +50,26 @@ module FacilitiesManagement
     def save_building_gia
       id = params['building-id']
       gia = params[:gia]
-
       fm_building_data = FMBuildingData.new
+      fm_building_data.save_building_property id, 'gia', gia
+      changed_building_data = (fm_building_data.get_building_data_by_id current_user.email.to_s, id).first
 
-
-      return_data = {}
-      return_data[:gia] = gia
-      return_data['building-id'] = id
-
-      render json: {status: 200, result: retData}
+      if ( changed_building_data.present?)
+        return_data = {}
+        if JSON.parse(changed_building_data['building'])['gia'].to_s != gia
+          return_data[:gia] = JSON.parse(changed_building_data['building'])['gia']
+          return_data['building-id'] = id
+          render json: {status: 500, result: return_data}
+          raise "Building #{id} GIA not saved"
+        else
+          return_data[:gia] = gia
+          return_data['building-id'] = id
+          render json: {status: 200, result: return_data}
+        end
+      else
+        render json: {status: 500, result: nil}
+        raise "Building #{id} not found"
+      end
     end
 
     def building_type
@@ -77,18 +88,43 @@ module FacilitiesManagement
     end
 
     def building_address
-      @error_msg = ''
+      @building_id = cookies['fm_building_id']
+      fm_building_data = FMBuildingData.new
+      building_details = fm_building_data.new_building_details(@building_id)
+      building = JSON.parse(building_details['building_json'])
+      @back_link_href = 'building'
+      @step = 1
+      @next_step = "What's the internal area of the building?"
+      @page_title = 'Add missing address'
+      @building_name = building['name']
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsManagementController building_address(): #{e}"
+    end
+
+    def save_building_address
+      building_id = cookies['fm_building_id']
+      new_address = request.raw_post
+      fm_building_data = FMBuildingData.new
+      fm_building_data.save_building_property(building_id, 'address', new_address.gsub('\\', ''))
+      j = { 'status': 200 }
+      render json: j, status: 200
     end
 
     def building_security_type
       @error_msg = ''
     end
 
+    def cache_new_building_id(building_id)
+      secure_cookie = Rails.env.development? ? false : true
+      cookies['fm_building_id'] = { value: building_id.to_s, secure: secure_cookie }
+    end
+
     def save_new_building
-      @new_building_json = request.raw_post
-      @fm_building_data = FMBuildingData.new
-      @fm_building_data.save_new_building(current_user.email.to_s, @new_building_json)
-      j = { 'status': 200 }
+      new_building_json = request.raw_post
+      fm_building_data = FMBuildingData.new
+      building_id = fm_building_data.save_new_building current_user.email.to_s, new_building_json
+      cache_new_building_id building_id
+      j = { 'status': 200, 'fm_building-id': building_id.to_s }
       render json: j, status: 200
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
