@@ -96,7 +96,6 @@ module FacilitiesManagement
       @step = 3
       @next_step = 'Select the level of security clearance needed'
       fm_building_data = FMBuildingData.new
-      @building_details = fm_building_data.new_building_details(current_user.email.to_s) if params['id'].blank?
       @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
       building_details = fm_building_data.new_building_details(building_id)
