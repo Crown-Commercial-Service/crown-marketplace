@@ -11,6 +11,7 @@ $(function () {
             data: JSON.stringify(building),
             processData: false,
             success: function (data, textStatus, jQxhr) {
+                console.log(data);
                 location.href = redirect_uri || '#';
             },
             error: function (jqXhr, textStatus, errorThrown) {
@@ -18,6 +19,31 @@ $(function () {
             }
         });
 
+    };
+
+    const saveBuildingType = function (redirectURI) {
+        let radioValue = $("input[name='fm-building-type-radio']:checked").val();
+
+        if (!radioValue) {
+            $('#inline-error-message').removeClass('govuk-visually-hidden');
+        } else {
+            let url = 'save-building-type';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(radioValue),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.href = redirectURI
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
     };
 
     const processStep = function (redirect_uri) {
@@ -50,16 +76,12 @@ $(function () {
                         pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
                         saveStep(FM.building, redirect_uri);
                     }
-
-
                     break;
+
                 case 2:
-
                     break;
-
                 case 3:
-
-                    break;
+                    saveBuildingType(redirect_uri);
                 case 4:
 
                     break;
@@ -80,7 +102,29 @@ $(function () {
 
     $('#fm-bm-save-and-continue').on('click', function (e) {
         e.preventDefault();
-        const redirect_uri = 'building-gross-internal-area';
-        processStep(redirect_uri);
+
+        let redirect_uri;
+        let step = $('#fm-manage-building-step').val();
+
+        if (step) {
+
+            step = parseInt(step);
+
+            switch (step) {
+                case 1:
+                    redirect_uri = 'building-gross-internal-area';
+                    break;
+                case 2:
+                    redirect_uri = 'building-type';
+                    break;
+                case 3:
+                    redirect_uri = 'building-security-type';
+                    break;
+                default:
+                    redirect_uri = 'buildings-management';
+                    break;
+            }
+            processStep(redirect_uri);
+        }
     });
 });
