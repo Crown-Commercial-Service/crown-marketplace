@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address save_building_gia].freeze
-    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address save_building_gia].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address save_building_type save_building_gia].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address save_building_type save_building_gia].freeze
 
     def buildings_management
       @error_msg = ''
