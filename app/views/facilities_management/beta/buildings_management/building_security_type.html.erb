@@ -1,3 +1,38 @@
 <!-- FM-176 building security clearance page -->
 
-<h1 class="govuk-heading-xl">security type</h1>
+<div>
+  <div>
+    <%= render 'buildings_steps_header' %>
+    <span class="govuk-heading-m govuk-!-margin-bottom-0">Select the level of security clearance needed</span>
+    <span class="govuk-caption-m">Choose one option only</span>
+  </div>
+  <p></p>
+  <!-- Radio's -->
+  <div class="govuk-radios">
+    <% @security_types.each do |record| %>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="<%= record['id'] %>"
+               name="fm-building-security-type-radio" type="radio" value="<%= record['title'] %>">
+        <label class="govuk-label govuk-radios__label" for="<%= record['id'] %>">
+          <%= record['title'] %><br>
+          <span class="govuk-caption-m"><%= record['description'] %></span>
+        </label>
+      </div>
+    <% end %>
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="fm-building-security-type-other"
+             name="fm-building-security-type-radio" type="radio" value="other">
+      <label class="govuk-label govuk-radios__label" for="fm-building-security-type-other">
+        Other<br>
+        <span class="govuk-caption-m">Describe security level</span>
+      </label>
+    </div>
+    <div class="govuk-details__text govuk-!-margin-left-3 govuk-!-width-two-thirds">
+      <textarea class="govuk-textarea govuk-!-margin-bottom-1" id="fm-building-security-type-more-detail" name="fm-building-security-type-more-detail" rows="4"></textarea>
+      <span class="govuk-caption-m govuk-!-margin-top-1 fm-security-type-text">150 characters</span>
+    </div>
+  </div>
+  <div>
+    <%= render ('buildings_steps_footer') %>
+  </div>
+</div>
