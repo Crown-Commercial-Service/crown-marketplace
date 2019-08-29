@@ -46,14 +46,17 @@ module FacilitiesManagement
     def building_gross_internal_area
       @back_link_href = "../building-details-summary/#{params['id']}"
       @step = 2
-      @page_title = 'Add building GIA'
+      @editing = params['id'].present?
+      @page_title = if @editing
+                      t('facilities_management.beta.building-gross-internal-area.edit_header')
+                    else t('facilities_management.beta.building-gross-internal-area.add_header')
+                    end
       @next_step = 'Building type'
 
       building_details = get_new_or_specific_building_by_ref params['id']
       @building_name = building_details['building_json']['name']
       @building_id = building_details['id']
       @building = building_details['building_json'] if building_details['building_json'].present?
-      @editing = params['id'].present?
     end
 
     def get_existing_building(building_id)
