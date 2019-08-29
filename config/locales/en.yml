@@ -877,48 +877,34 @@ en:
   legal_services:
     admin:
       uploads:
-        in_progress:
-          button: Button
-          content: Content
-          heading: Heading
         index:
-          caption: Caption
-          create_new: Create new
-          current_table_caption: Current table caption
+          caption: Manage supplier data
+          create_new: Create a new data upload
           date: Date
-          heading: Heading
+          heading: Legal Services
           name: Name
-          no_of_files: No of files
-          spreadsheet: Spreadsheet
+          number_of_files: Files
           status: Status
-          table_caption: Table caption
-          upload_session: Upload session
+          table_caption: Previous uploads
         new:
-          caption: Caption
-          heading: Heading
-          upload_button: Upload button
-          upload_caption: Upload caption
-          upload_title: Upload title
-        reject:
-          content: Content
-          heading_html: Heading html
-          index_button: Index button
-          new_button: New button
+          caption: Legal Services
+          heading: New data upload
+          upload_caption: Supported file format is XLSX. Maximum file size is 10mb.
+          upload_title: Upload the complete supplier data
         show:
           approve: Approve
-          caption: Caption
-          confirm_changes: Confirm changes
-          datetime: Datetime
-          error_heading: Error heading
+          caption: Legal Services
+          confirm: Confirm changes
+          datetime: 'Date/time:'
+          download: Download
+          error_heading: Error
+          file: File
           files: Files
-          heading: Heading
+          heading: 'Upload session #%{number}'
           reject: Reject
           spreadsheet: Spreadsheet
-          status: Status
-        uploading:
-          button: Button
-          content_html: Content html
-          heading: Heading
+          status: 'Status:'
+          suppliers_data: Suppliers data
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
