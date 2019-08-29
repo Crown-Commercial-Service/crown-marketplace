@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_22_085512) do
+ActiveRecord::Schema.define(version: 2019_08_29_114901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -100,6 +100,14 @@ ActiveRecord::Schema.define(version: 2019_08_22_085512) do
     t.string "code", limit: 255
     t.string "name", limit: 255
     t.index ["code"], name: "fm_regions_code_key", unique: true
+  end
+
+  create_table "fm_security_types", id: false, force: :cascade do |t|
+    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
+    t.string "title", null: false
+    t.string "description"
+    t.integer "sort_order", null: false
+    t.index ["id"], name: "fm_security_types_id_idx"
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|

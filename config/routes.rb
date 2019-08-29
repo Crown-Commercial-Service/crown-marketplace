@@ -115,6 +115,7 @@ Rails.application.routes.draw do
       match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
       match '/save-address', to: 'buildings_management#save_building_address', via: %i[get post]
       match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
+      match '/save-building-security-type', to: 'buildings_management#save_security_type', via: %i[get post]
       post '/summary', to: 'summary#index'
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'

@@ -174,6 +174,13 @@ class FMBuildingData
     Rails.logger.warn "Couldn' t get region information for post town : #{e}"
   end
 
+  def security_types
+    query = 'SELECT id, title, description FROM public.fm_security_types order by sort_order asc;'
+    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't get security types: #{e}"
+  end
+
   def building_type_list
     ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations',
      'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary School', 'Special Schools',
