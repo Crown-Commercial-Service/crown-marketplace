@@ -107,7 +107,7 @@ class FMBuildingData
   def get_building_data(email_address)
     Rails.logger.info '==> FMBuildingData.get_building_data()'
     ActiveRecord::Base.include_root_in_json = true
-    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
+    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' order by LOWER(building_json->>'name')"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     Rails.logger.info '<== FMBuildingData.get_building_data()'
     JSON.parse(result.to_json)

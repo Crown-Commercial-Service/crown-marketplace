@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_gia].freeze
-    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_gia].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address save_building_gia].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address save_building_gia].freeze
 
     def buildings_management
       @error_msg = ''
@@ -75,7 +75,7 @@ module FacilitiesManagement
       status = 200
       raise "Building #{id} not found" if get_existing_building(params['building-id']).blank?
 
-      raise "Building #{id} GIA not saved" unless gia_update_is_valid params['building_id'], params[:gia]
+      raise "Building #{id} GIA not saved" unless gia_update_is_valid params['building-id'], params[:gia]
 
       render json: { status: status, result: (get_return_data params['building-id'])[:gia] = params[:gia] }
     rescue StandardError => e
@@ -84,7 +84,10 @@ module FacilitiesManagement
     end
 
     def building_type
-      @building_id = cookies['fm_building_id']
+      @inline_error_summary_title = 'You must select type of building'
+      @inline_error_summary_body_href = '#'
+      @inline_summary_error_text = 'Choose the building type that best describes your building'
+      building_id = cookies['fm_building_id']
       @back_link_href = 'buildings-management'
       @step = 3
       @next_step = 'Select the level of security clearance needed'
@@ -92,7 +95,10 @@ module FacilitiesManagement
       @building_details = fm_building_data.new_building_details(current_user.email.to_s) if params['id'].blank?
       @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
-      @building_name = ''
+      building_details = fm_building_data.new_building_details(building_id)
+      building = JSON.parse(building_details['building_json'])
+      @building_name = building['name']
+      @page_title = 'Building type'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
@@ -103,7 +109,7 @@ module FacilitiesManagement
       building_details = fm_building_data.new_building_details(@building_id)
       building = JSON.parse(building_details['building_json'])
       @back_link_href = 'building'
-      @step = 1
+      @step = 1.5
       @next_step = "What's the internal area of the building?"
       @page_title = 'Add missing address'
       @building_name = building['name']

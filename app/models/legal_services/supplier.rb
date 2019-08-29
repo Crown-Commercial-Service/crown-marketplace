@@ -20,21 +20,20 @@ module LegalServices
     end
 
     def self.offering_services(lot_number, service_codes)
-      lot_service_codes = Service.where(lot_number: lot_number).map(&:code)
-      valid_service_codes = service_codes & lot_service_codes
+      valid_service_codes = set_service_codes(lot_number, service_codes)
       ids = ServiceOffering.supplier_ids_for_service_codes(valid_service_codes)
       where(id: ids)
     end
 
-    def self.supplying_regions(region_codes)
-      ids = RegionalAvailability.supplier_ids_for_region_codes(region_codes)
+    def self.supplying_regions(service_codes, region_codes)
+      ids = RegionalAvailability.supplier_ids_for_service_codes_and_region_codes(service_codes, region_codes)
       where(id: ids)
     end
 
-    def self.offering_services_in_regions(lot_number, service_codes, region_codes = nil)
-      return offering_services(lot_number, service_codes) unless lot_number == '1'
+    def self.offering_services_in_regions(lot_number, service_codes, jurisdiction = nil, region_codes = nil)
+      return offering_services(lot_number + jurisdiction.to_s, service_codes) unless lot_number == '1'
 
-      offering_services(lot_number, service_codes).supplying_regions(region_codes)
+      supplying_regions(service_codes, region_codes)
     end
 
     def self.delete_all_with_dependents
@@ -45,6 +44,13 @@ module LegalServices
 
     def services_in_lot(lot_number)
       service_offerings.select { |so| so.lot_number == lot_number }.map(&:service)
+    end
+
+    def self.set_service_codes(lot_number, service_codes)
+      return ["WPSLS.#{lot_number}.1"] if ['3', '4'].include? lot_number
+
+      lot_service_codes = Service.where(lot_number: lot_number).map(&:code)
+      service_codes & lot_service_codes
     end
   end
 end
