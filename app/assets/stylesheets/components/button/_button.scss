@@ -5,6 +5,7 @@ $govuk-button-hover-colour: darken($govuk-button-colour, 5%);
 $govuk-button-shadow-colour: darken($govuk-button-colour, 15%);
 $govuk-button-text-colour: govuk-colour("white");
 $govuk-button-radius: 3px !default;
+$govuk-button-colour-secondary: govuk-colour("grey-2");
 
 $button-shadow-size: 3px;
 
