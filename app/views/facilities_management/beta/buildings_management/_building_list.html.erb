@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-      <% @building_data.sort_by { |a| a['name'] }.each do |record| %>
+      <% @building_data.each do |record| %>
         <% building = JSON.parse(record['building'].to_s) %>
         <tr>
           <td><%= link_to building['name'].to_s, 'building-details-summary/'+building['building-ref'].to_s, { class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
