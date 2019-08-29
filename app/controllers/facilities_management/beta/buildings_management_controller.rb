@@ -111,7 +111,20 @@ module FacilitiesManagement
     end
 
     def building_security_type
-      @error_msg = ''
+      @inline_error_summary_title = 'You must select level of security clearance'
+      @inline_error_summary_body_href = '#'
+      @inline_summary_error_text = 'Select the level of security clearance needed'
+      building_id = cookies['fm_building_id']
+      @back_link_href = 'buildings-management'
+      @step = 4
+      @next_step = 'Buildings details summary'
+      fm_building_data = FMBuildingData.new
+      @type_list = fm_building_data.building_type_list
+      @type_list_titles = fm_building_data.building_type_list_titles
+      building_details = fm_building_data.new_building_details(building_id)
+      building = JSON.parse(building_details['building_json'])
+      @building_name = building['name']
+      @security_types = fm_building_data.security_types
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
     end
