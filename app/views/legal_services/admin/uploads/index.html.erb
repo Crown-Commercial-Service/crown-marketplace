@@ -8,21 +8,6 @@
       </div>
     <% end %>
   </div>
-  <div class="govuk-grid-column-full">
-    <table class="govuk-table">
-      <caption class="govuk-table__caption"><%= t('.current_table_caption') %></caption>
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col"><%= t('.spreadsheet') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('.upload_session') %></th>
-          <th class="govuk-table__header" scope="col"></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <%= render 'current_upload', current_uploads: @current_uploads %>
-      </tbody>
-    </table>
-  </div>
   <hr class="govuk-section-break govuk-section-break--m">
   <div class="govuk-grid-column-full">
     <table class="govuk-table">
@@ -31,7 +16,7 @@
         <tr class="govuk-table__row">
           <th class="govuk-table__header" scope="col"><%= t('.name') %></th>
           <th class="govuk-table__header" scope="col"><%= t('.date') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('.no_of_files') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('.number_of_files') %></th>
           <th class="govuk-table__header" scope="col"><%= t('.status') %></th>
         </tr>
       </thead>
@@ -41,6 +26,6 @@
     </table>
     <%= paginate @uploads, views_prefix: 'shared', window: 0, outer_window: 2 %>
 
-    <%= link_to t('.create_new'), new_legal_services_admin_upload_path, class: 'govuk-button'  %>
+    <%= link_to 'Create new', new_legal_services_admin_upload_path, class: 'govuk-button'  %>
   </div>
 </div>

@@ -44,9 +44,9 @@ RSpec.describe LegalServices::Supplier, type: :model do
     before do
       supplier1.service_offerings.create!(lot_number: '1', service_code: 'WPSLS.1.1')
       supplier1.service_offerings.create!(lot_number: '1', service_code: 'WPSLS.1.2')
-      supplier1.service_offerings.create!(lot_number: '2', service_code: 'WPSLS.2a.1')
+      supplier1.service_offerings.create!(lot_number: '2a', service_code: 'WPSLS.2a.1')
 
-      supplier2.service_offerings.create!(lot_number: '2', service_code: 'WPSLS.2a.1')
+      supplier2.service_offerings.create!(lot_number: '2a', service_code: 'WPSLS.2a.1')
       supplier2.service_offerings.create!(lot_number: '3', service_code: 'WPSLS.3.1')
       supplier2.service_offerings.create!(lot_number: '4', service_code: 'WPSLS.4.1')
     end
@@ -63,7 +63,7 @@ RSpec.describe LegalServices::Supplier, type: :model do
 
     it 'ignores services when there is a lot mismatch' do
       expect(described_class.offering_services('1', ['WPSLS.1.1'])).to contain_exactly(supplier1)
-      expect(described_class.offering_services('3', ['WPSLS.1.1'])).to be_empty
+      expect(described_class.offering_services('2a', ['WPSLS.1.1'])).to be_empty
     end
   end
 
@@ -78,94 +78,84 @@ RSpec.describe LegalServices::Supplier, type: :model do
       create(:legal_services_supplier, name: 'Supplier 3')
     end
     let(:supplier4) do
-      create(:legal_services_supplier, name: 'Supplier 3')
+      create(:legal_services_supplier, name: 'Supplier 4')
+    end
+    let(:supplier5) do
+      create(:legal_services_supplier, name: 'Supplier 5')
     end
 
     before do
       supplier1.service_offerings.create!(
-        lot_number: '1', service_code: 'WPSLS.1.1'
+        lot_number: '3', service_code: 'WPSLS.3.1'
       )
       supplier1.service_offerings.create!(
-        lot_number: '1', service_code: 'WPSLS.1.2'
+        lot_number: '4', service_code: 'WPSLS.4.1'
       )
       supplier1.service_offerings.create!(
-        lot_number: '2', service_code: 'WPSLS.2a.1'
+        lot_number: '2a', service_code: 'WPSLS.2a.1'
       )
       supplier2.service_offerings.create!(
-        lot_number: '1', service_code: 'WPSLS.1.2'
+        lot_number: '4', service_code: 'WPSLS.4.1'
       )
       supplier3.service_offerings.create!(
-        lot_number: '2', service_code: 'WPSLS.2a.1'
+        lot_number: '2a', service_code: 'WPSLS.2a.1'
       )
       supplier4.service_offerings.create!(
-        lot_number: '1', service_code: 'WPSLS.1.1'
+        lot_number: '3', service_code: 'WPSLS.3.1'
       )
-      supplier1.regional_availabilities.create!(region_code: 'UKC')
-      supplier2.regional_availabilities.create!(region_code: 'UKD')
-      supplier3.regional_availabilities.create!(region_code: 'UKC')
-      supplier4.regional_availabilities.create!(region_code: 'UKC')
+      supplier1.regional_availabilities.create!(service_code: 'WPSLS.1.1', region_code: 'UKC')
+      supplier1.regional_availabilities.create!(service_code: 'WPSLS.1.2', region_code: 'UKC')
+      supplier1.regional_availabilities.create!(service_code: 'WPSLS.1.1', region_code: 'UKD')
+      supplier2.regional_availabilities.create!(service_code: 'WPSLS.1.2', region_code: 'UKD')
+      supplier3.regional_availabilities.create!(service_code: 'WPSLS.1.1', region_code: 'UKD')
+      supplier4.regional_availabilities.create!(service_code: 'WPSLS.1.1', region_code: 'UKC')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.4', region_code: 'UKC')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.5', region_code: 'UKC')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.6', region_code: 'UKC')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.4', region_code: 'UKD')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.5', region_code: 'UKD')
+      supplier5.regional_availabilities.create!(service_code: 'WPSLS.1.6', region_code: 'UKD')
     end
 
-    it 'returns suppliers with availability in lot and regions' do
-      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.1'], ['UKC']))
+    it 'returns suppliers with availability in lot 1 for a single region' do
+      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.1'], nil, ['UKC']))
+        .to contain_exactly(supplier1, supplier4)
+
+      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.2'], nil, ['UKD']))
+        .to contain_exactly(supplier2)
+
+      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.1'], nil, ['UKD']))
+        .to contain_exactly(supplier1, supplier3)
+    end
+
+    it 'returns suppliers with availability in lot 1 for multiple regions' do
+      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.1'], nil, ['UKC', 'UKD']))
+        .to contain_exactly(supplier1)
+    end
+
+    it 'returns suppliers with availability for multiple services in lot 1 for a single region' do
+      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.1', 'WPSLS.1.2'], nil, ['UKC']))
+        .to contain_exactly(supplier1)
+    end
+
+    it 'returns only suppliers who can provide all services in all regions' do
+      expect(described_class.offering_services_in_regions('1', ['WPSLS.1.4', 'WPSLS.1.5', 'WPSLS.1.6'], nil, ['UKC', 'UKD']))
+        .to contain_exactly(supplier5)
+    end
+
+    it 'returns suppliers with availability in lot 2 for the selected jurisdiction' do
+      expect(described_class.offering_services_in_regions('2', ['WPSLS.2a.1'], 'a', nil))
+        .to contain_exactly(supplier1, supplier3)
+    end
+
+    it 'returns suppliers with availability in lot 3' do
+      expect(described_class.offering_services_in_regions('3', ['WPSLS.3.1'], nil, nil))
         .to contain_exactly(supplier1, supplier4)
     end
-  end
 
-  describe '#services_in_lot' do
-    let(:supplier) { create(:legal_services_supplier, name: 'Supplier 1') }
-
-    let(:service_1_1) { LegalServices::Service.find_by(code: 'WPSLS.1.1') }
-    let(:service_1_2) { LegalServices::Service.find_by(code: 'WPSLS.1.2') }
-    let(:service_3_1) { LegalServices::Service.find_by(code: 'WPSLS.3.1') }
-
-    before do
-      supplier.service_offerings.create!(
-        lot_number: service_1_1.lot_number,
-        service_code: service_1_1.code
-      )
-      supplier.service_offerings.create!(
-        lot_number: service_1_2.lot_number,
-        service_code: service_1_2.code
-      )
-      supplier.service_offerings.create!(
-        lot_number: service_3_1.lot_number,
-        service_code: service_3_1.code
-      )
-    end
-
-    it 'returns services in lot 1' do
-      expect(supplier.services_in_lot('1')).to contain_exactly(service_1_1, service_1_2)
-    end
-
-    it 'returns services in lot 3' do
-      expect(supplier.services_in_lot('3')).to contain_exactly(service_3_1)
-    end
-  end
-
-  describe '.supplying_regions' do
-    let(:supplier1) { create(:legal_services_supplier, name: 'Supplier 1') }
-    let(:supplier2) { create(:legal_services_supplier, name: 'Supplier 2') }
-    let(:supplier3) { create(:legal_services_supplier, name: 'Supplier 3') }
-
-    before do
-      supplier1.regional_availabilities.create!(region_code: 'UKC')
-      supplier1.regional_availabilities.create!(region_code: 'UKD')
-      supplier2.regional_availabilities.create!(region_code: 'UKC')
-      supplier3.regional_availabilities.create!(region_code: 'UKD')
-    end
-
-    it 'returns suppliers offering services in the selected regions' do
-      expect(described_class.supplying_regions(['UKC'])).to contain_exactly(supplier1, supplier2)
-    end
-
-    it 'only includes suppliers offering services in all specified regions' do
-      expect(described_class.supplying_regions(['UKC', 'UKD'])).to contain_exactly(supplier1)
-    end
-
-    it 'returns multiple matching suppliers' do
-      expect(described_class.supplying_regions(['UKD']))
-        .to contain_exactly(supplier1, supplier3)
+    it 'returns suppliers with availability in lot 4' do
+      expect(described_class.offering_services_in_regions('4', ['WPSLS.4.1'], nil, nil))
+        .to contain_exactly(supplier1, supplier2)
     end
   end
 
@@ -174,10 +164,10 @@ RSpec.describe LegalServices::Supplier, type: :model do
     let(:supplier2) { create(:legal_services_supplier, name: 'Supplier 2') }
 
     before do
-      supplier1.regional_availabilities.create!(region_code: 'UKC')
-      supplier1.service_offerings.create!(lot_number: '1', service_code: 'WPSLS.1.1')
-      supplier2.regional_availabilities.create!(region_code: 'UKD')
-      supplier2.service_offerings.create!(lot_number: '2', service_code: 'WPSLS.2a.1')
+      supplier1.regional_availabilities.create!(service_code: 'WPSLS.1.1', region_code: 'UKC')
+      supplier1.service_offerings.create!(lot_number: '3', service_code: 'WPSLS.3.1')
+      supplier2.regional_availabilities.create!(service_code: 'WPSLS.1.1', region_code: 'UKD')
+      supplier2.service_offerings.create!(lot_number: '2a', service_code: 'WPSLS.2a.1')
     end
 
     it 'deletes all regional availabilities' do
