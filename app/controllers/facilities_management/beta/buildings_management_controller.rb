@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address save_building_type save_building_gia].freeze
-    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address save_building_type save_building_gia].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address save_building_type save_building_gia save_security_type].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address save_building_type save_building_gia save_security_type].freeze
 
     def buildings_management
       @error_msg = ''
@@ -49,7 +49,8 @@ module FacilitiesManagement
       @editing = params['id'].present?
       @page_title = if @editing
                       t('facilities_management.beta.building-gross-internal-area.edit_header')
-                    else t('facilities_management.beta.building-gross-internal-area.add_header')
+                    else
+                      t('facilities_management.beta.building-gross-internal-area.add_header')
                     end
       @next_step = 'Building type'
 
@@ -149,9 +150,32 @@ module FacilitiesManagement
     end
 
     def building_security_type
-      @error_msg = ''
+      @inline_error_summary_title = 'You must select level of security clearance'
+      @inline_error_summary_body_href = '#'
+      @inline_summary_error_text = 'Select the level of security clearance needed'
+      building_id = cookies['fm_building_id']
+      @back_link_href = 'buildings-management'
+      @step = 4
+      @next_step = 'Buildings details summary'
+      fm_building_data = FMBuildingData.new
+      @type_list = fm_building_data.building_type_list
+      @type_list_titles = fm_building_data.building_type_list_titles
+      building_details = fm_building_data.new_building_details(building_id)
+      building = JSON.parse(building_details['building_json'])
+      @building_name = building['name']
+      @security_types = fm_building_data.security_types
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
+    end
+
+    def save_security_type
+      key = 'security-type'
+      building_type = request.raw_post
+      save_building_property(key, building_type)
+      j = { 'status': 200 }
+      render json: j, status: 200
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_security_type(): #{e}"
     end
 
     def cache_new_building_id(building_id)
