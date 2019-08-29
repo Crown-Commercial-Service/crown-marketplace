@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address save_building_type].freeze
-    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address save_building_type].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_type save_new_building save_building_address save_building_type save_security_type].freeze
+    before_action :authorize_user, only: %i[buildings_management building_type save_new_building save_building_address save_building_type save_security_type].freeze
 
     def buildings_management
       @error_msg = ''
@@ -127,6 +127,16 @@ module FacilitiesManagement
       @security_types = fm_building_data.security_types
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
+    end
+
+    def save_security_type
+      key = 'security-type'
+      building_type = request.raw_post
+      save_building_property(key, building_type)
+      j = { 'status': 200 }
+      render json: j, status: 200
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_security_type(): #{e}"
     end
 
     def cache_new_building_id(building_id)
