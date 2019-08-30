@@ -11,6 +11,7 @@
 <% if @building_count.positive? %>
   <form id="details_submission_form" action="building-details-summary" method="post">
     <input type="hidden" value="" name="id" id="target-building"/>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   </form>
   <div class="govuk-table" data-module="table" id="buildings-list">
     <table class="govuk-!-width-three-quarters" style="border-collapse: collapse;">
