@@ -211,11 +211,29 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsController building_security_type(): #{e}"
     end
 
+    def region(postcode)
+      fm_building_data = FMBuildingData.new
+      region_json = JSON.parse(fm_building_data.region_info_for_post_town(postcode))
+      region_json['result']['region']
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController region(): #{e}"
+    end
+
+    def save_region(postcode)
+      region = region(postcode)
+      save_building_property('region', region)
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_region(): #{e}"
+    end
+
     def save_new_building
       new_building_json = request.raw_post
       fm_building_data = FMBuildingData.new
       building_id = fm_building_data.save_new_building current_user.email.to_s, new_building_json
       cache_new_building_id building_id
+      add = JSON.parse(new_building_json)
+      postcode = add['address']['fm-address-postcode']
+      save_region(postcode)
       j = { 'status': 200, 'fm_building-id': building_id.to_s }
       render json: j, status: 200
     rescue StandardError => e
