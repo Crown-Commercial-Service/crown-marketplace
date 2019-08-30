@@ -25,7 +25,7 @@ module LegalServices
 
       aasm do
         state :in_progress, initial: true
-        state :in_review, :failed, :approved, :rejected, :canceled
+        state :in_review, :failed, :approved, :rejected, :canceled, :completed
         event :review do
           transitions from: :in_progress, to: :in_review
         end
@@ -35,6 +35,9 @@ module LegalServices
         event :approve do
           after :start_upload
           transitions from: :in_review, to: :approved
+        end
+        event :complete do
+          transitions from: :approved, to: :completed
         end
         event :reject do
           transitions from: :in_review, to: :rejected
