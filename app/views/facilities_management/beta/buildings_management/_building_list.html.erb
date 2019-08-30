@@ -9,6 +9,9 @@
   </table>
 <% end %>
 <% if @building_count.positive? %>
+  <form id="details_submission_form" action="building-details-summary" method="post">
+    <input type="hidden" value="" name="id" id="target-building"/>
+  </form>
   <div class="govuk-table" data-module="table" id="buildings-list">
     <table class="govuk-!-width-three-quarters" style="border-collapse: collapse;">
       <thead>
@@ -23,7 +26,7 @@
       <% @building_data.each do |record| %>
         <% building = JSON.parse(record['building'].to_s) %>
         <tr>
-          <td><%= link_to building['name'].to_s, 'building-details-summary/'+building['building-ref'].to_s, { class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
+          <td><%= link_to building['name'].to_s, 'building-details-summary', {role: 'details', 'building-id' => record['id'], class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
           </td>
           <td><%= building['description'].to_s.length > 0 ? building['description'].to_s : '-'%></td>
           <td><%= record['updated_at'].to_datetime.strftime("%d/%m/%Y") %></td>
