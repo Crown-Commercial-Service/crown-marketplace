@@ -28,7 +28,7 @@ class FMBuildingData
 
   def save_building_property(building_id, key, value)
     # Key/Value properties associated with a building such as GIA, etc
-    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{" + key + "}', to_json('" + value + "'::text)::jsonb) where id = '" + building_id + "';"
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{" + key + "}', '" + value + "') where id = '" + building_id + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building property: #{e}"
