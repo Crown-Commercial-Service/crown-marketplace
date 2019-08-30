@@ -169,7 +169,7 @@ form.ccs-form {
     a.ccs-no-underline & {
         margin-left: govuk-spacing(1);
     }
-  &-approved {
+  &-approved, &-completed {
     background-color: govuk-colour("green");
   }
   &-canceled, &-failed, &-rejected {
