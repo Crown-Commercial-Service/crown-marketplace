@@ -223,8 +223,9 @@ module FacilitiesManagement
     end
 
     def save_region(postcode)
+      key = 'region'
       region = region(postcode)
-      save_building_property('region', region)
+      save_building_property(key, region.to_s)
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_region(): #{e}"
     end
