@@ -46,6 +46,7 @@ module FacilitiesManagement
       building_details = fm_building_data.get_building_data_by_ref(current_user.email.to_s, building_ref) if building_ref.present?
       building_details
     end
+
     def get_new_or_specific_building_by_id(building_id)
       fm_building_data = FMBuildingData.new
       building_details = fm_building_data.new_building_details(current_user.email.to_s) if building_id.blank?
