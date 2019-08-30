@@ -21,7 +21,8 @@ module FacilitiesManagement
       @error_msg = ''
       building_id = if params['id'].present?
                       params['id']
-                    else cookies['fm-building-id']
+                    else
+                      cookies['fm-building-id']
                     end
       building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
                                                                     "' and building_json->>'id = '#{building_id}'")
@@ -57,7 +58,8 @@ module FacilitiesManagement
     def building_gross_internal_area
       building_id = if params['id'].present?
                       params['id']
-                    else cookies['fm_building_id']
+                    else
+                      cookies['fm_building_id']
                     end
       @back_link_href = "../building-details-summary/#{building_id}"
       @step = 2
