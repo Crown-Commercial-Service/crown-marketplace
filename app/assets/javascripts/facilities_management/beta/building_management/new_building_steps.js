@@ -21,6 +21,32 @@ $(function () {
 
     };
 
+    const saveBuildingGIA = function (redirectURI) {
+        let giaValue =  $('#fm-bm-internal-square-area').val();
+
+        if (!giaValue) {
+            $('#inline-error-message').removeClass('govuk-visually-hidden');
+            $('html, body').animate({scrollTop: 0}, 500);
+        } else {
+            let url = 'save-building-gia';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(giaValue),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.href = redirectURI
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    };
+
     const saveBuildingType = function (redirectURI) {
         let radioValue = $("input[name='fm-building-type-radio']:checked").val();
 
@@ -106,6 +132,7 @@ $(function () {
                     break;
 
                 case 2:
+                    saveBuildingGIA(redirect_uri);
                     break;
                 case 3:
                     saveBuildingType(redirect_uri);
