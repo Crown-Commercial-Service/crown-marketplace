@@ -44,7 +44,7 @@ $(function () {
         $.ajax( {
             url: '.',
             dataType: 'json',
-            type: 'post',
+            type: 'put',
             contentType: 'application/json',
             data: JSON.stringify(jsonValue),
             processData: false,
