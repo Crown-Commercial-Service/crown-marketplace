@@ -54,5 +54,5 @@ end
 def file_path(file)
   return file.path if Rails.env.development?
 
-  "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}#{file.url}"
+  file.url
 end
