@@ -8,7 +8,8 @@ def add_rate_cards_to_suppliers(upload_id)
 
   suppliers = upload.data
   suppliers.each { |supplier| supplier['rate_cards'] = [] }
-  rate_cards_workbook = Roo::Spreadsheet.open upload.rate_cards.file
+  rate_cards_file = upload.rate_cards.file
+  rate_cards_workbook = Roo::Spreadsheet.open rate_cards_file
   lot_numbers = ['1', '2a', '2b', '2c', '3', '4']
 
   (0..5).each do |sheet_number|
