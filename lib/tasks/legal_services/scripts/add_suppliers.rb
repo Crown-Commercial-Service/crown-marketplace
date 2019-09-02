@@ -3,7 +3,8 @@ require 'json'
 
 def add_suppliers(upload_id)
   upload = LegalServices::Admin::Upload.find(upload_id)
-  suppliers_workbook = Roo::Spreadsheet.open upload.suppliers.file
+  suppliers_file = upload.suppliers.file
+  suppliers_workbook = Roo::Spreadsheet.open suppliers_file
 
   headers = {
     name: 'Supplier Name',
