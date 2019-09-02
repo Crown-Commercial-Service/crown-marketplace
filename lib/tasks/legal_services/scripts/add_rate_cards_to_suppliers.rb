@@ -8,8 +8,7 @@ def add_rate_cards_to_suppliers(upload_id)
 
   suppliers = upload.data
   suppliers.each { |supplier| supplier['rate_cards'] = [] }
-  rate_cards_workbook_path = upload.rate_cards.path
-  rate_cards_workbook = Roo::Spreadsheet.open rate_cards_workbook_path
+  rate_cards_workbook = Roo::Spreadsheet.open(file_path(upload.rate_cards))
   lot_numbers = ['1', '2a', '2b', '2c', '3', '4']
 
   (0..5).each do |sheet_number|
@@ -59,6 +58,12 @@ end
 
 def convert_price_to_pence(price)
   price.to_i * 100
+end
+
+def file_path(file)
+  return file.path if Rails.env.development?
+
+  file.url
 end
 
 # rubocop:enable Metrics/AbcSize

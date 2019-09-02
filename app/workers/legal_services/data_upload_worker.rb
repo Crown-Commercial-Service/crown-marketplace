@@ -10,6 +10,7 @@ module LegalServices
       suppliers = upload.data
 
       LegalServices::Upload.upload!(suppliers)
+      upload.complete!
     rescue ActiveRecord::RecordInvalid => e
       summary = {
         record: e.record,
