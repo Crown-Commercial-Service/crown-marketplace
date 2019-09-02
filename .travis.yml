@@ -18,13 +18,10 @@ addons:
   postgresql: "11"
 before_install:
   - gem install --force --conservative -v 1.16.6 bundler
-  -
-  - sudo apt-get install postgresql-11-postgis-2.5
-  - sudo apt-get install postgresql-11-postgis-2.5-scripts
-  -
   - sudo service postgresql stop
-  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
   - sleep 5
+  - sudo apt-get install postgresql-11-postgis-2.5
+  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
   - sudo service postgresql start 11
 before_script:
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
