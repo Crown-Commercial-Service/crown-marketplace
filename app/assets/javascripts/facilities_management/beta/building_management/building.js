@@ -76,16 +76,12 @@ $(function () {
                         let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + buildingRef;
                         let newOption = '<option value="' + newOptionValue + '">' + newOptionData + '</option>';
                         $('#fm-find-address-results').append(newOption);
-                        // $('#fm-address-sub-title').text('Select an address');
                         $('#fm-bm-postcode-lookup-container').removeClass('govuk-visually-hidden');
-
                         $('#fm-find-address-btn').removeClass('govuk-button');
                         $('#fm-find-address-btn').addClass('govuk-link--no-visited-state');
                         $('#fm-find-address-btn').text('Change');
-                        $('fm-bm-postcode-lookup-container').addClass('govuk-!-margin-top-3')
+                        $('fm-bm-postcode-lookup-container').addClass('govuk-!-margin-top-3');
                         $('#fm-find-address-results').focus();
-                        //$('#fm-bm-postcode').addClass('govuk-visually-hidden');
-                        //$('#fm-find-address-btn').addClass('govuk-visually-hidden');
                     }
                 } else {
                     $('#fm-cant-find-address-link').removeClass('govuk-visually-hidden')
