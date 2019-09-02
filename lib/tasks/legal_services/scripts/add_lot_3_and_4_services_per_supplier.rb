@@ -7,8 +7,8 @@ def add_lot_3_and_4_services_per_supplier(upload_id)
   upload = LegalServices::Admin::Upload.find(upload_id)
   suppliers = upload.data
 
-  lot_3_services = Roo::Spreadsheet.open upload.supplier_lot_3_service_offerings.file.path
-  lot_4_services = Roo::Spreadsheet.open upload.supplier_lot_4_service_offerings.file.path
+  lot_3_services = Roo::Spreadsheet.open upload.supplier_lot_3_service_offerings.file
+  lot_4_services = Roo::Spreadsheet.open upload.supplier_lot_4_service_offerings.file
 
   lot_3_sheet = lot_3_services.sheet(0)
   lot_4_sheet = lot_4_services.sheet(0)
