@@ -715,6 +715,15 @@ en:
         section-header: Building details summary
         select_one_option_text: Select one option
         status_warning_message: Your building was saved.  "%{name}" is incomplete.  You need to answer all questions to be used in procurement.
+      building-gross-internal-area:
+        add_header: Add building GIA
+        edit_header: Change building GIA
+        guidance_1: Gross internal area (GIA) is the area of the building measured to the internal face of the perimeter walls at each floor area.
+        guidance_2: For example, 18000 square metres.
+        guidance_3: Use
+        guidance_link_text: this guidance on how to measure GIA
+        heading: What's the internal area of the building?
+        input_label: sqm (square metres)
       index:
         column_desc_header: Description
         column_lstup_header: Last updated

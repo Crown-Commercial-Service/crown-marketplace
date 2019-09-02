@@ -12,16 +12,13 @@ module LegalServices
     sidekiq_options queue: 'ls'
 
     def perform(upload_id)
-      Rake::Task.clear
-      Rails.application.load_tasks
-      Rake::Task['ls:clean'].invoke
+      upload = LegalServices::Admin::Upload.find(upload_id)
       add_suppliers(upload_id)
       add_lot_1_services_per_supplier(upload_id)
       add_lot_2_services_per_supplier(upload_id)
       add_lot_3_and_4_services_per_supplier(upload_id)
       add_rate_cards_to_suppliers(upload_id)
 
-      upload = LegalServices::Admin::Upload.find(upload_id)
       upload.review!
     rescue StandardError => e
       fail_upload(upload, e.full_message)
