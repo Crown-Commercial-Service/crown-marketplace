@@ -83,7 +83,9 @@ $(function () {
 
         if (!securityType) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
+
             $('html, body').animate({scrollTop: 0}, 500);
+
         } else {
             let url = 'save-building-security-type';
 
