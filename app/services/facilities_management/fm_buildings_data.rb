@@ -187,7 +187,7 @@ class FMBuildingData
      'Universities and Colleges', 'Doctors, Dentists and Health Clinics', 'Nursery and Care Homes', 'Data Centre Operations',
      'External parks, grounds and car parks', 'Laboratory', 'Heritage Buildings', 'Nuclear Facilities', 'Animal Facilities',
      'Custodial Facilities', 'Fire and Police Stations', 'Production Facilities', 'Workshops', 'Garages',
-     'Shopping Centres', 'Museums /Galleries', 'Fitness / Training Establishments', 'Residential Buildings',
+     'Shopping Centres', 'Museums or Galleries', 'Fitness or training Establishments', 'Residential Buildings',
      'Port and Airport buildings', 'List X Property', 'Hospitals', 'Mothballed / Vacant / Disposal']
   end
 
@@ -216,8 +216,8 @@ class FMBuildingData
       'Workshops' => 'Areas where works are undertaken such as joinery or metal working facilities',
       'Garages' => 'Areas where motor vehicles are cleaned, serviced, repaired and maintained.',
       'Shopping Centres' => 'Areas where retail services are delivered to the public.',
-      'Museums /Galleries' => 'Areas are generally open to the public with some restrictions in place from time to time. Some facilities have no public access.',
-      'Fitness / Training Establishments' => 'Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal / external sports facilities.',
+      'Museums or Galleries' => 'Areas are generally open to the public with some restrictions in place from time to time. Some facilities have no public access.',
+      'Fitness or training Establishments' => 'Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal / external sports facilities.',
       'Residential Buildings' => 'Residential accommodation / areas.',
       'Port and Airport buildings' => 'Areas associated with air and sea transportation and supporting facilities, such as airports, aerodromes and dock areas.',
       'List X Property' => 'A commercial site (i.e. non-Government) on UK soil that is approved to hold UK government protectively marked information marked as \'confidential\' and above. It is applied to a company\'s specific site and not a company as a whole.',
