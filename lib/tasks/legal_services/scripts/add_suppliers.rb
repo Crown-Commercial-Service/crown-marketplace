@@ -3,12 +3,12 @@ require 'json'
 
 def add_suppliers(upload_id)
   upload = LegalServices::Admin::Upload.find(upload_id)
-  suppliers_workbook = Roo::Spreadsheet.open upload.suppliers.path
+  suppliers_workbook = Roo::Spreadsheet.open(file_path(upload.suppliers))
 
   headers = {
     name: 'Supplier Name',
-    contact_email: 'Email address',
-    telephone_number: 'Phone number',
+    email: 'Email address',
+    phone_number: 'Phone number',
     website: 'Website URL',
     address: 'Postal address',
     sme: 'Is an SME',
@@ -31,4 +31,10 @@ def add_suppliers(upload_id)
 
   upload.data = suppliers
   upload.save!
+end
+
+def file_path(file)
+  return file.path if Rails.env.development?
+
+  file.url
 end

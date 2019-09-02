@@ -26,7 +26,7 @@ $(function () {
     };
 
     const saveBuildingGIA = function (redirectURI) {
-        let giaValue = $('#fm-bm-internal-square-area').val();
+        let giaValue =  $('#fm-bm-internal-square-area').val();
 
         if (!giaValue) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
