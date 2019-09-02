@@ -1,5 +1,10 @@
 $(function () {
 
+    $('#fm-bm-skip-step-link').on('click', function (e) {
+        e.preventDefault();
+        location.href = 'buildings-management'
+    });
+
     const saveStep = function (building, redirect_uri) {
         let url = '/facilities-management/beta/buildings-management/save-new-building';
 
@@ -22,7 +27,7 @@ $(function () {
     };
 
     const saveBuildingGIA = function (redirectURI) {
-        let giaValue =  $('#fm-bm-internal-square-area').val();
+        let giaValue = $('#fm-bm-internal-square-area').val();
 
         if (!giaValue) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
