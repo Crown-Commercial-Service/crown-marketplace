@@ -36,13 +36,13 @@ $(function () {
 
         return isValid;
     });
-    const saveGIA =(function(id,value, redirectURL) {
+    const saveGIA =(function(id, value, redirectURL) {
         let jsonValue = {};
         jsonValue["gia"] = value;
         jsonValue["building-id"] = id;
 
         $.ajax( {
-            url: '.',
+            url: './building-gross-internal-area',
             dataType: 'json',
             type: 'put',
             contentType: 'application/json',

@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_gia].freeze
-    before_action :authorize_user, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_gia].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_gia update_building_type update_security_type].freeze
+    before_action :authorize_user, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_gia update_building_type update_security_type].freeze
 
     def buildings_management
       @error_msg = ''
@@ -19,13 +19,11 @@ module FacilitiesManagement
 
     def building_details_summary
       @error_msg = ''
-      building_id = if params['id'].present?
-                      params['id']
-                    else
-                      cookies['fm-building-id']
-                    end
+      @building_id = building_id_from_inputs
+      @base_path = request.method.to_s == 'GET' ? '../' : './'
+
       building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
-                                                                    "' and building_json->>'id = '#{building_id}'")
+                                                                    "' and id = '#{@building_id}'")
       @building = building_record&.building_json
       @display_warning = building_record.blank? ? false : building_record&.status == 'Incomplete'
     rescue StandardError => e
@@ -56,12 +54,8 @@ module FacilitiesManagement
     end
 
     def building_gross_internal_area
-      building_id = if params['id'].present?
-                      params['id']
-                    else
-                      cookies['fm_building_id']
-                    end
-      @back_link_href = "../building-details-summary/#{building_id}"
+      local_building_id = building_id_from_inputs
+      @back_link_href = "./building-details-summary/#{local_building_id}"
       @step = 2
       @editing = params['id'].present?
       @page_title = if @editing
@@ -74,10 +68,10 @@ module FacilitiesManagement
       @inline_error_summary_body_href = '#'
       @inline_summary_error_text = ''
 
-      building_details = get_new_or_specific_building_by_id building_id
-      @building_name = building_details['building']['name']
-      @building_id = building_details['id']
-      @building = building_details['building'] if building_details['building'].present?
+      building_details = get_new_or_specific_building_by_id local_building_id
+      @building = JSON.parse(building_details['building']) if building_details['building'].present?
+      @building_name = @building['name']
+      @building_id = local_building_id
     end
 
     def get_existing_building(building_id)
@@ -89,17 +83,18 @@ module FacilitiesManagement
       { 'building-id' => building_id }
     end
 
-    def gia_update_is_valid(building_id, input_gia)
+    def update_and_validate_response(building_id, property_name, new_value)
       fm_building_data = FMBuildingData.new
-      fm_building_data.save_building_property building_id, 'gia', input_gia
-      JSON.parse(get_existing_building(building_id)['building'])['gia'].to_s == input_gia
+      fm_building_data.save_building_property building_id, property_name, new_value
+      updated_building = JSON.parse(get_existing_building(building_id)['building'])
+      updated_building.key?(property_name) ? updated_building[property_name].to_s == new_value : false
     end
 
     def update_building_gia
       status = 200
-      raise "Building #{id} not found" if get_existing_building(params['building-id']).blank?
+      validate_input_building
 
-      raise "Building #{id} GIA not saved" unless gia_update_is_valid params['building-id'], params[:gia]
+      raise "Building #{params['building-id']} GIA not saved" unless update_and_validate_response params['building-id'], 'gia', params[:gia]
 
       render json: { status: status, result: (get_return_data params['building-id'])[:gia] = params[:gia] }
     rescue StandardError => e
@@ -107,27 +102,57 @@ module FacilitiesManagement
       raise e
     end
 
+    def update_building_type
+      status = 200
+      validate_input_building
+
+      raise "Building #{params['building-id']} type not saved" unless update_and_validate_response params['building-id'], 'building-type', params['building-type']
+
+      render json: { status: status, result: (get_return_data params['building-id'])['building-type'] = params['building-type'] }
+    end
+
+    def building_id_from_inputs
+      if params['id'].present?
+        params['id']
+      else
+        cookies['fm-building-id']
+      end
+    end
+
     def building_type
-      @inline_error_summary_title = 'You must select type of building'
+      local_building_id = building_id_from_inputs
+      fm_building_data = FMBuildingData.new
+      building_details = get_new_or_specific_building_by_id local_building_id
+
+      @inline_error_summary_title = 'You must select the type of building'
       @inline_error_summary_body_href = '#'
       @inline_summary_error_text = 'Choose the building type that best describes your building'
-      building_id = cookies['fm_building_id']
       @back_link_href = 'buildings-management'
       @step = 3
       @next_step = 'Select the level of security clearance needed'
-      fm_building_data = FMBuildingData.new
+      @editing = params['id'].present?
+      @back_link_href = if @editing
+                          "./building-details-summary/#{local_building_id}"
+                        else
+                          './buildings-management/'
+                        end
+
       @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
-      building_details = fm_building_data.new_building_details(building_id)
-      building = JSON.parse(building_details['building_json'])
-      @building_name = building['name']
-      @page_title = 'Building type'
+      @building_id = building_details['id'].blank? ? nil : building_details['id']
+      @building = JSON.parse(building_details['building'])
+      @building_name = @building['name']
+      @page_title = @editing ? 'Change building type' : 'Building type'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
 
     def building_address
-      @building_id = cookies['fm_building_id']
+      @building_id = if params['id'].present?
+                       params['id']
+                     else
+                       cookies['fm-building-id']
+                     end
       fm_building_data = FMBuildingData.new
       building_details = fm_building_data.new_building_details(@building_id)
       building = JSON.parse(building_details['building_json'])
@@ -179,28 +204,52 @@ module FacilitiesManagement
     end
 
     def building_security_type
+      fm_building_data = FMBuildingData.new
+      local_building_id = building_id_from_inputs
+      building_details = get_new_or_specific_building_by_id local_building_id
+      @building = JSON.parse(building_details['building'])
+      @editing = params['id'].present?
+      @back_link_href = if @editing
+                          "./building-details-summary/#{local_building_id}"
+                        else
+                          './buildings-management/'
+                        end
+
       @inline_error_summary_title = 'You must select level of security clearance'
       @inline_error_summary_body_href = '#'
       @inline_summary_error_text = 'Select the level of security clearance needed'
-      building_id = cookies['fm_building_id']
-      @back_link_href = 'buildings-management'
       @step = 4
       @next_step = 'Buildings details summary'
-      fm_building_data = FMBuildingData.new
       @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
-      building_details = fm_building_data.new_building_details(building_id)
-      building = JSON.parse(building_details['building_json'])
-      @building_name = building['name']
+      @building_name = @building['name']
+      @building_id = local_building_id
       @security_types = fm_building_data.security_types
+      @page_title = 'Change Security Type' if @editing
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
     end
 
+    def validate_input_building
+      raise "Building #{params['building-id']} not found" if get_existing_building(params['building-id']).blank?
+
+      true
+    end
+
+    def update_security_type
+      status = 200
+      validate_input_building
+      raise "Security #{params['building-id']} type not saved" unless update_and_validate_response params['building-id'], 'security-type', params['security-type']
+
+      raise "Security #{params['building-id']} details not saved" unless update_and_validate_response params['building-id'], 'security-details', params['security-details']
+
+      render json: { status: status, result: (get_return_data params['building-id'])['security-type'] = params['security-type'] }
+    end
+
     def save_security_type
-      key = 'security-type'
-      building_type = request.raw_post
-      save_building_property(key, building_type)
+      save_building_property('security-type', params['security-type'])
+      save_building_property('security-details', params['security-details'])
+
       j = { 'status': 200 }
       render json: j, status: 200
     rescue StandardError => e

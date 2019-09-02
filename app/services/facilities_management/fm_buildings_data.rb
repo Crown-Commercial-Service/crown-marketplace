@@ -28,7 +28,7 @@ class FMBuildingData
 
   def save_building_property(building_id, key, value)
     # Key/Value properties associated with a building such as GIA, etc
-    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{" + key + "}', '" + value + "'::jsonb) where id = '" + building_id + "';"
+    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{" + key + "}', '\"" + value + "\"', true) where id = '" + building_id + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building property: #{e}"
@@ -51,9 +51,9 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get new building id: #{e}"
   end
 
-  def new_building_details(building_id)
+  def new_building_details(email_address)
     # returns building details for a given building_id
-    query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
+    query = "select building_json as building from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(result[0].to_json)
   rescue StandardError => e
@@ -118,7 +118,7 @@ class FMBuildingData
   def get_building_data_by_id(email_address, id)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
-    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
+    query = "select id, updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     Rails.logger.info(result.to_json.to_s)
     JSON.parse(result.to_json)
@@ -187,7 +187,7 @@ class FMBuildingData
      'Universities and Colleges', 'Doctors, Dentists and Health Clinics', 'Nursery and Care Homes', 'Data Centre Operations',
      'External parks, grounds and car parks', 'Laboratory', 'Heritage Buildings', 'Nuclear Facilities', 'Animal Facilities',
      'Custodial Facilities', 'Fire and Police Stations', 'Production Facilities', 'Workshops', 'Garages',
-     'Shopping Centres', 'Museums /Galleries', 'Fitness / Training Establishments', 'Residential Buildings',
+     'Shopping Centres', 'Museums or Galleries', 'Fitness or Training Establishments', 'Residential Buildings',
      'Port and Airport buildings', 'List X Property', 'Hospitals', 'Mothballed / Vacant / Disposal']
   end
 
@@ -216,8 +216,8 @@ class FMBuildingData
       'Workshops' => 'Areas where works are undertaken such as joinery or metal working facilities',
       'Garages' => 'Areas where motor vehicles are cleaned, serviced, repaired and maintained.',
       'Shopping Centres' => 'Areas where retail services are delivered to the public.',
-      'Museums /Galleries' => 'Areas are generally open to the public with some restrictions in place from time to time. Some facilities have no public access.',
-      'Fitness / Training Establishments' => 'Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal / external sports facilities.',
+      'Museums or Galleries' => 'Areas are generally open to the public with some restrictions in place from time to time. Some facilities have no public access.',
+      'Fitness or Training Establishments' => 'Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal / external sports facilities.',
       'Residential Buildings' => 'Residential accommodation / areas.',
       'Port and Airport buildings' => 'Areas associated with air and sea transportation and supporting facilities, such as airports, aerodromes and dock areas.',
       'List X Property' => 'A commercial site (i.e. non-Government) on UK soil that is approved to hold UK government protectively marked information marked as \'confidential\' and above. It is applied to a company\'s specific site and not a company as a whole.',

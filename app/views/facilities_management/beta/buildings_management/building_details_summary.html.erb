@@ -1,5 +1,5 @@
 <div class="govuk-body">
-  <a href="../buildings-management" aria-label="<%= t('layouts.application.back_aria_label')%>" class="govuk-back-link"><%= t('layouts.application.back') %></a>
+  <a href="./buildings-management" aria-label="<%= t('layouts.application.back_aria_label')%>" class="govuk-back-link"><%= t('layouts.application.back') %></a>
   <%= render('errors/inline_error_summary') %>
   <% if !@building.nil? %>
     <span class="govuk-caption-l" style="position:relative; top:1ex; margin-bottom:0; color:#AAAAAA"><%= t('facilities_management.beta.index.manage_buildings_header') %></span>
@@ -13,7 +13,7 @@
       <% end %>
     <%= render partial: 'building_details_summary' %>
   <% else %>
-    <h1><%= t('facilities_management.beta.index.manage_buildings_header') %>Manage Buildings</h1>
+    <h1><%= t('facilities_management.beta.index.manage_buildings_header') %></h1>
     <p>
       <%= t('facilities_management.beta.building-details-summary.no_data_message') %>
     </p>

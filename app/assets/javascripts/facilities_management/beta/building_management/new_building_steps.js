@@ -1,5 +1,9 @@
 $(function () {
-
+    $('#fm-bm-skip-step-link').on('click', function (e) {
+        e.preventDefault();
+        location.href = 'buildings-management'
+    });
+    
     const saveStep = function (building, redirect_uri) {
         let url = '/facilities-management/beta/buildings-management/save-new-building';
 
@@ -22,7 +26,7 @@ $(function () {
     };
 
     const saveBuildingGIA = function (redirectURI) {
-        let giaValue =  $('#fm-bm-internal-square-area').val();
+        let giaValue = $('#fm-bm-internal-square-area').val();
 
         if (!giaValue) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
@@ -75,19 +79,23 @@ $(function () {
 
     const saveSecurityType = function (redirectURI) {
         let securityType = $("input[name='fm-building-security-type-radio']:checked").val();
+        let details = $("#fm-building-security-type-more-detail").val();
 
         if (!securityType) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
             $('html, body').animate({scrollTop: 0}, 500);
         } else {
             let url = 'save-building-security-type';
+            let jsonData = {}
+            jsonData["security-type"] = securityType;
+            jsonData["security-details"] = details;
 
             $.ajax({
                 url: url,
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json',
-                data: JSON.stringify(securityType),
+                data: JSON.stringify(jsonData),
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     location.href = redirectURI
