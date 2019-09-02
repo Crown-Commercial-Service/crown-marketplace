@@ -29,11 +29,15 @@
   <!-- find address -->
   <span id="fm-address-sub-title" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0">Postcode</span>
   <input id="fm-bm-postcode" class="govuk-input govuk-!-margin-top-0 govuk-!-margin-bottom-0" type="text" maxlength="12" style="width:150px;">
-  <select class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0 govuk-visually-hidden" id="fm-find-address-results" name="fm-find-address-results">
-    <option value="status-option" selected>0 addresses found</option>
-  </select><br>
-  <a id="fm-find-address-btn" class="govuk-button govuk-!-margin-top-2">Find address</a><br>
-  <a id="fm-cant-find-address-link" class="govuk-link govuk-visually-hidden">I cant find my building's address in the list</a>
+  <a id="fm-find-address-btn" href="#" class="govuk-button ">Find address</a><br>
+
+  <div id="fm-bm-postcode-lookup-container" class="govuk-visually-hidden govuk-!-margin-bottom-6 govuk-!-margin-top-6">
+    <span class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</span>
+    <select class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0" id="fm-find-address-results" name="fm-find-address-results">
+      <option value="status-option" selected>0 addresses found</option>
+    </select><br>
+    <a id="fm-cant-find-address-link" href="#" class="govuk-link govuk-visually-hidden govuk-!-margin-top-6">I cant find my building's address in the list</a>
+  </div>
 </div>
 
 <!-- footer -->
