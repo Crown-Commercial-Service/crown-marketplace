@@ -30,7 +30,7 @@
           <td><%= link_to building['name'].to_s, 'building-details-summary', {role: 'details', 'building-id' => record['id'], class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
           </td>
           <td><%= building['description'].to_s.length > 0 ? building['description'].to_s : '-'%></td>
-          <td><%= record['updated_at'].to_datetime.strftime("%d/%m/%Y") %></td>
+          <td><%= record['updated_at'].to_datetime.strftime("%d/%m/%Y") %><br /><%= record['updated_at'].to_datetime.strftime("%H:%M:%S")%></td>
           <td><%= record['status'].to_s %></td>
         </tr>
       <% end %>
