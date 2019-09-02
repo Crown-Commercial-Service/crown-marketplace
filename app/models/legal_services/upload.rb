@@ -32,7 +32,12 @@ module LegalServices
         sme: data['sme'],
         address: data['address'],
         website: data['website'],
-        duns: data['duns']
+        duns: data['duns'],
+        rate_cards: data['rate_cards'],
+        lot_1_prospectus_link: data['lot_1_prospectus_link'],
+        lot_2_prospectus_link: data['lot_2_prospectus_link'],
+        lot_3_prospectus_link: data['lot_3_prospectus_link'],
+        lot_4_prospectus_link: data['lot_4_prospectus_link'],
       )
 
       lot_1_services = data.fetch('lot_1_services', {})
