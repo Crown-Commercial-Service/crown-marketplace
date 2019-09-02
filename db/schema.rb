@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_22_085512) do
+ActiveRecord::Schema.define(version: 2019_08_29_114901) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -21,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_08_22_085512) do
   create_table "facilities_management_buildings", id: false, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at", default: "2019-08-19 12:00:37", null: false
     t.string "status", default: "Incomplete", null: false
     t.uuid "id", null: false
     t.string "updated_by", null: false
@@ -81,15 +80,6 @@ ActiveRecord::Schema.define(version: 2019_08_22_085512) do
     t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
   end
 
-  create_table "fm_procurements", id: false, force: :cascade do |t|
-    t.string "user_id", null: false
-    t.datetime "date_created", null: false
-    t.datetime "last_updated", null: false
-    t.jsonb "procurement"
-    t.string "updated_by", null: false
-    t.index ["user_id"], name: "fm_procurements_user_id_idx"
-  end
-
   create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "data"
     t.text "source_file", null: false
@@ -110,6 +100,14 @@ ActiveRecord::Schema.define(version: 2019_08_22_085512) do
     t.string "code", limit: 255
     t.string "name", limit: 255
     t.index ["code"], name: "fm_regions_code_key", unique: true
+  end
+
+  create_table "fm_security_types", id: false, force: :cascade do |t|
+    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
+    t.string "title", null: false
+    t.string "description"
+    t.integer "sort_order", null: false
+    t.index ["id"], name: "fm_security_types_id_idx"
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|

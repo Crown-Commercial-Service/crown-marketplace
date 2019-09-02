@@ -21,11 +21,38 @@ $(function () {
 
     };
 
+    const saveBuildingGIA = function (redirectURI) {
+        let giaValue =  $('#fm-bm-internal-square-area').val();
+
+        if (!giaValue) {
+            $('#inline-error-message').removeClass('govuk-visually-hidden');
+            $('html, body').animate({scrollTop: 0}, 500);
+        } else {
+            let url = 'save-building-gia';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(giaValue),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.href = redirectURI
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    };
+
     const saveBuildingType = function (redirectURI) {
         let radioValue = $("input[name='fm-building-type-radio']:checked").val();
 
         if (!radioValue) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
+            $('html, body').animate({scrollTop: 0}, 500);
         } else {
             let url = 'save-building-type';
 
@@ -35,6 +62,32 @@ $(function () {
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify(radioValue),
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    location.href = redirectURI
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    };
+
+    const saveSecurityType = function (redirectURI) {
+        let securityType = $("input[name='fm-building-security-type-radio']:checked").val();
+
+        if (!securityType) {
+            $('#inline-error-message').removeClass('govuk-visually-hidden');
+            $('html, body').animate({scrollTop: 0}, 500);
+        } else {
+            let url = 'save-building-security-type';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(securityType),
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     location.href = redirectURI
@@ -79,13 +132,14 @@ $(function () {
                     break;
 
                 case 2:
+                    saveBuildingGIA(redirect_uri);
                     break;
                 case 3:
                     saveBuildingType(redirect_uri);
-                case 4:
-
                     break;
-
+                case 4:
+                    saveSecurityType(redirect_uri);
+                    break;
                 default:
 
                     break;
