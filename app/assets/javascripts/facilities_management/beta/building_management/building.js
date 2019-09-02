@@ -21,7 +21,7 @@ $(function () {
     });
 
     $('#fm-building-desc-input').on('keyup', function (e) {
-        $('#fm-building-desc-chars-left').text(FM.calcCharsLeft(e.target.value, 25));
+        $('#fm-building-desc-chars-left').text(FM.calcCharsLeft(e.target.value, 50));
     });
 
     $('#fm-building-desc-input').on('change', function (e) {
