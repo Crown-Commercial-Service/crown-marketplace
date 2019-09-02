@@ -3,8 +3,7 @@ require 'json'
 
 def add_suppliers(upload_id)
   upload = LegalServices::Admin::Upload.find(upload_id)
-  suppliers_file = upload.suppliers.file
-  suppliers_workbook = Roo::Spreadsheet.open suppliers_file
+  suppliers_workbook = Roo::Spreadsheet.open(file_path(upload.suppliers))
 
   headers = {
     name: 'Supplier Name',
@@ -32,4 +31,10 @@ def add_suppliers(upload_id)
 
   upload.data = suppliers
   upload.save!
+end
+
+def file_path(file)
+  return file.path if Rails.env.development?
+
+  "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{file.url}"
 end

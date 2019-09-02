@@ -7,10 +7,8 @@ def add_lot_3_and_4_services_per_supplier(upload_id)
   upload = LegalServices::Admin::Upload.find(upload_id)
   suppliers = upload.data
 
-  lot_3_services_file = upload.supplier_lot_3_service_offerings.file
-  lot_4_services_file = upload.supplier_lot_4_service_offerings.file
-  lot_3_services = Roo::Spreadsheet.open lot_3_services_file
-  lot_4_services = Roo::Spreadsheet.open lot_4_services_file
+  lot_3_services = Roo::Spreadsheet.open(file_path(upload.supplier_lot_3_service_offerings))
+  lot_4_services = Roo::Spreadsheet.open(file_path(upload.supplier_lot_4_service_offerings))
 
   lot_3_sheet = lot_3_services.sheet(0)
   lot_4_sheet = lot_4_services.sheet(0)
@@ -40,4 +38,10 @@ end
 
 def extract_duns(supplier_name)
   supplier_name.split('[')[1].split(']')[0].to_i
+end
+
+def file_path(file)
+  return file.path if Rails.env.development?
+
+  "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}#{file.url}"
 end

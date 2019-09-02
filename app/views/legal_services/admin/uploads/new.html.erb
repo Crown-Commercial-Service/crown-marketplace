@@ -3,15 +3,6 @@
     <%= render partial: 'shared/error_summary', locals: { errors: @upload.errors } %>
     <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-5 cmp-page-heading"><%= t('.heading') %></h1>
-    <% if @uploads_in_progress.any? %>
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-warning-text__assistive">Warning</span>
-          <%= warning_details(@uploads_in_progress) %>
-        </strong>
-      </div>
-    <% end %>
     <h3 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.upload_title') %></h3>
     <span class="govuk-caption-m govuk-!-margin-bottom-7"><%= t('.upload_caption') %></span>
     <%= form_for @upload, html: { multipart: true } do |f| %>
