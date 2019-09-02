@@ -6,8 +6,7 @@ require 'json'
 def add_lot_1_services_per_supplier(upload_id)
   upload = LegalServices::Admin::Upload.find(upload_id)
 
-  lot_1_services_file = upload.supplier_lot_1_service_offerings.file
-  lot_1_services = Roo::Spreadsheet.open lot_1_services_file
+  lot_1_services = Roo::Spreadsheet.open(file_path(upload.supplier_lot_1_service_offerings))
   suppliers = upload.data
   suppliers.each { |supplier| supplier['lot_1_services'] = [] }
 
@@ -49,4 +48,10 @@ def extract_nuts_code(sheet_name)
   return 'UK' if sheet_name == 'Full UK Coverage'
 
   'UK' + sheet_name.split('(NUTS')[1].split(')')[0].strip
+end
+
+def file_path(file)
+  return file.path if Rails.env.development?
+
+  "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}#{file.url}"
 end
