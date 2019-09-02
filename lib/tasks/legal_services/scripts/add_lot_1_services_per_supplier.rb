@@ -6,7 +6,8 @@ require 'json'
 def add_lot_1_services_per_supplier(upload_id)
   upload = LegalServices::Admin::Upload.find(upload_id)
 
-  lot_1_services = Roo::Spreadsheet.open upload.supplier_lot_1_service_offerings.url
+  lot_1_services_file = upload.supplier_lot_1_service_offerings.file
+  lot_1_services = Roo::Spreadsheet.open lot_1_services_file
   suppliers = upload.data
   suppliers.each { |supplier| supplier['lot_1_services'] = [] }
 
