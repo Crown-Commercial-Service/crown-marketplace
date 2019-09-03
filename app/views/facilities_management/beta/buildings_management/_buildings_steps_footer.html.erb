@@ -5,7 +5,7 @@
   <a id="fm-bm-save-return-to-manage-buildings" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Save and return to manage buildings</a>
   <br>
   <% if @step > 1 then %>
-    <a id="fm-bm-skip-step-link" href="#" class="govuk-link">Skip this step</a>
+    <a id="fm-bm-skip-step-link" href="<%= @skip_link_href %>" class="govuk-link">Skip this step</a>
   <% end %>
   <% unless @next_step.nil? %>
     <span class="govuk-caption-m govuk-!-margin-top-3">Next: <%= @next_step %></span>
