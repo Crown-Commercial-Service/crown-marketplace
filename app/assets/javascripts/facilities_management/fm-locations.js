@@ -137,10 +137,10 @@ $(function () {
                     $('input[name="' + ns + '"]').prop("checked", false);
                 }
 
-                total_count = $('input[name="' + ns + '"]').length
+                total_count = $('input[name="' + ns + '"]').length;
                 selected_count = $('input[name="' + ns + '"]').filter(':checked').length;
             } else {
-                total_count = $('input[name="' + n + '"]').length
+                total_count = $('input[name="' + n + '"]').length;
                 selected_count = $('input[name="' + n + '"]').filter(':checked').length;
             }
 

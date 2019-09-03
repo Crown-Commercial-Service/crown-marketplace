@@ -2,45 +2,58 @@
 <div>
   <%= render 'buildings_steps_header' %>
 </div>
-
-<div>
-  <!-- Building name -->
-  <span class="govuk-heading-m govuk-!-margin-bottom-0">What's the name of your building?</span>
-  <span class="govuk-caption-m govuk-!-margin-top-0">
+<form name="fm-building-details-form" id="fm-bm-building-details-form" action="." method="POST">
+  <input type="hidden" id="fm-redirect-url" value="<%= @back_link_href %>" />
+  <input type="hidden" id="fm-building-id" value="<%= @building_id %>" />
+  <div>
+    <!-- Building name -->
+    <span class="govuk-heading-m govuk-!-margin-bottom-0">What's the name of your building?</span>
+    <span class="govuk-caption-m govuk-!-margin-top-0">
     This will help you refer to your building or part of the building when selecting services.<br>
     For example, Newbury office 3rd floor.
   </span>
 
-  <input id="fm-building-name-input" class="govuk-input" type="text" maxlength="25" style="width:300px;">
-  <span class="govuk-caption-m">You have <span id="fm-building-name-chars-left">25</span> characters remaining</span>
-  <!-- building description -->
-  <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the description? - Optional</span>
-  <span class="govuk-caption-m govuk-!-margin-top-0">
+    <input id="fm-building-name-input" class="govuk-input" type="text" maxlength="25" style="width:300px;"
+           value="<%= @building['name'] %>">
+    <span class="govuk-caption-m">You have <span id="fm-building-name-chars-left">25</span> characters remaining</span>
+    <!-- building description -->
+    <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the description? - Optional</span>
+    <span class="govuk-caption-m govuk-!-margin-top-0">
     Enter additional information about this building that will help you to recognise it.<br>
     For example, some users put their cost centre in this field.
   </span>
-  <input id="fm-building-desc-input" class="govuk-input" type="text" maxlength="50" style="width:300px;">
-  <span class="govuk-caption-m">You have <span id="fm-building-desc-chars-left">50</span> characters remaining</span>
-  <!-- Address -->
-  <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the address?</span>
-  <span class="govuk-caption-m govuk-!-margin-top-0">
+    <input id="fm-building-desc-input" class="govuk-input" type="text" maxlength="50" style="width:300px;"
+           value="<%= @building['description'] %>">
+    <span class="govuk-caption-m">You have <span id="fm-building-desc-chars-left">50</span> characters remaining</span>
+    <!-- Address -->
+    <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the address?</span>
+    <span class="govuk-caption-m govuk-!-margin-top-0">
     We'll use this UK address to assess the region in which your building is located.
   </span>
-  <!-- find address -->
-  <span id="fm-address-sub-title" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0">Postcode</span>
-  <input id="fm-bm-postcode" class="govuk-input govuk-!-margin-top-0 govuk-!-margin-bottom-0" type="text" maxlength="12" style="width:150px;">
-  <a id="fm-find-address-btn" href="#" class="govuk-button ">Find address</a><br>
+    <!-- find address -->
+    <span id="fm-address-sub-title" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0">Postcode</span>
+    <input id="fm-bm-postcode" class="govuk-input govuk-!-margin-top-0 govuk-!-margin-bottom-0" type="text" maxlength="12" style="width:150px;"
+           value="<%= @building['address']['fm-address-postcode'] %>">
+    <a id="fm-find-address-btn" href="#" class="govuk-button ">Find address</a><br>
 
-  <div id="fm-bm-postcode-lookup-container" class="govuk-visually-hidden govuk-!-margin-bottom-6 govuk-!-margin-top-6">
-    <span class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</span>
-    <select class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0" id="fm-find-address-results" name="fm-find-address-results">
-      <option value="status-option" selected>0 addresses found</option>
-    </select><br>
-    <a id="fm-cant-find-address-link" href="#" class="govuk-link govuk-visually-hidden govuk-!-margin-top-6">I cant find my building's address in the list</a>
+    <div id="fm-bm-postcode-lookup-container" class="govuk-visually-hidden govuk-!-margin-bottom-6 govuk-!-margin-top-6">
+      <span class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</span>
+      <select class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0" id="fm-find-address-results" name="fm-find-address-results">
+        <% if @building['address']
+            address_text = stringify_address @building['building-ref'], @building['address'] %>
+          <option value="<%= address_text%>" selected><%=address_text %></option>
+        <% else %>
+          <option value="status-option" selected>0 addresses found</option>
+        <% end %>
+      </select><br>
+      <a id="fm-cant-find-address-link" href="#" class="govuk-link govuk-visually-hidden govuk-!-margin-top-6">I cant
+        find my building's address in the list</a>
+    </div>
   </div>
-</div>
 
-<!-- footer -->
-<div class="govuk-!-margin-top-0">
-  <%= render 'buildings_steps_footer' %>
-</div>
+  <!-- footer -->
+  <div class="govuk-!-margin-top-3">
+    <%= render partial: 'buildings_steps_footer' unless @editing %>
+    <%= render partial: 'buildings_steps_editing_footer' if @editing %>
+  </div>
+</form>

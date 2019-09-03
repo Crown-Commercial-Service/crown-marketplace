@@ -29,7 +29,7 @@ $(function () {
             let id = service.code;
             let newCheckBoxItem = '<div class="govuk-checkboxes__item">\n' +
                 '                <input class="govuk-checkboxes__input" checked id="' + id + '" name="fm-building-service-checkbox" type="checkbox" value="' + id + '">\n' +
-                '                <label class="govuk-label govuk-checkboxes__label" for="' + service.code + '">\n' + service.name + '</label></div>'
+                '                <label class="govuk-label govuk-checkboxes__label" for="' + service.code + '">\n' + service.name + '</label></div>';
 
             $('#fm-buildings-selected-services').prepend(newCheckBoxItem);
 
@@ -94,7 +94,7 @@ $(function () {
         });
 
         selectedServices = filtered;
-        serviceCount = selectedServices.length + 2
+        serviceCount = selectedServices.length + 2;
 
         updateServiceCount();
     });
@@ -117,7 +117,7 @@ $(function () {
 
         let newLI = '<li serviceid="' + serviceId + '" style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
             '<span class="govuk-!-padding-0">' + val + '</span><span class="remove-link">' +
-            '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>'
+            '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>';
         $("#selected-fm-services").append(newLI);
 
         $('#' + removeLinkID).on('click', function (e) {

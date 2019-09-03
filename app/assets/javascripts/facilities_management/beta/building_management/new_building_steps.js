@@ -86,7 +86,7 @@ $(function () {
             $('html, body').animate({scrollTop: 0}, 500);
         } else {
             let url = 'save-building-security-type';
-            let jsonData = {}
+            let jsonData = {};
             jsonData["security-type"] = securityType;
             jsonData["security-details"] = details;
 
@@ -129,9 +129,7 @@ $(function () {
                             id = 'fm-bm-postcode';
                             msg = 'An address is required';
                         }
-
                         pageUtils.toggleFieldValidationError(true, id, msg);
-
                     } else {
                         pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
                         pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
