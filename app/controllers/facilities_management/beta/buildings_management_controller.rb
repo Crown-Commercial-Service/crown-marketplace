@@ -201,6 +201,7 @@ module FacilitiesManagement
       @next_step = "What's the internal area of the building?"
       @page_title = 'Add missing address'
       @building_name = building['name']
+      @skip_link_href = '#'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_address(): #{e}"
     end
