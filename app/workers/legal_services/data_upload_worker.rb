@@ -3,7 +3,7 @@ require 'json'
 module LegalServices
   class DataUploadWorker
     include Sidekiq::Worker
-    sidekiq_options queue: 'ls'
+    sidekiq_options queue: 'default'
 
     def perform(upload_id)
       upload = LegalServices::Admin::Upload.find(upload_id)
