@@ -78,6 +78,7 @@ module FacilitiesManagement
       @building_name = building_details['building']['name']
       @building_id = building_details['id']
       @building = building_details['building'] if building_details['building'].present?
+      @skip_link_href = 'building-type'
     end
 
     def get_existing_building(building_id)
@@ -122,6 +123,7 @@ module FacilitiesManagement
       building = JSON.parse(building_details['building_json'])
       @building_name = building['name']
       @page_title = 'Building type'
+      @skip_link_href = "building-security-type"
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
@@ -136,6 +138,7 @@ module FacilitiesManagement
       @next_step = "What's the internal area of the building?"
       @page_title = 'Add missing address'
       @building_name = building['name']
+      @skip_link_href = '#'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_address(): #{e}"
     end
@@ -193,6 +196,7 @@ module FacilitiesManagement
       building = JSON.parse(building_details['building_json'])
       @building_name = building['name']
       @security_types = fm_building_data.security_types
+      @skip_link_href = 'buildings-management'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
     end
