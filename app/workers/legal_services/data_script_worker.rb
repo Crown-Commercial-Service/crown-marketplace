@@ -9,7 +9,7 @@ require './lib/tasks/legal_services/scripts/add_rate_cards_to_suppliers'
 module LegalServices
   class DataScriptWorker
     include Sidekiq::Worker
-    sidekiq_options queue: 'ls'
+    sidekiq_options queue: 'default'
 
     def perform(upload_id)
       upload = LegalServices::Admin::Upload.find(upload_id)
