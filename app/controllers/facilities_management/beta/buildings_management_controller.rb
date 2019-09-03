@@ -3,8 +3,8 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_gia update_building_type update_security_type].freeze
-    before_action :authorize_user, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_gia update_building_type update_security_type].freeze
+    before_action :authenticate_user!, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
+    before_action :authorize_user, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
 
     def buildings_management
       @error_msg = ''
@@ -35,9 +35,30 @@ module FacilitiesManagement
       @step = 1
       @next_step = "What's the internal area of the building?"
       @page_title = 'Create single building'
+
+      @building_id = building_id_from_inputs
+      if params['id'].present?
+        building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
+                                                                    "' and id = '#{@building_id}'")
+        @building = building_record&.building_json
+        @page_title = 'Change building details'
+        @editing = true
+      else
+        @building = nil
+        @editing = false
+      end
+
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController building(): #{e}"
     end
+
+    def stringify_address(building_ref, address_json_string)
+      address = address_json_string
+      "#{address['fm-address-line-1'].strip},#{address['fm-address-line-2'].strip},
+      #{address['fm-address-town'].strip},#{address['fm-address-county'].strip},#{address['fm-address-postcode'].strip},
+      #{building_ref.strip}"
+    end
+    helper_method :stringify_address
 
     def get_new_or_specific_building_by_ref(building_ref)
       fm_building_data = FMBuildingData.new
@@ -90,6 +111,24 @@ module FacilitiesManagement
       updated_building.key?(property_name) ? updated_building[property_name].to_s == new_value : false
     end
 
+    def update_building_details
+      status = 200
+      validate_input_building
+
+      raise "Building  #{params['building-id']} details - name not saved" unless update_and_validate_response params['building-id'], 'name', params['building-name']
+
+      raise "Building #{params['building-id']} details - description not saved" unless update_and_validate_response params['building-id'], 'description', params['building-description']
+
+      raise "Building #{params['building-id']} details - ref not saved" unless update_and_validate_response params['building-id'], 'building-ref', params['building-ref']
+
+      raise "Building #{params['building-id']} details - address not saved" unless update_and_validate_response params['building-id'], 'address', params['building-address']
+
+      render json: { status: status, result: (get_return_data params['building-id'])[:name] = params['building-name'] }
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsManagementController update_building_details(): #{e}"
+      raise e
+    end
+
     def update_building_gia
       status = 200
       validate_input_building
@@ -113,10 +152,11 @@ module FacilitiesManagement
 
     def building_id_from_inputs
       if params['id'].present?
-        params['id']
-      else
-        cookies['fm-building-id']
+        return params['id']
+      elsif cookies.key?('fm-building-id')
+        return cookies['fm-building-id']
       end
+      nil
     end
 
     def building_type

@@ -18,11 +18,11 @@
       <%= t('facilities_management.beta.building-details-summary.no_data_message') %>
     </p>
   <% end %>
-  <p class="govuk-!-margin-top-9">
-    <a href="../building" class="govuk-button ccs-no-print govuk-!-margin-right-6" role="button">
+  <p class="govuk-!-margin-top-3">
+    <a href="<%=@base_path%>building" class="govuk-button ccs-no-print govuk-!-margin-right-6" role="button">
       <%= t('facilities_management.beta.index.create_new_button') %>
     </a>
-    <a href="../buildings-management" class="govuk-button muted ccs-no-print" role="button">
+    <a href="<%=@base_path%>buildings-management" class="govuk-button muted ccs-no-print" role="button">
     <%= t('facilities_management.beta.building-details-summary.return_to_management_text') %>
   </a>
   </p>

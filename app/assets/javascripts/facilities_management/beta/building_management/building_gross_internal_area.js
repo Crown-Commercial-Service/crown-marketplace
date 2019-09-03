@@ -2,7 +2,7 @@ $(function () {
 
     /* namespace */
     window.FM = window.FM || {};
-    FM.building.GIA = {}
+    FM.building.GIA = {};
     // GIA
     $('#fm-bm-internal-square-area').on('keyup', function (e) {
         $('#fm-internal-square-area-chars-left').text(FM.calcCharsLeft(e.target.value, 10));

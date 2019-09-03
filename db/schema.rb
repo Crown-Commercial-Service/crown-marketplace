@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 2019_09_02_143001) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -21,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_09_02_143001) do
   create_table "facilities_management_buildings", id: false, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at", default: "2019-08-19 12:00:37", null: false
     t.string "status", default: "Incomplete", null: false
     t.uuid "id", null: false
     t.string "updated_by", null: false
@@ -79,15 +78,6 @@ ActiveRecord::Schema.define(version: 2019_09_02_143001) do
     t.jsonb "lift_data", null: false
     t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
     t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
-  end
-
-  create_table "fm_procurements", id: false, force: :cascade do |t|
-    t.string "user_id", null: false
-    t.datetime "date_created", null: false
-    t.datetime "last_updated", null: false
-    t.jsonb "procurement"
-    t.string "updated_by", null: false
-    t.index ["user_id"], name: "fm_procurements_user_id_idx"
   end
 
   create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

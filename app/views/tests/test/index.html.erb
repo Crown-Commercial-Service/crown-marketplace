@@ -158,39 +158,39 @@
 <script language="JavaScript">
     function pageInit()
     {
-        test_calc_form.onsubmit = submit
+        test_calc_form.onsubmit = submit;
         document.getElementById('startdate').value = new Date().toISOString().split('T')[0]
     }
 
     function selectAll(source, pattern)
     {
-        checkboxes = document.querySelectorAll(pattern)
+        checkboxes = document.querySelectorAll(pattern);
         for(var i in checkboxes)
             checkboxes[i].checked = source.checked;
     }
 
     function submit(event)
     {
-        var gia = test_calc_form.gia.value || 0
+        var gia = test_calc_form.gia.value || 0;
         if (isNaN(test_calc_form.gia.value) || gia == 0)
         {
-            test_calc_form.gia.focus()
-            alert('Please enter a number for Gross Internam Area (GIA)')
+            test_calc_form.gia.focus();
+            alert('Please enter a number for Gross Internam Area (GIA)');
             return false
         }
 
-        region_checkboxes = document.querySelectorAll('[name^=region-]:checked')
-        service_checkboxes = document.querySelectorAll('[name^=service-]:checked')
+        region_checkboxes = document.querySelectorAll('[name^=region-]:checked');
+        service_checkboxes = document.querySelectorAll('[name^=service-]:checked');
 
         if (!region_checkboxes.length)
         {
-            alert('Please select at least one region')
+            alert('Please select at least one region');
             return false
         }
 
         if (!service_checkboxes.length)
         {
-            alert('Please select at least one service')
+            alert('Please select at least one service');
             return false
         }
 

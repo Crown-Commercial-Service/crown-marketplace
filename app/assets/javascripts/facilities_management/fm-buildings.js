@@ -39,7 +39,7 @@ $(function () {
     $('#fm-building-not-found').on('click', function (e) {
         pageUtils.clearCashedData('fm-new-address');
 
-        e.preventDefault()
+        e.preventDefault();
         $('#fm-new-building-continue-form').attr('action', 'new-building-address').submit()
     });
 
@@ -159,7 +159,7 @@ $(function () {
 
     $('#fm-buildings-add-building').on('click', function (e) {
         fm.clearBuildingCache();
-        e.preventDefault()
+        e.preventDefault();
         $('#fm-new-building-form').submit()
     });
 

@@ -104,6 +104,8 @@ Rails.application.routes.draw do
       get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
       post '/building-details-summary', to: 'buildings_management#building_details_summary'
       get '/building', to: 'buildings_management#building'
+      post '/building', to: 'buildings_management#building'
+      put '/building', to: 'buildings_management#update_building_details'
       get '/building-type', to: 'buildings_management#building_type'
       post '/building-type', to: 'buildings_management#building_type'
       put '/building-type', to: 'buildings_management#update_building_type'

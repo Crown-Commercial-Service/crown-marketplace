@@ -2,7 +2,7 @@ $(function () {
 
     /* namespace */
     window.FM = window.FM || {};
-    FM.building.details_summary = {}
+    FM.building.details_summary = {};
 
     $("#fm-buildings-container a[role='change']").on('click', function (e) {
         let target= $(e.currentTarget);
