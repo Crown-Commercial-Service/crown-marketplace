@@ -123,7 +123,7 @@ module FacilitiesManagement
       building = JSON.parse(building_details['building_json'])
       @building_name = building['name']
       @page_title = 'Building type'
-      @skip_link_href = "building-security-type"
+      @skip_link_href = 'building-security-type'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
