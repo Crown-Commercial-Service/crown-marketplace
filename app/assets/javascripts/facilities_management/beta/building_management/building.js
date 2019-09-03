@@ -62,7 +62,7 @@ $(function () {
     };
 
     const assign_building_address = function( new_address, new_ref ) {
-        if ( null != newBuilding.address ) {
+        if ( null == newBuilding.address ) {
             newBuilding.address = new_address;
             newBuilding['building-ref'] = new_ref;
             FM.building = newBuilding;
@@ -157,15 +157,15 @@ $(function () {
     });
 
     const synchronise_FM_object = function() {
-        if ( null == FM.building.name ) {
-            assign_building_name($('#fm-building-name-input').val());
-            assign_building_description($('#fm-building-desc-input').val());
-            let address = {};
-            if (extract_address_data($("select#fm-find-address-results > option:selected").val(), address)) {
-                assign_building_address(address, address['building-ref']);
-            }
+        assign_building_name($('#fm-building-name-input').val());
+        assign_building_description($('#fm-building-desc-input').val());
+        let address = {};
+
+        if (extract_address_data($("select#fm-find-address-results > option:selected").val(), address)) {
+            assign_building_address(address, address['building-ref']);
         }
     };
+    
     const validateBuildingDetailsForm = function() {
         let bRet = false;
         synchronise_FM_object();
@@ -196,7 +196,7 @@ $(function () {
         jsonValue["building-id"] = building_id;
         jsonValue["building-name"] = new_name;
         jsonValue["building-description"] = new_description;
-        jsonValue["building-address"] = JSON.stringify(new_address);
+        jsonValue["building-address"] = new_address;
         jsonValue["building-ref"] = new_ref;
 
         $.ajax( {

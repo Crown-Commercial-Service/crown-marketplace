@@ -54,9 +54,9 @@ module FacilitiesManagement
 
     def stringify_address(building_ref, address_json_string)
       address = address_json_string
-      "#{address['fm-address-line-1'].strip},#{address['fm-address-line-2'].strip},
-      #{address['fm-address-town'].strip},#{address['fm-address-county'].strip},#{address['fm-address-postcode'].strip},
-      #{building_ref.strip}"
+      "#{address['fm-address-line-1'].strip},#{address['fm-address-line-2'].strip}," \
+        "#{address['fm-address-town'].strip},#{address['fm-address-county'].strip},#{address['fm-address-postcode'].strip}," \
+        "#{building_ref.strip}"
     end
     helper_method :stringify_address
 
@@ -106,24 +106,29 @@ module FacilitiesManagement
 
     def update_and_validate_response(building_id, property_name, new_value)
       fm_building_data = FMBuildingData.new
-      fm_building_data.save_building_property building_id, property_name, new_value
-      updated_building = JSON.parse(get_existing_building(building_id)['building'])
-      updated_building.key?(property_name) ? updated_building[property_name].to_s == new_value : false
+
+      if property_name == 'address'
+        fm_building_data.save_building_property_activerecord building_id, property_name, new_value.keys.zip(new_value.values).to_h.except('building-ref')
+        true
+      else
+        fm_building_data.save_building_property_activerecord building_id, property_name, new_value
+        updated_building = JSON.parse(get_existing_building(building_id)['building'])
+        (updated_building.key?(property_name) ? updated_building[property_name].to_s == new_value.to_s : false)
+      end
     end
 
     def update_building_details
-      status = 200
       validate_input_building
 
-      raise "Building  #{params['building-id']} details - name not saved" unless update_and_validate_response params['building-id'], 'name', params['building-name']
+      raise "Building  #{params['building-id']} details - name not saved" unless update_and_validate_response params['building-id'], 'name', params['building-name'].strip
 
-      raise "Building #{params['building-id']} details - description not saved" unless update_and_validate_response params['building-id'], 'description', params['building-description']
+      raise "Building #{params['building-id']} details - description not saved" unless update_and_validate_response params['building-id'], 'description', params['building-description'].strip
 
-      raise "Building #{params['building-id']} details - ref not saved" unless update_and_validate_response params['building-id'], 'building-ref', params['building-ref']
+      raise "Building #{params['building-id']} details - ref not saved" unless update_and_validate_response params['building-id'], 'building-ref', params['building-ref'].strip
 
       raise "Building #{params['building-id']} details - address not saved" unless update_and_validate_response params['building-id'], 'address', params['building-address']
 
-      render json: { status: status, result: (get_return_data params['building-id'])[:name] = params['building-name'] }
+      render json: { status: 200, result: (get_return_data params['building-id'])[:name] = params['building-name'] }
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController update_building_details(): #{e}"
       raise e

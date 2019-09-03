@@ -10,19 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_02_143001) do
+ActiveRecord::Schema.define(version: 2019_09_03_155115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
+  create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
     t.datetime "updated_at", default: "2019-08-19 12:00:37", null: false
     t.string "status", default: "Incomplete", null: false
-    t.uuid "id", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin

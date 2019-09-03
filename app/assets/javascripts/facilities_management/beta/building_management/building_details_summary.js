@@ -8,7 +8,6 @@ $(function () {
         let target= $(e.currentTarget);
         let building_id = target.attr('building-id');
         let href = target.attr('href');
-        alert('Going to ' + href + ', ' + building_id);
         e.preventDefault();
         $('#change_submission_form #target-building').val(building_id);
         $('#change_submission_form').attr('action', href);
