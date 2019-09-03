@@ -21,7 +21,7 @@ $(function () {
     });
 
     $('#fm-building-desc-input').on('keyup', function (e) {
-        $('#fm-building-desc-chars-left').text(FM.calcCharsLeft(e.target.value, 25));
+        $('#fm-building-desc-chars-left').text(FM.calcCharsLeft(e.target.value, 50));
     });
 
     $('#fm-building-desc-input').on('change', function (e) {
@@ -49,8 +49,12 @@ $(function () {
     });
 
     $('#fm-find-address-btn').on('click', function (e) {
+        e.preventDefault();
 
         let postCode = pageUtils.formatPostCode($('#fm-bm-postcode').val());
+
+        $('#fm-find-address-results').empty();
+        $('#fm-find-address-results').append('<option value="status-option" selected>0 addresses found</option>');
 
         $.get(encodeURI("/api/v1/postcodes/" + postCode))
             .done(function (data) {
@@ -72,10 +76,12 @@ $(function () {
                         let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + buildingRef;
                         let newOption = '<option value="' + newOptionValue + '">' + newOptionData + '</option>';
                         $('#fm-find-address-results').append(newOption);
-                        $('#fm-address-sub-title').text('Select an address');
-                        $('#fm-find-address-results').removeClass('govuk-visually-hidden');
-                        $('#fm-bm-postcode').addClass('govuk-visually-hidden');
-                        $('#fm-find-address-btn').addClass('govuk-visually-hidden');
+                        $('#fm-bm-postcode-lookup-container').removeClass('govuk-visually-hidden');
+                        $('#fm-find-address-btn').removeClass('govuk-button');
+                        $('#fm-find-address-btn').addClass('govuk-link--no-visited-state');
+                        $('#fm-find-address-btn').text('Change');
+                        $('fm-bm-postcode-lookup-container').addClass('govuk-!-margin-top-3');
+                        $('#fm-find-address-results').focus();
                     }
                 } else {
                     $('#fm-cant-find-address-link').removeClass('govuk-visually-hidden')

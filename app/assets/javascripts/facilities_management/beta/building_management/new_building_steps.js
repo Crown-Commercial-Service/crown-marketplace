@@ -22,7 +22,7 @@ $(function () {
     };
 
     const saveBuildingGIA = function (redirectURI) {
-        let giaValue =  $('#fm-bm-internal-square-area').val();
+        let giaValue = $('#fm-bm-internal-square-area').val();
 
         if (!giaValue) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
@@ -78,7 +78,9 @@ $(function () {
 
         if (!securityType) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
+
             $('html, body').animate({scrollTop: 0}, 500);
+
         } else {
             let url = 'save-building-security-type';
 
