@@ -26,12 +26,19 @@ class FMBuildingData
     Rails.logger.warn "Couldn't update new building id: #{e}"
   end
 
+  def save_building_property_activerecord(building_id, key, value)
+    current_building = CCS::FM::Building.find_by id: building_id
+    current_building['building_json'][key] = value
+    current_building.save id: building_id
+  end
+
   def save_building_property(building_id, key, value)
     # Key/Value properties associated with a building such as GIA, etc
-    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{#{key}}', '\"#{value}\"'::jsonb, true) where id = '#{building_id}';"
+    query = "update facilities_management_buildings set updated_at = now(), building_json = jsonb_set(building_json, '{#{key}}',  '\"#{value}\"'::jsonb, true) where id = '#{building_id}';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building property: #{e}"
+    raise e
   end
 
   def update_building_id
