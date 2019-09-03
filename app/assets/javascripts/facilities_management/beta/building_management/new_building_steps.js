@@ -1,10 +1,5 @@
 $(function () {
 
-    $('#fm-bm-skip-step-link').on('click', function (e) {
-        e.preventDefault();
-        location.href = 'buildings-management'
-    });
-
     const saveStep = function (building, redirect_uri) {
         let url = '/facilities-management/beta/buildings-management/save-new-building';
 
