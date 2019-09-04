@@ -40,7 +40,7 @@ $(function () {
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json',
-                data: JSON.stringify(giaValue),
+                data: giaValue,
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     location.href = redirectURI
@@ -66,7 +66,7 @@ $(function () {
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json',
-                data: JSON.stringify(radioValue),
+                data: radioValue,
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     location.href = redirectURI
