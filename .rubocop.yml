@@ -55,7 +55,7 @@ Style/ClassAndModuleChildren:
     Enabled: false
 
 Layout/EndOfLine:
-   EnforcedStyle: crlf
+   EnforcedStyle: lf
 
 Layout/TrailingBlankLines:
     Enabled: true

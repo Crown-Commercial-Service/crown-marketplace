@@ -60,7 +60,7 @@ class FMBuildingData
 
   def new_building_details(email_address)
     # returns building details for a given building_id
-    query = "select building_json as building from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+    query = "select id, updated_at, status, building_json as building from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(result[0].to_json)
   rescue StandardError => e
@@ -127,7 +127,6 @@ class FMBuildingData
     ActiveRecord::Base.include_root_in_json = false
     query = "select id, updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    Rails.logger.info(result.to_json.to_s)
     JSON.parse(result.to_json)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"

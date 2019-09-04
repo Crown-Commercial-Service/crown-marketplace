@@ -2,7 +2,7 @@
   <%= render 'buildings_steps_header' %>
 </div>
 <form name="fm-bm-internal-square-area-form" id="fm-bm-internal-square-area-form" action="." method="POST">
-  <div id="fm-internal-square-area-error-form-group" class="govuk-form-group">
+  <div id="fm-bm-internal-square-area-error-form-group" class="govuk-form-group">
     <h2 class="govuk-heading-m"><%= t('facilities_management.beta.building-gross-internal-area.heading') %></h2>
     <p class="govuk-caption-m govuk-!-margin-top-0"><%= t('facilities_management.beta.building-gross-internal-area.guidance_1') %></p>
     <p class="govuk-caption-m govuk-!-margin-top-0"><%= t('facilities_management.beta.building-gross-internal-area.guidance_2') %></p>
@@ -10,7 +10,7 @@
     <p class="govuk-caption-m govuk-!-margin-top-0">
       <input type="hidden" id="fm-redirect-url" value="<%= @back_link_href %>"/>
       <input type="hidden" id="fm-building-id" value="<%= @building_id %>"/>
-      <span id="fm-internal-square-area-error" class="govuk-error-message govuk-visually-hidden"></span>
+      <span id="fm-bm-internal-square-area-error" class="govuk-error-message govuk-visually-hidden"></span>
       <input id="fm-bm-internal-square-area" required class="govuk-input govuk-input--width-10"
              type="text" min="0" max="99999999" maxlength="10"
              value="<%= @building['gia']%>"/>
