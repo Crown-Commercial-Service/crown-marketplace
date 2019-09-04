@@ -48,19 +48,18 @@ module FacilitiesManagement
         @building['address'] = {}
         @editing = false
       end
-
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController building(): #{e}"
     end
 
     def stringify_address(building_ref, address_json_string)
-      if !address_json_string.blank?
+      if address_json_string.present?
         address = address_json_string
         "#{address['fm-address-line-1'].strip},#{address['fm-address-line-2'].strip}," \
           "#{address['fm-address-town'].strip},#{address['fm-address-county'].strip},#{address['fm-address-postcode'].strip}," \
           "#{building_ref.strip}"
       else
-        ""
+        ''
       end
     end
     helper_method :stringify_address
@@ -76,7 +75,7 @@ module FacilitiesManagement
       fm_building_data = FMBuildingData.new
       building_details = fm_building_data.new_building_details(current_user.email.to_s) if building_id.blank?
       building_details = fm_building_data.get_building_data_by_id(current_user.email.to_s, building_id).first if building_id.present?
-      building_details 
+      building_details
     end
 
     def building_gross_internal_area
@@ -122,6 +121,15 @@ module FacilitiesManagement
       end
     end
 
+    def update_building_address
+      validate_input_building
+
+      raise "Building #{params['building-id']} details - ref not saved" unless update_and_validate_response params['building-id'], 'building-ref', params['building-ref'].strip
+
+      raise "Building #{params['building-id']} details - address not saved" unless update_and_validate_response params['building-id'], 'address', params['building-address']
+    end
+
+    # rubocop:disable Metrics/AbcSize
     def update_building_details
       validate_input_building
 
@@ -138,6 +146,7 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsManagementController update_building_details(): #{e}"
       raise e
     end
+    # rubocop:enable Metrics/AbcSize
 
     def update_building_gia
       status = 200
@@ -161,11 +170,10 @@ module FacilitiesManagement
     end
 
     def building_id_from_inputs
-      if params['id'].present?
-        return params['id']
-      elsif cookies.key?('fm-building-id')
-        return cookies['fm-building-id']
-      end
+      return params['id'] if params['id'].present?
+
+      return cookies['fm-building-id'] if cookies.key?('fm-building-id')
+
       nil
     end
 
