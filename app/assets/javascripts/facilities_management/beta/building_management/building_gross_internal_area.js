@@ -19,19 +19,37 @@ $(function () {
             saveGIA ( $('#fm-building-id').val(), $('#fm-bm-internal-square-area').val(), $('#fm-redirect-url').val());
         }
     });
+    
     $('#fm-bm-internal-square-area').on('change', function (e) {
             validateGIAForm(e.target.value);
         }
     );
+    
+    const showGIAError = function (show, errorMsg) {
+        errorMsg = errorMsg || "The total internal area value entered is invalid";
+        if (show === true) {
+            $('#inline-error-message').removeClass('govuk-visually-hidden');
+            $('#fm-internal-square-area-error').text(errorMsg);
+            $('#fm-internal-square-area-error').removeClass('govuk-visually-hidden');
+            $('#fm-internal-square-area-error-form-group').addClass('govuk-form-group--error');
+            $('#fm-bm-internal-square-area').addClass('govuk-input--error');
+        } else {
+            $('#inline-error-message').addClass('govuk-visually-hidden');
+            $('#fm-internal-square-area-error').addClass('govuk-visually-hidden');
+            $('#fm-internal-square-area-error-form-group').removeClass('govuk-form-group--error');
+            $('#fm-bm-internal-square-area').removeClass('govuk-input--error');
+        }
+    };
+    
     const validateGIAForm = (function (value) {
         let isValid = false;
         value = (value && value.length > 0) ? parseInt(value) : 0;
         pageUtils.setCachedData('fm-gia', value);
         if (value > 0) {
             isValid  = true ;
-            pageUtils.showGIAError(false, '');
+            showGIAError(false, '');
         } else {
-            pageUtils.showGIAError(true, 'Total internal area must be a number, like 2000');
+            showGIAError(true, 'Total internal area must be a number, like 2000');
         }
 
         return isValid;
