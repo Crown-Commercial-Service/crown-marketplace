@@ -44,7 +44,8 @@ module FacilitiesManagement
         @page_title = 'Change building details'
         @editing = true
       else
-        @building = nil
+        @building = {}
+        @building['address'] = {}
         @editing = false
       end
 
@@ -53,10 +54,14 @@ module FacilitiesManagement
     end
 
     def stringify_address(building_ref, address_json_string)
-      address = address_json_string
-      "#{address['fm-address-line-1'].strip},#{address['fm-address-line-2'].strip}," \
-        "#{address['fm-address-town'].strip},#{address['fm-address-county'].strip},#{address['fm-address-postcode'].strip}," \
-        "#{building_ref.strip}"
+      if !address_json_string.blank?
+        address = address_json_string
+        "#{address['fm-address-line-1'].strip},#{address['fm-address-line-2'].strip}," \
+          "#{address['fm-address-town'].strip},#{address['fm-address-county'].strip},#{address['fm-address-postcode'].strip}," \
+          "#{building_ref.strip}"
+      else
+        ""
+      end
     end
     helper_method :stringify_address
 
@@ -85,7 +90,7 @@ module FacilitiesManagement
                       t('facilities_management.beta.building-gross-internal-area.add_header')
                     end
       @next_step = 'Building type'
-      @inline_error_summary_title = 'You must enter a valid gross internal area'
+      @inline_error_summary_title = 'Total internal area must be a number, like 2000'
       @inline_error_summary_body_href = '#'
       @inline_summary_error_text = ''
 
