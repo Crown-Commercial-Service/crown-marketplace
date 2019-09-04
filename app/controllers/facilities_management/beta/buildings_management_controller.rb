@@ -121,14 +121,6 @@ module FacilitiesManagement
       end
     end
 
-    def update_building_address
-      validate_input_building
-
-      raise "Building #{params['building-id']} details - ref not saved" unless update_and_validate_response params['building-id'], 'building-ref', params['building-ref'].strip
-
-      raise "Building #{params['building-id']} details - address not saved" unless update_and_validate_response params['building-id'], 'address', params['building-address']
-    end
-
     # rubocop:disable Metrics/AbcSize
     def update_building_details
       validate_input_building
@@ -141,6 +133,7 @@ module FacilitiesManagement
 
       raise "Building #{params['building-id']} details - address not saved" unless update_and_validate_response params['building-id'], 'address', params['building-address']
 
+      validate_and_update_building params['building_id'].to_s
       render json: { status: 200, result: (get_return_data params['building-id'])[:name] = params['building-name'] }
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController update_building_details(): #{e}"
@@ -154,6 +147,7 @@ module FacilitiesManagement
 
       raise "Building #{params['building-id']} GIA not saved" unless update_and_validate_response params['building-id'], 'gia', params[:gia]
 
+      validate_and_update_building params['building-id'].to_s
       render json: { status: status, result: (get_return_data params['building-id'])[:gia] = params[:gia] }
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController save_building_gia(): #{e}"
@@ -166,6 +160,7 @@ module FacilitiesManagement
 
       raise "Building #{params['building-id']} type not saved" unless update_and_validate_response params['building-id'], 'building-type', params['building-type']
 
+      validate_and_update_building params['building_id'].to_s
       render json: { status: status, result: (get_return_data params['building-id'])['building-type'] = params['building-type'] }
     end
 
@@ -206,11 +201,7 @@ module FacilitiesManagement
     end
 
     def building_address
-      @building_id = if params['id'].present?
-                       params['id']
-                     else
-                       cookies['fm-building-id']
-                     end
+      @building_id = building_id_from_inputs
       fm_building_data = FMBuildingData.new
       building_details = fm_building_data.new_building_details(@building_id)
       building = JSON.parse(building_details['building_json'])
@@ -224,10 +215,33 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsManagementController building_address(): #{e}"
     end
 
+    def save_building_property_using_ar(key, value)
+      building_id = cookies['fm_building_id']
+      fm_building_data = FMBuildingData.new
+      fm_building_data.save_building_property_activerecord(building_id, key, value)
+      validate_and_update_building building_id
+    rescue StandardError => e
+      Rails.logger.warn "Error: BuildingsController save_building_property(): #{e}"
+    end
+
+    def get_building_ready_status(building)
+      !(building['name'].empty? || building['region'].empty? ||
+          building['building-type'].empty? || building['security-type'].empty? ||
+          building['gia'].empty?)
+    end
+
+    def validate_and_update_building(building_id)
+      db = FMBuildingData.new
+      building = db.get_building_data_by_id current_user.email.to_s, building_id
+      new_status = get_building_ready_status(JSON.parse(building[0]['building'])) if building[0].present?
+      db.update_building_status(building_id, new_status, current_user.email.to_s) if building[0].present? && new_status != building[0]['status']
+    end
+
     def save_building_property(key, value)
       building_id = cookies['fm_building_id']
       fm_building_data = FMBuildingData.new
-      fm_building_data.save_building_property(building_id, key, value)
+      fm_building_data.save_building_property(building_id, key, value.gsub('"', ''))
+      validate_and_update_building building_id
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_building_property(): #{e}"
     end
@@ -235,7 +249,7 @@ module FacilitiesManagement
     def save_building_gia
       key = 'gia'
       building_gia = request.raw_post
-      save_building_property(key, building_gia)
+      save_building_property(key, building_gia.gsub('"', ''))
       j = { 'status': 200 }
       render json: j, status: 200
     rescue StandardError => e

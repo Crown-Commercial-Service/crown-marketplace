@@ -29,6 +29,15 @@ class FMBuildingData
   def save_building_property_activerecord(building_id, key, value)
     current_building = CCS::FM::Building.find_by id: building_id
     current_building['building_json'][key] = value
+    current_building['updated_at'] = DateTime.current
+    current_building.save id: building_id
+  end
+
+  def update_building_status(building_id, is_ready, email)
+    current_building = FacilitiesManagement::Buildings.find_by id: building_id
+    current_building['status'] = (is_ready ? 'Ready' : 'Incomplete')
+    current_building['updated_at'] = DateTime.current
+    current_building['updated_by'] = email
     current_building.save id: building_id
   end
 
@@ -70,8 +79,8 @@ class FMBuildingData
   def save_new_building(email_address, building)
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
-    query = 'insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by) ' /
-            "values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', gen_random_uuid(), '#{email_address}');"
+    query = "insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by)
+            values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', gen_random_uuid(), '#{email_address}');"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     update_building_id
     new_building_id(email_address)
@@ -105,7 +114,7 @@ class FMBuildingData
 
   def update_building(email_address, id, building)
     Rails.logger.info '==> FMBuildingData.update_building()'
-    query = "update facilities_management_buildings set building_json = '" + building.gsub("'", "''") + "'  where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
+    query = "update facilities_management_buildings set updated_at = now(), building_json = '" + building.gsub("'", "''") + "'  where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't update building: #{e}"
