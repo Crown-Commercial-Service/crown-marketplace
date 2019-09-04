@@ -75,8 +75,8 @@ module FacilitiesManagement
     def get_new_or_specific_building_by_id(building_id)
       fm_building_data = FMBuildingData.new
       building_details = fm_building_data.new_building_details(current_user.email.to_s) if building_id.blank?
-      building_details = fm_building_data.get_building_data_by_id(current_user.email.to_s, building_id) if building_id.present?
-      building_details.first
+      building_details = fm_building_data.get_building_data_by_id(current_user.email.to_s, building_id).first if building_id.present?
+      building_details 
     end
 
     def building_gross_internal_area
@@ -90,7 +90,7 @@ module FacilitiesManagement
                       t('facilities_management.beta.building-gross-internal-area.add_header')
                     end
       @next_step = 'Building type'
-      @inline_error_summary_title = 'Total internal area must be a number, like 2000'
+      @inline_error_summary_title = 'There is a problem'
       @inline_error_summary_body_href = '#'
       @inline_summary_error_text = ''
 
