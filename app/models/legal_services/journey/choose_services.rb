@@ -10,7 +10,9 @@ module LegalServices
       if lot == '2'
         LegalServices::Service.where(lot_number: lot + jurisdiction).sort_by(&:name)
       else
-        LegalServices::Service.where(lot_number: lot, central_government: central_government).sort_by(&:name)
+        return LegalServices::Service.where(lot_number: '1', central_government: 'yes').sort_by(&:name) if central_government == 'yes'
+
+        LegalServices::Service.where(lot_number: lot).sort_by(&:name)
       end
     end
 
