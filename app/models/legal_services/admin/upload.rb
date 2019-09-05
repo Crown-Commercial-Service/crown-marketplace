@@ -5,7 +5,7 @@ module LegalServices
       self.table_name = 'legal_services_admin_uploads'
       default_scope { order(created_at: :desc) }
 
-      ATTRIBUTES = %i[suppliers rate_cards supplier_lot_1_service_offerings supplier_lot_2_service_offerings supplier_lot_3_service_offerings supplier_lot_4_service_offerings].freeze
+      ATTRIBUTES = %i[suppliers rate_cards supplier_lot_1_service_offerings supplier_lot_2_service_offerings supplier_lot_3_service_offerings supplier_lot_4_service_offerings suppliers_data].freeze
 
       mount_uploader :suppliers, LegalServicesFileUploader
       mount_uploader :rate_cards, LegalServicesFileUploader
@@ -13,15 +13,11 @@ module LegalServices
       mount_uploader :supplier_lot_2_service_offerings, LegalServicesFileUploader
       mount_uploader :supplier_lot_3_service_offerings, LegalServicesFileUploader
       mount_uploader :supplier_lot_4_service_offerings, LegalServicesFileUploader
+      mount_uploader :suppliers_data, LegalServicesFileUploader
 
-      attr_accessor :suppliers_cache, :rate_cards_cache, :supplier_lot_1_service_offerings_cache, :supplier_lot_2_service_offerings_cache, :supplier_lot_3_service_offerings_cache, :supplier_lot_4_service_offerings_cache
+      attr_accessor :suppliers_cache, :rate_cards_cache, :supplier_lot_1_service_offerings_cache, :supplier_lot_2_service_offerings_cache, :supplier_lot_3_service_offerings_cache, :supplier_lot_4_service_offerings_cache, :suppliers_data_cache
 
-      validates :suppliers, presence: true
-      validates :rate_cards, presence: true
-      validates :supplier_lot_1_service_offerings, presence: true
-      validates :supplier_lot_2_service_offerings, presence: true
-      validates :supplier_lot_3_service_offerings, presence: true
-      validates :supplier_lot_4_service_offerings, presence: true
+      validates :suppliers_data, presence: true
 
       aasm do
         state :in_progress, initial: true
@@ -37,7 +33,7 @@ module LegalServices
           transitions from: :in_review, to: :approved
         end
         event :complete do
-          transitions from: :approved, to: :completed
+          transitions from: %i[approved in_review in_progress], to: :completed
         end
         event :reject do
           transitions from: :in_review, to: :rejected
