@@ -17,6 +17,15 @@ module LegalServices
 
     def download
       @back_path = :back
+
+      respond_to do |format|
+        format.html
+        format.xlsx do
+          spreadsheet_builder = LegalServices::SupplierSpreadsheetCreator.new(@all_suppliers, params)
+          spreadsheet = spreadsheet_builder.build
+          render xlsx: spreadsheet.to_stream.read, filename: "shortlist_of_management_consultancy_suppliers_#{DateTime.now.getlocal.strftime '%d-%m-%Y'}", format: 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
+        end
+      end
     end
 
     private
