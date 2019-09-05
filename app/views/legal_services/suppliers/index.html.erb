@@ -1,7 +1,10 @@
 <%= content_for :page_title, t('.page_title')  %>
 
-<div class="govuk-body">
-  <div class="govuk-grid-row">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-xl">
+      <%= full_lot_description(@lot.number, @lot.description) %>
+    </span>
     <% if @all_suppliers.count.zero? %>
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl"><%= t('.no_suppliers_found.heading') %></h1>
@@ -27,29 +30,35 @@
         <%= link_to 'Back to start', legal_services_path, class: 'govuk-button govuk-!-margin-top-4 govuk-!-padding-left-4 govuk-!-padding-right-4' %>
       </div>
     <% else %>
-      <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-0"><%= t('.heading') %></h1>
-        <p class="govuk-body">
-          <%= t('.suppliers_found_html',
-                number: @all_suppliers.count,
-                suppliers: number_to_human(@all_suppliers.count, units: :companies, format: '%u')) %>
-        </p>
-        <%= link_to(
-          t('.download_suppliers_list'),
-          legal_services_suppliers_download_path(
-            lot: params[:lot],
-            services: params[:services],
-            region_codes: params[:region_codes]
-            ),
-            class: 'govuk-button'
-          ) %>
-        <section class="govuk-grid-column-two-thirds ccs-search-results">
-          <ul class="ccs-results-list">
-            <%= render partial: 'supplier', collection: @suppliers %>
-          </ul>
-          <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
-        </section>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-0"><%= t('.heading') %></h1>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <p class="govuk-body">
+            <%= t('.suppliers_found_html',
+                  number: @all_suppliers.count,
+                  suppliers: number_to_human(@all_suppliers.count, units: :legal_services_suppliers, format: '%u')) %>
+          </p>
+        </div>
       </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <%= link_to(
+            t('.download_suppliers_list'),
+              legal_services_suppliers_download_path(
+              lot: params[:lot],
+              services: params[:services],
+              region_codes: params[:region_codes]
+              ),
+              class: 'govuk-button'
+            ) %>
+        </div>
+      </div>
+      <section class="govuk-grid-column-two-thirds ccs-search-results">
+        <ul class="ccs-results-list">
+          <%= render partial: 'supplier', collection: @suppliers %>
+        </ul>
+        <%= paginate @suppliers, views_prefix: 'shared', window: 2, outer_window: 1 %>
+      </section>
     <% end %>
   </div>
 </div>
