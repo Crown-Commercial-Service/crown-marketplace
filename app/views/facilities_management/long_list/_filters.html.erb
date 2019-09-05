@@ -3,9 +3,9 @@
     <div class="govuk-grid-column-one-half"><strong class="govuk-heading-m ccs-no-print">Apply filters</strong></div>
     <div class="govuk-grid-column-one-half">
       <% unless landing_or_admin_page %>
-        <a href="" id="fm-suppliers-long-list-clear-filters" class="remove-all ccs-no-print" >Back to start</a></div>
+        <a href="" id="fm-suppliers-long-list-clear-filters" class="remove-all ccs-no-print">Back to start</a></div>
       <% end %>
-  </div>
+      </div>
   <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
     <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
       <strong class="govuk-heading-m govuk-!-padding-1">Region</strong>
@@ -19,17 +19,15 @@
     </div>
 
   </div>
-  <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-    <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-      <strong class="govuk-heading-m govuk-!-padding-1">Service</strong>
-    </div>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half"><strong id="service-count" class="govuk-heading-s">2 selected</strong></div>
-      <div class="govuk-grid-column-one-half ccs-no-print"><a href="<%= @select_fm_services %>">Change service</a></div>
-    </div>
-    <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
-      <div id="fm-service-check-boxes" class="govuk-checkboxes"></div>
-    </div>
-  </div>
 
+  <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+    <strong class="govuk-heading-m govuk-!-padding-1">Service</strong>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half"><strong id="service-count" class="govuk-heading-s">2 selected</strong></div>
+    <div class="govuk-grid-column-one-half ccs-no-print"><a href="<%= @select_fm_services %>">Change service</a></div>
+  </div>
+  <div class="govuk-grid-row CCS-fm-supplier-filter-container-grey">
+    <div id="fm-service-check-boxes" class="govuk-checkboxes"></div>
+  </div>
 </div>

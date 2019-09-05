@@ -4,6 +4,7 @@ module LegalServices
 
     attribute :region_codes, Array
     validates :region_codes, length: { minimum: 1 }
+    validate :full_national_coverage_or_selected_regions
 
     def regions
       Nuts1Region.where(code: region_codes)
@@ -15,6 +16,14 @@ module LegalServices
 
     def next_step_class
       Journey::Suppliers
+    end
+
+    def full_national_coverage_or_selected_regions
+      return true unless region_codes.include?('UK')
+
+      return true if region_codes.include?('UK') && region_codes.size == 1
+
+      errors.add(:region_codes, :full_national_coverage)
     end
   end
 end
