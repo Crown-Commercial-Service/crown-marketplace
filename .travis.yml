@@ -25,8 +25,6 @@ before_install:
   - sudo service postgresql start 11
 before_script:
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
-  - sudo -u postgres psql -U postgres -c "create extension postgis" -d root
-  - sudo -u postgres psql -U postgres -c "ALTER EXTENSION postgis UPDATE TO '2.5.3';" -d root
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
