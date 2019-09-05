@@ -26,7 +26,7 @@ module LegalServices
         @uploads_in_progress = Upload.in_review_or_in_progress
 
         if @upload.save
-          LegalServices::DataScriptWorker.perform_async(@upload.id)
+          LegalServices::DataUploadWorker.perform_async(@upload.id)
           redirect_to legal_services_admin_uploads_path
         else
           render :new
@@ -60,7 +60,15 @@ module LegalServices
       private
 
       def upload_params
-        params.require(:legal_services_admin_upload).permit(:suppliers, :rate_cards, :supplier_lot_1_service_offerings, :supplier_lot_2_service_offerings, :supplier_lot_3_service_offerings, :supplier_lot_4_service_offerings)
+        params.require(:legal_services_admin_upload).permit(
+          :suppliers,
+          :rate_cards,
+          :supplier_lot_1_service_offerings,
+          :supplier_lot_2_service_offerings,
+          :supplier_lot_3_service_offerings,
+          :supplier_lot_4_service_offerings,
+          :suppliers_data
+        )
       end
 
       def authorize_user

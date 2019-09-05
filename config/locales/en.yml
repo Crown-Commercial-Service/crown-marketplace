@@ -891,7 +891,7 @@ en:
         new:
           caption: Legal Services
           heading: New data upload
-          upload_caption: Supported file format is XLSX. Maximum file size is 10mb.
+          upload_caption: Supported file format is JSON. Maximum file size is 10mb.
           upload_title: Upload the complete supplier data
         show:
           approve: Approve
