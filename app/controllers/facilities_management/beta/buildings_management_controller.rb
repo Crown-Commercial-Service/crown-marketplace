@@ -20,6 +20,8 @@ module FacilitiesManagement
 
     def building_details_summary
       @error_msg = ''
+      update_building_data if params['detail-type'].present? && request.method == 'POST'
+
       @building_id = building_id_from_inputs
       @base_path = request.method.to_s == 'GET' ? '../' : './'
 
@@ -201,57 +203,72 @@ module FacilitiesManagement
     end
 
     # Edit Building Update Methods
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    def update_building_data
+      if (details_type = params['detail-type']).present?
+        case details_type
+        when 'fm-building-type'
+          update_building_type
+        when 'fm-building-security-type'
+          update_security_type
+        when 'fm-building-details'
+          update_building_details
+        when 'fm-bm-internal-square-area'
+          update_building_gia
+        else true
+        end
+      end
+    rescue StandardError => e
+      @inline_error_summary_title = 'Problem saving data'
+      @inline_summary_error_text = e
+    end
+    # rubocop:enable Metrics/CyclomaticComplexity
+
     def update_building_details
       validate_input_building
+      building_id = building_id_from_inputs
 
-      raise "Building  #{params['building-id']} details - name not saved" unless update_and_validate_changes params['building-id'], 'name', params['building-name'].strip
+      raise "Building  #{building_id} details - name not saved" unless update_and_validate_changes building_id, 'name', params['fm-building-name']
 
-      raise "Building #{params['building-id']} details - description not saved" unless update_and_validate_changes params['building-id'], 'description', params['building-description'].strip
+      raise "Building #{building_id} details - description not saved" unless update_and_validate_changes building_id, 'description', params['fm-building-desc']
 
-      raise "Building #{params['building-id']} details - ref not saved" unless update_and_validate_changes params['building-id'], 'building-ref', params['building-ref'].strip
+      raise "Building #{building_id} details - ref not saved" unless update_and_validate_changes building_id, 'building-ref', params['building-ref']
 
-      raise "Building #{params['building-id']} details - address not saved" unless update_and_validate_changes params['building-id'], 'address', params['building-address']
+      raise "Building #{building_id} details - address not saved" unless update_and_validate_changes building_id, 'address', params['address-json']
 
-      validate_and_update_building params['building_id'].to_s
-      render json: { status: 200, result: (get_return_data params['building-id'])[:name] = params['building-name'] }
+      validate_and_update_building building_id
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController update_building_details(): #{e}"
       raise e
     end
-    # rubocop:enable Metrics/AbcSize
 
     def update_building_gia
-      status = 200
       validate_input_building
+      building_id = building_id_from_inputs
 
-      raise "Building #{params['building-id']} GIA not saved" unless update_and_validate_changes params['building-id'], 'gia', params[:gia]
+      raise "Building #{building_id} GIA not saved" unless update_and_validate_changes building_id, 'gia', params['fm-bm-internal-square-area']
 
-      validate_and_update_building params['building-id'].to_s
-      render json: { status: status, result: (get_return_data params['building-id'])[:gia] = params[:gia] }
+      validate_and_update_building building_id.to_s
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController save_building_gia(): #{e}"
       raise e
     end
 
     def update_building_type
-      status = 200
       validate_input_building
+      building_id = building_id_from_inputs
+      raise "Building #{building - id} type not saved" unless update_and_validate_changes building_id, 'building-type', params['fm-building-type-radio']
 
-      raise "Building #{params['building-id']} type not saved" unless update_and_validate_changes params['building-id'], 'building-type', params['building-type']
-
-      validate_and_update_building params['building_id'].to_s
-      render json: { status: status, result: (get_return_data params['building-id'])['building-type'] = params['building-type'] }
+      validate_and_update_building building_id_from_inputs
     end
 
     def update_security_type
-      status = 200
       validate_input_building
-      raise "Security #{params['building-id']} type not saved" unless update_and_validate_changes params['building-id'], 'security-type', params['security-type']
+      building_id = building_id_from_inputs
 
-      raise "Security #{params['building-id']} details not saved" unless update_and_validate_changes params['building-id'], 'security-details', params['security-details']
+      raise "Security #{building_id} type not saved" unless update_and_validate_changes building_id, 'security-type', params['fm-building-security-type-radio']
 
-      render json: { status: status, result: (get_return_data params['building-id'])['security-type'] = params['security-type'] }
+      raise "Security #{building_id} details not saved" unless update_and_validate_changes building_id, 'security-details', params['fm-building-security-type-more-detail']
     end
 
     # Helpers
@@ -269,7 +286,7 @@ module FacilitiesManagement
 
     def building_id_from_inputs
       return params['id'] if params['id'].present?
-
+      return params['building-id'] if params['building-id'].present?
       return cookies['fm-building-id'] if cookies.key?('fm-building-id')
 
       nil
@@ -301,7 +318,8 @@ module FacilitiesManagement
       fm_building_data = FMBuildingData.new
 
       if property_name == 'address'
-        fm_building_data.save_building_property_activerecord building_id, property_name, new_value.keys.zip(new_value.values).to_h.except('building-ref')
+        new_addr = JSON.parse(new_value)
+        fm_building_data.save_building_property_activerecord building_id, property_name, new_addr.keys.zip(new_addr.values).to_h.except('building-ref')
         true
       else
         fm_building_data.save_building_property_activerecord building_id, property_name, new_value
@@ -319,26 +337,21 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsController save_building_property(): #{e}"
     end
 
-    def save_building_property_using_ar(key, value)
-      building_id = cookies['fm_building_id']
-      fm_building_data = FMBuildingData.new
-      fm_building_data.save_building_property_activerecord(building_id, key, value)
-      validate_and_update_building building_id
-    rescue StandardError => e
-      Rails.logger.warn "Error: BuildingsController save_building_property(): #{e}"
+    def validate_and_update_building(building_id)
+      db         = FMBuildingData.new
+      building   = db.get_building_data_by_id current_user.email.to_s, building_id if building_id.present?
+      new_status = get_building_ready_status(JSON.parse(building[0]['building'])) if building.present?
+      db.update_building_status(building_id, new_status, current_user.email.to_s) if building.present?
     end
 
-    def validate_and_update_building(building_id)
-      db = FMBuildingData.new
-      building = db.get_building_data_by_id current_user.email.to_s, building_id
-      new_status = get_building_ready_status(JSON.parse(building[0]['building'])) if building[0].present?
-      db.update_building_status(building_id, new_status, current_user.email.to_s) if building[0].present? && new_status != building[0]['status']
+    def building_element_valid?(building, key_name)
+      (building[key_name].present? ? !building[key_name].empty? : false)
     end
 
     def get_building_ready_status(building)
-      !(building['name'].empty? || building['region'].empty? ||
-          building['building-type'].empty? || building['security-type'].empty? ||
-          building['gia'].empty?)
+      building_element_valid?(building, 'name') || building_element_valid?(building, 'region') ||
+        building_element_valid?(building, 'building-type') || building_element_valid?(building, 'security-type') ||
+        building_element_valid?(building, 'gia')
     end
 
     def validate_input_building

@@ -1,4 +1,8 @@
 <div class="govuk-!-padding-top-5">
   <a id="fm-bm-save-and-return" class="govuk-button">Save and return to details</a>
-  <a href="<%= @back_link_href%>" id="fm-bm-cancel-and-return" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Cancel and return to details</a>
+  <a id="fm-bm-cancel-and-return" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Cancel and return to details</a>
+  <form id="fm-bm-cancel-and-return-form" action="building-details-summary" method="POST">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag 'id', @building_id %>
+  </form>
 </div>

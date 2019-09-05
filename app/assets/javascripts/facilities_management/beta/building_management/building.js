@@ -143,16 +143,17 @@ $(function () {
         }
     });
 
-    $('#fm-bm-building-details-form #fm-bm-save-and-return').on('click', function (e) {
+    $('#fm-bm-building-details-footer #fm-bm-cancel-and-return').on('click', function(e){
+        $('#fm-bm-cancel-and-return-form').submit();
+    });
+
+    $('#fm-bm-building-details-footer #fm-bm-save-and-return').on('click', function (e) {
         if (!validateBuildingDetailsForm()) {
             e.preventDefault();
-        } else {
-            saveBuildingDetails ( $('#fm-building-id').val(),
-                FM.building.name,
-                FM.building.description,
-                FM.building['building-ref'],
-                FM.building.address,
-                $('#fm-redirect-url').val() );
+        } else {     
+            $('#address-json').val(JSON.stringify(FM.building.address));
+            $('#building-ref').val(FM.building['building-ref']);
+            $('#fm-bm-building-details-form').submit();
         }
     });
 
