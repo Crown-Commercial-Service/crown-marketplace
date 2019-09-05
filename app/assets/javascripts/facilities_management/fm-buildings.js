@@ -163,6 +163,26 @@ $(function () {
         $('#fm-new-building-form').submit()
     });
 
+    $('#fm-internal-square-area').on('change', function (e) {
+
+        let value = e.target.value;
+        value = (value && value.length > 0) ? parseInt(value) : 0;
+        pageUtils.setCachedData('fm-gia', value);
+        if (value > 0) {
+            pageUtils.showGIAError(false, '');
+        } else {
+            pageUtils.showGIAError(true, '');
+            let value = e.target.value;
+            value = (value && value.length > 0) ? parseInt(value) : 0;
+            pageUtils.setCachedData('fm-gia', value);
+            if (value > 0) {
+                pageUtils.showGIAError(false, '');
+            } else {
+                pageUtils.showGIAError(true, '');
+            }
+        }
+    });
+
     $('input[name="fm-builing-type-radio"]').on('click', function (e) {
         let value = e.target.value;
         let buildingTypeOther = $('#other-building-type').value;
