@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <span class="govuk-caption-xl">
-      <% "Lot #{@lot.number} - #{@lot.description}" if @lot %>
+      <%= full_lot_description(@lot.number, @lot.description) if @lot %>
     </span>
     <h1 class="govuk-heading-xl">
       <%= @supplier.name %>
@@ -15,56 +15,62 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds govuk-!-padding-right-8">
     <% if @rate_card %>
-      <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.day_rates') %></h2>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.rates') %></h2>
       <p class="govuk-body">
         <%= t('.fixed_until') %>
       </p>
       <p class="govuk-body"><%= t('.further_competition') %></p>
       <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-visually-hidden"><%= t('.day_rates') %></caption>
+        <caption class="govuk-table__caption govuk-visually-hidden"><%= t('.rates') %></caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"></th>
-            <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"><%= t('.hourly') %></th>
-            <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"><%= t('.daily') %></th>
-            <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"><%= t('.monthly') %></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-half" scope="col"><%= t('.position') %></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-sixth" scope="col"><%= t('.hourly') %></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-sixth" scope="col"><%= t('.daily') %></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-sixth" scope="col"><%= t('.monthly') %></th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.managing") %></th>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['managing_rate_in_pence']['hourly']/100, precision: 0) %></td>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['managing_rate_in_pence']['daily']/100, precision: 0) %></td>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['managing_rate_in_pence']['monthly']/100, precision: 0) %></td>
+            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.managing") %></th>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['managing']['hourly']/100, precision: 0) %></td>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['managing']['daily']/100, precision: 0) %></td>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['managing']['monthly']/100, precision: 0) %></td>
           </tr>
           <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row"><%= t("legal_services.job_titles.#{params[:lot)}.senior") %></th>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['senior_rate_in_pence']['hourly']/100, precision: 0) %></td>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['senior_rate_in_pence']['daily']/100, precision: 0) %></td>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['senior_rate_in_pence']['monthly']/100, precision: 0) %></td>
+            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.senior") %></th>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['senior']['hourly']/100, precision: 0) %></td>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['senior']['daily']/100, precision: 0) %></td>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['senior']['monthly']/100, precision: 0) %></td>
           </tr>
           <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{params[:lot]}.solicitor") %></th>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['solicitor_rate_in_pence']['hourly']/100, precision: 0) %></td>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['solicitor_rate_in_pence']['daily']/100, precision: 0) %></td>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['solicitor_rate_in_pence']['monthly']/100, precision: 0) %></td>
+            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.solicitor") %></th>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['solicitor']['hourly']/100, precision: 0) %></td>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['solicitor']['daily']/100, precision: 0) %></td>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['solicitor']['monthly']/100, precision: 0) %></td>
           </tr>
           <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{params[:lot]}.junior") %></th>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['junior_rate_in_pence']['hourly']/100, precision: 0) %></td>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['junior_rate_in_pence']['daily']/100, precision: 0) %></td>
-            <td class="govuk-table__cell"><%= number_to_currency(@rate_card['junior_rate_in_pence']['monthly']/100, precision: 0) %></td>
+            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.junior") %></th>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['junior']['hourly']/100, precision: 0) %></td>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['junior']['daily']/100, precision: 0) %></td>
+            <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['junior']['monthly']/100, precision: 0) %></td>
           </tr>
           <% unless params[:lot] == '1' %>
             <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row"><%= t("management_consultancy.job_titles.#{params[:lot]}.trainee") %></th>
-              <td class="govuk-table__cell"><%= number_to_currency(@rate_card['trainee_rate_in_pence']['hourly']/100, precision: 0) %></td>
-              <td class="govuk-table__cell"><%= number_to_currency(@rate_card['trainee_rate_in_pence']['daily']/100, precision: 0) %></td>
-              <td class="govuk-table__cell"><%= number_to_currency(@rate_card['trainee_rate_in_pence']['monthly']/100, precision: 0) %></td>
+              <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.trainee") %></th>
+              <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['trainee']['hourly']/100, precision: 0) %></td>
+              <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['trainee']['daily']/100, precision: 0) %></td>
+              <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['trainee']['monthly']/100, precision: 0) %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
+    <% end %>
+    <% if params[:lot] && params[:lot] != '1' %>
+      <% unless @supplier.send(:"lot_#{params[:lot]}_prospectus_link").nil? %>
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.supplier_prospectus_headline') %></h2>
+        <%= link_to @supplier.send(:"lot_#{params[:lot]}_prospectus_link") %>
+      <% end %>
     <% end %>
     <% if @supplier.sme? %>
       <p class="govuk-body">
@@ -76,11 +82,10 @@
     <div class="ccs-info-panel ccs-info-panel--pull-up">
       <h3 class="govuk-heading-m"><%= t('.contact_details.heading') %></h3>
       <dl class="ccs-contact-details">
-        <dt><%= t('.contact_details.person') %>
         <dt><%= t('.contact_details.email') %></dt>
-        <dd><%= mail_to(@supplier.contact_email) %></dd>
+        <dd><%= mail_to(@supplier.email) %></dd>
         <dt><%= t('.contact_details.phone_number') %></dt>
-        <dd><%= @supplier.telephone_number %></dd>
+        <dd><%= @supplier.phone_number %></dd>
         <dt><%= t('.contact_details.website') %></dt>
         <dd><%= link_to(@supplier.website, @supplier.website) if @supplier.website %></dd>
         <dt><%= t('.contact_details.address') %></dt>

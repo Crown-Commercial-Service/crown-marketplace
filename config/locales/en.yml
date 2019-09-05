@@ -1054,23 +1054,23 @@ en:
           text: There are no suppliers on this panel that can provide the law services you need
           text_central_government_users_html: The %{general_legal_advice_service_link} agreement provides legal services for central government and arms-length bodies.
         page_title: Supplier results
-        sme: SME
-        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide consultants that meet your requirements"
+        suppliers_found_html: "<span class='govuk-!-font-size-27 govuk-!-font-weight-bold'>%{number}</span> <span class='govuk-!-font-weight-bold'>%{suppliers}</span> can provide legal services that meet your requirements."
       show:
         contact_details:
           address: Address
           email: Email
           heading: Contact details
-          person: Name
           phone_number: Phone number
           website: Website
         daily: Daily
-        day_rates: Day rates
         fixed_until: Fixed until September 2021 and based on an 8 hour working day.
         further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
         hourly: Hourly
         is_an_sme: This supplier is a small or medium-sized enterprise
         monthly: Monthly
+        position: Position
+        rates: Rates
+        supplier_prospectus_headline: Supplier prospectus
     users:
       confirm_new:
         confirmation_code: Confirmation code
@@ -1090,6 +1090,10 @@ en:
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
         resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
+  legal_services_suppliers:
+    unit:
+      one: supplier
+      other: suppliers
   management_consultancy:
     admin:
       passwords:
