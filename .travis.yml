@@ -12,24 +12,21 @@ env:
 services:
   - postgresql
 addons:
+  postgresql: "11"
   apt:
     packages:
       - postgresql-11
       - postgresql-11-postgis-2.5
       - postgresql-11-postgis-2.5-scripts
-  postgresql: "11"
 before_install:
   - gem install --force --conservative -v 1.16.6 bundler
-  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
-  - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
   - sudo service postgresql stop
+  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
   - sudo service postgresql start 11
-  - sleep 20
 before_script:
-#  - sudo apt-get install postgresql-11-postgis-2.4 postgis -y -q
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
-  - psql -U postgres -c "create extension postgis" -d root
-  - psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
+  - sudo -u postgres psql -U postgres -c "create extension postgis" -d root
+  - sudo -u postgres psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile

@@ -89,6 +89,10 @@ en:
             new_password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+        cognito/sign_in_user:
+          attributes:
+            base:
+              cookies_disabled: Your browser must have cookies enabled
         cognito/sign_up_user:
           attributes:
             email:
@@ -150,6 +154,22 @@ en:
               invalid_location: Enter a valid postcode
             term:
               blank: Select how long you need the worker for
+        supply_teachers/journey/fta_calculator_contract_end:
+          attributes:
+            contract_end_date:
+              after_contract_start_date: The date the contract ended must be after the date the worker’s current contract started
+              blank: Enter the contract end date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_calculator_contract_start:
+          attributes:
+            contract_start_date:
+              blank: Enter the contract start date, including the day, month and year
+              invalid: Enter a real date
+        supply_teachers/journey/fta_calculator_salary:
+          attributes:
+            salary:
+              blank: Enter the annual salary
+              invalid: Enter a valid salary
         supply_teachers/journey/fta_to_perm_contract_end:
           attributes:
             contract_end_date:
@@ -675,6 +695,48 @@ en:
       or_text: or
       removeall_text: Remove all
       selectall_text: Select all
+    beta:
+      building-details-summary:
+        add_address_text: Add address
+        add_desc_text: Add description
+        add_name_text: Add name
+        answer_question_text: Answer question
+        building_was_saved: Your building was saved.  "%{name}" is ready for procurement.
+        caption_addr: Address
+        caption_desc: Description
+        caption_gia: Gross internal area
+        caption_name: Name
+        caption_reference: Reference
+        caption_sec: Security clearance
+        caption_type: Building type
+        change_text: Change
+        no_data_message: There are no building details to view
+        return_to_management_text: Return to manage buildings
+        section-header: Building details summary
+        select_one_option_text: Select one option
+        status_warning_message: Your building was saved.  "%{name}" is incomplete.  You need to answer all questions to be used in procurement.
+      building-gross-internal-area:
+        add_header: Add building GIA
+        edit_header: Change building GIA
+        guidance_1: Gross internal area (GIA) is the area of the building measured to the internal face of the perimeter walls at each floor area.
+        guidance_2: For example, 18000 square metres.
+        guidance_3: Use
+        guidance_link_text: this guidance on how to measure GIA
+        heading: What's the internal area of the building?
+        input_label: sqm (square metres)
+      index:
+        column_desc_header: Description
+        column_lstup_header: Last updated
+        column_name_header: Name
+        column_status_header: Status
+        create_new_button: "+ Create Single Building"
+        link_to_building_summary: View details for building
+        manage_building: Manage buildings
+        manage_buildings_header: Manage buildings
+        my_buildings_header: My buildings
+        no_buildings_text: You have no saved buildings
+        start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
+        start_warning: Only buildings that are ready can be used in your procurement.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -804,10 +866,11 @@ en:
       feedback_aria_label: Email your feedback on this service.
       feedback_end_journey_html: <b> This is a new service - how did you find it? </b> Please complete <a href="%{link}" target="_blank" >a short survey</a> to help us improve it.
       feedback_html: This is a new service – your %{link} will help us to improve it.
-      having_problems: To ask a question or report a problem,
+      having_problems: Having problems with this service?
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy
       skip: Skip to main content
+      support_email_html: Email %{link}.
       support_html: email %{link} or call %{phone}.
       support_link_aria_label: Email us for support with this service
       title: Crown Commercial Service
@@ -816,48 +879,34 @@ en:
   legal_services:
     admin:
       uploads:
-        in_progress:
-          button: Button
-          content: Content
-          heading: Heading
         index:
-          caption: Caption
-          create_new: Create new
-          current_table_caption: Current table caption
+          caption: Manage supplier data
+          create_new: Create a new data upload
           date: Date
-          heading: Heading
+          heading: Legal Services
           name: Name
-          no_of_files: No of files
-          spreadsheet: Spreadsheet
+          number_of_files: Files
           status: Status
-          table_caption: Table caption
-          upload_session: Upload session
+          table_caption: Previous uploads
         new:
-          caption: Caption
-          heading: Heading
-          upload_button: Upload button
-          upload_caption: Upload caption
-          upload_title: Upload title
-        reject:
-          content: Content
-          heading_html: Heading html
-          index_button: Index button
-          new_button: New button
+          caption: Legal Services
+          heading: New data upload
+          upload_caption: Supported file format is XLSX. Maximum file size is 10mb.
+          upload_title: Upload the complete supplier data
         show:
           approve: Approve
-          caption: Caption
-          confirm_changes: Confirm changes
-          datetime: Datetime
-          error_heading: Error heading
+          caption: Legal Services
+          confirm: Confirm changes
+          datetime: 'Date/time:'
+          download: Download
+          error_heading: Error
+          file: File
           files: Files
-          heading: Heading
+          heading: 'Upload session #%{number}'
           reject: Reject
           spreadsheet: Spreadsheet
-          status: Status
-        uploading:
-          button: Button
-          content_html: Content html
-          heading: Heading
+          status: 'Status:'
+          suppliers_data: Suppliers data
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -1579,6 +1628,13 @@ en:
         miles: Miles
         phone_number: Phone number
         region: Region
+      fta_calculator:
+        annual_salary: Enter annual salary
+        error: 'Error:'
+        error_message: Annual salary is invalid.
+        finders_fee: finders fee based on
+        fixed_term_length: fixed term length
+        heading: 'Update the salary to see what their finders fee will be:'
       index:
         calculate_markup_button_label: Calculate the fee
         calculate_markup_description: 'See how much the worker makes and what fee the agency will get using the figure they quoted you:'
@@ -1594,7 +1650,7 @@ en:
         download_aria_label: Download shortlist as Microsoft Excel file
         download_with_calculator: Download shortlist (with markup calculator)
         download_with_calculator_aria_label: Download shortlist (with markup calculator) as Microsoft Excel file
-        header: Agency list
+        header: Agency results
         inputs:
           job_type: Job type
           looking_for: Looking for
@@ -1696,6 +1752,19 @@ en:
         question_hint: We use this to find agencies near to your school
         worker_term_question: How long does your school need the worker for?
         worker_type_question: What type of worker does your school need?
+      fta_calculator_contract_end:
+        contract_end_question: What date do you want the employee to stop working?
+        contract_end_question_hint: For example, 01 03 2018. An estimate is fine.
+        page_title: What date do you want the employee to stop working?
+      fta_calculator_contract_start:
+        contract_start_question: What date do you want the employee to start?
+        contract_start_question_hint: For example, 01 03 2018. An estimate is fine.
+        page_title: What date do you want the employee to start?
+      fta_calculator_salary:
+        page_title: What would the employee's annual salary be?
+        salary_icon: "£"
+        salary_question: What would the employee's annual salary be?
+        salary_question_hint: Even if the fixed term agreement is less than a year, please provide the salary as if it were for an entire year
       fta_to_perm_contract_end:
         contract_end_question: What date did the workers fixed term contract end?
         contract_end_question_hint: For example, 12 05 2019

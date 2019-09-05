@@ -1,32 +1,40 @@
 require 'roo'
 require 'json'
-require 'capybara'
 
-def add_suppliers
-  suppliers_workbook = Roo::Spreadsheet.open '/users/milomia/master/storage/legal_services/current_data/input/SupplierDetails4.xlsx'
+def add_suppliers(upload_id)
+  upload = LegalServices::Admin::Upload.find(upload_id)
+  suppliers_workbook = Roo::Spreadsheet.open(file_path(upload.suppliers))
 
   headers = {
     name: 'Supplier Name',
-    contact_email: 'Email address',
-    telephone_number: 'Phone number',
+    email: 'Email address',
+    phone_number: 'Phone number',
     website: 'Website URL',
     address: 'Postal address',
     sme: 'Is an SME',
     duns: 'DUNS Number',
-    lot1: 'Lot 1 Prospectus Link',
-    lot2: 'Lot 2 Prospectus Link',
-    lot3: 'Lot 3 Prospectus Link',
-    lot4: 'Lot 4 Prospectus Link',
+    lot_1_prospectus_link: 'Lot 1: Prospectus Link',
+    lot_2_prospectus_link: 'Lot 2: Prospectus Link',
+    lot_3_prospectus_link: 'Lot 3: Prospectus Link',
+    lot_4_prospectus_link: 'Lot 4: Prospectus Link',
     clean: true
   }
 
-  ls_sheet = suppliers_workbook.sheet(0)
+  sheet = suppliers_workbook.sheet(0)
 
-  suppliers = ls_sheet.parse(headers)
+  suppliers = sheet.parse(headers)
 
-  File.open('/users/milomia/master/storage/legal_services/current_data/output/suppliers2.json', 'w') do |f|
-    f.write JSON.pretty_generate suppliers
+  suppliers.each do |supplier|
+    supplier[:sme] = ['YES', 'Y'].include? supplier[:sme].to_s.upcase
+    supplier[:id] = SecureRandom.uuid
   end
+
+  upload.data = suppliers
+  upload.save!
 end
 
-add_suppliers
+def file_path(file)
+  return file.path if Rails.env.development?
+
+  file.url
+end

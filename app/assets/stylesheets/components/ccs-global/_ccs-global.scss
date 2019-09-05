@@ -92,6 +92,9 @@ span.govuk-error-message + span.ccs-e-msg {
 
 #cookie_banner {
     display: none;
+  div {
+    border: 0;
+  }
 }
 
 .govuk-accordion .govuk-accordion__section-button {
@@ -166,7 +169,7 @@ form.ccs-form {
     a.ccs-no-underline & {
         margin-left: govuk-spacing(1);
     }
-  &-approved {
+  &-approved, &-completed {
     background-color: govuk-colour("green");
   }
   &-canceled, &-failed, &-rejected {

@@ -10,21 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_08_132209) do
+ActiveRecord::Schema.define(version: 2019_09_02_143001) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "facilities_management_buildings", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
+    t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "Incomplete", null: false
+    t.uuid "id", null: false
+    t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
@@ -63,22 +67,27 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
   end
 
   create_table "fm_cache", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "key", null: false
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "user_id", null: false
+    t.string "key", null: false
+    t.string "value"
     t.index ["user_id", "key"], name: "fm_cache_user_id_idx"
   end
 
   create_table "fm_lifts", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "building_id", null: false
+    t.string "user_id", null: false
+    t.string "building_id", null: false
     t.jsonb "lift_data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
     t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
+  end
+
+  create_table "fm_procurements", id: false, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.datetime "date_created", null: false
+    t.datetime "last_updated", null: false
+    t.jsonb "procurement"
+    t.string "updated_by", null: false
+    t.index ["user_id"], name: "fm_procurements_user_id_idx"
   end
 
   create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -91,11 +100,9 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
   end
 
   create_table "fm_rates", id: false, force: :cascade do |t|
-    t.text "code"
+    t.string "code", limit: 255
     t.decimal "framework"
     t.decimal "benchmark"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.index ["code"], name: "fm_rates_code_key", unique: true
   end
 
@@ -103,6 +110,14 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
     t.string "code", limit: 255
     t.string "name", limit: 255
     t.index ["code"], name: "fm_regions_code_key", unique: true
+  end
+
+  create_table "fm_security_types", id: false, force: :cascade do |t|
+    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
+    t.string "title", null: false
+    t.string "description"
+    t.integer "sort_order", null: false
+    t.index ["id"], name: "fm_security_types_id_idx"
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
@@ -138,11 +153,26 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
     t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
   end
 
+  create_table "legal_services_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "aasm_state", limit: 15
+    t.string "suppliers", limit: 255
+    t.string "supplier_lot_1_service_offerings", limit: 255
+    t.string "supplier_lot_2_service_offerings", limit: 255
+    t.string "supplier_lot_3_service_offerings", limit: 255
+    t.string "supplier_lot_4_service_offerings", limit: 255
+    t.string "rate_cards", limit: 255
+    t.jsonb "data"
+    t.text "fail_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "legal_services_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "legal_services_supplier_id", null: false
     t.text "region_code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "service_code"
     t.index ["legal_services_supplier_id"], name: "index_ls_regional_availabilities_on_ls_supplier_id"
   end
 
@@ -171,6 +201,11 @@ ActiveRecord::Schema.define(version: 2019_08_08_132209) do
     t.datetime "updated_at", null: false
     t.jsonb "rate_cards"
     t.index ["rate_cards"], name: "index_legal_services_suppliers_on_rate_cards", using: :gin
+  end
+
+  create_table "legal_services_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "london_postcodes", id: false, force: :cascade do |t|

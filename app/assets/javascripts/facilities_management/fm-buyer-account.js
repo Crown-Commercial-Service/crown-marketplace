@@ -1,6 +1,6 @@
 $(function () {
     $('#fm-start-new-procurement-link').on('click', function (e) {
-        location.href = 'select-services'
+        location.href = 'select-services?env=public-beta'
     });
 
     $('#fm-manage-procurements-link').on('click', function (e) {
