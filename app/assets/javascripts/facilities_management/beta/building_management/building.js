@@ -8,7 +8,7 @@ $(function () {
     $('#fm-find-address-btn').addClass('govuk-button');
     $('#fm-find-address-btn').text('Find address');
     $('fm-bm-postcode-lookup-container').removeClass('govuk-!-margin-top-3');
-    
+
     $('#fm-building-name-input').on('keyup', function (e) {
         $('#fm-building-name-chars-left').text(FM.calcCharsLeft(e.target.value, 25));
     });
