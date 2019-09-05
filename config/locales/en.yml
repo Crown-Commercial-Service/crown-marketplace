@@ -121,6 +121,7 @@ en:
         legal_services/journey/choose_regions:
           attributes:
             region_codes:
+              full_national_coverage: Select full national coverage or the region or regions you require the services in
               too_short: Select the region or regions you require the services in
         legal_services/journey/select_lot:
           attributes:
