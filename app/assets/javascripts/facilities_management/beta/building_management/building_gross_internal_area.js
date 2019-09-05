@@ -35,7 +35,7 @@ $(function () {
             pageUtils.toggleInlineErrorMessage(false);
             pageUtils.toggleFieldValidationError(false, 'fm-bm-internal-square-area');
         } else {
-            errorMessage = 'Total internal area must be a number, like 2000';
+            errorMessage = 'Enter a number for the total internal area of this building';
             pageUtils.inlineErrors_addMessage(errorMessage);
             pageUtils.toggleInlineErrorMessage(true);
             pageUtils.toggleFieldValidationError(true, 'fm-bm-internal-square-area',errorMessage);
