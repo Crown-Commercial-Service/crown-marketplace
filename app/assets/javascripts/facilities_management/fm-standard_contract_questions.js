@@ -287,6 +287,8 @@ $(function () {
     $('#fm-internal-square-area').on('keypress', function (event) {
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
+        } else {
+            pageUtils.setCachedData('fm-gia', event.target.value);
         }
     });
 
