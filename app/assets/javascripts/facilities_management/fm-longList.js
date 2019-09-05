@@ -53,7 +53,7 @@ $(function () {
             let value = selectedServices[x];
 
             let checkbox = '<div class="govuk-checkboxes__item">' +
-                '<input class="govuk-checkboxes__input" checked id="' + value.code + '" name="fm-services-checkbox" type="checkbox" value="' + value.name + '">' +
+                '<input class="govuk-checkboxes__input" id="' + value.code + '" name="fm-services-checkbox" type="checkbox" value="' + value.name + '">' +
                 '<label class="govuk-label govuk-checkboxes__label govuk-!-font-size-16 CCS-fm-supplier-filter-check-box-label" for="' + value.code + '">' + value.name + '</label></div>';
 
             serviceCheckBoxes.append(checkbox);
