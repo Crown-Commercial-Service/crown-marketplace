@@ -5,6 +5,13 @@ $(function () {
 
     let newBuilding = {};
 
+
+    $('#fm-bm-postcode-lookup-container').addClass('govuk-visually-hidden');
+    $('#fm-find-address-btn').addClass('govuk-button');
+    $('#fm-find-address-btn').text('Find address');
+    $('fm-bm-postcode-lookup-container').removeClass('govuk-!-margin-top-3');
+    //$('#fm-find-address-results').focus();
+
     $('#fm-building-name-input').on('keyup', function (e) {
         $('#fm-building-name-chars-left').text(FM.calcCharsLeft(e.target.value, 25));
     });
@@ -18,7 +25,7 @@ $(function () {
         }
     });
 
-    const assign_building_name = function ( new_name ) {
+    const assign_building_name = function (new_name) {
         newBuilding.name = new_name;
         FM.building = newBuilding;
     };
@@ -31,11 +38,11 @@ $(function () {
         assign_building_description(e.target.value);
     });
 
-    const assign_building_description = function ( new_desc ) {
+    const assign_building_description = function (new_desc) {
         newBuilding.description = new_desc;
         FM.building = newBuilding;
     };
-    
+
     $('#fm-find-address-results').on('change', function (e) {
         let selectedAddress = $("select#fm-find-address-results > option:selected").val();
 
@@ -61,13 +68,13 @@ $(function () {
         return false;
     };
 
-    const assign_building_address = function( new_address, new_ref ) {
-        if ( null == newBuilding.address ) {
+    const assign_building_address = function (new_address, new_ref) {
+        if (null == newBuilding.address) {
             newBuilding.address = new_address;
             newBuilding['building-ref'] = new_ref;
             FM.building = newBuilding;
         }
-    } ;
+    };
 
     $('#fm-find-address-btn').on('click', function (e) {
         e.preventDefault();
@@ -147,16 +154,16 @@ $(function () {
         if (!validateBuildingDetailsForm()) {
             e.preventDefault();
         } else {
-            saveBuildingDetails ( $('#fm-building-id').val(),
+            saveBuildingDetails($('#fm-building-id').val(),
                 FM.building.name,
                 FM.building.description,
                 FM.building['building-ref'],
                 FM.building.address,
-                $('#fm-redirect-url').val() );
+                $('#fm-redirect-url').val());
         }
     });
 
-    const synchronise_FM_object = function() {
+    const synchronise_FM_object = function () {
         assign_building_name($('#fm-building-name-input').val());
         assign_building_description($('#fm-building-desc-input').val());
         let address = {};
@@ -165,8 +172,8 @@ $(function () {
             assign_building_address(address, address['building-ref']);
         }
     };
-    
-    const validateBuildingDetailsForm = function() {
+
+    const validateBuildingDetailsForm = function () {
         let bRet = false;
         synchronise_FM_object();
         if (!FM.building.name || !FM.building.address || FM.building.address === {}) {
@@ -187,11 +194,11 @@ $(function () {
             pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
             pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
         }
-        
+
         return bRet;
     };
 
-    const saveBuildingDetails = function ( building_id, new_name, new_description, new_ref, new_address, redirectURL )  {
+    const saveBuildingDetails = function (building_id, new_name, new_description, new_ref, new_address, redirectURL) {
         let jsonValue = {};
         jsonValue["building-id"] = building_id;
         jsonValue["building-name"] = new_name;
@@ -199,17 +206,17 @@ $(function () {
         jsonValue["building-address"] = new_address;
         jsonValue["building-ref"] = new_ref;
 
-        $.ajax( {
+        $.ajax({
             url: './building',
             dataType: 'json',
             type: 'put',
             contentType: 'application/json',
             data: JSON.stringify(jsonValue),
             processData: false,
-            success: function(data, status, jQxhr ) {
+            success: function (data, status, jQxhr) {
                 location.href = redirectURL;
             },
-            error: function (jQxhr, status, errorThrown ) {
+            error: function (jQxhr, status, errorThrown) {
                 console.log(errorThrown);
                 $('#inline-error-message').removeClass('govuk-visually-hidden');
                 $('#inline-error-message #error-summary-title').text('Cannot save changes');
