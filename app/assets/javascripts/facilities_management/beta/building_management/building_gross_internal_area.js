@@ -12,11 +12,16 @@ $(function () {
             event.preventDefault();
         }
     });
-    $('#fm-bm-internal-square-area-form #fm-bm-save-and-return').on('click', function (e) {
+
+    $('#fm-bm-internal-square-area-footer #fm-bm-cancel-and-return').on('click', function(e){
+        $('#fm-bm-cancel-and-return-form').submit();
+    });
+
+    $('#fm-bm-internal-square-area-footer #fm-bm-save-and-return').on('click', function (e) {
         if (!validateGIAForm($('#fm-bm-internal-square-area').val())) {
             e.preventDefault();
         } else {
-            saveGIA ( $('#fm-building-id').val(), $('#fm-bm-internal-square-area').val(), $('#fm-redirect-url').val());
+            $('#fm-bm-internal-square-area-form').submit();
         }
     });
     
@@ -42,27 +47,5 @@ $(function () {
         }
 
         return isValid;
-    });
-    
-    const saveGIA =(function(id, value, redirectURL) {
-        let jsonValue = {};
-        jsonValue["gia"] = value;
-        jsonValue["building-id"] = id;
-
-        $.ajax( {
-            url: './building-gross-internal-area',
-            dataType: 'json',
-            type: 'put',
-            contentType: 'application/json',
-            data: JSON.stringify(jsonValue),
-            processData: false,
-            success: function(data, status, jQxhr ) {
-                location.href = redirectURL;
-            },
-            error: function (jQxhr, status, errorThrown ) {
-                console.log(errorThrown);
-                pageUtils.showGIAError(true, 'The building could not be saved.  Please try again');
-            }
-        });
     });
 });

@@ -2,9 +2,10 @@
 <div>
   <%= render 'buildings_steps_header' %>
 </div>
-<form name="fm-building-details-form" id="fm-bm-building-details-form" action="." method="POST">
-  <input type="hidden" id="fm-redirect-url" value="<%= @back_link_href %>" />
-  <input type="hidden" id="fm-building-id" value="<%= @building_id %>" />
+<form name="fm-building-details-form" id="fm-bm-building-details-form" action="building-details-summary" method="POST">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <input type="hidden" name="detail-type" value="fm-building-details" />
+  <input type="hidden" name="building-id" id="building-id" value="<%= @building_id %>" />
   <div>
     <!-- Building name -->
     <span class="govuk-heading-m govuk-!-margin-bottom-0">What's the name of your building?</span>
@@ -14,7 +15,7 @@
   </span>
 
     <input id="fm-building-name-input" class="govuk-input" type="text" maxlength="25" style="width:300px;"
-           value="<%= @building['name'] %>">
+           value="<%= @building['name'] %>" name="fm-building-name">
     <span class="govuk-caption-m">You have <span id="fm-building-name-chars-left">25</span> characters remaining</span>
     <!-- building description -->
     <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the description? - Optional</span>
@@ -23,7 +24,7 @@
     For example, some users put their cost centre in this field.
   </span>
     <input id="fm-building-desc-input" class="govuk-input" type="text" maxlength="50" style="width:300px;"
-           value="<%= @building['description'] %>">
+           value="<%= @building['description'] %>" name="fm-building-desc">
     <span class="govuk-caption-m">You have <span id="fm-building-desc-chars-left">50</span> characters remaining</span>
     <!-- Address -->
     <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the address?</span>
@@ -34,14 +35,16 @@
     <span id="fm-address-sub-title" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0">Postcode</span>
     <input id="fm-bm-postcode" class="govuk-input govuk-!-margin-top-0 govuk-!-margin-bottom-0" type="text" maxlength="12" style="width:150px;"
            value="<%= @building['address']['fm-address-postcode'] %>">
-    <a id="fm-find-address-btn" href="#" class="govuk-button ">Find address</a><br>
+    <input type="hidden" name="address-json" id="address-json"/>
+    <input type="hidden" name="building-ref" id="building-ref" value="<%= @building['building-ref']&.strip %>"/>
+    <a id="fm-find-address-btn" href="#" class="govuk-button ">Find address</a><br/>
 
     <div id="fm-bm-postcode-lookup-container" class="govuk-visually-hidden govuk-!-margin-bottom-6 govuk-!-margin-top-6">
       <span class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</span>
       <select class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0" id="fm-find-address-results" name="fm-find-address-results">
         <% if @building['address']
-            address_text = stringify_address @building['building-ref'], @building['address'] %>
-          <option value="<%= address_text%>" selected><%=address_text %></option>
+             address_text = stringify_address @building['building-ref'], @building['address'] %>
+          <option value="<%= address_text %>" selected><%= address_text %></option>
         <% else %>
           <option value="status-option" selected>0 addresses found</option>
         <% end %>
@@ -50,10 +53,9 @@
         find my building's address in the list</a>
     </div>
   </div>
-
-  <!-- footer -->
-  <div class="govuk-!-margin-top-3">
-    <%= render partial: 'buildings_steps_footer' unless @editing %>
-    <%= render partial: 'buildings_steps_editing_footer' if @editing %>
-  </div>
 </form>
+<!-- footer -->
+<div class="govuk-!-margin-top-3" id="fm-bm-building-details-footer">
+  <%= render partial: 'buildings_steps_footer' unless @editing %>
+  <%= render partial: 'buildings_steps_editing_footer' if @editing %>
+</div>

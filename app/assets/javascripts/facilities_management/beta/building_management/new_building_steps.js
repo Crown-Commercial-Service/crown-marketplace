@@ -66,7 +66,7 @@ $(function () {
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json',
-                data: radioValue,
+                data: JSON.stringify(radioValue),
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     location.href = redirectURI
