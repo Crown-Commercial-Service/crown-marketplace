@@ -35,9 +35,7 @@ module ManagementConsultancy
         params[:lot],
         params[:services],
         params[:region_codes]
-      ).joins(:rate_cards)
-                               .where(management_consultancy_rate_cards: { lot: params[:lot] })
-                               .order(:name)
+      ).order(:name)
     end
 
     def set_back_path

@@ -9,7 +9,7 @@ class ManagementConsultancy::SupplierSpreadsheetCreator
   def build
     Axlsx::Package.new do |p|
       p.workbook.add_worksheet(name: 'Supplier shortlist') do |sheet|
-        sheet.add_row ['Supplier name', 'Contact name', 'Phone number', 'Email', 'Supplier average day rate (£)']
+        sheet.add_row ['Supplier name', 'Contact name', 'Phone number', 'Email']
         add_supplier_details(sheet)
       end
 
@@ -31,8 +31,7 @@ class ManagementConsultancy::SupplierSpreadsheetCreator
           supplier.name,
           rate_card.contact_name,
           supplier.telephone_number,
-          supplier.contact_email,
-          rate_card.average_daily_rate
+          supplier.contact_email
         ]
       )
     end
