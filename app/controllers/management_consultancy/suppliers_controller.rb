@@ -37,7 +37,7 @@ module ManagementConsultancy
         params[:region_codes]
       ).joins(:rate_cards)
                                .where(management_consultancy_rate_cards: { lot: params[:lot] })
-                               .sort_by { |supplier| supplier.rate_cards.first.average_daily_rate }
+                               .order(:name)
     end
 
     def set_back_path
