@@ -153,7 +153,7 @@ $(function () {
         let totalExtensionYears = calcTotalExtensionYears();
         let contractLength = $('#fm-contract-length').val();
         contractLength = contractLength ? parseInt(contractLength) : 0;
-        contractLength = contractLength <= 0 ? 0 : contractLength
+        contractLength = contractLength <= 0 ? 0 : contractLength;
 
         let result = false;
 

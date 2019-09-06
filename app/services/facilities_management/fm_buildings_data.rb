@@ -28,10 +28,34 @@ class FMBuildingData
 
   def save_building_property(building_id, key, value)
     # Key/Value properties associated with a building such as GIA, etc
-    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{" + key + "}', '" + value + "') where id = '" + building_id + "';"
+    query = "update facilities_management_buildings set updated_at = now(), building_json = jsonb_set(building_json, '{#{key}}',  '\"#{value}\"'::jsonb, true) where id = '#{building_id}';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building property: #{e}"
+    raise e
+  end
+
+  def save_building_property_activerecord(building_id, key, value)
+    current_building = CCS::FM::Building.find_by id: building_id
+    unless current_building['building_json'][key].present? && current_building['building_json'][key] == value
+      current_building['building_json'][key] = value
+      current_building['updated_at'] = DateTime.current
+      current_building.save id: building_id
+    end
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't save building property: #{e}"
+    raise e
+  end
+
+  def update_building_status(building_id, is_ready, email)
+    current_building = CCS::FM::Building.find_by id: building_id
+    current_building['status'] = (is_ready ? 'Ready' : 'Incomplete')
+    current_building['updated_at'] = DateTime.current
+    current_building['updated_by'] = email
+    current_building.save id: building_id
+  rescue StandardError => e
+    Rails.logger.warn "Couldn't update building status: #{e}"
+    raise e
   end
 
   def update_building_id
@@ -51,9 +75,9 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get new building id: #{e}"
   end
 
-  def new_building_details(building_id)
+  def new_building_details(email_address)
     # returns building details for a given building_id
-    query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
+    query = "select id, updated_at, status, building_json as building from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(result[0].to_json)
   rescue StandardError => e
@@ -63,8 +87,8 @@ class FMBuildingData
   def save_new_building(email_address, building)
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
-    query = 'insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by) ' \
-            "values('" + Base64.encode64(email_address) + "', '" + building.gsub("'", "''") + "' , now()," + "'Incomplete', gen_random_uuid(), '" + email_address + "');"
+    query = "insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by)
+            values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', gen_random_uuid(), '#{email_address}');"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     update_building_id
     new_building_id(email_address)
@@ -98,7 +122,7 @@ class FMBuildingData
 
   def update_building(email_address, id, building)
     Rails.logger.info '==> FMBuildingData.update_building()'
-    query = "update facilities_management_buildings set building_json = '" + building.gsub("'", "''") + "'  where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
+    query = "update facilities_management_buildings set updated_at = now(), building_json = '" + building.gsub("'", "''") + "'  where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't update building: #{e}"
@@ -118,17 +142,9 @@ class FMBuildingData
   def get_building_data_by_id(email_address, id)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
-    query = "select updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
+    query = "select id, updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    Rails.logger.info(result.to_json.to_s)
     JSON.parse(result.to_json)
-  rescue StandardError => e
-    Rails.logger.warn "Couldn't get building data: #{e}"
-  end
-
-  def get_building_data_by_ref(email_address, building_ref)
-    Rails.logger.info '==> FMBuildingData.get_building_data_by_ref()'
-    (FacilitiesManagement::Buildings.building_by_reference email_address, building_ref)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
   end
@@ -187,7 +203,7 @@ class FMBuildingData
      'Universities and Colleges', 'Doctors, Dentists and Health Clinics', 'Nursery and Care Homes', 'Data Centre Operations',
      'External parks, grounds and car parks', 'Laboratory', 'Heritage Buildings', 'Nuclear Facilities', 'Animal Facilities',
      'Custodial Facilities', 'Fire and Police Stations', 'Production Facilities', 'Workshops', 'Garages',
-     'Shopping Centres', 'Museums or Galleries', 'Fitness or training Establishments', 'Residential Buildings',
+     'Shopping Centres', 'Museums or Galleries', 'Fitness or Training Establishments', 'Residential Buildings',
      'Port and Airport buildings', 'List X Property', 'Hospitals', 'Mothballed / Vacant / Disposal']
   end
 
@@ -217,7 +233,7 @@ class FMBuildingData
       'Garages' => 'Areas where motor vehicles are cleaned, serviced, repaired and maintained.',
       'Shopping Centres' => 'Areas where retail services are delivered to the public.',
       'Museums or Galleries' => 'Areas are generally open to the public with some restrictions in place from time to time. Some facilities have no public access.',
-      'Fitness or training Establishments' => 'Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal / external sports facilities.',
+      'Fitness or Training Establishments' => 'Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal / external sports facilities.',
       'Residential Buildings' => 'Residential accommodation / areas.',
       'Port and Airport buildings' => 'Areas associated with air and sea transportation and supporting facilities, such as airports, aerodromes and dock areas.',
       'List X Property' => 'A commercial site (i.e. non-Government) on UK soil that is approved to hold UK government protectively marked information marked as \'confidential\' and above. It is applied to a company\'s specific site and not a company as a whole.',
