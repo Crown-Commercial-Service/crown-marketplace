@@ -25,7 +25,7 @@ before_install:
   - sudo service postgresql start 11
 before_script:
   - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
-  - pause 5
+  - sleep 5
   - sudo -u postgres psql -U postgres -c "create extension postgis" -d root
   - sudo -u postgres psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
 script:
