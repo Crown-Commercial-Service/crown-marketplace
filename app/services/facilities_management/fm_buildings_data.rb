@@ -19,9 +19,9 @@ class FMBuildingData
     Rails.logger.info '==> FMBuildingData.save_building()'
 
     CCS::FM::Building.create(id: building['id'],
-                                           user_id: Base64.encode64(email_address),
-                                           updated_by: Base64.encode64(email_address),
-                                           building_json: building)
+                             user_id: Base64.encode64(email_address),
+                             updated_by: Base64.encode64(email_address),
+                             building_json: building)
   rescue StandardError => e
     Rails.logger.warn "Couldn't update new building id: #{e}"
   end
@@ -37,9 +37,11 @@ class FMBuildingData
 
   def save_building_property_activerecord(building_id, key, value)
     current_building = CCS::FM::Building.find_by id: building_id
-    current_building['building_json'][key] = value
-    current_building['updated_at'] = DateTime.current
-    current_building.save id: building_id
+    unless current_building['building_json'][key].present? && current_building['building_json'][key] == value
+      current_building['building_json'][key] = value
+      current_building['updated_at'] = DateTime.current
+      current_building.save id: building_id
+    end
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building property: #{e}"
     raise e
