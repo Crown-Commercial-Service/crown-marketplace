@@ -8,7 +8,7 @@
         <%= t('.body') %>
       </p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-left-2 govuk-!-margin-top-7 govuk-!-margin-bottom-8">
-        <% %w(contingent_labour corporate_financial_services research_marketplace technology_services digital_outcomes_and_specialists g_cloud).each do |service| %>
+        <% %w(contingent_labour research_marketplace technology_services digital_outcomes_and_specialists g_cloud).each do |service| %>
           <li class="govuk-!-margin-bottom-5">
             <%= t(".#{service}_html", "#{service}_link": link_to(t(".#{service}_link_text"), t(".#{service}_link"))) %>
           </li>
