@@ -18,7 +18,7 @@ class FMBuildingData
   def save_building(email_address, building)
     Rails.logger.info '==> FMBuildingData.save_building()'
 
-    FacilitiesManagement::Buildings.create(id: building['id'],
+    CCS::FM::Building.create(id: building['id'],
                                            user_id: Base64.encode64(email_address),
                                            updated_by: Base64.encode64(email_address),
                                            building_json: building)
@@ -36,7 +36,7 @@ class FMBuildingData
   end
 
   def save_building_property_activerecord(building_id, key, value)
-    current_building = FactilitiesManagement::Buildings.find_by id: building_id
+    current_building = CCS::FM::Building.find_by id: building_id
     current_building['building_json'][key] = value
     current_building['updated_at'] = DateTime.current
     current_building.save id: building_id
@@ -46,7 +46,7 @@ class FMBuildingData
   end
 
   def update_building_status(building_id, is_ready, email)
-    current_building = FacilitiesManagement::Buildings.find_by id: building_id
+    current_building = CCS::FM::Building.find_by id: building_id
     current_building['status'] = (is_ready ? 'Ready' : 'Incomplete')
     current_building['updated_at'] = DateTime.current
     current_building['updated_by'] = email
