@@ -11,8 +11,8 @@
     <div class="govuk-radios">
       <% @security_types.each do |record| %>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="FM-security-type-<%= record['id'] %>" <%= 'checked' if record['title'].to_s == @building['security-type'] %>
-                 name="fm-building-security-type-radio" type="radio" value="<%= record['title'] %>">
+          <input class="govuk-radios__input" id="FM-security-type-<%= record['id'] %>" <%= 'checked' if record['title'].to_s == @building_sec_type %>
+                 name="fm-building-security-type-radio" type="radio" value="<%= record['title'].to_s %>">
           <label class="govuk-label govuk-radios__label" for="FM-security-type-<%= record['id'] %>">
             <%= record['title'] %><br>
             <span class="govuk-caption-m"><%= record['description'] %></span>
@@ -21,14 +21,15 @@
       <% end %>
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="fm-building-security-type-other"
-               name="fm-building-security-type-radio" type="radio" value="other">
+               name="fm-building-security-type-radio" type="radio" value="other" <%= 'checked' if 'other' == @building_sec_type %>>
         <label class="govuk-label govuk-radios__label" for="fm-building-security-type-other">
           Other<br>
         </label>
       </div>
-      <div id="fm-bm-sec-other-container" class="govuk-details__text govuk-!-margin-left-3 govuk-!-width-two-thirds govuk-!-margin-top-1 govuk-visually-hidden">
+      <div id="fm-bm-sec-other-container" class="govuk-details__text govuk-!-margin-left-3 govuk-!-width-two-thirds govuk-!-margin-top-1 <%= 'govuk-visually-hidden' unless @building_sec_type == 'other'%>">
         <span class="govuk-caption-m govuk-!-margin-bottom-1">Describe security level</span>
-        <textarea maxlength="150" class="govuk-textarea govuk-!-margin-bottom-1 govuk-!-margin-top-1" id="fm-building-security-type-more-detail" name="fm-building-security-type-more-detail" rows="4"></textarea>
+        <textarea maxlength="150" class="govuk-textarea govuk-!-margin-bottom-1 govuk-!-margin-top-1" id="fm-building-security-type-more-detail"
+                  name="fm-building-security-type-more-detail" rows="4"><%= @building_sec_details %></textarea>
         <span id="fm-bm-bs-char-count" class="govuk-caption-m govuk-!-margin-top-1 fm-security-type-text">You have 150 characters remaining</span>
       </div>
     </div>
