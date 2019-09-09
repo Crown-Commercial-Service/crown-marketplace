@@ -17,7 +17,7 @@ $(function () {
 
     $('#fm-building-security-type-more-detail').on('keyup', function (e) {
         let value = e.target.value;
-        //$('#fm-building-security-type-other').val(value);
+        $('#fm-building-security-type-other').val(value);
 
         let charsLeft = FM.calcCharsLeft(value, 150);
         $('#fm-bm-bs-char-count').text('You have ' + charsLeft + ' characters remaining');
