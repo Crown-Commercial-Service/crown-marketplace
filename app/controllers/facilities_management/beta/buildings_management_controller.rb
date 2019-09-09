@@ -42,7 +42,7 @@ module FacilitiesManagement
       @building_id = building_id_from_inputs
       if params['id'].present?
         building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
-                                                                    "' and id = '#{@building_id}'")
+                                                                      "' and id = '#{@building_id}'")
         @building = building_record&.building_json
         @page_title = 'Change building details'
         @editing = true
@@ -215,13 +215,15 @@ module FacilitiesManagement
           update_building_details
         when 'fm-bm-internal-square-area'
           update_building_gia
-        else true
+        else
+          true
         end
       end
     rescue StandardError => e
       @inline_error_summary_title = 'Problem saving data'
       @inline_summary_error_text = e
     end
+
     # rubocop:enable Metrics/CyclomaticComplexity
 
     def update_building_details
@@ -282,12 +284,13 @@ module FacilitiesManagement
         ''
       end
     end
+
     helper_method :stringify_address
 
     def building_id_from_inputs
       return params['id'] if params['id'].present?
       return params['building-id'] if params['building-id'].present?
-      return cookies['fm-building-id'] if cookies.key?('fm-building-id')
+      return cookies['fm_building_id'] if cookies.key?('fm_building_id')
 
       nil
     end
@@ -295,8 +298,7 @@ module FacilitiesManagement
     # Data retrieval helpers - to be moved to the service layer?
     def get_new_or_specific_building_by_id(building_id)
       fm_building_data = FMBuildingData.new
-      building_details = fm_building_data.new_building_details(current_user.email.to_s) if building_id.blank?
-      building_details = fm_building_data.get_building_data_by_id(current_user.email.to_s, building_id).first if building_id.present?
+      building_details = fm_building_data.new_building_details(building_id)
       building_details
     end
 
@@ -338,8 +340,8 @@ module FacilitiesManagement
     end
 
     def validate_and_update_building(building_id)
-      db         = FMBuildingData.new
-      building   = db.get_building_data_by_id current_user.email.to_s, building_id if building_id.present?
+      db = FMBuildingData.new
+      building = db.get_building_data_by_id current_user.email.to_s, building_id if building_id.present?
       new_status = get_building_ready_status(JSON.parse(building[0]['building'])) if building.present?
       db.update_building_status(building_id, new_status, current_user.email.to_s) if building.present?
     end
