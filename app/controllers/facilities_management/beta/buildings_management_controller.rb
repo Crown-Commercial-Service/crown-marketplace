@@ -102,7 +102,7 @@ module FacilitiesManagement
       @security_types = fm_building_data.security_types
       @page_title = 'Change Security Type' if @editing
 
-      if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && @building_sec_type != ''
+      if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && !@building_sec_type.empty?
         @other_is_used = true
         @other_value = @building_sec_type
       end
@@ -331,7 +331,7 @@ module FacilitiesManagement
         true
       else
         fm_building_data.save_building_property_activerecord building_id, property_name, new_value
-        updated_building = JSON.parse(get_new_or_specific_building_by_id(building_id)['building'])
+        updated_building = JSON.parse(get_new_or_specific_building_by_id(building_id)['building_json'])
         (updated_building.key?(property_name) ? updated_building[property_name].to_s == new_value.to_s : false)
       end
     end
