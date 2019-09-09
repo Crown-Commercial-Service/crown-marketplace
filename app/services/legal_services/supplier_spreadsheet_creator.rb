@@ -38,9 +38,9 @@ class LegalServices::SupplierSpreadsheetCreator
   end
 
   def add_audit_trail(sheet)
-    add_regions(sheet) if @params['lot'] == '1'
     add_jurisdiction(sheet) if @params['lot'] == '2'
     add_services(sheet) if ['1', '2'].include? @params['lot']
+    add_regions(sheet) if @params['lot'] == '1'
   end
 
   def add_regions(sheet)

@@ -22,7 +22,7 @@ $(function () {
         }
     });
 
-    const assign_building_name = function ( new_name ) {
+    const assign_building_name = function (new_name) {
         newBuilding.name = new_name;
         FM.building = newBuilding;
     };
@@ -35,11 +35,11 @@ $(function () {
         assign_building_description(e.target.value);
     });
 
-    const assign_building_description = function ( new_desc ) {
+    const assign_building_description = function (new_desc) {
         newBuilding.description = new_desc;
         FM.building = newBuilding;
     };
-    
+
     $('#fm-find-address-results').on('change', function (e) {
         let selectedAddress = $("select#fm-find-address-results > option:selected").val();
 
@@ -65,13 +65,13 @@ $(function () {
         return false;
     };
 
-    const assign_building_address = function( new_address, new_ref ) {
-        if ( null == newBuilding.address ) {
+    const assign_building_address = function (new_address, new_ref) {
+        if (null == newBuilding.address) {
             newBuilding.address = new_address;
             newBuilding['building-ref'] = new_ref;
             FM.building = newBuilding;
         }
-    } ;
+    };
 
     $('#fm-find-address-btn').on('click', function (e) {
         e.preventDefault();
@@ -101,29 +101,32 @@ $(function () {
                         let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + buildingRef;
                         let newOption = '<option value="' + newOptionValue + '">' + newOptionData + '</option>';
                         $('#fm-find-address-results').append(newOption);
-                        $('#fm-bm-postcode-lookup-container').removeClass('govuk-visually-hidden');
-                        $('#fm-find-address-btn').removeClass('govuk-button');
-                        $('#fm-find-address-btn').addClass('govuk-link--no-visited-state');
-                        $('#fm-find-address-btn').text('Change');
-                        $('fm-bm-postcode-lookup-container').addClass('govuk-!-margin-top-3');
-                        $('#fm-find-address-results').focus();
                     }
-                } else {
-                    $('#fm-cant-find-address-link').removeClass('govuk-visually-hidden')
-                    //$('#fm-cant-find-address-link').trigger('click');
                 }
+                showCantFindAddressLink();
             })
             .fail(function (data) {
-                //pageUtils.showPostCodeError(true, data.error);
+                showCantFindAddressLink();
             });
     });
+
+    const showCantFindAddressLink = function () {
+        $('#fm-bm-postcode-lookup-container').removeClass('govuk-visually-hidden');
+        $('#fm-find-address-btn').removeClass('govuk-button');
+        $('#fm-find-address-btn').addClass('govuk-link--no-visited-state');
+        $('#fm-find-address-btn').text('Change');
+        $('fm-bm-postcode-lookup-container').addClass('govuk-!-margin-top-3');
+        $('#fm-find-address-results').focus();
+    };
 
     $('#fm-cant-find-address-link').on('click', function () {
 
         let id;
         let msg;
+        let bn = $('#fm-building-name-input').val();
+        assign_building_name(bn);
 
-        if (!FM.building.name) {
+        if (!bn) {
             id = 'fm-building-name-input';
             msg = 'A building name is required';
             pageUtils.toggleFieldValidationError(true, id, msg);
@@ -147,21 +150,21 @@ $(function () {
         }
     });
 
-    $('#fm-bm-building-details-footer #fm-bm-cancel-and-return').on('click', function(e){
+    $('#fm-bm-building-details-footer #fm-bm-cancel-and-return').on('click', function (e) {
         $('#fm-bm-cancel-and-return-form').submit();
     });
 
     $('#fm-bm-building-details-footer #fm-bm-save-and-return').on('click', function (e) {
         if (!validateBuildingDetailsForm()) {
             e.preventDefault();
-        } else {     
+        } else {
             $('#address-json').val(JSON.stringify(FM.building.address));
             $('#building-ref').val(FM.building['building-ref']);
             $('#fm-bm-building-details-form').submit();
         }
     });
 
-    const synchronise_FM_object = function() {
+    const synchronise_FM_object = function () {
         assign_building_name($('#fm-building-name-input').val());
         assign_building_description($('#fm-building-desc-input').val());
         let address = {};
@@ -170,8 +173,8 @@ $(function () {
             assign_building_address(address, address['building-ref']);
         }
     };
-    
-    const validateBuildingDetailsForm = function() {
+
+    const validateBuildingDetailsForm = function () {
         let bRet = false;
         synchronise_FM_object();
         if (!FM.building.name || !FM.building.address || FM.building.address === {}) {
@@ -192,11 +195,11 @@ $(function () {
             pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
             pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
         }
-        
+
         return bRet;
     };
 
-    const saveBuildingDetails = function ( building_id, new_name, new_description, new_ref, new_address, redirectURL )  {
+    const saveBuildingDetails = function (building_id, new_name, new_description, new_ref, new_address, redirectURL) {
         let jsonValue = {};
         jsonValue["building-id"] = building_id;
         jsonValue["building-name"] = new_name;
@@ -204,17 +207,17 @@ $(function () {
         jsonValue["building-address"] = new_address;
         jsonValue["building-ref"] = new_ref;
 
-        $.ajax( {
+        $.ajax({
             url: './building',
             dataType: 'json',
             type: 'put',
             contentType: 'application/json',
             data: JSON.stringify(jsonValue),
             processData: false,
-            success: function(data, status, jQxhr ) {
+            success: function (data, status, jQxhr) {
                 location.href = redirectURL;
             },
-            error: function (jQxhr, status, errorThrown ) {
+            error: function (jQxhr, status, errorThrown) {
                 console.log(errorThrown);
                 $('#inline-error-message').removeClass('govuk-visually-hidden');
                 $('#inline-error-message #error-summary-title').text('Cannot save changes');
