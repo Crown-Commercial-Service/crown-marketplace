@@ -102,7 +102,8 @@ module FacilitiesManagement
       @security_types = fm_building_data.security_types
       @page_title = 'Change Security Type' if @editing
 
-      if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && @building_sec_type != ''
+
+      if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && !@building_sec_type.empty?
         @other_is_used = true
         @other_value = @building_sec_type
       end
