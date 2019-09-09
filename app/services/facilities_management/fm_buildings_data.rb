@@ -75,9 +75,9 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get new building id: #{e}"
   end
 
-  def new_building_details(email_address)
+  def new_building_details(building_id)
     # returns building details for a given building_id
-    query = "select id, updated_at, status, building_json as building from facilities_management_buildings where updated_by = '" + email_address + "' order by updated_at DESC limit 1;"
+    query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(result[0].to_json)
   rescue StandardError => e
