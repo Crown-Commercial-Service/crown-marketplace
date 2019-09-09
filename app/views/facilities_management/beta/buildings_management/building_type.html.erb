@@ -21,7 +21,7 @@
       </div>
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>"
-               name="fm-building-type-radio" type="radio" value="<%= @type_list[1] %>" <%= 'checked' if @type_list[0] == @building['fm-building-type'] %>>
+               name="fm-building-type-radio" type="radio" value="<%= @type_list[1] %>" <%= 'checked' if @type_list[1] == @building['building-type'] %>>
         <label class="govuk-label govuk-radios__label" for="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>">
           <%= @type_list[1] %><br>
           <span class="govuk-caption-m"><%= @type_list_titles[@type_list[1]] %></span>
@@ -30,9 +30,9 @@
       <p></p>
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      More
-    </span>
+        <span class="govuk-details__summary-text">
+          More
+        </span>
         </summary>
         <div class="govuk-details__text">
           <% @type_list.drop(2).each do |building_type| %>
@@ -52,9 +52,7 @@
 
           <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="not-in-list" name="fm-building-type-radio" type="radio" value="other">
-            <label class="govuk-label govuk-radios__label" for="not-in-list">
-              <span class="govuk-caption-m">Other</span>
-            </label>
+            <label class="govuk-label govuk-radios__label" for="not-in-list">Other</label>
           </div>
         </div>
       </details>
