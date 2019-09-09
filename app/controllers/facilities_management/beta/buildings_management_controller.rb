@@ -113,6 +113,7 @@ module FacilitiesManagement
     end
     # rubocop:enable Metrics/AbcSize
 
+    # rubocop:disable Metrics/AbcSize
     def building_type
       local_building_id = building_id_from_inputs
       fm_building_data = FMBuildingData.new
@@ -140,6 +141,7 @@ module FacilitiesManagement
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
+    # rubocop:enable Metrics/AbcSize
 
     def building_address
       @building_id = building_id_from_inputs
