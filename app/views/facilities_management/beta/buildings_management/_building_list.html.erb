@@ -25,7 +25,7 @@
       </thead>
       <tbody class="govuk-table__body">
       <% @building_data.each do |record| %>
-        <% building = JSON.parse(record['building'].to_s) %>
+        <% building = JSON.parse(record['building_json'].to_s) %>
         <tr>
           <td><%= link_to building['name'].to_s, 'building-details-summary', {role: 'details', 'building-id' => record['id'], class: 'govuk-link', 'aria-label' => t('facilities_management.beta.index.link_to_building_summary') } %>
           </td>
