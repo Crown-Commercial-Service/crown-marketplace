@@ -12,9 +12,9 @@
     </p>
 
     <p class="govuk-body">
-        <a href="/legal_services/downloads/example?format=csv" class="supplier-record__file-download" type="<%= t('common.type_csv') %>" download>
-            <%= t('.download_supplier_shortlist_link') %>
-        </a>
+      <a href="<%= legal_services_suppliers_download_path(lot: params[:lot], services: params[:services], jurisdiction: params[:jurisdiction], region_codes: params[:region_codes], central_government: params['central_government']) %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+        <%= t('.download_supplier_shortlist_link') %>
+      </a>
     </p>
 
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
@@ -22,6 +22,5 @@
     <p class="govuk-body">
       <a href="/legal-services/" class="govuk-link--no-visited-state"><%= t('.back_to_start') %></a>
     </p>
-
   </div>
 </div>

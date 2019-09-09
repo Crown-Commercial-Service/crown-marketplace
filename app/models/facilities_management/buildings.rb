@@ -1,6 +1,7 @@
 module FacilitiesManagement
   class Buildings < ApplicationRecord
     self.table_name = 'facilities_management_buildings'
+    self.primary_key = 'id'
 
     # CCS::FM::Building.all
     #

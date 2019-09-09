@@ -103,6 +103,7 @@ ignore_unused:
   - activemodel.errors.models.*
   - activerecord.errors.models.*
   - journey_step.supply_teachers.*
+  - legal_services_suppliers.*
   - number.*
   - miles.*
   - results.*

@@ -1,63 +1,65 @@
-<!-- FM-175 -->
 <div>
   <div>
     <%= render 'buildings_steps_header' %>
     <span class="govuk-heading-m govuk-!-margin-bottom-0">Choose the building type that best describes your building</span>
-    <span class="govuk-caption-m">You can change your selection later.</span>
+    <% if !@editing %>
+      <span class="govuk-caption-m">You can change your selection later.</span>
+    <% end %>
   </div>
-  <p></p>
-
-  <!-- Radio's -->
-  <div class="govuk-radios">
-    <div class="govuk-radios__item">
-      <input class="govuk-radios__input" id="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>"
-             name="fm-building-type-radio" type="radio" value="<%= @type_list[0] %>">
-      <label class="govuk-label govuk-radios__label" for="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>">
-        <%= @type_list[0] %><br>
-        <span class="govuk-caption-m"><%= @type_list_titles[@type_list[0]] %></span>
-      </label>
-    </div>
-    <div class="govuk-radios__item">
-      <input class="govuk-radios__input" id="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>"
-             name="fm-building-type-radio" type="radio" value="<%= @type_list[1] %>">
-      <label class="govuk-label govuk-radios__label" for="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>">
-        <%= @type_list[1] %><br>
-        <span class="govuk-caption-m"><%= @type_list_titles[@type_list[1]] %></span>
-      </label>
-    </div>
-    <p></p>
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      More
-    </span>
-      </summary>
-      <div class="govuk-details__text">
-        <% @type_list.drop(2).each do |building_type| %>
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>"
-                   name="fm-building-type-radio" type="radio" value="<%= building_type %>">
-            <label class="govuk-label govuk-radios__label" for="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>">
-              <%= building_type %><br>
-              <span class="govuk-caption-m"><%= @type_list_titles[building_type] %></span>
-            </label>
-          </div>
-        <% end %>
-
-        <div class="govuk-!-margin-6">
-          or
-        </div>
-
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="not-in-list" name="fm-builing-type-radio" type="radio" value="not-in-list">
-          <label class="govuk-label govuk-radios__label" for="not-in-list">
-            <span class="govuk-caption-m">Other</span>
-          </label>
-        </div>
+  <form name="fm-bm-building-type-form" id="fm-bm-building-type-form" action="./building-details-summary" method="POST">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <input type="hidden" name="detail-type" value="fm-building-type" />
+    <input type="hidden" name="building-id" id="building-id" value="<%= @building_id %>" />
+    <div class="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>"
+               name="fm-building-type-radio" type="radio" value="<%= @type_list[0] %>" <%= 'checked' if @type_list[0] == @building['building-type'] %> >
+        <label class="govuk-label govuk-radios__label" for="<%= @type_list[0].gsub('  ', ' ').gsub(' ', '-') %>">
+          <%= @type_list[0] %><br />
+          <span class="govuk-caption-m"><%= @type_list_titles[@type_list[0]] %></span>
+        </label>
       </div>
-    </details>
-  </div>
-  <div>
-    <%= render ('buildings_steps_footer') %>
-  </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>"
+               name="fm-building-type-radio" type="radio" value="<%= @type_list[1] %>" <%= 'checked' if @type_list[1] == @building['building-type'] %>>
+        <label class="govuk-label govuk-radios__label" for="<%= @type_list[1].gsub('  ', ' ').gsub(' ', '-') %>">
+          <%= @type_list[1] %><br>
+          <span class="govuk-caption-m"><%= @type_list_titles[@type_list[1]] %></span>
+        </label>
+      </div>
+      <p></p>
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          More
+        </span>
+        </summary>
+        <div class="govuk-details__text">
+          <% @type_list.drop(2).each do |building_type| %>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>"
+                     name="fm-building-type-radio" type="radio" value="<%= building_type %>" <%= 'checked' if building_type == @building['building-type'] %>>
+              <label class="govuk-label govuk-radios__label" for="<%= building_type.gsub('  ', ' ').gsub(' ', '-') %>">
+                <%= building_type %><br>
+                <span class="govuk-caption-m"><%= @type_list_titles[building_type] %></span>
+              </label>
+            </div>
+          <% end %>
+
+          <div class="govuk-!-margin-6">
+            or
+          </div>
+
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="not-in-list" name="fm-building-type-radio" type="radio" value="other">
+            <label class="govuk-label govuk-radios__label" for="not-in-list">Other</label>
+          </div>
+        </div>
+      </details>
+    </div>
+  </form>
+</div>
+<div class="govuk-!-margin-top-3" id="fm-bm-building-type-footer">
+  <%= render partial: 'buildings_steps_footer' unless @editing %>
+  <%= render partial: 'buildings_steps_editing_footer' if @editing %>
 </div>
