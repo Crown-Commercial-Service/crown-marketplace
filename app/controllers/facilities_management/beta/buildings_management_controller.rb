@@ -76,6 +76,7 @@ module FacilitiesManagement
       @building_id = local_building_id
     end
 
+    # rubocop:disable Metrics/AbcSize
     def building_security_type
       fm_building_data = FMBuildingData.new
       local_building_id = building_id_from_inputs
@@ -95,13 +96,20 @@ module FacilitiesManagement
       @next_step = 'Buildings details summary'
       @building_name = @building['name']
       @building_sec_type = @building['security-type']
-      @building_sec_details = @building['security-details']
+      @other_is_used = false
+      @other_value = 'other'
       @building_id = local_building_id
       @security_types = fm_building_data.security_types
       @page_title = 'Change Security Type' if @editing
+
+      if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && @building_sec_type != ''
+        @other_is_used = true
+        @other_value = @building_sec_type
+      end
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
     end
+    # rubocop:enable Metrics/AbcSize
 
     def building_type
       local_building_id = building_id_from_inputs
@@ -267,8 +275,6 @@ module FacilitiesManagement
       building_id = building_id_from_inputs
 
       raise "Security #{building_id} type not saved" unless update_and_validate_changes building_id, 'security-type', params['fm-building-security-type-radio']
-
-      raise "Security #{building_id} details not saved" unless update_and_validate_changes building_id, 'security-details', params['fm-building-security-type-more-detail']
     end
 
     # Helpers
@@ -287,7 +293,7 @@ module FacilitiesManagement
     def building_id_from_inputs
       return params['id'] if params['id'].present?
       return params['building-id'] if params['building-id'].present?
-      return cookies['fm-building-id'] if cookies.key?('fm-building-id')
+      return cookies['fm_building_id'] if cookies.key?('fm_building_id')
 
       nil
     end
