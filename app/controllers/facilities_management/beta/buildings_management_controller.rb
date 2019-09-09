@@ -76,6 +76,7 @@ module FacilitiesManagement
       @building_id = local_building_id
     end
 
+    # rubocop:disable Metrics/AbcSize
     def building_security_type
       fm_building_data = FMBuildingData.new
       local_building_id = building_id_from_inputs
@@ -93,15 +94,22 @@ module FacilitiesManagement
       @inline_summary_error_text = 'Select the level of security clearance needed'
       @step = 4
       @next_step = 'Buildings details summary'
-      @type_list = fm_building_data.building_type_list
-      @type_list_titles = fm_building_data.building_type_list_titles
       @building_name = @building['name']
+      @building_sec_type = @building['security-type']
+      @other_is_used = false
+      @other_value = 'other'
       @building_id = local_building_id
       @security_types = fm_building_data.security_types
       @page_title = 'Change Security Type' if @editing
+
+      if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && @building_sec_type != ''
+        @other_is_used = true
+        @other_value = @building_sec_type
+      end
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
     end
+    # rubocop:enable Metrics/AbcSize
 
     def building_type
       local_building_id = building_id_from_inputs
@@ -269,8 +277,6 @@ module FacilitiesManagement
       building_id = building_id_from_inputs
 
       raise "Security #{building_id} type not saved" unless update_and_validate_changes building_id, 'security-type', params['fm-building-security-type-radio']
-
-      raise "Security #{building_id} details not saved" unless update_and_validate_changes building_id, 'security-details', params['fm-building-security-type-more-detail']
     end
 
     # Helpers
