@@ -331,7 +331,7 @@ module FacilitiesManagement
         true
       else
         fm_building_data.save_building_property_activerecord building_id, property_name, new_value
-        updated_building = JSON.parse(get_new_or_specific_building_by_id(building_id)['building'])
+        updated_building = JSON.parse(get_new_or_specific_building_by_id(building_id)['building_json'])
         (updated_building.key?(property_name) ? updated_building[property_name].to_s == new_value.to_s : false)
       end
     end
