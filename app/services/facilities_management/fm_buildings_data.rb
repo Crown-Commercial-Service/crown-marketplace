@@ -131,7 +131,7 @@ class FMBuildingData
   def get_building_data(email_address)
     Rails.logger.info '==> FMBuildingData.get_building_data()'
     ActiveRecord::Base.include_root_in_json = true
-    query = "select id, updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' order by LOWER(building_json->>'name')"
+    query = "select id, updated_at, status, building_json from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' order by LOWER(building_json->>'name')"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     Rails.logger.info '<== FMBuildingData.get_building_data()'
     JSON.parse(result.to_json)
@@ -142,7 +142,7 @@ class FMBuildingData
   def get_building_data_by_id(email_address, id)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
-    query = "select id, updated_at, status, building_json as building from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
+    query = "select id, updated_at, status, building_json from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(result.to_json)
   rescue StandardError => e
