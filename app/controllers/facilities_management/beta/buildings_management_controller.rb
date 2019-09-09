@@ -71,7 +71,7 @@ module FacilitiesManagement
       @inline_summary_error_text = ''
 
       building_details = get_new_or_specific_building_by_id local_building_id
-      @building = JSON.parse(building_details['building']) if building_details['building'].present?
+      @building = JSON.parse(building_details['building_json']) if building_details['building_json'].present?
       @building_name = @building['name']
       @building_id = local_building_id
     end
@@ -80,7 +80,7 @@ module FacilitiesManagement
       fm_building_data = FMBuildingData.new
       local_building_id = building_id_from_inputs
       building_details = get_new_or_specific_building_by_id local_building_id
-      @building = JSON.parse(building_details['building'])
+      @building = JSON.parse(building_details['building_json'])
       @editing = params['id'].present?
       @back_link_href = if @editing
                           "./building-details-summary/#{local_building_id}"
@@ -124,7 +124,7 @@ module FacilitiesManagement
       @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
       @building_id = building_details['id'].blank? ? nil : building_details['id']
-      @building = JSON.parse(building_details['building'])
+      @building = JSON.parse(building_details['building_json'])
       @building_name = @building['name']
       @page_title = @editing ? 'Change building type' : 'Building type'
     rescue StandardError => e
@@ -352,8 +352,8 @@ module FacilitiesManagement
 
     def get_building_ready_status(building)
       building_element_valid?(building, 'name') || building_element_valid?(building, 'region') ||
-        building_element_valid?(building, 'building-type') || building_element_valid?(building, 'security-type') ||
-        building_element_valid?(building, 'gia')
+          building_element_valid?(building, 'building-type') || building_element_valid?(building, 'security-type') ||
+          building_element_valid?(building, 'gia')
     end
 
     def validate_input_building
