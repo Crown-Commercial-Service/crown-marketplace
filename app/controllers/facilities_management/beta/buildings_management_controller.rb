@@ -58,6 +58,7 @@ module FacilitiesManagement
     def building_gross_internal_area
       local_building_id = building_id_from_inputs
       @back_link_href = "./building-details-summary/#{local_building_id}"
+      @skip_link_href = '#'
       @step = 2
       @editing = params['id'].present?
       @page_title = if @editing
@@ -83,6 +84,7 @@ module FacilitiesManagement
       building_details = get_new_or_specific_building_by_id local_building_id
       @building = JSON.parse(building_details['building_json'])
       @editing = params['id'].present?
+      @skip_link_href = '#'
       @back_link_href = if @editing
                           "./building-details-summary/#{local_building_id}"
                         else
@@ -115,7 +117,7 @@ module FacilitiesManagement
       local_building_id = building_id_from_inputs
       fm_building_data = FMBuildingData.new
       building_details = get_new_or_specific_building_by_id local_building_id
-
+      @skip_link_href = '#'
       @inline_error_summary_title = 'You must select the type of building'
       @inline_error_summary_body_href = '#'
       @inline_summary_error_text = 'Choose the building type that best describes your building'
@@ -155,7 +157,7 @@ module FacilitiesManagement
     end
 
     # Entry points for data storage
-    # New bulilding Save Methods
+    # New building Save Methods
     def save_new_building
       new_building_json = request.raw_post
       fm_building_data = FMBuildingData.new

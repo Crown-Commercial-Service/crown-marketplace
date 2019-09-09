@@ -2,8 +2,33 @@ $(function () {
 
     $('#fm-bm-skip-step-link').on('click', function (e) {
         e.preventDefault();
-        location.href = 'buildings-management'
+        location.href = getNextPageFromStep();
     });
+
+    const getNextPageFromStep = function (stepVal) {
+        if (null == stepVal) {
+            let step = $('#fm-manage-building-step').val();
+
+            if (step) {
+                stepVal = parseInt(step);
+            }
+        }
+
+        switch (stepVal) {
+            case 1:
+                return 'building-gross-internal-area';
+                break;
+            case 2:
+                return 'building-type';
+                break;
+            case 3:
+                return 'building-security-type';
+                break;
+            case 4:
+                return 'buildings-management';
+                break;
+        }
+    }
 
     const saveStep = function (building, redirect_uri) {
         let url = '/facilities-management/beta/buildings-management/save-new-building';
