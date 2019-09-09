@@ -88,6 +88,9 @@
         <td>
           <% if !@building['security-type'].blank? %>
             <%= @building['security-type'] %>
+            <% if @building['security-type'] == 'other' %>
+              <br /><%= @building['security-details'] %>
+            <% end %>
           <% else %>
             <%= link_to t('facilities_management.beta.building-details-summary.select_one_option_text'), "#{@base_path}building-security-type", { 'building-id': @building_id, role:'change', class: 'govuk-link' }%>
           <% end %>

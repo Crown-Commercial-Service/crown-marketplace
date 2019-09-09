@@ -93,9 +93,9 @@ module FacilitiesManagement
       @inline_summary_error_text = 'Select the level of security clearance needed'
       @step = 4
       @next_step = 'Buildings details summary'
-      @type_list = fm_building_data.building_type_list
-      @type_list_titles = fm_building_data.building_type_list_titles
       @building_name = @building['name']
+      @building_sec_type = @building['security-type']
+      @building_sec_details = @building['security-details']
       @building_id = local_building_id
       @security_types = fm_building_data.security_types
       @page_title = 'Change Security Type' if @editing
