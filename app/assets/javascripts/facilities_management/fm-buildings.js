@@ -39,7 +39,7 @@ $(function () {
     $('#fm-building-not-found').on('click', function (e) {
         pageUtils.clearCashedData('fm-new-address');
 
-        e.preventDefault()
+        e.preventDefault();
         $('#fm-new-building-continue-form').attr('action', 'new-building-address').submit()
     });
 
@@ -159,8 +159,28 @@ $(function () {
 
     $('#fm-buildings-add-building').on('click', function (e) {
         fm.clearBuildingCache();
-        e.preventDefault()
+        e.preventDefault();
         $('#fm-new-building-form').submit()
+    });
+
+    $('#fm-internal-square-area').on('change', function (e) {
+
+        let value = e.target.value;
+        value = (value && value.length > 0) ? parseInt(value) : 0;
+        pageUtils.setCachedData('fm-gia', value);
+        if (value > 0) {
+            pageUtils.showGIAError(false, '');
+        } else {
+            pageUtils.showGIAError(true, '');
+            let value = e.target.value;
+            value = (value && value.length > 0) ? parseInt(value) : 0;
+            pageUtils.setCachedData('fm-gia', value);
+            if (value > 0) {
+                pageUtils.showGIAError(false, '');
+            } else {
+                pageUtils.showGIAError(true, '');
+            }
+        }
     });
 
     $('input[name="fm-builing-type-radio"]').on('click', function (e) {

@@ -36,7 +36,7 @@ $(function () {
             $('#fm-address-postcode').val(postCode);
         }
 
-        $('#fm-address-line-1').trigger('focus')
+        $('#fm-address-line-1').trigger('focus');
 
         address['fm-address-postcode'] = postCode;
 

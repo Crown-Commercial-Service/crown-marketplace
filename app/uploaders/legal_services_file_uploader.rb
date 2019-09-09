@@ -8,13 +8,13 @@ class LegalServicesFileUploader < CarrierWave::Uploader::Base
   end
 
   def size_range
-    1..5.megabytes
+    1..10.megabytes
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_whitelist
-    %w[xls xlsx]
+    %w[xls xlsx json]
   end
 
   def cache_dir

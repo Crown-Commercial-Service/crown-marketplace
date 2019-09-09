@@ -36,10 +36,11 @@ $(function () {
         });
 
         /* remove a location from the selected list */
-        const removeSelectedItem = (function (id) {
+        const removeSelectedItem = (function (id, groupID) {
             $('li#' + id).remove();
             id = id.replace('_selected', '');
             $("input#" + id).prop("checked", false);
+            $("input#" + groupID + "_all").prop("checked", false);
 
             /* remove from the array that is saved */
             let filtered = selectedLocations.filter(function (value, index, arr) {
@@ -75,7 +76,7 @@ $(function () {
         /* click handler for check boxes */
 
 
-    const showOrRemoveBasketLinks = function(e, id) {
+    const showOrRemoveBasketLinks = function(e, id, groupID) {
         let labelID = '#' + e.id + '_label';
 
         let selectedID = e.id + '_selected';
@@ -96,7 +97,7 @@ $(function () {
 
             let newLI = '<li style="word-break: keep-all;" class="govuk-list" id="' + selectedID + '">' +
                 '<span class="govuk-!-padding-0 CCS-fm-regions-selected-label">' + val + '</span><span class="remove-link">' +
-                '<a data-no-turbolink id="' + removeLinkID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>';
+                '<a data-no-turbolink id="' + removeLinkID + '" groupid="' + groupID + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a></span></li>';
 
 
             if ($('#' + selectedID).length === 0) {
@@ -104,7 +105,7 @@ $(function () {
 
                 $('#' + removeLinkID).on('click', function (e) {
                     e.preventDefault();
-                    removeSelectedItem(selectedID);
+                    removeSelectedItem(selectedID, e.target.attributes["groupID"].value);
                 });
             }
         } else if ( id.endsWith('_all')) {
@@ -112,7 +113,7 @@ $(function () {
             let ns = sid[0];
             let regionItems = $('input[name="' + ns + '"]').get();
             for ( let n = 0; n < regionItems.length; n++ ) {
-                showOrRemoveBasketLinks(regionItems[n], regionItems[n].id) ;
+                showOrRemoveBasketLinks(regionItems[n], regionItems[n].id, ns) ;
             }
         } else {
             removeSelectedItem(selectedID);
@@ -137,16 +138,16 @@ $(function () {
                     $('input[name="' + ns + '"]').prop("checked", false);
                 }
 
-                total_count = $('input[name="' + ns + '"]').length
+                total_count = $('input[name="' + ns + '"]').length;
                 selected_count = $('input[name="' + ns + '"]').filter(':checked').length;
             } else {
-                total_count = $('input[name="' + n + '"]').length
+                total_count = $('input[name="' + n + '"]').length;
                 selected_count = $('input[name="' + n + '"]').filter(':checked').length;
             }
 
             $('#' + n + '_all').prop("checked", (selected_count === total_count) ? true : false);
 
-            showOrRemoveBasketLinks(e.target, id);
+            showOrRemoveBasketLinks(e.target, id, n);
 
             isLocationValid();
             updateLocationCount();

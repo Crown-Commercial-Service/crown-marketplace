@@ -92,3 +92,21 @@ $offset: 4;
 .govuk-button--warning:hover[disabled], .govuk-button--warning:focus[disabled] {
   background-color: #b10e1e;
 }
+
+.govuk-button--secondary {
+  background-color: #f3f2f1;
+  -webkit-box-shadow: 0 2px 0 #929191;
+  box-shadow: 0 2px 0 #929191
+}
+
+.govuk-button--secondary, .govuk-button--secondary:link, .govuk-button--secondary:visited, .govuk-button--secondary:active, .govuk-button--secondary:hover {
+  color: #0b0c0c
+}
+
+.govuk-button--secondary:hover {
+  background-color: #dbdad9
+}
+
+.govuk-button--secondary:hover[disabled] {
+  background-color: #f3f2f1
+}

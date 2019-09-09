@@ -2,7 +2,7 @@ $(function () {
 
     /* namespace */
     window.FM = window.FM || {};
-    FM.buildings_management = {}
+    FM.buildings_management = {};
     $("a[role='details']").on('click', function (e) {
         let target = $(e.target);
         let url = target.attr('href');
