@@ -173,50 +173,15 @@ $(function () {
         let bRet = false;
         synchronise_FM_object();
         if (!FM.building.name) {
-            let field_id;
-            let display_msg;
             if (!FM.building.name) {
-                field_id = 'fm-building-name-input';
-                display_msg = 'A building name is required';
+                pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
             }
-
-            pageUtils.toggleFieldValidationError(true, field_id, display_msg);
         } else {
             bRet = true;
             pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
         }
 
         return bRet;
-    };
-
-    const saveBuildingDetails = function (building_id, new_name, new_description, new_ref, new_address, redirectURL) {
-        let jsonValue = {};
-        jsonValue["building-id"] = building_id;
-        jsonValue["building-name"] = new_name;
-        jsonValue["building-description"] = new_description;
-        jsonValue["building-address"] = new_address;
-        jsonValue["building-ref"] = new_ref;
-
-        $.ajax({
-            url: './building',
-            dataType: 'json',
-            type: 'put',
-            contentType: 'application/json',
-            data: JSON.stringify(jsonValue),
-            processData: false,
-            success: function (data, status, jQxhr) {
-                location.href = redirectURL;
-            },
-            error: function (jQxhr, status, errorThrown) {
-                console.log(errorThrown);
-                $('#inline-error-message').removeClass('govuk-visually-hidden');
-                $('#inline-error-message #error-summary-title').text('Cannot save changes');
-                $('#inline-error-message li').empty();
-                $('#inline-error-message li').prepend("<li>The building details could not be saved</li>");
-                $('html, body').animate({scrollTop: 0}, 500);
-            }
-        });
-
     };
 });
 

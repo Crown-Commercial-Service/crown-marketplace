@@ -157,11 +157,6 @@ $(function () {
     const synchronise_FM_object = function () {
         assign_building_name($('#fm-building-name-input').val());
         assign_building_description($('#fm-building-desc-input').val());
-        let address = {};
-
-        if (gather_address_data($("select#fm-find-address-results > option:selected").val(), address)) {
-            assign_building_address(address, address['building-ref']);
-        }
     };
     const assign_building_name = function (new_name) {
         newBuilding.name = new_name;
