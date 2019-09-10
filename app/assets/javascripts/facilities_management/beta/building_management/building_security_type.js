@@ -8,7 +8,6 @@ $(function () {
     });
 
     $('#fm-building-security-type-other').on('click', function (e) {
-
         if (e.target.checked) {
             $('#fm-bm-sec-other-container').removeClass('govuk-visually-hidden');
         }

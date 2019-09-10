@@ -1,5 +1,7 @@
 $(function () {
-
+    let newBuilding = {};
+    newBuilding.requestRunning = false;
+    
     $('#fm-bm-skip-step-link').on('click', function (e) {
         e.preventDefault();
         location.href = getNextPageFromStep();
@@ -28,7 +30,7 @@ $(function () {
                 return 'buildings-management';
                 break;
         }
-    }
+    };
 
     const saveStep = function (building, redirect_uri) {
         let url = '/facilities-management/beta/buildings-management/save-new-building';
@@ -45,18 +47,25 @@ $(function () {
                 location.href = redirect_uri || '#';
             },
             error: function (jqXhr, textStatus, errorThrown) {
+                newBuilding.requestRunning = false;
                 console.log(errorThrown);
+            },
+            complete: function () {
+                newBuilding.requestRunning = false;
             }
         });
 
     };
 
-    const saveBuildingGIA = function (redirectURI) {
+    const saveBuildingGIA = function (redirectURI, sourceButton) {
         let giaValue = $('#fm-bm-internal-square-area').val();
 
         if (!giaValue) {
-            $('#inline-error-message').removeClass('govuk-visually-hidden');
-            $('html, body').animate({scrollTop: 0}, 500);
+            newBuilding.requestRunning = false;
+            let errorMessage = 'Enter a number for the total internal area of this building';
+            pageUtils.inlineErrors_addMessage(errorMessage);
+            pageUtils.toggleInlineErrorMessage(true);
+            pageUtils.toggleFieldValidationError(true, 'fm-bm-internal-square-area',errorMessage);
         } else {
             let url = 'save-building-gia';
 
@@ -71,18 +80,22 @@ $(function () {
                     location.href = redirectURI
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
+                    newBuilding.requestRunning = false;
                     console.log(errorThrown);
+                },
+                complete: function () {
+                    newBuilding.requestRunning = false;
                 }
             });
         }
     };
 
-    const saveBuildingType = function (redirectURI) {
+    const saveBuildingType = function (redirectURI, sourceButton) {
         let radioValue = $("input[name='fm-building-type-radio']:checked").val();
 
         if (!radioValue) {
-            $('#inline-error-message').removeClass('govuk-visually-hidden');
-            $('html, body').animate({scrollTop: 0}, 500);
+            pageUtils.toggleInlineErrorMessage(true);
+            newBuilding.requestRunning = false;
         } else {
             let url = 'save-building-type';
 
@@ -97,19 +110,23 @@ $(function () {
                     location.href = redirectURI
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
+                    newBuilding.requestRunning = false;
                     console.log(errorThrown);
+                },
+                complete: function () {
+                    newBuilding.requestRunning = false;
                 }
             });
         }
     };
 
-    const saveSecurityType = function (redirectURI) {
+    const saveSecurityType = function (redirectURI, sourceButton) {
         let securityType = $("input[name='fm-building-security-type-radio']:checked").val();
         let details = $("#fm-building-security-type-more-detail").val();
 
         if (!securityType) {
-            $('#inline-error-message').removeClass('govuk-visually-hidden');
-            $('html, body').animate({scrollTop: 0}, 500);
+            pageUtils.toggleInlineErrorMessage(true);
+            newBuilding.requestRunning = false;
         } else {
             let url = 'save-building-security-type';
             let jsonData = {};
@@ -127,35 +144,83 @@ $(function () {
                     location.href = redirectURI
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
+                    newBuilding.requestRunning = false;
                     console.log(errorThrown);
+                },
+                complete: function () {
+                    newBuilding.requestRunning = false;
                 }
             });
         }
     };
 
-    const processStep = function (redirect_uri) {
+    const synchronise_FM_object = function () {
+        assign_building_name($('#fm-building-name-input').val());
+        assign_building_description($('#fm-building-desc-input').val());
+        let address = {};
 
+        if (gather_address_data($("select#fm-find-address-results > option:selected").val(), address)) {
+            assign_building_address(address, address['building-ref']);
+        }
+    };
+    const assign_building_name = function (new_name) {
+        newBuilding.name = new_name;
+        FM.building = newBuilding;
+    };
+    const assign_building_description = function (new_desc) {
+        newBuilding.description = new_desc;
+        FM.building = newBuilding;
+    };
+    const assign_building_address = function (new_address, new_ref) {
+        newBuilding.address = new_address;
+        newBuilding['building-ref'] = new_ref;
+        FM.building = newBuilding;
+    };
+    const gather_address_data = function (selectedAddress, new_address) {
+        if ("" + selectedAddress != "") {
+            let addressElements = selectedAddress.split(',');
+            new_address['fm-address-line-1'] = addressElements[0];
+            new_address['fm-address-line-2'] = addressElements[1];
+            new_address['fm-address-town'] = addressElements[2];
+            new_address['fm-address-county'] = addressElements[3];
+            new_address['fm-address-postcode'] = addressElements[4].trim();
+            new_address['building-ref'] = addressElements[5];
+            return true;
+        }
+
+        return false;
+    };
+
+
+    const processStep = function (redirect_uri) {
         let step = $('#fm-manage-building-step').val();
 
         if (step) {
-
             step = parseInt(step);
 
-            switch (step) {
+            switch (step)
+            {
                 case 1:
+                    synchronise_FM_object();
                     if (!FM.building.name || !FM.building.address || FM.building.address === {}) {
                         let id;
                         let msg;
+                        id = 'fm-building-name-input';
+                        msg = 'A building name is required';
                         if (!FM.building.name) {
-                            id = 'fm-building-name-input';
-                            msg = 'A building name is required';
+                            pageUtils.toggleFieldValidationError(true, id, msg);
+                        } else {
+                            pageUtils.toggleFieldValidationError(false, id, msg);
                         }
 
+                        id = 'fm-bm-postcode';
+                        msg = 'An address is required';
                         if (!FM.building.address || FM.building.address === {}) {
-                            id = 'fm-bm-postcode';
-                            msg = 'An address is required';
+                            pageUtils.toggleFieldValidationError(true, id, msg);
+                        } else {
+                            pageUtils.toggleFieldValidationError(false, id, msg);
                         }
-                        pageUtils.toggleFieldValidationError(true, id, msg);
+                        newBuilding.requestRunning = false;
                     } else {
                         pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
                         pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
@@ -173,16 +238,18 @@ $(function () {
                     saveSecurityType(redirect_uri);
                     break;
                 default:
-
                     break;
             }
         }
     };
 
-
     $('#fm-bm-save-return-to-manage-buildings').on('click', function (e) {
-        e.preventDefault();
         const redirect_uri = 'buildings-management';
+        e.preventDefault();
+
+        if ( newBuilding.requestRunning )
+            return;
+        newBuilding.requestRunning = true;
         processStep(redirect_uri);
     });
 
@@ -193,7 +260,6 @@ $(function () {
         let step = $('#fm-manage-building-step').val();
 
         if (step) {
-
             step = parseInt(step);
 
             switch (step) {
@@ -210,6 +276,11 @@ $(function () {
                     redirect_uri = 'buildings-management';
                     break;
             }
+
+            if ( newBuilding.requestRunning )
+                return;
+            newBuilding.requestRunning = true;
+
             processStep(redirect_uri);
         }
     });
