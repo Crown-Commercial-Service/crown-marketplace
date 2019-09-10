@@ -4,8 +4,8 @@
 </div>
 <form name="fm-building-details-form" id="fm-bm-building-details-form" action="building-details-summary" method="POST">
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <input type="hidden" name="detail-type" value="fm-building-details" />
-  <input type="hidden" name="building-id" id="building-id" value="<%= @building_id %>" />
+  <input type="hidden" name="detail-type" value="fm-building-details"/>
+  <input type="hidden" name="building-id" id="building-id" value="<%= @building_id %>"/>
   <div>
     <!-- Building name -->
     <span class="govuk-heading-m govuk-!-margin-bottom-0">What's the name of your building?</span>
@@ -33,21 +33,13 @@
   </span>
     <!-- find address -->
     <span id="fm-address-sub-title" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0">Postcode</span>
-    <input id="fm-bm-postcode" class="govuk-input govuk-!-margin-top-0 govuk-!-margin-bottom-0" type="text" maxlength="12" style="width:150px;"
-           value="<%= @building['address']['fm-address-postcode'] %>">
-    <input type="hidden" name="address-json" id="address-json"/>
-    <input type="hidden" name="building-ref" id="building-ref" value="<%= @building['building-ref']&.strip %>"/>
+    <input id="fm-bm-postcode" class="govuk-input govuk-!-margin-top-0 govuk-!-margin-bottom-0" type="text" maxlength="12" style="width:150px;">
     <a id="fm-find-address-btn" href="#" class="govuk-button ">Find address</a><br/>
 
     <div id="fm-bm-postcode-lookup-container" class="govuk-visually-hidden govuk-!-margin-bottom-6 govuk-!-margin-top-6">
       <span class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</span>
       <select class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0" id="fm-find-address-results" name="fm-find-address-results">
-        <% if @building['address']
-             address_text = stringify_address @building['building-ref'], @building['address'] %>
-          <option value="<%= address_text %>" selected><%= address_text %></option>
-        <% else %>
-          <option value="status-option" selected>0 addresses found</option>
-        <% end %>
+        <option value="status-option" selected>0 addresses found</option>
       </select><br>
       <a id="fm-cant-find-address-link" href="#" class="govuk-!-margin-top-6">I cant
         find my building's address in the list</a>

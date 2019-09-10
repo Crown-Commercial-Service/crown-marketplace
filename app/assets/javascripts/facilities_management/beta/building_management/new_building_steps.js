@@ -1,7 +1,7 @@
 $(function () {
     let newBuilding = {};
     newBuilding.requestRunning = false;
-    
+
     $('#fm-bm-skip-step-link').on('click', function (e) {
         e.preventDefault();
         location.href = getNextPageFromStep();
@@ -65,7 +65,7 @@ $(function () {
             let errorMessage = 'Enter a number for the total internal area of this building';
             pageUtils.inlineErrors_addMessage(errorMessage);
             pageUtils.toggleInlineErrorMessage(true);
-            pageUtils.toggleFieldValidationError(true, 'fm-bm-internal-square-area',errorMessage);
+            pageUtils.toggleFieldValidationError(true, 'fm-bm-internal-square-area', errorMessage);
         } else {
             let url = 'save-building-gia';
 
@@ -176,8 +176,9 @@ $(function () {
         newBuilding['building-ref'] = new_ref;
         FM.building = newBuilding;
     };
+
     const gather_address_data = function (selectedAddress, new_address) {
-        if ("" + selectedAddress != "") {
+        if (selectedAddress) {
             let addressElements = selectedAddress.split(',');
             new_address['fm-address-line-1'] = addressElements[0];
             new_address['fm-address-line-2'] = addressElements[1];
@@ -198,11 +199,10 @@ $(function () {
         if (step) {
             step = parseInt(step);
 
-            switch (step)
-            {
+            switch (step) {
                 case 1:
                     synchronise_FM_object();
-                    if (!FM.building.name || !FM.building.address || FM.building.address === {}) {
+                    if (!FM.building.name) {
                         let id;
                         let msg;
                         id = 'fm-building-name-input';
@@ -213,13 +213,6 @@ $(function () {
                             pageUtils.toggleFieldValidationError(false, id, msg);
                         }
 
-                        id = 'fm-bm-postcode';
-                        msg = 'An address is required';
-                        if (!FM.building.address || FM.building.address === {}) {
-                            pageUtils.toggleFieldValidationError(true, id, msg);
-                        } else {
-                            pageUtils.toggleFieldValidationError(false, id, msg);
-                        }
                         newBuilding.requestRunning = false;
                     } else {
                         pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
@@ -247,8 +240,10 @@ $(function () {
         const redirect_uri = 'buildings-management';
         e.preventDefault();
 
-        if ( newBuilding.requestRunning )
+        if (newBuilding.requestRunning) {
             return;
+        }
+
         newBuilding.requestRunning = true;
         processStep(redirect_uri);
     });
@@ -277,8 +272,9 @@ $(function () {
                     break;
             }
 
-            if ( newBuilding.requestRunning )
+            if (newBuilding.requestRunning) {
                 return;
+            }
             newBuilding.requestRunning = true;
 
             processStep(redirect_uri);

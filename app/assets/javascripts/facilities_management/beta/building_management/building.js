@@ -51,7 +51,7 @@ $(function () {
     });
 
     const extract_address_data = function (selectedAddress, new_address) {
-        if ("" + selectedAddress != "") {
+        if (selectedAddress) {
             let addressElements = selectedAddress.split(',');
             new_address['fm-address-line-1'] = addressElements[0];
             new_address['fm-address-line-2'] = addressElements[1];
@@ -167,17 +167,12 @@ $(function () {
     const synchronise_FM_object = function () {
         assign_building_name($('#fm-building-name-input').val());
         assign_building_description($('#fm-building-desc-input').val());
-        let address = {};
-
-        if (extract_address_data($("select#fm-find-address-results > option:selected").val(), address)) {
-            assign_building_address(address, address['building-ref']);
-        }
     };
 
     const validateBuildingDetailsForm = function () {
         let bRet = false;
         synchronise_FM_object();
-        if (!FM.building.name || !FM.building.address || FM.building.address === {}) {
+        if (!FM.building.name) {
             let field_id;
             let display_msg;
             if (!FM.building.name) {
@@ -185,15 +180,10 @@ $(function () {
                 display_msg = 'A building name is required';
             }
 
-            if (!FM.building.address || FM.building.address === {}) {
-                field_id = 'fm-bm-postcode';
-                display_msg = 'An address is required';
-            }
             pageUtils.toggleFieldValidationError(true, field_id, display_msg);
         } else {
             bRet = true;
             pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
-            pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
         }
 
         return bRet;
