@@ -5,7 +5,6 @@ module LegalServices
     def index
       @journey = Journey.new(params[:slug], params)
       @back_path = @journey.previous_step_path
-      @suppliers = Kaminari.paginate_array(@all_suppliers).page(params[:page])
       @lot = Lot.find_by(number: params[:lot])
     end
 
@@ -22,7 +21,7 @@ module LegalServices
       respond_to do |format|
         format.html
         format.xlsx do
-          spreadsheet_builder = LegalServices::SupplierSpreadsheetCreator.new(@all_suppliers, params)
+          spreadsheet_builder = LegalServices::SupplierSpreadsheetCreator.new(@suppliers, params)
           spreadsheet = spreadsheet_builder.build
           render xlsx: spreadsheet.to_stream.read, filename: "shortlist_of_management_consultancy_suppliers_#{DateTime.now.getlocal.strftime '%d-%m-%Y'}", format: 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
         end
@@ -38,12 +37,12 @@ module LegalServices
     end
 
     def fetch_suppliers
-      @all_suppliers = Supplier.offering_services_in_regions(
+      @suppliers = Supplier.offering_services_in_regions(
         params[:lot],
         params[:services],
         params[:jurisdiction],
         params[:region_codes]
-      )
+      ).shuffle
     end
   end
 end
