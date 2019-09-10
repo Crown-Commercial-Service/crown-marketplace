@@ -47,6 +47,7 @@ $(function () {
                 location.href = redirect_uri || '#';
             },
             error: function (jqXhr, textStatus, errorThrown) {
+                newBuilding.requestRunning = false;
                 console.log(errorThrown);
             },
             complete: function () {
@@ -79,6 +80,7 @@ $(function () {
                     location.href = redirectURI
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
+                    newBuilding.requestRunning = false;
                     console.log(errorThrown);
                 },
                 complete: function () {
@@ -108,6 +110,7 @@ $(function () {
                     location.href = redirectURI
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
+                    newBuilding.requestRunning = false;
                     console.log(errorThrown);
                 },
                 complete: function () {
@@ -141,6 +144,7 @@ $(function () {
                     location.href = redirectURI
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
+                    newBuilding.requestRunning = false;
                     console.log(errorThrown);
                 },
                 complete: function () {
