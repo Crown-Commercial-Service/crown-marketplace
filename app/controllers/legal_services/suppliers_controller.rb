@@ -3,7 +3,8 @@ module LegalServices
     before_action :fetch_suppliers, only: %i[index download]
 
     def index
-      @back_path = :back
+      @journey = Journey.new(params[:slug], params)
+      @back_path = @journey.previous_step_path
       @suppliers = Kaminari.paginate_array(@all_suppliers).page(params[:page])
       @lot = Lot.find_by(number: params[:lot])
     end
