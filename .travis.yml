@@ -24,10 +24,14 @@ before_install:
   - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
   - sudo service postgresql start 11
 before_script:
-  - sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
+  - sudo -u postgres createuser --superuser root;
+  - sleep 5
+  - sudo -u postgres createdb root
   - sleep 5
   - sudo -u postgres psql -U postgres -c "create extension postgis" -d root
+  - sleep 5
   - sudo -u postgres psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
+  - sleep 5
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
