@@ -155,21 +155,21 @@ $(function () {
     };
 
     const synchronise_FM_object = function () {
+        if ( null == FM.building ) {
+            FM.building = {}
+        }
         assign_building_name($('#fm-building-name-input').val());
         assign_building_description($('#fm-building-desc-input').val());
     };
     const assign_building_name = function (new_name) {
-        newBuilding.name = new_name;
-        FM.building = newBuilding;
+        FM.building.name = new_name;
     };
     const assign_building_description = function (new_desc) {
-        newBuilding.description = new_desc;
-        FM.building = newBuilding;
+        FM.building.description = new_desc;
     };
     const assign_building_address = function (new_address, new_ref) {
-        newBuilding.address = new_address;
-        newBuilding['building-ref'] = new_ref;
-        FM.building = newBuilding;
+        FM.building.address = new_address;
+        FM.building['building-ref'] = new_ref;
     };
 
     const gather_address_data = function (selectedAddress, new_address) {
