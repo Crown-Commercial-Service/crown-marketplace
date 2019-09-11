@@ -52,8 +52,9 @@ $(function () {
     $('#fm-bm-address-save-and-continue').on('click', function (e) {
         let isValid = validateAddress();
 
-        if (isValid === true)
+        if (isValid === true) {
             saveAddress('building-gross-internal-area');
+        }
     });
 
 
@@ -64,7 +65,6 @@ $(function () {
         if (isValid === true)
             saveAddress('buildings-management');
     });
-
 
     const saveAddress = function (redirectURL) {
 
