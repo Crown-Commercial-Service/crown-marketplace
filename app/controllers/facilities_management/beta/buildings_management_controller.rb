@@ -8,12 +8,12 @@ module FacilitiesManagement
 
     # Entry Points
     def buildings_management
-      @error_msg          = ''
+      @error_msg = ''
       current_login_email = current_user.email.to_s
 
       @fm_building_data = FMBuildingData.new
-      @building_count   = @fm_building_data.get_count_of_buildings(current_login_email)
-      @building_data    = @fm_building_data.get_building_data(current_login_email)
+      @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
+      @building_data = @fm_building_data.get_building_data(current_login_email)
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController buildings_management(): #{e}"
     end
@@ -23,10 +23,10 @@ module FacilitiesManagement
       update_building_data if params['detail-type'].present? && request.method == 'POST'
 
       @building_id = building_id_from_inputs
-      @base_path   = request.method.to_s == 'GET' ? '../' : './'
+      @base_path = request.method.to_s == 'GET' ? '../' : './'
 
-      building_record  = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
-      @building        = building_record&.building_json
+      building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
+      @building = building_record&.building_json
       @display_warning = building_record.blank? ? false : building_record&.status == 'Incomplete'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController building_details_summary(): #{e}"
@@ -34,75 +34,77 @@ module FacilitiesManagement
 
     def building
       @back_link_href = 'buildings-management'
-      @step           = 1
-      @next_step      = "What's the internal area of the building?"
-      @page_title     = 'Create single building'
+      @step = 1
+      @next_step = "What's the internal area of the building?"
+      @page_title = 'Create single building'
 
       @building_id = building_id_from_inputs
       if params['id'].present?
         building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
-        @building       = building_record&.building_json
-        @page_title     = 'Change building details'
-        @editing        = true
+        @building = building_record&.building_json
+        @page_title = 'Change building details'
+        @editing = true
       else
-        @building       = {}
+        @building = {}
         @building['address'] = {}
-        @editing             = false
+        @editing = false
       end
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController building(): #{e}"
     end
 
     def building_gross_internal_area
-      local_building_id               = building_id_from_inputs
-      @back_link_href                 = "./building-details-summary/#{local_building_id}"
-      @skip_link_href                 = '#'
-      @step                           = 2
-      @editing                        = params['id'].present?
-      @page_title                     = if @editing
-                                          t('facilities_management.beta.building-gross-internal-area.edit_header')
-                                        else t('facilities_management.beta.building-gross-internal-area.add_header')
-                                        end
-      @next_step                      = 'Building type'
-      @inline_error_summary_title     = 'There is a problem'
+      local_building_id = building_id_from_inputs
+      @back_link_href = "./building-details-summary/#{local_building_id}"
+      @skip_link_href = '#'
+      @step = 2
+      @editing = params['id'].present?
+      @page_title = if @editing
+                      t('facilities_management.beta.building-gross-internal-area.edit_header')
+                    else
+                      t('facilities_management.beta.building-gross-internal-area.add_header')
+                    end
+      @next_step = 'Building type'
+      @inline_error_summary_title = 'There is a problem'
       @inline_error_summary_body_href = '#'
-      @inline_summary_error_text      = ''
+      @inline_summary_error_text = ''
 
       building_details = get_new_or_specific_building_by_id local_building_id
-      @building        = JSON.parse(building_details['building_json']) if building_details['building_json'].present?
-      @building_name   = @building['name']
-      @building_id     = local_building_id
+      @building = JSON.parse(building_details['building_json']) if building_details['building_json'].present?
+      @building_name = @building['name']
+      @building_id = local_building_id
     end
 
     # rubocop:disable Metrics/AbcSize
     def building_security_type
-      fm_building_data  = FMBuildingData.new
+      fm_building_data = FMBuildingData.new
       local_building_id = building_id_from_inputs
-      building_details  = get_new_or_specific_building_by_id local_building_id
-      @building         = JSON.parse(building_details['building_json'])
-      @editing          = params['id'].present?
-      @skip_link_href   = '#'
-      @back_link_href   = if @editing
-                            "./building-details-summary/#{local_building_id}"
-                          else './buildings-management/'
-                          end
+      building_details = get_new_or_specific_building_by_id local_building_id
+      @building = JSON.parse(building_details['building_json'])
+      @editing = params['id'].present?
+      @skip_link_href = '#'
+      @back_link_href = if @editing
+                          "./building-details-summary/#{local_building_id}"
+                        else
+                          './buildings-management/'
+                        end
 
-      @inline_error_summary_title     = 'You must select level of security clearance'
+      @inline_error_summary_title = 'You must select level of security clearance'
       @inline_error_summary_body_href = '#'
-      @inline_summary_error_text      = 'Select the level of security clearance needed'
-      @step                           = 4
-      @next_step                      = 'Buildings details summary'
-      @building_name                  = @building['name']
-      @building_sec_type              = @building['security-type']
-      @other_is_used                  = false
-      @other_value                    = 'other'
-      @building_id                    = local_building_id
-      @security_types                 = fm_building_data.security_types
-      @page_title                     = 'Change Security Type' if @editing
+      @inline_summary_error_text = 'Select the level of security clearance needed'
+      @step = 4
+      @next_step = 'Buildings details summary'
+      @building_name = @building['name']
+      @building_sec_type = @building['security-type']
+      @other_is_used = false
+      @other_value = 'other'
+      @building_id = local_building_id
+      @security_types = fm_building_data.security_types
+      @page_title = 'Change Security Type' if @editing
 
       if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && !@building_sec_type.empty?
         @other_is_used = true
-        @other_value   = @building_sec_type
+        @other_value = @building_sec_type
       end
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
@@ -112,28 +114,29 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/AbcSize
     def building_type
-      local_building_id               = building_id_from_inputs
-      fm_building_data                = FMBuildingData.new
-      building_details                = get_new_or_specific_building_by_id local_building_id
-      @skip_link_href                 = '#'
-      @inline_error_summary_title     = 'You must select the type of building'
+      local_building_id = building_id_from_inputs
+      fm_building_data = FMBuildingData.new
+      building_details = get_new_or_specific_building_by_id local_building_id
+      @skip_link_href = '#'
+      @inline_error_summary_title = 'You must select the type of building'
       @inline_error_summary_body_href = '#'
-      @inline_summary_error_text      = 'Choose the building type that best describes your building'
-      @back_link_href                 = 'buildings-management'
-      @step                           = 3
-      @next_step                      = 'Select the level of security clearance needed'
-      @editing                        = params['id'].present?
-      @back_link_href                 = if @editing
-                                          "./building-details-summary/#{local_building_id}"
-                                        else './buildings-management/'
-                                        end
+      @inline_summary_error_text = 'Choose the building type that best describes your building'
+      @back_link_href = 'buildings-management'
+      @step = 3
+      @next_step = 'Select the level of security clearance needed'
+      @editing = params['id'].present?
+      @back_link_href = if @editing
+                          "./building-details-summary/#{local_building_id}"
+                        else
+                          './buildings-management/'
+                        end
 
-      @type_list        = fm_building_data.building_type_list
+      @type_list = fm_building_data.building_type_list
       @type_list_titles = fm_building_data.building_type_list_titles
-      @building_id      = building_details['id'].blank? ? nil : building_details['id']
-      @building         = JSON.parse(building_details['building_json'])
-      @building_name    = @building['name']
-      @page_title       = @editing ? 'Change building type' : 'Building type'
+      @building_id = building_details['id'].blank? ? nil : building_details['id']
+      @building = JSON.parse(building_details['building_json'])
+      @building_name = @building['name']
+      @page_title = @editing ? 'Change building type' : 'Building type'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
@@ -141,16 +144,16 @@ module FacilitiesManagement
     # rubocop:enable Metrics/AbcSize
 
     def building_address
-      @building_id     = building_id_from_inputs
+      @building_id = building_id_from_inputs
       fm_building_data = FMBuildingData.new
       building_details = fm_building_data.new_building_details(@building_id)
-      building         = JSON.parse(building_details['building_json'])
-      @back_link_href  = 'building'
-      @step            = 1.5
-      @next_step       = "What's the internal area of the building?"
-      @page_title      = 'Add missing address'
-      @building_name   = building['name']
-      @skip_link_href  = '#'
+      building = JSON.parse(building_details['building_json'])
+      @back_link_href = 'building'
+      @step = 1.5
+      @next_step = "What's the internal area of the building?"
+      @page_title = 'Add missing address'
+      @building_name = building['name']
+      @skip_link_href = '#'
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_address(): #{e}"
     end
@@ -159,10 +162,10 @@ module FacilitiesManagement
     # New building Save Methods
     def save_new_building
       new_building_json = request.raw_post
-      fm_building_data  = FMBuildingData.new
-      building_id       = fm_building_data.save_new_building current_user.email.to_s, new_building_json
+      fm_building_data = FMBuildingData.new
+      building_id = fm_building_data.save_new_building current_user.email.to_s, new_building_json
       cache_new_building_id building_id
-      add      = JSON.parse(new_building_json)
+      add = JSON.parse(new_building_json)
       postcode = add['address']['fm-address-postcode']
       save_region(postcode)
       j = { 'status': 200, 'fm_building-id': building_id.to_s }
@@ -172,7 +175,7 @@ module FacilitiesManagement
     end
 
     def save_building_gia
-      key          = 'gia'
+      key = 'gia'
       building_gia = request.raw_post
       save_building_property(key, building_gia.gsub('"', ''))
       j = { 'status': 200 }
@@ -182,7 +185,7 @@ module FacilitiesManagement
     end
 
     def save_building_type
-      key           = 'building-type'
+      key = 'building-type'
       building_type = request.raw_post
       save_building_property(key, building_type)
       j = { 'status': 200 }
@@ -191,10 +194,30 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsController save_building_type(): #{e}"
     end
 
+    def generate_random_building_ref(postcode)
+      string = ''
+      len = 4
+      pc = postcode.split(' ')
+      chars = postcode.split('')
+      len.times do
+        string << chars[rand(len - 1)]
+      end
+      pc[0] + string + pc[pc.length - 1]
+    end
+
+    def extract_postcode(address)
+      address_json = JSON.parse(address)
+      pc = address_json['fm-address-postcode']
+      pc
+    end
+
     def save_building_address
-      key         = 'address'
+      key = 'address'
       new_address = request.raw_post
       save_building_property(key, new_address)
+      pc = extract_postcode(new_address)
+      building_ref = generate_random_building_ref(pc)
+      save_building_property('building-ref', building_ref)
       j = { 'status': 200 }
       render json: j, status: 200
     rescue StandardError => e
@@ -224,12 +247,13 @@ module FacilitiesManagement
           update_building_details
         when 'fm-bm-internal-square-area'
           update_building_gia
-        else true
+        else
+          true
         end
       end
     rescue StandardError => e
       @inline_error_summary_title = 'Problem saving data'
-      @inline_summary_error_text  = e
+      @inline_summary_error_text = e
     end
 
     # rubocop:enable Metrics/CyclomaticComplexity
