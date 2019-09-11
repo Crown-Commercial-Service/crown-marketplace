@@ -237,10 +237,10 @@ module FacilitiesManagement
       validate_input_building
       building_id = building_id_from_inputs
 
-      raise "Building  #{building_id} details - name not saved" unless update_and_validate_changes building_id, 'name', params['fm-building-name']
-      raise "Building #{building_id} details - description not saved" unless update_and_validate_changes building_id, 'description', params['fm-building-desc']
-      raise "Building #{building_id} details - ref not saved" unless update_and_validate_changes building_id, 'building-ref', params['building-ref']
-      raise "Building #{building_id} details - address not saved" unless update_and_validate_changes building_id, 'address', params['address-json']
+      update_and_validate_changes building_id, 'name', params['fm-building-name']
+      update_and_validate_changes building_id, 'description', params['fm-building-desc']
+      update_and_validate_changes building_id, 'building-ref', params['building-ref']
+      update_and_validate_changes building_id, 'address', params['address-json']
 
       validate_and_update_building building_id
     rescue StandardError => e
@@ -273,6 +273,8 @@ module FacilitiesManagement
       building_id = building_id_from_inputs
 
       raise "Security #{building_id} type not saved" unless update_and_validate_changes building_id, 'security-type', params['fm-building-security-type-radio']
+
+      validate_and_update_building building_id
     end
 
     # Helpers
@@ -342,7 +344,11 @@ module FacilitiesManagement
     end
 
     def get_building_ready_status(building)
-      building_element_valid?(building, 'name') && building_element_valid?(building, 'region') && building_element_valid?(building, 'building-type') && building_element_valid?(building, 'security-type') && building_element_valid?(building, 'gia')
+      building_element_valid?(building, 'name') &&
+        building_element_valid?(building, 'region') &&
+        building_element_valid?(building, 'building-type') &&
+        building_element_valid?(building, 'security-type') &&
+        building_element_valid?(building, 'gia')
     end
 
     def validate_input_building
