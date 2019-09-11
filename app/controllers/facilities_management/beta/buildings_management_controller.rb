@@ -198,7 +198,7 @@ module FacilitiesManagement
       string = ''
       len = 4
       pc = postcode.split(' ')
-      chars = postcode.scan /\w/
+      chars = postcode.split('')
       len.times do
         string << chars[rand(len - 1)]
       end
