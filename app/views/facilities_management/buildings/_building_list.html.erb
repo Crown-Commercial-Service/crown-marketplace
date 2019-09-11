@@ -13,7 +13,7 @@
     <div class="govuk-accordion" data-module="accordion" id="services-accordion">
       <div class="govuk-radios">
         <% @building_data.each do |record| %>
-          <% x = x +1; building = JSON.parse(record['building'].to_s) %>
+          <% x = x +1; building = JSON.parse(record['building_json'].to_s) %>
           <% unless building.nil? %>
             <% p building.to_s %>
             <div class="govuk-accordion__section ">
