@@ -131,7 +131,7 @@ module SupplyTeachers
           if file_path.include?(ENV['CCS_APP_API_DATA_BUCKET']) # if an S3 path use copy_object not upload_file
             object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).client.copy_object(bucket: ENV['CCS_APP_API_DATA_BUCKET'], copy_source: file_path, key: s3_path(new_path.to_s))
           else
-            object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path.to_s)).upload_file(file_path, acl: 'public-read')
+            object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path.to_s)).upload_file(file_path, acl: 'private')
           end
         end
       end
