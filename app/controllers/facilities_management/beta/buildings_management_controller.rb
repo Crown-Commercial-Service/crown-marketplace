@@ -205,17 +205,12 @@ module FacilitiesManagement
       pc[0] + string + pc[pc.length - 1]
     end
 
-    def extract_postcode(address)
-      address_json = JSON.parse(address)
-      pc = address_json['fm-address-postcode']
-      pc
-    end
-
     def save_building_address
       key = 'address'
       new_address = request.raw_post
-      save_building_property(key, new_address)
-      pc = extract_postcode(new_address)
+      address_json = JSON.parse(new_address)
+      update_and_validate_changes cookies['fm_building_id'], 'address', new_address
+      pc = address_json['fm-address-postcode']
       building_ref = generate_random_building_ref(pc)
       save_building_property('building-ref', building_ref)
       j = { 'status': 200 }
