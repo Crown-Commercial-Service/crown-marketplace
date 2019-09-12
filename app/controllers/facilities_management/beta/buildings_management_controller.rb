@@ -206,7 +206,6 @@ module FacilitiesManagement
     end
 
     def save_building_address
-      key = 'address'
       new_address = request.raw_post
       address_json = JSON.parse(new_address)
       update_and_validate_changes cookies['fm_building_id'], 'address', new_address
