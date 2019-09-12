@@ -18,11 +18,12 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-  create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "Incomplete", null: false
+    t.uuid "id", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
