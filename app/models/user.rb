@@ -1,5 +1,12 @@
 class User < ApplicationRecord
   include RoleModel
+
+  has_many  :procurements,
+            foreign_key: :user_id,
+            inverse_of: :user,
+            class_name: 'FacilitiesManagement::Procurement',
+            dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable, :recoverable
