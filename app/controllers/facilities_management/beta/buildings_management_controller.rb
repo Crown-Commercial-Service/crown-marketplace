@@ -25,8 +25,7 @@ module FacilitiesManagement
       @building_id = building_id_from_inputs
       @base_path = request.method.to_s == 'GET' ? '../' : './'
 
-      building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
-                                                                    "' and id = '#{@building_id}'")
+      building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
       @building = building_record&.building_json
       @display_warning = building_record.blank? ? false : building_record&.status == 'Incomplete'
     rescue StandardError => e
@@ -41,8 +40,7 @@ module FacilitiesManagement
 
       @building_id = building_id_from_inputs
       if params['id'].present?
-        building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) +
-                                                                      "' and id = '#{@building_id}'")
+        building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
         @building = building_record&.building_json
         @page_title = 'Change building details'
         @editing = true
@@ -111,6 +109,7 @@ module FacilitiesManagement
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
     end
+
     # rubocop:enable Metrics/AbcSize
 
     # rubocop:disable Metrics/AbcSize
@@ -141,6 +140,7 @@ module FacilitiesManagement
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsManagementController building_type(): #{e}"
     end
+
     # rubocop:enable Metrics/AbcSize
 
     def building_address
@@ -194,10 +194,24 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsController save_building_type(): #{e}"
     end
 
+    def generate_random_building_ref(postcode)
+      string = ''
+      len = 4
+      pc = postcode.split(' ')
+      chars = postcode.split('')
+      len.times do
+        string << chars[rand(len - 1)]
+      end
+      pc[0] + string + pc[pc.length - 1]
+    end
+
     def save_building_address
-      key = 'address'
       new_address = request.raw_post
-      save_building_property(key, new_address)
+      address_json = JSON.parse(new_address)
+      update_and_validate_changes cookies['fm_building_id'], 'address', new_address
+      pc = address_json['fm-address-postcode']
+      building_ref = generate_random_building_ref(pc)
+      save_building_property('building-ref', building_ref)
       j = { 'status': 200 }
       render json: j, status: 200
     rescue StandardError => e
@@ -237,18 +251,14 @@ module FacilitiesManagement
     end
 
     # rubocop:enable Metrics/CyclomaticComplexity
-
     def update_building_details
       validate_input_building
       building_id = building_id_from_inputs
 
-      raise "Building  #{building_id} details - name not saved" unless update_and_validate_changes building_id, 'name', params['fm-building-name']
-
-      raise "Building #{building_id} details - description not saved" unless update_and_validate_changes building_id, 'description', params['fm-building-desc']
-
-      raise "Building #{building_id} details - ref not saved" unless update_and_validate_changes building_id, 'building-ref', params['building-ref']
-
-      raise "Building #{building_id} details - address not saved" unless update_and_validate_changes building_id, 'address', params['address-json']
+      update_and_validate_changes building_id, 'name', params['fm-building-name']
+      update_and_validate_changes building_id, 'description', params['fm-building-desc']
+      update_and_validate_changes building_id, 'building-ref', params['building-ref']
+      update_and_validate_changes building_id, 'address', params['address-json']
 
       validate_and_update_building building_id
     rescue StandardError => e
@@ -281,22 +291,11 @@ module FacilitiesManagement
       building_id = building_id_from_inputs
 
       raise "Security #{building_id} type not saved" unless update_and_validate_changes building_id, 'security-type', params['fm-building-security-type-radio']
+
+      validate_and_update_building building_id
     end
 
     # Helpers
-    def stringify_address(building_ref, address_json_string)
-      if address_json_string.present?
-        address = address_json_string
-        "#{address['fm-address-line-1'].strip},#{address['fm-address-line-2'].strip}," \
-          "#{address['fm-address-town'].strip},#{address['fm-address-county'].strip},#{address['fm-address-postcode'].strip}," \
-          "#{building_ref.strip}"
-      else
-        ''
-      end
-    end
-
-    helper_method :stringify_address
-
     def building_id_from_inputs
       return params['id'] if params['id'].present?
       return params['building-id'] if params['building-id'].present?
@@ -329,6 +328,8 @@ module FacilitiesManagement
     def update_and_validate_changes(building_id, property_name, new_value)
       fm_building_data = FMBuildingData.new
 
+      return if new_value.present? ? new_value.empty? : true
+
       if property_name == 'address'
         new_addr = JSON.parse(new_value)
         fm_building_data.save_building_property_activerecord building_id, property_name, new_addr.keys.zip(new_addr.values).to_h.except('building-ref')
@@ -352,7 +353,7 @@ module FacilitiesManagement
     def validate_and_update_building(building_id)
       db = FMBuildingData.new
       building = db.get_building_data_by_id current_user.email.to_s, building_id if building_id.present?
-      new_status = get_building_ready_status(JSON.parse(building[0]['building'])) if building.present?
+      new_status = get_building_ready_status(JSON.parse(building[0]['building_json'])) if building.present?
       db.update_building_status(building_id, new_status, current_user.email.to_s) if building.present?
     end
 
@@ -361,8 +362,10 @@ module FacilitiesManagement
     end
 
     def get_building_ready_status(building)
-      building_element_valid?(building, 'name') || building_element_valid?(building, 'region') ||
-        building_element_valid?(building, 'building-type') || building_element_valid?(building, 'security-type') ||
+      building_element_valid?(building, 'name') &&
+        building_element_valid?(building, 'region') &&
+        building_element_valid?(building, 'building-type') &&
+        building_element_valid?(building, 'security-type') &&
         building_element_valid?(building, 'gia')
     end
 
