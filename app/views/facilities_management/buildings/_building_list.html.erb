@@ -13,7 +13,7 @@
     <div class="govuk-accordion" data-module="accordion" id="services-accordion">
       <div class="govuk-radios">
         <% @building_data.each do |record| %>
-          <% x = x +1; building = JSON.parse(record['building'].to_s) %>
+          <% x = x +1; building = JSON.parse(record['building_json'].to_s) %>
           <% unless building.nil? %>
             <% p building.to_s %>
             <div class="govuk-accordion__section ">
@@ -125,21 +125,23 @@
       </div>
     </div>
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full govuk-!-margin-top-6 govuk-!-margin-left-4">
-        <div>
-          <%= form_tag '/facilities-management/buildings/new-building', id: 'fm-new-building-form', method: :post do %>
-            <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-            <!--
-                    <a id="fm-buildings-add-building" href="buildings/new-building" class="govuk-link--no-visited-state ccs-no-print" role="button">+
-            -->
-
-          <% end %>
-        </div>
-      </div>
-      <a id="fm-buildings-add-building" href="#" class="govuk-button ccs-no-print govuk-!-margin-3" role="button">+
-        Add a
-        building
-      </a>
     </div>
   </div>
 <% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-top-6 govuk-!-margin-left-4">
+    <div>
+      <%= form_tag '/facilities-management/buildings/new-building', id: 'fm-new-building-form', method: :post do %>
+        <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+        <!--
+                <a id="fm-buildings-add-building" href="buildings/new-building" class="govuk-link--no-visited-state ccs-no-print" role="button">+
+        -->
+
+      <% end %>
+    </div>
+  </div>
+  <a id="fm-buildings-add-building" href="#" class="govuk-button ccs-no-print govuk-!-margin-3" role="button">+
+    Add a
+    building
+  </a>
+</div>

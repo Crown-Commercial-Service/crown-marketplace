@@ -51,7 +51,7 @@ $(function () {
     });
 
     const extract_address_data = function (selectedAddress, new_address) {
-        if ("" + selectedAddress != "") {
+        if (selectedAddress) {
             let addressElements = selectedAddress.split(',');
             new_address['fm-address-line-1'] = addressElements[0];
             new_address['fm-address-line-2'] = addressElements[1];
@@ -167,66 +167,21 @@ $(function () {
     const synchronise_FM_object = function () {
         assign_building_name($('#fm-building-name-input').val());
         assign_building_description($('#fm-building-desc-input').val());
-        let address = {};
-
-        if (extract_address_data($("select#fm-find-address-results > option:selected").val(), address)) {
-            assign_building_address(address, address['building-ref']);
-        }
     };
 
     const validateBuildingDetailsForm = function () {
         let bRet = false;
         synchronise_FM_object();
-        if (!FM.building.name || !FM.building.address || FM.building.address === {}) {
-            let field_id;
-            let display_msg;
+        if (!FM.building.name) {
             if (!FM.building.name) {
-                field_id = 'fm-building-name-input';
-                display_msg = 'A building name is required';
+                pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
             }
-
-            if (!FM.building.address || FM.building.address === {}) {
-                field_id = 'fm-bm-postcode';
-                display_msg = 'An address is required';
-            }
-            pageUtils.toggleFieldValidationError(true, field_id, display_msg);
         } else {
             bRet = true;
             pageUtils.toggleFieldValidationError(false, 'fm-building-name-input');
-            pageUtils.toggleFieldValidationError(false, 'fm-bm-postcode');
         }
 
         return bRet;
-    };
-
-    const saveBuildingDetails = function (building_id, new_name, new_description, new_ref, new_address, redirectURL) {
-        let jsonValue = {};
-        jsonValue["building-id"] = building_id;
-        jsonValue["building-name"] = new_name;
-        jsonValue["building-description"] = new_description;
-        jsonValue["building-address"] = new_address;
-        jsonValue["building-ref"] = new_ref;
-
-        $.ajax({
-            url: './building',
-            dataType: 'json',
-            type: 'put',
-            contentType: 'application/json',
-            data: JSON.stringify(jsonValue),
-            processData: false,
-            success: function (data, status, jQxhr) {
-                location.href = redirectURL;
-            },
-            error: function (jQxhr, status, errorThrown) {
-                console.log(errorThrown);
-                $('#inline-error-message').removeClass('govuk-visually-hidden');
-                $('#inline-error-message #error-summary-title').text('Cannot save changes');
-                $('#inline-error-message li').empty();
-                $('#inline-error-message li').prepend("<li>The building details could not be saved</li>");
-                $('html, body').animate({scrollTop: 0}, 500);
-            }
-        });
-
     };
 });
 
