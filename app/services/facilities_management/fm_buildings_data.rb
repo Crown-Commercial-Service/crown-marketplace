@@ -88,7 +88,9 @@ class FMBuildingData
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
     query = "insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by)
-            values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}') ON CONFLICT DO NOTHING;"
+            values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
+            ON CONFLICT (id)
+            DO update set building_json = '#{building.gsub("'", "''")}';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     # update_building_id
     new_building_id(email_address)
