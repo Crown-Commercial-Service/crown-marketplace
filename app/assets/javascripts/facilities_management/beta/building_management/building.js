@@ -56,17 +56,19 @@ $(function () {
     };
     
     $.restore_last_known_addr = function ( ) {
-        let addr = '' + pageUtils.getCachedData( 'lst_knwn_addr');
-        if ( addr != '' ){
-            $('#fm-find-address-results').empty();
-            $('#fm-find-address-results').append('<option value="' + addr + '">' + addr + '</option>');
-            showCantFindAddressLink();
-            let address = {};
-            if (extract_address_data(addr, address)) {
-                assign_building_address(address, address['building-ref']);
+        if ( location.href.indexOf('/beta/building') > 0 ) {
+            let addr = '' + pageUtils.getCachedData('lst_knwn_addr');
+            if (addr != '') {
+                $('#fm-find-address-results').empty();
+                $('#fm-find-address-results').append('<option value="' + addr + '">' + addr + '</option>');
+                showCantFindAddressLink();
+                let address = {};
+                if (extract_address_data(addr, address)) {
+                    assign_building_address(address, address['building-ref']);
+                }
             }
         }
-    } ;
+    };
 
     const extract_address_data = function (selectedAddress, new_address) {
         if (selectedAddress) {
