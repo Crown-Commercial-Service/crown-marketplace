@@ -1,0 +1,7 @@
+<h1>Procurements</h1>
+
+<ul>
+  <% @procurements.each do |procurement| %>
+    <li><%= link_to procurement.name, facilities_management_beta_procurement_path(procurement) %></li>
+  <% end %>
+</ul>
