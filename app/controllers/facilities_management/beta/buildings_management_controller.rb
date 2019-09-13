@@ -18,6 +18,7 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsController buildings_management(): #{e}"
     end
 
+    # rubocop:disable Metrics/AbcSize
     def building_details_summary
       @error_msg = ''
       update_building_data if params['detail-type'].present? && request.method == 'POST'
@@ -32,6 +33,7 @@ module FacilitiesManagement
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController building_details_summary(): #{e}"
     end
+    # rubocop:enable Metrics/AbcSize
 
     def building
       @back_link_href = 'buildings-management'
