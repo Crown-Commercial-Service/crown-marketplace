@@ -10,26 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_04_142234) do
+ActiveRecord::Schema.define(version: 2019_09_11_140213) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
+  create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at", default: "2019-08-19 12:00:37", null: false
     t.string "status", default: "Incomplete", null: false
-    t.uuid "id", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
+  end
+
+  create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "name", limit: 100
+    t.string "aasm_state", limit: 15
+    t.string "updated_by", limit: 100
+    t.jsonb "procurement_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -79,15 +88,6 @@ ActiveRecord::Schema.define(version: 2019_09_04_142234) do
     t.jsonb "lift_data", null: false
     t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
     t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
-  end
-
-  create_table "fm_procurements", id: false, force: :cascade do |t|
-    t.string "user_id", null: false
-    t.datetime "date_created", null: false
-    t.datetime "last_updated", null: false
-    t.jsonb "procurement"
-    t.string "updated_by", null: false
-    t.index ["user_id"], name: "fm_procurements_user_id_idx"
   end
 
   create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -454,6 +454,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_142234) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
   add_foreign_key "legal_services_regional_availabilities", "legal_services_suppliers"

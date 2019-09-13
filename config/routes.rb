@@ -128,6 +128,7 @@ Rails.application.routes.draw do
       post '/summary', to: 'summary#index'
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
+      resources :procurements
     end
 
     get '/', to: 'home#index'
