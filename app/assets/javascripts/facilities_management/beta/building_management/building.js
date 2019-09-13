@@ -125,7 +125,8 @@ $(function () {
         let msg;
         let bn = $('#fm-building-name-input').val();
         assign_building_name(bn);
-
+        FM.building.id = $('#building-id').val();
+        
         if (!bn) {
             id = 'fm-building-name-input';
             msg = 'A building name is required';
