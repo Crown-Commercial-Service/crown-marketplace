@@ -4,7 +4,7 @@ $(function () {
     });
 
     $('#fm-manage-procurements-link').on('click', function (e) {
-        alert('The manage procurements feature is not available yet');
+        location.href = 'beta/procurements?env=public-beta'
     });
 
     $('#fm-manage-buildings-link').on('click', function (e) {
