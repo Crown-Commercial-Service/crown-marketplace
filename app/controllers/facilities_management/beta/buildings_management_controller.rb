@@ -10,7 +10,7 @@ module FacilitiesManagement
     def buildings_management
       @error_msg = ''
       current_login_email = current_user.email.to_s
-
+      cookies.delete 'fm_building_id'
       @fm_building_data = FMBuildingData.new
       @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
       @building_data = @fm_building_data.get_building_data(current_login_email)
@@ -18,10 +18,12 @@ module FacilitiesManagement
       Rails.logger.warn "Error: BuildingsController buildings_management(): #{e}"
     end
 
+    # rubocop:disable Metrics/AbcSize
     def building_details_summary
       @error_msg = ''
       update_building_data if params['detail-type'].present? && request.method == 'POST'
 
+      cookies.delete 'fm_building_id'
       @building_id = building_id_from_inputs
       @base_path = request.method.to_s == 'GET' ? '../' : './'
 
@@ -31,6 +33,7 @@ module FacilitiesManagement
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController building_details_summary(): #{e}"
     end
+    # rubocop:enable Metrics/AbcSize
 
     def building
       @back_link_href = 'buildings-management'
@@ -39,6 +42,8 @@ module FacilitiesManagement
       @page_title = 'Create single building'
 
       @building_id = building_id_from_inputs
+      @building_id = SecureRandom.uuid if @building_id.blank?
+
       if params['id'].present?
         building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
         @building = building_record&.building_json
@@ -162,12 +167,15 @@ module FacilitiesManagement
     # New building Save Methods
     def save_new_building
       new_building_json = request.raw_post
-      fm_building_data = FMBuildingData.new
-      building_id = fm_building_data.save_new_building current_user.email.to_s, new_building_json
-      cache_new_building_id building_id
       add = JSON.parse(new_building_json)
+      fm_building_data = FMBuildingData.new
+      building_id = fm_building_data.save_new_building current_user.email.to_s, add['id'], new_building_json
+      cache_new_building_id building_id
+      raise 'Building IDs do not match' unless building_id == add['id']
+
       postcode = add['address']['fm-address-postcode']
-      save_region(postcode)
+      save_region(postcode) if postcode.present?
+
       j = { 'status': 200, 'fm_building-id': building_id.to_s }
       render json: j, status: 200
     rescue StandardError => e

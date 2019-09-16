@@ -5,7 +5,7 @@ module FacilitiesManagement
 
     def buyer_account
       @current_login_email = current_user.email.to_s
-      render 'facilities_management/home/buyer_account_landing_page'
+      # render 'facilities_management/home/buyer_account_landing_page'
     end
   end
 end
