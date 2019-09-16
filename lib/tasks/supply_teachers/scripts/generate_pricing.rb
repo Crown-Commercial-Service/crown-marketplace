@@ -10,10 +10,11 @@ require 'yaml'
 require 'csv'
 
 def generate_pricing
-  current_accredited_path = file_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH)
+  current_data = SupplyTeachers::Admin::CurrentData.first
+  current_accredited_path = current_data.current_accredited_suppliers.path
   accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
   suppliers = []
-  supplier_lookup_path = file_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH)
+  supplier_lookup_path = current_data.supplier_lookup.path
   csv = CSV.open(URI.open(supplier_lookup_path), headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
@@ -45,7 +46,7 @@ def generate_pricing
   end
 # rubocop:enable Style/PreferredHashMethods, Rails/Blank
 
-  pricing_for_tool_path = Rails.env.development? ? SupplyTeachers::Admin::Upload::PRICING_TOOL_PATH : s3_path(SupplyTeachers::Admin::Upload::PRICING_TOOL_PATH.to_s)
+  pricing_for_tool_path = current_data.pricing_for_tool.path
   price_workbook = Roo::Spreadsheet.open(pricing_for_tool_path, extension: :xlsx)
 
   def subhead?(row)
