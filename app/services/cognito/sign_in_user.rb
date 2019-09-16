@@ -8,7 +8,7 @@ module Cognito
     validate :cookies_should_be_enabled
 
     def initialize(email, password, cookies_disabled)
-      @email = email
+      @email = email.try(:downcase)
       @password = password
       @error = nil
       @needs_password_reset = false
