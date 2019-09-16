@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_31_124754) do
+ActiveRecord::Schema.define(version: 2019_09_11_140213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_10_31_124754) do
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.text "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "created_at"
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
@@ -31,61 +31,14 @@ ActiveRecord::Schema.define(version: 2019_10_31_124754) do
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
-  create_table "facilities_management_procurement_building_services", force: :cascade do |t|
-    t.uuid "facilities_management_procurement_building_id", null: false
-    t.string "code", limit: 10
-    t.string "name", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "no_of_appliances_for_testing"
-    t.integer "no_of_building_occupants"
-    t.integer "size_of_external_area"
-    t.integer "no_of_consoles_to_be_serviced"
-    t.integer "tones_to_be_collected_and_removed"
-    t.integer "no_of_units_to_be_serviced"
-    t.string "lift_data", default: [], array: true
-    t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
-  end
-
-  create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_procurement_id", null: false
-    t.text "service_codes", default: [], array: true
-    t.string "name", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "address_line_1", limit: 255
-    t.string "address_line_2", limit: 255
-    t.string "town", limit: 255
-    t.string "county", limit: 255
-    t.string "postcode", limit: 20
-    t.boolean "active"
-    t.uuid "building_id"
-    t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
-  end
-
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "name", limit: 100
     t.string "aasm_state", limit: 15
     t.string "updated_by", limit: 100
+    t.jsonb "procurement_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "service_codes", default: [], array: true
-    t.text "region_codes", default: [], array: true
-    t.string "contract_name", limit: 100
-    t.integer "estimated_annual_cost"
-    t.boolean "tupe"
-    t.integer "initial_call_off_period"
-    t.date "initial_call_off_start_date"
-    t.date "initial_call_off_end_date"
-    t.integer "mobilisation_period"
-    t.integer "optional_call_off_extensions_1"
-    t.integer "optional_call_off_extensions_2"
-    t.integer "optional_call_off_extensions_3"
-    t.integer "optional_call_off_extensions_4"
-    t.boolean "estimated_cost_known"
-    t.boolean "mobilisation_period_required"
-    t.boolean "extensions_required"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -178,8 +131,10 @@ ActiveRecord::Schema.define(version: 2019_10_31_124754) do
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
-    t.string "key", null: false
+    t.text "key", null: false
     t.jsonb "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["key"], name: "fm_static_data_key_idx"
   end
 
@@ -194,12 +149,14 @@ ActiveRecord::Schema.define(version: 2019_10_31_124754) do
 
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
     t.serial "id", null: false
-    t.string "title_text", null: false
-    t.string "example_text"
-    t.string "unit_text"
-    t.string "data_type"
-    t.string "spreadsheet_label"
+    t.text "title_text", null: false
+    t.text "example_text"
+    t.text "unit_text"
+    t.text "data_type"
+    t.text "spreadsheet_label"
     t.text "service_usage", array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "fm_uom_values", id: false, force: :cascade do |t|
@@ -330,14 +287,6 @@ ActiveRecord::Schema.define(version: 2019_10_31_124754) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "nuts_regions", id: false, force: :cascade do |t|
-    t.string "code", limit: 255
-    t.string "name", limit: 255
-    t.string "nuts1_code", limit: 255
-    t.string "nuts2_code", limit: 255
-    t.index ["code"], name: "nuts_regions_code_key", unique: true
-  end
-
   create_table "os_address", id: false, force: :cascade do |t|
     t.bigint "uprn", null: false
     t.bigint "udprn"
@@ -429,20 +378,6 @@ ActiveRecord::Schema.define(version: 2019_10_31_124754) do
     t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
   end
 
-  create_table "supply_teachers_admin_current_data", force: :cascade do |t|
-    t.string "current_accredited_suppliers", limit: 255
-    t.string "geographical_data_all_suppliers", limit: 255
-    t.string "lot_1_and_lot_2_comparisons", limit: 255
-    t.string "master_vendor_contacts", limit: 255
-    t.string "neutral_vendor_contacts", limit: 255
-    t.string "pricing_for_tool", limit: 255
-    t.string "supplier_lookup", limit: 255
-    t.string "data", limit: 255
-    t.text "error"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "supply_teachers_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "aasm_state", limit: 15
     t.string "current_accredited_suppliers", limit: 255
@@ -520,8 +455,6 @@ ActiveRecord::Schema.define(version: 2019_10_31_124754) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
-  add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
