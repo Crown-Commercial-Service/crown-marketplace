@@ -4,14 +4,6 @@ module SupplyTeachers
       include AASM
       self.table_name = 'supply_teachers_admin_uploads'
       default_scope { order(created_at: :desc) }
-
-      CURRENT_ACCREDITED_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'current_accredited_suppliers.xlsx').freeze
-      GEOGRAPHICAL_DATA_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'geographical_data_all_suppliers.xlsx').freeze
-      LOT_1_AND_LOT2_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'lot_1_and_2_comparisons.xlsx').freeze
-      MASTER_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'master_vendor_contacts.csv').freeze
-      NEUTRAL_VENDOR_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'neutral_vendor_contacts.csv').freeze
-      PRICING_TOOL_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'pricing_for_tool.xlsx').freeze
-      SUPPLIER_LOOKUP_PATH = Rails.root.join('storage', 'supply_teachers', 'current_data', 'input', 'supplier_lookup.csv').freeze
       ATTRIBUTES = %i[current_accredited_suppliers geographical_data_all_suppliers lot_1_and_lot_2_comparisons master_vendor_contacts neutral_vendor_contacts pricing_for_tool supplier_lookup].freeze
 
       mount_uploader :current_accredited_suppliers, SupplyTeachersFileUploader
@@ -51,13 +43,15 @@ module SupplyTeachers
       end
 
       def cleanup_input_files
-        cp_previous_uploaded_file(:current_accredited_suppliers, CURRENT_ACCREDITED_PATH)
-        cp_previous_uploaded_file(:geographical_data_all_suppliers, GEOGRAPHICAL_DATA_PATH)
-        cp_previous_uploaded_file(:lot_1_and_lot_2_comparisons, LOT_1_AND_LOT2_PATH)
-        cp_previous_uploaded_file(:master_vendor_contacts, MASTER_VENDOR_PATH)
-        cp_previous_uploaded_file(:neutral_vendor_contacts, NEUTRAL_VENDOR_PATH)
-        cp_previous_uploaded_file(:pricing_for_tool, PRICING_TOOL_PATH)
-        cp_previous_uploaded_file(:supplier_lookup, SUPPLIER_LOOKUP_PATH)
+        current_data = CurrentData.first_or_create
+        current_data.current_accredited_suppliers = Upload.previous_uploaded_file(:current_accredited_suppliers) if available_for_cp(:current_accredited_suppliers)
+        current_data.geographical_data_all_suppliers = Upload.previous_uploaded_file(:geographical_data_all_suppliers) if available_for_cp(:geographical_data_all_suppliers)
+        current_data.lot_1_and_lot_2_comparisons = Upload.previous_uploaded_file(:lot_1_and_lot_2_comparisons) if available_for_cp(:lot_1_and_lot_2_comparisons)
+        current_data.master_vendor_contacts = Upload.previous_uploaded_file(:master_vendor_contacts) if available_for_cp(:master_vendor_contacts)
+        current_data.neutral_vendor_contacts = Upload.previous_uploaded_file(:neutral_vendor_contacts) if available_for_cp(:neutral_vendor_contacts)
+        current_data.pricing_for_tool = Upload.previous_uploaded_file(:pricing_for_tool) if available_for_cp(:pricing_for_tool)
+        current_data.supplier_lookup = Upload.previous_uploaded_file(:supplier_lookup) if available_for_cp(:supplier_lookup)
+        current_data.save!
       end
 
       def files_count
@@ -111,45 +105,21 @@ module SupplyTeachers
       end
 
       def copy_files_to_input_folder
-        FileUtils.makedirs(Rails.root.join('storage', 'supply_teachers', 'current_data', 'input'))
-        cp_file_to_input(current_accredited_suppliers_url, CURRENT_ACCREDITED_PATH, current_accredited_suppliers_changed?)
-        cp_file_to_input(geographical_data_all_suppliers_url, GEOGRAPHICAL_DATA_PATH, geographical_data_all_suppliers_changed?)
-        cp_file_to_input(lot_1_and_lot_2_comparisons_url, LOT_1_AND_LOT2_PATH, lot_1_and_lot_2_comparisons_changed?)
-        cp_file_to_input(master_vendor_contacts_url, MASTER_VENDOR_PATH, master_vendor_contacts_changed?)
-        cp_file_to_input(neutral_vendor_contacts_url, NEUTRAL_VENDOR_PATH, neutral_vendor_contacts_changed?)
-        cp_file_to_input(pricing_for_tool_url, PRICING_TOOL_PATH, pricing_for_tool_changed?)
-        cp_file_to_input(supplier_lookup_url, SUPPLIER_LOOKUP_PATH, supplier_lookup_changed?)
-      end
-
-      def cp_file_to_input(file_path, new_path, condition)
-        return unless condition
-
-        if Rails.env.development?
-          FileUtils.cp(file_path, new_path)
-        else
-          object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-          if file_path.include?(ENV['CCS_APP_API_DATA_BUCKET']) # if an S3 path use copy_object not upload_file
-            object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).client.copy_object(bucket: ENV['CCS_APP_API_DATA_BUCKET'], copy_source: file_path, key: s3_path(new_path.to_s))
-          else
-            object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path(new_path.to_s)).upload_file(file_path, acl: 'private')
-          end
-        end
-      end
-
-      def s3_path(path)
-        path.slice((path.index('storage/') + 8)..path.length)
+        current_data = CurrentData.first_or_create
+        current_data.current_accredited_suppliers = self.current_accredited_suppliers if current_accredited_suppliers_changed?
+        current_data.geographical_data_all_suppliers = self.geographical_data_all_suppliers if geographical_data_all_suppliers_changed?
+        current_data.lot_1_and_lot_2_comparisons = self.lot_1_and_lot_2_comparisons if lot_1_and_lot_2_comparisons_changed?
+        current_data.master_vendor_contacts = self.master_vendor_contacts if master_vendor_contacts_changed?
+        current_data.neutral_vendor_contacts = self.neutral_vendor_contacts if neutral_vendor_contacts_changed?
+        current_data.pricing_for_tool = self.pricing_for_tool if pricing_for_tool_changed?
+        current_data.supplier_lookup = self.supplier_lookup if supplier_lookup_changed?
+        current_data.save!
       end
 
       def reject_previous_uploads
         self.class.in_review.map(&:cancel!)
         self.class.in_progress.map(&:cancel!)
         self.class.uploading.map(&:cancel!)
-      end
-
-      def cp_previous_uploaded_file(attr_name, file_path)
-        return unless available_for_cp(attr_name)
-
-        cp_file_to_input(self.class.previous_uploaded_file_url(attr_name), file_path, true)
       end
 
       def available_for_cp(attr_name)
