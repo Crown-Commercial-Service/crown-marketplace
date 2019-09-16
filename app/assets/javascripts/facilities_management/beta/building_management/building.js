@@ -46,9 +46,29 @@ $(function () {
         //$('#fm-find-address-results').css("background", '#28a197');
         let address = {};
         if (extract_address_data(selectedAddress, address)) {
+            cache_address ( selectedAddress) ;
             assign_building_address(address, address['building-ref']);
         }
     });
+
+    const cache_address =function( addr )  {
+        pageUtils.setCachedData( 'lst_knwn_addr', addr );
+    };
+    
+    $.restore_last_known_addr = function ( ) {
+        if ( location.href.indexOf('/beta/building') > 0 ) {
+            let addr = '' + pageUtils.getCachedData('lst_knwn_addr');
+            if (addr != '') {
+                $('#fm-find-address-results').empty();
+                $('#fm-find-address-results').append('<option value="' + addr + '">' + addr + '</option>');
+                showCantFindAddressLink();
+                let address = {};
+                if (extract_address_data(addr, address)) {
+                    assign_building_address(address, address['building-ref']);
+                }
+            }
+        }
+    };
 
     const extract_address_data = function (selectedAddress, new_address) {
         if (selectedAddress) {
@@ -125,7 +145,8 @@ $(function () {
         let msg;
         let bn = $('#fm-building-name-input').val();
         assign_building_name(bn);
-
+        FM.building.id = $('#building-id').val();
+        
         if (!bn) {
             id = 'fm-building-name-input';
             msg = 'A building name is required';
@@ -183,5 +204,8 @@ $(function () {
 
         return bRet;
     };
+});
+$(window).on("load", function () {
+    $.restore_last_known_addr();
 });
 
