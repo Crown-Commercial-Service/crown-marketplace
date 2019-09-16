@@ -1,7 +1,7 @@
-# rubocop:disable: Metrics/AbcSize
-# rubocop:disable: Metrics/MethodLength
-# rubocop:disable: Metrics/BlockLength
-# rubocop:disable: Rails/CreateTableWithTimestamps
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/BlockLength
+# rubocop:disable Rails/CreateTableWithTimestamps
 class UpdateOsAddressView < ActiveRecord::Migration[5.2]
   def up
     create_table 'os_address', id: false, force: :cascade do |t|
@@ -104,7 +104,7 @@ class UpdateOsAddressView < ActiveRecord::Migration[5.2]
     drop_table 'os_address'
   end
 end
-# rubocop:enable: Metrics/AbcSize
-# rubocop:enable: Metrics/BlockLength
-# rubocop:enable: Metrics/MethodLength
-# rubocop:enable: Rails/CreateTableWithTimestamps
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/BlockLength
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Rails/CreateTableWithTimestamps
