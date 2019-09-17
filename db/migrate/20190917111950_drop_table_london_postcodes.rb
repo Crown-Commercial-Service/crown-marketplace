@@ -12,5 +12,5 @@ class DropTableLondonPostcodes < ActiveRecord::Migration[5.2]
       t.text 'Last updated'
     end
   end
-# rubocop:enable Rails/CreateTableWithTimestamps
+  # rubocop:enable Rails/CreateTableWithTimestamps
 end
