@@ -18,7 +18,8 @@
     </div>
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-start-new-procurement-link" class="fm-buyer-account-panel__title" href="../beta/procurements?env=public-beta">Manage procurements</a>
+        <%= link_to(t('.facilities_management.beta.index.manage_procurements_link'), facilities_management_beta_procurements_path, class: 'fm-buyer-account-panel__title') %>
+
         <p class="fm-buyer-account-panel__body">
           See a list of your search results and procurements
         </p>

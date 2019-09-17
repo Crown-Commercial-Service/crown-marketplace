@@ -725,6 +725,12 @@ en:
         guidance_link_text: this guidance on how to measure GIA
         heading: What's the internal area of the building?
         input_label: sqm (square metres)
+      buyer_account:
+        buyer_account:
+          facilities_management:
+            beta:
+              index:
+                manage_procurements_link: Manage procurements
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -738,6 +744,9 @@ en:
         no_buildings_text: You have no saved buildings
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
+      procurements:
+        index:
+          manage_procurements: Manage Procurements
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
