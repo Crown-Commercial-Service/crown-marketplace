@@ -44,13 +44,9 @@ module SupplyTeachers
 
       def cleanup_input_files
         current_data = CurrentData.first_or_create
-        current_data.current_accredited_suppliers = Upload.previous_uploaded_file(:current_accredited_suppliers) if available_for_cp(:current_accredited_suppliers)
-        current_data.geographical_data_all_suppliers = Upload.previous_uploaded_file(:geographical_data_all_suppliers) if available_for_cp(:geographical_data_all_suppliers)
-        current_data.lot_1_and_lot_2_comparisons = Upload.previous_uploaded_file(:lot_1_and_lot_2_comparisons) if available_for_cp(:lot_1_and_lot_2_comparisons)
-        current_data.master_vendor_contacts = Upload.previous_uploaded_file(:master_vendor_contacts) if available_for_cp(:master_vendor_contacts)
-        current_data.neutral_vendor_contacts = Upload.previous_uploaded_file(:neutral_vendor_contacts) if available_for_cp(:neutral_vendor_contacts)
-        current_data.pricing_for_tool = Upload.previous_uploaded_file(:pricing_for_tool) if available_for_cp(:pricing_for_tool)
-        current_data.supplier_lookup = Upload.previous_uploaded_file(:supplier_lookup) if available_for_cp(:supplier_lookup)
+        ATTRIBUTES.each do |attr|
+          current_data.send(attr.to_s + '=', Upload.previous_uploaded_file(attr.to_sym)) if available_for_cp(attr.to_sym)
+        end
         current_data.save!
       end
 
@@ -99,20 +95,16 @@ module SupplyTeachers
         return if errors.any?
 
         reject_previous_uploads
-        copy_files_to_input_folder
+        copy_files_to_current_data
       rescue StandardError => e
         errors.add(:base, e.message)
       end
 
-      def copy_files_to_input_folder
+      def copy_files_to_current_data
         current_data = CurrentData.first_or_create
-        current_data.current_accredited_suppliers = self.current_accredited_suppliers if current_accredited_suppliers_changed?
-        current_data.geographical_data_all_suppliers = self.geographical_data_all_suppliers if geographical_data_all_suppliers_changed?
-        current_data.lot_1_and_lot_2_comparisons = self.lot_1_and_lot_2_comparisons if lot_1_and_lot_2_comparisons_changed?
-        current_data.master_vendor_contacts = self.master_vendor_contacts if master_vendor_contacts_changed?
-        current_data.neutral_vendor_contacts = self.neutral_vendor_contacts if neutral_vendor_contacts_changed?
-        current_data.pricing_for_tool = self.pricing_for_tool if pricing_for_tool_changed?
-        current_data.supplier_lookup = self.supplier_lookup if supplier_lookup_changed?
+        ATTRIBUTES.each do |attr|
+          current_data.send(attr.to_s + '=', send(attr.to_sym)) if send((attr.to_s + '_changed?').to_sym)
+        end
         current_data.save!
       end
 

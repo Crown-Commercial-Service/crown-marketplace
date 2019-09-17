@@ -1,7 +1,6 @@
 class SupplyTeachersJsonFileUploader < CarrierWave::Uploader::Base
-  # storage Rails.env.production? ? :aws : :file
+  storage Rails.env.production? ? :aws : :file
 
-  storage :aws
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir

@@ -8,7 +8,7 @@ module SupplyTeachers
 
     def perform(upload_id)
       upload = SupplyTeachers::Admin::Upload.find(upload_id)
-      suppliers = JSON.parse(File.read(URI.open(SupplyTeachers::Admin::CurrentData.first.data.url)))
+      suppliers = JSON.parse(File.read(URI.open(data_file_path(SupplyTeachers::Admin::CurrentData.first.data))))
 
       SupplyTeachers::Upload.upload!(suppliers)
 
@@ -28,6 +28,10 @@ module SupplyTeachers
     def fail_upload(upload, fail_reason)
       upload.fail!
       upload.update(fail_reason: fail_reason)
+    end
+
+    def data_file_path(file_path)
+      Rails.env.production? ? file_path.url : file_path.path
     end
   end
 end

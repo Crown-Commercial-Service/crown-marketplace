@@ -11,10 +11,10 @@ require 'csv'
 
 def generate_pricing
   current_data = SupplyTeachers::Admin::CurrentData.first
-  current_accredited_path = current_data.current_accredited_suppliers.url
+  current_accredited_path = input_file_path(current_data.current_accredited_suppliers)
   accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
   suppliers = []
-  supplier_lookup_path = current_data.supplier_lookup.url
+  supplier_lookup_path = input_file_path(current_data.supplier_lookup)
   csv = CSV.open(URI.open(supplier_lookup_path), headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
@@ -46,7 +46,7 @@ def generate_pricing
   end
 # rubocop:enable Style/PreferredHashMethods, Rails/Blank
 
-  pricing_for_tool_path = current_data.pricing_for_tool.url
+  pricing_for_tool_path = input_file_path(current_data.pricing_for_tool)
   price_workbook = Roo::Spreadsheet.open(pricing_for_tool_path, extension: :xlsx)
 
   def subhead?(row)
