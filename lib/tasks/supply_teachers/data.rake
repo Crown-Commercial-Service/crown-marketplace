@@ -59,6 +59,10 @@ namespace :st do
     end
   end
 
+  def input_file_path(file_path)
+    Rails.env.production? ? file_path.url : file_path.path
+  end
+
   def get_output_file_path(file_name)
     Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', file_name)
   end
