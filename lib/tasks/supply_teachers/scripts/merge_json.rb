@@ -9,7 +9,7 @@ require 'active_support'
 def merge_json(supplier_name_key: , destination_key:, destination_file:, primary:, secondary:)
   alias_rows = []
   merge_key = 'supplier_name'
-  supplier_lookup_path = SupplyTeachers::Admin::CurrentData.first.supplier_lookup.path
+  supplier_lookup_path = SupplyTeachers::Admin::CurrentData.first.supplier_lookup.url
   alias_rows = CSV.parse(URI.open(supplier_lookup_path), headers: :first_row)
 
   aliases = Hash.new { |_, k| k }
