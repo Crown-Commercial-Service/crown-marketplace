@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_091020) do
+ActiveRecord::Schema.define(version: 2019_09_17_111950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -131,10 +131,8 @@ ActiveRecord::Schema.define(version: 2019_09_17_091020) do
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
-    t.text "key", null: false
+    t.string "key", null: false
     t.jsonb "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["key"], name: "fm_static_data_key_idx"
   end
 
@@ -149,14 +147,12 @@ ActiveRecord::Schema.define(version: 2019_09_17_091020) do
 
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
     t.serial "id", null: false
-    t.text "title_text", null: false
-    t.text "example_text"
-    t.text "unit_text"
-    t.text "data_type"
-    t.text "spreadsheet_label"
+    t.string "title_text", null: false
+    t.string "example_text"
+    t.string "unit_text"
+    t.string "data_type"
+    t.string "spreadsheet_label"
     t.text "service_usage", array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "fm_uom_values", id: false, force: :cascade do |t|
@@ -223,13 +219,6 @@ ActiveRecord::Schema.define(version: 2019_09_17_091020) do
   create_table "legal_services_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "london_postcodes", id: false, force: :cascade do |t|
-    t.text "postcode"
-    t.text "In Use"
-    t.text "region"
-    t.text "Last updated"
   end
 
   create_table "management_consultancy_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -305,10 +294,10 @@ ActiveRecord::Schema.define(version: 2019_09_17_091020) do
   create_table "os_address", id: false, force: :cascade do |t|
     t.bigint "uprn", null: false
     t.bigint "udprn"
-    t.text "change_type"
+    t.string "change_type"
     t.bigint "state"
     t.date "state_date"
-    t.text "class"
+    t.string "class"
     t.bigint "parent_uprn"
     t.decimal "x_coordinate"
     t.decimal "y_coordinate"
@@ -316,70 +305,70 @@ ActiveRecord::Schema.define(version: 2019_09_17_091020) do
     t.decimal "longitude"
     t.bigint "rpc"
     t.bigint "local_custodian_code"
-    t.text "country"
+    t.string "country"
     t.date "la_start_date"
     t.date "last_update_date"
     t.date "entry_date"
-    t.text "rm_organisation_name"
-    t.text "la_organisation"
-    t.text "department_name"
-    t.text "legal_name"
-    t.text "sub_building_name"
-    t.text "building_name"
-    t.text "building_number"
+    t.string "rm_organisation_name"
+    t.string "la_organisation"
+    t.string "department_name"
+    t.string "legal_name"
+    t.string "sub_building_name"
+    t.string "building_name"
+    t.string "building_number"
     t.bigint "sao_start_number"
-    t.text "sao_start_suffix"
+    t.string "sao_start_suffix"
     t.bigint "sao_end_number"
-    t.text "sao_end_suffix"
-    t.text "sao_text"
-    t.text "alt_language_sao_text"
+    t.string "sao_end_suffix"
+    t.string "sao_text"
+    t.string "alt_language_sao_text"
     t.bigint "pao_start_number"
-    t.text "pao_start_suffix"
+    t.string "pao_start_suffix"
     t.bigint "pao_end_number"
-    t.text "pao_end_suffix"
-    t.text "pao_text"
-    t.text "alt_language_pao_text"
+    t.string "pao_end_suffix"
+    t.string "pao_text"
+    t.string "alt_language_pao_text"
     t.bigint "usrn"
-    t.text "usrn_match_indicator"
-    t.text "area_name"
-    t.text "level"
-    t.text "official_flag"
-    t.text "os_address_toid"
+    t.string "usrn_match_indicator"
+    t.string "area_name"
+    t.string "level"
+    t.string "official_flag"
+    t.string "os_address_toid"
     t.bigint "os_address_toid_version"
-    t.text "os_roadlink_toid"
+    t.string "os_roadlink_toid"
     t.bigint "os_roadlink_toid_version"
-    t.text "os_topo_toid"
+    t.string "os_topo_toid"
     t.bigint "os_topo_toid_version"
     t.bigint "voa_ct_record"
     t.bigint "voa_ndr_record"
-    t.text "street_description"
-    t.text "alt_language_street_description"
-    t.text "dependent_thoroughfare"
-    t.text "thoroughfare"
-    t.text "welsh_dependent_thoroughfare"
-    t.text "welsh_thoroughfare"
-    t.text "double_dependent_locality"
-    t.text "dependent_locality"
-    t.text "locality"
-    t.text "welsh_dependent_locality"
-    t.text "welsh_double_dependent_locality"
-    t.text "town_name"
-    t.text "administrative_area"
-    t.text "post_town"
-    t.text "welsh_post_town"
-    t.text "postcode"
-    t.text "postcode_locator"
-    t.text "postcode_type"
-    t.text "delivery_point_suffix"
-    t.text "addressbase_postal"
-    t.text "po_box_number"
-    t.text "ward_code"
-    t.text "parish_code"
+    t.string "street_description"
+    t.string "alt_language_street_description"
+    t.string "dependent_thoroughfare"
+    t.string "thoroughfare"
+    t.string "welsh_dependent_thoroughfare"
+    t.string "welsh_thoroughfare"
+    t.string "double_dependent_locality"
+    t.string "dependent_locality"
+    t.string "locality"
+    t.string "welsh_dependent_locality"
+    t.string "welsh_double_dependent_locality"
+    t.string "town_name"
+    t.string "administrative_area"
+    t.string "post_town"
+    t.string "welsh_post_town"
+    t.string "postcode"
+    t.string "postcode_locator"
+    t.string "postcode_type"
+    t.string "delivery_point_suffix"
+    t.string "addressbase_postal"
+    t.string "po_box_number"
+    t.string "ward_code"
+    t.string "parish_code"
     t.date "rm_start_date"
     t.bigint "multi_occ_count"
-    t.text "voa_ndr_p_desc_code"
-    t.text "voa_ndr_scat_code"
-    t.text "alt_language"
+    t.string "voa_ndr_p_desc_code"
+    t.string "voa_ndr_scat_code"
+    t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
   end
 
