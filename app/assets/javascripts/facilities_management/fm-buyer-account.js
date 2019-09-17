@@ -3,10 +3,6 @@ $(function () {
         location.href = 'select-services?env=public-beta'
     });
 
-    $('#fm-manage-procurements-link').on('click', function (e) {
-        alert('The manage procurements feature is not available yet');
-    });
-
     $('#fm-manage-buildings-link').on('click', function (e) {
         location.href = 'buildings-list'
     });
