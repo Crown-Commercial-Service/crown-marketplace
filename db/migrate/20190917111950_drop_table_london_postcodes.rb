@@ -3,7 +3,6 @@ class DropTableLondonPostcodes < ActiveRecord::Migration[5.2]
     drop_table :london_postcodes
   end
 
-  # rubocop:disable Rails/CreateTableWithTimestamps
   def down
     create_table :london_postcodes, id: false, force: :cascade do |t|
       t.text :postcode
@@ -12,5 +11,4 @@ class DropTableLondonPostcodes < ActiveRecord::Migration[5.2]
       t.text 'Last updated'
     end
   end
-  # rubocop:enable Rails/CreateTableWithTimestamps
 end
