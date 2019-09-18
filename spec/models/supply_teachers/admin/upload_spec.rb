@@ -266,7 +266,7 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
       let(:admin_upload) { create(:supply_teachers_admin_upload, aasm_state: 'uploading') }
 
       it 'does not cancel the upload' do
-        expect(admin_upload).to_not have_state(:canceled)
+        expect(admin_upload).not_to have_state(:canceled)
       end
     end
   end
@@ -294,6 +294,5 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
         expect(SupplyTeachers::Admin::CurrentData.first.supplier_lookup.read).to eq admin_upload.supplier_lookup.read
       end
     end
-
   end
 end
