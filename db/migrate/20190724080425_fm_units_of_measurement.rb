@@ -1,3 +1,4 @@
+# rubocop:disable Rails/CreateTableWithTimestamps
 class FmUnitsOfMeasurement < ActiveRecord::Migration[5.2]
   def change
     return if table_exists?('fm_units_of_measurement')
@@ -10,7 +11,7 @@ class FmUnitsOfMeasurement < ActiveRecord::Migration[5.2]
       t.text 'data_type'
       t.text 'spreadsheet_label'
       t.text 'service_usage', array: true
-      t.timestamps
     end
   end
 end
+# rubocop:enable Rails/CreateTableWithTimestamps
