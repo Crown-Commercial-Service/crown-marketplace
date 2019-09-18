@@ -1,7 +1,45 @@
-<h1>Procurements</h1>
+<div class="govuk-body">
 
-<ul>
-  <% @procurements.each do |procurement| %>
-    <li><%= link_to procurement.name, facilities_management_beta_procurement_path(procurement) %></li>
-  <% end %>
-</ul>
+  <div class="govuk-grid-row">
+    <a class="govuk-back-link govuk-!-margin-top-6 ccs-no-print" aria-label="Back to the previous page" href=".">Back</a>
+
+    <h1 class="govuk-heading-xl"><%= t('.manage_procurements') %></h1>
+
+    <a class="govuk-button govuk-!-margin-top-4  govuk-!-margin-bottom-8 govuk-!-padding-left-5 govuk-!-padding-right-5" href="procurements/new">+ Start a new procurement</a>
+
+    <h1 class="govuk-heading-m">Saved searches</h1>
+
+    <h1 class="govuk-heading-m">
+      <span class="govuk-caption-m govuk-!-margin-top-6">Use saved searches to continue to procurement</span>
+    </h1>
+
+  </div>
+
+  <div class="govuk-grid-row">
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+              <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col">Name</th>
+              <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-third" scope="col">Saved</th>
+              <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col">Stage</th>
+              <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"></th>
+          </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <% @procurements.each do |procurement| %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">
+            <%= link_to procurement.name, facilities_management_beta_procurement_path(procurement) %>
+          </th>
+          <td class="govuk-table__cell"><%= "#{procurement.updated_at.in_time_zone("London").strftime '%a %d %b %Y at %l:%M:%S %P'} #{procurement.updated_at.in_time_zone("London").zone}" %></td>
+          <td class="govuk-table__cell">Quick Search</td>
+          <td class="govuk-table__cell"><%= link_to "Delete" %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
