@@ -223,4 +223,77 @@ RSpec.describe SupplyTeachers::Admin::Upload, type: :model do
       end
     end
   end
+
+  describe '#reject_previous_uploads' do
+    context 'when there is previous upload in in_progress state' do
+      before do
+        admin_upload
+        create(:supply_teachers_admin_upload)
+        admin_upload.reload
+      end
+
+      it 'cancels the upload' do
+        expect(admin_upload).to have_state(:canceled)
+      end
+    end
+
+    context 'when there is previous upload in in_review state' do
+      before do
+        admin_upload.review!
+        create(:supply_teachers_admin_upload)
+        admin_upload.reload
+      end
+
+      it 'cancels the upload' do
+        expect(admin_upload).to have_state(:canceled)
+      end
+    end
+
+    context 'when there is previous upload in uploading state' do
+      before do
+        admin_upload.review!
+        admin_upload.upload!
+        create(:supply_teachers_admin_upload)
+        admin_upload.reload
+      end
+
+      it 'cancels the upload' do
+        expect(admin_upload).to have_state(:canceled)
+      end
+    end
+
+    context 'when there is previous upload in approved state' do
+      let(:admin_upload) { create(:supply_teachers_admin_upload, aasm_state: 'uploading') }
+
+      it 'does not cancel the upload' do
+        expect(admin_upload).to_not have_state(:canceled)
+      end
+    end
+  end
+
+  describe '#copy_files_to_current_data' do
+    context 'when a CurrentData object does not exist' do
+      it 'creates a CurrentData object' do
+        expect { create(:supply_teachers_admin_upload) }.to change(SupplyTeachers::Admin::CurrentData, :count).by(+1)
+      end
+      it 'updates all CurrentData files to match the Upload object' do
+        admin_upload
+        expect(SupplyTeachers::Admin::CurrentData.first.supplier_lookup.file.read).to eq admin_upload.supplier_lookup.file.read
+      end
+    end
+
+    context 'when a CurrentData object exists' do
+      before do
+        admin_upload
+      end
+
+      it 'does not create a new CurrentData object' do
+        expect { create(:supply_teachers_admin_upload) }.not_to change(SupplyTeachers::Admin::CurrentData, :count)
+      end
+      it 'updates the existing CurrentData object' do
+        expect(SupplyTeachers::Admin::CurrentData.first.supplier_lookup.read).to eq admin_upload.supplier_lookup.read
+      end
+    end
+
+  end
 end
