@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_111950) do
+ActiveRecord::Schema.define(version: 2019_09_18_112324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_09_17_111950) do
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.text "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", default: -> { "now()" }
     t.datetime "updated_at", null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 2019_09_17_111950) do
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
-    t.text "key", null: false
+    t.string "key", null: false
     t.jsonb "value"
     t.index ["key"], name: "fm_static_data_key_idx"
   end
@@ -147,11 +147,11 @@ ActiveRecord::Schema.define(version: 2019_09_17_111950) do
 
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
     t.serial "id", null: false
-    t.text "title_text", null: false
-    t.text "example_text"
-    t.text "unit_text"
-    t.text "data_type"
-    t.text "spreadsheet_label"
+    t.string "title_text", null: false
+    t.string "example_text"
+    t.string "unit_text"
+    t.string "data_type"
+    t.string "spreadsheet_label"
     t.text "service_usage", array: true
   end
 
@@ -370,6 +370,16 @@ ActiveRecord::Schema.define(version: 2019_09_17_111950) do
     t.string "voa_ndr_scat_code"
     t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
+  end
+
+  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "filename", limit: 255
+    t.integer "size"
+    t.string "etag", limit: 255
+    t.text "fail_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
   end
 
   create_table "supply_teachers_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
