@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_11_140213) do
+ActiveRecord::Schema.define(version: 2019_09_19_101129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -18,12 +18,11 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-  create_table "facilities_management_buildings", id: false, force: :cascade do |t|
+  create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "Incomplete", null: false
-    t.uuid "id", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
@@ -37,9 +36,10 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
     t.string "name", limit: 100
     t.string "aasm_state", limit: 15
     t.string "updated_by", limit: 100
-    t.jsonb "procurement_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "service_codes", default: [], array: true
+    t.text "region_codes", default: [], array: true
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
