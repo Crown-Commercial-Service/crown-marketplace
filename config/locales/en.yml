@@ -738,11 +738,28 @@ en:
         no_buildings_text: You have no saved buildings
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
+      procurements:
+        new:
+          continue_headline: Continue to procurement
+          continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided wuth an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
+          save_headline: Save a new search
+          save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
+    journey:
+      choose_locations:
+        question: Where are your buildings located?
+        subtitle: Choose one or more regions, based on building's location where you require facilities management services.
+        no_regions_selected: No regions selected
+        regions_selected: Regions selected
+        remove_all: Remove all
+      choose_services:
+        question: Select the facilities management services do you need
+        subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
+        service_specification_doc: Read the service specification document
     home:
       beforeyoustart: Before you start
       heading: Find Facilities Management services

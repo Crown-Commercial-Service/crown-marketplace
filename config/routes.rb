@@ -128,6 +128,7 @@ Rails.application.routes.draw do
       post '/summary', to: 'summary#index'
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
+      get '/start', to: 'journey#start', as: 'journey_start'
       resources :procurements
     end
 
@@ -171,6 +172,8 @@ Rails.application.routes.draw do
     post '/cache/clear', to: 'cache#clear_all'
     get '/buyer-account', to: 'buyer_account#buyer_account'
     get '/reset', to: 'buildings#reset_buildings_tables'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     get '/:slug', to: '/errors#404'
 
     resources :uploads, only: :create if Marketplace.upload_privileges?

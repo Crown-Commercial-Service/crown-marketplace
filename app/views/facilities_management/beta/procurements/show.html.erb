@@ -1,1 +1,8 @@
 <%= @procurement.name %>
+<% @procurement.region_codes.each do |r| %>
+  <%= r %>
+<% end %>
+
+<% @procurement.service_codes.each do |s| %>
+  <%= s %>
+<% end %>
