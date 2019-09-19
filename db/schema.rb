@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_11_140213) do
+ActiveRecord::Schema.define(version: 2019_09_19_152002) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -20,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "updated_at", default: "2019-08-19 12:00:37", null: false
+    t.datetime "updated_at", null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
@@ -38,6 +39,17 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
     t.jsonb "procurement_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contract_name", limit: 100
+    t.integer "estimated_annual_cost"
+    t.boolean "tupe"
+    t.integer "initial_call_off_period"
+    t.date "initial_call_off_start_date"
+    t.date "initial_call_off_end_date"
+    t.integer "mobilisation_period"
+    t.integer "optional_call_off_extensions_1"
+    t.integer "optional_call_off_extensions_2"
+    t.integer "optional_call_off_extensions_3"
+    t.integer "optional_call_off_extensions_4"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -88,6 +100,15 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
     t.jsonb "lift_data", null: false
     t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
     t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
+  end
+
+  create_table "fm_procurements", id: false, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.datetime "date_created", null: false
+    t.datetime "last_updated", null: false
+    t.jsonb "procurement"
+    t.string "updated_by", null: false
+    t.index ["user_id"], name: "fm_procurements_user_id_idx"
   end
 
   create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

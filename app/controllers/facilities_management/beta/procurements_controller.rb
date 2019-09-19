@@ -2,6 +2,8 @@ module FacilitiesManagement
   module Beta
     class ProcurementsController < FacilitiesManagement::FrameworkController
       before_action :set_procurement, only: %i[show edit update]
+      before_action :authenticate_user!, only: %i[show edit update detailed_summary].freeze
+      before_action :authorize_user, only: %i[show edit update detailed_summary].freeze
 
       def index
         @procurements = current_user.procurements
