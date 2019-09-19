@@ -7,6 +7,7 @@ RSpec.describe SupplyTeachers::Admin::CurrentData, type: :model do
         expect(build(:supply_teachers_admin_current_data)).to be_valid
       end
     end
+
     context 'when one instance already exists' do
       it 'validation fails' do
         create(:supply_teachers_admin_current_data)
