@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_11_140213) do
+ActiveRecord::Schema.define(version: 2019_09_16_132808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -375,6 +375,20 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
+  end
+
+  create_table "supply_teachers_admin_current_data", force: :cascade do |t|
+    t.string "current_accredited_suppliers", limit: 255
+    t.string "geographical_data_all_suppliers", limit: 255
+    t.string "lot_1_and_lot_2_comparisons", limit: 255
+    t.string "master_vendor_contacts", limit: 255
+    t.string "neutral_vendor_contacts", limit: 255
+    t.string "pricing_for_tool", limit: 255
+    t.string "supplier_lookup", limit: 255
+    t.string "data", limit: 255
+    t.text "error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "supply_teachers_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
