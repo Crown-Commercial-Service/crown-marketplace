@@ -63,7 +63,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
       end
 
       it 'redirects to the show page for the record' do
-        expect(response).to redirect_to edit_facilities_management_beta_procurement_path(procurement.id, step: '???')
+        expect(response).to redirect_to edit_facilities_management_beta_procurement_path(procurement.id, next_step: '???')
       end
 
       it 'correctly updates the provided params' do
