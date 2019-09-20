@@ -1,0 +1,61 @@
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key govuk-!-font-size-24">
+    About the contract
+  </dt>
+  <dd class="govuk-summary-list__value">
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Contract Name
+  </dt>
+
+  <dd class="govuk-summary-list__value">
+    <% unless @procurement.contract_name.nil? %>
+      <%= @procurement.contract_name %>
+    <% else %>
+      <a class="govuk-link" href="#">
+        Answer question
+      </a>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Estimated annual cost
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <% unless @procurement.estimated_annual_cost.nil? %>
+      <%= @procurement.estimated_annual_cost %>
+    <% else %>
+      <a class="govuk-link" href="#">
+        Answer question
+      </a>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    TUPE
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <% unless @procurement.tupe.nil? %>
+      <%= @procurement.tupe == true ? 'Yes' : 'No' %>
+    <% else %>
+      <a class="govuk-link" href="#">
+        Answer question
+      </a>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
