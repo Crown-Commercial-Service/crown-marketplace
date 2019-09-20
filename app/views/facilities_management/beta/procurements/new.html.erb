@@ -1,41 +1,23 @@
+<a href="<%= request.referer %>" class="govuk-back-link">Back</a>
+<h1 class="govuk-heading-xl"><%= t('.search_results') %></h1>
+<p class="govuk-caption-l"><%= t('.search_result_body_html') %></p>
 <%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { multipart: true } do |f| %>
   <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
       <%= display_errors(@procurement, :name) %>
-      <a id="filter-toggle-btn" id="filter-toggle-btn" href="" class="govuk-button ccs-no-print govuk-!-margin-top-6" role="button">Hide
-      filters</a><br>
-      <div id="fm-filter-pane" class="govuk-grid-column-one-third">
-        <div class="govuk-form-group">
-          <div class="govuk-checkboxes">
-            <% @regions.each do |region| %>
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag(
-                  "facilities_management_procurement[region_codes][]",
-                  region.code,
-                  @procurement.region_codes.include?(region.code),
-                  class: "govuk-checkboxes__input",
-                  id: "facilities_management_procurement_region_codes_region_#{region.code}"
-                  )
-                %>
-                <label class="govuk-label govuk-checkboxes__label" for="region_<%= region.code %>">
-                  <%= region.name %>
-                </label>
-              </div>
-            <% end %>
-            <% @services.each do |service| %>
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag(
-                  "facilities_management_procurement[service_codes][]",
-                  service.code,
-                  @procurement.service_codes.include?(service.code),
-                  class: "govuk-checkboxes__input",
-                  id: "facilities_management_procurement_service_codes_service_#{service.code}"
-                  )
-                %>
-                <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>">
-                  <%= service.name %>
-                </label>
-              </div>
-            <% end %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <a id="filter-toggle-btn" id="filter-toggle-btn" href="" style="width:100%" class="govuk-button ccs-no-print govuk-!-margin-top-6" role="button"><%= t('.hide_filters')%></a><br/>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <div id="fm-filter-pane">
+          <div class="govuk-!-padding-2 CCS-fm-supplier-filter-container">
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-half"><strong class="govuk-heading-m ccs-no-print"><%=t('.apply_filters') %></strong></div>
+            </div>
+            <%= render partial: 'filter_section', locals: {section_name: 'region', section_title: t('.region'), change_title: t('.change_add_region'), collection: @regions, superset: @procurement.region_codes} %>
+            <%= render partial: 'filter_section', locals: {section_name: 'service', section_title: t('.service'), change_title: t('.change_add_service'), collection: @services, superset: @procurement.service_codes} %>
           </div>
         </div>
       </div>
@@ -45,13 +27,20 @@
         <%= render('facilities_management/long_list/lot1b') %>
         <%= render('facilities_management/long_list/lot1c') %>
       </div>
-      <h2><%= t('.continue_headline') %></h2>
-      <p><%= t('.continue_text') %></p>
-      <h2><%= t('.save_headline') %></h2>
-      <p><%= t('.save_text') %></p>
-      <div>
-        <%= f.text_field :name %>
-      </div>
+      <h2 class="govuk-heading-m"><%= t('.continue_headline') %></h2>
+      <p class="govuk-caption-l"><%= t('.continue_text') %></p>
+      <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
+      <p class="govuk-caption-l"><%= t('.save_text') %></p>
+      <p class="govuk-caption-m">
+        <%= f.text_field :name, maxlenth: 100, class: 'govuk-input govuk-input--width-20' %>
+        <br />
+        <span class="govuk-caption-m">You have <span id="fm-procurement-name-chars-left">100</span> characters remaining</span>
+      </p>
+      <%= f.submit t('.save_your_search'), class: 'govuk-button' %>
+      <%= f.submit t('.save_for_later'), name: 'save_for_later', class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %><br/>
+      <%= link_to t('.cancel_text'), facilities_management_beta_procurements_path, class: 'govuk-link'%>
+    </div>
     <% end %>
-  <%= f.submit 'Create', class: 'govuk-button' %>
+  <div class="govuk-row">
+  </div>
 <% end %>
