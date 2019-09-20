@@ -1,10 +1,13 @@
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FacilitiesManagement::FrameworkController
-      before_action :set_procurement, only: %i[show edit update]
+      before_action :set_procurement, only: %i[show edit update destroy]
+      before_action :set_edit_state, only: %i[show edit]
 
       def index
-        @procurements = current_user.procurements
+        @procurements = current_user.procurements.sort_by do |proc|
+          proc[:name]
+        end
       end
 
       def show; end
@@ -47,6 +50,11 @@ module FacilitiesManagement
 
       def set_procurement
         @procurement = Procurement.find(params[:id])
+      end
+
+      def set_edit_state
+        @delete = params.include? 'delete'
+        @change = !@delete && action_name == 'edit'
       end
     end
   end

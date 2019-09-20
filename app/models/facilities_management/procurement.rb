@@ -1,5 +1,7 @@
 module FacilitiesManagement
   class Procurement < ApplicationRecord
+    enum status: [:qs, :ds]
+
     belongs_to :user,
                foreign_key: :user_id,
                inverse_of: :procurements
