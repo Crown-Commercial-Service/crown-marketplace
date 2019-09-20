@@ -1,4 +1,4 @@
-<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :patch, html: { multipart: true }  do |f| %>
+<%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement), method: :patch, html: { multipart: true }  do |f| %>
   <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
       <%= display_errors(@procurement, :name) %>
       <%= f.label :name, class: "govuk-label" %>
