@@ -38,7 +38,7 @@ logfile
 # SupplyTeachers data folders
 uploads/*
 public/data/*
-public/supply_teachers/data/*
+public/supply_teachers/*
 public/uploads/*
 storage/management_consultancy/data*
 storage/supply_teachers/data*
