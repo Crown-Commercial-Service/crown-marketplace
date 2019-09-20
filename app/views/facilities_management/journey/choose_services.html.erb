@@ -3,9 +3,11 @@
   <div>
     <fieldset class="govuk-fieldset" aria-describedby="">
       <h2 class="govuk-heading-m">
-        <%= t('facilities_management.select_services.heading') %>
+        <%= t('.question') %>
       </h2>
     </fieldset>
+    <p class="govuk-caption-m"><%= t('.subtitle') %></p>
+    <p><a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="<%= t('facilities_management.select_services.servicespec_link_alttext')%>"><%= t('.service_specification_doc') %></a></p>
   </div>
   <%= form_tag @form_path, method: :get do %>
     <div class="govuk-grid-column-two-thirds">
@@ -13,8 +15,6 @@
       <%= govuk_form_group_with_optional_error(@journey, :service_codes) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :service_codes) do %>
           <div class="govuk-grid-column-full" style="padding-left:0">
-            <p class="govuk-caption-m"><%= t('facilities_management.select_services.subheading') %></p>
-            <p><a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="<%= t('facilities_management.select_services.servicespec_link_alttext')%>"><%= t('.service_specification_doc') %></a></p>
             <%= form_tag 'choose-services/answer', method: :get do %>
             <div class="govuk-accordion" data-module="accordion" id="services-accordion">
               <% @journey.current_step.services.each do |service| %>

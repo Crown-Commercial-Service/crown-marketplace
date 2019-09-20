@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
 
   describe 'GET new' do
     it 'renders the correct template' do
-      get :new
+      get :new, params: { region_codes: ['UKC1'], service_codes: ['C.1'] }
 
       expect(response).to render_template('new')
     end
