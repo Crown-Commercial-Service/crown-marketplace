@@ -3,8 +3,12 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   class Beta::BuildingsManagementController < FacilitiesManagement::BuildingsController
-    before_action :authenticate_user!, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
-    before_action :authorize_user, only: %i[buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
+    before_action :authenticate_user!, only: %i[buildings_not_selected buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
+    before_action :authorize_user, only: %i[buildings_not_selected buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
+
+    def buildings_not_selected
+      render('buildings_not_selected')
+    end
 
     # Entry Points
     def buildings_management
@@ -33,6 +37,7 @@ module FacilitiesManagement
     rescue StandardError => e
       Rails.logger.warn "Error: BuildingsController building_details_summary(): #{e}"
     end
+
     # rubocop:enable Metrics/AbcSize
 
     def building
@@ -371,10 +376,10 @@ module FacilitiesManagement
 
     def get_building_ready_status(building)
       building_element_valid?(building, 'name') &&
-        building_element_valid?(building, 'region') &&
-        building_element_valid?(building, 'building-type') &&
-        building_element_valid?(building, 'security-type') &&
-        building_element_valid?(building, 'gia')
+          building_element_valid?(building, 'region') &&
+          building_element_valid?(building, 'building-type') &&
+          building_element_valid?(building, 'security-type') &&
+          building_element_valid?(building, 'gia')
     end
 
     def validate_input_building
