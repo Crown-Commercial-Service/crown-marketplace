@@ -8,7 +8,7 @@ module SupplyTeachers
 
     def perform(upload_id)
       upload = SupplyTeachers::Admin::Upload.find(upload_id)
-      suppliers = JSON.parse(File.read(URI.open(data_file)))
+      suppliers = JSON.parse(File.read(URI.open(data_file_path(SupplyTeachers::Admin::CurrentData.first.data))))
 
       SupplyTeachers::Upload.upload!(suppliers)
 
@@ -30,12 +30,8 @@ module SupplyTeachers
       upload.update(fail_reason: fail_reason)
     end
 
-    def data_file
-      if Rails.env.development?
-        Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', 'data.json')
-      else
-        "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/supply_teachers/current_data/output/data.json"
-      end
+    def data_file_path(file_path)
+      Rails.env.production? ? file_path.url : file_path.path
     end
   end
 end

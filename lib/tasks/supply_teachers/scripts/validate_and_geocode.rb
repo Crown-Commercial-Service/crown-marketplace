@@ -9,10 +9,11 @@ require 'csv'
 require 'roo'
 
 def validate_and_geocode
-  current_accredited_path = file_path(SupplyTeachers::Admin::Upload::CURRENT_ACCREDITED_PATH)
+  current_data = SupplyTeachers::Admin::CurrentData.first
+  current_accredited_path = input_file_path(current_data.current_accredited_suppliers)
   accredited_suppliers_workbook = Roo::Spreadsheet.open(current_accredited_path, extension: :xlsx)
   suppliers = []
-  supplier_lookup_path = file_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH)
+  supplier_lookup_path = input_file_path(current_data.supplier_lookup)
   csv = CSV.open(URI.open(supplier_lookup_path), headers: true)
   csv.each do |row|
     suppliers << row.to_h.transform_keys!(&:to_sym)
@@ -125,6 +126,14 @@ def validate_and_geocode
     supplier['neutral_vendor_pricing'] ||= []
   end
 
+  def check_pricing_present(supplier)
+    unless [supplier['pricing'].try(:empty?), supplier['master_vendor_pricing'].try(:empty?), supplier['neutral_vendor_pricing'].try(:empty?)].any?{|s| s == false}
+      File.open(get_output_file_path('errors.out'), 'a') do |f|
+        f.puts "'Pricing' cannot be found for the following supplier: #{supplier['supplier_name']}."
+      end
+    end
+  end
+
   suppliers = suppliers.map do |supplier|
     supplier.tap do |s|
       next unless s['branches']
@@ -140,10 +149,15 @@ def validate_and_geocode
 
   suppliers.map do |supplier|
     supplier.tap do |s|
+      check_pricing_present(s)
       next unless s['branches']
       branch_errors, branches = s['branches'].partition { |b| errors?(b) }
       branch_errors.each do |branch|
-        warn "#{supplier['supplier_name']} - #{branch['branch_name']}: #{branch['errors'].inspect}. Check the branch row in the file 'input/Geographical Data all suppliers.xlsx'" if supplier_accredited?(supplier['supplier_name'])
+        if supplier_accredited?(supplier['supplier_name'])
+          File.open(get_output_file_path('errors.out'), 'a') do |f|
+            f.puts "#{supplier['supplier_name']} - #{branch['branch_name']}: #{branch['errors'].inspect}. Check the branch row in the file 'input/Geographical Data all suppliers.xlsx'"
+          end
+        end
       end
       s['branches'] = branches
     end
