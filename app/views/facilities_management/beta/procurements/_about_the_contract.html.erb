@@ -17,7 +17,7 @@
     <% unless @procurement.contract_name.nil? %>
       <%= @procurement.contract_name %>
     <% else %>
-      <a class="govuk-link" href="#">
+      <a class="govuk-link" href="<%= @procurement.id %>/edit?choice=contract_name">
         Answer question
       </a>
     <% end %>
@@ -34,7 +34,7 @@
     <% unless @procurement.estimated_annual_cost.nil? %>
       <%= @procurement.estimated_annual_cost %>
     <% else %>
-      <a class="govuk-link" href="<%= @procurement.id %>/edit">
+      <a class="govuk-link" href="<%= @procurement.id %>/edit?choice=estimated_annual_cost">
         Answer question
       </a>
     <% end %>
@@ -51,7 +51,7 @@
     <% unless @procurement.tupe.nil? %>
       <%= @procurement.tupe == true ? 'Yes' : 'No' %>
     <% else %>
-      <a class="govuk-link" href="#">
+      <a class="govuk-link" href="<%= @procurement.id %>/edit?choice=estimated_annual_cost">
         Answer question
       </a>
     <% end %>

@@ -4,5 +4,7 @@
       <%= f.label :name, class: "govuk-label" %>
       <%= f.text_field :name %>
     <% end %>
+
+    <%= params.inspect %>
   <%= f.submit 'Update', class: 'govuk-button' %>
 <% end %>
