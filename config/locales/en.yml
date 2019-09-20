@@ -260,6 +260,11 @@ en:
             worker_type:
               inclusion: Select yes if you want an agency to supply the worker
   activerecord:
+    attributes:
+      facilities_management/procurement:
+        statuses:
+          qs: Quick Search
+          ds: Detailed Search
     errors:
       models:
         supply_teachers/admin/upload:
@@ -747,6 +752,20 @@ en:
       procurements:
         index:
           manage_procurements: Manage Procurements
+        edit:
+          search_show_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
+          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
+        edit_procurement:
+          save_and_continue: Save and Continue
+          save_for_later: Save for later
+          cancel_and_return: Cancel and return to the manage procurements page
+          search_result: Search result
+          search_show_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
+          continue_to_procurement: Continue to procurement
+          continue_body_html: Next, you need to provide additional information on your contract requirements, buildings and services.<br />Once completed, you will be provided with an estimate cost, recommended sub-lot, shortlist of potential suppliers and options for your next steps.
+        destroy_procurement:
+          confirm_delete: Yes, delete this search result
+          cancel: Cancel
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service

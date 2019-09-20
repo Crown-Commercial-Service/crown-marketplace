@@ -1,0 +1,14 @@
+<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :patch, html: { multipart: true } do |f| %>
+  <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
+      <%= display_errors(@procurement, :name) %>
+      <div class="govuk-form-group">
+        <%= f.label :name, 'Change the name', class: 'govuk-label' %> <%= f.text_field :name, maxlength: 100, required: 'required', class: 'govuk-input govuk-input--width-10'%>
+      </div>
+      <%= render partial: 'facilities_management/beta/procurements/show_procurement', locals: { delete: @delete, change: @change }%>
+    <% end %>
+    <%= f.submit t('.save_and_continue'), class: 'govuk-button' %>
+    <%= f.submit t('.save_for_later'), name: 'save_for_later', class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3' %>
+    <br />
+    <%= link_to t('.cancel_and_return'), facilities_management_beta_procurements_url, class: "govuk_link"%>
+    <br />
+<% end %>
