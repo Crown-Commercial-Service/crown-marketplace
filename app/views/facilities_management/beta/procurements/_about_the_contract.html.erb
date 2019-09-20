@@ -4,6 +4,8 @@
   </dt>
   <dd class="govuk-summary-list__value">
   </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
 </div>
 
 <div class="govuk-summary-list__row">
@@ -29,8 +31,8 @@
     Estimated annual cost
   </dt>
   <dd class="govuk-summary-list__value">
-    <% unless @place_holder.nil? %>
-      <%= @place_holder.nil? %>
+    <% unless @procurement.estimated_annual_cost.nil? %>
+      <%= @procurement.estimated_annual_cost %>
     <% else %>
       <a class="govuk-link" href="#">
         Answer question
@@ -46,8 +48,8 @@
     TUPE
   </dt>
   <dd class="govuk-summary-list__value">
-    <% unless @place_holder.nil? %>
-      <%= @place_holder %>
+    <% unless @procurement.tupe.nil? %>
+      <%= @procurement.tupe == true ? 'Yes' : 'No' %>
     <% else %>
       <a class="govuk-link" href="#">
         Answer question
