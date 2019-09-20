@@ -749,17 +749,6 @@ en:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace private beta
-    journey:
-      choose_locations:
-        question: Where are your buildings located?
-        subtitle: Choose one or more regions, based on building's location where you require facilities management services.
-        no_regions_selected: No regions selected
-        regions_selected: Regions selected
-        remove_all: Remove all
-      choose_services:
-        question: Select the facilities management services do you need
-        subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
-        service_specification_doc: Read the service specification document
     home:
       beforeyoustart: Before you start
       heading: Find Facilities Management services
@@ -774,6 +763,20 @@ en:
         <li>see a shortlist of suppliers available in your region</li>
         <li>download a spreadsheet with your requirements and list of potential suppliers</li>
       youneedtoknow: 'You need to know:'
+    journey:
+      choose_locations:
+        no_regions_selected: No regions selected
+        question: Where are your buildings located?
+        regions_selected: Regions selected
+        remove_all: Remove all
+        subtitle: Choose one or more regions, based on building's location where you require facilities management services.
+      choose_services:
+        no_services_selected: No services selected
+        question: Select the facilities management services that you need
+        remove_all: Remove all
+        service_specification_doc: Read the service specification document
+        services_selected: Services selected
+        subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     passwords:
       edit:
         confirm_code: Confirm Code
