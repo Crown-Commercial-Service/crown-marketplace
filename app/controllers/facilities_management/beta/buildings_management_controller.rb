@@ -376,10 +376,10 @@ module FacilitiesManagement
 
     def get_building_ready_status(building)
       building_element_valid?(building, 'name') &&
-          building_element_valid?(building, 'region') &&
-          building_element_valid?(building, 'building-type') &&
-          building_element_valid?(building, 'security-type') &&
-          building_element_valid?(building, 'gia')
+        building_element_valid?(building, 'region') &&
+        building_element_valid?(building, 'building-type') &&
+        building_element_valid?(building, 'security-type') &&
+        building_element_valid?(building, 'gia')
     end
 
     def validate_input_building
