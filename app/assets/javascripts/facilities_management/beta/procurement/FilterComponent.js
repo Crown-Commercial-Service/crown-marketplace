@@ -6,7 +6,13 @@ function FilterComponent(classification, filterPanelName) {
     this._filterPanelIdentity = "." + this._basePath + " ." + this._filterPanelControlName + " .filter-pane"
     this._filterTargetIdentity = "." + this._basePath + " ." + this._filterPanelControlName + " .filter-pane-target"
 }
-
+FilterComponent.prototype.init = function() {
+    this.SynchroniseFilterToggleButton( this.onToggleButtonClick.bind(this));
+    let sectionsDivs = $("." + this._basePath + " ." + this._filterPanelControlName).find('[data-section]');
+    for ( let index = 0; index < sectionsDivs.length; index++) {
+        this.AddSection(sectionsDivs[index].getAttribute('data-section'));
+    }
+};
 FilterComponent.prototype.AddSection = function (sectionName) {
     this._filterHelper[sectionName] = new FilterSectionComponent(this._basePath, this._filterPanelControlName, sectionName);
     this._filterHelper.push(this._filterHelper[sectionName]);
@@ -22,10 +28,29 @@ FilterComponent.prototype.ConnectCheckboxes = function ( callback ) {
     let procHelper = this;
 
     this._filterHelper.forEach( function (filterHelper) {
-        filterHelper.connectCheckboxes ( function (checkboxEvernt) {
-            procHelper.checkboxChangedHandler(checkboxEvernt, callback );
+        filterHelper.connectCheckboxes ( function (checkboxEvent) {
+            procHelper.checkboxChangedHandler(checkboxEvent, callback );
         });
     }) ;
+};
+FilterComponent.prototype.onToggleButtonClick = function (filterEvent) {
+    let filterPane = filterEvent.FilterPanel || null;
+    let filterTarget = filterEvent.TargetPanel || null;
+
+    if ( filterPane != null && filterTarget != null ) {
+        let targetSection = filterTarget.jqueryObject;
+        let filterButton = filterEvent.jqueryObject;
+
+        if ( filterEvent.IsHidden ) {
+            filterPane.jqueryObject.attr('hidden', true);
+            filterButton.text('Show filters');
+            targetSection.removeClass('govuk-grid-column-two-thirds')
+        } else {
+            filterPane.jqueryObject.attr('hidden', false);
+            filterButton.text('Hide filters');
+            targetSection.addClass('govuk-grid-column-two-thirds')
+        }
+    }
 };
 FilterComponent.prototype.checkboxChangedHandler = function( checkboxEvent, clientCallback ) {
     let filterEvent = {
@@ -88,8 +113,6 @@ FilterComponent.prototype.getFilterToggleButton = function () {
     };
 };
 
-console.log("FilterComponent scope created");
-
 function FilterSectionComponent(baseClassName, filterPanelName, sectionName) {
     this._filterPanelControlName = filterPanelName;
     this._baseClass = baseClassName;
@@ -138,5 +161,3 @@ FilterSectionComponent.prototype.updateCount = function () {
     this.sectionCounterTextField.text(sectionCount + " selected");
     return this.sectionCheckboxes.length;
 };
-
-console.log("FilterSectionComponent  scope created");
