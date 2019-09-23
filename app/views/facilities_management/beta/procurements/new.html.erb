@@ -1,7 +1,7 @@
 <a href="<%= request.referer %>" class="govuk-back-link">Back</a>
 <h1 class="govuk-heading-xl"><%= t('.search_results') %></h1>
 <p class="govuk-caption-l"><%= t('.search_result_body_html') %></p>
-<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { multipart: true } do |f| %>
+<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { novalidate:true, multipart: true } do |f| %>
   <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
     <%= display_errors(@procurement, :name) %>
   <% end %>
@@ -18,20 +18,20 @@
           <span><%= t('.name_text_length_warning') %></span>
         </span>
         <span class="govuk-error-message govuk-visually-hidden" data-validation="required">
-          <span><%= t('.name_text_length_warning') %></span>
+          <span><%= t('.name_text_required') %></span>
         </span>
         <%= f.text_field :name, maxlength: 100, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
       </div>
     </div>
-    <%= f.submit t('.save_your_search'), class: 'govuk-button' %>
-    <%= f.submit t('.save_for_later'), name: 'save_for_later', class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %>
+    <%= f.submit t('.save_your_search'), data: {disable_with:false}, class: 'govuk-button' %>
+    <%= f.submit t('.save_for_later'), name: 'save_for_later', data: {disable_with:false}, class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %>
     <br />
     <%= link_to t('.cancel_text'), facilities_management_beta_procurements_path, class: 'govuk-link govuk-link--no-visited-state' %>
   </div>
 <% end %>
 
-<!--<script type="text/javascript" charset="utf-8">
-    (function () {
+<script type="text/javascript" charset="utf-8" async="false" defer="defer">
+    window.addEventListener("load", function () {
         QuickSearchResultsAssistant.init("procurement", "new", "facilities_management");
-    })();
-</script>-->
+    });
+</script>

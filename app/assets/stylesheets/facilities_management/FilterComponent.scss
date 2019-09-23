@@ -15,8 +15,15 @@
   margin-bottom: 0;
   background-color: #FFFFFF;
   padding-left: 2px;
+  float:initial !important;
+}
+.filter-component-govuk-checkboxes__item:after {
+  content:"";
+  clear:both;
+  display:table;
 }
 .filter-component-govuk-checkboxes__label {
   padding-right:5px;
   background-color: #FFFFFF;
+  float:initial;
 }
