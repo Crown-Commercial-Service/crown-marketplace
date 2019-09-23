@@ -740,19 +740,21 @@ en:
         start_warning: Only buildings that are ready can be used in your procurement.
       procurements:
         new:
+          new_name_label: Enter a name for the search
           save_your_search: Save your search
           save_for_later: Save for later
           cancel_text: Cancel, and return to the manage procurements page
           search_results: Search Results
           search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of two-sublots below, subject to your total contract value.
-          apply_filters: Apply filters
           region: Region
           service: Service
           continue_headline: Continue to procurement
           continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided wuth an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
           save_headline: Save a new search
           save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
+          name_text_length_warning: Name must be 100 characters for fewer.
         filter_details:
+          apply_filters: Apply filters
           hide_filters: Hide filter
           change_add_region: Change/Add region
           change_add_service: Change/Add service
