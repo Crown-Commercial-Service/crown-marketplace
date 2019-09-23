@@ -22,6 +22,7 @@ if Marketplace.dfe_signin_enabled?
 
     def call(env)
       request = Rack::Request.new(env)
+      Rails.logger.info "REQUEST INFO. path: #{request.path} AND params: #{request.params}"
       if request.path == '/auth/dfe/callback' && request.params.empty? && !OmniAuth.config.test_mode
         response = Rack::Response.new
         response.redirect('/auth/dfe')
