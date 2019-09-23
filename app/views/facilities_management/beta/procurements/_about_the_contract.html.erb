@@ -34,9 +34,7 @@
     <% unless @procurement.estimated_annual_cost.nil? %>
       <%= @procurement.estimated_annual_cost %>
     <% else %>
-      <a class="govuk-link" href="<%= @procurement.id %>/edit?choice=estimated_annual_cost">
-        Answer question
-      </a>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
