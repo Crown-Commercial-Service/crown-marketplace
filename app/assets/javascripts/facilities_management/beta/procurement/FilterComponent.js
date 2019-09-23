@@ -1,24 +1,24 @@
-function ProcurementHelper(baseClassName) {
-    this._basePath = baseClassName;
-    this._filterPanelControlName = "filter-panel";
+function FilterComponent(classification, filterPanelName) {
+    this._basePath = classification;
+    this._filterPanelControlName = filterPanelName !== undefined ? filterPanelName : "filter-panel";
     this._filterHelper = [];
     this._filterButtonIdentity = "." + this._basePath + " ." + this._filterPanelControlName + " .filter-toggle";
     this._filterPanelIdentity = "." + this._basePath + " ." + this._filterPanelControlName + " .filter-pane"
     this._filterTargetIdentity = "." + this._basePath + " ." + this._filterPanelControlName + " .filter-pane-target"
 }
 
-ProcurementHelper.prototype.AddSection = function (sectionName) {
-    this._filterHelper[sectionName] = new FilterHelper(this._basePath, this._filterPanelControlName, sectionName);
+FilterComponent.prototype.AddSection = function (sectionName) {
+    this._filterHelper[sectionName] = new FilterSectionComponent(this._basePath, this._filterPanelControlName, sectionName);
     this._filterHelper.push(this._filterHelper[sectionName]);
 };
-ProcurementHelper.prototype.UpdateCounts = function () {
+FilterComponent.prototype.UpdateCounts = function () {
     let countTotal = 0;
 
     this._filterHelper.forEach(function (x) {
         countTotal += x.updateCount();
     });
 };
-ProcurementHelper.prototype.ConnectCheckboxes = function ( callback ) {
+FilterComponent.prototype.ConnectCheckboxes = function ( callback ) {
     let procHelper = this;
 
     this._filterHelper.forEach( function (filterHelper) {
@@ -27,7 +27,7 @@ ProcurementHelper.prototype.ConnectCheckboxes = function ( callback ) {
         });
     }) ;
 };
-ProcurementHelper.prototype.checkboxChangedHandler = function( checkboxEvent, clientCallback ) {
+FilterComponent.prototype.checkboxChangedHandler = function( checkboxEvent, clientCallback ) {
     let filterEvent = {
         FilterTarget : this.getFilterTarget(),
         FilterSection : checkboxEvent.type
@@ -39,7 +39,7 @@ ProcurementHelper.prototype.checkboxChangedHandler = function( checkboxEvent, cl
     }) ;
     clientCallback(filterEvent);
 };
-ProcurementHelper.prototype.SynchroniseFilterToggleButton = function (TogglePanelCallback, PreventDefault) {
+FilterComponent.prototype.SynchroniseFilterToggleButton = function (TogglePanelCallback, PreventDefault) {
     let filterButton = null;
     let filterPanel = null;
     let filterTarget = null;
@@ -56,13 +56,14 @@ ProcurementHelper.prototype.SynchroniseFilterToggleButton = function (TogglePane
                 (PreventDefault !== undefined && !PreventDefault)) {
                 e.preventDefault();
             }
+            filterButton.IsHidden = filterPanel.jqueryObject.attr('hidden') ? false : true
             filterButton.FilterPanel = filterPanel;
             filterButton.TargetPanel = filterTarget;
             TogglePanelCallback(filterButton);
         });
     }
 };
-ProcurementHelper.prototype.getFilterTarget = function () {
+FilterComponent.prototype.getFilterTarget = function () {
     return {
         jqueryObject: $(this._filterTargetIdentity),
         class: this._basePath,
@@ -70,7 +71,7 @@ ProcurementHelper.prototype.getFilterTarget = function () {
         type : 'data-panel'
     };
 };
-ProcurementHelper.prototype.getFilterPanel = function () {
+FilterComponent.prototype.getFilterPanel = function () {
     return {
         jqueryObject: $(this._filterPanelIdentity),
         class: this._basePath,
@@ -78,7 +79,7 @@ ProcurementHelper.prototype.getFilterPanel = function () {
         type : 'filter-panel'
     };
 };
-ProcurementHelper.prototype.getFilterToggleButton = function () {
+FilterComponent.prototype.getFilterToggleButton = function () {
     return {
         jqueryObject: $(this._filterButtonIdentity),
         class: this._basePath,
@@ -87,9 +88,9 @@ ProcurementHelper.prototype.getFilterToggleButton = function () {
     };
 };
 
-console.log("Procurement scope created");
+console.log("FilterComponent scope created");
 
-function FilterHelper(baseClassName, filterPanelName, sectionName) {
+function FilterSectionComponent(baseClassName, filterPanelName, sectionName) {
     this._filterPanelControlName = filterPanelName;
     this._baseClass = baseClassName;
     this._sectionName = sectionName;
@@ -100,7 +101,7 @@ function FilterHelper(baseClassName, filterPanelName, sectionName) {
         this.sectionCounterTextField = $('#proc-' + this._sectionName + '-count');
     }
 }
-FilterHelper.prototype.GetSelectedCheckboxes = function (){
+FilterSectionComponent.prototype.GetSelectedCheckboxes = function (){
     let selectedCheckboxes = [];
 
     this.sectionCheckboxes.each( function ()  {
@@ -111,7 +112,7 @@ FilterHelper.prototype.GetSelectedCheckboxes = function (){
     
     return selectedCheckboxes;
 };
-FilterHelper.prototype.connectCheckboxes = function (callback) {
+FilterSectionComponent.prototype.connectCheckboxes = function (callback) {
     let filterHelper = this;
     this.sectionCheckboxes.on ( 'click', function (e) {
         filterHelper.updateCount();
@@ -127,7 +128,7 @@ FilterHelper.prototype.connectCheckboxes = function (callback) {
         callback(checkboxEvent) ;
     }) ;
 } ;
-FilterHelper.prototype.updateCount = function () {
+FilterSectionComponent.prototype.updateCount = function () {
     let sectionCount = 0 ;
     this.sectionCheckboxes.each(function () {
         if (this.checked) {
@@ -138,4 +139,4 @@ FilterHelper.prototype.updateCount = function () {
     return this.sectionCheckboxes.length;
 };
 
-console.log("FilterHelper  scope created");
+console.log("FilterSectionComponent  scope created");

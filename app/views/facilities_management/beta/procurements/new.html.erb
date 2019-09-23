@@ -3,22 +3,26 @@
 <p class="govuk-caption-l"><%= t('.search_result_body_html') %></p>
 <%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { multipart: true } do |f| %>
   <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
-      <%= display_errors(@procurement, :name) %>
-    <% end %>
+    <%= display_errors(@procurement, :name) %>
+  <% end %>
   <div class="procurement govuk-row">
-    <%= render partial: 'filter_details', locals: { form: f} %>
+    <%= render partial: 'filter_details', locals: { form: f } %>
     <h2 class="govuk-heading-m"><%= t('.continue_headline') %></h2>
     <p class="govuk-caption-l"><%= t('.continue_text') %></p>
     <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
     <p class="govuk-caption-l"><%= t('.save_text') %></p>
-    <p class="govuk-caption-m">
-      <%= f.text_field :name, maxlenth: 100, class: 'govuk-!-margin-top-3 govuk-input govuk-input--width-20' %>
-      <br />
-      <span class="govuk-caption-m">You have <span id="fm-procurement-name-chars-left">100</span> characters remaining</span>
-    </p>
+    <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
+      <div class="govuk-form-group">
+        <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
+        <span class="govuk-error-message govuk-visually-hidden">
+          <span><%= t('.name_text_length_warning') %></span>
+        </span>
+        <%= f.text_field :name, maxlength: 100, required: 'required', class: 'govuk-input govuk-input--width-20 js-character-count' %>
+      </div>
+    </div>
     <%= f.submit t('.save_your_search'), class: 'govuk-button' %>
-    <%= f.submit t('.save_for_later'), name: 'save_for_later', class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %><br/>
-    <%= link_to t('.cancel_text'), facilities_management_beta_procurements_path, class: 'govuk-link'%>
+    <%= f.submit t('.save_for_later'), name: 'save_for_later', class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %>
+    <br />
+    <%= link_to t('.cancel_text'), facilities_management_beta_procurements_path, class: 'govuk-link govuk-link--no-visited-state' %>
   </div>
-
 <% end %>
