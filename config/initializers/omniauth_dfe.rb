@@ -30,6 +30,10 @@ if Marketplace.dfe_signin_enabled?
       else
         @app.call(env)
       end
+    rescue NoMethodError => e
+      logger.error 'OMNIAUTH DFE ERROR:'
+      logger.error e.message
+      logger.error e.backtrace.join("\n")
     end
   end
 
