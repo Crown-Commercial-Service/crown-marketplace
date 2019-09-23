@@ -27,7 +27,11 @@ module FacilitiesManagement
 
       def update
         if @procurement.update(procurement_params)
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
+          if params['submit_choice'] == 'return'
+            redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, :step => 'tupe')
+          else
+            redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
+          end
         else
           render :edit
         end
@@ -50,7 +54,12 @@ module FacilitiesManagement
         params.require(:facilities_management_procurement)
               .permit(
                 :name,
-                :procurement_data
+                :contract_name,
+                :procurement_data,
+                :estimated_annual_cost,
+                :tupe,
+                :save_continue,
+                :save_return
               )
       end
 
