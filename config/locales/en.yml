@@ -689,15 +689,6 @@ en:
     maintenance:
       explanation: You will be able to use the service later.
       title: Service unavailable
-  facilities_management:
-    beta:
-      procurements:
-        edit:
-          continue_body_html: Next, you need to provide additional information on your contract requirements, buildings and services.<br />Once completed, you will be provided with an estimate cost, recommended sub-lot, shortlist of potential suppliers and options for your next steps.
-          continue_to_procurement: Continue to procurement
-          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
-          search_result: Search result
-          search_show_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
   faker:
     company:
       name:
