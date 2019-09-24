@@ -32,7 +32,7 @@ module FacilitiesManagement
 
       def update
         if @procurement.update(procurement_params)
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
+          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, step: params[:step]).route
         else
           render :edit
         end
