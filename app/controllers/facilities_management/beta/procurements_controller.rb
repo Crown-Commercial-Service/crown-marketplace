@@ -30,7 +30,7 @@ module FacilitiesManagement
           if params['submit_choice'] == 'return'
             redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
           else
-            redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, :step => 'tupe')
+            redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: :tupe)
           end
         else
           render :edit

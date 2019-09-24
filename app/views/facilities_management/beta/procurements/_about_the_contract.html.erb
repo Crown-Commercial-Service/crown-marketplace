@@ -17,7 +17,7 @@
     <% unless @procurement.contract_name.nil? %>
       <%= @procurement.contract_name %>
     <% else %>
-      <a class="govuk-link" href="<%= @procurement.id %>/edit?choice=contract_name">
+      <a class="govuk-link" href="<%= @procurement.id %>/edit?step=contract_name">
         Answer question
       </a>
     <% end %>
