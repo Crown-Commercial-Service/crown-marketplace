@@ -17,9 +17,7 @@
     <% unless @procurement.contract_name.nil? %>
       <%= @procurement.contract_name %>
     <% else %>
-      <a class="govuk-link" href="<%= @procurement.id %>/edit?step=contract_name">
-        Answer question
-      </a>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'contract_name', :next_step => 'estimated_annual_cost'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
@@ -34,7 +32,7 @@
     <% unless @procurement.estimated_annual_cost.nil? %>
       <%= @procurement.estimated_annual_cost %>
     <% else %>
-      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link"%>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost', :next_step => 'tupe'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
@@ -49,7 +47,7 @@
     <% unless @procurement.tupe.nil? %>
       <%= @procurement.tupe == true ? 'Yes' : 'No' %>
     <% else %>
-      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link"%>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe', :next_step => 'contract_period'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">

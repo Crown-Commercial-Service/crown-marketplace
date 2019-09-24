@@ -30,7 +30,7 @@ module FacilitiesManagement
           if params['submit_choice'] == 'return'
             redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
           else
-            redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: :tupe)
+            redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: params[:next_step], next_step: next_step(params[:next_step]))
           end
         else
           render :edit
@@ -65,6 +65,19 @@ module FacilitiesManagement
 
       def set_procurement
         @procurement = Procurement.find(params[:id])
+      end
+
+      def next_step(step)
+        case step
+        when 'contract_name'
+          'estimated_annual_cost'
+        when 'estimated_annual_cost'
+          'tupe'
+        when 'tupe'
+          'contract_period'
+        else
+          '???'
+        end
       end
     end
   end
