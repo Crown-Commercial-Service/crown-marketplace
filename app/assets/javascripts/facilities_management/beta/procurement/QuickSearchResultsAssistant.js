@@ -6,9 +6,7 @@ const QuickSearchResultsAssistant = {
     init: function (classification, action, module_name) {
         this.helper = new FilterComponent(classification);
         this.formValidator = new FormValidationComponent (
-            document.getElementById(action + "_" + module_name + "_" + classification),
-            this.validateForm.bind(this)
-        );
+            document.getElementById(action + "_" + module_name + "_" + classification));
         this.formValidator.init();
         this.helper.init();
         this.helper.UpdateCounts();
@@ -56,63 +54,6 @@ const QuickSearchResultsAssistant = {
                     }
                 }
             }
-        }
-    },
-    validateForm: function (formElements) {
-        let submitForm = true;
-
-        if ( formElements !== undefined && formElements.length > 0) {
-            let elements = [];
-            for ( let i = 0; i < formElements.length; i++) {
-                let element = formElements[i];
-                if ( element.hasAttribute('required') || element.hasAttribute('maxlength') ) {
-                    elements.push(element);
-                }
-            }
-            if ( elements.length > 0 ) {
-                for ( let index = 0; index < elements.length; index++ ) {
-                    let element = elements[index];
-                    let jElem = $(element);
-                    let elementValue = jElem.val();
-                    if (jElem.prop('required')) {
-                        if ('' + elementValue == '') {
-                            this.toggleRequiredError(jElem);
-                            submitForm = false;
-                        }
-                    }
-                    if (jElem.prop('maxlength')) {
-                        let maxLength = parseInt(jElem.prop('maxlength'));
-                        if ( ('' + elementValue).length > maxLength) {
-                            this.toggleLengthError(jElem);
-                            submitForm = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        return submitForm;
-    },
-    toggleRequiredError : function (jQueryElement) {
-        let jqueryElementForInputGroup = jQueryElement.parent (".govuk-form-group");
-        let jqueryElementForRequiredMessage = jQueryElement.siblings("div[data-validation='required']");
-        if (jqueryElementForInputGroup.hasClass("govuk-form-group--error")) {
-            jqueryElementForInputGroup.removeClass("govuk-form-group--error");
-            jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
-        } else {
-            jqueryElementForInputGroup.addClass("govuk-form-group--error");
-            jqueryElementForRequiredMessage.removeClass("govuk-visually-hidden");
-        }
-    },
-    toggleLengthError : function (jQueryElement) {
-        let jqueryElementForInputGroup = jQueryElement.parent (".govuk-form-group");
-        let jqueryElementForRequiredMessage = jQueryElement.siblings("div[data-validation='maxlength']");
-        if (jqueryElementForInputGroup.hasClass("govuk-form-group--error")) {
-            jqueryElementForInputGroup.removeClass("govuk-form-group--error");
-            jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
-        } else {
-            jqueryElementForInputGroup.addClass("govuk-form-group--error");
-            jqueryElementForRequiredMessage.removeClass("govuk-visually-hidden");
         }
     }
 };
