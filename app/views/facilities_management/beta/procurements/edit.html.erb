@@ -36,8 +36,10 @@
             <%= label :tupe, 'Yes', class: 'govuk-label govuk-radios__label' %>
           </div>
 
-          <h1 class="govuk-heading-xl"><%= f.label :estimated_annual_cost, class: "govuk-label" %></h1>
-          <%= f.number_field :estimated_annual_cost, class: 'govuk-input govuk-input--width-20', maxlength: '30' %>
+          <div class="govuk-inset-text">
+            <h1 class="govuk-heading-xl"><%= f.label 'Enter the estimated annual cost, excluding VAT', class: "govuk-label" %></h1>
+            <%= f.number_field :estimated_annual_cost, class: 'govuk-input govuk-input--width-20', placeholder: '£', maxlength: '30' %>
+          </div>
 
           <div class="govuk-radios__item">
             <%= f.radio_button :tupe, false, class: 'govuk-radios__input' %>
