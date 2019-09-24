@@ -28,7 +28,6 @@ before_script:
   - sudo -u postgres createuser --superuser root;
   - sudo -u postgres createdb root
   - sudo -u postgres psql -U postgres -c "create extension postgis"
-  - sudo -u postgres psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();"
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
