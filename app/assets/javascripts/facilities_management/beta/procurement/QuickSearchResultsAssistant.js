@@ -57,9 +57,3 @@ const QuickSearchResultsAssistant = {
         }
     }
 };
-
-/*
-$(function () {
-    QuickSearchResultsAssistant.init("procurement", "new", "facilities_management");
-}());
-*/
