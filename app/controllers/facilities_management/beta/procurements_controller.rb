@@ -27,11 +27,15 @@ module FacilitiesManagement
 
       def update
         if @procurement.update(procurement_params)
-          if params['submit_choice'] == 'return'
-            redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
-          else
-            redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: params[:next_step], next_step: next_step(params[:next_step]))
-          end
+          # ******************************************
+          # if params['submit_choice'] == 'return'
+          #   redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
+          # else
+          #   redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: params[:next_step], next_step: next_step(params[:next_step]))
+          # end
+          # ******************************************
+          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, step: params[:step]).route
+
         else
           render :edit
         end
