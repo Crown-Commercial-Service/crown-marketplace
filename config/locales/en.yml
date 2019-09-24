@@ -697,9 +697,6 @@ en:
       removeall_text: Remove all
       selectall_text: Select all
     beta:
-      buyer_account:
-        buyer_account:
-          start_a_new_procurement: Start a new procurement
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description
@@ -728,6 +725,9 @@ en:
         guidance_link_text: this guidance on how to measure GIA
         heading: What's the internal area of the building?
         input_label: sqm (square metres)
+      buyer_account:
+        buyer_account:
+          start_a_new_procurement: Start a new procurement
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
