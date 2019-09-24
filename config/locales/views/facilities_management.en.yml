@@ -56,8 +56,19 @@ en:
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
       procurements:
+        edit:
+          detailed_search: Detailed search
+          name_text_length_warning: Your contract name must be 100 characters or fewer
+          name_text_required: Enter your contract name
+          problem_message: There is a problem
+          save_and_continue: Save and continue
+          save_and_return: Save and return to detailed search and summary
         index:
           manage_procurements: Manage Procurements
+        shared:
+          contract_name:
+            contract_name_info: This will help you to refer to your contracts when talking to suppliers.
+            contract_name_question: What do you want to call your contract?
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
