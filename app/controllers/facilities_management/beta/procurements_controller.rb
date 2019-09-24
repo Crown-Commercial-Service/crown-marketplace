@@ -28,9 +28,9 @@ module FacilitiesManagement
       def update
         if @procurement.update(procurement_params)
           if params['submit_choice'] == 'return'
-            redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, :step => 'tupe')
-          else
             redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
+          else
+            redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, :step => 'tupe')
           end
         else
           render :edit
