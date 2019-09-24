@@ -1,11 +1,25 @@
-<%= link_to 'Back', facilities_management_beta_procurements_url, class: "govuk-back-link govuk-!-margin-bottom-5" %>
-<span class="govuk-caption-l govuk-!-padding-top-0"><%= t(:search_result, :scope => :edit) %></span>
-<h1 class="govuk-heading-xl govuk-!-padding-top-0"><%= @procurement.name %></h1>
-<p><%= t('facilities_management.beta.procurements.edit.search_show_body_html') %></p>
-<div class="govuk-!-margin-top-5 govuk-!-margin-bottom-5">
-  <%= render partial: 'show_procurement', locals: { delete: false, change: false} %>
-</div>
-<div class="govuk-!-margin-top-5 ccs-no-print">
-  <a id="print-short-list" href="" class="govuk-link--no-visited-state print-page">Print this page</a>
-</div>
 
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <%= render('facilities_management/beta/backlink_header') %>
+    <span class="govuk-caption-m"><%= @procurement.name %></span>
+    <h1 class="govuk-heading-xl">Detailed search summary</h1>
+    <p>
+      Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
+    </p>
+  </div>
+
+  <div class="govuk-grid-row">
+    <form>
+      <dl class="govuk-summary-list">
+        <%= render('about_the_contract') %>
+        <%= render('contract_period') %>
+        <%= render('about_the_work') %>
+      </dl>
+    </form>
+  </div>
+  <div>
+    <%= render('continue_button_footer') %>
+  </div>
+
+</div>

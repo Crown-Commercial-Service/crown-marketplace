@@ -47,6 +47,8 @@ module Marketplace
     configure_sprockets_bumble_d do |config|
       config.babel_config_version = 1
     end
+
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
   end
 
   def self.feedback_email_address

@@ -1,0 +1,55 @@
+<div class="govuk-summary-list__row ">
+  <dt class="govuk-summary-list__key govuk-!-font-size-24">
+    About the work
+  </dt>
+  <dd class="govuk-summary-list__value">
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    1. Buildings
+  </dt>
+
+  <dd class="govuk-summary-list__value">
+    <% unless @place_holder.nil? %>
+      <%= @place_holder %>
+    <% else %>
+      <a class="govuk-link" href="#">
+        Select buildings
+      </a>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    2. Services
+  </dt>
+  <dd class="govuk-summary-list__value">
+    You must select buildings first
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <strong class="govuk-tag">
+      CAN'T START YET
+    </strong>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    3. Services information
+  <dd class="govuk-summary-list__value">
+    You must select buildings first
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <strong class="govuk-tag">
+      CAN'T START YET
+    </strong>
+  </dd>
+
+</div>
