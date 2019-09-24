@@ -14,12 +14,12 @@
     <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
       <div class="govuk-form-group">
         <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
-        <span class="govuk-error-message govuk-visually-hidden" data-validation="maxlength">
+        <div class="govuk-error-message govuk-visually-hidden" data-validation="maxlength">
           <span><%= t('.name_text_length_warning') %></span>
-        </span>
-        <span class="govuk-error-message govuk-visually-hidden" data-validation="required">
+        </div>
+        <div class="govuk-error-message govuk-visually-hidden" data-validation="required">
           <span><%= t('.name_text_required') %></span>
-        </span>
+        </div>
         <%= f.text_field :name, maxlength: 100, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
       </div>
     </div>
