@@ -18,6 +18,7 @@ addons:
       - postgresql-11
       - postgresql-11-postgis-2.5
       - postgresql-11-postgis-2.5-scripts
+sudo: true
 before_install:
   - gem install --force --conservative -v 1.16.6 bundler
   - sudo service postgresql stop
@@ -25,13 +26,8 @@ before_install:
   - sudo service postgresql start 11
 before_script:
   - sudo -u postgres createuser --superuser root;
-  - sleep 5
   - sudo -u postgres createdb root
-  - sleep 5
-  - sudo -u postgres psql -U postgres -c "create extension postgis" -d root
-  - sleep 5
-  - sudo -u postgres psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
-  - sleep 5
+  - sudo -u postgres psql -U postgres -c "create extension postgis"
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile

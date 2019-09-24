@@ -21,27 +21,10 @@ module SupplyTeachers
     private
 
     def check_for_errors
-      Rails.env.development? ? check_local_errors_out : check_s3_errors_out
-    end
-
-    def check_local_errors_out
-      error_file_path = Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', 'errors.out')
-      if File.zero?(error_file_path)
+      if SupplyTeachers::Admin::CurrentData.first.error.empty?
         @upload.review!
       else
-        file = File.open(error_file_path)
-        fail_upload(@upload, file.read)
-      end
-    end
-
-    def check_s3_errors_out
-      error_file_path = 'supply_teachers/current_data/output/errors.out'
-      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      if object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(error_file_path).exists?
-        file = URI.open("https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{error_file_path}")
-        fail_upload(@upload, file.read)
-      else
-        @upload.review!
+        fail_upload(@upload, SupplyTeachers::Admin::CurrentData.first.error)
       end
     end
 
