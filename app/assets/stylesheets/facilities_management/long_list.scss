@@ -1,4 +1,12 @@
-
+.CCS-govuk-checkboxes__item {
+  margin-bottom: 0;
+  background-color: #FFFFFF;
+}
+.CCS-govuk-checkboxes__label {
+  width:99%;
+  padding-right:5px;
+  background-color: #FFFFFF;
+}
 .CCS-fm-supplier-filter-container {
   border-style: solid;
   border-width: 1px;
@@ -9,11 +17,8 @@
 
 .CCS-fm-supplier-filter-container-grey {
   background-color: #F8F8F8;
-  margin-top: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  padding-bottom: 5px;
+  margin: 5px;
+  padding: 0 5px 5px 5px;
 }
 
 .CCS-fm-supplier-filter-check-boxes {
