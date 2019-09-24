@@ -5,10 +5,10 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
 
   describe '.route' do
     context 'when on the first step' do
-      let(:step) { 'a' }
+      let(:step) { 'tupe' }
 
       it 'returns a route for the next edit step' do
-        expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=b')
+        expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=test')
       end
     end
 

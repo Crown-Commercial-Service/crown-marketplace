@@ -1,7 +1,7 @@
 class FacilitiesManagement::ProcurementRouter
   include Rails.application.routes.url_helpers
 
-  STEPS = ['a', 'b'].freeze
+  STEPS = %w[tupe test].freeze
 
   def initialize(id:, step: nil)
     @id = id

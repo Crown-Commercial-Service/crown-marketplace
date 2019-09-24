@@ -28,11 +28,15 @@ module FacilitiesManagement
         end
       end
 
-      def edit; end
+      def edit
+        redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step]
+      end
 
       def update
         if @procurement.update(procurement_params)
-          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, step: params[:step]).route
+          set_current_step
+
+          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, step: @current_step).route
         else
           render :edit
         end
@@ -46,9 +50,14 @@ module FacilitiesManagement
         params.require(:facilities_management_procurement)
               .permit(
                 :name,
+                :tupe,
                 service_codes: [],
-                region_codes: []
+                region_codes: [],
               )
+      end
+
+      def set_current_step
+        @current_step ||= params[:facilities_management_procurement][:step] if params['next_step'].present?
       end
 
       def set_procurement

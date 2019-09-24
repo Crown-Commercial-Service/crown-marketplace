@@ -31,7 +31,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
 
   describe 'GET edit' do
     it 'renders the correct template' do
-      get :edit, params: { id: procurement.id }
+      get :edit, params: { id: procurement.id, step: 'tupe' }
 
       expect(response).to render_template('edit')
     end

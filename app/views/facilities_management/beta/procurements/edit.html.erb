@@ -1,8 +1,16 @@
-<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :patch, html: { multipart: true } do |f| %>
+<%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { multipart: true } do |f| %>
   <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
-      <%= display_errors(@procurement, :name) %>
-      <%= f.label :name, class: "govuk-label" %>
-      <%= f.text_field :name %>
+      <%= render partial: params[:step], locals: { f: f } %>
     <% end %>
-  <%= f.submit 'Update', class: 'govuk-button' %>
+  <%= f.hidden_field :step, value: params[:step] %>
+  <div class="govuk-grid-row">
+    <%= f.submit t('.save_and_continue'), class: 'govuk-button', name: 'next_step' %>
+    <%= f.submit t('.save_and_return_to_detailed_summary'), class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3' %>
+  </div>
+  <div class="govuk-grid-row govuk-!-margin-top-3">
+    <%= link_to 'Back to detailed search summary', facilities_management_beta_procurements_path, class: 'govuk-link--no-visited-state' %>
+  </div>
+  <div class="govuk-grid-row">
+    <span class="govuk-caption-m"><%= t(".next_step.#{params[:step]}") %></span>
+  </div>
 <% end %>
