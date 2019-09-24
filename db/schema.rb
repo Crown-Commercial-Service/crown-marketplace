@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_11_140213) do
+ActiveRecord::Schema.define(version: 2019_09_19_152002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,11 +23,6 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
     t.datetime "updated_at", default: "2019-08-19 12:00:37", null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
-    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
-    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
-    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
-    t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
-    t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -38,6 +33,17 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
     t.jsonb "procurement_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contract_name", limit: 100
+    t.integer "estimated_annual_cost"
+    t.boolean "tupe"
+    t.integer "initial_call_off_period"
+    t.date "initial_call_off_start_date"
+    t.date "initial_call_off_end_date"
+    t.integer "mobilisation_period"
+    t.integer "optional_call_off_extensions_1"
+    t.integer "optional_call_off_extensions_2"
+    t.integer "optional_call_off_extensions_3"
+    t.integer "optional_call_off_extensions_4"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -375,6 +381,20 @@ ActiveRecord::Schema.define(version: 2019_09_11_140213) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
+  end
+
+  create_table "supply_teachers_admin_current_data", force: :cascade do |t|
+    t.string "current_accredited_suppliers", limit: 255
+    t.string "geographical_data_all_suppliers", limit: 255
+    t.string "lot_1_and_lot_2_comparisons", limit: 255
+    t.string "master_vendor_contacts", limit: 255
+    t.string "neutral_vendor_contacts", limit: 255
+    t.string "pricing_for_tool", limit: 255
+    t.string "supplier_lookup", limit: 255
+    t.string "data", limit: 255
+    t.text "error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "supply_teachers_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

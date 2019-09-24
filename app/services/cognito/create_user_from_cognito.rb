@@ -4,7 +4,7 @@ module Cognito
     attr_accessor :error, :user
 
     def initialize(username)
-      @username = username
+      @username = username.try(:downcase)
       @error = nil
     end
 
