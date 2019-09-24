@@ -27,22 +27,8 @@
 
     <%= hidden_field_tag :next_step, params[:next_step] %>
 
-  <% if params[:step] == 'estimated_annual_cost' %>
+    <%= render "facilities_management/beta/procurements/shared/" + params[:step], f: f %>
 
-    <%= render "facilities_management/beta/procurements/shared/estimated_annual_cost", f: f %>
-
-
-  <% elsif params[:step] == 'tupe' %>
-
-
-
-    <%= render "facilities_management/beta/procurements/shared/tupe", f: f %>
-
-  <% elsif params[:step] == 'contract_name' %>
-
-    <%= render "facilities_management/beta/procurements/shared/contract_name", f: f %>
-
-  <% end %>
 
   </div>
 
