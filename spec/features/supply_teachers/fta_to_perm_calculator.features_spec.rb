@@ -104,21 +104,21 @@ RSpec.feature 'FTA to Perm fee calculator', type: :feature, supply_teachers: tru
     expect_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.header') + ' ' + number_to_currency(12000 / difference_in_months(date_13_months_ago, date_5_months_ago).to_f * 12 - 12000)
   end
 
-  # scenario 'Worker contract length is 5 months - 1.day, fixed term fee is 2500 and hire date is less than 6 months' do
-  #  visit_fta_to_perm_calculator
+  scenario 'Worker contract length is 5 months - 1.day, fixed term fee is 2500 and hire date is less than 6 months' do
+    visit_fta_to_perm_calculator
 
-  #  fill_in_contract_start_date date_6_months_ago
-  #  click_on I18n.t('common.submit')
-  #  fill_in_contract_end_date date_1_month_ago - 1.day
-  #  click_on I18n.t('common.submit')
-  #  fill_in_hire_date date_1_month_from_now
-  #  click_on I18n.t('common.submit')
-  #  click_on I18n.t('supply_teachers.journey.fta_to_perm_hire_date_notice.submit')
-  #  fill_in 'fixed_term_fee', with: '2500'
-  #  click_on I18n.t('common.submit')
+    fill_in_contract_start_date date_6_months_ago
+    click_on I18n.t('common.submit')
+    fill_in_contract_end_date date_1_month_ago - 1.day
+    click_on I18n.t('common.submit')
+    fill_in_hire_date date_1_month_from_now
+    click_on I18n.t('common.submit')
+    click_on I18n.t('supply_teachers.journey.fta_to_perm_hire_date_notice.submit')
+    fill_in 'fixed_term_fee', with: '2500'
+    click_on I18n.t('common.submit')
 
-  #  expect_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.header') + ' ' + number_to_currency(2500 / 4.5 * 12 - 2500)
-  # end
+    expect_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.header') + ' ' + number_to_currency(2500 / difference_in_months(date_6_months_ago, date_1_month_ago - 1.day) * 12 - 2500)
+  end
 
   scenario 'Worker contract length is 5 + 1/2 months, fixed term fee is 2500 and hire date is less than 6 months' do
     visit_fta_to_perm_calculator
@@ -133,7 +133,7 @@ RSpec.feature 'FTA to Perm fee calculator', type: :feature, supply_teachers: tru
     fill_in 'fixed_term_fee', with: '2500'
     click_on I18n.t('common.submit')
 
-    expect_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.header') + ' ' + number_to_currency(2500 / 4.5 * 12 - 2500)
+    expect_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.header') + ' ' + number_to_currency(2500 / difference_in_months(date_6_months_ago, date_1_month_ago - 12.days) * 12 - 2500)
   end
 
   private
