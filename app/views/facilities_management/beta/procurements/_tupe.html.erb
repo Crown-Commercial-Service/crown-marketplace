@@ -1,0 +1,62 @@
+<div class="govuk-grid-row">
+  <%= render('facilities_management/beta/backlink_header') %>
+  <%= render('facilities_management/beta/procurement_name_header') %>
+  <h1 class="govuk-heading-xl">TUPE</h1>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <span class="govuk-heading-s govuk-!-margin-bottom-0">
+    Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
+  </span>
+  <span class="govuk-caption-m govuk-!-margin-top-0">
+    When a supplier changes, the original service provider's workers may be protected under TUPE.<br>
+    For example, a new supplier is awarded the contract to provide provide cleaning services to a building.<br>
+    The cleaners, who are employed by the current service provider, may be protected under TUPE.
+  </span>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      What you need to know about TUPE
+    </span>
+    </summary>
+    <div class="govuk-details__text">
+      TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees<br>
+      when the business or commercial contract that they are working on changes to new ownership. It ensures<br>
+      that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br>
+      of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
+    </div>
+  </details>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <div class="govuk-radios govuk-radios--inline">
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="fm-tupe-yes" name="fm-tupe" type="radio" value="yes">
+      <label class="govuk-label govuk-radios__label" for="fm-tupe-yes">
+        Yes
+      </label>
+    </div>
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="fm-tupe-no" name="fm-tupe" type="radio" value="no">
+      <label class="govuk-label govuk-radios__label" for="fm-tupe-no">
+        No
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-9">
+  <a class="govuk-button">Save and continue</a>
+  <%= link_to 'Save and return to detailed search summary', facilities_management_beta_procurements_path, class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3' %>
+</div>
+
+<div class="govuk-grid-row">
+  <span class="govuk-caption-m">Next: Contract period</span>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <%= link_to 'Back to detailed search summary', facilities_management_beta_procurements_path, class: 'govuk-link--no-visited-state' %>
+</div>
