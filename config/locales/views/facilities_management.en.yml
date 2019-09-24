@@ -57,8 +57,6 @@ en:
         start_warning: Only buildings that are ready can be used in your procurement.
       procurements:
         edit:
-          contract_name_info: This will help you to refer to your contracts when talking to suppliers.
-          contract_name_question: What do you want to call your contract?
           detailed_search: Detailed search
           name_text_length_warning: Your contract name must be 100 characters or fewer
           name_text_required: Enter your contract name
@@ -67,6 +65,10 @@ en:
           save_and_return: Save and return to detailed search and summary
         index:
           manage_procurements: Manage Procurements
+        shared:
+          contract_name:
+            contract_name_info: This will help you to refer to your contracts when talking to suppliers.
+            contract_name_question: What do you want to call your contract?
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
