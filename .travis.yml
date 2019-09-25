@@ -27,6 +27,7 @@ before_install:
 before_script:
   - sudo -u postgres createuser --superuser root;
   - sudo -u postgres createdb root
+  - psql -U postgres -c "create extension postgis"
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
