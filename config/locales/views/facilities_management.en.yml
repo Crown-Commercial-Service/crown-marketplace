@@ -56,17 +56,19 @@ en:
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
       procurements:
-        contract_name:
-          contract_name_info: This will help you to refer to your contracts when talking to suppliers.
-          contract_name_question: What do you want to call your contract?
         edit:
+          contract_name:
+            contract_name_info: This will help you to refer to your contracts when talking to suppliers.
+            contract_name_question: What do you want to call your contract?
           detailed_search: Detailed search
           next_step:
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
             tupe: 'Next: Contract period'
+          quick_search: Quick search
           save_and_continue: Save and continue
-          save_and_return_to_detailed_summary: Save and return to deailed search summary
+          save_and_return_to_detailed_summary: Save and return to detailed search summary
+          save_for_later: Save for later
         filter_details:
           apply_filters: Apply filters
           change_add_region: Change/Add region
@@ -78,17 +80,18 @@ en:
           manage_procurements: Manage procurements
         new:
           cancel_text: Cancel, and return to the manage procurements page
+          save_for_later: Save for later
+          save_your_search: Save your search
+          search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of two-sublots below, subject to your total contract value.
+          search_results: Search Results
+        quick_search_form:
           continue_headline: Continue to procurement
           continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided wuth an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
           name_text_length_warning: Name must be 100 characters or fewer.
           name_text_required: The name is required in order to continue.
           new_name_label: Enter a name for the search
-          save_for_later: Save for later
           save_headline: Save a new search
           save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
-          save_your_search: Save your search
-          search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of two-sublots below, subject to your total contract value.
-          search_results: Search Results
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service

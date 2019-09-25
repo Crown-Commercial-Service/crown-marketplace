@@ -10,8 +10,7 @@
           <div class="govuk-checkboxes__item filter-component-govuk-checkboxes__item">
             <%= check_box_tag("facilities_management_procurement[#{section_name}_codes][]", item.code, superset.include?(item.code),
                               class: "govuk-checkboxes__input",
-                              id: "facilities_management_procurement_#{section_name}s_codes_#{section_name}_#{item.code}",
-                              name: "fm-proc-#{section_name}s-checkbox"
+                              id: "facilities_management_procurement_#{section_name}s_codes_#{section_name}_#{item.code}"
                 ) %>
             <label class="govuk-label govuk-checkboxes__label filter-component-govuk-checkboxes__label"
                    for='<%= "facilities_management_procurement_#{section_name}s_codes_#{section_name}_#{item.code}"%>'>
@@ -22,7 +21,7 @@
       </div>
     </div>
     <div class="govuk-grid-row govuk-!-padding-1 filter-component-container-grey">
-      <%= link_to change_title, nil, class: 'govuk-link govuk-!-font-size-19' %>
+      <%= link_to change_title, nil, class: 'govuk-link govuk-!-font-size-19'  unless @procurement.persisted? %>
     </div>
   </div>
 </div>
