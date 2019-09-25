@@ -8,7 +8,9 @@ cache:
     - /home/travis/.rvm/gems
     - /home/travis/.cache/rubocop_cache
 env:
-  - RAILS_ENV=test
+  global:
+    - PGPORT=5433
+    - RAILS_ENV=test
 services:
   - postgresql
 addons:
