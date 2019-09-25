@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FacilitiesManagement::FrameworkController
-      before_action :set_procurement, only: %i[show edit update]
+      before_action :set_procurement, only: %i[show edit update destroy]
 
       def index
         @procurements = current_user.procurements
@@ -42,7 +42,16 @@ module FacilitiesManagement
         end
       end
 
-      def destroy; end
+      # DELETE /procurements/1
+      # DELETE /procurements/1.json
+      def destroy
+        @procurement.destroy
+
+        respond_to do |format|
+          format.html { redirect_to facilities_management_beta_procurements_url }
+          format.json { head :no_content }
+        end
+      end
 
       private
 
@@ -51,6 +60,9 @@ module FacilitiesManagement
               .permit(
                 :name,
                 :tupe,
+                :contract_name,
+                :procurement_data,
+                :estimated_annual_cost,
                 service_codes: [],
                 region_codes: [],
               )
