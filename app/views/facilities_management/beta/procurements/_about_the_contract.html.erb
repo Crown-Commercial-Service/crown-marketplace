@@ -17,12 +17,11 @@
     <% unless @procurement.contract_name.nil? %>
       <%= @procurement.contract_name %>
     <% else %>
-      <a class="govuk-link" href="#">
-        Answer question
-      </a>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
+    <%= link_to "Change answer", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link" unless @procurement.contract_name.nil? %>
   </dd>
 </div>
 
@@ -34,12 +33,11 @@
     <% unless @procurement.estimated_annual_cost.nil? %>
       <%= @procurement.estimated_annual_cost %>
     <% else %>
-      <a class="govuk-link" href="#">
-        Answer question
-      </a>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
+    <%= link_to "Change answer", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_annual_cost.nil? %>
   </dd>
 </div>
 
@@ -49,13 +47,12 @@
   </dt>
   <dd class="govuk-summary-list__value">
     <% unless @procurement.tupe.nil? %>
-      <%= @procurement.tupe == true ? 'Yes' : 'No' %>
+      <%= @procurement.tupe? ? 'Yes' : 'No' %>
     <% else %>
-      <a class="govuk-link" href="#">
-        Answer question
-      </a>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
+    <%= link_to "Change answer", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link" unless @procurement.tupe.nil? %>
   </dd>
 </div>

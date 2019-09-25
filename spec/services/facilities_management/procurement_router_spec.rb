@@ -5,15 +5,15 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
 
   describe '.route' do
     context 'when on the first step' do
-      let(:step) { 'tupe' }
+      let(:step) { 'estimated_annual_cost' }
 
       it 'returns a route for the next edit step' do
-        expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=test')
+        expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=tupe')
       end
     end
 
     context 'when on the last step' do
-      let(:step) { 'b' }
+      let(:step) { 'tupe' }
 
       it 'returns a route for the show page' do
         expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1')

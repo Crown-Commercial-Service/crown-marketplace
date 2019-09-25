@@ -56,8 +56,14 @@ en:
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
       procurements:
+        contract_name:
+          contract_name_info: This will help you to refer to your contracts when talking to suppliers.
+          contract_name_question: What do you want to call your contract?
         edit:
+          detailed_search: Detailed search
           next_step:
+            contract_name: 'Next: Estimated annual cost'
+            estimated_annual_cost: 'Next: TUPE'
             tupe: 'Next: Contract period'
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to deailed search summary

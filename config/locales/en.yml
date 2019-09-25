@@ -689,6 +689,11 @@ en:
     maintenance:
       explanation: You will be able to use the service later.
       title: Service unavailable
+  facilities_management:
+    beta:
+      buyer_account:
+        buyer_account:
+          start_a_new_procurement: Start a new procurement
   faker:
     company:
       name:
