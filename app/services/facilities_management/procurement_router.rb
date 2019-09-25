@@ -3,12 +3,14 @@ class FacilitiesManagement::ProcurementRouter
 
   STEPS = %w[contract_name estimated_annual_cost tupe].freeze
 
-  def initialize(id:, step: nil)
+  def initialize(id:, procurement_state:, step: nil)
     @id = id
+    @procurement_state = procurement_state
     @step = step
   end
 
   def route
+    return facilities_management_beta_procurements_path if @procurement_state == 'quick_search'
     return facilities_management_beta_procurement_path(id: @id) if next_step.nil?
 
     edit_facilities_management_beta_procurement_path(id: @id, step: next_step)

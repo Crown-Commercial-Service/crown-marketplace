@@ -7,14 +7,15 @@ module FacilitiesManagement
         @procurements = current_user.procurements
       end
 
-      def show; end
+      def show
+        redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search?
+      end
 
       def new
         set_suppliers(params[:region_codes], params[:service_codes])
+        find_regions(params[:region_codes])
+        find_services(params[:service_codes])
 
-        @supplier_count = CCS::FM::Supplier.supplier_count(params[:region_codes], params[:service_codes])
-        @regions = Nuts2Region.where(code: params[:region_codes])
-        @services = Service.where(code: params[:service_codes])
         @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
       end
 
@@ -22,21 +23,36 @@ module FacilitiesManagement
         @procurement = current_user.procurements.create(procurement_params)
 
         if @procurement.save
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
+          # Normally we'd redirect to the show page for a record
+          # but we need to go back to the edit page for a quick search
+          # to ensure the journey flow matches what has been designed
+
+          redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
           render :new
         end
       end
 
       def edit
-        redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step]
+        set_suppliers(@procurement.region_codes, @procurement.service_codes)
+        find_regions(@procurement.region_codes)
+        find_services(@procurement.service_codes)
+
+        if @procurement.quick_search?
+          render :edit
+        else
+          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step]
+        end
       end
 
       def update
         if @procurement.update(procurement_params)
+          @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
+          @procurement.reload
+
           set_current_step
 
-          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, step: @current_step).route
+          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
           render :edit
         end
@@ -80,6 +96,15 @@ module FacilitiesManagement
         @suppliers_lot1a = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1a')
         @suppliers_lot1b = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1b')
         @suppliers_lot1c = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1c')
+        @supplier_count = CCS::FM::Supplier.supplier_count(region_codes, service_codes)
+      end
+
+      def find_regions(region_codes)
+        @regions = Nuts2Region.where(code: region_codes)
+      end
+
+      def find_services(service_codes)
+        @services = Service.where(code: service_codes)
       end
     end
   end
