@@ -22,10 +22,12 @@ addons:
       - postgresql-11-postgis-2.5-scripts
 sudo: true
 before_install:
+  - gem update --system
   - gem install bundler
 before_script:
   - sudo -u postgres createuser --superuser root;
   - sudo -u postgres createdb root
+  - sudo -u postgres psql -U postgres -c "create extension postgis"
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
