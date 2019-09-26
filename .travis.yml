@@ -8,7 +8,9 @@ cache:
     - /home/travis/.rvm/gems
     - /home/travis/.cache/rubocop_cache
 env:
-  - RAILS_ENV=test
+  global:
+    - PGPORT=5433
+    - RAILS_ENV=test
 services:
   - postgresql
 addons:
@@ -18,20 +20,13 @@ addons:
       - postgresql-11
       - postgresql-11-postgis-2.5
       - postgresql-11-postgis-2.5-scripts
+sudo: true
 before_install:
-  - gem install --force --conservative -v 1.16.6 bundler
-  - sudo service postgresql stop
-  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
-  - sudo service postgresql start 11
+  - gem install bundler
 before_script:
   - sudo -u postgres createuser --superuser root;
-  - sleep 5
   - sudo -u postgres createdb root
-  - sleep 5
-  - sudo -u postgres psql -U postgres -c "create extension postgis" -d root
-  - sleep 5
-  - sudo -u postgres psql -U postgres -c "ALTER EXTENSION postgis UPDATE; SELECT PostGIS_full_version();" -d root
-  - sleep 5
+  - sudo -u postgres psql -U postgres -c "create extension postgis"
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
