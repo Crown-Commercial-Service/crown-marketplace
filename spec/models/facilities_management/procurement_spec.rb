@@ -44,7 +44,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
 
     context 'when the name is not present' do
-
       it 'expected to not be valid' do
         procurement.contract_name = 'Valid Name'
         expect(procurement.valid?(:contract_name)).to eq true
