@@ -26,7 +26,8 @@ module FacilitiesManagement
       def edit; end
 
       def update
-        if @procurement.update(procurement_params)
+        @procurement.assign_attributes(procurement_params)
+        if @procurement.save(context: params[:step].to_sym)
           # ******************************************
           # if params['submit_choice'] == 'return'
           #   redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
