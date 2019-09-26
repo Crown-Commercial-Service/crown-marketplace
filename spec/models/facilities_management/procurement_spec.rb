@@ -12,7 +12,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'is expected to not be valid' do
         procurement.name = (0...101).map { ('a'..'z').to_a[rand(26)] }.join
 
-        expect(procurement).not_to be_valid
+        expect(procurement.valid?(:name)).to eq false
       end
     end
 
@@ -22,14 +22,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'expected to not be valid' do
         procurement.save
 
-        expect(second_procurement).not_to be_valid
+        expect(second_procurement.valid?(:name)).to eq false
       end
     end
 
     context 'when the name is not present' do
       it 'expected to not be valid' do
         procurement.name = nil
-        expect(procurement).not_to be_valid
+        expect(procurement.valid?(:name)).to eq false
       end
     end
   end

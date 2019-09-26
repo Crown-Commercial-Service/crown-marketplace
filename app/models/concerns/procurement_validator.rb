@@ -2,10 +2,10 @@ module ProcurementValidator
   extend ActiveSupport::Concern
 
   included do
-    # validations on :create
-    validates :name, presence: true, on: :create
-    validates :name, uniqueness: { scope: :user }, on: :create
-    validates :name, length: 1..100, on: :create
+    # validations on :name step
+    validates :name, presence: true, on: :name
+    validates :name, uniqueness: { scope: :user }, on: :name
+    validates :name, length: 1..100, on: :name
 
     # validations on :contract_name step
     validates :contract_name, presence: true, on: :contract_name
