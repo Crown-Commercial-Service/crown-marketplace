@@ -7,9 +7,10 @@ module LegalServices
 
     def perform(upload_id)
       upload = LegalServices::Admin::Upload.find(upload_id)
-      suppliers = upload.data
+      suppliers = JSON.parse(upload.suppliers_data.file.read)
 
       LegalServices::Upload.upload!(suppliers)
+
       upload.complete!
     rescue ActiveRecord::RecordInvalid => e
       summary = {

@@ -2,9 +2,10 @@
 
 <h1 class="govuk-heading-xl">Manage buildings</h1>
 <h2 class="govuk-heading-m govuk-!-margin-0"><%= @building_count %> buildings</h2>
-<% if @building_count == 0 %><h2 class="govuk-caption-m govuk-!-margin-0">You must add at least one building</h2><% end %>
+<% if @building_count == 0 %><h2 class="govuk-caption-m govuk-!-margin-0">You must add at least one building</h2>
+<% end %>
 
-<% if @building_count > 0 %>
+<% unless @building_count <= 0 %>
   <h2 class="govuk-caption-m govuk-!-margin-0">All buildings on this list and their selected services will be included
     in your contract</h2>
 
@@ -12,14 +13,16 @@
     <div class="govuk-accordion" data-module="accordion" id="services-accordion">
       <div class="govuk-radios">
         <% @building_data.each do |record| %>
-          <% x = x +1; building = JSON.parse(record['building'].to_s) %>
-          <div class="govuk-accordion__section ">
-            <div class="govuk-accordion__section-header">
-              <h2 class="govuk-accordion__section-heading">
+          <% x = x +1; building = JSON.parse(record['building_json'].to_s) %>
+          <% unless building.nil? %>
+            <% p building.to_s %>
+            <div class="govuk-accordion__section ">
+              <div class="govuk-accordion__section-header">
+                <h2 class="govuk-accordion__section-heading">
                 <span class="govuk-accordion__section-button" id="<%= building['id'].to_s + '_btn' %>"><%= 'Building ' + x.to_s + ' - ' + building['name'].to_s %>
                   <br>
                 <span class="govuk-caption-m govuk-!-font-size-18">
-                  <% if building['address'].any? %>
+                  <% unless building['address'].nil? %>
                     <% address = building['address']['fm-address-line-1'].to_s + (building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') +
                         building['address']['fm-address-line-2'].to_s + (building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') +
                         building['address']['fm-address-town'].to_s + (building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') +
@@ -30,96 +33,98 @@
                   <% end %>
                 </span>
               </span>
-              </h2>
-            </div>
-            <div class="govuk-accordion__section-content" aria-labelledby="<%= building['name'] %>">
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
-                  Type:
-                </div>
-                <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
-                  <%= building['fm-building-type'] %>
-                </div>
+                </h2>
               </div>
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
-                  Region:
-                </div>
-                <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
-                  <%= building['region'] %>
-                </div>
-              </div>
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
-                  Postcode in london:
-                </div>
-                <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
-                  <%= building['isLondon'] %>
-                </div>
-              </div>
-
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
-                  Internal area:
-                </div>
-                <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
-                  <%= building['gia'] %>
-                </div>
-              </div>
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
-                  Total number of lifts:
-                </div>
-                <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
-                  <% if @lift_data.any? { |p| p.values.member?(building['id']) } %>
-                    <% @lift_data.each do |lift| %>
-                      <% if building['id'].to_s == lift['building_id'].to_s %>
-                        <%= lift['lift_qty'] %>
-                      <% end %>
-                    <% end %>
-                  <% else %>
-                    0
-                  <% end %>
-                </div>
-              </div>
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
-                  Number of floors:
-                </div>
-                <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
-                  <% if @lift_data.any? { |p| p.values.member?(building['id']) } %>
-                    <% @lift_data.each do |lift| %>
-                      <% if building['id'].to_s == lift['building_id'].to_s %>
-                        <%= lift['total_floor_count'] %>
-                      <% end %>
-                    <% end %>
-                  <% else %>
-                    0
-                  <% end %>
-                </div>
-              </div>
-
-              <% @uom_values.each do |values| %>
-                <% if building['id'].to_s == values['building_id'].to_s %>
-                  <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
-                      <%= values['description'] %>:
-                    </div>
-                    <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
-                      <%= values['uom_value'] %>&nbsp;<%= values['unit_text'] %>
-                    </div>
+              <div class="govuk-accordion__section-content" aria-labelledby="<%= building['name'] %>">
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
+                    Type:
                   </div>
+                  <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
+                    <%= building['fm-building-type'] %>
+                  </div>
+                </div>
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
+                    Region:
+                  </div>
+                  <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
+                    <%= building['region'] %>
+                  </div>
+                </div>
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
+                    Postcode in london:
+                  </div>
+                  <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
+                    <%= building['isLondon'] %>
+                  </div>
+                </div>
+
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
+                    Internal area:
+                  </div>
+                  <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
+                    <%= building['gia'] %>
+                  </div>
+                </div>
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
+                    Total number of lifts:
+                  </div>
+                  <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
+                    <% if @lift_data.any? { |p| p.values.member?(building['id']) } %>
+                      <% @lift_data.each do |lift| %>
+                        <% if building['id'].to_s == lift['building_id'].to_s %>
+                          <%= lift['lift_qty'] %>
+                        <% end %>
+                      <% end %>
+                    <% else %>
+                      0
+                    <% end %>
+                  </div>
+                </div>
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
+                    Number of floors:
+                  </div>
+                  <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
+                    <% if @lift_data.any? { |p| p.values.member?(building['id']) } %>
+                      <% @lift_data.each do |lift| %>
+                        <% if building['id'].to_s == lift['building_id'].to_s %>
+                          <%= lift['total_floor_count'] %>
+                        <% end %>
+                      <% end %>
+                    <% else %>
+                      0
+                    <% end %>
+                  </div>
+                </div>
+
+                <% @uom_values.each do |values| %>
+                  <% if building['id'].to_s == values['building_id'].to_s %>
+                    <div class="govuk-grid-row">
+                      <div class="govuk-grid-column-one-third govuk-!-font-size-16 govuk-!-font-weight-bold">
+                        <%= values['description'] %>:
+                      </div>
+                      <div class="govuk-grid-column-two-thirds govuk-!-font-size-16">
+                        <%= values['uom_value'] %>&nbsp;<%= values['unit_text'] %>
+                      </div>
+                    </div>
+                  <% end %>
                 <% end %>
-              <% end %>
-              <div class="govuk-grid-row">
-                <a role="button" class="govuk-link--no-visited-state fm-delete-building-link" href="#" name="FM-delete-building-link" id="FM-delete-building-link~<%= building['id'].to_s %>">Delete
-                  building</a>
+                <div class="govuk-grid-row">
+                  <a role="button" class="govuk-link--no-visited-state fm-delete-building-link" href="#" name="FM-delete-building-link" id="FM-delete-building-link~<%= building['id'].to_s %>">Delete
+                    building</a>
+                </div>
               </div>
             </div>
-          </div>
-
+          <% end %>
         <% end %>
       </div>
+    </div>
+    <div class="govuk-grid-row">
     </div>
   </div>
 <% end %>
@@ -140,4 +145,3 @@
     building
   </a>
 </div>
-

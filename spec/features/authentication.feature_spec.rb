@@ -35,6 +35,17 @@ RSpec.feature 'Authentication', type: :feature do
     expect(page).to have_text('Confirm you need management consultancy')
   end
 
+  scenario 'Users can sign in using AWS Cognito with capitals in email' do
+    user = create(:user, roles: %i[buyer mc_access])
+    visit '/management-consultancy/start'
+    click_on 'Sign in with Cognito'
+    fill_in 'Email', with: user.email.upcase
+    fill_in 'Password', with: 'ValidPassword!'
+    click_button 'Sign in'
+    expect(page).not_to have_text('Not permitted')
+    expect(page).to have_text('Confirm you need management consultancy')
+  end
+
   scenario 'Users signed in using AWS Cognito can sign out' do
     user = create(:user, roles: %i[buyer mc_access])
     visit '/management-consultancy/start'

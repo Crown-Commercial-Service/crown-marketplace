@@ -153,7 +153,7 @@ $(function () {
         let totalExtensionYears = calcTotalExtensionYears();
         let contractLength = $('#fm-contract-length').val();
         contractLength = contractLength ? parseInt(contractLength) : 0;
-        contractLength = contractLength <= 0 ? 0 : contractLength
+        contractLength = contractLength <= 0 ? 0 : contractLength;
 
         let result = false;
 
@@ -287,6 +287,8 @@ $(function () {
     $('#fm-internal-square-area').on('keypress', function (event) {
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
+        } else {
+            pageUtils.setCachedData('fm-gia', event.target.value);
         }
     });
 

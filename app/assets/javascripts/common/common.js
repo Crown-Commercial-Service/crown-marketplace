@@ -1,4 +1,22 @@
 const pageUtils = {
+    inlineErrors_clear: function () {
+        /* Will clear the list items inside the unordered list contained
+        in the inline error block at the head of the page
+         */
+        let inLineErrorMessageList = $('#inline-error-message ul');
+        if (null != inLineErrorMessageList) {
+            inLineErrorMessageList.empty();
+        }
+    },
+    inlineErrors_addMessage: function(msg) {
+        /* Will append an item to  the list items inside the unordered list contained
+        in the inline error block at the head of the page
+         */
+        let inLineErrorMessageList = $('#inline-error-message ul');
+        if (null != inLineErrorMessageList) {
+            inLineErrorMessageList.append("<li>"+msg+"</li>");
+        }
+    },
 
     toggleFieldValidationError: function (show, id, msg) {
         /* Show or hide a field validation error messages adding
@@ -25,13 +43,14 @@ const pageUtils = {
                 /* add error styling to the offending element */
                 $('#' + id).addClass('govuk-input--error');
             }
+            $('#' + id + '-error-form-group').addClass('govuk-form-group--error');
+
             /* scroll to the offending element */
             $('body').animate({
                 scrollTop: $('#' + id).offset().top - $('body').offset().top + $('body').scrollTop()
             }, 'fast');
             /* focus on the offending input */
             $('#' + id).focus();
-
         } else {
             /* Undo above if present */
             if ($('#' + id + '-container').length) {
@@ -39,6 +58,7 @@ const pageUtils = {
                 $('#' + errorID).remove();
                 $('#' + id).removeClass('govuk-input--error');
             }
+            $('#' + id + '-error-form-group').removeClass('govuk-form-group--error');
         }
     },
 
@@ -239,8 +259,8 @@ const fm = {
                     if (whereNext == '/facilities-management/buildings/select-services') {
                         $('#fm-building-type-form').submit()
                     } else {
-                        document.getElementById('fm-services').value = JSON.stringify(pageUtils.getCachedData('fm-services'))
-                        document.getElementById('fm-locations').value = JSON.stringify(pageUtils.getCachedData('fm-locations'))
+                        document.getElementById('fm-services').value = JSON.stringify(pageUtils.getCachedData('fm-services'));
+                        document.getElementById('fm-locations').value = JSON.stringify(pageUtils.getCachedData('fm-locations'));
                         $('#fm-select-services-continue-btn-form').attr('action', whereNext).submit()
                     }
                 },

@@ -102,15 +102,21 @@ Rails.application.routes.draw do
       get '/buyer_account', to: 'buyer_account#buyer_account'
       get '/buildings-management', to: 'buildings_management#buildings_management'
       get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
+      get '/building-details-summary', to: 'buildings_management#building_details_summary'
       post '/building-details-summary', to: 'buildings_management#building_details_summary'
       get '/building', to: 'buildings_management#building'
+      post '/building', to: 'buildings_management#building'
+      put '/building', to: 'buildings_management#update_building_details'
       get '/building-type', to: 'buildings_management#building_type'
+      post '/building-type', to: 'buildings_management#building_type'
+      put '/building-type', to: 'buildings_management#update_building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      get '/building-gross-internal-area/:id', to: 'buildings_management#building_gross_internal_area'
       post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
       put  '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
       get '/building-address', to: 'buildings_management#building_address'
       get '/building-security-type', to: 'buildings_management#building_security_type'
+      post '/building-security-type', to: 'buildings_management#building_security_type'
+      put '/building-security-type', to: 'buildings_management#update_security_type'
       match '/buildings-management/save-new-building', to: 'buildings_management#save_new_building', via: %i[get post]
       match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
       match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
@@ -122,6 +128,8 @@ Rails.application.routes.draw do
       post '/summary', to: 'summary#index'
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
+      resources :procurements
+      get '/buildings-not-selected', to: 'buildings_management#buildings_not_selected'
     end
 
     get '/', to: 'home#index'

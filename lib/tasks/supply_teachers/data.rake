@@ -2,14 +2,10 @@ require 'fileutils'
 
 namespace :st do
   task :clean do
-    if Rails.env.development?
-      rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.tmp')]
-      rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.json')]
-      rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.out')]
-    else
-      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).objects({prefix: 'supply_teachers/current_data/output/'}).batch_delete!
-    end
+    rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.tmp')]
+    rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.json')]
+    rm_f Dir[Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', '*.out')]
+    SupplyTeachers::Admin::CurrentData.first.update(data: nil, error: nil)
   end
 
   task data: :environment do
@@ -54,7 +50,7 @@ namespace :st do
     # we are using test data on non-production environment so this is not needed anymore
     # run_script(anonymize)
 
-    upload_data_and_errors_to_s3 unless Rails.env.development?
+    upload_data_and_errors
   end
 
   def run_script(script)
@@ -63,27 +59,19 @@ namespace :st do
     end
   end
 
+  def input_file_path(file_path)
+    Rails.env.production? ? file_path.url : file_path.path
+  end
+
   def get_output_file_path(file_name)
     Rails.root.join('storage', 'supply_teachers', 'current_data', 'output', file_name)
   end
 
-  def file_path(path)
-    return path if Rails.env.development?
-    s3_path(path.to_s)
-  end
-
-  def s3_path(path)
-    "https://s3-#{ENV['COGNITO_AWS_REGION']}.amazonaws.com/#{ENV['CCS_APP_API_DATA_BUCKET']}/#{s3_path_folder(path)}"
-  end
-
-  def s3_path_folder(path)
-    path.slice((path.index('storage/') + 8)..path.length)
-  end
-
-  def upload_data_and_errors_to_s3
-    object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('data.json').to_s)).upload_file(get_output_file_path('data.json'), {acl:'public-read'})
-    object.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(s3_path_folder(get_output_file_path('errors.out').to_s)).upload_file(get_output_file_path('errors.out'), {acl:'public-read'}) unless File.zero?(get_output_file_path('errors.out'))
+  def upload_data_and_errors
+    current_data = SupplyTeachers::Admin::CurrentData.first
+    current_data.data = File.open(get_output_file_path('data.json'))
+    current_data.error = get_output_file_path('errors.out').read
+    current_data.save!
   end
 
 end
