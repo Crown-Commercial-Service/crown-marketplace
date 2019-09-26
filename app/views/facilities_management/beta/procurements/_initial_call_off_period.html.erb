@@ -1,0 +1,23 @@
+<div class="govuk-grid-row">
+<span class="govuk-heading-m govuk-!-margin-bottom-0">
+  Initial call-off period
+</span>
+  <span class="govuk-caption-m govuk-!-margin-top-0">
+  The initial period in which the services are provided. This is the date you want services<br>
+  to begin and can be a maximum of 7 years
+</span>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <input type="number" max="7" class="govuk-input govuk-input--width-4"> <span class="govuk-label--s govuk-!-margin-left-2">years </span>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-5">
+  <span class="govuk-heading-s">Initial call-off period start date</span>
+  <%= render('facilities_management/beta/procurements/shared/day_month_year') %>
+</div>
+
+<div class="govuk-grid-row">
+  <span class="govuk-heading-s">Initial call-off period end date</span>
+  <%= render('facilities_management/beta/procurements/shared/day_month_year_read_only') %>
+</div>

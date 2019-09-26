@@ -1,0 +1,33 @@
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+    <span id="date-hint" class="govuk-hint">
+      For example, <%= Time.current.day + 1 < 10 ? '0' + (Time.current.day + 1).to_s : Time.current.day.to_s %> <%= Time.current.month < 10 ? '0' + Time.current.month.to_s : Time.current.month.to_s %> <%= Time.current.year %>
+    </span>
+    <div class="govuk-date-input" id="date-input">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="day" type="number" pattern="[0-9]*">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="month" type="number" pattern="[0-9]*">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="year" type="number" pattern="[0-9]*">
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>

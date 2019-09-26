@@ -1,3 +1,23 @@
-<div>
-  <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+<div class="govuk-form-group">
+  <div class="govuk-grid-row">
+    <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+  </div>
+
+  <div class="govuk-grid-row">
+    <%= render('facilities_management/beta/procurements/shared/procurement_name_header') %>
+    <h1 class="govuk-heading-xl">Contract period</h1>
+  </div>
+
+  <div class="govuk-grid-row">
+    <%= render('initial_call_off_period') %>
+  </div>
+
+  <div class="govuk-grid-row">
+    <%= render('mobilisation_period') %>
+  </div>
+
+  <div class="govuk-grid-row">
+    <%= render('call_off_extensions') %>
+  </div>
 </div>
+
