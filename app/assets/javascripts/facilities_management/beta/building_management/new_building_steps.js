@@ -160,6 +160,7 @@ $(function () {
         }
         assign_building_name($('#fm-building-name-input').val());
         assign_building_description($('#fm-building-desc-input').val());
+        FM.building.id = $('#building-id').val();
     };
     const assign_building_name = function (new_name) {
         FM.building.name = new_name;

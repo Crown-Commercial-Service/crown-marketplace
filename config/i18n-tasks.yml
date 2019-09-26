@@ -16,9 +16,9 @@ data:
   # Locale files or `File.find` patterns where translations are read from:
   read:
     ## Default:
-    # - config/locales/%{locale}.yml
+    - config/locales/%{locale}.yml
     ## More files:
-    # - config/locales/**/*.%{locale}.yml
+    - config/locales/views/*.%{locale}.yml
 
   # Locale files to write new keys to, based on a list of key pattern => file rules. Matched from top to bottom:
   # `i18n-tasks normalize -p` will force move the keys according to these rules
@@ -121,6 +121,7 @@ ignore_unused:
   - supply_teachers.home.fta_to_perm_fee.no_fee.end_not_within_6_months
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
+  - 'devise.*'
 # - 'simple_form.{yes,no}'
 # - 'simple_form.{placeholders,hints,labels}.*'
 # - 'simple_form.{error_notification,required}.:'

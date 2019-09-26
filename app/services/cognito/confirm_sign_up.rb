@@ -40,7 +40,7 @@ module Cognito
     end
 
     def confirm_user
-      @user = User.find_by(email: email)
+      @user = User.find_for_authentication(email: email)
       @user.update(confirmed_at: Time.zone.now)
     end
   end
