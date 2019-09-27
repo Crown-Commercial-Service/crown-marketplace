@@ -2,7 +2,7 @@
   <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> - <%= @procurement.name %></span>
 </div>
 
-<div class="govuk-grid-row">
+<div class="procurement govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { multipart: true } do |f| %>
       <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
