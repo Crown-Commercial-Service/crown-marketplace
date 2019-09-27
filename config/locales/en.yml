@@ -786,7 +786,7 @@ en:
           guidance_heading: Guidance and other useful documents
           para01: Use this service to download a shortlist of suppliers that provide the legal services you need.
           para02: Using this service means you're following the public sector procurement procedures.
-          para03_html: Central government can use this service to buy transactional property and litigation services if your contract budget is &pound;20,000 or less per matter.
+          para03_html: Central government can use this service to buy transactional property and litigation services if your contract budget is &pound;20,000 or less per matter. The wider public sector is able to use this panel in its entirety.
           para04_html: If you need legal services in a non-UK jurisdiction, contact <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> for help.
           para05_html: To use this service you need to be a recognised public sector body listed in the <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3788-Contract-Notice-Authorised-Customer-List.docx">authorised customer list</a>.
         wps_link_text: WPS Legal Services panel specification
@@ -820,7 +820,9 @@ en:
         trainee: Trainee/Paralegal
     journey:
       check_suitability:
+        advice: Please note that the £20,000 includes Legal Fees only, disbursements and other charges are to be excluded.
         heading: Will the fees be under £20,000 per matter?
+        multiple_transaction_advice: Where multiple individual "transactional" matters make up the requirement, the £20,000 fees relate to each individual matter and not the full contract value.
       choose_jurisdiction:
         heading: Lot 2 - Full-service firms
         question: Select the jurisdiction you need
@@ -927,6 +929,7 @@ en:
           phone_number: Phone number
           website: Website
         daily: Daily
+        fee_advice: You are also able to use alternative fee arrangements such as fixed or capped fees, which may deliver greater value.
         fixed_until: Fixed until September 2021 and based on an 8 hour working day.
         further_competition: These are the maximum rates the supplier charges for a direct award. You may get a cheaper rate by running a further competition.
         hourly: Hourly
