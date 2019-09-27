@@ -16,6 +16,8 @@ module ApplicationHelper
 
     return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/BGBL4/', target: '_blank', rel: 'noopener') if controller.class.try(:parent_name) == 'LegalServices'
 
+    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/MIIJB/', target: '_blank', rel: 'noopener') if controller.class.try(:parent_name) == 'ManagementConsultancy'
+
     govuk_email_link(Marketplace.feedback_email_address, t('layouts.application.feedback_aria_label'), css_class: 'govuk-link ga-feedback-mailto')
   end
 
