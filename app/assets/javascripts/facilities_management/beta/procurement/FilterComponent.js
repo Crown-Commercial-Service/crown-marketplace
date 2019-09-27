@@ -120,7 +120,7 @@ function FilterSectionComponent(baseClassName, filterPanelName, sectionName) {
 
     this._sectionIdentifier = "." + this._baseClass + " ." + this._filterPanelControlName + " ." + this._sectionName + ".data-section";
     if ("" + sectionName != "" ) {
-        this.sectionCheckboxes = $(this._sectionIdentifier + " input[name='fm-proc-" + this._sectionName + "s-checkbox']:checked");
+        this.sectionCheckboxes = $(this._sectionIdentifier + " input[name='facilities_management_" + this._baseClass + "[" + this._sectionName + "_codes][]']");
         this.sectionCounterTextField = $('#proc-' + this._sectionName + '-count');
     }
 }
