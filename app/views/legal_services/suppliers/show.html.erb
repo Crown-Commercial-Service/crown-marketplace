@@ -66,6 +66,7 @@
         </tbody>
       </table>
     <% end %>
+    <p><%= t('.fee_advice') %></p>
     <% if params[:lot] && params[:lot] != '1' %>
       <% unless @supplier.send(:"lot_#{params[:lot]}_prospectus_link").nil? %>
         <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.supplier_prospectus_headline') %></h2>
