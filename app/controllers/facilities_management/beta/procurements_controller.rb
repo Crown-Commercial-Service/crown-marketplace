@@ -16,7 +16,7 @@ module FacilitiesManagement
       def create
         @procurement = current_user.procurements.create(procurement_params)
 
-        if @procurement.save
+        if @procurement.save(context: :name)
           redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
         else
           render :new
@@ -26,7 +26,8 @@ module FacilitiesManagement
       def edit; end
 
       def update
-        if @procurement.update(procurement_params)
+        @procurement.assign_attributes(procurement_params)
+        if @procurement.save(context: params[:step].try(:to_sym))
           # ******************************************
           # if params['submit_choice'] == 'return'
           #   redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
