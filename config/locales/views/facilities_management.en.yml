@@ -113,9 +113,9 @@ en:
       youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
-        no_regions_selected: No regions selected
+        no_locations_selected: No locations selected
         question: Where are your buildings located?
-        regions_selected: Regions selected
+        locations_selected: Buildings selected
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building's location where you require facilities management services.
       choose_services:

@@ -9,6 +9,7 @@ $(function () {
 
             if (null !== activeChooser) {
                 activeChooser.init();
+                activeChooser.PrimeBasket();
             }
         } catch (e) {
             console.log("No location chooser component found");
