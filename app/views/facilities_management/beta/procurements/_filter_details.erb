@@ -10,8 +10,8 @@
         <div class="govuk-grid-row ccs-no-print govuk-!-padding-0">
           <div class="govuk-grid-column-full"><strong class="govuk-heading-m"><%=t('.apply_filters') %></strong></div>
         </div>
-        <%= render partial: 'filter_data_section', locals: { section_name: 'region', section_title: t('.region'), change_title: t('.change_add_region'), collection: @regions, superset: @procurement.region_codes} %>
-        <%= render partial: 'filter_data_section', locals: { section_name: 'service', section_title: t('.service'), change_title: t('.change_add_service'), collection: @services, superset: @procurement.service_codes} %>
+        <%= render partial: 'filter_data_section', locals: { section_name: 'region', section_title: t('.region'), change_title: t('.change_add_region'), change_link: journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes]),collection: @regions, superset: @procurement.region_codes} %>
+        <%= render partial: 'filter_data_section', locals: { section_name: 'service', section_title: t('.service'), change_title: t('.change_add_service'), change_link: journey_step_url_former(journey_step: 'services', region_codes: params[:region_codes], service_codes: params[:service_codes]), collection: @services, superset: @procurement.service_codes} %>
       </div>
     </div>
     <!-- Start of main list section -->
