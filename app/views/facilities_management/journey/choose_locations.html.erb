@@ -69,10 +69,10 @@
         <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
           <div class="basket" id="css-list-basket">
             <div>
-              <h3 class="govuk-heading-m" data-txt01="<%= t('.regions_selected') %>" data-txt02="<%= t('.no_regions_selected') %>">
-                <span id="selected-locations-count">0</span> <span><%= t('.regions_selected') %></span></h3>
-              <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll"><%= t('.remove_all') %></a>
-              <ul class="govuk-list"></ul>
+              <h3 class="govuk-heading-m" data-txt01="<%= t('.locations_selected') %>" data-txt02="<%= t('.no_locations_selected') %>">
+                <span id="selected-locations-count">0</span> <span><%= t('.locations_selected') %></span></h3>
+              <a class="govuk-!-padding-left-2 remove-link" role="button" href=""><%= t('.remove_all') %></a><br />
+              <ul style="margin-top:10px;" class="govuk-list"></ul>
             </div>
           </div>
         </div>
