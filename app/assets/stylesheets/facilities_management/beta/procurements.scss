@@ -1,6 +1,7 @@
 
 input[type=radio] + label + div#radio-inner-content {
   visibility: hidden;
+  height: 0px;
 }
 
 input[type=radio]:checked + label + div#radio-inner-content {
@@ -10,9 +11,5 @@ input[type=radio]:checked + label + div#radio-inner-content {
   border-left-width: 4px;
   height: auto;
   position: relative;
-  left: -20px;
-}
-
-.radio-inner-content {
-  height: 0px;
+  left: -22px;
 }
