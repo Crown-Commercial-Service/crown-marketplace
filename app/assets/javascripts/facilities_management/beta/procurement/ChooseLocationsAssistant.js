@@ -2,10 +2,7 @@ $(function () {
     if ($('.chooser-component').length > 0) {
         try {
             let activeChooser = null;
-
-            if (null === activeChooser) {
-                activeChooser = initialiseChooseLocations();
-            }
+            activeChooser = initialiseChooseLocations();
 
             if (null !== activeChooser) {
                 activeChooser.init();
