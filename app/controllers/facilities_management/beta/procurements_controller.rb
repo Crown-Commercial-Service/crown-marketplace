@@ -7,36 +7,49 @@ module FacilitiesManagement
         @procurements = current_user.procurements
       end
 
-      def show; end
+      def show
+        redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search?
+      end
 
       def new
-        @procurement = current_user.procurements.build
+        set_suppliers(params[:region_codes], params[:service_codes])
+        find_regions(params[:region_codes])
+        find_services(params[:service_codes])
+
+        @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
       end
 
       def create
         @procurement = current_user.procurements.create(procurement_params)
 
         if @procurement.save(context: :name)
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
+          redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
           render :new
         end
       end
 
-      def edit; end
+      def edit
+        set_suppliers(@procurement.region_codes, @procurement.service_codes)
+        find_regions(@procurement.region_codes)
+        find_services(@procurement.service_codes)
+
+        if @procurement.quick_search?
+          render :edit
+        else
+          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step]
+        end
+      end
 
       def update
         @procurement.assign_attributes(procurement_params)
         if @procurement.save(context: params[:step].try(:to_sym))
-          # ******************************************
-          # if params['submit_choice'] == 'return'
-          #   redirect_to facilities_management_beta_procurement_url(id: @procurement.id)
-          # else
-          #   redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: params[:next_step], next_step: next_step(params[:next_step]))
-          # end
-          # ******************************************
-          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, step: params[:step]).route
+          @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
+          @procurement.reload
 
+          set_current_step
+
+          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
           render :edit
         end
@@ -59,30 +72,36 @@ module FacilitiesManagement
         params.require(:facilities_management_procurement)
               .permit(
                 :name,
+                :tupe,
                 :contract_name,
                 :procurement_data,
                 :estimated_annual_cost,
-                :tupe,
-                :save_continue,
-                :save_return
+                service_codes: [],
+                region_codes: [],
               )
+      end
+
+      def set_current_step
+        @current_step ||= params[:facilities_management_procurement][:step] if params['next_step'].present?
       end
 
       def set_procurement
         @procurement = Procurement.find(params[:id])
       end
 
-      def next_step(step)
-        case step
-        when 'contract_name'
-          'estimated_annual_cost'
-        when 'estimated_annual_cost'
-          'tupe'
-        when 'tupe'
-          'contract_period'
-        else
-          '???'
-        end
+      def set_suppliers(region_codes, service_codes)
+        @suppliers_lot1a = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1a')
+        @suppliers_lot1b = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1b')
+        @suppliers_lot1c = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1c')
+        @supplier_count = CCS::FM::Supplier.supplier_count(region_codes, service_codes)
+      end
+
+      def find_regions(region_codes)
+        @regions = Nuts2Region.where(code: region_codes)
+      end
+
+      def find_services(service_codes)
+        @services = Service.where(code: service_codes)
       end
     end
   end

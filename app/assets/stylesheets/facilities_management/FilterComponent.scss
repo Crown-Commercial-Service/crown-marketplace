@@ -1,0 +1,29 @@
+.filter-component-container-grey {
+  background-color: #F8F8F8;
+  margin: 5px;
+  overflow-x: hidden;
+}
+
+.filter-component-container {
+  border-style: solid;
+  border-width: 1px;
+  border-color: silver;
+  padding-top: 10px;
+  min-width: 315px;
+}
+.filter-component-govuk-checkboxes__item {
+  margin-bottom: 0;
+  background-color: #FFFFFF;
+  padding-left: 2px;
+  float:initial !important;
+}
+.filter-component-govuk-checkboxes__item:after {
+  content:"";
+  clear:both;
+  display:table;
+}
+.filter-component-govuk-checkboxes__label {
+  padding-right:5px;
+  background-color: #FFFFFF;
+  float:initial;
+}

@@ -1,0 +1,27 @@
+<div class="<%= section_name %> data-section" data-section="<%= section_name %>" >
+  <div class="govuk-grid-row filter-component-container-grey">
+    <div class="govuk-grid-row filter-component-container-grey">
+      <strong class="govuk-heading-m govuk-!-margin-0 govuk-!-padding-1"><%= section_title %>
+        <br /> <span class="govuk-!-font-size-19" id="sproc-<%= section_name %>-count">2 selected</span></strong>
+    </div>
+    <div class="govuk-grid-row filter-component-container-grey">
+      <div class="govuk-checkboxes govuk-checkboxes--small">
+        <% collection.each do |item| %>
+          <div class="govuk-checkboxes__item filter-component-govuk-checkboxes__item">
+            <%= check_box_tag("facilities_management_procurement[#{section_name}_codes][]", item.code, superset.include?(item.code),
+                              class: "govuk-checkboxes__input",
+                              id: "facilities_management_procurement_#{section_name}s_codes_#{section_name}_#{item.code}"
+                ) %>
+            <label class="govuk-label govuk-checkboxes__label filter-component-govuk-checkboxes__label"
+                   for='<%= "facilities_management_procurement_#{section_name}s_codes_#{section_name}_#{item.code}"%>'>
+              <%= item.name %>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-1 filter-component-container-grey">
+      <%= link_to change_title, change_link, class: 'govuk-link govuk-!-font-size-19'  unless @procurement.persisted? %>
+    </div>
+  </div>
+</div>
