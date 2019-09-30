@@ -14,16 +14,28 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
   end
 
   describe 'GET show' do
-    it 'renders the correct template' do
-      get :show, params: { id: procurement.id }
+    context 'with a procurement in the quick search state' do
+      it 'redirects to the edit path' do
+        get :show, params: { id: procurement.id }
 
-      expect(response).to render_template('show')
+        expect(response).to redirect_to edit_facilities_management_beta_procurement_path(procurement.id)
+      end
+    end
+
+    context 'with a procurement in the detailed search state' do
+      before { procurement.update(aasm_state: 'detailed_search') }
+
+      it 'renders the show template' do
+        get :show, params: { id: procurement.id }
+
+        expect(response).to render_template('show')
+      end
     end
   end
 
   describe 'GET new' do
     it 'renders the correct template' do
-      get :new
+      get :new, params: { region_codes: ['UKC1'], service_codes: ['C.1'] }
 
       expect(response).to render_template('new')
     end
@@ -31,7 +43,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
 
   describe 'GET edit' do
     it 'renders the correct template' do
-      get :edit, params: { id: procurement.id }
+      get :edit, params: { id: procurement.id, step: 'tupe' }
 
       expect(response).to render_template('edit')
     end
@@ -39,11 +51,11 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
 
   describe 'POST create' do
     context 'with a valid record' do
-      it 'redirects to show path for the new record' do
+      it 'redirects to edit path for the new record' do
         post :create, params: { facilities_management_procurement: { name: 'New procurement' } }
 
         new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
-        expect(response).to redirect_to facilities_management_beta_procurement_path(new_procurement.id)
+        expect(response).to redirect_to edit_facilities_management_beta_procurement_path(new_procurement.id)
       end
     end
 
@@ -59,6 +71,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
   describe 'PATCH update' do
     context 'with a valid update' do
       before do
+        procurement.update(aasm_state: 'detailed_search')
         patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { name: 'Updated name' } }
       end
 
