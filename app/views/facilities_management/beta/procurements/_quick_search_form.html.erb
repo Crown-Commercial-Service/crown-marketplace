@@ -1,0 +1,35 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <%= render partial: 'filter_details', locals: { form: f } %>
+    </div>
+    <div class="govuk-grid-row">
+      <h2 class="govuk-heading-m"><%= t('.continue_headline') %></h2>
+    </div>
+    <div class="govuk-grid-row">
+      <p class="govuk-caption-l"><%= t('.continue_text') %></p>
+    </div>
+    <% unless @procurement.persisted? %>
+      <div class="govuk-grid-row govuk-!-margin-top-7">
+        <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
+      </div>
+      <div class="govuk-grid-row">
+        <p class="govuk-caption-l"><%= t('.save_text') %></p>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
+          <div class="govuk-form-group">
+            <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
+            <div class="govuk-error-message govuk-visually-hidden" data-validation="maxlength">
+              <span><%= t('.name_text_length_warning') %></span>
+            </div>
+            <div class="govuk-error-message govuk-visually-hidden" data-validation="required">
+              <span><%= t('.name_text_required') %></span>
+            </div>
+            <%= f.text_field :name, maxlength: 100, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

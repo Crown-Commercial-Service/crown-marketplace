@@ -239,7 +239,3 @@ function initCustomFnc() {
         initDynamicAccordian();
     }
 }
-
-jQuery(document).ready(function(){
-    initCustomFnc(); //call block of custom functions calls
-});

@@ -17,10 +17,11 @@
     <% unless @procurement.contract_name.nil? %>
       <%= @procurement.contract_name %>
     <% else %>
-      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'contract_name', :next_step => 'estimated_annual_cost'), :class => "govuk-link"%>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
+    <%= link_to "Change answer", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link" unless @procurement.contract_name.nil? %>
   </dd>
 </div>
 
@@ -32,10 +33,11 @@
     <% unless @procurement.estimated_annual_cost.nil? %>
       <%= @procurement.estimated_annual_cost %>
     <% else %>
-      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost', :next_step => 'tupe'), :class => "govuk-link"%>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
+    <%= link_to "Change answer", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_annual_cost.nil? %>
   </dd>
 </div>
 
@@ -45,11 +47,12 @@
   </dt>
   <dd class="govuk-summary-list__value">
     <% unless @procurement.tupe.nil? %>
-      <%= @procurement.tupe == true ? 'Yes' : 'No' %>
+      <%= @procurement.tupe? ? 'Yes' : 'No' %>
     <% else %>
-      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe', :next_step => 'contract_period'), :class => "govuk-link"%>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
+    <%= link_to "Change answer", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link" unless @procurement.tupe.nil? %>
   </dd>
 </div>
