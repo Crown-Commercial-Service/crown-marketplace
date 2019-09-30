@@ -22,11 +22,7 @@ module FacilitiesManagement
       def create
         @procurement = current_user.procurements.create(procurement_params)
 
-        if @procurement.save
-          # Normally we'd redirect to the show page for a record
-          # but we need to go back to the edit page for a quick search
-          # to ensure the journey flow matches what has been designed
-
+        if @procurement.save(context: :name)
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
           render :new
@@ -46,7 +42,8 @@ module FacilitiesManagement
       end
 
       def update
-        if @procurement.update(procurement_params)
+        @procurement.assign_attributes(procurement_params)
+        if @procurement.save(context: params[:step].try(:to_sym))
           @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
           @procurement.reload
 

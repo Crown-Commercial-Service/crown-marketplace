@@ -1,14 +1,11 @@
 module FacilitiesManagement
   class Procurement < ApplicationRecord
     include AASM
+    include ProcurementValidator
 
     belongs_to :user,
                foreign_key: :user_id,
                inverse_of: :procurements
-
-    validates :name, presence: true
-    validates :name, uniqueness: { scope: :user }
-    validates :name, length: 1..100
 
     aasm do
       state :quick_search, initial: true
