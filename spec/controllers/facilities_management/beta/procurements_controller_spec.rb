@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
   describe 'PATCH update' do
     context 'with a valid update' do
       before do
-        patch :update, params: { id: procurement.id, facilities_management_procurement: { name: 'Updated name' } }
+        patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { name: 'Updated name' } }
       end
 
       it 'redirects to the show page for the record' do
@@ -75,7 +75,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
 
     context 'with an invalid update' do
       before do
-        patch :update, params: { id: procurement.id, facilities_management_procurement: { name: (0...200).map { ('a'..'z').to_a[rand(26)] }.join } }
+        patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { name: (0...200).map { ('a'..'z').to_a[rand(26)] }.join } }
       end
 
       it 'render the edit page for the record' do
