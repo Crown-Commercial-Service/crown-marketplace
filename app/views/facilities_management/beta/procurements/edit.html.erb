@@ -19,15 +19,15 @@
         <%= f.submit t('.save_for_later'), class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3'  if @procurement.quick_search? %>
       </div>
 
-      <% if @procurement.detailed_search? %>
-        <div class="govuk-grid-row govuk-!-margin-top-3">
-          <%= link_to 'Back to detailed search summary', facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' %>
-        </div>
-      <% end %>
-
       <% if params[:step] %>
         <div class="govuk-grid-row">
           <span class="govuk-caption-m"><%= t(".next_step.#{params[:step]}") %></span>
+        </div>
+      <% end %>
+
+      <% if @procurement.detailed_search? %>
+        <div class="govuk-grid-row govuk-!-margin-top-3">
+          <%= link_to 'Back to detailed search summary', facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' %>
         </div>
       <% end %>
     <% end %>
