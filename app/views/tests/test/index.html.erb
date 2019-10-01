@@ -38,7 +38,7 @@
 
     <% region_code_names = Nuts2Region.to_h %>
     <% nuts2_code = nil %>
-    <% Nuts3Region.all.sort_by { |r| r.nuts2_code}.each do |x| %>
+    <% Nuts3Region.all.sort_by { |r| [r.nuts2_code, r.name] }.each do |x| %>
 
       <% if nuts2_code != x.nuts2_code %>
         <% if nuts2_code %>
