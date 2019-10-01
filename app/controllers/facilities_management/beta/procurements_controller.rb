@@ -37,6 +37,8 @@ module FacilitiesManagement
         if @procurement.quick_search?
           render :edit
         else
+          @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).back_link
+
           redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step]
         end
       end
