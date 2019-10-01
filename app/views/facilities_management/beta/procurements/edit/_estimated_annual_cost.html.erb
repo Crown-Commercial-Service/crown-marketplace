@@ -12,18 +12,18 @@
 
   <div class="govuk-radios govuk-radios">
     <div class="govuk-radios__item">
-      <%= radio_button_tag 'estimated_annual_cost', true, !@procurement.estimated_annual_cost.nil?, class: "govuk-radios__input" %>
-      <%= label 'estimated_annual_cost', 'Yes', class: 'govuk-label govuk-radios__label' %>
+      <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input" %>
+      <%= label :estimated_cost_known, 'Yes', class: 'govuk-label govuk-radios__label' %>
     </div>
 
     <div class="govuk-inset-text">
       <h1 class="govuk-heading-xl"><%= f.label 'Enter the estimated annual cost, excluding VAT', class: "govuk-label" %></h1>
-      <%= f.number_field 'estimated_annual_cost', class: 'govuk-input govuk-input--width-20', placeholder: '£', maxlength: '100' %>
+      <%= f.number_field :estimated_annual_cost, class: 'govuk-input govuk-input--width-20', placeholder: '£', maxlength: '100' %>
     </div>
 
     <div class="govuk-radios__item">
-      <%= radio_button_tag 'estimated_annual_cost', false, @procurement.estimated_annual_cost.nil?, class: 'govuk-radios__input' %>
-      <%= label 'estimated_annual_cost', 'No', class: "govuk-label govuk-radios__label" %>
+      <%= f.radio_button :estimated_cost_known, false, class: 'govuk-radios__input' %>
+      <%= label :estimated_cost_known, 'No', class: "govuk-label govuk-radios__label" %>
     </div>
   </div>
 </div>
