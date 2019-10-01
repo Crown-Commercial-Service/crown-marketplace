@@ -6,14 +6,14 @@
   </legend>
   <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-20">
       This will help us to place you into the correct sub-lot.
-      The cost shouldn't include all the buildings and services included in the procurement.
+      The cost should include all the buildings and services included in the procurement.
       The cost shouldn't include additional or project work
   </span>
 
   <div class="govuk-radios govuk-radios">
     <div class="govuk-radios__item">
-      <%= f.radio_button :tupe, true, :checked => true, class: "govuk-radios__input" %>
-      <%= label :tupe, 'Yes', class: 'govuk-label govuk-radios__label' %>
+      <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input" %>
+      <%= label :estimated_cost_known, 'Yes', class: 'govuk-label govuk-radios__label' %>
     </div>
 
     <div class="govuk-inset-text">
@@ -22,8 +22,8 @@
     </div>
 
     <div class="govuk-radios__item">
-      <%= f.radio_button :tupe, false, class: 'govuk-radios__input' %>
-      <%= label :tupe, 'No', class: "govuk-label govuk-radios__label" %>
+      <%= f.radio_button :estimated_cost_known, false, class: 'govuk-radios__input' %>
+      <%= label :estimated_cost_known, 'No', class: "govuk-label govuk-radios__label" %>
     </div>
   </div>
 </div>
