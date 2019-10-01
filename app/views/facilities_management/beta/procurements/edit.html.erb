@@ -1,4 +1,8 @@
 <div class="govuk-grid-row">
+  <%= link_to 'Back', @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? %>
+</div>
+
+<div class="govuk-grid-row">
   <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> - <%= @procurement.name %></span>
 </div>
 
