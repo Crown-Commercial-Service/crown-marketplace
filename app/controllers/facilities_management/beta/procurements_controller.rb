@@ -76,6 +76,7 @@ module FacilitiesManagement
                 :contract_name,
                 :procurement_data,
                 :estimated_annual_cost,
+                :estimated_cost_known,
                 service_codes: [],
                 region_codes: [],
               )
