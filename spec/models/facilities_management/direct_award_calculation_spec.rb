@@ -290,39 +290,36 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
 
   it 'can model services' do
-
-
     FacilitiesManagement::Service.all.sort_by { |s| [ s.work_package_code, s.code[ s.code.index('.') + 1..-1 ].to_i  ] }.each do |service|
 
-      p service
+      # p service
 
     end
-
-
   end
 
   it 'can calculate a direct award procurement' do
 
+    p '*********'
+    p CCS::FM::UnitsOfMeasurement.all.count
+    p '*********'
 
     uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
     uom2 = {}
     uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
 
-    p uom2.first.inspect
+    FacilitiesManagement::Service.all
+        .sort_by { |s| [ s.work_package_code, s.code[ s.code.index('.') + 1..-1 ].to_i  ] }.each do |service|
 
-    p '------------'
+      p service
 
-    p uom2.count
+      p '  has uom ' if uom2[service.code]
 
-    p '------------'
-
-    p FacilitiesManagement::Service.all.first.inspect
-
-    p '------------'
+    end
 
 
+    p "There are #{uom2.count} service with a specific * units of measure *"
 
-
+    p 'Buildings info'
 
 
     # except(true).to eq false
