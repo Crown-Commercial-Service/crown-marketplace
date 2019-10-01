@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_152002) do
+ActiveRecord::Schema.define(version: 2019_10_01_122201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2019_09_19_152002) do
     t.integer "optional_call_off_extensions_2"
     t.integer "optional_call_off_extensions_3"
     t.integer "optional_call_off_extensions_4"
+    t.boolean "estimated_cost_known"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
