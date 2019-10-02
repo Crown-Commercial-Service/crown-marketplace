@@ -15,7 +15,7 @@
       <%= label :estimated_cost_known, 'Yes', class: 'govuk-label govuk-radios__label' %>
       <div class="govuk-inset-text">
         <h1 class="govuk-heading-xl"><%= f.label 'Enter the estimated annual cost, excluding VAT', class: "govuk-label" %></h1>
-        <%= f.number_field :estimated_annual_cost, class: 'govuk-input govuk-input--width-20', placeholder: '£', maxlength: '100' %>
+        <%= f.number_field :estimated_annual_cost, class: 'govuk-input govuk-input--width-20', placeholder: '£', min: 1 %>
       </div>
     </div>
     <div class="govuk-radios__item">
