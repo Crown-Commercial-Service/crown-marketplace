@@ -1,5 +1,5 @@
 module Tests
-  class TestController < FacilitiesManagement::FrameworkController
+  class TestController < ActionController::Base
     ## skip_before_action :authenticate_user!
     # skip_before_action :authorize_user
     skip_before_action :verify_authenticity_token, only: [:index]
@@ -20,6 +20,9 @@ module Tests
     def calculate(vals)
       id = SecureRandom.uuid
 
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
+
       # start_date = Time.zone.today + 1
       # e.g. DateTime.strptime('2011-03-09',"%Y-%m-%d")
       start_date = DateTime.strptime(vals['startdate'], '%Y-%m-%d')
@@ -27,8 +30,8 @@ module Tests
       data2 =
         {
           start_date: start_date,
-          'is-tupe': vals['tupe'] ? 'yes' : 'no',
-          'fm-contract-length': vals['contract-length']
+          is_tupe: vals['tupe'] ? 'yes' : 'no',
+          fm_contract_length: vals['contract-length']
         }
       data2[:posted_locations] = vals.keys.select { |k| k.start_with?('region-') }.collect { |k| vals[k] }
 
@@ -58,13 +61,13 @@ module Tests
           }
       end
 
-      @report = FacilitiesManagement::SummaryReport.new(start_date: start_date, user_email: 'test@example.com', data: data2)
+      @report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data2)
 
       @results = {}
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
+      supplier_names = rate_card.data['Prices'].keys
       supplier_names.each do |supplier_name|
         # dummy_supplier_name = 'Hickle-Schinner'
-        @report.calculate_services_for_buildings all_buildings, uom_vals, supplier_name
+        @report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name
         @results[supplier_name] = @report.direct_award_value
       end
 
