@@ -186,8 +186,8 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
         params['fm-contract-cost'] # if params['fm-contract-cost']
       end
 
-    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
-    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
+    TransientSessionInfo[session.id, 'is-tupe'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
+    TransientSessionInfo[session.id, 'contract-extension'] = params['contract-extension-radio'] if params['contract-extension-radio']
   end
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
