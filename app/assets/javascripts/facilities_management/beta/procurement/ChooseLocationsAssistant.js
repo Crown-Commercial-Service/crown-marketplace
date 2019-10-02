@@ -2,13 +2,11 @@ $(function () {
     if ($('.chooser-component').length > 0) {
         try {
             let activeChooser = null;
-
-            if (null === activeChooser) {
-                activeChooser = initialiseChooseLocations();
-            }
+            activeChooser = initialiseChooseLocations();
 
             if (null !== activeChooser) {
                 activeChooser.init();
+                activeChooser.PrimeBasket();
             }
         } catch (e) {
             console.log("No location chooser component found");
