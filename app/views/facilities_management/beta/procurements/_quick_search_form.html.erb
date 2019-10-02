@@ -17,7 +17,7 @@
         <p class="govuk-caption-l"><%= t('.save_text') %></p>
       </div>
       <div class="govuk-grid-row">
-        <%= govuk_form_field @procurement, f, :name, t('.new_name_label'), {'data-module' => 'character-count', 'data-maxlength' => 100}, {:class => 'govuk-input--width-20'} do%>
+        <%= govuk_form_text_field @procurement, f, :name, t('.new_name_label'), {'data-module' => 'character-count', 'data-maxlength' => 100}, ['govuk-input--width-20'] do%>
           <%= validation_error(@procurement, :name, :too_long, t('.name_text_length_warning') ) %>
           <%= validation_error(@procurement, :name, :too_short, t('.name_text_required') ) %>
         <%end %>

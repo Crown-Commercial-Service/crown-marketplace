@@ -41,9 +41,9 @@ module ApplicationHelper
     mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
-  def govuk_form_field ( model_object, form, attribute, label_text, top_level_options, field_options)
+  def govuk_form_text_field ( model_object, form, attribute, label_text, top_level_options, field_css)
     css_classes = %w[govuk-caption-m govuk-!-margin-top-3]
-    field_css_classes = %w[govuk-input]
+    field_css_classes = %w[govuk-input] + field_css
     form_group_css = ['govuk-form-group']
     form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
 
@@ -53,7 +53,7 @@ module ApplicationHelper
 
     content_tag :div, class: css_classes do
       content_tag :div, class: form_group_css do
-        content_tag :label, attribute, label_text, class: 'govuk-label'
+        form.label attribute, label_text, class: 'govuk-label'
         content_tag :div do
           yield
         end

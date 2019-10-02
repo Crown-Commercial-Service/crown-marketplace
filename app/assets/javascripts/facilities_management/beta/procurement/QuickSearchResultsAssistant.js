@@ -63,4 +63,4 @@ $(function () {
         jqDiv = jqDiv[0];
         //QuickSearchResultsAssistant.init(jqDiv.getAttribute('classification'), jqDiv.getAttribute('action'), jqDiv.getAttribute('module' ));
     }
-})();
+});
