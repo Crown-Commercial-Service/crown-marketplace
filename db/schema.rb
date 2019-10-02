@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_152002) do
+ActiveRecord::Schema.define(version: 2019_10_01_122201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2019_09_19_152002) do
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "name", limit: 100
-    t.string "aasm_state", limit: 15
+    t.string "aasm_state", limit: 15, default: "qs"
     t.string "updated_by", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2019_09_19_152002) do
     t.integer "optional_call_off_extensions_2"
     t.integer "optional_call_off_extensions_3"
     t.integer "optional_call_off_extensions_4"
+    t.boolean "estimated_cost_known"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 

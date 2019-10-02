@@ -9,8 +9,12 @@ function FormValidationComponent (formDOMObject, validationCallback) {
 
 FormValidationComponent.prototype.init = function () {
     let $self = this;
-    this.form.onsubmit = function (e) { return $self.validator($self.form.elements) ; };
-} ;
+    if ( null != this.form ) {
+        this.form.onsubmit = function (e) {
+            return $self.validator($self.form.elements);
+        };
+    }
+};
 
 FormValidationComponent.prototype.validateForm = function (formElements) {
     let submitForm = this.validationResult = true;
