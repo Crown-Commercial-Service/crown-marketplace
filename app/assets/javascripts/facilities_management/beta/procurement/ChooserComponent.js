@@ -93,6 +93,7 @@ ChooserComponent.prototype.handleBasketRemove = function ( groupID, value) {
         total_count : this.GetTotalCount(),
         selected_count : this.GetSelectedCount()
     };
+    this._basketContainer.UpdateBasketNumber ( chooserEvent.selected_count );
     this._checkboxCallback(chooserEvent);
 };
 ChooserComponent.prototype.GetValidStatus = function() {
@@ -196,12 +197,27 @@ function BasketComponent ( baseClass, classification, jqueryObject, removeHandle
     this._classification = classification;
     this.jqueryObject = jqueryObject;
     this.list = null;
+    this.removeAllBtn = null;
     this.onRemove = removeHandler ? removeHandler : this.onRemove;
     this.init();
 }
 BasketComponent.prototype.init = function() {
     this.list = this.jqueryObject.find("ul");
+    this.removeAllBtn = this.jqueryObject.find("a.ccs-remove-all");
+    this.removeAllBtn.on('click', function (e) {
+        e.preventDefault();
+        this.RemoveAll();
+    }.bind(this));
 } ;
+BasketComponent.prototype.RemoveAll = function () {
+    let collection = this.list.find("li") ;
+    for ( let index = 0; index < collection.length; index++) {
+        let target = collection[index];
+        this.removeSelectedItem(target.getAttribute("groupid"), target.id.replace('_basket', ''));
+        this.onRemove(target.getAttribute("groupid"), target.id.replace('_basket', ''));
+    }
+    this.UpdateBasketNumber(0);
+};
 BasketComponent.prototype.AddItems = function ( itemsToAdd) {
     for (let index = 0; index < itemsToAdd.length; index++) {
         this.AddItem(itemsToAdd[index]);
@@ -211,7 +227,7 @@ BasketComponent.prototype.AddItem = function ( itemToAdd ) {
     let selectedID = itemToAdd.code + '_basket';
     let removeLinkID = itemToAdd.code + '_removeLink';
 
-    let newLI = '<li style="word-break: keep-all;" groupid="' + itemToAdd.groupId + '" class="govuk-list" id="' + selectedID + '">' +
+    let newLI = '<li style="margin-top:0; word-break: keep-all;" groupid="' + itemToAdd.groupId + '" class="govuk-list" id="' + selectedID + '">' +
         '<div style="float:right;"><span class="remove-link">' +
         '<a data-no-turbolink id="' + removeLinkID + '" groupid="' + itemToAdd.groupId + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a>' +
         '</span></div>' +
@@ -231,6 +247,7 @@ BasketComponent.prototype.AddItem = function ( itemToAdd ) {
 };
 BasketComponent.prototype.clear = function () {
   this.list[0].innerHTML = "";
+  this.UpdateBasketNumber(0);
 };
 BasketComponent.prototype.clearByGroupID = function ( groupID ) {
     let item = null;
@@ -253,9 +270,9 @@ BasketComponent.prototype.UpdateBasketNumber = function(count) {
     let selectedParent = selectedCount.parent();
 
     if (count < 2) {
-        $('#remove-all-' + this._classification + '-link').hide();
+        this.removeAllBtn.hide();
     } else {
-        $('#remove-all-' + this._classification + '-link').show();
+        this.removeAllBtn.show();
     }
     if (selectedCount) {
         selectedCount.text(count);

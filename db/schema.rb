@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2019_10_01_122201) do
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "name", limit: 100
-    t.string "aasm_state", limit: 15
+    t.string "aasm_state", limit: 15, default: "qs"
     t.string "updated_by", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
