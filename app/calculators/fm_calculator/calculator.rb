@@ -70,7 +70,7 @@ module FMCalculator
 
       @uomd =
         if @supplier_name && @rate_card.data['Discounts'][@supplier_name][@service_ref]
-          (1 - @rate_card.data['Discounts'][@supplier_name][@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card.data['Prices'][@supplier_name][@service_ref][@building_data['fm-building-type']].to_f
+          (1 - @rate_card.data['Discounts'][@supplier_name][@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card.data['Prices'][@supplier_name][@service_ref][@building_data[:fm_building_type]].to_f
         else
           @uom_vol * @framework_rate
         end
@@ -117,7 +117,7 @@ module FMCalculator
       if @cafm_flag == 'Y'
         @cafm =
           if @supplier_name
-            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data['fm-building-type']].to_f
+            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data[:fm_building_type]].to_f
           else
             @subtotal2 * @framework_rates['M136']
           end
@@ -131,7 +131,7 @@ module FMCalculator
       if @helpdesk_flag == 'Y'
         @helpdesk =
           if @supplier_name
-            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data['fm-building-type']].to_f
+            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data[:fm_building_type]].to_f
           else
             @subtotal2 * @framework_rates['M138']
           end
