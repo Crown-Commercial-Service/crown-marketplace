@@ -8,6 +8,7 @@ $(function () {
 
             if (null !== activeChooser) {
                 activeChooser.init();
+                activeChooser.PrimeBasket();
             }
         } catch (e) {
             console.log("No service chooser component found");
@@ -30,3 +31,4 @@ $(function () {
     }
 
 });
+
