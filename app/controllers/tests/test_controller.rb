@@ -29,12 +29,11 @@ module Tests
 
       data2 =
         {
-          'start_date' => start_date,
-          'contract-tupe-radio' => vals['tupe'] ? 'yes' : 'no',
-          'fm-contract-length' => vals['contract-length']
+          start_date: start_date,
+          is_tupe: vals['tupe'] ? 'yes' : 'no',
+          fm_contract_length: vals['contract-length']
         }
-      # set data2['posted_locations']
-      data2['posted_locations'] = vals.keys.select { |k| k.start_with?('region-') }.collect { |k| vals[k] }
+      data2[:posted_locations] = vals.keys.select { |k| k.start_with?('region-') }.collect { |k| vals[k] }
 
       b =
         {
@@ -55,10 +54,10 @@ module Tests
       posted_services.each do |s|
         uom_vals <<
           {
-            'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n',
-            'service_code' => s,
-            'uom_value' => vals['uom-' + s],
-            'building_id' => id,
+            user_id: 'dGVzdEBleGFtcGxlLmNvbQ==\n',
+            service_code: s,
+            uom_value: vals['uom-' + s],
+            building_id: id,
           }
       end
 
@@ -71,7 +70,8 @@ module Tests
         @report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name
         @results[supplier_name] = @report.direct_award_value
       end
-      # @report.direct_award_value
+
+      # p @results
     end
     # rubocop:enable Metrics/AbcSize
   end
