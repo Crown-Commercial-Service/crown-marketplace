@@ -27,8 +27,8 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
       context 'when on the last step' do
         let(:step) { 'tupe' }
 
-        it 'returns a route for the show page' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1')
+        it 'returns a route for the next edit step' do
+          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=services')
         end
       end
 

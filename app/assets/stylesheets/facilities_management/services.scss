@@ -1,0 +1,297 @@
+.browse .browse-panes:after {
+  content: "";
+  display: block;
+  clear: both
+}
+.browse .browse-panes:after {
+  content: "";
+  display: block;
+  clear: both
+}
+
+.browse .browse-panes {
+  padding-bottom: 30px;
+  position: relative
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes {
+    padding-top: 30px
+  }
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes.section .root-pane {
+    display: block;
+    float: left;
+    width: 30%
+  }
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes.section .section-pane {
+    float: left;
+    width: 70%;
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .browse .browse-panes.section .section-pane {
+    width: 70%;
+    margin-right: 0;
+  }
+}
+
+.browse .browse-panes .pane-inner {
+  padding-bottom: 30px
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes .pane-inner {
+    border-left: 1px solid #bfc1c3;
+    min-height: 950px
+  }
+}
+
+@media (min-width: 769px) {
+  .browse .browse-panes .pane-inner {
+    min-height: 700px
+  }
+}
+
+.browse .browse-panes h1 {
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 700;
+  text-transform: none;
+  font-size: 20px;
+  line-height: 1.1111111111;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  outline: none
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes h1 {
+    font-size: 27px;
+    line-height: 1.1111111111
+  }
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes h1,
+  .browse .browse-panes h2 {
+    margin-top: 0;
+    margin-bottom: 15px
+  }
+}
+
+.browse .browse-panes .root-pane,
+.browse .browse-panes .section-pane {
+  min-height: 20px
+}
+
+.browse .root-pane ul {
+  padding-inline-start: 0;
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes .root-pane h1,
+  .browse .browse-panes .section-pane h1{
+    padding-left: 15px
+  }
+}
+
+.browse .browse-panes .root-pane .sort-order,
+.browse .browse-panes .section-pane .sort-order {
+  display: none
+}
+
+.browse .browse-panes .root-pane ul li,
+.browse .browse-panes .section-pane ul li {
+  list-style: none;
+  position: relative
+}
+
+.browse .browse-panes .root-pane ul a,
+.browse .browse-panes .section-pane ul a.browse .browse-panes .section-pane ul a {
+  position: relative;
+  display: block;
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 16px;
+  line-height: 1.25;
+  text-decoration: none;
+  padding: 12px 25px 8px 0;
+}
+.browse-panes .root-pane .building-button {
+  color: black !important;
+}
+
+.browse-panes .root-pane li.active .building-button {
+  color: #fff !important;
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes .root-pane ul a,
+  .browse .browse-panes .section-pane ul a {
+    font-size: 19px;
+    line-height: 1.3157894737
+  }
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes .root-pane ul a,
+  .browse .browse-panes .section-pane ul a {
+    padding: 12px 30px 8px 15px;
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 1.1428571429
+  }
+}
+
+@media (min-width: 641px) and (min-width: 641px) {
+  .browse .browse-panes .root-pane ul a,
+  .browse .browse-panes .section-pane ul a {
+    font-size: 16px;
+    line-height: 1.25
+  }
+}
+
+.browse .browse-panes .root-pane ul a:hover,
+.browse .browse-panes .section-pane ul a:hover {
+  background: #dee0e2;
+  color: #005ea5
+}
+
+.browse .browse-panes .root-pane ul li.active a:after{
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  right: 10px;
+  float: left;
+  content: "\203A"
+}
+
+.browse .browse-panes .root-pane ul a.loading:after,
+.browse .browse-panes .section-pane ul a.loading:after {
+  content: ""
+}
+
+.browse .browse-panes .root-pane ul a h3,
+.browse .browse-panes .section-pane ul a h3 {
+  font-weight: bold
+}
+
+.browse .browse-panes .root-pane ul a p,
+.browse .browse-panes .section-pane ul a p {
+  color: #0b0c0c;
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 12px;
+  line-height: 1.25
+}
+
+@media (min-width: 641px) {
+  .browse .browse-panes .root-pane ul a p,
+  .browse .browse-panes .section-pane ul a p {
+    font-size: 14px;
+    line-height: 1.4285714286
+  }
+}
+
+.browse .browse-panes .root-pane ul .active a,
+.browse .browse-panes .section-pane ul .active a {
+  background: #005ea5;
+  color: #fff
+}
+
+.browse .browse-panes .root-pane ul .active a:hover,
+.browse .browse-panes .section-pane ul .active a:hover {
+  background: #005ea5
+}
+
+.browse .browse-panes .root-pane ul .active a p,
+.browse .browse-panes .section-pane ul .active a p {
+  color: #fff
+}
+
+.browse .browse-panes .section-pane {
+  z-index: 2;
+  background: #fff;
+  position: relative
+}
+
+@media (min-width: 769px) {
+  .browse .browse-panes .section-pane.with-sort .pane-inner {
+    padding-left: 30px
+  }
+  .browse .browse-panes .section-pane.with-sort .pane-inner.alphabetical {
+    padding-left: 96px
+  }
+  .browse .browse-panes .section-pane.with-sort .sort-order {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 20px;
+    line-height: 1.1111111111;
+    float: left;
+    display: block;
+    width: 75px;
+    margin-left: -90px;
+    padding: 11px 0 15px 15px
+  }
+}
+
+@media (min-width: 769px) and (min-width: 641px) {
+  .browse .browse-panes .section-pane.with-sort .sort-order {
+    font-size: 27px;
+    line-height: 1.1111111111
+  }
+}
+
+.browse .browse-panes .section-pane ul,
+.browse .browse-panes .root-pane ul{
+  padding: 0;
+  list-style: none
+}
+
+.browse-container {
+  background-color: #fff;
+  min-height: 500px;
+  padding: 0 0 45px 0
+}
+
+.browse-container h3 {
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 700;
+  text-transform: none;
+  font-size: 16px;
+  line-height: 1.25;
+  margin-bottom: 0
+}
+
+.hidden-pane {
+  display: none
+}
+
+@media (min-width: 641px) {
+   .browse-container h3 {
+    font-size: 19px;
+    line-height: 1.3157894737
+  }
+}
+
+@media (max-width: 640px) {
+  .browse-container {
+    padding: 0 0 30px 0;
+    min-height: auto
+  }
+}
+.browse .browse-panes .root-pane ul a.govuk-link--no-visited-state {
+  text-decoration: underline;
+}
