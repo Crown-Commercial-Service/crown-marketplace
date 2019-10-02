@@ -1,5 +1,12 @@
 ---
 en:
+  activerecord:
+    errors:
+      models:
+        facilities_management/procurement_building:
+          attributes:
+            service_codes:
+              invalid: Select at least one service for each building
   facilities_management:
     basket:
       basket_header: selected
@@ -74,6 +81,10 @@ en:
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
+          services:
+            content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don't already appear on your shortlist.
+            heading: What facilities management services do you need for each building?
+            your_buildings: Your buildings
           tupe:
             body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
