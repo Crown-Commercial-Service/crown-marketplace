@@ -5,10 +5,12 @@
     </h2>
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
-        <% errors.keys.each do |attribute| %>
-          <li>
-            <%= link_to errors[attribute].first, "##{error_id(attribute)}" %>
-          </li>
+        <% errors.keys.each do |attribute|%>
+          <% errors[attribute].each do |err|%>
+            <li>
+              <%= link_to "#{attribute} #{err}", "##{error_id(attribute)}" %>
+            </li>
+          <% end  %>
         <% end %>
       </ul>
     </div>

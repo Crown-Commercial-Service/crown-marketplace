@@ -1,10 +1,8 @@
 <a href="<%= request.referer %>" class="govuk-back-link">Back</a>
+<%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors } %>
 <h1 class="govuk-heading-xl"><%= t('.search_results') %></h1>
 <p class="govuk-caption-l"><%= t('.search_result_body_html') %></p>
-<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { novalidate:true, multipart: true } do |f| %>
-  <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
-    <%= display_errors(@procurement, :name) %>
-  <% end %>
+<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { novalidate: true, specialvalidation: true, multipart: true } do |f| %>
   <div class="procurement govuk-row">
     <%= render partial: 'quick_search_form', locals: { f: f } %>
     <div class="govuk-row">
@@ -16,8 +14,3 @@
   </div>
 <% end %>
 
-<script type="text/javascript" charset="utf-8" async="false" defer="defer">
-    window.addEventListener("load", function () {
-        QuickSearchResultsAssistant.init("procurement", "new", "facilities_management");
-    });
-</script>

@@ -1,7 +1,10 @@
 function FormValidationComponent (formDOMObject, validationCallback) {
     this.form = formDOMObject;
-    this.validator = validationCallback == undefined ? this.validateForm : validationCallback;
-    this.validationResult = true;
+    if ( null != formDOMObject && null == this.form.formValidator && this.form.getAttribute('specialvalidation') != true ) {
+        this.form.formValidator = this;
+        this.validator = validationCallback == undefined ? this.validateForm : validationCallback;
+        this.validationResult = true;
+    }
 }
 
 FormValidationComponent.prototype.init = function () {

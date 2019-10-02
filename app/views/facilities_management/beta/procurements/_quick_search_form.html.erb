@@ -1,4 +1,4 @@
-<div class="govuk-grid-row">
+<div class="govuk-grid-row quicksearchassistant" action="<%= params[:action]%>" classification="procurement" module="facilities_management">
   <div class="govuk-grid-column-full">
     <div class="govuk-grid-row">
       <%= render partial: 'filter_details', locals: { form: f } %>
@@ -17,16 +17,16 @@
         <p class="govuk-caption-l"><%= t('.save_text') %></p>
       </div>
       <div class="govuk-grid-row">
+        <%= govuk_form_field @procurement, f, :name, t('.new_name_label'), {'data-module' => 'character-count', 'data-maxlength' => 100}, {:class => 'govuk-input--width-20'} do%>
+          <%= validation_error(@procurement, :name, :too_long, t('.name_text_length_warning') ) %>
+          <%= validation_error(@procurement, :name, :too_short, t('.name_text_required') ) %>
+        <%end %>
         <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
           <div class="govuk-form-group">
             <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
-            <div class="govuk-error-message govuk-visually-hidden" data-validation="maxlength">
-              <span><%= t('.name_text_length_warning') %></span>
-            </div>
-            <div class="govuk-error-message govuk-visually-hidden" data-validation="required">
-              <span><%= t('.name_text_required') %></span>
-            </div>
-            <%= f.text_field :name, maxlength: 100, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
+            <%= validation_error(@procurement, :name, :too_long, t('.name_text_length_warning') ) %>
+            <%= validation_error(@procurement, :name, :too_short, t('.name_text_required') ) %>
+            <%= f.text_field :name, maxlength: 150, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
           </div>
         </div>
       </div>

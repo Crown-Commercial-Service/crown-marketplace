@@ -41,6 +41,58 @@ module ApplicationHelper
     mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
+  def govuk_form_field ( model_object, form, attribute, label_text, top_level_options, field_options)
+    css_classes = %w[govuk-caption-m govuk-!-margin-top-3]
+    field_css_classes = %w[govuk-input]
+    form_group_css = ['govuk-form-group']
+    form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
+
+    if top_level_options.key?('data-module') && top_level_options['data-module'] == 'character-count'
+      field_css_classes += ['js-character-count']
+    end
+
+    content_tag :div, class: css_classes do
+      content_tag :div, class: form_group_css do
+        content_tag :label, attribute, label_text, class: 'govuk-label'
+        content_tag :div do
+          yield
+        end
+        form.text_field attribute, class: field_css_classes, options: field_options
+      end
+    end
+  end
+
+  def model_has_error_type? model_object, property, error_type
+    type_exists = false
+
+    if model_object.errors.any?
+      if model_object.errors.details[property].any?
+        model_object.errors.details[property].each do |err|
+          type_exists = err[:error] == error_type
+          break if type_exists
+        end
+      end
+    end
+
+    type_exists
+  end
+
+  def validation_error ( model_object, attribute, error_type, text)
+    attribute_has_errors = model_has_error_type? model_object, attribute, error_type
+
+    tag_validation_type = ''
+    css_classes = ['govuk-error-message']
+    css_classes += ['govuk-visually-hidden'] unless attribute_has_errors
+    case error_type
+    when :too_short
+      tag_validation_type = 'required'
+    when :too_long
+      tag_validation_type = 'maxlength'
+    end
+
+    content_tag :div, content_tag(:span, text), class: css_classes, 'data-validation'.to_sym => tag_validation_type
+  end
+
   def govuk_form_group_with_optional_error(journey, *attributes)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 

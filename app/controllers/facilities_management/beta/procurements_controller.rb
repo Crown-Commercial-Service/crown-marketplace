@@ -12,10 +12,7 @@ module FacilitiesManagement
       end
 
       def new
-        set_suppliers(params[:region_codes], params[:service_codes])
-        find_regions(params[:region_codes])
-        find_services(params[:service_codes])
-
+        establish_data_requirements_from_params
         @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
       end
 
@@ -25,14 +22,14 @@ module FacilitiesManagement
         if @procurement.save(context: :name)
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
+          # establish_data_requirements_from_create_params
+          establish_data_requirements_from_procurement
           render :new
         end
       end
 
       def edit
-        set_suppliers(@procurement.region_codes, @procurement.service_codes)
-        find_regions(@procurement.region_codes)
-        find_services(@procurement.service_codes)
+        establish_data_requirements_from_procurement
 
         if @procurement.quick_search?
           render :edit
@@ -67,6 +64,20 @@ module FacilitiesManagement
       end
 
       private
+
+      def establish_data_requirements_from_params
+        establish_data_requirements params[:region_codes], params[:service_codes]
+      end
+
+      def establish_data_requirements_from_procurement
+        establish_data_requirements @procurement.region_codes, @procurement.service_codes
+      end
+
+      def establish_data_requirements region_collection, service_collection
+        set_suppliers(region_collection, service_collection)
+        find_regions(region_collection)
+        find_services(service_collection)
+      end
 
       def procurement_params
         params.require(:facilities_management_procurement)

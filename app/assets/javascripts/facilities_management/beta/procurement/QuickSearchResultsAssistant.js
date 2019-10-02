@@ -57,3 +57,10 @@ const QuickSearchResultsAssistant = {
         }
     }
 };
+$(function () {
+    jqDiv = $('.quicksearchassistant');
+    if ( jqDiv.length > 0 ) {
+        jqDiv = jqDiv[0];
+        //QuickSearchResultsAssistant.init(jqDiv.getAttribute('classification'), jqDiv.getAttribute('action'), jqDiv.getAttribute('module' ));
+    }
+})();
