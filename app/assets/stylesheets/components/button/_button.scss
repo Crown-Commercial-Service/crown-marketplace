@@ -103,7 +103,7 @@ $offset: 4;
   color: #0b0c0c
 }
 
-.govuk-button--secondary:hover {
+.govuk-button--secondary:hover, .govuk-button--secondary:focus{
   background-color: #dbdad9
 }
 
