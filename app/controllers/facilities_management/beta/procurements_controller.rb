@@ -1,7 +1,10 @@
+require 'facilities_management/fm_buildings_data'
+
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FacilitiesManagement::FrameworkController
       before_action :set_procurement, only: %i[show edit update destroy]
+      before_action :user_buildings_count, only: %i[show edit]
 
       def index
         @procurements = current_user.procurements
@@ -25,6 +28,9 @@ module FacilitiesManagement
         if @procurement.save(context: :name)
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
+          set_suppliers(@procurement.region_codes, @procurement.service_codes)
+          find_regions(@procurement.region_codes)
+          find_services(@procurement.service_codes)
           render :new
         end
       end
@@ -111,6 +117,10 @@ module FacilitiesManagement
 
       def set_step_param
         params[:step] = params[:facilities_management_procurement][:step] if @procurement.detailed_search?
+      end
+
+      def user_buildings_count
+        @building_count = FMBuildingData.new.get_count_of_buildings(current_user.email.to_s)
       end
     end
   end

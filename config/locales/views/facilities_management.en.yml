@@ -69,10 +69,17 @@ en:
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
+          tupe:
+            body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
+            first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
+            tupe_title: TUPE
+            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees<br /> when the business or commercial contract that they are working on changes to new ownership. It ensures<br /> that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br /> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
+            what_you_need_to_know_title: What you need to know about TUPE
         filter_details:
           apply_filters: Apply filters
           change_add_region: Change/Add region
           change_add_service: Change/Add service
+          edit_filters: Show filter
           hide_filters: Hide filter
           region: Region
           service: Service
