@@ -23,6 +23,8 @@ FilterComponent.prototype.UpdateCounts = function () {
     this._filterHelper.forEach(function (x) {
         countTotal += x.updateCount();
     });
+
+    return countTotal;
 };
 FilterComponent.prototype.ConnectCheckboxes = function ( callback ) {
     let procHelper = this;
@@ -122,7 +124,7 @@ function FilterSectionComponent(baseClassName, filterPanelName, sectionName) {
     this._sectionIdentifier = "." + this._baseClass + " ." + this._filterPanelControlName + " ." + this._sectionName + ".data-section";
     if ("" + sectionName != "" ) {
         this.sectionCheckboxes = $(this._sectionIdentifier + " input[name='facilities_management_" + this._baseClass + "[" + this._sectionName + "_codes][]']");
-        this.sectionCounterTextField = $('#proc-' + this._sectionName + '-count');
+        this.sectionCounterTextField = $('#sproc-' + this._sectionName + '-count');
     }
 }
 FilterSectionComponent.prototype.GetSelectedCheckboxes = function (){
@@ -159,6 +161,7 @@ FilterSectionComponent.prototype.updateCount = function () {
             sectionCount++;
         }
     }) ;
+    
     this.sectionCounterTextField.text(sectionCount + " selected");
     return this.sectionCheckboxes.length;
 };
