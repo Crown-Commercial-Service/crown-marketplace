@@ -23,6 +23,8 @@ FilterComponent.prototype.UpdateCounts = function () {
     this._filterHelper.forEach(function (x) {
         countTotal += x.updateCount();
     });
+
+    return countTotal;
 };
 FilterComponent.prototype.ConnectCheckboxes = function ( callback ) {
     let procHelper = this;
@@ -40,16 +42,17 @@ FilterComponent.prototype.onToggleButtonClick = function (filterEvent) {
     if ( filterPane != null && filterTarget != null ) {
         let targetSection = filterTarget.jqueryObject;
         let filterButton = filterEvent.jqueryObject;
+        let curText = filterButton.text();
 
         if ( filterEvent.IsHidden ) {
             filterPane.jqueryObject.attr('hidden', true);
-            filterButton.text('Show filters');
             targetSection.removeClass('govuk-grid-column-two-thirds')
         } else {
             filterPane.jqueryObject.attr('hidden', false);
-            filterButton.text('Hide filters');
             targetSection.addClass('govuk-grid-column-two-thirds')
         }
+        filterButton.text(filterButton.attr('alt-text'));
+        filterButton.attr('alt-text', curText);
     }
 };
 FilterComponent.prototype.checkboxChangedHandler = function( checkboxEvent, clientCallback ) {
@@ -121,7 +124,7 @@ function FilterSectionComponent(baseClassName, filterPanelName, sectionName) {
     this._sectionIdentifier = "." + this._baseClass + " ." + this._filterPanelControlName + " ." + this._sectionName + ".data-section";
     if ("" + sectionName != "" ) {
         this.sectionCheckboxes = $(this._sectionIdentifier + " input[name='facilities_management_" + this._baseClass + "[" + this._sectionName + "_codes][]']");
-        this.sectionCounterTextField = $('#proc-' + this._sectionName + '-count');
+        this.sectionCounterTextField = $('#sproc-' + this._sectionName + '-count');
     }
 }
 FilterSectionComponent.prototype.GetSelectedCheckboxes = function (){
@@ -158,6 +161,7 @@ FilterSectionComponent.prototype.updateCount = function () {
             sectionCount++;
         }
     }) ;
+    
     this.sectionCounterTextField.text(sectionCount + " selected");
     return this.sectionCheckboxes.length;
 };
