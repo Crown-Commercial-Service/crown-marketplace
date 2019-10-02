@@ -93,7 +93,8 @@ ChooserComponent.prototype.handleBasketRemove = function (groupID, value) {
         total_count: this.GetTotalCount(),
         selected_count: this.GetSelectedCount()
     };
-    this._basketContainer.UpdateBasketNumber(chooserEvent.selected_count);
+
+    this._basketContainer.UpdateBasketNumber ( chooserEvent.selected_count );
     this._checkboxCallback(chooserEvent);
 };
 ChooserComponent.prototype.GetValidStatus = function () {
@@ -221,12 +222,14 @@ function BasketComponent(baseClass, classification, jqueryObject, removeHandler)
     this.jqueryObject = jqueryObject;
     this.jqRemoveAll = null;
     this.list = null;
+    this.removeAllBtn = null;
     this.onRemove = removeHandler ? removeHandler : this.onRemove;
     this.init();
 }
 
 BasketComponent.prototype.init = function () {
     this.list = this.jqueryObject.find("ul");
+
     this.jqRemoveAll = this.jqueryObject.find("a.remove-link");
     if (this.jqRemoveAll.length > 0) {
         this.jqRemoveAll.on('click', this.RemoveAll.bind(this));
@@ -241,7 +244,8 @@ BasketComponent.prototype.AddItem = function (itemToAdd) {
     let selectedID = itemToAdd.code + '_basket';
     let removeLinkID = itemToAdd.code + '_removeLink';
 
-    let newLI = '<li style="word-break: keep-all; margin-top: 0;" groupid="' + itemToAdd.groupId + '" class="govuk-list" id="' + selectedID + '">' +
+
+    let newLI = '<li style="margin-top:0; word-break: keep-all;" groupid="' + itemToAdd.groupId + '" class="govuk-list" id="' + selectedID + '">' +
         '<div style="float:right;"><span class="remove-link">' +
         '<a data-no-turbolink id="' + removeLinkID + '" groupid="' + itemToAdd.groupId + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a>' +
         '</span></div>' +
@@ -260,7 +264,8 @@ BasketComponent.prototype.AddItem = function (itemToAdd) {
     }
 };
 BasketComponent.prototype.clear = function () {
-    this.list[0].innerHTML = "";
+  this.list[0].innerHTML = "";
+  this.UpdateBasketNumber(0);
 };
 BasketComponent.prototype.clearByGroupID = function (groupID) {
     let item = null;
