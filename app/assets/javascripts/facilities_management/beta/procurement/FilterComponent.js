@@ -40,16 +40,17 @@ FilterComponent.prototype.onToggleButtonClick = function (filterEvent) {
     if ( filterPane != null && filterTarget != null ) {
         let targetSection = filterTarget.jqueryObject;
         let filterButton = filterEvent.jqueryObject;
+        let curText = filterButton.text();
 
         if ( filterEvent.IsHidden ) {
             filterPane.jqueryObject.attr('hidden', true);
-            filterButton.text('Show filters');
             targetSection.removeClass('govuk-grid-column-two-thirds')
         } else {
             filterPane.jqueryObject.attr('hidden', false);
-            filterButton.text('Hide filters');
             targetSection.addClass('govuk-grid-column-two-thirds')
         }
+        filterButton.text(filterButton.attr('alt-text'));
+        filterButton.attr('alt-text', curText);
     }
 };
 FilterComponent.prototype.checkboxChangedHandler = function( checkboxEvent, clientCallback ) {

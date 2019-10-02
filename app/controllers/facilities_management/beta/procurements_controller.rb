@@ -28,6 +28,9 @@ module FacilitiesManagement
         if @procurement.save(context: :name)
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
+          set_suppliers(@procurement.region_codes, @procurement.service_codes)
+          find_regions(@procurement.region_codes)
+          find_services(@procurement.service_codes)
           render :new
         end
       end
