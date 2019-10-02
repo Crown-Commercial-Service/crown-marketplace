@@ -1,15 +1,13 @@
 <div class="govuk-grid-row">
-  <h1 class="govuk-heading-xl">TUPE</h1>
+  <h1 class="govuk-heading-xl"><%= t('.tupe_title') %></h1>
 </div>
 
 <div class="govuk-grid-row govuk-!-margin-top-3">
   <span class="govuk-heading-s govuk-!-margin-bottom-0">
-    Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
+    <%= t('.first_question') %>
   </span>
   <span class="govuk-caption-m govuk-!-margin-top-0">
-    When a supplier changes, the original service provider's workers may be protected under TUPE.<br>
-    For example, a new supplier is awarded the contract to provide provide cleaning services to a building.<br>
-    The cleaners, who are employed by the current service provider, may be protected under TUPE.
+    <%= t('.body_text_html') %>
   </span>
 </div>
 
@@ -17,14 +15,11 @@
   <details class="govuk-details" data-module="govuk-details">
     <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
-      What you need to know about TUPE
+      <%= t('.what_you_need_to_know_title') %>
     </span>
     </summary>
     <div class="govuk-details__text">
-      TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees<br>
-      when the business or commercial contract that they are working on changes to new ownership. It ensures<br>
-      that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br>
-      of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
+      <%= t('.what_you_need_to_know_html') %>
     </div>
   </details>
 </div>
