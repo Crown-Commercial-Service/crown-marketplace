@@ -11,7 +11,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       'region' => 'London',
       'address' => { 'fm-address-town' => 'London', 'fm-address-line-1' => '151 Buckingham Palace Road', 'fm-address-postcode' => 'SW1W 9SZ' },
       'isLondon' => 'No',
-      'fm-building-type' => 'General office - Customer Facing' }
+      :fm_building_type => 'General office - Customer Facing' }
   end
 
   let(:building2) do
@@ -138,7 +138,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         { 'code' => 'N-1', 'name' => 'Helpdesk services' },
         { 'code' => 'O-1', 'name' => 'Management of billable works' }
       ],
-      'fm-building-type' => 'Residential Buildings' }
+      fm_building_type: 'Residential Buildings' }
   end
 
   let(:building3) do
@@ -263,7 +263,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         { 'code' => 'N-1', 'name' => 'Helpdesk services' },
         { 'code' => 'O-1', 'name' => 'Management of billable works' }
       ],
-      'fm-building-type' => 'General office - Customer Facing' }
+      fm_building_type: 'General office - Customer Facing' }
   end
 
   let(:buildings) do
@@ -280,25 +280,23 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
 
   let(:building3_services_for_procurement_1) do
-
   end
 
   let(:procurement_1) do
     OpenStruct.new(
-        name: 'Procurement 1',
-        buildings_and_services: [ [building3, services: [] ] ] )
+      name: 'Procurement 1',
+      buildings_and_services: [[building3, services: []]]
+    )
   end
 
   it 'can model services' do
-    FacilitiesManagement::Service.all.sort_by { |s| [ s.work_package_code, s.code[ s.code.index('.') + 1..-1 ].to_i  ] }.each do |service|
-
+    FacilitiesManagement::Service.all.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |service|
       # p service
-
     end
   end
 
+  # rubocop:disable RSpec/ExampleLength
   it 'can calculate a direct award procurement' do
-
     p '*********'
     p CCS::FM::UnitsOfMeasurement.all.count
     p '*********'
@@ -307,26 +305,93 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     uom2 = {}
     uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
 
-    FacilitiesManagement::Service.all
-        .sort_by { |s| [ s.work_package_code, s.code[ s.code.index('.') + 1..-1 ].to_i  ] }.each do |service|
+    FacilitiesManagement::Service
+      .all
+      .sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |service|
 
       p service
-
       p '  has uom ' if uom2[service.code]
-
     end
 
+    p FacilitiesManagement::Service.all.map(&:code)
 
-    p "There are #{uom2.count} service with a specific * units of measure *"
+    # ----------
+    region_codes = Nuts3Region.all.map(&:code)
+
+    p Nuts3Region.all.first.inspect
+    p region_codes
+
+    # ----------
+
+    # input params
+    vals = {}
+    vals['tupe'] = 'no' # 'yes' : 'no',
+    vals['contract-length'] = 3
+    vals['gia'] = 12345
+    vals['isLondon'] = true
+    id = SecureRandom.uuid
+
+    p 'procurement info'
+
+    start_date = DateTime.now.utc
+    procurement =
+      {
+        'start_date' => start_date,
+        'is-tupe' => vals['tupe'] ? 'yes' : 'no',
+        'fm-contract-length' => vals['contract-length']
+      }
+    # set data2['posted_locations']
+    procurement[:posted_locations] = ['UKC14', 'UKC21', 'UKC22', 'UKD11']
+    # procurement['posted_locations'] = vals.keys.select { |k| k.start_with?('region-') }.collect { |k| vals[k] }
 
     p 'Buildings info'
+    b =
+      {
+        id: id,
+        gia: vals['gia'].to_f,
+        isLondon: vals['isLondon'] ? 'Yes' : 'No',
+        fm_building_type: 'General office - Customer Facing'
+      }
 
+    all_buildings =
+      [
+        OpenStruct.new(building_json: b)
+      ]
 
-    # except(true).to eq false
-    expect(true).to eq(true)
+    p "There are #{uom2.count} services with a specific * units of measure *"
+    p "There are #{Nuts3Region.all.count} NUTS3 regions"
+
+    # --------
+    rate_card = CCS::FM::RateCard.latest
+    rates = CCS::FM::Rate.read_benchmark_rates
+
+    # ------
+    uom_vals = []
+    # posted_services = FacilitiesManagement::Service.all.map(&:code)
+    posted_services = uom2.keys
+    posted_services.each do |s|
+      uom_vals <<
+        {
+          user_id: 'test@example.com',
+          service_code: s,
+          uom_value: 10,
+          building_id: id,
+        }
+    end
+    # ------
+
+    report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', procurement)
+
+    results = {}
+    supplier_names = rate_card.data['Prices'].keys
+    supplier_names.each do |supplier_name|
+      # dummy_supplier_name = 'Hickle-Schinner'
+      report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name
+      results[supplier_name] = report.direct_award_value
+    end
+
+    p report.direct_award_value
+    expect(report.direct_award_value).to be > -1
   end
-
-
-
-
+  # rubocop:enable RSpec/ExampleLength
 end

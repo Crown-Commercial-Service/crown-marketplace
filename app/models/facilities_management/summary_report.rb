@@ -2,7 +2,6 @@ module FacilitiesManagement
   class SummaryReport
     attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions
 
-    # rubocop:disable Metrics/PerceivedComplexity
     def initialize(start_date, user_id, data)
       @start_date = start_date
       @user_id = user_id
@@ -14,19 +13,14 @@ module FacilitiesManagement
           data['posted_services']
         end
 
-      @posted_locations =
-        if data['fm-locations']
-          data['fm-locations'].collect { |x| x['code'] }
-        else
-          data['posted_locations']
-        end
+      @posted_locations = data[:posted_locations]
 
-      @contract_length_years = data['fm-contract-length'].to_i
+      @contract_length_years = data[:fm_contract_length].to_i
       @contract_cost = data['fm-contract-cost'].to_f
 
       @tupe_flag =
         begin
-          if data['contract-tupe-radio'] == 'yes'
+          if data[:is_tupe] == 'yes'
             'Y'
           else
             'N'
@@ -40,7 +34,6 @@ module FacilitiesManagement
 
       regions
     end
-    # rubocop:enable Metrics/PerceivedComplexity
 
     def user_buildings
       CCS::FM::Building.buildings_for_user(@user_id)
@@ -56,8 +49,9 @@ module FacilitiesManagement
       uvals ||= uom_values(selected_buildings) unless
 
       selected_buildings.each do |building|
-        id = building['building_json']['id']
-        vals_per_building = services(building.building_json, (uvals.select { |u| u['building_id'] == id }),
+        building_json = building['building_json'].deep_symbolize_keys
+        id = building_json[:id]
+        vals_per_building = services(building.building_json, (uvals.select { |u| u[:building_id] == id }),
                                      rates, rate_card, supplier_name)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark]
@@ -172,13 +166,13 @@ module FacilitiesManagement
 
         lifts_per_building.each do |b|
           b['lift_data']['lift_data']['floor-data'].each do |l|
-            uvals << { 'user_id' => b['user_id'],
-                       'service_code' => 'C.5',
-                       'uom_value' => l.first[1],
-                       'building_id' => b['building_id'],
-                       'title_text' => lifts_title_text,
-                       'example_text' => lifts_example_text,
-                       'spreadsheet_label' => 'The sum total of number of floors per lift' }
+            uvals << { user_id: b['user_id'],
+                       service_code: 'C.5',
+                       uom_value: l.first[1],
+                       building_id: b['building_id'],
+                       title_text: lifts_title_text,
+                       example_text: lifts_example_text,
+                       spreadsheet_label: 'The sum total of number of floors per lift' }
           end
         end
       end
@@ -191,13 +185,13 @@ module FacilitiesManagement
           next unless CCS::FM::Service.gia_services.include? s['code']
 
           s_dot = s['code'].gsub('-', '.')
-          uvals << { 'user_id' => b['user_id'],
-                     'service_code' => s_dot,
-                     'uom_value' => b['building_json']['gia'].to_f,
-                     'building_id' => b['building_json']['id'],
-                     'title_text' => 'What is the total internal area of this building?',
-                     'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
-                     'spreadsheet_label' => 'Square Metre (GIA) per annum' }
+          uvals << { user_id: b['user_id'],
+                     service_code: s_dot,
+                     uom_value: b[:building_json][:gia].to_f,
+                     building_id: b[:building_json][:id],
+                     title_text: 'What is the total internal area of this building?',
+                     example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
+                     spreadsheet_label: 'Square Metre (GIA) per annum' }
         end
       end
 
@@ -284,6 +278,9 @@ module FacilitiesManagement
       sum_uom = 0.0
       sum_benchmark = 0.0
 
+      building_data.deep_symbolize_keys!
+      uvals.map!(&:deep_symbolize_keys)
+
       copy_params building_data, uvals
 
       uvals.each do |v|
@@ -295,19 +292,19 @@ module FacilitiesManagement
         # puts service.work_package.code
         # puts service.work_package.name
 
-        uom_value = v['uom_value'].to_f
+        uom_value = v[:uom_value].to_f
 
         # occupants = occupants(v['service_code'], building_data)
-        if v['service_code'] == 'G.3' || (v['service_code'] == 'G.1')
-          occupants = v['uom_value'].to_i
-          uom_value = building_data['gia']
+        if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
+          occupants = v[:uom_value].to_i
+          uom_value = building_data[:gia]
         else
           occupants = 0
         end
 
         # code = v['service_code'].remove('.')
         calc_fm = FMCalculator::Calculator.new(@contract_length_years,
-                                               v['service_code'],
+                                               v[:service_code],
                                                uom_value,
                                                occupants,
                                                @tupe_flag,
