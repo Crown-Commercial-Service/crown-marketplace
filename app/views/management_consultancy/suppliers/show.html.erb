@@ -80,7 +80,7 @@
         <dt><%= t('.contact_details.phone_number') %></dt>
         <dd><%= @supplier.telephone_number %></dd>
         <dt><%= t('.contact_details.website') %></dt>
-        <dd><%= link_to(@supplier.website, @supplier.website) if @supplier.website %></dd>
+        <dd><%= link_to(@supplier.website, url_formatter(@supplier.website)) if @supplier.website %></dd>
         <dt><%= t('.contact_details.address') %></dt>
         <dd><%= @supplier.address %></dd>
       </dl>
