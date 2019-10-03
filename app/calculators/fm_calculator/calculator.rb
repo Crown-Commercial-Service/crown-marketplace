@@ -1,5 +1,5 @@
 require 'holidays'
-require 'pg'
+# require 'pg'
 
 # rubocop:disable Metrics/ParameterLists (with a s)
 # rubocop:disable Metrics/AbcSize
@@ -56,8 +56,14 @@ module FMCalculator
 
       @benchmark_rates = rates[:benchmark_rates]
       @framework_rates = rates[:framework_rates]
-      @rate_card = rate_card
+
       @supplier_name = supplier_name
+      if supplier_name
+        @rate_card_discounts = rate_card.data['Discounts'][@supplier_name]
+        @rate_card_variances = rate_card.data['Variances'][@supplier_name]
+        @rate_card_prices = rate_card.data['Prices'][@supplier_name]
+      end
+
       @building_data = building_data
     end
 
@@ -69,8 +75,8 @@ module FMCalculator
       @benchmark_rate = @benchmark_rates[@service_ref].to_f
 
       @uomd =
-        if @supplier_name && @rate_card.data['Discounts'][@supplier_name][@service_ref]
-          (1 - @rate_card.data['Discounts'][@supplier_name][@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card.data['Prices'][@supplier_name][@service_ref][@building_data[:fm_building_type]].to_f
+        if @supplier_name && @rate_card_discounts[@service_ref]
+          (1 - @rate_card_discounts[@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref][@building_data[:fm_building_type]].to_f
         else
           @uom_vol * @framework_rate
         end
@@ -82,7 +88,7 @@ module FMCalculator
     def clean
       @clean =
         if @supplier_name
-          @occupants * @rate_card.data['Variances'][@supplier_name]['Cleaning Consumables per Building User (£)']
+          @occupants * @rate_card_variances['Cleaning Consumables per Building User (£)']
         else
           @occupants * @framework_rates['M146']
         end
@@ -98,7 +104,7 @@ module FMCalculator
       if @london_flag == 'Y'
         @variance =
           if @supplier_name
-            @subtotal1 * @rate_card.data['Variances'][@supplier_name]['London Location Variance Rate (%)'].to_f
+            @subtotal1 * rate_card_variances['London Location Variance Rate (%)'].to_f
           else
             @subtotal1 * @benchmark_rates['M144'].to_f
           end
@@ -117,7 +123,7 @@ module FMCalculator
       if @cafm_flag == 'Y'
         @cafm =
           if @supplier_name
-            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data[:fm_building_type]].to_f
+            @subtotal2 * @rate_card_prices['M.1'][@building_data[:fm_building_type]].to_f
           else
             @subtotal2 * @framework_rates['M136']
           end
@@ -131,7 +137,7 @@ module FMCalculator
       if @helpdesk_flag == 'Y'
         @helpdesk =
           if @supplier_name
-            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data[:fm_building_type]].to_f
+            @subtotal2 * @rate_card_prices['M.1'][@building_data[:fm_building_type]].to_f
           else
             @subtotal2 * @framework_rates['M138']
           end
@@ -149,7 +155,7 @@ module FMCalculator
     def mobilisation
       @mobilisation =
         if @supplier_name
-          @subtotal3 * @rate_card.data['Variances'][@supplier_name]['Mobilisation Cost (DA %)'].to_f
+          @subtotal3 * @rate_card_variances['Mobilisation Cost (DA %)'].to_f
         else
           @subtotal3 * @framework_rates['M5']
         end
@@ -160,7 +166,7 @@ module FMCalculator
       if @tupe_flag == 'Y'
         @tupe =
           if @supplier_name
-            @subtotal3 * @rate_card.data['Variances'][@supplier_name]['TUPE Risk Premium (DA %)'].to_f
+            @subtotal3 * @rate_card_variances['TUPE Risk Premium (DA %)'].to_f
           else
             @subtotal3 * @framework_rates['M148']
           end
@@ -178,7 +184,7 @@ module FMCalculator
     def manage
       @manage =
         if @supplier_name
-          @year1 * @rate_card.data['Variances'][@supplier_name]['Management Overhead %']
+          @year1 * @rate_card_variances['Management Overhead %']
         else
           @year1 * @framework_rates['M140']
         end
@@ -188,7 +194,7 @@ module FMCalculator
     def corporate
       @corporate =
         if @supplier_name
-          @year1 * @rate_card.data['Variances'][@supplier_name]['Corporate Overhead %']
+          @year1 * @rate_card_variances['Corporate Overhead %']
         else
           @year1 * @framework_rates['M141']
         end
@@ -203,7 +209,7 @@ module FMCalculator
     def profit
       @profit =
         if @supplier_name
-          @year1 * @rate_card.data['Variances'][@supplier_name]['Profit %']
+          @year1 * @rate_card_variances['Profit %']
         else
           @year1 * @framework_rates['M142']
         end
@@ -220,9 +226,9 @@ module FMCalculator
         if @supplier_name
           @subsequent_length_years *
             (@year1totalcharges -
-              (((@mobilisation + (@mobilisation * @rate_card.data['Variances'][@supplier_name]['Management Overhead %']) +
-                (@mobilisation * @rate_card.data['Variances'][@supplier_name]['Corporate Overhead %'])) *
-                  (@rate_card.data['Variances'][@supplier_name]['Profit %'] + 1))))
+              (((@mobilisation + (@mobilisation * @rate_card_variances['Management Overhead %']) +
+                (@mobilisation * @rate_card_variances['Corporate Overhead %'])) *
+                  (@rate_card_variances['Profit %'] + 1))))
         else
           @subsequent_length_years * (@year1totalcharges - (((@mobilisation + (@mobilisation * @framework_rates['M140']) + (@mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
         end
