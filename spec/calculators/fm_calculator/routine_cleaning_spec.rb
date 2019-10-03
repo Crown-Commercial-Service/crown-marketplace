@@ -16,42 +16,42 @@ require 'fm_calculator/calculator'
     describe 'calculate routine cleaning'
     it 'calculate routine cleaning' do
 
-      x = @calc.uomd
-      expect(x.round(0)).to eq(277491)
-      x = @calc.clean
-      expect(x.round(0)).to eq(3276)
-      x = @calc.subtotal1
-      expect(x.round(0)).to eq(280767)
-      x = @calc.variance
-      expect(x.round(0)).to eq(52816)
-      x = @calc.subtotal2
-      expect(x.round(0)).to eq(333583)
-      x = @calc.cafm
-      expect(x.round(0)).to eq(4850)
-      x = @calc.helpdesk
-      expect(x.round(0)).to eq(0)
-      x = @calc.subtotal3
-      expect(x.round(0)).to eq(338433)
-      x = @calc.mobilisation
-      expect(x.round(0)).to eq(21998)
-      x = @calc.tupe
-      expect(x.round(0)).to eq(35142)
-      x = @calc.year1
-      expect(x.round(0)).to eq(395573)
-      x = @calc.manage
-      expect(x.round(0)).to eq(39915)
-      x = @calc.corporate
-      expect(x.round(0)).to eq(19709)
-      x = @calc.year1total
-      expect(x.round(0)).to eq(455197)
-      x = @calc.profit
-      expect(x.round(0)).to eq(21472)
-      x = @calc.year1totalcharges
-      expect(x.round(0)).to eq(476668)
-      x = @calc.subyearstotal
-      x = @calc.totalcharges
-      # expect(x).to eq(899962)
-      # expect(x).to eq(1376631)
+      uomd = @calc.uomd
+      expect(uomd.round(0)).to eq(277491)
+      clean = @calc.clean
+      expect(clean.round(0)).to eq(3276)
+      subtotal1 = uomd + clean
+      expect(subtotal1.round(0)).to eq(280767)
+      variance = @calc.variance(subtotal1)
+      expect(variance.round(0)).to eq(52816)
+      subtotal2 = subtotal1 + variance
+      expect(subtotal2.round(0)).to eq(333583)
+      cafm = @calc.cafm(subtotal2)
+      expect(cafm.round(0)).to eq(4850)
+      helpdesk = @calc.helpdesk(subtotal2)
+      expect(helpdesk.round(0)).to eq(0)
+      subtotal3 = subtotal2 + cafm + helpdesk
+      expect(subtotal3.round(0)).to eq(338433)
+      mobilisation = @calc.mobilisation(subtotal3)
+      expect(mobilisation.round(0)).to eq(21998)
+      tupe = @calc.tupe(subtotal3)
+      expect(tupe.round(0)).to eq(35142)
+      year1 = subtotal3 + mobilisation + tupe
+      expect(year1.round(0)).to eq(395573)
+      manage = @calc.manage(year1)
+      expect(manage.round(0)).to eq(39915)
+      corporate = @calc.corporate(year1)
+      expect(corporate.round(0)).to eq(19709)
+      year1total = year1 + manage + corporate
+      expect(year1total.round(0)).to eq(455197)
+      profit = @calc.profit(year1)
+      expect(profit.round(0)).to eq(21472)
+      year1totalcharges = year1total + profit
+      expect(year1totalcharges.round(0)).to eq(476668)
+      subyearstotal = @calc.subyearstotal(year1totalcharges, mobilisation)
+      expect(subyearstotal.round(0)).to eq(899961)
+      totalcharges = year1totalcharges + subyearstotal
+      expect(totalcharges.round(0)).to eq(1376629)
     # -------------------------------------- Benchmarked Costs ----------------------------------------------
       x = @calc.benchmarkedcosts
       # expect(x).to eq(119144)
