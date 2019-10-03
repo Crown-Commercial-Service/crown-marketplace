@@ -51,8 +51,8 @@ module FacilitiesManagement
       selected_buildings.each do |building|
         building_json = building['building_json'].deep_symbolize_keys
         id = building_json[:id]
-        vals_per_building = services(building.building_json, (uvals.select { |u| u[:building_id] == id }),
-                                     rates, rate_card, supplier_name)
+        building_uvals = (uvals.select { |u| u[:building_id] == id })
+        vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
