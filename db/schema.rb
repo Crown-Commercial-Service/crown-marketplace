@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_28_101010) do
+ActiveRecord::Schema.define(version: 2019_10_01_122201) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -21,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_101010) do
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at", default: "2019-08-19 12:00:37", null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
@@ -29,50 +28,6 @@ ActiveRecord::Schema.define(version: 2019_10_28_101010) do
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
-  end
-
-  create_table "facilities_management_buyer", id: false, force: :cascade do |t|
-    t.uuid "id", null: false
-    t.string "full_name", limit: 50
-    t.string "job_title", limit: 250
-    t.string "telephone_number"
-    t.string "organisation_name"
-    t.string "organisation_address_line_1"
-    t.string "organisation_address_line_2"
-    t.string "organisation_address_town"
-    t.string "organisation_address_county"
-    t.string "organisation_address_postcode"
-    t.boolean "central_government"
-    t.boolean "wider_public_sector"
-    t.datetime "created_at", default: -> { "now()" }
-    t.datetime "updated_at"
-    t.boolean "active", default: true, null: false
-    t.index ["id"], name: "facilities_management_buyer_id_idx"
-  end
-
-  create_table "facilities_management_procurement_building_services", force: :cascade do |t|
-    t.uuid "facilities_management_procurement_building_id", null: false
-    t.string "code", limit: 10
-    t.string "name", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
-  end
-
-  create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_procurement_id", null: false
-    t.text "service_codes", default: [], array: true
-    t.string "name", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "address_line_1", limit: 255
-    t.string "address_line_2", limit: 255
-    t.string "town", limit: 255
-    t.string "county", limit: 255
-    t.string "postcode", limit: 20
-    t.boolean "active"
-    t.uuid "building_id"
-    t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -96,8 +51,6 @@ ActiveRecord::Schema.define(version: 2019_10_28_101010) do
     t.text "service_codes", default: [], array: true
     t.text "region_codes", default: [], array: true
     t.boolean "estimated_cost_known"
-    t.boolean "mobilisation_period_required"
-    t.boolean "extensions_required"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -528,8 +481,6 @@ ActiveRecord::Schema.define(version: 2019_10_28_101010) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
-  add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"

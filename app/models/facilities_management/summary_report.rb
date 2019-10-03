@@ -54,7 +54,7 @@ module FacilitiesManagement
         vals_per_building = services(building.building_json, (uvals.select { |u| u[:building_id] == id }),
                                      rates, rate_card, supplier_name)
         @sum_uom += vals_per_building[:sum_uom]
-        @sum_benchmark += vals_per_building[:sum_benchmark]
+        @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
     end
 
@@ -318,6 +318,8 @@ module FacilitiesManagement
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
       end
+      return { sum_uom: sum_uom } if supplier_name
+
       { sum_uom: sum_uom,
         sum_benchmark: sum_benchmark }
     rescue StandardError => e
