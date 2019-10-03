@@ -11,4 +11,12 @@ module ManagementConsultancy::SuppliersHelper
 
     "#{framework} lot #{lot_number} - #{description}"
   end
+
+  def url_formatter(url)
+    u = URI.parse(url)
+
+    return url if %w[http https].include?(u.scheme)
+
+    "http://#{url}"
+  end
 end
