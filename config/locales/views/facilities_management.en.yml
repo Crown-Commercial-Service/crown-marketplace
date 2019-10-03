@@ -56,6 +56,8 @@ en:
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
       procurements:
+        about_the_contract:
+          no_cost_provided: None
         edit:
           contract_name:
             contract_name_info: This will help you to refer to your contracts when talking to suppliers.
