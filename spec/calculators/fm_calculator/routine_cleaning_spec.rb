@@ -52,43 +52,43 @@ require 'fm_calculator/calculator'
       expect(subyearstotal.round(0)).to eq(899961)
       totalcharges = year1totalcharges + subyearstotal
       expect(totalcharges.round(0)).to eq(1376629)
-    # -------------------------------------- Benchmarked Costs ----------------------------------------------
-      x = @calc.benchmarkedcosts
-      # expect(x).to eq(119144)
-      x = @calc.benchclean
-      # expect(x).to eq(3276)
-      x = @calc.benchsubtotal1
-      # expect(x).to eq(122420)
-      x = @calc.benchvariation
-      # expect(x).to eq(23029)
-      x = @calc.benchsubtotal2
-      # expect(x).to eq(145449)
-      x = @calc.benchcafm
-      # expect(x).to eq(0)
-      # expect(x).to eq(2115)
-      x = @calc.benchhelpdesk
-      x = @calc.benchsubtotal3
-      # expect(x).to eq(147564)
-      x = @calc.benchmobilisation
-      # expect(x).to eq(9592)
-      x = @calc.benchtupe
-      # expect(x).to eq(15323)
-      x = @calc.benchyear1
-      # expect(x).to eq(172479)
-      x = @calc.benchmanage
-      # expect(x).to eq(17404)
-      x = @calc.benchcorporate
-      # expect(x).to eq(8594)
-      x = @calc.benchyear1total
-      # expect(x).to eq(198477)
-      x = @calc.benchprofit
-      # expect(x).to eq(9362)
-      x = @calc.benchyear1totalcharges
-      # expect(x).to eq(207839)
-      x = @calc.benchsubyearstotal
-      # expect(x).to eq(392404)
-      x = @calc.benchtotalcharges
-      # expect(x).to eq(600243)
+      # -------------------------------------- Benchmarked Costs ----------------------------------------------
+      benchmarkedcosts = @calc.benchmarkedcosts
+      expect(benchmarkedcosts.round(0)).to eq(119144)
+      benchclean = @calc.benchclean
+      expect(benchclean.round(0)).to eq(3276)
+      benchsubtotal1 = benchmarkedcosts + benchclean
+      expect(benchsubtotal1.round(0)).to eq(122421)
+      benchvariation = @calc.benchvariation(benchsubtotal1)
+      expect(benchvariation.round(0)).to eq(23029)
+      benchsubtotal2 = benchsubtotal1 + benchvariation
+      expect(benchsubtotal2.round(0)).to eq(145449)
+      benchcafm = @calc.benchcafm(benchsubtotal2)
+      # expect(benchcafm.round(0)).to eq(0)
+      expect(benchcafm.round(0)).to eq(2115)
+      benchhelpdesk = @calc.benchhelpdesk(benchsubtotal2)
+      benchsubtotal3 = benchsubtotal2 + benchcafm + benchhelpdesk
+      expect(benchsubtotal3.round(0)).to eq(147564)
+      benchmobilisation = @calc.benchmobilisation(benchsubtotal3)
+      expect(benchmobilisation.round(0)).to eq(9592)
+      benchtupe = @calc.benchtupe(benchsubtotal3)
+      expect(benchtupe.round(0)).to eq(15323)
+      benchyear1 = benchsubtotal3 + benchmobilisation + benchtupe
+      expect(benchyear1.round(0)).to eq(172478)
+      benchmanage = @calc.benchmanage(benchyear1)
+      expect(benchmanage.round(0)).to eq(17404)
+      benchcorporate = @calc.benchcorporate(benchyear1)
+      expect(benchcorporate.round(0)).to eq(8594)
+      benchyear1total = benchyear1 + benchmanage + benchcorporate
+      expect(benchyear1total .round(0)).to eq(198476)
+      benchprofit = @calc.benchprofit(benchyear1)
+      expect(benchprofit.round(0)).to eq(9362)
+      benchyear1totalcharges = benchyear1total + benchprofit
+      expect(benchyear1totalcharges.round(0)).to eq(207838)
+      benchsubyearstotal = @calc.benchsubyearstotal(benchyear1totalcharges, benchmobilisation)
+      expect(benchsubyearstotal.round(0)).to eq(392403)
+      benchtotalcharges = benchyear1totalcharges + benchsubyearstotal
+      expect(benchtotalcharges.round(0)).to eq(600241)
   end
 end
 # rubocop:enable all
