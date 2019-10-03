@@ -38,7 +38,7 @@
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
-    <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_annual_cost.nil? %>
+    <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_cost_known.nil? %>
   </dd>
 </div>
 
