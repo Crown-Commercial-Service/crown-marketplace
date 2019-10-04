@@ -60,7 +60,6 @@ en:
           no_cost_provided: None
         edit:
           cancel: Cancel
-          cancel_and_return: Cancel and return to Procurements
           confirm_delete: Confirm delete
           contract_name:
             contract_name_info: This will help you to refer to your contracts when talking to suppliers.

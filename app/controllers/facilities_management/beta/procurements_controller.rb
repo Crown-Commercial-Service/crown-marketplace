@@ -13,7 +13,8 @@ module FacilitiesManagement
       end
 
       def show
-        redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search?
+        redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
+        redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search?
       end
 
       def new
@@ -30,24 +31,21 @@ module FacilitiesManagement
         if @procurement.save(context: :name)
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
-          set_suppliers(@procurement.region_codes, @procurement.service_codes)
-          find_regions(@procurement.region_codes)
-          find_services(@procurement.service_codes)
+          establish_params @procurement
           render :new
         end
       end
 
       def edit
-        set_suppliers(@procurement.region_codes, @procurement.service_codes)
-        find_regions(@procurement.region_codes)
-        find_services(@procurement.service_codes)
+        establish_params @procurement
 
         if @procurement.quick_search?
           render :edit
         else
           @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).back_link
 
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step]
+          redirect_to facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @delete
+          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step]
         end
       end
 
@@ -79,6 +77,12 @@ module FacilitiesManagement
       end
 
       private
+
+      def establish_params(collection)
+        set_suppliers(collection.region_codes, collection.service_codes)
+        find_regions(collection.region_codes)
+        find_services(collection.service_codes)
+      end
 
       def procurement_params
         params.require(:facilities_management_procurement)
