@@ -56,8 +56,56 @@ en:
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
       procurements:
+        about_the_contract:
+          no_cost_provided: None
+        show:
+          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
+        edit:
+          cancel: Cancel
+          confirm_delete: Confirm delete
+          contract_name:
+            contract_name_info: This will help you to refer to your contracts when talking to suppliers.
+            contract_name_question: What do you want to call your contract?
+          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
+          detailed_search: Detailed search
+          next_step:
+            contract_name: 'Next: Estimated annual cost'
+            estimated_annual_cost: 'Next: TUPE'
+            tupe: 'Next: Contract period'
+          quick_search: Quick search
+          save_and_continue: Save and continue
+          save_and_return_to_detailed_summary: Save and return to detailed search summary
+          save_for_later: Save for later
+          tupe:
+            body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
+            first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
+            tupe_title: TUPE
+            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees<br /> when the business or commercial contract that they are working on changes to new ownership. It ensures<br /> that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br /> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
+            what_you_need_to_know_title: What you need to know about TUPE
+        filter_details:
+          apply_filters: Apply filters
+          change_add_region: Change/Add region
+          change_add_service: Change/Add service
+          edit_filters: Show filter
+          hide_filters: Hide filter
+          region: Region
+          service: Service
         index:
-          manage_procurements: Manage Procurements
+          manage_procurements: Manage procurements
+        new:
+          cancel_text: Cancel, and return to the manage procurements page
+          save_for_later: Save for later
+          save_your_search: Save your search
+          search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of two-sublots below, subject to your total contract value.
+          search_results: Search Results
+        quick_search_form:
+          continue_headline: Continue to procurement
+          continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided wuth an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
+          name_text_length_warning: Name must be 100 characters or fewer.
+          name_text_required: The name is required in order to continue.
+          new_name_label: Enter a name for the search
+          save_headline: Save a new search
+          save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -77,6 +125,20 @@ en:
         <li>see a shortlist of suppliers available in your region</li>
         <li>download a spreadsheet with your requirements and list of potential suppliers</li>
       youneedtoknow: 'You need to know:'
+    journey:
+      choose_locations:
+        locations_selected: Locations selected
+        no_locations_selected: No locations selected
+        question: Where are your buildings located?
+        remove_all: Remove all
+        subtitle: Choose one or more regions, based on building's location where you require facilities management services.
+      choose_services:
+        no_services_selected: No services selected
+        question: Select the facilities management services that you need
+        remove_all: Remove all
+        service_specification_doc: Read the service specification document
+        services_selected: Services selected
+        subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     passwords:
       edit:
         confirm_code: Confirm Code

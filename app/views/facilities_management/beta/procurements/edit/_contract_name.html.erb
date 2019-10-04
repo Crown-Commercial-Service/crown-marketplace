@@ -1,0 +1,16 @@
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <div class="govuk-character-count" data-module="character-count" data-maxlength="100">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
+        <h1 class="govuk-fieldset__heading">
+          <%= t('.contract_name_question') %>
+        </h1>
+    </legend>
+
+    <span id="with-hint-hint" class="govuk-hint">
+      <%= t('.contract_name_info') %>
+    </span>
+
+    <%= f.label :contract_name, class: "govuk-label" %>
+    <%= f.text_field :contract_name, class: 'govuk-input govuk-input--width-30 js-character-count', maxlength: 100%>
+  </div>
+</div>
