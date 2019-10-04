@@ -1,13 +1,19 @@
 function FormValidationComponent (formDOMObject, validationCallback) {
     this.form = formDOMObject;
-    this.validator = validationCallback == undefined ? this.validateForm : validationCallback;
-    this.validationResult = true;
+    if ( null != this.form ) {
+        this.validator = validationCallback == undefined ? this.validateForm : validationCallback;
+        this.validationResult = true;
+    }
 }
 
 FormValidationComponent.prototype.init = function () {
     let $self = this;
-    this.form.onsubmit = function (e) { return $self.validator($self.form.elements) ; };
-} ;
+    if ( null != this.form ) {
+        this.form.onsubmit = function (e) {
+            return $self.validator($self.form.elements);
+        };
+    }
+};
 
 FormValidationComponent.prototype.validateForm = function (formElements) {
     let submitForm = this.validationResult = true;

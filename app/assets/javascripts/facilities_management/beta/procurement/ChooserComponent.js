@@ -53,24 +53,24 @@ ChooserComponent.prototype.checkboxHandler = function (sectionEvent) {
     this._checkboxCallback(chooserEvent);
 
     let basketItem = {
-        groupId : chooserEvent.sectionCode, 
-        captionText : chooserEvent.target.title,
-        code : chooserEvent.target.id,
-    } ;
+        groupId: chooserEvent.sectionCode,
+        captionText: chooserEvent.target.title,
+        code: chooserEvent.target.id,
+    };
 
     if (chooserEvent.select_all) {
         if (chooserEvent.target.checked) {
             let newCollection = chooserEvent.section._allCheckboxes.map(function (item) {
                 let newVal = {
-                    groupId : chooserEvent.section._allCheckboxes[item].getAttribute('sectionid'),
-                    code : chooserEvent.section._allCheckboxes[item].id,
-                    captionText : chooserEvent.section._allCheckboxes[item].title
-                } ;
+                    groupId: chooserEvent.section._allCheckboxes[item].getAttribute('sectionid'),
+                    code: chooserEvent.section._allCheckboxes[item].id,
+                    captionText: chooserEvent.section._allCheckboxes[item].title
+                };
                 return newVal;
-            }.bind(this)) ;
+            }.bind(this));
             this._basketContainer.AddItems(newCollection);
         } else {
-          this._basketContainer.clearByGroupID.bind(this._basketContainer)(chooserEvent.sectionCode);
+            this._basketContainer.clearByGroupID.bind(this._basketContainer)(chooserEvent.sectionCode);
         }
     } else {
         if (chooserEvent.target.checked) {
@@ -82,20 +82,22 @@ ChooserComponent.prototype.checkboxHandler = function (sectionEvent) {
 
     this._basketContainer.UpdateBasketNumber(chooserEvent.selected_count);
 };
-ChooserComponent.prototype.handleBasketRemove = function ( groupID, value) {
+ChooserComponent.prototype.handleBasketRemove = function (groupID, value) {
     let section = this._sections[groupID];
-    section.uncheckItem.bind(section)( value );
+    section.uncheckItem.bind(section)(value);
 
     let chooserEvent = {
-        baseClass : this._baseClass,
-        classification : this._classification,
-        isValid : this.GetValidStatus(),
-        total_count : this.GetTotalCount(),
-        selected_count : this.GetSelectedCount()
+        baseClass: this._baseClass,
+        classification: this._classification,
+        isValid: this.GetValidStatus(),
+        total_count: this.GetTotalCount(),
+        selected_count: this.GetSelectedCount()
     };
+
+    this._basketContainer.UpdateBasketNumber ( chooserEvent.selected_count );
     this._checkboxCallback(chooserEvent);
 };
-ChooserComponent.prototype.GetValidStatus = function() {
+ChooserComponent.prototype.GetValidStatus = function () {
     let status = false;
     for (let index = 0; !status && index < this._sections.length; index++) {
         status = this._sections[index].IsSectionValid() || status;
@@ -105,21 +107,44 @@ ChooserComponent.prototype.GetValidStatus = function() {
 ChooserComponent.prototype.GetTotalCount = function () {
     let total = 0;
 
-    for (let index =0; index < this._sections.length; index++) {
+    for (let index = 0; index < this._sections.length; index++) {
         total += this._sections[index].GetTotalCount();
     }
 
-    return total ;
+    return total;
 };
 ChooserComponent.prototype.GetSelectedCount = function () {
     let total = 0;
 
-    for (let index =0; index < this._sections.length; index++) {
+    for (let index = 0; index < this._sections.length; index++) {
         total += this._sections[index].GetSelectedCount();
     }
 
-    return total ;
+    return total;
 };
+ChooserComponent.prototype.PrimeBasket = function () {
+    let selectedItems = [];
+
+    if (this.GetSelectedCount() > 0) {
+        for (let index = 0; index < this._sections.length; index++) {
+            let sectionItem = this._sections[index];
+            let mappedItems = [] ;
+            sectionItem._allCheckboxes.each(function () {
+                let cb = this;
+                let newItem = {
+                    code: cb.id,
+                    groupId: sectionItem._sectionCode,
+                    captionText : cb.title
+                };
+                mappedItems.push(newItem);
+            });
+            selectedItems = selectedItems.concat(mappedItems);
+        }
+        this._basketContainer.AddItems(selectedItems);
+        this._basketContainer.UpdateBasketNumber(selectedItems.length);
+    }
+};
+
 function ChooserSection($parentSection, sectionCode, sectionName, checkboxHandler) {
     this._parentElementName = $parentSection;
     this._sectionName = sectionName;
@@ -145,24 +170,24 @@ ChooserSection.prototype.connectCheckboxes = function (callback) {
         $self.checkboxHandler(e, callback);
     });
 };
-ChooserSection.prototype.uncheckItem = function( value ) {
-    let target = this._allCheckboxes.filter ( function (item) {
+ChooserSection.prototype.uncheckItem = function (value) {
+    let target = this._allCheckboxes.filter(function (item) {
         return this._allCheckboxes[item].id == value;
     }.bind(this));
     $(target).prop('checked', false);
-    if ( this._allHandlerCheckbox ) {
+    if (this._allHandlerCheckbox) {
         this._allHandlerCheckbox.prop('checked', false);
     }
 };
 ChooserSection.prototype.IsSectionValid = function () {
     return this._allCheckboxes.filter(':checked').length > 0;
 };
-ChooserSection.prototype.GetTotalCount = function() {
+ChooserSection.prototype.GetTotalCount = function () {
     return this._allCheckboxes.length - this._selectAllCheckboxCount;
-} ;
-ChooserSection.prototype.GetSelectedCount = function() {
-    return this._allCheckboxes.filter(':checked').length ;
-} ;
+};
+ChooserSection.prototype.GetSelectedCount = function () {
+    return this._allCheckboxes.filter(':checked').length;
+};
 ChooserSection.prototype.checkboxHandler = function (e, callback) {
     let sectionEvent = {
         section: this,
@@ -176,49 +201,58 @@ ChooserSection.prototype.checkboxHandler = function (e, callback) {
         select_all: false
     };
     if (sectionEvent.targetid.endsWith('_all')) {
-        this._allCheckboxes.prop("checked",sectionEvent.target.checked);
+        this._allCheckboxes.prop("checked", sectionEvent.target.checked);
         sectionEvent.select_all = true;
     }
     sectionEvent.section_total_count = this.GetTotalCount();
     sectionEvent.section_selected_count = this.GetSelectedCount();
 
-    if ( sectionEvent.section_selected_count == sectionEvent.section_total_count ) {
+    if (sectionEvent.section_selected_count == sectionEvent.section_total_count) {
         this._allHandlerCheckbox.prop("checked", true);
     } else {
         this._allHandlerCheckbox.prop("checked", false);
     }
-    
+
     callback(sectionEvent);
 };
 
-function BasketComponent ( baseClass, classification, jqueryObject, removeHandler ) {
+function BasketComponent(baseClass, classification, jqueryObject, removeHandler) {
     this._baseClass = baseClass;
     this._classification = classification;
     this.jqueryObject = jqueryObject;
+    this.jqRemoveAll = null;
     this.list = null;
+    this.removeAllBtn = null;
     this.onRemove = removeHandler ? removeHandler : this.onRemove;
     this.init();
 }
-BasketComponent.prototype.init = function() {
+
+BasketComponent.prototype.init = function () {
     this.list = this.jqueryObject.find("ul");
-} ;
-BasketComponent.prototype.AddItems = function ( itemsToAdd) {
+
+    this.jqRemoveAll = this.jqueryObject.find("a.remove-link");
+    if (this.jqRemoveAll.length > 0) {
+        this.jqRemoveAll.on('click', this.RemoveAll.bind(this));
+    }
+};
+BasketComponent.prototype.AddItems = function (itemsToAdd) {
     for (let index = 0; index < itemsToAdd.length; index++) {
         this.AddItem(itemsToAdd[index]);
     }
 };
-BasketComponent.prototype.AddItem = function ( itemToAdd ) {
+BasketComponent.prototype.AddItem = function (itemToAdd) {
     let selectedID = itemToAdd.code + '_basket';
     let removeLinkID = itemToAdd.code + '_removeLink';
 
-    let newLI = '<li style="word-break: keep-all;" groupid="' + itemToAdd.groupId + '" class="govuk-list" id="' + selectedID + '">' +
+
+    let newLI = '<li style="margin-top:0; word-break: keep-all;" groupid="' + itemToAdd.groupId + '" class="govuk-list" id="' + selectedID + '">' +
         '<div style="float:right;"><span class="remove-link">' +
         '<a data-no-turbolink id="' + removeLinkID + '" groupid="' + itemToAdd.groupId + '" name="' + removeLinkID + '" href="" class="govuk-link font-size--8" >Remove</a>' +
         '</span></div>' +
-        '<div style="float:left; max-width: 70%" ><span class="govuk-!-padding-0 CCS-selected-label">' + itemToAdd.captionText + '</span></div></li>';
+        '<div style="float:left; max-width: 70%; float:left; font-size: 1rem;" >' + itemToAdd.captionText + '</div></li>';
 
     if (this.list) {
-        if ($(this.list).find('li#'+selectedID).length === 0 ) {
+        if ($(this.list).find('li#' + selectedID).length === 0) {
             $(this.list).append(newLI);
 
             $('#' + removeLinkID).on('click', function (e) {
@@ -231,31 +265,41 @@ BasketComponent.prototype.AddItem = function ( itemToAdd ) {
 };
 BasketComponent.prototype.clear = function () {
   this.list[0].innerHTML = "";
+  this.UpdateBasketNumber(0);
 };
-BasketComponent.prototype.clearByGroupID = function ( groupID ) {
+BasketComponent.prototype.clearByGroupID = function (groupID) {
     let item = null;
     let collection = this.list.find('li[groupid="' + groupID + '"]');
-    for ( let index = 0; index < collection.length && (item = collection[index])!=null; index++){
-        this.removeSelectedItem("", item.id.replace('_basket',''));
+    for (let index = 0; index < collection.length && (item = collection[index]) != null; index++) {
+        this.removeSelectedItem("", item.id.replace('_basket', ''));
     }
-} ;
-BasketComponent.prototype.removeSelectedItem = function( groupID, selectedID) {
+};
+BasketComponent.prototype.removeSelectedItem = function (groupID, selectedID) {
     $('li#' + selectedID + '_basket').remove();
-} ;
-BasketComponent.prototype.RemoveItem = function (itemToRemove){
+};
+BasketComponent.prototype.RemoveAll = function (e) {
+    let item = null;
+    let collection = this.list.find('li');
+    for (let index = 0; index < collection.length && (item = collection[index]) != null; index++) {
+        this.removeSelectedItem("", item.id.replace('_basket', ''));
+        this.onRemove(item.getAttribute("groupid"), item.id.replace('_basket', ''));
+    }
+    e.preventDefault();
+};
+BasketComponent.prototype.RemoveItem = function (itemToRemove) {
     this.removeSelectedItem(itemToRemove.groupId, itemToRemove.code);
 };
-BasketComponent.prototype.onRemove = function (sectionID, itemValue){
-    console.log ( "Removing " + sectionID + "." + itemValue);
+BasketComponent.prototype.onRemove = function (sectionID, itemValue) {
+    console.log("Removing " + sectionID + "." + itemValue);
 };
-BasketComponent.prototype.UpdateBasketNumber = function(count) {
+BasketComponent.prototype.UpdateBasketNumber = function (count) {
     let selectedCount = $('#selected-' + this._classification + '-count');
     let selectedParent = selectedCount.parent();
 
     if (count < 2) {
-        $('#remove-all-' + this._classification + '-link').hide();
+        this.jqRemoveAll.hide();
     } else {
-        $('#remove-all-' + this._classification + '-link').show();
+        this.jqRemoveAll.show();
     }
     if (selectedCount) {
         selectedCount.text(count);
