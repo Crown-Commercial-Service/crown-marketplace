@@ -1,7 +1,7 @@
 <div class="govuk-!-margin-top-6">
   <% if @delete %>
-    <%= link_to t('.confirm_delete'), facilities_management_beta_procurement_path(@procurement), :method => 'delete', class: "govuk-button govuk-button--warning" %>
-    <%= link_to t('.cancel'),  facilities_management_beta_procurements_url, class: "govuk-button govuk-button--secondary govuk-!-margin-left-3" %>
+    <%= link_to 'Confirm delete', facilities_management_beta_procurement_path(@procurement), :method => 'delete', class: "govuk-button govuk-button--warning" %>
+    <%= link_to 'Cancel',  facilities_management_beta_procurements_url, class: "govuk-button govuk-button--secondary govuk-!-margin-left-3" %>
   <% else %>
     <a class="govuk-button">Continue</a>
     <%= link_to 'Return to manage procurements', facilities_management_beta_procurements_path, class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3' %>
