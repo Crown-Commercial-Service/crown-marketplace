@@ -9,15 +9,14 @@
   </div>
 
   <div class="govuk-grid-row">
-    <%= render('initial_call_off_period') %>
+    <%= render partial: 'initial_call_off_period', locals: { f: f } %>
   </div>
 
   <div class="govuk-grid-row">
-    <%= render('mobilisation_period') %>
+    <%= render partial: 'mobilisation_period', locals: { f: f } %>
   </div>
 
   <div class="govuk-grid-row">
-    <%= render('call_off_extensions') %>
+    <%= render partial: 'call_off_extensions', locals: { f: f } %>
   </div>
 </div>
-

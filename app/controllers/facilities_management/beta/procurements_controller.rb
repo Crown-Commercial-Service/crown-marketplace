@@ -70,15 +70,20 @@ module FacilitiesManagement
 
       def procurement_params
         params.require(:facilities_management_procurement)
-              .permit(
+            .permit(
                 :name,
                 :tupe,
                 :contract_name,
                 :procurement_data,
                 :estimated_annual_cost,
+                :initial_call_off_start_date_dd,
+                :initial_call_off_start_date_mm,
+                :initial_call_off_start_date_yyyy,
+                :initial_call_off_period,
+                :mobilisation_period,
                 service_codes: [],
                 region_codes: [],
-              )
+            )
       end
 
       def set_current_step
