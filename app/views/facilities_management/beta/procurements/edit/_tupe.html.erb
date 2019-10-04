@@ -1,0 +1,38 @@
+<div class="govuk-grid-row">
+  <h1 class="govuk-heading-xl"><%= t('.tupe_title') %></h1>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <span class="govuk-heading-s govuk-!-margin-bottom-0">
+    <%= t('.first_question') %>
+  </span>
+  <span class="govuk-caption-m govuk-!-margin-top-0">
+    <%= t('.body_text_html') %>
+  </span>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= t('.what_you_need_to_know_title') %>
+    </span>
+    </summary>
+    <div class="govuk-details__text">
+      <%= t('.what_you_need_to_know_html') %>
+    </div>
+  </details>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <div class="govuk-radios govuk-radios--inline">
+    <div class="govuk-radios__item">
+      <%= f.radio_button :tupe, true, value: true, class: 'govuk-radios__input' %>
+      <%= label :tupe, true, 'Yes', class: 'govuk-label govuk-radios__label' %>
+    </div>
+    <div class="govuk-radios__item">
+      <%= f.radio_button :tupe, false, value: false, class: 'govuk-radios__input' %>
+      <%= label :tupe, false, 'No', class: 'govuk-label govuk-radios__label' %>
+    </div>
+  </div>
+</div>

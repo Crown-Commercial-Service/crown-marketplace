@@ -206,6 +206,8 @@ $(function () {
     };
 });
 $(window).on("load", function () {
-    $.restore_last_known_addr();
+    if ( $.restore_last_known_addr !== undefined) {
+        $.restore_last_known_addr();
+    }
 });
 

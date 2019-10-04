@@ -2,7 +2,7 @@
   <div class="govuk-grid-row filter-component-container-grey">
     <div class="govuk-grid-row filter-component-container-grey">
       <strong class="govuk-heading-m govuk-!-margin-0 govuk-!-padding-1"><%= section_title %>
-        <br /> <span class="govuk-!-font-size-19" id="sproc-<%= section_name %>-count">2 selected</span></strong>
+        <br /> <span class="govuk-!-font-size-19" id="sproc-<%= section_name %>-count"><%= "#{collection.length} selected" %> </span></strong>
     </div>
     <div class="govuk-grid-row filter-component-container-grey">
       <div class="govuk-checkboxes govuk-checkboxes--small">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="govuk-grid-row govuk-!-padding-1 filter-component-container-grey">
-      <%= link_to change_title, nil, class: 'govuk-link govuk-!-font-size-19' %>
+      <%= link_to change_title, change_link, class: 'govuk-link govuk-!-font-size-19'  unless @procurement.persisted? %>
     </div>
   </div>
 </div>
