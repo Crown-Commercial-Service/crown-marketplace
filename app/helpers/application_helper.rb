@@ -41,28 +41,25 @@ module ApplicationHelper
     mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
-  def govuk_form_text_field ( model_object, form, attribute, label_text, top_level_options, field_css)
+  def govuk_form_field(model_object, attribute, form_object_name, label_text, top_level_data_options)
     css_classes = %w[govuk-caption-m govuk-!-margin-top-3]
-    field_css_classes = %w[govuk-input] + field_css
     form_group_css = ['govuk-form-group']
     form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
 
-    if top_level_options.key?('data-module') && top_level_options['data-module'] == 'character-count'
-      field_css_classes += ['js-character-count']
-    end
-
-    content_tag :div, class: css_classes do
+    content_tag :div, class: css_classes, data: top_level_data_options do
       content_tag :div, class: form_group_css do
-        form.label attribute, label_text, class: 'govuk-label'
-        content_tag :div do
-          yield
-        end
-        form.text_field attribute, class: field_css_classes, options: field_options
+        concat display_error(model_object, attribute)
+        concat display_label(label_text, "#{form_object_name}_#{attribute}")
+        concat yield
       end
     end
   end
 
-  def model_has_error_type? model_object, property, error_type
+  def model_has_error?(model_object, property)
+    model_object.errors.any? && model_object.errors.details[property].any?
+  end
+
+  def model_has_error_type?(model_object, property, error_type)
     type_exists = false
 
     if model_object.errors.any?
@@ -77,12 +74,12 @@ module ApplicationHelper
     type_exists
   end
 
-  def validation_error ( model_object, attribute, error_type, text)
-    attribute_has_errors = model_has_error_type? model_object, attribute, error_type
-
+  # Renders a govuk compliant error-content div with a client-compatible validation type
+  # and text for use as static content in the page
+  def validation_error(model_object, attribute, error_type, text)
     tag_validation_type = ''
     css_classes = ['govuk-error-message']
-    css_classes += ['govuk-visually-hidden'] unless attribute_has_errors
+    css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, attribute
     case error_type
     when :too_short
       tag_validation_type = 'required'
@@ -90,7 +87,7 @@ module ApplicationHelper
       tag_validation_type = 'maxlength'
     end
 
-    content_tag :div, content_tag(:span, text), class: css_classes, 'data-validation'.to_sym => tag_validation_type
+    content_tag :div, content_tag(:span, text), class: css_classes, data: { validation: tag_validation_type }
   end
 
   def govuk_form_group_with_optional_error(journey, *attributes)
@@ -125,6 +122,14 @@ module ApplicationHelper
 
     content_tag :span, id: error_id(attribute), class: 'govuk-error-message' do
       error
+    end
+  end
+
+  def display_label(label_text, target)
+    return if label_text.blank?
+
+    content_tag :label, class: 'govuk_label', for: target do
+      label_text
     end
   end
 

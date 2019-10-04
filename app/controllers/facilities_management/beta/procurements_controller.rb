@@ -80,7 +80,7 @@ module FacilitiesManagement
         establish_data_requirements @procurement.region_codes, @procurement.service_codes
       end
 
-      def establish_data_requirements region_collection, service_collection
+      def establish_data_requirements(region_collection, service_collection)
         set_suppliers(region_collection, service_collection)
         find_regions(region_collection)
         find_services(service_collection)
