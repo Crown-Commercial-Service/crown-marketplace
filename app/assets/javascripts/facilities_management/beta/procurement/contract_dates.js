@@ -23,20 +23,23 @@ $(function () {
     const displayContractDates = function () {
 
         let initialCallOffPeriod = parseInt($('#facilities_management_procurement_initial_call_off_period').val());
-        if (initialCallOffPeriod) {
+        let ds = $('#facilities_management_procurement_initial_call_off_start_date_dd').val();
+        let ms = $('#facilities_management_procurement_initial_call_off_start_date_mm').val();
+        let ys = $('#facilities_management_procurement_initial_call_off_start_date_yyyy').val();
+
+        if (initialCallOffPeriod && ds && ms && ys) {
             let mobilisationPeriod = parseInt($('#facilities_management_procurement_mobilisation_period').val());
-            let dd = parseInt($('#facilities_management_procurement_initial_call_off_start_date_dd').val());
-            let mm = parseInt($('#facilities_management_procurement_initial_call_off_start_date_mm').val());
-            let yyyy = parseInt($('#facilities_management_procurement_initial_call_off_start_date_yyyy').val());
+            let dd = parseInt(ds);
+            let mm = parseInt(ms);
+            let yyyy = parseInt(ys);
             let contractStartDate = new Date(yyyy, mm - 1, dd);
             let contractEndDate = contractDateUtils.contractEndDate(contractStartDate, initialCallOffPeriod);
-
             /* Display contract end date */
             $('#contract-end-date-dd').val(leadingZero(contractEndDate.getDate()));
             $('#contract-end-date-mm').val(leadingZero(contractEndDate.getMonth() + 1));
             $('#contract-end-date-yyyy').val(leadingZero(contractEndDate.getFullYear()));
 
-            if (mobilisationPeriod) {
+            if (mobilisationPeriod && dd !== NaN) {
                 let dates = contractDateUtils.calcContractDates(contractStartDate, initialCallOffPeriod, mobilisationPeriod);
                 /* display mobilisation start date */
                 $('#mobilisation-start-date-dd').val(dates['Contract-Mob-Start'].substr(8, 2));
