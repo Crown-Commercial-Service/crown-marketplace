@@ -30,14 +30,15 @@
     Estimated annual cost
   </dt>
   <dd class="govuk-summary-list__value">
-    <% unless @procurement.estimated_annual_cost.nil? || !@procurement.estimated_cost_known? %>
-      <%= @procurement.estimated_annual_cost %>
+    <% unless @procurement.estimated_cost_known.nil? %>
+      <%= @procurement.estimated_annual_cost if @procurement.estimated_cost_known? %>
+      <%= t('.no_cost_provided') if !@procurement.estimated_cost_known? %>
     <% else %>
       <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link"%>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
-    <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_annual_cost.nil? || !@procurement.estimated_cost_known? %>
+    <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_cost_known.nil? %>
   </dd>
 </div>
 
