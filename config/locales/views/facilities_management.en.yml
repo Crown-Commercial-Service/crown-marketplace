@@ -58,8 +58,6 @@ en:
       procurements:
         about_the_contract:
           no_cost_provided: None
-        show:
-          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
         edit:
           cancel: Cancel
           confirm_delete: Confirm delete
@@ -106,6 +104,8 @@ en:
           new_name_label: Enter a name for the search
           save_headline: Save a new search
           save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
+        show:
+          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
