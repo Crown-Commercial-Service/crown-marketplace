@@ -1,7 +1,5 @@
 require 'holidays'
 
-# rubocop:disable Metrics/ParameterLists (with a s)
-
 #
 # # facilities management calculator based on Damolas spreadsheet -  the first set framework calculations are repeated with a benchmark rate to give two values
 # # 1. Unit of measure of deliverables required
@@ -18,6 +16,7 @@ module FMCalculator
     @benchmark_rates = nil
     @framework_rates = nil
 
+    # rubocop:disable Metrics/ParameterLists (with a s)
     def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag,
                    rates, rate_card = nil, supplier_name = nil, building_data = nil)
       @contract_length_years = contract_length_years
@@ -29,28 +28,6 @@ module FMCalculator
       @london_flag = london_flag
       @cafm_flag = cafm_flag
       @helpdesk_flag = helpdesk_flag
-      # @subtotal2 = 0
-      # @uomd = 0
-      # @clean = 0
-      # @variance = 0
-      # @subtotal1 = 0
-      # @cafm = 0
-      # @helpdesk = 0
-      # @mobilisation = 0
-      # @year1 = 0
-      # @manage = 0
-      # @year1total = 0
-      # @profit = 0
-      # @year1totalcharges = 0
-      # @benchmark_rate = 0
-      # @framework_rate = 0
-      # @benchmarkedcosts = 0
-      # @benchclean = 0
-      # @benchcafm = 0
-      # @benchhelpdesk = 0
-      # @benchsubtotal2 = 0
-      # @benchsubtotal3 = 0
-      # @benchvariance = 0
 
       @benchmark_rates = rates[:benchmark_rates]
       @framework_rates = rates[:framework_rates]
@@ -64,6 +41,7 @@ module FMCalculator
 
       @building_data = building_data
     end
+    # rubocop:enable Metrics/ParameterLists (with a s)
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
@@ -203,11 +181,6 @@ module FMCalculator
       @benchclean = @occupants * @framework_rates['M146']
     end
 
-    # benchmark subtotal1
-    # def benchsubtotal1
-    #   @benchsubtotal1 = @benchmarkedcosts + @benchclean
-    # end
-
     # benchmark variation if london_flag set
     def benchvariation(benchsubtotal1)
       if @london_flag == 'Y'
@@ -216,11 +189,6 @@ module FMCalculator
         0
       end
     end
-
-    # benchmark subtotal2
-    # def benchsubtotal2
-    #   @benchsubtotal2 = @benchvariance + @benchsubtotal1
-    # end
 
     # benchmark cafm if flag set
     def benchcafm(benchsubtotal2)
@@ -240,11 +208,6 @@ module FMCalculator
       end
     end
 
-    # bench mark subtotal 3
-    # def benchsubtotal3
-    #   @benchsubtotal3 = @benchsubtotal2 + @benchcafm + @benchhelpdesk
-    # end
-
     # benchmark mobilisation costs
     def benchmobilisation(benchsubtotal3)
       benchsubtotal3 * @framework_rates['M5']
@@ -259,11 +222,6 @@ module FMCalculator
       end
     end
 
-    # bench mark total year1 deliverables value
-    # def benchyear1
-    #   @benchyear1 = @benchsubtotal3 + @benchmobilisation + @benchtupe
-    # end
-
     # benchmark mananagement overhead costs
     def benchmanage(benchyear1)
       benchyear1 * @framework_rates['M140']
@@ -274,30 +232,15 @@ module FMCalculator
       benchyear1 * @framework_rates['M141']
     end
 
-    # total year 1 charges subtotal
-    # def benchyear1total
-    #    @benchyear1total = @benchyear1 + @benchmanage + @benchcorporate
-    # end
-
     # bench mark profit
     def benchprofit(benchyear1)
       benchyear1 * @framework_rates['M142']
     end
 
-    # bench mark year 1 total charges
-    # def benchyear1totalcharges
-    #    @benchyear1totalcharges = @benchyear1total + @benchprofit
-    # end
-
     # bench mark subsequent year(s) total charges
     def benchsubyearstotal(benchyear1totalcharges, benchmobilisation)
       @subsequent_length_years * (benchyear1totalcharges - (((benchmobilisation + (benchmobilisation * @framework_rates['M140']) + (benchmobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
     end
-
-    # total bench mark charges
-    # def benchtotalcharges
-    #   @benchyear1totalcharges += @benchsubyearstotal
-    # end
 
     # entry point to calculate sum of the unit of measure
     def sumunitofmeasure
@@ -316,14 +259,12 @@ module FMCalculator
       benchsubtotal1 = benchmarkedcosts + benchclean
       benchsubtotal2 = benchsubtotal1 + benchvariation(benchsubtotal1)
       benchsubtotal3 = benchsubtotal2 + benchcafm(benchsubtotal2) + benchhelpdesk(benchsubtotal2)
-      benchmobilisation = benchmobilisation(benchsubtotal3)
-      benchyear1 = benchsubtotal3 + benchmobilisation + benchtupe(benchsubtotal3)
+      bench_mobilisation = benchmobilisation(benchsubtotal3)
+      benchyear1 = benchsubtotal3 + bench_mobilisation + benchtupe(benchsubtotal3)
       benchyear1total = benchyear1 + benchmanage(benchyear1) + benchcorporate(benchyear1)
 
       benchyear1totalcharges = benchyear1total + benchprofit(benchyear1)
-      benchyear1totalcharges + benchsubyearstotal(benchyear1totalcharges, benchmobilisation)
+      benchyear1totalcharges + benchsubyearstotal(benchyear1totalcharges, bench_mobilisation)
     end
   end
 end
-
-# rubocop:enable Metrics/ParameterLists (with a s)
