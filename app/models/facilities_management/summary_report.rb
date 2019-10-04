@@ -39,7 +39,8 @@ module FacilitiesManagement
       CCS::FM::Building.buildings_for_user(@user_id)
     end
 
-    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil)
+    # rubocop:disable Metrics/ParameterLists (with a s)
+    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil)
       # selected_services
 
       @sum_uom = 0
@@ -52,11 +53,12 @@ module FacilitiesManagement
         building_json = building['building_json'].deep_symbolize_keys
         id = building_json[:id]
         building_uvals = (uvals.select { |u| u[:building_id] == id })
-        vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name)
+        vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name, results)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
     end
+    # rubocop:enable Metrics/ParameterLists (with a s)
 
     def with_pricing
       # CCS::FM::Rate.non_zero_rate
@@ -274,7 +276,10 @@ module FacilitiesManagement
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
 
-    def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil)
+    # rubocop:disable Metrics/ParameterLists (with a s)
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
+    def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil, results = nil)
       sum_uom = 0.0
       sum_benchmark = 0.0
 
@@ -317,6 +322,8 @@ module FacilitiesManagement
                                                building_data,)
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
+
+        results[:service_code] = calc_fm.sumunitofmeasure if results
       end
       return { sum_uom: sum_uom } if supplier_name
 
@@ -328,5 +335,8 @@ module FacilitiesManagement
       { sum_uom: sum_uom,
         sum_benchmark: sum_benchmark }
     end
+    # rubocop:enable Metrics/ParameterLists (with a s)
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end
