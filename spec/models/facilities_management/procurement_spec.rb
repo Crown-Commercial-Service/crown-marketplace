@@ -43,8 +43,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
-    context 'when the name is not present' do
-      it 'expected to not be valid' do
+    context 'when the name is blank' do
+      it 'is expected to not be valid' do
+        procurement.contract_name = ''
+        expect(procurement.valid?(:contract_name)).to eq false
+      end
+    end
+
+    context 'when the name is correct' do
+      it 'expected to be valid' do
         procurement.contract_name = 'Valid Name'
         expect(procurement.valid?(:contract_name)).to eq true
       end

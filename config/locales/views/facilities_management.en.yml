@@ -56,6 +56,8 @@ en:
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
       procurements:
+        about_the_contract:
+          no_cost_provided: None
         edit:
           contract_name:
             contract_name_info: This will help you to refer to your contracts when talking to suppliers.
@@ -69,10 +71,17 @@ en:
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
+          tupe:
+            body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
+            first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
+            tupe_title: TUPE
+            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees<br /> when the business or commercial contract that they are working on changes to new ownership. It ensures<br /> that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br /> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
+            what_you_need_to_know_title: What you need to know about TUPE
         filter_details:
           apply_filters: Apply filters
           change_add_region: Change/Add region
           change_add_service: Change/Add service
+          edit_filters: Show filter
           hide_filters: Hide filter
           region: Region
           service: Service
@@ -113,9 +122,9 @@ en:
       youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
-        no_regions_selected: No regions selected
+        locations_selected: Buildings selected
+        no_locations_selected: No locations selected
         question: Where are your buildings located?
-        regions_selected: Regions selected
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building's location where you require facilities management services.
       choose_services:
