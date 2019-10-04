@@ -386,7 +386,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     supplier_names = rate_card.data['Prices'].keys
     supplier_names.each do |supplier_name|
       # dummy_supplier_name = 'Hickle-Schinner'
-      report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name
+      report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name, results
       results[supplier_name] = report.direct_award_value
     end
 
