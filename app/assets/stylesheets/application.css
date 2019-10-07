@@ -776,11 +776,6 @@
     border: 0
 }
 
-.govuk-grid-row {
-    margin-right: -15px;
-    margin-left: -15px
-}
-
 .govuk-grid-row:after {
     content: "";
     display: block;

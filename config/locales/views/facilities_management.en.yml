@@ -1,5 +1,12 @@
 ---
 en:
+  activerecord:
+    errors:
+      models:
+        facilities_management/procurement_building:
+          attributes:
+            service_codes:
+              invalid: Select at least one service for each building
   facilities_management:
     basket:
       basket_header: selected
@@ -59,9 +66,12 @@ en:
         about_the_contract:
           no_cost_provided: None
         edit:
+          cancel: Cancel
+          confirm_delete: Confirm delete
           contract_name:
             contract_name_info: This will help you to refer to your contracts when talking to suppliers.
             contract_name_question: What do you want to call your contract?
+          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
           detailed_search: Detailed search
           next_step:
             contract_name: 'Next: Estimated annual cost'
@@ -71,12 +81,20 @@ en:
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
+          services:
+            content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don't already appear on your shortlist.
+            heading: What facilities management services do you need for each building?
+            your_buildings: Your buildings
           tupe:
             body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
             tupe_title: TUPE
             what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees<br /> when the business or commercial contract that they are working on changes to new ownership. It ensures<br /> that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br /> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
             what_you_need_to_know_title: What you need to know about TUPE
+        edit_procurement:
+          cancel_and_return: Cancel and return to Procurements
+          save_and_continue: Save and continue
+          save_for_later: Save for later
         filter_details:
           apply_filters: Apply filters
           change_add_region: Change/Add region
@@ -101,6 +119,8 @@ en:
           new_name_label: Enter a name for the search
           save_headline: Save a new search
           save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
+        show:
+          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -122,7 +142,7 @@ en:
       youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
-        locations_selected: Buildings selected
+        locations_selected: Locations selected
         no_locations_selected: No locations selected
         question: Where are your buildings located?
         remove_all: Remove all

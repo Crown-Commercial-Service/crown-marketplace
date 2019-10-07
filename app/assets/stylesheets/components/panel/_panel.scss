@@ -1,0 +1,35 @@
+.ccs-govuk-panel {
+  @include govuk-font($size: 19);
+
+  box-sizing: border-box;
+
+  margin-bottom: govuk-spacing(3);
+  padding: govuk-spacing(7) - $govuk-border-width;
+  
+  text-align: left;
+
+  @include govuk-media-query($until: tablet) {
+    padding: govuk-spacing(6) - $govuk-border-width;
+  }
+}
+
+.ccs-govuk-panel--confirmation {
+  color: govuk-colour("black");
+  background: govuk-colour("green-2");
+  border-left: 3px solid govuk-colour("green-3");
+}
+
+.ccs-govuk-panel__title {
+  margin-top: 0;
+  margin-bottom: govuk-spacing(6);
+
+  @include govuk-font($size: 24, $weight: bold);
+}
+
+.ccs-govuk-panel__title:last-child {
+  margin-bottom: 0;
+}
+
+.ccs-govuk-panel__body {
+  @include govuk-font($size: 19);
+}
