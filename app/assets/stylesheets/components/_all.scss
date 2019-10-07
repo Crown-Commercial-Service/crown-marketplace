@@ -31,6 +31,7 @@
 @import "master-vendor-record/master-vendor-record";
 @import "neutral-vendor-record/neutral-vendor-record";
 @import "pagination/pagination";
+@import "panel/panel";
 @import "phase-banner/phase-banner";
 @import "sidebar/sidebar";
 @import "st-supplier-page/st-supplier-page";
@@ -38,6 +39,6 @@
 @import "table/table";
 @import "tag/tag";
 @import "typography/typography";
-
+@import "print-page/print-page";
 /* CCS override and bespoke styles; re-used globally across all modules */
 @import "ccs-global/ccs-global";

@@ -8,7 +8,9 @@
       <div class="govuk-checkboxes govuk-checkboxes--small">
         <% collection.each do |item| %>
           <div class="govuk-checkboxes__item filter-component-govuk-checkboxes__item">
-            <%= check_box_tag("facilities_management_procurement[#{section_name}_codes][]", item.code, superset.include?(item.code),
+            <%= check_box_tag("facilities_management_procurement[#{section_name}_codes][]",
+                              item.code,
+                              superset.include?(item.code),
                               class: "govuk-checkboxes__input",
                               id: "facilities_management_procurement_#{section_name}s_codes_#{section_name}_#{item.code}"
                 ) %>

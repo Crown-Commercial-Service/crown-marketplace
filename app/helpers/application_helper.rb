@@ -71,8 +71,8 @@ module ApplicationHelper
     error = journey.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(attribute), class: 'govuk-error-message' do
-      error
+    content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
+      "#{attribute} #{error}"
     end
   end
 
