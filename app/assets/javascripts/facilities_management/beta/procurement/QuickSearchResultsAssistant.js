@@ -3,10 +3,14 @@ const QuickSearchResultsAssistant = {
     helper : null,
     formValidator: null,
     
-    init: function (classification, action, module_name) {
+    init: function (classification, action, module_name, id) {
         this.helper = new FilterComponent(classification);
+        let formName = action + "_" + module_name + "_" + classification;
+        if (id !== undefined) {
+            formName += "_" + id;
+        }
         this.formValidator = new FormValidationComponent (
-            document.getElementById(action + "_" + module_name + "_" + classification));
+            document.getElementById(formName));
         this.formValidator.init();
         this.helper.init();
         this.helper.UpdateCounts();
