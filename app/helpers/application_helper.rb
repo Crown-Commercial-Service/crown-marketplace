@@ -48,7 +48,7 @@ module ApplicationHelper
 
     content_tag :div, class: css_classes, data: top_level_data_options do
       content_tag :div, class: form_group_css do
-        concat display_error(model_object, attribute)
+        concat display_error_label(model_object, attribute, label_text, "#{form_object_name}_#{attribute}")
         concat display_label(label_text, "#{form_object_name}_#{attribute}")
         concat yield
       end
@@ -125,10 +125,19 @@ module ApplicationHelper
     end
   end
 
+  def display_error_label ( model, attribute, label_text, target)
+    error = model.errors[attribute].first
+    return if error.blank?
+
+    content_tag :label, id: error_id(attribute), for: target, class: 'govuk-error-message' do
+      "#{attribute} #{error}"
+    end
+  end
+
   def display_label(label_text, target)
     return if label_text.blank?
 
-    content_tag :label, class: 'govuk_label', for: target do
+    content_tag :label, class: 'govuk-label', for: target do
       label_text
     end
   end

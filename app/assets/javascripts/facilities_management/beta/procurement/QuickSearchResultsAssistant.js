@@ -6,7 +6,7 @@ const QuickSearchResultsAssistant = {
     init: function (classification, action, module_name) {
         this.helper = new FilterComponent(classification);
         this.formValidator = new FormValidationComponent (
-            document.getElementById(action + "_" + module_name + "_" + classification));
+            document.getElementById(action + "_" + module_name + "_" + classification), undefined, true);
         this.formValidator.init();
         this.helper.init();
         this.helper.UpdateCounts();
@@ -61,6 +61,6 @@ $(function () {
     jqDiv = $('.quicksearchassistant');
     if ( jqDiv.length > 0 ) {
         jqDiv = jqDiv[0];
-        //QuickSearchResultsAssistant.init(jqDiv.getAttribute('classification'), jqDiv.getAttribute('action'), jqDiv.getAttribute('module' ));
+        QuickSearchResultsAssistant.init(jqDiv.getAttribute('classification'), jqDiv.getAttribute('action'), jqDiv.getAttribute('module' ));
     }
 });

@@ -1,6 +1,9 @@
-function FormValidationComponent (formDOMObject, validationCallback) {
-    this.form = formDOMObject;
-    if ( null != formDOMObject && null == this.form.formValidator && this.form.getAttribute('specialvalidation') != true ) {
+function FormValidationComponent (formDOMObject, validationCallback, thisisspecial = false) {
+    if ( null != formDOMObject && null == formDOMObject.formValidator &&
+        ( ( thisisspecial && formDOMObject.getAttribute('specialvalidation') == 'true') ||
+          ( !thisisspecial && (formDOMObject.hasAttribute('specialvalidation') && formDOMObject.getAttribute('specialvalidation') == 'false'))
+        )) {
+        this.form = formDOMObject;
         this.form.formValidator = this;
         this.validator = validationCallback == undefined ? this.validateForm : validationCallback;
         this.validationResult = true;
@@ -29,48 +32,41 @@ FormValidationComponent.prototype.validateForm = function (formElements) {
         }
         if ( elements.length > 0 ) {
             for ( let index = 0; index < elements.length; index++ ) {
-                let element = elements[index];
-                let jElem = $(element);
-                let elementValue = jElem.val();
-                if (jElem.prop('required')) {
-                    if ('' + elementValue == '') {
-                        this.toggleRequiredError(jElem, true);
-                        this.validationResult = submitForm = false;
-                    } else {
-                        this.toggleRequiredError(jElem, false);
+                let jElem = $(elements[index]);
+                if ( jElem.length > 0 ) {
+                    if (jElem.prop('required')) {
+                        submitForm = submitForm && this.testError (function (jqueryObject) {return ('' + jqueryObject.val() != '')}, jElem, 'required');
                     }
-                }
-                if (jElem.prop('maxlength')) {
-                    let maxLength = parseInt(jElem.prop('maxlength'));
-                    if ( ('' + elementValue).length > maxLength) {
-                        this.toggleLengthError(jElem, true );
-                        this.validationResult = submitForm = false;
-                    } else {
-                        this.toggleLengthError(jElem, false );
+                    if (jElem.prop('maxlength')) {
+                            submitForm = submitForm && this.testError ( function (jqueryObject) {
+                            let maxLength = parseInt(jqueryObject.prop('maxlength'));
+                            return !('' + jqueryObject.val().length > maxLength);
+                        }, jElem, 'maxlength');
                     }
                 }
             }
         }
+        this.validationResult = submitForm;
     }
 
     return submitForm;
 };
-FormValidationComponent.prototype.toggleRequiredError = function (jQueryElement, show) {
-    let jqueryElementForInputGroup = jQueryElement.parent (".govuk-form-group");
-    let jqueryElementForRequiredMessage = jQueryElement.siblings("div[data-validation='required']");
-    if (!show) {
-        if (this.validationResult ) {
-            jqueryElementForInputGroup.removeClass("govuk-form-group--error");
-        }
-        jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
+FormValidationComponent.prototype.testError = function ( errFn, jElem, errorType) {
+    let result = false ;
+
+    if ( !errFn(jElem) ) {
+        this.toggleError(jElem, true, errorType);
+        result = false;
     } else {
-        jqueryElementForInputGroup.addClass("govuk-form-group--error");
-        jqueryElementForRequiredMessage.removeClass("govuk-visually-hidden");
+        this.toggleError(jElem, false, 'required');
+        result = true;
     }
+
+    return result;
 };
-FormValidationComponent.prototype.toggleLengthError = function (jQueryElement, show) {
+FormValidationComponent.prototype.toggleError = function ( jQueryElement, show, errorType ) {
     let jqueryElementForInputGroup = jQueryElement.parent (".govuk-form-group");
-    let jqueryElementForRequiredMessage = jQueryElement.siblings("div[data-validation='maxlength']");
+    let jqueryElementForRequiredMessage = jQueryElement.siblings("div[data-validation='+ errorType + ']");
     if (!show) {
         if (this.validationResult ) {
             jqueryElementForInputGroup.removeClass("govuk-form-group--error");
