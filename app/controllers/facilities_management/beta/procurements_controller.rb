@@ -26,7 +26,7 @@ module FacilitiesManagement
       end
 
       def create
-        @procurement = current_user.procurements.create(procurement_params)
+        @procurement = current_user.procurements.build(procurement_params)
 
         if @procurement.save(context: :name)
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
