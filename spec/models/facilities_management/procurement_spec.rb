@@ -62,13 +62,31 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when the estimated_annual_cost is present' do
       it 'expected to be valid' do
         procurement.estimated_annual_cost = 25000
-        expect(procurement.valid?(:annual_cost)).to eq true
+        expect(procurement.valid?(:estimated_annual_cost)).to eq true
       end
     end
 
     context 'when the estimated_annual_cost is not present' do
       it 'expected to not be valid' do
-        expect(procurement.valid?(:annual_cost)).to eq false
+        expect(procurement.valid?(:estimated_annual_cost)).to eq false
+      end
+    end
+  end
+
+  describe '#procurement_buildings' do
+    context 'when the procurement_building is present with a service code' do
+      it 'expected to be valid' do
+        procurement.save
+        procurement.procurement_buildings.create(service_codes: ['test'])
+        expect(procurement.valid?(:services)).to eq true
+      end
+    end
+
+    context 'when the procurement_building is present but without any service codes' do
+      it 'expected to not be valid' do
+        procurement.save
+        procurement.procurement_buildings.create
+        expect(procurement.valid?(:services)).to eq false
       end
     end
   end
