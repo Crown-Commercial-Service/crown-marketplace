@@ -14,7 +14,7 @@ module FacilitiesManagement
 
       def show
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
-        redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search?
+        redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search? && !@delete
       end
 
       def new
@@ -32,6 +32,7 @@ module FacilitiesManagement
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
           establish_params @procurement
+          @errors = @procurement.errors
           render :new
         end
       end
@@ -45,7 +46,7 @@ module FacilitiesManagement
           @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).back_link
 
           redirect_to facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @delete
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step]
+          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include? params[:step] && !@delete
         end
       end
 

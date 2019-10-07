@@ -14,7 +14,7 @@
     <%= link_to 'Back', @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? %>
   </div>
 
-  <span class="govuk-caption-l govuk-!-padding-top-0" style="margin-bottom:-1ex;"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %></span>
+  <span class="govuk-caption-l govuk-!-padding-top-0"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %></span>
   <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0"><%= @procurement.name %></h1>
   <div class="procurement govuk-grid-row">
     <div class="govuk-grid-column-full">
