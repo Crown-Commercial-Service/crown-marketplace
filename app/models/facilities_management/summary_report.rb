@@ -6,21 +6,23 @@ module FacilitiesManagement
       @start_date = start_date
       @user_id = user_id
 
+      data.deep_symbolize_keys!
+
       @posted_services =
-        if data['fm-services']
-          data['fm-services'].collect { |x| x['code'].gsub('-', '.') }
+        if data[:'fm-services']
+          data[:'fm-services'].collect { |x| x[:code].gsub('-', '.') }
         else
-          data['posted_services']
+          data[:posted_services]
         end
 
       @posted_locations = data[:posted_locations]
 
-      @contract_length_years = data[:fm_contract_length].to_i
-      @contract_cost = data['fm-contract-cost'].to_f
+      @contract_length_years = data[:'fm-contract-length'].to_i
+      @contract_cost = data[:'fm-contract-cost'].to_f
 
       @tupe_flag =
         begin
-          if data[:is_tupe] == 'yes'
+          if data[:'is-tupe'] == 'yes'
             'Y'
           else
             'N'
