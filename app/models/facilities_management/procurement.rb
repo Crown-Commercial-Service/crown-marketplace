@@ -7,6 +7,9 @@ module FacilitiesManagement
                foreign_key: :user_id,
                inverse_of: :procurements
 
+    has_many :procurement_buildings, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+    accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
+
     aasm do
       state :quick_search, initial: true
       state :detailed_search

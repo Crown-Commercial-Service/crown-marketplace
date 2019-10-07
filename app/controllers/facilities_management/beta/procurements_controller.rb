@@ -1,12 +1,13 @@
 require 'facilities_management/fm_buildings_data'
-
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FacilitiesManagement::FrameworkController
       before_action :set_procurement, only: %i[show edit update destroy]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
-      before_action :user_buildings_count, only: %i[show edit]
+      before_action :user_buildings_count, only: %i[show edit update]
+      before_action :set_procurement_data, only: %i[show edit update]
+      before_action :set_new_procurement_data, only: %i[new]
 
       def index
         @procurements = current_user.procurements
@@ -18,10 +19,6 @@ module FacilitiesManagement
       end
 
       def new
-        set_suppliers(params[:region_codes], params[:service_codes])
-        find_regions(params[:region_codes])
-        find_services(params[:service_codes])
-
         @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
       end
 
@@ -33,13 +30,13 @@ module FacilitiesManagement
         else
           establish_params @procurement
           @errors = @procurement.errors
+          set_procurement_data
           render :new
         end
       end
 
       def edit
         establish_params @procurement
-
         if @procurement.quick_search?
           render :edit
         else
@@ -52,6 +49,7 @@ module FacilitiesManagement
 
       def update
         @procurement.assign_attributes(procurement_params)
+
         if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
           @procurement.reload
@@ -96,6 +94,7 @@ module FacilitiesManagement
                 :estimated_cost_known,
                 service_codes: [],
                 region_codes: [],
+                procurement_buildings_attributes: [:id, :name, service_codes: []]
               )
       end
 
@@ -107,11 +106,34 @@ module FacilitiesManagement
         @procurement = Procurement.find(params[:id])
       end
 
+      def set_new_procurement_data
+        set_suppliers(params[:region_codes], params[:service_codes])
+        find_regions(params[:region_codes])
+        find_services(params[:service_codes])
+      end
+
+      def set_procurement_data
+        region_codes = @procurement.region_codes
+        service_codes = @procurement.service_codes
+        set_suppliers(region_codes, service_codes)
+        find_regions(region_codes)
+        find_services(service_codes)
+        set_buildings if params[:step] == 'services'
+      end
+
       def set_suppliers(region_codes, service_codes)
         @suppliers_lot1a = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1a')
         @suppliers_lot1b = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1b')
         @suppliers_lot1c = CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1c')
         @supplier_count = CCS::FM::Supplier.supplier_count(region_codes, service_codes)
+      end
+
+      def set_buildings
+        @buildings_data = FMBuildingData.new.get_building_data(current_user.email.to_s)
+        @buildings_data.each do |building|
+          building_data = JSON.parse(building['building_json'].to_s)
+          @procurement.procurement_buildings.build(name: building_data['name']) if @procurement.procurement_buildings.where(name: building_data['name']).blank?
+        end
       end
 
       def find_regions(region_codes)
