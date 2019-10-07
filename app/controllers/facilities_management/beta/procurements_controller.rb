@@ -91,6 +91,10 @@ module FacilitiesManagement
                 :initial_call_off_start_date_yyyy,
                 :initial_call_off_period,
                 :mobilisation_period,
+                :optional_call_off_extensions_1,
+                :optional_call_off_extensions_2,
+                :optional_call_off_extensions_3,
+                :optional_call_off_extensions_4,
                 service_codes: [],
                 region_codes: []
               )

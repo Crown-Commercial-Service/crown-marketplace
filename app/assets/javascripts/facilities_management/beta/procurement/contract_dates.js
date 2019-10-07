@@ -57,6 +57,7 @@ $(function () {
         } else {
             clearContractEndDate();
         }
+
     };
 
     $('#facilities_management_procurement_mobilisation_period').on('keyup', function (e) {
