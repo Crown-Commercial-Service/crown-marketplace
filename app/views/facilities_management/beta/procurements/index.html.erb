@@ -1,7 +1,19 @@
 <div class="govuk-body">
-
   <div class="govuk-grid-row">
     <a class="govuk-back-link govuk-!-margin-top-6 ccs-no-print" aria-label="Back to the previous page" href=".">Back</a>
+
+    <% if @deleted %>
+      <div class="govuk-grid-row">
+      <div class="ccs-govuk-panel ccs-govuk-panel--confirmation">
+        <h1 class="ccs-govuk-panel__title">
+          Your search was deleted
+        </h1>
+        <div class="ccs-govuk-panel__body">
+          '<%= @what_was_deleted %>' search result was deleted.
+        </div>
+      </div>
+      </div>
+    <% end %>
 
     <h1 class="govuk-heading-xl"><%= t('.manage_procurements') %></h1>
 
@@ -34,7 +46,7 @@
           </th>
           <td class="govuk-table__cell"><%= "#{procurement.updated_at.in_time_zone("London").strftime '%a %d %b %Y at %l:%M:%S %P'} #{procurement.updated_at.in_time_zone("London").zone}" %></td>
           <td class="govuk-table__cell"><%= procurement.aasm_state.humanize %></td>
-          <td class="govuk-table__cell"><%= link_to "Delete", facilities_management_beta_procurement_path(procurement), method: :delete, :class => "delete", :confirm => "Are you sure ?"%></td>
+          <td class="govuk-table__cell"><%= link_to "Delete", facilities_management_beta_procurement_path(procurement, delete:'y'), :class => "govuk-link govuk-link--no-visited-state" if procurement.quick_search?%></td>
         </tr>
       <% end %>
       </tbody>

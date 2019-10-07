@@ -46,8 +46,8 @@ module ApplicationHelper
     form_group_css = ['govuk-form-group']
     form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
 
-    content_tag :div, class: css_classes, data: top_level_data_options do
-      content_tag :div, class: form_group_css do
+    content_tag :div, class: css_classes do
+      content_tag :div, class: form_group_css, data: top_level_data_options  do
         concat display_error_label(model_object, attribute, label_text, "#{form_object_name}_#{attribute}")
         concat display_label(label_text, "#{form_object_name}_#{attribute}")
         concat yield
@@ -120,16 +120,22 @@ module ApplicationHelper
     error = journey.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(attribute), class: 'govuk-error-message' do
-      error
+    content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
+      "#{attribute} #{error}"
     end
+  end
+
+  def get_client_side_error_type (model, attribute)
+    ''
+    'maxlength' if model.errors.details[attribute].first[:error] == :too_long
+    'required' if model.errors.details[attribute].first[:error] == :blank
   end
 
   def display_error_label ( model, attribute, label_text, target)
     error = model.errors[attribute].first
     return if error.blank?
 
-    content_tag :label, id: error_id(attribute), for: target, class: 'govuk-error-message' do
+    content_tag :label, data:{:validation => "#{get_client_side_error_type(model,attribute)}"}, for: target, class: 'govuk-error-message' do
       "#{attribute} #{error}"
     end
   end
