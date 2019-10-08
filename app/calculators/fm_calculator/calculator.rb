@@ -45,15 +45,10 @@ module FMCalculator
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
-      @framework_rate = @framework_rates[@service_ref].to_f
-
-      # benchmark rate set here
-      # @benchmark_rate = @benchmark_rates[@service_ref].to_f
-
       if @supplier_name && @rate_card_discounts[@service_ref]
-        (1 - @rate_card_discounts[@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref][@building_data[:fm_building_type]].to_f
+        (1 - @rate_card_discounts[@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref][@building_data[:"fm-building-type"]].to_f
       else
-        @uom_vol * @framework_rates[@service_ref].to_f
+        @uom_vol * @framework_rates[@service_ref.gsub('.','')].to_f
       end
     rescue StandardError => e
       raise e
@@ -172,7 +167,7 @@ module FMCalculator
 
     # benchmarked costs start = benchmark rates * unit of mesasure volume
     def benchmarkedcosts
-      benchmark_rate = @benchmark_rates[@service_ref].to_f
+      benchmark_rate = @benchmark_rates[@service_ref.gsub('.','')].to_f
       benchmark_rate * @uom_vol
     end
 
