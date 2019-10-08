@@ -226,9 +226,6 @@ function initDynamicAccordian(){
     updateList(govcheckboxes, id, basketheader);
 }
 
-
-
-
 function initCustomFnc() {
     var filt = $('#ccs-at-results-filters');
     if(filt.length){//call function only if this id is on this page
@@ -239,3 +236,7 @@ function initCustomFnc() {
         initDynamicAccordian();
     }
 }
+
+jQuery(document).ready(function(){
+    initCustomFnc(); //call block of custom functions calls
+});

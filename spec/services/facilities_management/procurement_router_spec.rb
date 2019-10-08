@@ -28,7 +28,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'tupe' }
 
         it 'returns a route for the show page' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1')
+          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=contract_dates')
         end
       end
 
