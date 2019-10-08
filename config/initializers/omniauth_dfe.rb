@@ -22,6 +22,13 @@ if Marketplace.dfe_signin_enabled?
 
     def call(env)
       request = Rack::Request.new(env)
+      Rails.logger.info('rak.session: ' + env['rack.session'].try(:to_s))
+      Rails.logger.info('stored_state: ' + env['rack.session']['omniauth.state'].try(:to_s))
+      Rails.logger.info('accept_header: ' + request.has_header?('Accept') ? request.get_header('Accept').try(:to_s) : request.get_header('HTTP_ACCEPT').try(:to_s))
+      Rails.logger.info('error: ' + request.params['error'].try(:to_s))
+      Rails.logger.info('error_reason: ' + request.params['error_reason'].try(:to_s))
+      Rails.logger.info('error_description: ' + request.params['error_description'].try(:to_s))
+      Rails.logger.info('error_uri: ' + request.params['error_uri'].try(:to_s))
       if request.path == '/auth/dfe/callback' && request.params.empty? && !OmniAuth.config.test_mode
         response = Rack::Response.new
         response.redirect('/auth/dfe')
