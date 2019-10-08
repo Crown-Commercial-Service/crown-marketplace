@@ -95,11 +95,34 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '#procurement_buildings' do
+    context 'when there are no procurement_buildings on the procurement_buildings step' do
+      it 'expected to be invalid' do
+        procurement.save
+        expect(procurement.valid?(:procurement_buildings)).to eq false
+      end
+    end
+
+    context 'when there are no active procurement_buildings on the procurement_buildings step' do
+      it 'expected to be invalid' do
+        procurement.save
+        procurement.procurement_buildings.create(active: false)
+        expect(procurement.valid?(:procurement_buildings)).to eq false
+      end
+    end
+
+    context 'when there is an active procurement_building on the procurement_buildings step' do
+      it 'expected to be valid' do
+        procurement.save
+        procurement.procurement_buildings.create(active: true)
+        expect(procurement.valid?(:procurement_buildings)).to eq true
+      end
+    end
+
     context 'when the procurement_building is present with a service code' do
       it 'expected to be valid' do
         procurement.save
         procurement.procurement_buildings.create(service_codes: ['test'])
-        expect(procurement.valid?(:services)).to eq true
+        expect(procurement.valid?(:building_services)).to eq true
       end
     end
 
@@ -107,7 +130,76 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'expected to not be valid' do
         procurement.save
         procurement.procurement_buildings.create
-        expect(procurement.valid?(:services)).to eq false
+        expect(procurement.procurement_buildings.first.valid?(:building_services)).to eq false
+      end
+    end
+  end
+
+  describe '#find_or_build_procurement_building' do
+    let(:building_data) do
+      {
+        'name' => 'test',
+        'address' => {
+          'fm-address-line-1' => 'line 1',
+          'fm-address-line-2' => 'line 2',
+          'town' => 'town',
+          'county' => 'county',
+          'postcode' => 'postcode'
+        }
+      }
+    end
+
+    context 'when procurement building already exists' do
+      before do
+        procurement.save
+        procurement.procurement_buildings.create(name: 'test')
+      end
+
+      it 'does not create a new one' do
+        expect { procurement.find_or_build_procurement_building(building_data) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
+      end
+
+      it 'keeps the name' do
+        procurement.find_or_build_procurement_building(building_data)
+        procurement_building = procurement.procurement_buildings.first
+        expect(procurement_building.name).to eq building_data['name']
+      end
+
+      it 'updates its address line 1' do
+        procurement.find_or_build_procurement_building(building_data)
+        procurement_building = procurement.procurement_buildings.first
+        expect(procurement_building.address_line_1).to eq building_data['address']['fm-address-line-1']
+      end
+
+      it 'updates its address line 2' do
+        procurement.find_or_build_procurement_building(building_data)
+        procurement_building = procurement.procurement_buildings.first
+        expect(procurement_building.address_line_2).to eq building_data['address']['fm-address-line-2']
+      end
+
+      it 'updates its town' do
+        procurement.find_or_build_procurement_building(building_data)
+        procurement_building = procurement.procurement_buildings.first
+        expect(procurement_building.town).to eq building_data['address']['town']
+      end
+
+      it 'updates its county' do
+        procurement.find_or_build_procurement_building(building_data)
+        procurement_building = procurement.procurement_buildings.first
+        expect(procurement_building.county).to eq building_data['address']['county']
+      end
+
+      it 'updates its postcode' do
+        procurement.find_or_build_procurement_building(building_data)
+        procurement_building = procurement.procurement_buildings.first
+        expect(procurement_building.postcode).to eq building_data['address']['postcode']
+      end
+    end
+
+    context 'when procurement building does not exist' do
+      it 'creates one' do
+        procurement.save
+        expect { procurement.find_or_build_procurement_building(building_data) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
       end
     end
   end
