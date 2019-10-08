@@ -95,6 +95,8 @@ gem 'carrierwave-aws', '~> 1.3.0'
 gem 'sprockets'
 gem 'sprockets-bumble_d'
 
+gem 'gov_uk_date_fields'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
