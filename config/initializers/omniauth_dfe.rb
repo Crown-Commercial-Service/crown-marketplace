@@ -20,7 +20,7 @@ if Marketplace.dfe_signin_enabled?
       @app = app
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Style/RescueStandardError
     def call(env)
       request = Rack::Request.new(env)
       Rails.logger.info('rak.session: ')
@@ -44,9 +44,14 @@ if Marketplace.dfe_signin_enabled?
       else
         @app.call(env)
       end
+    rescue => e
+      Rails.logger.info('EXCEPTION STARTS')
+      Rails.logger.info(e.message)
+      Rails.logger.info(e.backtrace.join("\n"))
+      Rails.logger.info('EXCEPTION ENDS')
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Style/RescueStandardError
 
   Rails.application.config.middleware.insert_before OmniAuth::Strategies::OpenIDConnect, DfeSignIn
 end
