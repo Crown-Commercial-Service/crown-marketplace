@@ -12,11 +12,8 @@
  *
  *= require_self
  *= require govuk-frontend
- *= require facilities_management/long_list
- *= require facilities_management/standard_contract_questions
- *= require facilities_management/buildings
- *= require facilities_management/buyer-account
- *= require facilities_management/FilterComponent
+ *= require_directory ./facilities_management
+ *= require_directory ./facilities_management/beta
  */
 
 /*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
@@ -777,11 +774,6 @@
 .govuk-form-group--error .govuk-form-group {
     padding: 0;
     border: 0
-}
-
-.govuk-grid-row {
-    margin-right: -15px;
-    margin-left: -15px
 }
 
 .govuk-grid-row:after {
