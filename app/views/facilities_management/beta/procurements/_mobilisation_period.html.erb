@@ -1,0 +1,107 @@
+<div class="govuk-grid-row govuk-!-margin-top-5">
+
+  <span class="govuk-heading-m govuk-!-margin-bottom-0">Do you need a mobilisation period?</span>
+
+  <span class="govuk-caption-m">
+    This is the period in which the supplier gets ready to start providing the<br>
+    services. A mobilisation period of between 3 to 6 months is recommended<br>
+    depending on the complexity of services and buildings. A shorter term can be<br>
+    entered if required, however enough time should be allowed for suitable<br>
+    mobilisation ready for service delivery.
+  </span>
+
+
+  <div class="govuk-radios govuk-!-margin-top-3">
+
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-mobilisation-period-yes" name="mob-group" type="radio" value="yes" <%= unless @procurement.mobilisation_period.nil?;
+                                                                                                                                               @procurement.mobilisation_period > 0 ? 'checked' : '' end %>>
+        <label class="govuk-label govuk-radios__label govuk-label--s" for="fm-mobilisation-period-yes">
+          Yes
+        </label>
+        <!-- Content for when yes is selected hidden when no is selected -->
+        <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3">
+          <span class="govuk-heading-s govuk-!-margin-left-3">Enter mobilisation length</span>
+          <span class="govuk-caption-m govuk-!-margin-left-3 govuk-!-margin-top-2 govuk-!-margin-bottom-2">A minimum of 4 weeks required if TUPE is involved.</span>
+
+          <%= f.number_field :mobilisation_period, class: 'govuk-input govuk-input--width-4 govuk-!-margin-left-3' %><span class="govuk-label--s govuk-!-margin-left-2"> weeks</span>
+
+          <div class="govuk-!-margin-left-3">
+            <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3">Mobilisation start date</span>
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+                <div class="govuk-date-input" id="date-input">
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-dd">
+                        Day
+                      </label>
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-start-date-dd" name="mobilisation-start-date-dd">
+                    </div>
+                  </div>
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-mm">
+                        Month
+                      </label>
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-start-date-mm" name="mobilisation-start-date-mm">
+                    </div>
+                  </div>
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-yyyy">
+                        Year
+                      </label>
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field" id="mobilisation-start-date-yyyy" name="mobilisation-start-date-yyyy">
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="govuk-!-margin-left-3">
+            <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3">Mobilisation end date</span>
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+                <div class="govuk-date-input" id="date-input">
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-dd">
+                        Day
+                      </label>
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-end-date-dd" name="mobilisation-end-date-dd">
+                    </div>
+                  </div>
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-mm">
+                        Month
+                      </label>
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-end-date-mm" name="mobilisation-end-date-mm">
+                    </div>
+                  </div>
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-yyyy">
+                        Year
+                      </label>
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field" id="mobilisation-end-date-yyyy" name="mobilisation-end-date-yyyy">
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-mobilisation-period-no" name="mob-group" type="radio" value="no">
+          <label class="govuk-label govuk-radios__label govuk-label--s" for="fm-mobilisation-period-no">
+            No
+          </label>
+        </div>
+
+      </div>
+      </div>
