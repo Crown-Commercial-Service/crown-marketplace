@@ -67,7 +67,7 @@ en:
           no_cost_provided: None
         edit:
           cancel: Cancel
-          confirm_delete: Confirm delete
+          confirm_delete: Yes, delete this search result
           contract_name:
             contract_name_info: This will help you to refer to your contracts when talking to suppliers.
             contract_name_question: What do you want to call your contract?
@@ -81,6 +81,7 @@ en:
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
+          search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
           services:
             content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don't already appear on your shortlist.
             heading: What facilities management services do you need for each building?
@@ -109,7 +110,7 @@ en:
           cancel_text: Cancel, and return to the manage procurements page
           save_for_later: Save for later
           save_your_search: Save your search
-          search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of two-sublots below, subject to your total contract value.
+          search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sublots below, subject to your total contract value.
           search_results: Search Results
         quick_search_form:
           continue_headline: Continue to procurement
