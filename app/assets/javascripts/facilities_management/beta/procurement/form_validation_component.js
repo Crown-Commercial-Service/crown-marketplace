@@ -59,11 +59,11 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
     this.validationFunctions = {
         'required' : function(jQueryObject) {
-            return ('' + jqueryObject.val() == '')
+            return ('' + jQueryObject.val() == '')
         },
         'maxlength' : function (jQueryObject) {
-            let maxLength = parseInt(jqueryObject.prop('maxlength'));
-            return (('' + jqueryObject.val()).length > maxLength);
+            let maxLength = parseInt(jQueryObject.prop('maxlength'));
+            return (('' + jQueryObject.val()).length > maxLength);
         }
     };
     this.testError = function (errFn, jElem, errorType) {
@@ -95,11 +95,42 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
 
     this.insertElementToCreateFieldBlock = function (inputElement) {
+        let continueLooping = true;
+        let counter = 0;
+        let elementsToWrap = [];
+        elementsToWrap.push(inputElement[0]);
+        // look at the previous sibling of the input element - if it is a label - we need to include it
+        // look at the previous siblings of the input element - if it is a div of class govuk-error-message, we need to include it
+        let prevElem = inputElement.prev() ;
+        let lastElem = inputElement[0];
+        while ( continueLooping && counter < 3) {
+            if ( prevElem.length > 0 ) {
+                if (prevElem[0].nodeName == 'LABEL') {
+                    elementsToWrap.push(prevElem[0]);
+                } else if ( prevElem.prop('class').indexOf('govuk-error-message') >= 0) {
+                    elementsToWrap.push(prevElem[0]);
+                    continueLooping = false;
+                } else if ( counter >= 1 ){
+                    continueLooping = false;
+                }
+                lastElem = prevElem;
+                prevElem = prevElem.prev();
+                counter++;
+            } else {
+                break;
+            }
+        }
+        let newElem = $('<div class="govuk-form-group"></div>').insertBefore(lastElem);
+        for ( let index = 0; index < elementsToWrap.length; index++ ) {
+            newElem.prepend(elementsToWrap[index]);
+        }
 
+        return newElem;
     };
 
     this.insertElementForRequiredMessage = function (inputElement, parent, errorType) {
         let propertyName = parent.attr("data-propertyname");
+        if (propertyName == undefined ) propertyName = '';
         let labelElem = '<label class="govuk-error-message" data-validation="' + errorType + '" for="' + inputElement[0].id + '">' + this.errorMessage(propertyName, errorType) + '</label>';
         $(parent).prepend(labelElem);
 
@@ -108,6 +139,9 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
 
     this.toggleError = function (jQueryElement, show, errorType) {
         let jqueryElementForInputGroup = jQueryElement.parent(".govuk-form-group");
+        if (jqueryElementForInputGroup.length == 0 ) {
+            jqueryElementForInputGroup = this.insertElementToCreateFieldBlock(jQueryElement);
+        }
         let jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
         if (jqueryElementForRequiredMessage.length == 0) {
             jqueryElementForRequiredMessage = this.insertElementForRequiredMessage(jQueryElement, jqueryElementForInputGroup, errorType);
