@@ -74,6 +74,7 @@ en:
           delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
           detailed_search: Detailed search
           next_step:
+            contract_dates: 'Next: Buildings'
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
             tupe: 'Next: Contract period'
