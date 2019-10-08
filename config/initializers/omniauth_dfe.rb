@@ -20,8 +20,23 @@ if Marketplace.dfe_signin_enabled?
       @app = app
     end
 
+    # rubocop:disable Metrics/AbcSize
     def call(env)
       request = Rack::Request.new(env)
+      Rails.logger.info('rak.session: ')
+      Rails.logger.info(env['rack.session'])
+      Rails.logger.info('stored_state: ')
+      Rails.logger.info(env['rack.session']['omniauth.state'])
+      Rails.logger.info('accept_header: ')
+      Rails.logger.info(request.has_header?('Accept') ? request.get_header('Accept') : request.get_header('HTTP_ACCEPT'))
+      Rails.logger.info('error: ')
+      Rails.logger.info(request.params['error'])
+      Rails.logger.info('error_reason: ')
+      Rails.logger.info(request.params['error_reason'])
+      Rails.logger.info('error_description: ')
+      Rails.logger.info(request.params['error_description'])
+      Rails.logger.info('error_uri: ')
+      Rails.logger.info(request.params['error_uri'])
       if request.path == '/auth/dfe/callback' && request.params.empty? && !OmniAuth.config.test_mode
         response = Rack::Response.new
         response.redirect('/auth/dfe')
@@ -31,6 +46,7 @@ if Marketplace.dfe_signin_enabled?
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   Rails.application.config.middleware.insert_before OmniAuth::Strategies::OpenIDConnect, DfeSignIn
 end
