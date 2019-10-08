@@ -19,16 +19,10 @@
       <div class="govuk-grid-row">
         <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
           <%= govuk_form_group_with_optional_error @procurement, :name do %>
-            <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
-            <div class="govuk-error-message govuk-visually-hidden" data-validation="maxlength">
-              <span><%= t('.name_text_length_warning') %></span>
-            </div>
-            <div class="govuk-error-message govuk-visually-hidden" data-validation="required">
-              <span><%= t('.name_text_required') %></span>
-            </div>
             <%= display_error @procurement, :name %>
+            <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
             <%= f.text_field :name, maxlength: 100, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
-          <%end %>
+          <%end%>
         </div>
       </div>
     <%end %>
