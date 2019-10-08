@@ -191,8 +191,8 @@ module FacilitiesManagement
           s_dot = s['code'].gsub('-', '.')
           uvals << { user_id: b['user_id'],
                      service_code: s_dot,
-                     uom_value: b[:building_json][:gia].to_f,
-                     building_id: b[:building_json][:id],
+                     uom_value: b[:building_json]['gia'].to_f,
+                     building_id: b[:building_json]['id'],
                      title_text: 'What is the total internal area of this building?',
                      example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
                      spreadsheet_label: 'Square Metre (GIA) per annum' }
@@ -325,7 +325,7 @@ module FacilitiesManagement
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
 
-        results[:service_code] = calc_fm.sumunitofmeasure if results
+        results[v[:service_code]] = calc_fm.sumunitofmeasure if results
       end
       return { sum_uom: sum_uom } if supplier_name
 

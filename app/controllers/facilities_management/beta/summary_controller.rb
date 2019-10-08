@@ -1,5 +1,10 @@
 module FacilitiesManagement
   class Beta::SummaryController < FacilitiesManagement::HomeController
+    def index
+      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+      build_direct_award_report
+    end
+
     def guidance
       # render plain: 'guidance test'
 
