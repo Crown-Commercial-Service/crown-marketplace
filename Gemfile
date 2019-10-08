@@ -63,7 +63,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'carrierwave', '~> 1.0'
 
 # handles spreadsheets
-gem 'roo', '~> 2.8.0'
+gem 'roo', '~> 2.8.2'
 
 # manipulating JSON for anonymisation
 gem 'jsonpath', '~> 0.5.8'
@@ -95,6 +95,8 @@ gem 'carrierwave-aws', '~> 1.3.0'
 gem 'sprockets'
 gem 'sprockets-bumble_d'
 
+gem 'gov_uk_date_fields'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -106,7 +108,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'rubyXL'
+  gem 'rubyXL', '>= 3.4.3'
   gem 'i18n-tasks'
   gem 'poltergeist'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
@@ -121,5 +123,5 @@ end
 group :test do
   gem 'webmock'
   gem 'simplecov', require: false
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '>= 3.142.3'
 end

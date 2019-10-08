@@ -43,8 +43,7 @@ module FacilitiesManagement
         else
           @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).back_link
 
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @delete
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && !@delete
+          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
         end
       end
 
@@ -106,7 +105,15 @@ module FacilitiesManagement
                 :contract_name,
                 :procurement_data,
                 :estimated_annual_cost,
-                :estimated_cost_known,
+                :initial_call_off_start_date_dd,
+                :initial_call_off_start_date_mm,
+                :initial_call_off_start_date_yyyy,
+                :initial_call_off_period,
+                :mobilisation_period,
+                :optional_call_off_extensions_1,
+                :optional_call_off_extensions_2,
+                :optional_call_off_extensions_3,
+                :optional_call_off_extensions_4,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id, :name, service_codes: []]

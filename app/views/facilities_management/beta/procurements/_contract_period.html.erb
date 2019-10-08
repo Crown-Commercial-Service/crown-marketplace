@@ -4,9 +4,7 @@
   </dt>
 
   <dd class="govuk-summary-list__value">
-    <a class="govuk-link" href="#">
-      Answer all questions
-    </a>
+    <%= link_to "Answer all questions", edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link" %>
   </dd>
   <dd class="govuk-summary-list__actions">
   </dd>
@@ -17,7 +15,9 @@
     Initial call-off period
   </dt>
   <dd class="govuk-summary-list__value">
-    <%= @procurement.initial_call_off_period %> years
+    <% unless @procurement.initial_call_off_period.nil? %>
+      <%= @procurement.initial_call_off_period %> years
+    <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
   </dd>
