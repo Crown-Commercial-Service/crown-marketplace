@@ -34,8 +34,6 @@
       <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> - <%= @procurement.name %></span>
     </div>
 
-    <span class="govuk-caption-l govuk-!-padding-top-0"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %></span>
-    <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0"><%= @procurement.name %></h1>
     <div class="procurement govuk-grid-row">
       <div class="govuk-grid-column-full">
         <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
