@@ -20,6 +20,7 @@ if Marketplace.dfe_signin_enabled?
       @app = app
     end
 
+    # rubocop:disable Metrics/AbcSize
     def call(env)
       request = Rack::Request.new(env)
       Rails.logger.info('rak.session: ' + env['rack.session'].try(:to_s))
@@ -38,6 +39,7 @@ if Marketplace.dfe_signin_enabled?
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   Rails.application.config.middleware.insert_before OmniAuth::Strategies::OpenIDConnect, DfeSignIn
 end
