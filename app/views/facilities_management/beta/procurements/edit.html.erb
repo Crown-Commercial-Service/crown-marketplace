@@ -31,9 +31,14 @@
       </div>
     </div>
     <div class="govuk-grid-row">
-      <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> - <%= @procurement.name %></span>
-      <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0">Search Results</h1>
-      <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
+      <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.name}" if @procurement.detailed_search? %></span>
+      <% if !@procurement.persisted? || @procurement.quick_search?%>
+        <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
+          <%= @procurement.name if @procurement.quick_search? %>
+          <%= 'Search Results' unless @procurement.persisted? %>
+        </h1>
+        <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
+      <% end %>
     </div>
     <div class="procurement govuk-grid-row">
       <div class="govuk-grid-column-full quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
@@ -64,11 +69,10 @@
           </div>
         <% end %>
 
-        <% if @procurement.detailed_search? %>
-          <div class="govuk-grid-row govuk-!-margin-top-3">
-            <%= link_to 'Back to detailed search summary', facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' %>
-          </div>
-        <% end %>
+        <div class="govuk-grid-row govuk-!-margin-top-3">
+          <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' if @procurement.detailed_search? %>
+          <%= link_to t('.cancel_and_return'), facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' if @procurement.quick_search? %>
+        </div>
       <% end %>
     </div>
   </div>
