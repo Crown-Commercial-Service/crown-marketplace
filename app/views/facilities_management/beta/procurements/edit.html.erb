@@ -71,7 +71,7 @@
 
         <div class="govuk-grid-row govuk-!-margin-top-3">
           <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' if @procurement.detailed_search? %>
-          <%= link_to t('.cancel_and_return'), facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' if @procurement.quick_search? %>
+          <%= link_to t('.cancel_and_return'), facilities_management_beta_procurements_path, class: 'govuk-link--no-visited-state' if @procurement.quick_search? %>
         </div>
       <% end %>
     </div>
