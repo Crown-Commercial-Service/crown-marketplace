@@ -12,10 +12,10 @@
       </div>
 
       <div class="govuk-grid-row govuk-!-margin-top-5">
-        <h2 class="govuk-heading-m"><%= t('.continue_headline') %></h2>
+        <h2 class="govuk-heading-m"><%= t('.continue_headline') unless @delete %></h2>
       </div>
       <div class="govuk-grid-row">
-        <p class="govuk-caption-l"><%= t('.continue_text') %></p>
+        <p class="govuk-caption-l"><%= t('.continue_text') unless @delete %></p>
       </div>
       <% if !@procurement.persisted? || @procurement.errors.any? %>
         <div class="govuk-grid-row govuk-!-margin-top-7">
