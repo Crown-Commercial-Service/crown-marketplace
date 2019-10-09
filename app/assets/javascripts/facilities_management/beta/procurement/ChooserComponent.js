@@ -130,13 +130,15 @@ ChooserComponent.prototype.PrimeBasket = function () {
             let sectionItem = this._sections[index];
             let mappedItems = [] ;
             sectionItem._allCheckboxes.each(function () {
-                let cb = this;
-                let newItem = {
-                    code: cb.id,
-                    groupId: sectionItem._sectionCode,
-                    captionText : cb.title
-                };
-                mappedItems.push(newItem);
+                if ( this.checked ) {
+                    let cb = this;
+                    let newItem = {
+                        code: cb.id,
+                        groupId: sectionItem._sectionCode,
+                        captionText: cb.title
+                    };
+                    mappedItems.push(newItem);
+                }
             });
             selectedItems = selectedItems.concat(mappedItems);
         }
