@@ -59,16 +59,37 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '#estimated_annual_cost' do
-    context 'when the estimated_annual_cost is present' do
-      it 'expected to be valid' do
-        procurement.estimated_annual_cost = 25000
-        expect(procurement.valid?(:estimated_annual_cost)).to eq true
+    context 'when estimated_cost_known is true' do
+      context 'when estimated_annual_cost is present' do
+        it 'expected to be valid' do
+          procurement.estimated_cost_known = true
+          procurement.estimated_annual_cost = 25000
+          expect(procurement.valid?(:estimated_annual_cost)).to eq true
+        end
+      end
+
+      context 'when the estimated_annual_cost is not present' do
+        it 'expected to not be valid' do
+          procurement.estimated_cost_known = true
+          expect(procurement.valid?(:estimated_annual_cost)).to eq false
+        end
       end
     end
 
-    context 'when the estimated_annual_cost is not present' do
-      it 'expected to not be valid' do
-        expect(procurement.valid?(:estimated_annual_cost)).to eq false
+    context 'when estimated_cost_known is false' do
+      context 'when estimated_annual_cost is present' do
+        it 'expected to be valid' do
+          procurement.estimated_cost_known = false
+          procurement.estimated_annual_cost = 25000
+          expect(procurement.valid?(:estimated_annual_cost)).to eq true
+        end
+      end
+
+      context 'when the estimated_annual_cost is not present' do
+        it 'expected to be valid' do
+          procurement.estimated_cost_known = false
+          expect(procurement.valid?(:estimated_annual_cost)).to eq true
+        end
       end
     end
   end
