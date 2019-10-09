@@ -25,6 +25,8 @@ ChooserComponent.prototype.validate = function () {
 ChooserComponent.prototype.init = function () {
     let result = false;
 
+    $('body').addClass('js-enabled');
+
     this._basketContainer = new BasketComponent(this._baseClass, this._classification, $(this._basketName), this.handleBasketRemove.bind(this));
     let sectionArray = $(this._checkboxSourceDivName + " .chooser-section");
     for (let index = 0; index < sectionArray.length; index++) {
@@ -37,7 +39,7 @@ ChooserComponent.prototype.init = function () {
             this._sections[id] = newSection;
         }
     }
-    this._basketContainer.UpdateBasketNumber(0);
+    //this._basketContainer.UpdateBasketNumber(0);
 
     return result;
 };
@@ -306,12 +308,13 @@ BasketComponent.prototype.UpdateBasketNumber = function (count) {
     if (selectedCount) {
         selectedCount.text(count);
     }
+
     if (selectedParent && selectedParent.data("txt01")) {
         if (count == 0) {
             selectedCount.text("");
             selectedCount.next().text(selectedParent.data("txt02"));
         } else {
-            selectedCount.next().text(selectedParent.data("txt01"));
+            $('#selected-' + this._classification + '-count').next().text(selectedParent.data("txt01"));
         }
     }
 };
