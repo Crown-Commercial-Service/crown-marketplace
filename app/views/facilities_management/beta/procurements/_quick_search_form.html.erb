@@ -10,13 +10,14 @@
       <div class="govuk-grid-row">
         <%= render partial: 'filter_details', locals: { form: f } %>
       </div>
+
+      <div class="govuk-grid-row govuk-!-margin-top-5">
+        <h2 class="govuk-heading-m"><%= t('.continue_headline') %></h2>
+      </div>
+      <div class="govuk-grid-row">
+        <p class="govuk-caption-l"><%= t('.continue_text') %></p>
+      </div>
       <% if !@procurement.persisted? || @procurement.errors.any? %>
-        <div class="govuk-grid-row govuk-!-margin-top-5">
-          <h2 class="govuk-heading-m"><%= t('.continue_headline') %></h2>
-        </div>
-        <div class="govuk-grid-row">
-          <p class="govuk-caption-l"><%= t('.continue_text') %></p>
-        </div>
         <div class="govuk-grid-row govuk-!-margin-top-7">
           <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
         </div>
