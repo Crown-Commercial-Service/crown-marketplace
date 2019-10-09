@@ -36,7 +36,7 @@
       <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
     </div>
     <div class="procurement govuk-grid-row">
-      <div class="govuk-grid-column-full">
+      <div class="govuk-grid-column-full quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
         <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
           <% if @procurement.quick_search? %>
             <%= render partial: 'quick_search_form', locals: { f: f } %>
@@ -67,7 +67,7 @@
             <%= link_to 'Back to detailed search summary', facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' %>
           </div>
         <% end %>
-  <% end %>
-  </div>
+      <% end %>
+    </div>
   </div>
 <% end %>
