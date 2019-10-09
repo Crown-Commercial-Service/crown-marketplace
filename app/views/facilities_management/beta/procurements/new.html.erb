@@ -4,7 +4,7 @@
 <%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { novalidate:true, multipart: true } do |f| %>
   <%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors } %>
   <div class="procurement govuk-row">
-    <%= render partial: 'quick_search_form', locals: { f: f } %>
+    <%= render partial: 'quick_search_form', locals: { f: f, step: nil } %>
     <div class="govuk-row">
       <%= f.submit t('.save_your_search'), data: {disable_with:false}, class: 'govuk-button' %>
       <%= f.submit t('.save_for_later'), name: 'save_for_later', data: {disable_with:false}, class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %>
