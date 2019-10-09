@@ -4,20 +4,10 @@
   </dt>
 
   <dd class="govuk-summary-list__value">
-    <%= if @procurement.initial_call_off_period.nil? ||
-        @procurement.initial_call_off_start_date.nil? ||
-        @procurement.mobilisation_period.nil?
-        then
-          link_to 'Answer all questions', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link"
-        end %>
+    <%= link_to('Answer all questions', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") if @procurement.unanswered_contract_date_questions? %>
   </dd>
   <dd class="govuk-summary-list__actions">
-    <%= unless @procurement.initial_call_off_period.nil? ||
-        @procurement.initial_call_off_start_date.nil? ||
-        @procurement.mobilisation_period.nil?
-        then
-          link_to 'Change all', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link"
-        end %>
+    <%= link_to('Change all', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") unless @procurement.unanswered_contract_date_questions? %>
   </dd>
 </div>
 
