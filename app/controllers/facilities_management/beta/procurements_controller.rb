@@ -90,6 +90,7 @@ module FacilitiesManagement
                 :contract_name,
                 :procurement_data,
                 :estimated_annual_cost,
+                :estimated_cost_known,
                 :initial_call_off_start_date_dd,
                 :initial_call_off_start_date_mm,
                 :initial_call_off_start_date_yyyy,
