@@ -13,7 +13,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       # locations: "('\"UKC1\"','\"UKC2\"')",
       # services: "('\"C.21\"','\"C.15\"','\"C.10\"','\"C.11\"','\"C.14\"','\"C.3\"','\"C.4\"','\"C.13\"','\"C.7\"','\"C.5\"','\"C.20\"','\"C.17\"','\"C.1\"','\"C.18\"','\"C.9\"','\"C.8\"','\"C.6\"','\"C.22\"','\"C.12\"','\"C.16\"','\"C.2\"','\"C.19\"','\"D.6\"','\"D.1\"','\"D.5\"','\"D.3\"','\"D.4\"','\"D.2\"','\"E.1\"','\"E.9\"','\"E.5\"','\"E.6\"','\"E.7\"','\"E.8\"','\"E.4\"','\"E.3\"','\"E.2\"','\"F.1\"','\"F.2\"','\"F.3\"','\"F.4\"','\"F.5\"','\"F.6\"','\"F.7\"','\"F.8\"','\"F.9\"','\"F.10\"','\"G.8\"','\"G.13\"','\"G.5\"','\"G.2\"','\"G.4\"','\"G.10\"','\"G.11\"','\"G.16\"','\"G.14\"','\"G.3\"','\"G.15\"','\"G.9\"','\"G.1\"','\"G.12\"','\"G.7\"','\"G.6\"','\"H.16\"','\"H.9\"','\"H.12\"','\"H.7\"','\"H.3\"','\"H.10\"','\"H.4\"','\"H.2\"','\"H.1\"','\"H.5\"','\"H.15\"','\"H.6\"','\"H.13\"','\"H.8\"','\"H.11\"','\"H.14\"','\"I.3\"','\"I.1\"','\"I.2\"','\"I.4\"','\"J.8\"','\"J.2\"','\"J.3\"','\"J.4\"','\"J.9\"','\"J.10\"','\"J.11\"','\"J.6\"','\"J.1\"','\"J.5\"','\"J.12\"','\"J.7\"','\"K.1\"','\"K.5\"','\"K.7\"','\"K.2\"','\"K.4\"','\"K.6\"','\"K.3\"','\"L.1\"','\"L.2\"','\"L.3\"','\"L.4\"','\"L.5\"','\"L.6\"','\"L.7\"','\"L.8\"','\"L.9\"','\"L.10\"','\"L.11\"','\"M.1\"','\"N.1\"','\"O.1\"')",
       start_date: start_date,
-      fm_contract_length: 3
+      'fm-contract-length': 3
     }
   end
 
@@ -24,8 +24,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       # locations: "('\"UKC1\"','\"UKC2\"')",
       # services: "('\"G.1\"','\"C.5\"','\"C.19\"','\"E.4\"','\"K.1\"','\"H.4\"','\"G.5\"','\"K.2\"','\"K.7\"')",
       start_date: start_date,
-      is_tupe: 'yes',
-      fm_contract_length: 3
+      'is-tupe': 'yes',
+      'fm-contract-length': 3
     }
   end
 
@@ -162,7 +162,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         { 'code' => 'N-1', 'name' => 'Helpdesk services' },
         { 'code' => 'O-1', 'name' => 'Management of billable works' }
       ],
-      fm_building_type: 'General office - Customer Facing' }
+      "fm-building-type": 'General office - Customer Facing' }
   end
 
   let(:building2) do
@@ -289,7 +289,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         { 'code' => 'N-1', 'name' => 'Helpdesk services' },
         { 'code' => 'O-1', 'name' => 'Management of billable works' }
       ],
-      fm_building_type: 'Residential Buildings' }
+      'fm-building-type': 'Residential Buildings' }
   end
 
   let(:building3) do
@@ -414,7 +414,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         { 'code' => 'N-1', 'name' => 'Helpdesk services' },
         { 'code' => 'O-1', 'name' => 'Management of billable works' }
       ],
-      fm_building_type: 'General office - Customer Facing' }
+      'fm-building-type': 'General office - Customer Facing' }
   end
 
   let(:buildings) do
@@ -613,7 +613,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # report.workout_current_lot
     # p report.assessed_value
-    expect(report.assessed_value.round(2)).to be 16644.73
+    # assessed_value.round == £8,171,866.21
+    expect(report.assessed_value.round(2)).to be 8171866.21
   end
 
   it 'buildings with rate card' do
@@ -642,7 +643,66 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
 
   # rubocop:disable RSpec/ExampleLength
-  it 'uses ratecard for dummy supplier' do
+  it 'uses ratecard for dummy supplier for service C.5' do
+    id = SecureRandom.uuid
+
+    b =
+      {
+        'id' => id,
+        'gia' => 21000,
+        'name' => 'ccs',
+        'region' => 'London',
+        'address' =>
+          {
+            'fm-address-town' => 'London',
+            'fm-address-line-1' => '151 Buckingham Palace Road',
+            'fm-address-postcode' => 'SW1W 9SZ'
+          },
+        'isLondon' => 'Yes',
+        'services' =>
+          [
+            { 'code' => 'G-1', 'name' => 'Airport and aerodrome maintenance services' },
+            { 'code' => 'M-1', 'name' => 'CAFM system' },
+            # { 'code' => 'N-1', 'name' => 'Helpdesk services' },
+            { 'code' => 'O-1', 'name' => 'Management of billable works' }
+          ],
+        'fm-building-type': 'General office - Customer Facing'
+      }
+
+    all_buildings =
+      [
+        OpenStruct.new(building_json: b)
+      ]
+    uom_vals =
+      [
+        {
+          'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n',
+          'service_code' => 'C.5',
+          'uom_value' => '54',
+          :building_id => id
+        },
+        {
+          'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\\n',
+          :service_code => 'M.1',
+          :uom_value => nil,
+          :building_id => id
+        }
+      ]
+    # data
+    dummy_supplier_name = 'Hickle-Schinner'
+
+    data2[:isLondon] = true
+    report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data2)
+    # prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
+    report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
+
+    # p report.assessed_value
+    expect(report.direct_award_value.round(2)).to be 59153.05
+  end
+  # rubocop:enable RSpec/ExampleLength
+
+  # rubocop:disable RSpec/ExampleLength
+  it 'uses ratecard for dummy supplier service G.1' do
     id = SecureRandom.uuid
 
     b =
@@ -665,7 +725,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
             # { 'code' => 'N-1', 'name' => 'Helpdesk services' },
             { 'code' => 'O-1', 'name' => 'Management of billable works' }
           ],
-        fm_building_type: 'General office - Customer Facing'
+        'fm-building-type': 'General office - Customer Facing'
       }
 
     all_buildings =

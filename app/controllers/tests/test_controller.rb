@@ -30,8 +30,8 @@ module Tests
       data2 =
         {
           start_date: start_date,
-          is_tupe: vals['tupe'] ? 'yes' : 'no',
-          fm_contract_length: vals['contract-length']
+          'is-tupe': vals['tupe'] ? 'yes' : 'no',
+          'fm-contract-length': vals['contract-length']
         }
       data2[:posted_locations] = vals.keys.select { |k| k.start_with?('region-') }.collect { |k| vals[k] }
 
