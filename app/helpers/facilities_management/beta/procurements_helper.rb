@@ -4,26 +4,26 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def format_date(date_object)
-    date_object.strftime ('%d %B %Y').to_s
+    date_object.strftime '%d %B %Y'
   end
 
   def initial_call_off_period_start_date(date)
     start_date = Date.parse(date.to_s)
-    format_date(start_date)
+    format_date start_date
   end
 
   def initial_call_off_period_end_date(initial_call_off_period_start_date, initial_call_off_period)
     end_date = Date.parse(initial_call_off_period_start_date.to_s).next_year(initial_call_off_period) - 1
-    format_date(end_date)
+    format_date end_date
   end
 
   def mobilisation_start_date(initial_call_off_period_start_date, mobilisation_period)
     start_date = Date.parse(initial_call_off_period_start_date.to_s) - (mobilisation_period * 7)
-    format_date(start_date)
+    format_date start_date
   end
 
   def mobilisation_end_date(initial_call_off_period_start_date)
     end_date = Date.parse(initial_call_off_period_start_date.to_s) - 1
-    format_date(end_date)
+    format_date end_date
   end
 end
