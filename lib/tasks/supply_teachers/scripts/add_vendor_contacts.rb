@@ -4,9 +4,9 @@ require 'csv'
 
 def add_vendor_contacts
   suppliers = JSON.parse(File.read(get_output_file_path'data_only_accredited.json'))
-
-  master_vendor_path = file_path(SupplyTeachers::Admin::Upload::MASTER_VENDOR_PATH)
-  neutral_vendor_path = file_path(SupplyTeachers::Admin::Upload::NEUTRAL_VENDOR_PATH)
+  current_data = SupplyTeachers::Admin::CurrentData.first
+  master_vendor_path = input_file_path(current_data.master_vendor_contacts)
+  neutral_vendor_path = input_file_path(current_data.neutral_vendor_contacts)
 
   master_details =
     CSV.new(URI.open(master_vendor_path), headers: :first_row)

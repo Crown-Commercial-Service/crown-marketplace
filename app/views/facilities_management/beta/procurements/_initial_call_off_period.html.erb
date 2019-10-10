@@ -1,0 +1,57 @@
+<div class="govuk-grid-row">
+<span class="govuk-heading-m govuk-!-margin-bottom-0">
+  Initial call-off period
+</span>
+  <span class="govuk-caption-m govuk-!-margin-top-0">
+  The initial period in which the services are provided. This is the date you want services<br>
+  to begin and can be a maximum of 7 years
+</span>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <%= f.number_field :initial_call_off_period, class: 'govuk-input govuk-input--width-4', max: '7' %><span class="govuk-label--s govuk-!-margin-left-2">years </span>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-5">
+  <span class="govuk-heading-s">Initial call-off period start date</span>
+  <%= f.gov_uk_date_field :initial_call_off_start_date, legend_options: { page_heading: false, visually_hidden: true } %>
+</div>
+
+
+<div class="govuk-grid-row govuk-!-margin-top-5">
+  <div class="govuk-date-input" id="contract-end-date-input">
+    <div class="govuk-date-input__item">
+      <span class="govuk-heading-s">Initial call-off period end date</span>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+          <div class="govuk-date-input" id="date-input">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="contract-end-date-dd">
+                  Day
+                </label>
+                <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="contract-end-date-dd" name="contract-end-date-dd" >
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="contract-end-date-mm">
+                  Month
+                </label>
+                <input  readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="contract-end-date-mm" name="contract-end-date-mm" >
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="contract-end-date-yyyy">
+                  Year
+                </label>
+                <input  readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field" id="contract-end-date-yyyy" name="contract-end-date-yyyy" >
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>

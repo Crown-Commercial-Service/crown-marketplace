@@ -9,7 +9,7 @@ require 'active_support'
 def merge_json(supplier_name_key: , destination_key:, destination_file:, primary:, secondary:)
   alias_rows = []
   merge_key = 'supplier_name'
-  supplier_lookup_path = file_path(SupplyTeachers::Admin::Upload::SUPPLIER_LOOKUP_PATH)
+  supplier_lookup_path = input_file_path(SupplyTeachers::Admin::CurrentData.first.supplier_lookup)
   alias_rows = CSV.parse(URI.open(supplier_lookup_path), headers: :first_row)
 
   aliases = Hash.new { |_, k| k }
@@ -44,7 +44,7 @@ def merge_json(supplier_name_key: , destination_key:, destination_file:, primary
       merged << item.merge(supplier_id: supplier_id, supplier_name: k)
     else
       File.open(get_output_file_path('errors.out'), 'a') do |f|
-        f.puts "#{k}: does not appear in aliases file (Supplier lookup). Make sure you include it in the column '#{supplier_name_key}'."
+        f.puts "'#{supplier_name_key.capitalize}' cannot be found for the following supplier: #{k}."
       end
     end
   end
