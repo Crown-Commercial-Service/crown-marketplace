@@ -44,18 +44,31 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                                 this.validationFunctions['required'],
                                 jElem, 'required');
                         }
-                        if (jElem.prop('maxlength')) {
+                        if (jElem.prop('maxlength') > 0) {
                             submitForm = submitForm && this.testError(
                                 this.validationFunctions['maxlength'],
                                 jElem, 'maxlength');
                         }
+                        if ( jElem.prop('type') && submitForm) {
+                            for ( let prop in this.validationFunctions.type ) {
+                                if ( this.validationFunctions.type.hasOwnProperty(prop)) {
+                                    let fn = this.validationFunctions.type[prop];
+                                    if (null != fn && jElem.prop('type') == prop) {
+                                        submitForm = submitForm && this.testError(
+                                            fn, jElem, prop);
+                                    }
+                                }
+                            }
+                        }
                     }
+
+                    this.validationResult = this.validationResult && submitForm;
+                    submitForm = true;
                 }
             }
-            this.validationResult = submitForm;
         }
 
-        return submitForm;
+        return this.validationResult;
     };
     this.validationFunctions = {
         'required' : function(jQueryObject) {
@@ -64,7 +77,13 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         'maxlength' : function (jQueryObject) {
             let maxLength = parseInt(jQueryObject.prop('maxlength'));
             return (('' + jQueryObject.val()).length > maxLength);
+        },
+        'type' : {
+            'number' : function (jQueryObject) {
+                return jQueryObject.val() == '' || isNaN(Number(jQueryObject.val()));
+            }
         }
+
     };
     this.testError = function (errFn, jElem, errorType) {
         let result = false;
@@ -104,21 +123,21 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         let prevElem = inputElement.prev() ;
         let lastElem = inputElement[0];
         while ( continueLooping && counter < 3) {
-            if ( prevElem.length > 0 ) {
-                if (prevElem[0].nodeName == 'LABEL') {
-                    elementsToWrap.push(prevElem[0]);
-                } else if ( prevElem.prop('class').indexOf('govuk-error-message') >= 0) {
-                    elementsToWrap.push(prevElem[0]);
-                    continueLooping = false;
-                } else if ( counter >= 1 ){
-                    continueLooping = false;
-                }
-                lastElem = prevElem;
-                prevElem = prevElem.prev();
-                counter++;
-            } else {
+            if ( prevElem.length == 0 ) break;
+
+            if (prevElem[0].nodeName == 'LABEL') {
+                elementsToWrap.push(prevElem[0]);
+            } else if ( prevElem.prop('class').indexOf('govuk-error-message') >= 0) {
+                elementsToWrap.push(prevElem[0]);
+                continueLooping = false;
+            } else if (prevElem[0].nodeName == 'INPUT') {
                 break;
+            } else if ( counter >= 1 ){
+                continueLooping = false;
             }
+            lastElem = prevElem;
+            prevElem = prevElem.prev();
+            counter++;
         }
         let newElem = $('<div class="govuk-form-group"></div>').insertBefore(lastElem);
         for ( let index = 0; index < elementsToWrap.length; index++ ) {
