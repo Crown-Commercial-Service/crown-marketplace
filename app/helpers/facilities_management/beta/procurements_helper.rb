@@ -17,6 +17,14 @@ module FacilitiesManagement::Beta::ProcurementsHelper
     format_date end_date
   end
 
+  def mobilisation_period(period)
+    result = 'None'
+    unless period.nil?
+      result = period.to_s + (period > 1 ? ' weeks' : 'week')
+    end
+    result
+  end
+
   def mobilisation_start_date(initial_call_off_period_start_date, mobilisation_period)
     start_date = Date.parse(initial_call_off_period_start_date.to_s) - (mobilisation_period * 7)
     format_date start_date
@@ -25,5 +33,13 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   def mobilisation_end_date(initial_call_off_period_start_date)
     end_date = Date.parse(initial_call_off_period_start_date.to_s) - 1
     format_date end_date
+  end
+
+  def initial_call_off_period(period)
+    period.to_s + (period > 1 ? ' years' : 'year')
+  end
+
+  def optional_call_off_extension(extension)
+    extension.to_s + (extension > 1 ? ' years' : 'year')
   end
 end
