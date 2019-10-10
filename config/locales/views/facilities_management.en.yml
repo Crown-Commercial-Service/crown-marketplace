@@ -119,8 +119,6 @@ en:
         quick_search_form:
           continue_headline: Continue to procurement
           continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided wuth an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
-          name_text_length_warning: Name must be 100 characters or fewer.
-          name_text_required: The name is required in order to continue.
           new_name_label: Enter a name for the search
           save_headline: Save a new search
           save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
