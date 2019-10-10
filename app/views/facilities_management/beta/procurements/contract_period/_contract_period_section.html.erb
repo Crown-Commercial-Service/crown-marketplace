@@ -1,0 +1,49 @@
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key govuk-!-font-size-24">
+    Contract period
+  </dt>
+
+  <dd class="govuk-summary-list__value">
+    <%= link_to('Answer all questions', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") if @procurement.unanswered_contract_date_questions? %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <%= link_to('Change all', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") unless @procurement.unanswered_contract_date_questions? %>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Initial call-off period
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <%= @procurement.initial_call_off_period %>
+    <% unless @procurement.initial_call_off_period.nil? %> <%= @procurement.initial_call_off_period > 1 ? ' years' : 'year' %>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Initial call-off period start date
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <%= initial_call_off_period_start_date(@procurement.initial_call_off_start_date) %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Initial call-off period end date
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <% unless @procurement.initial_call_off_period.nil? %>
+      <%= initial_call_off_period_end_date(@procurement.initial_call_off_start_date, @procurement.initial_call_off_period) %>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
