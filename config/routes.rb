@@ -135,6 +135,8 @@ Rails.application.routes.draw do
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
       get '/start', to: 'journey#start', as: 'journey_start'
       resources :procurements
+      get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
+      get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
     end
 
     get '/', to: 'home#index'
