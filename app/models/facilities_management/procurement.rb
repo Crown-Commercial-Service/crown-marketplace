@@ -1,11 +1,27 @@
 module FacilitiesManagement
   class Procurement < ApplicationRecord
+    include AASM
+    include ProcurementValidator
+
     belongs_to :user,
                foreign_key: :user_id,
                inverse_of: :procurements
 
-    validates :name, presence: true
-    validates :name, uniqueness: { scope: :user }
-    validates :name, length: 1..100
+    has_many :procurement_buildings, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+    accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
+    acts_as_gov_uk_date :initial_call_off_start_date
+
+    def unanswered_contract_date_questions?
+      initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period.nil?
+    end
+
+    aasm do
+      state :quick_search, initial: true
+      state :detailed_search
+
+      event :start_detailed_search do
+        transitions from: :quick_search, to: :detailed_search
+      end
+    end
   end
 end

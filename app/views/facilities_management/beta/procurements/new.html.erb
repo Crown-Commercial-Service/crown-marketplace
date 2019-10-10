@@ -1,8 +1,17 @@
-<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { multipart: true } do |f| %>
-  <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
-      <%= display_errors(@procurement, :name) %>
-      <%= f.label :name, class: "govuk-label" %>
-      <%= f.text_field :name %>
-    <% end %>
-  <%= f.submit 'Create', class: 'govuk-button' %>
+<a href="<%= request.referer %>" class="govuk-back-link">Back</a>
+<h1 class="govuk-heading-xl"><%= t('.search_results') %></h1>
+<p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
+<%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { novalidate:true, multipart: true } do |f| %>
+  <%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors } %>
+  <div class="quicksearchassistant" classification="procurement" action="new" module="facilities_management">
+    <div class="procurement govuk-row">
+    <%= render partial: 'quick_search_form', locals: { f: f, step: nil } %>
+      <div class="govuk-row">
+        <%= f.submit t('.save_your_search'), data: {disable_with:false}, class: 'govuk-button' %>
+        <%= f.submit t('.save_for_later'), name: 'save_for_later', data: {disable_with:false}, class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %>
+        <br />
+        <%= link_to t('.cancel_text'), facilities_management_beta_procurements_path, class: 'govuk-link govuk-link--no-visited-state' %>
+      </div>
+    </div>
+  </div>
 <% end %>

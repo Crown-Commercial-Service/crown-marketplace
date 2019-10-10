@@ -1,0 +1,59 @@
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key govuk-!-font-size-24">
+    About the contract
+  </dt>
+  <dd class="govuk-summary-list__value">
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Contract Name
+  </dt>
+
+  <dd class="govuk-summary-list__value">
+    <% unless @procurement.contract_name.nil? %>
+      <%= @procurement.contract_name %>
+    <% else %>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link"%>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link" unless @procurement.contract_name.nil? %>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Estimated annual cost
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <% unless @procurement.estimated_cost_known.nil? %>
+      <%= @procurement.estimated_annual_cost if @procurement.estimated_cost_known? %>
+      <%= t('.no_cost_provided') if !@procurement.estimated_cost_known? %>
+    <% else %>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link"%>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_cost_known.nil? %>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    TUPE
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <% unless @procurement.tupe.nil? %>
+      <%= @procurement.tupe? ? 'Yes' : 'No' %>
+    <% else %>
+      <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link"%>
+    <% end %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link" unless @procurement.tupe.nil? %>
+  </dd>
+</div>

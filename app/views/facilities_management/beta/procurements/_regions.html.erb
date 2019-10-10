@@ -1,0 +1,73 @@
+<%= render('errors/inline_error_summary') %>
+<br>
+<div class="procurement govuk-grid-row">
+  <div class="locations chooser-component">
+    <div id="ccs-dynamic-accordian" class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.question') %>
+          </h1>
+          <span class="govuk-caption-m">
+            <%= t('.subtitle') %>
+          </span>
+        </legend>
+        <div class="chooser-input">
+          <div class="govuk-accordion" data-module="accordion" id="procurement-region-accordion">
+            <% Nuts1Region.all.each do |nuts1_region| %>
+              <div class="govuk-accordion__section chooser-section" data-section="<%= nuts1_region.code %>" data-sectionname="<%= nuts1_region.name %>">
+                <div class="govuk-accordion__section-header">
+                  <h2 class="govuk-accordion__section-heading ">
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-<%= nuts1_region.code %>">
+                      <%= nuts1_region.name %>
+                    </span>
+                  </h2>
+                </div>
+                <div class="govuk-accordion__section-content CCS-fm-region-filter-check-box-label">
+                  <div class="govuk-form-group chooser-input" sectionname="<%= nuts1_region.name %>" section="<%= nuts1_region.code %>">
+                    <div class="govuk-checkboxes">
+                      <% Nuts2Region.where(nuts1_code: nuts1_region.code).each do |region| %>
+                        <div class="govuk-checkboxes__item">
+                          <%= check_box_tag("facilities_management_procurement[region_codes][]", region.code, @procurement.region_codes.include?(region.code),
+                                            title: region.name,
+                                            class: "govuk-checkboxes__input", sectionid: nuts1_region.code,
+                                            id: "facilities_management_procurement_region_codes_#{region.code}"
+                              ) %>
+                          <label class="govuk-label govuk-checkboxes__label" for="region_<%= region.code %>">
+                            <%= region.name %>
+                          </label>
+                        </div>
+                      <% end %>
+                      <p class="govuk-body govuk-!-margin-top-4">Or</p>
+                      <div class="govuk-checkboxes__item ccs-select-all">
+                        <input class="govuk-checkboxes__input"
+                              id="region_<%= nuts1_region.code %>_all"
+                              name="section-checkbox_select_all"
+                              type="checkbox"
+                              value=""><!-- no value -->
+                        <label class="govuk-label govuk-checkboxes__label" for="region_<%= nuts1_region.code %>_all">
+                          Select all
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
+        <div class="basket">
+          <div>
+            <h3 class="govuk-heading-m" data-txt01="<%= t('.locations_selected') %>" data-txt02="<%= t('.no_locations_selected') %>">
+              <span id="selected-locations-count">0</span> <span><%= t('.locations_selected') %></span>
+            </h3>
+            <a class="govuk-!-padding-left-2 remove-link" role="button" href=""><%= t('.remove_all') %></a><br />
+            <ul style="margin-top:10px;" class="govuk-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
