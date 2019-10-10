@@ -16,9 +16,7 @@
     Initial call-off period
   </dt>
   <dd class="govuk-summary-list__value">
-    <%= @procurement.initial_call_off_period %>
-    <% unless @procurement.initial_call_off_period.nil? %> <%= @procurement.initial_call_off_period > 1 ? ' years' : 'year' %>
-    <% end %>
+    <%= initial_call_off_period @procurement.initial_call_off_period %>
   </dd>
   <dd class="govuk-summary-list__actions">
   </dd>
@@ -29,7 +27,7 @@
     Initial call-off period start date
   </dt>
   <dd class="govuk-summary-list__value">
-    <%= initial_call_off_period_start_date(@procurement.initial_call_off_start_date) %>
+    <%= initial_call_off_period_start_date @procurement.initial_call_off_start_date %>
   </dd>
   <dd class="govuk-summary-list__actions">
   </dd>
@@ -41,7 +39,7 @@
   </dt>
   <dd class="govuk-summary-list__value">
     <% unless @procurement.initial_call_off_period.nil? %>
-      <%= initial_call_off_period_end_date(@procurement.initial_call_off_start_date, @procurement.initial_call_off_period) %>
+      <%= initial_call_off_period_end_date @procurement.initial_call_off_start_date, @procurement.initial_call_off_period %>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
