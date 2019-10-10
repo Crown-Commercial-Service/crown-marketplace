@@ -45,7 +45,7 @@ gem 'omniauth-oauth2'
 gem 'omniauth_openid_connect'
 gem 'json-jwt'
 
-gem 'devise'
+gem 'devise', '>= 4.7.1'
 gem 'aws-sdk', '~> 3'
 # for pagination
 gem 'kaminari', '~> 1.1.1'
@@ -113,5 +113,5 @@ end
 group :test do
   gem 'webmock'
   gem 'simplecov', require: false
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '>= 3.142.3'
 end
