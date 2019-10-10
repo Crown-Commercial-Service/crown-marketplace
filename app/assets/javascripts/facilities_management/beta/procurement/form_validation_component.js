@@ -1,12 +1,13 @@
 function form_validation_component(formDOMObject, validationCallback, thisisspecial = false) {
     this.verify_connection_to_form = function (formDOMObject, requestedSpecialTreatment) {
-        if (null == formDOMObject) return false;
-        if (null != formDOMObject.formValidator) return false;
-        if (requestedSpecialTreatment && !formDOMObject.hasAttribute('specialvalidation')) return false;
-        if (requestedSpecialTreatment && formDOMObject.getAttribute('specialvalidation') != 'true') return false;
-        if (!requestedSpecialTreatment && formDOMObject.getAttribute('specialvalidation') == 'true') return false;
-
-        return true;
+        let canConnect = false;
+        if (null != formDOMObject && null == formDOMObject.formValidator) {
+            if ( (requestedSpecialTreatment && formDOMObject.getAttribute('specialvalidation') == 'true') ||
+                 (!requestedSpecialTreatment && !formDOMObject.hasAttribute('specialvalidation') || formDOMObject.getAttribute('specialvalidation') == 'false') ) {
+                canConnect = true;
+            }
+        }
+        return canConnect;
     };
 
     this.connect_to_form = function (formDOMObject, validationCallback) {
@@ -60,6 +61,11 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                                 }
                             }
                         }
+                        if ( '' + jElem.prop('pattern') != '' && submitForm) {
+                            submitForm = submitForm && this.testError(
+                                this.validationFunctions['regex'],
+                                jElem, 'pattern');
+                        }
                     }
 
                     this.validationResult = this.validationResult && submitForm;
@@ -71,16 +77,24 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         return this.validationResult;
     };
     this.validationFunctions = {
-        'required' : function(jQueryObject) {
-            return ('' + jQueryObject.val() == '')
+        'required' : function(jQueryinputElem) {
+            return ('' + jQueryinputElem.val() == '')
         },
-        'maxlength' : function (jQueryObject) {
-            let maxLength = parseInt(jQueryObject.prop('maxlength'));
-            return (('' + jQueryObject.val()).length > maxLength);
+        'maxlength' : function (jQueryinputElem) {
+            let maxLength = parseInt(jQueryinputElem.prop('maxlength'));
+            return (('' + jQueryinputElem.val()).length > maxLength);
+        },
+        'regex' : function ( jQueryinputElem) {
+            let reg = new RegExp ( jQueryinputElem.prop('pattern') ) ;
+            return !reg.test(jQueryinputElem.val());
         },
         'type' : {
-            'number' : function (jQueryObject) {
-                return jQueryObject.val() == '' || isNaN(Number(jQueryObject.val()));
+            'number' : function (jQueryinputElem) {
+                return jQueryinputElem.val() == '' || isNaN(Number(jQueryinputElem.val()));
+            },
+            'email' :  function (jQueryinputElem) {
+                let regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return !regEx.test(jQueryinputElem.val());
             }
         }
 
@@ -107,8 +121,17 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             case 'maxlength':
                 return property_name + ' is too long';
                 break;
+            case 'number':
+                return property_name + ' is not a number';
+                break;
+            case 'email':
+                return property_name + ' is not a valid email address';
+                break;
+            case 'pattern':
+                return property_name + ' is not valid';
+                break;
             default:
-                return property_name + ' has a problem';
+                return property_name + ' is not valid for the type';
                 break;
         }
     };
@@ -117,11 +140,13 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         let continueLooping = true;
         let counter = 0;
         let elementsToWrap = [];
-        elementsToWrap.push(inputElement[0]);
         // look at the previous sibling of the input element - if it is a label - we need to include it
         // look at the previous siblings of the input element - if it is a div of class govuk-error-message, we need to include it
         let prevElem = inputElement.prev() ;
-        let lastElem = inputElement[0];
+        if ( inputElement.next().length > 0 && inputElement.next().prop('class').indexOf('character-count') >= 0 ) {
+            elementsToWrap.push(inputElement.next()[0]);
+        }
+        elementsToWrap.push(inputElement[0]);
         while ( continueLooping && counter < 3) {
             if ( prevElem.length == 0 ) break;
 
@@ -129,17 +154,13 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                 elementsToWrap.push(prevElem[0]);
             } else if ( prevElem.prop('class').indexOf('govuk-error-message') >= 0) {
                 elementsToWrap.push(prevElem[0]);
-                continueLooping = false;
-            } else if (prevElem[0].nodeName == 'INPUT') {
-                break;
             } else if ( counter >= 1 ){
                 continueLooping = false;
             }
-            lastElem = prevElem;
             prevElem = prevElem.prev();
             counter++;
         }
-        let newElem = $('<div class="govuk-form-group"></div>').insertBefore(lastElem);
+        let newElem = $('<div class="govuk-form-group"></div>').insertBefore(inputElement);
         for ( let index = 0; index < elementsToWrap.length; index++ ) {
             newElem.prepend(elementsToWrap[index]);
         }
@@ -177,16 +198,21 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
 
     if (this.verify_connection_to_form(formDOMObject, thisisspecial)) {
-        this.connect_to_form(formDOMObject, validationCallback == undefined ? this.validateForm : validationCallback)
+        this.connect_to_form(formDOMObject, validationCallback == undefined ? this.validateForm : validationCallback);
         this.initialise();
     }
 }
 
-global_formValidator = null;
+const anyArbritatryName = {};
+
 $(function () {
-    jqForm = $('form');
-    if ( jqForm.length > 0 ) {
-        global_formValidator = new form_validation_component (
-            jqForm[0], undefined, false);
+    anyArbritatryName.global_formValidators = [];
+    let jqForms = $('form');
+    if ( jqForms.length > 0 ) {
+        for ( let index=0; index < jqForms.length; index++) {
+            anyArbritatryName.global_formValidators[jqForms[index].id] = new form_validation_component (
+                jqForms[index], undefined, false);
+            anyArbritatryName.global_formValidators.push(anyArbritatryName.global_formValidators[jqForms[index].id]);
+        }
     }
 });
