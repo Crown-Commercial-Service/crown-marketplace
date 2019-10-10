@@ -4,13 +4,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 5.2.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 5.0', '>= 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -46,7 +46,7 @@ gem 'omniauth_openid_connect'
 gem 'json-jwt'
 
 # for authentication
-gem 'devise', '~> 4.6.2'
+gem 'devise', '~> 4.7.1'
 
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
 
@@ -63,7 +63,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'carrierwave', '~> 1.0'
 
 # handles spreadsheets
-gem 'roo', '~> 2.8.0'
+gem 'roo', '~> 2.8.2'
 
 # manipulating JSON for anonymisation
 gem 'jsonpath', '~> 0.5.8'
@@ -80,7 +80,7 @@ gem 'sinatra', '~> 2.0.5', require: false
 gem 'slim', '~> 4.0.1'
 
 # for rspec and ST data generation script
-gem 'capybara'
+gem 'capybara', '>= 3.20.2'
 gem 'faker'
 
 # for authorization
@@ -92,22 +92,22 @@ gem 'role_model', '~> 0.8.2'
 gem 'carrierwave-aws', '~> 1.3.0'
 
 gem 'sprockets'
-gem 'sprockets-bumble_d'
+gem 'sprockets-bumble_d', '>= 2.1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails'
-  gem 'factory_bot_rails'
+  gem 'dotenv-rails', '>= 2.7.2'
+  gem 'factory_bot_rails', '>= 5.0.2'
   gem 'launchy'
   gem 'pry-rails'
-  gem 'rails-controller-testing'
-  gem 'rspec-rails'
+  gem 'rails-controller-testing', '>= 1.0.4'
+  gem 'rspec-rails', '>= 3.8.2'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'rubyXL'
-  gem 'i18n-tasks'
-  gem 'poltergeist'
+  gem 'rubyXL', '>= 3.4.3'
+  gem 'i18n-tasks', '>= 0.9.29'
+  gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
 end
@@ -120,5 +120,5 @@ end
 group :test do
   gem 'webmock'
   gem 'simplecov', require: false
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '>= 3.142.3'
 end
