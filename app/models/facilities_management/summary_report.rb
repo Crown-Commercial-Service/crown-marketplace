@@ -55,6 +55,7 @@ module FacilitiesManagement
         building_json = building['building_json'].deep_symbolize_keys
         id = building_json[:id]
         building_uvals = (uvals.select { |u| u[:building_id] == id })
+        p "building id: #{id}"
         vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name, results)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
@@ -237,14 +238,14 @@ module FacilitiesManagement
     def copy_params(building_json, uvals)
       @fm_gross_internal_area =
         begin
-          building_json['gia'].to_i
+          building_json[:gia].to_i
         rescue StandardError
           0
         end
 
       @london_flag =
         begin
-          if building_json['isLondon'] == 'Yes'
+          if building_json[:isLondon] == 'Yes'
             'Y'
           else
             'N'
@@ -255,7 +256,7 @@ module FacilitiesManagement
 
       @cafm_flag =
         begin
-          if uvals.any? { |x| x['service_code'] == 'M.1' }
+          if uvals.any? { |x| x[:service_code] == 'M.1' }
             'Y'
           else
             'N'
@@ -266,7 +267,7 @@ module FacilitiesManagement
 
       @helpdesk_flag =
         begin
-          if uvals.any? { |x| x['service_code'] == 'N.1' }
+          if uvals.any? { |x| x[:service_code] == 'N.1' }
             'Y'
           else
             'N'
@@ -321,7 +322,14 @@ module FacilitiesManagement
                                                rates,
                                                rate_card,
                                                supplier_name,
-                                               building_data,)
+                                               building_data)
+
+
+        # print "#{calc_fm.sumunitofmeasure},#{calc_fm.benchmarkedcostssum},#{@contract_length_years},"
+        # print "#{v[:service_code]},#{uom_value},#{occupants},"
+        # print "#{@tupe_flag},#{@london_flag},#{@cafm_flag},#{@helpdesk_flag},#{supplier_name},"
+        # puts "#{building_data.inspect}"
+
         sum_uom += calc_fm.sumunitofmeasure
         sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
 

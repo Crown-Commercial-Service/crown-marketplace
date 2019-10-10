@@ -481,6 +481,7 @@ ActiveRecord::Schema.define(version: 2019_10_01_122201) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"

@@ -46,9 +46,9 @@ module FMCalculator
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
       if @supplier_name && @rate_card_discounts[@service_ref]
-        (1 - @rate_card_discounts[@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref][@building_data[:"fm-building-type"]].to_f
+        (1 - @rate_card_discounts[@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref][@building_data[:'fm-building-type']].to_f
       else
-        @uom_vol * @framework_rates[@service_ref.gsub('.','')].to_f
+        @uom_vol * @framework_rates[@service_ref.gsub('.', '')].to_f
       end
     rescue StandardError => e
       raise e
@@ -68,7 +68,7 @@ module FMCalculator
     def variance(subtotal1)
       if @london_flag == 'Y'
         if @supplier_name
-          subtotal1 * rate_card_variances['London Location Variance Rate (%)'].to_f
+          subtotal1 * @rate_card_variances['London Location Variance Rate (%)'].to_f
         else
           subtotal1 * @benchmark_rates['M144'].to_f
         end
@@ -81,7 +81,7 @@ module FMCalculator
     def cafm(subtotal2)
       if @cafm_flag == 'Y'
         if @supplier_name
-          subtotal2 * @rate_card_prices['M.1'][@building_data[:fm_building_type]].to_f
+          subtotal2 * @rate_card_prices['M.1'][@building_data[:'fm-building-type']].to_f
         else
           subtotal2 * @framework_rates['M136']
         end
@@ -167,7 +167,7 @@ module FMCalculator
 
     # benchmarked costs start = benchmark rates * unit of mesasure volume
     def benchmarkedcosts
-      benchmark_rate = @benchmark_rates[@service_ref.gsub('.','')].to_f
+      benchmark_rate = @benchmark_rates[@service_ref.gsub('.', '')].to_f
       benchmark_rate * @uom_vol
     end
 
