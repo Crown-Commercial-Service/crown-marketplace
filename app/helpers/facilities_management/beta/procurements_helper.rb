@@ -36,7 +36,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def initial_call_off_period(period)
-    period.to_s + (period > 1 ? ' years' : 'year') unless period.nil?
+    period.to_s + (period > 1 ? ' years' : ' year') unless period.nil?
   end
 
   def format_extension(start_date, end_date)
