@@ -4,7 +4,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def format_date(date_object)
-    date_object.strftime '%d %B %Y'
+    date_object&.strftime '%d %B %Y'
   end
 
   def initial_call_off_period_start_date
@@ -19,7 +19,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   def mobilisation_period
     result = 'None'
     period = @procurement.mobilisation_period
-    unless @procurement.mobilisation_period.nil?
+    unless period.nil?
       result = "#{period}  #{(period > 1 ? ' weeks' : 'week')}"
     end
     result
@@ -36,7 +36,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def initial_call_off_period(period)
-    period.to_s + (period > 1 ? ' years' : 'year')
+    period.to_s + (period > 1 ? ' years' : 'year') unless period.nil?
   end
 
   def format_extension(start_date, end_date)
