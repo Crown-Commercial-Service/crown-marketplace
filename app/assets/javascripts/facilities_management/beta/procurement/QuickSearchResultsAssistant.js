@@ -9,9 +9,7 @@ const QuickSearchResultsAssistant = {
         if (id !== undefined) {
             formName += "_" + id;
         }
-        this.formValidator = new FormValidationComponent (
-            document.getElementById(formName));
-        this.formValidator.init();
+        this.formValidator = new form_validation_component (document.getElementById(formName));
         this.helper.init();
         this.helper.UpdateCounts();
         this.helper.ConnectCheckboxes(this.FilterSuppliers.bind(this));
@@ -61,3 +59,11 @@ const QuickSearchResultsAssistant = {
         }
     }
 };
+
+$(function () {
+    jqDiv = $('.quicksearchassistant');
+    if ( jqDiv.length > 0 ) {
+        jqDiv = jqDiv[0];
+        QuickSearchResultsAssistant.init(jqDiv.getAttribute('classification'), jqDiv.getAttribute('action'), jqDiv.getAttribute('module' ));
+    }
+});
