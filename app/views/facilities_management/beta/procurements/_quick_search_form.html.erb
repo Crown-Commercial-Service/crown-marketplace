@@ -1,36 +1,39 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <div class="govuk-grid-row">
-      <%= render partial: 'filter_details', locals: { form: f } %>
-    </div>
-    <% if !@procurement.persisted? || @procurement.errors.any? %>
+<% if step == 'regions' %>
+  <%= render 'regions', locals: { f: f }%>
+  <%= f.hidden_field :step, value: step %>
+<% elsif step == 'services' %>
+  <%= render 'services', locals: { f: f }%>
+  <%= f.hidden_field :step, value: step %>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-grid-row">
+        <%= render partial: 'filter_details', locals: { form: f } %>
+      </div>
+
       <div class="govuk-grid-row govuk-!-margin-top-5">
-        <h2 class="govuk-heading-m"><%= t('.continue_headline') %></h2>
+        <h2 class="govuk-heading-m"><%= t('.continue_headline') unless @delete %></h2>
       </div>
       <div class="govuk-grid-row">
-        <p class="govuk-caption-l"><%= t('.continue_text') %></p>
+        <p class="govuk-caption-l"><%= t('.continue_text') unless @delete %></p>
       </div>
-      <div class="govuk-grid-row govuk-!-margin-top-7">
-        <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
-      </div>
-      <div class="govuk-grid-row">
-        <p class="govuk-caption-l"><%= t('.save_text') %></p>
-      </div>
-      <div class="govuk-grid-row">
-        <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
-          <%= govuk_form_group_with_optional_error @procurement, :name do %>
-            <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
-            <div class="govuk-error-message govuk-visually-hidden" data-validation="maxlength">
-              <span><%= t('.name_text_length_warning') %></span>
-            </div>
-            <div class="govuk-error-message govuk-visually-hidden" data-validation="required">
-              <span><%= t('.name_text_required') %></span>
-            </div>
-            <%= display_error @procurement, :name %>
-            <%= f.text_field :name, maxlength: 100, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
-          <%end %>
+      <% if !@procurement.persisted? || @procurement.errors.any? %>
+        <div class="govuk-grid-row govuk-!-margin-top-7">
+          <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
         </div>
-      </div>
-    <%end %>
+        <div class="govuk-grid-row">
+          <p class="govuk-caption-l"><%= t('.save_text') %></p>
+        </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
+            <%= govuk_form_group_with_optional_error @procurement, :name do %>
+              <%= display_error @procurement, :name %>
+              <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
+              <%= f.text_field :name, maxlength: 100, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
+          <%end %>
+          </div>
+        </div>
+      <%end %>
+    </div>
   </div>
-</div>
+<% end %>
