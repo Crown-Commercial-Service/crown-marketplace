@@ -1,0 +1,24 @@
+<div class="filter-panel">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <a id="" href="" style="width:100%" class="filter-toggle govuk-button govuk-button--secondary ccs-no-print govuk-!-margin-top-6" role="button" alt-text="<%= t('.edit_filters') %>"><%= t('.hide_filters')%></a><br/>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="filter-pane govuk-grid-column-one-third">
+      <div class="govuk-!-padding-2 filter-component-container">
+        <div class="govuk-grid-row ccs-no-print govuk-!-padding-0">
+          <div class="govuk-grid-column-full"><strong class="govuk-heading-m"><%=t('.apply_filters') %></strong></div>
+        </div>
+        <%= render partial: 'filter_data_section', locals: { section_name: 'region', section_title: t('.region'), change_title: t('.change_add_region'), change_link: journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes]),collection: @regions, superset: @procurement.region_codes} %>
+        <%= render partial: 'filter_data_section', locals: { section_name: 'service', section_title: t('.service'), change_title: t('.change_add_service'), change_link: journey_step_url_former(journey_step: 'services', region_codes: params[:region_codes], service_codes: params[:service_codes]), collection: @services, superset: @procurement.service_codes} %>
+      </div>
+    </div>
+    <!-- Start of main list section -->
+    <div id="proc-CCS-fm-suppliers-long-list" class="filter-pane-target govuk-grid-column-two-thirds">
+      <%= render partial:'facilities_management/beta/procurements/long_list/lot1a'%>
+      <%= render('facilities_management/beta/procurements/long_list/lot1b') %>
+      <%= render('facilities_management/beta/procurements/long_list/lot1c') %>
+    </div>
+  </div>
+</div>
