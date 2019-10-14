@@ -3,6 +3,10 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/procurement:
+          attributes:
+            procurement_buildings:
+              invalid: Select one or more buildings you want to include in your procurement
         facilities_management/procurement_building:
           attributes:
             service_codes:
@@ -68,6 +72,7 @@ en:
         edit:
           back_to_detailed_summary: Back to detailed search summary
           building_services:
+            change_buildings: "+ Change buildings"
             content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don't already appear on your shortlist.
             heading: What facilities management services do you need for each building?
             your_buildings: Your buildings
@@ -80,10 +85,19 @@ en:
           delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
           detailed_search: Detailed search
           next_step:
+            building_services: 'Next: Service information'
             contract_dates: 'Next: Buildings'
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
+            procurement_buildings: 'Next: Services'
             tupe: 'Next: Contract period'
+          procurement_buildings:
+            buildings_selected: Buildings selected
+            content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
+            heading: Buildings
+            no_buildings_selected: No buildings selected
+            remove_all: Remove all
+            sub_heading: Select all of the buildings you want to include in your procurement
           quick_search: Search result
           save: Save
           save_and_continue: Save and continue

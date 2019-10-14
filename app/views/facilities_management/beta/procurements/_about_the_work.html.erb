@@ -17,9 +17,7 @@
     <% unless @place_holder.nil? %>
       <%= @place_holder %>
     <% else %>
-      <a class="govuk-link" href="#">
-        Select buildings
-      </a>
+      <%= link_to "Select buildings", edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
     <% end %>
   </dd>
   <dd class="govuk-summary-list__actions">
