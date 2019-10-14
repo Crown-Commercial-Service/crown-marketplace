@@ -1,7 +1,6 @@
 GIT
-  remote: https://github.com/m0n9oose/omniauth_openid_connect.git
-  revision: a6779ddb035dd1b1d0e006e9f5a8318f747fbe1c
-  branch: fix_redundant_token_verification
+  remote: https://github.com/iceraluk/omniauth_openid_connect
+  revision: 8e7d15e6216b1de980203c0eadfd036a309bf49c
   specs:
     omniauth_openid_connect (0.3.2)
       addressable (~> 2.5)
