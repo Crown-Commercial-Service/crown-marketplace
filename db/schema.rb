@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_152002) do
+ActiveRecord::Schema.define(version: 2019_10_09_152026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -30,12 +30,26 @@ ActiveRecord::Schema.define(version: 2019_09_19_152002) do
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
+  create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.text "service_codes", default: [], array: true
+    t.string "name", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "address_line_1", limit: 255
+    t.string "address_line_2", limit: 255
+    t.string "town", limit: 255
+    t.string "county", limit: 255
+    t.string "postcode", limit: 20
+    t.boolean "active"
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
+  end
+
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "name", limit: 100
     t.string "aasm_state", limit: 15
     t.string "updated_by", limit: 100
-    t.jsonb "procurement_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "contract_name", limit: 100
@@ -49,6 +63,9 @@ ActiveRecord::Schema.define(version: 2019_09_19_152002) do
     t.integer "optional_call_off_extensions_2"
     t.integer "optional_call_off_extensions_3"
     t.integer "optional_call_off_extensions_4"
+    t.text "service_codes", default: [], array: true
+    t.text "region_codes", default: [], array: true
+    t.boolean "estimated_cost_known"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -479,6 +496,7 @@ ActiveRecord::Schema.define(version: 2019_09_19_152002) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"

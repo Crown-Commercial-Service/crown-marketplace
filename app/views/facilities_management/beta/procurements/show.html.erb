@@ -1,28 +1,42 @@
-<div class="govuk-body">
-  <div class="govuk-grid-row">
-    <%= render('facilities_management/beta/backlink_header') %>
-    <span class="govuk-caption-m"><%= @procurement.name %></span>
-    <h1 class="govuk-heading-xl">Detailed search summary</h1>
-    <p>
-      Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
-    </p>
+<% if @delete %>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      <%= t('.delete_message') %>
+    </strong>
   </div>
+<% end %>
+<% if @building_count.zero? %>
+  <%= render partial: 'no_buildings' %>
+<% else %>
+  <div class="govuk-body">
+    <div class="govuk-grid-row">
+      <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+      <span class="govuk-caption-m"><%= @procurement.name %></span>
+      <h1 class="govuk-heading-xl">Detailed search summary</h1>
+      <p>
+        Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
+      </p>
+    </div>
 
-  <div class="govuk-grid-row">
-    <form>
-      <dl class="govuk-summary-list">
-        <%= render('about_the_contract') %>
-      </dl>
-      <dl class="govuk-summary-list">
-        <%= render('contract_period') %>
-      </dl>
-      <dl class="govuk-summary-list">
-        <%= render('about_the_work') %>
-      </dl>
-    </form>
+    <div class="govuk-grid-row">
+      <form>
+        <dl class="govuk-summary-list">
+          <%= render('about_the_contract') %>
+        </dl>
+        <dl class="govuk-summary-list">
+          <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_period_section' %>
+          <%= render partial: 'facilities_management/beta/procurements/contract_period/mobilisation_section' %>
+          <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_extension_section' %>
+        </dl>
+        <dl class="govuk-summary-list">
+          <%= render('about_the_work') %>
+        </dl>
+      </form>
+    </div>
+    <div>
+      <%= render('continue_button_footer') %>
+    </div>
   </div>
-  <div>
-    <%= render('continue_button_footer') %>
-  </div>
-
-</div>
+<% end %>
