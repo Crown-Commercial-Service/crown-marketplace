@@ -23,5 +23,15 @@ module FacilitiesManagement
         transitions from: :quick_search, to: :detailed_search
       end
     end
+
+    def find_or_build_procurement_building(building_data)
+      procurement_building = procurement_buildings.find_by(name: building_data['name']) || procurement_buildings.build(name: building_data['name'])
+      procurement_building.address_line_1 = building_data['address']['fm-address-line-1']
+      procurement_building.address_line_2 = building_data['address']['fm-address-line-2']
+      procurement_building.town = building_data['address']['town']
+      procurement_building.county = building_data['address']['county']
+      procurement_building.postcode = building_data['address']['postcode']
+      procurement_building.save
+    end
   end
 end
