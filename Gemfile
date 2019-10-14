@@ -43,7 +43,7 @@ gem 'jquery-rails', '~> 4.3.5'
 gem 'omniauth', '~> 1.9.0'
 gem 'omniauth-oauth2', '~> 1.6.0'
 # updating to the latest gem version causes an error when response_type is :code. A fix is coming but has not been merged in yet, so will be using this forked repo until then
-gem 'omniauth_openid_connect', git: 'https://github.com/iceraluk/omniauth_openid_connect'
+gem 'omniauth_openid_connect', git: 'https://github.com/iceraluk/omniauth_openid_connect.git'
 gem 'json-jwt'
 
 # for authentication
