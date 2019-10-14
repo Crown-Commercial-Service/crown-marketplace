@@ -18,7 +18,12 @@ $(function () {
         $('#mobilisation-end-date-dd').val('');
         $('#mobilisation-end-date-mm').val('');
         $('#mobilisation-end-date-yyyy').val('');
-    }
+    };
+
+    const clearMobilisationPeriod = function () {
+        $('#facilities_management_procurement_mobilisation_period').val('');
+        clearMobilisationDates();
+    };
 
     const displayContractDates = function () {
 
@@ -78,6 +83,10 @@ $(function () {
 
     $('#facilities_management_procurement_initial_call_off_period').on('keyup', function (e) {
         displayContractDates();
+    });
+
+    $('#fm-mobilisation-period-no').on('click', function (e) {
+        clearMobilisationPeriod();
     });
 
     displayContractDates();
