@@ -6,6 +6,8 @@ module FacilitiesManagement
 
     validate :service_codes_not_empty, on: :building_services
 
+    before_validation :cleanup_service_codes
+
     def full_address
       "#{address_line_1 + ', ' if address_line_1.present?}
       #{address_line_2 + ', ' if address_line_2.present?}
@@ -17,7 +19,13 @@ module FacilitiesManagement
     private
 
     def service_codes_not_empty
-      errors.add(:service_codes, :invalid) if service_codes.reject(&:blank?).empty?
+      return unless active
+
+      errors.add(:service_codes, :invalid) if service_codes.empty?
+    end
+
+    def cleanup_service_codes
+      self.service_codes = service_codes.reject(&:blank?)
     end
   end
 end

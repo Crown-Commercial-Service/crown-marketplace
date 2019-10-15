@@ -69,4 +69,8 @@ module FacilitiesManagement::Beta::ProcurementsHelper
     end_date = (start_date - 1).next_year(@procurement.optional_call_off_extensions_4)
     format_extension start_date, end_date
   end
+
+  def any_service_codes(procurement_buildings)
+    procurement_buildings.map(&:service_codes).flatten.reject(&:blank?).any?
+  end
 end
