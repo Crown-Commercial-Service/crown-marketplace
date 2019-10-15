@@ -129,7 +129,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when the procurement_building is present but without any service codes' do
       it 'expected to not be valid' do
         procurement.save
-        procurement.procurement_buildings.create
+        procurement.procurement_buildings.create(active: true)
         expect(procurement.procurement_buildings.first.valid?(:building_services)).to eq false
       end
     end
