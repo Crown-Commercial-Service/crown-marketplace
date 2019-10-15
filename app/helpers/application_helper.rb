@@ -41,6 +41,21 @@ module ApplicationHelper
     mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
+  def govuk_form_field(model_object, attribute, form_object_name, label_text, top_level_data_options)
+    css_classes = %w[govuk-!-margin-top-3]
+    form_group_css = ['govuk-form-group']
+    form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
+
+    content_tag :div, class: css_classes do
+      content_tag :div, class: form_group_css, data: top_level_data_options  do
+        concat display_error_label(model_object, attribute, label_text, "#{form_object_name}_#{attribute}")
+        concat display_label(label_text, "#{form_object_name}_#{attribute}") unless label_text.blank?
+        concat yield
+      end
+    end
+  end
+
+
   def govuk_form_group_with_optional_error(journey, *attributes)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
@@ -63,6 +78,27 @@ module ApplicationHelper
     end
   end
 
+  def display_potential_errors(model, attribute)
+    validators = model.class.validators.map { |x| x[:options].on == attribute }
+    
+  end
+
+  # Renders a govuk compliant error-content div with a client-compatible validation type
+  # and text for use as static content in the page
+  def validation_error(model_object, attribute, error_type, text)
+    tag_validation_type = ''
+    css_classes = ['govuk-error-message']
+    css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, attribute
+    case error_type
+    when :too_short
+      tag_validation_type = 'required'
+    when :too_long
+      tag_validation_type = 'maxlength'
+    end
+
+    content_tag :div, content_tag(:span, text), class: css_classes, data: { validation: tag_validation_type }
+  end
+
   def display_errors(journey, *attributes)
     safe_join(attributes.map { |a| display_error(journey, a) })
   end
@@ -73,6 +109,23 @@ module ApplicationHelper
 
     content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
       "#{attribute} #{error}"
+    end
+  end
+
+  def get_client_side_error_type (model, attribute)
+    return 'maxlength' if model.errors.details[attribute].first[:error] == :too_long
+
+    return 'required' if model.errors.details[attribute].first[:error] == :blank
+
+    return model.errors.details[attribute].first[:error].to_s
+  end
+
+  def display_error_label(model, attribute, label_text, target)
+    error = model.errors[attribute].first
+    return if error.blank?
+
+    content_tag :label, data: { :validation => "#{get_client_side_error_type(model,attribute)}"}, for: target, id:error_id(attribute), class: 'govuk-error-message' do
+      "#{label_text} #{error}"
     end
   end
 

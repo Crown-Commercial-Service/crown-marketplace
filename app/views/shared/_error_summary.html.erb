@@ -5,9 +5,15 @@
     </h2>
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
-        <% errors.keys.each do |attribute| %>
+        <% if multiple %>
+          <% errors.keys.each do |attribute| %>
+            <li>
+              <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}" %>
+            </li>
+          <% end %>
+        <%else %>
           <li>
-            <%= link_to "#{attribute} #{errors[attribute].first}", "##{error_id(attribute)}" %>
+            <%= link_to "#{errors[errors.keys.first].first}", "##{error_id(errors.keys.first)}" %>
           </li>
         <% end %>
       </ul>

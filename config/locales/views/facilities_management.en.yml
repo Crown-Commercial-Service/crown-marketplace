@@ -5,6 +5,18 @@ en:
       models:
         facilities_management/procurement:
           attributes:
+            initial_call_off_end_date:
+              not_a_date: Initial call-off period end date is not a valid date
+            initial_call_off_period:
+              greater_than_or_equal_to: Enter initial call-off period (1..7)
+              less_than_or_equal_to: Enter the initial call-off period (1..7)
+            initial_call_off_start_date:
+              after: Initial call-off period start date must be in the future
+              after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
+              blank: Initial call-off period start date is required
+            mobilisation_period:
+              greater_than: Enter mobilisation length
+              greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
         facilities_management/procurement_building:
