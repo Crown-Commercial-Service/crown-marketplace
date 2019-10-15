@@ -90,8 +90,8 @@ en:
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
             procurement_buildings: 'Next: Services'
-            tupe: 'Next: Contract period'
             services: 'Next: Select services for detailed search'
+            tupe: 'Next: Contract period'
           procurement_buildings:
             buildings_selected: Buildings selected
             content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
