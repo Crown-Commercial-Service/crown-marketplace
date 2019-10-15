@@ -1,0 +1,27 @@
+
+input[type=radio] + label + div#radio-inner-content {
+  visibility: hidden;
+  height: 0px;
+}
+
+input[type=radio]:checked + label + div#radio-inner-content {
+  visibility: visible;
+  border-left: solid;
+  border-left-color: #BFC1C3;
+  border-left-width: 4px;
+  height: auto;
+  position: relative;
+  left: -22px;
+}
+
+ul.buildings-list {
+  padding-top: 0;
+  padding-left: 20px;
+    li {
+      padding-bottom: 15px;
+    }
+}
+
+.vertical-align-top {
+  vertical-align: top;
+}

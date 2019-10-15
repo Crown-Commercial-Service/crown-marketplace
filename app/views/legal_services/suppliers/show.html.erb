@@ -66,10 +66,11 @@
         </tbody>
       </table>
     <% end %>
+    <p><%= t('.fee_advice') %></p>
     <% if params[:lot] && params[:lot] != '1' %>
       <% unless @supplier.send(:"lot_#{params[:lot]}_prospectus_link").nil? %>
         <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.supplier_prospectus_headline') %></h2>
-        <%= link_to @supplier.send(:"lot_#{params[:lot]}_prospectus_link") %>
+        <%= link_to @supplier.send(:"lot_#{params[:lot]}_prospectus_link"), url_formatter(@supplier.send(:"lot_#{params[:lot]}_prospectus_link")) %>
       <% end %>
     <% end %>
     <% if @supplier.sme? %>
@@ -87,7 +88,7 @@
         <dt><%= t('.contact_details.phone_number') %></dt>
         <dd><%= @supplier.phone_number %></dd>
         <dt><%= t('.contact_details.website') %></dt>
-        <dd><%= link_to(@supplier.website, @supplier.website) if @supplier.website %></dd>
+        <dd><%= link_to(@supplier.website, url_formatter(@supplier.website)) if @supplier.website %></dd>
         <dt><%= t('.contact_details.address') %></dt>
         <dd><%= @supplier.address %></dd>
       </dl>

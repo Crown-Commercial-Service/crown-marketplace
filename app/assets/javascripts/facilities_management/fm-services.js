@@ -4,6 +4,9 @@
 * */
 $(function () {
     /* govuk-accordion__controls event handlers */
+    if ( $('#fm-buildings-selected-services').length == 0 ) {
+        return;
+    }
     let selectedServices = pageUtils.getCachedData('fm-services');
     let selectedServicesForThisBuilding = selectedServices;
     let currentBuilding = pageUtils.getCachedData('fm-current-building');

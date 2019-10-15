@@ -6,10 +6,6 @@ module FacilitiesManagement
     before_action :authenticate_user!, only: %i[buildings_not_selected buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
     before_action :authorize_user, only: %i[buildings_not_selected buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
 
-    def buildings_not_selected
-      render('buildings_not_selected')
-    end
-
     # Entry Points
     def buildings_management
       @error_msg = ''
