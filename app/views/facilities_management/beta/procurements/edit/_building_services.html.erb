@@ -4,7 +4,7 @@
   </h2>
 
   <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-20">
-    <%= t('.content_html') %>
+    <%= t('.content_html') %>test
   </span>
   <div class="content browse">
     <div class="browse-panes section">
@@ -13,16 +13,16 @@
         <ul>
           <% f.object.procurement_buildings.active.each_with_index do |building, i| %>
             <li class="<%= 'active' if i == 0 %>">
-              <a id="<%= 'building-'+i.to_s %>" class="building-button govuk-!-font-size-19" href="#"><%=building.name %> <strong class="<%= 'building-services-'+i.to_s %>">(0 selected)</strong></a>
+              <a id="<%= 'building-' + i.to_s %>" class="building-button govuk-!-font-size-19" href="#"><%= building.name %> <strong class="<%= 'building-services-' + i.to_s %>">(0 selected)</strong></a>
             </li>
           <% end %>
-          <%= link_to t('.change_buildings'), edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), class: "govuk-link--no-visited-state govuk-!-margin-top-2 govuk-!-font-size-19"%>
+          <%= link_to t('.change_buildings'), edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), class: "govuk-link--no-visited-state govuk-!-margin-top-2 govuk-!-font-size-19" %>
         </ul>
       </div>
       <div id="section" class="section-pane pane with-sort">
-        <%= f.fields_for :procurement_buildings do |procurement_building|%>
+        <%= f.fields_for :procurement_buildings do |procurement_building| %>
           <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
-          <div id="<%= 'building-services-'+procurement_building.index.to_s %>" class="pane-inner services-pane <%= 'hidden-pane' if procurement_building.index > 0 %>">
+          <div id="<%= 'building-services-' + procurement_building.index.to_s %>" class="pane-inner services-pane <%= 'hidden-pane' if procurement_building.index > 0 %>">
             <div class="govuk-form-group <%= 'govuk-form-group--error' if procurement_building.object.errors.any? %>">
               <h2 tabindex="-1" class="govuk-heading-m govuk-!-margin-top-7">Choose from <%= @services.count %> services</h2>
               <%= display_error_no_attr(procurement_building.object, :service_codes) %>
@@ -48,7 +48,11 @@
                     </label>
                   </li>
                   <li class="govuk-checkboxes__item govuk-!-margin-top-5 govuk-!-padding-left-0">
-                    <a href="#" class="govuk-link--no-visited-state govuk-!-font-size-19 govuk-!-padding-left-0">+ Add more services</a>
+
+                    <%= link_to '+ Add more services', edit_facilities_management_beta_procurement_path(@procurement.id, step: 'services'), class: 'govuk-link govuk-!-font-size-19'  if @procurement.persisted? %>
+
+                    <!--<a href="/facilities-management/select_services?id=<%= @procurement.id %>/edit?step=building_services" class="govuk-link--no-visited-state govuk-!-font-size-19 govuk-!-padding-left-0">+
+                      Add more services</a>-->
                   </li>
                 </ul>
               </div>
