@@ -594,6 +594,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # after do
   # end
 
+  let(:report) { FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data2) }
   # context 'when condition' do
   #   it 'succeeds' do
   #     pending 'Not implemented'
@@ -613,11 +614,42 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # report.workout_current_lot
     # p report.assessed_value
-    # assessed_value.round == £8,171,866.21
-    expect(report.assessed_value.round(2)).to be 8171866.21
+    # assessed_value.round == GBP 8,171,866.21
+    expect(report.assessed_value.round(2)).to be 3832725.24
   end
 
-  it 'buildings with rate card' do
+  it 'price individual services E.4' do
+    # data
+    dummy_supplier_name = 'Hickle-Schinner'
+    # data2[:isLondon] = true
+
+    # prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
+
+    u = uvals.select { |s| s['service_code'] == 'E.4' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+    report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    # GBP 470.80
+    expect(report.direct_award_value.round(2)).to be 470.80
+  end
+
+  it 'price individual services G.3' do
+    dummy_supplier_name = 'Hickle-Schinner'
+
+    u = uvals.select { |s| s['service_code'] == 'G.3' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+    report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    # GBP 1,119,698.27
+    expect(report.direct_award_value.round(2)).to be 1119698.27
+
+    u = uvals.select { |s| s['service_code'] == 'C.11' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+    report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    # GBP 52,655.96
+    expect(report.direct_award_value.round(2)).to be 52655.96
+
+    report.calculate_services_for_buildings buildings, uvals, rates, rate_card, dummy_supplier_name
+    expect(report.direct_award_value.round(2)).to be 4806671.50
+    # -------------------
+  end
+
+  it 'price multiple buildings and services with rate card' do
     results = {}
 
     supplier_names = rate_card.data['Prices'].keys
