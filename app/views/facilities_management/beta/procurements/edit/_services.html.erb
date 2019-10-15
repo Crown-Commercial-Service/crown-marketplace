@@ -1,0 +1,89 @@
+<%= render('errors/inline_error_summary') %>
+<div class="procurement">
+  <div class="services chooser-component">
+    <div id="ccs-dynamic-accordian" class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-top-0">All services</h1>
+        <fieldset class="govuk-fieldset" aria-describedby="">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+            Select the facilities management services you need
+          </h2>
+        </fieldset>
+        <p class="govuk-caption-m govuk-!-margin-top-0">
+          Select all of the facilities management services required within your estate.<BR>
+          You will then be able to match up each building with the services it requires.</p>
+        <p>
+          <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="<%= t('facilities_management.select_services.servicespec_link_alttext') %>"><%= t('.service_specification_doc') %></a>
+        </p>
+        <div class="govuk-grid-column-full" style="padding-left:0">
+          <div class="chooser-input">
+            <div class="govuk-accordion" data-module="accordion" id="procurement-services-accordion">
+              <% FacilitiesManagement::StaticData.services.each do |service| %>
+                <div class="govuk-accordion__section chooser-section" data-section="<%= service['code'] %>" data-sectionname="<%= service['name'] %>">
+                  <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading">
+                      <span class="govuk-accordion__section-button" id="<%= service['code'] %>"><%= service['name'] %></span>
+                    </h2>
+                  </div>
+                  <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
+                    <% FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
+                      <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
+                        <fieldset class="govuk-fieldset" aria-describedby="<%= work_package['name'] %>">
+                          <div id="services-checkboxes" class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                              <%= check_box_tag("facilities_management_procurement[service_codes][]", work_package['code'], @procurement.service_codes.include?(work_package['code']),
+                                                title: work_package['name'],
+                                                class: "govuk-checkboxes__input",
+                                                sectionid: service['code'],
+                                                id: "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}",) %>
+                              <label style="padding-top:0"
+                                     class="govuk-label govuk-checkboxes__label"
+                                     for="<%= "service_#{work_package['code'].gsub('.', '-')}" %>">
+                                <%= work_package['name'] %>
+                                <br/>
+                                <span style="font-weight:lighter;"><%= work_package['description'] %></span>
+                              </label>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                    <% end %>
+                    <% if FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
+                      <p><%= t('facilities_management.basket.or_text') %></p>
+                      <div id="services-checkboxes" class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input title="Select all code-<%= service['code'] %> services"
+                                 style="margin-top:4px"
+                                 class="govuk-checkboxes__input"
+                                 id="<%= service['code'].sub('.', '-') %>_all"
+                                 name="section-checkbox_select_all"
+                                 forserviceid="<%= service['code'] %>"
+                                 type="checkbox"
+                                 value="<%= service['code'] %>">
+                          <label class="govuk-label govuk-checkboxes__label"
+                                 for="<%= service['code'].sub('.', '-') %>_all">
+                            <%= t('facilities_management.basket.selectall_text') %>
+                          </label>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
+        <div class="basket">
+          <div>
+            <h3 class="govuk-heading-m" data-txt01="services selected" data-txt02="no services selected">
+              <span id="selected-services-count">0</span> <span><%= t('.services_selected') %></span></h3>
+            <a class="govuk-!-padding-left-2 remove-link" role="button" href="#"><%= t('.remove_all') %></a><br/>
+            <ul style="margin-top:10px;" class="govuk-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
