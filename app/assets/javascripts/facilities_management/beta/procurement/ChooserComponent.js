@@ -37,7 +37,7 @@ ChooserComponent.prototype.init = function () {
             this._sections[id] = newSection;
         }
     }
-    //this._basketContainer.UpdateBasketNumber(0);
+    this._basketContainer.UpdateBasketNumber(0);
 
     return result;
 };

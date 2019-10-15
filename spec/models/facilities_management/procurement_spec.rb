@@ -142,9 +142,9 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         'address' => {
           'fm-address-line-1' => 'line 1',
           'fm-address-line-2' => 'line 2',
-          'town' => 'town',
-          'county' => 'county',
-          'postcode' => 'postcode'
+          'fm-address-town' => 'town',
+          'fm-address-county' => 'county',
+          'fm-address-postcode' => 'postcode'
         }
       }
     end
@@ -180,19 +180,19 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'updates its town' do
         procurement.find_or_build_procurement_building(building_data)
         procurement_building = procurement.procurement_buildings.first
-        expect(procurement_building.town).to eq building_data['address']['town']
+        expect(procurement_building.town).to eq building_data['address']['fm-address-town']
       end
 
       it 'updates its county' do
         procurement.find_or_build_procurement_building(building_data)
         procurement_building = procurement.procurement_buildings.first
-        expect(procurement_building.county).to eq building_data['address']['county']
+        expect(procurement_building.county).to eq building_data['address']['fm-address-county']
       end
 
       it 'updates its postcode' do
         procurement.find_or_build_procurement_building(building_data)
         procurement_building = procurement.procurement_buildings.first
-        expect(procurement_building.postcode).to eq building_data['address']['postcode']
+        expect(procurement_building.postcode).to eq building_data['address']['fm-address-postcode']
       end
     end
 
