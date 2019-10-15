@@ -13,3 +13,15 @@ input[type=radio]:checked + label + div#radio-inner-content {
   position: relative;
   left: -22px;
 }
+
+ul.buildings-list {
+  padding-top: 0;
+  padding-left: 20px;
+    li {
+      padding-bottom: 15px;
+    }
+}
+
+.vertical-align-top {
+  vertical-align: top;
+}
