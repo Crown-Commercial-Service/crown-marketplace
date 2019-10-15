@@ -126,6 +126,7 @@ module FacilitiesManagement
         set_suppliers(region_codes, service_codes)
         find_regions(region_codes)
         find_services(service_codes)
+        @active_procurement_buildings = @procurement.procurement_buildings.try(:active)
         set_buildings if params['step'] == 'procurement_buildings'
       end
 
@@ -140,7 +141,7 @@ module FacilitiesManagement
         @buildings_data = FMBuildingData.new.get_building_data(current_user.email.to_s)
         @buildings_data.each do |building|
           building_data = JSON.parse(building['building_json'].to_s)
-          @procurement.find_or_build_procurement_building(building_data)
+          @procurement.find_or_build_procurement_building(building_data) if building['status'] == 'Ready'
         end
       end
 
