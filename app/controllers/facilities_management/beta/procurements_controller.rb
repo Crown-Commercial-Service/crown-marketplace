@@ -78,7 +78,7 @@ module FacilitiesManagement
 
       def procurement_params
         params.require(:facilities_management_procurement)
-            .permit(
+              .permit(
                 :name,
                 :tupe,
                 :contract_name,
@@ -105,7 +105,7 @@ module FacilitiesManagement
                                                    :postcode,
                                                    :active,
                                                    service_codes: []]
-            )
+              )
       end
 
       def set_current_step
