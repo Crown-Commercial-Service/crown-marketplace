@@ -55,7 +55,7 @@ module FacilitiesManagement
         building_json = building['building_json'].deep_symbolize_keys
         id = building_json[:id]
         building_uvals = (uvals.select { |u| u[:building_id] == id })
-        p "building id: #{id}"
+        # p "building id: #{id}"
         vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name, results)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
@@ -282,6 +282,7 @@ module FacilitiesManagement
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/AbcSize
     def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil, results = nil)
       sum_uom = 0.0
       sum_benchmark = 0.0
@@ -291,15 +292,9 @@ module FacilitiesManagement
 
       copy_params building_data, uvals
 
-      uvals.each do |v|
-        # puts service.code
-        # puts service.name
-        # puts service.mandatory
-        # puts service.mandatory?
-        # puts service.work_package
-        # puts service.work_package.code
-        # puts service.work_package.name
+      uvals.select! { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
 
+      uvals.each do |v|
         uom_value = v[:uom_value].to_f
 
         # occupants = occupants(v['service_code'], building_data)
@@ -324,10 +319,12 @@ module FacilitiesManagement
                                                supplier_name,
                                                building_data)
 
-
-        # print "#{calc_fm.sumunitofmeasure},#{calc_fm.benchmarkedcostssum},#{@contract_length_years},"
+        # print "#{calc_fm.sumunitofmeasure},"
+        # print "#{calc_fm.benchmarkedcostssum}," if supplier_name.nil?
+        # print "#{@contract_length_years},"
         # print "#{v[:service_code]},#{uom_value},#{occupants},"
         # print "#{@tupe_flag},#{@london_flag},#{@cafm_flag},#{@helpdesk_flag},#{supplier_name},"
+        # print "#{building_data[:"fm-building-type"]},"
         # puts "#{building_data.inspect}"
 
         sum_uom += calc_fm.sumunitofmeasure
@@ -345,6 +342,7 @@ module FacilitiesManagement
       { sum_uom: sum_uom,
         sum_benchmark: sum_benchmark }
     end
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
