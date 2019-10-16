@@ -76,6 +76,15 @@ module ApplicationHelper
     end
   end
 
+  def display_error_no_attr(object, attribute)
+    error = object.errors[attribute].first
+    return if error.blank?
+
+    content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
+      error.to_s
+    end
+  end
+
   def css_classes_for_input(journey, attribute, extra_classes = [])
     error = journey.errors[attribute].first
 
@@ -120,24 +129,19 @@ module ApplicationHelper
   end
 
   def service_start_page_path
-    # send controller.class.parent_name.underscore + '_path' if controller.class.parent_name
     send controller.class.parent_name.underscore.tr('/', '_') + '_path' if controller.class.parent_name
   end
 
   def service_gateway_path
-    send controller.class.parent_name.underscore + '_gateway_path' if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
+    send controller.class.parent_name.underscore.tr('/', '_') + '_gateway_path' if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
   end
 
   def service_destroy_user_session_path
     if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
-      send controller.class.parent_name.underscore.tr('/', '_') + '_destroy_user_session_path'
+      send "#{controller.class.parent_name.underscore.tr('/', '_')}_destroy_user_session_path"
     else
       send 'destroy_user_session_path'
     end
-  end
-
-  def facilities_management_beta_destroy_user_session_path
-    controller.class.parent.name == 'FacilitiesManagement'
   end
 
   def landing_or_admin_page
@@ -146,10 +150,6 @@ module ApplicationHelper
 
   def fm_buyer_landing_page
     request.path_info.include? 'buyer-account'
-  end
-
-  def facilities_management_beta_path
-    controller.class.parent.name == 'FacilitiesManagement'
   end
 
   def not_permitted_page

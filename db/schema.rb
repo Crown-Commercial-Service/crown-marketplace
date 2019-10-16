@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_145423) do
+ActiveRecord::Schema.define(version: 2019_10_09_152026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -36,6 +36,12 @@ ActiveRecord::Schema.define(version: 2019_10_02_145423) do
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "address_line_1", limit: 255
+    t.string "address_line_2", limit: 255
+    t.string "town", limit: 255
+    t.string "county", limit: 255
+    t.string "postcode", limit: 20
+    t.boolean "active"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 

@@ -1,44 +1,46 @@
 module FacilitiesManagement
-  class Beta::SummaryController < FacilitiesManagement::HomeController
-    def index
-      @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-      build_direct_award_report
-    end
-
-    def guidance
-      # render plain: 'guidance test'
-
-      if params['download-spreadsheet'] == 'yes'
-        redirect_to '/facilities-management/summary?calculations=yes&format=xlsx'
-      else
-        render 'facilities_management/beta/summary/guidance'
+  module Beta
+    class SummaryController < FrameworkController
+      def index
+        @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+        build_direct_award_report
       end
-    end
 
-    def sorted_suppliers
-      build_direct_award_report
-    end
+      def guidance
+        # render plain: 'guidance test'
 
-    private
+        if params['download-spreadsheet'] == 'yes'
+          redirect_to '/facilities-management/summary?calculations=yes&format=xlsx'
+        else
+          render 'facilities_management/beta/summary/guidance'
+        end
+      end
 
-    def build_direct_award_report
-      user_email = current_user.email.to_s
+      def sorted_suppliers
+        build_direct_award_report
+      end
 
-      @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
+      private
 
-      selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
+      def build_direct_award_report
+        user_email = current_user.email.to_s
 
-      uvals = @report.uom_values(selected_buildings)
+        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
 
-      rates = CCS::FM::Rate.read_benchmark_rates
-      rate_card = CCS::FM::RateCard.latest
+        selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
 
-      @results = {}
-      supplier_names = rate_card.data['Prices'].keys
-      supplier_names.each do |supplier_name|
-        # dummy_supplier_name = 'Hickle-Schinner'
-        @report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name
-        @results[supplier_name] = @report.direct_award_value
+        uvals = @report.uom_values(selected_buildings)
+
+        rates = CCS::FM::Rate.read_benchmark_rates
+        rate_card = CCS::FM::RateCard.latest
+
+        @results = {}
+        supplier_names = rate_card.data['Prices'].keys
+        supplier_names.each do |supplier_name|
+          # dummy_supplier_name = 'Hickle-Schinner'
+          @report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name
+          @results[supplier_name] = @report.direct_award_value
+        end
       end
     end
   end

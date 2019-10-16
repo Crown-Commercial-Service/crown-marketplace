@@ -24,7 +24,7 @@ ChooserComponent.prototype.validate = function () {
 };
 ChooserComponent.prototype.init = function () {
     let result = false;
-
+    $('body').addClass('js-enabled');
     this._basketContainer = new BasketComponent(this._baseClass, this._classification, $(this._basketName), this.handleBasketRemove.bind(this));
     let sectionArray = $(this._checkboxSourceDivName + " .chooser-section");
     for (let index = 0; index < sectionArray.length; index++) {
@@ -130,13 +130,15 @@ ChooserComponent.prototype.PrimeBasket = function () {
             let sectionItem = this._sections[index];
             let mappedItems = [] ;
             sectionItem._allCheckboxes.each(function () {
-                let cb = this;
-                let newItem = {
-                    code: cb.id,
-                    groupId: sectionItem._sectionCode,
-                    captionText : cb.title
-                };
-                mappedItems.push(newItem);
+                if ( this.checked ) {
+                    let cb = this;
+                    let newItem = {
+                        code: cb.id,
+                        groupId: sectionItem._sectionCode,
+                        captionText: cb.title
+                    };
+                    mappedItems.push(newItem);
+                }
             });
             selectedItems = selectedItems.concat(mappedItems);
         }
@@ -304,12 +306,13 @@ BasketComponent.prototype.UpdateBasketNumber = function (count) {
     if (selectedCount) {
         selectedCount.text(count);
     }
+
     if (selectedParent && selectedParent.data("txt01")) {
         if (count == 0) {
             selectedCount.text("");
             selectedCount.next().text(selectedParent.data("txt02"));
         } else {
-            selectedCount.next().text(selectedParent.data("txt01"));
+            $('#selected-' + this._classification + '-count').next().text(selectedParent.data("txt01"));
         }
     }
 };

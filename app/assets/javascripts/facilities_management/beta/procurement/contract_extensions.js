@@ -94,6 +94,7 @@ $(function () {
         $('#ext3-container').addClass('govuk-visually-hidden');
         $('#ext4-container').addClass('govuk-visually-hidden');
         $('#fm-ext2-remove-btn').removeClass('govuk-visually-hidden');
+        updateButtonText();
     });
 
     $('#facilities_management_procurement_optional_call_off_extensions_1').on('keyup', function (e) {
