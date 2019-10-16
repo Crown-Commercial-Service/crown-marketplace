@@ -31,14 +31,20 @@
       </div>
     </div>
     <div class="govuk-grid-row">
-      <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> - <%= @procurement.name %></span>
+      <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.name}" if @procurement.detailed_search? %></span>
+      <% if !@procurement.persisted? || @procurement.quick_search?%>
+        <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
+          <%= @procurement.name if @procurement.quick_search? %>
+          <%= 'Search Results' unless @procurement.persisted? %>
+        </h1>
+        <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
+      <% end %>
     </div>
-
     <div class="procurement govuk-grid-row">
-      <div class="govuk-grid-column-full">
+      <div class="govuk-grid-column-full quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
         <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
           <% if @procurement.quick_search? %>
-            <%= render partial: 'quick_search_form', locals: { f: f } %>
+            <%= render partial: 'quick_search_form', locals: { f: f, step: params[:step] } %>
           <% else %>
             <%= render partial: "facilities_management/beta/procurements/edit/#{params[:step]}", locals: { f: f } %>
           <% end %>
@@ -48,6 +54,8 @@
           <% if @delete %>
             <%= link_to t('.confirm_delete'), facilities_management_beta_procurement_path(@procurement), :method => 'delete', class: "govuk-button govuk-button--warning" %>
             <%= link_to t('.cancel'),  facilities_management_beta_procurements_url, class: "govuk-button govuk-button--secondary govuk-!-margin-left-3" %>
+          <% elsif %w[regions services].include? params[:step] %>
+            <%= f.submit t('.save'), class: 'govuk-button', name: 'next_step' %>
           <% else %>
             <%= f.submit t('.save_and_continue'), class: 'govuk-button', name: @procurement.detailed_search? ? 'next_step' : 'start_detailed_search' %>
             <%= f.submit t('.save_and_return_to_detailed_summary'), class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3'  if @procurement.detailed_search? %>
@@ -55,25 +63,17 @@
           <%end %>
         </div>
 
-        <% if params[:step] %>
+        <% if params[:step] && @procurement.detailed_search? %>
           <div class="govuk-grid-row">
             <span class="govuk-caption-m"><%= t(".next_step.#{params[:step]}") %></span>
           </div>
         <% end %>
 
-        <% if @procurement.detailed_search? %>
-          <div class="govuk-grid-row govuk-!-margin-top-3">
-            <%= link_to 'Back to detailed search summary', facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' %>
-          </div>
-        <% end %>
-  <% end %>
-  </div>
+        <div class="govuk-grid-row govuk-!-margin-top-3">
+          <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' if @procurement.detailed_search? %>
+          <%= link_to t('.cancel_and_return'), facilities_management_beta_procurements_path, class: 'govuk-link--no-visited-state' if @procurement.quick_search? %>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>
-
-
-<script type="text/javascript" charset="utf-8" async="false" defer="defer">
-    window.addEventListener("load", function () {
-        QuickSearchResultsAssistant.init("procurement", "edit", "facilities_management");
-    });
-</script>
