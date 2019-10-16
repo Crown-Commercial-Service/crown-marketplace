@@ -24,7 +24,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         end
       end
 
-      context 'when a non existant step has been set' do
+      context 'when a non existing step has been set' do
         let(:step) { 'fake-step' }
 
         it 'redirects the user to the procurement index page' do
@@ -59,10 +59,12 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
       end
 
       context 'when on the last step' do
+        let(:procurement_building) { create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, id: 1)) }
+        let(:procurement_router) { described_class.new(id: procurement_building.procurement.id, procurement_state: state, step: step) }
         let(:step) { 'building_services' }
 
-        it 'returns a route for the show page' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=services')
+        it 'returns a route for the show procurement_building page' do
+          expect(procurement_router.route).to eq("/facilities-management/beta/procurement_buildings/#{procurement_building.id}")
         end
       end
 
