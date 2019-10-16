@@ -102,6 +102,7 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management' do
     namespace 'beta', path: 'beta' do
       get '/', to: 'buyer_account#buyer_account'
+      get '/start', to: 'home#index'
       get '/gateway', to: 'gateway#index'
       get '/buyer_account', to: 'buyer_account#buyer_account'
       get '/buildings-management', to: 'buildings_management#buildings_management'
