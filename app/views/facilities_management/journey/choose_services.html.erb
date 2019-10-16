@@ -9,12 +9,7 @@
           </h2>
         </fieldset>
         <p class="govuk-caption-m">
-        <%='Step: ' %><%= @step.to_s %><br>
-        <% if @step == 'building_services' %>
-          hello
-        <% else %>
           <%= t('.subtitle') %>
-        <% end %>
         </p>
         <p>
           <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="<%= t('facilities_management.select_services.servicespec_link_alttext') %>"><%= t('.service_specification_doc') %></a>
