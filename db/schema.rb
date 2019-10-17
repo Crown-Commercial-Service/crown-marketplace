@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_09_152026) do
+ActiveRecord::Schema.define(version: 2019_10_17_103501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 2019_10_09_152026) do
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
-    t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
@@ -66,6 +65,8 @@ ActiveRecord::Schema.define(version: 2019_10_09_152026) do
     t.text "service_codes", default: [], array: true
     t.text "region_codes", default: [], array: true
     t.boolean "estimated_cost_known"
+    t.boolean "mobilisation_period_required"
+    t.boolean "extensions_required"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -496,7 +497,6 @@ ActiveRecord::Schema.define(version: 2019_10_09_152026) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
