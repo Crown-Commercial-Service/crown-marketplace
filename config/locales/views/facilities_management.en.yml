@@ -116,6 +116,7 @@ en:
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
             procurement_buildings: 'Next: Services'
+            services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
           procurement_buildings:
             buildings_selected: Buildings selected
@@ -125,11 +126,12 @@ en:
             remove_all: Remove all
             sub_heading: Select all of the buildings you want to include in your procurement
           quick_search: Search result
-          save: Save
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
           search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
+          services:
+            service_specification_doc: Read the service specification document
           tupe:
             body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?

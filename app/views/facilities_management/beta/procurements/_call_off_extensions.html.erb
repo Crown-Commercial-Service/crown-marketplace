@@ -13,12 +13,10 @@
   <div class="govuk-radios govuk-!-margin-top-3">
 
     <div class="govuk-radios__item">
-      <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-calloff-ext-yes" name="ext-group" type="radio" value="yes" <%= unless @procurement.optional_call_off_extensions_1.nil? then
-                                                                                                                                       'checked'
-                                                                                                                                     end %>>
-      <label class="govuk-label govuk-radios__label govuk-label--s" for="show">
-        Yes
-      </label>
+
+      <%= f.radio_button :extensions_required, true, class: "govuk-radios__input" %>
+      <%= label :extensions_required, 'Yes', class: 'govuk-label govuk-radios__label' %>
+
       <!-- Content for when yes is selected hidden when no is selected -->
       <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3">
 
@@ -34,7 +32,8 @@
           <%= f.number_field :optional_call_off_extensions_2, class: 'govuk-input govuk-input--width-5 govuk-!-margin-left-3', max: '7' %><span class=""> years</span>
           <button id="fm-ext2-remove-btn" class="govuk-button govuk-button--secondary <%= unless @procurement.optional_call_off_extensions_3.nil? then
                                                                                             'govuk-visually-hidden'
-                                                                                          end %>">Remove</button>
+                                                                                          end %>">Remove
+          </button>
         </div>
 
         <div id="ext3-container" class="ext-container <%= if @procurement.optional_call_off_extensions_3.nil? then
@@ -61,10 +60,8 @@
       </div>
     </div>
     <div class="govuk-radios__item">
-      <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-calloff-ext-no" name="ext-group" type="radio" value="no">
-      <label class="govuk-label govuk-radios__label govuk-label--s" for="hide">
-        No
-      </label>
+      <%= f.radio_button :extensions_required, false, class: "govuk-radios__input" %>
+      <%= label :extensions_required, 'No', class: 'govuk-label govuk-radios__label' %>
     </div>
   </div>
 </div>
