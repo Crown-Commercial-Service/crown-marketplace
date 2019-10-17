@@ -19,7 +19,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   def mobilisation_period
     result = 'None'
     period = @procurement.mobilisation_period
-    unless period.nil?
+    unless @procurement.mobilisation_period_required == false
       result = "#{period}  #{(period > 1 ? ' weeks' : 'week')}"
     end
     result

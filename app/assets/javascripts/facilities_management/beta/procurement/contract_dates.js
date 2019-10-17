@@ -85,7 +85,7 @@ $(function () {
         displayContractDates();
     });
 
-    $('#fm-mobilisation-period-no').on('click', function (e) {
+    $('#facilities_management_procurement_mobilisation_period_required_false').on('click', function (e) {
         clearMobilisationPeriod();
     });
 

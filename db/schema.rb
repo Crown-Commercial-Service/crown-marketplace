@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_09_152026) do
+ActiveRecord::Schema.define(version: 2019_10_17_103501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(version: 2019_10_09_152026) do
     t.text "service_codes", default: [], array: true
     t.text "region_codes", default: [], array: true
     t.boolean "estimated_cost_known"
+    t.boolean "mobilisation_period_required"
+    t.boolean "extensions_required"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
