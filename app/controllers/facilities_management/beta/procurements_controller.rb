@@ -76,7 +76,7 @@ module FacilitiesManagement
 
       def procurement_params
         params.require(:facilities_management_procurement)
-              .permit(
+            .permit(
                 :name,
                 :tupe,
                 :contract_name,
@@ -92,6 +92,7 @@ module FacilitiesManagement
                 :optional_call_off_extensions_2,
                 :optional_call_off_extensions_3,
                 :optional_call_off_extensions_4,
+                :mobilisation_period_required,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
@@ -103,7 +104,7 @@ module FacilitiesManagement
                                                    :postcode,
                                                    :active,
                                                    service_codes: []]
-              )
+            )
       end
 
       def set_current_step
