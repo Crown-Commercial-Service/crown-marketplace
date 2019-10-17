@@ -4,8 +4,8 @@ require 'net/http'
 require 'uri'
 
 class FMBuildingData
-  def reset_buildings_tables (email_address)
-    query = 'truncate fm_uom_values where ;'
+  def reset_buildings_tables
+    query = 'truncate fm_uom_values;'
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     query = 'truncate fm_lifts;'
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
