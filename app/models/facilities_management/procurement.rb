@@ -11,6 +11,10 @@ module FacilitiesManagement
     accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
     acts_as_gov_uk_date :initial_call_off_start_date, validate_if: :validate_contract_data?, error_clash_behaviour: :omit_gov_uk_date_field_error
 
+    def unanswered_contract_date_questions?
+      initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period.nil?
+    end
+    
     aasm do
       state :quick_search, initial: true
       state :detailed_search

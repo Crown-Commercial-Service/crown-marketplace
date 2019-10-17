@@ -1,24 +1,25 @@
 <div class="govuk-!-margin-top-3">
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_period].any?%>">
+  <%= f.text_field :tupe, class: 'tupe_indicator' %>
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_period].any?%>" data-propertyname="Initial call-off period">
     <%= f.label :initial_call_off_period, 'Initial call-off period', class: "govuk-heading-m govuk-!-margin-bottom-0"%>
     <p class="govuk-caption-m govuk-!-margin-top-0">
       The initial period in which the services are provided. This is the date you want services<br>
       to begin and can be a maximum of 7 years.
     </p>
     <%= display_error_label(@procurement, :initial_call_off_period, '', "#{f.object_name}_initial_call_off_period") %>
-    <%= f.number_field :initial_call_off_period, class: 'govuk-input govuk-input--width-4', maxlength:1, max: '7' %>
+    <%= f.number_field :initial_call_off_period, class: 'govuk-input govuk-input--width-4', maxlength:2, max: '7' %>
     <%= f.label :initial_call_off_period, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
   </div>
 </div>
 
 <div class="govuk-!-margin-top-5">
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_start_date].any?%>">
+  <div class="govuk-form-group initial_call_off_start_date <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_start_date].any?%>" data-propertyname="Initial call-off start date">
     <%= f.label :initial_call_off_start_date, 'Initial call-off start date', class: "govuk-heading-s govuk-!-margin-bottom-0"%>
     <%= display_error_label(@procurement, :initial_call_off_start_date, '', "#{f.object_name}_initial_call_off_start_date_dd") %>
     <%= f.gov_uk_date_field :initial_call_off_start_date, legend_options: { page_heading: false, visually_hidden: true } %>
   </div>
   
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_end_date].any?%>">
+  <div class="govuk-form-group initial_call_off_end_date <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_end_date].any?%>" data-propertyname="Initial call-off end date">
     <%= f.label :initial_call_off_end_date, 'Initial call-off end date', class: "govuk-heading-s govuk-!-margin-bottom-0"%>
     <%= display_error_label(@procurement, :initial_call_off_end_date, '', "#{f.object_name}_initial_call_off_start_date_dd") %>
     <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">

@@ -16,11 +16,11 @@
              Yes
          </label>
         <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
-          <div class="govuk-form-group govuk-!-margin-left-3 <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_period].any?%>">
+          <div class="govuk-form-group govuk-!-margin-left-3 <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_period].any?%>" data-propertyname="Mobilisation period">
             <%= f.label :mobilisation_period, 'Enter mobilisation length', class:'govuk-heading-s' %>
             <%= f.label :mobilisation_period, 'A minimum of 4 weeks required if TUPE is involved.', class:'govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-2' %>
             <%= display_error_label(@procurement, :mobilisation_period, '', "#{f.object_name}_mobilisation_period") %>
-            <%= f.number_field :mobilisation_period, class: 'govuk-input govuk-input--width-4', maxlength:3, min: '0', max: '312' %>
+            <%= f.number_field :mobilisation_period, class: 'govuk-input govuk-input--width-4', maxlength:3, min: '1', max: '312' %>
             <%= f.label :mobilisation_period, 'weeks', class: 'govuk-label--s govuk-!-margin-left-2' %>
           </div>
           <div class="govuk-!-margin-left-3">
