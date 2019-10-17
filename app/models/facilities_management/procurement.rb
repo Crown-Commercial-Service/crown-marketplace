@@ -12,7 +12,7 @@ module FacilitiesManagement
     acts_as_gov_uk_date :initial_call_off_start_date
 
     def unanswered_contract_date_questions?
-      initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil?
+      initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
     end
 
     aasm do
