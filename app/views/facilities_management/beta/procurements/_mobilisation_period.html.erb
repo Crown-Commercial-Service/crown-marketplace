@@ -14,12 +14,10 @@
   <div class="govuk-radios govuk-!-margin-top-3">
 
     <div class="govuk-radios__item">
-      <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-mobilisation-period-yes" name="mob-group" type="radio" value="yes" <%= unless @procurement.mobilisation_period.nil?;
-                                                                                                                                               @procurement.mobilisation_period > 0 ? 'checked' : ''
-                                                                                                                                             end %>>
-      <label class="govuk-label govuk-radios__label govuk-label--s" for="fm-mobilisation-period-yes">
-        Yes
-      </label>
+
+      <%= f.radio_button :mobilisation_period_required, true, class: "govuk-radios__input" %>
+      <%= label :mobilisation_period_required, 'Yes', class: 'govuk-label govuk-radios__label' %>
+
       <!-- Content for when yes is selected hidden when no is selected -->
       <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3">
         <span class="govuk-heading-s govuk-!-margin-left-3">Enter mobilisation length</span>
@@ -97,10 +95,8 @@
       </div>
     </div>
     <div class="govuk-radios__item">
-      <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-mobilisation-period-no" name="mob-group" type="radio" value="no">
-      <label class="govuk-label govuk-radios__label govuk-label--s" for="fm-mobilisation-period-no">
-        No
-      </label>
+      <%= f.radio_button :mobilisation_period_required, false, class: "govuk-radios__input" %>
+      <%= label :mobilisation_period_required, 'No', class: 'govuk-label govuk-radios__label' %>
     </div>
   </div>
 </div>
