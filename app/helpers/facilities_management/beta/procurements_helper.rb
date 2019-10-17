@@ -17,11 +17,10 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def mobilisation_period
-    result = 'None'
+    result = ''
     period = @procurement.mobilisation_period
-    unless @procurement.mobilisation_period_required == false
-      result = "#{period}  #{(period > 1 ? ' weeks' : 'week')}"
-    end
+    result = "#{period}  #{(period > 1 ? ' weeks' : 'week')}" if @procurement.mobilisation_period_required == true
+    result = 'None' if @procurement.mobilisation_period_required == false
     result
   end
 
