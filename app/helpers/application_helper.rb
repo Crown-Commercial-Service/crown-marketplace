@@ -41,12 +41,12 @@ module ApplicationHelper
     mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
-  def govuk_form_field(model_object, attribute, form_object_name, label_text, top_level_data_options)
+  def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
     css_classes = %w[govuk-!-margin-top-3]
     form_group_css = ['govuk-form-group']
     form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
 
-    content_tag :div, class: css_classes do
+    content_tag :div, class: css_classes, data: {propertyname: readable_property_name} do
       content_tag :div, class: form_group_css, data: top_level_data_options  do
         concat display_error_label(model_object, attribute, label_text, "#{form_object_name}_#{attribute}")
         concat display_label(label_text, "#{form_object_name}_#{attribute}") unless label_text.blank?
