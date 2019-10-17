@@ -31,9 +31,9 @@ $(function () {
 
         if (initialCallOffPeriod > 0) {
             ext1 = ext1 ? parseInt(ext1) : 0;
-            ext2 = ext2 ? parseInt(ext1) : 0;
-            ext3 = ext3 ? parseInt(ext1) : 0;
-            ext4 = ext4 ? parseInt(ext1) : 0;
+            ext2 = ext2 ? parseInt(ext2) : 0;
+            ext3 = ext3 ? parseInt(ext3) : 0;
+            ext4 = ext4 ? parseInt(ext4) : 0;
             result = initialCallOffPeriod + ext1 + ext2 + ext3 + ext4;
 
         }
@@ -43,7 +43,10 @@ $(function () {
     const updateButtonText = function () {
         let count = calcTotalContractYears();
         if ((10 - count) >= 0) {
+            $('#fm-add-contract-ext-btn').removeClass('govuk-visually-hidden');
             $('#fm-add-contract-ext-btn').text('+ Add another extension period (' + (10 - count) + ' remaining)');
+        } else {
+            $('#fm-add-contract-ext-btn').addClass('govuk-visually-hidden');
         }
     };
 
