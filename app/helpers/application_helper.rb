@@ -72,7 +72,7 @@ module ApplicationHelper
     return if error.blank?
 
     content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
-      "#{attribute} #{error}"
+      "#{error}"
     end
   end
 

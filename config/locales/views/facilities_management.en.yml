@@ -7,6 +7,8 @@ en:
           attributes:
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
+            service_codes:
+              invalid: Select at least one service you need to include in your procurement
         facilities_management/procurement_building:
           attributes:
             service_codes:
