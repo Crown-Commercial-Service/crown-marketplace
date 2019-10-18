@@ -12,42 +12,97 @@
   <dt class="govuk-summary-list__key">
     1. Buildings
   </dt>
-
-  <dd class="govuk-summary-list__value">
-    <% unless @place_holder.nil? %>
-      <%= @place_holder %>
+    <% if @active_procurement_buildings.any? %>
+      <dd class="govuk-summary-list__value">
+        <ul class="buildings-list">
+          <% @active_procurement_buildings.each do |procurement_building| %>
+              <li><%= procurement_building.name %></li>
+          <% end %>
+        </ul>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
+      </dd>
     <% else %>
-      <%= link_to "Select buildings", edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
+      <dd class="govuk-summary-list__value">
+        <%= link_to "Select buildings", edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+
+      </dd>
     <% end %>
-  </dd>
-  <dd class="govuk-summary-list__actions">
-  </dd>
 </div>
 
 <div class="govuk-summary-list__row">
   <dt class="govuk-summary-list__key">
     2. Services
   </dt>
-  <dd class="govuk-summary-list__value">
-    You must select buildings first
-  </dd>
-  <dd class="govuk-summary-list__actions">
-    <strong class="govuk-tag">
-      CAN'T START YET
-    </strong>
-  </dd>
+  <% if @active_procurement_buildings.any? %>
+    <% if any_service_codes(@active_procurement_buildings) %>
+      <dd class="govuk-summary-list__value">
+        <% @active_procurement_buildings.each do |procurement_building| %>
+          <%= render 'procurement_building_services', procurement_building: procurement_building %>
+        <% end %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
+      </dd>
+    <% else %>
+      <dd class="govuk-summary-list__value">
+        <%= link_to "Select services", edit_facilities_management_beta_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+      </dd>
+    <% end %>
+  <% else %>
+    <dd class="govuk-summary-list__value">
+      You must select buildings first
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <strong class="govuk-tag">
+        CAN'T START YET
+      </strong>
+    </dd>
+  <% end %>
 </div>
+
 
 <div class="govuk-summary-list__row">
-  <dt class="govuk-summary-list__key">
-    3. Services information
-  <dd class="govuk-summary-list__value">
-    You must select buildings first
-  </dd>
-  <dd class="govuk-summary-list__actions">
-    <strong class="govuk-tag">
-      CAN'T START YET
-    </strong>
-  </dd>
 
+  <dt class="govuk-summary-list__key vertical-align-top">
+    3. Services information
+    <% if any_service_codes(@active_procurement_buildings) %>
+      <dd class="govuk-summary-list__value govuk-!-padding-top-8">
+        <strong>Buildings</strong>
+      </dd>
+      <dd class="govuk-summary-list__actions govuk-!-padding-top-8">
+        <strong>Status</strong>
+      </dd>
+    <% else %>
+      <dd class="govuk-summary-list__value">
+        You must select buildings first
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <strong class="govuk-tag">
+          CAN'T START YET
+        </strong>
+      </dd>
+    <% end %>
+  </dt>
 </div>
+
+<% if any_service_codes(@active_procurement_buildings) %>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+    <dd class="govuk-summary-list__value govuk-!-padding-0 govuk-!-margin-0">
+      <% @active_procurement_buildings.each do |procurement_building| %>
+        <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%= link_to procurement_building.name, '#' %></p>
+      <% end %>
+    </dd>
+    <dd class="govuk-summary-list__actions govuk-!-padding-0 govuk-!-margin-0">
+      <% @active_procurement_buildings.each do |procurement_building| %>
+        <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3">Incomplete</p>
+      <% end %>
+    </dd>
+  </div>
+<% end %>

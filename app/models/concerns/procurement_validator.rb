@@ -64,6 +64,8 @@ module ProcurementValidator
     # End of validation rules for contract-dates
     #############################################
 
+    validate :service_codes_not_empty, on: :services
+    
     private
 
     #############################################
@@ -82,6 +84,10 @@ module ProcurementValidator
 
     def at_least_one_active_procurement_building
       errors.add(:procurement_buildings, :invalid) unless procurement_buildings.map(&:active).any?(true)
+    end
+
+    def service_codes_not_empty
+      errors.add(:service_codes, :invalid) if defined?(service_codes) && service_codes.empty?
     end
   end
   # rubocop:enable Metrics/BlockLength
