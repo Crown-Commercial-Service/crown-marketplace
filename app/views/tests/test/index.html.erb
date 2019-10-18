@@ -13,7 +13,7 @@
       <% if @results  %>
         <table>
         <% i = 0 %>
-        <% @results.sort_by { |k,v| @results[k]}.each do |k,v| %>
+        <% @results.sort_by { |_k,val| val }.each do |k,v| %>
           <tr>
             <td align="right"><%= "#{i += 1}."%>&nbsp;&nbsp;</td>
             <td><%= "#{k}" %></td>
