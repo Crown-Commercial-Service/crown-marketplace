@@ -55,22 +55,22 @@ RSpec.describe 'shared/_error_summary.html.erb' do
       errors.add(:attribute_name, 'error-message-2')
       errors.add(:attribute_name_2, 'error-message-3')
       errors.add(:attribute_name_2, 'error-message-4')
-      render partial: 'shared/error_summary', locals: { errors: errors}
+      render partial: 'shared/error_summary', locals: { errors: errors }
     end
 
     it 'displays the first error message for the first attribute in the summary' do
       expect(rendered).to have_link('error-message-1', href: '#attribute_name-error')
     end
 
-    it 'doesn''t display the second error message for the first attribute in the summary' do
+    it 'does not display the second error message for the first attribute in the summary' do
       expect(rendered).not_to have_link('error-message-2')
     end
 
-    it 'doesn''t displays the first error message for the second attribute in the summary' do
+    it 'does not displays the first error message for the second attribute in the summary' do
       expect(rendered).not_to have_link('error-message-3', href: '#attribute_name_2-error')
     end
 
-    it 'doesn''t display the second error message for the second attribute in the summary' do
+    it 'does not display the second error message for the second attribute in the summary' do
       expect(rendered).not_to have_link('error-message-4', href: '#attribute_name_2-error')
     end
   end
@@ -88,7 +88,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
       expect(rendered).to have_link('error-message-1', href: '#attribute_name-error')
     end
 
-    it 'doesn''t display the second error message for the first attribute in the summary' do
+    it 'does not display the second error message for the first attribute in the summary' do
       expect(rendered).not_to have_link('error-message-2')
     end
 
@@ -96,7 +96,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
       expect(rendered).to have_link('error-message-3', href: '#attribute_name_2-error')
     end
 
-    it 'doesn''t display the second error message for the second attribute in the summary' do
+    it 'does not display the second error message for the second attribute in the summary' do
       expect(rendered).not_to have_link('error-message-4', href: '#attribute_name_2-error')
     end
   end

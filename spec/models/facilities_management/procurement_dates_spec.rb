@@ -9,7 +9,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
   #  puts $stdout, "Messages: #{procurement.errors.to_json}"
   #  puts $stdout, "Details: #{procurement.errors.details.to_json}"
-  
   # describe 'procurements validations' do
   #   context 'has validators' do
   #     it 'is valid' do
