@@ -44,6 +44,7 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def update
         @procurement.assign_attributes(procurement_params)
 
@@ -69,6 +70,7 @@ module FacilitiesManagement
           render :edit
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       # DELETE /procurements/1
       # DELETE /procurements/1.json
