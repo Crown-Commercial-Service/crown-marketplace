@@ -6,8 +6,10 @@
   </summary>
   <div class="govuk-details__text govuk-!-padding-0">
     <ul class="govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-7">
-      <% procurement_building.service_codes.each do |service_code| %>
-        <li class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"><%= @services.select{|s| s['code'] == service_code}.first['name'] %></li>
+      <%if @services %>
+        <% procurement_building.service_codes.each do |service_code| %>
+          <li class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"><%= "#{@services.select{|s| s['code'] == service_code}.first&.name}" %></li>
+        <% end %>
       <% end %>
     </ul>
   </div>

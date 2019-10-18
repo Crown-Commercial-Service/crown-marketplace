@@ -15,6 +15,7 @@
         <p>
           <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="<%= t('facilities_management.select_services.servicespec_link_alttext') %>"><%= t('.service_specification_doc') %></a>
         </p>
+        <%= display_error @procurement, :service_codes %>
         <div class="govuk-grid-column-full" style="padding-left:0">
           <div class="chooser-input">
             <div class="govuk-accordion" data-module="accordion" id="procurement-services-accordion">

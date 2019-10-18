@@ -47,6 +47,15 @@ module FacilitiesManagement
       def update
         @procurement.assign_attributes(procurement_params)
 
+        # To need to do this is awful - it will trigger validations so that an invalid action can be recognised
+        # that action - resulting in clearing the service_code collection in the store will not happen
+        # we can however validate and push the custom message to the client from here
+        # !WHY?! The browser is not sending the [:facilities_management_procurement][:service_codes] value as empty
+        #        if no checkboxes are checked
+        #        Can the procurement_params specification not establish defaults?
+        @procurement.service_codes = [] if params[:facilities_management_procurement][:step].try(:to_sym) == :services &&
+                                           params[:facilities_management_procurement][:service_codes].nil?
+
         if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
           @procurement.reload
