@@ -43,7 +43,10 @@
           <%= link_to t('.confirm_delete'), facilities_management_beta_procurement_path(@procurement), :method => 'delete', class: "govuk-button govuk-button--warning" %>
           <%= link_to t('.cancel'),  facilities_management_beta_procurements_url, class: "govuk-button govuk-button--secondary govuk-!-margin-left-3" %>
         <% elsif %w[regions services].include? params[:step] %>
-          <%= f.submit t('.save'), class: 'govuk-button', name: 'next_step' %>
+           <!-- neil -->
+            <%= f.submit t('.save_and_continue'), class: 'govuk-button', name: @procurement.detailed_search? ? 'next_step' : 'start_detailed_search' %>
+            <%= f.submit t('.save_and_return_to_detailed_summary'), class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3'  if @procurement.detailed_search? %>
+
         <% else %>
           <%= f.submit t('.save_and_continue'), class: 'govuk-button', name: @procurement.detailed_search? ? 'next_step' : 'start_detailed_search' %>
           <%= f.submit t('.save_and_return_to_detailed_summary'), class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3'  if @procurement.detailed_search? %>

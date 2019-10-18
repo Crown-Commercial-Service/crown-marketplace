@@ -13,47 +13,50 @@
         <ul>
           <% f.object.procurement_buildings.active.each_with_index do |building, i| %>
             <li class="<%= 'active' if i == 0 %>">
-              <a id="<%= 'building-'+i.to_s %>" class="building-button govuk-!-font-size-19" href="#"><%=building.name %> <strong class="<%= 'building-services-'+i.to_s %>">(0 selected)</strong></a>
+              <a id="<%= 'building-' + building.id %>" class="building-button govuk-!-font-size-19" href="#"><%= building.name %>
+                <strong class="<%= 'building-services-' + building.id %>">(0 selected)</strong></a>
             </li>
           <% end %>
-          <%= link_to t('.change_buildings'), edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), class: "govuk-link--no-visited-state govuk-!-margin-top-2 govuk-!-font-size-19"%>
+          <%= link_to t('.change_buildings'), edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), class: "govuk-link--no-visited-state govuk-!-margin-top-2 govuk-!-font-size-19" %>
         </ul>
       </div>
       <div id="section" class="section-pane pane with-sort">
-        <%= f.fields_for :procurement_buildings do |procurement_building|%>
-          <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
-          <div id="<%= 'building-services-'+procurement_building.index.to_s %>" class="pane-inner services-pane <%= 'hidden-pane' if procurement_building.index > 0 %>">
-            <div class="govuk-form-group <%= 'govuk-form-group--error' if procurement_building.object.errors.any? %>">
-              <h2 tabindex="-1" class="govuk-heading-m govuk-!-margin-top-7">Choose from <%= @services.count %> services</h2>
-              <%= display_error_no_attr(procurement_building.object, :service_codes) %>
-              <div class="govuk-checkboxes ccs-govuk-checkboxes--s govuk-checkboxes--small">
-                <ul>
-                  <%= procurement_building.collection_check_boxes(:service_codes, @services, :code, :name) do |c| %>
-                    <li class="">
+        <%= f.fields_for :procurement_buildings do |procurement_building| %>
+          <% if procurement_building.object.active %>
+            <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
+            <div id="<%= 'building-services-' + procurement_building.object.id %>" class="pane-inner services-pane <%= 'hidden-pane' if procurement_building.object.id != f.object.procurement_buildings.active.first.id %>">
+              <div class="govuk-form-group <%= 'govuk-form-group--error' if procurement_building.object.errors.any? %>">
+                <h2 tabindex="-1" class="govuk-heading-m govuk-!-margin-top-7">Choose from <%= @services.count %> services</h2>
+                <%= display_error_no_attr(procurement_building.object, :service_codes) %>
+                <div class="govuk-checkboxes ccs-govuk-checkboxes--s govuk-checkboxes--small">
+                  <ul>
+                    <%= procurement_building.collection_check_boxes(:service_codes, @services, :code, :name) do |c| %>
+                      <li class="">
+                        <div class="govuk-checkboxes__item">
+                          <%= c.check_box(class: "govuk-checkboxes__input procurement-building__input") %>
+                          <%= c.label(class: "govuk-label govuk-checkboxes__label") %>
+                        </div>
+                      </li>
+                    <% end %>
+                    <li>
                       <div class="govuk-checkboxes__item">
-                        <%= c.check_box(class: "govuk-checkboxes__input procurement-building__input") %>
-                        <%= c.label(class: "govuk-label govuk-checkboxes__label") %>
+                        <p class="govuk-body govuk-!-margin-bottom-0">or</p>
                       </div>
                     </li>
-                  <% end %>
-                  <li>
-                    <div class="govuk-checkboxes__item">
-                      <p class="govuk-body govuk-!-margin-bottom-0">or</p>
-                    </div>
-                  </li>
-                  <li class="govuk-checkboxes__item ccs-select-all">
-                    <input class="govuk-checkboxes__input box1-all" id="box-all<%= procurement_building.index %>" name="box-all" type="checkbox" value="">
-                    <label class="govuk-label govuk-checkboxes__label" for="box-all<%= procurement_building.index %>">
-                      Select all
-                    </label>
-                  </li>
-                  <li class="govuk-checkboxes__item govuk-!-margin-top-5 govuk-!-padding-left-0">
-                    <a href="#" class="govuk-link--no-visited-state govuk-!-font-size-19 govuk-!-padding-left-0">+ Add more services</a>
-                  </li>
-                </ul>
+                    <li class="govuk-checkboxes__item ccs-select-all">
+                      <input class="govuk-checkboxes__input box1-all" id="box-all<%= procurement_building.object.id %>" name="box-all" type="checkbox" value="">
+                      <label class="govuk-label govuk-checkboxes__label" for="box-all<%= procurement_building.object.id %>">
+                        Select all
+                      </label>
+                    </li>
+                    <li class="govuk-checkboxes__item govuk-!-margin-top-5 govuk-!-padding-left-0">
+                      <%= link_to '+ Add more services', edit_facilities_management_beta_procurement_path(@procurement.id, step: 'services'), class: 'govuk-link govuk-!-font-size-19' %>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>

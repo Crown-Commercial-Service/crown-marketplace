@@ -8,7 +8,9 @@
             <%= t('.question') %>
           </h2>
         </fieldset>
-        <p class="govuk-caption-m"><%= t('.subtitle') %></p>
+        <p class="govuk-caption-m">
+          <%= t('.subtitle') %>
+        </p>
         <p>
           <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx" alt="<%= t('facilities_management.select_services.servicespec_link_alttext') %>"><%= t('.service_specification_doc') %></a>
         </p>
@@ -31,7 +33,7 @@
                           </div>
                           <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
                             <% @journey.current_step.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
-                              <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>" >
+                              <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
                                 <fieldset class="govuk-fieldset" aria-describedby="<%= work_package['name'] %>">
                                   <div id="services-checkboxes" class="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
@@ -41,10 +43,10 @@
                                                         sectionid: service['code'],
                                                         id: "service_#{work_package['code'].gsub('.', '-')}",) %>
                                       <label style="padding-top:0"
-                                              class="govuk-label govuk-checkboxes__label"
-                                              for="<%="service_#{work_package['code'].gsub('.', '-')}"%>">
+                                             class="govuk-label govuk-checkboxes__label"
+                                             for="<%= "service_#{work_package['code'].gsub('.', '-')}" %>">
                                         <%= work_package['name'] %>
-                                        <br />
+                                        <br/>
                                         <span style="font-weight:lighter;"><%= work_package['description'] %></span>
                                       </label>
                                     </div>
@@ -57,15 +59,15 @@
                               <div id="services-checkboxes" class="govuk-checkboxes">
                                 <div class="govuk-checkboxes__item">
                                   <input title="Select all code-<%= service['code'] %> services"
-                                          style="margin-top:4px"
-                                          class="govuk-checkboxes__input"
-                                          id="<%= service['code'].sub('.', '-') %>_all"
-                                          name="section-checkbox_select_all"
-                                          forserviceid="<%= service['code'] %>"
-                                          type="checkbox"
-                                          value="<%= service['code'] %>">
+                                         style="margin-top:4px"
+                                         class="govuk-checkboxes__input"
+                                         id="<%= service['code'].sub('.', '-') %>_all"
+                                         name="section-checkbox_select_all"
+                                         forserviceid="<%= service['code'] %>"
+                                         type="checkbox"
+                                         value="<%= service['code'] %>">
                                   <label class="govuk-label govuk-checkboxes__label"
-                                          for="<%= service['code'].sub('.', '-') %>_all">
+                                         for="<%= service['code'].sub('.', '-') %>_all">
                                     <%= t('facilities_management.basket.selectall_text') %>
                                   </label>
                                 </div>
@@ -87,7 +89,7 @@
             <div>
               <h3 class="govuk-heading-m" data-txt01="<%= t('.services_selected') %>" data-txt02="<%= t('.no_services_selected') %>">
                 <span id="selected-services-count">0</span> <span><%= t('.services_selected') %></span></h3>
-              <a class="govuk-!-padding-left-2 remove-link" role="button" href="#"><%= t('.remove_all') %></a><br />
+              <a class="govuk-!-padding-left-2 remove-link" role="button" href="#"><%= t('.remove_all') %></a><br/>
               <ul style="margin-top:10px;" class="govuk-list"></ul>
             </div>
           </div>

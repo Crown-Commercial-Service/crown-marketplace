@@ -44,8 +44,18 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def update
         @procurement.assign_attributes(procurement_params)
+
+        # To need to do this is awful - it will trigger validations so that an invalid action can be recognised
+        # that action - resulting in clearing the service_code collection in the store will not happen
+        # we can however validate and push the custom message to the client from here
+        # !WHY?! The browser is not sending the [:facilities_management_procurement][:service_codes] value as empty
+        #        if no checkboxes are checked
+        #        Can the procurement_params specification not establish defaults?
+        @procurement.service_codes = [] if params[:facilities_management_procurement][:step].try(:to_sym) == :services &&
+                                           params[:facilities_management_procurement][:service_codes].nil?
 
         if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
@@ -60,6 +70,7 @@ module FacilitiesManagement
           render :edit
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       # DELETE /procurements/1
       # DELETE /procurements/1.json
@@ -126,6 +137,7 @@ module FacilitiesManagement
         set_suppliers(region_codes, service_codes)
         find_regions(region_codes)
         find_services(service_codes)
+        @active_procurement_buildings = @procurement.procurement_buildings.try(:active)
         set_buildings if params['step'] == 'procurement_buildings'
       end
 
@@ -140,7 +152,7 @@ module FacilitiesManagement
         @buildings_data = FMBuildingData.new.get_building_data(current_user.email.to_s)
         @buildings_data.each do |building|
           building_data = JSON.parse(building['building_json'].to_s)
-          @procurement.find_or_build_procurement_building(building_data)
+          @procurement.find_or_build_procurement_building(building_data) if building['status'] == 'Ready'
         end
       end
 
