@@ -41,20 +41,21 @@ module ApplicationHelper
     mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
+  # rubocop:disable Metrics/ParameterLists
   def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
     css_classes = %w[govuk-!-margin-top-3]
     form_group_css = ['govuk-form-group']
     form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
 
-    content_tag :div, class: css_classes, data: {propertyname: readable_property_name} do
-      content_tag :div, class: form_group_css, data: top_level_data_options  do
+    content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
+      content_tag :div, class: form_group_css, data: top_level_data_options do
         concat display_error_label(model_object, attribute, label_text, "#{form_object_name}_#{attribute}")
-        concat display_label(label_text, "#{form_object_name}_#{attribute}") unless label_text.blank?
+        concat display_label(label_text, "#{form_object_name}_#{attribute}") if label_text.present?
         concat yield
       end
     end
   end
-
+  # rubocop:enable Metrics/ParameterLists
 
   def govuk_form_group_with_optional_error(journey, *attributes)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
@@ -79,8 +80,11 @@ module ApplicationHelper
   end
 
   def display_potential_errors(model, attribute)
-    validators = model.class.validators.map { |x| x[:options].on == attribute }
-    
+    content_tag :div, class: 'error_collection' do
+      model.class.validators.each do |val|
+        concat(validation_error(model, attribute, val.key, val.message))
+      end
+    end
   end
 
   # Renders a govuk compliant error-content div with a client-compatible validation type
@@ -112,19 +116,28 @@ module ApplicationHelper
     end
   end
 
-  def get_client_side_error_type (model, attribute)
-    return 'maxlength' if model.errors.details[attribute].first[:error] == :too_long
+  ERROR_TYPES = {
+    too_long: 'maxlength',
+    too_short: 'minlength',
+    blank: 'required',
+    greater_than: 'greater_than',
+    greater_than_or_equal_to: 'greater_than_or_equal_to',
+    less_than: 'min',
+    less_than_or_equal_to: 'min',
+    not_a_date: 'pattern',
+    not_a_number: 'pattern'
+  }.freeze
 
-    return 'required' if model.errors.details[attribute].first[:error] == :blank
-
-    return model.errors.details[attribute].first[:error].to_s
+  def get_client_side_error_type(model, attribute)
+    ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key? model.errors.details[attribute].first[:error]
+    model.errors.details[attribute].first[:error].to_s
   end
 
   def display_error_label(model, attribute, label_text, target)
     error = model.errors[attribute].first
     return if error.blank?
 
-    content_tag :label, data: { :validation => "#{get_client_side_error_type(model,attribute)}"}, for: target, id:error_id(attribute), class: 'govuk-error-message' do
+    content_tag :label, data: { validation: get_client_side_error_type(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message' do
       "#{label_text} #{error}"
     end
   end

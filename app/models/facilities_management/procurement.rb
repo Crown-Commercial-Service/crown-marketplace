@@ -14,7 +14,7 @@ module FacilitiesManagement
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period.nil?
     end
-    
+
     aasm do
       state :quick_search, initial: true
       state :detailed_search
