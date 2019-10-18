@@ -80,12 +80,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # rubocop:enable Layout/ClosingParenthesisIndentation
   # rubocop:enable Layout/MultilineMethodCallBraceLayout
 
-  it 'can model services' do
-    FacilitiesManagement::Service.all.sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |service|
-      # p service
-    end
-  end
-
   # rubocop:disable RSpec/ExampleLength
   it 'create a direct-award report' do
     user_email = 'test@example.com'
@@ -106,14 +100,14 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       results[supplier_name] = report.direct_award_value
     end
 
-    # sorted_list = results.sort_by { |k| results[k] }
-    # sorted_list.each do |x, y|
-    #  # p "#{x} #{number_to_currency(y, precision: 0)}"
-    # end
+    sorted_list = results.sort_by { |k, v| v }
+    sorted_list.each do |x, y|
+      p "#{x} #{number_to_currency(y, precision: 0)}"
+    end
 
-    # p "The lowest price is: #{sorted_list.first[0]} #{number_to_currency(sorted_list.first[1], precision: 0)}"
+    p "The lowest price is: #{sorted_list.first[0]} #{number_to_currency(sorted_list.first[1], precision: 0)}"
 
-    # p report_results
+    p report_results
   end
   # rubocop:enable RSpec/ExampleLength
 
