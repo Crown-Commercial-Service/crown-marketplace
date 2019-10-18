@@ -1,6 +1,7 @@
 module ProcurementValidator
   extend ActiveSupport::Concern
 
+  # rubocop:disable Metrics/BlockLength
   included do
     # validations on :name step
     validates :name, presence: true, on: :name
@@ -43,9 +44,12 @@ module ProcurementValidator
     validates :initial_call_off_start_date, date: { allow_nil: false, after: proc { Time.current } },
                                             if: :initial_call_off_period_expects_a_date?,
                                             on: :contract_dates
+    validates :initial_call_off_end_date, date: { allow_nil: false, after: :initial_call_off_start_date },
+                                          if: :initial_call_off_period_expects_a_date?,
+                                          on: :contract_dates
     validates :mobilisation_period, numericality: { allow_nil: false, only_integer: true,
                                                     greater_than: -1 },
-                                    if: ->{ initial_call_off_period.present? ? initial_call_off_period.positive?  : false},
+                                    if: -> { initial_call_off_period.present? ? initial_call_off_period.positive? : false },
                                     on: :contract_dates
     validates :mobilisation_period, numericality: { allow_nil: false, only_integer: true,
                                                     greater_than_or_equal_to: 4 },
@@ -60,17 +64,17 @@ module ProcurementValidator
     # End of validation rules for contract-dates
     #############################################
 
-
     private
 
     #############################################
     # Start of validation methods for contract-dates
     def validate_contract_data?
       initial_call_off_period.present? ? initial_call_off_period.positive? : false
-      end
+    end
 
     def initial_call_off_period_expects_a_date?
       return (1..7).include? initial_call_off_period if initial_call_off_period.present?
+
       false
     end
     # End of validation methods for contract-dates
@@ -80,4 +84,5 @@ module ProcurementValidator
       errors.add(:procurement_buildings, :invalid) unless procurement_buildings.map(&:active).any?(true)
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end

@@ -12,7 +12,8 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def initial_call_off_period_end_date
-    return '' unless @procurement.initial_call_off_start_date.present?
+    return '' if @procurement.initial_call_off_start_date.blank?
+
     end_date = Date.parse(@procurement.initial_call_off_start_date.to_s).next_year(@procurement.initial_call_off_period) - 1
     format_date end_date
   end
