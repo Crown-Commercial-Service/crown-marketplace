@@ -1,8 +1,9 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :errors
 
     def initialize(start_date, user_id, data)
+      @errors = ''
       @start_date = start_date
       @user_id = user_id
 
@@ -56,7 +57,10 @@ module FacilitiesManagement
         id = building_json[:id]
         building_uvals = (uvals.select { |u| u[:building_id] == id })
         # p "building id: #{id}"
-        vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name, results)
+        results2 = results[:building_id] = {} if results
+        # results2 = results[:building_id] if results
+
+        vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name, results2)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
@@ -291,6 +295,10 @@ module FacilitiesManagement
       uvals.map!(&:deep_symbolize_keys)
 
       copy_params building_data, uvals
+
+      # use .patition instead of select and reject
+      uvals_not_da = uvals.reject { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
+      @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
 
       uvals.select! { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
 
