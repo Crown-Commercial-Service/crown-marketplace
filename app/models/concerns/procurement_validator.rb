@@ -32,6 +32,7 @@ module ProcurementValidator
     #   optional_call_off_extensions_4 (int)
     # they are prepared and layed-out in logical sequence
     # they are tested in the appropriate rspec
+    validates :initial_call_off_period, presence: true, on: :contract_dates
     validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true,
                                                         greater_than_or_equal_to: 0 },
                                         if: -> { initial_call_off_period.present? }, on: :contract_dates
@@ -44,9 +45,6 @@ module ProcurementValidator
     validates :initial_call_off_start_date, date: { allow_nil: false, after: proc { Time.current } },
                                             if: :initial_call_off_period_expects_a_date?,
                                             on: :contract_dates
-    validates :initial_call_off_end_date, date: { allow_nil: false, after: :initial_call_off_start_date },
-                                          if: :initial_call_off_period_expects_a_date?,
-                                          on: :contract_dates
     validates :mobilisation_period, numericality: { allow_nil: false, only_integer: true,
                                                     greater_than: -1 },
                                     if: -> { initial_call_off_period.present? ? initial_call_off_period.positive? : false },
@@ -56,16 +54,16 @@ module ProcurementValidator
                                     if: -> { tupe? && (initial_call_off_period.present? ? initial_call_off_period.positive? : false) },
                                     on: :contract_dates
 
-    validates :optional_call_off_extensions_1, date: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_2, date: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_3, date: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_4, date: { allow_nil: true }, on: :contract_dates
+    validates :optional_call_off_extensions_1, numericality: { allow_nil: true }, on: :contract_dates
+    validates :optional_call_off_extensions_2, numericality: { allow_nil: true }, on: :contract_dates
+    validates :optional_call_off_extensions_3, numericality: { allow_nil: true }, on: :contract_dates
+    validates :optional_call_off_extensions_4, numericality: { allow_nil: true }, on: :contract_dates
     #
     # End of validation rules for contract-dates
     #############################################
 
     validate :service_codes_not_empty, on: :services
-    
+
     private
 
     #############################################

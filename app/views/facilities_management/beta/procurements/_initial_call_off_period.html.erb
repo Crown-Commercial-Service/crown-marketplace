@@ -1,10 +1,9 @@
 <div class="govuk-!-margin-top-3">
-  <%= f.text_field :tupe, class: 'tupe_indicator' %>
+  <%= f.hidden_field :tupe, class: 'tupe_indicator' %>
   <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_period].any?%>" data-propertyname="Initial call-off period">
     <%= f.label :initial_call_off_period, 'Initial call-off period', class: "govuk-heading-m govuk-!-margin-bottom-0"%>
     <p class="govuk-caption-m govuk-!-margin-top-0">
-      The initial period in which the services are provided. This is the date you want services<br>
-      to begin and can be a maximum of 7 years.
+      The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
     </p>
     <%= display_error_label(@procurement, :initial_call_off_period, '', "#{f.object_name}_initial_call_off_period") %>
     <%= f.number_field :initial_call_off_period, class: 'govuk-input govuk-input--width-4', maxlength:2, max: '7' %>
@@ -21,7 +20,7 @@
   
   <div class="govuk-form-group initial_call_off_end_date <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_end_date].any?%>" data-propertyname="Initial call-off end date">
     <%= f.label :initial_call_off_end_date, 'Initial call-off end date', class: "govuk-heading-s govuk-!-margin-bottom-0"%>
-    <%= display_error_label(@procurement, :initial_call_off_end_date, '', "#{f.object_name}_initial_call_off_start_date_dd") %>
+    <%= display_error_label(@procurement, :initial_call_off_end_date, '', "#{f.object_name}_initial_call_off_end_date_dd") %>
     <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
       <div class="govuk-date-input" id="date-input">
         <div class="govuk-date-input__item">

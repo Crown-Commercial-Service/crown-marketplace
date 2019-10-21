@@ -79,28 +79,39 @@ module ApplicationHelper
     end
   end
 
-  def display_potential_errors(model, attribute)
+  def display_potential_errors(model_object, attribute)
+    collection = validation_messages(model_object.class.name.demodulize.downcase.to_sym, attribute)
+
     content_tag :div, class: 'error_collection' do
-      model.class.validators.each do |val|
-        concat(validation_error(model, attribute, val.key, val.message))
+      collection.each do |key, val|
+        concat(govuk_validation_error(model_object, attribute, key, val))
       end
     end
   end
 
+  # looks up the locals data for validation messages
+  def validation_messages(model_object_sym, attribute_sym = nil)
+    translation_hash = t("activerecord.errors.models.facilities_management/#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
+    translation_hash = t("activerecord.errors.models.facilities_management/#{model_object_sym.downcase}.attributes.#{attribute_sym.to_s.downcase}") unless attribute_sym.nil?
+    return {} if translation_hash.to_s.include?('translation_missing')
+
+    translation_hash
+  end
+
   # Renders a govuk compliant error-content div with a client-compatible validation type
   # and text for use as static content in the page
-  def validation_error(model_object, attribute, error_type, text)
-    tag_validation_type = ''
+  def govuk_validation_error(model_object, attribute, error_type, text)
+    tag_validation_type = ERROR_TYPES.include?(error_type) ? ERROR_TYPES[error_type] : error_type
     css_classes = ['govuk-error-message']
-    css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, attribute
-    case error_type
-    when :too_short
-      tag_validation_type = 'required'
-    when :too_long
-      tag_validation_type = 'maxlength'
-    end
+    css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, error_type, attribute
 
     content_tag :div, content_tag(:span, text), class: css_classes, data: { validation: tag_validation_type }
+  end
+
+  def model_has_error?(model_object, error_type, *attributes)
+    result = false
+    attributes.each { |a| result |= (model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil)) == error_type }
+    result
   end
 
   def display_errors(journey, *attributes)
@@ -120,8 +131,10 @@ module ApplicationHelper
     too_long: 'maxlength',
     too_short: 'minlength',
     blank: 'required',
-    greater_than: 'greater_than',
-    greater_than_or_equal_to: 'greater_than_or_equal_to',
+    after: 'max',
+    greater_than: 'max',
+    greater_than_or_equal_to: 'max',
+    before: 'min',
     less_than: 'min',
     less_than_or_equal_to: 'min',
     not_a_date: 'pattern',
@@ -129,8 +142,9 @@ module ApplicationHelper
   }.freeze
 
   def get_client_side_error_type(model, attribute)
-    ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key? model.errors.details[attribute].first[:error]
-    model.errors.details[attribute].first[:error].to_s
+    ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
+
+    model.errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
   end
 
   def display_error_label(model, attribute, label_text, target)

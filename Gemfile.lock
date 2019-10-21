@@ -1,7 +1,6 @@
 GIT
-  remote: https://github.com/m0n9oose/omniauth_openid_connect.git
-  revision: a6779ddb035dd1b1d0e006e9f5a8318f747fbe1c
-  branch: fix_redundant_token_verification
+  remote: https://github.com/iceraluk/omniauth_openid_connect.git
+  revision: 8e7d15e6216b1de980203c0eadfd036a309bf49c
   specs:
     omniauth_openid_connect (0.3.2)
       addressable (~> 2.5)
@@ -130,6 +129,9 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
+    date_validator (0.9.0)
+      activemodel
+      activesupport
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     devise (4.7.1)
@@ -484,6 +486,7 @@ DEPENDENCIES
   capybara
   carrierwave (~> 1.0)
   carrierwave-aws (~> 1.3.0)
+  date_validator
   devise (~> 4.7.1)
   dotenv-rails
   down
@@ -536,4 +539,4 @@ RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   1.17.3
+   1.16.2
