@@ -10,9 +10,7 @@
 <% if @building_count.zero? && @procurement.detailed_search? %>
   <%= render partial: 'no_buildings' %>%
 <% else %>
-  <div class="govuk-grid-row">
     <%= link_to 'Back', @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? %>
-  </div>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: {specialvalidation: does_form_for_current_step_require_special_client_validation?(params), novalidate: true, multipart: true } do |f| %>
     <div class="govuk-grid-row">
       <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, multiple: false, render_empty: true}  %>
@@ -57,7 +55,7 @@
           <span class="govuk-caption-m"><%= t(".next_step.#{params[:step]}") %></span>
         </div>
       <% end %>
-      <div class="govuk-grid-row govuk-!-margin-top-3">
+        <div class="govuk-grid-row govuk-!-margin-top-3 govuk-!-margin-bottom-7">
         <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' if @procurement.detailed_search? %>
         <%= link_to t('.cancel_and_return'), facilities_management_beta_procurements_path, class: 'govuk-link--no-visited-state' if @procurement.quick_search? %>
       </div>
