@@ -1,0 +1,30 @@
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        <%= t('facilities_management.home.heading') %>
+      </h1>
+      <h2 class="govuk-heading-s"><%= t('facilities_management.home.subheading').html_safe %></h2>
+      <ul class="govuk-list govuk-list--bullet">
+        <%= t('facilities_management.home.usagelist').html_safe %>
+      </ul>
+      <h2 class="govuk-heading-m"><%= t('facilities_management.home.beforeyoustart') %></h2>
+      <p class="govuk-heading-s"><%= t('facilities_management.home.youneedtoknow') %></p>
+      <ul class="govuk-list govuk-list--bullet">
+        <%= t('facilities_management.home.startlist').html_safe %>
+      </ul>
+      <p>
+        <%= link_to t('facilities_management.home.startnow'), facilities_management_beta_gateway_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+      </p>
+    </div>
+  </div>
+</div>
+<script type="application/javascript">
+    if (localStorage) {
+        localStorage.clear();
+    }
+
+    if (sessionStorage) {
+        sessionStorage.clear();
+    }
+</script>

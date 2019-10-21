@@ -9,7 +9,7 @@ module CCS
     # debug
     puts "CCS_DEFAULT_DB_HOST #{is_dev_db}"
     # nb reinstate || (is_dev_db.include? 'dev')
-    if is_dev_db.nil? || (is_dev_db.include? 'dev.')
+    if is_dev_db.nil? || (is_dev_db.include? 'dev.') || (is_dev_db.include? 'cmpdefault.db.internal.fm-preview')
       puts 'dummy supplier data'
       JSON File.read('data/' + 'facilities_management/dummy_supplier_data.json')
     elsif ENV['SECRET_KEY_BASE']

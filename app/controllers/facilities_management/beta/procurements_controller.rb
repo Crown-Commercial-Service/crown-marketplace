@@ -1,7 +1,7 @@
 require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
-    class ProcurementsController < FacilitiesManagement::FrameworkController
+    class ProcurementsController < FrameworkController
       before_action :set_procurement, only: %i[show edit update destroy]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
@@ -103,6 +103,8 @@ module FacilitiesManagement
                 :optional_call_off_extensions_2,
                 :optional_call_off_extensions_3,
                 :optional_call_off_extensions_4,
+                :mobilisation_period_required,
+                :extensions_required,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,

@@ -148,6 +148,11 @@ $(function () {
         $('#mobilisation-end-date-yyyy').val('');
     };
 
+    const clearMobilisationPeriod = function () {
+        $('#facilities_management_procurement_mobilisation_period').val('');
+        clearMobilisationDates();
+    };
+
     const displayContractDates = function () {
 
         let initialCallOffPeriod = parseInt($('#facilities_management_procurement_initial_call_off_period').val());
