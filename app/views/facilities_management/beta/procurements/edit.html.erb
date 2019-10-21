@@ -10,11 +10,8 @@
 <% if @building_count.zero? && @procurement.detailed_search? %>
   <%= render partial: 'no_buildings' %>%
 <% else %>
-  <div class="govuk-grid-row">
     <%= link_to 'Back', @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? %>
-  </div>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { multipart: true } do |f| %>
-    <div class="govuk-grid-row">
       <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless f.object.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">
           <%= t('common.error_summary_title') %>
@@ -29,8 +26,6 @@
           </ul>
         </div>
       </div>
-    </div>
-    <div class="govuk-grid-row">
       <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.name}" if @procurement.detailed_search? %></span>
       <% if !@procurement.persisted? || @procurement.quick_search?%>
         <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
@@ -39,8 +34,7 @@
         </h1>
         <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
       <% end %>
-    </div>
-    <div class="procurement govuk-grid-row">
+    <div class="procurement">
       <div class="govuk-grid-column-full quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
         <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
           <% if @procurement.quick_search? %>
@@ -72,7 +66,7 @@
           </div>
         <% end %>
 
-        <div class="govuk-grid-row govuk-!-margin-top-3">
+        <div class="govuk-grid-row govuk-!-margin-top-3 govuk-!-margin-bottom-7">
           <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' if @procurement.detailed_search? %>
           <%= link_to t('.cancel_and_return'), facilities_management_beta_procurements_path, class: 'govuk-link--no-visited-state' if @procurement.quick_search? %>
         </div>
