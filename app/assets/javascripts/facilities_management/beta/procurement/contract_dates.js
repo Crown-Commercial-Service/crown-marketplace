@@ -25,26 +25,35 @@ $(function () {
             let jqInitialCallOffStartDate_dd = $('#facilities_management_procurement_initial_call_off_start_date_dd');
             let jqInitialCallOffStartDate_mm = $('#facilities_management_procurement_initial_call_off_start_date_mm');
             let jqInitialCallOffStartDate_yy = $('#facilities_management_procurement_initial_call_off_start_date_yyyy');
-            isValid = this.testError(fnRequiredValidator, jqInitialCallOffStartDate_dd, 'required');
-            isValid = isValid && this.testError(fnNumberValidator, jqInitialCallOffStartDate_dd, 'number') ;
-            isValid = isValid && this.testError(fnRequiredValidator, jqInitialCallOffStartDate_mm, 'required');
-            isValid = isValid && this.testError(fnNumberValidator, jqInitialCallOffStartDate_mm, 'number') ;
-            isValid = isValid && this.testError(fnRequiredValidator, jqInitialCallOffStartDate_yy, 'required');
-            isValid = isValid && this.testError(fnNumberValidator, jqInitialCallOffStartDate_yy, 'number') ;
+
+            isValid = !fnRequiredValidator(jqInitialCallOffStartDate_dd); //this.testError(fnRequiredValidator, jqInitialCallOffStartDate_dd, 'required');
+            isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_dd); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_dd, 'number') ;
+            isValid = isValid && !fnRequiredValidator(jqInitialCallOffStartDate_mm);//this.testError(fnRequiredValidator, jqInitialCallOffStartDate_mm, 'required');
+            isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_mm); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_mm, 'number') ;
+            isValid = isValid && !fnRequiredValidator(jqInitialCallOffStartDate_yy) ; //this.testError(fnRequiredValidator, jqInitialCallOffStartDate_yy, 'required');
+            isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_yy); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_yy, 'number') ;
 
             if (isValid) {
+                jqInitialCallOffStartDate_dd.removeClass('govuk-input--error');
+                jqInitialCallOffStartDate_yy.removeClass('govuk-input--error');
+                jqInitialCallOffStartDate_mm.removeClass('govuk-input--error');
                 let callOffStartDate = fnCreateDateFromGovInputs('facilities_management_procurement_initial_call_off_start_date');
                 if (callOffStartDate != "Invalid Date") {
-                    this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset'), false, 'pattern');
+                    this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), false, 'required');
                     isValid = callOffStartDate >= new Date();
                     if (!isValid) {
-                        this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset'), true, 'min');
+                        this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), true, 'min');
                     } else {
-                        this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset'), false, 'min');
+                        this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), false, 'min');
                     }
                 } else {
-                    this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset'), true, 'pattern');
+                    this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), true, 'required');
                 }
+            } else {
+                this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), true, 'required');
+                jqInitialCallOffStartDate_dd.addClass('govuk-input--error');
+                jqInitialCallOffStartDate_mm.addClass('govuk-input--error');
+                jqInitialCallOffStartDate_yy.addClass('govuk-input--error');
             }
         }
 
@@ -107,6 +116,13 @@ $(function () {
                 isValid = isValid && this.testError(fnIncrementingCountTest, ext4, 'max');
                 count += Number(ext4.val());
             }
+        }
+
+
+        if (!isValid) {
+            this.toggleBannerError(true);
+        } else {
+            this.toggleBannerError(false);
         }
 
         return isValid;
@@ -203,8 +219,12 @@ $(function () {
         form_helper.errorMessage = function (prop_name, errType) {
             let message = "";
 
-            if (prop_name == "Initial call-off start date" && errType == "min") {
-                message = prop_name + " must be in the future";
+            if (prop_name == "Initial call-off period" && errType == "required") {
+                message = "Enter initial call-off period";
+            } else if ( (prop_name.indexOf("_dd") >= 0 || prop_name.indexOf("_mm") >= 0 || prop_name.indexOf("_yy") >= 0) && errType == "required") {
+                message = "can't be blank";
+            } else if (prop_name.indexOf("Initial call-off start date") >= 0) {
+                message = "Initial call-off start date must be in the future";
             } else if (prop_name == "Mobilisation period" && errType == "greater_than_or_equal_to") {
                 message = "Mobilisation period must be a minimum of 4 weeks when TUPE is selected";
             } else if (prop_name == "Mobilisation period" && errType == "greater_than" ) {

@@ -16,6 +16,8 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         this.validator = validationCallback.bind(this) ;
         this.validationResult = true;
 
+        this.bannerErrorContainer = $('[data-module="error-summary"]') ;
+                
         this.form.onsubmit = function (e) {
             return this.validator(this.form.elements);
         }.bind(this);
@@ -28,15 +30,17 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     this.initialise = function () {
         this.validationResult = true;
     };
-
+    
     this.validateForm = function (formElements) {
         let submitForm = this.validationResult = true;
+        this.clearBannerErrorList();
+        this.toggleBannerError(false);
 
         if (formElements !== undefined && formElements.length > 0) {
             let elements = [];
             for (let i = 0; i < formElements.length; i++) {
                 let element = formElements[i];
-                if (element.hasAttribute('required') || element.hasAttribute('maxlength')) {
+                if (element.hasAttribute('type') || element.hasAttribute('required') || element.hasAttribute('maxlength')) {
                     elements.push(element);
                 }
             }
@@ -78,6 +82,9 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             }
         }
 
+        if (!this.validationResult) {
+            this.toggleBannerError(true);
+        }
         return this.validationResult;
     };
     this.validationFunctions = {
@@ -234,19 +241,66 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
 
     this.insertElementForRequiredMessage = function (inputElement, parent, errorType) {
-        let propertyName = parent.attr("data-propertyname");
-        if (propertyName == undefined ) {
-            let newParent = null ;
-            if ( (newParent = parent.parent("[data-propertyname]")).length > 0 ) {
-                propertyName = newParent.attr("data-propertyname")
-            } else {
-                propertyName = '';
+        let propertyName = this.getPropertyName(parent) ;
+        let labelElem = '<label id="' + this.getErrorID(inputElement) + '" class="govuk-error-message" data-validation="' + errorType + '" for="' + inputElement[0].id + '">' + this.errorMessage(propertyName, errorType) + '</label>';
+        $(parent).prepend(labelElem);
+        let newElement = $(parent[0].childNodes[0]);
+        let parentElement = inputElement.prev();
+        if (parentElement.length>0 && parentElement[0].tagName == "LABEL") {
+            newElement.detach().insertBefore(parentElement);
+        } else {
+            newElement.detach().insertBefore(inputElement);
+        }
+        return newElement;
+    };
+
+    this.clearBannerErrorList = function () {
+        if (null != this.bannerErrorContainer ) {
+            let ul = this.bannerErrorContainer.find("ul");
+            ul.empty();
+        }
+    } ;
+
+    this.insertListElementInBannerError = function (inputElement, error_type) {
+        let ul = this.bannerErrorContainer.find("ul");
+        if (ul.length > 0) {
+            let propertyName = this.getPropertyName(inputElement) ;
+            let link = ul.find("a").filter(function () {
+                return $(this).attr("data-propertyname") === propertyName && $(this).attr("data-errortype") === error_type;
+            });
+           
+            if (link.length <= 0) {
+                let link = "<a href=\"#" + this.getErrorID(inputElement) + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + this.errorMessage(propertyName, error_type) + "</a>";
+                ul.append("<li>" + link + "</li>");
             }
         }
-        let labelElem = '<label class="govuk-error-message" data-validation="' + errorType + '" for="' + inputElement[0].id + '">' + this.errorMessage(propertyName, errorType) + '</label>';
-        $(parent).prepend(labelElem);
+    } ;
 
-        return $(parent[0].childNodes[0]);
+    this.removeListElementInBannerError = function (inputElement, error_type) {
+        let ul = this.bannerErrorContainer.find("ul");
+        if (ul.length > 0) {
+            let propertyName = this.getPropertyName(inputElement) ;
+            let link = ul.find("a").filter(function () {
+                return $(this).attr("data-propertyname") === propertyName && $(this).attr("data-errortype") === error_type;
+            });
+
+            if (link.length > 0) {
+                link.remove();
+            }
+        }
+    } ;
+
+    this.toggleBannerError = function (bShow) {
+        if ( null != this.bannerErrorContainer ) {
+            if (bShow) {
+                this.bannerErrorContainer.removeClass("govuk-visually-hidden");
+                $('html, body').animate({
+                    scrollTop: this.bannerErrorContainer.offset().top
+                }, 1000);
+            } else {
+                this.bannerErrorContainer.addClass("govuk-visually-hidden");
+            }
+        }
     };
 
     this.toggleError = function (jQueryElement, show, errorType) {
@@ -265,6 +319,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                     jQueryElement.removeClass("govuk-input--error");
                 }
             }
+            this.removeListElementInBannerError(jQueryElement, errorType);
             jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
         } else {
             if (jQueryElement[0].tagName == "INPUT") {
@@ -272,8 +327,30 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             }
             jqueryElementForInputGroup.addClass("govuk-form-group--error");
             jqueryElementForRequiredMessage.removeClass("govuk-visually-hidden");
+            this.insertListElementInBannerError(jQueryElement, errorType);
         }
     };
+
+    this.getErrorID = function(jqueryInputElement) {
+        return "error_" + jqueryInputElement[0].id;
+    };
+    this.getPropertyName = function (jqueryInputElement) {
+        let propertyName = jqueryInputElement.attr("data-propertyname");
+        if ( propertyName == undefined || propertyName == "") {
+            let newParent = null ;
+            if ( (newParent = jqueryInputElement.closest("[data-propertyname]")).length > 0 ) {
+                propertyName = newParent.attr("data-propertyname")
+            } else {
+                propertyName = '';
+            }
+        }
+        if ( propertyName == undefined || propertyName == "") {
+            propertyName = jqueryInputElement[0].id;
+        }
+
+        return propertyName;
+    } ;
+
 
     if (this.verify_connection_to_form(formDOMObject, thisisspecial)) {
         this.connect_to_form(formDOMObject, validationCallback == undefined ? this.validateForm : validationCallback);
