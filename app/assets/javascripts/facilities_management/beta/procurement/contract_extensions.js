@@ -88,7 +88,7 @@ $(function () {
         updateButtonText();
     });
 
-    $('#fm-calloff-ext-no').on('click', function (e) {
+    $('#facilities_management_procurement_extensions_required_false').on('click', function (e) {
         $('#facilities_management_procurement_optional_call_off_extensions_1').val('');
         $('#facilities_management_procurement_optional_call_off_extensions_2').val('');
         $('#facilities_management_procurement_optional_call_off_extensions_3').val('');
