@@ -109,7 +109,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 22
     expect(report_results[supplier_name][report_results[supplier_name].keys.third].count).to eq 22
 
-    spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new report_results[supplier_name]
+    spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name]
     output = spreadsheet.to_xlsx
 
     # p output
