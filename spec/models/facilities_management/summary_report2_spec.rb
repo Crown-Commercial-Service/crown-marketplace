@@ -109,7 +109,12 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 22
     expect(report_results[supplier_name][report_results[supplier_name].keys.third].count).to eq 22
 
-    # p report_results
+    spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new report_results[supplier_name]
+    output = spreadsheet.to_xlsx
+
+    # p output
+
+    IO.write('/tmp/direct_award_prices.xlsx', output)
   end
   # rubocop:enable RSpec/ExampleLength
 
