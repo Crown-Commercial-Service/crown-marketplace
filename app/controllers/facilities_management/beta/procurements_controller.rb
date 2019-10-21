@@ -154,7 +154,7 @@ module FacilitiesManagement
         @buildings_data = FMBuildingData.new.get_building_data(current_user.email.to_s)
         @buildings_data.each do |building|
           building_data = JSON.parse(building['building_json'].to_s)
-          @procurement.find_or_build_procurement_building(building_data) if building['status'] == 'Ready'
+          @procurement.find_or_build_procurement_building(building_data, building_data['id']) if building['status'] == 'Ready'
         end
       end
 

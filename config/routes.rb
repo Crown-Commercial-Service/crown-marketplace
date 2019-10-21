@@ -135,6 +135,7 @@ Rails.application.routes.draw do
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
       get '/start', to: 'journey#start', as: 'journey_start'
       resources :procurements
+      resources :procurement_buildings, only: :show
     end
 
     get '/', to: 'home#index'

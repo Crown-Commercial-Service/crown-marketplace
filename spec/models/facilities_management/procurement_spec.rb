@@ -149,6 +149,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       }
     end
 
+    let(:building_id) { 'test-building-uuid' }
+
     context 'when procurement building already exists' do
       before do
         procurement.save
@@ -156,41 +158,41 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
 
       it 'does not create a new one' do
-        expect { procurement.find_or_build_procurement_building(building_data) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
+        expect { procurement.find_or_build_procurement_building(building_data, building_id) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
       end
 
       it 'keeps the name' do
-        procurement.find_or_build_procurement_building(building_data)
+        procurement.find_or_build_procurement_building(building_data, building_id)
         procurement_building = procurement.procurement_buildings.first
         expect(procurement_building.name).to eq building_data['name']
       end
 
       it 'updates its address line 1' do
-        procurement.find_or_build_procurement_building(building_data)
+        procurement.find_or_build_procurement_building(building_data, building_id)
         procurement_building = procurement.procurement_buildings.first
         expect(procurement_building.address_line_1).to eq building_data['address']['fm-address-line-1']
       end
 
       it 'updates its address line 2' do
-        procurement.find_or_build_procurement_building(building_data)
+        procurement.find_or_build_procurement_building(building_data, building_id)
         procurement_building = procurement.procurement_buildings.first
         expect(procurement_building.address_line_2).to eq building_data['address']['fm-address-line-2']
       end
 
       it 'updates its town' do
-        procurement.find_or_build_procurement_building(building_data)
+        procurement.find_or_build_procurement_building(building_data, building_id)
         procurement_building = procurement.procurement_buildings.first
         expect(procurement_building.town).to eq building_data['address']['fm-address-town']
       end
 
       it 'updates its county' do
-        procurement.find_or_build_procurement_building(building_data)
+        procurement.find_or_build_procurement_building(building_data, building_id)
         procurement_building = procurement.procurement_buildings.first
         expect(procurement_building.county).to eq building_data['address']['fm-address-county']
       end
 
       it 'updates its postcode' do
-        procurement.find_or_build_procurement_building(building_data)
+        procurement.find_or_build_procurement_building(building_data, building_id)
         procurement_building = procurement.procurement_buildings.first
         expect(procurement_building.postcode).to eq building_data['address']['fm-address-postcode']
       end
@@ -199,7 +201,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when procurement building does not exist' do
       it 'creates one' do
         procurement.save
-        expect { procurement.find_or_build_procurement_building(building_data) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
+        expect { procurement.find_or_build_procurement_building(building_data, building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
       end
     end
   end
