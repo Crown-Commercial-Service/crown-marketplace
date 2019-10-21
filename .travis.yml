@@ -1,3 +1,4 @@
+dist: bionic
 language: ruby
 cache:
   bundler: true
@@ -9,24 +10,19 @@ cache:
     - /home/travis/.cache/rubocop_cache
 env:
   global:
-    - PGPORT=5433
     - RAILS_ENV=test
 services:
   - postgresql
 addons:
-  postgresql: "11"
-  apt:
-    packages:
-      - postgresql-11
-      - postgresql-11-postgis-2.5
-      - postgresql-11-postgis-2.5-scripts
+  postgresql: '9.6'
 sudo: true
 before_install:
   - gem install bundler
 before_script:
-  - sudo -u postgres createuser --superuser root;
-  - sudo -u postgres createdb root
-  - sudo -u postgres psql -U postgres -c "create extension postgis"
+  - sudo apt-get -qq update
+  - sudo apt-get install -y postgresql-9.6-postgis-2.4
+  - psql -U postgres -c 'create database marketplace_test'
+  - psql -U postgres -d marketplace_test -c 'create extension postgis'
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile

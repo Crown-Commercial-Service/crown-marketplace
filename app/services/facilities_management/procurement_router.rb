@@ -12,12 +12,13 @@ class FacilitiesManagement::ProcurementRouter
   end
 
   def route
-    return edit_facilities_management_beta_procurement_path(id: @id) if QUICK_SEARCH_EDIT_STEPS.include?(@step) && @procurement_state == 'quick_search'
-    return facilities_management_beta_procurements_path if @procurement_state == 'quick_search'
+    if @procurement_state == 'quick_search'
+      return QUICK_SEARCH_EDIT_STEPS.include?(@step) ? edit_facilities_management_beta_procurement_path(id: @id) : facilities_management_beta_procurements_path
+    end
     return edit_facilities_management_beta_procurement_path(id: @id, step: previous_step) if @step == 'services'
-    return facilities_management_beta_procurement_path(id: @id) if next_step.nil?
+    return facilities_management_beta_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).procurement_buildings.first) if @step == 'building_services'
 
-    edit_facilities_management_beta_procurement_path(id: @id, step: next_step)
+    next_step.nil? ? facilities_management_beta_procurement_path(id: @id) : edit_facilities_management_beta_procurement_path(id: @id, step: next_step)
   end
 
   def back_link
