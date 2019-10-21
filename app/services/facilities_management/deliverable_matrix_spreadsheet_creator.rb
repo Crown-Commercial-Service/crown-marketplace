@@ -1,4 +1,5 @@
 require 'axlsx'
+require 'axlsx_rails'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def initialize(building_ids_with_service_codes)
@@ -11,16 +12,27 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def build
     Axlsx::Package.new do |p|
-      p.workbook.add_worksheet(name: 'Buildings information') do |sheet|
-        header_row = ['Buildings information']
-        (1..@buildings_with_service_codes.count).each { |x| header_row << "Building #{x}" }
-        sheet.add_row header_row
-        add_buildings_information(sheet)
+      p.workbook.styles do |s|
+        header_row_style =  s.add_style sz: 12, b: true, alignment: { horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
+        first_column_style = s.add_style sz: 12, b: true, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+
+        p.workbook.add_worksheet(name: 'Buildings information') do |sheet|
+          header_row = ['Buildings information']
+          (1..@buildings_with_service_codes.count).each { |x| header_row << "Building #{x}" }
+          sheet.add_row header_row, style: header_row_style, height: standard_row_height
+          add_buildings_information(sheet)
+          sheet['A1:A10'].each { |c| c.style = first_column_style }
+          sheet.column_widths(*([50] * sheet.column_info.count))
+        end
       end
     end
   end
 
   private
+
+  def standard_row_height
+    35
+  end
 
   def buildings_with_service_codes
     @buildings_with_service_codes = []
@@ -43,15 +55,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_buildings_information(sheet)
-    sheet.add_row building_name
-    sheet.add_row building_description
-    sheet.add_row building_address_street
-    sheet.add_row building_address_town
-    sheet.add_row building_address_postcode
-    sheet.add_row building_nuts_region
-    sheet.add_row building_gia
-    sheet.add_row building_type
-    sheet.add_row building_security_clearance
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }, fg_color: '6E6E6E'
+
+    [building_name, building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_type, building_security_clearance].each do |row_type|
+      sheet.add_row row_type, style: standard_style, height: standard_row_height
+    end
   end
 
   def building_name
@@ -85,7 +93,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def building_address_town
-    row = ['Building Address - Street']
+    row = ['Building Address - Town']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
       row << building_with_service_codes[:building].building_json['address']['fm-address-town']
