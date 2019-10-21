@@ -57,7 +57,7 @@ module FacilitiesManagement
         id = building_json[:id]
         building_uvals = (uvals.select { |u| u[:building_id] == id })
         # p "building id: #{id}"
-        results2 = results[:building_id] = {} if results
+        results2 = results[id] = {} if results
         # results2 = results[:building_id] if results
 
         vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name, results2)
