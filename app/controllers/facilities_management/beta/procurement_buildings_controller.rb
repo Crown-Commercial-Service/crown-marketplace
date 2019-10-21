@@ -11,7 +11,7 @@ module FacilitiesManagement
       private
 
       def set_procurement_building
-        @procurement_building = FacilitiesManagement::ProcurementBuilding.find(params[:id])
+        @procurement_building = current_user.procurements.map(&:procurement_buildings).flatten.select { |pb| pb.id == params[:id] } .first
       end
 
       def set_building_data
