@@ -238,12 +238,14 @@ module FMCalculator
     end
 
     # entry point to calculate sum of the unit of measure
-    def sumunitofmeasure
+    def sumunitofmeasure(results = nil)
       subtotal1 = uomd + clean
       subtotal2 = subtotal1 + variance(subtotal1)
       subtotal3 = subtotal2 + cafm(subtotal2) + helpdesk(subtotal2)
       mobilisation = mobilisation(subtotal3)
       year1 = subtotal3 + mobilisation + tupe(subtotal3)
+      results[:year1] = year1 if results
+
       year1total = year1 + manage(year1) + corporate(year1)
       year1totalcharges = year1total + profit(year1)
       year1totalcharges + subyearstotal(year1totalcharges, mobilisation)
