@@ -23,16 +23,22 @@ default: &default
 
 development:
   <<: *default
-  database: marketplace_development
+  #database: marketplace_development
+
+  host: ccsdev-db.cvdclbrxqk3r.eu-west-2.rds.amazonaws.com
+  port: 5432
+  database: cmpdefault
+  username: ccsdev
+  password: 7XO0HIzQ2DEpNYD9snFekD7VIzYLsz
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  username: 
+  #username:
 
   # The password associated with the postgres role (username).
-  password:
+  #password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -59,7 +65,7 @@ test:
   <<: *default
   database: marketplace_test
   username:
-  password: 
+  password:
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
