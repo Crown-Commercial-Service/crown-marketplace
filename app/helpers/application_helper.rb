@@ -41,6 +41,22 @@ module ApplicationHelper
     mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
+  # rubocop:disable Metrics/ParameterLists
+  def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
+    css_classes = %w[govuk-!-margin-top-3]
+    form_group_css = ['govuk-form-group']
+    form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
+
+    content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
+      content_tag :div, class: form_group_css, data: top_level_data_options do
+        concat display_error_label(model_object, attribute, label_text, "#{form_object_name}_#{attribute}")
+        concat display_label(label_text, "#{form_object_name}_#{attribute}") if label_text.present?
+        concat yield
+      end
+    end
+  end
+  # rubocop:enable Metrics/ParameterLists
+
   def govuk_form_group_with_optional_error(journey, *attributes)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
@@ -63,6 +79,41 @@ module ApplicationHelper
     end
   end
 
+  def display_potential_errors(model_object, attribute)
+    collection = validation_messages(model_object.class.name.demodulize.downcase.to_sym, attribute)
+
+    content_tag :div, class: 'error_collection' do
+      collection.each do |key, val|
+        concat(govuk_validation_error(model_object, attribute, key, val))
+      end
+    end
+  end
+
+  # looks up the locals data for validation messages
+  def validation_messages(model_object_sym, attribute_sym = nil)
+    translation_hash = t("activerecord.errors.models.facilities_management/#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
+    translation_hash = t("activerecord.errors.models.facilities_management/#{model_object_sym.downcase}.attributes.#{attribute_sym.to_s.downcase}") unless attribute_sym.nil?
+    return {} if translation_hash.to_s.include?('translation_missing')
+
+    translation_hash
+  end
+
+  # Renders a govuk compliant error-content div with a client-compatible validation type
+  # and text for use as static content in the page
+  def govuk_validation_error(model_object, attribute, error_type, text)
+    tag_validation_type = ERROR_TYPES.include?(error_type) ? ERROR_TYPES[error_type] : error_type
+    css_classes = ['govuk-error-message']
+    css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, error_type, attribute
+
+    content_tag :div, content_tag(:span, text), class: css_classes, data: { validation: tag_validation_type }
+  end
+
+  def model_has_error?(model_object, error_type, *attributes)
+    result = false
+    attributes.each { |a| result |= (model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil)) == error_type }
+    result
+  end
+
   def display_errors(journey, *attributes)
     safe_join(attributes.map { |a| display_error(journey, a) })
   end
@@ -73,6 +124,35 @@ module ApplicationHelper
 
     content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
       error.to_s
+    end
+  end
+
+  ERROR_TYPES = {
+    too_long: 'maxlength',
+    too_short: 'minlength',
+    blank: 'required',
+    after: 'max',
+    greater_than: 'max',
+    greater_than_or_equal_to: 'max',
+    before: 'min',
+    less_than: 'min',
+    less_than_or_equal_to: 'min',
+    not_a_date: 'pattern',
+    not_a_number: 'pattern'
+  }.freeze
+
+  def get_client_side_error_type(model, attribute)
+    ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
+
+    model.errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
+  end
+
+  def display_error_label(model, attribute, label_text, target)
+    error = model.errors[attribute].first
+    return if error.blank?
+
+    content_tag :label, data: { validation: get_client_side_error_type(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message' do
+      "#{label_text} #{error}"
     end
   end
 

@@ -13,26 +13,34 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     this.connect_to_form = function (formDOMObject, validationCallback) {
         this.form = formDOMObject;
         this.form.formValidator = this;
-        this.validator = validationCallback ;
+        this.validator = validationCallback.bind(this) ;
         this.validationResult = true;
 
+        this.bannerErrorContainer = $('[data-module="error-summary"]') ;
+                
         this.form.onsubmit = function (e) {
             return this.validator(this.form.elements);
         }.bind(this);
     };
 
+    this.validateTheForm = function () {
+        return this.validator(this.form.elements);
+    };
+
     this.initialise = function () {
         this.validationResult = true;
     };
-
+    
     this.validateForm = function (formElements) {
         let submitForm = this.validationResult = true;
+        this.clearBannerErrorList();
+        this.toggleBannerError(false);
 
         if (formElements !== undefined && formElements.length > 0) {
             let elements = [];
             for (let i = 0; i < formElements.length; i++) {
                 let element = formElements[i];
-                if (element.hasAttribute('required') || element.hasAttribute('maxlength')) {
+                if (element.hasAttribute('type') || element.hasAttribute('required') || element.hasAttribute('maxlength')) {
                     elements.push(element);
                 }
             }
@@ -74,30 +82,85 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             }
         }
 
+        if (!this.validationResult) {
+            this.toggleBannerError(true);
+        }
         return this.validationResult;
     };
     this.validationFunctions = {
         'required' : function(jQueryinputElem) {
-            return ('' + jQueryinputElem.val() == '')
+            let inputType = jQueryinputElem[0].type;
+            jQueryinputElem[0].type = "text";
+            let result = ('' + jQueryinputElem.val() == '');
+            jQueryinputElem[0].type = inputType;
+            return result;
         },
         'maxlength' : function (jQueryinputElem) {
             let maxLength = parseInt(jQueryinputElem.prop('maxlength'));
-            return (('' + jQueryinputElem.val()).length > maxLength);
+            if ( maxLength != NaN && maxLength > 0 ) {
+                let inputType = jQueryinputElem[0].type;
+                jQueryinputElem[0].type = "text";
+                let result = (('' + jQueryinputElem.val()).length > maxLength);
+                jQueryinputElem[0].type = inputType;
+                return result;
+            }
+            return false;
+        },
+        'max' : function (jQueryInputElem) {
+            let inputValue = Number(jQueryInputElem.val());
+            let maxVal = parseInt(jQueryInputElem.prop("max"));
+            if ( inputValue != NaN && maxVal != NaN ) {
+                return inputValue > maxVal;
+            }
+            return false;
+        },
+        'min' : function(jQueryInputElem) {
+            let inputValue = Number(jQueryInputElem.val());
+            let minVal = parseInt(jQueryInputElem.prop("min"));
+
+            if ( inputValue != NaN && minVal != NaN ) {
+                return inputValue < minVal ;
+            }
+
+            return false;
+        },
+        'range' : function (jQueryInputElem) {
+            let inputValue = Number(jQueryInputElem.val());
+            let maxVal = parseInt(jQueryInputElem.prop("max"));
+            let minVal = parseInt(jQueryInputElem.prop("min"));
+            if ( inputValue != NaN && maxVal != NaN ) {
+                return inputValue > maxVal;
+            }
+            if ( inputValue != NaN && minVal != NaN ) {
+                return inputValue < minVal ;
+            }
+
+            return false;
         },
         'regex' : function ( jQueryinputElem) {
             let reg = new RegExp ( jQueryinputElem.prop('pattern') ) ;
             return !reg.test(jQueryinputElem.val());
         },
         'type' : {
+            'text' : function(jQueryinputElem){
+                return false;
+            },
             'number' : function (jQueryinputElem) {
-                return jQueryinputElem.val() == '' || isNaN(Number(jQueryinputElem.val()));
+                let inputType = jQueryinputElem[0].type;
+                jQueryinputElem[0].type = "text";
+                let result = jQueryinputElem.val() == '' || isNaN(Number(jQueryinputElem.val()));
+                jQueryinputElem[0].type = inputType;
+                return result;
             },
             'email' :  function (jQueryinputElem) {
                 let regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 return !regEx.test(jQueryinputElem.val());
+            },
+            'date' : function (jQueryInputElem) {
+                let theDate = Date.parse(jQueryInputElem.val());
+                return theDate == NaN ;
             }
         }
-
     };
     this.testError = function (errFn, jElem, errorType) {
         let result = false;
@@ -120,6 +183,15 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                 break;
             case 'maxlength':
                 return property_name + ' is too long';
+                break;
+            case 'min':
+                return property_name + ' is too low';
+                break;
+            case 'max':
+                return property_name + ' is too high';
+                break;
+            case 'range':
+                return property_name + ' is too low or too high';
                 break;
             case 'number':
                 return property_name + ' is not a number';
@@ -169,12 +241,66 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
 
     this.insertElementForRequiredMessage = function (inputElement, parent, errorType) {
-        let propertyName = parent.attr("data-propertyname");
-        if (propertyName == undefined ) propertyName = '';
-        let labelElem = '<label class="govuk-error-message" data-validation="' + errorType + '" for="' + inputElement[0].id + '">' + this.errorMessage(propertyName, errorType) + '</label>';
+        let propertyName = this.getPropertyName(parent) ;
+        let labelElem = '<label id="' + this.getErrorID(inputElement) + '" class="govuk-error-message" data-validation="' + errorType + '" for="' + inputElement[0].id + '">' + this.errorMessage(propertyName, errorType) + '</label>';
         $(parent).prepend(labelElem);
+        let newElement = $(parent[0].childNodes[0]);
+        let parentElement = inputElement.prev();
+        if (parentElement.length>0 && parentElement[0].tagName == "LABEL") {
+            newElement.detach().insertBefore(parentElement);
+        } else {
+            newElement.detach().insertBefore(inputElement);
+        }
+        return newElement;
+    };
 
-        return $(parent[0].childNodes[0]);
+    this.clearBannerErrorList = function () {
+        if (null != this.bannerErrorContainer ) {
+            let ul = this.bannerErrorContainer.find("ul");
+            ul.empty();
+        }
+    } ;
+
+    this.insertListElementInBannerError = function (inputElement, error_type) {
+        let ul = this.bannerErrorContainer.find("ul");
+        if (ul.length > 0) {
+            let propertyName = this.getPropertyName(inputElement) ;
+            let link = ul.find("a").filter(function () {
+                return $(this).attr("data-propertyname") === propertyName && $(this).attr("data-errortype") === error_type;
+            });
+           
+            if (link.length <= 0) {
+                let link = "<a href=\"#" + this.getErrorID(inputElement) + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + this.errorMessage(propertyName, error_type) + "</a>";
+                ul.append("<li>" + link + "</li>");
+            }
+        }
+    } ;
+
+    this.removeListElementInBannerError = function (inputElement, error_type) {
+        let ul = this.bannerErrorContainer.find("ul");
+        if (ul.length > 0) {
+            let propertyName = this.getPropertyName(inputElement) ;
+            let link = ul.find("a").filter(function () {
+                return $(this).attr("data-propertyname") === propertyName && $(this).attr("data-errortype") === error_type;
+            });
+
+            if (link.length > 0) {
+                link.remove();
+            }
+        }
+    } ;
+
+    this.toggleBannerError = function (bShow) {
+        if ( null != this.bannerErrorContainer ) {
+            if (bShow) {
+                this.bannerErrorContainer.removeClass("govuk-visually-hidden");
+                $('html, body').animate({
+                    scrollTop: this.bannerErrorContainer.offset().top
+                }, 1000);
+            } else {
+                this.bannerErrorContainer.addClass("govuk-visually-hidden");
+            }
+        }
     };
 
     this.toggleError = function (jQueryElement, show, errorType) {
@@ -189,13 +315,42 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         if (!show) {
             if (this.validationResult) {
                 jqueryElementForInputGroup.removeClass("govuk-form-group--error");
+                if (jQueryElement[0].tagName == "INPUT") {
+                    jQueryElement.removeClass("govuk-input--error");
+                }
             }
+            this.removeListElementInBannerError(jQueryElement, errorType);
             jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
         } else {
+            if (jQueryElement[0].tagName == "INPUT") {
+                jQueryElement.addClass("govuk-input--error");
+            }
             jqueryElementForInputGroup.addClass("govuk-form-group--error");
             jqueryElementForRequiredMessage.removeClass("govuk-visually-hidden");
+            this.insertListElementInBannerError(jQueryElement, errorType);
         }
     };
+
+    this.getErrorID = function(jqueryInputElement) {
+        return "error_" + jqueryInputElement[0].id;
+    };
+    this.getPropertyName = function (jqueryInputElement) {
+        let propertyName = jqueryInputElement.attr("data-propertyname");
+        if ( propertyName == undefined || propertyName == "") {
+            let newParent = null ;
+            if ( (newParent = jqueryInputElement.closest("[data-propertyname]")).length > 0 ) {
+                propertyName = newParent.attr("data-propertyname")
+            } else {
+                propertyName = '';
+            }
+        }
+        if ( propertyName == undefined || propertyName == "") {
+            propertyName = jqueryInputElement[0].id;
+        }
+
+        return propertyName;
+    } ;
+
 
     if (this.verify_connection_to_form(formDOMObject, thisisspecial)) {
         this.connect_to_form(formDOMObject, validationCallback == undefined ? this.validateForm : validationCallback);

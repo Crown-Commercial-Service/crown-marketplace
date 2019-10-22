@@ -99,7 +99,9 @@ gem 'carrierwave-aws', '~> 1.3.0'
 gem 'sprockets'
 gem 'sprockets-bumble_d'
 
+# for date layout and validation
 gem 'gov_uk_date_fields'
+gem 'date_validator'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
