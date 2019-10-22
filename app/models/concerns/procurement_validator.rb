@@ -17,10 +17,16 @@ module ProcurementValidator
     # validations on :procurement_buildings step
     validate :at_least_one_active_procurement_building, on: :procurement_buildings
 
+    validate :service_codes_not_empty, on: :services
+
     private
 
     def at_least_one_active_procurement_building
       errors.add(:procurement_buildings, :invalid) unless procurement_buildings.map(&:active).any?(true)
+    end
+
+    def service_codes_not_empty
+      errors.add(:service_codes, :invalid) if defined?(service_codes) && service_codes.empty?
     end
   end
 end
