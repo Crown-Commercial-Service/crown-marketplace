@@ -11,6 +11,17 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
   private
 
+  def add_computed_row(sheet, sorted_building_keys, label, vals)
+    new_row = []
+    sum = 0
+    sorted_building_keys.each do |k|
+      new_row << vals[k]
+      sum += vals[k]
+    end
+    new_row = ([label, nil, sum] << new_row).flatten
+    sheet.add_row new_row
+  end
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/BlockLength
@@ -37,6 +48,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sum_building_manage = {}
       sum_building_corporate = {}
       sum_building_profit = {}
+      sum_building_mobilisation = {}
       sorted_building_keys.each do |k|
         sum_building[k] = 0
         sum_building_cafm[k] = 0
@@ -46,6 +58,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sum_building_manage[k] = 0
         sum_building_corporate[k] = 0
         sum_building_profit[k] = 0
+        sum_building_mobilisation[k] = 0
       end
       @data.keys.collect { |k| @data[k].keys }
            .flatten.uniq
@@ -67,6 +80,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
           sum_building_manage[k] += @data[k][s][:manage]
           sum_building_corporate[k] += @data[k][s][:corporate]
           sum_building_profit[k] += @data[k][s][:profit]
+          sum_building_mobilisation[k] += @data[k][s][:mobilisation]
         end
 
         sumsum += sum
@@ -81,35 +95,51 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row new_row
 
       sheet.add_row
-      sheet.add_row ['CAFM']
-      sheet.add_row ['Helpdesk']
+
+      add_computed_row sheet, sorted_building_keys, 'CAFM', sum_building_cafm
+
+      add_computed_row sheet, sorted_building_keys, 'Helpdesk', sum_building_helpdesk
+
       sheet.add_row ['Year 1 Deliverables sub total']
       sheet.add_row
-      sheet.add_row ['London Location Variance']
+
+      add_computed_row sheet, sorted_building_keys, 'London Location Variance', sum_building_variance
+
       sheet.add_row ['Year 1 Deliverables total']
       sheet.add_row
-      sheet.add_row ['Mobilisation']
-      sheet.add_row ['TUPE Risk Premium']
+
+      add_computed_row sheet, sorted_building_keys, 'Mobilisation', sum_building_mobilisation
+
+      add_computed_row sheet, sorted_building_keys, 'TUPE Risk Premium', sum_building_tupe
+
       sheet.add_row ['Total Charges excluding Overhead and Profit']
       sheet.add_row
-      sheet.add_row ['Management Overhead']
-      sheet.add_row ['Corporate Overhead']
+
+      add_computed_row sheet, sorted_building_keys, 'Management Overhead', sum_building_manage
+
+      add_computed_row sheet, sorted_building_keys, 'Corporate Overhead', sum_building_corporate
+
       sheet.add_row ['Total Charges excluding Profit']
-      sheet.add_row ['Profit']
+
+      add_computed_row sheet, sorted_building_keys, 'Profit', sum_building_profit
+
       sheet.add_row ['Total Charges year 1']
       sheet.add_row
       sheet.add_row ['Table 2. Subsequent Years Total Charges']
-      sheet.add_row ['Year 2']
-      sheet.add_row ['Year 3']
-      sheet.add_row ['Year 4']
+      # @data["E7EED6F6-5EF0-E387-EE35-6C1D39FEB8A9"].first[1][:subsequent_length_years]
+      max_years =
+        sorted_building_keys.collect { |k| @data[k].first[1][:subsequent_length_years] }.max
+      (1..max_years).each do |i|
+        sheet.add_row ["Year #{i}"]
+      end
+
       sheet.add_row
       sheet.add_row ['Total Charge (total contract cost)']
       sheet.add_row
       sheet.add_row ['Table 3. Total charges per month']
-      sheet.add_row ['Year 1 Monthly cost']
-      sheet.add_row ['Year 2 Monthly cost']
-      sheet.add_row ['Year 3 Monthly cost']
-      sheet.add_row ['Year 4 Monthly cost']
+      (1..max_years).each do |i|
+        sheet.add_row ["Year #{i} Monthly cost"]
+      end
     end
 
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
