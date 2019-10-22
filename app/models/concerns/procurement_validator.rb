@@ -83,7 +83,7 @@ module ProcurementValidator
     end
 
     def optional_call_off_extensions_too_long
-      errors.add(:optional_call_off_extensions_1, :too_long) unless initial_call_off_period + total_extensions <= 10
+      errors.add(:optional_call_off_extensions_1, :too_long) unless initial_call_off_period.to_i + total_extensions <= 10
     end
     # End of validation methods for contract-dates
     #############################################
