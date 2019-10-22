@@ -335,10 +335,12 @@ module FacilitiesManagement
         # print "#{building_data[:"fm-building-type"]},"
         # puts "#{building_data.inspect}"
 
-        sum_uom += calc_fm.sumunitofmeasure
+        results2 = nil
+        results2 = results[v[:service_code]] = {} if results
+        sum_uom += calc_fm.sumunitofmeasure results2
         sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
 
-        results[v[:service_code]] = calc_fm.sumunitofmeasure if results
+        # results[v[:service_code]] = calc_fm.sumunitofmeasure if results
       end
       return { sum_uom: sum_uom } if supplier_name
 

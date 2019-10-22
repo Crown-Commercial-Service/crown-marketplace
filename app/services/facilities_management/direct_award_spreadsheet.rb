@@ -36,8 +36,8 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         new_row2 = []
         sum = 0
         sorted_building_keys.each do |k|
-          new_row2 << @data[k][s]
-          sum += @data[k][s]
+          new_row2 << @data[k][s][:year1]
+          sum += @data[k][s][:year1]
         end
 
         new_row = (new_row << sum << new_row2).flatten
