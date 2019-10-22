@@ -61,7 +61,7 @@ module ProcurementValidator
     #
     # End of validation rules for contract-dates
     #############################################
-
+      
     validate :service_codes_not_empty, on: :services
 
     private
