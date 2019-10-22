@@ -11,14 +11,17 @@ en:
               not_a_date: Initial call-off period end date is not a valid date
             initial_call_off_period:
               blank: Enter initial call-off period
-              greater_than_or_equal_to: Initial call-off period can be a maximum of 7 years
-              less_than_or_equal_to: Initial call-off period must start at 0
+              greater_than_or_equal_to: Enter initial call-off period
+              less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
             mobilisation_period:
               greater_than: Enter mobilisation length
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
+              not_an_integer: Enter mobilisation length as a whole number
+            optional_call_off_extensions_1:
+              too_long: Call-off period and extensions must be 10 years or less
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
             service_codes:

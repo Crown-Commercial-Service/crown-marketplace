@@ -266,7 +266,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         if (ul.length > 0) {
             let propertyName = this.getPropertyName(inputElement) ;
             let link = ul.find("a").filter(function () {
-                return $(this).attr("data-propertyname") === propertyName && $(this).attr("data-errortype") === error_type;
+                return $(this).attr("data-errortype") === error_type ; // && $(this).attr("data-propertyname") === propertyName;
             });
            
             if (link.length <= 0) {
