@@ -59,6 +59,7 @@ module ProcurementValidator
     validates :optional_call_off_extensions_3, numericality: { allow_nil: true }, on: :contract_dates
     validates :optional_call_off_extensions_4, numericality: { allow_nil: true }, on: :contract_dates
     #
+    #
     # End of validation rules for contract-dates
     #############################################
 
