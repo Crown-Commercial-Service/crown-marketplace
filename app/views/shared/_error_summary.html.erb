@@ -8,12 +8,12 @@
         <% if defined?(multiple) && multiple %>
           <% errors.keys.each do |attribute| %>
             <li>
-              <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}" %>
+              <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(errors, attribute).to_s } %>
             </li>
           <% end %>
         <%else %>
           <li>
-            <%= link_to "#{errors[errors.keys.first].first}", "##{error_id(errors.keys.first)}" %>
+            <%= link_to "#{errors[errors.keys.first].first}", "##{error_id(errors.keys.first)}", data: { fieldname: errors.keys.first, errortype: get_client_side_error_type_from_errors(errors, errors.keys.first).to_s } %>
           </li>
         <% end %>
       </ul>
