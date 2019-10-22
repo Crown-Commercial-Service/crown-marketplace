@@ -138,11 +138,18 @@ module ApplicationHelper
     less_than: 'min',
     less_than_or_equal_to: 'min',
     not_a_date: 'pattern',
-    not_a_number: 'pattern'
+    not_a_number: 'pattern',
+    not_an_integer: 'pattern'
   }.freeze
 
-  def get_client_side_error_type(model, attribute)
-    ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
+  def get_client_side_error_type_from_errors(errors, attribute)
+    return ERROR_TYPES[errors.details[attribute].first[:error]] if ERROR_TYPES.key?(errors.details[attribute].first[:error])
+
+    errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(errors.details[attribute].first[:error])
+  end
+
+  def get_client_side_error_type_from_model(model, attribute)
+    return ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
 
     model.errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
   end
@@ -151,7 +158,7 @@ module ApplicationHelper
     error = model.errors[attribute].first
     return if error.blank?
 
-    content_tag :label, data: { validation: get_client_side_error_type(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message' do
+    content_tag :label, data: { validation: get_client_side_error_type_from_model(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message' do
       "#{label_text} #{error}"
     end
   end
