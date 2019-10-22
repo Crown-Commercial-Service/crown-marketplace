@@ -42,7 +42,7 @@ module ProcurementValidator
     validates :initial_call_off_start_date, presence: true,
                                             if: :initial_call_off_period_expects_a_date?,
                                             on: :contract_dates
-    validates :initial_call_off_start_date, date: { allow_nil: false, after_or_equal_to: proc { Date.today } },
+    validates :initial_call_off_start_date, date: { allow_nil: false, after_or_equal_to: proc { Time.zone.today } },
                                             if: :initial_call_off_period_expects_a_date?,
                                             on: :contract_dates
     validates :mobilisation_period, numericality: { allow_nil: false, only_integer: true,
@@ -79,8 +79,7 @@ module ProcurementValidator
     end
 
     def total_extensions
-      optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 +
-          optional_call_off_extensions_4
+      optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 + optional_call_off_extensions_4
     end
 
     def optional_call_off_extensions_too_long
