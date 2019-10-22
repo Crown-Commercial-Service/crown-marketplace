@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_01_122201) do
+ActiveRecord::Schema.define(version: 2019_10_18_183421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -28,6 +28,31 @@ ActiveRecord::Schema.define(version: 2019_10_01_122201) do
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
+  end
+
+  create_table "facilities_management_procurement_building_services", force: :cascade do |t|
+    t.uuid "facilities_management_procurement_building_id", null: false
+    t.string "code", limit: 10
+    t.string "name", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
+  end
+
+  create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.text "service_codes", default: [], array: true
+    t.string "name", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "address_line_1", limit: 255
+    t.string "address_line_2", limit: 255
+    t.string "town", limit: 255
+    t.string "county", limit: 255
+    t.string "postcode", limit: 20
+    t.boolean "active"
+    t.uuid "building_id"
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -51,6 +76,8 @@ ActiveRecord::Schema.define(version: 2019_10_01_122201) do
     t.text "service_codes", default: [], array: true
     t.text "region_codes", default: [], array: true
     t.boolean "estimated_cost_known"
+    t.boolean "mobilisation_period_required"
+    t.boolean "extensions_required"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -481,6 +508,7 @@ ActiveRecord::Schema.define(version: 2019_10_01_122201) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
