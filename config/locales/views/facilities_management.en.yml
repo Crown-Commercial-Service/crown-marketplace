@@ -92,6 +92,16 @@ en:
         password_reset_success:
           heading: You have successfully changed your password
           lead: You can now sign in to your Crown Commercial Service account
+      procurement_buildings:
+        show:
+          back_to_detailed_summary: Back to detailed search summary
+          heading: Service information
+          no_of_appliances_for_testing: The number of appliances to be tested per annum
+          no_of_building_occupants: The number of building occupants
+          no_of_hours_of_service_provision: The number of hours of service provision per annum
+          service_standard: The service standard required
+          size_of_external_area: The size of the external area (in square metres)
+          total_floors_per_lift: The sum total of number of floors per lift
       procurements:
         about_the_contract:
           no_cost_provided: None

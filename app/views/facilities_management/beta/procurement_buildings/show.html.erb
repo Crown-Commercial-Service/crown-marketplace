@@ -1,0 +1,56 @@
+<div class="govuk-body building-services govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+    <span class="govuk-caption-m"><%= @procurement_building.name %></span>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key border-top">
+          Gross internal area (GIA)
+        </dt>
+        <dd class="govuk-summary-list__value border-top">
+          The gross internal area of the building (in square meters)
+        </dd>
+        <dd class="govuk-summary-list__actions border-top">
+          <%= @building_data['gia'] %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key govuk-!-padding-top-6 govuk-!-padding-bottom-6">
+          Service
+        </dt>
+        <dd class="govuk-summary-list__value">
+
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <b> Volume required <br> (per anum)</b>
+        </dd>
+      </div>
+      <% index = 0 %>
+      <% @procurement_building.procurement_building_services.each do |service| %>
+        <% if service_questions(service.code).present? %>
+          <% index += 1 %>
+          <% service_questions(service.code)[:questions].each_with_index do |question, i| %>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                <% if i == 0 %>
+                  <%= index %>. <%= service.name %>
+                <% end %>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <%= t(".#{question.to_s}") %>
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <%= link_to 'Answer question', '#' %>
+              </dd>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+
+    </div>
+    <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-0">
+      <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement_building.procurement), class: 'govuk-link--no-visited-state'%>
+    </div>
+  </div>
+</div>
