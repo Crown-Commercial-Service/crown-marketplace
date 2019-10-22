@@ -20,6 +20,7 @@ $(function () {
         isValid = isValid && this.testError(fnLengthValidator, jqInitialCallOffPeriod, 'maxlength') ;
         isValid = isValid && this.testError(fnNumberValidator, jqInitialCallOffPeriod, 'number') ;
         isValid = isValid && this.testError(fnMaxValidator, jqInitialCallOffPeriod, 'max') ;
+        isValid = isValid && this.testError(fnMinValidator, jqInitialCallOffPeriod, 'min') ;
 
         if (isValid ) {
             let jqInitialCallOffStartDate_dd = $('#facilities_management_procurement_initial_call_off_start_date_dd');
@@ -28,10 +29,13 @@ $(function () {
 
             isValid = !fnRequiredValidator(jqInitialCallOffStartDate_dd); //this.testError(fnRequiredValidator, jqInitialCallOffStartDate_dd, 'required');
             isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_dd); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_dd, 'number') ;
+            isValid = isValid && jqInitialCallOffStartDate_dd.val() < 31;
             isValid = isValid && !fnRequiredValidator(jqInitialCallOffStartDate_mm);//this.testError(fnRequiredValidator, jqInitialCallOffStartDate_mm, 'required');
             isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_mm); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_mm, 'number') ;
+            isValid = isValid && jqInitialCallOffStartDate_mm.val() < 12;
             isValid = isValid && !fnRequiredValidator(jqInitialCallOffStartDate_yy) ; //this.testError(fnRequiredValidator, jqInitialCallOffStartDate_yy, 'required');
             isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_yy); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_yy, 'number') ;
+            isValid = isValid && jqInitialCallOffStartDate_yy.val() < 2100;
 
             if (isValid) {
                 jqInitialCallOffStartDate_dd.removeClass('govuk-input--error');
@@ -40,7 +44,7 @@ $(function () {
                 let callOffStartDate = fnCreateDateFromGovInputs('facilities_management_procurement_initial_call_off_start_date');
                 if (callOffStartDate != "Invalid Date") {
                     this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), false, 'required');
-                    isValid = callOffStartDate >= new Date();
+                    isValid = callOffStartDate >= new Date(new Date().toDateString());
                     if (!isValid) {
                         this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), true, 'min');
                     } else {
@@ -65,6 +69,13 @@ $(function () {
 
             isValid = this.testError(fnRequiredValidator, jqMobilisationPeriod, 'required');
             isValid = isValid && this.testError(fnNumberValidator, jqMobilisationPeriod, 'number');
+            if ( jqMobilisationPeriod.val().indexOf('.') >= 0 ) {
+                isValid = isValid && false;
+                this.toggleError ( jqMobilisationPeriod, true, 'pattern');
+            } else {
+                isValid = isValid && true;
+                this.toggleError ( jqMobilisationPeriod, false, 'pattern');
+            }
             isValid = isValid && this.testError(fnRequiredValidator, jqMobilisationPeriod, 'maxlength');
 
             if ( isValid ) {
@@ -83,7 +94,7 @@ $(function () {
         }
         if (isValid  && formElements['ext-group'].value == "yes") {
             const MAX = 10;
-            let count = 0;
+            let count = parseInt(jqInitialCallOffPeriod.val());
             let ext1 = $('#facilities_management_procurement_optional_call_off_extensions_1');
             let fnIncrementingCountTest = function (jq) {
                 let val = Number (jq.val());
@@ -226,13 +237,19 @@ $(function () {
 
             if (prop_name == "Initial call-off period" && errType == "required") {
                 message = "Enter initial call-off period";
+            } else if (prop_name == "Initial call-off period" && errType == "min") {
+                message = "Enter initial call-off period";
+            } else if (prop_name == "Initial call-off period" && errType == "max") {
+                message = "Initial call-off period can be a maximum of 7 years";
             } else if ( (prop_name.indexOf("_dd") >= 0 || prop_name.indexOf("_mm") >= 0 || prop_name.indexOf("_yy") >= 0) && errType == "required") {
                 message = "can't be blank";
             } else if (prop_name.indexOf("Initial call-off start date") >= 0) {
                 message = "Initial call-off start date must be in the future";
-            } else if (prop_name == "Mobilisation period" && errType == "greater_than_or_equal_to") {
+            } else if (prop_name == "Mobilisation period" && errType == "pattern") {
+                message = "Enter mobilisation length";
+            } else if (prop_name == "Mobilisation period" && errType == "max") {
                 message = "Mobilisation period must be a minimum of 4 weeks when TUPE is selected";
-            } else if (prop_name == "Mobilisation period" && errType == "greater_than" ) {
+            } else if (prop_name == "Mobilisation period" ) {
                 message = "Enter mobilisation length";
             } else {
                 message = this.prevErrorMessage(prop_name, errType);
