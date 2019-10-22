@@ -6,7 +6,7 @@
       The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
     </p>
     <%= display_error_label(@procurement, :initial_call_off_period, '', "#{f.object_name}_initial_call_off_period") %>
-    <%= f.number_field :initial_call_off_period, class: 'govuk-input govuk-input--width-4', maxlength:2, max: '7' %>
+    <%= f.number_field :initial_call_off_period, class: 'govuk-input govuk-input--width-4', min:1, maxlength:2, max: 7 %>
     <%= f.label :initial_call_off_period, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
   </div>
 </div>

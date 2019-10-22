@@ -34,7 +34,7 @@ module ProcurementValidator
     # they are tested in the appropriate rspec
     validates :initial_call_off_period, presence: true, on: :contract_dates
     validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true,
-                                                        greater_than_or_equal_to: 0 },
+                                                        greater_than_or_equal_to: 1 },
                                         if: -> { initial_call_off_period.present? }, on: :contract_dates
     validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true,
                                                         less_than_or_equal_to: 7 },
@@ -42,7 +42,7 @@ module ProcurementValidator
     validates :initial_call_off_start_date, presence: true,
                                             if: :initial_call_off_period_expects_a_date?,
                                             on: :contract_dates
-    validates :initial_call_off_start_date, date: { allow_nil: false, after: proc { Time.current } },
+    validates :initial_call_off_start_date, date: { allow_nil: false, after_or_equal_to: proc { Date.today } },
                                             if: :initial_call_off_period_expects_a_date?,
                                             on: :contract_dates
     validates :mobilisation_period, numericality: { allow_nil: false, only_integer: true,
@@ -58,6 +58,7 @@ module ProcurementValidator
     validates :optional_call_off_extensions_2, numericality: { allow_nil: true }, on: :contract_dates
     validates :optional_call_off_extensions_3, numericality: { allow_nil: true }, on: :contract_dates
     validates :optional_call_off_extensions_4, numericality: { allow_nil: true }, on: :contract_dates
+    validate :optional_call_off_extensions_too_long, on: :contract_dates
     #
     # End of validation rules for contract-dates
     #############################################
@@ -75,6 +76,15 @@ module ProcurementValidator
       return (1..7).include? initial_call_off_period if initial_call_off_period.present?
 
       false
+    end
+
+    def total_extensions
+      optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 +
+          optional_call_off_extensions_4
+    end
+
+    def optional_call_off_extensions_too_long
+      errors.add(:optional_call_off_extensions_1, :too_long) unless initial_call_off_period + total_extensions <= 10
     end
     # End of validation methods for contract-dates
     #############################################
