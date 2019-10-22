@@ -79,7 +79,7 @@ module ProcurementValidator
     end
 
     def total_extensions
-      optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 + optional_call_off_extensions_4
+      optional_call_off_extensions_1.to_i + optional_call_off_extensions_2.to_i + optional_call_off_extensions_3.to_i + optional_call_off_extensions_4.to_i
     end
 
     def optional_call_off_extensions_too_long
