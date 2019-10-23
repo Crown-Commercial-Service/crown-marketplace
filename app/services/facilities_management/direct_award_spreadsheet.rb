@@ -119,11 +119,28 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       add_computed_row sheet, sorted_building_keys, 'Corporate Overhead', sum_building_corporate
 
-      sheet.add_row ['Total Charges excluding Profit']
+      new_row = ['Total Charges excluding Profit', nil, nil]
+      sorted_building_keys.each do |_k|
+        new_row << ''
+      end
+      sheet.add_row new_row
+      (2..sheet.rows.last.cells.count - 1).each do |i|
+        start = sheet.rows.last.cells[i].r_abs.index('$', 0)
+        finish = sheet.rows.last.cells[i].r_abs.index('$', 1)
+
+        column_ref = sheet.rows.last.cells[i].r_abs[start + 1..finish - 1]
+        row_ref = sheet.rows.last.cells[i].r_abs[finish + 1..-1].to_i
+        sheet.rows.last.cells[i].value = "=sum(#{column_ref}#{row_ref - 1}:#{column_ref}#{row_ref - 2})"
+      end
 
       add_computed_row sheet, sorted_building_keys, 'Profit', sum_building_profit
 
-      sheet.add_row ['Total Charges year 1']
+      new_row = ['Total Charges year 1', nil, sumsum]
+      sorted_building_keys.each do |k|
+        new_row << sum_building[k]
+      end
+      sheet.add_row new_row
+
       sheet.add_row
       sheet.add_row ['Table 2. Subsequent Years Total Charges']
       # @data["E7EED6F6-5EF0-E387-EE35-6C1D39FEB8A9"].first[1][:subsequent_length_years]
@@ -138,18 +155,18 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sumsum += sum
       end
 
-      (1..max_years).each do |i|
-        new_row2 = (["Year #{i}", nil, sumsum] << new_row).flatten
+      (2..max_years).each do |i|
+        new_row2 = ["Year #{i}", nil, sumsum]
         sheet.add_row new_row2
       end
 
       sheet.add_row
-      sheet.add_row ['Total Charge (total contract cost)']
+      sheet.add_row ['Total Charge (total contract cost)', nil, "=SUM(C43:C#{43 + max_years + 1})"]
       sheet.add_row
       sheet.add_row ['Table 3. Total charges per month']
       new_row = new_row.map { |x| x / 12 }
       (1..max_years).each do |i|
-        new_row2 = (["Year #{i} Monthly cost", nil, sumsum / 12] << new_row).flatten
+        new_row2 = ["Year #{i} Monthly cost", nil, sumsum / 12]
         sheet.add_row new_row2
       end
     end
