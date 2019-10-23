@@ -23,13 +23,13 @@ default: &default
 
 development:
   <<: *default
-  #database: marketplace_development
-
-  host: ccsdev-db.cvdclbrxqk3r.eu-west-2.rds.amazonaws.com
-  port: 5432
-  database: cmpdefault
-  username: ccsdev
-  password: 7XO0HIzQ2DEpNYD9snFekD7VIzYLsz
+  database: marketplace_development
+#
+#  host: ccsdev-db.cvdclbrxqk3r.eu-west-2.rds.amazonaws.com
+#  port: 5432
+#  database: cmpdefault
+#  username: ccsdev
+#  password: 7XO0HIzQ2DEpNYD9snFekD7VIzYLsz
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
