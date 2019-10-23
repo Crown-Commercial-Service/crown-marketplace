@@ -156,17 +156,18 @@ ActiveRecord::Schema.define(version: 2019_10_23_090757) do
   create_table "fm_regions", id: false, force: :cascade do |t|
     t.text "code"
     t.text "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["code"], name: "fm_regions_code_key", unique: true
   end
 
-  create_table "fm_security_types", id: false, force: :cascade do |t|
-    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
-    t.string "title", null: false
-    t.string "description"
-    t.integer "sort_order", null: false
-    t.index ["id"], name: "fm_security_types_id_idx"
+  create_table "fm_security_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "title", null: false
+    t.text "description"
+    t.integer "sort_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["id"], name: "index_fm_security_types_on_id"
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
