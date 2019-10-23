@@ -2,17 +2,34 @@ $(function () {
 
     const countActiveExtensions = function () {
         let result = 4;
+        let bRemoveBtnShown = false ;
 
-        if ($("#ext2-container").hasClass("govuk-visually-hidden")) {
+        if ($("#ext4-container").hasClass("govuk-visually-hidden")) {
             result--;
+            $("#ext4-container").find("button").removeClass("govuk-visually-hidden");
+            bRemoveBtnShown = true ;
+        } else {
+            $("#ext4-container").find("button").addClass("govuk-visually-hidden");
         }
 
         if ($("#ext3-container").hasClass("govuk-visually-hidden")) {
             result--;
+            if ( !bRemoveBtnShown) {
+                $("#ext3-container").find("button").removeClass("govuk-visually-hidden");
+                bRemoveBtnShown = true ;
+            }
+        } else {
+            $("#ext3-container").find("button").addClass("govuk-visually-hidden");
         }
 
-        if ($("#ext4-container").hasClass("govuk-visually-hidden")) {
+        if ($("#ext2-container").hasClass("govuk-visually-hidden")) {
             result--;
+            if ( !bRemoveBtnShown) {
+                $("#ext2-container").find("button").removeClass("govuk-visually-hidden");
+                bRemoveBtnShown = true ;
+            }
+        } else {
+            $("#ext2-container").find("button").addClass("govuk-visually-hidden");
         }
 
         return result;
@@ -42,7 +59,7 @@ $(function () {
 
     const updateButtonText = function () {
         let count = calcTotalContractYears();
-        if ((10 - count) >= 0) {
+        if ((10 - count) > 0) {
             $("#fm-add-contract-ext-btn").removeClass("govuk-visually-hidden");
             $("#fm-add-contract-ext-btn").text("+ Add another extension period (" + (10 - count) + " remaining)");
         } else {
