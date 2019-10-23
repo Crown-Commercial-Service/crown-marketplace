@@ -109,9 +109,11 @@ module FacilitiesManagement
         @security_types = fm_building_data.security_types
         @page_title = 'Change Security Type' if @editing
 
-        if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && !@building_sec_type.empty?
-          @other_is_used = true
-          @other_value = @building_sec_type
+        unless @security_types.records.any?
+          if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && !@building_sec_type.empty?
+            @other_is_used = true
+            @other_value = @building_sec_type
+          end
         end
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
@@ -175,7 +177,8 @@ module FacilitiesManagement
         cache_new_building_id building_id
         raise 'Building IDs do not match' unless building_id == add['id']
 
-        postcode = add['address']['fm-address-postcode']
+        postcode = add['address']['fm-address-postcode'] if add['address'].present?
+
         save_region(postcode) if postcode.present?
 
         j = { 'status': 200, 'fm_building-id': building_id.to_s }
@@ -373,7 +376,8 @@ module FacilitiesManagement
 
       def get_building_ready_status(building)
         building_element_valid?(building, 'name') &&
-          building_element_valid?(building, 'region') &&
+          (building_element_valid?(building, 'region') ||
+           building['address']&.dig('fm-address-postcode').present?) &&
           building_element_valid?(building, 'building-type') &&
           building_element_valid?(building, 'security-type') &&
           building_element_valid?(building, 'gia')
