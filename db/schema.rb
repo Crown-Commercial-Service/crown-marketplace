@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_18_183421) do
+ActiveRecord::Schema.define(version: 2019_10_23_090757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 2019_10_18_183421) do
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.text "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "created_at", default: -> { "now()" }
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
@@ -156,18 +156,17 @@ ActiveRecord::Schema.define(version: 2019_10_18_183421) do
   create_table "fm_regions", id: false, force: :cascade do |t|
     t.text "code"
     t.text "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["code"], name: "fm_regions_code_key", unique: true
   end
 
-  create_table "fm_security_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "title", null: false
-    t.text "description"
-    t.integer "sort_order"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["id"], name: "index_fm_security_types_on_id"
+  create_table "fm_security_types", id: false, force: :cascade do |t|
+    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
+    t.string "title", null: false
+    t.string "description"
+    t.integer "sort_order", null: false
+    t.index ["id"], name: "fm_security_types_id_idx"
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
