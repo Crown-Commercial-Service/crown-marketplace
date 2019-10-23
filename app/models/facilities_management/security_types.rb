@@ -4,4 +4,3 @@ module FacilitiesManagement
     self.id = 'id'
   end
 end
-

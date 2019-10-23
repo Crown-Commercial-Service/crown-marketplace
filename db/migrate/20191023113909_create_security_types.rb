@@ -1,3 +1,4 @@
+# rubocop:disable Style/GuardClause
 class CreateSecurityTypes < ActiveRecord::Migration[5.2]
   def change
     unless table_exists?(:fm_security_types)
@@ -11,3 +12,4 @@ class CreateSecurityTypes < ActiveRecord::Migration[5.2]
     end
   end
 end
+# rubocop:enable Style/GuardClause

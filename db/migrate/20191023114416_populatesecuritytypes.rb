@@ -1,7 +1,7 @@
 class Populatesecuritytypes < ActiveRecord::Migration[5.2]
   def up
-    execute %|truncate table fm_security_types;|
-    execute %|INSERT INTO fm_security_types (id,title,description,sort_order) VALUES
+    execute %(truncate table fm_security_types;)
+    execute %(INSERT INTO fm_security_types (id,title,description,sort_order) VALUES
 ('82172139-3ade-4cf1-9d62-babf9d8c1fdd','Baseline personnel security standard (BPSS)','generally used as pre-employment checks. Ascertains the
 trustworthiness and reliability of a prospective candidate, looking at
 Identity, Employment history, Nationality and immigration status, and
@@ -34,6 +34,6 @@ information that the police or other government bodies think is relevant',11)
 warnings, cautions and diversionary youth conferences',13)
 ,('ec9949b9-0e6e-4b56-9176-e938bb0a1998','AccessNI Enhanced','contains the same information as a standard check and police records
 held locally. To work with children and vulnerable adults, the check may
-include information held by the Disclosure and Barring Service (DBS)',14);|
+include information held by the Disclosure and Barring Service (DBS)',14);)
   end
 end

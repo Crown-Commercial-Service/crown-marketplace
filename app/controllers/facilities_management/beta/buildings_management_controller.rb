@@ -109,11 +109,9 @@ module FacilitiesManagement
         @security_types = fm_building_data.security_types
         @page_title = 'Change Security Type' if @editing
 
-        unless @security_types.records.any?
-          if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && !@building_sec_type.empty?
-            @other_is_used = true
-            @other_value = @building_sec_type
-          end
+        if @security_types.select { |x| x['title'] == @building_sec_type }.empty? && !@building_sec_type.empty?
+          @other_is_used = true
+          @other_value = @building_sec_type
         end
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController save_buildings(): #{e}"
