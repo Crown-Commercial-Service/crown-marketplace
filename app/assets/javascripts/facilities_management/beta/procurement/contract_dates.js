@@ -86,7 +86,7 @@ $(function () {
                 };
 
                 if (tupeIsSpecified ) {
-                    isValid = this.testError(fnMobilisationValidationScope, jqMobilisationPeriod, 'greater_than_or_equal_to');
+                    isValid = this.testError(fnMobilisationValidationScope, jqMobilisationPeriod, 'max');
                 }
                 isValid = isValid && isValid && this.testError(fnMinValidator, jqMobilisationPeriod, "min");
                 isValid = isValid && this.testError(fnMaxValidator, jqMobilisationPeriod, "max");
@@ -235,24 +235,39 @@ $(function () {
         form_helper.errorMessage = function (prop_name, errType) {
             let message = "";
 
-            if (prop_name == "Initial call-off period" && errType == "required") {
-                message = "Enter initial call-off period";
-            } else if (prop_name == "Initial call-off period" && errType == "min") {
-                message = "Enter initial call-off period";
-            } else if (prop_name == "Initial call-off period" && errType == "max") {
-                message = "Initial call-off period can be a maximum of 7 years";
-            } else if ( (prop_name.indexOf("_dd") >= 0 || prop_name.indexOf("_mm") >= 0 || prop_name.indexOf("_yy") >= 0) && errType == "required") {
-                message = "can't be blank";
-            } else if (prop_name.indexOf("Initial call-off start date") >= 0) {
-                message = "Initial call-off start date must be in the future";
-            } else if (prop_name == "Mobilisation period" && errType == "pattern") {
-                message = "Enter mobilisation length";
-            } else if (prop_name == "Mobilisation period" && errType == "max") {
-                message = "Mobilisation period must be a minimum of 4 weeks when TUPE is selected";
-            } else if (prop_name == "Mobilisation period" ) {
-                message = "Enter mobilisation length";
-            } else {
-                message = this.prevErrorMessage(prop_name, errType);
+            switch ( prop_name) {
+                case "Initial call-off period":
+                    switch(errType){
+                        case "required":
+                            message = "Enter initial call-off period";
+                            break;
+                        case "min":
+                            message = "Enter initial call-off period";
+                            break;
+                        case "max":
+                            message = "Initial call-off period can be a maximum of 7 years";
+                            break;
+                        default:
+                            message = "Enter initial call-off period";
+                    }
+                    break;
+                case "Initial call-off start date":
+                    message = "Initial call-off start date must be in the future";
+                    break;
+                case "Mobilisation period":
+                    switch (errType) {
+                        case "pattern":
+                            message = "Enter mobilisation length";
+                            break;
+                        case "max":
+                            message = "Mobilisation period must be a minimum of 4 weeks when TUPE is selected";
+                            break;
+                        default:
+                            message = "Enter mobilisation length";
+                    }
+                    break;
+                default:
+                    message = this.prevErrorMessage(prop_name, errType);
             }
 
             return message;

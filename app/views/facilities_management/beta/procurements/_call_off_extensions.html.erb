@@ -32,7 +32,7 @@
           <%= display_error_label( @procurement, :optional_call_off_extensions_2, '', "#{f.object_name}_optional_call_off_extensions_2") %>
           <%= f.number_field :optional_call_off_extensions_2, class: 'govuk-input govuk-input--width-5', max: '7' %>
           <%= f.label :optional_call_off_extensions_2, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
-          <button id="fm-ext2-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">Remove</button>
+          <button id="fm-ext2-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 <%= 'govuk-visually-hidden' unless @procurement.optional_call_off_extensions_3.blank?  %>">Remove</button>
         </div>
 
         <div id="ext3-container" class="ext-container govuk-form-group govuk-!-margin-left-3
@@ -43,7 +43,7 @@
           <%= display_error_label( @procurement, :optional_call_off_extensions_3, '', "#{f.object_name}_optional_call_off_extensions_3") %>
           <%= f.number_field :optional_call_off_extensions_3, class: 'govuk-input govuk-input--width-5', max: '7' %>
           <%= f.label :optional_call_off_extensions_3, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
-          <button id="fm-ext3-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">Remove</button>
+          <button id="fm-ext3-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 <%= 'govuk-visually-hidden' unless @procurement.optional_call_off_extensions_4.blank?  %>">Remove</button>
         </div>
         <div id="ext4-container" class="ext-container govuk-form-group govuk-!-margin-left-3
                                  <%= ' govuk-form-group--error' if @procurement.errors[:optional_call_off_extensions_4].any?%>
@@ -53,7 +53,7 @@
           <%= display_error_label( @procurement, :optional_call_off_extensions_4, '', "#{f.object_name}_optional_call_off_extensions_4") %>
           <%= f.number_field :optional_call_off_extensions_4, class: 'govuk-input govuk-input--width-5', max: '7' %>
           <%= f.label :optional_call_off_extensions_4, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
-          <button id="fm-ext4-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">Remove</button>
+          <button id="fm-ext4-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 <%= 'govuk-visually-hidden' if @procurement.optional_call_off_extensions_4.blank?  %>">Remove</button>
         </div>
         <button id="fm-add-contract-ext-btn" class="govuk-button govuk-button--secondary govuk-!-margin-left-3 govuk-!-margin-top-3">+ Add another extension period</button>
       </div>
