@@ -19,8 +19,8 @@ en:
             mobilisation_period:
               greater_than: Enter mobilisation length
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
-              not_an_integer: Enter mobilisation length as a whole number
               not_a_number: Enter mobilisation length
+              not_an_integer: Enter mobilisation length as a whole number
             optional_call_off_extensions_1:
               too_long: Call-off period and extensions must be 10 years or less
             procurement_buildings:
