@@ -46,6 +46,9 @@ Rails.application.routes.draw do
 
     namespace 'facilities_management', path: 'facilities-management' do
       concerns %i[authenticatable registrable]
+      namespace :beta do
+        concerns :authenticatable
+      end
     end
 
     namespace 'management_consultancy', path: 'management-consultancy' do
@@ -99,6 +102,8 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management' do
     namespace 'beta', path: 'beta' do
       get '/', to: 'buyer_account#buyer_account'
+      get '/start', to: 'home#index'
+      get '/gateway', to: 'gateway#index'
       get '/buyer_account', to: 'buyer_account#buyer_account'
       get '/buildings-management', to: 'buildings_management#buildings_management'
       get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
@@ -129,7 +134,10 @@ Rails.application.routes.draw do
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
       get '/start', to: 'journey#start', as: 'journey_start'
+      get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
+      get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
       resources :procurements
+      resources :procurement_buildings, only: :show
     end
 
     get '/', to: 'home#index'
