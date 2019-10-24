@@ -4,4 +4,3 @@ module FacilitiesManagement
     self.primary_key = 'id'
   end
 end
-
