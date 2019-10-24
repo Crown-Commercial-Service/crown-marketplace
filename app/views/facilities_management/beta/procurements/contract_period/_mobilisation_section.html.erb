@@ -15,7 +15,7 @@
       Mobilisation start date
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= mobilisation_start_date %>
+      <%= mobilisation_start_date unless @procurement.initial_call_off_start_date.blank?%>
     </dd>
     <dd class="govuk-summary-list__actions">
     </dd>
@@ -28,7 +28,7 @@
       Mobilisation end date
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= mobilisation_end_date %>
+      <%= mobilisation_end_date unless @procurement.initial_call_off_start_date.blank?%>
     </dd>
     <dd class="govuk-summary-list__actions">
     </dd>

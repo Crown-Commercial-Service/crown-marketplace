@@ -1,10 +1,13 @@
-<% if @procurement.optional_call_off_extensions_1.nil? and @procurement.optional_call_off_extensions_2.nil? and @procurement.optional_call_off_extensions_3.nil? and @procurement.optional_call_off_extensions_4.nil? %>
+<% if @procurement.optional_call_off_extensions_1.nil? and
+    @procurement.optional_call_off_extensions_2.nil? and
+    @procurement.optional_call_off_extensions_3.nil? and
+    @procurement.optional_call_off_extensions_4.nil? %>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
       Optional call-off extensions
     </dt>
     <dd class="govuk-summary-list__value">
-      None
+      <%= 'None' if @procurement.extensions_required == false %>
     </dd>
     <dd class="govuk-summary-list__actions">
     </dd>

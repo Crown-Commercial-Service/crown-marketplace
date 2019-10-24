@@ -3,6 +3,10 @@ module FacilitiesManagement::Beta::ProcurementsHelper
     "/facilities-management/choose-#{journey_step}?#{{ region_codes: region_codes }.to_query}&#{{ service_codes: service_codes }.to_query}"
   end
 
+  def does_form_for_current_step_require_special_client_validation?(params)
+    %i[contract_dates].include? params[:step].try(:to_sym)
+  end
+
   def format_date(date_object)
     date_object&.strftime '%d %B %Y'
   end
@@ -12,16 +16,17 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def initial_call_off_period_end_date
+    return '' if @procurement.initial_call_off_start_date.blank?
+
     end_date = Date.parse(@procurement.initial_call_off_start_date.to_s).next_year(@procurement.initial_call_off_period) - 1
     format_date end_date
   end
 
   def mobilisation_period
-    result = 'None'
+    result = ''
     period = @procurement.mobilisation_period
-    unless period.nil?
-      result = "#{period}  #{(period > 1 ? ' weeks' : 'week')}"
-    end
+    result = "#{period}  #{(period > 1 ? ' weeks' : 'week')}" if @procurement.mobilisation_period_required == true
+    result = 'None' if @procurement.mobilisation_period_required == false
     result
   end
 

@@ -96,7 +96,7 @@
     <dt class="govuk-summary-list__key">
     <dd class="govuk-summary-list__value govuk-!-padding-0 govuk-!-margin-0">
       <% @active_procurement_buildings.each do |procurement_building| %>
-        <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%= link_to procurement_building.name, '#' %></p>
+        <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%= link_to procurement_building.name, facilities_management_beta_procurement_building_path(procurement_building) %></p>
       <% end %>
     </dd>
     <dd class="govuk-summary-list__actions govuk-!-padding-0 govuk-!-margin-0">
