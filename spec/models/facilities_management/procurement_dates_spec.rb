@@ -6,8 +6,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   let(:user) { build(:user) }
 
   def log_error
-    puts $stdout, "Messages: #{procurement.errors.to_json}"
-    puts $stdout, "Details: #{procurement.errors.details.to_json}"
+    # puts $stdout, "Messages: #{procurement.errors.to_json}"
+    # puts $stdout, "Details: #{procurement.errors.details.to_json}"
   end
 
   describe 'contract data should not be invalid because call-off period is not > 0' do
