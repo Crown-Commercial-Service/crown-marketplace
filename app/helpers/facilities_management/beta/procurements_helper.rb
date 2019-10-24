@@ -27,6 +27,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
     period = @procurement.mobilisation_period
     result = "#{period} #{'week'.pluralize(period)}" if @procurement.mobilisation_period_required == true
     result = 'None' unless @procurement.mobilisation_period_required == true
+    result = '' if @procurement.mobilisation_period_required.blank?
     result
   end
 
