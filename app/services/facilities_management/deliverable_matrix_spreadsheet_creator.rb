@@ -13,16 +13,19 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def build
     Axlsx::Package.new do |p|
       p.workbook.styles do |s|
-        header_row_style =  s.add_style sz: 12, b: true, alignment: { horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
         first_column_style = s.add_style sz: 12, b: true, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+        standard_column_style = s.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
 
         p.workbook.add_worksheet(name: 'Buildings information') do |sheet|
-          header_row = ['Buildings information']
-          (1..@buildings_with_service_codes.count).each { |x| header_row << "Building #{x}" }
-          sheet.add_row header_row, style: header_row_style, height: standard_row_height
+          add_header_row(sheet, ['Buildings information'])
           add_buildings_information(sheet)
-          sheet['A1:A10'].each { |c| c.style = first_column_style }
-          sheet.column_widths(*([50] * sheet.column_info.count))
+          style_buildings_information_sheet(sheet, first_column_style)
+        end
+
+        p.workbook.add_worksheet(name: 'Service Matrix') do |sheet|
+          add_header_row(sheet, ['Service Reference', 'Service Name'])
+          add_service_matrix(sheet)
+          style_service_matrix_sheet(sheet, standard_column_style)
         end
       end
     end
@@ -32,6 +35,25 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def standard_row_height
     35
+  end
+
+  def add_header_row(sheet, initial_values)
+    header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
+    header_row = initial_values
+    (1..@buildings_with_service_codes.count).each { |x| header_row << "Building #{x}" }
+    sheet.add_row header_row, style: header_row_style, height: standard_row_height
+  end
+
+  def style_buildings_information_sheet(sheet, style)
+    sheet['A1:A10'].each { |c| c.style = style }
+    sheet.column_widths(*([50] * sheet.column_info.count))
+  end
+
+  def style_service_matrix_sheet(sheet, style)
+    column_widths = [15, 100]
+    @buildings.count.times { column_widths << 50 }
+    sheet["A2:B#{@services.count + 1}"].each { |c| c.style = style }
+    sheet.column_widths(*column_widths)
   end
 
   def buildings_with_service_codes
@@ -51,7 +73,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       service_codes += building_with_service_codes[:service_codes]
     end
 
-    @services = FacilitiesManagement::StaticData.work_packages.select { |wp| service_codes.uniq.include? wp['code'] }.sort_by { |wp| wp['code'] }
+    services = FacilitiesManagement::StaticData.work_packages.select { |wp| service_codes.uniq.include? wp['code'] }
+    @services = services.sort { |a, b| [a['code'].split('.')[0], a['code'].split('.')[1].to_i] <=> [b['code'].split('.')[0], b['code'].split('.')[1].to_i] }
   end
 
   def add_buildings_information(sheet)
@@ -150,5 +173,20 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
 
     row
+  end
+
+  def add_service_matrix(sheet)
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
+
+    @services.each do |service|
+      row_values = [service['code'], service['name']]
+
+      @building_ids_with_service_codes.each do |building|
+        v = building[:service_codes].include?(service['code']) ? 'Yes' : ''
+        row_values << v
+      end
+
+      sheet.add_row row_values, style: standard_style, height: standard_row_height
+    end
   end
 end
