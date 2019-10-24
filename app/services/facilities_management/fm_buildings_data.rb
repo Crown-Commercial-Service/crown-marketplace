@@ -5,11 +5,11 @@ require 'uri'
 
 class FMBuildingData
   def reset_buildings_tables(email_address)
-    query = 'truncate fm_uom_values where user_id = ' + Base64.encode64(email_address) + ';'
+    query = "delete from fm_uom_values where user_id = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    query = 'truncate fm_lifts where user_id = ' + Base64.encode64(email_address) + ';'
+    query = "delete from fm_lifts where user_id = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    query = 'truncate facilities_management_buildings where user_id = ' + Base64.encode64(email_address) + ';'
+    query = "delete from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't reset building tables: #{e}"
