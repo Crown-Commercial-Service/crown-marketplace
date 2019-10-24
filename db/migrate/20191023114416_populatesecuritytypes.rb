@@ -1,7 +1,5 @@
-class AddSecurityTypeTable < ActiveRecord::Migration[5.2]
+class Populatesecuritytypes < ActiveRecord::Migration[5.2]
   def up
-    execute %|CREATE TABLE if not exists public.fm_security_types (id uuid NOT NULL DEFAULT gen_random_uuid(),title varchar NOT NULL,description varchar NULL,sort_order int4 NOT NULL);|
-    execute %|CREATE INDEX if not exists fm_security_types_id_idx ON public.fm_security_types USING btree (id);|
     execute %(truncate table fm_security_types;)
     execute %(INSERT INTO fm_security_types (id,title,description,sort_order) VALUES
 ('82172139-3ade-4cf1-9d62-babf9d8c1fdd','Baseline personnel security standard (BPSS)','generally used as pre-employment checks. Ascertains the
@@ -37,9 +35,5 @@ warnings, cautions and diversionary youth conferences',13)
 ,('ec9949b9-0e6e-4b56-9176-e938bb0a1998','AccessNI Enhanced','contains the same information as a standard check and police records
 held locally. To work with children and vulnerable adults, the check may
 include information held by the Disclosure and Barring Service (DBS)',14);)
-  end
-
-  def down
-    raise ActiveRecord::IrreversibleMigration
   end
 end
