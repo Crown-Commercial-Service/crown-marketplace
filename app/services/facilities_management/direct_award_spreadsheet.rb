@@ -23,6 +23,24 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
 
   # rubocop:disable Metrics/AbcSize
+  def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2)
+    new_row = [label, nil, nil]
+    sorted_building_keys.each do |_k|
+      new_row << ''
+    end
+    sheet.add_row new_row
+    (2..sheet.rows.last.cells.count - 1).each do |i|
+      start = sheet.rows.last.cells[i].r_abs.index('$', 0)
+      finish = sheet.rows.last.cells[i].r_abs.index('$', 1)
+
+      column_ref = sheet.rows.last.cells[i].r_abs[start + 1..finish - 1]
+      row_ref = sheet.rows.last.cells[i].r_abs[finish + 1..-1].to_i
+      sheet.rows.last.cells[i].value = "=sum(#{column_ref}#{row_ref - 1}:#{column_ref}#{row_ref - how_many_rows})"
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/BlockLength
   def create_spreadsheet
@@ -100,12 +118,14 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       add_computed_row sheet, sorted_building_keys, 'Helpdesk', sum_building_helpdesk
 
-      sheet.add_row ['Year 1 Deliverables sub total']
+      # sheet.add_row ['Year 1 Deliverables sub total']
+      add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables sub total', 4
       sheet.add_row
 
       add_computed_row sheet, sorted_building_keys, 'London Location Variance', sum_building_variance
 
-      sheet.add_row ['Year 1 Deliverables total']
+      # sheet.add_row ['Year 1 Deliverables total']
+      add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables total', 4
       sheet.add_row
 
       add_computed_row sheet, sorted_building_keys, 'Mobilisation', sum_building_mobilisation
@@ -119,19 +139,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       add_computed_row sheet, sorted_building_keys, 'Corporate Overhead', sum_building_corporate
 
-      new_row = ['Total Charges excluding Profit', nil, nil]
-      sorted_building_keys.each do |_k|
-        new_row << ''
-      end
-      sheet.add_row new_row
-      (2..sheet.rows.last.cells.count - 1).each do |i|
-        start = sheet.rows.last.cells[i].r_abs.index('$', 0)
-        finish = sheet.rows.last.cells[i].r_abs.index('$', 1)
-
-        column_ref = sheet.rows.last.cells[i].r_abs[start + 1..finish - 1]
-        row_ref = sheet.rows.last.cells[i].r_abs[finish + 1..-1].to_i
-        sheet.rows.last.cells[i].value = "=sum(#{column_ref}#{row_ref - 1}:#{column_ref}#{row_ref - 2})"
-      end
+      add_summation_row sheet, sorted_building_keys, 'Total Charges excluding Profit'
 
       add_computed_row sheet, sorted_building_keys, 'Profit', sum_building_profit
 
