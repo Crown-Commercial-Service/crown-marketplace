@@ -9,7 +9,7 @@
   </dd>
 </div>
 
-<% unless @procurement.mobilisation_period.nil? %>
+<% if @procurement.mobilisation_period_required %>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
       Mobilisation start date

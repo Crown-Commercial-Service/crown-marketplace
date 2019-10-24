@@ -2,7 +2,7 @@
   <%= f.hidden_field :tupe, class: 'tupe_indicator' %>
   <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_period].any?%>" data-propertyname="Initial call-off period">
     <%= f.label :initial_call_off_period, 'Initial call-off period', class: "govuk-heading-m govuk-!-margin-bottom-0"%>
-    <p class="govuk-caption-m govuk-!-margin-top-0">
+    <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds">
       The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
     </p>
     <%= display_error_label(@procurement, :initial_call_off_period, '', "#{f.object_name}_initial_call_off_period") %>

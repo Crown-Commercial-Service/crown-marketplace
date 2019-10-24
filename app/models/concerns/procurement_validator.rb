@@ -45,11 +45,11 @@ module ProcurementValidator
     validates :initial_call_off_start_date, date: { allow_nil: false, after_or_equal_to: proc { Time.zone.today } },
                                             if: :initial_call_off_period_expects_a_date?,
                                             on: :contract_dates
-    validates :mobilisation_period, numericality: { allow_nil: false, only_integer: true,
+    validates :mobilisation_period, numericality: { allow_nil: true, only_integer: true,
                                                     greater_than: -1 },
                                     if: -> { initial_call_off_period.present? ? initial_call_off_period.positive? : false },
                                     on: :contract_dates
-    validates :mobilisation_period, numericality: { allow_nil: false, only_integer: true,
+    validates :mobilisation_period, numericality: { allow_nil: true, only_integer: true,
                                                     greater_than_or_equal_to: 4 },
                                     if: -> { tupe? && (initial_call_off_period.present? ? initial_call_off_period.positive? : false) },
                                     on: :contract_dates
