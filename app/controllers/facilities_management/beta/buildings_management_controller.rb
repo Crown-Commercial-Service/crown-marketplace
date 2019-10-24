@@ -175,7 +175,8 @@ module FacilitiesManagement
         cache_new_building_id building_id
         raise 'Building IDs do not match' unless building_id == add['id']
 
-        postcode = add['address']['fm-address-postcode']
+        postcode = add['address']['fm-address-postcode'] if add['address'].present?
+
         save_region(postcode) if postcode.present?
 
         j = { 'status': 200, 'fm_building-id': building_id.to_s }
@@ -373,7 +374,8 @@ module FacilitiesManagement
 
       def get_building_ready_status(building)
         building_element_valid?(building, 'name') &&
-          building_element_valid?(building, 'region') &&
+          (building_element_valid?(building, 'region') ||
+           building['address']&.dig('fm-address-postcode').present?) &&
           building_element_valid?(building, 'building-type') &&
           building_element_valid?(building, 'security-type') &&
           building_element_valid?(building, 'gia')
