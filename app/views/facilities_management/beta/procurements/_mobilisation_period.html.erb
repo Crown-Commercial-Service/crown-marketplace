@@ -1,5 +1,5 @@
 <div class="govuk-!-margin-top-5">
-  <div class="govuk-form-group">
+  <div class="govuk-form-group" data-propertyname="Mobilisation period choice">
     <%= f.label :mobilisation_period, 'Do you need a mobilisation period?', class: "govuk-heading-m govuk-!-margin-bottom-0"%>
     <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds">
       This is the period in which the supplier gets ready to start providing the
@@ -8,95 +8,92 @@
       entered if required, however enough time should be allowed for suitable
       mobilisation ready for service delivery.
     </p>
-    <div class="govuk-radios govuk-!-margin-top-3">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-mobilisation-period-yes"
-               name="mob-group" type="radio" value="yes" <%= 'checked' unless @procurement.mobilisation_period.blank? %>>
-        <label class="govuk-label govuk-radios__label govuk-label--s" for="fm-mobilisation-period-yes">
-             Yes
-         </label>
-        <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
-          <div class="govuk-form-group govuk-!-margin-left-3 <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_period].any?%>" data-propertyname="Mobilisation period">
-            <%= f.label :mobilisation_period, 'Enter mobilisation length', class:'govuk-heading-s' %>
-            <%= f.label :mobilisation_period, 'A minimum of 4 weeks required if TUPE is involved.', class:'govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-2' %>
-            <%= display_error_label(@procurement, :mobilisation_period, '', "#{f.object_name}_mobilisation_period") %>
-            <%= f.number_field :mobilisation_period, class: 'govuk-input govuk-input--width-4', maxlength:3, min: '1', max: '312', step:1 %>
-            <%= f.label :mobilisation_period, 'weeks', class: 'govuk-label--s govuk-!-margin-left-2' %>
-          </div>
-          <div class="govuk-!-margin-left-3">
-            <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3">Mobilisation start date</span>
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
-              <div class="govuk-date-input" id="date-input">
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-dd">
-                      Day
-                    </label>
-                    <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-start-date-dd" name="mobilisation-start-date-dd">
-                  </div>
-                </div>
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-mm">
-                      Month
-                    </label>
-                    <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-start-date-mm" name="mobilisation-start-date-mm">
-                  </div>
-                </div>
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-yyyy">
-                      Year
-                    </label>
-                    <input readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field" id="mobilisation-start-date-yyyy" name="mobilisation-start-date-yyyy">
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-
-          <div class="govuk-!-margin-left-3">
-            <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3">Mobilisation end date</span>
-            <div class="govuk-form-group">
+    <span id="mobilisation-required-warning"/>
+    <div class="govuk-form-group" data-propertyname="Mobilisation period choice">
+      <div class="govuk-radios govuk-!-margin-top-3">
+        <div class="govuk-radios__item">
+            <%= f.radio_button :mobilisation_period_required, true, class: "govuk-radios__input" %>
+            <%= label :mobilisation_period_required, 'Yes', class: 'govuk-label govuk-radios__label' %>
+          <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
+            <div class="govuk-form-group govuk-!-margin-left-3 <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_period].any?%>" data-propertyname="Mobilisation period">
+              <%= f.label :mobilisation_period, 'Enter mobilisation length', class:'govuk-heading-s' %>
+              <%= f.label :mobilisation_period, 'A minimum of 4 weeks required if TUPE is involved.', class:'govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-2' %>
+              <%= display_error_label(@procurement, :mobilisation_period, '', "#{f.object_name}_mobilisation_period") %>
+              <%= f.number_field :mobilisation_period, class: 'govuk-input govuk-input--width-4', maxlength:3, min: '1', max: '312', step:1 %>
+              <%= f.label :mobilisation_period, 'weeks', class: 'govuk-label--s govuk-!-margin-left-2' %>
+            </div>
+            <div class="govuk-!-margin-left-3">
+              <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3">Mobilisation start date</span>
               <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
                 <div class="govuk-date-input" id="date-input">
                   <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-dd">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-dd">
                         Day
                       </label>
-                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-end-date-dd" name="mobilisation-end-date-dd">
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-start-date-dd" name="mobilisation-start-date-dd">
                     </div>
                   </div>
                   <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-mm">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-mm">
                         Month
                       </label>
-                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-end-date-mm" name="mobilisation-end-date-mm">
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-start-date-mm" name="mobilisation-start-date-mm">
                     </div>
                   </div>
                   <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-yyyy">
+                      <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-yyyy">
                         Year
                       </label>
-                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field" id="mobilisation-end-date-yyyy" name="mobilisation-end-date-yyyy">
+                      <input readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field" id="mobilisation-start-date-yyyy" name="mobilisation-start-date-yyyy">
                     </div>
                   </div>
                 </div>
               </fieldset>
             </div>
+
+            <div class="govuk-!-margin-left-3">
+              <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3">Mobilisation end date</span>
+              <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+                  <div class="govuk-date-input" id="date-input">
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-dd">
+                          Day
+                        </label>
+                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-end-date-dd" name="mobilisation-end-date-dd">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-mm">
+                          Month
+                        </label>
+                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-end-date-mm" name="mobilisation-end-date-mm">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="mobilisation-end-date-yyyy">
+                          Year
+                        </label>
+                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field" id="mobilisation-end-date-yyyy" name="mobilisation-end-date-yyyy">
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="govuk-radios__item">
-      <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-mobilisation-period-no"
-             name="mob-group" type="radio" value="no" <%='checked' if @procurement.mobilisation_period.blank? %>>
-      <label class="govuk-label govuk-radios__label govuk-label--s" for="fm-mobilisation-period-no">
-        No
-      </label>
+      <div class="govuk-radios__item">
+        <%= f.radio_button :mobilisation_period_required, false, class: "govuk-radios__input" %>
+        <%= label :mobilisation_period_required, 'No', class: 'govuk-label govuk-radios__label' %>
+      </div>
     </div>
   </div>
 </div>
