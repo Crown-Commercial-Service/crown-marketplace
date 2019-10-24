@@ -2,6 +2,10 @@ $(function () {
     const validateForm = function (formElements) {
         let isValid = false;
 
+        this.clearBannerErrorList();
+        this.clearAllFieldErrors();
+        this.toggleBannerError(false);
+        
         let fnRequiredValidator = this.validationFunctions['required'];
         let fnNumberValidator = this.validationFunctions['type']['number'];
         let fnLengthValidator = this.validationFunctions['maxlength'];
@@ -11,7 +15,7 @@ $(function () {
             return new Date(strYYYY, strMM, strDD);
         };
         let fnCreateDateFromGovInputs = function ( strName ) {
-            return fnCreateDate ( $("#" + strName + "_dd").val(), $("#" + strName + "_mm").val(), $("#" + strName + "_yyyy").val()) ;
+            return fnCreateDate ( $("#" + strName + "_dd").val(), parseInt($("#" + strName + "_mm").val())-1 + "", $("#" + strName + "_yyyy").val()) ;
         };
 
         let jqInitialCallOffPeriod = $('#facilities_management_procurement_initial_call_off_period');
@@ -29,13 +33,16 @@ $(function () {
 
             isValid = !fnRequiredValidator(jqInitialCallOffStartDate_dd); //this.testError(fnRequiredValidator, jqInitialCallOffStartDate_dd, 'required');
             isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_dd); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_dd, 'number') ;
-            isValid = isValid && jqInitialCallOffStartDate_dd.val() < 31;
+            isValid = isValid && jqInitialCallOffStartDate_dd.val() <= 31;
+            if ( jqInitialCallOffStartDate_mm.val() == 2) {
+                isValid = isValid && jqInitialCallOffStartDate_dd.val() <= 29;
+            }
             isValid = isValid && !fnRequiredValidator(jqInitialCallOffStartDate_mm);//this.testError(fnRequiredValidator, jqInitialCallOffStartDate_mm, 'required');
             isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_mm); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_mm, 'number') ;
-            isValid = isValid && jqInitialCallOffStartDate_mm.val() < 12;
+            isValid = isValid && jqInitialCallOffStartDate_mm.val() <= 12;
             isValid = isValid && !fnRequiredValidator(jqInitialCallOffStartDate_yy) ; //this.testError(fnRequiredValidator, jqInitialCallOffStartDate_yy, 'required');
             isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_yy); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_yy, 'number') ;
-            isValid = isValid && jqInitialCallOffStartDate_yy.val() < 2100;
+            isValid = isValid && jqInitialCallOffStartDate_yy.val() <= 2100;
 
             if (isValid) {
                 jqInitialCallOffStartDate_dd.removeClass('govuk-input--error');
@@ -61,22 +68,39 @@ $(function () {
             }
         }
 
-        if ( isValid && formElements['mob-group'].value == "yes" ) {
-            let jqTupeIndicator = $('.tupe_indicator');
-            let jqMobilisationPeriod = $('#facilities_management_procurement_mobilisation_period');
-            let tupeIsSpecified = jqTupeIndicator.val() == 'true';
-            let fnMobilisationValidatorForTUPE = function(nMobPeriod, tupeIsSpecified) {return nMobPeriod < 4}.bind(this);
+        let jqTupeIndicator = $('.tupe_indicator');
+        let tupeIsSpecified = jqTupeIndicator.val() == 'true';
+        let jqMobilisationPeriod = $('#facilities_management_procurement_mobilisation_period');
+        let jqMobilisationPeriodRequired = $('#facilities_management_procurement_mobilisation_period_required_true');
+        let jqExtensionsRequired = $('#facilities_management_procurement_extensions_required_true');
+        let mobilisationChoice = formElements['facilities_management_procurement[mobilisation_period_required]'].value ;
+        if (mobilisationChoice == "") {
+            isValid = false;
+            this.toggleError ( $("#mobilisation-required-warning"), true, 'required');
+        }
 
-            isValid = this.testError(fnRequiredValidator, jqMobilisationPeriod, 'required');
-            isValid = isValid && this.testError(fnNumberValidator, jqMobilisationPeriod, 'number');
-            if ( jqMobilisationPeriod.val().indexOf('.') >= 0 ) {
-                isValid = isValid && false;
-                this.toggleError ( jqMobilisationPeriod, true, 'pattern');
+        if ( isValid && mobilisationChoice == "true" ) {
+            let fnMobilisationValidatorForTUPE = function(nMobPeriod, tupeIsSpecified) {return nMobPeriod < 4}.bind(this);
+            let mobTextValue = jqMobilisationPeriod.val();
+
+            isValid = !(tupeIsSpecified && mobTextValue == "");
+            if ( isValid ) {
+                isValid = isValid && this.testError(fnNumberValidator, jqMobilisationPeriod, 'number');
+                if ( mobTextValue.indexOf('.') >= 0 ) {
+                    if ( mobTextValue.substring(mobTextValue.indexOf('.')+1).replace('0','') != '' ) {
+                        isValid = isValid && false;
+                        this.toggleError ( jqMobilisationPeriod, true, 'pattern');
+                    } else {
+                        jqMobilisationPeriod.val(parseInt(mobTextValue));
+                    }
+                } else {
+                    isValid = isValid && true;
+                    this.toggleError ( jqMobilisationPeriod, false, 'pattern');
+                }
+                isValid = isValid && this.testError(fnLengthValidator, jqMobilisationPeriod, 'maxlength');
             } else {
-                isValid = isValid && true;
-                this.toggleError ( jqMobilisationPeriod, false, 'pattern');
+                this.toggleError ( jqMobilisationPeriod, true, 'max') ;
             }
-            isValid = isValid && this.testError(fnRequiredValidator, jqMobilisationPeriod, 'maxlength');
 
             if ( isValid ) {
                 let nMobilisationPeriod = parseInt(jqMobilisationPeriod.val());
@@ -91,40 +115,61 @@ $(function () {
                 isValid = isValid && isValid && this.testError(fnMinValidator, jqMobilisationPeriod, "min");
                 isValid = isValid && this.testError(fnMaxValidator, jqMobilisationPeriod, "max");
             }
+        } else if ( isValid && tupeIsSpecified && mobilisationChoice == "false" ) {
+            isValid = false ;
+            this.toggleError ( jqMobilisationPeriod, true, 'max') ;
+        } else if ( isValid && !tupeIsSpecified && mobilisationChoice == "false" ) {
+             isValid == isValid && true ;
+            jqMobilisationPeriod.val("");
         }
-        if (isValid  && formElements['ext-group'].value == "yes") {
+
+        let extensionChoice = formElements['facilities_management_procurement[extensions_required]'].value ;
+        if (extensionChoice == "") {
+            isValid = false;
+            this.toggleError ( $("#extensions-required-warning"), true, 'required');
+        }
+        if (isValid  && extensionChoice == "true") {
             const MAX = 10;
             let count = parseInt(jqInitialCallOffPeriod.val());
             let ext1 = $('#facilities_management_procurement_optional_call_off_extensions_1');
+            let ext2 = $('#facilities_management_procurement_optional_call_off_extensions_2');
+            let ext3 = $('#facilities_management_procurement_optional_call_off_extensions_3');
+            let ext4 = $('#facilities_management_procurement_optional_call_off_extensions_4');
+
             let fnIncrementingCountTest = function (jq) {
                 let val = Number (jq.val());
                 return val + count > MAX ;
             };
+            this.clearFieldErrors(ext1);
+            this.clearFieldErrors(ext2);
+            this.clearFieldErrors(ext3);
+            this.clearFieldErrors(ext4);
 
             isValid = this.testError(fnRequiredValidator, ext1, 'required');
             isValid = isValid && this.testError(fnNumberValidator, ext1, 'number');
             isValid = isValid && this.testError(fnIncrementingCountTest, ext1, 'max');
+            isValid = isValid && this.testError(fnMinValidator, ext1, 'min');
             count += Number(ext1.val());
 
             if (isValid && !$('#ext2-container').hasClass('govuk-visually-hidden')) {
-                let ext2 = $('#facilities_management_procurement_optional_call_off_extensions_2');
                 isValid = this.testError(fnRequiredValidator, ext2, 'required');
                 isValid = isValid && this.testError(fnNumberValidator, ext2, 'number');
                 isValid = isValid && this.testError(fnIncrementingCountTest, ext2, 'max');
+                isValid = isValid && this.testError(fnMinValidator, ext2, 'min');
                 count += Number(ext2.val());
             }
             if (isValid && !$('#ext3-container').hasClass('govuk-visually-hidden')) {
-                let ext3 = $('#facilities_management_procurement_optional_call_off_extensions_3');
                 isValid = this.testError(fnRequiredValidator, ext3, 'required');
                 isValid = isValid && this.testError(fnNumberValidator, ext3, 'number');
                 isValid = isValid && this.testError(fnIncrementingCountTest, ext3, 'max');
+                isValid = isValid && this.testError(fnMinValidator, ext3, 'min');
                 count += Number(ext3.val());
             }
             if (isValid && !$('#ext4-container').hasClass('govuk-visually-hidden')) {
-                let ext4 = $('#facilities_management_procurement_optional_call_off_extensions_4');
                 isValid = this.testError(fnRequiredValidator, ext4, 'required');
                 isValid = isValid && this.testError(fnNumberValidator, ext4, 'number');
                 isValid = isValid && this.testError(fnIncrementingCountTest, ext4, 'max');
+                isValid = isValid && this.testError(fnMinValidator, ext4, 'min');
                 count += Number(ext4.val());
             }
         }
@@ -204,23 +249,23 @@ $(function () {
 
     };
 
-    $('#facilities_management_procurement_mobilisation_period').on('keyup', function (e) {
+    $('#facilities_management_procurement_mobilisation_period').on('blur', function (e) {
         displayContractDates();
     });
 
-    $('#facilities_management_procurement_initial_call_off_start_date_dd').on('keyup', function (e) {
+    $('#facilities_management_procurement_initial_call_off_start_date_dd').on('blur', function (e) {
         displayContractDates();
     });
 
-    $('#facilities_management_procurement_initial_call_off_start_date_mm').on('keyup', function (e) {
+    $('#facilities_management_procurement_initial_call_off_start_date_mm').on('blur', function (e) {
         displayContractDates();
     });
 
-    $('#facilities_management_procurement_initial_call_off_start_date_yyyy').on('keyup', function (e) {
+    $('#facilities_management_procurement_initial_call_off_start_date_yyyy').on('blur', function (e) {
         displayContractDates();
     });
 
-    $('#facilities_management_procurement_initial_call_off_period').on('keyup', function (e) {
+    $('#facilities_management_procurement_initial_call_off_period').on('blur', function (e) {
         displayContractDates();
     });
 
@@ -236,6 +281,12 @@ $(function () {
             let message = "";
 
             switch ( prop_name) {
+                case "Mobilisation period choice":
+                    message = "Select yes if you need mobilisation period";
+                    break;
+                case "Extensions choice":
+                    message = "Select yes if you want to extend your call-off contract";
+                    break;
                 case "Initial call-off period":
                     switch(errType){
                         case "required":

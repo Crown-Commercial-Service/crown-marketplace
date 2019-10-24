@@ -162,6 +162,19 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             }
         }
     };
+
+    this.clearAllFieldErrors = function () {
+        $(this.form).find("label[class=govuk-error-message]").closest(".govuk-form-group .govuk-form-group--error").find(".govuk-input--error").removeClass("govuk-input--error");
+        $(this.form).find("label[class=govuk-error-message]").closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
+        $(this.form).find("label[class=govuk-error-message]").addClass("govuk-visually-hidden");
+    } ;
+    this.clearFieldErrors = function (jElem) {
+        let errorCollection = jElem.siblings("label[class=govuk-error-message]");
+        jElem.closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
+        jElem.removeClass("govuk-input--error");
+        errorCollection.addClass("govuk-visually-hidden");
+    };
+
     this.testError = function (errFn, jElem, errorType) {
         let result = false;
 
