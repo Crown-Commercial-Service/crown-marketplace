@@ -9,7 +9,7 @@ RSpec.describe FacilitiesManagement::SecurityTypes, type: :model do
       end
     end
 
-    context 'data validation' do
+    context 'when accessing the database' do
       it 'returns a collection or rows' do
         expect(FacilitiesManagement::SecurityTypes.first.blank?).to eq false
       end
