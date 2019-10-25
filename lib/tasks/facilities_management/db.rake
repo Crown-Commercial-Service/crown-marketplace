@@ -65,14 +65,18 @@ module CCS
     puts e.message
   end
 
-  def self.load_static(directory = 'data/')
+  def self.load_fm_nuts_data directory
     DistributedLocks.distributed_lock(150) do
       p "Loading NUTS static data, Environment: #{Rails.env}"
       CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv'
       CCS.csv_to_nuts_regions directory + 'nuts2_regions.csv'
       CCS.csv_to_nuts_regions directory + 'nuts3_regions.csv'
       p "Finished loading NUTS codes into db #{Rails.application.config.database_configuration[Rails.env]['database']}"
+    end
+  end
 
+  def self.load_fm_static_data directory
+    DistributedLocks.distributed_lock(150) do
       p 'Loading FM regions static data'
       CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv'
       p 'Loading FM rates static data'
@@ -81,6 +85,11 @@ module CCS
       CCS.populate_security_types directory + 'facilities_management/security_types.csv'
       p 'Finished loading security types static data'
     end
+  end
+
+  def self.load_static(directory = 'data/')
+    CCS.load_fm_nuts_data directory
+    CCS.load_fm_static_data directory
   end
 end
 
