@@ -65,7 +65,7 @@ module CCS
     puts e.message
   end
 
-  def self.load_fm_nuts_data directory
+  def self.load_fm_nuts_data(directory)
     DistributedLocks.distributed_lock(150) do
       p "Loading NUTS static data, Environment: #{Rails.env}"
       CCS.csv_to_nuts_regions directory + 'nuts1_regions.csv'
@@ -75,7 +75,7 @@ module CCS
     end
   end
 
-  def self.load_fm_static_data directory
+  def self.load_fm_static_data(directory)
     DistributedLocks.distributed_lock(150) do
       p 'Loading FM regions static data'
       CCS.csv_to_fm_regions directory + 'facilities_management/regions.csv'
