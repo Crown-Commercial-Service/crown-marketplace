@@ -18,7 +18,6 @@ module ProcurementValidator
     # validations on :procurement_buildings step
     validate :at_least_one_active_procurement_building, on: :procurement_buildings
 
-    # validates :tupe, presence: true, on: :tupe
     validates :tupe, inclusion: { in: [true, false] }, on: :tupe
 
     #############################################

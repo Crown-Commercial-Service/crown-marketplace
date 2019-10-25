@@ -5,6 +5,10 @@ en:
       models:
         facilities_management/procurement:
           attributes:
+            contract_name:
+              blank: Enter your contract name
+              too_long: Your contract name must be 100 characters or fewer
+              too_short: Enter your contract name
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -21,6 +25,10 @@ en:
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
+            name:
+              blank: Enter the name for the search
+              too_long: Your search name must be 100 characters or fewer
+              too_short: Enter the name for the search
             optional_call_off_extensions_1:
               too_long: Call-off period and extensions must be 10 years or less
             procurement_buildings:
