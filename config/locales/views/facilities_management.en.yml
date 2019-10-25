@@ -1,100 +1,10 @@
 ---
 en:
-  activemodel:
-    attributes:
-      facilities_management/service_hour_choice/service_choice:
-        all_day: All day <br/> (24 hours)
-        hourly: Specified Hours
-        not_required: Not required
-        time_to: to
-    errors:
-      models:
-        facilities_management/journey/choose_locations:
-          attributes:
-            region_codes:
-              too_short: Select at least one region you need to include in your procurement
-        facilities_management/journey/choose_services:
-          attributes:
-            service_codes:
-              too_short: Select at least one service you need to include in your procurement
-        facilities_management/service_hours:
-          attributes:
-            friday:
-              invalid: Select not required if you don't need the service on Friday
-              not_a_date: Enter a real start time or end time for Friday
-            monday:
-              invalid: Select not required if you don't need the service on Monday
-              not_a_date: Enter a real start time or end time for Monday
-            saturday:
-              invalid: Select not required if you don't need the service on Saturday
-              not_a_date: Enter a real start time or end time for Saturday
-            sunday:
-              invalid: Select not required if you don't need the service on Sunday
-              not_a_date: Enter a real start time or end time for Sunday
-            thursday:
-              invalid: Select not required if you don't need the service on Thursday
-              not_a_date: Enter a real start time or end time for Thursday
-            tuesday:
-              invalid: Select not required if you don't need the service on Tuesday
-              not_a_date: Enter a real start time or end time for Tuesday
-            wednesday:
-              invalid: Select not required if you don't need the service on Wednesday
-              not_a_date: Enter a real start time or end time for Wednesday
-        user:
-          incorrect_username_or_password: You must provide a correct username or password
   activerecord:
     errors:
       models:
-        facilities_management/buyer_detail:
-          attributes:
-            central_government:
-              blank: Select the type of public sector organisation you're buying for
-            full_name:
-              blank: Enter your full name
-              invalid: Enter your full name
-            job_title:
-              blank: Enter your job title
-              invalid: Enter your job title
-            organisation_address_line_1:
-              blank: Enter your building or street name
-              invalid: Enter your building or street name
-            organisation_address_postcode:
-              address_not_complete: Address not provided
-              blank: Enter your postcode
-              invalid: Enter a valid postcode
-            organisation_address_town:
-              blank: Enter your town or city
-              invalid: Enter your town or city
-            organisation_name:
-              blank: Enter your organisation name
-              invalid: Enter your organisation name
-            telephone_number:
-              blank: Enter your telephone number
-              invalid: Enter a telephone number
-        facilities_management/journey/choose_locations:
-          attributes:
-            region_codes:
-              too_short: Select at least one region you need to include in your procurement
-        facilities_management/journey/choose_services:
-          attributes:
-            service_codes:
-              too_short: Select at least one service you need to include in your procurement
         facilities_management/procurement:
           attributes:
-            base:
-              services_not_present: You must select at least one service
-            contract_name:
-              blank: Enter your contract name
-              not_present: You must answer the question about 'Contract name'
-              taken: This contract name is already in use
-              too_long: Your contract name must be 100 characters or fewer
-              too_short: Enter your contract name
-            estimated_annual_cost:
-              blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
-              greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
-            estimated_cost_known:
-              inclusion: Select yes if you know your estimated annual cost, if you do not please select no
-              not_present: You must answer the question about 'Estimated annual cost'
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -103,205 +13,26 @@ en:
               greater_than_or_equal_to: Enter initial call-off period
               less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
               not_a_number: Enter initial call-off period
-              not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
-            local_government_pension_scheme:
-              inclusion: Select one answer
-              not_present: Select one answer
-              not_present_contract_details: You must answer the question about 'Local Government Pension Scheme'
             mobilisation_period:
               greater_than: Enter mobilisation length
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
-              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
-            mobilisation_start_date:
-              greater_than: Mobilisation start date must be in the future
-            name:
-              blank: Enter the name for the search
-              invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
-              taken: This name is already in use
-              too_long: Search name must be 100 characters or less
-              too_short: Enter the name for the search
             optional_call_off_extensions_1:
-              not_an_integer: Extension period must be a whole number
-              too_long: Call-off contract period, including extensions must not be more than 10 years
-            optional_call_off_extensions_2:
-              not_an_integer: Extension period must be a whole number
-            optional_call_off_extensions_3:
-              not_an_integer: Extension period must be a whole number
-            optional_call_off_extensions_4:
-              not_an_integer: Extension period must be a whole number
-            payment_method:
-              inclusion: Select one payment method
-              not_present_contract_details: You must answer the question about 'Payment method'
-            procurement_building_services:
-              invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be 'Complete'
+              too_long: Call-off period and extensions must be 10 years or less
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
-              not_present: You must select at least one building
-            region_codes:
-              invalid: Select at least one region you need to include in your procurement
-            route_to_market:
-              inclusion: Select direct award if you want to award a contract directly to the supplier with the best price
-            security_policy_document_date:
-              not_a_date: The selected date is not valid
-            security_policy_document_file:
-              antivirus_virus_detected: The selected file contains a virus
-              blank: The selected file is empty
-              content_type_invalid: The selected file must be a DOC, DOCX or PDF
-              file_size_out_of_range: The selected file must be smaller than 10MB
-            security_policy_document_name:
-              blank: Enter a security policy document name
-            security_policy_document_required:
-              inclusion: Select yes if a security policy document is required for your contract
-              not_present_contract_details: You must answer the question about 'Security policy'
-            security_policy_document_version_number:
-              blank: Enter a security policy document version number
             service_codes:
               invalid: Select at least one service you need to include in your procurement
             tupe:
               inclusion: Select yes if you know TUPE applies to your contract
-              not_present: You must answer the question about 'TUPE'
-            using_buyer_detail_for_authorised_detail:
-              inclusion: Select one option
-              not_present_contract_details: You must answer the question about 'Authorised representative details'
-            using_buyer_detail_for_invoice_details:
-              inclusion: Select one option
-              not_present_contract_details: You must answer the question about 'Invoicing contact details'
-            using_buyer_detail_for_notices_detail:
-              inclusion: Select one option
-              not_present_contract_details: You must answer the question about 'Notices contact details'
-        facilities_management/procurement_authorised_contact_detail:
-          attributes:
-            email:
-              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
-            job_title:
-              blank: Enter the new authorised representative job title
-            name:
-              blank: Enter the new authorised representative name
-            telephone_number:
-              blank: Enter a UK telephone number, for example 020 7688 8888
-              invalid: Enter a UK telephone number, for example 020 7688 8888
         facilities_management/procurement_building:
           attributes:
             service_codes:
               invalid: Select at least one service for each building
-        facilities_management/procurement_building_service:
-          attributes:
-            lift_data:
-              above_maximum: The maximum number of lifts is 99
-              greater_than: The number of floors accessed must be a whole number greater than 0.
-              less_than: The number of floors accessed must be a whole number greater than 0.
-              not_an_integer: The number of floors accessed must be a whole number greater than 0.
-              required: The number of floors accessed must be a whole number greater than 0.
-              too_long: The number of floors accessed must be a whole number greater than 0.
-              too_short: The number of floors accessed must be a whole number greater than 0.
-            no_of_appliances_for_testing:
-              invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
-            no_of_building_occupants:
-              invalid: The number of building occupants must be a whole number and greater than 0, like 20.
-            no_of_consoles_to_be_serviced:
-              invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
-            no_of_units_to_be_serviced:
-              invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
-            service_hours:
-              end_time:
-                greater_than: The end time must be after the start time of your specified hours
-                invalid: Enter a real end time
-                less_than: The start time must be before the end time of your specified hours
-              service_choice:
-                inclusion: Select not required if you don't need the service on this day
-              start_time:
-                greater_than: The end time must be after the start time of your specified hours
-                invalid: Enter a real start time
-                less_than: The start time must be before the end time of your specified hours
-            service_standard:
-              blank: Select level of standard for your
-            size_of_external_area:
-              invalid: The size of the external area must be a whole number and greater than 0, like 1500.
-            tones_to_be_collected_and_removed:
-              invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
-        facilities_management/procurement_contact_detail:
-          attributes:
-            email:
-              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
-            organisation_address_line_1:
-              blank: Enter the building or street name of the address
-            organisation_address_postcode:
-              address_not_complete: Select an address from the list or add a missing address
-              blank: Enter a valid postcode, for example SW1A 1AA
-            organisation_address_town:
-              blank: Enter the town or city of the address
-        facilities_management/procurement_invoice_contact_detail:
-          attributes:
-            email:
-              blank: Enter the new invoicing contact email address
-            job_title:
-              blank: Enter the new invoicing contact job title
-            name:
-              blank: Enter the new invoicing contact name
-        facilities_management/procurement_notices_contact_detail:
-          attributes:
-            email:
-              blank: Enter the new notices contact email address
-            job_title:
-              blank: Enter the new notices contact job title
-            name:
-              blank: Enter the new notices contact name
-        facilities_management/procurement_pension_fund:
-          attributes:
-            name:
-              blank: Enter a pension fund name
-              inclusion: Enter a pension fund name
-              required: Enter a pension fund name
-              taken: Enter a unique pension fund name, duplication is not allowed
-            percentage:
-              blank: Enter a percentage of pensionable pay
-              greater_than_or_equal_to: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
-              inclusion: Enter a percentage of pensionable pay
-              less_than_or_equal_to: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
-              not_a_number: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
-              not_an_integer: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
-              required: Enter a percentage of pensionable pay
-        facilities_management/procurement_supplier:
-          attributes:
-            contract_end_date:
-              after_or_equal_to: The contract end date must be after the contract start date
-              blank: Enter contract end date
-              not_a_date: Enter a valid end date
-            contract_response:
-              inclusion: You must select one option to respond to the contract offer
-            contract_signed:
-              inclusion: Select one option
-            contract_start_date:
-              blank: Enter contract start date
-              not_a_date: Enter a valid start date
-            reason_for_closing:
-              blank: Enter a reason for closing this procurement
-            reason_for_declining:
-              blank: Enter a reason for declining this contract offer
-            reason_for_not_signing:
-              blank: Enter a reason why this contract will not be signed
-        facilities_management/service_hour_choice:
-          attributes:
-            end_time:
-              greater_than: The end time must be after the start time of your specified hours
-              invalid: Enter a real end time
-              less_than: The start time must be before the end time of your specified hours
-              not_a_date: Enter a real end time
-            service_choice:
-              inclusion: Select "Not required" if you don't need the service on this day
-            start_time:
-              greater_than: The end time must be after the start time of your specified hours
-              invalid: Enter a real start time
-              less_than: The start time must be before the end time of your specified hours
-              not_a_date: Enter a real start time
-  dashboard:
-    index:
-      admin_link: Managing framework and supplier data
   facilities_management:
     basket:
       basket_header: selected
@@ -310,94 +41,25 @@ en:
       removeall_text: Remove all
       selectall_text: Select all
     beta:
-      admin:
-        admin_account:
-          admin_account:
-            dashboard_assessed_value: Assessed value
-            dashboard_average_rate: Average framework rates
-            dashboard_calloff_rate: Call-off benchmark rates
-            dashboard_header: RM3830 administration dashboard
-            dashboard_manage_calloff_rate: Manage the call-off benchmark rates and variances
-            dashboard_manage_rate: Manage the average framework rates and variances
-            dashboard_supplier_data: Supplier data
-            dashboard_supplier_framework_data: Supplier framework data
-            dashboard_supplier_prices: Manage supplier services, prices and regions
-        sessions:
-          new:
-            admin_sign_in_header: Sign in to your administration dashboard
-            email_hint_html: Enter the email address you used to register
-        supplier_framework_data:
-          heading_title: Supplier framework data
-          rtrn_link: Return to admin dashboard
-          sublot_data:
-            breadcrumb_text_supplier_framework_data: Supplier framework data
-            heading_title: Sub-lot 1a services, prices, and variances
-            heading_title_three: Services and prices
-            heading_title_two: Variances
-            leading_text: Sub-lot 1a services, prices, and variances
-            note: The tick boxes in the first column indicate the services this suppler can provide.
-            update_button: Save and return to supplier framework data
-        supplier_rates:
-          supplier_benchmark_rates:
-            benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
-            heading_title: Call-off benchmark rates
-            heading_title_two: Benchmark variances
-            item: Item
-            leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
-            note: "*Use this column for normal price if Standard A isn't applicable"
-            rate: Rate
-            rate_a: Rate (£) *Standard A
-            rate_b: Rate (£) Standard B
-            rate_c: Rate (£) Standard C
-            rate_percentage_a: Rate (%)
-            rate_pound_a: Rate (£)
-            rtrn_link: Return to admin dashboard
-            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
-            td_corporate: Corporate overhead (%)
-            td_london: London location percentage variance (%)
-            td_mobilisation: Mobilisation (%)
-            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-            td_profit: Profit (%)
-            td_tupe: TUPE risk premium (%)
-            update_button: Save and return to dashboard
-          supplier_framework_rates:
-            heading_title: Average framework rates
-            heading_title_two: Average framework variances
-            item: Item
-            leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
-            note: "*Use this column for normal price if Standard A isn't applicable"
-            rate: Rate
-            rate_a: Rate (£) *Standard A
-            rate_b: Rate (£) Standard B
-            rate_c: Rate (£) Standard C
-            rate_percentage_a: Rate (%)
-            rate_pound_a: Rate (£)
-            rtrn_link: Return to admin dashboard
-            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
-            td_corporate: Corporate overhead (%)
-            td_london: London location percentage variance (%)
-            td_mobilisation: Direct award mobilisation (%)
-            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-            td_profit: Profit (%)
-            td_tupe: Direct award TUPE risk premium (%)
-            update_button: Save and return to dashboard
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description
         add_name_text: Add name
         answer_question_text: Answer question
+        building_was_saved: Your building was saved.  "%{name}" is ready for procurement.
         caption_addr: Address
         caption_desc: Description
         caption_gia: Gross internal area
         caption_name: Name
-        caption_region_nuts: Location (NUTS region)
+        caption_reference: Reference
         caption_sec: Security clearance
         caption_type: Building type
         change_text: Change
         no_data_message: There are no building details to view
         return_to_management_text: Return to manage buildings
         section-header: Building details summary
-        select_one_option_text: Please select one option
+        select_one_option_text: Select one option
+        status_warning_message: Your building was saved.  "%{name}" is incomplete.  You need to answer all questions to be used in procurement.
       building-gross-internal-area:
         add_header: Add building GIA
         edit_header: Change building GIA
@@ -409,476 +71,66 @@ en:
         input_label: sqm (square metres)
       buyer_account:
         buyer_account:
-          about_the_buyer_description: Edit buyer account details such as contact name, organisation name
-          about_the_buyer_title: About the buyer
           facilities_management:
             beta:
               index:
-                manage_procurements_link: Procurements dashboard
-          link_text: Update buyer details
-      buyer_details:
-        edit:
-          buyer_details: Buyer details
-          cant_find_addr_in_list: I can't find my address in the list
-          central_gov: Central government
-          change: Change
-          find_addr: Find address
-          name: Name
-          no_addr_found: 0 addresses found
-          no_addr_selected: No address selected
-          organisation_address: Organisation address
-          organisation_details: Organisation details
-          postcode: Postcode
-          search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you're unsure.
-          select_an_addr: Select an address
-          selected_addr: Selected address
-          submit: Save and continue
-          which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
-          wider_public_sector: Wider public sector
-          your_details: Your details
-        edit_address:
-          add_address: Add address
-          building_and_street: Building and street
-          county: County (optional)
-          postcode: Post code
-          submit: Save and continue
-          town_or_city: Town or city
-          your_details: Your details
+                manage_procurements_link: Manage procurements
+      gateway:
+        index:
+          cmp_support_aria_label: Email us for support with this service
+          cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+          heading: CCS Marketplace private beta
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
         column_name_header: Name
         column_status_header: Status
-        create_new_button: Create Single Building
+        create_new_button: "+ Create Single Building"
         link_to_building_summary: View details for building
         manage_building: Manage buildings
         manage_buildings_header: Manage buildings
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
-        procurements_dashboard_button: Procurements dashboard
-        start_paragraph: You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements.
-        start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer a cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require.
+        start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
+        start_warning: Only buildings that are ready can be used in your procurement.
+      passwords:
+        edit:
+          confirm_code: Confirm Code
+          confirm_new_password: Confirm new password
+          heading: Reset your password
+          lead: Reset password for
+          new_password: New password
+          password: Your password must have
+        forgot_password_confirmation:
+          heading: A reset email has been sent
+          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+          text01: If you don't receive this, email
+          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        new:
+          email: Email address
+          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+          heading: Reset password
+          lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        password_reset_success:
+          heading: You have successfully changed your password
+          lead: You can now sign in to your Crown Commercial Service account
       procurement_buildings:
-        building_standards:
-          back_to_service_information: Back to service information
-          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-          fabric_standard_a_copy: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
-          fabric_standard_a_title: Standard A - the general or normal service level
-          fabric_standard_b_copy: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
-          fabric_standard_b_title: Standard B - this is the minimum level of service required
-          fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
-          fabric_standard_c_title: Standard C - this level of service will be bespoke and site or area specific
-          heading: Building fabric maintenance services standards
-          save_and_return_to_service_information: Save and return to service information
-          subheading: What standard are you applying to all selected building fabric maintenance services?
-        cleaning_standards:
-          back_to_service_information: Back to service information
-          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-          cleaning_standard_a_copy: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
-          cleaning_standard_a_title: Standard A - the general or normal service level
-          cleaning_standard_b_copy: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
-          cleaning_standard_b_title: Standard B - the highest service level
-          cleaning_standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-          cleaning_standard_c_title: Standard C - a bespoke service level
-          heading: Cleaning services standards
-          save_and_return_to_service_information: Save and return to service information
-          subheading: What standard are you applying to all selected cleaning services?
-        ppm_standards:
-          back_to_service_information: Back to service information
-          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-          heading: Planned maintenance (PPM) services standards
-          save_and_return_to_service_information: Save and return to service information
-          standard_a_copy: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
-          standard_a_title: Standard A - the general or normal service level
-          standard_b_copy: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
-          standard_b_title: Standard B - this is the minimum level of service required
-          standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-          standard_c_title: Standard C - a bespoke service level
-          subheading: What standard are you applying to all selected planned maintenance services?
-        service_hour_summary:
-          service_hours_caption: Service times
-          total_hours_tip: Total annual hours this service will be used
         show:
-          answer_question: Answer question
           back_to_detailed_summary: Back to detailed search summary
-          gia: Gross internal area (GIA)
-          gia-summary: The gross internal area of the building (in square meters)
           heading: Service information
-          lift_data: The sum total of number of floors
           no_of_appliances_for_testing: The number of appliances to be tested per annum
           no_of_building_occupants: The number of building occupants
           no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
           no_of_hours_of_service_provision: The number of hours of service provision per annum
           no_of_units_to_be_serviced: The number of units to be serviced per annum
-          service: Service
-          service_hours: Service hours
           service_standard: The service standard required
           size_of_external_area: The size of the external area (in square metres)
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
-          total_floors_per_lift: The sum total of number of floors
-          volume_required_heading: Volume required (per annum)
-          volume_required_html: "<b>Volume required <br> (per annum)</b>"
-        volume:
-          back_to_service_information: Back to service information
-          caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
-          heading: Service information volumes
-          question:
-            no_of_appliances_for_testing: How many appliances to be tested per annum?
-            no_of_building_occupants: How many building occupants?
-            no_of_consoles_to_be_serviced: How many consoles to be serviced per annum?
-            no_of_units_to_be_serviced: How many units to be serviced per annum?
-            size_of_external_area: What is the size of the external area (in square metres)?
-            tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
-          save_and_return_to_service_information: Save and return to service information
-          subheading: Answer additional questions about the services
-      procurement_buildings_services:
-        day_section:
-          copy_details: Apply to Monday through Friday
-        lifts:
-          back_to_service_information: Back to service information
-          save_and_return_to_service_information: Save and return to service information
-        service_hours:
-          back_to_service_information: Back to service information
-          save_and_return_to_service_information: Save and return to service information
-          service_hours_description_html: "<p>The hours you enter will be used to:</p><ul><li>inform the supplier the exact hours you require this service to be delivered</li><li>calculate the cost of this service</li></ul><p>The calculation will assume 52 weeks x 7 days in one year.</p>"
-          service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard week
-        show:
-          back_to_service_information: Back to service information
-          save_and_return_to_service_information: Save and return to service information
+          total_floors_per_lift: The sum total of number of floors per lift
       procurements:
         about_the_contract:
           no_cost_provided: None
-        call_off_extensions:
-          add_extension_period: Add another extension period
-          description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
-        contracts:
-          awaiting_response:
-            else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
-            if_accepted_header: If the supplier accepts the offer
-            if_accepted_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
-            if_accepted_list_2: the supplier will sign the contract and send it back to you (offline)
-            if_accepted_list_3: you will then sign the contract and send it back to the supplier (offline)
-            if_accepted_list_4: you will confirm on this portal that the contract has been signed by both parties
-            if_declined_header: If the supplier declines the offer
-            if_declined_list_1: "- offer the contract to the next placed supplier (after reviewing their price)"
-            if_declined_list_2: "- switch to a further competition"
-            if_declined_list_3: "- change your requirements"
-            if_declined_list_4: "- stop the process"
-            if_declined_list_header_1: you will be notified that they have declined your offer, and be provided with a reason why
-            if_declined_list_header_2: 'you have the choice to:'
-            title: What happens next
-            two_working_days: The supplier has 2 working days (48 hours) to accept or decline your offer.
-          awaiting_signature:
-            confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the 'effective date', and the term of the contract is calculated forwards from this date
-            confirmation_2: you can then click on the link below to confirm that the contract is now signed, and on which date. The procurement dashboard will detail your live contracts, which is useful when it comes to contract management and renewal
-            supplier_signs_1: the supplier will sign the contract and send it back to you
-            supplier_signs_2: this will happen offline (outside this portal)
-            supplier_signs_3: usually within 5 working days
-            title: What happens next
-            you_sign_1: you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
-            you_sign_2: this will happen offline (outside this portal)
-            you_sign_3: usually within 2 working days
-          closed:
-            contract_closed:
-              info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
-              title: Your procurement has been closed
-            contract_signed:
-              end_date: End date
-              info_1: You have confirmed that both parties have signed.
-              info_2: This is now a live contract.
-              live_period: Live contract period
-              start_date: Start date
-              title: Your contract has been signed
-            index:
-              return_text: Return to procurements dashboard
-          closing_direct_award_offer:
-            are_you_sure_1: Are you sure you wish to close the
-            are_you_sure_2: procurement?
-            closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
-            once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
-            reason: Please provide a reason for closing this procurement
-          confirmation_of_signed_contract:
-            contract_end_date: Enter contract end date
-            contract_end_date_caption: The contract end date should be the same as the end of your initial call-off period. For example, 01 11 2030.
-            contract_start_date: Enter contract start date
-            contract_start_date_caption: The contract start date is the 'effective date' - this is the date the final party signed the contract. For example, 01 11 2030.
-            contract_will_not_be_signed: This contract will not be signed.
-            contract_will_not_be_signed_reason: Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.
-            description: Please confirm if both parties have signed and exchanged the contract
-            input_remaining: You have 100 characters remaining
-            title: Confirmation of signed contract
-          contract_offer_details:
-            declined: The supplier declined this contract offer on
-            expired: This contract offer expired on
-            not_signed_1: You confirmed on
-            not_signed_2: that the contract has not been signed.
-            reason_for_not_signed: Your reason for not signing this contract offer was
-            sent: You sent this contract offer to the supplier on
-            sent_accepted: The supplier accepted the contract offer on
-            sent_no_response: The supplier has not yet responded.
-            signed_confirmed_1: You confirmed on the
-            signed_confirmed_2: that the contract has been signed by both parties.
-            supplier_declined_reason: 'The supplier''s reason for declining was:'
-            withdrawn_reason: 'Your reason for withdrawing this offer was:'
-          contract_summary_foot:
-            close: You can close this procurement by clicking on the 'Close this procurement' button below, it will then be viewable in the closed section of your procurements dashboard. If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. This is a quick way to amend some of your requirements and re-run the results.
-            confirm: Use the ‘confirm if contract signed or not’ button below to confirm whether or not the contract was signed.
-            confirm_and_close: You can still withdraw this contract offer; if you need to, use the 'Close this procurement' button below, which will withdraw the offer from the supplier, and close the procurement.
-            expired: The supplier did not respond within the required timescale, so this has been automatically recorded as declined with 'no response' as the reason.
-            next_steps: Available next steps
-            next_supplier: You can look at the next lowest priced supplier and the option of offering them your contract. Click on the 'View next supplier's price’ button below.
-            or: or
-            reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
-            withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
-          next_supplier:
-            about_the_price: About the price
-            about_the_price_description: The price shown is the contract value, excluding VAT, based on the contract terms and service requirements you have entered.
-            close: You can close this procurement
-            close_point_1: by clicking on the button below, it will then be viewable in the closed section of your procurements dashboard.
-            close_point_2: You will then have the option to create a copy of the requirements for use in a new/similar procurement, or further competition
-            next_lowest: The next lowest supplier who can deliver the services to your buildings is
-            next_steps: Available next steps
-            offer: You can offer your contract to this supplier
-            offer_list_1: we have generated your contract documents using this supplier's details and pricing
-            offer_list_2: the supplier will have 2 working days to respond to your offer
-            price: The contract price with this supplier is
-            return_to_dashboard: You can return to your procurements dashboard
-            return_to_dashboard_description: you can simply return to your procurements dashboard in which you will find a saved copy of this contract for when you are ready
-            title: Offer to next supplier
-          procurement_closed:
-            closed_1: The
-            closed_2: procurement has been closed.
-            description: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
-            title: Your procurement has been closed
-          procurement_requirements:
-            buildings_services: Buildings and services
-            call_off_extensions_1: Optional call-off extension period 1
-            call_off_extensions_2: Optional call-off extension period 2
-            call_off_extensions_3: Optional call-off extension period 3
-            call_off_extensions_4: Optional call-off extension period 4
-            contract_name: Contract name
-            contract_number: Contract number
-            contract_value: Contract value
-            date_of_first_indexation: Date of first indexation
-            direct_award: Direct award
-            framework: Framework, sub-lot
-            framework_details: RM3830, sub-lot 1a
-            initial_call_off_period: Initial call-off period
-            mobilisation_period: Mobilisation period
-            route_to_market: Route to market
-          procurement_requirements_head:
-            supplier: Supplier
-          sent:
-            index:
-              accepts_header: 1. If the supplier accepts the offer
-              accepts_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
-              accepts_list_2: the supplier will sign the contract and send it back to you (offline)
-              accepts_list_3: you will then sign the contract and send it back to the supplier (offline)
-              accepts_list_4: you will confirm on this portal that the contract has been signed by both parties
-              declines_header: 2. If the supplier declines the offer
-              declines_list_1: you will be notified that they have declined your offer, and provided a reason why
-              declines_list_2: 'you have the choice to:'
-              declines_list_2_sub_1: "- offer the contract to the next placed supplier (after reviewing their price)"
-              declines_list_2_sub_2: "- switch to a further competition"
-              declines_list_2_sub_3: "- change your requirements"
-              declines_list_2_sub_4: "- stop the process"
-              further_information: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
-              header: Your contract was sent
-              what_happens_next: What happens next
-              what_happens_next_sub: The supplier has 2 working days (48 hours) to accept or decline your offer.
-          show:
-            call_off_contract_documents: Call-off contract documents
-            requirements: Requirements
-            supplier_contact_details: Supplier contact details
-        contracts_helper:
-          warning_message:
-            accepted: Awaiting your confirmation of signed contract.
-            closed: This contract offer was closed on
-            declined: The supplier declined this offer
-            expired: The supplier did not respond to your contract offer within the required 2 working days (48 hours).
-            not_signed_1: You confirmed on the
-            not_signed_2: that the contract has not been signed
-            sent: This offer was sent to the supplier on
-            signed: You confirmed that the contract period is between
-        da_buyer:
-          contract_details:
-            contract_details_description: Please provide further information that will help us put your contract together.
-          contract_details_summary:
-            authorised_representative: Authorised representative details
-            invoicing_contact_details: Invoicing contact details
-            local_government_pension_scheme: Local Government Pension Scheme
-            notices_contact_details: Notices contact details
-            payment_method: Payment method
-            security_policy_document: Security policy
-          did_you_know:
-            contract_documents:
-              call_off_schedule_5:
-                document_name: Call-Off Schedule 5 - Call-Off Pricing (DA).docx
-                title: call-off schedule 5 - call-off pricing.
-              joint_schedule_3:
-                document_name: Joint Schedule 3 - Insurance Requirements (DA).docx
-                title: joint schedule 3 - insurance requirements.
-              service_requirements_and_standards:
-                document_name: RM3830 Service requirements and standards.docx
-                title: service requirements and standards
-            indexation_body_html: Your supplier will have the opportunity to adjust their pricing using the CPI index data on the first anniversary of your contract start date. Further information on this can be found in
-            indexation_heading: Indexation
-            insurance_body_html: Fixed levels of insurance will apply and cannot be changed within a direct award. To view the levels and for further information, please see
-            insurance_heading: Insurance
-            intro-text: There are some elements of a direct award contract that cannot be amended. Please read the below information to ensure that a direct award is suitable for you.
-            price_body_html: Your price has been calculated using rates that were submitted by suppliers when they competed to join the framework. There can be no further negotiation on the price within a direct award.
-            price_heading: Price
-            services_body_html_1: The service specifications and service standards cannot be amended within a direct award. Please check within the
-            services_body_html_2: that you're happy with the details for the services you are buying.
-            services_heading: Services
-          pricing:
-            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If there is more than one supplier that can meet your requirements, and the lowest priced supplier declines the opportunity, then the details of the second place supplier will be presented to you, with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
-            lowest_price_supplier: lowest priced supplier
-            supplier_description_plural: that can offer your services under direct award, their contract prices are shown below in ascending order.
-            supplier_description_singular: that can offer your services under direct award, their contract price is shown below.
-          procurement_requirements:
-            buildings_services: Buildings and services
-            contract_name: Contract name
-            contract_value: Contract value
-            date_of_first_indexation: Date of first indexation
-            direct_award: Direct award
-            framework_sublot_title: Framework, sub-lot
-            framework_sublot_value: RM3830, sub-lot 1a
-            initial_call_off_period: Initial call-off period
-            mobilisation_period: Mobilisation period
-            optional_call_off_extensions_1: Optional call-off extension period 1
-            optional_call_off_extensions_2: Optional call-off extension period 2
-            optional_call_off_extensions_3: Optional call-off extension period 3
-            optional_call_off_extensions_4: Optional call-off extension period 4
-            route_to_market: Route to Market
-            supplier: Supplier
-          review_contract:
-            attachment_1:
-              document_name: About the Direct Award.docx
-              guidance: This document tells the supplier important information about the contract you have offered.
-              heading: Attachment 1
-              title: About the direct award
-            attachment_2:
-              annex_a:
-                guidance: This document sets out the processes, standards and service delivery response times the suppliers must adhere to in delivery of the services.
-                title: Annex A - standards & processes
-              heading: Attachment 2
-              statement_of_requirements:
-                guidance: This document forms the basis of your requirement, and includes your building information, the services you require in each building, and the service specification.
-                title: Statement of requirements (deliverables matrix)
-            attachment_3:
-              heading: Attachment 3
-              price_matrix:
-                guidance: This document contains the details of your contractual pricing, and a breakdown of the component parts.
-                title: Price matrix
-            attachment_4:
-              core_terms:
-                guidance: The Core Terms are based on CCS's standard commercial terms under The Public Sector Contract.
-                title: Core terms
-              heading: Attachment 4 - Contract (Order form and Schedules)
-              order_form:
-                guidance: The Order Form is the overarching contract document where key contractual decisions are highlighted, the Core Terms, Joint Schedules and Call-off Schedules are listed and contract signatures from both parties are captured.
-                title: Order form
-            change_requirements:
-              guidance: If you wish to make changes to your requirements, click on the 'Change requirements' button below.
-              title: Change requirements
-            change_schedule:
-              guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended
-            contract_documents:
-              call_off_schedule_1:
-                document_name: Call-Off Schedule 1 Transparency Reports (DA).docx
-                title: Call-off Schedule 1 - Transparency Reports
-              call_off_schedule_10:
-                document_name: Call-Off Schedule 10 - Exit Management (DA).docx
-                title: Call-off Schedule 10 - Exit Management
-              call_off_schedule_13:
-                document_name: Call-Off Schedule 13 - Mobilisation Plan and Testing (DA).docx
-                title: Call-off Schedule 13 - Mobilisation Plan and Testing
-              call_off_schedule_2:
-                document_name: "#"
-                title: Call-off Schedule 2 - Staff Transfer
-              call_off_schedule_3:
-                document_name: Call-Off Schedule 3 - Continuous Improvement (DA).docx
-                title: Call-off Schedule 3 - Continuous Improvement
-              call_off_schedule_4:
-                document_name: Call-Off Schedule 4 - Facilities Management (DA).docx
-                title: Call-off Schedule 4 - Facilities Management
-              call_off_schedule_4A:
-                document_name: Call-Off Schedule 4A - Billable Works and Projects (DA).docx
-                title: Call-off Schedule 4A - Billable Work and Projects
-              call_off_schedule_5:
-                document_name: Call-Off Schedule 5 - Call-Off Pricing (DA).docx
-                title: Call-off Schedule 5 - Call-off Pricing
-              call_off_schedule_6:
-                document_name: Call-Off Schedule 6 - TUPE Surcharge (DA).docx
-                title: Call-off Schedule 6 - TUPE Surcharge
-              call_off_schedule_7:
-                document_name: Call-Off Schedule 7 - Key Staff (DA).docx
-                title: Call-off Schedule 7 - Key Staff
-              call_off_schedule_8:
-                document_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
-                title: Call-Off Schedule 8 - Business Continuity and Disaster Recovery
-              call_off_schedule_9:
-                document_name: Call-Off Schedule 9 - Security (DA).docx
-                title: Call-off Schedule 9 - Security
-              joint_schedule_1:
-                document_name: Joint Schedule 1 - Definitions (DA).docx
-                title: Joint Schedule 1 - Definitions
-              joint_schedule_10:
-                document_name: Joint Schedule 10 - Rectification Plan (DA).docx
-                title: Joint Schedule 10 - Rectification Plan
-              joint_schedule_11:
-                document_name: Joint Schedule 11 - Processing Data (DA).docx
-                title: Joint Schedule 11 - Processing Data
-              joint_schedule_2:
-                document_name: Joint Schedule 2 - Variation Form (DA).docx
-                title: Joint Schedule 2 - Variation Form
-              joint_schedule_3:
-                document_name: Joint Schedule 3 - Insurance Requirements (DA).docx
-                title: Joint Schedule 3 - Insurance Requirements
-              joint_schedule_5:
-                document_name: Joint Schedule 5 - Corporate Social Responsibility (DA).docx
-                title: Joint Schedule 5 - Corporate Social Responsibility
-              joint_schedule_6:
-                document_name: Joint Schedule 6 - Key Subcontractors (DA).docx
-                title: Joint Schedule 6 - Key Subcontractors
-              joint_schedule_7:
-                document_name: Joint Schedule 7 - Financial Distress (DA).docx
-                title: Joint Schedule 7 - Financial Distress
-            documents:
-              heading: 1. Contract documents
-              text: Please review the contract documents below. These documents will form the contract between the supplier and your organisation.
-            download_documents:
-              guidance: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to the supplier.
-              title: Download all contract documents
-            security_policy:
-              guidance: The buyer's security policy document.
-              heading: Security policy
-              title: Security policy
-            sending_contract:
-              guidance: Following your review of the contract documents in section 1 above, please click on the button below to create a zipped folder of the documents ready to send as an offer to the supplier.
-              heading: 2. Sending the contract
-        dashboard_tables:
-          closed:
-            no_closed: You do not have any closed contracts
-          contracts:
-            no_live: You do not have any live contracts
-          in_draft:
-            no_drafts: You do not have any offers in the draft
-          searches:
-            no_searches: You do not have any searches
-          sent_offers:
-            no_sent: You do not have any sent offers
-        detailed_search_summary:
-          delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
-          detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
-          detailed_search_summary_title: Detailed search summary
         edit:
-          authorised_representative:
-            authorised_representative_detail_description: Select an authorised representative
-            authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
-            change: Change
-            new: Enter a new authorised representative
           back_to_detailed_summary: Back to detailed search summary
           building_services:
             change_buildings: "+ Change buildings"
@@ -891,75 +143,16 @@ en:
           contract_name:
             contract_name_info: This will help you to refer to your contracts when talking to suppliers.
             contract_name_question: What do you want to call your contract?
-          delete_message: Are you sure you want to delete this search result?  This action cannot be undone.
+          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
           detailed_search: Detailed search
-          invoicing_contact_details:
-            change: Change
-            invoicing_contact_detail_description: Select an invoicing contact
-            invoicing_contact_detail_description_header: This is the relevent contact for invoicing.
-            new: Enter a new invoicing contact
-          local_government_pension_scheme:
-            description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
-          new_authorised_representative_address:
-            building_and_street: Building and street
-            county: County (optional)
-            postcode: Postcode
-            town_or_city: Town or city
-          new_authorised_representative_details:
-            address: Address
-            change: Change
-            choose_address: Select an address
-            email: Email address
-            job_title: Job title
-            missing_address: I can't find my address in the list
-            name: Name
-            telephone_number: Telephone number
-          new_invoicing_address:
-            building_and_street: Building and street
-            county: County (optional)
-            postcode: Postcode
-            town_or_city: Town or city
-          new_invoicing_contact_details:
-            address: Address
-            change: Change
-            choose_address: Select an address
-            email: Email address
-            job_title: Job title
-            missing_address: I cant find my address in the list
-            name: Name
-          new_notices_address:
-            building_and_street: Building and street
-            county: County (optional)
-            postcode: Postcode
-            town_or_city: Town or city
-          new_notices_contact_details:
-            address: Address
-            change: Change
-            choose_address: Select an address
-            email: Email address
-            job_title: Job title
-            missing_address: I cant find my address in the list
-            name: Name
           next_step:
+            building_services: 'Next: Service information'
             contract_dates: 'Next: Buildings'
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
             procurement_buildings: 'Next: Services'
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
-          notices_contact_details:
-            change: Change
-            new: Enter a new contact for notices
-            notices_contact_detail_description: Select a contact for notices
-            notices_contact_detail_description_header: The person to whom contract notices should be communicated.
-          payment_method:
-            bacs_payment: BACS payment
-            government_procurement_card: Government procurement card
-            payment_description: Please select the payment method that will be used
-          pension_funds:
-            description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
-            form_title: List of pension funds
-            heading: How many pension funds are involved?
           procurement_buildings:
             buildings_selected: Buildings selected
             content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
@@ -967,37 +160,18 @@ en:
             no_buildings_selected: No buildings selected
             remove_all: Remove all
             sub_heading: Select all of the buildings you want to include in your procurement
-          procurement_pension_fund:
-            name_text: Pension fund name
-            percentage_text: Percentage of pensionable pay
           quick_search: Search result
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
           search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
-          security_policy_document:
-            document:
-              guidance: Supported file types are DOC, DOCX and PDF. Maximum file size is 10MB.
-              title: Security policy document
-            document_date:
-              label: Please input the date of your security policy document. For example, 31 3 2019
-              title: Security policy document date (optional)
-            document_name:
-              label: Please input the name of your security policy document
-              title: Security policy document name
-            document_version_number:
-              label: Please input the version number of your security policy document
-              title: Security policy document version number
-            guidance: The site monitors file uploads for unusual activity. Security incidents resulting from buyer file uploads may be subject to CCS investigation with the Buyer.
-            question: Do you have an organisation security policy that you wish to form part of this contract? If yes, can you provide this document?
-            title: Security policy document
           services:
             service_specification_doc: Read the service specification document
           tupe:
-            body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
-            first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
+            body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
+            first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
             tupe_title: TUPE
-            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state" tabindex="-1">Find out when TUPE applies</a>
+            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees<br /> when the business or commercial contract that they are working on changes to new ownership. It ensures<br /> that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br /> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
             what_you_need_to_know_title: What you need to know about TUPE
         edit_procurement:
           cancel_and_return: Cancel and return to Procurements
@@ -1012,18 +186,9 @@ en:
           region: Region
           service: Service
         index:
-          closed_title: Closed
-          contracts_title: Contracts
-          direct_award_title: Direct award
-          in-draft-title: In draft
-          manage_procurements: Procurements dashboard
-          searches_title: Searches
-          sent_offers: Sent offers
-          start_new_search: Start a new search
-        mobilisation_period:
-          description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
+          manage_procurements: Manage procurements
         new:
-          cancel_text: Cancel, and return to the procurements dashboard
+          cancel_text: Cancel, and return to the manage procurements page
           save_for_later: Save for later
           save_your_search: Save your search
           search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sublots below, subject to your total contract value.
@@ -1040,23 +205,6 @@ en:
           question: Where are your buildings located?
           remove_all: Remove all
           subtitle: Choose one or more regions, based on building's location where you require facilities management services.
-        results:
-          any_changes: Any changes to the information provided may result in a different outcome.
-          available_routes_to_market: Available route to market
-          building_services_summary: Buildings and services summary
-          da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
-          direct_award_label_html: "<b>Direct award</b> (the most competitive direct award price is %{price})"
-          estimated_cost: Estimated cost
-          estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework and benchmark pricing, and your current cost.  <br/>This cost has been used to place you in the correct sub-lot.
-          estimated_cost_how: How your estimated cost was calculated?
-          fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
-          further_competition_html: "<b>Further competition</b>"
-          sub-lot: Lot
-          sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
-          suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
-          what_is_da: What is a direct award?
-          what_is_fc: What is further competition?
-          who_are: who are able to provide the services your require in your location(s)
         services:
           no_services_selected: No services selected
           question: Select the facilities management services that you need
@@ -1064,88 +212,14 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
+        show:
+          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
       sessions:
         new:
+          email_address: Email address
           email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
-          nonadmin_sign_in_header: Sign in to your account
-      supplier:
-        contracts:
-          accepted_contract_offer:
-            list01_1: you will sign the contract first, in the order form, and share with the buyer
-            list01_2: this would usually take place within 5 working days
-            list02_1: the buyer will then complete the effective date (on page 4 of the order form - this is the date the contract is fully signed), sign the contract, and share it back with you
-            list02_2: this would usually take place within 2 working days
-            list03_1: the buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date
-            list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
-            list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
-            what_happens_next: What happens next
-          contract_offer_details:
-            accepted_contract_offer: You accepted this contract offer on
-            buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
-            contract_closed_on: This contract offer was closed on
-            contract_received_on: This contract offer was received on
-            reason_for_declining: Your reason for declining was
-            reason_for_not_signing: The buyer’s reason for not signing this contract was
-            reason_for_withdrawing: The buyer's reason for withdrawing this contract offer was
-          contract_summary_foot:
-            respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
-          edit:
-            contract_name: 'Contract name:'
-            contract_number: 'Contract number:'
-            form_title: Do you accept the contract offer from
-            reason_for_declining: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
-          procurement_requirements_head:
-            buyer: Buyer
-          received_contract_offer:
-            list01_1: you should review the offer to see if you wish to accept the contract
-            list01_2: please ensure you download and review all the contract documents
-            list02_1: you are required to accept or decline this offer within 48 hours (Monday to Friday only, excluding weekends and bank holidays)
-            list02_2: the deadline for your response is shown at the top of this page
-            list03_1: if you do not respond within 48 hours it will be recorded as 'no response' and the offer will be automatically withrawn allowing the customer the option of offering the contract to the next lowest priced supplier
-            what_happens_next: What happens next
-          show:
-            buyer_contact_details: Buyer contact details
-            call_off_contract_documents: Call off contract documents
-            requirements: Requirements
-        sent:
-          accepted_offer:
-            list01_1: you will sign the contract first, in the order form, and share with the buyer
-            list01_2: this would usually take place within 5 working days
-            list01_title: 1. You sign the contract
-            list02_1: the buyer will then complete the effective date (on page 4 of the order form - this is the date the contract is fully signed), sign the contract, and share it back with you
-            list02_title: 2. Buyer signs the contract
-            list03_1: the buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date
-            list03_title: 3. Signature confirmation
-            list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
-            list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
-            list04_title: 4. Withdraw before signing
-            what_happens_next: What happens next
-          declined_offer:
-            contract_name: 'Contract name:'
-            contract_number: 'Contract number:'
-            description: For reference, this contract offer will be be viewable only in the closed section of your dashboard.
-            title: You have declined this contract offer
-          index:
-            link_text: Return to dashboard
-        sessions:
-          new:
-            email_address: Email address
-            email_hint_html: Enter the email address you used to register
-            forgotten_password_html: I've forgotten my password
-            password: Password
-            sign_in_header: Sign in to your account
-        users:
-          new_password_required:
-            confirm_your_password: Confirm your password
-            create_your_password: Create a password you'll remember
-            heading: Change your password
-            intro: This is the first time you've signed in to your account. You need to reset your password.
-          sms_mfa:
-            access_code: Access code
-            content: It may take a few minutes to arrive.
-            heading: Enter your access code
-            lead: 'We just sent a 6 digit access code by text to:'
-            resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
+          forgotten_password_html: I've forgotten my password
+          password: Password
       users:
         new_password_required:
           confirm_your_password: Confirm your password
@@ -1158,6 +232,11 @@ en:
           heading: Enter your access code
           lead: 'We just sent a 6 digit access code by text to:'
           resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     home:
       beforeyoustart: Before you start
       heading: Find Facilities Management services
@@ -1185,8 +264,28 @@ en:
         remove_all: Remove all
         service_specification_doc: Read the service specification document
         services_selected: Services selected
-        start_a_new_procurement_header: Start a new procurement
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
+    passwords:
+      edit:
+        confirm_code: Confirm Code
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        lead: Reset password for
+        new_password: New password
+        password: Your password must have
+      forgot_password_confirmation:
+        heading: A reset email has been sent
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
     registrations:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
@@ -1206,7 +305,7 @@ en:
       heading: Where are your buildings located?
       subheading: Choose one or more regions, based on building's location where you require facilities management services.
     select_services:
-      heading: Select the facilities management services that you need
+      heading: Select the facilities management services do you need
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
       servicespec_link_text: Read the service specification document
       subheading: Choose all facilities management services required within your estate, even if you want services in just one building.
@@ -1216,7 +315,6 @@ en:
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
-        sign_in_header: Sign in to your account
     users:
       confirm_new:
         confirmation_code: Confirmation code
@@ -1236,38 +334,3 @@ en:
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
         resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
-  shared:
-    gateway:
-      index:
-        cmp_support_aria_label: Email us for support with this service
-        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
-        heading: CCS Marketplace private beta
-    passwords:
-      edit:
-        confirm_code: Confirm Code
-        confirm_new_password: Confirm new password
-        heading: Reset your password
-        heading1: A reset email has been sent.
-        lead: Reset password for
-        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
-        new_password: New password
-        password: Your password must have
-        text_html: If you don't receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-      forgot_password_confirmation:
-        heading: A reset email has been sent.
-        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
-        text01: If you don't receive this, email
-        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-      new:
-        email: Email address
-        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
-        heading: Reset password
-        lead: Enter your email address and we'll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
-      password_reset_success:
-        heading: You have successfully changed your password
-        lead: You can now sign in to your Crown Commercial Service account
-    sessions:
-      new:
-        email_address: Email address
-        forgotten_password_html: I've forgotten my password
-        password: Password
