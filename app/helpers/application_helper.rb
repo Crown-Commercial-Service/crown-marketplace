@@ -49,13 +49,17 @@ module ApplicationHelper
 
     content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
       content_tag :div, class: form_group_css, data: top_level_data_options do
-        concat display_error_label(model_object, attribute, label_text, "#{form_object_name}_#{attribute}")
-        concat display_label(label_text, "#{form_object_name}_#{attribute}") if label_text.present?
+        concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
+        concat display_label(attribute, label_text, "#{form_object_name}_#{attribute}") if label_text.present?
         concat yield
       end
     end
   end
   # rubocop:enable Metrics/ParameterLists
+
+  def display_label(attribute, text, form_object_name)
+    content_tag :label, text, class: 'govuk-label', for: "#{form_object_name}_#{attribute}"
+  end
 
   def govuk_form_group_with_optional_error(journey, *attributes)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
