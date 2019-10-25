@@ -1,7 +1,7 @@
-<h1 style="margin-left:-1rem !important;" class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0"><%= t('.tupe_title') %></h1>
+<h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0"><%= t('.tupe_title') %></h1>
 <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:tupe].any? %>" data-propertyname="TUPE"
-    style="<%= 'padding-left:2em' if @procurement.errors[:tupe].any?%>">
-  <div class="govuk-grid-row govuk-!-margin-top-3">
+    style="<%= 'padding-left:1em' if @procurement.errors[:tupe].any?%>">
+  <div class="govuk-!-margin-top-3">
   <span class="govuk-heading-s govuk-!-margin-bottom-0">
     <%= t('.first_question') %>
   </span>
@@ -10,7 +10,7 @@
   </span>
   </div>
 
-  <div class="govuk-grid-row govuk-!-margin-top-3">
+  <div class="govuk-!-margin-top-3">
     <details class="govuk-details" data-module="govuk-details">
       <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
@@ -23,7 +23,7 @@
     </details>
   </div>
 
-  <div class="govuk-grid-row govuk-!-margin-top-3">
+  <div class="govuk-!-margin-top-3">
     <%= display_error_label @procurement, :tupe, '', 'facilities_management_procurement_tupe_true' %>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">

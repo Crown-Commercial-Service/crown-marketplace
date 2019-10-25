@@ -4,7 +4,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def does_form_for_current_step_require_special_client_validation?(params)
-    %i[contract_dates].include? params[:step].try(:to_sym)
+    %i[contract_dates estimated_annual_cost].include? params[:step].try(:to_sym)
   end
 
   def format_date(date_object)
