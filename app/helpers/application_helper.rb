@@ -79,12 +79,12 @@ module ApplicationHelper
     end
   end
 
-  def display_potential_errors(model_object, attribute)
+  def display_potential_errors(model_object, attribute, form_object_name)
     collection = validation_messages(model_object.class.name.demodulize.downcase.to_sym, attribute)
 
-    content_tag :div, class: 'error_collection' do
+    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attribute}" do
       collection.each do |key, val|
-        concat(govuk_validation_error(model_object, attribute, key, val))
+        concat(govuk_validation_error(model_object, attribute, key, val, form_object_name))
       end
     end
   end
@@ -100,12 +100,12 @@ module ApplicationHelper
 
   # Renders a govuk compliant error-content div with a client-compatible validation type
   # and text for use as static content in the page
-  def govuk_validation_error(model_object, attribute, error_type, text)
+  def govuk_validation_error(model_object, attribute, error_type, text, form_object_name)
     tag_validation_type = ERROR_TYPES.include?(error_type) ? ERROR_TYPES[error_type] : error_type
     css_classes = ['govuk-error-message']
     css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, error_type, attribute
 
-    content_tag :div, content_tag(:span, text), class: css_classes, data: { validation: tag_validation_type }
+    content_tag :label, content_tag(:span, text), class: css_classes, for: "#{form_object_name}_#{attribute}", data: { validation: tag_validation_type }
   end
 
   def model_has_error?(model_object, error_type, *attributes)

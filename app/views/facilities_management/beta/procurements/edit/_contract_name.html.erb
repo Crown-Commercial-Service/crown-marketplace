@@ -1,17 +1,21 @@
 <h1 style="margin-left:-1rem !important;" class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0">Contract Name</h1>
-<div class="govuk-grid-row govuk-!-margin-top-3">
-  <div class="govuk-character-count" data-module="character-count" data-maxlength="100">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
-        <h1 class="govuk-fieldset__heading">
-          <%= t('.contract_name_question') %>
-        </h1>
-    </legend>
+<div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:contract_name].any? %>" data-propertyname="Contract name"
+     style="<%= 'padding-left:2em' if @procurement.errors[:contract_name].any?%>">
+  <div class="govuk-grid-row govuk-!-margin-top-3">
+    <div class="govuk-character-count" data-module="character-count" data-maxlength="100">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
+          <h1 class="govuk-fieldset__heading">
+            <%= t('.contract_name_question') %>
+          </h1>
+      </legend>
 
-    <span id="with-hint-hint" class="govuk-hint">
-      <%= t('.contract_name_info') %>
-    </span>
+      <span id="with-hint-hint" class="govuk-hint">
+        <%= t('.contract_name_info') %>
+      </span>
 
-    <%= f.label :contract_name, class: "govuk-label" %>
-    <%= f.text_field :contract_name, class: 'govuk-input govuk-input--width-30 js-character-count', maxlength: 100%>
+      <%= f.label :contract_name, class: "govuk-label" %>
+      <%= display_error_label @procurement, :contract_name, '', 'facilities_management_procurements_contract_name' %>
+      <%= f.text_field :contract_name, class: 'govuk-input govuk-input--width-30 js-character-count', maxlength: 100%>
+    </div>
   </div>
 </div>
