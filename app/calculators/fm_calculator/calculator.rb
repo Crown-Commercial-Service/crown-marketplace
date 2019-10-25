@@ -250,6 +250,7 @@ module FMCalculator
       year1totalcharges = year1total + profit(year1)
 
       if results
+        results[:subtotal1] = subtotal1
         results[:year1totalcharges] = year1totalcharges
         results[:cafm] = cafm(subtotal2)
         results[:helpdesk] = helpdesk(subtotal2)
