@@ -25,7 +25,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
 
       it 'will have its specific error message' do
-        # puts $stdout, procurement.errors.details[0][:error].to_s
         procurement.service_codes = []
         procurement.valid?(:services)
         expect(procurement.errors[:service_codes][0]).to eq 'Select at least one service you need to include in your procurement'
