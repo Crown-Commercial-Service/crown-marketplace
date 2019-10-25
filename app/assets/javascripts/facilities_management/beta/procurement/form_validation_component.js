@@ -323,7 +323,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
 
     this.toggleError = function (jQueryElement, show, errorType) {
-        let jqueryElementForInputGroup = jQueryElement.parent(".govuk-form-group");
+        let jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group");
         let error_text = "";
         if (jqueryElementForInputGroup.length == 0) {
             jqueryElementForInputGroup = this.insertElementToCreateFieldBlock(jQueryElement);
