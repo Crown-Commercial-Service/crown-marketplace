@@ -82,15 +82,16 @@ class FacilitiesManagement::DirectAwardSpreadsheet
            .flatten.uniq
            .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
 
+        # ChrisG suggest an alternative call to work_package to het the service description
         new_row = [s, FacilitiesManagement::Service.where(code: s).first.name]
 
         new_row2 = []
         sum = 0
         sorted_building_keys.each do |k|
-          new_row2 << @data[k][s][:year1totalcharges]
-          sum += @data[k][s][:year1totalcharges]
+          new_row2 << @data[k][s][:subtotal1]
+          sum += @data[k][s][:subtotal1]
+          sum_building[k] += @data[k][s][:subtotal1]
 
-          sum_building[k] += @data[k][s][:year1totalcharges]
           sum_building_cafm[k] += @data[k][s][:cafm]
           sum_building_helpdesk[k] += @data[k][s][:helpdesk]
           sum_building_variance[k] += @data[k][s][:variance]
@@ -125,29 +126,26 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       add_computed_row sheet, sorted_building_keys, 'London Location Variance', sum_building_variance
 
       # sheet.add_row ['Year 1 Deliverables total']
-      add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables total', 4
+      add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables total', 3
       sheet.add_row
 
       add_computed_row sheet, sorted_building_keys, 'Mobilisation', sum_building_mobilisation
 
       add_computed_row sheet, sorted_building_keys, 'TUPE Risk Premium', sum_building_tupe
 
-      sheet.add_row ['Total Charges excluding Overhead and Profit']
+      # sheet.add_row ['Total Charges excluding Overhead and Profit']
+      add_summation_row sheet, sorted_building_keys, 'Total Charges excluding Overhead and Profit', 4
       sheet.add_row
 
       add_computed_row sheet, sorted_building_keys, 'Management Overhead', sum_building_manage
 
       add_computed_row sheet, sorted_building_keys, 'Corporate Overhead', sum_building_corporate
 
-      add_summation_row sheet, sorted_building_keys, 'Total Charges excluding Profit'
+      add_summation_row sheet, sorted_building_keys, 'Total Charges excluding Profit', 4
 
       add_computed_row sheet, sorted_building_keys, 'Profit', sum_building_profit
 
-      new_row = ['Total Charges year 1', nil, sumsum]
-      sorted_building_keys.each do |k|
-        new_row << sum_building[k]
-      end
-      sheet.add_row new_row
+      add_summation_row sheet, sorted_building_keys, 'Total Charges year 1', 2
 
       sheet.add_row
       sheet.add_row ['Table 2. Subsequent Years Total Charges']
