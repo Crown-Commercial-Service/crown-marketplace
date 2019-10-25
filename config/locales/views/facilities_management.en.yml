@@ -27,6 +27,8 @@ en:
               invalid: Select one or more buildings you want to include in your procurement
             service_codes:
               invalid: Select at least one service you need to include in your procurement
+            tupe:
+              inclusion: Select yes if you know TUPE applies to your contract
         facilities_management/procurement_building:
           attributes:
             service_codes:
