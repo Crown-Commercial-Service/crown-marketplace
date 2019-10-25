@@ -66,7 +66,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.mobilisation_period = 0
         procurement.save context: :contract_dates
         log_error
-        puts $stdout, procurement.errors.details[:initial_call_off_start_date][0][:error]
+        # puts $stdout, procurement.errors.details[:initial_call_off_start_date][0][:error]
         expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
         expect(procurement.valid?(:contract_dates)).to eq false
       end
