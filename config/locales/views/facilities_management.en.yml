@@ -9,6 +9,11 @@ en:
               blank: Enter your contract name
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
+            estimated_annual_cost:
+              blank: Estimated annual cost must be an amount of money, like 12000 or 1200.45
+              greater_than_or_equal_to: Estimated annual cost must be an amount of money, like 12000 or 1200.45
+            estimated_cost_known:
+              inclusion: Select yes if you know your annual cost
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
