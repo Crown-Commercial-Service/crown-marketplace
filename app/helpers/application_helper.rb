@@ -114,7 +114,7 @@ module ApplicationHelper
 
   def model_attribute_has_error(model_object, *attributes)
     result = false
-    attributes.each { |a| result |= model_object&.errors[a].any? }
+    attributes.each { |a| result |= model_object&.errors&.dig(a)&.any? }
   end
 
   def model_has_error?(model_object, error_type, *attributes)
