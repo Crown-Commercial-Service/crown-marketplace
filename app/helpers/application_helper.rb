@@ -109,12 +109,12 @@ module ApplicationHelper
     css_classes = ['govuk-error-message']
     css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, error_type, attribute
 
-    content_tag :label, content_tag(:span, text), class: css_classes, for: "#{form_object_name}_#{attribute}", id: "#{attribute}-error", data: { propertyname: "#{attribute}", validation: tag_validation_type }
+    content_tag :label, content_tag(:span, text), class: css_classes, for: "#{form_object_name}_#{attribute}", id: "#{attribute}-error", data: { propertyname: attribute.to_s, validation: tag_validation_type }
   end
 
   def model_attribute_has_error(model_object, *attributes)
     result = false
-    attributes.each { |a| result |= model_object&.errors[a]&.any? }
+    attributes.each { |a| result |= model_object&.errors[a].any? }
   end
 
   def model_has_error?(model_object, error_type, *attributes)
