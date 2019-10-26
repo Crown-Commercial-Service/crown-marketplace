@@ -50,36 +50,39 @@ $(function () {
                 jqInitialCallOffStartDate_mm.removeClass('govuk-input--error');
                 let callOffStartDate = fnCreateDateFromGovInputs('facilities_management_procurement_initial_call_off_start_date');
                 if (callOffStartDate != "Invalid Date") {
-                    this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), false, 'required');
+                    this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').closest(".govuk-form-group.initial_call_off_start_date"), false, 'required');
                     isValid = callOffStartDate >= new Date(new Date().toDateString());
                     if (!isValid) {
-                        this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), true, 'min');
+                        this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').closest(".govuk-form-group.initial_call_off_start_date"), true, 'min');
                     } else {
-                        this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), false, 'min');
+                        this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').closest(".govuk-form-group.initial_call_off_start_date"), false, 'min');
                     }
                 } else {
-                    this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), true, 'required');
+                    this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').closest(".govuk-form-group.initial_call_off_start_date"), true, 'required');
                 }
             } else {
-                this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').parent(), true, 'required');
+                this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').closest(".govuk-form-group.initial_call_off_start_date"), true, 'required');
                 jqInitialCallOffStartDate_dd.addClass('govuk-input--error');
                 jqInitialCallOffStartDate_mm.addClass('govuk-input--error');
                 jqInitialCallOffStartDate_yy.addClass('govuk-input--error');
             }
         }
 
+        let mobilisationChoice = formElements['facilities_management_procurement[mobilisation_period_required]'].value;
+        let jqMobilisationPeriod = $('#facilities_management_procurement_mobilisation_period');
         let jqTupeIndicator = $('.tupe_indicator');
         let tupeIsSpecified = jqTupeIndicator.val() == 'true';
-        let jqMobilisationPeriod = $('#facilities_management_procurement_mobilisation_period');
-        let jqMobilisationPeriodRequired = $('#facilities_management_procurement_mobilisation_period_required_true');
-        let jqExtensionsRequired = $('#facilities_management_procurement_extensions_required_true');
-        let mobilisationChoice = formElements['facilities_management_procurement[mobilisation_period_required]'].value ;
-        if (mobilisationChoice == "") {
-            isValid = false;
-            this.toggleError ( $("#mobilisation-required-warning"), true, 'required');
+
+        if ( isValid ) {
+            if (mobilisationChoice == "") {
+                isValid = false;
+                this.toggleError($("#mobilisation-required-warning"), true, 'required');
+            }
         }
 
         if ( isValid && mobilisationChoice == "true" ) {
+            let jqMobilisationPeriodRequired = $('#facilities_management_procurement_mobilisation_period_required_true');
+            let jqExtensionsRequired = $('#facilities_management_procurement_extensions_required_true');
             let fnMobilisationValidatorForTUPE = function(nMobPeriod, tupeIsSpecified) {return nMobPeriod < 4}.bind(this);
             let mobTextValue = jqMobilisationPeriod.val();
 
@@ -119,15 +122,18 @@ $(function () {
             isValid = false ;
             this.toggleError ( jqMobilisationPeriod, true, 'max') ;
         } else if ( isValid && !tupeIsSpecified && mobilisationChoice == "false" ) {
-             isValid == isValid && true ;
+            isValid = isValid && true ;
             jqMobilisationPeriod.val("");
         }
 
         let extensionChoice = formElements['facilities_management_procurement[extensions_required]'].value ;
-        if (extensionChoice == "") {
-            isValid = false;
-            this.toggleError ( $("#extensions-required-warning"), true, 'required');
+        if ( isValid ) {
+            if (extensionChoice == "") {
+                isValid = false;
+                this.toggleError($("#extensions-required-warning"), true, 'required');
+            }
         }
+        
         if (isValid  && extensionChoice == "true") {
             const MAX = 10;
             let count = parseInt(jqInitialCallOffPeriod.val());
@@ -173,7 +179,6 @@ $(function () {
                 count += Number(ext4.val());
             }
         }
-
 
         if (!isValid) {
             this.toggleBannerError(true);
