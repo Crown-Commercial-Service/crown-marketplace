@@ -24,7 +24,7 @@
   </div>
 
   <div class="govuk-!-margin-top-3">
-    <%= display_error_label @procurement, :tupe, '', 'facilities_management_procurement_tupe_true' %>
+    <%= display_potential_errors(@procurement, :tupe, f.object_name)%>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
         <%= f.radio_button :tupe, true, value: true, class: 'govuk-radios__input' %>
