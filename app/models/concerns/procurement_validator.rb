@@ -13,7 +13,7 @@ module ProcurementValidator
     validates :contract_name, length: 1..100, on: :contract_name
 
     # validations on :estimated_annual_cost step
-    validates :estimated_cost_known, inclusion: { in:[true,false] }, on: :estimated_annual_cost
+    validates :estimated_cost_known, inclusion: { in: [true, false ] }, on: :estimated_annual_cost
     validates :estimated_annual_cost, presence: true, if: -> { estimated_cost_known? }, on: :estimated_annual_cost
     validates :estimated_annual_cost, numericality: { allow_nil: false, only_integer: true,
                                                       greater_than_or_equal_to: 1 }, on: :estimated_annual_cost
