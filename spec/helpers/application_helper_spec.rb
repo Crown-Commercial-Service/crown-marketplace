@@ -139,7 +139,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'when rendering HTML' do
       it 'will list elements' do
-        validation_output = helper.display_potential_errors(FacilitiesManagement::Procurement.new, :initial_call_off_period)
+        validation_output = helper.display_potential_errors(FacilitiesManagement::Procurement.new, :initial_call_off_period, 'facilities_management_procurement_initial_call_off_period')
         # puts $stdout, validation_output
         expect(validation_output).to include('div')
       end

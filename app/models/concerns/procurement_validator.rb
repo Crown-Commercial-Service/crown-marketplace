@@ -16,7 +16,9 @@ module ProcurementValidator
     validates :estimated_cost_known, inclusion: { in: [true, false] }, on: :estimated_annual_cost
     validates :estimated_annual_cost, presence: true, if: -> { estimated_cost_known? }, on: :estimated_annual_cost
     validates :estimated_annual_cost, numericality: { allow_nil: false, only_integer: true,
-                                                      greater_than_or_equal_to: 1 }, on: :estimated_annual_cost
+                                                      greater_than_or_equal_to: 1 },
+                                      if: -> { estimated_cost_known? },
+                                      on: :estimated_annual_cost
     # validations on :procurement_buildings step
     validate :at_least_one_active_procurement_building, on: :procurement_buildings
 
