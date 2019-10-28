@@ -10,15 +10,11 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       context 'when it is blank' do
         it 'expected to be invalid' do
           procurement.tupe = ''
-          procurement.valid?(:tupe)
-          puts $stdout, procurement.errors.details.to_json
           expect(procurement.valid?(:tupe)).to eq false
         end
 
         it 'expected to be invalid when nil' do
           procurement.tupe = nil
-          procurement.valid?(:tupe)
-          puts $stdout, procurement.errors.details.to_json
           expect(procurement.valid?(:tupe)).to eq false
         end
       end
