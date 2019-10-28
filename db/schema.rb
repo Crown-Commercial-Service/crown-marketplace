@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_23_114416) do
+ActiveRecord::Schema.define(version: 2019_10_28_101010) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
-    t.text "user_id", null: false
+    t.string "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "created_at"
     t.datetime "updated_at", null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
@@ -29,6 +29,25 @@ ActiveRecord::Schema.define(version: 2019_10_23_114416) do
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
+  end
+
+  create_table "facilities_management_buyer", id: false, force: :cascade do |t|
+    t.uuid "id", null: false
+    t.string "full_name", limit: 50
+    t.string "job_title", limit: 250
+    t.string "telephone_number"
+    t.string "organisation_name"
+    t.string "organisation_address_line_1"
+    t.string "organisation_address_line_2"
+    t.string "organisation_address_town"
+    t.string "organisation_address_county"
+    t.string "organisation_address_postcode"
+    t.boolean "central_government"
+    t.boolean "wider_public_sector"
+    t.datetime "created_at", default: -> { "now()" }
+    t.datetime "updated_at"
+    t.boolean "active", default: true, null: false
+    t.index ["id"], name: "facilities_management_buyer_id_idx"
   end
 
   create_table "facilities_management_procurement_building_services", force: :cascade do |t|
@@ -63,8 +82,6 @@ ActiveRecord::Schema.define(version: 2019_10_23_114416) do
     t.string "updated_by", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "service_codes", default: [], array: true
-    t.text "region_codes", default: [], array: true
     t.string "contract_name", limit: 100
     t.integer "estimated_annual_cost"
     t.boolean "tupe"
@@ -76,6 +93,8 @@ ActiveRecord::Schema.define(version: 2019_10_23_114416) do
     t.integer "optional_call_off_extensions_2"
     t.integer "optional_call_off_extensions_3"
     t.integer "optional_call_off_extensions_4"
+    t.text "service_codes", default: [], array: true
+    t.text "region_codes", default: [], array: true
     t.boolean "estimated_cost_known"
     t.boolean "mobilisation_period_required"
     t.boolean "extensions_required"
@@ -117,20 +136,16 @@ ActiveRecord::Schema.define(version: 2019_10_23_114416) do
   end
 
   create_table "fm_cache", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "key", null: false
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "user_id", null: false
+    t.string "key", null: false
+    t.string "value"
     t.index ["user_id", "key"], name: "fm_cache_user_id_idx"
   end
 
   create_table "fm_lifts", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "building_id", null: false
+    t.string "user_id", null: false
+    t.string "building_id", null: false
     t.jsonb "lift_data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
     t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
   end
@@ -145,29 +160,24 @@ ActiveRecord::Schema.define(version: 2019_10_23_114416) do
   end
 
   create_table "fm_rates", id: false, force: :cascade do |t|
-    t.text "code"
+    t.string "code", limit: 255
     t.decimal "framework"
     t.decimal "benchmark"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.index ["code"], name: "fm_rates_code_key", unique: true
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|
-    t.text "code"
-    t.text "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "code", limit: 255
+    t.string "name", limit: 255
     t.index ["code"], name: "fm_regions_code_key", unique: true
   end
 
-  create_table "fm_security_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "title", null: false
-    t.text "description"
-    t.integer "sort_order"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["id"], name: "index_fm_security_types_on_id"
+  create_table "fm_security_types", id: false, force: :cascade do |t|
+    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
+    t.string "title", null: false
+    t.string "description"
+    t.integer "sort_order", null: false
+    t.index ["id"], name: "fm_security_types_id_idx"
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
@@ -196,12 +206,10 @@ ActiveRecord::Schema.define(version: 2019_10_23_114416) do
   end
 
   create_table "fm_uom_values", id: false, force: :cascade do |t|
-    t.text "user_id"
-    t.text "service_code"
-    t.text "uom_value"
-    t.text "building_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "user_id"
+    t.string "service_code"
+    t.string "uom_value"
+    t.string "building_id"
     t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
   end
 
@@ -259,6 +267,13 @@ ActiveRecord::Schema.define(version: 2019_10_23_114416) do
   create_table "legal_services_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "london_postcodes", id: false, force: :cascade do |t|
+    t.text "postcode"
+    t.text "In Use"
+    t.text "region"
+    t.text "Last updated"
   end
 
   create_table "management_consultancy_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
