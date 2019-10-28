@@ -2,7 +2,9 @@
   <div class="govuk-grid-row">
     <h1 class="govuk-heading-xl">Contract period</h1>
   </div>
+  <div class="govuk-grid-row contract-dates">
     <%= render partial: 'initial_call_off_period', locals: { f: f } %>
     <%= render partial: 'mobilisation_period', locals: { f: f } %>
     <%= render partial: 'call_off_extensions', locals: { f: f } %>
+  </div>
 </div>

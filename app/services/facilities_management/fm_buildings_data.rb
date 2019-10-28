@@ -4,12 +4,12 @@ require 'net/http'
 require 'uri'
 
 class FMBuildingData
-  def reset_buildings_tables
-    query = 'truncate fm_uom_values;'
+  def reset_buildings_tables(email_address)
+    query = "delete from fm_uom_values where user_id = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    query = 'truncate fm_lifts;'
+    query = "delete from fm_lifts where user_id = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    query = 'truncate facilities_management_buildings;'
+    query = "delete from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't reset building tables: #{e}"
@@ -87,8 +87,8 @@ class FMBuildingData
   def save_new_building(email_address, building_id, building)
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
-    query = "insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by)
-            values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
+    query = "insert into facilities_management_buildings (user_id, building_json, created_at, updated_at, status, id, updated_by)
+            values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), now(), 'Incomplete', '#{building_id}', '#{email_address}')
             ON CONFLICT (id)
             DO update set building_json = '#{building.gsub("'", "''")}';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -193,8 +193,7 @@ class FMBuildingData
   end
 
   def security_types
-    query = 'SELECT id, title, description FROM public.fm_security_types order by sort_order asc;'
-    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+    FacilitiesManagement::SecurityTypes.order(:sort_order)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get security types: #{e}"
   end
