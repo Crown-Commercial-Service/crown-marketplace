@@ -5,8 +5,28 @@ en:
       models:
         facilities_management/procurement:
           attributes:
+            initial_call_off_end_date:
+              after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
+              not_a_date: Initial call-off period end date is not a valid date
+            initial_call_off_period:
+              blank: Enter initial call-off period
+              greater_than_or_equal_to: Enter initial call-off period
+              less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
+              not_a_number: Enter initial call-off period
+            initial_call_off_start_date:
+              after: Initial call-off period start date must be in the future
+              blank: Initial call-off period start date must be in the future
+            mobilisation_period:
+              greater_than: Enter mobilisation length
+              greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
+              not_a_number: Enter mobilisation length
+              not_an_integer: Enter mobilisation length as a whole number
+            optional_call_off_extensions_1:
+              too_long: Call-off period and extensions must be 10 years or less
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
+            service_codes:
+              invalid: Select at least one service you need to include in your procurement
         facilities_management/procurement_building:
           attributes:
             service_codes:
@@ -98,9 +118,12 @@ en:
           heading: Service information
           no_of_appliances_for_testing: The number of appliances to be tested per annum
           no_of_building_occupants: The number of building occupants
+          no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
           no_of_hours_of_service_provision: The number of hours of service provision per annum
+          no_of_units_to_be_serviced: The number of units to be serviced per annum
           service_standard: The service standard required
           size_of_external_area: The size of the external area (in square metres)
+          tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
           total_floors_per_lift: The sum total of number of floors per lift
       procurements:
         about_the_contract:
@@ -170,7 +193,7 @@ en:
           search_results: Search Results
         quick_search_form:
           continue_headline: Continue to procurement
-          continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided wuth an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
+          continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided with an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
           new_name_label: Enter a name for the search
           save_headline: Save a new search
           save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
