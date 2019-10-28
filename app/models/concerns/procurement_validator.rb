@@ -22,6 +22,8 @@ module ProcurementValidator
     # validations on :procurement_buildings step
     validate :at_least_one_active_procurement_building, on: :procurement_buildings
 
+    validate :service_codes_not_empty, on: :services
+
     validates :tupe, inclusion: { in: [true, false] }, on: :tupe
 
     #############################################
@@ -68,7 +70,6 @@ module ProcurementValidator
     #
     # End of validation rules for contract-dates
     #############################################
-    validate :service_codes_not_empty, on: :services
 
     private
 

@@ -84,7 +84,7 @@ module ApplicationHelper
   end
 
   def display_potential_errors(model_object, attribute, form_object_name)
-    collection = validation_messages(model_object.class.name.demodulize.downcase.to_sym, attribute)
+    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
     content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attribute}" do
       collection.each do |key, val|
@@ -95,8 +95,8 @@ module ApplicationHelper
 
   # looks up the locals data for validation messages
   def validation_messages(model_object_sym, attribute_sym = nil)
-    translation_hash = t("activerecord.errors.models.facilities_management/#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
-    translation_hash = t("activerecord.errors.models.facilities_management/#{model_object_sym.downcase}.attributes.#{attribute_sym.to_s.downcase}") unless attribute_sym.nil?
+    translation_hash = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
+    translation_hash = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes.#{attribute_sym.to_s.downcase}") unless attribute_sym.nil?
     return {} if translation_hash.to_s.include?('translation_missing')
 
     translation_hash
@@ -114,7 +114,7 @@ module ApplicationHelper
 
   def model_attribute_has_error(model_object, *attributes)
     result = false
-    attributes.each { |a| result |= model_object&.errors&.dig(a)&.any? }
+    attributes.each { |a| result |= model_object.errors[a]&.any? }
   end
 
   def model_has_error?(model_object, error_type, *attributes)
