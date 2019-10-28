@@ -1,8 +1,31 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        facilities_management/journey/choose_services:
+          attributes:
+            service_codes:
+              invalid: Select at least one service you need to include in your procurement
+              too_short: Select at least one service you need to include in your procurement
+        facilities_management/journey/choose_locations:
+          attributes:
+            region_codes:
+              invalid: Select at least one region you need to include in your procurement
+              too_short: Select at least one region you need to include in your procurement
   activerecord:
     errors:
       models:
+        facilities_management/journey/choose_services:
+          attributes:
+            service_codes:
+              invalid: Select at least one service you need to include in your procurement
+              too_short: Select at least one service you need to include in your procurement
+        facilities_management/journey/choose_locations:
+          attributes:
+            region_codes:
+              invalid: Select at least one region you need to include in your procurement
+              too_short: Select at least one region you need to include in your procurement
         facilities_management/procurement:
           attributes:
             contract_name:
@@ -268,12 +291,14 @@ en:
       youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
+        invalid: Select at least one region you need to include in your procurement
         locations_selected: Locations selected
         no_locations_selected: No locations selected
         question: Where are your buildings located?
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building's location where you require facilities management services.
       choose_services:
+        invalid: Select at least one service you need to include in your procurement
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
