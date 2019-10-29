@@ -30,10 +30,10 @@ const contractDateUtils = {
         let mobilisationEndDate = contractDateUtils.mobilisationEndDate(contractStartDate);
         let mobilisationStartDate = contractDateUtils.mobilisationStartDate(mobilisationEndDate, mobilisationPeriod);
 
-        result['Contract-Start-Date'] = contractStartDate.toISOString().slice(0, 10);
-        result['Contract-End-Date'] = contractEndDate.toISOString().slice(0, 10);
-        result['Contract-Mob-Start'] = mobilisationStartDate.toISOString().slice(0, 10);
-        result['Contract-Mob-End'] = mobilisationEndDate.toISOString().slice(0, 10);
+        result['Contract-Start-Date'] = contractStartDate.toLocaleDateString().slice(0, 10);
+        result['Contract-End-Date'] = contractEndDate.toLocaleDateString().slice(0, 10);
+        result['Contract-Mob-Start'] = mobilisationStartDate.toLocaleDateString().slice(0, 10);
+        result['Contract-Mob-End'] = mobilisationEndDate.toLocaleDateString().slice(0, 10);
         return result;
     },
 
