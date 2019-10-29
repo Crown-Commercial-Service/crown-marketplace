@@ -167,7 +167,7 @@ module ApplicationHelper
     error = object.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
+    content_tag :span, id: error_id(attribute.to_s), class: 'govuk-error-message govuk-!-margin-top-3' do
       error.to_s
     end
   end

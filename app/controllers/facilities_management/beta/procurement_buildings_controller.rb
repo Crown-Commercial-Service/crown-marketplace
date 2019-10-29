@@ -8,7 +8,30 @@ module FacilitiesManagement
 
       def show; end
 
+      def edit; end
+
+      def update
+        if @procurement_building.update(procurement_building_params)
+          redirect_to facilities_management_beta_procurement_building_path(@procurement_building)
+        else
+          render :edit
+        end
+      end
+
       private
+
+      def procurement_building_params
+        params.require(:facilities_management_procurement_building)
+              .permit(
+                procurement_building_services_attributes: %i[id
+                                                             no_of_appliances_for_testing
+                                                             no_of_building_occupants
+                                                             no_of_units_to_be_serviced
+                                                             size_of_external_area
+                                                             no_of_consoles_to_be_serviced
+                                                             tones_to_be_collected_and_removed]
+              )
+      end
 
       def set_procurement_building
         @procurement_building = current_user.procurements.map(&:procurement_buildings).flatten.select { |pb| pb.id == params[:id] } .first
@@ -21,7 +44,7 @@ module FacilitiesManagement
       end
 
       def set_back_path
-        @back_link = facilities_management_beta_procurement_path(@procurement_building.procurement)
+        @back_link = :back
       end
     end
   end

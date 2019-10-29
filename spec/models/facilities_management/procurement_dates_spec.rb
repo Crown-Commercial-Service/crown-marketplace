@@ -5,11 +5,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   let(:user) { build(:user) }
 
-  def log_error
-  end
-  # puts $stdout, "Messages: #{procurement.errors.to_json}"
-  # puts $stdout, "Details: #{procurement.errors.details.to_json}"
-
   describe 'contract data should not be invalid because call-off period is not > 0' do
     context 'when the initial_call_off_period is not supplied' do
       it 'will be invalid' do
@@ -22,7 +17,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'will be invalid because of a blank error' do
         procurement.initial_call_off_period = nil
         procurement.save context: :contract_dates
-        log_error
         expect(procurement.valid?(:contract_dates)).to eq false
         expect(procurement.errors[:initial_call_off_period][0]).to eq 'Enter initial call-off period'
       end
@@ -43,7 +37,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'will be invalid' do
         procurement.initial_call_off_period = -2
         procurement.save context: :contract_dates
-        log_error
         expect(procurement.errors.details[:initial_call_off_period][0][:error]).to eq :greater_than_or_equal_to
         expect(procurement.valid?(:contract_dates)).to eq false
       end
@@ -53,49 +46,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'will be valid' do
         procurement.initial_call_off_period = 0
         procurement.save context: :contract_dates
-        log_error
         expect(procurement.valid?(:contract_dates)).to eq false
       end
     end
   end
 
   describe 'when a call off period is specified, other validation rules will come into effect, ' do
-    context 'when initial_call_off_period is > 0' do
-      it 'will be invalid' do
-        procurement.initial_call_off_period = 1
-        procurement.save context: :contract_dates
-        log_error
-        expect(procurement.errors.details[:mobilisation_period][0][:error]).to eq :not_a_number
-        expect(procurement.valid?(:contract_dates)).to eq false
-      end
-    end
-
-    context 'when mobilisation period is nil or whitespace' do
-      it 'and will be invalid when the value is nil' do
-        procurement.initial_call_off_period = 1
-        procurement.mobilisation_period = nil
-        procurement.save context: :contract_dates
-        log_error
-        expect(procurement.errors.details[:mobilisation_period][0][:error]).to eq :not_a_number
-        expect(procurement.valid?(:contract_dates)).to eq false
-      end
-
-      it 'and will be invalid when the value is whitespace' do
-        procurement.initial_call_off_period = 1
-        procurement.mobilisation_period = '    '
-        procurement.save context: :contract_dates
-        log_error
-        expect(procurement.errors.details[:mobilisation_period][0][:error]).to eq :not_a_number
-        expect(procurement.valid?(:contract_dates)).to eq false
-      end
-    end
-
     context 'when mobilisation period is zero' do
       it 'and will be valid' do
         procurement.initial_call_off_period = 1
         procurement.mobilisation_period = 0
         procurement.save context: :contract_dates
-        log_error
         expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
         expect(procurement.valid?(:contract_dates)).to eq false
       end
@@ -107,7 +68,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.initial_call_off_period = 1
           procurement.mobilisation_period = 1
           procurement.save context: :contract_dates
-          log_error
           expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
           expect(procurement.valid?(:contract_dates)).to eq false
         end
@@ -120,7 +80,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.mobilisation_period = 1
           procurement.initial_call_off_start_date = nil
           procurement.save context: :contract_dates
-          log_error
           expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
           expect(procurement.valid?(:contract_dates)).to eq false
         end
@@ -130,7 +89,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.mobilisation_period = 1
           procurement.initial_call_off_start_date = ''
           procurement.save context: :contract_dates
-          log_error
           expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
           expect(procurement.valid?(:contract_dates)).to eq false
         end
@@ -141,7 +99,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.initial_call_off_start_date = DateTime.current - 100
           procurement.initial_call_off_end_date = DateTime.current - 10
           procurement.save context: :contract_dates
-          log_error
           expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :after_or_equal_to
           expect(procurement.valid?(:contract_dates)).to eq false
         end
@@ -173,7 +130,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.initial_call_off_start_date = DateTime.current + 100
           procurement.initial_call_off_end_date = DateTime.current + 200
           procurement.save context: :contract_dates
-          log_error
           expect(procurement.errors.details[:mobilisation_period][0][:error]).to eq :greater_than_or_equal_to
           expect(procurement.valid?(:contract_dates)).to eq false
         end
@@ -184,7 +140,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.initial_call_off_start_date = DateTime.current + 100
           procurement.initial_call_off_end_date = DateTime.current + 200
           procurement.save context: :contract_dates
-          log_error
           expect(procurement.valid?(:contract_dates)).to eq true
         end
       end
