@@ -16,9 +16,39 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def sorted_suppliers
         build_direct_award_report
+
+        return if params[:'download-spreadsheet'] != 'yes'
+
+        # it 'create a direct-award report' do
+        user_email = 'test@example.com'
+        start_date = DateTime.now.utc
+
+        report = FacilitiesManagement::SummaryReport.new(start_date, user_email, data)
+
+        rates = CCS::FM::Rate.read_benchmark_rates
+        rate_card = CCS::FM::RateCard.latest
+
+        results = {}
+        report_results = {}
+        supplier_names = rate_card.data['Prices'].keys
+        supplier_names.each do |supplier_name|
+          report_results[supplier_name] = {}
+          # dummy_supplier_name = 'Hickle-Schinner'
+          report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+          results[supplier_name] = report.direct_award_value
+        end
+
+        sorted_list = results.sort_by { |_k, v| v }
+        supplier_name = sorted_list.first[0]
+        # supplier_da_price = sorted_list.first[1]
+
+        spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name]
+        render xlsx: spreadsheet.to_xlsx, filename: 'direct_award_prices'
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 
@@ -37,7 +67,7 @@ module FacilitiesManagement
         @results = {}
         supplier_names = rate_card.data['Prices'].keys
         supplier_names.each do |supplier_name|
-          # dummy_supplier_name = 'Hickle-Schinner'
+          # e.g. dummy_supplier_name = 'Hickle-Schinner'
           @report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name
           @results[supplier_name] = @report.direct_award_value
         end
