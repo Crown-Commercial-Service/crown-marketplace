@@ -67,7 +67,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
     end
 
     it 'does not displays the first error message for the second attribute in the summary' do
-      expect(rendered).not_to have_link('error-message-3', href: '#attribute_name_2-error')
+      expect(rendered).to have_link('error-message-3', href: '#attribute_name_2-error')
     end
 
     it 'does not display the second error message for the second attribute in the summary' do

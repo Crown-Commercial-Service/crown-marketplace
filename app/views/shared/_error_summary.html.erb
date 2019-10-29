@@ -5,15 +5,9 @@
     </h2>
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
-        <% if defined?(multiple) && multiple %>
-          <% errors.keys.each do |attribute| %>
-            <li>
-              <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(errors, attribute).to_s } %>
-            </li>
-          <% end %>
-        <%else %>
+        <% errors.keys.each do |attribute| %>
           <li>
-            <%= link_to "#{errors[errors.keys.first].first}", "##{error_id(errors.keys.first)}", data: { fieldname: errors.keys.first, errortype: get_client_side_error_type_from_errors(errors, errors.keys.first).to_s } %>
+            <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(errors, attribute).to_s } %>
           </li>
         <% end %>
       </ul>
