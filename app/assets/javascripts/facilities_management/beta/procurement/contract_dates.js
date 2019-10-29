@@ -73,11 +73,15 @@ $(function () {
         let jqTupeIndicator = $('.tupe_indicator');
         let tupeIsSpecified = jqTupeIndicator.val() == 'true';
 
-        if ( isValid ) {
-            if (mobilisationChoice == "") {
-                isValid = false;
-                this.toggleError($("#mobilisation-required-warning"), true, 'required');
-            }
+        if (mobilisationChoice == "") {
+            isValid = false;
+            this.toggleError($("#mobilisation-required-warning"), true, 'required');
+        }
+
+        let extensionChoice = formElements['facilities_management_procurement[extensions_required]'].value ;
+        if (extensionChoice == "") {
+            isValid = false;
+            this.toggleError($("#extensions-required-warning"), true, 'required');
         }
 
         if ( isValid && mobilisationChoice == "true" ) {
@@ -126,14 +130,6 @@ $(function () {
             jqMobilisationPeriod.val("");
         }
 
-        let extensionChoice = formElements['facilities_management_procurement[extensions_required]'].value ;
-        if ( isValid ) {
-            if (extensionChoice == "") {
-                isValid = false;
-                this.toggleError($("#extensions-required-warning"), true, 'required');
-            }
-        }
-        
         if (isValid  && extensionChoice == "true") {
             const MAX = 10;
             let count = parseInt(jqInitialCallOffPeriod.val());

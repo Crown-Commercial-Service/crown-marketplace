@@ -285,7 +285,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                 display_text = message_text;
             }
             let link = ul.find("a").filter(function () {
-                return $(this).attr("data-errortype") === error_type; // && $(this).attr("data-propertyname") === propertyName;
+                return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
             });
 
             if (link.length <= 0) {
