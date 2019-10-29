@@ -32,7 +32,10 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def mobilisation_start_date
-    start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - (@procurement.mobilisation_period * 7)
+    # start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - (@procurement.mobilisation_period * 7)
+    # align server-side calculation to client-side logic
+    start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - 1
+    start_date -= (@procurement.mobilisation_period * 7)
     format_date start_date
   end
 
