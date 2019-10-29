@@ -1,7 +1,7 @@
 <div class="govuk-body building-services govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
-    <span class="govuk-caption-m"><%= @procurement_building.name %></span>
+    <span class="govuk-caption-m"><%= @procurement_building.procurement.name %> - <%= @procurement_building.name %></span>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <div class="govuk-summary-list">
       <div class="govuk-summary-list__row">
