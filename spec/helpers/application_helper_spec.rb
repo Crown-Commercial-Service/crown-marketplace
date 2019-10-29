@@ -106,7 +106,9 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'returns a hash' do
-        validation_message = helper.validation_messages :procurement
+        proc = FacilitiesManagement::Procurement.new
+
+        validation_message = helper.validation_messages proc.class.name.underscore.downcase.to_sym
         expect(validation_message.class.name).to eq 'Hash'
         expect(validation_message.empty?).to eq false
       end
@@ -126,7 +128,9 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'will return a populated hash when the attribute has translations' do
-        validation_message = helper.validation_messages(:procurement, :initial_call_off_period)
+        proc = FacilitiesManagement::Procurement.new
+
+        validation_message = helper.validation_messages(proc.class.name.underscore.downcase.to_sym, :initial_call_off_period)
         expect(validation_message.class.name).to eq 'Hash'
         expect(validation_message.empty?).to eq false
       end
