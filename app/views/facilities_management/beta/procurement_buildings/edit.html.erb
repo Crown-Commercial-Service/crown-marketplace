@@ -5,7 +5,7 @@
       <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <span class="govuk-caption-m"><%= @procurement_building.name %></span>
+      <span class="govuk-caption-m"><%= @procurement_building.procurement.name %> - <%= @procurement_building.name %></span>
       <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
       <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.subheading') %></h2>
       <p class="govuk-caption-m govuk-!-margin-bottom-6"><%= t('.caption') %></p>
