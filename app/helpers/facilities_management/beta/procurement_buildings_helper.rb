@@ -46,4 +46,16 @@ module FacilitiesManagement::Beta::ProcurementBuildingsHelper
   def checked?(object_value, value)
     object_value == value
   end
+
+  def question_type(service, question)
+    if question == :service_standard
+      'ppm_standards' if service.requires_ppm_standards?
+    elsif service.requires_volume?
+      'volume'
+    end
+  end
+
+  def checked?(object_value, value)
+    object_value == value
+  end
 end

@@ -1,7 +1,7 @@
 require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
-    class ProcurementBuildingsController < FacilitiesManagement::Beta::FrameworkController
+    class ProcurementBuildingsController < FrameworkController
       before_action :set_procurement_building
       before_action :set_building_data
       before_action :set_back_path
@@ -36,8 +36,7 @@ module FacilitiesManagement
                                                              size_of_external_area
                                                              no_of_consoles_to_be_serviced
                                                              tones_to_be_collected_and_removed
-                                                             service_standard
-                                                             service_hours]
+                                                             service_standard]
               )
       end
 

@@ -181,6 +181,15 @@ module ApplicationHelper
     end
   end
 
+  def display_error_nested_models(object, attribute)
+    error = object.errors[attribute].first
+    return if error.blank?
+
+    content_tag :span, id: error_id(object.id), class: 'govuk-error-message govuk-!-margin-top-3' do
+      error.to_s
+    end
+  end
+
   def css_classes_for_input(journey, attribute, extra_classes = [])
     error = journey.errors[attribute].first
 
