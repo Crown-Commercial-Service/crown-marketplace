@@ -23,10 +23,13 @@ module FacilitiesManagement
         return if params[:'download-spreadsheet'] != 'yes'
 
         # it 'create a direct-award report' do
-        user_email = 'test@example.com'
+        user_email = current_user.email.to_s
         start_date = DateTime.now.utc
 
-        report = FacilitiesManagement::SummaryReport.new(start_date, user_email, data)
+        report = FacilitiesManagement::SummaryReport.new(start_date, user_email, TransientSessionInfo[session.id])
+
+        selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
+        uvals = @report.uom_values(selected_buildings)
 
         rates = CCS::FM::Rate.read_benchmark_rates
         rate_card = CCS::FM::RateCard.latest
@@ -58,7 +61,6 @@ module FacilitiesManagement
         @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
 
         selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
-
         uvals = @report.uom_values(selected_buildings)
 
         rates = CCS::FM::Rate.read_benchmark_rates
