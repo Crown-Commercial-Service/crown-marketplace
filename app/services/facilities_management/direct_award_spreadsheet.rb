@@ -81,7 +81,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       @data.keys.collect { |k| @data[k].keys }
            .flatten.uniq
            .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-
         # ChrisG suggest an alternative call to work_package to het the service description
         new_row = [s, FacilitiesManagement::Service.where(code: s).first.name]
 
@@ -167,7 +166,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       end
 
       sheet.add_row
-      # sheet.add_row ['Total Charge (total contract cost)', nil, "=SUM(C43:C#{43 + max_years + 1})"]
       add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3
       sheet.add_row
       sheet.add_row ['Table 3. Total charges per month']

@@ -594,7 +594,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # after do
   # end
 
-  let(:report) { FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data2) }
+  let(:report) { described_class.new(start_date, 'test@example.com', data2) }
   # context 'when condition' do
   #   it 'succeeds' do
   #     pending 'Not implemented'

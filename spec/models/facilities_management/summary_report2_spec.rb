@@ -85,7 +85,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     user_email = 'test@example.com'
     start_date = DateTime.now.utc
 
-    report = FacilitiesManagement::SummaryReport.new(start_date, user_email, data)
+    report = described_class.new(start_date, user_email, data)
 
     rates = CCS::FM::Rate.read_benchmark_rates
     rate_card = CCS::FM::RateCard.latest
@@ -203,7 +203,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
     # ------
 
-    report = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', procurement)
+    report = described_class.new(start_date, 'test@example.com', procurement)
 
     results = {}
     supplier_names = rate_card.data['Prices'].keys
