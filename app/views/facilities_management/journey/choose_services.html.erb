@@ -1,4 +1,4 @@
-<%= render('errors/inline_error_summary') %>
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors, multiple: false, render_empty: true }  %>
 <div class="procurement">
   <div class="services chooser-component">
     <div id="ccs-dynamic-accordian" class="govuk-grid-row">
@@ -22,6 +22,7 @@
             <%= govuk_fieldset_with_optional_error(@journey, :service_codes) do %>
               <div class="govuk-grid-column-full" style="padding-left:0">
                 <%= form_tag 'choose-services/answer', method: :get do %>
+                  <%= display_potential_errors(@journey.steps[0], :service_codes, '')%>
                   <div class="chooser-input">
                     <div class="govuk-accordion" data-module="accordion" id="procurement-services-accordion">
                       <% @journey.current_step.services.each do |service| %>

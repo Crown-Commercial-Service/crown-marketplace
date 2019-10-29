@@ -4,7 +4,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def does_form_for_current_step_require_special_client_validation?(params)
-    %i[contract_dates].include? params[:step].try(:to_sym)
+    %i[contract_dates estimated_annual_cost].include? params[:step].try(:to_sym)
   end
 
   def format_date(date_object)
@@ -26,13 +26,16 @@ module FacilitiesManagement::Beta::ProcurementsHelper
     result = ''
     period = @procurement.mobilisation_period
     result = "#{period} #{'week'.pluralize(period)}" if @procurement.mobilisation_period_required == true
-    result = 'None' unless @procurement.mobilisation_period_required == true
-    result = 'None' if @procurement.mobilisation_period_required.blank?
+    result = '' if @procurement.mobilisation_period_required.blank?
+    result = 'None' if @procurement.mobilisation_period_required == false
     result
   end
 
   def mobilisation_start_date
-    start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - (@procurement.mobilisation_period * 7)
+    # start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - (@procurement.mobilisation_period * 7)
+    # align server-side calculation to client-side logic
+    start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - 1
+    start_date -= (@procurement.mobilisation_period * 7)
     format_date start_date
   end
 

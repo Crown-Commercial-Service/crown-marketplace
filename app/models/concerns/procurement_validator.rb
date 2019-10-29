@@ -13,10 +13,18 @@ module ProcurementValidator
     validates :contract_name, length: 1..100, on: :contract_name
 
     # validations on :estimated_annual_cost step
+    validates :estimated_cost_known, inclusion: { in: [true, false] }, on: :estimated_annual_cost
     validates :estimated_annual_cost, presence: true, if: -> { estimated_cost_known? }, on: :estimated_annual_cost
-
+    validates :estimated_annual_cost, numericality: { allow_nil: false, only_integer: true,
+                                                      greater_than_or_equal_to: 1 },
+                                      if: -> { estimated_cost_known? },
+                                      on: :estimated_annual_cost
     # validations on :procurement_buildings step
     validate :at_least_one_active_procurement_building, on: :procurement_buildings
+
+    validate :service_codes_not_empty, on: :services
+
+    validates :tupe, inclusion: { in: [true, false] }, on: :tupe
 
     #############################################
     # Validation rules for contract-dates
@@ -62,7 +70,6 @@ module ProcurementValidator
     #
     # End of validation rules for contract-dates
     #############################################
-    validate :service_codes_not_empty, on: :services
 
     private
 

@@ -38,7 +38,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when the name is more than 100 characters' do
       it 'is expected to not be valid' do
         procurement.contract_name = (0...101).map { ('a'..'z').to_a[rand(26)] }.join
-
         expect(procurement.valid?(:contract_name)).to eq false
       end
     end
