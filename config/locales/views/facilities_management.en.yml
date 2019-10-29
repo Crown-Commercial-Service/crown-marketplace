@@ -31,6 +31,20 @@ en:
           attributes:
             service_codes:
               invalid: Select at least one service for each building
+        facilities_management/procurement_building_service:
+          attributes:
+            no_of_appliances_for_testing:
+              invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
+            no_of_building_occupants:
+              invalid: The number of building occupants must be a whole number and greater than 0, like 20.
+            no_of_consoles_to_be_serviced:
+              invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
+            no_of_units_to_be_serviced:
+              invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
+            size_of_external_area:
+              invalid: The size of the external area must be a whole number and greater than 0, like 1500.
+            tones_to_be_collected_and_removed:
+              invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
   facilities_management:
     basket:
       basket_header: selected
@@ -113,6 +127,19 @@ en:
           heading: You have successfully changed your password
           lead: You can now sign in to your Crown Commercial Service account
       procurement_buildings:
+        edit:
+          back_to_service_information: Back to service information
+          caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
+          heading: Service information volumes
+          question:
+            no_of_appliances_for_testing: How many appliances to be tested per annum?
+            no_of_building_occupants: How many building occupants?
+            no_of_consoles_to_be_serviced: How many consoles to be serviced per annum?
+            no_of_units_to_be_serviced: How many units to be serviced per annum?
+            size_of_external_area: What is the size of the external area (in square metres)?
+            tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
+          save_and_return_to_service_information: Save and return to service information
+          subheading: Answer additional questions about the services
         show:
           back_to_detailed_summary: Back to detailed search summary
           heading: Service information
