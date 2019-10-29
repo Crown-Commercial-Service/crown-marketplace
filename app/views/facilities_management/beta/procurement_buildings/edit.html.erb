@@ -1,8 +1,10 @@
 <div class="govuk-body govuk-grid-row procurement-building-service">
   <%= form_for @procurement_building, url: facilities_management_beta_procurement_building_path(@procurement_building), method: :put, html: { multipart: true } do |f| %>
-    <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
-    <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-full">
       <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
+    </div>
+    <div class="govuk-grid-column-three-quarters">
       <span class="govuk-caption-m"><%= @procurement_building.name %></span>
       <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
       <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.subheading') %></h2>
