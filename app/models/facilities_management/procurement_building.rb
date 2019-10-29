@@ -6,6 +6,7 @@ module FacilitiesManagement
     belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_buildings
     has_many :procurement_building_services, foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building, dependent: :destroy
     accepts_nested_attributes_for :procurement_building_services, allow_destroy: true
+    validates_associated :procurement_building_services
 
     validate :service_codes_not_empty, on: :building_services
 
