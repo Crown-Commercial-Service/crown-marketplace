@@ -48,11 +48,28 @@ Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. Ut aliquam purus
 
 <%= form_tag '/facilities-management/beta/summary/suppliers', class: :'ccs-form', method: :post do %>
 
-<%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-<p>
-  <%= submit_tag t('common.submit'), class: "govuk-button" %>
-  <%= button_tag 'Switch to further competition', class: "govuk-button", style: 'color: black; background-color: lightgrey; -webkit-box-shadow: 0 3px 0 grey;', disabled: true %>
-</p>
+    <p class="govuk-!-font-size-24"><strong>Download Direct-Award Prices Spreadsheet?</strong>
+    <div class="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-1" name="download-spreadsheet" type="radio" value="yes">
+        <label class="govuk-label govuk-radios__label" for="changed-name-1">
+          Yes
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="changed-name-2" name="download-spreadsheet" type="radio" value="no">
+        <label class="govuk-label govuk-radios__label" for="changed-name-2">
+          No
+        </label>
+      </div>
+    </div>
+    </p>
+
+  <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+  <p>
+    <%= submit_tag t('common.submit'), class: "govuk-button" %>
+    <%= button_tag 'Switch to further competition', class: "govuk-button", style: 'color: black; background-color: lightgrey; -webkit-box-shadow: 0 3px 0 grey;', disabled: true %>
+  </p>
 
 
 <% end %>
