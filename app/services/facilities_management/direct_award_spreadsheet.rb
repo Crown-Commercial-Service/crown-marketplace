@@ -167,7 +167,8 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       end
 
       sheet.add_row
-      sheet.add_row ['Total Charge (total contract cost)', nil, "=SUM(C43:C#{43 + max_years + 1})"]
+      # sheet.add_row ['Total Charge (total contract cost)', nil, "=SUM(C43:C#{43 + max_years + 1})"]
+      add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3
       sheet.add_row
       sheet.add_row ['Table 3. Total charges per month']
       new_row = new_row.map { |x| x / 12 }
