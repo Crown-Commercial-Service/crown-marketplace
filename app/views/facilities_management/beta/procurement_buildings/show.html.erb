@@ -1,56 +1,51 @@
 <div class="govuk-body building-services govuk-grid-row">
-  <div class="govuk-!-width-three-quarters">
+  <div class="govuk-grid-column-three-quarters">
     <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
-    <span class="govuk-caption-m"><%= @procurement_building.procurement.contract_name %>
-      - <%= @procurement_building.name %></span>
+    <span class="govuk-caption-m"><%= @procurement_building.procurement.name %> - <%= @procurement_building.name %></span>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-    
-    <table class="govuk-table govuk-!-margin-bottom-6 govuk-!-font-size-16">
-      <thead>
-        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></th>
-        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></th>
-        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 22%; overflow: hidden"></th>
-        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 18%"></th>
-      </thead>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"><%= t('.gia') %></th>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.gia-summary') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= @building_data['gia'] %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"><%= t('.service') %></th>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.volume_required_html') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
-        </tr>
-        <% @procurement_building.procurement_building_services.has_service_questions.each_with_index do |service, index| %>
-          <% service.answer_store[:questions].each_with_index do |qa_h, i| %>
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"> <%= "#{index + 1}. #{service.name}" if i == 0 %> </th>
-              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".#{qa_h[:question].to_s}") %></td>
-              <td class="govuk-table__cell govuk-!-padding-right-2">
-                <%= render partial: 'service_hour_summary', locals: {position: index, service_hours: qa_h[:answer]} if qa_h[:question] == :service_hours && qa_h[:answer].valid? %>
-                <%= qa_h[:answer].map(&:to_i).reduce(:+) if qa_h[:question] == :lift_data %>
-                <%= 'Standard ' if qa_h[:answer].present? && qa_h[:question] == :service_standard %><%= qa_h[:answer].to_s unless %i[lift_data service_hours].include? qa_h[:question] %>
-              </td>
-              <td class="govuk-table__cell govuk-!-padding-right-2">
-                <% link_text = 'Change' %>
-                <% link_text = 'Answer question' if qa_h[:answer].blank? || qa_h[:answer].try(:invalid?) %>
-                <% if %i[service_hours lift_data].include?(qa_h[:question])%>
-                  <%= link_to link_text, facilities_management_beta_procurement_buildings_service_path(service) %>
-                <% else %>
-                  <%= link_to link_text, edit_facilities_management_beta_procurement_building_path(@procurement_building, service_question: question_type(service, qa_h[:question])) %>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key border-top">
+          Gross internal area (GIA)
+        </dt>
+        <dd class="govuk-summary-list__value border-top">
+          The gross internal area of the building (in square meters)
+        </dd>
+        <dd class="govuk-summary-list__actions border-top">
+          <%= @building_data['gia'] %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key govuk-!-padding-top-6 govuk-!-padding-bottom-6">
+          Service
+        </dt>
+        <dd class="govuk-summary-list__value">
+
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <b> Volume required <br> (per anum)</b>
+        </dd>
+      </div>
+      <% @procurement_building.procurement_building_services.has_service_questions.each_with_index do |service, index| %>
+          <% service_questions(service.code)[:questions].each_with_index do |question, i| %>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                <% if i == 0 %>
+                  <%= index + 1 %>. <%= service.name %>
                 <% end %>
-              </td>
-            </tr>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <%= t(".#{question.to_s}") %>
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <%= link_to 'Answer question', edit_facilities_management_beta_procurement_building_path(@procurement_building) %>
+              </dd>
+            </div>
           <% end %>
         <% end %>
-      </tbody>
-    </table>
+    </div>
     <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-0">
-      <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement_building.procurement), class: 'govuk-link--no-visited-state' %>
+      <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement_building.procurement), class: 'govuk-link--no-visited-state'%>
     </div>
   </div>
 </div>
