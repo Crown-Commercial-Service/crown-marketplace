@@ -1,26 +1,24 @@
 <div class="govuk-!-margin-top-5">
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:optional_call_off_extensions_1].any?%>">
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:optional_call_off_extensions_1].any?%>" data-propertyname="Extensions choice">
     <%= f.label :optional_call_off_extensions_1, 'Do you want the option to extend your call-off contract?', class: "govuk-heading-m govuk-!-margin-bottom-0"%>
     <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds">
       Including this in your contract gives you the option to extend the end date of the
       agreement. Call-off contracts can be let for a maximum period of 10 years,
       inclusive of mobilisation period and all call-off extensions.
     </p>
+    <span id="extensions-required-warning"/>
   </div>
-  <div class="govuk-radios govuk-!-margin-top-3">
+  <div class="govuk-radios govuk-!-margin-top-3" data-propertyname="Extensions choice">
     <div class="govuk-radios__item">
-      <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-calloff-ext-yes"
-             name="ext-group" type="radio" value="yes" <%= 'checked' unless @procurement.optional_call_off_extensions_1.blank? %>>
-      <label class="govuk-label govuk-radios__label govuk-label--s" for="show">
-        Yes
-      </label>
+      <%= f.radio_button :extensions_required, true, class: "govuk-radios__input" %>
+      <%= label :extensions_required, 'Yes', class: 'govuk-label govuk-radios__label' %>
       <!-- Content for when yes is selected hidden when no is selected -->
       <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3">
         <div id="ext1-container" class="ext-container govuk-form-group govuk-!-margin-left-3
                                  <%= ' govuk-form-group--error' if @procurement.errors[:optional_call_off_extensions_1].any?%>" data-propertyname="Extension period 1">
           <%= f.label :optional_call_off_extensions_1, 'Extension period 1', class: 'govuk-heading-s govuk-!-margin-bottom-1' %>
           <%= display_error_label( @procurement, :optional_call_off_extensions_1, '', "#{f.object_name}_optional_call_off_extensions_1") %>
-          <%= f.number_field :optional_call_off_extensions_1, class: 'govuk-input govuk-input--width-5', max: '10' %>
+          <%= f.number_field :optional_call_off_extensions_1, class: 'govuk-input govuk-input--width-5', min: 1, max: '10' %>
           <%= f.label :optional_call_off_extensions_1, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
         </div>
 
@@ -30,9 +28,9 @@
                                         data-propertyname="Extension period 2">
           <%= f.label :optional_call_off_extensions_2, 'Extension period 2', class: 'govuk-heading-s govuk-!-margin-bottom-1' %>
           <%= display_error_label( @procurement, :optional_call_off_extensions_2, '', "#{f.object_name}_optional_call_off_extensions_2") %>
-          <%= f.number_field :optional_call_off_extensions_2, class: 'govuk-input govuk-input--width-5', max: '7' %>
+          <%= f.number_field :optional_call_off_extensions_2, class: 'govuk-input govuk-input--width-5', min: 1, max: '7' %>
           <%= f.label :optional_call_off_extensions_2, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
-          <button id="fm-ext2-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">Remove</button>
+          <button id="fm-ext2-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 <%= 'govuk-visually-hidden' unless @procurement.optional_call_off_extensions_3.blank?  %>">Remove</button>
         </div>
 
         <div id="ext3-container" class="ext-container govuk-form-group govuk-!-margin-left-3
@@ -41,9 +39,9 @@
                                  data-propertyname="Extension period 3">
           <%= f.label :optional_call_off_extensions_3, 'Extension period 3', class: 'govuk-heading-s govuk-!-margin-bottom-1' %>
           <%= display_error_label( @procurement, :optional_call_off_extensions_3, '', "#{f.object_name}_optional_call_off_extensions_3") %>
-          <%= f.number_field :optional_call_off_extensions_3, class: 'govuk-input govuk-input--width-5', max: '7' %>
+          <%= f.number_field :optional_call_off_extensions_3, class: 'govuk-input govuk-input--width-5', min: 1, max: '7' %>
           <%= f.label :optional_call_off_extensions_3, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
-          <button id="fm-ext3-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">Remove</button>
+          <button id="fm-ext3-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 <%= 'govuk-visually-hidden' unless @procurement.optional_call_off_extensions_4.blank?  %>">Remove</button>
         </div>
         <div id="ext4-container" class="ext-container govuk-form-group govuk-!-margin-left-3
                                  <%= ' govuk-form-group--error' if @procurement.errors[:optional_call_off_extensions_4].any?%>
@@ -51,19 +49,16 @@
                                  data-propertyname="Extension period 4">
           <%= f.label :optional_call_off_extensions_4, 'Extension period 4', class: 'govuk-heading-s govuk-!-margin-bottom-1' %>
           <%= display_error_label( @procurement, :optional_call_off_extensions_4, '', "#{f.object_name}_optional_call_off_extensions_4") %>
-          <%= f.number_field :optional_call_off_extensions_4, class: 'govuk-input govuk-input--width-5', max: '7' %>
+          <%= f.number_field :optional_call_off_extensions_4, class: 'govuk-input govuk-input--width-5', min: 1, max: '7' %>
           <%= f.label :optional_call_off_extensions_4, 'years', class: 'govuk-label--s govuk-!-margin-left-2' %>
-          <button id="fm-ext4-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">Remove</button>
+          <button id="fm-ext4-remove-btn" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 <%= 'govuk-visually-hidden' if @procurement.optional_call_off_extensions_4.blank?  %>">Remove</button>
         </div>
         <button id="fm-add-contract-ext-btn" class="govuk-button govuk-button--secondary govuk-!-margin-left-3 govuk-!-margin-top-3">+ Add another extension period</button>
       </div>
     </div>
     <div class="govuk-radios__item">
-      <input class="govuk-radios__input govuk-!-margin-left-0" id="fm-calloff-ext-no"
-             name="ext-group" type="radio" value="no"  <%='checked' if @procurement.optional_call_off_extensions_1.blank? %>>
-      <label class="govuk-label govuk-radios__label govuk-label--s" for="hide">
-        No
-      </label>
+      <%= f.radio_button :extensions_required, false, class: "govuk-radios__input" %>
+      <%= label :extensions_required, 'No', class: 'govuk-label govuk-radios__label' %>
     </div>
   </div>
 </div>
