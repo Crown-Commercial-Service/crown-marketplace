@@ -5,12 +5,12 @@ module FacilitiesManagement
     scope :has_service_questions, -> { where(code: [SERVICES_AND_QUESTIONS.pluck(:code)]) }
     belongs_to :procurement_building, class_name: 'FacilitiesManagement::ProcurementBuilding', foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building_services
 
-    validates :no_of_appliances_for_testing, numericality: { greater_than: 0, message: :invalid }, allow_blank: true
-    validates :no_of_building_occupants, numericality: { greater_than: 0, message: :invalid }, allow_blank: true
-    validates :no_of_units_to_be_serviced, numericality: { greater_than: 0, message: :invalid }, allow_blank: true
-    validates :size_of_external_area, numericality: { greater_than: 0, message: :invalid }, allow_blank: true
-    validates :no_of_consoles_to_be_serviced, numericality: { greater_than: 0, message: :invalid }, allow_blank: true
-    validates :tones_to_be_collected_and_removed, numericality: { greater_than: 0, message: :invalid }, allow_blank: true
+    validates :no_of_appliances_for_testing, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
+    validates :no_of_building_occupants, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
+    validates :no_of_units_to_be_serviced, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
+    validates :size_of_external_area, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
+    validates :no_of_consoles_to_be_serviced, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
+    validates :tones_to_be_collected_and_removed, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
 
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
     SERVICES_AND_QUESTIONS = [{ code: 'C.5', questions: %i[total_floors_per_lift service_standard] },
