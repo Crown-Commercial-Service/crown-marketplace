@@ -1,7 +1,8 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(supplier_name, data)
+  def initialize(supplier_name, data, rate_card)
     @supplier_name = supplier_name
     @data = data
+    @rate_card = rate_card
     create_spreadsheet
   end
 
@@ -40,13 +41,60 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
   # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/BlockLength
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
 
+    contract_price_matrix
+    contract_rate_card
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def contract_rate_card
+    @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
+      sheet.add_row [@supplier_name]
+      sheet.add_row ['Table 1. Service rates']
+      sheet.add_row ['Service Reference', 'Service Name', 'Unit of Measure', 'General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations', 'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary Schools', 'Special Schools', 'Universities and Colleges', 'Community - Doctors, Dentist, Health Clinic', 'Nursing and Care Homes']
+
+      if @supplier_name
+        rate_card_discounts = @rate_card.data['Discounts'][@supplier_name]
+        rate_card_variances = @rate_card.data['Variances'][@supplier_name]
+        rate_card_prices = @rate_card.data['Prices'][@supplier_name]
+
+        sheet.add_row [rate_card_discounts.inspect]
+        sheet.add_row [rate_card_variances.inspect]
+        sheet.add_row [rate_card_prices.inspect]
+
+        @data.keys.collect { |k| @data[k].keys }
+             .flatten.uniq
+             .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
+
+          # {"Lot"=>"1a", "Supplier"=>"Hirthe-Mills",
+          # "Pre-School"=>1.3418903988675766, "Warehouses"=>0.6778947368421055,
+          # "Service Ref"=>"C.1", "Service Name"=>"Mechanical and Electrical Engineering Maintenance - Standard A", "Primary School"=>1.3418903988675766, "Special Schools"=>1.3418903988675766, "Unit of Measure"=>"Square Metre (GIA) per annum", "Secondary Schools"=>1.3418903988675766, "Call Centre Operations"=>1.84, "Nursing and Care Homes"=>1.3418903988675766, "Universities and Colleges"=>1.3418903988675766, "General office - Customer Facing"=>1.84, "Restaurant and Catering Facilities"=>1.84, "General office - Non Customer Facing"=>1.84, "Community - Doctors, Dentist, Health Clinic"=>2.5161395965423625}
+
+          labels = @data.keys.sort.collect do |k|
+            @data[k][s][:spreadsheet_label]
+          end
+
+          new_row = []
+          CCS::FM::RateCard.building_types.each do |b|
+            new_row << b
+          end
+
+          new_row = ([s, rate_card_prices[s]['Service Name'], labels.first] << new_row).flatten
+
+          sheet.add_row new_row
+        end
+      end
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/BlockLength
+  # rubocop:disable Metrics/MethodLength
+  def contract_price_matrix
     @workbook.add_worksheet(name: 'Contract Price Matrix') do |sheet|
       sheet.add_row
       sheet.add_row ['Table 1. Baseline service costs for year 1']
@@ -78,15 +126,20 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sum_building_profit[k] = 0
         sum_building_mobilisation[k] = 0
       end
+
       @data.keys.collect { |k| @data[k].keys }
            .flatten.uniq
            .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-        # ChrisG suggest an alternative call to work_package to het the service description
-        new_row = [s, FacilitiesManagement::Service.where(code: s).first.name]
+
+        new_row = [s, @rate_card.data['Prices'][@supplier_name][s]['Service Name']]
 
         new_row2 = []
         sum = 0
+
         sorted_building_keys.each do |k|
+          new_row2 = []
+          next unless @data[k][s]
+
           new_row2 << @data[k][s][:subtotal1]
           sum += @data[k][s][:subtotal1]
           sum_building[k] += @data[k][s][:subtotal1]
@@ -175,12 +228,8 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sheet.add_row new_row2
       end
     end
-
-    @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
-      sheet.add_row [@supplier_name]
-    end
   end
-  # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/AbcSize
 end
