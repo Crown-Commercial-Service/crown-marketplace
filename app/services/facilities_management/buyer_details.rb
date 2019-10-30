@@ -1,7 +1,6 @@
 module FacilitiesManagement
   module Beta
     class BuyerDetails
-
       def save_buyer_details(details, email)
         # always save a new record, leave previous records as audit trail of changes
         id = SecureRandom.uuid
@@ -12,12 +11,16 @@ module FacilitiesManagement
         address_parts = details['buyer-details-postcode-lookup-results'].to_s.split(',')
         central_gov = details['buyer-details-central-government'].to_s == 'on'
         wps = details['buyer-details-wider-public-sector'].to_s == 'on'
-        query = "insert into facilities_management_buyer (id,full_name,job_title,telephone_number,organisation_name,organisation_address_line_1,organisation_address_line_2,organisation_address_town,organisation_address_county,organisation_address_postcode,central_government,wider_public_sector,created_at,updated_at,active,email)
-              values('#{id}','#{full_name}','#{job_title}','#{telephone_number}', '#{organisation_name}','#{address_parts[0]}',
-              '#{address_parts[1]}','#{address_parts[2]}','#{address_parts[3]}','#{address_parts[4]}',#{central_gov},#{wps},now(),now(),true,'#{email}');"
-        ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
+        query = "insert into facilities_management_buyer (id,full_name,job_title,telephone_number,organisation_name,organisation_address_line_1,organisation_address_line_2,organisation_address_town,organisation_address_county,organisation_address_postcode,central_government,wider_public_sector,created_at,updated_at,active,email) values('#{id}','#{full_name}','#{job_title}','#{telephone_number}', '#{organisation_name}','#{address_parts[0]}','#{address_parts[1]}','#{address_parts[2]}','#{address_parts[3]}','#{address_parts[4]}',#{central_gov},#{wps},now(),now(),true,'#{email}');"
+        do_save(query)
         id.to_s
       rescue StandardError => e
+        Rails.logger.warn "Couldn't save buyer details: #{e}"
+        raise e
+      end
+
+      def do_save(query)
+        ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
         Rails.logger.warn "Couldn't save buyer details: #{e}"
         raise e
       end
