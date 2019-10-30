@@ -18,7 +18,9 @@ class CreateBuyerTable < ActiveRecord::Migration[5.2]
         t.datetime 'created_at', default: -> { 'now()' }
         t.datetime 'updated_at'
         t.boolean 'active', default: true, null: false
+        t.text 'email', null: false
         t.index ['id'], name: 'facilities_management_buyer_id_idx'
+        t.index ['email'], name: 'facilities_management_buyer_email_idx'
       end
     end
   end

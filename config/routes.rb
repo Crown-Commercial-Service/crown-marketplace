@@ -46,6 +46,9 @@ Rails.application.routes.draw do
 
     namespace 'facilities_management', path: 'facilities-management' do
       concerns %i[authenticatable registrable]
+      namespace :beta do
+        concerns :authenticatable
+      end
     end
 
     namespace 'management_consultancy', path: 'management-consultancy' do
@@ -99,21 +102,43 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management' do
     namespace 'beta', path: 'beta' do
       get '/', to: 'buyer_account#buyer_account'
+      get '/start', to: 'home#index'
+      get '/gateway', to: 'gateway#index'
       get '/buyer_account', to: 'buyer_account#buyer_account'
+      match '/buyer-details', to: 'buyer_account#buyer_details', via: %i[get post]
       get '/buildings-management', to: 'buildings_management#buildings_management'
       get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
-      get '/building', to: 'buildings_management#building'
-      get '/building-type', to: 'buildings_management#building_type'
-      get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
       get '/building-details-summary', to: 'buildings_management#building_details_summary'
-      get '/building_address', to: 'buildings_management#building_address'
-      get '/building-security-type', to: 'buildings_management#building_security-type'
+      post '/building-details-summary', to: 'buildings_management#building_details_summary'
+      get '/building', to: 'buildings_management#building'
+      post '/building', to: 'buildings_management#building'
+      put '/building', to: 'buildings_management#update_building_details'
+      get '/building-type', to: 'buildings_management#building_type'
+      post '/building-type', to: 'buildings_management#building_type'
+      put '/building-type', to: 'buildings_management#update_building_type'
+      get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
+      post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
+      put '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
+      get '/building-address', to: 'buildings_management#building_address'
+      get '/building-security-type', to: 'buildings_management#building_security_type'
+      post '/building-security-type', to: 'buildings_management#building_security_type'
+      put '/building-security-type', to: 'buildings_management#update_security_type'
       match '/buildings-management/save-new-building', to: 'buildings_management#save_new_building', via: %i[get post]
       match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
       match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
       match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
+      match '/save-address', to: 'buildings_management#save_building_address', via: %i[get post]
+      match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
+      match '/save-building-gia', to: 'buildings_management#save_building_gia', via: %i[get post]
+      match '/save-building-security-type', to: 'buildings_management#save_security_type', via: %i[get post]
+      post '/summary', to: 'summary#index'
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
+      get '/start', to: 'journey#start', as: 'journey_start'
+      get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
+      get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
+      resources :procurements
+      resources :procurement_buildings, only: :show
     end
 
     get '/', to: 'home#index'
@@ -156,6 +181,8 @@ Rails.application.routes.draw do
     post '/cache/clear', to: 'cache#clear_all'
     get '/buyer-account', to: 'buyer_account#buyer_account'
     get '/reset', to: 'buildings#reset_buildings_tables'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     get '/:slug', to: '/errors#404'
 
     resources :uploads, only: :create if Marketplace.upload_privileges?
@@ -186,35 +213,6 @@ Rails.application.routes.draw do
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
-  end
-
-  namespace 'apprenticeships', path: 'apprenticeships' do
-    get '/', to: 'home#index'
-    get '/gateway', to: 'gateway#index'
-    get '/search', to: 'home#search'
-    get '/search_results', to: 'home#search_results'
-    get '/supplier_search', to: 'home#supplier_search'
-    get '/supplier_search2', to: 'home#supplier_search2'
-    get '/find_apprentices', to: 'home#find_apprentices'
-    get '/find_apprentices2', to: 'home#find_apprentices2'
-    get '/find_apprentices3', to: 'home#find_apprentices3'
-    get '/find_apprentices4', to: 'home#find_apprentices4'
-    get '/find_apprentices5', to: 'journey#find_apprentices5'
-    get '/outline', to: 'home#outline'
-    get '/requirements', to: 'home#requirements'
-    get '/requirement', to: 'home#requirement'
-    get '/building_services', to: 'home#building_services'
-    get '/training_provider', to: 'home#training_provider'
-    get '/training_provider_list', to: 'home#training_provider_list'
-    get '/sorry', to: 'home#sorry'
-    get '/signup', to: 'home#signup'
-    get '/understanding', to: 'home#understanding'
-    get '/training_details', to: 'home#training_details'
-    get '/download_provider', to: 'home#download_provider'
-    resources :suppliers, only: %i[index show]
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
@@ -252,7 +250,7 @@ Rails.application.routes.draw do
     get '/gateway', to: 'gateway#index'
     get '/', to: 'home#index'
     get '/service-not-suitable', to: 'home#service_not_suitable'
-    get '/suppliers/download_shortlist', to: 'suppliers#download_shortlist'
+    get '/suppliers/download', to: 'suppliers#download'
     get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
     get '/suppliers/cg-no-suppliers-found', to: 'suppliers#cg_no_suppliers_found'
     resources :suppliers, only: %i[index show]
