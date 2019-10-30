@@ -119,12 +119,12 @@ en:
         input_label: sqm (square metres)
       buyer_account:
         buyer_account:
+          about_the_buyer_description: Edit buyer account details such as contact name, organisation name
+          about_the_buyer_title: About the buyer
           facilities_management:
             beta:
               index:
                 manage_procurements_link: Manage procurements
-          about_the_buyer_title: About the buyer
-          about_the_buyer_description: Edit buyer account details such as contact name, organisation name
           link_text: Update buyer details
       gateway:
         index:
