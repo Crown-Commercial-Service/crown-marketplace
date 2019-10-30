@@ -337,6 +337,7 @@ module FacilitiesManagement
 
         results2 = nil
         results2 = results[v[:service_code]] = {} if results
+        results2[:spreadsheet_label] = v[:spreadsheet_label] if results2
         sum_uom += calc_fm.sumunitofmeasure results2
         sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
 
