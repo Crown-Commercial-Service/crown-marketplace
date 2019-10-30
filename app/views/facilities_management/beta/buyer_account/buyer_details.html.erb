@@ -1,0 +1,138 @@
+<a href="<%= request.referrer %>" class="govuk-back-link govuk-!-margin-bottom-3">Back</a>
+
+<div class="govuk-grid-row govuk-!-margin-top-3">
+  <div class="govuk-caption-l">
+    <%= @current_login_email %>
+  </div>
+  <div class="govuk-heading-xl">
+    Buyer details
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <form id="buyer-details-form" method="post" action="buyer-details">
+
+    <fieldset class="govuk-fieldset">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <h2 class="govuk-heading">
+        Your details
+      </h2>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="buyer-details-name">
+          Name <span class="govuk-visually-hidden">Buyer's name</span>
+        </label>
+        <input class="govuk-input govuk-!-width-two-thirds" id="buyer-details-name" name="buyer-details-name" type="text" value="<%= @buyer_record['full_name'] unless @buyer_record.nil? %>">
+      </div>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="buyer-details-job-title">
+          Job title
+        </label>
+        <input class="govuk-input govuk-!-width-two-thirds" id="buyer-details-job-title" name="buyer-details-job-title" type="text" value="<%= @buyer_record['job_title'] unless @buyer_record.nil? %>">
+      </div>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-6">
+        <label class="govuk-label" for="buyer-details-telephone-number">
+          Telephone number
+        </label>
+        <input class="govuk-input govuk-!-width-one-third" id="buyer-details-telephone-number" name="buyer-details-telephone-number" type="text" value="<%= @buyer_record['telephone_number'] unless @buyer_record.nil? %>">
+      </div>
+
+      <h2 class="govuk-heading">
+        Organisation details
+      </h2>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="buyer-details-organisation">
+          Organisation name
+        </label>
+        <input class="govuk-input govuk-!-width-two-thirds" id="buyer-details-organisation" name="buyer-details-organisation" type="text" value="<%= @buyer_record['organisation_name'] unless @buyer_record.nil? %>">
+      </div>
+
+      <div>
+        <h2 class="govuk-heading govuk-!-margin-bottom-0">
+          Organisation address
+        </h2>
+      </div>
+      <div class="govuk-form-group govuk-!-width-two-thirds">
+        <span id="organisation_address" class="govuk-caption-m govuk-!-margin-top-0">
+          <%= @buyer_record['organisation_address_line_1'] + ',' +
+                  @buyer_record['organisation_address_line_2'] + ',' +
+                  @buyer_record['organisation_address_town'] + ',' +
+                  @buyer_record['organisation_address_county'] unless @buyer_record.nil?
+          %>
+        </span>
+        <div class="fm-postcode-lookup-panel" id="fm-postcode-lookup-container">
+
+          <label class="govuk-label" for="buyer-details-postcode">
+            Postcode
+          </label>
+          <input class="govuk-input fm-postcode-input" id="buyer-details-postcode" name="buyer-details-postcode" type="text" value="<%= @buyer_record['organisation_address_postcode'] unless @buyer_record.nil? %>">
+          <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
+            <a role="button" class="govuk-button" id="buyer-details-find-address-btn"><%= @buyer_record.nil? ? 'Find':'Change' %> address</a>
+          </div>
+          <div class="govuk-!-margin-top-1">
+            <a href='#' class="govuk-link--no-visited-state govuk-caption-m" id="buyer-details-cant-find-address">I can't find my address in the list</a>
+          </div>
+        </div>
+        <div id="fm-post-code-results-container" class="govuk-form-group govuk-visually-hidden fm-postcode-lookup-panel">
+          <label class="govuk-heading-s">Postcode</label>
+          <div class="govuk-grid-row govuk-!-margin-top-3">
+            <div class="govuk-grid-column-one-quarter">
+              <label id="fm-postcode-label" class="govuk-heading-s"></label>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <a id="fm-change-postcode" href="#" class="govuk-link--no-visited-state" role="button">Change</a>
+            </div>
+          </div>
+          <label class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</label>
+          <div id="fm-address-error-form-group" class="govuk-form-group">
+            <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
+              No address selected
+            </span>
+            <select class="govuk-select govuk-!-width-full" id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
+              <option value="status-option" selected>0 addresses found</option>
+            </select>
+          </div>
+          <div class="govuk-!-margin-top-3">
+            <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button">I
+              can't find my building's
+              address in the list</a>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="govuk-heading">
+        Sector
+      </h2>
+
+      <div class="govuk-heading-s govuk-!-margin-bottom-0">
+        Which type of public sector organisation are you buying for?
+      </div>
+
+      <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-3">
+        <span class="govuk-caption-m">Search <a href="https://www.gov.uk/government/organisations" target="_blank">central government departments, agencies and public bodies</a> if you're unsure.</span>
+      </div>
+
+      <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-6">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="buyer-details-central-government" name="buyer-details-central-government" type="radio" <%= @buyer_record['central_government'] == true ? 'checked' : '' unless @buyer_record.nil? %>>
+          <label class="govuk-label govuk-radios__label" for="buyer-details-central-government">
+            Central government
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="buyer-details-wider-public-sector" name="buyer-details-wider-public-sector" type="radio" <%= @buyer_record['wider_public_sector'] == true ? 'checked' : '' unless @buyer_record.nil? %>>
+          <label class="govuk-label govuk-radios__label" for="changed-name-2">
+            Wider public sector
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <a id="buyer-details-save-continue-btn" class="govuk-button" role="button">Save and continue</a>
+      </div>
+
+    </fieldset>
+  </form>
+</div>
