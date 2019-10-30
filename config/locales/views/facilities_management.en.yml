@@ -26,6 +26,7 @@ en:
           attributes:
             contract_name:
               blank: Enter your contract name
+              taken: This contract name is already in use
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
             estimated_annual_cost:
@@ -51,6 +52,7 @@ en:
               not_an_integer: Enter mobilisation length as a whole number
             name:
               blank: Enter the name for the search
+              taken: This name is already in use
               too_long: Your search name must be 100 characters or fewer
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
