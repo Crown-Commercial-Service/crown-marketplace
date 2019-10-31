@@ -13,7 +13,7 @@
       <div class="govuk-radios govuk-!-margin-top-3">
         <div class="govuk-radios__item">
             <%= f.radio_button :mobilisation_period_required, true, class: "govuk-radios__input" %>
-            <%= label :mobilisation_period_required, 'Yes', class: 'govuk-label govuk-radios__label' %>
+            <%= f.label :mobilisation_period_required, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
           <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
             <div class="govuk-form-group govuk-!-margin-left-3 <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_period].any?%>" data-propertyname="Mobilisation period">
               <%= f.label :mobilisation_period, 'Enter mobilisation length', class:'govuk-heading-s' %>
@@ -92,7 +92,7 @@
       </div>
       <div class="govuk-radios__item">
         <%= f.radio_button :mobilisation_period_required, false, class: "govuk-radios__input" %>
-        <%= label :mobilisation_period_required, 'No', class: 'govuk-label govuk-radios__label' %>
+        <%= f.label :mobilisation_period_required, 'No', value: false ,class: 'govuk-label govuk-radios__label' %>
       </div>
     </div>
   </div>

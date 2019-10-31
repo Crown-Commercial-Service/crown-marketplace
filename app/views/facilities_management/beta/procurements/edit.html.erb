@@ -10,12 +10,12 @@
 <% if @building_count.zero? && @procurement.detailed_search? %>
   <%= render partial: 'no_buildings' %>%
 <% else %>
-    <%= link_to 'Back', @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? %>
+  <%= link_to 'Back', @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? %>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: {specialvalidation: does_form_for_current_step_require_special_client_validation?(params), novalidate: true, multipart: true } do |f| %>
     <div class="govuk-grid-row">
-      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, multiple: false, render_empty: true}  %>
+      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, multiple: false, render_empty: true }  %>
     </div>
-    <div class="govuk-grid-row">
+    <div class="govuk-clearfix">
       <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.name}" if @procurement.detailed_search? %></span>
       <% if !@procurement.persisted? || @procurement.quick_search?%>
         <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
@@ -26,7 +26,7 @@
       <% end %>
     </div>
     <div class="procurement">
-      <%= govuk_form_group_with_optional_error(@procurement, :name) do %>
+      <%= govuk_form_group_with_optional_error(@procurement, :name, :region_codes, :service_codes) do %>
         <% if @procurement.quick_search? %>
           <div class="govuk-grid-column-full quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
             <%= render partial: 'quick_search_form', locals: { f: f, step: params[:step] } %>
@@ -36,7 +36,7 @@
         <% end %>
       <% end %>
       <%= f.hidden_field :step, value: params[:step] if params[:step] %>
-      <div class="govuk-grid-row govuk-!-margin-top-5">
+      <div class="govuk-!-margin-top-5">
         <% if @delete %>
           <%= link_to t('.confirm_delete'), facilities_management_beta_procurement_path(@procurement), :method => 'delete', class: "govuk-button govuk-button--warning" %>
           <%= link_to t('.cancel'),  facilities_management_beta_procurements_url, class: "govuk-button govuk-button--secondary govuk-!-margin-left-3" %>
@@ -48,14 +48,14 @@
           <%= f.submit t('.save_and_continue'), class: 'govuk-button', data: {disable_with: false}, name: @procurement.detailed_search? ? 'next_step' : 'start_detailed_search' %>
           <%= f.submit t('.save_and_return_to_detailed_summary'), class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3', data: {disable_with: false} if @procurement.detailed_search? %>
           <%= f.submit t('.save_for_later'), class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3', data: {disable_with: false} if @procurement.quick_search? %>
-        <%end %>
+        <% end %>
       </div>
       <% if params[:step] && @procurement.detailed_search? %>
-        <div class="govuk-grid-row">
+        <div>
           <span class="govuk-caption-m"><%= t(".next_step.#{params[:step]}") %></span>
         </div>
       <% end %>
-        <div class="govuk-grid-row govuk-!-margin-top-3 govuk-!-margin-bottom-7">
+        <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-7">
         <%= link_to t('.back_to_detailed_summary'), facilities_management_beta_procurement_path(@procurement), class: 'govuk-link--no-visited-state' if @procurement.detailed_search? %>
         <%= link_to t('.cancel_and_return'), facilities_management_beta_procurements_path, class: 'govuk-link--no-visited-state' if @procurement.quick_search? %>
       </div>

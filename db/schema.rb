@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_28_101010) do
+ActiveRecord::Schema.define(version: 2019_10_25_152610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -56,6 +56,12 @@ ActiveRecord::Schema.define(version: 2019_10_28_101010) do
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "no_of_appliances_for_testing"
+    t.integer "no_of_building_occupants"
+    t.integer "size_of_external_area"
+    t.integer "no_of_consoles_to_be_serviced"
+    t.integer "tones_to_be_collected_and_removed"
+    t.integer "no_of_units_to_be_serviced"
     t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
   end
 
