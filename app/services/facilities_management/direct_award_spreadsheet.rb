@@ -64,17 +64,12 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row new_row
 
       if @supplier_name
-        # rate_card_discounts = @rate_card_data[:Discounts][@supplier_name.to_sym]
         rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
         rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
 
         @data.keys.collect { |k| @data[k].keys }
              .flatten.uniq
              .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-
-          # {"Lot"=>"1a", "Supplier"=>"Hirthe-Mills",
-          # "Pre-School"=>1.3418903988675766, "Warehouses"=>0.6778947368421055,
-          # "Service Ref"=>"C.1", "Service Name"=>"Mechanical and Electrical Engineering Maintenance - Standard A", "Primary School"=>1.3418903988675766, "Special Schools"=>1.3418903988675766, "Unit of Measure"=>"Square Metre (GIA) per annum", "Secondary Schools"=>1.3418903988675766, "Call Centre Operations"=>1.84, "Nursing and Care Homes"=>1.3418903988675766, "Universities and Colleges"=>1.3418903988675766, "General office - Customer Facing"=>1.84, "Restaurant and Catering Facilities"=>1.84, "General office - Non Customer Facing"=>1.84, "Community - Doctors, Dentist, Health Clinic"=>2.5161395965423625}
 
           labels = @data.keys.sort.collect do |k|
             @data[k][s][:spreadsheet_label]
@@ -187,13 +182,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       add_computed_row sheet, sorted_building_keys, 'Helpdesk', sum_building_helpdesk
 
-      # sheet.add_row ['Year 1 Deliverables sub total']
       add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables sub total', 4
       sheet.add_row
 
       add_computed_row sheet, sorted_building_keys, 'London Location Variance', sum_building_variance
 
-      # sheet.add_row ['Year 1 Deliverables total']
       add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables total', 3
       sheet.add_row
 
@@ -201,7 +194,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       add_computed_row sheet, sorted_building_keys, 'TUPE Risk Premium', sum_building_tupe
 
-      # sheet.add_row ['Total Charges excluding Overhead and Profit']
       add_summation_row sheet, sorted_building_keys, 'Total Charges excluding Overhead and Profit', 4
       sheet.add_row
 
@@ -217,7 +209,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       sheet.add_row
       sheet.add_row ['Table 2. Subsequent Years Total Charges']
-      # @data["E7EED6F6-5EF0-E387-EE35-6C1D39FEB8A9"].first[1][:subsequent_length_years]
       max_years =
         sorted_building_keys.collect { |k| @data[k].first[1][:subsequent_length_years] }.max
 
