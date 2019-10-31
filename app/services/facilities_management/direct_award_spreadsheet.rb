@@ -24,7 +24,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
 
   # rubocop:disable Metrics/AbcSize
-  def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2)
+  def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2, just_one = false)
     new_row = [label, nil, nil]
     sorted_building_keys.each do |_k|
       new_row << ''
@@ -37,6 +37,8 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       column_ref = sheet.rows.last.cells[i].r_abs[start + 1..finish - 1]
       row_ref = sheet.rows.last.cells[i].r_abs[finish + 1..-1].to_i
       sheet.rows.last.cells[i].value = "=sum(#{column_ref}#{row_ref - 1}:#{column_ref}#{row_ref - how_many_rows})"
+
+      break if just_one
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -62,7 +64,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row new_row
 
       if @supplier_name
-        rate_card_discounts = @rate_card_data[:Discounts][@supplier_name.to_sym]
+        # rate_card_discounts = @rate_card_data[:Discounts][@supplier_name.to_sym]
         rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
         rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
 
@@ -152,7 +154,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sum = 0
 
         sorted_building_keys.each do |k|
-          new_row2 = []
           next unless @data[k][s]
 
           new_row2 << @data[k][s][:subtotal1]
@@ -234,7 +235,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       end
 
       sheet.add_row
-      add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3
+      add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3, true
       sheet.add_row
       sheet.add_row ['Table 3. Total charges per month']
       new_row = new_row.map { |x| x / 12 }
