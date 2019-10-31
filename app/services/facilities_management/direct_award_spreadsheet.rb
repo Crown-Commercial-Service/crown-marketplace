@@ -142,7 +142,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       @data.keys.collect { |k| @data[k].keys }
            .flatten.uniq
            .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-
         new_row = [s, @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][:'Service Name']]
 
         new_row2 = []
