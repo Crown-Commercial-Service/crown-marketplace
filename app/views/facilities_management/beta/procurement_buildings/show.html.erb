@@ -38,7 +38,7 @@
                 <%= t(".#{question.to_s}") %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                <%= link_to 'Answer question', edit_facilities_management_beta_procurement_building_path(@procurement_building) %>
+                <%= link_to 'Answer question', edit_facilities_management_beta_procurement_building_path(@procurement_building, service_question: question_type(service, question)) %>
               </dd>
             </div>
           <% end %>

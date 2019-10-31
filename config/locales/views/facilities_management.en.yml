@@ -79,6 +79,8 @@ en:
               invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
+            service_standard:
+              blank: Select level of standard for your
             size_of_external_area:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
             tones_to_be_collected_and_removed:
@@ -168,19 +170,18 @@ en:
           heading: You have successfully changed your password
           lead: You can now sign in to your Crown Commercial Service account
       procurement_buildings:
-        edit:
+        ppm_standards:
           back_to_service_information: Back to service information
-          caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
-          heading: Service information volumes
-          question:
-            no_of_appliances_for_testing: How many appliances to be tested per annum?
-            no_of_building_occupants: How many building occupants?
-            no_of_consoles_to_be_serviced: How many consoles to be serviced per annum?
-            no_of_units_to_be_serviced: How many units to be serviced per annum?
-            size_of_external_area: What is the size of the external area (in square metres)?
-            tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
+          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification doc</a>.
+          heading: Planned maintenance (PPM) services standards
           save_and_return_to_service_information: Save and return to service information
-          subheading: Answer additional questions about the services
+          standard_a_copy: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
+          standard_a_title: Standard A - the general or normal service level
+          standard_b_copy: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
+          standard_b_title: Standard B - this is the minimum level of service required
+          standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+          standard_c_title: Standard C - a bespoke service level
+          subheading: What standard are you applying to all selected planned maintenance services?
         show:
           back_to_detailed_summary: Back to detailed search summary
           heading: Service information
@@ -193,6 +194,19 @@ en:
           size_of_external_area: The size of the external area (in square metres)
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
           total_floors_per_lift: The sum total of number of floors per lift
+        volume:
+          back_to_service_information: Back to service information
+          caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
+          heading: Service information volumes
+          question:
+            no_of_appliances_for_testing: How many appliances to be tested per annum?
+            no_of_building_occupants: How many building occupants?
+            no_of_consoles_to_be_serviced: How many consoles to be serviced per annum?
+            no_of_units_to_be_serviced: How many units to be serviced per annum?
+            size_of_external_area: What is the size of the external area (in square metres)?
+            tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
+          save_and_return_to_service_information: Save and return to service information
+          subheading: Answer additional questions about the services
       procurements:
         about_the_contract:
           no_cost_provided: None
