@@ -1,6 +1,10 @@
 $(function () {
 
     let selectedAddress;
+    const focusElem = function (elem) {
+        elem.focus();
+        elem.select();
+    };
 
     $('#buyer-details-find-address-btn').on('click', function (e) {
         e.preventDefault();
@@ -16,13 +20,36 @@ $(function () {
         if (validateForm(form) === true) {
             form.submit();
         }
+    });
 
+    $('#change-selected-address-link').on('click', function (e) {
+        e.preventDefault();
+        $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
+        $('#selected-address-container').addClass('govuk-visually-hidden');
+        $('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
+        focusElem($('#buyer-details-postcode'));
+    });
+
+    $('#buyer-details-change-postcode').on('click', function (e) {
+        e.preventDefault();
+        $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
+        $('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
+        focusElem($('#buyer-details-postcode'));
     });
 
     $('#buyer-details-postcode-lookup-results').on('change', function (e) {
         selectedAddress = void 0;
         selectedAddress = $("select#buyer-details-postcode-lookup-results > option:selected").val();
+
+        $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
+        $('#selected-address-container').removeClass('govuk-visually-hidden');
+        $('#selected-address-label').val(selectedAddress);
         $('#organisation_address').text(selectedAddress);
+    });
+
+    $('#buyer-details-cant-find-address').on('click', function (e) {
+        e.preventDefault();
+        alert('Not yet implemented TODO add new page');
     });
 
     const validateForm = function (form) {
@@ -39,9 +66,9 @@ $(function () {
             isValid = true;
         } else {
             // to do add error messages & validation etc
+            alert("There are empty fields - TODO Add validation and error messages");
         }
 
         return isValid;
     }
-
 });
