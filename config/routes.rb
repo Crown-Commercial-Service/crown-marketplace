@@ -105,6 +105,7 @@ Rails.application.routes.draw do
       get '/start', to: 'home#index'
       get '/gateway', to: 'gateway#index'
       get '/buyer_account', to: 'buyer_account#buyer_account'
+      match '/buyer-details', to: 'buyer_account#buyer_details', via: %i[get post]
       get '/buildings-management', to: 'buildings_management#buildings_management'
       get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
       get '/building-details-summary', to: 'buildings_management#building_details_summary'
@@ -117,7 +118,7 @@ Rails.application.routes.draw do
       put '/building-type', to: 'buildings_management#update_building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
       post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      put  '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
+      put '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
       get '/building-address', to: 'buildings_management#building_address'
       get '/building-security-type', to: 'buildings_management#building_security_type'
       post '/building-security-type', to: 'buildings_management#building_security_type'
