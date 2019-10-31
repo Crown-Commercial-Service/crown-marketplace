@@ -70,7 +70,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         @data.keys.collect { |k| @data[k].keys }
              .flatten.uniq
              .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-
           labels = @data.keys.sort.collect do |k|
             @data[k][s][:spreadsheet_label]
           end
