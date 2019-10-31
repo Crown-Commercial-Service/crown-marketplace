@@ -12,7 +12,11 @@ module FacilitiesManagement
 
       def buyer_details
         @current_login_email = current_user.email.to_s
-        @buyer_id = save_buyer_details(params) if request.method.to_s == 'POST'
+
+        if request.method.to_s == 'POST'
+          @buyer_id = save_buyer_details(params)
+          redirect_to('/facilities-management/beta/')
+        end
         results = retrieve_buyer_details @current_login_email
         @buyer_record = results.first
       end

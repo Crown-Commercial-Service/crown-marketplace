@@ -55,24 +55,23 @@
         </h2>
       </div>
       <div class="govuk-form-group govuk-!-width-two-thirds">
-        <span id="organisation_address" class="govuk-caption-m govuk-!-margin-top-0">
-          <%= @buyer_record['organisation_address_line_1'] + ',' +
-                  @buyer_record['organisation_address_line_2'] + ',' +
-                  @buyer_record['organisation_address_town'] + ',' +
-                  @buyer_record['organisation_address_county'] unless @buyer_record.nil?
-          %>
-        </span>
-        <div class="fm-postcode-lookup-panel" id="fm-postcode-lookup-container">
-
+        <div class="fm-postcode-lookup-panel<%= ' govuk-visually-hidden' unless @buyer_record.nil? %>" id="fm-postcode-lookup-container">
+          <span class="govuk-caption-m">
+            <%= @buyer_record['organisation_address_line_1'] + ',' +
+                    @buyer_record['organisation_address_line_2'] + ',' +
+                    @buyer_record['organisation_address_town'] + ',' +
+                    @buyer_record['organisation_address_county'] unless @buyer_record.nil?
+            %>
+          </span>
           <label class="govuk-label" for="buyer-details-postcode">
             Postcode
           </label>
           <input class="govuk-input fm-postcode-input" id="buyer-details-postcode" name="buyer-details-postcode" type="text" value="<%= @buyer_record['organisation_address_postcode'] unless @buyer_record.nil? %>">
           <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
-            <a role="button" class="govuk-button" id="buyer-details-find-address-btn"><%= @buyer_record.nil? ? 'Find':'Change' %> address</a>
+            <a role="button" class="govuk-button" id="buyer-details-find-address-btn">Find address</a>
           </div>
           <div class="govuk-!-margin-top-1">
-            <a href='#' class="govuk-link--no-visited-state govuk-caption-m" id="buyer-details-cant-find-address">I can't find my address in the list</a>
+            <a href='' class="govuk-link--no-visited-state govuk-caption-m" id="buyer-details-cant-find-address">I can't find my address in the list</a>
           </div>
         </div>
         <div id="fm-post-code-results-container" class="govuk-form-group govuk-visually-hidden fm-postcode-lookup-panel">
@@ -82,7 +81,7 @@
               <label id="fm-postcode-label" class="govuk-heading-s"></label>
             </div>
             <div class="govuk-grid-column-one-quarter">
-              <a id="fm-change-postcode" href="#" class="govuk-link--no-visited-state" role="button">Change</a>
+              <a id="buyer-details-change-postcode" href="" class="govuk-link--no-visited-state">Change</a>
             </div>
           </div>
           <label class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</label>
@@ -100,6 +99,18 @@
               address in the list</a>
           </div>
         </div>
+        <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' if @buyer_record.nil? %>" id="selected-address-container">
+          <label class="govuk-heading-s govuk-!-margin-bottom-0">Selected Address</label>
+          <input id="selected-address-label" type="text" class="govuk-input"
+                 readonly
+                 value="<%= @buyer_record['organisation_address_line_1'] + ',' +
+                                @buyer_record['organisation_address_line_2'] + ',' +
+                                @buyer_record['organisation_address_town'] + ',' +
+                                @buyer_record['organisation_address_county'] unless @buyer_record.nil?
+                 %>">
+          <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state">Change</a>
+        </div>
+
       </div>
 
       <h2 class="govuk-heading">
