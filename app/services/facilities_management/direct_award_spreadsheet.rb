@@ -2,7 +2,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   def initialize(supplier_name, data, rate_card)
     @supplier_name = supplier_name
     @data = data
-    @rate_card = rate_card
+    @rate_card_data = rate_card.data.deep_symbolize_keys
     create_spreadsheet
   end
 
@@ -54,16 +54,17 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
       sheet.add_row [@supplier_name]
       sheet.add_row ['Table 1. Service rates']
-      sheet.add_row ['Service Reference', 'Service Name', 'Unit of Measure', 'General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations', 'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary Schools', 'Special Schools', 'Universities and Colleges', 'Community - Doctors, Dentist, Health Clinic', 'Nursing and Care Homes']
+
+      new_row = ['Service Reference', 'Service Name', 'Unit of Measure']
+      CCS::FM::RateCard.building_types.each do |b|
+        new_row << b
+      end
+      sheet.add_row new_row
 
       if @supplier_name
-        rate_card_discounts = @rate_card.data['Discounts'][@supplier_name]
-        rate_card_variances = @rate_card.data['Variances'][@supplier_name]
-        rate_card_prices = @rate_card.data['Prices'][@supplier_name]
-
-        sheet.add_row [rate_card_discounts.inspect]
-        sheet.add_row [rate_card_variances.inspect]
-        sheet.add_row [rate_card_prices.inspect]
+        rate_card_discounts = @rate_card_data[:Discounts][@supplier_name.to_sym]
+        rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
+        rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
 
         @data.keys.collect { |k| @data[k].keys }
              .flatten.uniq
@@ -79,13 +80,27 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
           new_row = []
           CCS::FM::RateCard.building_types.each do |b|
-            new_row << b
+            new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b]
           end
 
-          new_row = ([s, rate_card_prices[s]['Service Name'], labels.first] << new_row).flatten
+          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], labels.first] << new_row).flatten
 
           sheet.add_row new_row
         end
+
+        sheet.add_row
+        sheet.add_row
+        sheet.add_row ['Table 2. Pricing Variables']
+        sheet.add_row ['Cost type', 'Unit of Measure', 'Rate']
+
+        sheet.add_row ['Cleaning Consumables', 'price per building occupant per annum', rate_card_variances[:'Cleaning Consumables per Building User (£)']]
+        sheet.add_row ['Management Overhead', 'percentage of deliverables value', rate_card_variances[:"Management Overhead %"]]
+        sheet.add_row ['Corporate Overhead', 'percentage of deliverables value', rate_card_variances[:"Corporate Overhead %"]]
+        sheet.add_row ['Profit', 'percentage of deliverables value', rate_card_variances[:'Profit %']]
+        sheet.add_row ['London Location Variance Rate', 'variance to standard service rate', rate_card_variances[:'London Location Variance Rate (%)']]
+        sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']]
+        sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']]
+
       end
     end
   end
@@ -131,7 +146,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
            .flatten.uniq
            .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
 
-        new_row = [s, @rate_card.data['Prices'][@supplier_name][s]['Service Name']]
+        new_row = [s, @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][:'Service Name']]
 
         new_row2 = []
         sum = 0
