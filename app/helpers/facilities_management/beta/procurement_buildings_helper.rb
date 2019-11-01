@@ -7,6 +7,10 @@ module FacilitiesManagement::Beta::ProcurementBuildingsHelper
     service_questions(code)[:questions].first
   end
 
+  def ppm_standard_question(code)
+    service_questions(code)[:questions].last
+  end
+
   def question_type(service, question)
     if question == :service_standard
       'ppm_standards' if service.requires_ppm_standards?
