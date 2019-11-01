@@ -172,7 +172,7 @@ en:
       procurement_buildings:
         ppm_standards:
           back_to_service_information: Back to service information
-          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification doc</a>.
+          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
           heading: Planned maintenance (PPM) services standards
           save_and_return_to_service_information: Save and return to service information
           standard_a_copy: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
