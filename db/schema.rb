@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_10_31_165100) do
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.text "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "created_at", default: -> { "now()" }
+    t.datetime "created_at"
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
