@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_18_112324) do
+ActiveRecord::Schema.define(version: 2019_10_02_145423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -21,12 +21,13 @@ ActiveRecord::Schema.define(version: 2019_09_18_112324) do
     t.text "user_id", null: false
     t.jsonb "building_json", null: false
     t.datetime "created_at", default: -> { "now()" }
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
@@ -46,6 +47,8 @@ ActiveRecord::Schema.define(version: 2019_09_18_112324) do
     t.string "updated_by", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "service_codes", default: [], array: true
+    t.text "region_codes", default: [], array: true
     t.string "contract_name", limit: 100
     t.integer "estimated_annual_cost"
     t.boolean "tupe"
@@ -57,8 +60,6 @@ ActiveRecord::Schema.define(version: 2019_09_18_112324) do
     t.integer "optional_call_off_extensions_2"
     t.integer "optional_call_off_extensions_3"
     t.integer "optional_call_off_extensions_4"
-    t.text "service_codes", default: [], array: true
-    t.text "region_codes", default: [], array: true
     t.boolean "estimated_cost_known"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
@@ -152,7 +153,7 @@ ActiveRecord::Schema.define(version: 2019_09_18_112324) do
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
-    t.string "key", null: false
+    t.text "key", null: false
     t.jsonb "value"
     t.index ["key"], name: "fm_static_data_key_idx"
   end
@@ -168,11 +169,11 @@ ActiveRecord::Schema.define(version: 2019_09_18_112324) do
 
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
     t.serial "id", null: false
-    t.string "title_text", null: false
-    t.string "example_text"
-    t.string "unit_text"
-    t.string "data_type"
-    t.string "spreadsheet_label"
+    t.text "title_text", null: false
+    t.text "example_text"
+    t.text "unit_text"
+    t.text "data_type"
+    t.text "spreadsheet_label"
     t.text "service_usage", array: true
   end
 
@@ -393,16 +394,6 @@ ActiveRecord::Schema.define(version: 2019_09_18_112324) do
     t.index ["postcode"], name: "idx_postcode"
   end
 
-  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "filename", limit: 255
-    t.integer "size"
-    t.string "etag", limit: 255
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
-  end
-
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|
     t.string "current_accredited_suppliers", limit: 255
     t.string "geographical_data_all_suppliers", limit: 255
@@ -494,6 +485,7 @@ ActiveRecord::Schema.define(version: 2019_09_18_112324) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
