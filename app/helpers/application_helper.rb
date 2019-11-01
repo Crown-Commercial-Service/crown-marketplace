@@ -41,6 +41,26 @@ module ApplicationHelper
     mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
   end
 
+  # rubocop:disable Metrics/ParameterLists
+  def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
+    css_classes = %w[govuk-!-margin-top-3]
+    form_group_css = ['govuk-form-group']
+    form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
+
+    content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
+      content_tag :div, class: form_group_css, data: top_level_data_options do
+        concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
+        concat display_label(attribute, label_text, "#{form_object_name}_#{attribute}") if label_text.present?
+        concat yield
+      end
+    end
+  end
+  # rubocop:enable Metrics/ParameterLists
+
+  def display_label(attribute, text, form_object_name)
+    content_tag :label, text, class: 'govuk-label', for: "#{form_object_name}_#{attribute}"
+  end
+
   def govuk_form_group_with_optional_error(journey, *attributes)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
@@ -63,6 +83,46 @@ module ApplicationHelper
     end
   end
 
+  def display_potential_errors(model_object, attribute, form_object_name)
+    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
+
+    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attribute}" do
+      collection.each do |key, val|
+        concat(govuk_validation_error(model_object, attribute, key, val, form_object_name))
+      end
+    end
+  end
+
+  # looks up the locals data for validation messages
+  def validation_messages(model_object_sym, attribute_sym = nil)
+    translation_hash = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
+    translation_hash = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes.#{attribute_sym.to_s.downcase}") unless attribute_sym.nil?
+    return {} if translation_hash.to_s.include?('translation_missing')
+
+    translation_hash
+  end
+
+  # Renders a govuk compliant error-content div with a client-compatible validation type
+  # and text for use as static content in the page
+  def govuk_validation_error(model_object, attribute, error_type, text, form_object_name)
+    tag_validation_type = ERROR_TYPES.include?(error_type) ? ERROR_TYPES[error_type] : error_type
+    css_classes = ['govuk-error-message']
+    css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, error_type, attribute
+
+    content_tag :label, content_tag(:span, text), class: css_classes, for: "#{form_object_name}_#{attribute}", id: "#{attribute}-error", data: { propertyname: attribute.to_s, validation: tag_validation_type }
+  end
+
+  def model_attribute_has_error(model_object, *attributes)
+    result = false
+    attributes.each { |a| result |= model_object.errors[a]&.any? }
+  end
+
+  def model_has_error?(model_object, error_type, *attributes)
+    result = false
+    attributes.each { |a| result |= (model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil)) == error_type }
+    result
+  end
+
   def display_errors(journey, *attributes)
     safe_join(attributes.map { |a| display_error(journey, a) })
   end
@@ -72,7 +132,61 @@ module ApplicationHelper
     return if error.blank?
 
     content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
-      "#{attribute} #{error}"
+      error.to_s
+    end
+  end
+
+  ERROR_TYPES = {
+    too_long: 'maxlength',
+    too_short: 'minlength',
+    blank: 'required',
+    after: 'max',
+    greater_than: 'min',
+    greater_than_or_equal_to: 'min',
+    before: 'min',
+    less_than: 'max',
+    less_than_or_equal_to: 'max',
+    not_a_date: 'pattern',
+    not_a_number: 'pattern',
+    not_an_integer: 'pattern'
+  }.freeze
+
+  def get_client_side_error_type_from_errors(errors, attribute)
+    return ERROR_TYPES[errors.details[attribute].first[:error]] if ERROR_TYPES.key?(errors.details[attribute].first[:error])
+
+    errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(errors.details[attribute].first[:error])
+  end
+
+  def get_client_side_error_type_from_model(model, attribute)
+    return ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
+
+    model.errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
+  end
+
+  def display_error_label(model, attribute, label_text, target)
+    error = model.errors[attribute].first
+    return if error.blank?
+
+    content_tag :label, data: { validation: get_client_side_error_type_from_model(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message' do
+      "#{label_text} #{error}"
+    end
+  end
+
+  def display_error_no_attr(object, attribute)
+    error = object.errors[attribute].first
+    return if error.blank?
+
+    content_tag :span, id: error_id(attribute.to_s), class: 'govuk-error-message govuk-!-margin-top-3' do
+      error.to_s
+    end
+  end
+
+  def display_error_nested_models(object, attribute)
+    error = object.errors[attribute].first
+    return if error.blank?
+
+    content_tag :span, id: error_id(object.id), class: 'govuk-error-message govuk-!-margin-top-3' do
+      error.to_s
     end
   end
 
@@ -120,24 +234,19 @@ module ApplicationHelper
   end
 
   def service_start_page_path
-    # send controller.class.parent_name.underscore + '_path' if controller.class.parent_name
     send controller.class.parent_name.underscore.tr('/', '_') + '_path' if controller.class.parent_name
   end
 
   def service_gateway_path
-    send controller.class.parent_name.underscore + '_gateway_path' if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
+    send controller.class.parent_name.underscore.tr('/', '_') + '_gateway_path' if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
   end
 
   def service_destroy_user_session_path
     if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
-      send controller.class.parent_name.underscore.tr('/', '_') + '_destroy_user_session_path'
+      send "#{controller.class.parent_name.underscore.tr('/', '_')}_destroy_user_session_path"
     else
       send 'destroy_user_session_path'
     end
-  end
-
-  def facilities_management_beta_destroy_user_session_path
-    controller.class.parent.name == 'FacilitiesManagement'
   end
 
   def landing_or_admin_page
@@ -146,10 +255,6 @@ module ApplicationHelper
 
   def fm_buyer_landing_page
     request.path_info.include? 'buyer-account'
-  end
-
-  def facilities_management_beta_path
-    controller.class.parent.name == 'FacilitiesManagement'
   end
 
   def not_permitted_page

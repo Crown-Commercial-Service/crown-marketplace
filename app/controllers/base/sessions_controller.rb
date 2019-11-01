@@ -40,6 +40,7 @@ module Base
     end
 
     def result_unsuccessful_path
+      sign_out
       if @result.needs_password_reset
         redirect_to confirm_forgot_password_path(params[:user][:email])
       elsif @result.needs_confirmation

@@ -1,8 +1,5 @@
 require 'holidays'
-require 'pg'
 
-# rubocop:disable Metrics/ParameterLists (with a s)
-# rubocop:disable Metrics/AbcSize
 #
 # # facilities management calculator based on Damolas spreadsheet -  the first set framework calculations are repeated with a benchmark rate to give two values
 # # 1. Unit of measure of deliverables required
@@ -19,6 +16,7 @@ module FMCalculator
     @benchmark_rates = nil
     @framework_rates = nil
 
+    # rubocop:disable Metrics/ParameterLists (with a s)
     def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag,
                    rates, rate_card = nil, supplier_name = nil, building_data = nil)
       @contract_length_years = contract_length_years
@@ -30,50 +28,28 @@ module FMCalculator
       @london_flag = london_flag
       @cafm_flag = cafm_flag
       @helpdesk_flag = helpdesk_flag
-      @subtotal2 = 0
-      @uomd = 0
-      @clean = 0
-      @variance = 0
-      @subtotal1 = 0
-      @cafm = 0
-      @helpdesk = 0
-      @mobilisation = 0
-      @year1 = 0
-      @manage = 0
-      @year1total = 0
-      @profit = 0
-      @year1totalcharges = 0
-      @benchmark_rate = 0
-      @framework_rate = 0
-      @benchmarkedcosts = 0
-      @benchclean = 0
-      @tupe = 0
-      @benchcafm = 0
-      @benchhelpdesk = 0
-      @benchsubtotal2 = 0
-      @benchsubtotal3 = 0
-      @benchvariance = 0
 
       @benchmark_rates = rates[:benchmark_rates]
       @framework_rates = rates[:framework_rates]
-      @rate_card = rate_card
+
       @supplier_name = supplier_name
+      if supplier_name
+        @rate_card_discounts = rate_card.data['Discounts'][@supplier_name]
+        @rate_card_variances = rate_card.data['Variances'][@supplier_name]
+        @rate_card_prices = rate_card.data['Prices'][@supplier_name]
+      end
+
       @building_data = building_data
     end
+    # rubocop:enable Metrics/ParameterLists (with a s)
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
-      @framework_rate = @framework_rates[@service_ref].to_f
-
-      # benchmark rate set here
-      @benchmark_rate = @benchmark_rates[@service_ref].to_f
-
-      @uomd =
-        if @supplier_name && @rate_card.data['Discounts'][@supplier_name][@service_ref]
-          (1 - @rate_card.data['Discounts'][@supplier_name][@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card.data['Prices'][@supplier_name][@service_ref][@building_data['fm-building-type']].to_f
-        else
-          @uom_vol * @framework_rate
-        end
+      if @supplier_name && @rate_card_discounts[@service_ref]
+        (1 - @rate_card_discounts[@service_ref]['Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref][@building_data[:'fm-building-type']].to_f
+      else
+        @uom_vol * @framework_rates[@service_ref.gsub('.', '')].to_f
+      end
     rescue StandardError => e
       raise e
     end
@@ -82,161 +58,117 @@ module FMCalculator
     def clean
       @clean =
         if @supplier_name
-          @occupants * @rate_card.data['Variances'][@supplier_name]['Cleaning Consumables per Building User (£)']
+          @occupants * @rate_card_variances['Cleaning Consumables per Building User (£)']
         else
           @occupants * @framework_rates['M146']
         end
     end
 
-    # subtotal1 = unit of measurable deliverables + cleaning consumables
-    def subtotal1
-      @subtotal1 = @uomd + @clean
-    end
-
     # London location variance based on being in london and a framework rate multiplied by subtotal1
-    def variance
+    def variance(subtotal1)
       if @london_flag == 'Y'
-        @variance =
-          if @supplier_name
-            @subtotal1 * @rate_card.data['Variances'][@supplier_name]['London Location Variance Rate (%)'].to_f
-          else
-            @subtotal1 * @benchmark_rates['M144'].to_f
-          end
+        if @supplier_name
+          subtotal1 * @rate_card_variances['London Location Variance Rate (%)'].to_f
+        else
+          subtotal1 * @benchmark_rates['M144'].to_f
+        end
       else
         0
       end
     end
 
-    # subtotal2 = subtotal1 + variance
-    def subtotal2
-      @subtotal2 = @subtotal1 + @variance
-    end
-
     # if cafm flag is set then subtotal * framework rate
-    def cafm
+    def cafm(subtotal2)
       if @cafm_flag == 'Y'
-        @cafm =
-          if @supplier_name
-            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data['fm-building-type']].to_f
-          else
-            @subtotal2 * @framework_rates['M136']
-          end
+        if @supplier_name
+          subtotal2 * @rate_card_prices['M.1'][@building_data[:'fm-building-type']].to_f
+        else
+          subtotal2 * @framework_rates['M136']
+        end
       else
         0
       end
     end
 
     # if helpdesk_flag is set then multiply by subtotal2
-    def helpdesk
+    def helpdesk(subtotal2)
       if @helpdesk_flag == 'Y'
-        @helpdesk =
-          if @supplier_name
-            @subtotal2 * @rate_card.data['Prices'][@supplier_name]['M.1'][@building_data['fm-building-type']].to_f
-          else
-            @subtotal2 * @framework_rates['M138']
-          end
+        if @supplier_name
+          subtotal2 * @rate_card_prices['M.1'][@building_data[:fm_building_type]].to_f
+        else
+          subtotal2 * @framework_rates['M138']
+        end
       else
         0
       end
-    end
-
-    # subtotal3 = subtotal2 + cafm + helpdesk
-    def subtotal3
-      @subtotal3 = @subtotal2 + @cafm + @helpdesk
     end
 
     # mobilisation = subtotal3 * framework_rate
-    def mobilisation
-      @mobilisation =
-        if @supplier_name
-          @subtotal3 * @rate_card.data['Variances'][@supplier_name]['Mobilisation Cost (DA %)'].to_f
-        else
-          @subtotal3 * @framework_rates['M5']
-        end
+    def mobilisation(subtotal3)
+      if @supplier_name
+        subtotal3 * @rate_card_variances['Mobilisation Cost (DA %)'].to_f
+      else
+        subtotal3 * @framework_rates['M5']
+      end
     end
 
     # if tupe_flag set then calculate tupe risk premium = subtotal3 * framework rate
-    def tupe
+    def tupe(subtotal3)
       if @tupe_flag == 'Y'
-        @tupe =
-          if @supplier_name
-            @subtotal3 * @rate_card.data['Variances'][@supplier_name]['TUPE Risk Premium (DA %)'].to_f
-          else
-            @subtotal3 * @framework_rates['M148']
-          end
+        if @supplier_name
+          subtotal3 * @rate_card_variances['TUPE Risk Premium (DA %)'].to_f
+        else
+          subtotal3 * @framework_rates['M148']
+        end
       else
         0
       end
     end
 
-    # total  year 1 deliverables value
-    def year1
-      @year1 = @subtotal3 + @mobilisation + @tupe
-    end
-
     # Management overhead
-    def manage
-      @manage =
-        if @supplier_name
-          @year1 * @rate_card.data['Variances'][@supplier_name]['Management Overhead %']
-        else
-          @year1 * @framework_rates['M140']
-        end
+    def manage(year1)
+      if @supplier_name
+        year1 * @rate_card_variances['Management Overhead %']
+      else
+        year1 * @framework_rates['M140']
+      end
     end
 
     # Corporate overhead
-    def corporate
-      @corporate =
-        if @supplier_name
-          @year1 * @rate_card.data['Variances'][@supplier_name]['Corporate Overhead %']
-        else
-          @year1 * @framework_rates['M141']
-        end
-    end
-
-    # Year 1 total charges subtotal
-    def year1total
-      @year1total = @year1 + @manage + @corporate
+    def corporate(year1)
+      if @supplier_name
+        year1 * @rate_card_variances['Corporate Overhead %']
+      else
+        year1 * @framework_rates['M141']
+      end
     end
 
     # framework profit
-    def profit
-      @profit =
-        if @supplier_name
-          @year1 * @rate_card.data['Variances'][@supplier_name]['Profit %']
-        else
-          @year1 * @framework_rates['M142']
-        end
-    end
-
-    # year 1 total charges
-    def year1totalcharges
-      @year1totalcharges = @year1total + @profit
+    def profit(year1)
+      if @supplier_name
+        year1 * @rate_card_variances['Profit %']
+      else
+        year1 * @framework_rates['M142']
+      end
     end
 
     # subsequent year(s) total charges
-    def subyearstotal
-      @subyearstotal =
-        if @supplier_name
-          @subsequent_length_years *
-            (@year1totalcharges -
-              (((@mobilisation + (@mobilisation * @rate_card.data['Variances'][@supplier_name]['Management Overhead %']) +
-                (@mobilisation * @rate_card.data['Variances'][@supplier_name]['Corporate Overhead %'])) *
-                  (@rate_card.data['Variances'][@supplier_name]['Profit %'] + 1))))
-        else
-          @subsequent_length_years * (@year1totalcharges - (((@mobilisation + (@mobilisation * @framework_rates['M140']) + (@mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
-        end
-    end
-
-    # total charges
-    def totalcharges
-      @year1totalcharges += @subyearstotal
+    def subyearstotal(year1totalcharges, mobilisation)
+      if @supplier_name
+        @subsequent_length_years *
+          (year1totalcharges -
+            (((mobilisation + (mobilisation * @rate_card_variances['Management Overhead %']) +
+              (mobilisation * @rate_card_variances['Corporate Overhead %'])) *
+                (@rate_card_variances['Profit %'] + 1))))
+      else
+        @subsequent_length_years * (year1totalcharges - (((mobilisation + (mobilisation * @framework_rates['M140']) + (mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
+      end
     end
 
     # benchmarked costs start = benchmark rates * unit of mesasure volume
     def benchmarkedcosts
-      benchmark_rate = @benchmark_rates[@service_ref].to_f
-      @benchmarkedcosts = benchmark_rate * @uom_vol
+      benchmark_rate = @benchmark_rates[@service_ref.gsub('.', '')].to_f
+      benchmark_rate * @uom_vol
     end
 
     # cleaning consumables using benchmark rate
@@ -244,145 +176,109 @@ module FMCalculator
       @benchclean = @occupants * @framework_rates['M146']
     end
 
-    # benchmark subtotal1
-    def benchsubtotal1
-      @benchsubtotal1 = @benchmarkedcosts + @benchclean
-    end
-
     # benchmark variation if london_flag set
-    def benchvariation
+    def benchvariation(benchsubtotal1)
       if @london_flag == 'Y'
-        @benchvariance = @benchsubtotal1 * @benchmark_rates['M144'].to_f
+        @benchvariance = benchsubtotal1 * @benchmark_rates['M144'].to_f
       else
         0
       end
-    end
-
-    # benchmark subtotal2
-    def benchsubtotal2
-      @benchsubtotal2 = @benchvariance + @benchsubtotal1
     end
 
     # benchmark cafm if flag set
-    def benchcafm
-      @benchcafm =
-        if @cafm_flag == 'Y'
-          @framework_rates['M136'] * @benchsubtotal2
-        else
-          0
-        end
-    end
-
-    # benchmark helpsdesk costs if helpdesk_flag set
-    def benchhelpdesk
-      if @helpdesk_flag == 'Y'
-        @benchhelpdesk = @benchsubtotal2 * @framework_rates['M138']
+    def benchcafm(benchsubtotal2)
+      if @cafm_flag == 'Y'
+        @framework_rates['M136'] * benchsubtotal2
       else
         0
       end
     end
 
-    # bench mark subtotal 3
-    def benchsubtotal3
-      @benchsubtotal3 = @benchsubtotal2 + @benchcafm + @benchhelpdesk
+    # benchmark helpsdesk costs if helpdesk_flag set
+    def benchhelpdesk(benchsubtotal2)
+      if @helpdesk_flag == 'Y'
+        @benchhelpdesk = benchsubtotal2 * @framework_rates['M138']
+      else
+        0
+      end
     end
 
     # benchmark mobilisation costs
-    def benchmobilisation
-      @benchmobilisation = @benchsubtotal3 * @framework_rates['M5']
+    def benchmobilisation(benchsubtotal3)
+      benchsubtotal3 * @framework_rates['M5']
     end
 
     # benchmark tupe costs if flag set
-    def benchtupe
-      @benchtupe =
-        if @tupe_flag == 'Y'
-          @benchsubtotal3 * @framework_rates['M148']
-        else
-          @benchtupe = 0
-        end
-    end
-
-    # bench mark total year1 deliverables value
-    def benchyear1
-      @benchyear1 = @benchsubtotal3 + @benchmobilisation + @benchtupe
+    def benchtupe(benchsubtotal3)
+      if @tupe_flag == 'Y'
+        benchsubtotal3 * @framework_rates['M148']
+      else
+        0
+      end
     end
 
     # benchmark mananagement overhead costs
-    def benchmanage
-      @benchmanage = @benchyear1 * @framework_rates['M140']
+    def benchmanage(benchyear1)
+      benchyear1 * @framework_rates['M140']
     end
 
     # bench mark corporate overhead cost
-    def benchcorporate
-      @benchcorporate = @benchyear1 * @framework_rates['M141']
-    end
-
-    # total year 1 charges subtotal
-    def benchyear1total
-      @benchyear1total = @benchyear1 + @benchmanage + @benchcorporate
+    def benchcorporate(benchyear1)
+      benchyear1 * @framework_rates['M141']
     end
 
     # bench mark profit
-    def benchprofit
-      @benchprofit = @benchyear1 * @framework_rates['M142']
-    end
-
-    # bench mark year 1 total charges
-    def benchyear1totalcharges
-      @benchyear1totalcharges = @benchyear1total + @benchprofit
+    def benchprofit(benchyear1)
+      benchyear1 * @framework_rates['M142']
     end
 
     # bench mark subsequent year(s) total charges
-    def benchsubyearstotal
-      @benchsubyearstotal = @subsequent_length_years * (@benchyear1totalcharges - (((@benchmobilisation + (@benchmobilisation * @framework_rates['M140']) + (@benchmobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
-    end
-
-    # total bench mark charges
-    def benchtotalcharges
-      @benchyear1totalcharges += @benchsubyearstotal
+    def benchsubyearstotal(benchyear1totalcharges, benchmobilisation)
+      @subsequent_length_years * (benchyear1totalcharges - (((benchmobilisation + (benchmobilisation * @framework_rates['M140']) + (benchmobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
     end
 
     # entry point to calculate sum of the unit of measure
-    def sumunitofmeasure
-      uomd
-      clean
-      subtotal1
-      variance
-      subtotal2
-      cafm
-      helpdesk
-      subtotal3
-      mobilisation
-      tupe
-      year1
-      manage
-      corporate
-      year1total
-      profit
-      year1totalcharges + subyearstotal
+    # rubocop:disable Metrics/AbcSize
+    def sumunitofmeasure(results = nil)
+      subtotal1 = uomd + clean
+      subtotal2 = subtotal1 + variance(subtotal1)
+      subtotal3 = subtotal2 + cafm(subtotal2) + helpdesk(subtotal2)
+      mobilisation = mobilisation(subtotal3)
+      year1 = subtotal3 + mobilisation + tupe(subtotal3)
+
+      year1total = year1 + manage(year1) + corporate(year1)
+      year1totalcharges = year1total + profit(year1)
+
+      if results
+        results[:subtotal1] = subtotal1
+        results[:year1totalcharges] = year1totalcharges
+        results[:cafm] = cafm(subtotal2)
+        results[:helpdesk] = helpdesk(subtotal2)
+        results[:variance] = variance(subtotal1)
+        results[:tupe] = tupe(subtotal3)
+        results[:manage] = manage(year1)
+        results[:corporate] = corporate(year1)
+        results[:profit] = profit(year1)
+        results[:mobilisation] = mobilisation
+        results[:subyearstotal] = (subyearstotal(year1totalcharges, mobilisation) / @subsequent_length_years)
+        results[:subsequent_length_years] = @subsequent_length_years
+      end
+
+      year1totalcharges + subyearstotal(year1totalcharges, mobilisation)
     end
+    # rubocop:enable Metrics/AbcSize
 
     # entry point to calculate bench marked sum
     def benchmarkedcostssum
-      benchmarkedcosts
-      benchclean
-      benchsubtotal1
-      benchvariation
-      benchsubtotal2
-      benchcafm
-      benchhelpdesk
-      benchsubtotal3
-      benchmobilisation
-      benchtupe
-      benchyear1
-      benchmanage
-      benchcorporate
-      benchyear1total
-      benchprofit
-      benchyear1totalcharges + benchsubyearstotal
+      benchsubtotal1 = benchmarkedcosts + benchclean
+      benchsubtotal2 = benchsubtotal1 + benchvariation(benchsubtotal1)
+      benchsubtotal3 = benchsubtotal2 + benchcafm(benchsubtotal2) + benchhelpdesk(benchsubtotal2)
+      bench_mobilisation = benchmobilisation(benchsubtotal3)
+      benchyear1 = benchsubtotal3 + bench_mobilisation + benchtupe(benchsubtotal3)
+      benchyear1total = benchyear1 + benchmanage(benchyear1) + benchcorporate(benchyear1)
+
+      benchyear1totalcharges = benchyear1total + benchprofit(benchyear1)
+      benchyear1totalcharges + benchsubyearstotal(benchyear1totalcharges, bench_mobilisation)
     end
   end
 end
-
-# rubocop:enable Metrics/ParameterLists (with a s)
-# rubocop:enable Metrics/AbcSize

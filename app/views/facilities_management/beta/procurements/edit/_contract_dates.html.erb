@@ -1,17 +1,8 @@
 <div class="govuk-form-group">
-  <div class="govuk-grid-row">
-    <h1 class="govuk-heading-xl">Contract period</h1>
-  </div>
-
-  <div class="govuk-grid-row">
+  <h1 class="govuk-heading-xl">Contract period</h1>
+  <div class="contract-dates">
     <%= render partial: 'initial_call_off_period', locals: { f: f } %>
-  </div>
-
-  <div class="govuk-grid-row">
     <%= render partial: 'mobilisation_period', locals: { f: f } %>
-  </div>
-
-  <div class="govuk-grid-row">
     <%= render partial: 'call_off_extensions', locals: { f: f } %>
   </div>
 </div>

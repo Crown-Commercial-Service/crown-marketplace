@@ -96,4 +96,51 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.miles_to_metres(miles)).to eq(expected)
     end
   end
+
+  describe '#validation_message' do
+    context 'when a classname only is used' do
+      it 'an empty hash is returned' do
+        validation_message = helper.validation_messages :procurement2
+        expect(validation_message.class.name).to eq 'Hash'
+        expect(validation_message.empty?).to eq true
+      end
+
+      it 'returns a hash' do
+        proc = FacilitiesManagement::Procurement.new
+
+        validation_message = helper.validation_messages proc.class.name.underscore.downcase.to_sym
+        expect(validation_message.class.name).to eq 'Hash'
+        expect(validation_message.empty?).to eq false
+      end
+    end
+
+    context 'when an attribute is also used' do
+      it 'will return an empty hash when the attribute cannot be found' do
+        validation_message = helper.validation_messages(:procurement, :blahblah)
+        expect(validation_message.class.name).to eq 'Hash'
+        expect(validation_message.empty?).to eq true
+      end
+
+      it 'will return an empty hash when the attribute has no translations' do
+        validation_message = helper.validation_messages(:procurement, :blah)
+        expect(validation_message.class.name).to eq 'Hash'
+        expect(validation_message.empty?).to eq true
+      end
+
+      it 'will return a populated hash when the attribute has translations' do
+        proc = FacilitiesManagement::Procurement.new
+
+        validation_message = helper.validation_messages(proc.class.name.underscore.downcase.to_sym, :initial_call_off_period)
+        expect(validation_message.class.name).to eq 'Hash'
+        expect(validation_message.empty?).to eq false
+      end
+    end
+
+    context 'when rendering HTML' do
+      it 'will list elements' do
+        validation_output = helper.display_potential_errors(FacilitiesManagement::Procurement.new, :initial_call_off_period, 'facilities_management_procurement_initial_call_off_period')
+        expect(validation_output).to include('div')
+      end
+    end
+  end
 end

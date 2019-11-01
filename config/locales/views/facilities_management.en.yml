@@ -1,12 +1,90 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        facilities_management/journey/choose_locations:
+          attributes:
+            region_codes:
+              too_short: Select at least one region you need to include in your procurement
+        facilities_management/journey/choose_services:
+          attributes:
+            service_codes:
+              too_short: Select at least one service you need to include in your procurement
   activerecord:
     errors:
       models:
+        facilities_management/journey/choose_locations:
+          attributes:
+            region_codes:
+              too_short: Select at least one region you need to include in your procurement
+        facilities_management/journey/choose_services:
+          attributes:
+            service_codes:
+              too_short: Select at least one service you need to include in your procurement
+        facilities_management/procurement:
+          attributes:
+            contract_name:
+              blank: Enter your contract name
+              taken: This contract name is already in use
+              too_long: Your contract name must be 100 characters or fewer
+              too_short: Enter your contract name
+            estimated_annual_cost:
+              blank: Estimated annual cost must be an amount of money, like 12000 or 1200.45
+              greater_than_or_equal_to: Estimated annual cost must be an amount of money, like 12000 or 1200.45
+            estimated_cost_known:
+              inclusion: Select yes if you know your annual cost
+            initial_call_off_end_date:
+              after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
+              not_a_date: Initial call-off period end date is not a valid date
+            initial_call_off_period:
+              blank: Enter initial call-off period
+              greater_than_or_equal_to: Enter initial call-off period
+              less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
+              not_a_number: Enter initial call-off period
+            initial_call_off_start_date:
+              after: Initial call-off period start date must be in the future
+              blank: Initial call-off period start date must be in the future
+            mobilisation_period:
+              greater_than: Enter mobilisation length
+              greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
+              not_a_number: Enter mobilisation length
+              not_an_integer: Enter mobilisation length as a whole number
+            name:
+              blank: Enter the name for the search
+              taken: This name is already in use
+              too_long: Your search name must be 100 characters or fewer
+              too_short: Enter the name for the search
+            optional_call_off_extensions_1:
+              too_long: Call-off period and extensions must be 10 years or less
+            procurement_buildings:
+              invalid: Select one or more buildings you want to include in your procurement
+            region_codes:
+              invalid: Select at least one region you need to include in your procurement
+            service_codes:
+              invalid: Select at least one service you need to include in your procurement
+            tupe:
+              inclusion: Select yes if you know TUPE applies to your contract
         facilities_management/procurement_building:
           attributes:
             service_codes:
               invalid: Select at least one service for each building
+        facilities_management/procurement_building_service:
+          attributes:
+            no_of_appliances_for_testing:
+              invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
+            no_of_building_occupants:
+              invalid: The number of building occupants must be a whole number and greater than 0, like 20.
+            no_of_consoles_to_be_serviced:
+              invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
+            no_of_units_to_be_serviced:
+              invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
+            service_standard:
+              blank: Select level of standard for your
+            size_of_external_area:
+              invalid: The size of the external area must be a whole number and greater than 0, like 1500.
+            tones_to_be_collected_and_removed:
+              invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
   facilities_management:
     basket:
       basket_header: selected
@@ -45,10 +123,18 @@ en:
         input_label: sqm (square metres)
       buyer_account:
         buyer_account:
+          about_the_buyer_description: Edit buyer account details such as contact name, organisation name
+          about_the_buyer_title: About the buyer
           facilities_management:
             beta:
               index:
                 manage_procurements_link: Manage procurements
+          link_text: Update buyer details
+      gateway:
+        index:
+          cmp_support_aria_label: Email us for support with this service
+          cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+          heading: CCS Marketplace private beta
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -62,12 +148,72 @@ en:
         no_buildings_text: You have no saved buildings
         start_paragraph: Buildings are used to tell suppliers where you want services provided. You can add buildings to the system and these will be available to use later in your requirements.
         start_warning: Only buildings that are ready can be used in your procurement.
+      passwords:
+        edit:
+          confirm_code: Confirm Code
+          confirm_new_password: Confirm new password
+          heading: Reset your password
+          lead: Reset password for
+          new_password: New password
+          password: Your password must have
+        forgot_password_confirmation:
+          heading: A reset email has been sent
+          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+          text01: If you don't receive this, email
+          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        new:
+          email: Email address
+          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+          heading: Reset password
+          lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        password_reset_success:
+          heading: You have successfully changed your password
+          lead: You can now sign in to your Crown Commercial Service account
+      procurement_buildings:
+        ppm_standards:
+          back_to_service_information: Back to service information
+          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
+          heading: Planned maintenance (PPM) services standards
+          save_and_return_to_service_information: Save and return to service information
+          standard_a_copy: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
+          standard_a_title: Standard A - the general or normal service level
+          standard_b_copy: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
+          standard_b_title: Standard B - this is the minimum level of service required
+          standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+          standard_c_title: Standard C - a bespoke service level
+          subheading: What standard are you applying to all selected planned maintenance services?
+        show:
+          back_to_detailed_summary: Back to detailed search summary
+          heading: Service information
+          no_of_appliances_for_testing: The number of appliances to be tested per annum
+          no_of_building_occupants: The number of building occupants
+          no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
+          no_of_hours_of_service_provision: The number of hours of service provision per annum
+          no_of_units_to_be_serviced: The number of units to be serviced per annum
+          service_standard: The service standard required
+          size_of_external_area: The size of the external area (in square metres)
+          tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
+          total_floors_per_lift: The sum total of number of floors per lift
+        volume:
+          back_to_service_information: Back to service information
+          caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
+          heading: Service information volumes
+          question:
+            no_of_appliances_for_testing: How many appliances to be tested per annum?
+            no_of_building_occupants: How many building occupants?
+            no_of_consoles_to_be_serviced: How many consoles to be serviced per annum?
+            no_of_units_to_be_serviced: How many units to be serviced per annum?
+            size_of_external_area: What is the size of the external area (in square metres)?
+            tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
+          save_and_return_to_service_information: Save and return to service information
+          subheading: Answer additional questions about the services
       procurements:
         about_the_contract:
           no_cost_provided: None
         edit:
           back_to_detailed_summary: Back to detailed search summary
           building_services:
+            change_buildings: "+ Change buildings"
             content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don't already appear on your shortlist.
             heading: What facilities management services do you need for each building?
             your_buildings: Your buildings
@@ -80,16 +226,27 @@ en:
           delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
           detailed_search: Detailed search
           next_step:
+            building_services: 'Next: Service information'
             contract_dates: 'Next: Buildings'
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
+            procurement_buildings: 'Next: Services'
+            services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
+          procurement_buildings:
+            buildings_selected: Buildings selected
+            content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
+            heading: Buildings
+            no_buildings_selected: No buildings selected
+            remove_all: Remove all
+            sub_heading: Select all of the buildings you want to include in your procurement
           quick_search: Search result
-          save: Save
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
           search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
+          services:
+            service_specification_doc: Read the service specification document
           tupe:
             body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
@@ -118,9 +275,7 @@ en:
           search_results: Search Results
         quick_search_form:
           continue_headline: Continue to procurement
-          continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided wuth an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
-          name_text_length_warning: Name must be 100 characters or fewer.
-          name_text_required: The name is required in order to continue.
+          continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided with an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
           new_name_label: Enter a name for the search
           save_headline: Save a new search
           save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
@@ -139,6 +294,24 @@ en:
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
         show:
           delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
+      sessions:
+        new:
+          email_address: Email address
+          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          forgotten_password_html: I've forgotten my password
+          password: Password
+      users:
+        new_password_required:
+          confirm_your_password: Confirm your password
+          create_your_password: Create a password you'll remember
+          heading: Change your password
+          intro: This is the first time you've signed in to your account. You need to reset your password.
+        sms_mfa:
+          access_code: Access code
+          content: It may take a few minutes to arrive.
+          heading: Enter your access code
+          lead: 'We just sent a 6 digit access code by text to:'
+          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service

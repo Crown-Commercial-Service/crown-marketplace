@@ -6,8 +6,9 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
   before_action :authorize_user, only: %i[delete_building reset_buildings_tables region_info save_uom_value buildings new_building manual_address_entry_form save_building building_type update_building select_services_per_building units_of_measurement].freeze
 
   def reset_buildings_tables
+    current_login_email = current_user.email.to_s
     fmd = FMBuildingData.new
-    fmd.reset_buildings_tables
+    fmd.reset_buildings_tables(current_login_email)
     j = { 'status': 200 }
     render json: j, status: 200
   end
@@ -186,9 +187,10 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
         params['fm-contract-cost'] # if params['fm-contract-cost']
       end
 
-    TransientSessionInfo[session.id, 'contract-tupe-radio'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
-    TransientSessionInfo[session.id, 'contract-extension-radio'] = params['contract-extension-radio'] if params['contract-extension-radio']
+    TransientSessionInfo[session.id, 'is-tupe'] = params['contract-tupe-radio'] if params['contract-tupe-radio']
+    TransientSessionInfo[session.id, 'contract-extension'] = params['contract-extension-radio'] if params['contract-extension-radio']
   end
+
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize

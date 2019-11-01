@@ -3,7 +3,12 @@ $(function () {
         try {
             let activeChooser = null;
             if (null === activeChooser) {
-                activeChooser = initialiseChooseServices();
+                if ($('.services').length > 0) {
+                    activeChooser = initialiseChooseServices();
+                }
+                if ($('.buildings').length > 0) {
+                    activeChooser = initialiseChooseBuildings();
+                }
             }
 
             if (null !== activeChooser) {
@@ -16,6 +21,14 @@ $(function () {
     }
     function initialiseChooseServices() {
         let obj = new ChooserComponent("procurement", "services", serviceCheckboxCallback, pageUtils.getCachedData('fm-locations'));
+        if (obj.validate()) {
+            return obj;
+        } else {
+            return null;
+        }
+    }
+    function initialiseChooseBuildings() {
+        let obj = new ChooserComponent("procurement", "buildings", serviceCheckboxCallback, null);
         if (obj.validate()) {
             return obj;
         } else {
