@@ -1,27 +1,32 @@
-<h1 style="margin-left:-1rem !important;" class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0">Estimated Annual Cost</h1>
-<div class="govuk-grid-row govuk-!-margin-top-3">
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
-    <h1 class="govuk-fieldset__heading">
+<h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0">Estimated Annual Cost</h1>
+<div class="govuk-!-margin-top-3">
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(@procurement, :estimated_cost_known, :estimated_annual_cost)%>" data-propertyname="Estimated cost"
+       style="<%= 'padding-left:1em' if @procurement.errors[:estimated_cost_known].any? %>">
+    <h1 class="govuk-heading-m">
       Do you know your current or estimated cost?
     </h1>
-  </legend>
-  <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-20">
+    <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-20">
       This will help us to place you into the correct sub-lot.
       The cost should include all the buildings and services included in the procurement.
       The cost shouldn't include additional or project work
-  </span>
-  <div class="radio-content-toggle govuk-radios govuk-radios">
-    <div class="govuk-radios__item">
-      <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input" %>
-      <%= label :estimated_cost_known, 'Yes', class: 'govuk-label govuk-radios__label' %>
-      <div class="govuk-inset-text">
-        <h1 class="govuk-heading-xl"><%= f.label 'Enter the estimated annual cost, excluding VAT', class: "govuk-label" %></h1>
-        <%= f.number_field :estimated_annual_cost, class: 'govuk-input govuk-input--width-20', placeholder: '£', min: 1 %>
+    </span>
+    <%= display_potential_errors @procurement, :estimated_cost_known, f.object_name %>
+    <div class="radio-content-toggle govuk-radios govuk-radios">
+      <div class="govuk-radios__item">
+        <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input", required: true %>
+        <%= f.label :estimated_cost_known, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
+        <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
+          <div class="govuk-!-margin-left-3" data-propertyname="Estimated annual cost">
+            <%= f.label :estimated_annual_cost, 'Enter the estimated annual cost, excluding VAT', class: "govuk-label" %>
+            <%= display_potential_errors @procurement, :estimated_annual_cost, f.object_name %>
+            <%= f.number_field :estimated_annual_cost, class: 'govuk-input govuk-input--width-20', placeholder: '£', min: 1 %>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="govuk-radios__item">
-      <%= f.radio_button :estimated_cost_known, false, class: 'govuk-radios__input' %>
-      <%= label :estimated_cost_known, 'No', class: "govuk-label govuk-radios__label" %>
+      <div class="govuk-radios__item">
+        <%= f.radio_button :estimated_cost_known, false, class: 'govuk-radios__input', required: true %>
+        <%= f.label :estimated_cost_known, 'No', value: false, class: "govuk-label govuk-radios__label" %>
+      </div>
     </div>
   </div>
 </div>

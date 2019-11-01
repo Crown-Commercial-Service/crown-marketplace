@@ -21,7 +21,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
   context 'when errors are present' do
     before do
       errors.add(:attribute_name, 'error-message')
-      render partial: 'shared/error_summary', locals: { errors: errors }
+      render partial: 'shared/error_summary', locals: { errors: errors, multiple: false }
     end
 
     it 'displays the error summary' do
@@ -33,7 +33,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
     end
   end
 
-  context 'when there are multiple errors for the same attribute' do
+  context 'when there are multiple errors for the same attribute and we want only 1 error' do
     before do
       errors.add(:attribute_name, 'error-message-1')
       errors.add(:attribute_name, 'error-message-2')
@@ -46,6 +46,58 @@ RSpec.describe 'shared/_error_summary.html.erb' do
 
     it 'does not display the second error message in the summary' do
       expect(rendered).not_to have_link('error-message-2')
+    end
+  end
+
+  context 'when there are multiple errors for the multiple attributes and we want the first attribute and the first error' do
+    before do
+      errors.add(:attribute_name, 'error-message-1')
+      errors.add(:attribute_name, 'error-message-2')
+      errors.add(:attribute_name_2, 'error-message-3')
+      errors.add(:attribute_name_2, 'error-message-4')
+      render partial: 'shared/error_summary', locals: { errors: errors }
+    end
+
+    it 'displays the first error message for the first attribute in the summary' do
+      expect(rendered).to have_link('error-message-1', href: '#attribute_name-error')
+    end
+
+    it 'does not display the second error message for the first attribute in the summary' do
+      expect(rendered).not_to have_link('error-message-2')
+    end
+
+    it 'does not displays the first error message for the second attribute in the summary' do
+      expect(rendered).to have_link('error-message-3', href: '#attribute_name_2-error')
+    end
+
+    it 'does not display the second error message for the second attribute in the summary' do
+      expect(rendered).not_to have_link('error-message-4', href: '#attribute_name_2-error')
+    end
+  end
+
+  context 'when there are multiple errors for the multiple attributes and we want more than 1 attribute' do
+    before do
+      errors.add(:attribute_name, 'error-message-1')
+      errors.add(:attribute_name, 'error-message-2')
+      errors.add(:attribute_name_2, 'error-message-3')
+      errors.add(:attribute_name_2, 'error-message-4')
+      render partial: 'shared/error_summary', locals: { errors: errors, multiple: true }
+    end
+
+    it 'displays the first error message for the first attribute in the summary' do
+      expect(rendered).to have_link('error-message-1', href: '#attribute_name-error')
+    end
+
+    it 'does not display the second error message for the first attribute in the summary' do
+      expect(rendered).not_to have_link('error-message-2')
+    end
+
+    it 'displays the first error message for the second attribute in the summary' do
+      expect(rendered).to have_link('error-message-3', href: '#attribute_name_2-error')
+    end
+
+    it 'does not display the second error message for the second attribute in the summary' do
+      expect(rendered).not_to have_link('error-message-4', href: '#attribute_name_2-error')
     end
   end
 end

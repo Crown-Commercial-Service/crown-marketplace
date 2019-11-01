@@ -24,9 +24,7 @@ ChooserComponent.prototype.validate = function () {
 };
 ChooserComponent.prototype.init = function () {
     let result = false;
-
     $('body').addClass('js-enabled');
-
     this._basketContainer = new BasketComponent(this._baseClass, this._classification, $(this._basketName), this.handleBasketRemove.bind(this));
     let sectionArray = $(this._checkboxSourceDivName + " .chooser-section");
     for (let index = 0; index < sectionArray.length; index++) {
@@ -39,7 +37,7 @@ ChooserComponent.prototype.init = function () {
             this._sections[id] = newSection;
         }
     }
-    //this._basketContainer.UpdateBasketNumber(0);
+    this._basketContainer.UpdateBasketNumber(0);
 
     return result;
 };

@@ -1,8 +1,8 @@
 <a href="<%= request.referer %>" class="govuk-back-link">Back</a>
+<%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors, multiple: false, render_empty: true  } %>
 <h1 class="govuk-heading-xl"><%= t('.search_results') %></h1>
 <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
 <%= form_for @procurement, url: facilities_management_beta_procurements_path, method: :post, html: { novalidate:true, multipart: true } do |f| %>
-  <%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors } %>
   <div class="quicksearchassistant" classification="procurement" action="new" module="facilities_management">
     <div class="procurement govuk-row">
     <%= render partial: 'quick_search_form', locals: { f: f, step: nil } %>

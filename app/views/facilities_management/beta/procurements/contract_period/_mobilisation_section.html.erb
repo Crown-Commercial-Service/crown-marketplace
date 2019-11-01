@@ -1,0 +1,36 @@
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Mobilisation period
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <%= mobilisation_period %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+  </dd>
+</div>
+
+<% if @procurement.mobilisation_period_required %>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Mobilisation start date
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= mobilisation_start_date unless @procurement.initial_call_off_start_date.blank?%>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+    </dd>
+  </div>
+<% end %>
+
+<% unless @procurement.mobilisation_period.nil? %>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Mobilisation end date
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= mobilisation_end_date unless @procurement.initial_call_off_start_date.blank?%>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+    </dd>
+  </div>
+<% end %>

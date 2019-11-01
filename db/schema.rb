@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_145423) do
+ActiveRecord::Schema.define(version: 2019_10_31_165100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -31,12 +31,56 @@ ActiveRecord::Schema.define(version: 2019_10_02_145423) do
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
+  create_table "facilities_management_buyer", id: false, force: :cascade do |t|
+    t.uuid "id", null: false
+    t.string "full_name", limit: 50
+    t.string "job_title", limit: 250
+    t.string "telephone_number", limit: 100
+    t.string "organisation_name", limit: 250
+    t.text "organisation_address_line_1"
+    t.text "organisation_address_line_2"
+    t.text "organisation_address_town"
+    t.text "organisation_address_county"
+    t.text "organisation_address_postcode"
+    t.boolean "central_government"
+    t.boolean "wider_public_sector"
+    t.datetime "created_at", default: -> { "now()" }
+    t.datetime "updated_at"
+    t.boolean "active", default: true, null: false
+    t.text "email", null: false
+    t.index ["email"], name: "facilities_management_buyer_email_idx"
+    t.index ["id"], name: "facilities_management_buyer_id_idx"
+  end
+
+  create_table "facilities_management_procurement_building_services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_building_id", null: false
+    t.string "code", limit: 10
+    t.string "name", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "no_of_appliances_for_testing"
+    t.integer "no_of_building_occupants"
+    t.integer "size_of_external_area"
+    t.integer "no_of_consoles_to_be_serviced"
+    t.integer "tones_to_be_collected_and_removed"
+    t.integer "no_of_units_to_be_serviced"
+    t.string "service_standard", limit: 1
+    t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
+  end
+
   create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
     t.text "service_codes", default: [], array: true
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "address_line_1", limit: 255
+    t.string "address_line_2", limit: 255
+    t.string "town", limit: 255
+    t.string "county", limit: 255
+    t.string "postcode", limit: 20
+    t.boolean "active"
+    t.uuid "building_id"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
@@ -61,6 +105,8 @@ ActiveRecord::Schema.define(version: 2019_10_02_145423) do
     t.integer "optional_call_off_extensions_3"
     t.integer "optional_call_off_extensions_4"
     t.boolean "estimated_cost_known"
+    t.boolean "mobilisation_period_required"
+    t.boolean "extensions_required"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -485,6 +531,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_145423) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
