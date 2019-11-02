@@ -105,7 +105,6 @@ Rails.application.routes.draw do
       get '/start', to: 'home#index'
       get '/gateway', to: 'gateway#index'
       get '/buyer_account', to: 'buyer_account#buyer_account'
-      match '/buyer-details', to: 'buyer_account#buyer_details', via: %i[get post]
       get '/buildings-management', to: 'buildings_management#buildings_management'
       get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
       get '/building-details-summary', to: 'buildings_management#building_details_summary'
@@ -118,7 +117,7 @@ Rails.application.routes.draw do
       put '/building-type', to: 'buildings_management#update_building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
       post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      put '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
+      put  '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
       get '/building-address', to: 'buildings_management#building_address'
       get '/building-security-type', to: 'buildings_management#building_security_type'
       post '/building-security-type', to: 'buildings_management#building_security_type'
@@ -138,7 +137,11 @@ Rails.application.routes.draw do
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
       resources :procurements
-      resources :procurement_buildings, only: :show
+      resources :procurement_buildings, only: %i[show edit update]
+      resources :procurement_buildings_services, only: %i[edit update] do
+        # post 'addlift', on: :edit, as: :addnewlift
+        # post 'removelift', on: :edit, as: :removelift
+      end
     end
 
     get '/', to: 'home#index'
@@ -281,7 +284,7 @@ Rails.application.routes.draw do
   end
 
   # scope module: :postcode do
-  #  resources :postcodes, only: :show
+  #  procurement_buildings_services :postcodes, only: :show
   # end
   namespace :api, defaults: { format: :json } do
     namespace :v1 do

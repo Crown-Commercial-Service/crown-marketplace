@@ -69,10 +69,20 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                                 }
                             }
                         }
-                        if ('' + jElem.prop('pattern') != '' && submitForm) {
+                        if ( jElem.prop('pattern') != undefined && jElem.prop('pattern') !== '' && submitForm) {
                             submitForm = submitForm && this.testError(
                                 this.validationFunctions['regex'],
                                 jElem, 'pattern');
+                        }
+                        if ( jElem.prop("min") != undefined && jElem.prop("min") !== '' && submitForm) {
+                            submitForm = submitForm && this.testError(
+                                this.validationFunctions['min'],
+                                jElem, 'min');
+                        }
+                        if ( jElem.prop("max") != undefined && jElem.prop("max") !== '' && submitForm) {
+                            submitForm = submitForm && this.testError(
+                                this.validationFunctions['max'],
+                                jElem, 'max');
                         }
                     }
 
