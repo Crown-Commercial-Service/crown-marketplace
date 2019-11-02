@@ -63,3 +63,19 @@ en:
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"
+  volume_required_heading: "Volume required (per annum)"
+  facilities_management:
+    beta:
+      procurement_buildings:
+        edit-lifts:
+          heading: "Lifts, hoists and conveyance system maintenance service"
+          save_and_return_to_service_information: "Save and return to service information"
+          back_to_service_information: "Back to service information"
+      procurement_buildings_services:
+        edit:
+          save_and_return_to_service_information: "Save and return to service information"
+          back_to_service_information: "Back to service information"
+  answer_question: "Answer question"
+  change_button_text: "Change"
+  how_many_floors_heading: "How many floors does each lift access?"
+  lift_description: "For example, a lift starting at the ground floor, giving acces up to the 10th floor, is a total of 11 floors"

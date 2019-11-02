@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_25_152610) do
+ActiveRecord::Schema.define(version: 2019_10_31_124754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.text "user_id", null: false
     t.jsonb "building_json", null: false
-    t.datetime "created_at"
+    t.datetime "created_at-retired"
     t.datetime "updated_at", null: false
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.integer "no_of_consoles_to_be_serviced"
     t.integer "tones_to_be_collected_and_removed"
     t.integer "no_of_units_to_be_serviced"
+    t.string "lift_data", default: [], array: true
     t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
   end
 
