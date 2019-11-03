@@ -20,7 +20,7 @@ LiftDataUI.prototype.addNewLift = function() {
         $("<button>",{"class":"govuk-!-margin-left-2 govuk-button govuk-button--secondary removelift",
                       "data-liftcount":(currentCount+1)}).append("Remove")
     ]);
-    newInputElement.find("button").on('click', function(e) {
+    newInputElement.find("button").on("click", function(e) {
         e.preventDefault();
         let targetLift = Number(e.currentTarget.getAttribute("data-liftcount"));
         this.removeLift(targetLift);
@@ -34,27 +34,32 @@ LiftDataUI.prototype.removeLift = function(nLiftIndex) {
     toRemove.remove();
     this.liftDataContainer.find("button[data-liftcount=" + (nLiftIndex-1) + "]").removeClass("govuk-visually-hidden");
 };
-
-LiftDataUI.prototype.connectButtons = function() {
+LiftDataUI.prototype.connectAddLiftButton = function(){
     if (this.containerDiv) {
         let addNewButton = this.containerDiv.find(".addliftbtn");
         if ( addNewButton.length > 0 ) {
-            addNewButton.on('click', function(e){
+            addNewButton.on("click", function(e){
                 e.preventDefault();
                 this.addNewLift();
             }.bind(this));
         }
     }
+};
+LiftDataUI.prototype.connectRemoveLiftButtons = function() {
     if ( this.liftDataContainer){
         let removeButtons = this.liftDataContainer.find(".removelift");
         if ( removeButtons.length > 0 ) {
-            removeButtons.on('click', function(e) {
+            removeButtons.on("click", function(e) {
                 e.preventDefault();
                 let targetLift = Number(e.currentTarget.getAttribute("data-liftcount"));
                 this.removeLift(targetLift);
             }.bind(this));
         }
     }
+};
+LiftDataUI.prototype.connectButtons = function() {
+    this.connectAddLiftButton();
+    this.connectRemoveLiftButtons();
 };
 $(function(){
    let liftDataContainer = $(".liftdatacontainer");
