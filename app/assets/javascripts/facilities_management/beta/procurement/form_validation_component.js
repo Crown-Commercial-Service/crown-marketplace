@@ -69,17 +69,17 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                                 }
                             }
                         }
-                        if ( jElem.prop("pattern") != undefined && jElem.prop("pattern") !== "" && submitForm) {
+                        if ( jElem.prop("pattern") !== undefined && jElem.prop("pattern") !== "" && submitForm) {
                             submitForm = submitForm && this.testError(
                                 this.validationFunctions["regex"],
                                 jElem, "pattern");
                         }
-                        if ( jElem.prop("min") != undefined && jElem.prop("min") !== "" && submitForm) {
+                        if ( jElem.prop("min") !== undefined && jElem.prop("min") !== "" && submitForm) {
                             submitForm = submitForm && this.testError(
                                 this.validationFunctions["min"],
                                 jElem, "min");
                         }
-                        if ( jElem.prop("max") != undefined && jElem.prop("max") !== "" && submitForm) {
+                        if ( jElem.prop("max") !== undefined && jElem.prop("max") !== "" && submitForm) {
                             submitForm = submitForm && this.testError(
                                 this.validationFunctions["max"],
                                 jElem, "max");
@@ -101,13 +101,13 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         "required": function (jQueryinputElem) {
             let inputType = jQueryinputElem[0].type;
             jQueryinputElem[0].type = "text";
-            let result = ("" + jQueryinputElem.val() == "");
+            let result = ("" + jQueryinputElem.val() === "");
             jQueryinputElem[0].type = inputType;
             return result;
         },
         "maxlength": function (jQueryinputElem) {
             let maxLength = parseInt(jQueryinputElem.prop("maxlength"));
-            if (maxLength != NaN && maxLength > 0) {
+            if (!isNaN(maxLength) && maxLength > 0) {
                 let inputType = jQueryinputElem[0].type;
                 jQueryinputElem[0].type = "text";
                 let result = (("" + jQueryinputElem.val()).length > maxLength);
@@ -119,7 +119,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         "max": function (jQueryInputElem) {
             let inputValue = Number(jQueryInputElem.val());
             let maxVal = parseInt(jQueryInputElem.prop("max"));
-            if (inputValue != NaN && maxVal != NaN) {
+            if (!isNaN(inputValue) && !isNaN(maxVal)) {
                 return inputValue > maxVal;
             }
             return false;
@@ -128,7 +128,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             let inputValue = Number(jQueryInputElem.val());
             let minVal = parseInt(jQueryInputElem.prop("min"));
 
-            if (inputValue != NaN && minVal != NaN) {
+            if (!isNaN(inputValue) && !isNaN(minVal)) {
                 return inputValue < minVal;
             }
 
@@ -138,10 +138,10 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             let inputValue = Number(jQueryInputElem.val());
             let maxVal = parseInt(jQueryInputElem.prop("max"));
             let minVal = parseInt(jQueryInputElem.prop("min"));
-            if (inputValue != NaN && maxVal != NaN) {
+            if (!isNaN(inputValue) && !isNaN(maxVal)) {
                 return inputValue > maxVal;
             }
-            if (inputValue != NaN && minVal != NaN) {
+            if (!isNaN(inputValue) && !isNaN(minVal)) {
                 return inputValue < minVal;
             }
 
@@ -158,7 +158,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             "number": function (jQueryinputElem) {
                 let inputType = jQueryinputElem[0].type;
                 jQueryinputElem[0].type = "text";
-                let result = jQueryinputElem.val() == "" || isNaN(Number(jQueryinputElem.val()));
+                let result = jQueryinputElem.val() === "" || isNaN(Number(jQueryinputElem.val()));
                 jQueryinputElem[0].type = inputType;
                 return result;
             },
@@ -168,7 +168,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             },
             "date": function (jQueryInputElem) {
                 let theDate = Date.parse(jQueryInputElem.val());
-                return theDate == NaN;
+                return theDate === NaN;
             }
         }
     };
@@ -199,35 +199,26 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         return result;
     };
 
-    this.errorMessage = function (property_name, errorType) {
+    this.errorMessage = function (propertyName, errorType) {
         switch (errorType) {
             case "required":
-                return property_name + " is required";
-                break;
+                return propertyName + " is required";
             case "maxlength":
-                return property_name + " is too long";
-                break;
+                return propertyName + " is too long";
             case "min":
-                return property_name + " is too low";
-                break;
+                return propertyName + " is too low";
             case "max":
-                return property_name + " is too high";
-                break;
+                return propertyName + " is too high";
             case "range":
-                return property_name + " is too low or too high";
-                break;
+                return propertyName + " is too low or too high";
             case "number":
-                return property_name + " is not a number";
-                break;
+                return propertyName + " is not a number";
             case "email":
-                return property_name + " is not a valid email address";
-                break;
+                return propertyName + " is not a valid email address";
             case "pattern":
-                return property_name + " is not valid";
-                break;
+                return propertyName + " is not valid";
             default:
-                return property_name + " is not valid for the type";
-                break;
+                return propertyName + " is not valid for the type";
         }
     };
 
@@ -243,9 +234,9 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         }
         elementsToWrap.push(inputElement[0]);
         while (continueLooping && counter < 3) {
-            if (prevElem.length == 0) break;
+            if (prevElem.length === 0) break;
 
-            if (prevElem[0].nodeName == "LABEL") {
+            if (prevElem[0].nodeName === "LABEL") {
                 elementsToWrap.push(prevElem[0]);
             } else if (prevElem.prop("class").indexOf("govuk-error-message") >= 0) {
                 elementsToWrap.push(prevElem[0]);
@@ -269,7 +260,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         $(parent).prepend(labelElem);
         let newElement = $(parent[0].childNodes[0]);
         let parentElement = inputElement.prev();
-        if (parentElement.length > 0 && parentElement[0].tagName == "LABEL") {
+        if (parentElement.length > 0 && parentElement[0].tagName === "LABEL") {
             newElement.detach().insertBefore(parentElement);
         } else {
             newElement.detach().insertBefore(inputElement);
@@ -289,7 +280,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         let display_text = "" ;
         if (ul.length > 0) {
             let propertyName = this.getPropertyName(inputElement);
-            if (undefined == message_text || message_text + "" == "" ) {
+            if (undefined === message_text || message_text + "" === "" ) {
                 display_text = this.errorMessage(propertyName, error_type)
             } else {
                 display_text = message_text;
@@ -335,13 +326,13 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     this.toggleError = function (jQueryElement, show, errorType) {
         let jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group");
         let error_text = "";
-        if (jqueryElementForInputGroup.length == 0) {
+        if (jqueryElementForInputGroup.length === 0) {
             jqueryElementForInputGroup = this.insertElementToCreateFieldBlock(jQueryElement);
         }
         let jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
-        if (jqueryElementForRequiredMessage.length == 0) {
+        if (jqueryElementForRequiredMessage.length === 0) {
             jqueryElementForRequiredMessage = jQueryElement.parent().find(".error-collection").find("label[data-validation='" + errorType + "']");
-            if (jqueryElementForRequiredMessage.length == 0) {
+            if (jqueryElementForRequiredMessage.length === 0) {
                 jqueryElementForRequiredMessage = this.insertElementForRequiredMessage(jQueryElement, jqueryElementForInputGroup, errorType);
             }
         }
@@ -353,14 +344,14 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         if (!show) {
             if (this.validationResult) {
                 jqueryElementForInputGroup.removeClass("govuk-form-group--error");
-                if (jQueryElement[0].tagName == "INPUT") {
+                if (jQueryElement[0].tagName === "INPUT") {
                     jQueryElement.removeClass("govuk-input--error");
                 }
             }
             this.removeListElementInBannerError(jQueryElement, errorType);
             jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
         } else {
-            if (jQueryElement[0].tagName == "INPUT") {
+            if (jQueryElement[0].tagName === "INPUT") {
                 jQueryElement.addClass("govuk-input--error");
             }
             jqueryElementForInputGroup.addClass("govuk-form-group--error");
@@ -374,7 +365,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
     this.getPropertyName = function (jqueryInputElement) {
         let propertyName = jqueryInputElement.attr("data-propertyname");
-        if (propertyName == undefined || propertyName == "") {
+        if (propertyName === undefined || propertyName === "") {
             let newParent = null;
             if ((newParent = jqueryInputElement.closest("[data-propertyname]")).length > 0) {
                 propertyName = newParent.attr("data-propertyname")
@@ -382,7 +373,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                 propertyName = "";
             }
         }
-        if (propertyName == undefined || propertyName == "") {
+        if (propertyName === undefined || propertyName === "") {
             propertyName = jqueryInputElement[0].id;
         }
 
@@ -391,7 +382,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
 
 
     if (this.verify_connection_to_form(formDOMObject, thisisspecial)) {
-        this.connect_to_form(formDOMObject, validationCallback == undefined ? this.validateForm : validationCallback);
+        this.connect_to_form(formDOMObject, validationCallback === undefined ? this.validateForm : validationCallback);
         this.initialise();
     }
 }
