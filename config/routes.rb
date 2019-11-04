@@ -138,7 +138,7 @@ Rails.application.routes.draw do
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
       resources :procurements
       resources :procurement_buildings, only: %i[show edit update]
-      resources :procurement_buildings_services, only: %i[edit update]
+      resources :procurement_buildings_services, only: %i[show update]
     end
 
     get '/', to: 'home#index'
