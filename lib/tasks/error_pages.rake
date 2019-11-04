@@ -8,7 +8,7 @@ task :error_pages, :remote_site do |_t, args|
     sh "curl #{uri} --output #{html_file.path}"
     out_file = Tempfile.new('page-inline')
 
-    command = "npx juice --web-procurement_buildings_services-relative-to #{site}/ --apply-style-tags false " \
+    command = "npx juice --web-resources-relative-to #{site}/ --apply-style-tags false " \
              '--remove-style-tags false --preserve-media-queries false'
 
     sh "#{command} #{html_file.path} #{out_file.path}"

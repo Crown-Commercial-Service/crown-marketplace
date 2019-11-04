@@ -345,6 +345,12 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         }
         let jqueryElementForRequiredMessage = this.findPreExistingErrorMessage(jQueryElement, errorType, jqueryElementForInputGroup);
 
+        if (! jQueryElement.siblings().is(jqueryElementForRequiredMessage)) {
+            // clone error element and place it above the input element
+            jqueryElementForRequiredMessage = jqueryElementForRequiredMessage.clone();
+            jqueryElementForRequiredMessage.insertBefore(jQueryElement);
+        }
+
         if (jqueryElementForRequiredMessage.length > 0 ) {
             error_text = jqueryElementForRequiredMessage[0].innerText;
         }
