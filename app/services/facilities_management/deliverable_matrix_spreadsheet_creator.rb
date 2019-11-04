@@ -2,10 +2,17 @@ require 'axlsx'
 require 'axlsx_rails'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  def initialize(building_ids_with_service_codes)
+  def initialize(building_ids_with_service_codes, buildings = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
-    @buildings = FacilitiesManagement::Buildings.where(id: building_ids)
+
+    @buildings =
+      if buildings
+        buildings
+      else
+        @buildings = FacilitiesManagement::Buildings.where(id: building_ids) unless buildings
+      end
+
     buildings_with_service_codes
     set_services
   end
@@ -27,6 +34,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           add_service_matrix(sheet)
           style_service_matrix_sheet(sheet, standard_column_style)
         end
+
+        volumes_sheet
       end
     end
   end
@@ -187,6 +196,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       end
 
       sheet.add_row row_values, style: standard_style, height: standard_row_height
+    end
+  end
+
+  def volumes_sheet
+    p.workbook.add_worksheet(name: 'Volume') do |sheet|
+      add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
+      # add_service_matrix(sheet)
+      # style_service_matrix_sheet(sheet, standard_column_style)
     end
   end
 end
