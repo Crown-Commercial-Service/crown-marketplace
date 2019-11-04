@@ -71,6 +71,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         )
     ]
   end
+
+  let(:building_ids_with_service_codes) do
+    [{:building_id=>"e7eed6f6-5ef0-e387-ee35-6c1d39feb8a9", :service_codes=>["A.7", "A.12", "A.9", "A.5", "A.2", "A.1", "A.3", "A.11", "A.6", "A.16", "A.13", "A.10", "A.8", "A.15", "A.4", "A.18", "A.14", "A.17", "B.1", "C.1", "C.2", "C.3", "C.4", "C.6", "C.7", "C.11", "C.12", "C.13", "C.5", "C.14", "C.8", "C.9", "C.10", "C.15", "C.16", "C.17", "C.18", "C.19", "C.20", "C.21", "C.22", "D.1", "D.2", "D.3", "D.4", "D.5", "D.6", "E.1", "E.2", "E.3", "E.5", "E.6", "E.7", "E.8", "E.4", "E.9", "F.1", "F.2", "F.3", "F.4", "F.5", "F.6", "F.7", "F.8", "F.9", "F.10", "G.1"]}, {:building_id=>"d6110725-33ed-b20d-47b2-d2e0cbc3ac83", :service_codes=>["G.2", "G.3", "G.4", "G.6", "G.7", "G.15", "G.5", "G.9", "G.8", "G.10", "G.11", "G.12", "G.13", "G.14", "G.16", "H.4", "H.5", "H.7", "H.1", "H.2", "H.3", "H.6", "H.8", "H.9", "H.10", "H.11", "H.12", "H.13", "H.14", "H.15", "H.16", "I.1", "I.2", "I.3", "I.4", "J.1", "J.2", "J.3", "J.4", "J.5", "J.6", "J.7", "J.8", "J.9", "J.10", "J.11", "J.12", "K.2", "K.3", "K.1", "K.7", "K.4", "K.5", "K.6", "L.1", "L.2", "L.3", "L.4", "L.5", "L.6", "L.7", "L.8", "L.9", "L.10", "L.11", "M.1", "N.1"]}, {:building_id=>"8d54a907-4508-dd74-8ab5-ada3e4551f17", :service_codes=>["A.7", "A.12", "A.9", "A.5", "A.2", "A.1", "A.3", "A.11", "A.6", "A.16", "A.13", "A.10", "A.8", "A.15", "A.4", "A.18", "A.14", "A.17", "B.1", "C.1", "C.2", "C.3", "C.4", "C.6", "C.7", "C.11", "C.12", "C.13", "C.5", "C.14", "C.8", "C.9", "C.10", "C.15", "C.16", "C.17", "C.18", "C.19", "C.20", "C.21", "C.22", "D.1", "D.2", "D.3", "D.4", "D.5", "D.6", "E.1", "E.2", "E.3", "E.5", "E.6", "E.7", "E.8", "E.4", "E.9", "F.1", "F.2", "F.3", "F.4", "F.5", "F.6", "F.7", "F.8", "F.9", "F.10", "G.1"]}]
+  end
   # rubocop:enable Style/StringLiterals
   # rubocop:enable Layout/AlignHash
   # rubocop:enable Style/HashSyntax
@@ -108,9 +112,21 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     expect(report_results[supplier_name][report_results[supplier_name].keys.third].count).to eq 22
 
     spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
-    output = spreadsheet.to_xlsx
 
-    IO.write('/tmp/direct_award_prices.xlsx', output)
+    IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
+
+    uvals.each(&:deep_symbolize_keys!)
+    buildings_ids = uvals.collect { |u| u[:building_id] }.uniq
+
+    building_ids_with_service_codes2 = buildings_ids.collect do |b|
+      services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
+      { building_id: b, service_codes: services_per_building }
+    end
+
+    spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, selected_buildings)
+    spreadsheet = spreadsheet_builder.build
+    # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
+    IO.write('/tmp/deliverable_matrix.xlsx', spreadsheet.to_stream.read)
   end
   # rubocop:enable RSpec/ExampleLength
 
