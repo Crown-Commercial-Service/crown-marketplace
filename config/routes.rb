@@ -280,9 +280,6 @@ Rails.application.routes.draw do
     get '/auth/dfe/callback' => 'auth#callback'
   end
 
-  # scope module: :postcode do
-  #  procurement_buildings_services :postcodes, only: :show
-  # end
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :postcodes, only: :show
