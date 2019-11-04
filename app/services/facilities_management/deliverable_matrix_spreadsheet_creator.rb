@@ -35,7 +35,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           style_service_matrix_sheet(sheet, standard_column_style)
         end
 
-        volumes_sheet
+        volumes_sheet p
       end
     end
   end
@@ -71,7 +71,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @building_ids_with_service_codes.each do |building_id_with_service_codes|
       building = @buildings.find(building_id_with_service_codes[:building_id])
 
-      @buildings_with_service_codes << { building: building, service_codes: building_id_with_service_codes[:service_codes] }
+      @buildings_with_service_codes << { building: building.first, service_codes: building_id_with_service_codes[:service_codes] }
     end
   end
 
@@ -98,7 +98,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Name']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['name']
+      row << building_with_service_codes[:building].building_json[:name]
     end
 
     row
@@ -118,7 +118,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Street']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['address']['fm-address-line-1']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-address-line-1']
     end
 
     row
@@ -128,7 +128,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Town']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['address']['fm-address-town']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-address-town']
     end
 
     row
@@ -138,7 +138,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Postcode']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['address']['fm-address-postcode']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-address-postcode']
     end
 
     row
@@ -148,7 +148,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Location (NUTS Region)']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['address']['fm-nuts-region']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-nuts-region']
     end
 
     row
@@ -178,7 +178,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Security Clearance']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['security-type']
+      row << building_with_service_codes[:building].building_json[:'security-type']
     end
 
     row
@@ -199,8 +199,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
-  def volumes_sheet
-    p.workbook.add_worksheet(name: 'Volume') do |sheet|
+  def volumes_sheet(pkg)
+    pkg.workbook.add_worksheet(name: 'Volume') do |sheet|
       add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
       # add_service_matrix(sheet)
       # style_service_matrix_sheet(sheet, standard_column_style)

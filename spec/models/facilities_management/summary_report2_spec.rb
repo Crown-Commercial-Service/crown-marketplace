@@ -115,8 +115,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
 
-    uvals.each(&:deep_symbolize_keys!)
-    buildings_ids = uvals.collect { |u| u[:building_id] }.uniq
+    # uvals.each(&:deep_symbolize_keys!)
+    buildings_ids = uvals.collect { |u| u['building_id'] }.uniq
 
     building_ids_with_service_codes2 = buildings_ids.collect do |b|
       services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
