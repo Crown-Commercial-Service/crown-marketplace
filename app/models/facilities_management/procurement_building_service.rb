@@ -68,7 +68,7 @@ module FacilitiesManagement
     end
 
     private
-    
+
     def check_lift_data
       errors.add(:lift_data, :required, position: 0) if lift_data.blank?
 
