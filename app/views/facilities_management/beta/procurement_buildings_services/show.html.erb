@@ -1,0 +1,19 @@
+<div class="govuk-body govuk-grid-row procurement-building-service">
+  <%= form_for @building_service, url: facilities_management_beta_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation:true, novalidate: true, multipart: true} do |f| %>
+    <div class="govuk-grid-column-full">
+      <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-m"><%= @procurement_building.procurement.name %>
+        - <%= @procurement_building.name %></span>
+      <h1 class="govuk-heading-xl"><%= @building_service.name %></h1>
+      <%= f.hidden_field :step, value: @partial_prefix %>
+      <%= render partial: "#{@partial_prefix}", locals: {f: f} %>
+      <div class="govuk-grid-row govuk-!-margin-top-9">
+        <%= f.submit t('.save_and_return_to_service_information'), class: 'govuk-button govuk-button--primary govuk-!-margin-left-3 govuk-!-margin-bottom-4', data: { disable_with:false } %>
+      </div>
+      <%= link_to t('.back_to_service_information'), facilities_management_beta_procurement_building_path(@procurement_building), class: 'govuk-link--no-visited-state' %>
+  <% end %>
+  </div>
+</div>
