@@ -202,13 +202,6 @@ en:
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
           total_floors_per_lift: The sum total of number of floors per lift
           volume_required_heading: Volume required (per annum)
-      procurement_buildings_services:
-        edit:
-          back_to_service_information: Back to service information
-          save_and_return_to_service_information: Save and return to service information
-        show:
-          back_to_service_information: Back to service information
-          save_and_return_to_service_information: Save and return to service information
         volume:
           back_to_service_information: Back to service information
           caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
@@ -222,6 +215,13 @@ en:
             tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
           save_and_return_to_service_information: Save and return to service information
           subheading: Answer additional questions about the services
+      procurement_buildings_services:
+        edit:
+          back_to_service_information: Back to service information
+          save_and_return_to_service_information: Save and return to service information
+        show:
+          back_to_service_information: Back to service information
+          save_and_return_to_service_information: Save and return to service information
       procurements:
         about_the_contract:
           no_cost_provided: None
