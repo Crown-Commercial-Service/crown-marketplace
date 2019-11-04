@@ -75,6 +75,7 @@ en:
               greater_than: The number of floors accessed must be a whole number greater than 0.
               less_than: The number of floors accessed must be a whole number greater than 0.
               required: The number of floors accessed must be a whole number greater than 0.
+              too_long: The number of floors accessed must be a whole number greater than 0.
               too_short: The number of floors accessed must be a whole number greater than 0.
             no_of_appliances_for_testing:
               invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.

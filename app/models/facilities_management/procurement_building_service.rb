@@ -11,11 +11,11 @@ module FacilitiesManagement
     validates :size_of_external_area, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
     validates :no_of_consoles_to_be_serviced, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
     validates :tones_to_be_collected_and_removed, numericality: { only_integer: true, greater_than: 0, message: :invalid }, allow_blank: true
-    validates :lift_data, length: { minimum: 1 }, on: :lifts
+    validates :lift_data, length: { minimum: 1, maximum: 99 }, on: :lifts
     validate :check_lift_data, on: :lifts
 
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
-    SERVICES_AND_QUESTIONS = [{ code: 'C.5', questions: %i[total_floors_per_lift] },
+    SERVICES_AND_QUESTIONS = [{ code: 'C.5', questions: %i[total_floors_per_lift service_standard] },
                               { code: 'E.4', questions: [:no_of_appliances_for_testing] },
                               { code: 'G.1', questions: %i[no_of_building_occupants service_standard] },
                               { code: 'G.3', questions: %i[no_of_building_occupants service_standard] },
