@@ -4,6 +4,10 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
   before_action :set_partial
   before_action :set_lift_count
 
+  def show
+    render :edit
+  end
+
   def edit
     raise ActionController::RoutingError, 'not found' if @building_service.blank?
   end
