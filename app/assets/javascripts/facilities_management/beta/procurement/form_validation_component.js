@@ -35,6 +35,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         let submitForm = this.validationResult = true;
         this.clearBannerErrorList();
         this.toggleBannerError(false);
+        this.clearAllFieldErrors();
 
         if (formElements !== undefined && formElements.length > 0) {
             let elements = [];
@@ -322,20 +323,27 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             }
         }
     };
+    this.findPreExistingErrorMessage = function (jQueryElement, errorType, jqueryElementForInputGroup) {
+        let jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
+        if (jqueryElementForRequiredMessage.length === 0) {
+            jqueryElementForRequiredMessage = jQueryElement.parent().find(".error-collection").find("label[data-validation='" + errorType + "']");
+            if (jqueryElementForRequiredMessage.length === 0) {
+                jqueryElementForRequiredMessage = jQueryElement.parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']");
+                if (jqueryElementForRequiredMessage.length === 0) {
+                    jqueryElementForRequiredMessage = this.insertElementForRequiredMessage(jQueryElement, jqueryElementForInputGroup, errorType);
+                }
+            }
+        }
 
+        return jqueryElementForRequiredMessage;
+    };
     this.toggleError = function (jQueryElement, show, errorType) {
         let jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group");
         let error_text = "";
         if (jqueryElementForInputGroup.length === 0) {
             jqueryElementForInputGroup = this.insertElementToCreateFieldBlock(jQueryElement);
         }
-        let jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
-        if (jqueryElementForRequiredMessage.length === 0) {
-            jqueryElementForRequiredMessage = jQueryElement.parent().find(".error-collection").find("label[data-validation='" + errorType + "']");
-            if (jqueryElementForRequiredMessage.length === 0) {
-                jqueryElementForRequiredMessage = this.insertElementForRequiredMessage(jQueryElement, jqueryElementForInputGroup, errorType);
-            }
-        }
+        let jqueryElementForRequiredMessage = this.findPreExistingErrorMessage(jQueryElement, errorType, jqueryElementForInputGroup);
 
         if (jqueryElementForRequiredMessage.length > 0 ) {
             error_text = jqueryElementForRequiredMessage[0].innerText;
