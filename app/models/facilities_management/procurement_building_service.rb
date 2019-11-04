@@ -13,6 +13,10 @@ module FacilitiesManagement
     validates :no_of_consoles_to_be_serviced, numericality: { greater_than: 0, message: :invalid }, allow_blank: true, on: :volume
     validates :tones_to_be_collected_and_removed, numericality: { greater_than: 0, message: :invalid }, allow_blank: true, on: :volume
 
+    # validates on :lifts
+    validates :lift_data, length: { minimum: 1, maximum: 99 }, on: :lifts
+    validate :check_lift_data, on: :lifts
+
     # validates on :ppm_standards service question
     validate :service_standard_presence, on: :ppm_standards
 
@@ -64,6 +68,16 @@ module FacilitiesManagement
     end
 
     private
+
+    def check_lift_data
+      errors.add(:lift_data, :required, position: 0) if lift_data.blank?
+
+      Array(lift_data).each_with_index do |value, index|
+        errors.add(:lift_data.to_sym, :greater_than, position: index) if value.to_i.zero?
+
+        errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i > 99
+      end
+    end
 
     def service_standard_presence
       errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_ppm_standards?

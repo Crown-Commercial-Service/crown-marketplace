@@ -23,7 +23,7 @@
 
         </dd>
         <dd class="govuk-summary-list__actions">
-          <b> Volume required <br> (per anum)</b>
+          <b>Volume required <br> (per anum)</b>
         </dd>
       </div>
       <% @procurement_building.procurement_building_services.has_service_questions.each_with_index do |service, index| %>
@@ -38,7 +38,11 @@
                 <%= t(".#{question.to_s}") %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                <%= link_to 'Answer question', edit_facilities_management_beta_procurement_building_path(@procurement_building, service_question: question_type(service, question)) %>
+                <%if question == :total_floors_per_lift %>
+                  <%= link_to 'Answer question', facilities_management_beta_procurement_buildings_service_path(service) %>
+                <%else %>
+                <%= link_to 'Answer question', edit_facilities_management_beta_procurement_building_path(@procurement_building) %>
+                <%end %>
               </dd>
             </div>
           <% end %>
