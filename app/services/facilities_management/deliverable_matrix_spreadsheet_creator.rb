@@ -2,18 +2,20 @@ require 'axlsx'
 require 'axlsx_rails'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  def initialize(building_ids_with_service_codes, buildings = nil)
+  def initialize(building_ids_with_service_codes, buildings = nil, uvals = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
 
-    @buildings =
-      if buildings
-        buildings
-      else
-        @buildings = FacilitiesManagement::Buildings.where(id: building_ids) unless buildings
-      end
+    @uvals = uvals
 
-    buildings_with_service_codes
+    @buildings = buildings || FacilitiesManagement::Buildings.where(id: building_ids)
+
+    if buildings
+      buildings_with_service_codes_simple
+    else
+      buildings_with_service_codes
+    end
+
     set_services
   end
 
@@ -69,9 +71,19 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @buildings_with_service_codes = []
 
     @building_ids_with_service_codes.each do |building_id_with_service_codes|
-      building = @buildings.find(building_id_with_service_codes[:building_id])
+      building = @buildings.find(id: building_id_with_service_codes[:building_id])
 
-      @buildings_with_service_codes << { building: building.first, service_codes: building_id_with_service_codes[:service_codes] }
+      @buildings_with_service_codes << { building: building, service_codes: building_id_with_service_codes[:service_codes] }
+    end
+  end
+
+  def buildings_with_service_codes_simple
+    @buildings_with_service_codes = []
+
+    @building_ids_with_service_codes.each do |building_id_with_service_codes|
+      building = @buildings.find { |b| b[:id] == building_id_with_service_codes[:building_id] }
+
+      @buildings_with_service_codes << { building: building, service_codes: building_id_with_service_codes[:service_codes] }
     end
   end
 
@@ -204,6 +216,17 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
       # add_service_matrix(sheet)
       # style_service_matrix_sheet(sheet, standard_column_style)
+
+      codes = @building_ids_with_service_codes.collect do |building|
+        building[:service_codes]
+      end
+
+      codes.flatten!.uniq!
+
+      services = FacilitiesManagement::StaticData.work_packages.map { |w| [w['code'], w] }.to_h
+      codes.sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
+        sheet.add_row [s, services[s]['description']]
+      end
     end
   end
 end
