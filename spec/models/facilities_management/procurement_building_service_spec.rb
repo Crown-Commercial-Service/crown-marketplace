@@ -375,7 +375,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
 
     context 'when code = K.6' do
-      it 'validates tones_to_be_collected_and_removed grater than 0 if value is present' do
+      it 'validates tones_to_be_collected_and_removed greater than 0 if value is present' do
         procurement_building_service.code = 'K.6'
         procurement_building_service.tones_to_be_collected_and_removed = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
@@ -390,6 +390,56 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         procurement_building_service.code = 'K.6'
         procurement_building_service.tones_to_be_collected_and_removed = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
+      end
+    end
+
+    context 'when code = C.5' do
+      context 'when lift_data is blank' do
+        it 'validates to true for normal context' do
+          procurement_building_service.code = 'C.5'
+          expect(procurement_building_service.valid?).to eq true
+        end
+
+        it 'validates to false when validating lift data' do
+          procurement_building_service.code = 'C.5'
+          expect(procurement_building_service.valid?(:lifts)).to eq false
+        end
+      end
+
+      context 'when lift_data is an empty collection' do
+        it 'validates to false when validating lift data' do
+          procurement_building_service.code = 'C.5'
+          procurement_building_service.lift_data = []
+          expect(procurement_building_service.valid?(:lifts)).to eq false
+        end
+      end
+
+      context 'when lift_data has 100 elements' do
+        it 'validates to false' do
+          procurement_building_service.code = 'C.5'
+          procurement_building_service.lift_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                                                    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                                                    31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                                                    51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+                                                    71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+                                                    91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101]
+          expect(procurement_building_service.valid?(:lifts)).to eq false
+        end
+      end
+
+      context 'when lift_data has elements are zero or 100 in value' do
+        it 'validates to false' do
+          procurement_building_service.code = 'C.5'
+          procurement_building_service.lift_data = [0, 99, 3, 4, 5, 6, 7, 8, 9, 10]
+          expect(procurement_building_service.valid?(:lifts)).to eq false
+        end
+
+        it 'has an error collection containing corresponding index positions' do
+          procurement_building_service.code = 'C.5'
+          procurement_building_service.lift_data = [0, 3, 300, 4, 5, 6, 7, 8, 9, 10]
+          expect(procurement_building_service.valid?(:lifts)).to eq false
+          expect(procurement_building_service.errors.details[:lift_data].find_index { |item| item[:position] == 0 }.present?).to eq true
+        end
       end
     end
   end
