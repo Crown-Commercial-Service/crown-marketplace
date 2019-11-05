@@ -13,6 +13,8 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   private
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+
     new_row = []
     sum = 0
     sorted_building_keys.each do |k|
@@ -20,16 +22,24 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sum += vals[k]
     end
     new_row = ([label, nil, sum] << new_row).flatten
-    sheet.add_row new_row
+    sheet.add_row new_row, style: standard_style
   end
 
   # rubocop:disable Metrics/AbcSize
   def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2, just_one = false)
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+    standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
     new_row = [label, nil, nil]
+
     sorted_building_keys.each do |_k|
-      new_row << ''
+      new_row << '' if just_one == false
     end
-    sheet.add_row new_row
+
+    row_styles = [standard_column_style, standard_column_style, standard_style]
+    sorted_building_keys.each { |_k| row_styles << standard_style } unless just_one
+
+    sheet.add_row new_row, style: row_styles
+
     (2..sheet.rows.last.cells.count - 1).each do |i|
       start = sheet.rows.last.cells[i].r_abs.index('$', 0)
       finish = sheet.rows.last.cells[i].r_abs.index('$', 1)
@@ -107,13 +117,20 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:disable Metrics/MethodLength
   def contract_price_matrix
     @workbook.add_worksheet(name: 'Contract Price Matrix') do |sheet|
+      header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
+      standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+      standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+      total_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: '70AD47', alignment: { wrap_text: true, vertical: :center }
+      year_total_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'ED7D31', alignment: { wrap_text: true, vertical: :center }
+      variance_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'BDD6EE', alignment: { wrap_text: true, vertical: :center }
+
       sheet.add_row
       sheet.add_row ['Table 1. Baseline service costs for year 1']
       new_row = ['Service Reference', 'Service Name', 'Total']
       @data.keys.sort.each.with_index do |_k, idx|
         new_row << 'Building ' + (idx + 1).to_s
       end
-      sheet.add_row new_row
+      sheet.add_row new_row, style: header_row_style
 
       sorted_building_keys = @data.keys.sort
       sumsum = 0
@@ -165,14 +182,14 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
         sumsum += sum
         new_row = (new_row << sum << new_row2).flatten
-        sheet.add_row new_row
+        sheet.add_row new_row, style: standard_style
       end
 
       new_row = ['Planned Deliverables sub total', nil, sumsum]
       sorted_building_keys.each do |k|
         new_row << sum_building[k]
       end
-      sheet.add_row new_row
+      sheet.add_row new_row, style: standard_style
 
       sheet.add_row
 
@@ -220,7 +237,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       (2..max_years).each do |i|
         new_row2 = ["Year #{i}", nil, sumsum]
-        sheet.add_row new_row2
+        sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
       end
 
       sheet.add_row
@@ -230,8 +247,28 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       new_row = new_row.map { |x| x / 12 }
       (1..max_years).each do |i|
         new_row2 = ["Year #{i} Monthly cost", nil, sumsum / 12]
-        sheet.add_row new_row2
+        sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
       end
+
+      service_count = @data.keys.collect { |k| @data[k].keys }.flatten.uniq.count
+      # Service costs
+      sheet["A#{service_count + 4}:C#{service_count + 4}"].each { |c| c.style = total_style }
+      sheet["A4:B#{service_count + 4}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 6}:C#{service_count + 7}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 8}:C#{service_count + 8}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 6}:B#{service_count + 8}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 10}:C#{service_count + 10}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 11}:C#{service_count + 11}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 10}:B#{service_count + 11}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 13}:C#{service_count + 14}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 15}:C#{service_count + 15}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 13}:B#{service_count + 15}"].each { |c| c.style = standard_column_style }
+      # Year 1 charges
+      sheet["A#{service_count + 17}:C#{service_count + 18}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 19}:C#{service_count + 19}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 20}:C#{service_count + 20}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 21}:C#{service_count + 21}"].each { |c| c.style = year_total_style }
+      sheet["A#{service_count + 17}:B#{service_count + 21}"].each { |c| c.style = standard_column_style }
     end
   end
   # rubocop:enable Metrics/MethodLength
