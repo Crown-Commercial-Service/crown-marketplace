@@ -64,14 +64,17 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:disable Metrics/AbcSize
   def contract_rate_card
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
+      header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
+      price_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+      percentage_style = sheet.styles.add_style sz: 12, format_code: '#.00 %', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+      standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+
       sheet.add_row [@supplier_name]
       sheet.add_row ['Table 1. Service rates']
 
       new_row = ['Service Reference', 'Service Name', 'Unit of Measure']
-      CCS::FM::RateCard.building_types.each do |b|
-        new_row << b
-      end
-      sheet.add_row new_row
+      CCS::FM::RateCard.building_types.each { |b| new_row << b }
+      sheet.add_row new_row, style: header_row_style
 
       if @supplier_name
         rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
@@ -80,32 +83,35 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         @data.keys.collect { |k| @data[k].keys }
              .flatten.uniq
              .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-          labels = @data.keys.sort.collect do |k|
-            @data[k][s][:spreadsheet_label]
-          end
+          labels = @data.keys.sort.collect { |k| @data[k][s][:spreadsheet_label] }
 
           new_row = []
-          CCS::FM::RateCard.building_types.each do |b|
-            new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b]
-          end
+          CCS::FM::RateCard.building_types.each { |b| new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b] }
 
           new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], labels.first] << new_row).flatten
 
-          sheet.add_row new_row
+          styles = [standard_column_style, standard_column_style]
+
+          CCS::FM::RateCard.building_types.count.times do
+            styles << percentage_style if ['M.1', 'N.1'].include? s
+            styles << price_style unless ['M.1', 'N.1'].include? s
+          end
+
+          sheet.add_row new_row, style: styles
         end
 
         sheet.add_row
         sheet.add_row
         sheet.add_row ['Table 2. Pricing Variables']
-        sheet.add_row ['Cost type', 'Unit of Measure', 'Rate']
+        sheet.add_row ['Cost type', 'Unit of Measure', 'Rate'], style: header_row_style
 
-        sheet.add_row ['Cleaning Consumables', 'price per building occupant per annum', rate_card_variances[:'Cleaning Consumables per Building User (£)']]
-        sheet.add_row ['Management Overhead', 'percentage of deliverables value', rate_card_variances[:"Management Overhead %"]]
-        sheet.add_row ['Corporate Overhead', 'percentage of deliverables value', rate_card_variances[:"Corporate Overhead %"]]
-        sheet.add_row ['Profit', 'percentage of deliverables value', rate_card_variances[:'Profit %']]
-        sheet.add_row ['London Location Variance Rate', 'variance to standard service rate', rate_card_variances[:'London Location Variance Rate (%)']]
-        sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']]
-        sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']]
+        sheet.add_row ['Cleaning Consumables', 'price per building occupant per annum', rate_card_variances[:'Cleaning Consumables per Building User (£)']], style: [standard_column_style, standard_column_style, price_style]
+        sheet.add_row ['Management Overhead', 'percentage of deliverables value', rate_card_variances[:"Management Overhead %"]], style: [standard_column_style, standard_column_style, percentage_style]
+        sheet.add_row ['Corporate Overhead', 'percentage of deliverables value', rate_card_variances[:"Corporate Overhead %"]], style: [standard_column_style, standard_column_style, percentage_style]
+        sheet.add_row ['Profit', 'percentage of deliverables value', rate_card_variances[:'Profit %']], style: [standard_column_style, standard_column_style, percentage_style]
+        sheet.add_row ['London Location Variance Rate', 'variance to standard service rate', rate_card_variances[:'London Location Variance Rate (%)']], style: [standard_column_style, standard_column_style, percentage_style]
+        sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
+        sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
 
       end
     end
