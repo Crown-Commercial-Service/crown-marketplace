@@ -6,12 +6,12 @@ module FacilitiesManagement
     belongs_to :procurement_building, class_name: 'FacilitiesManagement::ProcurementBuilding', foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building_services
 
     # validates on :volume service question
-    validates :no_of_appliances_for_testing, numericality: { greater_than: 0, message: :invalid }, allow_blank: true, on: :volume
-    validates :no_of_building_occupants, numericality: { greater_than: 0, message: :invalid }, allow_blank: true, on: :volume
-    validates :no_of_units_to_be_serviced, numericality: { greater_than: 0, message: :invalid }, allow_blank: true, on: :volume
-    validates :size_of_external_area, numericality: { greater_than: 0, message: :invalid }, allow_blank: true, on: :volume
-    validates :no_of_consoles_to_be_serviced, numericality: { greater_than: 0, message: :invalid }, allow_blank: true, on: :volume
-    validates :tones_to_be_collected_and_removed, numericality: { greater_than: 0, message: :invalid }, allow_blank: true, on: :volume
+    validates :no_of_appliances_for_testing, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
+    validates :no_of_building_occupants, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
+    validates :no_of_units_to_be_serviced, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
+    validates :size_of_external_area, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
+    validates :no_of_consoles_to_be_serviced, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
+    validates :tones_to_be_collected_and_removed, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
 
     # validates on :lifts
     validates :lift_data, length: { minimum: 1, maximum: 99 }, on: :lifts
@@ -19,6 +19,8 @@ module FacilitiesManagement
 
     # validates on :ppm_standards service question
     validate :service_standard_presence, on: :ppm_standards
+
+    after_validation :cleanup_arra
 
     SERVICE_STANDARDS = %w[A B C].freeze
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
