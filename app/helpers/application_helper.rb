@@ -83,7 +83,7 @@ module ApplicationHelper
     end
   end
 
-  def list_potential_errors (model_object, attribute, form_object_name)
+  def list_potential_errors(model_object, attribute, form_object_name)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
     content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attribute}" do
