@@ -1,0 +1,64 @@
+<div class="govuk-grid-column-three-quarters">
+  <span class="govuk-caption-m"><%= @procurement_building.procurement.name %> - <%= @procurement_building.name %></span>
+  <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.subheading') %></h2>
+  <p class="govuk-caption-m govuk-!-margin-bottom-6"><%= t('.caption_html', service_info_doc: Marketplace.service_information_doc) %></p>
+  <details class="govuk-details govuk-!-margin-bottom-4" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= t('.fabric_standard_a_title') %>
+    </span>
+    </summary>
+    <div class="govuk-details__text">
+      <%= t('.fabric_standard_a_copy') %>
+    </div>
+  </details>
+  <details class="govuk-details govuk-!-margin-bottom-4" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= t('.fabric_standard_b_title') %>
+    </span>
+    </summary>
+    <div class="govuk-details__text">
+      <%= t('.fabric_standard_b_copy') %>
+    </div>
+  </details>
+  <details class="govuk-details govuk-!-margin-bottom-4" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= t('.fabric_standard_c_title') %>
+    </span>
+    </summary>
+    <div class="govuk-details__text">
+      <%= t('.fabric_standard_c_copy') %>
+    </div>
+  </details>
+  <% index = 0 %>
+  <%= f.fields_for :procurement_building_services do |procurement_building_service| %>
+    <% if procurement_building_service.object.requires_fabric_standards? %>
+      <% index += 1 %>
+      <div class="govuk-form-group <%= "govuk-form-group--error" if procurement_building_service.object.errors.any? %>" id="<%= error_id("procurement_building_services.#{ppm_standard_question(procurement_building_service.object.code)}") %>">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-0 govuk-!-padding-bottom-0">
+            <p class="govuk-fieldset__heading"><strong><%= index %>. <%= procurement_building_service.object.name %></strong></p>
+          </legend>
+          <%= display_error_nested_models(procurement_building_service.object, fabric_standard_question(procurement_building_service.object.code)) %>
+          <%= procurement_building_service.collection_radio_buttons :service_standard, FacilitiesManagement::ProcurementBuildingService::SERVICE_STANDARDS, :first, :first do |b| %>
+            <div class="govuk-radios govuk-radios--small govuk-!-margin-top-2">
+              <div class="govuk-radios__item">
+                <%= b.radio_button(class:'govuk-radios__input' ) %>
+                <%= b.label(class: "govuk-label govuk-radios__label") do %>
+                  <%= "Standard " + b.text %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </fieldset>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="govuk-grid-row govuk-!-margin-top-9">
+    <%= f.submit t('.save_and_return_to_service_information'), class: 'govuk-button govuk-button--primary govuk-!-margin-left-3 govuk-!-margin-bottom-4' %>
+  </div>
+  <%= link_to t('.back_to_service_information'), facilities_management_beta_procurement_building_path(@procurement_building), class: 'govuk-link--no-visited-state' %>
+</div>

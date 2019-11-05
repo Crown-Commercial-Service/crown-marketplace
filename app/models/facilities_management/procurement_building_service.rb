@@ -23,6 +23,7 @@ module FacilitiesManagement
     SERVICE_STANDARDS = %w[A B C].freeze
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
     REQUIRE_PPM_STANDARDS_CODES = %w[C.1 C.2 C.3 C.4 C.5 C.6 C.11 C.12 C.13 C.14].freeze
+    REQUIRE_FABRICS_STANDARDS_CODES = %w[C.7].freeze
     SERVICES_AND_QUESTIONS = [{ code: 'C.5', questions: %i[total_floors_per_lift service_standard] },
                               { code: 'E.4', questions: [:no_of_appliances_for_testing] },
                               { code: 'G.1', questions: %i[no_of_building_occupants service_standard] },
@@ -65,6 +66,10 @@ module FacilitiesManagement
 
     def requires_ppm_standards?
       REQUIRE_PPM_STANDARDS_CODES.include?(code)
+    end
+
+    def requires_fabric_standards?
+      REQUIRE_FABRICS_STANDARDS_CODES.include?(code)
     end
 
     private
