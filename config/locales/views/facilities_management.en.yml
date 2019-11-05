@@ -177,6 +177,18 @@ en:
           heading: You have successfully changed your password
           lead: You can now sign in to your Crown Commercial Service account
       procurement_buildings:
+        cleaning_standards:
+          back_to_service_information: Back to service information
+          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
+          cleaning_standard_a_copy: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
+          cleaning_standard_a_title: Standard A - the general or normal service level
+          cleaning_standard_b_copy: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
+          cleaning_standard_b_title: Standard B - the highest service level
+          cleaning_standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+          cleaning_standard_c_title: a bespoke service level
+          heading: Cleaning services standards
+          save_and_return_to_service_information: Save and return to service information
+          subheading: What standard are you applying to all selected cleaning services?
         fabric_standards:
           back_to_service_information: Back to service information
           caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
