@@ -95,7 +95,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     supplier_names = rate_card.data['Prices'].keys
     supplier_names.each do |supplier_name|
       report_results[supplier_name] = {}
-      # dummy_supplier_name = 'Hickle-Schinner'
+      # e.g. dummy supplier_name = 'Hickle-Schinner'
       report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
       results[supplier_name] = report.direct_award_value
     end
@@ -105,14 +105,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     expect(sorted_list.first[1].round(2)).to eq 1344330.02
 
     supplier_name = 'Hirthe-Mills'
-    # expect(report_results[supplier_name][report_results[supplier_name].keys.first].count).to eq 22
-    # expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 22
     expect(report_results[supplier_name][report_results[supplier_name].keys.third].count).to eq 22
 
-    spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name]
+    spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
     output = spreadsheet.to_xlsx
-
-    # p output
 
     IO.write('/tmp/direct_award_prices.xlsx', output)
   end
