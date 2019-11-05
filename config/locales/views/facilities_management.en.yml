@@ -77,6 +77,7 @@ en:
               required: The number of floors accessed must be a whole number greater than 0.
               too_long: The number of floors accessed must be a whole number greater than 0.
               too_short: The number of floors accessed must be a whole number greater than 0.
+              not_an_integer: The number of floors accessed must be a whole number greater than 0.
             no_of_appliances_for_testing:
               invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
             no_of_building_occupants:

@@ -76,6 +76,8 @@ module FacilitiesManagement
         errors.add(:lift_data.to_sym, :greater_than, position: index) if value.to_i.zero?
 
         errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i > 99
+
+        errors.add(:lift_data.to_sym, :not_an_integer, position: index) unless value.to_i.to_s == value
       end
     end
 
