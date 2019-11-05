@@ -48,7 +48,7 @@ module FacilitiesManagement
         supplier_name = sorted_list.first[0]
         # supplier_da_price = sorted_list.first[1]
 
-        spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name]
+        spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
         render xlsx: spreadsheet.to_xlsx, filename: 'direct_award_prices'
       end
       # rubocop:enable Metrics/AbcSize
