@@ -71,9 +71,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @buildings_with_service_codes = []
 
     @building_ids_with_service_codes.each do |building_id_with_service_codes|
-      building = @buildings.find(id: building_id_with_service_codes[:building_id])
+      building = @buildings.find(building_id_with_service_codes[:building_id])
 
       @buildings_with_service_codes << { building: building, service_codes: building_id_with_service_codes[:service_codes] }
+    end
+
+    # @buildings_with_service_codes.map!(&:deep_symbolize_keys!)
+    @buildings_with_service_codes.each do |b|
+      b[:building][:building_json].deep_symbolize_keys!
     end
   end
 
@@ -213,6 +218,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   # rubocop:disable Metrics/AbcSize
   def volumes_sheet(pkg)
+    return unless @uvals
+
     pkg.workbook.add_worksheet(name: 'Volume') do |sheet|
       add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
       # add_service_matrix(sheet)
