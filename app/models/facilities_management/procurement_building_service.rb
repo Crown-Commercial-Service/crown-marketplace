@@ -18,13 +18,13 @@ module FacilitiesManagement
     validate :check_lift_data, on: :lifts
 
     # validates on :ppm_standards service question
-    validate :service_standard_presence, on: :ppm_standards
+    validate :service_ppm_standard_presence, on: :ppm_standards
 
     # validates on :ppm_standards service question
-    validate :service_standard_presence, on: :fabric_standards
+    validate :service_building_standard_presence, on: :fabric_standards
 
     # validates on :ppm_standards service question
-    validate :service_standard_presence, on: :cleaning_standards
+    validate :service_cleaning_standard_presence, on: :cleaning_standards
 
     SERVICE_STANDARDS = %w[A B C].freeze
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
@@ -83,12 +83,6 @@ module FacilitiesManagement
       REQUIRE_VOLUME_CODES.include?(code)
     end
 
-    def requires_service_standard?
-      REQUIRE_PPM_STANDARDS_CODES.include?(code) ||
-        REQUIRE_BUILDING_STANDARDS_CODES.include?(code) ||
-        REQUIRE_CLEANING_STANDARDS_CODES.include?(code)
-    end
-
     def requires_ppm_standards?
       REQUIRE_PPM_STANDARDS_CODES.include?(code)
     end
@@ -115,8 +109,16 @@ module FacilitiesManagement
       end
     end
 
-    def service_standard_presence
-      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_service_standard?
+    def service_ppm_standard_presence
+      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_ppm_standards?
+    end
+
+    def service_building_standard_presence
+      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_building_standards?
+    end
+
+    def service_cleaning_standard_presence
+      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_cleaning_standards?
     end
   end
 end
