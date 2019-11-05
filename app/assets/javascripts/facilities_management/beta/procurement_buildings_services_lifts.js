@@ -76,7 +76,7 @@ LiftDataUI.prototype.restrictInput = function(jqElem) {
 LiftDataUI.prototype.connectButtons = function() {
     this.connectAddLiftButton();
     this.connectRemoveLiftButtons();
-    this.restrictInputKeys();
+    // this.restrictInputKeys();
 };
 $(function(){
    let liftDataContainer = $(".liftdatacontainer");
