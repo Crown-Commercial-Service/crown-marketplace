@@ -41,7 +41,7 @@
                 <%if question == :total_floors_per_lift %>
                   <%= link_to 'Answer question', facilities_management_beta_procurement_buildings_service_path(service) %>
                 <%else %>
-                <%= link_to 'Answer question', edit_facilities_management_beta_procurement_building_path(@procurement_building, service_question: question_type(service, question))  %>
+                <%= link_to 'Answer question', edit_facilities_management_beta_procurement_building_path(@procurement_building, service_question: question_type(service, question)) %>
                 <%end %>
               </dd>
             </div>
