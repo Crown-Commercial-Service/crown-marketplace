@@ -211,6 +211,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def volumes_sheet(pkg)
     pkg.workbook.add_worksheet(name: 'Volume') do |sheet|
       add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
@@ -225,8 +226,28 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
       services = FacilitiesManagement::StaticData.work_packages.map { |w| [w['code'], w] }.to_h
       codes.sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-        sheet.add_row [s, services[s]['description']]
+        new_row = []
+
+        title_text = ''
+        spreadsheet_label = ''
+
+        @buildings_with_service_codes.each do |b|
+          # uvs = @uvals.select { |u| (b[:building][:id]&.downcase == u[:building_id]&.downcase) }
+          uvs = @uvals.select { |u| b[:building][:id].casecmp? u[:building_id] }
+
+          suv = uvs.find { |u| s == u[:service_code] }
+
+          title_text = suv[:title_text]
+          spreadsheet_label = suv[:spreadsheet_label]
+
+          new_row << suv[:uom_value] if suv
+          new_row << nil unless suv
+        end
+
+        new_row = ([s, services[s]['description']] << title_text << spreadsheet_label << new_row).flatten
+        sheet.add_row new_row
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end
