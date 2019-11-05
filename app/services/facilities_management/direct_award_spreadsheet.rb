@@ -1,8 +1,7 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(supplier_name, data, rate_card)
+  def initialize(supplier_name, data)
     @supplier_name = supplier_name
     @data = data
-    @rate_card_data = rate_card.data.deep_symbolize_keys
     create_spreadsheet
   end
 
@@ -13,6 +12,8 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   private
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+
     new_row = []
     sum = 0
     sorted_building_keys.each do |k|
@@ -20,16 +21,18 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sum += vals[k]
     end
     new_row = ([label, nil, sum] << new_row).flatten
-    sheet.add_row new_row
+    sheet.add_row new_row, style: standard_style
   end
 
   # rubocop:disable Metrics/AbcSize
-  def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2, just_one = false)
+  def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2)
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+
     new_row = [label, nil, nil]
     sorted_building_keys.each do |_k|
       new_row << ''
     end
-    sheet.add_row new_row
+    sheet.add_row new_row, style: standard_style
     (2..sheet.rows.last.cells.count - 1).each do |i|
       start = sheet.rows.last.cells[i].r_abs.index('$', 0)
       finish = sheet.rows.last.cells[i].r_abs.index('$', 1)
@@ -37,83 +40,32 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       column_ref = sheet.rows.last.cells[i].r_abs[start + 1..finish - 1]
       row_ref = sheet.rows.last.cells[i].r_abs[finish + 1..-1].to_i
       sheet.rows.last.cells[i].value = "=sum(#{column_ref}#{row_ref - 1}:#{column_ref}#{row_ref - how_many_rows})"
-
-      break if just_one
     end
   end
   # rubocop:enable Metrics/AbcSize
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/BlockLength
   def create_spreadsheet
     @package = Axlsx::Package.new
     @workbook = @package.workbook
 
-    contract_price_matrix
-    contract_rate_card
-  end
-
-  # rubocop:disable Metrics/AbcSize
-  def contract_rate_card
-    @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
-      sheet.add_row [@supplier_name]
-      sheet.add_row ['Table 1. Service rates']
-
-      new_row = ['Service Reference', 'Service Name', 'Unit of Measure']
-      CCS::FM::RateCard.building_types.each do |b|
-        new_row << b
-      end
-      sheet.add_row new_row
-
-      if @supplier_name
-        rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
-        rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
-
-        @data.keys.collect { |k| @data[k].keys }
-             .flatten.uniq
-             .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-          labels = @data.keys.sort.collect do |k|
-            @data[k][s][:spreadsheet_label]
-          end
-
-          new_row = []
-          CCS::FM::RateCard.building_types.each do |b|
-            new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b]
-          end
-
-          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], labels.first] << new_row).flatten
-
-          sheet.add_row new_row
-        end
-
-        sheet.add_row
-        sheet.add_row
-        sheet.add_row ['Table 2. Pricing Variables']
-        sheet.add_row ['Cost type', 'Unit of Measure', 'Rate']
-
-        sheet.add_row ['Cleaning Consumables', 'price per building occupant per annum', rate_card_variances[:'Cleaning Consumables per Building User (£)']]
-        sheet.add_row ['Management Overhead', 'percentage of deliverables value', rate_card_variances[:"Management Overhead %"]]
-        sheet.add_row ['Corporate Overhead', 'percentage of deliverables value', rate_card_variances[:"Corporate Overhead %"]]
-        sheet.add_row ['Profit', 'percentage of deliverables value', rate_card_variances[:'Profit %']]
-        sheet.add_row ['London Location Variance Rate', 'variance to standard service rate', rate_card_variances[:'London Location Variance Rate (%)']]
-        sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']]
-        sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']]
-
-      end
-    end
-  end
-  # rubocop:enable Metrics/AbcSize
-
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/BlockLength
-  # rubocop:disable Metrics/MethodLength
-  def contract_price_matrix
     @workbook.add_worksheet(name: 'Contract Price Matrix') do |sheet|
+      header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
+      standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+      standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+      total_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: '70AD47', alignment: { wrap_text: true, vertical: :center }
+      year_total_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'ED7D31', alignment: { wrap_text: true, vertical: :center }
+      variance_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'BDD6EE', alignment: { wrap_text: true, vertical: :center }
+
       sheet.add_row
       sheet.add_row ['Table 1. Baseline service costs for year 1']
       new_row = ['Service Reference', 'Service Name', 'Total']
       @data.keys.sort.each.with_index do |_k, idx|
         new_row << 'Building ' + (idx + 1).to_s
       end
-      sheet.add_row new_row
+      sheet.add_row new_row, style: header_row_style
 
       sorted_building_keys = @data.keys.sort
       sumsum = 0
@@ -137,18 +89,15 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sum_building_profit[k] = 0
         sum_building_mobilisation[k] = 0
       end
-
       @data.keys.collect { |k| @data[k].keys }
            .flatten.uniq
            .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-        new_row = [s, @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][:'Service Name']]
+        # ChrisG suggest an alternative call to work_package to het the service description
+        new_row = [s, FacilitiesManagement::Service.where(code: s).first.name]
 
         new_row2 = []
         sum = 0
-
         sorted_building_keys.each do |k|
-          next unless @data[k][s]
-
           new_row2 << @data[k][s][:subtotal1]
           sum += @data[k][s][:subtotal1]
           sum_building[k] += @data[k][s][:subtotal1]
@@ -165,14 +114,14 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
         sumsum += sum
         new_row = (new_row << sum << new_row2).flatten
-        sheet.add_row new_row
+        sheet.add_row new_row, style: standard_style
       end
 
       new_row = ['Planned Deliverables sub total', nil, sumsum]
       sorted_building_keys.each do |k|
         new_row << sum_building[k]
       end
-      sheet.add_row new_row
+      sheet.add_row new_row, style: standard_style
 
       sheet.add_row
 
@@ -180,11 +129,13 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       add_computed_row sheet, sorted_building_keys, 'Helpdesk', sum_building_helpdesk
 
+      # sheet.add_row ['Year 1 Deliverables sub total']
       add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables sub total', 4
       sheet.add_row
 
       add_computed_row sheet, sorted_building_keys, 'London Location Variance', sum_building_variance
 
+      # sheet.add_row ['Year 1 Deliverables total']
       add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables total', 3
       sheet.add_row
 
@@ -192,6 +143,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       add_computed_row sheet, sorted_building_keys, 'TUPE Risk Premium', sum_building_tupe
 
+      # sheet.add_row ['Total Charges excluding Overhead and Profit']
       add_summation_row sheet, sorted_building_keys, 'Total Charges excluding Overhead and Profit', 4
       sheet.add_row
 
@@ -207,6 +159,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       sheet.add_row
       sheet.add_row ['Table 2. Subsequent Years Total Charges']
+      # @data["E7EED6F6-5EF0-E387-EE35-6C1D39FEB8A9"].first[1][:subsequent_length_years]
       max_years =
         sorted_building_keys.collect { |k| @data[k].first[1][:subsequent_length_years] }.max
 
@@ -220,21 +173,44 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       (2..max_years).each do |i|
         new_row2 = ["Year #{i}", nil, sumsum]
-        sheet.add_row new_row2
+        sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
       end
 
       sheet.add_row
-      add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3, true
+      add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3
       sheet.add_row
       sheet.add_row ['Table 3. Total charges per month']
       new_row = new_row.map { |x| x / 12 }
       (1..max_years).each do |i|
         new_row2 = ["Year #{i} Monthly cost", nil, sumsum / 12]
-        sheet.add_row new_row2
+        sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
       end
+
+      service_count = @data.keys.collect { |k| @data[k].keys }.flatten.uniq.count
+      # Service costs
+      sheet["A#{service_count + 4}:C#{service_count + 4}"].each { |c| c.style = total_style }
+      sheet["A4:B#{service_count + 4}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 6}:C#{service_count + 7}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 8}:C#{service_count + 8}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 6}:B#{service_count + 8}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 10}:C#{service_count + 10}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 11}:C#{service_count + 11}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 10}:B#{service_count + 11}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 13}:C#{service_count + 14}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 15}:C#{service_count + 15}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 13}:B#{service_count + 15}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 17}:C#{service_count + 18}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 19}:C#{service_count + 19}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 20}:C#{service_count + 20}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 21}:C#{service_count + 21}"].each { |c| c.style = year_total_style }
+      sheet["A#{service_count + 17}:B#{service_count + 21}"].each { |c| c.style = standard_column_style }
+    end
+
+    @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
+      sheet.add_row [@supplier_name]
     end
   end
-  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/BlockLength
+  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 end
