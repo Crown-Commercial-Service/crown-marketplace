@@ -20,8 +20,6 @@ module FacilitiesManagement
     # validates on :ppm_standards service question
     validate :service_standard_presence, on: :ppm_standards
 
-    after_validation :cleanup_arra
-
     SERVICE_STANDARDS = %w[A B C].freeze
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
     REQUIRE_PPM_STANDARDS_CODES = %w[C.1 C.2 C.3 C.4 C.5 C.6 C.11 C.12 C.13 C.14].freeze
