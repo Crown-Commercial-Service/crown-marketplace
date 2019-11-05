@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 2019_10_31_165100) do
   end
 
   create_table "fm_static_data", id: false, force: :cascade do |t|
-    t.text "key", null: false
+    t.string "key", null: false
     t.jsonb "value"
     t.index ["key"], name: "fm_static_data_key_idx"
   end
@@ -216,11 +216,11 @@ ActiveRecord::Schema.define(version: 2019_10_31_165100) do
 
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
     t.serial "id", null: false
-    t.text "title_text", null: false
-    t.text "example_text"
-    t.text "unit_text"
-    t.text "data_type"
-    t.text "spreadsheet_label"
+    t.string "title_text", null: false
+    t.string "example_text"
+    t.string "unit_text"
+    t.string "data_type"
+    t.string "spreadsheet_label"
     t.text "service_usage", array: true
   end
 
