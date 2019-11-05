@@ -83,6 +83,16 @@ module ApplicationHelper
     end
   end
 
+  def list_potential_errors(model_object, attribute, form_object_name)
+    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
+
+    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attribute}" do
+      collection.each do |key, val|
+        concat(silent_govuk_validation_error(model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name))
+      end
+    end
+  end
+
   def display_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
@@ -104,6 +114,15 @@ module ApplicationHelper
 
   # Renders a govuk compliant error-content div with a client-compatible validation type
   # and text for use as static content in the page
+  def silent_govuk_validation_error(model_data)
+    tag_validation_type = ERROR_TYPES.include?(model_data[:error_type]) ? ERROR_TYPES[model_data[:error_type]] : model_data[:error_type]
+    css_classes = ['govuk-error-message govuk-visually-hidden']
+    content_tag :label, content_tag(:span, model_data[:text]), class: css_classes,
+                                                               for: "#{model_data[:form_object_name]}_#{model_data[:attribute]}",
+                                                               id: "#{model_data[:attribute]}-error",
+                                                               data: { propertyname: model_data[:attribute].to_s, validation: tag_validation_type }
+  end
+
   def govuk_validation_error(model_data, error_lookup = nil, error_position = nil)
     tag_validation_type = ERROR_TYPES.include?(model_data[:error_type]) ? ERROR_TYPES[model_data[:error_type]] : model_data[:error_type]
     model_has_error = false

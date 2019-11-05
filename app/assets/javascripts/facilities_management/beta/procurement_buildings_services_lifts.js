@@ -25,6 +25,7 @@ LiftDataUI.prototype.addNewLift = function() {
         let targetLift = Number(e.currentTarget.getAttribute("data-liftcount"));
         this.removeLift(targetLift);
     }.bind(this));
+    this.restrictInput(newInputElement.find("input")[0]);
     this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").addClass("govuk-visually-hidden");
     this.liftDataContainer.append(newInputElement);
 };
@@ -57,9 +58,25 @@ LiftDataUI.prototype.connectRemoveLiftButtons = function() {
         }
     }
 };
+LiftDataUI.prototype.restrictInputKeys = function(){
+    if ( this.liftDataContainer) {
+        let inputs = this.liftDataContainer.find("input[type='number']");
+        let i = 0;
+        for (i = 0; i < inputs.length; i++) {
+            this.restrictInput(inputs[i]);
+        }
+    }
+};
+LiftDataUI.prototype.restrictInput = function(jqElem) {
+    $(jqElem).keypress(function(e) {
+        let verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
+        if (verified) {e.preventDefault();}
+    });
+};
 LiftDataUI.prototype.connectButtons = function() {
     this.connectAddLiftButton();
     this.connectRemoveLiftButtons();
+    // this.restrictInputKeys();
 };
 $(function(){
    let liftDataContainer = $(".liftdatacontainer");
