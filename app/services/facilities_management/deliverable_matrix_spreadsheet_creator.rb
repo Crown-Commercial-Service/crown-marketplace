@@ -2,20 +2,15 @@ require 'axlsx'
 require 'axlsx_rails'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  def initialize(building_ids_with_service_codes, buildings = nil, uvals = nil)
+  def initialize(building_ids_with_service_codes, uvals = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
 
     @uvals = uvals
 
-    @buildings = buildings || FacilitiesManagement::Buildings.where(id: building_ids)
+    @buildings = FacilitiesManagement::Buildings.where(id: building_ids)
 
-    if buildings
-      buildings_with_service_codes_simple
-    else
-      buildings_with_service_codes
-    end
-
+    buildings_with_service_codes
     set_services
   end
 
@@ -79,16 +74,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     # @buildings_with_service_codes.map!(&:deep_symbolize_keys!)
     @buildings_with_service_codes.each do |b|
       b[:building][:building_json].deep_symbolize_keys!
-    end
-  end
-
-  def buildings_with_service_codes_simple
-    @buildings_with_service_codes = []
-
-    @building_ids_with_service_codes.each do |building_id_with_service_codes|
-      building = @buildings.find { |b| b[:id] == building_id_with_service_codes[:building_id] }
-
-      @buildings_with_service_codes << { building: building, service_codes: building_id_with_service_codes[:service_codes] }
     end
   end
 
@@ -240,7 +225,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
         @buildings_with_service_codes.each do |b|
           # uvs = @uvals.select { |u| (b[:building][:id]&.downcase == u[:building_id]&.downcase) }
-          uvs = @uvals.select { |u| b[:building][:id].casecmp? u[:building_id] }
+          uvs = @uvals.select { |u| b[:building][:id] == u[:building_id] }
 
           suv = uvs.find { |u| s == u[:service_code] }
 
