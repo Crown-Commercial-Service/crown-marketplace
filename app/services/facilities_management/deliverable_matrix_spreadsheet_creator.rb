@@ -146,7 +146,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def building_gia
-    row = ['Building Gross Internal Area (GIA) (m2)']
+    row = ['Building Gross Internal Area (GIA) (sqm)']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
       row << building_with_service_codes[:building].building_json['gia']
