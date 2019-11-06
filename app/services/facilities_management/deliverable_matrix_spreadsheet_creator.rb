@@ -213,7 +213,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
       codes.flatten!.uniq!
 
-      services = FacilitiesManagement::StaticData.work_packages.map { |w| [w['code'], w] }.to_h
+      services = @services.map { |w| [w['code'], w] }.to_h
       codes.sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
         new_row = []
 
