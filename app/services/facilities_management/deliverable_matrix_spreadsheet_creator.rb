@@ -5,13 +5,10 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def initialize(building_ids_with_service_codes, uvals = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
-
-    @uvals = uvals
-
     @buildings = FacilitiesManagement::Buildings.where(id: building_ids)
-
     buildings_with_service_codes
     set_services
+    @uvals = uvals
   end
 
   def build
