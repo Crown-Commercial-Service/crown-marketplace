@@ -25,7 +25,7 @@ LiftDataUI.prototype.addNewLift = function() {
         let targetLift = Number(e.currentTarget.getAttribute("data-liftcount"));
         this.removeLift(targetLift);
     }.bind(this));
-    this.restrictInput(newInputElement.find("input")[0]);
+    //this.restrictInput(newInputElement.find("input")[0]);
     this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").addClass("govuk-visually-hidden");
     this.liftDataContainer.append(newInputElement);
 };
