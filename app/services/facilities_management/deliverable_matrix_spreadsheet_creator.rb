@@ -223,6 +223,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
         title_text = ''
         spreadsheet_label = ''
 
+        new_row = []
         @buildings_with_service_codes.each do |b|
           # uvs = @uvals.select { |u| (b[:building][:id]&.downcase == u[:building_id]&.downcase) }
           uvs = @uvals.select { |u| b[:building][:id] == u[:building_id] }
@@ -236,7 +237,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           new_row << nil unless suv
         end
 
-        new_row = ([s, services[s]['description']] << title_text << spreadsheet_label << new_row).flatten
+        new_row = ([s, services[s]['description'], title_text, spreadsheet_label] << new_row).flatten
         sheet.add_row new_row
       end
     end
