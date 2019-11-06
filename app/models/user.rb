@@ -6,6 +6,7 @@ class User < ApplicationRecord
             inverse_of: :user,
             class_name: 'FacilitiesManagement::Procurement',
             dependent: :destroy
+  has_one :buyer, class_name: 'FacilititesManagement::Buyer', foreign_key: :user_id, inverse_of: :user, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
