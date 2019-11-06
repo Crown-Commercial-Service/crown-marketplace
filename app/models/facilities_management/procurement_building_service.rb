@@ -18,12 +18,21 @@ module FacilitiesManagement
     validate :check_lift_data, on: :lifts
 
     # validates on :ppm_standards service question
-    validate :service_standard_presence, on: :ppm_standards
+    validate :service_ppm_standard_presence, on: :ppm_standards
+
+    # validates on :ppm_standards service question
+    validate :service_building_standard_presence, on: :building_standards
+
+    # validates on :ppm_standards service question
+    validate :service_cleaning_standard_presence, on: :cleaning_standards
 
     SERVICE_STANDARDS = %w[A B C].freeze
+
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
     REQUIRE_PPM_STANDARDS_CODES = %w[C.1 C.2 C.3 C.4 C.5 C.6 C.11 C.12 C.13 C.14].freeze
-    REQUIRE_FABRICS_STANDARDS_CODES = %w[C.7].freeze
+    REQUIRE_CLEANING_STANDARDS_CODES = %w[G.1 G.2 G.3 G.4 G.5 G.6 G.7 G.8 G.9 G.10 G.11 G.12 G.13 G.14 G.15 G.16].freeze
+    REQUIRE_BUILDING_STANDARDS_CODES = %w[C.7].freeze
+
     SERVICES_AND_QUESTIONS = [{ code: 'C.5', questions: %i[total_floors_per_lift service_standard] },
                               { code: 'E.4', questions: [:no_of_appliances_for_testing] },
                               { code: 'G.1', questions: %i[no_of_building_occupants service_standard] },
@@ -58,7 +67,19 @@ module FacilitiesManagement
                               { code: 'C.12', questions: [:service_standard] },
                               { code: 'C.13', questions: [:service_standard] },
                               { code: 'C.14', questions: [:service_standard] },
-                              { code: 'G.4', questions: [:service_standard] }].freeze
+                              { code: 'G.4', questions: [:service_standard] },
+                              { code: 'G.2', questions: [:service_standard] },
+                              { code: 'G.6', questions: [:service_standard] },
+                              { code: 'G.7', questions: [:service_standard] },
+                              { code: 'G.8', questions: [:service_standard] },
+                              { code: 'G.9', questions: [:service_standard] },
+                              { code: 'G.10', questions: [:service_standard] },
+                              { code: 'G.11', questions: [:service_standard] },
+                              { code: 'G.12', questions: [:service_standard] },
+                              { code: 'G.13', questions: [:service_standard] },
+                              { code: 'G.14', questions: [:service_standard] },
+                              { code: 'G.15', questions: [:service_standard] },
+                              { code: 'G.16', questions: [:service_standard] }].freeze
 
     def requires_volume?
       REQUIRE_VOLUME_CODES.include?(code)
@@ -68,8 +89,12 @@ module FacilitiesManagement
       REQUIRE_PPM_STANDARDS_CODES.include?(code)
     end
 
-    def requires_fabric_standards?
-      REQUIRE_FABRICS_STANDARDS_CODES.include?(code)
+    def requires_building_standards?
+      REQUIRE_BUILDING_STANDARDS_CODES.include?(code)
+    end
+
+    def requires_cleaning_standards?
+      REQUIRE_CLEANING_STANDARDS_CODES.include?(code)
     end
 
     private
@@ -86,8 +111,16 @@ module FacilitiesManagement
       end
     end
 
-    def service_standard_presence
+    def service_ppm_standard_presence
       errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_ppm_standards?
+    end
+
+    def service_building_standard_presence
+      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_building_standards?
+    end
+
+    def service_cleaning_standard_presence
+      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_cleaning_standards?
     end
   end
 end
