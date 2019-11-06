@@ -120,7 +120,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       { building_id: b.downcase, service_codes: services_per_building }
     end
 
-    #
+    # populate db with dub buildings
     selected_buildings.each do |b|
       begin
         FacilitiesManagement::Buildings.delete b.id
@@ -139,6 +139,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     spreadsheet = spreadsheet_builder.build
     # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
     IO.write('/tmp/deliverable_matrix.xlsx', spreadsheet.to_stream.read)
+
+    # teardown
+    selected_buildings.each do |b|
+      begin
+        FacilitiesManagement::Buildings.delete b.id
+      rescue StandardError => e
+        Rails.logger.warn "Couldn't delete new building id: #{e}"
+      end
+    end
   end
   # rubocop:enable RSpec/ExampleLength
 
