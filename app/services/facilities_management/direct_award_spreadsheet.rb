@@ -13,7 +13,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   private
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)
-    standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#,###.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
 
     new_row = []
     sum = 0
@@ -65,7 +65,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   def contract_rate_card
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
-      price_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+      price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
       percentage_style = sheet.styles.add_style sz: 12, format_code: '#.00 %', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
       standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
 
@@ -90,7 +90,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
           new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], labels.first] << new_row).flatten
 
-          styles = [standard_column_style, standard_column_style]
+          styles = [standard_column_style, standard_column_style, standard_column_style]
 
           CCS::FM::RateCard.building_types.count.times do
             styles << percentage_style if ['M.1', 'N.1'].include? s
