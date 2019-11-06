@@ -21,16 +21,18 @@ module FacilitiesManagement
     validate :service_ppm_standard_presence, on: :ppm_standards
 
     # validates on :ppm_standards service question
-    validate :service_building_standard_presence, on: :fabric_standards
+    validate :service_building_standard_presence, on: :building_standards
 
     # validates on :ppm_standards service question
     validate :service_cleaning_standard_presence, on: :cleaning_standards
 
     SERVICE_STANDARDS = %w[A B C].freeze
+
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
     REQUIRE_PPM_STANDARDS_CODES = %w[C.1 C.2 C.3 C.4 C.5 C.6 C.11 C.12 C.13 C.14].freeze
     REQUIRE_CLEANING_STANDARDS_CODES = %w[G.1 G.2 G.3 G.4 G.5 G.6 G.7 G.8 G.9 G.10 G.11 G.12 G.13 G.14 G.15 G.16].freeze
     REQUIRE_BUILDING_STANDARDS_CODES = %w[C.7].freeze
+
     SERVICES_AND_QUESTIONS = [{ code: 'C.5', questions: %i[total_floors_per_lift service_standard] },
                               { code: 'E.4', questions: [:no_of_appliances_for_testing] },
                               { code: 'G.1', questions: %i[no_of_building_occupants service_standard] },
