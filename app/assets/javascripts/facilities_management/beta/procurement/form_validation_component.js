@@ -286,10 +286,17 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             } else {
                 display_text = message_text;
             }
+            // is there a message, of any other type, with the same text...
             let link = ul.find("a").filter(function () {
-                return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
+                return $(this).attr("data-propertyname") === propertyName && $(this).text() === display_text;
             });
 
+            if ( link.length === 0 ) {
+                link = ul.find("a").filter(function () {
+                    return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
+                });
+            }
+            // ensure duplicates
             if (link.length <= 0) {
                 let link = "<a href=\"#" + this.getErrorID(inputElement) + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
                 ul.append("<li>" + link + "</li>");
@@ -348,6 +355,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         if (! jQueryElement.siblings().is(jqueryElementForRequiredMessage)) {
             // clone error element and place it above the input element
             jqueryElementForRequiredMessage = jqueryElementForRequiredMessage.clone();
+            jqueryElementForRequiredMessage.prop("id", this.getErrorID(jQueryElement));
             jqueryElementForRequiredMessage.insertBefore(jQueryElement);
         }
 
@@ -362,7 +370,6 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                     jQueryElement.removeClass("govuk-input--error");
                 }
             }
-            this.removeListElementInBannerError(jQueryElement, errorType);
             jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
         } else {
             if (jQueryElement[0].tagName === "INPUT") {
