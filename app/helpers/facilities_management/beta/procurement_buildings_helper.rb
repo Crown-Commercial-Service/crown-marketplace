@@ -23,7 +23,7 @@ module FacilitiesManagement::Beta::ProcurementBuildingsHelper
     if question == :service_standard
       return 'ppm_standards' if service.requires_ppm_standards?
 
-      return 'fabric_standards' if service.requires_building_standards?
+      return 'building_standards' if service.requires_building_standards?
 
       return 'cleaning_standards' if service.requires_cleaning_standards?
     elsif service.requires_volume?

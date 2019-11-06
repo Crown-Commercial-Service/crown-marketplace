@@ -177,6 +177,18 @@ en:
           heading: You have successfully changed your password
           lead: You can now sign in to your Crown Commercial Service account
       procurement_buildings:
+        building_standards:
+          back_to_service_information: Back to service information
+          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
+          fabric_standard_a_copy: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
+          fabric_standard_a_title: Standard A - the general or normal service level
+          fabric_standard_b_copy: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
+          fabric_standard_b_title: Standard B - this is the minimum level of service required
+          fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
+          fabric_standard_c_title: This level of Service will be bespoke and site or area specific
+          heading: Building fabric maintenance services standards
+          save_and_return_to_service_information: Save and return to service information
+          subheading: What standard are you applying to all selected building fabric maintenance services?
         cleaning_standards:
           back_to_service_information: Back to service information
           caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
@@ -189,18 +201,6 @@ en:
           heading: Cleaning services standards
           save_and_return_to_service_information: Save and return to service information
           subheading: What standard are you applying to all selected cleaning services?
-        fabric_standards:
-          back_to_service_information: Back to service information
-          caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-          fabric_standard_a_copy: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
-          fabric_standard_a_title: Standard A - the general or normal service level
-          fabric_standard_b_copy: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
-          fabric_standard_b_title: Standard B - this is the minimum level of service required
-          fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
-          fabric_standard_c_title: This level of Service will be bespoke and site or area specific
-          heading: Building fabric maintenance services standards
-          save_and_return_to_service_information: Save and return to service information
-          subheading: What standard are you applying to all selected building fabric maintenance services?
         ppm_standards:
           back_to_service_information: Back to service information
           caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
