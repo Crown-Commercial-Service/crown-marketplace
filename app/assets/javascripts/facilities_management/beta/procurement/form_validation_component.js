@@ -326,9 +326,9 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     this.findPreExistingErrorMessage = function (jQueryElement, errorType, jqueryElementForInputGroup) {
         let jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
         if (jqueryElementForRequiredMessage.length === 0) {
-            jqueryElementForRequiredMessage = jQueryElement.parent().find(".error-collection").find("label[data-validation='" + errorType + "']");
+            jqueryElementForRequiredMessage = jQueryElement.parent().find(".error-collection").find("label[data-validation='" + errorType + "']").first();
             if (jqueryElementForRequiredMessage.length === 0) {
-                jqueryElementForRequiredMessage = jQueryElement.parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']");
+                jqueryElementForRequiredMessage = jQueryElement.parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']").first();
                 if (jqueryElementForRequiredMessage.length === 0) {
                     jqueryElementForRequiredMessage = this.insertElementForRequiredMessage(jQueryElement, jqueryElementForInputGroup, errorType);
                 }
