@@ -2,13 +2,13 @@ require 'axlsx'
 require 'axlsx_rails'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  def initialize(building_ids_with_service_codes, uvals = nil)
+  def initialize(building_ids_with_service_codes, units_of_measure_values = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
     @buildings = FacilitiesManagement::Buildings.where(id: building_ids)
     buildings_with_service_codes
     set_services
-    @uvals = uvals
+    @units_of_measure_values = units_of_measure_values
   end
 
   def build
@@ -199,31 +199,25 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def volumes_sheet(pkg)
-    return unless @uvals
+    return unless @units_of_measure_values
 
     pkg.workbook.add_worksheet(name: 'Volume') do |sheet|
       add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
 
       @services.each do |s|
-        new_row = []
-
-        title_text = ''
-        spreadsheet_label = ''
-
-        new_row = []
+        new_row = [s['code'], s['description'], s['name'], s['unit_text']]
         @buildings_with_service_codes.each do |b|
-          uvs = @uvals.select { |u| b[:building][:id] == u[:building_id] }
+          uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
 
           suv = uvs.find { |u| s['code'] == u[:service_code] }
 
-          title_text = suv[:title_text] if suv
-          spreadsheet_label = suv[:spreadsheet_label] if suv
-
-          new_row << suv[:uom_value] if suv
-          new_row << nil unless suv
+          if suv
+            new_row << suv[:uom_value]
+          else
+            new_row << nil
+          end
         end
 
-        new_row = ([s['code'], s['description'], title_text, spreadsheet_label] << new_row).flatten
         sheet.add_row new_row
       end
     end
