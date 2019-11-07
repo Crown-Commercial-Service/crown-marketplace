@@ -32,54 +32,55 @@ module FacilitiesManagement
     REQUIRE_PPM_STANDARDS_CODES = %w[C.1 C.2 C.3 C.4 C.5 C.6 C.11 C.12 C.13 C.14].freeze
     REQUIRE_CLEANING_STANDARDS_CODES = %w[G.1 G.2 G.3 G.4 G.5 G.6 G.7 G.8 G.9 G.10 G.11 G.12 G.13 G.14 G.15 G.16].freeze
     REQUIRE_BUILDING_STANDARDS_CODES = %w[C.7].freeze
+    REQUIRE_LIFT_DATA_CODES = %w[C.5].freeze
 
-    SERVICES_AND_QUESTIONS = [{ code: 'C.5', questions: %i[total_floors_per_lift service_standard] },
-                              { code: 'E.4', questions: [:no_of_appliances_for_testing] },
-                              { code: 'G.1', questions: %i[no_of_building_occupants service_standard] },
-                              { code: 'G.3', questions: %i[no_of_building_occupants service_standard] },
-                              { code: 'G.5', questions: %i[size_of_external_area service_standard] },
-                              { code: 'H.4', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'H.5', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'I.1', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'I.2', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'I.3', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'I.4', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.1', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.2', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.3', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.4', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.5', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.6', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'K.1', questions: [:no_of_consoles_to_be_serviced] },
-                              { code: 'K.2', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.3', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.4', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.5', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.6', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.7', questions: [:no_of_units_to_be_serviced] },
-                              { code: 'C.1', questions: [:service_standard] },
-                              { code: 'C.2', questions: [:service_standard] },
-                              { code: 'C.3', questions: [:service_standard] },
-                              { code: 'C.4', questions: [:service_standard] },
-                              { code: 'C.6', questions: [:service_standard] },
-                              { code: 'C.7', questions: [:service_standard] },
-                              { code: 'C.11', questions: [:service_standard] },
-                              { code: 'C.12', questions: [:service_standard] },
-                              { code: 'C.13', questions: [:service_standard] },
-                              { code: 'C.14', questions: [:service_standard] },
-                              { code: 'G.4', questions: [:service_standard] },
-                              { code: 'G.2', questions: [:service_standard] },
-                              { code: 'G.6', questions: [:service_standard] },
-                              { code: 'G.7', questions: [:service_standard] },
-                              { code: 'G.8', questions: [:service_standard] },
-                              { code: 'G.9', questions: [:service_standard] },
-                              { code: 'G.10', questions: [:service_standard] },
-                              { code: 'G.11', questions: [:service_standard] },
-                              { code: 'G.12', questions: [:service_standard] },
-                              { code: 'G.13', questions: [:service_standard] },
-                              { code: 'G.14', questions: [:service_standard] },
-                              { code: 'G.15', questions: [:service_standard] },
-                              { code: 'G.16', questions: [:service_standard] }].freeze
+    SERVICES_AND_QUESTIONS = [{ code: 'C.5', context: %i[lifts ppm_standards], questions: %i[total_floors_per_lift service_standard] },
+                              { code: 'E.4', context: [:volume], questions: [:no_of_appliances_for_testing] },
+                              { code: 'G.1', context: %i[volume cleaning_standards], questions: %i[no_of_building_occupants service_standard] },
+                              { code: 'G.3', context: %i[volume cleaning_standards], questions: %i[no_of_building_occupants service_standard] },
+                              { code: 'G.5', context: %i[volume cleaning_standards], questions: %i[size_of_external_area service_standard] },
+                              { code: 'H.4', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'H.5', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'I.1', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'I.2', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'I.3', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'I.4', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.1', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.2', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.3', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.4', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.5', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.6', context: [:service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'K.1', context: [:volume], questions: [:no_of_consoles_to_be_serviced] },
+                              { code: 'K.2', context: [:volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.3', context: [:volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.4', context: [:volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.5', context: [:volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.6', context: [:volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.7', context: [:volume], questions: [:no_of_units_to_be_serviced] },
+                              { code: 'C.1', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'C.2', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'C.3', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'C.4', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'C.6', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'C.7', context: [:building_standards], questions: [:service_standard] },
+                              { code: 'C.11', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'C.12', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'C.13', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'C.14', context: [:ppm_standards], questions: [:service_standard] },
+                              { code: 'G.4', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.2', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.6', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.7', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.8', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.9', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.10', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.11', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.12', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.13', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.14', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.15', context: [:cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.16', context: [:cleaning_standards], questions: [:service_standard] }].freeze
 
     def requires_volume?
       REQUIRE_VOLUME_CODES.include?(code)
@@ -95,6 +96,16 @@ module FacilitiesManagement
 
     def requires_cleaning_standards?
       REQUIRE_CLEANING_STANDARDS_CODES.include?(code)
+    end
+
+    def services_complete?(_context)
+      return { context: :na, ready: false } if code.blank?
+
+      located_services = SERVICES_AND_QUESTIONS.select { |x| x[:code] == code }&.first
+
+      return { context: :unknown, ready: false } unless located_services.any?
+
+      { context: located_services[:context], ready: false }
     end
 
     private
