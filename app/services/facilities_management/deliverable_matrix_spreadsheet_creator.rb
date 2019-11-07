@@ -2,12 +2,13 @@ require 'axlsx'
 require 'axlsx_rails'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  def initialize(building_ids_with_service_codes)
+  def initialize(building_ids_with_service_codes, units_of_measure_values = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
     @buildings = FacilitiesManagement::Buildings.where(id: building_ids)
     buildings_with_service_codes
     set_services
+    @units_of_measure_values = units_of_measure_values
   end
 
   def build
@@ -27,6 +28,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           add_service_matrix(sheet)
           style_service_matrix_sheet(sheet, standard_column_style)
         end
+
+        volumes_sheet p
       end
     end
   end
@@ -64,6 +67,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
       @buildings_with_service_codes << { building: building, service_codes: building_id_with_service_codes[:service_codes] }
     end
+
+    # @buildings_with_service_codes.map!(&:deep_symbolize_keys!)
+    @buildings_with_service_codes.each do |b|
+      b[:building][:building_json].deep_symbolize_keys!
+    end
   end
 
   def set_services
@@ -89,7 +97,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Name']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['name']
+      row << building_with_service_codes[:building].building_json[:name]
     end
 
     row
@@ -109,7 +117,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Street']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['address']['fm-address-line-1']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-address-line-1']
     end
 
     row
@@ -119,7 +127,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Town']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['address']['fm-address-town']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-address-town']
     end
 
     row
@@ -129,7 +137,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Postcode']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['address']['fm-address-postcode']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-address-postcode']
     end
 
     row
@@ -139,7 +147,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Location (NUTS Region)']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['address']['fm-nuts-region']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-nuts-region']
     end
 
     row
@@ -169,7 +177,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Security Clearance']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['security-type']
+      row << building_with_service_codes[:building].building_json[:'security-type']
     end
 
     row
@@ -187,6 +195,28 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       end
 
       sheet.add_row row_values, style: standard_style, height: standard_row_height
+    end
+  end
+
+  def volumes_sheet(pkg)
+    return unless @units_of_measure_values
+
+    pkg.workbook.add_worksheet(name: 'Volume') do |sheet|
+      add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
+
+      @services.each do |s|
+        new_row = [s['code'], s['description'], s['name'], s['unit_text']]
+        @buildings_with_service_codes.each do |b|
+          uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
+
+          suv = uvs.find { |u| s['code'] == u[:service_code] }
+
+          new_row << suv[:uom_value] if suv
+          new_row << nil unless suv
+        end
+
+        sheet.add_row new_row
+      end
     end
   end
 end
