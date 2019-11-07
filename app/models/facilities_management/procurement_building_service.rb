@@ -83,19 +83,19 @@ module FacilitiesManagement
                               { code: 'G.16', context: [:cleaning_standards], questions: [:service_standard] }].freeze
 
     def requires_volume?
-      REQUIRE_VOLUME_CODES.include?(code)
+      SERVICES_AND_QUESTIONS.select{ |x| x[:code] == code && x[:context].include?(:volume)}&.any?
     end
 
     def requires_ppm_standards?
-      REQUIRE_PPM_STANDARDS_CODES.include?(code)
+      SERVICES_AND_QUESTIONS.select{ |x| x[:code] == code && x[:context].include?(:ppm_standards)}&.any?
     end
 
     def requires_building_standards?
-      REQUIRE_BUILDING_STANDARDS_CODES.include?(code)
+      SERVICES_AND_QUESTIONS.select{ |x| x[:code] == code && x[:context].include?(:building_standards)}&.any?
     end
 
     def requires_cleaning_standards?
-      REQUIRE_CLEANING_STANDARDS_CODES.include?(code)
+      SERVICES_AND_QUESTIONS.select{ |x| x[:code] == code && x[:context].include?(:cleaning_standards)}&.any?
     end
 
     def services_complete?(_context)
