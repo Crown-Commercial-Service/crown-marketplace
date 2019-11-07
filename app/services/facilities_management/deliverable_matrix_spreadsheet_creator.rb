@@ -204,17 +204,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
     pkg.workbook.add_worksheet(name: 'Volume') do |sheet|
       add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
-      # add_service_matrix(sheet)
-      # style_service_matrix_sheet(sheet, standard_column_style)
 
-      codes = @building_ids_with_service_codes.collect do |building|
-        building[:service_codes]
-      end
-
-      codes.flatten!.uniq!
-
-      services = @services.map { |w| [w['code'], w] }.to_h
-      codes.sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
+      @services.each do |s|
         new_row = []
 
         title_text = ''
@@ -222,19 +213,18 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
         new_row = []
         @buildings_with_service_codes.each do |b|
-          # uvs = @uvals.select { |u| (b[:building][:id]&.downcase == u[:building_id]&.downcase) }
           uvs = @uvals.select { |u| b[:building][:id] == u[:building_id] }
 
-          suv = uvs.find { |u| s == u[:service_code] }
+          suv = uvs.find { |u| s['code'] == u[:service_code] }
 
-          title_text = suv[:title_text]
-          spreadsheet_label = suv[:spreadsheet_label]
+          title_text = suv[:title_text] if suv
+          spreadsheet_label = suv[:spreadsheet_label] if suv
 
           new_row << suv[:uom_value] if suv
           new_row << nil unless suv
         end
 
-        new_row = ([s, services[s]['description'], title_text, spreadsheet_label] << new_row).flatten
+        new_row = ([s['code'], s['description'], title_text, spreadsheet_label] << new_row).flatten
         sheet.add_row new_row
       end
     end
