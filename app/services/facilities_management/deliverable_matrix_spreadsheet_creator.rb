@@ -211,11 +211,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
           suv = uvs.find { |u| s['code'] == u[:service_code] }
 
-          if suv
-            new_row << suv[:uom_value]
-          else
-            new_row << nil
-          end
+          new_row << suv[:uom_value] if suv
+          new_row << nil unless suv
         end
 
         sheet.add_row new_row
