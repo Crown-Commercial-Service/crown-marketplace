@@ -29,7 +29,13 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           style_service_matrix_sheet(sheet, standard_column_style)
         end
 
-        volumes_sheet p
+        unless @units_of_measure_values.nil?
+          p.workbook.add_worksheet(name: 'Volume') do |sheet|
+            add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
+            add_volumes_information(sheet)
+            style_volume_sheet(sheet, standard_column_style)
+          end
+        end
       end
     end
   end
@@ -198,25 +204,28 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
-  def volumes_sheet(pkg)
-    return unless @units_of_measure_values
+  def add_volumes_information(sheet)
+    number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40'
 
-    pkg.workbook.add_worksheet(name: 'Volume') do |sheet|
-      add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
+    @services.each do |s|
+      new_row = [s['code'], s['description'], s['name'], s['unit_text']]
+      @buildings_with_service_codes.each do |b|
+        uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
 
-      @services.each do |s|
-        new_row = [s['code'], s['description'], s['name'], s['unit_text']]
-        @buildings_with_service_codes.each do |b|
-          uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
+        suv = uvs.find { |u| s['code'] == u[:service_code] }
 
-          suv = uvs.find { |u| s['code'] == u[:service_code] }
-
-          new_row << suv[:uom_value] if suv
-          new_row << nil unless suv
-        end
-
-        sheet.add_row new_row
+        new_row << suv[:uom_value] if suv
+        new_row << nil unless suv
       end
+
+      sheet.add_row new_row, style: number_column_style
     end
+  end
+
+  def style_volume_sheet(sheet, style)
+    column_widths = [15, 100, 50, 50]
+    @buildings.count.times { column_widths << 20 }
+    sheet["A2:D#{@services.count + 1}"].each { |c| c.style = style }
+    sheet.column_widths(*column_widths)
   end
 end
