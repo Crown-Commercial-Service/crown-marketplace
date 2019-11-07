@@ -198,7 +198,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def volumes_sheet(pkg)
     return unless @uvals
 
@@ -229,5 +228,4 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize
 end
