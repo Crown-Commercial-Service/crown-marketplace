@@ -4,7 +4,7 @@
   <div class="liftdata">
     <%= hidden_field_tag "#{f.object_name}[lift_data][]", '' %>
     <% index = 0 %>
-    <%= display_potential_errors @building_service, :lift_data, f.object_name, method(:specific_lift_error?), index %>
+    <%= list_potential_errors @building_service, :lift_data, f.object_name, method(:specific_lift_error?), index %>
     <% until index == @lift_count %>
       <div class="govuk-form-group <%= 'govuk-form-group--error' if any_lift_error? @building_service, index %>" data-propertyname="Lift Data"
            data-liftcount="<%= index + 1 %>">
