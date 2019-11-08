@@ -14,7 +14,7 @@ module FacilitiesManagement
     validates :tones_to_be_collected_and_removed, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
 
     # validates on :lifts
-    validates :lift_data, length: { minimum: 1, maximum: 99 }, on: :lifts
+    validates :lift_data, length: { minimum: 1, maximum: 1000 }, on: :lifts
     validate :check_lift_data, on: :lifts
 
     # validates on :ppm_standards service question
@@ -105,7 +105,7 @@ module FacilitiesManagement
       Array(lift_data).each_with_index do |value, index|
         errors.add(:lift_data.to_sym, :greater_than, position: index) if value.to_i.zero?
 
-        errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i > 99
+        errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i > 1000
 
         errors.add(:lift_data.to_sym, :not_an_integer, position: index) unless value.to_i.to_s == value
       end
