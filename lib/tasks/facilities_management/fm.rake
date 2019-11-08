@@ -95,13 +95,8 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
     puts e.message
   end
 
-  def self.work_packages
-    data = File.read 'data/facilities_management/work_packages.json'
-    data.delete!("\n")
-  end
-
   def self.facilities_management_work_packages
-    data = work_packages
+    data = File.read('data/facilities_management/work_packages.json').delete!("\n")
 
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "DELETE FROM fm_static_data WHERE key = 'work_packages';"
