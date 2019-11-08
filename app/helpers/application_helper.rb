@@ -88,8 +88,7 @@ module ApplicationHelper
 
     content_tag :div, class: 'error-collection govuk-visually-hidden', id: "error_#{form_object_name}_#{attribute}" do
       collection.each do |key, val|
-        @concat = concat(govuk_validation_error({model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name}, error_lookup, error_position))
-        @concat
+        concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
       end
     end
   end
