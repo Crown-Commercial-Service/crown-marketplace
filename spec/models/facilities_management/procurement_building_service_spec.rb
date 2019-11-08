@@ -414,8 +414,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         end
       end
 
-      context 'when lift_data has 100 elements' do
-        it 'validates to false' do
+      context 'when lift_data has 101 elements' do
+        it 'validates to true' do
           procurement_building_service.code = 'C.5'
           procurement_building_service.lift_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
                                                     11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
@@ -423,7 +423,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
                                                     51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
                                                     71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
                                                     91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101]
-          expect(procurement_building_service.valid?(:lifts)).to eq false
+          expect(procurement_building_service.valid?(:lifts)).to eq true
         end
       end
 
