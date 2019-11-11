@@ -439,20 +439,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     FacilitiesManagement::Service
       .all
       .sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |service|
-
-      # p service
-      # p '  has uom ' if uom2[service.code]
     end
-
-    # p FacilitiesManagement::Service.all.map(&:code)
-
-    # ----------
-    # region_codes = Nuts3Region.all.map(&:code)
-
-    # p Nuts3Region.all.first.inspect
-    # p region_codes
-
-    # ----------
 
     # input params
     vals = {}
