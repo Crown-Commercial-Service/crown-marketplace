@@ -83,6 +83,16 @@ module ApplicationHelper
     end
   end
 
+  def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
+    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
+
+    content_tag :div, class: 'error-collection govuk-visually-hidden', id: "error_#{form_object_name}_#{attribute}" do
+      collection.each do |key, val|
+        concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
+      end
+    end
+  end
+
   def display_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
@@ -165,8 +175,8 @@ module ApplicationHelper
     less_than: 'max',
     less_than_or_equal_to: 'max',
     not_a_date: 'pattern',
-    not_a_number: 'pattern',
-    not_an_integer: 'pattern'
+    not_a_number: 'number',
+    not_an_integer: 'number'
   }.freeze
 
   def get_client_side_error_type_from_errors(errors, attribute)
