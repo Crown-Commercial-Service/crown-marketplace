@@ -305,7 +305,6 @@ module FacilitiesManagement
       uvals.each do |v|
         uom_value = v[:uom_value].to_f
 
-        # occupants = occupants(v['service_code'], building_data)
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
           uom_value = building_data[:gia]
@@ -313,7 +312,6 @@ module FacilitiesManagement
           occupants = 0
         end
 
-        # code = v['service_code'].remove('.')
         calc_fm = FMCalculator::Calculator.new(@contract_length_years,
                                                v[:service_code],
                                                uom_value,
