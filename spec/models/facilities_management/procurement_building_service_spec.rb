@@ -507,7 +507,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         end
 
         it 'service_status will showing invalid' do
-          procurement_building_service[:lift_data] = %w[1 101]
+          procurement_building_service[:lift_data] = %w[1 1001]
           service_status = procurement_building_service.services_status
           expect(service_status[procurement_building_service.code.to_sym].dig(:lifts)).to eq false
           expect(service_status[procurement_building_service.code.to_sym].dig(:ppm_standards)).to eq false
