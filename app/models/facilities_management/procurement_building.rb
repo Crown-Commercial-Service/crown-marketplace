@@ -3,7 +3,6 @@ module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
     default_scope { order(name: :asc) }
     scope :active, -> { where(active: true) }
-    scope :requires_service_information, -> { select { |pb| pb.service_codes.any? { |code| FacilitiesManagement::ServicesAndQuestions.new.codes.include?(code) } } }
     belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_buildings
     has_many :procurement_building_services, foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building, dependent: :destroy
     accepts_nested_attributes_for :procurement_building_services, allow_destroy: true
@@ -22,10 +21,6 @@ module FacilitiesManagement
       #{postcode}"
     end
 
-    def building
-      CCS::FM::Building.find_by(id: building_id)
-    end
-
     private
 
     def service_codes_not_empty
@@ -40,8 +35,16 @@ module FacilitiesManagement
 
     def services_valid?
       false if procurement_building_services.empty?
+
       result = procurement_building_services.all? { |pbs| pbs.valid?(:all) }
-      errors.add(:procurement_building_services, :invalid, message: 'Some services are invalid') unless result && answers_present?
+      errors.add(:procurement_building_services, :invalid, message: 'Some services are invalid') unless result
+
+      # unless result
+      #   validation_details = {}
+      #   procurement_building_services.each { |pbs| validation_details.merge!(pbs.services_status) }
+      #   # Rails.logger.info(validation_details.to_s)
+      # end
+
       result
     end
 
@@ -50,13 +53,9 @@ module FacilitiesManagement
         if service_codes.include?(service_code)
           procurement_building_services.create(code: service_code, name: Service.find_by(code: service_code).try(:name)) if procurement_building_services.find_by(code: service_code).blank?
         else
-          procurement_building_services.find_by(code: service_code)&.destroy
+          procurement_building_services.find_by(code: service_code).destroy
         end
       end
-    end
-
-    def answers_present?
-      service_codes.all? { |service_code| procurement_building_services.find_by(code: service_code).answer_store[:questions].all? { |question| !question[:answer].nil? } }
     end
   end
 end
