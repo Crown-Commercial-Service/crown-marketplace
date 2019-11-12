@@ -616,7 +616,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
   end
 
-  describe '#service_ready?' do
+  describe '#services_status' do
     context 'when analysing an empty service record' do
       it 'will return a hash indicating na/false' do
         expect(procurement_building_service.services_status).to include(:context)
