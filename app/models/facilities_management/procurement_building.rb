@@ -39,12 +39,6 @@ module FacilitiesManagement
       result = procurement_building_services.all? { |pbs| pbs.valid?(:all) }
       errors.add(:procurement_building_services, :invalid, message: 'Some services are invalid') unless result
 
-      # unless result
-      #   validation_details = {}
-      #   procurement_building_services.each { |pbs| validation_details.merge!(pbs.services_status) }
-      #   # Rails.logger.info(validation_details.to_s)
-      # end
-
       result
     end
 

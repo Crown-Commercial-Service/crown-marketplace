@@ -117,10 +117,10 @@ module FacilitiesManagement
       validate_volume
       error_collection.merge!(errors)
 
-      located_services.each do |svc|
-        svc[:context].each do |ctx|
-          results[ctx] = valid?(ctx)
-          next if results[ctx]
+      located_services.each do |service|
+        service[:context].each do |context|
+          results[context] = valid?(context)
+          next if results[context]
 
           error_collection.merge!(errors)
         end
@@ -139,10 +139,10 @@ module FacilitiesManagement
 
       results = {}
 
-      located_services.each do |svc|
-        svc[:context].each do |ctx|
+      located_services.each do |service|
+        service[:context].each do |context|
           results[code.to_sym] = {} unless results.key?(code.to_sym)
-          results[code.to_sym].merge!(ctx.to_sym => valid?(ctx))
+          results[code.to_sym].merge!(context.to_sym => valid?(context))
         end
       end
 
@@ -180,11 +180,11 @@ module FacilitiesManagement
       located_services = SERVICES_AND_QUESTIONS.select { |x| x[:code] == code }
       return true if located_services.empty?
 
-      located_services.each do |ls|
-        next unless ls[:context].include?(:volume)
+      located_services.each do |located_service|
+        next unless located_service[:context].include?(:volume)
 
-        ls[:questions].each do |q|
-          validates_numericality_of(q.to_sym, greater_than: 0, only_integer: true, message: :invalid) if VOLUME_QUESTIONS.include?(q)
+        located_service[:questions].each do |question|
+          validates_numericality_of(question.to_sym, greater_than: 0, only_integer: true, message: :invalid) if VOLUME_QUESTIONS.include?(q)
         end
       end
     end
