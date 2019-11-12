@@ -640,6 +640,8 @@ en:
         text03: You need to know which lot the management consultancy services you need are in. Review the lot description documents for
         text04: and
   common:
+    Complete: Complete
+    Incomplete: Incomplete
     apply_filters: Apply filters
     back_to_start: Back to start
     browse: Browse
