@@ -645,6 +645,7 @@ en:
     browse: Browse
     ccs_contact_url: https://www.crowncommercial.gov.uk/contact
     change_password_and_sign_in: Change password and sign in
+    complete: Complete
     confirm_and_continue: Confirm and continue
     continue: Continue
     create_account: Create account
@@ -653,6 +654,7 @@ en:
     error_summary_title: There is a problem
     feedback: feedback
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
+    incomplete: Incomplete
     next: Next
     passcap: at least one capital letter
     passeight: at least 8 characters
