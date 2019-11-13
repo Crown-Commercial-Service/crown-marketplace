@@ -1,3 +1,7 @@
+# This module pertains to the control and validation of the facilities_management_procurement_building_services table
+# The main requirement is to drive the UI - there are lookups in the class that enable decisions as to which
+# view to the present to the user and also, how to validate that data for both input from the UI and also from
+# the perspective of the facilities_management_procurement that needs to know if it's buildings and services are completed
 module FacilitiesManagement
   class ProcurementBuildingService < ApplicationRecord
     default_scope { order(created_at: :asc) }
@@ -26,75 +30,137 @@ module FacilitiesManagement
     # validates on :ppm_standards service question
     validate :service_cleaning_standard_presence, on: :cleaning_standards
 
+    # validates the entire row for all contexts
+    validate :validate_services, on: :all
+
+    # The options given in the service standards pages
     SERVICE_STANDARDS = %w[A B C].freeze
 
+    # Nearly redundant lookups used to present the UI and drive validations
     REQUIRE_VOLUME_CODES = %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
     REQUIRE_PPM_STANDARDS_CODES = %w[C.1 C.2 C.3 C.4 C.5 C.6 C.11 C.12 C.13 C.14].freeze
     REQUIRE_CLEANING_STANDARDS_CODES = %w[G.1 G.2 G.3 G.4 G.5 G.6 G.7 G.8 G.9 G.10 G.11 G.12 G.13 G.14 G.15 G.16].freeze
     REQUIRE_BUILDING_STANDARDS_CODES = %w[C.7].freeze
+    REQUIRE_LIFT_DATA_CODES = %w[C.5].freeze
 
-    SERVICES_AND_QUESTIONS = [{ code: 'C.5', questions: %i[total_floors_per_lift service_standard] },
-                              { code: 'E.4', questions: [:no_of_appliances_for_testing] },
-                              { code: 'G.1', questions: %i[no_of_building_occupants service_standard] },
-                              { code: 'G.3', questions: %i[no_of_building_occupants service_standard] },
-                              { code: 'G.5', questions: %i[size_of_external_area service_standard] },
-                              { code: 'H.4', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'H.5', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'I.1', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'I.2', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'I.3', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'I.4', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.1', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.2', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.3', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.4', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.5', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'J.6', questions: [:no_of_hours_of_service_provision] },
-                              { code: 'K.1', questions: [:no_of_consoles_to_be_serviced] },
-                              { code: 'K.2', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.3', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.4', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.5', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.6', questions: [:tones_to_be_collected_and_removed] },
-                              { code: 'K.7', questions: [:no_of_units_to_be_serviced] },
-                              { code: 'C.1', questions: [:service_standard] },
-                              { code: 'C.2', questions: [:service_standard] },
-                              { code: 'C.3', questions: [:service_standard] },
-                              { code: 'C.4', questions: [:service_standard] },
-                              { code: 'C.6', questions: [:service_standard] },
-                              { code: 'C.7', questions: [:service_standard] },
-                              { code: 'C.11', questions: [:service_standard] },
-                              { code: 'C.12', questions: [:service_standard] },
-                              { code: 'C.13', questions: [:service_standard] },
-                              { code: 'C.14', questions: [:service_standard] },
-                              { code: 'G.4', questions: [:service_standard] },
-                              { code: 'G.2', questions: [:service_standard] },
-                              { code: 'G.6', questions: [:service_standard] },
-                              { code: 'G.7', questions: [:service_standard] },
-                              { code: 'G.8', questions: [:service_standard] },
-                              { code: 'G.9', questions: [:service_standard] },
-                              { code: 'G.10', questions: [:service_standard] },
-                              { code: 'G.11', questions: [:service_standard] },
-                              { code: 'G.12', questions: [:service_standard] },
-                              { code: 'G.13', questions: [:service_standard] },
-                              { code: 'G.14', questions: [:service_standard] },
-                              { code: 'G.15', questions: [:service_standard] },
-                              { code: 'G.16', questions: [:service_standard] }].freeze
+    # A set of questions that pertain to :volume validation context - :volume has multiple fields valid for specific questions
+    VOLUME_QUESTIONS = %i[no_of_appliances_for_testing no_of_building_occupants size_of_external_area no_of_consoles_to_be_serviced tones_to_be_collected_and_removed].freeze
 
+    # A collection of service code, their UI/Validation contexts, and the attributes that are being populated by the view
+    SERVICES_AND_QUESTIONS = [{ code: 'C.5', context: %i[lifts ppm_standards], questions: %i[total_floors_per_lift service_standard] },
+                              { code: 'E.4', context: %i[volume], questions: [:no_of_appliances_for_testing] },
+                              { code: 'G.1', context: %i[volume cleaning_standards], questions: %i[no_of_building_occupants service_standard] },
+                              { code: 'G.3', context: %i[volume cleaning_standards], questions: %i[no_of_building_occupants service_standard] },
+                              { code: 'G.5', context: %i[volume cleaning_standards], questions: %i[size_of_external_area service_standard] },
+                              { code: 'H.4', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'H.5', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'I.1', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'I.2', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'I.3', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'I.4', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.1', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.2', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.3', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.4', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.5', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'J.6', context: %i[service_hours], questions: [:no_of_hours_of_service_provision] },
+                              { code: 'K.1', context: %i[volume], questions: [:no_of_consoles_to_be_serviced] },
+                              { code: 'K.2', context: %i[volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.3', context: %i[volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.4', context: %i[volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.5', context: %i[volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.6', context: %i[volume], questions: [:tones_to_be_collected_and_removed] },
+                              { code: 'K.7', context: %i[volume], questions: [:no_of_units_to_be_serviced] },
+                              { code: 'C.1', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'C.2', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'C.3', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'C.4', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'C.6', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'C.7', context: [:building_standards], questions: [:service_standard] },
+                              { code: 'C.11', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'C.12', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'C.13', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'C.14', context: %i[ppm_standards], questions: [:service_standard] },
+                              { code: 'G.4', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.2', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.6', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.7', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.8', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.9', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.10', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.11', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.12', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.13', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.14', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.15', context: %i[cleaning_standards], questions: [:service_standard] },
+                              { code: 'G.16', context: %i[cleaning_standards], questions: [:service_standard] }].freeze
+
+    # A set of methods used to confirm validation
     def requires_volume?
-      REQUIRE_VOLUME_CODES.include?(code)
+      SERVICES_AND_QUESTIONS.select { |x| x[:code] == code && x[:context].include?(:volume) }&.any?
     end
 
     def requires_ppm_standards?
-      REQUIRE_PPM_STANDARDS_CODES.include?(code)
+      SERVICES_AND_QUESTIONS.select { |x| x[:code] == code && x[:context].include?(:ppm_standards) }&.any?
     end
 
     def requires_building_standards?
-      REQUIRE_BUILDING_STANDARDS_CODES.include?(code)
+      SERVICES_AND_QUESTIONS.select { |x| x[:code] == code && x[:context].include?(:building_standards) }&.any?
     end
 
     def requires_cleaning_standards?
-      REQUIRE_CLEANING_STANDARDS_CODES.include?(code)
+      SERVICES_AND_QUESTIONS.select { |x| x[:code] == code && x[:context].include?(:cleaning_standards) }&.any?
+    end
+
+    def requires_lift_data?
+      SERVICES_AND_QUESTIONS.select { |x| x[:code] == code && x[:context].include?(:lifts) }&.any?
+    end
+
+    def requires_which_contexts?
+      SERVICES_AND_QUESTIONS.where { |x| x[:code] == code }&.select { |y| y[:context] }
+    end
+
+    # Used to validate the entire set of services, for it's specified contexts
+    def validate_services
+      located_services = SERVICES_AND_QUESTIONS.select { |x| x[:code] == code }
+
+      results = {}
+      error_collection = ActiveModel::Errors.new(ProcurementBuildingService)
+
+      validate_volume
+      error_collection.merge!(errors)
+
+      located_services.each do |service|
+        service[:context].each do |context|
+          results[context] = valid?(context)
+          next if results[context]
+
+          error_collection.merge!(errors)
+        end
+      end
+
+      errors.merge! error_collection
+      results
+    end
+
+    # Returns a hash of all contexts and the valid? status for each
+    def services_status
+      return { context: :na, ready: false } if code.blank?
+
+      located_services = SERVICES_AND_QUESTIONS.select { |x| x[:code] == code }
+
+      return { context: :unknown, ready: false } unless located_services.any?
+
+      results = {}
+
+      located_services.each do |service|
+        service[:context].each do |context|
+          results[code.to_sym] = {} unless results.key?(code.to_sym)
+          results[code.to_sym].merge!(context.to_sym => valid?(context))
+        end
+      end
+
+      results
     end
 
     private
@@ -122,5 +188,22 @@ module FacilitiesManagement
     def service_cleaning_standard_presence
       errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_cleaning_standards?
     end
+
+    # rubocop:disable Rails/Validation
+    # Checks that each field for each question
+    # in the collection of VOLUME_QUESTIONS is correctly filled
+    def validate_volume
+      located_services = SERVICES_AND_QUESTIONS.select { |x| x[:code] == code }
+      return true if located_services.empty?
+
+      located_services.each do |located_service|
+        next unless located_service[:context].include?(:volume)
+
+        located_service[:questions].each do |question|
+          validates_numericality_of(question.to_sym, greater_than: 0, only_integer: true, message: :invalid) if VOLUME_QUESTIONS.include?(question)
+        end
+      end
+    end
+    # rubocop:enable Rails/Validation
   end
 end
