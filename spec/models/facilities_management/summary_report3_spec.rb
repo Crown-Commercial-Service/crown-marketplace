@@ -70,7 +70,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     ]
   end
 
-  # rubocop:disable Layout/AlignArray
   # rubocop:disable Layout/MultilineHashBraceLayout
   # rubocop:disable RSpec/BeforeAfterAll
   context 'and dummy buildings to a db' do
@@ -375,7 +374,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
     end
     # rubocop:enable Layout/MultilineHashBraceLayout
-    # rubocop:enable Layout/AlignArray
     # rubocop:enable Style/HashSyntax
 
     after :all do
