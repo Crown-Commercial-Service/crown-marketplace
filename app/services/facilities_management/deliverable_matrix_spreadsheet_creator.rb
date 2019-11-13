@@ -113,7 +113,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Description']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['description']
+      row << building_with_service_codes[:building].building_json[:description]
     end
 
     row
@@ -163,7 +163,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Gross Internal Area (GIA) (sqm)']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['gia']
+      row << building_with_service_codes[:building].building_json[:gia]
     end
 
     row
@@ -173,7 +173,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Type']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['building-type']
+      row << building_with_service_codes[:building].building_json[:'building-type']
     end
 
     row
