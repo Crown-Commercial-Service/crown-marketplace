@@ -84,8 +84,8 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def building_services_status?(status)
-    return t('common.Incomplete') unless status == true
+    return t('common.incomplete') unless status == true
 
-    t('common.Complete')
+    t('common.complete')
   end
 end
