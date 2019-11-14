@@ -10,15 +10,15 @@
         <%= current_user.email %>
       </div>
       <div class="govuk-heading-xl">
-        Buyer details
+        <%= t('.buyer_details') %>
       </div>
 
       <fieldset class="govuk-fieldset">
         <h2 class="govuk-heading-m">
-          Your details
+          <%= t('.your_details') %>
         </h2>
         <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:full_name].any? %>">
-          <%= f.label :full_name, 'Name', class: 'govuk-label' %>
+          <%= f.label :full_name, t('.name'), class: 'govuk-label' %>
           <%= display_error(f.object, :full_name) %>
           <%= f.text_field :full_name, class: 'govuk-input' %>
         </div>
@@ -36,7 +36,7 @@
         </div>
 
         <h2 class="govuk-heading-m govuk-!-margin-top-3">
-          Organisation details
+          <%= t('.organisation_details') %>
         </h2>
 
         <div class="govuk-form-group  <%= "govuk-form-group--error" if f.object.errors[:organisation_name].any? %>">
@@ -47,7 +47,7 @@
 
         <div class="govuk-!-margin-top-7">
           <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
-            Organisation address
+            <%= t('.organisation_address') %>
           </h2>
         </div>
 
@@ -56,52 +56,52 @@
             <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
-                  <%= f.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1' %>
+                  <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1' %>
                   <%= display_error(f.object, :organisation_address_postcode) %>
                   <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode' %>
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
-                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn">Find address</a>
+                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn"><%= t('.find_addr') %></a>
               </div>
               <div class="govuk-!-margin-top-0">
-                <a href='' class="govuk-link--no-visited-state govuk-caption-m" id="buyer-details-cant-find-address">I can't find my address in the list</a>
+                <a href='' class="govuk-link--no-visited-state govuk-caption-m" id="buyer-details-cant-find-address"><%= t('.cant_find_addr_in_list') %></a>
               </div>
             </div>
 
             <div id="fm-post-code-results-container" class="govuk-form-group govuk-visually-hidden">
-              <%= f.label :organisation_address_postcode, 'Postcode', class: 'govuk-heading-s govuk-!-margin-bottom-2' %>
+              <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-heading-s govuk-!-margin-bottom-2' %>
               <div class="govuk-grid-row govuk-!-margin-top-0">
                 <div class="govuk-grid-column-one-quarter">
                   <label id="fm-postcode-label" class="govuk-body"><%= f.object.organisation_address_postcode %></label>
                 </div>
                 <div class="govuk-grid-column-one-quarter">
-                  <a id="buyer-details-change-postcode" href="" class="govuk-link--no-visited-state">Change</a>
+                  <a id="buyer-details-change-postcode" href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
                 </div>
               </div>
-              <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4">Select an address</label>
+              <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4"><%= t('.select_an_addr') %></label>
               <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
                   <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
-                    No address selected
+                    <%= t('.no_addr_selected') %>
                   </span>
                 <select class="govuk-select govuk-!-width-full" id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
-                  <option value="status-option" selected>0 addresses found</option>
+                  <option value="status-option" selected><%= t('.no_addr_found') %></option>
                 </select>
               </div>
               <div class="govuk-!-margin-top-2">
-                <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button">I can't find my building's address in the list</a>
+                <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button"><%= t('.cant_find_addr_in_list') %></a>
               </div>
             </div>
             <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? %>" id="selected-address-container">
-              <label class="govuk-heading-s govuk-!-margin-bottom-1">Postcode</label>
+              <label class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.postcode') %></label>
               <div id="selected-address-postcode" class="govuk-!-margin-bottom-6">
                 <%= f.object.organisation_address_postcode %>
               </div>
-              <label class="govuk-heading-s govuk-!-margin-bottom-1">Selected Address</label>
+              <label class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.selected_addr') %></label>
               <div id="selected-address-label" class="govuk-!-margin-bottom-6">
                 <%= f.object.organisation_address_line_1 + ', ' + f.object.organisation_address_line_2 + ', ' + f.object.organisation_address_town + ', ' + f.object.organisation_address_county + ', ' + f.object.organisation_address_postcode  if f.object.organisation_address_postcode.present?%>
               </div>
-              <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state">Change</a>
+              <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
               <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
               <%= f.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>
               <%= f.hidden_field :organisation_address_town, id: 'organisation-address-town' %>
@@ -117,29 +117,29 @@
         <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:central_government].any? %>">
 
           <div class="govuk-heading-s govuk-!-margin-bottom-0">
-            Which type of public sector organisation are you buying for?
+            <%= t('.which_type_of_public_sector_org') %>
           </div>
 
           <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-3">
-            <span class="govuk-caption-m">Search <a href="https://www.gov.uk/government/organisations" target="_blank">central government departments, agencies and public bodies</a> if you're unsure.</span>
+            <span class="govuk-caption-m"><%= t('.search_html', url: 'https://www.gov.uk/government/organisations') %></span>
           </div>
           <%= display_error(f.object, :central_government) %>
           <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-6 govuk-!-margin-top-6">
             <div class="govuk-radios govuk-radios--inline">
               <div class="govuk-radios__item">
                 <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input' %>
-                <%= f.label :central_government, 'Central Government', value: true, class: 'govuk-label govuk-radios__label' %>
+                <%= f.label :central_government, t('.central_gov'), value: true, class: 'govuk-label govuk-radios__label' %>
               </div>
               <div class="govuk-radios__item">
                 <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input' %>
-                <%= f.label :central_government, 'Winder public sector', value: false, class: 'govuk-label govuk-radios__label' %>
+                <%= f.label :central_government, t('.wider_public_sector'), value: false, class: 'govuk-label govuk-radios__label' %>
               </div>
             </div>
           </div>
         </div>
 
         <div>
-          <%= f.submit 'Save and continue', class: "govuk-button" %>
+          <%= f.submit t('.submit'), class: "govuk-button" %>
         </div>
 
       </fieldset>
