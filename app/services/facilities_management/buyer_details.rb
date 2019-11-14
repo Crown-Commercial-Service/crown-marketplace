@@ -37,7 +37,7 @@ module FacilitiesManagement
       raise e
     end
 
-    def buyer_details_incomplete? current_user
+    def buyer_details_incomplete?(current_user)
       # used to assist the site in determining if the user
       # is a buyer and if they are required to complete information in
       # the buyer-account details page
