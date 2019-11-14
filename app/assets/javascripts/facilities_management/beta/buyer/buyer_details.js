@@ -43,7 +43,7 @@ $(function () {
 
         $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
         $('#selected-address-container').removeClass('govuk-visually-hidden');
-        $('#selected-address-label').val(selectedAddress);
+        $('#selected-address-label').text(selectedAddress);
         $('#organisation_address').text(selectedAddress);
     });
 
