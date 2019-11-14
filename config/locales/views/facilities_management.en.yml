@@ -22,6 +22,20 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
+        facilities_management/buyer_detail:
+          attributes:
+            full_name:
+              blank: Enter your full name
+            job_title:
+              blank: Enter your job title
+            telephone_number:
+              blank: Enter your telephone number
+            organisation_name:
+              blank: Enter your organisation name
+            organisation_address_postcode:
+              blank: Enter a real postcode
+            central_government:
+              blank: Select the type of public sector organisation you're buying for
         facilities_management/procurement:
           attributes:
             contract_name:
