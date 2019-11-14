@@ -41,11 +41,11 @@ $(function () {
         let selectedOption = $("select#buyer-details-postcode-lookup-results > option:selected");
         selectedAddress = void 0;
         selectedAddress = selectedOption.val();
-        let add1 = selectedOption.data('add1');
-        let add2 = selectedOption.data('add2');
-        let town = selectedOption.data('town');
-        let county = selectedOption.data('county');
-        let postcode = selectedOption.data('postcode');
+        let add1 = selectedOption.data("add1");
+        let add2 = selectedOption.data("add2");
+        let town = selectedOption.data("town");
+        let county = selectedOption.data("county");
+        let postcode = selectedOption.data("postcode");
 
         $('#organisation-address-line-1').val(add1);
         $('#organisation-address-line-2').val(add2);
