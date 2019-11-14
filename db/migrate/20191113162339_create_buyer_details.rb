@@ -1,6 +1,8 @@
 class CreateBuyerDetails < ActiveRecord::Migration[5.2]
   def change
+    # rubocop:disable Rails/ReversibleMigration
     drop_table :facilities_management_buyer if table_exists?(:facilities_management_buyer)
+    # rubocop:enable Rails/ReversibleMigration
 
     create_table :facilities_management_buyer_details, id: :uuid do |t|
       t.references :user
