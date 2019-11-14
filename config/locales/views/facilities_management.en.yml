@@ -23,7 +23,7 @@ en:
             job_title:
               blank: Enter your job title
             organisation_address_postcode:
-              blank: Enter a real postcode
+              blank: Enter your postcode
             organisation_name:
               blank: Enter your organisation name
             telephone_number:
