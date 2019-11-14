@@ -14,9 +14,6 @@ class CreateBuyerDetails < ActiveRecord::Migration[5.2]
       t.string :organisation_address_county, limit: 255
       t.string :organisation_address_postcode, limit: 255
       t.boolean :central_government
-      t.boolean :wider_public_sector
-      t.boolean :active
-      t.string :email, limit: 255
 
       t.timestamps
     end
