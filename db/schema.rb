@@ -43,9 +43,6 @@ ActiveRecord::Schema.define(version: 2019_11_13_162339) do
     t.string "organisation_address_county", limit: 255
     t.string "organisation_address_postcode", limit: 255
     t.boolean "central_government"
-    t.boolean "wider_public_sector"
-    t.boolean "active"
-    t.string "email", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
