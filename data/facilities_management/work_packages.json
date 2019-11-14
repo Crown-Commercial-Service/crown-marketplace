@@ -268,7 +268,8 @@
     "metric": "The sum total of number of floors per lift",
     "work_package_code": "C",
     "unit_text": "Number (per lift per floor) per annum",
-    "has_standards": true
+    "has_standards": true,
+    "unit_of_measure": "Lift floors per annum"
   },
   {
     "code": "C.14",
@@ -525,10 +526,11 @@
     "name": "Portable Appliance Testing",
     "description": "Portable Appliance Testing",
     "mandatory": true,
-    "metric": "Number of appliances in the building to be tested per annum",
+    "metric": "Number of appliances to be tested",
     "work_package_code": "E",
     "unit_text": "Number (per unit) per annum",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Appliances per annum"
   },
   {
     "code": "E.9",
@@ -645,10 +647,11 @@
     "name": "Routine Cleaning",
     "description": "Routine Cleaning",
     "mandatory": true,
-    "metric": "occupants (each year)",
+    "metric": "Number of building occupants",
     "work_package_code": "G",
     "unit_text": "occupants",
-    "has_standards": true
+    "has_standards": true,
+    "unit_of_measure": "Building occupants per annum"
   },
   {
     "code": "G.2",
@@ -665,10 +668,11 @@
     "name": "Mobile Cleaning",
     "description": "Mobile Cleaning",
     "mandatory": true,
-    "metric": "occupants (each year)",
+    "metric": "Number of building occupants",
     "work_package_code": "G",
     "unit_text": "occupants",
-    "has_standards": true
+    "has_standards": true,
+    "unit_of_measure": "Building occupants per annum"
   },
   {
     "code": "G.4",
@@ -715,10 +719,11 @@
     "name": "Cleaning of External Areas",
     "description": "Cleaning of External Areas",
     "mandatory": true,
-    "metric": "Number of square metres (of the external area) to be cleaned",
+    "metric": "Size of external area (square metres)",
     "work_package_code": "G",
     "unit_text": "Square Metre (external area) per annum",
-    "has_standards": true
+    "has_standards": true,
+    "unit_of_measure": "Square Metres (sqm) per annum"
   },
   {
     "code": "G.9",
@@ -805,20 +810,22 @@
     "name": "Handyman Services",
     "description": "Handyman Services",
     "mandatory": true,
-    "metric": "number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "H",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "H.5",
     "name": "Move and Space Management - Internal Moves",
     "description": "Move and Space Management - Internal Moves",
     "mandatory": true,
-    "metric": "number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "H",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "H.7",
@@ -965,100 +972,110 @@
     "name": "Reception Service",
     "description": "Reception Service",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "I",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "I.2",
     "name": "Taxi Booking Service",
     "description": "Taxi Booking Service",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "I",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "I.3",
     "name": "Car Park Management and Booking",
     "description": "Car Park Management and Booking",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "I",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "I.4",
     "name": "Voice Announcement System Operation",
     "description": "Voice Announcement System Operation",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "I",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "J.1",
     "name": "Manned Guarding Service",
     "description": "Manned Guarding Service",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "J",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "J.2",
     "name": "CCTV / Alarm Monitoring",
     "description": "CCTV / Alarm Monitoring",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "J",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "J.3",
     "name": "Control of Access and Security Passes",
     "description": "Control of Access and Security Passes",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "J",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "J.4",
     "name": "Emergency Response",
     "description": "Emergency Response",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "J",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "J.5",
     "name": "Patrols (Fixed or Static Guarding)",
     "description": "Patrols (Fixed or Static Guarding)",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "J",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "J.6",
     "name": "Management of Visitors and Passes",
     "description": "Management of Visitors and Passes",
     "mandatory": true,
-    "metric": "Number of hours required per annum",
+    "metric": "Number of hours required",
     "work_package_code": "J",
     "unit_text": "hourly rate",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Hours per annum"
   },
   {
     "code": "J.7",
@@ -1125,67 +1142,74 @@
     "name": "General Waste",
     "description": "General Waste",
     "mandatory": true,
-    "metric": "number of tonnes per annum",
+    "metric": "Number of tonnes",
     "work_package_code": "K",
     "unit_text": "tonne",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Tonnes per annum"
   },
   {
     "code": "K.3",
     "name": "Recycled Waste",
     "description": "Recycled Waste",
     "mandatory": true,
-    "metric": "number of tonnes per annum",
+    "metric": "Number of tonnes",
     "work_package_code": "K",
     "unit_text": "tonne",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Tonnes per annum"
   },
   {
     "code": "K.1",
     "name": "Classified Waste",
     "description": "Classified Waste",
     "mandatory": true,
-    "metric": "number of consoles per annum",
+    "metric": "Number of consoles",
     "work_package_code": "K",
     "unit_text": "console",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Consoles per annum"
   },
   {
     "code": "K.7",
     "name": "Feminine Hygiene Waste",
     "description": "Feminine Hygiene Waste",
     "mandatory": true,
-    "metric": "number of units per annum",
+    "metric": "Number of units",
     "work_package_code": "K",
     "unit_text": "unit",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Units per annum"
   },
   {
     "code": "K.4",
     "name": "Hazardous Waste",
     "description": "Hazardous Waste",
     "mandatory": false,
-    "metric": "tonnes (each year)",
+    "metric": "Number of tonnes",
     "work_package_code": "K",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Tonnes per annum"
   },
   {
     "code": "K.5",
     "name": "Clinical Waste",
     "description": "Clinical Waste",
     "mandatory": false,
-    "metric": "tonnes (each year)",
+    "metric": "Number of tonnes",
     "work_package_code": "K",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Tonnes per annum"
   },
   {
     "code": "K.6",
     "name": "Medical Waste",
     "description": "Medical Waste",
     "mandatory": false,
-    "metric": "tonnes (each year)",
+    "metric": "Number of tonnes",
     "work_package_code": "K",
-    "has_standards": false
+    "has_standards": false,
+    "unit_of_measure": "Tonnes per annum"
   },
   {
     "code": "L.1",
