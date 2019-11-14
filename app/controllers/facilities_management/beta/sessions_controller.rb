@@ -10,8 +10,7 @@ module FacilitiesManagement
       end
 
       def after_sign_in_path_for(resource)
-        buyer_service = BuyerDetails.new
-        return facilities_management_beta_buyer_details_path if buyer_service.buyer_details_incomplete? current_user
+        return facilities_management_beta_buyer_details_path if current_user.fm_buyer_details_incomplete?
 
         stored_location_for(resource) || facilities_management_beta_path
       end
