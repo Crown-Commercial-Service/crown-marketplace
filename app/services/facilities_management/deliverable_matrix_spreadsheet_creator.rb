@@ -113,7 +113,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Description']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['description']
+      row << building_with_service_codes[:building].building_json[:description]
     end
 
     row
@@ -163,7 +163,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Gross Internal Area (GIA) (sqm)']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['gia']
+      row << building_with_service_codes[:building].building_json[:gia]
     end
 
     row
@@ -173,7 +173,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Type']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json['building-type']
+      row << building_with_service_codes[:building].building_json[:'building-type']
     end
 
     row
@@ -208,7 +208,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40'
 
     @services.each do |s|
-      new_row = [s['code'], s['name'], s['metric'], s['unit_text']]
+      new_row = [s['code'], s['name'], s['metric'], s['unit_of_measure']]
       @buildings_with_service_codes.each do |b|
         uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
 
