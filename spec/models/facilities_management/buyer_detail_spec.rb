@@ -37,6 +37,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         expect(buyer_detail.update(organisation_name: nil)).to eq false
       end
     end
+
     context 'when organisation postcode not present' do
       it 'is invalid' do
         expect(buyer_detail.update(organisation_address_postcode: nil)).to eq false
