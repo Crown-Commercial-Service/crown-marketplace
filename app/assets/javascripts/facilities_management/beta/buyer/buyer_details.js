@@ -47,16 +47,16 @@ $(function () {
         let county = selectedOption.data("county");
         let postcode = selectedOption.data("postcode");
 
-        $('#organisation-address-line-1').val(add1);
-        $('#organisation-address-line-2').val(add2);
-        $('#organisation-address-town').val(town);
-        $('#organisation-address-county').val(county);
-        $('#organisation-address-postcode').val(postcode);
-        $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
-        $('#selected-address-container').removeClass('govuk-visually-hidden');
-        $('#selected-address-label').text(selectedAddress);
-        $('#selected-address-postcode').text(postcode);
-        $('#organisation_address').text(selectedAddress);
+        $("#organisation-address-line-1").val(add1);
+        $("#organisation-address-line-2").val(add2);
+        $("#organisation-address-town").val(town);
+        $("#organisation-address-county").val(county);
+        $("#organisation-address-postcode").val(postcode);
+        $("#fm-post-code-results-container").addClass('govuk-visually-hidden');
+        $("#selected-address-container").removeClass('govuk-visually-hidden');
+        $("#selected-address-label").text(selectedAddress);
+        $("#selected-address-postcode").text(postcode);
+        $("#organisation_address").text(selectedAddress);
     });
 
     $('#buyer-details-cant-find-address').on('click', function (e) {
