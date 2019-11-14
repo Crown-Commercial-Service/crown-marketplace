@@ -2,7 +2,7 @@ class CreateBuyerDetails < ActiveRecord::Migration[5.2]
   def change
     drop_table :facilities_management_buyer if table_exists?(:facilities_management_buyer)
 
-    create_table :facilities_management_buyer_details do |t|
+    create_table :facilities_management_buyer_details, id: :uuid do |t|
       t.references :user
       t.string :full_name, limit: 255
       t.string :job_title, limit: 255
