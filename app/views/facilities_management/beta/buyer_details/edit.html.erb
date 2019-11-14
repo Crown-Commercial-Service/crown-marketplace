@@ -1,41 +1,47 @@
 <div class="govuk-body govuk-grid-row buyer-details">
 
   <div class="govuk-grid-column-two-thirds">
-    <a href="<%= :back %>" class="govuk-back-link govuk-!-margin-bottom-2">Back</a>
-    <div class="govuk-caption-l govuk-!-margin-top-2">
-      <%= current_user.email %>
-    </div>
-    <div class="govuk-heading-xl">
-      Buyer details
-    </div>
     <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { multipart: true } do |f| %>
+      <a href="<%= :back %>" class="govuk-back-link govuk-!-margin-bottom-2">Back</a>
+
+      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
+
+      <div class="govuk-caption-l govuk-!-margin-top-2">
+        <%= current_user.email %>
+      </div>
+      <div class="govuk-heading-xl">
+        Buyer details
+      </div>
+
       <fieldset class="govuk-fieldset">
         <h2 class="govuk-heading-m">
           Your details
         </h2>
-        <div class="govuk-form-group">
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:full_name].any? %>">
           <%= f.label :full_name, 'Name', class: 'govuk-label' %>
+          <%= display_error(f.object, :full_name) %>
           <%= f.text_field :full_name, class: 'govuk-input' %>
         </div>
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:job_title].any? %>">
           <%= f.label :job_title, class: 'govuk-label' %>
+          <%= display_error(f.object, :job_title) %>
           <%= f.text_field :job_title, class: 'govuk-input' %>
         </div>
 
-        <div class="govuk-grid-row">
-          <div class="govuk-form-group govuk-!-margin-bottom-6 govuk-grid-column-one-half">
-            <%= f.label :telephone_number, class: 'govuk-label' %>
-            <%= f.text_field :telephone_number, class: 'govuk-input' %>
-          </div>
+        <div class="govuk-form-group govuk-!-margin-bottom-6 govuk-!-width-one-half <%= "govuk-form-group--error" if f.object.errors[:telephone_number].any? %>">
+          <%= f.label :telephone_number, class: 'govuk-label' %>
+          <%= display_error(f.object, :telephone_number) %>
+          <%= f.text_field :telephone_number, class: 'govuk-input' %>
         </div>
 
         <h2 class="govuk-heading-m govuk-!-margin-top-3">
           Organisation details
         </h2>
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group  <%= "govuk-form-group--error" if f.object.errors[:organisation_name].any? %>">
           <%= f.label :organisation_name, class: 'govuk-label' %>
+          <%= display_error(f.object, :organisation_name) %>
           <%= f.text_field :organisation_name, class: 'govuk-input' %>
         </div>
 
@@ -45,12 +51,13 @@
           </h2>
         </div>
 
-        <div class="govuk-form-group govuk-!-margin-top-4">
+        <div class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
           <div class="">
             <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1' %>
+                  <%= display_error(f.object, :organisation_address_postcode) %>
                   <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode' %>
                 </div>
               </div>
@@ -62,7 +69,7 @@
               </div>
             </div>
 
-            <div id="fm-post-code-results-container" class="govuk-form-group <%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
+            <div id="fm-post-code-results-container" class="govuk-form-group govuk-visually-hidden">
               <%= f.label :organisation_address_postcode, 'Postcode', class: 'govuk-heading-s govuk-!-margin-bottom-2' %>
               <div class="govuk-grid-row govuk-!-margin-top-0">
                 <div class="govuk-grid-column-one-quarter">
@@ -85,14 +92,14 @@
                 <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button">I can't find my building's address in the list</a>
               </div>
             </div>
-            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.nil? %>" id="selected-address-container">
+            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? %>" id="selected-address-container">
               <label class="govuk-heading-s govuk-!-margin-bottom-1">Postcode</label>
               <div id="selected-address-postcode" class="govuk-!-margin-bottom-6">
                 <%= f.object.organisation_address_postcode %>
               </div>
               <label class="govuk-heading-s govuk-!-margin-bottom-1">Selected Address</label>
               <div id="selected-address-label" class="govuk-!-margin-bottom-6">
-                <%= f.object.organisation_address_line_1 + ', ' + f.object.organisation_address_line_2 + ', ' + f.object.organisation_address_town + ', ' + f.object.organisation_address_county + ', ' + f.object.organisation_address_postcode %>
+                <%= f.object.organisation_address_line_1 + ', ' + f.object.organisation_address_line_2 + ', ' + f.object.organisation_address_town + ', ' + f.object.organisation_address_county + ', ' + f.object.organisation_address_postcode  if f.object.organisation_address_postcode.present?%>
               </div>
               <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state">Change</a>
               <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
@@ -107,23 +114,26 @@
           Sector
         </h2>
 
-        <div class="govuk-heading-s govuk-!-margin-bottom-0">
-          Which type of public sector organisation are you buying for?
-        </div>
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:central_government].any? %>">
 
-        <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-3">
-          <span class="govuk-caption-m">Search <a href="https://www.gov.uk/government/organisations" target="_blank">central government departments, agencies and public bodies</a> if you're unsure.</span>
-        </div>
+          <div class="govuk-heading-s govuk-!-margin-bottom-0">
+            Which type of public sector organisation are you buying for?
+          </div>
 
-        <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-6 govuk-!-margin-top-6">
-          <div class="govuk-radios govuk-radios--inline">
-            <div class="govuk-radios__item">
-              <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input' %>
-              <%= f.label :central_government, 'Central Government', value: true, class: 'govuk-label govuk-radios__label' %>
-            </div>
-            <div class="govuk-radios__item">
-              <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input' %>
-              <%= f.label :central_government, 'Winder public sector', value: false, class: 'govuk-label govuk-radios__label' %>
+          <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-3">
+            <span class="govuk-caption-m">Search <a href="https://www.gov.uk/government/organisations" target="_blank">central government departments, agencies and public bodies</a> if you're unsure.</span>
+          </div>
+          <%= display_error(f.object, :central_government) %>
+          <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-6 govuk-!-margin-top-6">
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input' %>
+                <%= f.label :central_government, 'Central Government', value: true, class: 'govuk-label govuk-radios__label' %>
+              </div>
+              <div class="govuk-radios__item">
+                <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input' %>
+                <%= f.label :central_government, 'Winder public sector', value: false, class: 'govuk-label govuk-radios__label' %>
+              </div>
             </div>
           </div>
         </div>
