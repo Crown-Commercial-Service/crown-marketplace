@@ -47,22 +47,13 @@
 
         <div class="govuk-form-group govuk-!-margin-top-4">
           <div class="">
-            <div id="fm-postcode-lookup-container">
-                <span class="govuk-caption-m">
-
-                  <%= @buyer_record['organisation_address_line_1'] + ',' +
-                          @buyer_record['organisation_address_line_2'] + ',' +
-                          @buyer_record['organisation_address_town'] + ',' +
-                          @buyer_record['organisation_address_county'] unless @buyer_record.nil?
-                  %>
-                </span>
-                <div class="govuk-grid-row">
+            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
+              <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1' %>
                   <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode' %>
                 </div>
-                </div>
-
+              </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
                 <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn">Find address</a>
               </div>
@@ -70,11 +61,12 @@
                 <a href='' class="govuk-link--no-visited-state govuk-caption-m" id="buyer-details-cant-find-address">I can't find my address in the list</a>
               </div>
             </div>
-            <div id="fm-post-code-results-container" class="govuk-form-group govuk-visually-hidden">
+
+            <div id="fm-post-code-results-container" class="govuk-form-group <%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
               <%= f.label :organisation_address_postcode, 'Postcode', class: 'govuk-heading-s govuk-!-margin-bottom-2' %>
               <div class="govuk-grid-row govuk-!-margin-top-0">
                 <div class="govuk-grid-column-one-quarter">
-                  <label id="fm-postcode-label" class="govuk-body"></label>
+                  <label id="fm-postcode-label" class="govuk-body"><%= f.object.organisation_address_postcode %></label>
                 </div>
                 <div class="govuk-grid-column-one-quarter">
                   <a id="buyer-details-change-postcode" href="" class="govuk-link--no-visited-state">Change</a>
@@ -93,10 +85,21 @@
                 <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button">I can't find my building's address in the list</a>
               </div>
             </div>
-            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' if @buyer_record.nil? %>" id="selected-address-container">
+            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.nil? %>" id="selected-address-container">
+              <label class="govuk-heading-s govuk-!-margin-bottom-1">Postcode</label>
+              <div id="selected-address-postcode" class="govuk-!-margin-bottom-6">
+                <%= f.object.organisation_address_postcode %>
+              </div>
               <label class="govuk-heading-s govuk-!-margin-bottom-1">Selected Address</label>
-              <div id="selected-address-label" class="govuk-!-margin-top-6"></div>
+              <div id="selected-address-label" class="govuk-!-margin-bottom-6">
+                <%= f.object.organisation_address_line_1 + ', ' + f.object.organisation_address_line_2 + ', ' + f.object.organisation_address_town + ', ' + f.object.organisation_address_county + ', ' + f.object.organisation_address_postcode %>
+              </div>
               <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state">Change</a>
+              <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
+              <%= f.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>
+              <%= f.hidden_field :organisation_address_town, id: 'organisation-address-town' %>
+              <%= f.hidden_field :organisation_address_county, id: 'organisation-address-county' %>
+              <%= f.hidden_field :organisation_address_postcode, id: 'organisation-address-postcode' %>
             </div>
           </div>
         </div>
