@@ -1,3 +1,5 @@
+require 'facilities_management/buyer_details'
+
 module FacilitiesManagement
   module Beta
     class SessionsController < Base::SessionsController
@@ -8,7 +10,8 @@ module FacilitiesManagement
       end
 
       def after_sign_in_path_for(resource)
-        return edit_facilities_management_beta_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user)) if current_user.fm_buyer_details_incomplete?
+        buyer_service = BuyerDetails.new
+        return facilities_management_beta_buyer_details_path if buyer_service.buyer_details_incomplete? current_user
 
         stored_location_for(resource) || facilities_management_beta_path
       end
