@@ -99,7 +99,7 @@
               </div>
               <label class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.selected_addr') %></label>
               <div id="selected-address-label" class="govuk-!-margin-bottom-6">
-                <%= f.object.organisation_address_line_1 + ', ' + f.object.organisation_address_line_2 + ', ' + f.object.organisation_address_town + ', ' + f.object.organisation_address_county + ', ' + f.object.organisation_address_postcode %>
+                <%= f.object.organisation_address_line_1 + ', ' + f.object.organisation_address_line_2 + ', ' + f.object.organisation_address_town + ', ' + f.object.organisation_address_county + ', ' + f.object.organisation_address_postcode if f.object.organisation_address_postcode.present?%>
               </div>
               <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
               <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
