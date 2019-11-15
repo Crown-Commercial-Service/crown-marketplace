@@ -1,5 +1,3 @@
-require 'facilities_management/buyer_details'
-
 module FacilitiesManagement
   module Beta
     class SessionsController < Base::SessionsController
