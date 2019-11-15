@@ -28,4 +28,16 @@ class User < ApplicationRecord
   def confirmed?
     confirmed_at.present?
   end
+
+  def fm_buyer_details_incomplete?
+    # used to assist the site in determining if the user
+    # is a buyer and if they are required to complete information in
+    # the buyer-account details page
+
+    if has_role? :buyer
+      !(buyer_detail.present? && buyer_detail&.valid?(:update))
+    else
+      false
+    end
+  end
 end
