@@ -2,8 +2,7 @@
 
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { multipart: true } do |f| %>
-      <a href="<%= :back %>" class="govuk-back-link govuk-!-margin-bottom-2">Back</a>
-
+      <%= link_to 'Back', facilities_management_beta_path, class: "govuk-back-link govuk-!-margin-bottom-2" %>
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
 
       <div class="govuk-caption-l govuk-!-margin-top-2">
@@ -32,7 +31,7 @@
         <div class="govuk-form-group govuk-!-margin-bottom-6 govuk-!-width-one-half <%= "govuk-form-group--error" if f.object.errors[:telephone_number].any? %>">
           <%= f.label :telephone_number, class: 'govuk-label' %>
           <%= display_error(f.object, :telephone_number) %>
-          <%= f.text_field :telephone_number, class: 'govuk-input' %>
+          <%= f.number_field :telephone_number, class: 'govuk-input' %>
         </div>
 
         <h2 class="govuk-heading-m govuk-!-margin-top-3">
