@@ -14,6 +14,20 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/buyer_detail:
+          attributes:
+            central_government:
+              blank: Select the type of public sector organisation you're buying for
+            full_name:
+              blank: Enter your full name
+            job_title:
+              blank: Enter your job title
+            organisation_address_postcode:
+              blank: Enter your postcode
+            organisation_name:
+              blank: Enter your organisation name
+            telephone_number:
+              blank: Enter your telephone number
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -137,6 +151,26 @@ en:
               index:
                 manage_procurements_link: Manage procurements
           link_text: Update buyer details
+      buyer_details:
+        edit:
+          buyer_details: Buyer details
+          cant_find_addr_in_list: I can't find my address in the list
+          central_gov: Central Government
+          change: Change
+          find_addr: Find address
+          name: Name
+          no_addr_found: 0 addresses found
+          no_addr_selected: No address selected
+          organisation_address: Organisation address
+          organisation_details: Organisation details
+          postcode: Postcode
+          search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you're unsure.
+          select_an_addr: Select an address
+          selected_addr: Selected Address
+          submit: Save and continue
+          which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
+          wider_public_sector: Wider public sector
+          your_details: Your details
       gateway:
         index:
           cmp_support_aria_label: Email us for support with this service

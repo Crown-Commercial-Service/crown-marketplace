@@ -13,13 +13,13 @@ $(function () {
     });
 
     $('#buyer-details-save-continue-btn').on('click', function (e) {
-        e.preventDefault();
-
-        let form = $('#buyer-details-form');
-
-        if (validateForm(form) === true) {
-            form.submit();
-        }
+        // e.preventDefault();
+        //
+        // let form = $('#buyer-details-form');
+        //
+        // if (validateForm(form) === true) {
+        //     form.submit();
+        // }
     });
 
     $('#change-selected-address-link').on('click', function (e) {
@@ -38,13 +38,25 @@ $(function () {
     });
 
     $('#buyer-details-postcode-lookup-results').on('change', function (e) {
+        let selectedOption = $("select#buyer-details-postcode-lookup-results > option:selected");
         selectedAddress = void 0;
-        selectedAddress = $("select#buyer-details-postcode-lookup-results > option:selected").val();
+        selectedAddress = selectedOption.val();
+        let add1 = selectedOption.data("add1");
+        let add2 = selectedOption.data("add2");
+        let town = selectedOption.data("town");
+        let county = selectedOption.data("county");
+        let postcode = selectedOption.data("postcode");
 
-        $('#fm-post-code-results-container').addClass('govuk-visually-hidden');
-        $('#selected-address-container').removeClass('govuk-visually-hidden');
-        $('#selected-address-label').val(selectedAddress);
-        $('#organisation_address').text(selectedAddress);
+        $("#organisation-address-line-1").val(add1);
+        $("#organisation-address-line-2").val(add2);
+        $("#organisation-address-town").val(town);
+        $("#organisation-address-county").val(county);
+        $("#organisation-address-postcode").val(postcode);
+        $("#fm-post-code-results-container").addClass('govuk-visually-hidden');
+        $("#selected-address-container").removeClass('govuk-visually-hidden');
+        $("#selected-address-label").text(selectedAddress);
+        $("#selected-address-postcode").text(postcode);
+        $("#organisation_address").text(selectedAddress);
     });
 
     $('#buyer-details-cant-find-address').on('click', function (e) {
@@ -66,7 +78,7 @@ $(function () {
             isValid = true;
         } else {
             // to do add error messages & validation etc
-            alert("There are empty fields - TODO Add validation and error messages");
+            //alert("There are empty fields - TODO Add validation and error messages");
         }
 
         return isValid;
