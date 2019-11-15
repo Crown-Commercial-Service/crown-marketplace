@@ -53,7 +53,7 @@
 
         <div class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
           <div class="">
-            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? && f.object.errors[:organisation_address_postcode].blank? %>">
+            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1' %>
@@ -92,7 +92,7 @@
                 <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button"><%= t('.cant_find_addr_in_list') %></a>
               </div>
             </div>
-            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present?%>" id="selected-address-container">
+            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? %>" id="selected-address-container">
               <label class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.postcode') %></label>
               <div id="selected-address-postcode" class="govuk-!-margin-bottom-6">
                 <%= f.object.organisation_address_postcode %>
