@@ -1,0 +1,45 @@
+<div class="govuk-body govuk-grid-row buyer-details">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path(@buyer_detail), method: :patch, html: { multipart: true } do |f| %>
+      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
+
+      <div class="govuk-caption-l govuk-!-margin-top-2">
+        <%= current_user.email %>
+      </div>
+      <div class="govuk-heading-xl">
+        <%= t('.add_address') %>
+      </div>
+      <fieldset class="govuk-fieldset">
+        <h2 class="govuk-heading-m">
+          <%= t('.your_details') %>
+        </h2>
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_line_1].any? %>">
+          <%= f.label :organisation_address_line_1, t('.building_and_street'), class: 'govuk-label' %>
+          <%= display_error(f.object, :organisation_address_line_1) %>
+          <%= f.text_field :organisation_address_line_1, class: 'govuk-input' %>
+        </div>
+        <div class="govuk-form-group">
+          <%= f.text_field :organisation_address_line_2, class: 'govuk-input' %>
+        </div>
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_town].any? %>">
+          <%= f.label :organisation_address_town, t('.town_or_city'), class: 'govuk-label' %>
+          <%= display_error(f.object, :organisation_address_town) %>
+          <%= f.text_field :organisation_address_town, class: 'govuk-input' %>
+        </div>
+        <div class="govuk-form-group">
+          <%= f.label :organisation_address_county, t('.county'), class: 'govuk-label' %>
+          <%= display_error(f.object, :organisation_address_county) %>
+          <%= f.text_field :organisation_address_county, class: 'govuk-input' %>
+        </div>
+        <div class="govuk-form-group govuk-!-width-one-half <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
+          <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label' %>
+          <%= display_error(f.object, :organisation_address_postcode) %>
+          <%= f.text_field :organisation_address_postcode, class: 'govuk-input' %>
+        </div>
+      </fieldset>
+      <div class="govuk-!-margin-top-4">
+        <%= f.submit t('.submit'), class: "govuk-button" %>
+      </div>
+    <% end %>
+    </div>
+</div>
