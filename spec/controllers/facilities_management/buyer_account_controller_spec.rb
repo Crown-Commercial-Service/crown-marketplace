@@ -7,12 +7,5 @@ module FacilitiesManagement
         expect(response).to have_http_status(:found)
       end
     end
-
-    describe 'GET #buyer_details' do
-      it 'returns http success' do
-        get :buyer_details
-        expect(response).to have_http_status(:found)
-      end
-    end
   end
 end
