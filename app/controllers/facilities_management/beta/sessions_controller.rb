@@ -8,6 +8,8 @@ module FacilitiesManagement
       end
 
       def after_sign_in_path_for(resource)
+        return facilities_management_beta_buyer_details_path if current_user.fm_buyer_details_incomplete?
+
         stored_location_for(resource) || facilities_management_beta_path
       end
 
