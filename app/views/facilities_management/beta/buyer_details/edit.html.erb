@@ -101,8 +101,6 @@
               <div id="selected-address-label" class="govuk-!-margin-bottom-6">
                 <%= f.object.organisation_address_line_1 + ', ' + f.object.organisation_address_line_2 + ', ' + f.object.organisation_address_town + ', ' + f.object.organisation_address_county + ', ' + f.object.organisation_address_postcode %>
               </div>
-              <% if f.object.organisation_address_postcode.blank? %>
-              <%end %>
               <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
               <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
               <%= f.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>
