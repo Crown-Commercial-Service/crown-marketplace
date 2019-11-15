@@ -64,7 +64,7 @@ RSpec.describe User, type: :model do
         user.buyer_detail.telephone_number = '3434'
         user.buyer_detail.organisation_name = 'org name'
         user.buyer_detail.organisation_address_postcode = 'postcode'
-        user.buyer_detail.central_government = true
+        user.buyer_detail.central_government = false
 
         expect(user.fm_buyer_details_incomplete?).to eq false
       end

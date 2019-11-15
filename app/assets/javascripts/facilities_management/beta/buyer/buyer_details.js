@@ -13,13 +13,13 @@ $(function () {
     });
 
     $('#buyer-details-save-continue-btn').on('click', function (e) {
-        e.preventDefault();
-
-        let form = $('#buyer-details-form');
-
-        if (validateForm(form) === true) {
-            form.submit();
-        }
+        // e.preventDefault();
+        //
+        // let form = $('#buyer-details-form');
+        //
+        // if (validateForm(form) === true) {
+        //     form.submit();
+        // }
     });
 
     $('#change-selected-address-link').on('click', function (e) {
@@ -78,7 +78,7 @@ $(function () {
             isValid = true;
         } else {
             // to do add error messages & validation etc
-            alert("There are empty fields - TODO Add validation and error messages");
+            //alert("There are empty fields - TODO Add validation and error messages");
         }
 
         return isValid;
