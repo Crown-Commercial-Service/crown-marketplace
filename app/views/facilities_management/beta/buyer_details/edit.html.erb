@@ -64,7 +64,7 @@
                 <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn"><%= t('.find_addr') %></a>
               </div>
               <div class="govuk-!-margin-top-0">
-                <a href='' class="govuk-link--no-visited-state govuk-caption-m" id="buyer-details-cant-find-address"><%= t('.cant_find_addr_in_list') %></a>
+                <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail),  class: "govuk-link--no-visited-state govuk-caption-m" %>
               </div>
             </div>
 
@@ -88,7 +88,7 @@
                 </select>
               </div>
               <div class="govuk-!-margin-top-2">
-                <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button"><%= t('.cant_find_addr_in_list') %></a>
+                <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail, update_address: true),  class: "govuk-link--no-visited-state govuk-caption-m" %>
               </div>
             </div>
             <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? %>" id="selected-address-container">

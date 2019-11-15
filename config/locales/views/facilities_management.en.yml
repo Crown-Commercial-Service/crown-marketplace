@@ -171,6 +171,14 @@ en:
           which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
           wider_public_sector: Wider public sector
           your_details: Your details
+        edit_address:
+          add_address: Add address
+          building_and_street: Building and street
+          county: County (optional)
+          postcode: Post code
+          submit: Save and continue
+          town_or_city: Town or city
+          your_details: Your details
       gateway:
         index:
           cmp_support_aria_label: Email us for support with this service
