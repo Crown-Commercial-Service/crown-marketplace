@@ -1,13 +1,13 @@
 module FacilitiesManagement
   module Beta
     class BuyerDetailsController < FrameworkController
-      def edit
-        @buyer_detail = current_user.buyer_detail
-      end
+      before_action :set_buyer_detail
+
+      def edit; end
+
+      def edit_address; end
 
       def update
-        @buyer_detail = current_user.buyer_detail
-
         if @buyer_detail.update(buyer_detail_params)
           redirect_to facilities_management_beta_path
         else
@@ -31,6 +31,10 @@ module FacilitiesManagement
                 :organisation_address_postcode,
                 :central_government
               )
+      end
+
+      def set_buyer_detail
+        @buyer_detail = current_user.buyer_detail
       end
     end
   end
