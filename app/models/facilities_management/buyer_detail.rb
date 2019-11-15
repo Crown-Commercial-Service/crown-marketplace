@@ -7,6 +7,6 @@ module FacilitiesManagement
     validates :telephone_number, presence: true, on: :update
     validates :organisation_name, presence: true, on: :update
     validates :organisation_address_postcode, presence: true, on: :update
-    validates :central_government, presence: true, on: :update
+    validates :central_government, inclusion: { in: [true, false] }, on: :update
   end
 end
