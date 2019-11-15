@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_31_165100) do
+ActiveRecord::Schema.define(version: 2019_11_13_162339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -31,25 +31,21 @@ ActiveRecord::Schema.define(version: 2019_10_31_165100) do
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
-  create_table "facilities_management_buyer", id: false, force: :cascade do |t|
-    t.uuid "id", null: false
-    t.string "full_name", limit: 50
-    t.string "job_title", limit: 250
-    t.string "telephone_number", limit: 100
-    t.string "organisation_name", limit: 250
-    t.text "organisation_address_line_1"
-    t.text "organisation_address_line_2"
-    t.text "organisation_address_town"
-    t.text "organisation_address_county"
-    t.text "organisation_address_postcode"
+  create_table "facilities_management_buyer_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "full_name", limit: 255
+    t.string "job_title", limit: 255
+    t.string "telephone_number", limit: 255
+    t.string "organisation_name", limit: 255
+    t.string "organisation_address_line_1", limit: 255
+    t.string "organisation_address_line_2", limit: 255
+    t.string "organisation_address_town", limit: 255
+    t.string "organisation_address_county", limit: 255
+    t.string "organisation_address_postcode", limit: 255
     t.boolean "central_government"
-    t.boolean "wider_public_sector"
-    t.datetime "created_at", default: -> { "now()" }
-    t.datetime "updated_at"
-    t.boolean "active", default: true, null: false
-    t.text "email", null: false
-    t.index ["email"], name: "facilities_management_buyer_email_idx"
-    t.index ["id"], name: "facilities_management_buyer_id_idx"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
   create_table "facilities_management_procurement_building_services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
