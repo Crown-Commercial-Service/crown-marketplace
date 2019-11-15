@@ -1,4 +1,3 @@
-require 'facilities_management/buyer_details'
 module FacilitiesManagement
   module Beta
     class BuyerAccountController < FrameworkController
