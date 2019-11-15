@@ -105,7 +105,6 @@ Rails.application.routes.draw do
       get '/start', to: 'home#index'
       get '/gateway', to: 'gateway#index'
       get '/buyer_account', to: 'buyer_account#buyer_account'
-      match '/buyer-details', to: 'buyer_account#buyer_details', via: %i[get post]
       get '/buildings-management', to: 'buildings_management#buildings_management'
       get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
       get '/building-details-summary', to: 'buildings_management#building_details_summary'
