@@ -3,6 +3,7 @@ module FacilitiesManagement
     class BuyerDetailsController < FrameworkController
       def edit
         @buyer_detail = current_user.buyer_detail
+        @buyer_detail.valid?(:update)
       end
 
       def update
