@@ -616,6 +616,17 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
   end
 
+  describe '#validate_services' do
+    context 'when empty' do
+      it 'will be so' do
+        procurement_building_service.code = 'C.5'
+        procurement_building_service.lift_data = %w[1 2 3]
+        procurement_building_service.service_standard = 'A'
+        expect(procurement_building_service.validate_services.dig(:validity)).to not_eq({})
+      end
+    end
+  end
+
   describe '#services_status' do
     context 'when analysing an empty service record' do
       it 'will return a hash indicating na/false' do
