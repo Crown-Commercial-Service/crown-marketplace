@@ -261,6 +261,9 @@ en:
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
           total_floors_per_lift: The sum total of number of floors per lift
           volume_required_heading: Volume required (per annum)
+          gia: "Gross internal area (GIA)"
+          gia-summary: "The gross internal area of the building (in square meters)"
+          service: "Service"
         volume:
           back_to_service_information: Back to service information
           caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
