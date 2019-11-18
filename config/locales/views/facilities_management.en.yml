@@ -325,6 +325,115 @@ en:
           question: Where are your buildings located?
           remove_all: Remove all
           subtitle: Choose one or more regions, based on building's location where you require facilities management services.
+        review_contract:
+          attachment_1:
+            guidance: This document tells the supplier important information about the contract you have offered.
+            heading: Attachment 1
+            title: About the direct award
+          attachment_2:
+            annex_a:
+              guidance: This document sets out the processes, standards and service deliver reposnse times the suppliers must adhere to in delivery of the services.
+              title: Annex A - standards & processes
+            heading: Attachment 2
+            statement_of_requirements:
+              guidance: This document forms the basis of your requirement, and includes your building information, the services you require in each building, and the service specification.
+              title: Statement of requirements (deliverables matrix)
+          attachment_3:
+            heading: Attachment 3
+            price_matrix:
+              guidance: This document contains the details of your contractual pricing, and a breakdown of the component parts.
+              title: Price matrix
+          attachment_4:
+            core_terms:
+              guidance: The Core Terms are based on CCS's standard commercial terms under The Public Sector Contract.
+              title: Core terms
+            heading: Attachment 4 - Contract (Order form and Schedules)
+            order_form:
+              guidance: The Order Form is the overarching contract document where key contractual decisions are highlighted, the Core Terms, Joint Schedules and Call-off Schedules are listed and contract signatures from both Parties are captured.
+              title: Order form
+          change_requirements:
+            guidance: If you wish to make changes to your requirements, click on the 'Change requirements' button below.
+            title: Change requirements
+          change_schedule:
+            guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended
+          continue: Create final contract and send to supplier
+          contract_documents:
+            call_off_schedule_1:
+              document_name: Call-Off Schedule 1 Transparency Reports (DA).docx
+              title: Call-off Schedule 1 - Transparency Reports
+            call_off_schedule_10:
+              document_name: Call-Off Schedule 10 - Exit Management (DA).docx
+              title: Call-off Schedule 10 - Exit Management
+            call_off_schedule_13:
+              document_name: Call-Off Schedule 13 - Mobilisation Plan and Testing (DA).docx
+              title: Call-off Schedule 13 - Mobilisation Plan and Testing
+            call_off_schedule_2:
+              document_name: "#"
+              title: Call-off Schedule 2 - Staff Transfer
+            call_off_schedule_3:
+              document_name: Call-Off Schedule 3 - Continuous Improvement (DA).docx
+              title: Call-off Schedule 3 - Continuous Improvement
+            call_off_schedule_4:
+              document_name: Call-Off Schedule 4 - Facilities Management (DA).docx
+              title: Call-off Schedule 4 - Facilities Management
+            call_off_schedule_4A:
+              document_name: Call-Off Schedule 4A - Billable Works and Projects (DA).docx
+              title: Call-off Schedule 4A - Billable Work and Projects
+            call_off_schedule_5:
+              document_name: Call-Off Schedule 5 - Call-Off Pricing (DA).docx
+              title: Call-off Schedule 5 - Call-off Pricing
+            call_off_schedule_6:
+              document_name: Call-Off Schedule 6 - TUPE Surcharge (DA).docx
+              title: Call-off Schedule 6 - TUPE Surcharge
+            call_off_schedule_7:
+              document_name: Call-Off Schedule 7 - Key Staff (DA).docx
+              title: Call-off Schedule 7 - Key Staff
+            call_off_schedule_8:
+              document_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
+              title: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
+            call_off_schedule_9:
+              document_name: Call-Off Schedule 9 - Security (DA).docx
+              title: Call-off Schedule 9 - Security
+            joint_schedule_1:
+              document_name: Joint Schedule 1 - Definitions (DA).docx
+              title: Joint Schedule 1 - Definitions
+            joint_schedule_10:
+              document_name: Joint Schedule 10 - Rectification Plan (DA).docx
+              title: Joint Schedule 10 - Rectification Plan
+            joint_schedule_11:
+              document_name: Joint Schedule 11 - Processing Data (DA).docx
+              title: Joint Schedule 11 - Processing Data
+            joint_schedule_2:
+              document_name: Joint Schedule 2 - Variation Form (DA).docx
+              title: Joint Schedule 2 - Variation Form
+            joint_schedule_3:
+              document_name: Joint Schedule 3 - Insurance Requirements (DA).docx
+              title: Joint Schedule 3 - Insurance Requirements
+            joint_schedule_5:
+              document_name: Joint Schedule 5 - Corporate Social Responsibility (DA).docx
+              title: Joint Schedule 5 - Corporate Social Responsibility
+            joint_schedule_6:
+              document_name: Joint Schedule 6 - Key Subcontractors (DA).docx
+              title: Joint Schedule 6 - Key Subcontractors
+            joint_schedule_7:
+              document_name: Joint Schedule 7 - Financial Distress (DA).docx
+              title: Joint Schedule 7 - Financial Distress
+          documents:
+            heading: 1. Contract documents
+            text: Please review the contract documents below. These documents will form the contract between the supplier and your organisation.
+          download_documents:
+            guidance: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to the supplier.
+            title: Download all contract documents
+          heading: Review your contract
+          return_to_dashboard: Return to procurement dashboard
+          security_policy:
+            guidance: The buyer's security policy document.
+            heading: Security policy
+            title: Security policy
+          sending_contract:
+            guidance: Following your review of the contract documents in section 1 above, please click on the button below to create a zipped folder of the documents ready to send as an offer to the supplier.
+            heading: 2. Sending the contract
+          switch_to_further_competition: Switch to further competition
         services:
           no_services_selected: No services selected
           question: Select the facilities management services that you need
