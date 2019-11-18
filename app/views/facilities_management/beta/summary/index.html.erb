@@ -62,6 +62,7 @@
       <%= submit_tag t('common.submit'), class: "govuk-button" %>
     </p>
     <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
+    <%= hidden_field_tag 'name', params[:name] %>
   <% end %>
   <!--</form>-->
 
