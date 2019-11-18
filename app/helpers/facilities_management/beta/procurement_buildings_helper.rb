@@ -1,22 +1,22 @@
 module FacilitiesManagement::Beta::ProcurementBuildingsHelper
-  def service_questions(code)
-    FacilitiesManagement::ProcurementBuildingService::SERVICES_AND_QUESTIONS.select { |service| service[:code] == code }.first
+  def service_questions(pbs)
+    pbs.this_service
   end
 
-  def volume_question(code)
-    service_questions(code)[:questions].first
+  def volume_question(pbs)
+    service_questions(pbs)[:questions].first
   end
 
-  def ppm_standard_question(code)
-    service_questions(code)[:questions].last
+  def ppm_standard_question(pbs)
+    service_questions(pbs)[:ppm_standards][:questions]
   end
 
-  def fabric_standard_question(code)
-    service_questions(code)[:questions].last
+  def building_standard_question(pbs)
+    service_questions(pbs)[:building_standards][:questions]
   end
 
-  def cleaning_standard_question(code)
-    service_questions(code)[:questions].last
+  def cleaning_standard_question(pbs)
+    service_questions(pbs)[:cleaning_standards][:questions]
   end
 
   def question_type(service, question)
