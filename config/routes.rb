@@ -130,7 +130,8 @@ Rails.application.routes.draw do
       match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
       match '/save-building-gia', to: 'buildings_management#save_building_gia', via: %i[get post]
       match '/save-building-security-type', to: 'buildings_management#save_security_type', via: %i[get post]
-      post '/summary', to: 'summary#index'
+      # post '/summary', to: 'summary#index'
+      match '/summary', to: 'summary#index', via: %i[get post]
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
       get '/start', to: 'journey#start', as: 'journey_start'

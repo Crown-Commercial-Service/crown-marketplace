@@ -2,11 +2,19 @@ module FacilitiesManagement
   class SummaryReport
     attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :errors
 
-    def initialize(start_date, user_id, data)
+    def initialize(start_date, user_id, data, procurement = nil)
       @errors = ''
       @start_date = start_date
       @user_id = user_id
 
+      initialize_from_data data if data
+
+      initialize_from_procurement procurement if procurement
+
+      regions
+    end
+
+    def initialize_from_data(data)
       data.deep_symbolize_keys!
 
       @posted_services =
@@ -34,8 +42,10 @@ module FacilitiesManagement
 
       @sum_uom = 0
       @sum_benchmark = 0
+    end
 
-      regions
+    def initialize_from_procurement(procurement)
+      @posted_locations = procurement[:region_codes]
     end
 
     def user_buildings

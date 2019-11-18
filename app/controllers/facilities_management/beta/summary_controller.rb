@@ -2,7 +2,7 @@ module FacilitiesManagement
   module Beta
     class SummaryController < FrameworkController
       def index
-        @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+        init
         build_direct_award_report
       end
 
@@ -12,12 +12,16 @@ module FacilitiesManagement
         if params['download-spreadsheet'] == 'yes'
           redirect_to '/facilities-management/summary?calculations=yes&format=xlsx'
         else
-          render 'facilities_management/beta/summary/guidance'
+          # str = '?name=' + params[:name] if params[:name]
+          render 'facilities_management/beta/summary/guidance', name: params[:name] if params[:name]
+          render 'facilities_management/beta/summary/guidance' unless params[:name]
         end
       end
 
       # rubocop:disable Metrics/AbcSize
       def sorted_suppliers
+        init
+
         build_direct_award_report
 
         return if params[:'download-spreadsheet'] != 'yes'
@@ -26,7 +30,7 @@ module FacilitiesManagement
         user_email = current_user.email.to_s
         start_date = DateTime.now.utc
 
-        report = FacilitiesManagement::SummaryReport.new(start_date, user_email, TransientSessionInfo[session.id])
+        report = FacilitiesManagement::SummaryReport.new(start_date, user_email, TransientSessionInfo[session.id], @procurement)
 
         selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
         uvals = @report.uom_values(selected_buildings)
@@ -58,7 +62,7 @@ module FacilitiesManagement
       def build_direct_award_report
         user_email = current_user.email.to_s
 
-        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
+        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
 
         selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
         uvals = @report.uom_values(selected_buildings)
@@ -72,6 +76,18 @@ module FacilitiesManagement
           # e.g. dummy_supplier_name = 'Hickle-Schinner'
           @report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name
           @results[supplier_name] = @report.direct_award_value
+        end
+      end
+
+      def init
+        if params[:name]
+          # FacilitiesManagement::Procurement.count
+          # current_user.procurements
+          @procurement = current_user.procurements.where(name: params[:name]).first
+          # TBC: is the contract start date the same as the 'initial call off start date' ?
+          @start_date = @procurement[:initial_call_off_start_date]
+        else
+          @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
         end
       end
     end
