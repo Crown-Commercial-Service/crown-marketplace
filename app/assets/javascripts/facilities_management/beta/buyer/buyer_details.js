@@ -8,7 +8,8 @@ $(function () {
 
     $('#buyer-details-find-address-btn').on('click', function (e) {
         e.preventDefault();
-        let postCode = $('#buyer-details-postcode').val();
+
+        let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
         pageUtils.addressLookUp(postCode, false);
     });
 
