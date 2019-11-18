@@ -42,7 +42,7 @@
               </dd>
               <dd class="govuk-summary-list__value">
                 <%= qa_h[:answer].map(&:to_i).reduce(:+) if qa_h[:question] == :lift_data %>
-                <%= qa_h[:answer] if qa_h[:answer].is_a? String %>
+                <%= qa_h[:answer].to_s unless qa_h[:question] == :lift_data  %>
               </dd>
               <dd class="govuk-summary-list__actions">
                 <% link_text = 'Change' %>
