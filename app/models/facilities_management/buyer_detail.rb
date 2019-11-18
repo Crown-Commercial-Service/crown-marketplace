@@ -13,6 +13,5 @@ module FacilitiesManagement
     validates :organisation_address_postcode, presence: true, on: :update_address
     validates :organisation_address_town, presence: true, on: :update_address
     validates :organisation_address_line_1, presence: true, on: :update_address
-
   end
 end
