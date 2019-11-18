@@ -14,12 +14,6 @@ module FacilitiesManagement
     services_and_questions = ServicesAndQuestions.new
 
     # validates on :volume service question
-    # validates :no_of_appliances_for_testing, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
-    # validates :no_of_building_occupants, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
-    # validates :no_of_units_to_be_serviced, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
-    # validates :size_of_external_area, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
-    # validates :no_of_consoles_to_be_serviced, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
-    # validates :tones_to_be_collected_and_removed, numericality: { greater_than: 0, only_integer: true, message: :invalid }, allow_blank: true, on: :volume
     validate :validate_volume, on: :volume # this validator will valid the appropriate field for the given service
 
     # validates on :lifts
@@ -27,40 +21,33 @@ module FacilitiesManagement
     validate :validate_lift_data, on: :lifts
 
     # validates on the service_standard service question
-    validate :validate_standard_presence, on: :ppm_standards
-    validate :validate_standard_presence, on: :building_standards
-    validate :validate_standard_presence, on: :cleaning_standards
-
-    # validates on :ppm_standards service question
-    validate :service_building_standard_presence, on: :building_standards
-
-    # validates on :ppm_standards service question
-    validate :service_cleaning_standard_presence, on: :cleaning_standards
+    validate :validate_standard_presence, on: %i[ppm_standards building_standards cleaning_standards]
 
     # validates the entire row for all contexts - any appropriately invalid will validate as false
     validate :validate_services, on: :all
 
     # Methods to act as accessors to the computed results of validation
     # Filters the main service collection to the current selected :code and places in @instance_service_store
+    define_method(:services_and_questions) do
+      @services_and_questions ||= services_and_questions
+    end
+
     def this_service
-      @this_service ||= SERVICES_DEFINITION.select { |x| x[:code] == code }
+      @this_service ||= services_and_questions.service_detail(code)
     end
 
     # Processes each question of each service item and captures the question and answer in @service_answers_store
     def answer_store
-      @answer_store ||= this_service.map { |service_hash| { code: service_hash[:code], contexts: service_hash[:context], questions: get_answers(service_hash[:questions]) } }
+      @answer_store ||= { code: this_service[:code], contexts: this_service[:context], questions: get_answers(this_service[:questions]) }
     end
 
     # Process each service by validating each context and gathers the errors for any context
     def context_validations
-      @context_validations ||= answer_store.map { |sa| sa.merge!(validity: sa[:contexts].map { |ctx| { ctx[0] => context_errors([ctx[1].reduce]) } }.reduce({}, :update)) }
+      @context_validations ||= answer_store[:contexts].map { |ctx| { ctx[0] => context_errors(ctx[0]) } }.reduce({}, :update)
     end
 
     # The options given in the service standards pages
     SERVICE_STANDARDS = %w[A B C].freeze
-
-    # A set of questions that pertain to :volume validation context - :volume has multiple fields valid for specific questions
-    VOLUME_QUESTIONS = services_and_questions.context_questions[:volume].freeze
 
     # A collection of service code, their UI/Validation contexts, and the attributes that are being populated by the view
     SERVICES_DEFINITION = services_and_questions.service_collection.freeze
@@ -89,7 +76,7 @@ module FacilitiesManagement
     end
 
     def required_contexts
-      @required_contexts ||= this_service&.map { |y| y[:context] }.reduce({}, :update)
+      @required_contexts ||= this_service[:context]
     end
 
     def context_errors(*contexts)
@@ -109,21 +96,18 @@ module FacilitiesManagement
     # Builds a map of context => error collection
     # Restores object's :errors collection to be the sum of all validations errors
     def validate_services
-      results = {}
-      return results if this_service.blank?
+      return if this_service.blank?
 
-      context_validations.each { |cv| results.merge!(cv) }
       errors.merge!(context_errors([required_contexts.keys]))
-      results
     end
 
     # Returns a hash of all contexts and the valid? status for each
     def services_status
       return { context: :na, ready: false } if code.blank?
 
-      return { context: :unknown, ready: false } unless this_service.any?
+      return { context: :unknown, ready: false } if this_service[:context].empty?
 
-      answer_store.merge(context_validations)
+      answer_store.merge(validity: context_validations)
     end
 
     private
@@ -148,25 +132,7 @@ module FacilitiesManagement
     end
 
     def validate_standard_presence
-      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank?
-    end
-
-    def service_ppm_standard_presence
-      errors.add(:service_standard, "#{I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank')} #{name[0, 1].downcase}#{name[1, name.length]}") if service_standard.blank? && requires_ppm_standards?
-    end
-
-    def service_building_standard_presence
-      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_building_standards?
-    end
-
-    def service_cleaning_standard_presence
-      errors.add(:service_standard, I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank') + ' ' + name[0, 1].downcase + name[1, name.length]) if service_standard.blank? && requires_cleaning_standards?
-    end
-
-    # gathers the answers for a set of questions
-    # in an array of question => answer key-value pairs
-    def get_answers(questions)
-      questions.map { |q| { question: q, answer: self[q] } }
+      errors.add(:service_standard, "#{I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank')} #{name[0, 1].downcase}#{name[1, name.length]}") if service_standard.blank?
     end
 
     # Checks that each field for each question
@@ -174,12 +140,20 @@ module FacilitiesManagement
     # according to it's specified context (:volume) and specific questions
     # rubocop:disable Rails/Validation
     def validate_volume
-      return true if this_service.empty?
+      return if this_service.empty?
 
-      this_service.select { |svc| svc.value?(:volume) }.dig(:questions).each do |question|
-        validates_numericality_of(question.to_sym, greater_than: 0, only_integer: true, message: :invalid) if VOLUME_QUESTIONS.include?(question)
+      return unless this_service[:context].key?(:volume)
+
+      this_service[:context][:volume].each do |question|
+        validates_numericality_of(question.to_sym, greater_than: 0, only_integer: true, message: :invalid)
       end
     end
+
     # rubocop:enable Rails/Validation
+    # gathers the answers for a set of questions
+    # in an array of question => answer key-value pairs
+    def get_answers(questions)
+      questions.map { |q| { question: q, answer: self[q] } }
+    end
   end
 end

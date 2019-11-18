@@ -7,6 +7,18 @@ class FacilitiesManagement::ServicesAndQuestions
   attr_accessor :service_collection
   attr_accessor :context_questions
 
+  # Reduces the set of service declarations into a single hash for the given service code
+  def service_detail(code)
+    result = { code: code, context: {}, questions: [] }
+
+    @service_collection.select { |x| x[:code] == code }.each do |svc|
+      result[:context].merge! svc[:context]
+      result[:questions] |= svc[:questions]
+    end
+
+    result
+  end
+
   private
 
   def define_context_questions
@@ -18,16 +30,18 @@ class FacilitiesManagement::ServicesAndQuestions
       service_hours: %i[no_of_hours_of_service_provision].freeze }
   end
 
+  # rubocop:disable Metrics/MethodLength
   def gather_services
     service_hours_questions = @context_questions[:service_hours]
     cleaning_questions = @context_questions[:cleaning_standards]
     ppm_questions = context_questions[:ppm_standards]
 
-    [{ code: 'C.5', context: { lifts: @context_questions[:lifts], ppm_standards: ppm_questions}, questions: context_questions[:lifts] + ppm_questions },
+    [{ code: 'C.5', context: { lifts: @context_questions[:lifts] }, questions: context_questions[:lifts] },
+     { code: 'C.5', context: { ppm_standards: ppm_questions }, questions: context_questions[:lifts] + ppm_questions },
      { code: 'E.4', context: { volume: [:no_of_appliances_for_testing] }, questions: [:no_of_appliances_for_testing] },
-     { code: 'G.1', context: { volume: [:no_of_building_occupants], cleaning_standards: cleaning_questions}, questions: %i[no_of_building_occupants] + cleaning_questions },
-     { code: 'G.3', context: { volume: [:no_of_building_occupants], cleaning_standards: cleaning_questions}, questions: %i[no_of_building_occupants] + cleaning_questions },
-     { code: 'G.5', context: { volume: [:size_of_external_area], cleaning_standards: cleaning_questions}, questions: %i[size_of_external_area] + cleaning_questions },
+     { code: 'G.1', context: { volume: [:no_of_building_occupants], cleaning_standards: cleaning_questions }, questions: %i[no_of_building_occupants] + cleaning_questions },
+     { code: 'G.3', context: { volume: [:no_of_building_occupants], cleaning_standards: cleaning_questions }, questions: %i[no_of_building_occupants] + cleaning_questions },
+     { code: 'G.5', context: { volume: [:size_of_external_area], cleaning_standards: cleaning_questions }, questions: %i[size_of_external_area] + cleaning_questions },
      { code: 'H.4', context: { service_hours: service_hours_questions }, questions: service_hours_questions },
      { code: 'I.1', context: { service_hours: service_hours_questions }, questions: service_hours_questions },
      { code: 'H.5', context: { service_hours: service_hours_questions }, questions: service_hours_questions },
@@ -71,4 +85,5 @@ class FacilitiesManagement::ServicesAndQuestions
      { code: 'G.15', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
      { code: 'G.16', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions }].freeze
   end
+  # rubocop:enable Metrics/MethodLength
 end
