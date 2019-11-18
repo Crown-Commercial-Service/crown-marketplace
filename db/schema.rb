@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_13_162339) do
+ActiveRecord::Schema.define(version: 2019_11_18_164814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 2019_11_13_162339) do
   end
 
   create_table "facilities_management_buyer_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.bigint "user_id"
     t.string "full_name", limit: 255
     t.string "job_title", limit: 255
     t.string "telephone_number", limit: 255
@@ -45,6 +44,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_162339) do
     t.boolean "central_government"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
@@ -437,6 +437,16 @@ ActiveRecord::Schema.define(version: 2019_11_13_162339) do
     t.index ["postcode"], name: "idx_postcode"
   end
 
+  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "filename", limit: 255
+    t.integer "size"
+    t.string "etag", limit: 255
+    t.text "fail_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
+  end
+
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|
     t.string "current_accredited_suppliers", limit: 255
     t.string "geographical_data_all_suppliers", limit: 255
@@ -528,6 +538,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_162339) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
