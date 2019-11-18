@@ -155,7 +155,7 @@ en:
         edit:
           buyer_details: Buyer details
           cant_find_addr_in_list: I can't find my address in the list
-          central_gov: Central Government
+          central_gov: Central government
           change: Change
           find_addr: Find address
           name: Name
@@ -166,7 +166,7 @@ en:
           postcode: Postcode
           search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you're unsure.
           select_an_addr: Select an address
-          selected_addr: Selected Address
+          selected_addr: Selected address
           submit: Save and continue
           which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
           wider_public_sector: Wider public sector
