@@ -12,9 +12,9 @@
           <%= t('.gia-summary') %>
         </dd>
         <dd class="govuk-summary-list__value border-top">
+          <%= @building_data['gia'] %>
         </dd>
         <dd class="govuk-summary-list__actions border-top">
-          <%= @building_data['gia'] %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -24,13 +24,13 @@
         <dd class="govuk-summary-list__value">
         </dd>
         <dd class="govuk-summary-list__value">
+          <%= t('.volume_required_html') %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= t('volume_required_html') %>
         </dd>
       </div>
       <% @procurement_building.procurement_building_services.has_service_questions.each_with_index do |service, index| %>
-          <% service_questions(service.code)[:questions].each_with_index do |question, i| %>
+          <% service.answer_store[:questions].each_with_index do |qa_h, i| %>
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">
                 <% if i == 0 %>
@@ -38,16 +38,19 @@
                 <% end %>
               </dt>
               <dd class="govuk-summary-list__value">
-                <%= t(".#{question.to_s}") %>
+                <%= t(".#{qa_h[:question].to_s}") %>
               </dd>
               <dd class="govuk-summary-list__value">
-                Answer here
+                <%= qa_h[:answer].map(&:to_i).reduce(:+) if qa_h[:question] == :lift_data %>
+                <%= qa_h[:answer] if qa_h[:answer].is_a? String %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                <%if question == :lift_data %>
-                  <%= link_to 'Answer question', facilities_management_beta_procurement_buildings_service_path(service) %>
+                <% link_text = 'Change' %>
+                <% link_text = 'Answer question' if qa_h[:answer].blank? %>
+                <%if qa_h[:question] == :lift_data %>
+                <%= link_to link_text, facilities_management_beta_procurement_buildings_service_path(service) %>
                 <%else %>
-                <%= link_to 'Answer question', edit_facilities_management_beta_procurement_building_path(@procurement_building, service_question: question_type(service, question)) %>
+                <%= link_to link_text, edit_facilities_management_beta_procurement_building_path(@procurement_building, service_question: question_type(service, qa_h[:question])) %>
                 <%end %>
               </dd>
             </div>

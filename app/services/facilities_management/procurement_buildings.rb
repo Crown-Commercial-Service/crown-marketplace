@@ -34,7 +34,7 @@ class FacilitiesManagement::ServicesAndQuestions
   def gather_services
     service_hours_questions = @context_questions[:service_hours]
     cleaning_questions = @context_questions[:cleaning_standards]
-    ppm_questions = context_questions[:ppm_standards]
+    ppm_questions = @context_questions[:ppm_standards]
 
     [{ code: 'C.5', context: { lifts: @context_questions[:lifts] }, questions: context_questions[:lifts] },
      { code: 'C.5', context: { ppm_standards: ppm_questions }, questions: context_questions[:lifts] + ppm_questions },

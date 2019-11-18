@@ -250,20 +250,21 @@ en:
         show:
           answer_question: Answer question
           back_to_detailed_summary: Back to detailed search summary
+          gia: Gross internal area (GIA)
+          gia-summary: The gross internal area of the building (in square meters)
           heading: Service information
           no_of_appliances_for_testing: The number of appliances to be tested per annum
           no_of_building_occupants: The number of building occupants
           no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
           no_of_hours_of_service_provision: The number of hours of service provision per annum
           no_of_units_to_be_serviced: The number of units to be serviced per annum
+          service: Service
           service_standard: The service standard required
           size_of_external_area: The size of the external area (in square metres)
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
           total_floors_per_lift: The sum total of number of floors per lift
           volume_required_heading: Volume required (per annum)
-          gia: "Gross internal area (GIA)"
-          gia-summary: "The gross internal area of the building (in square meters)"
-          service: "Service"
+          volume_required_html: "<b>Volume required <br> (per anum)</b>"
         volume:
           back_to_service_information: Back to service information
           caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
