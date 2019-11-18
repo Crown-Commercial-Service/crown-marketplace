@@ -3,12 +3,11 @@ require 'json'
 
 # rubocop:disable Metrics/AbcSize
 
-def add_lot_3_and_4_services_per_supplier(upload_id)
-  upload = LegalServices::Admin::Upload.find(upload_id)
-  suppliers = upload.data
+def add_lot_3_and_4_services_per_supplier
+  suppliers = JSON.parse(File.read(get_ls_output_file_path('suppliers_with_lot_1_and_2_services.json')))
 
-  lot_3_services = Roo::Spreadsheet.open(file_path(upload.supplier_lot_3_service_offerings))
-  lot_4_services = Roo::Spreadsheet.open(file_path(upload.supplier_lot_4_service_offerings))
+  lot_3_services = Roo::Spreadsheet.open(lot_3_file_path, extension: :xlsx)
+  lot_4_services = Roo::Spreadsheet.open(lot_4_file_path, extension: :xlsx)
 
   lot_3_sheet = lot_3_services.sheet(0)
   lot_4_sheet = lot_4_services.sheet(0)
@@ -29,9 +28,7 @@ def add_lot_3_and_4_services_per_supplier(upload_id)
     supplier['lots'] << { 'lot_number' => 4, 'services' => ['WPSLS.4.1'] }
   end
 
-  upload.data = suppliers
-
-  upload.save!
+  write_ls_output_file('suppliers_with_all_services.json', suppliers)
 end
 
 # rubocop:enable Metrics/AbcSize
@@ -40,8 +37,10 @@ def extract_duns(supplier_name)
   supplier_name.split('[')[1].split(']')[0].to_i
 end
 
-def file_path(file)
-  return file.path if Rails.env.development?
+def lot_3_file_path
+  'storage/legal_services/current_data/input/lot3.xlsx'
+end
 
-  file.url
+def lot_4_file_path
+  'storage/legal_services/current_data/input/lot4.xlsx'
 end
