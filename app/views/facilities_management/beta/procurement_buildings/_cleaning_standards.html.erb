@@ -37,12 +37,12 @@
   <%= f.fields_for :procurement_building_services do |procurement_building_service| %>
     <% if procurement_building_service.object.requires_cleaning_standards? %>
       <% index += 1 %>
-      <div class="govuk-form-group <%= "govuk-form-group--error" if procurement_building_service.object.errors.any? %>" id="<%= error_id("procurement_building_services.#{cleaning_standard_question(procurement_building_service.object.code)}") %>">
+      <div class="govuk-form-group <%= "govuk-form-group--error" if procurement_building_service.object.errors.any? %>" id="<%= error_id("procurement_building_services.#{cleaning_standard_question(procurement_building_service.object)}") %>">
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-0 govuk-!-padding-bottom-0">
             <span class="govuk-fieldset__heading"><strong><%= index %>. <%= procurement_building_service.object.name %></strong></span>
           </legend>
-          <%= display_error_nested_models(procurement_building_service.object, cleaning_standard_question(procurement_building_service.object.code)) %>
+          <%= display_error_nested_models(procurement_building_service.object, cleaning_standard_question(procurement_building_service.object)) %>
           <%= procurement_building_service.collection_radio_buttons :service_standard, FacilitiesManagement::ProcurementBuildingService::SERVICE_STANDARDS, :first, :first do |b| %>
             <div class="govuk-radios govuk-radios--small govuk-!-margin-top-2">
               <div class="govuk-radios__item">

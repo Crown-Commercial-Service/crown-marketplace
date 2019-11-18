@@ -11,7 +11,7 @@ module FacilitiesManagement
     belongs_to :procurement_building, class_name: 'FacilitiesManagement::ProcurementBuilding', foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building_services
 
     # Lookup data for 'constants' are taken from this service object
-    services_and_questions = ServicesAndQuestions.new
+    # services_and_questions = ServicesAndQuestions.new
 
     # validates on :volume service question
     validate :validate_volume, on: :volume # this validator will valid the appropriate field for the given service
@@ -26,14 +26,8 @@ module FacilitiesManagement
     # validates the entire row for all contexts - any appropriately invalid will validate as false
     validate :validate_services, on: :all
 
-    # Methods to act as accessors to the computed results of validation
-    # Filters the main service collection to the current selected :code and places in @instance_service_store
-    define_method(:services_and_questions) do
-      @services_and_questions ||= services_and_questions
-    end
-
     def this_service
-      @this_service ||= services_and_questions.service_detail(code)
+      @this_service ||= get_service_detail
     end
 
     # Processes each question of each service item and captures the question and answer in @service_answers_store
@@ -48,11 +42,6 @@ module FacilitiesManagement
 
     # The options given in the service standards pages
     SERVICE_STANDARDS = %w[A B C].freeze
-
-    # A collection of service code, their UI/Validation contexts, and the attributes that are being populated by the view
-    SERVICES_DEFINITION = services_and_questions.service_collection.freeze
-
-    REQUIRE_VOLUME_CODES = services_and_questions.service_collection.select { |svc| svc[:context].include?(:volume) }.map { |svc| svc[:code] }.freeze # %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
 
     # A set of methods used to confirm validation
     def requires_volume?
@@ -79,18 +68,6 @@ module FacilitiesManagement
       @required_contexts ||= this_service[:context]
     end
 
-    def context_errors(*contexts)
-      return nil if contexts.blank?
-
-      error_collection = ActiveModel::Errors.new(ProcurementBuildingService)
-      contexts.flatten.each do |ctx|
-        valid?(ctx)
-        error_collection.merge!(errors)
-      end
-
-      error_collection
-    end
-
     # Goes through each context, gathering errors of each validation
     # (valid? clears errors so an internal collection is used)
     # Builds a map of context => error collection
@@ -111,13 +88,6 @@ module FacilitiesManagement
     end
 
     private
-
-    # Executes validate_volume and gathers the error collection from that validation
-    def volume_validation_results?(error_collection)
-      validate_volume
-      error_collection.merge(errors)
-      errors.any?
-    end
 
     def validate_lift_data
       errors.add(:lift_data, :required, position: 0) if lift_data.blank?
@@ -155,5 +125,89 @@ module FacilitiesManagement
     def get_answers(questions)
       questions.map { |q| { question: q, answer: self[q] } }
     end
+
+    def context_errors(*contexts)
+      return nil if contexts.blank?
+
+      error_collection = ActiveModel::Errors.new(ProcurementBuildingService)
+      contexts.flatten.each do |ctx|
+        valid?(ctx)
+        error_collection.merge!(errors)
+      end
+
+      error_collection
+    end
+
+    define_method(:get_service_detail) do
+      result = { code: code, context: {}, questions: [] }
+
+      SERVICE_DECLARATIONS.select { |x| x[:code] == code }.each do |svc|
+        result[:context].merge! svc[:context]
+        result[:questions] |= svc[:questions]
+      end
+
+      result
+    end
+
+    CONTEXT_QUESTIONS =
+      { lifts: %i[lift_data].freeze,
+        ppm_standards: %i[service_standard].freeze,
+        building_standards: %i[service_standard].freeze,
+        cleaning_standards: %i[service_standard].freeze,
+        volume: %i[no_of_appliances_for_testing no_of_building_occupants size_of_external_area no_of_consoles_to_be_serviced tones_to_be_collected_and_removed].freeze,
+        service_hours: %i[no_of_hours_of_service_provision].freeze }.freeze
+
+    SERVICE_DECLARATIONS = [{ code: 'C.5', context: { lifts: CONTEXT_QUESTIONS[:lifts] }, questions: CONTEXT_QUESTIONS[:lifts] },
+                            { code: 'C.5', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:lifts] + CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'E.4', context: { volume: [:no_of_appliances_for_testing] }, questions: [:no_of_appliances_for_testing] },
+                            { code: 'G.1', context: { volume: [:no_of_building_occupants], cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: %i[no_of_building_occupants] + CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.3', context: { volume: [:no_of_building_occupants], cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: %i[no_of_building_occupants] + CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.5', context: { volume: [:size_of_external_area], cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: %i[size_of_external_area] + CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'H.4', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'I.1', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'H.5', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'I.2', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'I.3', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'I.4', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'J.1', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'J.2', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'J.3', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'J.4', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'J.5', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'J.6', context: { service_hours: CONTEXT_QUESTIONS[:service_hours] }, questions: CONTEXT_QUESTIONS[:service_hours] },
+                            { code: 'K.1', context: { volume: [:no_of_consoles_to_be_serviced] }, questions: [:no_of_consoles_to_be_serviced] },
+                            { code: 'K.2', context: { volume: [:tones_to_be_collected_and_removed] }, questions: [:tones_to_be_collected_and_removed] },
+                            { code: 'K.3', context: { volume: [:tones_to_be_collected_and_removed] }, questions: [:tones_to_be_collected_and_removed] },
+                            { code: 'K.4', context: { volume: [:tones_to_be_collected_and_removed] }, questions: [:tones_to_be_collected_and_removed] },
+                            { code: 'K.5', context: { volume: [:tones_to_be_collected_and_removed] }, questions: [:tones_to_be_collected_and_removed] },
+                            { code: 'K.6', context: { volume: [:tones_to_be_collected_and_removed] }, questions: [:tones_to_be_collected_and_removed] },
+                            { code: 'K.7', context: { volume: [:no_of_units_to_be_serviced] }, questions: [:no_of_units_to_be_serviced] },
+                            { code: 'C.1', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'C.2', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'C.3', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'C.4', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'C.6', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'C.7', context: { building_standards: CONTEXT_QUESTIONS[:building_standards] }, questions: CONTEXT_QUESTIONS[:building_standards] },
+                            { code: 'C.11', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'C.12', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'C.13', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'C.14', context: { ppm_standards: CONTEXT_QUESTIONS[:ppm_standards] }, questions: CONTEXT_QUESTIONS[:ppm_standards] },
+                            { code: 'G.4', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.2', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.6', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.7', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.8', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.9', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.10', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.11', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.12', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.13', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.14', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.15', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] },
+                            { code: 'G.16', context: { cleaning_standards: CONTEXT_QUESTIONS[:cleaning_standards] }, questions: CONTEXT_QUESTIONS[:cleaning_standards] }].freeze
+
+    # A collection of service code, their UI/Validation contexts, and the attributes that are being populated by the view
+    SERVICES_DEFINITION = SERVICE_DECLARATIONS
+    REQUIRE_VOLUME_CODES = SERVICES_DEFINITION.select { |svc| svc[:context].include?(:volume) }.map { |svc| svc[:code] }.freeze # %w[E.4 G.1 G.3 G.5 K.1 K.2 K.3 K.7 K.4 K.5 K.6].freeze
   end
 end

@@ -1,62 +1,22 @@
 module FacilitiesManagement::Beta::ProcurementBuildingsHelper
+  def service_questions(pbs)
+    pbs.this_service
+  end
+
   def volume_question(pbs)
-    [] unless pbs.this_service[:context].key? :volume
-    pbs.this_service[:context][:volume]&.first
+    service_questions(pbs)[:questions].first
   end
 
   def ppm_standard_question(pbs)
-    [] unless pbs.this_service[:context].key? :ppm_standards
-    pbs.this_service[:context][:ppm_standards]&.first
+    service_questions(pbs)[:ppm_standards][:questions]
   end
 
   def building_standard_question(pbs)
-    [] unless pbs.this_service[:context].key? :building_standards
-    pbs.this_service[:context][:building_standards]&.first
+    service_questions(pbs)[:building_standards][:questions]
   end
 
   def cleaning_standard_question(pbs)
-    [] unless pbs.this_service[:context].key? :cleaning_standards
-    pbs.this_service[:context][:cleaning_standards]&.first
-  end
-
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-  def question_type(service, question)
-    return 'service_hours' if question == :service_hours
-
-    if question == :service_standard
-      return 'ppm_standards' if service.requires_ppm_standards?
-
-      return 'building_standards' if service.requires_building_standards?
-
-      return 'cleaning_standards' if service.requires_cleaning_standards?
-    elsif service.requires_volume?
-      'volume'
-    end
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-
-  def service_standard(service)
-    return 'ppm_standards' if service.requires_ppm_standards?
-
-    return 'building_standards' if service.requires_building_standards?
-
-    'cleaning_standards' if service.requires_cleaning_standards?
-  end
-
-  def checked?(object_value, value)
-    object_value == value
-  end
-
-  def ppm_standard_question(code)
-    service_questions(code)[:questions].last
-  end
-
-  def fabric_standard_question(code)
-    service_questions(code)[:questions].last
-  end
-
-  def cleaning_standard_question(code)
-    service_questions(code)[:questions].last
+    service_questions(pbs)[:cleaning_standards][:questions]
   end
 
   def question_type(service, question)
