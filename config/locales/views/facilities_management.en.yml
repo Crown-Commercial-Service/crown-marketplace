@@ -22,6 +22,10 @@ en:
               blank: Enter your full name
             job_title:
               blank: Enter your job title
+            organisation_address_line_1:
+              blank: Enter your building or street name
+            organisation_address_town:
+              blank: Enter your town or city
             organisation_address_postcode:
               blank: Enter your postcode
             organisation_name:

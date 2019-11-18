@@ -8,10 +8,12 @@ module FacilitiesManagement
       def edit_address; end
 
       def update
-        if @buyer_detail.update(buyer_detail_params)
-          redirect_to facilities_management_beta_path
+        @buyer_detail.assign_attributes(buyer_detail_params)
+
+        if @buyer_detail.save(context: context_from_params)
+          redirect_to params[:context] ? edit_facilities_management_beta_buyer_detail_path : facilities_management_beta_path
         else
-          render :edit
+          render params[:context] ? :edit_address : :edit
         end
       end
 
@@ -35,6 +37,10 @@ module FacilitiesManagement
 
       def set_buyer_detail
         @buyer_detail = current_user.buyer_detail
+      end
+
+      def context_from_params
+        params[:context].try(:to_sym) || :update
       end
     end
   end
