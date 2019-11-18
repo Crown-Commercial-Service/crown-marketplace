@@ -659,6 +659,7 @@ en:
     passcap: at least one capital letter
     passeight: at least 8 characters
     passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    pdf_html: <abbr title="PDF">PDF</abbr>
     reset_password: Reset password
     search: Search
     send_reset_email: Send reset email
@@ -668,6 +669,7 @@ en:
     therewasaproblem: There was a problem
     type_csv: text/csv
     type_doc: application/msword
+    type_pdf: application/pdf
     type_xlsx: application/msexcel
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
     youmustselect: You must select at least one service before clicking the continue button

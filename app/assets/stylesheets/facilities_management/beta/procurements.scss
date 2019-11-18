@@ -14,51 +14,6 @@ input[type=radio]:checked + label + div#radio-inner-content {
   left: -22px;
 }
 
-input[type=radio] + label + div#radio-inner-content-for-call-off-extensions {
-  visibility: hidden;
-  height: 0px;
-}
-
-input[type=radio]:checked + label + div#radio-inner-content-for-call-off-extensions {
-  visibility: visible;
-  border-left: solid;
-  border-left-color: #BFC1C3;
-  border-left-width: 4px;
-  height: auto;
-  position: relative;
-  left: -22px;
-}
-
-input[type=radio] + label + div#radio-inner-content-for-mobilisation-period {
-  visibility: hidden;
-  height: 0px;
-}
-
-input[type=radio]:checked + label + div#radio-inner-content-for-mobilisation-period {
-  visibility: visible;
-  border-left: solid;
-  border-left-color: #BFC1C3;
-  border-left-width: 4px;
-  height: auto;
-  position: relative;
-  left: -22px;
-}
-
-input.govuk-radios__input + label + div.govuk-radios__conditional {
-  visibility: hidden;
-  height: 0 ;
-  }
-
-input.govuk-radios__input:checked + label + div.govuk-radios__conditional {
-  visibility: visible;
-  border-left: solid;
-  border-left-color: #BFC1C3;
-  border-left-width: 4px;
-  height: auto;
-  position: relative;
-  left: -22px;
-  }
-
 ul.buildings-list {
   padding-top: 0;
   padding-left: 20px;
@@ -76,19 +31,3 @@ ul.buildings-list {
   padding-top: 15px;
   padding-bottom: 3px;
 }
-
-div.govuk-radios details.govuk-details {
-  margin-left: 1em;
-
-  summary + div {
-    margin-left: 0.35rem;
-    }
-  }
-
-blockquote.cmp-inset-text {
-  margin:1em 0;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 1rem;
-  }

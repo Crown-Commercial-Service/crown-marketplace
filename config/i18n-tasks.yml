@@ -121,6 +121,7 @@ ignore_unused:
   - supply_teachers.home.fta_to_perm_fee.no_fee.length_not_within_12_months
   - supply_teachers.home.fta_to_perm_fee.no_fee.end_not_within_6_months
   - facilities_management.beta.procurement_buildings.volume.question.*
+  - facilities_management.beta.procurements.review_contract.contract_documents.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
   - 'devise.*'
