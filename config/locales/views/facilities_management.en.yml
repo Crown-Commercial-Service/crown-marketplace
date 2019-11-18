@@ -22,8 +22,12 @@ en:
               blank: Enter your full name
             job_title:
               blank: Enter your job title
+            organisation_address_line_1:
+              blank: Enter your building or street name
             organisation_address_postcode:
               blank: Enter your postcode
+            organisation_address_town:
+              blank: Enter your town or city
             organisation_name:
               blank: Enter your organisation name
             telephone_number:
@@ -170,6 +174,14 @@ en:
           submit: Save and continue
           which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
           wider_public_sector: Wider public sector
+          your_details: Your details
+        edit_address:
+          add_address: Add address
+          building_and_street: Building and street
+          county: County (optional)
+          postcode: Post code
+          submit: Save and continue
+          town_or_city: Town or city
           your_details: Your details
       gateway:
         index:

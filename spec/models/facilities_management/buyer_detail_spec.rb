@@ -43,5 +43,26 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         expect(buyer_detail.update(organisation_address_postcode: nil)).to eq false
       end
     end
+
+    context 'when organisation line 1 is not present on update_address context' do
+      it 'is invalid' do
+        buyer_detail.organisation_address_line_1 = nil
+        expect(buyer_detail.valid?(:update_address)).to eq false
+      end
+    end
+
+    context 'when organisation town is not present on update_address context' do
+      it 'is invalid' do
+        buyer_detail.organisation_address_town = nil
+        expect(buyer_detail.valid?(:update_address)).to eq false
+      end
+    end
+
+    context 'when organisation postcode is not present on update_address context' do
+      it 'is invalid' do
+        buyer_detail.organisation_address_postcode = nil
+        expect(buyer_detail.valid?(:update_address)).to eq false
+      end
+    end
   end
 end
