@@ -8,7 +8,8 @@ $(function () {
 
     $('#buyer-details-find-address-btn').on('click', function (e) {
         e.preventDefault();
-        let postCode = $('#buyer-details-postcode').val();
+
+        let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
         pageUtils.addressLookUp(postCode, false);
     });
 
@@ -31,11 +32,11 @@ $(function () {
         let selectedOption = $("select#buyer-details-postcode-lookup-results > option:selected");
         selectedAddress = void 0;
         selectedAddress = selectedOption.val();
-        let add1 = selectedOption.data("add1");
-        let add2 = selectedOption.data("add2");
-        let town = selectedOption.data("town");
-        let county = selectedOption.data("county");
-        let postcode = selectedOption.data("postcode");
+        let add1 = selectedOption.data("add1").slice(0, -2);
+        let add2 = selectedOption.data("add2").slice(0, -2);
+        let town = selectedOption.data("town").slice(0, -2);
+        let county = selectedOption.data("county").slice(0, -2);
+        let postcode = selectedOption.data("postcode").slice(0, -2);
 
         $("#organisation-address-line-1").val(add1);
         $("#organisation-address-line-2").val(add2);
