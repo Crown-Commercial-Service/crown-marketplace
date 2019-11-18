@@ -11,6 +11,12 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
 
     this.connect_to_form = function (formDOMObject, validationCallback) {
+
+        //because there are inconsistencies in the designs, this form does not need validations
+        if (formDOMObject.className == 'edit_facilities_management_buyer_detail') {
+            return;
+        }
+
         this.form = formDOMObject;
         this.form.formValidator = this;
         this.validator = validationCallback.bind(this);
