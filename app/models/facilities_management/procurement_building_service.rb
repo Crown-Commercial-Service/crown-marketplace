@@ -104,6 +104,8 @@ module FacilitiesManagement
     end
 
     def validate_standard_presence
+      return unless this_service[:context].key?(%i[ppm_standards building_standards cleaning_standards])
+
       errors.add(:service_standard, "#{I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank')} #{name[0, 1].downcase}#{name[1, name.length]}") if service_standard.blank?
     end
 
