@@ -1,7 +1,7 @@
 <div class="govuk-body govuk-grid-row buyer-details">
 
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { multipart: true } do |f| %>
+    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { specialvalidation:false, multipart: true } do |f| %>
       <%= link_to 'Back', facilities_management_beta_path, class: "govuk-back-link govuk-!-margin-bottom-2" %>
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
 
@@ -64,7 +64,7 @@
                 <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn"><%= t('.find_addr') %></a>
               </div>
               <div class="govuk-!-margin-top-0">
-                <a href='' class="govuk-link--no-visited-state govuk-caption-m" id="buyer-details-cant-find-address"><%= t('.cant_find_addr_in_list') %></a>
+                <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail),  class: "govuk-link--no-visited-state govuk-caption-m" %>
               </div>
             </div>
 
@@ -88,7 +88,7 @@
                 </select>
               </div>
               <div class="govuk-!-margin-top-2">
-                <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button"><%= t('.cant_find_addr_in_list') %></a>
+                <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail, update_address: true),  class: "govuk-link--no-visited-state govuk-caption-m" %>
               </div>
             </div>
             <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? %>" id="selected-address-container">
@@ -98,7 +98,7 @@
               </div>
               <label class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.selected_addr') %></label>
               <div id="selected-address-label" class="govuk-!-margin-bottom-6">
-                <%= f.object.organisation_address_line_1 + ', ' + f.object.organisation_address_line_2 + ', ' + f.object.organisation_address_town + ', ' + f.object.organisation_address_county + ', ' + f.object.organisation_address_postcode if f.object.organisation_address_postcode.present?%>
+                <%= f.object.full_organisation_address if f.object.organisation_address_postcode.present? %>
               </div>
               <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
               <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
@@ -109,10 +109,9 @@
             </div>
           </div>
         </div>
-        <h2 class="govuk-heading">
+        <h2 class="govuk-heading-m">
           Sector
         </h2>
-
         <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:central_government].any? %>">
 
           <div class="govuk-heading-s govuk-!-margin-bottom-0">
