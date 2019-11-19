@@ -76,9 +76,10 @@ module FacilitiesManagement
 
         rates = CCS::FM::Rate.read_benchmark_rates
         rate_card = CCS::FM::RateCard.latest
+        rate_card.data.deep_symbolize_keys!
 
         @results = {}
-        supplier_names = rate_card.data['Prices'].keys
+        supplier_names = rate_card.data[:Prices].keys
         supplier_names.each do |supplier_name|
           # e.g. dummy_supplier_name = 'Hickle-Schinner'
           @report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name
