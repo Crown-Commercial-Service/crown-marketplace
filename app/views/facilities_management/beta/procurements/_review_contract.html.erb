@@ -1,0 +1,191 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <span class="govuk-caption-m"><%= @procurement.contract_name %></span>
+        <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m"><%= t('.documents.heading') %></h2>
+        <p class="govuk-body govuk-!-margin-left-6 govuk-!-font-size-28"><%= t('.documents.text') %></p>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <div class="govuk-grid-column-full">
+        <h3 class="govuk-heading-s"><%= t('.attachment_1.heading') %></h2>
+        <ul class="govuk-list govuk-!-margin-top-6 documents">
+          <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+            <a href="<%= asset_path('About the Direct Award.docx') %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <%= t('.attachment_1.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+            </a>
+            <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_1.guidance') %></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <div class="govuk-grid-column-full">
+        <h3 class="govuk-heading-s"><%= t('.attachment_2.heading') %></h2>
+        <ul class="govuk-list govuk-!-margin-top-6 documents">
+          <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+            <a href="#?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <%= t('.attachment_2.statement_of_requirements.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+            </a>
+            <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.statement_of_requirements.guidance') %></p>
+          </li>
+          <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+            <a href="<%= asset_path('Statement of Requirements - Annex A - Standards and Processes.docx') %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+              <%= t('.attachment_2.annex_a.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
+            </a>
+            <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.annex_a.guidance') %></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <div class="govuk-grid-column-full">
+        <h3 class="govuk-heading-s"><%= t('.attachment_3.heading') %></h2>
+        <ul class="govuk-list govuk-!-margin-top-6 documents">
+          <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+            <a href="#?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+              <%= t('.attachment_3.price_matrix.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
+            </a>
+            <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_3.price_matrix.guidance') %></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <div class="govuk-grid-column-full">
+        <h3 class="govuk-heading-s"><%= t('.attachment_4.heading') %></h2>
+        <ul class="govuk-list govuk-!-margin-top-6 documents">
+          <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+            <a href="#?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <%= t('.attachment_4.order_form.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+            </a>
+            <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_4.order_form.guidance') %></p>
+          </li>
+          <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+            <a href="<%= asset_path('Core Terms v3.0.2 (DA).docx')%>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <%= t('.attachment_4.core_terms.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+            </a>
+            <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_4.core_terms.guidance') %></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <div class="govuk-grid-column-full">
+        <ul class="govuk-list govuk-!-margin-top-6 documents">
+          <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+            <a href="<%= asset_path(t(".contract_documents.call_off_schedule_1.document_name")) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <%= t(".contract_documents.call_off_schedule_1.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+            </a>
+          </li>
+          <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+            <a href="#?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <%= t(".contract_documents.call_off_schedule_2.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+            </a>
+          </li>
+          <% [[3, 4, '4A'], (5..10).to_a, [13]].flatten.each do |document_number| %>
+            <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+              <a href="<%= asset_path(t(".contract_documents.call_off_schedule_#{document_number}.document_name")) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                <%= t(".contract_documents.call_off_schedule_#{document_number}.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+              </a>
+            </li>
+          <% end %>
+          <% [(1..3).to_a, (5..7).to_a, [10]].flatten.each do |document_number| %>
+            <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+              <a href="<%= asset_path(t(".contract_documents.joint_schedule_#{document_number}.document_name")) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                <%= t(".contract_documents.joint_schedule_#{document_number}.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+              </a>
+            </li>
+          <% end %>
+          <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+            <a href="<%= asset_path(t(".contract_documents.joint_schedule_11.document_name")) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <%= t('.contract_documents.joint_schedule_11.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <div class="govuk-grid-column-full">
+        <h3 class="govuk-heading-s"><%= t('.security_policy.heading') %></h2>
+        <ul class="govuk-list govuk-!-margin-top-6 documents">
+          <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+            <a href="#?format=pdf" class="supplier-record__file-download" type="<%= t('common.type_pdf') %>" download>
+              <%= t('.security_policy.title') %> <span class="govuk-visually-hidden"><%= t('common.pdf_html') %></span>
+            </a>
+            <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.security_policy.guidance') %></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <div class="govuk-grid-column-full">
+        <%= link_to t('.download_documents.title'), '#', class: 'govuk-button govuk-button--secondary' %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-left-2">
+      <div class="govuk-grid-column-full govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <%= t('.download_documents.guidance') %>
+        </strong>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <strong>
+          <%= t('.change_requirements.guidance') %>
+        </strong>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+      <div class="govuk-grid-column-full">
+        <%= link_to t('.change_requirements.title'), '#', class: 'govuk-button govuk-button--warning' %>
+      </div>
+    </div>
+
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <strong><%= t('.change_schedule.guidance') %></strong>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-8">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m"><%= t('.sending_contract.heading') %></h2>
+        <p class="govuk-body"><%= t('.sending_contract.guidance') %></p>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <%= link_to t('.continue'), '#', class: 'govuk-button' %>
+        <%= link_to t('.switch_to_further_competition'), '#', class: 'govuk-button govuk-button--secondary govuk-!-margin-left-3' %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <%= link_to t('.return_to_dashboard'), facilities_management_beta_procurements_path, class: 'govuk-link govuk-link--no-visited-state' %>
+      </div>
+    </div>
+  </div>
+</div>
