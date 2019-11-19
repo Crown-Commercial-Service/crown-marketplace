@@ -191,9 +191,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_appliances_for_testing if value is not present' do
+      it 'now validates no_of_appliances_for_testing if value is not present' do
         procurement_building_service.code = 'E.4'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_appliances_for_testing is present and greater than 0' do
@@ -210,9 +210,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_building_occupants if value is not present' do
+      it 'now validates no_of_building_occupants if value is not present' do
         procurement_building_service.code = 'G.1'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_building_occupants is present and greater than 0' do
@@ -229,9 +229,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_building_occupants if value is not present' do
+      it 'now validates no_of_building_occupants if value is not present' do
         procurement_building_service.code = 'G.3'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_building_occupants is present and greater than 0' do
@@ -248,9 +248,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate size_of_external_area if value is not present' do
+      it 'now validates size_of_external_area if value is not present' do
         procurement_building_service.code = 'G.5'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if size_of_external_area is present and greater than 0' do
@@ -267,9 +267,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_consoles_to_be_serviced if value is not present' do
+      it 'now validates no_of_consoles_to_be_serviced if value is not present' do
         procurement_building_service.code = 'K.1'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_consoles_to_be_serviced is present and greater than 0' do
@@ -286,9 +286,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'now validates tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.2'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -305,9 +305,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'now validates tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.3'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -324,9 +324,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_units_to_be_serviced if value is not present' do
+      it 'now validates no_of_units_to_be_serviced if value is not present' do
         procurement_building_service.code = 'K.7'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_units_to_be_serviced is present and greater than 0' do
@@ -343,9 +343,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'now validates tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.4'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -362,9 +362,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'now validates tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.5'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -381,9 +381,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'now validates tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.6'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -449,14 +449,14 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         procurement_building_service.service_standard = 'B'
         procurement_building_service.no_of_building_occupants = nil
         expect(procurement_building_service.valid?(:cleaning_standards)).to eq true
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
         expect(procurement_building_service.valid?(:all)).to eq false
       end
 
       it 'volume will be valid (incorrectly) and all correctly invalid' do
         procurement_building_service.no_of_building_occupants = nil
         procurement_building_service.service_standard = 'B'
-        expect(procurement_building_service.valid?(:volume)).to eq true # this is incorrect
+        expect(procurement_building_service.valid?(:volume)).to eq false # this is incorrect
         expect(procurement_building_service.valid?(:cleaning_standards)).to eq true
         expect(procurement_building_service.valid?(:all)).to eq false
       end
@@ -494,8 +494,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       it 'will be invalid without lift data' do
         expect(procurement_building_service.valid?(:lifts)).to eq false
         expect(procurement_building_service.valid?(:all)).to eq false
-        service_status = procurement_building_service.services_status
-        expect(service_status.include?(procurement_building_service.code.to_sym)).to eq true
       end
 
       context 'with just lift data' do
@@ -506,11 +504,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
           expect(procurement_building_service.valid?(:all)).to eq false
         end
 
-        it 'service_status will showing invalid' do
+        it 'service_status will show invalid when lift_data invalid' do
           procurement_building_service[:lift_data] = %w[1 1001]
           service_status = procurement_building_service.services_status
-          expect(service_status[procurement_building_service.code.to_sym].dig(:lifts)).to eq false
-          expect(service_status[procurement_building_service.code.to_sym].dig(:ppm_standards)).to eq false
+          expect(service_status[:validity][:lifts].empty?).to eq false
+          expect(service_status[:validity][:ppm_standards].empty?).to eq false
         end
       end
 
@@ -525,8 +523,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         it 'service status data will show it' do
           procurement_building_service[:service_standard] = 'B'
           service_status = procurement_building_service.services_status
-          expect(service_status[procurement_building_service.code.to_sym].dig(:lifts)).to eq false
-          expect(service_status[procurement_building_service.code.to_sym].dig(:ppm_standards)).to eq true
+          expect(service_status[:validity][:lifts].empty?).to eq false
+          expect(service_status[:validity][:ppm_standards].empty?).to eq true
         end
       end
 
@@ -542,9 +540,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
           procurement_building_service[:service_standard] = 'B'
           procurement_building_service[:lift_data] = %w[1 50]
           service_status = procurement_building_service.services_status
-          expect(service_status.include?(procurement_building_service.code.to_sym)).to eq true
-          expect(service_status[procurement_building_service.code.to_sym].dig(:lifts)).to eq true
-          expect(service_status[procurement_building_service.code.to_sym].dig(:ppm_standards)).to eq true
+          expect(service_status[:validity][:lifts].empty?).to eq true
+          expect(service_status[:validity][:ppm_standards].empty?).to eq true
         end
       end
     end
@@ -616,6 +613,17 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
   end
 
+  describe '#validate_services' do
+    context 'when empty' do
+      it 'will be so' do
+        procurement_building_service.code = 'C.5'
+        procurement_building_service.lift_data = %w[1 2 3]
+        procurement_building_service.service_standard = 'A'
+        expect(procurement_building_service.services_status[:validity][:lifts].empty?).to eq(true)
+      end
+    end
+  end
+
   describe '#services_status' do
     context 'when analysing an empty service record' do
       it 'will return a hash indicating na/false' do
@@ -640,8 +648,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       it 'will return a hash with the correct contexts and false for G.1' do
         procurement_building_service.code = 'G.1'
         result = procurement_building_service.services_status
-        expect(result[procurement_building_service[:code].to_sym]).to include(:cleaning_standards)
-        expect(result[procurement_building_service[:code].to_sym][:cleaning_standards]).to eq(false)
+        expect(result[:contexts]).to include(:cleaning_standards)
+        expect(result[:validity][:cleaning_standards].empty?).to eq(false)
       end
     end
   end
