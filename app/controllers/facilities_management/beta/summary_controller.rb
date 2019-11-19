@@ -64,8 +64,15 @@ module FacilitiesManagement
 
         @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
 
-        selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
-        uvals = @report.uom_values(selected_buildings)
+        # @procurement.procurement_buildings.first.procurement_building_services
+        if @procurement
+          selected_buildings = @procurement.procurement_buildings
+          # uvals = @procurement.procurement_buildings.first.procurement_building_services
+          # uvals = nil
+        else
+          selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
+          uvals = @report.uom_values(selected_buildings)
+        end
 
         rates = CCS::FM::Rate.read_benchmark_rates
         rate_card = CCS::FM::RateCard.latest
@@ -86,6 +93,7 @@ module FacilitiesManagement
           @procurement = current_user.procurements.where(name: params[:name]).first
           # TBC: is the contract start date the same as the 'initial call off start date' ?
           @start_date = @procurement[:initial_call_off_start_date]
+          # @procurement.procurement_buildings.first.procurement_building_services
         else
           @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
         end
