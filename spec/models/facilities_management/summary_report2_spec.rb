@@ -678,10 +678,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       rates = CCS::FM::Rate.read_benchmark_rates
       rate_card = CCS::FM::RateCard.latest
+      rate_card.data.deep_symbolize_keys!
 
       results = {}
       report_results = {}
-      supplier_names = rate_card.data['Prices'].keys
+      supplier_names = rate_card.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
