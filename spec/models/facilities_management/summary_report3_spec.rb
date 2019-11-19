@@ -399,10 +399,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       rates = CCS::FM::Rate.read_benchmark_rates
       rate_card = CCS::FM::RateCard.latest
+      rate_card.data.deep_symbolize_keys!
 
       results = {}
       report_results = {}
-      supplier_names = rate_card.data['Prices'].keys
+      supplier_names = rate_card.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -411,8 +412,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       sorted_list = results.sort_by { |_k, v| v }
-      expect(sorted_list.first[0]).to eq 'Cartwright and Sons'
-      expect(sorted_list.first[1].round(2)).to eq 1469124.32
+      expect(sorted_list.first[0].to_s).to eq 'Leffler-Strosin'
+      expect(sorted_list.first[1].round(2)).to eq 3730882.67
 
       supplier_name = sorted_list.first[0]
       expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
@@ -490,6 +491,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # --------
     rate_card = CCS::FM::RateCard.latest
+    rate_card.data.deep_symbolize_keys!
     rates = CCS::FM::Rate.read_benchmark_rates
 
     # ------
@@ -510,7 +512,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     report = described_class.new(start_date, 'test@example.com', procurement)
 
     results = {}
-    supplier_names = rate_card.data['Prices'].keys
+    supplier_names = rate_card.data[:Prices].keys
     supplier_names.each do |supplier_name|
       # dummy_supplier_name = 'Hickle-Schinner'
       results[supplier_name] = {}
