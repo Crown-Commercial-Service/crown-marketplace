@@ -1,7 +1,7 @@
 <div class="govuk-body govuk-grid-row buyer-details">
 
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { multipart: true } do |f| %>
+    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { specialvalidation:false, multipart: true } do |f| %>
       <%= link_to 'Back', facilities_management_beta_path, class: "govuk-back-link govuk-!-margin-bottom-2" %>
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
 
@@ -112,7 +112,6 @@
         <h2 class="govuk-heading-m">
           Sector
         </h2>
-
         <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:central_government].any? %>">
 
           <div class="govuk-heading-s govuk-!-margin-bottom-0">
