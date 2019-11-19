@@ -36,7 +36,7 @@ $(function () {
         let add2 = selectedOption.data("add2").slice(0, -2);
         let town = selectedOption.data("town").slice(0, -2);
         let county = selectedOption.data("county").slice(0, -2);
-        let postcode = selectedOption.data("postcode").slice(0, -2);
+        let postcode = selectedOption.data("postcode");
 
         $("#organisation-address-line-1").val(add1);
         $("#organisation-address-line-2").val(add2);
