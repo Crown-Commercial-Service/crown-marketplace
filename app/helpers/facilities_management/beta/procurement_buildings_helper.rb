@@ -1,22 +1,22 @@
 module FacilitiesManagement::Beta::ProcurementBuildingsHelper
-  def service_questions(pbs)
-    pbs.this_service
-  end
-
   def volume_question(pbs)
-    service_questions(pbs)[:questions].first
+    [] unless pbs.this_service[:context].key? :volume
+    pbs.this_service[:context][:volume]&.first
   end
 
   def ppm_standard_question(pbs)
-    service_questions(pbs)[:ppm_standards][:questions]
+    [] unless pbs.this_service[:context].key? :ppm_standards
+    pbs.this_service[:context][:ppm_standards]&.first
   end
 
   def building_standard_question(pbs)
-    service_questions(pbs)[:building_standards][:questions]
+    [] unless pbs.this_service[:context].key? :building_standards
+    pbs.this_service[:context][:building_standards]&.first
   end
 
   def cleaning_standard_question(pbs)
-    service_questions(pbs)[:cleaning_standards][:questions]
+    [] unless pbs.this_service[:context].key? :cleaning_standards
+    pbs.this_service[:context][:cleaning_standards]&.first
   end
 
   def question_type(service, question)

@@ -23,10 +23,6 @@ class FacilitiesManagement::ServicesAndQuestions
     @service_collection.select { |svc| svc[:context].include?(context.to_sym) }.map { |svc| svc[:code] }
   end
 
-  def codes
-    @service_collection.map { |sc| sc[:code] }
-  end
-
   private
 
   def define_context_questions
@@ -35,9 +31,10 @@ class FacilitiesManagement::ServicesAndQuestions
       building_standards: %i[service_standard].freeze,
       cleaning_standards: %i[service_standard].freeze,
       volume: %i[no_of_appliances_for_testing no_of_building_occupants size_of_external_area no_of_consoles_to_be_serviced tones_to_be_collected_and_removed].freeze,
-      service_hours: %i[service_hours].freeze }
+      service_hours: %i[no_of_hours_of_service_provision].freeze }
   end
 
+  # rubocop:disable Metrics/MethodLength
   def gather_services
     service_hours_questions = @context_questions[:service_hours]
     cleaning_questions = @context_questions[:cleaning_standards]
@@ -78,6 +75,19 @@ class FacilitiesManagement::ServicesAndQuestions
      { code: 'C.12', context: { ppm_standards: ppm_questions }, questions: ppm_questions },
      { code: 'C.13', context: { ppm_standards: ppm_questions }, questions: ppm_questions },
      { code: 'C.14', context: { ppm_standards: ppm_questions }, questions: ppm_questions },
-     { code: 'G.4', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions }].freeze
+     { code: 'G.4', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.2', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.6', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.7', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.8', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.9', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.10', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.11', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.12', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.13', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.14', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.15', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
+     { code: 'G.16', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions }].freeze
   end
+  # rubocop:enable Metrics/MethodLength
 end
