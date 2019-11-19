@@ -59,6 +59,9 @@ module FacilitiesManagement
     end
 
     # rubocop:disable Metrics/ParameterLists (with a s)
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil)
       # selected_services
 
@@ -93,8 +96,8 @@ module FacilitiesManagement
           # building_data = building
           building_uvals = building_uvals.map do |u|
             {
-              :service_code => u[:code],
-              :uom_value => 42,
+              service_code: u[:code],
+              uom_value: 42,
             }
           end
 
@@ -108,6 +111,9 @@ module FacilitiesManagement
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
 
     def with_pricing
