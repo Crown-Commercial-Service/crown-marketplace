@@ -37,7 +37,7 @@
   <%= f.fields_for :procurement_building_services do |procurement_building_service| %>
     <% if procurement_building_service.object.requires_building_standards? %>
       <% index += 1 %>
-      <div class="govuk-form-group <%= "govuk-form-group--error" if procurement_building_service.object.errors.any? %>" id="<%= error_id("procurement_building_services.#{ppm_standard_question(procurement_building_service.object)}") %>">
+      <div class="govuk-form-group <%= "govuk-form-group--error" if procurement_building_service.object.errors.any? %>" id="<%= error_id("procurement_building_services.#{building_standard_question(procurement_building_service.object)}") %>">
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-0 govuk-!-padding-bottom-0">
             <p class="govuk-fieldset__heading"><strong><%= index %>. <%= procurement_building_service.object.name %></strong></p>
