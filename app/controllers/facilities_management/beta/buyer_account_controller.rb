@@ -2,6 +2,8 @@ module FacilitiesManagement
   module Beta
     class BuyerAccountController < FrameworkController
       before_action :redirect_if_needed
+      before_action :authenticate_user!
+      before_action :authorize_user
 
       def buyer_account
         @current_login_email = current_user.email.to_s
