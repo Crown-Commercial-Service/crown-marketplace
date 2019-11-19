@@ -19,6 +19,10 @@ class FacilitiesManagement::ServicesAndQuestions
     result
   end
 
+  def get_codes_by_context(context)
+    @service_collection.select { |svc| svc[:context].include?(context.to_sym) }.map { |svc| svc[:code] }
+  end
+
   private
 
   def define_context_questions
