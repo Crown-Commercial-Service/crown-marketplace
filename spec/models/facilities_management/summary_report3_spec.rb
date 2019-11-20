@@ -399,7 +399,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       rates = CCS::FM::Rate.read_benchmark_rates
       rate_card = CCS::FM::RateCard.latest
-      rate_card.data.deep_symbolize_keys!
+      # rate_card.data.deep_symbolize_keys!
 
       results = {}
       report_results = {}
@@ -425,7 +425,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       # uvals.each(&:deep_symbolize_keys!)
       buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
 
-      building_ids_with_service_codes2 = buildings_ids.collect do |b|
+      building_ids_with_service_codes2 = buildings_ids.sort.collect do |b|
         services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
         { building_id: b.downcase, service_codes: services_per_building }
       end
@@ -491,7 +491,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # --------
     rate_card = CCS::FM::RateCard.latest
-    rate_card.data.deep_symbolize_keys!
+    # rate_card.data.deep_symbolize_keys!
     rates = CCS::FM::Rate.read_benchmark_rates
 
     # ------
