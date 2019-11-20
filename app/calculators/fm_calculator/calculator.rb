@@ -17,11 +17,13 @@ module FMCalculator
     @framework_rates = nil
 
     # rubocop:disable Metrics/ParameterLists (with a s)
+    # rubocop:disable Metrics/AbcSize
     def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag,
                    rates, rate_card = nil, supplier_name = nil, building_data = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
+      @service_ref_sym = service_ref.to_sym
       @uom_vol = uom_vol
       @occupants = occupants
       @tupe_flag = tupe_flag
@@ -43,12 +45,13 @@ module FMCalculator
       @building_type = @building_data[:'fm-building-type'] || @building_data['building-type'] if building_data
       @building_type = @building_type.to_sym if @building_type
     end
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
-      if @supplier_name && @rate_card_discounts[@service_ref]
-        (1 - @rate_card_discounts[@service_ref][:'Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref][@building_type].to_f
+      if @supplier_name && @rate_card_discounts[@service_ref_sym]
+        (1 - @rate_card_discounts[@service_ref_sym][:'Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref_sym][@building_type].to_f
       else
         @uom_vol * @framework_rates[@service_ref.gsub('.', '')].to_f
       end

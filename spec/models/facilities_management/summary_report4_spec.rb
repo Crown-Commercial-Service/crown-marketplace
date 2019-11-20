@@ -399,7 +399,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       rates = CCS::FM::Rate.read_benchmark_rates
       rate_card = CCS::FM::RateCard.latest
-      # rate_card.data.deep_symbolize_keys!
 
       results = {}
       report_results = {}
@@ -414,26 +413,30 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
       expect(sorted_list.first[1].round(2)).to eq 1469124.32
+    end
 
-      supplier_name = sorted_list.first[0]
-      expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
+    it 'price for one supplier' do
+      user_email = 'test@example.com'
+      start_date = DateTime.now.utc
 
-      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
+      uvals.map!(&:deep_symbolize_keys)
 
-      IO.write('/tmp/direct_award_prices_3.xlsx', spreadsheet.to_xlsx)
+      data[:'is-tupe'] = 'yes'
+      report = described_class.new(start_date, user_email, data)
 
-      # uvals.each(&:deep_symbolize_keys!)
-      buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
 
-      building_ids_with_service_codes2 = buildings_ids.sort.collect do |b|
-        services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
-        { building_id: b.downcase, service_codes: services_per_building }
-      end
+      selected_buildings3 = [@selected_buildings2[1]]
+      uvals2 = uvals.select { |v| selected_buildings3.first.id == v[:building_id] && v[:service_code] == 'E.4' }
+      supplier_name = 'Hickle-Schinner'
 
-      spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals)
-      spreadsheet = spreadsheet_builder.build
-      # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
-      IO.write('/tmp/deliverable_matrix_3.xlsx', spreadsheet.to_stream.read)
+      report_results = {}
+      report_results[supplier_name] = {}
+      report.calculate_services_for_buildings selected_buildings3, uvals2, rates, rate_card, supplier_name, report_results[supplier_name]
+
+      # p report.direct_award_value
+      expect(report.direct_award_value.round(2)).to eq 7.29
     end
     # rubocop:enable RSpec/InstanceVariable
     # rubocop:enable RSpec/ExampleLength
