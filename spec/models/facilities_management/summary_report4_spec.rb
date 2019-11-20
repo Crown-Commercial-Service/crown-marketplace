@@ -69,34 +69,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 6, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' }
     ]
   end
-  let(:supplier_names) do
-    [:"Wolf-Wiza",
-     :"Bogan-Koch",
-     :"O'Keefe LLC",
-     :"Treutel LLC",
-     :"Hirthe-Mills",
-     :"Kemmer Group",
-     :"Mayer-Russel",
-     :"Bode and Sons",
-     :"Collier Group",
-     :"Hickle-Schinner",
-     :"Leffler-Strosin",
-     :"Dickinson-Abbott",
-     :"O'Keefe-Mitchell",
-     :"Schmeler-Leuschke",
-     :"Abernathy and Sons",
-     :"Cartwright and Sons",
-     :"Dare, Heaney and Kozey",
-     :"Rowe, Hessel and Heller",
-     :"Kulas, Schultz and Moore",
-     :"Walsh, Murphy and Gaylord",
-     :"Shields, Ratke and Parisian",
-     :"Ullrich, Ratke and Botsford",
-     :"Lebsack, Vandervort and Veum",
-     :"Marvin, Kunde and Cartwright",
-     :"Kunze, Langworth and Parisian",
-     :"Halvorson, Corwin and O'Connell"]
-  end
 
   # rubocop:disable Layout/MultilineHashBraceLayout
   # rubocop:disable RSpec/BeforeAfterAll
@@ -118,7 +90,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
               'fm-address-postcode' => 'SW1P 2BA',
               'fm-nuts-region' => 'Westminster'
             },
-            'isLondon' => false,
+            'isLondon' => 'No',
             :'security-type' => 'Baseline Personnel Security Standard',
             'services' => [
               { 'code' => 'J-8', 'name' => 'Additional security services' },
@@ -257,7 +229,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
               'fm-address-postcode' => 'SW1W 9SZ',
               'fm-nuts-region' => 'Westminster'
             },
-            'isLondon' => false,
+            'isLondon' => 'No',
             :'security-type' => 'Baseline Personnel Security Standard',
             'services' => [
               { 'code' => 'J-8', 'name' => 'Additional security services' },
@@ -423,14 +395,18 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       uvals.map!(&:deep_symbolize_keys)
 
-      report = described_class.new(start_date: start_date, user_email: user_email, data: data)
+      report = described_class.new(start_date, user_email, data)
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
 
       results = {}
       report_results = {}
+      supplier_names = rate_card.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
-        report.calculate_services_for_buildings @selected_buildings2, uvals, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
         results[supplier_name] = report.direct_award_value
       end
 
@@ -446,7 +422,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       uvals.map!(&:deep_symbolize_keys)
 
       data[:'is-tupe'] = 'yes'
-      report = described_class.new(start_date: start_date, user_email: user_email, data: data)
+      report = described_class.new(start_date, user_email, data)
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
 
       selected_buildings3 = [@selected_buildings2[1]]
       uvals2 = uvals.select { |v| selected_buildings3.first.id == v[:building_id] && v[:service_code] == 'E.4' }
@@ -454,7 +433,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       report_results = {}
       report_results[supplier_name] = {}
-      report.calculate_services_for_buildings selected_buildings3, uvals2, supplier_name, report_results[supplier_name]
+      report.calculate_services_for_buildings selected_buildings3, uvals2, rates, rate_card, supplier_name, report_results[supplier_name]
 
       # p report.direct_award_value
       expect(report.direct_award_value.round(2)).to eq 7.29
@@ -501,7 +480,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       {
         id: id,
         gia: vals['gia'].to_f,
-        isLondon: vals['isLondon'] ? true : false,
+        isLondon: vals['isLondon'] ? 'Yes' : 'No',
         fm_building_type: 'General office - Customer Facing'
       }
 
@@ -514,6 +493,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # p 'There are #{Nuts3Region.all.count} NUTS3 regions'
 
     # --------
+    rate_card = CCS::FM::RateCard.latest
+    # rate_card.data.deep_symbolize_keys!
+    rates = CCS::FM::Rate.read_benchmark_rates
+
     # ------
     uom_vals = []
     # posted_services = FacilitiesManagement::Service.all.map(&:code)
@@ -529,13 +512,14 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
     # ------
 
-    report = described_class.new(start_date: start_date, user_email: 'test@example.com', data: procurement)
+    report = described_class.new(start_date, 'test@example.com', procurement)
 
     results = {}
+    supplier_names = rate_card.data[:Prices].keys
     supplier_names.each do |supplier_name|
       # dummy_supplier_name = 'Hickle-Schinner'
       results[supplier_name] = {}
-      report.calculate_services_for_buildings all_buildings, uom_vals, supplier_name, results[supplier_name]
+      report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name, results[supplier_name]
       results[supplier_name][:direct_award_value] = report.direct_award_value
     end
 

@@ -389,7 +389,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/InstanceVariable
-    it 'create a direct-award report' do
+    it 'create a direct-award report check prices' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
 
@@ -412,15 +412,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       sorted_list = results.sort_by { |_k, v| v }
-      expect(sorted_list.first[0].to_s).to eq 'Leffler-Strosin'
-      expect(sorted_list.first[1].round(2)).to eq 3730882.67
+      expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
+      expect(sorted_list.first[1].round(2)).to eq 1469124.32
 
       supplier_name = sorted_list.first[0]
       expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
 
       spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
 
-      IO.write('/tmp/direct_award_prices_2.xlsx', spreadsheet.to_xlsx)
+      IO.write('/tmp/direct_award_prices_3.xlsx', spreadsheet.to_xlsx)
 
       # uvals.each(&:deep_symbolize_keys!)
       buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
@@ -433,7 +433,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals)
       spreadsheet = spreadsheet_builder.build
       # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
-      IO.write('/tmp/deliverable_matrix_2.xlsx', spreadsheet.to_stream.read)
+      IO.write('/tmp/deliverable_matrix_3.xlsx', spreadsheet.to_stream.read)
     end
     # rubocop:enable RSpec/InstanceVariable
     # rubocop:enable RSpec/ExampleLength
