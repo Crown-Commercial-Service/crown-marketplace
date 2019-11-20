@@ -628,7 +628,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     u = uvals.select { |s| s['service_code'] == 'E.4' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
     report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
     # GBP 470.80
-    expect(report.direct_award_value.round(2)).to be 470.8
+    expect(report.direct_award_value.round(2)).to be 470.80
   end
 
   it 'price individual services G.3' do
