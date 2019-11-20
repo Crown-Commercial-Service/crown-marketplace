@@ -628,7 +628,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     u = uvals.select { |s| s['service_code'] == 'E.4' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
     report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
     # GBP 470.80
-    expect(report.direct_award_value.round(2)).to be 485.80
+    expect(report.direct_award_value.round(2)).to be 470.8
   end
 
   it 'price individual services G.3' do
@@ -637,15 +637,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     u = uvals.select { |s| s['service_code'] == 'G.3' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
     report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
     # GBP 1,119,698.27
-    expect(report.direct_award_value.round(2)).to be 767017.54
+    expect(report.direct_award_value.round(2)).to be 1119698.27
 
     u = uvals.select { |s| s['service_code'] == 'C.11' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
     report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
     # GBP 52,655.96
-    expect(report.direct_award_value.round(2)).to be 27832.21
+    expect(report.direct_award_value.round(2)).to be 52655.96
 
     report.calculate_services_for_buildings buildings, uvals, rates, rate_card, dummy_supplier_name
-    expect(report.direct_award_value.round(2)).to be 4416680.88
+    expect(report.direct_award_value.round(2)).to be 4806671.50
     # -------------------
   end
 
@@ -669,9 +669,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     sorted_results = results.sort_by { |_key, value| value }
 
     # p rate_card
-    expect(sorted_results.first[0].to_s).to eq 'Leffler-Strosin'
+    expect(sorted_results.first[0].to_s).to eq 'Cartwright and Sons'
 
-    expect(sorted_results.first[1].round(2)).to equal 3607329.52
+    expect(sorted_results.first[1].round(2)).to equal 2566970.06
   end
 
   # rubocop:disable RSpec/ExampleLength
@@ -729,7 +729,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
 
     # p report.assessed_value
-    expect(report.direct_award_value.round(2)).to be 46321.64
+    expect(report.direct_award_value.round(2)).to be 59153.05
   end
   # rubocop:enable RSpec/ExampleLength
 
@@ -783,7 +783,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, dummy_supplier_name
 
     # p report.assessed_value
-    expect(report.direct_award_value.round(2)).to be 1028182.92
+    expect(report.direct_award_value.round(2)).to be 972572.38
   end
   # rubocop:enable RSpec/ExampleLength
 
