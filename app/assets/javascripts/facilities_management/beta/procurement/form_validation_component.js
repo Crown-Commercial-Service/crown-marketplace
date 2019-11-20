@@ -3,7 +3,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         let canConnect = false;
         if (null != formDOMObject && null == formDOMObject.formValidator) {
             if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") == "true") ||
-                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation") || formDOMObject.getAttribute("specialvalidation") == "false")) {
+                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation") || !formDOMObject.getAttribute("specialvalidation") == "false")) {
                 canConnect = true;
             }
         }
