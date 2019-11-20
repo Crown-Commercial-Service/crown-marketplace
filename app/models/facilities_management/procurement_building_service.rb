@@ -21,7 +21,9 @@ module FacilitiesManagement
     validate :validate_lift_data, on: :lifts
 
     # validates on the service_standard service question
-    validate :validate_standard_presence, on: %i[ppm_standards building_standards cleaning_standards]
+    validate :validate_ppm_standard_presence, on: :ppm_standards
+    validate :validate_building_standard_presence, on: :building_standards
+    validate :validate_cleaning_standard_presence, on: :cleaning_standards
 
     # validates the entire row for all contexts - any appropriately invalid will validate as false
     validate :validate_services, on: :all
@@ -103,9 +105,23 @@ module FacilitiesManagement
       end
     end
 
-    def validate_standard_presence
-      return if (%i[ppm_standards building_standards cleaning_standards] & this_service[:context].keys).empty?
+    def validate_ppm_standard_presence
+      validate_standard if validation_needed_for?(:ppm_standards)
+    end
 
+    def validate_building_standard_presence
+      validate_standard if validation_needed_for?(:building_standards)
+    end
+
+    def validate_cleaning_standard_presence
+      validate_standard if validation_needed_for?(:cleaning_standards)
+    end
+
+    def validation_needed_for?(context)
+      this_service[:context].keys.include?(context)
+    end
+
+    def validate_standard
       errors.add(:service_standard, "#{I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank')} #{name[0, 1].downcase}#{name[1, name.length]}") if service_standard.blank?
     end
 
@@ -119,7 +135,7 @@ module FacilitiesManagement
       return unless this_service[:context].key?(:volume)
 
       this_service[:context][:volume].each do |question|
-        validates_numericality_of(question.to_sym, greater_than: 0, only_integer: true, message: :invalid)
+        validates_numericality_of(question.to_sym, greater_than: 0, only_integer: true, message: :invalid) if send(this_service[:context][:volume].first).present?
       end
     end
 
