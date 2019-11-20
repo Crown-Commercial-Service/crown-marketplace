@@ -2,7 +2,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   def initialize(supplier_name, data, rate_card)
     @supplier_name = supplier_name
     @data = data
-    @rate_card_data = rate_card.data.deep_symbolize_keys
+    @rate_card_data = rate_card.data
     create_spreadsheet
   end
 
