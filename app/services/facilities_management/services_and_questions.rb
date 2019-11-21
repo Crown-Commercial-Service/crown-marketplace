@@ -31,7 +31,7 @@ class FacilitiesManagement::ServicesAndQuestions
       building_standards: %i[service_standard].freeze,
       cleaning_standards: %i[service_standard].freeze,
       volume: %i[no_of_appliances_for_testing no_of_building_occupants size_of_external_area no_of_consoles_to_be_serviced tones_to_be_collected_and_removed].freeze,
-      service_hours: %i[no_of_hours_of_service_provision].freeze }
+      service_hours: %i[service_hours].freeze }
   end
 
   # rubocop:disable Metrics/MethodLength
