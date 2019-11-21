@@ -8,6 +8,7 @@ module FacilitiesManagement
     accepts_nested_attributes_for :procurement_building_services, allow_destroy: true
 
     validate :service_codes_not_empty, on: :building_services
+    validate :services_valid?, on: :procurement_building_services
 
     before_validation :cleanup_service_codes
     after_save :update_procurement_building_services
@@ -30,6 +31,15 @@ module FacilitiesManagement
 
     def cleanup_service_codes
       self.service_codes = service_codes.reject(&:blank?)
+    end
+
+    def services_valid?
+      false if procurement_building_services.empty?
+
+      result = procurement_building_services.all? { |pbs| pbs.valid?(:all) }
+      errors.add(:procurement_building_services, :invalid, message: 'Some services are invalid') unless result
+
+      result
     end
 
     def update_procurement_building_services

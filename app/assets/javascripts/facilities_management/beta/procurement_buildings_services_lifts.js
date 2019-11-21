@@ -14,7 +14,7 @@ LiftDataUI.prototype.addNewLift = function() {
     }).append([
         $("<label>",{"class":"govuk-label", "for":"newlift_"+(currentCount+1)}).append("Lift " + (currentCount+1) + "."),
         $("<span>",{"class":"govuk-caption-m"}).append("Number of floors"),
-        $("<input>",{"class":"govuk-input govuk-input--width-2", "type":"number","min":"1","max":"99","required":"required",
+        $("<input>",{"class":"govuk-input govuk-input--width-2", "type":"number","maxlength":"3","min":"1","max":"1000","step":"1", "required":"required",
                      "id":"newlift_"+(currentCount+1),
                      "name":"facilities_management_procurement_building_service[lift_data][]"}),
         $("<button>",{"class":"govuk-!-margin-left-2 govuk-button govuk-button--secondary removelift",
@@ -25,7 +25,7 @@ LiftDataUI.prototype.addNewLift = function() {
         let targetLift = Number(e.currentTarget.getAttribute("data-liftcount"));
         this.removeLift(targetLift);
     }.bind(this));
-    this.restrictInput(newInputElement.find("input")[0]);
+    //this.restrictInput(newInputElement.find("input")[0]);
     this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").addClass("govuk-visually-hidden");
     this.liftDataContainer.append(newInputElement);
 };

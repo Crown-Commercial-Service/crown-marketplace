@@ -27,10 +27,6 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
     end
   end
 
-  def addlift; end
-
-  def removelift; end
-
   private
 
   def set_lift_count

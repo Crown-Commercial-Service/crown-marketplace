@@ -8,21 +8,21 @@
         <%= f.fields_for :procurement_building_services do |procurement_building_service| %>
           <% if procurement_building_service.object.requires_volume? %>
             <% index += 1 %>
-            <div class="govuk-grid-row procurement-building-service__form-group govuk-!-margin-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 govuk-form-group <%= "govuk-form-group--error" if procurement_building_service.object.errors.any? %> <%= 'border-top' if index == 1 %>" id="<%= error_id("procurement_building_services.#{volume_question(procurement_building_service.object.code)}") %>">
+            <div class="govuk-grid-row procurement-building-service__form-group govuk-!-margin-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 govuk-form-group <%= "govuk-form-group--error" if procurement_building_service.object.errors.any? %> <%= 'border-top' if index == 1 %>" id="<%= error_id("procurement_building_services.#{volume_question(procurement_building_service.object)}") %>">
               <div class="govuk-grid-column-one-half govuk-!-padding-0">
                 <strong><%= index %>. <%= procurement_building_service.object.name %></strong>
               </div>
               <div class="govuk-grid-column-one-half govuk-!-padding-0">
                 <div class="govuk-grid-row">
                   <div class="govuk-grid-column-three-quarters">
-                    <%= procurement_building_service.label t(".question.#{volume_question(procurement_building_service.object.code).to_s}"), class: "govuk-label govuk-!-font-weight-bold govuk-!-font-size-16" %>
+                    <%= procurement_building_service.label t(".question.#{volume_question(procurement_building_service.object).to_s}"), class: "govuk-label govuk-!-font-weight-bold govuk-!-font-size-16" %>
                   </div>
                   <div class="govuk-grid-column-one-quarter">
-                    <%= procurement_building_service.text_field volume_question(procurement_building_service.object.code), value: procurement_building_service.object.send(volume_question(procurement_building_service.object.code)), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if procurement_building_service.object.errors.any?} " %>
+                    <%= procurement_building_service.text_field volume_question(procurement_building_service.object), value: procurement_building_service.object.send(volume_question(procurement_building_service.object)), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if procurement_building_service.object.errors.any?} " %>
                   </div>
                 </div>
               </div>
-              <%= display_error_nested_models(procurement_building_service.object, volume_question(procurement_building_service.object.code)) %>
+              <%= display_error_nested_models(procurement_building_service.object, volume_question(procurement_building_service.object)) %>
             </div>
           <% end %>
         <% end %>

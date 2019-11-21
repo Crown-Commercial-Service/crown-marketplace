@@ -414,15 +414,10 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         end
       end
 
-      context 'when lift_data has 100 elements' do
+      context 'when lift_data has 1001 elements' do
         it 'validates to false' do
           procurement_building_service.code = 'C.5'
-          procurement_building_service.lift_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                                                    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-                                                    31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
-                                                    51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
-                                                    71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
-                                                    91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101]
+          procurement_building_service.lift_data = [*0..1001]
           expect(procurement_building_service.valid?(:lifts)).to eq false
         end
       end
@@ -440,6 +435,221 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
           expect(procurement_building_service.valid?(:lifts)).to eq false
           expect(procurement_building_service.errors.details[:lift_data].find_index { |item| item[:position] == 0 }.present?).to eq true
         end
+      end
+    end
+  end
+
+  describe 'service status and validations' do
+    context 'when code has exclusive validations' do
+      before do
+        procurement_building_service.code = 'G.1'
+      end
+
+      it 'will be invalid when only occupancy collected is invalid' do
+        procurement_building_service.service_standard = 'B'
+        procurement_building_service.no_of_building_occupants = -1
+        expect(procurement_building_service.valid?(:cleaning_standards)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
+        expect(procurement_building_service.valid?(:all)).to eq false
+      end
+
+      it 'volume will be invalid and all correctly invalid' do
+        procurement_building_service.no_of_building_occupants = -1
+        procurement_building_service.service_standard = 'B'
+        expect(procurement_building_service.valid?(:volume)).to eq false
+        expect(procurement_building_service.valid?(:cleaning_standards)).to eq true
+        expect(procurement_building_service.valid?(:all)).to eq false
+      end
+
+      it 'volume will be valid (correctly) and all correctly valid' do
+        procurement_building_service.no_of_building_occupants = 9
+        procurement_building_service.service_standard = 'B'
+        expect(procurement_building_service.valid?(:cleaning_standards)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:all)).to eq true
+      end
+
+      it 'will be invalid when only service_standard is blank' do
+        procurement_building_service.service_standard = nil
+        procurement_building_service.no_of_building_occupants = 65
+        expect(procurement_building_service.valid?(:cleaning_standards)).to eq false
+        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:all)).to eq false
+      end
+
+      it 'will be valid when tonnes and service_standard are not blank' do
+        procurement_building_service.service_standard = 'B'
+        procurement_building_service.no_of_building_occupants = 65
+        expect(procurement_building_service.valid?(:cleaning_standards)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq true
+      end
+    end
+
+    context 'when code has multiple validations' do
+      before do
+        procurement_building_service.code = 'C.5'
+      end
+
+      it 'will be invalid without lift data' do
+        expect(procurement_building_service.valid?(:lifts)).to eq false
+        expect(procurement_building_service.valid?(:all)).to eq false
+      end
+
+      context 'with just lift data' do
+        it 'will be valid with good data' do
+          procurement_building_service[:lift_data] = %w[1 50]
+          expect(procurement_building_service.valid?(:lifts)).to eq true
+          expect(procurement_building_service.valid?(:ppm_standards)).to eq false
+          expect(procurement_building_service.valid?(:all)).to eq false
+        end
+
+        it 'service_status will show invalid when lift_data invalid' do
+          procurement_building_service[:lift_data] = %w[1 1001]
+          service_status = procurement_building_service.services_status
+          expect(service_status[:validity][:lifts].empty?).to eq false
+          expect(service_status[:validity][:ppm_standards].empty?).to eq false
+        end
+      end
+
+      context 'with just service_standard data' do
+        it 'will be invalid' do
+          procurement_building_service[:service_standard] = 'B'
+          expect(procurement_building_service.valid?(:lifts)).to eq false
+          expect(procurement_building_service.valid?(:ppm_standards)).to eq true
+          expect(procurement_building_service.valid?(:all)).to eq false
+        end
+
+        it 'service status data will show it' do
+          procurement_building_service[:service_standard] = 'B'
+          service_status = procurement_building_service.services_status
+          expect(service_status[:validity][:lifts].empty?).to eq false
+          expect(service_status[:validity][:ppm_standards].empty?).to eq true
+        end
+      end
+
+      context 'with both lift and service_standard data' do
+        it 'will be valid with both lift and service standard data' do
+          procurement_building_service[:service_standard] = 'B'
+          procurement_building_service[:lift_data] = %w[1 50]
+          expect(procurement_building_service.valid?(:lifts)).to eq true
+          expect(procurement_building_service.valid?(:all)).to eq true
+        end
+
+        it 'service_status will indicate validity' do
+          procurement_building_service[:service_standard] = 'B'
+          procurement_building_service[:lift_data] = %w[1 50]
+          service_status = procurement_building_service.services_status
+          expect(service_status[:validity][:lifts].empty?).to eq true
+          expect(service_status[:validity][:ppm_standards].empty?).to eq true
+        end
+      end
+    end
+  end
+
+  describe 'code lookups' do
+    describe '#requires_volume?' do
+      context 'when code is does not require volumn' do
+        it 'will be false when C.5' do
+          procurement_building_service.code = 'C.5'
+          expect(procurement_building_service.requires_volume?).to eq false
+        end
+      end
+
+      context 'when code does require volume' do
+        it 'will be be true' do
+          procurement_building_service.code = 'E.4'
+          expect(procurement_building_service.requires_volume?).to eq true
+        end
+      end
+    end
+
+    describe '#requires_ppm_standards?' do
+      context 'when code requires ppm standards' do
+        it 'will be true when C.5' do
+          procurement_building_service.code = 'C.5'
+          expect(procurement_building_service.requires_ppm_standards?).to eq true
+        end
+      end
+
+      context 'when code doesn\'t require ppm standards' do
+        it 'will be false when K.6' do
+          procurement_building_service.code = 'K.6'
+          expect(procurement_building_service.requires_ppm_standards?).to eq false
+        end
+      end
+    end
+
+    describe '#requires_building_standards?' do
+      context 'when code requires building standards' do
+        it 'will be true when C.7' do
+          procurement_building_service.code = 'C.7'
+          expect(procurement_building_service.requires_building_standards?).to eq true
+        end
+      end
+
+      context 'when code doesn\'t require building standards' do
+        it 'will be false when K.1' do
+          procurement_building_service.code = 'K.1'
+          expect(procurement_building_service.requires_building_standards?).to eq false
+        end
+      end
+    end
+
+    describe '#requires_cleaning_standards?' do
+      context 'when code requires cleaning standards' do
+        it 'will be true when G.5' do
+          procurement_building_service.code = 'G.5'
+          expect(procurement_building_service.requires_cleaning_standards?).to eq true
+        end
+      end
+
+      context 'when code doesn\'t require cleaning standards' do
+        it 'will be false when K.6' do
+          procurement_building_service.code = 'K.6'
+          expect(procurement_building_service.requires_cleaning_standards?).to eq false
+        end
+      end
+    end
+  end
+
+  describe '#validate_services' do
+    context 'when empty' do
+      it 'will be so' do
+        procurement_building_service.code = 'C.5'
+        procurement_building_service.lift_data = %w[1 2 3]
+        procurement_building_service.service_standard = 'A'
+        expect(procurement_building_service.services_status[:validity][:lifts].empty?).to eq(true)
+      end
+    end
+  end
+
+  describe '#services_status' do
+    context 'when analysing an empty service record' do
+      it 'will return a hash indicating na/false' do
+        expect(procurement_building_service.services_status).to include(:context)
+        expect(procurement_building_service.services_status[:context]).to eq :na
+      end
+
+      it 'will return a hash indicating na/false when the code isn\'t initialised' do
+        procurement_building_service.code = nil
+        expect(procurement_building_service.services_status).to include(:context)
+        expect(procurement_building_service.services_status[:context]).to eq :na
+      end
+
+      it 'will return a hash indicating unknown/false when the code isn\'t valid' do
+        procurement_building_service.code = 'bad.code'
+        expect(procurement_building_service.services_status).to include(:context)
+        expect(procurement_building_service.services_status[:context]).to eq :unknown
+      end
+    end
+
+    context 'when analysing a service record with a valid code' do
+      it 'will return a hash with the correct contexts and false for G.1' do
+        procurement_building_service.code = 'G.1'
+        result = procurement_building_service.services_status
+        expect(result[:contexts]).to include(:cleaning_standards)
+        expect(result[:validity][:cleaning_standards].empty?).to eq(false)
       end
     end
   end
