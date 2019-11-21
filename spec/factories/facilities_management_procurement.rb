@@ -1,6 +1,11 @@
 FactoryBot.define do
   factory :facilities_management_procurement, class: FacilitiesManagement::Procurement do
-    name { Faker::Company.unique.name }
+    name { Faker::Name.unique.name }
+    contract_name { 'Contract name' }
+    estimated_cost_known { 12345 }
+    tupe { false }
+    initial_call_off_period { Time.zone.now + 6.months }
     association :user
+    procurement_buildings { build_list :facilities_management_procurement_building, 1 }
   end
 end

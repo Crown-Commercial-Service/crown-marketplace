@@ -71,8 +71,11 @@ en:
               too_short: Select at least one service you need to include in your procurement
         facilities_management/procurement:
           attributes:
+            base:
+              services_not_present: You must select at least one service
             contract_name:
               blank: Enter your contract name
+              not_present: You must answer the question about 'Contract name'
               taken: This contract name is already in use
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
@@ -81,6 +84,7 @@ en:
               greater_than_or_equal_to: Estimated annual cost must be an amount of money, like 12000 or 1200.45
             estimated_cost_known:
               inclusion: Select yes if you know your annual cost, if you do not please select no
+              not_present: You must answer the question about 'Estimated cost'
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -89,6 +93,7 @@ en:
               greater_than_or_equal_to: Enter initial call-off period
               less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
               not_a_number: Enter initial call-off period
+              not_present: You must answer the questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
@@ -97,6 +102,7 @@ en:
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
+              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             name:
               blank: Enter the name for the search
               taken: This name is already in use
@@ -104,8 +110,11 @@ en:
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               too_long: Call-off period and extensions must be 10 years or less
+            procurement_building_services:
+              invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be 'Complete'
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
+              not_present: You must select at least one building
             region_codes:
               invalid: Select at least one region you need to include in your procurement
             security_policy_document_date:
@@ -122,6 +131,7 @@ en:
               invalid: Select at least one service you need to include in your procurement
             tupe:
               inclusion: Select yes if you know TUPE applies to your contract
+              not_present: You must answer the question about 'TUPE'
         facilities_management/procurement_building:
           attributes:
             service_codes:
