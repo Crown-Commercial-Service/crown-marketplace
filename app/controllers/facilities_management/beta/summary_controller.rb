@@ -37,7 +37,6 @@ module FacilitiesManagement
 
         rates = CCS::FM::Rate.read_benchmark_rates
         rate_card = CCS::FM::RateCard.latest
-        # rate_card.data.deep_symbolize_keys!
 
         results = {}
         report_results = {}
@@ -77,7 +76,6 @@ module FacilitiesManagement
 
         rates = CCS::FM::Rate.read_benchmark_rates
         rate_card = CCS::FM::RateCard.latest
-        # rate_card.data.deep_symbolize_keys!
 
         @results = {}
         supplier_names = rate_card.data[:Prices].keys
