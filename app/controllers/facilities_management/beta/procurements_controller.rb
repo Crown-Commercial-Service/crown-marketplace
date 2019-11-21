@@ -2,12 +2,13 @@ require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FrameworkController
-      before_action :set_procurement, only: %i[show edit update destroy]
+      before_action :set_procurement, only: %i[show edit update destroy continue]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
       before_action :user_buildings_count, only: %i[show edit update]
       before_action :set_procurement_data, only: %i[show edit update]
       before_action :set_new_procurement_data, only: %i[new]
+      before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
 
       def index
         @procurements = current_user.procurements
@@ -83,6 +84,16 @@ module FacilitiesManagement
         end
       end
 
+      def continue
+        if procurement_valid?
+          redirect_to facilities_management_beta_procurement_summary_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
+      def summary; end
+
       private
 
       def procurement_params
@@ -131,7 +142,7 @@ module FacilitiesManagement
       end
 
       def set_procurement
-        @procurement = Procurement.find(params[:id])
+        @procurement = Procurement.find(params[:id] || params[:procurement_id])
       end
 
       def set_new_procurement_data
@@ -189,6 +200,10 @@ module FacilitiesManagement
       def set_edit_state
         @delete = params[:delete] == 'y' || params[:delete] == 'true'
         @change = !@delete && action_name == 'edit'
+      end
+
+      def procurement_valid?
+        @procurement.valid?(:all) && !@procurement.procurement_buildings.map { |p| p.valid?(:procurement_building_services) }.include?(false)
       end
     end
   end

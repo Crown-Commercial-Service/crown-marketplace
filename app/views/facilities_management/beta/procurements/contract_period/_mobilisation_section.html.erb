@@ -1,36 +1,35 @@
-<div class="govuk-summary-list__row">
-  <dt class="govuk-summary-list__key">
-    Mobilisation period
-  </dt>
-  <dd class="govuk-summary-list__value">
+<tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:mobilisation_period].any? %>">
+  <th scope="row" class="govuk-table__header govuk-!-font-size-19  <%= 'govuk-!-padding-left-2' if @procurement.errors[:mobilisation_period].any? %>" width="30%">Mobilisation period</th>
+  <td class="govuk-table__cell">
     <%= mobilisation_period %>
-  </dd>
-  <dd class="govuk-summary-list__actions">
-  </dd>
-</div>
+  </td>
+  <td class="govuk-table__cell">
+  </td>
+</tr>
+<% if @procurement.errors[:mobilisation_period].any? %>
+  <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
+    <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3"><%= display_error(@procurement, :mobilisation_period, false) %></td>
+  </tr>
+<% end %>
 
 <% if @procurement.mobilisation_period_required %>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-      Mobilisation start date
-    </dt>
-    <dd class="govuk-summary-list__value">
+  <tr class="govuk-table__row">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Mobilisation start date</th>
+    <td class="govuk-table__cell">
       <%= mobilisation_start_date unless @procurement.initial_call_off_start_date.blank?%>
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    </dd>
-  </div>
+    </td>
+    <td class="govuk-table__cell">
+    </td>
+  </tr>
 <% end %>
 
 <% unless @procurement.mobilisation_period.nil? %>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-      Mobilisation end date
-    </dt>
-    <dd class="govuk-summary-list__value">
+  <tr class="govuk-table__row">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Mobilisation end date</th>
+    <td class="govuk-table__cell">
       <%= mobilisation_end_date unless @procurement.initial_call_off_start_date.blank?%>
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    </dd>
-  </div>
+    </td>
+    <td class="govuk-table__cell">
+    </td>
+  </tr>
 <% end %>

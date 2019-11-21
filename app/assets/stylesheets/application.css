@@ -2350,6 +2350,10 @@
     border: 0
 }
 
+.govuk-no-border th, .govuk-no-border td {
+    border: 0 !important;
+}
+
 .govuk-input {
     font-family: "nta", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
