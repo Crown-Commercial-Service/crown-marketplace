@@ -34,8 +34,8 @@ module FMCalculator
       @benchmark_rates = rates[:benchmark_rates]
       @framework_rates = rates[:framework_rates]
 
-      @supplier_name = supplier_name.to_sym if supplier_name
       if supplier_name
+        @supplier_name = supplier_name.to_sym
         @rate_card_discounts = rate_card.data[:Discounts][@supplier_name]
         @rate_card_variances = rate_card.data[:Variances][@supplier_name]
         @rate_card_prices = rate_card.data[:Prices][@supplier_name]
