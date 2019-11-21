@@ -82,4 +82,10 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   def any_service_codes(procurement_buildings)
     procurement_buildings.map(&:service_codes).flatten.reject(&:blank?).any?
   end
+
+  def building_services_status?(status)
+    return t('common.incomplete') unless status == true
+
+    t('common.complete')
+  end
 end

@@ -305,7 +305,6 @@ module FacilitiesManagement
       uvals.each do |v|
         uom_value = v[:uom_value].to_f
 
-        # occupants = occupants(v['service_code'], building_data)
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
           uom_value = building_data[:gia]
@@ -313,7 +312,6 @@ module FacilitiesManagement
           occupants = 0
         end
 
-        # code = v['service_code'].remove('.')
         calc_fm = FMCalculator::Calculator.new(@contract_length_years,
                                                v[:service_code],
                                                uom_value,
@@ -327,21 +325,11 @@ module FacilitiesManagement
                                                supplier_name,
                                                building_data)
 
-        # print "#{calc_fm.sumunitofmeasure},"
-        # print "#{calc_fm.benchmarkedcostssum}," if supplier_name.nil?
-        # print "#{@contract_length_years},"
-        # print "#{v[:service_code]},#{uom_value},#{occupants},"
-        # print "#{@tupe_flag},#{@london_flag},#{@cafm_flag},#{@helpdesk_flag},#{supplier_name},"
-        # print "#{building_data[:"fm-building-type"]},"
-        # puts "#{building_data.inspect}"
-
         results2 = nil
         results2 = results[v[:service_code]] = {} if results
         results2[:spreadsheet_label] = v[:spreadsheet_label] if results2
         sum_uom += calc_fm.sumunitofmeasure results2
         sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
-
-        # results[v[:service_code]] = calc_fm.sumunitofmeasure if results
       end
       return { sum_uom: sum_uom } if supplier_name
 

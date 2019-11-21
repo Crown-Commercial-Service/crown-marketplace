@@ -83,12 +83,12 @@ module ApplicationHelper
     end
   end
 
-  def list_potential_errors(model_object, attribute, form_object_name)
+  def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
-    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attribute}" do
+    content_tag :div, class: 'error-collection govuk-visually-hidden', id: "error_#{form_object_name}_#{attribute}" do
       collection.each do |key, val|
-        concat(silent_govuk_validation_error(model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name))
+        concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
       end
     end
   end
@@ -103,6 +103,16 @@ module ApplicationHelper
     end
   end
 
+  def display_specialised_error(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
+    error = model_object.errors[attribute].first
+    return if error.blank?
+
+    error_type = model_object.errors.details[attribute].first[:error]
+    error_message = model_object.errors[attribute]&.first
+
+    govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: error_type, text: error_message, form_object_name: form_object_name }, error_lookup, error_position)
+  end
+
   # looks up the locals data for validation messages
   def validation_messages(model_object_sym, attribute_sym = nil)
     translation_hash = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
@@ -114,15 +124,6 @@ module ApplicationHelper
 
   # Renders a govuk compliant error-content div with a client-compatible validation type
   # and text for use as static content in the page
-  def silent_govuk_validation_error(model_data)
-    tag_validation_type = ERROR_TYPES.include?(model_data[:error_type]) ? ERROR_TYPES[model_data[:error_type]] : model_data[:error_type]
-    css_classes = ['govuk-error-message govuk-visually-hidden']
-    content_tag :label, content_tag(:span, model_data[:text]), class: css_classes,
-                                                               for: "#{model_data[:form_object_name]}_#{model_data[:attribute]}",
-                                                               id: "#{model_data[:attribute]}-error",
-                                                               data: { propertyname: model_data[:attribute].to_s, validation: tag_validation_type }
-  end
-
   def govuk_validation_error(model_data, error_lookup = nil, error_position = nil)
     tag_validation_type = ERROR_TYPES.include?(model_data[:error_type]) ? ERROR_TYPES[model_data[:error_type]] : model_data[:error_type]
     model_has_error = false
@@ -174,8 +175,8 @@ module ApplicationHelper
     less_than: 'max',
     less_than_or_equal_to: 'max',
     not_a_date: 'pattern',
-    not_a_number: 'pattern',
-    not_an_integer: 'pattern'
+    not_a_number: 'number',
+    not_an_integer: 'number'
   }.freeze
 
   def get_client_side_error_type_from_errors(errors, attribute)

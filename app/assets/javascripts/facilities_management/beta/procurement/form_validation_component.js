@@ -3,7 +3,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         let canConnect = false;
         if (null != formDOMObject && null == formDOMObject.formValidator) {
             if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") == "true") ||
-                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation") || formDOMObject.getAttribute("specialvalidation") == "false")) {
+                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation") || !formDOMObject.getAttribute("specialvalidation") == "false")) {
                 canConnect = true;
             }
         }
@@ -47,45 +47,50 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             }
             if (elements.length > 0) {
                 for (let index = 0; index < elements.length; index++) {
-                    let jElem = $(elements[index]);
-                    if (jElem.length > 0) {
-                        if (jElem.prop("required")) {
-                            submitForm = submitForm && this.testError(
-                                this.validationFunctions["required"],
-                                jElem, "required");
-                        }
-                        if (jElem.prop("maxlength") > 0) {
-                            submitForm = submitForm && this.testError(
-                                this.validationFunctions["maxlength"],
-                                jElem, "maxlength");
-                        }
-                        if (jElem.prop("type") && submitForm) {
-                            for (let prop in this.validationFunctions.type) {
-                                if (this.validationFunctions.type.hasOwnProperty(prop)) {
-                                    let fn = this.validationFunctions.type[prop];
-                                    if (null != fn && jElem.prop("type") == prop) {
-                                        submitForm = submitForm && this.testError(
-                                            fn, jElem, prop);
+                    try {
+                        let jElem = $(elements[index]);
+                        if (jElem.length > 0) {
+                            if (jElem.prop("required")) {
+                                submitForm = submitForm && this.testError(
+                                    this.validationFunctions["required"],
+                                    jElem, "required");
+                            }
+                            if (jElem.prop("maxlength") > 0) {
+                                submitForm = submitForm && this.testError(
+                                    this.validationFunctions["maxlength"],
+                                    jElem, "maxlength");
+                            }
+                            if (jElem.prop("type") && submitForm) {
+                                let htmlAttributeValue = jElem[0].getAttribute("type");
+                                try {
+                                    for (let prop in this.validationFunctions.type) {
+                                        if (this.validationFunctions.type.hasOwnProperty(prop)) {
+                                            let fn = this.validationFunctions.type[prop];
+                                            if (null != fn && htmlAttributeValue == prop) {
+                                                submitForm = submitForm && this.testError(
+                                                    fn, jElem, prop);
+                                            }
+                                        }
                                     }
-                                }
+                                } catch (e) {console.log(e);}
+                            }
+                            if ( jElem.prop("pattern") !== undefined && jElem.prop("pattern") !== "" && submitForm) {
+                                submitForm = submitForm && this.testError(
+                                    this.validationFunctions["regex"],
+                                    jElem, "pattern");
+                            }
+                            if ( jElem.prop("min") !== undefined && jElem.prop("min") !== "" && submitForm) {
+                                submitForm = submitForm && this.testError(
+                                    this.validationFunctions["min"],
+                                    jElem, "min");
+                            }
+                            if ( jElem.prop("max") !== undefined && jElem.prop("max") !== "" && submitForm) {
+                                submitForm = submitForm && this.testError(
+                                    this.validationFunctions["max"],
+                                    jElem, "max");
                             }
                         }
-                        if ( jElem.prop("pattern") !== undefined && jElem.prop("pattern") !== "" && submitForm) {
-                            submitForm = submitForm && this.testError(
-                                this.validationFunctions["regex"],
-                                jElem, "pattern");
-                        }
-                        if ( jElem.prop("min") !== undefined && jElem.prop("min") !== "" && submitForm) {
-                            submitForm = submitForm && this.testError(
-                                this.validationFunctions["min"],
-                                jElem, "min");
-                        }
-                        if ( jElem.prop("max") !== undefined && jElem.prop("max") !== "" && submitForm) {
-                            submitForm = submitForm && this.testError(
-                                this.validationFunctions["max"],
-                                jElem, "max");
-                        }
-                    }
+                    } catch (e) {console.log(e);}
 
                     this.validationResult = this.validationResult && submitForm;
                     submitForm = true;
@@ -159,7 +164,11 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             "number": function (jQueryinputElem) {
                 let inputType = jQueryinputElem[0].type;
                 jQueryinputElem[0].type = "text";
+
                 let result = jQueryinputElem.val() === "" || isNaN(Number(jQueryinputElem.val()));
+                if ( !result && jQueryinputElem[0].getAttribute("step") === "1") {
+                    result = ((jQueryinputElem.val() % 1) != 0) ;
+                }
                 jQueryinputElem[0].type = inputType;
                 return result;
             },
@@ -175,8 +184,8 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     };
 
     this.clearAllFieldErrors = function () {
-        $(this.form).find("label[class=govuk-error-message]").closest(".govuk-form-group .govuk-form-group--error").find(".govuk-input--error").removeClass("govuk-input--error");
-        $(this.form).find("label[class=govuk-error-message]").closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
+        $(this.form).find(".govuk-input--error").removeClass("govuk-input--error");
+        $(this.form).find(".govuk-form-group--error").removeClass("govuk-form-group--error");
         $(this.form).find("label[class=govuk-error-message]").addClass("govuk-visually-hidden");
     };
     this.clearFieldErrors = function (jElem) {
@@ -286,10 +295,17 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             } else {
                 display_text = message_text;
             }
+            // is there a message, of any other type, with the same text...
             let link = ul.find("a").filter(function () {
-                return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
+                return $(this).attr("data-propertyname") === propertyName && $(this).text() === display_text;
             });
 
+            if ( link.length === 0 ) {
+                link = ul.find("a").filter(function () {
+                    return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
+                });
+            }
+            // ensure duplicates
             if (link.length <= 0) {
                 let link = "<a href=\"#" + this.getErrorID(inputElement) + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
                 ul.append("<li>" + link + "</li>");
@@ -326,9 +342,9 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
     this.findPreExistingErrorMessage = function (jQueryElement, errorType, jqueryElementForInputGroup) {
         let jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
         if (jqueryElementForRequiredMessage.length === 0) {
-            jqueryElementForRequiredMessage = jQueryElement.parent().find(".error-collection").find("label[data-validation='" + errorType + "']");
+            jqueryElementForRequiredMessage = jQueryElement.parent().find(".error-collection").find("label[data-validation='" + errorType + "']").first();
             if (jqueryElementForRequiredMessage.length === 0) {
-                jqueryElementForRequiredMessage = jQueryElement.parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']");
+                jqueryElementForRequiredMessage = jQueryElement.parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']").first();
                 if (jqueryElementForRequiredMessage.length === 0) {
                     jqueryElementForRequiredMessage = this.insertElementForRequiredMessage(jQueryElement, jqueryElementForInputGroup, errorType);
                 }
@@ -348,6 +364,7 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
         if (! jQueryElement.siblings().is(jqueryElementForRequiredMessage)) {
             // clone error element and place it above the input element
             jqueryElementForRequiredMessage = jqueryElementForRequiredMessage.clone();
+            jqueryElementForRequiredMessage.prop("id", this.getErrorID(jQueryElement));
             jqueryElementForRequiredMessage.insertBefore(jQueryElement);
         }
 
@@ -362,7 +379,6 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
                     jQueryElement.removeClass("govuk-input--error");
                 }
             }
-            this.removeListElementInBannerError(jQueryElement, errorType);
             jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
         } else {
             if (jQueryElement[0].tagName === "INPUT") {
