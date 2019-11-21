@@ -399,7 +399,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       rates = CCS::FM::Rate.read_benchmark_rates
       rate_card = CCS::FM::RateCard.latest
-      # rate_card.data.deep_symbolize_keys!
 
       results = {}
       report_results = {}
@@ -491,7 +490,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # --------
     rate_card = CCS::FM::RateCard.latest
-    # rate_card.data.deep_symbolize_keys!
     rates = CCS::FM::Rate.read_benchmark_rates
 
     # ------

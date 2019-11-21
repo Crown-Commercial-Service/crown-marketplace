@@ -94,14 +94,23 @@ module FacilitiesManagement
           building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
 
           # building_data = building
+          building_data = FacilitiesManagement::Buildings.find_by(id: building.building_id).building_json
+          services_and_questions = FacilitiesManagement::ServicesAndQuestions.new
           building_uvals = building_uvals.map do |u|
+            # p u[:code]
+
+            lookup = services_and_questions.service_detail(u[:code])
+            value_field = lookup[:questions].reject { |v| v == :service_standard }
+
+            val = u[value_field.first]
+            val = building_data['gia'] if value_field.empty?
+            val = u[value_field.first].map(&:to_i).inject(&:+) if value_field.first == :lift_data
+
             {
               service_code: u[:code],
-              uom_value: 42,
+              uom_value: val
             }
           end
-
-          building_data = FacilitiesManagement::Buildings.find_by(id: building.building_id).building_json
         end
         # p "building id: #{id}"
         results2 = results[id] = {} if results
