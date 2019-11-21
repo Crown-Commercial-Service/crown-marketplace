@@ -653,4 +653,44 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
   end
+
+  describe '#service_hours' do
+    let(:mock_ar_class) { build_mock_ar }
+    let(:record) { mock_ar_class.create(service_hours: {}) }
+
+    before(:all) do
+      ActiveRecord::Base.connection.drop_table :pbs_mock if ActiveRecord::Base.connection.data_source_exists? 'pbs_mock'
+      ActiveRecord::Base.connection.create_table :pbs_mock do |t|
+        t.hstore :service_hours, null: true
+      end
+    end
+
+    after(:all) do
+      ActiveRecord::Base.connection.drop_table :pbs_mock
+    end
+
+    def build_mock_ar
+      Class.new(ApplicationRecord) do
+        self.table_name = 'pbs_mock'
+        serialize :service_hours, FacilitiesManagement::ServiceHours
+
+        attr_accessor :id
+      end
+    end
+
+    context 'when saving' do
+      it 'will produce a hash' do
+        sh = FacilitiesManagement::ServiceHours.new
+        sh[:tuesday][:all_day] = true
+        sh[:wednesday][:start] = '22:00'
+        sh[:wednesday][:end] = '00:00'
+
+        record[:service_hours] = sh
+
+        record.save
+        result = ActiveRecord::Base.connection.execute('select service_hours from pbs_mock')
+        expect(result).not_to eq nil
+      end
+    end
+  end
 end
