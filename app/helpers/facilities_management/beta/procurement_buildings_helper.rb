@@ -34,4 +34,12 @@ module FacilitiesManagement::Beta::ProcurementBuildingsHelper
   def checked?(object_value, value)
     object_value == value
   end
+
+  def show_service_hours service_hours
+    content_tag 'div', class: 'service_hours' do
+      service_hours.attributes.each do |k, _v|
+        concat(k)
+      end
+    end
+  end
 end
