@@ -20,6 +20,7 @@ module FacilitiesManagement
     # validates on :lifts
     validates :lift_data, length: { minimum: 1, maximum: 1000 }, on: :lifts
     validate :validate_lift_data, on: :lifts
+    validate :service_hours_complete?, on: :service_hours
 
     # validates on the service_standard service question
     validate :validate_ppm_standard_presence, on: :ppm_standards
@@ -93,6 +94,10 @@ module FacilitiesManagement
     end
 
     private
+
+    def service_hours_complete?
+      errors.merge!(service_hours.errors) if service_hours.invalid?
+    end
 
     def validate_lift_data
       errors.add(:lift_data, :required, position: 0) if lift_data.blank?

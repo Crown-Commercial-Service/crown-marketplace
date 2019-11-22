@@ -1,6 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
+  describe '#validation' do
+    let(:service_hours) { described_class.new }
+
+    context 'when empty and uninitialised' do
+      it 'will be invalid' do
+        expect(service_hours.valid?).to eq false
+      end
+
+      it 'will contain an error message for each day' do
+        sh = FacilitiesManagement::ServiceHours.new
+        sh.valid?
+        expect(sh.errors.messages.length).to eq 7
+      end
+    end
+  end
+
   describe 'Serialization' do
     let(:service_hours) { described_class.new }
 

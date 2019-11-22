@@ -1,7 +1,9 @@
 module FacilitiesManagement
   class ServiceHours
-    include Virtus.model
     include ActiveModel::Model
+    include Virtus.model
+    include ActiveModel::Serialization
+    include ActiveModel::Callbacks
 
     attribute :monday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :tuesday, ServiceHourChoice, default: ServiceHourChoice.new
@@ -10,6 +12,9 @@ module FacilitiesManagement
     attribute :friday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :saturday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :sunday, ServiceHourChoice, default: ServiceHourChoice.new
+
+    define_model_callbacks :initialize, only: [:after]
+    after_initialize :valid?
 
     def self.dump(service_hours)
       return {} if service_hours.blank?
@@ -39,6 +44,18 @@ module FacilitiesManagement
       new_obj[:sunday] = ServiceHourChoice.load(service_hours[:sunday])
 
       new_obj
+    end
+
+    validate :all_present?
+
+    def all_present?
+      attributes.each do |choice|
+        errors.add choice[0], :invalid if choice[1].invalid?
+      end
+    end
+
+    def any_values?
+      attributes.any? { |_k, v| v.valid? }
     end
   end
 end

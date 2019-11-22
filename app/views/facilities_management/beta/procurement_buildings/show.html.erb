@@ -41,8 +41,9 @@
                 <%= t(".#{qa_h[:question].to_s}") %>
               </dd>
               <dd class="govuk-summary-list__value">
+                <%= show_service_hours qa_h[:answer] if qa_h[:question] == :service_hours %>
                 <%= qa_h[:answer].map(&:to_i).reduce(:+) if qa_h[:question] == :lift_data %>
-                <%= 'Standard ' if qa_h[:answer].present? and qa_h[:question] == :service_standard and qa_h[:question] != :lift_data %><%= qa_h[:answer].to_s unless qa_h[:question] == :lift_data  %>
+                <%= 'Standard ' if qa_h[:answer].present? and qa_h[:question] == :service_standard %><%= qa_h[:answer].to_s unless %i[lift_data service_hours].include? qa_h[:question]  %>
               </dd>
               <dd class="govuk-summary-list__actions">
                 <% link_text = 'Change' %>
