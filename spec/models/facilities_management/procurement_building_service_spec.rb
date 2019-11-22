@@ -654,6 +654,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
   end
 
+  # rubocop:disable RSpec/BeforeAfterAll
   describe '#service_hours' do
     let(:mock_ar_class) { build_mock_ar }
     let(:record) { mock_ar_class.create(service_hours: {}) }
@@ -693,4 +694,5 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
   end
+  # rubocop:enable RSpec/BeforeAfterAll
 end
