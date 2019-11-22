@@ -58,10 +58,40 @@ module FacilitiesManagement
       CCS::FM::Building.buildings_for_user(@user_id)
     end
 
+    # rubocop:disable Metrics/AbcSize
+    def uvals_for_public(building)
+      building_uvals = building.procurement_building_services
+
+      uvals_not_da = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+      @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
+
+      building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+
+      # building_data = building
+      building_data = FacilitiesManagement::Buildings.find_by(id: building.building_id).building_json
+      services_and_questions = FacilitiesManagement::ServicesAndQuestions.new
+      building_uvals = building_uvals.map do |u|
+        # p u[:code]
+
+        lookup = services_and_questions.service_detail(u[:code])
+        value_field = lookup[:questions].reject { |v| v == :service_standard }
+
+        val = u[value_field.first]
+        val = building_data['gia'] if value_field.empty?
+        val = u[value_field.first].map(&:to_i).inject(&:+) if value_field.first == :lift_data
+
+        {
+          building_id: building.id,
+          service_code: u[:code],
+          uom_value: val
+        }
+      end
+      [building_uvals, building_data]
+    end
+    # rubocop:enable Metrics/AbcSize
+
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/CyclomaticComplexity
-    # rubocop:disable Metrics/PerceivedComplexity
     def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil)
       # selected_services
 
@@ -86,32 +116,11 @@ module FacilitiesManagement
 
           building_uvals.select! { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
         else
-          building_uvals = building.procurement_building_services
-
-          uvals_not_da = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.direct_award_services }
-          @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
-
-          building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
-
-          # building_data = building
-          building_data = FacilitiesManagement::Buildings.find_by(id: building.building_id).building_json
-          services_and_questions = FacilitiesManagement::ServicesAndQuestions.new
-          building_uvals = building_uvals.map do |u|
-            # p u[:code]
-
-            lookup = services_and_questions.service_detail(u[:code])
-            value_field = lookup[:questions].reject { |v| v == :service_standard }
-
-            val = u[value_field.first]
-            val = building_data['gia'] if value_field.empty?
-            val = u[value_field.first].map(&:to_i).inject(&:+) if value_field.first == :lift_data
-
-            {
-              service_code: u[:code],
-              uom_value: val
-            }
-          end
+          result = uvals_for_public(building)
+          building_uvals = result[0]
+          building_data = result[1]
         end
+
         # p "building id: #{id}"
         results2 = results[id] = {} if results
 
@@ -120,8 +129,6 @@ module FacilitiesManagement
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
     end
-    # rubocop:enable Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
 

@@ -254,7 +254,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3, true
       sheet.add_row
       sheet.add_row ['Table 3. Total charges per month']
-      new_row2 = ["Year 1 Monthly cost", nil, "= #{cell_refs.first} / 12"]
+      new_row2 = ['Year 1 Monthly cost', nil, "= #{cell_refs.first} / 12"]
       sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
       new_row = new_row.map { |x| x / 12 }
       (2..max_years).each do |i|
