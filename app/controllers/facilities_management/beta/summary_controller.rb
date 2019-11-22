@@ -3,7 +3,7 @@ module FacilitiesManagement
     class SummaryController < FrameworkController
       def index
         init
-        build_direct_award_report
+        build_direct_award_report params['download-spreadsheet'] == 'yes'
       end
 
       def guidance
@@ -22,44 +22,20 @@ module FacilitiesManagement
       def sorted_suppliers
         init
 
-        build_direct_award_report
+        build_direct_award_report params[:'download-spreadsheet'] == 'yes'
 
         return if params[:'download-spreadsheet'] != 'yes'
 
-        # it 'create a direct-award report' do
-        user_email = current_user.email.to_s
-        start_date = DateTime.now.utc
+        spreadsheet_1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card
+        render xlsx: spreadsheet_1.to_xlsx, filename: 'direct_award_prices'
 
-        report = FacilitiesManagement::SummaryReport.new(start_date, user_email, TransientSessionInfo[session.id], @procurement)
 
-        selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
-        uvals = @report.uom_values(selected_buildings)
-
-        rates = CCS::FM::Rate.read_benchmark_rates
-        rate_card = CCS::FM::RateCard.latest
-
-        results = {}
-        report_results = {}
-        supplier_names = rate_card.data[:Prices].keys
-        supplier_names.each do |supplier_name|
-          report_results[supplier_name] = {}
-          # dummy_supplier_name = 'Hickle-Schinner'
-          report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
-          results[supplier_name] = report.direct_award_value
-        end
-
-        sorted_list = results.sort_by { |_k, v| v }
-        supplier_name = sorted_list.first[0]
-        # supplier_da_price = sorted_list.first[1]
-
-        spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
-        render xlsx: spreadsheet.to_xlsx, filename: 'direct_award_prices'
       end
       # rubocop:enable Metrics/AbcSize
 
       private
 
-      def build_direct_award_report
+      def build_direct_award_report(cache__calculation_values_for_spreadsheet_flag)
         user_email = current_user.email.to_s
 
         @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
@@ -75,15 +51,20 @@ module FacilitiesManagement
         end
 
         rates = CCS::FM::Rate.read_benchmark_rates
-        rate_card = CCS::FM::RateCard.latest
+        @rate_card = CCS::FM::RateCard.latest
 
         @results = {}
-        supplier_names = rate_card.data[:Prices].keys
+        @report_results = {} if cache__calculation_values_for_spreadsheet_flag
+        supplier_names = @rate_card.data[:Prices].keys
         supplier_names.each do |supplier_name|
           # e.g. dummy_supplier_name = 'Hickle-Schinner'
-          @report.calculate_services_for_buildings selected_buildings, uvals, rates, rate_card, supplier_name
+          a_supplier_calculation_results = @report_results[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
+          @report.calculate_services_for_buildings selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results
           @results[supplier_name] = @report.direct_award_value
         end
+
+        sorted_list = @results.sort_by { |_k, v| v }
+        @supplier_name = sorted_list.first[0]
       end
 
       def init
@@ -98,6 +79,24 @@ module FacilitiesManagement
           @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
         end
       end
+
+      def download_report(spreadsheet_1, spreadsheet_2)
+        # Use Zip::OutputStream for rubyzip <= 1.0.0
+        compressed_filestream = Zip::ZipOutputStream.write_buffer do |zos|
+          params[:user_id].each do |user_id|
+            @user = User.find user_id
+            filename = "#{@user.username}.xlsx"
+            content = render_to_string xlsx: "download_report", filename: filename
+            zos.put_next_entry filename
+            zos.print content
+          end
+        end
+        compressed_filestream.rewind
+        send_data compressed_filestream.read, filename: 'all_users.zip', type: 'application/zip'
+      end
+
+
+
     end
   end
 end

@@ -700,7 +700,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
 
-      # uvals.each(&:deep_symbolize_keys!)
+      # create deliverable matrix spreadsheet
       buildings_ids = uvals.collect { |u| u['building_id'] }.compact.uniq
 
       building_ids_with_service_codes2 = buildings_ids.sort.collect do |b|
