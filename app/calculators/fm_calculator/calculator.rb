@@ -265,7 +265,8 @@ module FMCalculator
         results[:corporate] = corporate(year1)
         results[:profit] = profit(year1)
         results[:mobilisation] = mobilisation
-        results[:subyearstotal] = (subyearstotal(year1totalcharges, mobilisation) / @subsequent_length_years)
+        results[:subyearstotal] = (subyearstotal(year1totalcharges, mobilisation) / @subsequent_length_years) if @subsequent_length_years.positive?
+        results[:contract_length_years] = @contract_length_years
         results[:subsequent_length_years] = @subsequent_length_years
       end
 
