@@ -680,14 +680,20 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
 
     context 'when saving' do
+      let(:sh) { FacilitiesManagement::ServiceHours.new }
+
+      before do
+        sh[:tuesday][:service_choice] = :all_day
+        sh[:wednesday][:start_hour] = '10'
+        sh[:wednesday][:start_minute] = '00'
+        sh[:wednesday][:start_ampm] = 'am'
+        sh[:wednesday][:end_hour] = '10'
+        sh[:wednesday][:end_minute] = '00'
+        sh[:wednesday][:end_ampm] = 'pm'
+      end
+
       it 'will produce a hash' do
-        sh = FacilitiesManagement::ServiceHours.new
-        sh[:tuesday][:all_day] = true
-        sh[:wednesday][:start] = '22:00'
-        sh[:wednesday][:end] = '00:00'
-
         record[:service_hours] = sh
-
         record.save
         result = ActiveRecord::Base.connection.execute('select service_hours from pbs_mock')
         expect(result).not_to eq nil
