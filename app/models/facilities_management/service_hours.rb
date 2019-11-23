@@ -5,6 +5,14 @@ module FacilitiesManagement
     include ActiveModel::Serialization
     include ActiveModel::Callbacks
 
+    # attribute :monday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :not_required)
+    # attribute :tuesday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :all_day)
+    # attribute :wednesday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'am')
+    # attribute :thursday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :all_day)
+    # attribute :friday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :not_required)
+    # attribute :saturday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'am')
+    # attribute :sunday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm')
+
     attribute :monday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :tuesday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :wednesday, ServiceHourChoice, default: ServiceHourChoice.new
@@ -15,6 +23,8 @@ module FacilitiesManagement
 
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
+
+    validate :all_present?
 
     def self.dump(service_hours)
       return {} if service_hours.blank?
@@ -46,11 +56,23 @@ module FacilitiesManagement
       new_obj
     end
 
-    validate :all_present?
+    def total_hours_annually
+      total_hours * 52
+    end
+
+    def total_hours
+      total = 0
+      attributes.each do |_k, v|
+        total += v.total_hours
+      end
+      total
+    end
+
+    private
 
     def all_present?
-      attributes.each do |choice|
-        errors.add choice[0], :invalid if choice[1].invalid?
+      attributes.each do |key, value|
+        errors.add key, :invalid unless value.valid?
       end
     end
 

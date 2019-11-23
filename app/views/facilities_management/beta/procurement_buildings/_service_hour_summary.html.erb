@@ -1,0 +1,15 @@
+<div class="service_hours govuk-summary-list">
+  <input type="checkbox" id="#_<%=position%>_check"/>
+  <span class="service_hours-data"><%= service_hours.total_hours_annually %></span>
+  <div class="service_hours-caption">
+    <label for="#_<%=position%>_check" title="Click to show details"><span></span><span><%= t('.service_hours_caption') %></span></label>
+  </div>
+  <ul id="_<%=position%>_details" class="service_hours-details">
+    <% service_hours.attributes.each do |k, v|%>
+      <li class="govuk-summary-list__row">
+        <span><%=k.to_s.capitalize %></span>,
+        <span><%=v.to_summary %></span>
+      </li>
+    <% end %>
+  </ul>
+</div>

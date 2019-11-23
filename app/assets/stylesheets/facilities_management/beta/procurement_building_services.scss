@@ -1,17 +1,99 @@
 .building-services {
+  display : block;
+
+  .govuk-summary-list {
+    font-size : smaller;
+    }
+
   .govuk-summary-list__value, .govuk-summary-list__actions {
-    vertical-align: middle;
-  }
+    vertical-align : middle;
+    }
 
   .border-top {
-    border-top: 1px solid #bfc1c3;
+    border-top : 1px solid #bfc1c3;
+    }
+
+  .floating-div {
+    position : absolute;
+    top      : 0;
+    right    : 0
+    }
   }
-}
 
 .procurement-building-service .procurement-building-service__form-group {
-  border-bottom: 1px solid #bfc1c3;
-}
+  border-bottom : 1px solid #bfc1c3;
+  }
 
 .procurement-building-service .border-top {
-  border-top: 1px solid #bfc1c3;
-}
+  border-top : 1px solid #bfc1c3;
+  }
+
+.service_hours {
+  font-size : smaller;
+  min-width : 14rem;
+
+  input[type=checkbox] {
+    opacity : 0;
+    width   : 1px;
+    height  : 1px;
+    display : none;
+    }
+
+  span.service_hours-data {
+    position : relative;
+    top      : 3px;
+    }
+
+  .service_hours-caption {
+    color       : #007194 !important;
+    margin-left : 0.5em;
+    margin-top  : 0.5rem;
+
+    label {
+      color : #007194 !important;
+
+      span:last-child {
+        text-decoration : underline;
+        }
+
+      span:first-child {
+        &::before {
+          content         : "▶︎";
+          position        : relative;
+          top             : 1px;
+          left            : 1px;
+          margin-left     : -1em;
+          padding-right   : 0.5em;
+          text-decoration : none !important;
+          }
+        }
+      }
+    }
+
+  input[type=checkbox]:checked ~ .service_hours-details {
+    display : block;
+    }
+
+  input[type=checkbox]:checked ~ .service_hours-caption label span:first-child {
+    &::before {
+      content : "▼";
+      }
+    }
+
+  .service_hours-details {
+    padding     : 0 0 0 1em;
+    margin      : 5px 0 0;
+    display     : none;
+    border-left : 3px solid grey;
+
+    li {
+      margin-bottom : 0 !important;
+      padding-left  : 0 !important;
+      font-size     : smaller;
+      }
+
+    span {
+      font-weight : normal !important;
+      }
+    }
+  }
