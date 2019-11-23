@@ -81,7 +81,8 @@ module FacilitiesManagement
         val = u[value_field.first].map(&:to_i).inject(&:+) if value_field.first == :lift_data
 
         {
-          building_id: building.id,
+          # building_id: building.id,
+          building_id: building.building_id,
           service_code: u[:code],
           uom_value: val
         }
@@ -117,8 +118,11 @@ module FacilitiesManagement
           building_uvals.select! { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
         else
           result = uvals_for_public(building)
-          building_uvals = result[0]
+          all_building_uvals = result[0]
           building_data = result[1]
+
+          # TBC filter out nil values for now
+          building_uvals = all_building_uvals.reject { |v| v[:uom_value].nil? }
         end
 
         # p "building id: #{id}"
@@ -363,7 +367,7 @@ module FacilitiesManagement
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
-          uom_value = building_data[:gia]
+          uom_value = (building_data[:gia] || building_data['gia']).to_f
         else
           occupants = 0
         end

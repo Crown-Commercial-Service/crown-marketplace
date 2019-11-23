@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'zip'
+
 module FacilitiesManagement
   module Beta
     class SummaryController < FrameworkController
@@ -36,7 +39,8 @@ module FacilitiesManagement
           # building_data = result[1]
           uvals.concat building_uvals
 
-          buildings_ids << building.id
+          # buildings_ids << building.id
+          buildings_ids << building.building_id
         end
 
         # create deliverable matrix spreadsheet
@@ -52,8 +56,9 @@ module FacilitiesManagement
         # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
         # IO.write('/tmp/deliverable_matrix_3.xlsx', spreadsheet.to_stream.read)
 
-        render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices'
-        render xlsx: spreadsheet2.to_xlsx, filename: 'deliverable_matrix'
+        ### render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices'
+        ### render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
+        download_report spreadsheet1, spreadsheet2
       end
       # rubocop:enable Metrics/AbcSize
 
@@ -106,8 +111,11 @@ module FacilitiesManagement
         end
       end
 
-      # def download_report(spreadsheet1, spreadsheet2)
-      def download_report
+      # def download_report
+      def download_report(spreadsheet1, spreadsheet2)
+        spreadsheet1.nil?
+        spreadsheet2.nil?
+
         # Use Zip::OutputStream for rubyzip <= 1.0.0
         compressed_filestream = Zip::ZipOutputStream.write_buffer do |zos|
           params[:user_id].each do |user_id|
