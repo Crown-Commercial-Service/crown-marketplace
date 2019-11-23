@@ -11,6 +11,10 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
+    service_hour_choice:
+      all_day: All day (24 hours)
+      not_required: Not required
+      time_to: to
   activerecord:
     errors:
       models:
@@ -269,6 +273,8 @@ en:
           standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
           standard_c_title: Standard C - a bespoke service level
           subheading: What standard are you applying to all selected planned maintenance services?
+        service_hour_summary:
+          service_hours_caption: Service times
         show:
           answer_question: Answer question
           back_to_detailed_summary: Back to detailed search summary

@@ -1,13 +1,15 @@
-<span class="details-expando--data" title="<%= t('.total_hours_tip') %>"><%= number_with_precision(service_hours.total_hours_annually, precision: 2) %></span>
-<%= content_tag :details, class: 'govuk-details', data: { module: 'govuk-details' } do %>
-  <% capture do %>
-    <% concat(content_tag(:summary, content_tag(:span, t('.service_hours_caption'), class: 'govuk-details__summary-text govuk-!-font-size-16'), class: 'govuk-details__summary')) %>
-    <% concat(content_tag(:div, class: "govuk-details__text govuk-!-padding-bottom-0 govuk-!-padding-top-0") do %>
-      <ul class="govuk-list">
-        <% service_hours.attributes.reject{|k| k == :uom}.each do |k, v| %>
-          <li class="govuk-!-font-size-14"> <%= "#{k.to_s.capitalize}, #{v.to_summary}".html_safe %> </li>
-        <% end %>
-      </ul>
-    <% end) %>
-  <% end %>
-<% end %>
+<div class="service_hours govuk-summary-list">
+  <input type="checkbox" id="#_<%=position%>_check"/>
+  <span class="service_hours-data"><%= service_hours.total_hours_annually %></span>
+  <div class="service_hours-caption">
+    <label for="#_<%=position%>_check" title="Click to show details"><span></span><span><%= t('.service_hours_caption') %></span></label>
+  </div>
+  <ul id="_<%=position%>_details" class="service_hours-details">
+    <% service_hours.attributes.each do |k, v|%>
+      <li class="govuk-summary-list__row">
+        <span><%=k.to_s.capitalize %></span>,
+        <span><%=v.to_summary %></span>
+      </li>
+    <% end %>
+  </ul>
+</div>
