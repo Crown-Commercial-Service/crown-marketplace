@@ -4,17 +4,17 @@
   <div class="servicehourscontainer">
     <div class="servicehoursdata">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.service_hours_subtitle') %></h3>
-      <p class="govuk-caption-m govuk-!-margin-bottom-6"><%= t('.service_hours_description_html') %></p>
+      <p class="govuk-caption-m govuk-!-margin-bottom-6"><%= t('.service_hours_description') %></p>
       <div class="service_hours_container">
-        <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
-          <% sh.object.attributes.each do |key, _value| %>
-            <% if key != :uom %>
-              <%= sh.fields_for key, sh.object[key] do |day|%>
-                <%= render partial: 'day_section', locals: { day: key, f: day, service_hours:sh.object, service_choice: day.object } %>
-              <%end%>
-            <%end %>
-          <%end%>
-        <%end%>
+        <%= list_potential_errors @building_service, :service_hours, f.object_name %>
+        <%= render partial: 'day_section', locals: {day: 'Monday', f: f} %>
+        <button>Copy</button>
+        <%= render partial: 'day_section', locals: {day: 'Tuesday', f: f} %>
+        <%= render partial: 'day_section', locals: {day: 'Wednesday', f: f} %>
+        <%= render partial: 'day_section', locals: {day: 'Thursday', f: f} %>
+        <%= render partial: 'day_section', locals: {day: 'Friday', f: f} %>
+        <%= render partial: 'day_section', locals: {day: 'Saturday', f: f} %>
+        <%= render partial: 'day_section', locals: {day: 'Sunday', f: f} %>
       </div>
     </div>
   </div>

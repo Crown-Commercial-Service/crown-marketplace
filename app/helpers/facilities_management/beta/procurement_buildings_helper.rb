@@ -20,6 +20,8 @@ module FacilitiesManagement::Beta::ProcurementBuildingsHelper
   end
 
   def question_type(service, question)
+    return 'service_hours' if question == :service_hours
+
     if question == :service_standard
       return 'ppm_standards' if service.requires_ppm_standards?
 

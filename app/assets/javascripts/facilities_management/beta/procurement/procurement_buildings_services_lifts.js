@@ -26,28 +26,22 @@ LiftDataUI.prototype.addNewLift = function() {
         this.removeLift(targetLift);
     }.bind(this));
     //this.restrictInput(newInputElement.find("input")[0]);
-    this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").hide("button");
+    this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").addClass("govuk-visually-hidden");
     this.liftDataContainer.append(newInputElement);
 };
 
 LiftDataUI.prototype.removeLift = function(nLiftIndex) {
     let toRemove = this.liftDataContainer.find("div[data-liftcount=" + nLiftIndex + "]");
     toRemove.remove();
-    $($(".addliftbtn").get(0)).val("Add new lift (" + (100 - nLiftIndex) +" remaining)");
-    this.liftDataContainer.find("button[data-liftcount=" + (nLiftIndex-1) + "]").show("button");
+    this.liftDataContainer.find("button[data-liftcount=" + (nLiftIndex-1) + "]").removeClass("govuk-visually-hidden");
 };
 LiftDataUI.prototype.connectAddLiftButton = function(){
     if (this.containerDiv) {
         let addNewButton = this.containerDiv.find(".addliftbtn");
         if ( addNewButton.length > 0 ) {
             addNewButton.on("click", function(e){
-                if ($(".govuk-form-group").length < 99 ) {
-                    e.preventDefault();
-                    this.addNewLift();
-                    $($(".addliftbtn").get(0)).val("Add new lift (" + (99 - $(".govuk-form-group").length) +" remaining)");
-                } else {
-                    e.preventDefault();
-                }
+                e.preventDefault();
+                this.addNewLift();
             }.bind(this));
         }
     }
