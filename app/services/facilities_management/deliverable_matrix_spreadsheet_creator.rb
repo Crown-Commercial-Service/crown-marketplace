@@ -11,8 +11,12 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @units_of_measure_values = units_of_measure_values
   end
 
+  def to_xlsx
+    @package.to_stream.read
+  end
+
   def build
-    Axlsx::Package.new do |p|
+    @package = Axlsx::Package.new do |p|
       p.workbook.styles do |s|
         first_column_style = s.add_style sz: 12, b: true, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
         standard_column_style = s.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }

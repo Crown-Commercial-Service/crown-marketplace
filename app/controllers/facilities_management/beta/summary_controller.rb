@@ -51,14 +51,14 @@ module FacilitiesManagement
         end
 
         spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals)
-        spreadsheet2 = spreadsheet_builder.build
+        spreadsheet_builder.build
 
         # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
         # IO.write('/tmp/deliverable_matrix_3.xlsx', spreadsheet.to_stream.read)
 
         ### render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices'
         ### render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
-        download_report spreadsheet1, spreadsheet2
+        download_report 'fm_spreadsheets', [['direct_award_prices', spreadsheet1], ['deliverable_matrix', spreadsheet_builder]]
       end
       # rubocop:enable Metrics/AbcSize
 
@@ -112,22 +112,18 @@ module FacilitiesManagement
       end
 
       # def download_report
-      def download_report(spreadsheet1, spreadsheet2)
-        spreadsheet1.nil?
-        spreadsheet2.nil?
-
+      def download_report(download_file_name, *files)
         # Use Zip::OutputStream for rubyzip <= 1.0.0
-        compressed_filestream = Zip::ZipOutputStream.write_buffer do |zos|
-          params[:user_id].each do |user_id|
-            @user = User.find user_id
-            filename = "#{@user.username}.xlsx"
-            content = render_to_string xlsx: 'download_report', filename: filename
+        compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+          (0..files.length - 1).each do |i|
+            filename = "#{files[i][0]}.xlsx"
+            # content = render_to_string xlsx: files[i].to_xlsx, filename: filename
             zos.put_next_entry filename
-            zos.print content
+            zos.print files[i][1].to_xlsx
           end
         end
         compressed_filestream.rewind
-        send_data compressed_filestream.read, filename: 'all_users.zip', type: 'application/zip'
+        send_data compressed_filestream.read, filename: "#{download_file_name}.zip", type: 'application/zip'
       end
     end
   end
