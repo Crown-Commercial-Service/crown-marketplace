@@ -1,0 +1,93 @@
+<div class="govuk-form-group" id="<%= day.downcase %>_form-group%>">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m"><%= day %></legend>
+    <%= display_potential_errors @building_service, [:service_hours, :service_choice], f.object_name %>
+    <%= display_potential_errors @building_service, [:service_hours, :start_time], f.object_name %>
+    <%= display_potential_errors @building_service, [:service_hours, :end_time], f.object_name %>
+    <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="<%= day.downcase %>_not_required" name="service_hours[<%= day.downcase %>[service_choice]]" type="radio" value="not_specified">
+        <label class="govuk-label govuk-radios__label" for="<%= day.downcase %>_not_required">
+          Not Required
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="<%= day.downcase %>_all_day" name="service_hours[<%= day.downcase %>[service_choice]]" type="radio" value="all_day">
+        <label class="govuk-label govuk-radios__label" for="<%= day.downcase %>_all_day">
+          All day
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="<%= day.downcase %>_hourly" name="service_hours[<%= day.downcase %>[service_choice]]" type="radio" value="hourly" aria-controls="<%= day.downcase %>-conditional-specified">
+        <label class="govuk-label govuk-radios__label" for="<%= day.downcase %>_hourly">
+          Specified Hours
+        </label>
+      </div>
+      <div class="govuk-radios__conditional <%= 'govuk-radios__conditional--hidden' if @building_service[:service_hours][day.downcase.to_sym][:service_choice] != 'hourly' %>" id="<%= day.downcase %>-conditional-specified">
+        <%= govuk_fieldset_with_optional_error @building_service, :service_hours do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start</legend>
+          <div class="govuk-form-group">
+            <div class="govuk-date-input">
+              <div class="govuk-date-input__item">
+                <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_start_hour">
+                  Hour
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_start_hour" name="service_hours[<%= day.downcase %>[start_hour]]" maxlength="2" type="number" min="0" max="12">
+              </div>
+              <div class="govuk-date-input__item">
+                <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_start_minute">
+                  Minute
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_start_minute" name="service_hours[<%= day.downcase %>[start_minute]]" maxlength="2" type="number" min="0" max="59">
+              </div>
+              <div class="govuk-date-input__item">
+                <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_start_ampm">
+                  Morning/Afternoon
+                </label>
+                <select class="govuk-select govuk-input--width-2" id="<%= day.downcase %>_start_ampm" name="service_hours[<%= day.downcase %>[start_ampm]]">
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <%= display_error @building_service, :service_hours %>
+          <br/>
+        <% end %>
+        <%= govuk_fieldset_with_optional_error @building_service, :service_hours do %>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End</legend>
+          <div class="govuk-date-input">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_end_hour">
+                  Hour
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_end_hour" name="service_hours[<%= day.downcase %>[end_hour]]" maxlength="2" min="0" max="12">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_end_minute">
+                  Minute
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_end_minute" name="service_hours[<%= day.downcase %>[end_minute]]" maxlength="2" min="0" max="59">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_end_ampm">
+                  Morning/Afternoon
+                </label>
+                <select class="govuk-select govuk-input--width-2" id="<%= day.downcase %>_start_ampm" name="service_hours[<%= day.downcase %>[end_ampm]]">
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <%= display_error @building_service, :service_hours %>
+        <% end %>
+      </div>
+    </div>
+  </fieldset>
+</div>

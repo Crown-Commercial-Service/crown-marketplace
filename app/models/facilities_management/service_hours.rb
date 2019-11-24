@@ -5,6 +5,7 @@ module FacilitiesManagement
     include ActiveModel::Serialization
     include ActiveModel::Callbacks
 
+    # these are used to test
     # attribute :monday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :not_required)
     # attribute :tuesday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :all_day)
     # attribute :wednesday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'am')
@@ -25,6 +26,10 @@ module FacilitiesManagement
     after_initialize :valid?
 
     validate :all_present?
+
+    def initialize(params = {})
+      super(params)
+    end
 
     def self.dump(service_hours)
       return {} if service_hours.blank?

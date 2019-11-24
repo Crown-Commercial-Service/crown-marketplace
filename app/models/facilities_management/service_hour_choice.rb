@@ -34,6 +34,10 @@ module FacilitiesManagement
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
 
+    def initialize(params = {})
+      super(params)
+    end
+
     def self.dump(service_hour_choice)
       new_hash = {}
       new_hash.merge!(service_hour_choice.attributes.select { |_key, value| value.present? })

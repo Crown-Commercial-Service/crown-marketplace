@@ -36,7 +36,8 @@ module FacilitiesManagement
                                                              size_of_external_area
                                                              no_of_consoles_to_be_serviced
                                                              tones_to_be_collected_and_removed
-                                                             service_standard]
+                                                             service_standard
+                                                             service_hours]
               )
       end
 
