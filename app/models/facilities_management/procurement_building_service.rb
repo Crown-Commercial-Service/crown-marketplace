@@ -70,6 +70,10 @@ module FacilitiesManagement
       required_contexts.include?(:lifts)
     end
 
+    def requires_service_hours?
+      required_contexts.include?(:service_hours)
+    end
+
     def required_contexts
       @required_contexts ||= this_service[:context]
     end

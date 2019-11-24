@@ -37,7 +37,9 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
 
   def set_partial
     @partial_prefix = ''
-    @partial_prefix = 'lifts' if @building_service.code == 'C.5'
+    return @partial_prefix = 'lifts' if @building_service.code == 'C.5'
+
+    @partial_prefix = 'service_hours'
   end
 
   def procurement_building_service_lift_params
@@ -57,6 +59,8 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
     @building_data = @building['building_json'] if @building.present?
 
     @building_service = bs_from_db if @building.present?
+
+    @building_service[:service_hours] = FacilitiesManagement::ServiceHours.new(@building_service[:service_hours])
   end
 
   def procurement_building_from_bs(bs_from_db)

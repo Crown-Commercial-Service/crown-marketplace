@@ -42,7 +42,9 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             for (let i = 0; i < formElements.length; i++) {
                 let element = formElements[i];
                 if (element.hasAttribute("type") || element.hasAttribute("required") || element.hasAttribute("maxlength")) {
-                    elements.push(element);
+                    if (element.getAttribute("type") !== "hidden") {
+                        elements.push(element);
+                    }
                 }
             }
             if (elements.length > 0) {
@@ -346,7 +348,16 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             if (jqueryElementForRequiredMessage.length === 0) {
                 jqueryElementForRequiredMessage = jQueryElement.parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']").first();
                 if (jqueryElementForRequiredMessage.length === 0) {
-                    jqueryElementForRequiredMessage = this.insertElementForRequiredMessage(jQueryElement, jqueryElementForInputGroup, errorType);
+                    jqueryElementForRequiredMessage = jQueryElement.parent().parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']").first();
+                    if (jqueryElementForRequiredMessage.length === 0) {
+                        jqueryElementForRequiredMessage = jQueryElement.parent().parent().parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']").first();
+                        if (jqueryElementForRequiredMessage.length === 0) {
+                            jqueryElementForRequiredMessage = jQueryElement.parent().parent().parent().parent().parent().find(".error-collection").find("label[data-validation='" + errorType + "']").first();
+                            if (jqueryElementForRequiredMessage.length === 0) {
+                                jqueryElementForRequiredMessage = this.insertElementForRequiredMessage(jQueryElement, jqueryElementForInputGroup, errorType);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -365,7 +376,11 @@ function form_validation_component(formDOMObject, validationCallback, thisisspec
             // clone error element and place it above the input element
             jqueryElementForRequiredMessage = jqueryElementForRequiredMessage.clone();
             jqueryElementForRequiredMessage.prop("id", this.getErrorID(jQueryElement));
-            jqueryElementForRequiredMessage.insertBefore(jQueryElement);
+            if ( jQueryElement.prop("type") === "radio") {
+                jqueryElementForRequiredMessage.insertBefore(jQueryElement.parent());
+            } else {
+                jqueryElementForRequiredMessage.insertBefore(jQueryElement);
+            }
         }
 
         if (jqueryElementForRequiredMessage.length > 0 ) {
