@@ -5,7 +5,9 @@ module CCS
 
       # rubocop:disable Rails/FindBy
       def self.latest
-        where(updated_at: CCS::FM::RateCard.select('max(updated_at)')).first
+        rc = where(updated_at: CCS::FM::RateCard.select('max(updated_at)')).first
+        rc.data.deep_symbolize_keys!
+        rc
       end
       # rubocop:enable Rails/FindBy
 
