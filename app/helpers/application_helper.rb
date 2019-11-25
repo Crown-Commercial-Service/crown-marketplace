@@ -93,10 +93,16 @@ module ApplicationHelper
     end
   end
 
-  def display_potential_errors(model_object, attributes, form_object_name, error_lookup = nil, error_position = nil)
+  def property_name(section_name, attributes)
+    return "#{section_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}" unless section_name.nil?
+
+    (attributes.is_a?(Array) ? attributes.last : attributes).to_s
+  end
+
+  def display_potential_errors(model_object, attributes, form_object_name, error_lookup = nil, error_position = nil, section_name = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
 
-    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}", property_name: attributes.is_a?(Array) ? attributes.last : attributes do
+    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}", property_name: property_name(section_name, attributes) do
       collection.each do |key, val|
         concat(govuk_validation_error({ model_object: model_object, attribute: attributes.is_a?(Array) ? attributes.last : attributes, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
       end

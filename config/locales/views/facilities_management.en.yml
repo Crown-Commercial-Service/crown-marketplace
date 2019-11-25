@@ -118,26 +118,23 @@ en:
               invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
+            service_hours:
+              end_time:
+                greater_than: The end time must be after the start time of your specified hours
+                invalid: Enter a real end time
+                less_than: The start time must be before the end time of your specified hours
+              service_choice:
+                blank: Select not required if you don't need the service on this day
+              start_time:
+                greater_than: The end time must be after the start time of your specified hours
+                invalid: Enter a real start time
+                less_than: The start time must be before the end time of your specified hours
             service_standard:
               blank: Select level of standard for your
             size_of_external_area:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
-            service_hours:
-              service_choice:
-                blank: Select not required if you don't need the service on this day
-                greater_than: The end time must be after the start time of your specified hours
-                less_than: The start time must be before the end time of your specified hours
-                invalid: Enter a real start time or end time
-              end_time:
-                invalid: Enter a real start time or end time
-                greater_than: The end time must be after the start time of your specified hours
-                less_than: The start time must be before the end time of your specified hours
-              start_time:
-                invalid: Enter a real start time or end time
-                greater_than: The end time must be after the start time of your specified hours
-                less_than: The start time must be before the end time of your specified hours
   facilities_management:
     basket:
       basket_header: selected
@@ -325,17 +322,17 @@ en:
         edit:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
-        show:
+        lifts:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
         service_hours:
-          service_hours_subtitle: Breakdown the details of the the required hours for the service below
+          back_to_service_information: Back to service information
+          save_and_return_to_service_information: Save and return to service information
           service_hours_description: Please ensure that the detail breakdown of hours matches the hours requirement each year entered in the first box.
-          save_and_return_to_service_information: Save and return to service information
+          service_hours_subtitle: Breakdown the details of the the required hours for the service below
+        show:
           back_to_service_information: Back to service information
-        lifts:
           save_and_return_to_service_information: Save and return to service information
-          back_to_service_information: Back to service information
       procurements:
         about_the_contract:
           no_cost_provided: None
