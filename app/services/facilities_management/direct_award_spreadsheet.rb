@@ -237,17 +237,19 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       max_years =
         sorted_building_keys.collect { |k| @data[k].first[1][:contract_length_years] }.max
 
-      new_row = []
-      sumsum = 0
-      sorted_building_keys.each do |k|
-        sum = @data[k].sum { |s| s[1][:subyearstotal] }
-        new_row << sum
-        sumsum += sum
-      end
+      if @data[k][:subsequent_length_years].positive?
+        new_row = []
+        sumsum = 0
+        sorted_building_keys.each do |k|
+          sum = @data[k].sum { |s| s[1][:subyearstotal] }
+          new_row << sum
+          sumsum += sum
+        end
 
-      (2..max_years).each do |i|
-        new_row2 = ["Year #{i}", nil, sumsum]
-        sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
+        (2..max_years).each do |i|
+          new_row2 = ["Year #{i}", nil, sumsum]
+          sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
+        end
       end
 
       sheet.add_row
@@ -256,10 +258,13 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row ['Table 3. Total charges per month']
       new_row2 = ['Year 1 Monthly cost', nil, "= #{cell_refs.first} / 12"]
       sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
-      new_row = new_row.map { |x| x / 12 }
-      (2..max_years).each do |i|
-        new_row2 = ["Year #{i} Monthly cost", nil, sumsum / 12]
-        sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
+      
+      if @data[k][:subsequent_length_years].positive?
+        new_row = new_row.map { |x| x / 12 }
+        (2..max_years).each do |i|
+          new_row2 = ["Year #{i} Monthly cost", nil, sumsum / 12]
+          sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
+        end
       end
 
       service_count = @data.keys.collect { |k| @data[k].keys }.flatten.uniq.count
