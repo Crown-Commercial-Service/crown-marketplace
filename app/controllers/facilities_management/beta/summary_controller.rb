@@ -112,7 +112,7 @@ module FacilitiesManagement
       end
 
       # def download_report
-      def download_report(download_file_name, *files)
+      def download_report(download_file_name, files)
         # Use Zip::OutputStream for rubyzip <= 1.0.0
         compressed_filestream = Zip::OutputStream.write_buffer do |zos|
           (0..files.length - 1).each do |i|
