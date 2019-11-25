@@ -10,7 +10,7 @@ function SvcHoursDataUI(jqContainer) {
         this.form_helper.errorMessage = function (prop_name, errType) {
             let message = "";
 
-            if (errType == "required") {
+            if (errType === "required") {
                 message = "Select not required if you don't need services on this day"
             } else {
                 switch (prop_name) {
@@ -57,16 +57,17 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
 
         let jqHour = $("#" + day + "_" + part + "_hour");
         let jqMinute = $("#" + day + "_" + part + "_minute");
+        let jqAmPm = $("#" + day + "_" + part + "_ampm");
 
         if (daily_choices[day][part] === undefined) {
             daily_choices[day][part] = {};
         }
 
         this.fnCheckTimeUnit = function (jqElem, section) {
-            let isValid = fnRequiredValidator(jqElem);
-            isValid = fnNumberValidator(jqElem) && isValid;
-            isValid = fnMaxValidator(jqElem) && isValid;
-            isValid = fnMinValidator(jqElem) && isValid;
+            let isValid = !fnRequiredValidator(jqElem);
+            isValid = !fnNumberValidator(jqElem) && isValid;
+            isValid = !fnMaxValidator(jqElem) && isValid;
+            isValid = !fnMinValidator(jqElem) && isValid;
 
             daily_choices[day][part][section] = {status: isValid, elem: jqElem, value: jqElem.val()};
 
@@ -75,6 +76,7 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
 
         isValid = this.fnCheckTimeUnit(jqHour, "hour") && isValid;
         isValid = this.fnCheckTimeUnit(jqMinute, "minute") && isValid;
+        daily_choices[day][part]['ampmElem'] = jqAmPm;
         daily_choices[day][part]['status'] = isValid;
 
         return isValid;
@@ -100,14 +102,38 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
                     let timeIsValid = this.fnCheckTime(key, "start", daily_choices[key]);
                     timeIsValid = this.fnCheckTime(key, "end", daily_choices[key]) && timeIsValid;
 
-                    isValid = timeIsValid;
+                    isValid = isValid && timeIsValid;
                     if (!timeIsValid) {
                         if (daily_choices[key]['start'].status === false) {
                             this.toggleError(daily_choices[key]['start']['hour'].elem, true, 'invalid');
+                            this.addErrorClass(daily_choices[key]['start']['minute'].elem);
+                            this.addErrorClass(daily_choices[key]['start']['ampmElem']);
                         }
                         if (daily_choices[key]['end'].status === false) {
                             this.toggleError(daily_choices[key]['end']['hour'].elem, true, 'invalid');
+                            this.addErrorClass(daily_choices[key]['end']['minute'].elem);
+                            this.addErrorClass(daily_choices[key]['end']['ampmElem']);
                         }
+                    } else {
+                        // let startTime = daily_choices[key]['start']['hour'].value + daily_choices[key]['start']['minute'].value;
+                        // let startampm = daily_choices[key]['start']['ampmElem'].val();
+                        // let endTime = daily_choices[key]['end']['hour'].value + daily_choices[key]['end']['minute'].value;
+                        // let endampm = daily_choices[key]['start']['ampmElem'].val();
+                        // if (endampm !== startampm) {
+                        //     if (endampm === 'pm' && endTime <= startTime) {
+                        //         this.toggleError(daily_choices[key]['end']['hour'].elem, true, 'min');
+                        //         this.addErrorClass(daily_choices[key]['end']['minute'].elem);
+                        //         this.addErrorClass(daily_choices[key]['end']['ampmElem']);
+                        //     } else if (endampm === 'am' && startTime <= endTime) {
+                        //         this.toggleError(daily_choices[key]['start']['hour'].elem, true, 'max');
+                        //         this.addErrorClass(daily_choices[key]['start']['minute'].elem);
+                        //         this.addErrorClass(daily_choices[key]['start']['ampmElem']);
+                        //     }
+                        // } else if (endTime <= startTime) {
+                        //     this.toggleError(daily_choices[key]['end']['hour'].elem, true, 'min');
+                        //     this.addErrorClass(daily_choices[key]['end']['minute'].elem);
+                        //     this.addErrorClass(daily_choices[key]['end']['ampmElem']);
+                        // }
                     }
                 }
             }
