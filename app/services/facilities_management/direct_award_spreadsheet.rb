@@ -237,7 +237,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       max_years =
         sorted_building_keys.collect { |k| @data[k].first[1][:contract_length_years] }.max
 
-      if @data[k][:subsequent_length_years].positive?
+      if max_years > 1
         new_row = []
         sumsum = 0
         sorted_building_keys.each do |k|
@@ -258,8 +258,8 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row ['Table 3. Total charges per month']
       new_row2 = ['Year 1 Monthly cost', nil, "= #{cell_refs.first} / 12"]
       sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
-      
-      if @data[k][:subsequent_length_years].positive?
+
+      if max_years > 1
         new_row = new_row.map { |x| x / 12 }
         (2..max_years).each do |i|
           new_row2 = ["Year #{i} Monthly cost", nil, sumsum / 12]
