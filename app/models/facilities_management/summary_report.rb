@@ -2,11 +2,21 @@ module FacilitiesManagement
   class SummaryReport
     attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :errors
 
-    def initialize(start_date, user_id, data)
+    def initialize(start_date, user_id, data, procurement = nil)
       @errors = ''
       @start_date = start_date
       @user_id = user_id
 
+      @sum_uom = 0
+      @sum_benchmark = 0
+
+      initialize_from_data data if data
+      initialize_from_procurement procurement if procurement
+
+      regions
+    end
+
+    def initialize_from_data(data)
       data.deep_symbolize_keys!
 
       @posted_services =
@@ -31,18 +41,58 @@ module FacilitiesManagement
         rescue StandardError
           'N'
         end
+    end
 
-      @sum_uom = 0
-      @sum_benchmark = 0
+    # TBC check with Damola
+    # what is the @contract_length_years ?
+    def initialize_from_procurement(procurement)
+      @posted_services = procurement[:service_codes]
+      @posted_locations = procurement[:region_codes]
+      @contract_length_years = procurement[:initial_call_off_period].to_i
+      @contract_cost = procurement[:'fm-contract-cost'].to_f
 
-      regions
+      @tupe_flag = procurement[:tupe]
     end
 
     def user_buildings
       CCS::FM::Building.buildings_for_user(@user_id)
     end
 
+    # rubocop:disable Metrics/AbcSize
+    def uvals_for_public(building)
+      building_uvals = building.procurement_building_services
+
+      uvals_not_da = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+      @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
+
+      building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+
+      # building_data = building
+      building_data = FacilitiesManagement::Buildings.find_by(id: building.building_id).building_json
+      services_and_questions = FacilitiesManagement::ServicesAndQuestions.new
+      building_uvals = building_uvals.map do |u|
+        # p u[:code]
+
+        lookup = services_and_questions.service_detail(u[:code])
+        value_field = lookup[:questions].reject { |v| v == :service_standard }
+
+        val = u[value_field.first]
+        val = building_data['gia'] if value_field.empty?
+        val = u[value_field.first].map(&:to_i).inject(&:+) if value_field.first == :lift_data
+
+        {
+          # building_id: building.id,
+          building_id: building.building_id,
+          service_code: u[:code],
+          uom_value: val
+        }
+      end
+      [building_uvals, building_data]
+    end
+    # rubocop:enable Metrics/AbcSize
+
     # rubocop:disable Metrics/ParameterLists (with a s)
+    # rubocop:disable Metrics/AbcSize
     def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil)
       # selected_services
 
@@ -53,18 +103,37 @@ module FacilitiesManagement
       uvals ||= uom_values(selected_buildings) unless
 
       selected_buildings.each do |building|
-        building_json = building['building_json'].deep_symbolize_keys
-        id = building_json[:id]
-        building_uvals = (uvals.select { |u| u[:building_id] == id })
+        if uvals
+          building_json = building['building_json'].deep_symbolize_keys
+          id = building_json[:id]
+          building_uvals = (uvals.select { |u| u[:building_id] == id })
+          building_data = building.building_json
+          building_data.deep_symbolize_keys!
+          building_uvals.map!(&:deep_symbolize_keys)
+
+          # use .patition instead of select and reject
+          uvals_not_da = uvals.reject { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
+          @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
+
+          building_uvals.select! { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
+        else
+          result = uvals_for_public(building)
+          all_building_uvals = result[0]
+          building_data = result[1]
+
+          # TBC filter out nil values for now
+          building_uvals = all_building_uvals.reject { |v| v[:uom_value].nil? }
+        end
+
         # p "building id: #{id}"
         results2 = results[id] = {} if results
-        # results2 = results[:building_id] if results
 
-        vals_per_building = services(building.building_json, building_uvals, rates, rate_card, supplier_name, results2)
+        vals_per_building = services(building_data, building_uvals, rates, rate_card, supplier_name, results2)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
     end
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
 
     def with_pricing
@@ -239,17 +308,17 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
-    def copy_params(building_json, uvals)
+    def copy_params(building_data, uvals)
       @fm_gross_internal_area =
         begin
-          building_json[:gia].to_i
+          building_data[:gia].to_i
         rescue StandardError
           0
         end
 
       @london_flag =
         begin
-          if building_json[:isLondon] == 'Yes'
+          if building_data[:isLondon] == 'Yes'
             'Y'
           else
             'N'
@@ -291,23 +360,14 @@ module FacilitiesManagement
       sum_uom = 0.0
       sum_benchmark = 0.0
 
-      building_data.deep_symbolize_keys!
-      uvals.map!(&:deep_symbolize_keys)
-
       copy_params building_data, uvals
-
-      # use .patition instead of select and reject
-      uvals_not_da = uvals.reject { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
-      @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
-
-      uvals.select! { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
 
       uvals.each do |v|
         uom_value = v[:uom_value].to_f
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
-          uom_value = building_data[:gia]
+          uom_value = (building_data[:gia] || building_data['gia']).to_f
         else
           occupants = 0
         end
