@@ -39,7 +39,7 @@ module FacilitiesManagement
       new_hash[:tuesday] = ServiceHourChoice.dump(service_hours[:tuesday])
       new_hash[:wednesday] = ServiceHourChoice.dump(service_hours[:wednesday])
       new_hash[:thursday] = ServiceHourChoice.dump(service_hours[:thursday])
-      new_hash[:friday] = ServiceHourChoice.dump(service_hours[:friday])
+      new_hash[:friday] = ServiceHourChoice.dump(service_hours[:friday]/"")
       new_hash[:saturday] = ServiceHourChoice.dump(service_hours[:saturday])
       new_hash[:sunday] = ServiceHourChoice.dump(service_hours[:sunday])
       # service_hours.to_h
@@ -72,6 +72,14 @@ module FacilitiesManagement
       end
       total
     end
+
+    PARAMETERS = { monday: ServiceHourChoice::PARAMETERS,
+                   tuesday: ServiceHourChoice::PARAMETERS,
+                   wednesday: ServiceHourChoice::PARAMETERS,
+                   thursday: ServiceHourChoice::PARAMETERS,
+                   friday: ServiceHourChoice::PARAMETERS,
+                   saturday: ServiceHourChoice::PARAMETERS,
+                   sunday: ServiceHourChoice::PARAMETERS }.freeze
 
     private
 

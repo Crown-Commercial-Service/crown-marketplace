@@ -6,6 +6,8 @@ module FacilitiesManagement
     include ActiveModel::Callbacks
 
     SERVICE_CHOICES = %w[not_required all_day hourly].freeze
+    PARAMETERS = %i[service_choice start_hour start_minute start_ampm end_hour end_minute end_ampm].freeze
+
 
     attribute :service_choice, String, default: nil
 

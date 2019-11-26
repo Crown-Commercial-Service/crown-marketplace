@@ -5,19 +5,19 @@
       <%= display_potential_errors @building_service, [:service_hours, :service_choice], f.object_name, nil, nil, day.downcase %>
       <div class="govuk-radios govuk-radios--conditional" data-module="radios">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="<%= day.downcase %>_not_required" name="service_hours[<%= day.downcase %>[service_choice]]" type="radio" value="not_specified" data-propertyname="<%= day.downcase %>_service_choice">
+          <input class="govuk-radios__input" id="<%= day.downcase %>_not_required" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[service_choice]]]" type="radio" value="not_specified" data-propertyname="<%= day.downcase %>_service_choice">
           <label class="govuk-label govuk-radios__label" for="<%= day.downcase %>_not_required">
             Not Required
           </label>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="<%= day.downcase %>_all_day" name="service_hours[<%= day.downcase %>[service_choice]]" type="radio" value="all_day" data-propertyname="<%= day.downcase %>_service_choice">
+          <input class="govuk-radios__input" id="<%= day.downcase %>_all_day" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[service_choice]]]" type="radio" value="all_day" data-propertyname="<%= day.downcase %>_service_choice">
           <label class="govuk-label govuk-radios__label" for="<%= day.downcase %>_all_day">
             All day
           </label>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="<%= day.downcase %>_hourly" name="service_hours[<%= day.downcase %>[service_choice]]" type="radio" value="hourly" aria-controls="<%= day.downcase %>-conditional-specified" data-propertyname="<%= day.downcase %>_service_choice">
+          <input class="govuk-radios__input" id="<%= day.downcase %>_hourly" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[service_choice]]]" type="radio" value="hourly" aria-controls="<%= day.downcase %>-conditional-specified" data-propertyname="<%= day.downcase %>_service_choice">
           <label class="govuk-label govuk-radios__label" for="<%= day.downcase %>_hourly">
             Specified Hours
           </label>
@@ -32,19 +32,19 @@
                   <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_start_hour">
                     Hour
                   </label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_start_hour" name="service_hours[<%= day.downcase %>[start_hour]]" maxlength="2" type="number" min="0" max="12">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_start_hour" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[start_hour]]]" maxlength="2" type="number" min="0" max="12">
                 </div>
                 <div class="govuk-date-input__item">
                   <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_start_minute">
                     Minute
                   </label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_start_minute" name="service_hours[<%= day.downcase %>[start_minute]]" maxlength="2" type="number" min="0" max="59">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_start_minute" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[start_minute]]]" maxlength="2" type="number" min="0" max="59">
                 </div>
                 <div class="govuk-date-input__item">
                   <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_start_ampm">
                     Morning/Afternoon
                   </label>
-                  <select class="govuk-select govuk-input--width-2" id="<%= day.downcase %>_start_ampm" name="service_hours[<%= day.downcase %>[start_ampm]]">
+                  <select class="govuk-select govuk-input--width-2" id="<%= day.downcase %>_start_ampm" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[start_ampm]]]">
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
                   </select>
@@ -63,19 +63,19 @@
                   <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_end_hour">
                     Hour
                   </label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_end_hour" name="service_hours[<%= day.downcase %>[end_hour]]" maxlength="2" min="0" max="12">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_end_hour" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[end_hour]]]" maxlength="2" min="0" max="12">
                 </div>
                 <div class="govuk-date-input__item">
                   <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_end_minute">
                     Minute
                   </label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_end_minute" name="service_hours[<%= day.downcase %>[end_minute]]" maxlength="2" min="0" max="59">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<%= day.downcase %>_end_minute" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[end_minute]]]" maxlength="2" min="0" max="59">
                 </div>
                 <div class="govuk-date-input__item">
                   <label class="govuk-label govuk-date-input__label" for="<%= day.downcase %>_end_ampm">
                     Morning/Afternoon
                   </label>
-                  <select class="govuk-select govuk-input--width-2" id="<%= day.downcase %>_end_ampm" name="service_hours[<%= day.downcase %>[end_ampm]]">
+                  <select class="govuk-select govuk-input--width-2" id="<%= day.downcase %>_end_ampm" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[end_ampm]]]">
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
                   </select>
