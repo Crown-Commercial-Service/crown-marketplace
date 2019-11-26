@@ -36,7 +36,8 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
   end
 
   def update_service_hours
-    @building_service.assign_attributes(servicehours_params)
+    @building_service.assign_attributes(servicehours_params.select { |attribute| attribute unless attribute.empty? }.to_h)
+
     if @building_service.save(context: :service_hours)
       redirect_to facilities_management_beta_procurement_building_path(@procurement_building)
     else
@@ -81,8 +82,6 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
     @building_data = @building['building_json'] if @building.present?
 
     @building_service = bs_from_db if @building.present?
-
-    @building_service[:service_hours] = FacilitiesManagement::ServiceHours.new(@building_service[:service_hours])
   end
 
   def procurement_building_from_bs(bs_from_db)

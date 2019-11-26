@@ -19,6 +19,7 @@ module FacilitiesManagement::Beta::ProcurementBuildingsHelper
     pbs.this_service[:context][:cleaning_standards]&.first
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def question_type(service, question)
     return 'service_hours' if question == :service_hours
 
@@ -31,6 +32,15 @@ module FacilitiesManagement::Beta::ProcurementBuildingsHelper
     elsif service.requires_volume?
       'volume'
     end
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+  def service_standard(service)
+    return 'ppm_standards' if service.requires_ppm_standards?
+
+    return 'building_standards' if service.requires_building_standards?
+
+    'cleaning_standards' if service.requires_cleaning_standards?
   end
 
   def checked?(object_value, value)

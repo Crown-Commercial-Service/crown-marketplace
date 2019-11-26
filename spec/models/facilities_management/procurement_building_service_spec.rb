@@ -662,7 +662,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     before(:all) do
       ActiveRecord::Base.connection.drop_table :pbs_mock if ActiveRecord::Base.connection.data_source_exists? 'pbs_mock'
       ActiveRecord::Base.connection.create_table :pbs_mock do |t|
-        t.hstore :service_hours, null: true
+        t.jsonb :service_hours, null: true
       end
     end
 

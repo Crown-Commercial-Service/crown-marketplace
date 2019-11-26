@@ -99,6 +99,7 @@ module ApplicationHelper
     (attributes.is_a?(Array) ? attributes.last : attributes).to_s
   end
 
+  # rubocop:disable Metrics/ParameterLists
   def display_potential_errors(model_object, attributes, form_object_name, error_lookup = nil, error_position = nil, section_name = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
 
@@ -108,6 +109,7 @@ module ApplicationHelper
       end
     end
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def display_specialised_error(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
     error = model_object.errors[attribute].first
@@ -120,8 +122,8 @@ module ApplicationHelper
   end
 
   # looks up the locals data for validation messages
-  def validation_messages(model_object_sym, attribute_sym = nil, child_attribute_sym = nil)
-    return t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
+  def validation_messages(model_object_sym, attribute_sym = nil)
+    translation_key = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
 
     translation_key = "activerecord.errors.models.#{model_object_sym.downcase}.attributes"
     if attribute_sym.is_a? Array
