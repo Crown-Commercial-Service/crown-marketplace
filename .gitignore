@@ -55,6 +55,10 @@ public/management_consultancy/data/*
 
 public/legal_services/data/*
 
+# Facilities Management data folders
+
+public/facilities_management/data/*
+
 # Redis dump
 dump.rdb
 lib/tasks/supply_teachers/input/
