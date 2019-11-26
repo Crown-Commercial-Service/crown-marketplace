@@ -35,14 +35,14 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
     let fnMinValidator = this.validationFunctions['min'];
 
     this.fnGetDayInputs = function (strDay, strFieldName) {
-        let jqField = $('input[name=service_hours[' + strDay + '[' + strFieldName + ']]');
+        let jqField = $('input[name=facilities_management_procurement_building_service[service_hours[' + strDay + '[' + strFieldName + ']]]');
         if (jqField.length > 0) {
             return jqField;
         }
     };
 
     this.fnCheckRadioButtons = function (day, choices) {
-        let fieldValue_service_choice = this.form["service_hours[" + day + "[service_choice]]"];
+        let fieldValue_service_choice = this.form["facilities_management_procurement_building_service[service_hours[" + day + "[service_choice]]]"];
         if (fieldValue_service_choice.value === "") {
             choices[day] = {field: fieldValue_service_choice, status: "none"};
             return false;
