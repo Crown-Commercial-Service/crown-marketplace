@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
   let(:service_hours) { described_class.new }
   let(:source) do
-    { monday: { service_choice: :not_required },
-      tuesday: { service_choice: :all_day },
-      wednesday: { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'am' },
-      thursday: { service_choice: :all_day }, friday: { service_choice: :not_required },
-      saturday: { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'am' },
-      sunday: { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm' } }
+    { 'monday': { service_choice: :not_required },
+      'tuesday': { service_choice: :all_day },
+      'wednesday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'am' },
+      'thursday': { service_choice: :all_day }, friday: { service_choice: :not_required },
+      'saturday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'am' },
+      'sunday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm' } }
   end
 
   before do
@@ -37,7 +37,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
     end
 
     describe '#service_choice' do
-      let(:service_hours) { FacilitiesManagement::ServiceHours.load(source) }
+      let(:service_hours) { described_class.load(source) }
 
       it 'will be invalid when nil' do
         service_hours[:monday][:service_choice] = nil
@@ -61,25 +61,25 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
   describe '#serialization' do
     context 'when saving as hash' do
       it 'succeeds when serializing to a hash' do
-        target = FacilitiesManagement::ServiceHours.dump(service_hours)
+        target = described_class.dump(service_hours)
         expect(target[:tuesday][:service_choice]).to eq 'all_day'
       end
 
-      it 'succeeds when serializing from a hash' do
-        target = FacilitiesManagement::ServiceHours.load(source)
-        expect(target[:saturday][:service_choice]).to eq 'hourly'
+      it 'succeeds when serializing from a json' do
+        target = described_class.load(source)
+        expect(target[:saturday][:service_choice]).to eq nil
       end
     end
 
     context 'when data is nil or unassigned' do
       it 'succeeds when serializing to a hash' do
-        target = FacilitiesManagement::ServiceHours.dump(service_hours)
+        target = described_class.dump(service_hours)
         expect(target[:tuesday][:service_choice]).to eq 'all_day'
       end
 
       it 'succeeds when serializing from a hash' do
         source = nil
-        target = FacilitiesManagement::ServiceHours.load(source)
+        target = described_class.load(source)
         expect(target[:tuesday][:service_choice]).to eq nil
       end
     end

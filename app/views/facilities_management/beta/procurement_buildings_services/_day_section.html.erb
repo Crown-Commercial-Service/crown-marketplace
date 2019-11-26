@@ -5,7 +5,7 @@
       <%= display_potential_errors @building_service, [:service_hours, :service_choice], f.object_name, nil, nil, day.downcase %>
       <div class="govuk-radios govuk-radios--conditional" data-module="radios">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="<%= day.downcase %>_not_required" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[service_choice]]]" type="radio" value="not_specified" data-propertyname="<%= day.downcase %>_service_choice">
+          <input class="govuk-radios__input" id="<%= day.downcase %>_not_required" name="<%=f.object_name%>[service_hours[<%= day.downcase %>[service_choice]]]" type="radio" value="not_required" data-propertyname="<%= day.downcase %>_service_choice">
           <label class="govuk-label govuk-radios__label" for="<%= day.downcase %>_not_required">
             Not Required
           </label>
