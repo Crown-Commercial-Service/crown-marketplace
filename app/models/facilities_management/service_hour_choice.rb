@@ -8,7 +8,6 @@ module FacilitiesManagement
     SERVICE_CHOICES = %w[not_required all_day hourly].freeze
     PARAMETERS = %i[service_choice start_hour start_minute start_ampm end_hour end_minute end_ampm].freeze
 
-
     attribute :service_choice, String, default: nil
 
     attribute :start_hour, Integer, default: nil
@@ -20,18 +19,18 @@ module FacilitiesManagement
 
     validates :service_choice, presence: true
     validates :service_choice, inclusion: { in: SERVICE_CHOICES }
-    validates :start_ampm, inclusion: { in: %w[am pm] }, if: -> { service_choice&.to_sym == :hourly }
-    validates :start_hour, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
-    validates :start_hour, inclusion: { in: 1..12 }, if: -> { service_choice == :hourly }
-    validates :start_minute, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
-    validates :start_minute, inclusion: { in: 0..59 }, if: -> { service_choice == :hourly }
-    validates :end_ampm, inclusion: { in: %w[am pm] }, if: -> { service_choice == :hourly }
-    validates :end_hour, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
-    validates :end_hour, inclusion: { in: 1..12 }, if: -> { service_choice == :hourly }
-    validates :end_minute, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
-    validates :end_minute, inclusion: { in: 0..59 }, if: -> { service_choice == :hourly }
-
-    validate :validate_choice
+    # validates :start_ampm, inclusion: { in: %w[am pm] }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :start_hour, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
+    # validates :start_hour, inclusion: { in: 1..12 }, if: -> { service_choice == :hourly }
+    # validates :start_minute, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
+    # validates :start_minute, inclusion: { in: 0..59 }, if: -> { service_choice == :hourly }
+    # validates :end_ampm, inclusion: { in: %w[am pm] }, if: -> { service_choice == :hourly }
+    # validates :end_hour, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
+    # validates :end_hour, inclusion: { in: 1..12 }, if: -> { service_choice == :hourly }
+    # validates :end_minute, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
+    # validates :end_minute, inclusion: { in: 0..59 }, if: -> { service_choice == :hourly }
+    #
+    # validate :validate_choice
 
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
@@ -41,16 +40,24 @@ module FacilitiesManagement
     end
 
     def self.dump(service_hour_choice)
-      new_hash = {}
-      new_hash.merge!(service_hour_choice.attributes.select { |_key, value| value.present? })
-      new_hash
+      # new_hash = {}
+      # new_hash.merge!(service_hour_choice.attributes.select { |_key, value| value.present? })
+      # new_hash
+
+      return service_hour_choice if service_hour_choice.is_a? ServiceHourChoice
+
+      service_hour_choice.select { |attribute| attribute unless attribute.empty? }.to_h
     end
 
     def self.load(service_hour_choice)
+      new if service_hour_choice.is_a? String
+
       new(service_hour_choice)
     end
 
     def total_hours
+      return 0 if service_choice.nil?
+
       return 0 if service_choice.to_sym == :not_required
 
       return 24 if service_choice.to_sym == :all_day

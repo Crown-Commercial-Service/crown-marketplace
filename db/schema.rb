@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 2019_11_21_104947) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -63,9 +62,8 @@ ActiveRecord::Schema.define(version: 2019_11_21_104947) do
     t.integer "no_of_units_to_be_serviced"
     t.string "service_standard", limit: 1
     t.string "lift_data", default: [], array: true
-    t.hstore "service_hours", default: {}
+    t.jsonb "service_hours"
     t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
-    t.index ["service_hours"], name: "building_service_hours", using: :gist
   end
 
   create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
