@@ -72,6 +72,9 @@ module ProcurementValidator
     # End of validation rules for contract-dates
     #############################################
 
+    validates :security_policy_document_file, presence: true, if: :security_policy_document_required?, on: :security_policy_document
+    validates :security_policy_document_date, date: { allow_nil: true }, on: :security_policy_document
+
     private
 
     #############################################
