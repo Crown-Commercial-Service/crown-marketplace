@@ -17,20 +17,23 @@ module FacilitiesManagement
     attribute :end_minute, Integer, default: nil
     attribute :end_ampm, String, default: nil
 
+    attr_accessor :start_time
+    attr_accessor :end_time
+
     validates :service_choice, presence: true
     validates :service_choice, inclusion: { in: SERVICE_CHOICES }
-    # validates :start_ampm, inclusion: { in: %w[am pm] }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :start_hour, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
-    # validates :start_hour, inclusion: { in: 1..12 }, if: -> { service_choice == :hourly }
-    # validates :start_minute, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
-    # validates :start_minute, inclusion: { in: 0..59 }, if: -> { service_choice == :hourly }
-    # validates :end_ampm, inclusion: { in: %w[am pm] }, if: -> { service_choice == :hourly }
-    # validates :end_hour, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
-    # validates :end_hour, inclusion: { in: 1..12 }, if: -> { service_choice == :hourly }
-    # validates :end_minute, numericality: { only_integer: true }, if: -> { service_choice == :hourly }
-    # validates :end_minute, inclusion: { in: 0..59 }, if: -> { service_choice == :hourly }
-    #
-    # validate :validate_choice
+    validates :start_ampm, inclusion: { in: %w[AM PM] }, if: -> { service_choice&.to_sym == :hourly }
+    validates :end_ampm, inclusion: { in: %w[AM PM] }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :start_hour, numericality: { only_integer: true }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :start_hour, inclusion: { in: 1..12 }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :start_minute, numericality: { only_integer: true }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :start_minute, inclusion: { in: 0..59 }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :end_hour, numericality: { only_integer: true }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :end_hour, inclusion: { in: 1..12 }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :end_minute, numericality: { only_integer: true }, if: -> { service_choice&.to_sym == :hourly }
+    # validates :end_minute, inclusion: { in: 0..59 }, if: -> { service_choice&.to_sym == :hourly }
+
+    validate :validate_choice
 
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
@@ -135,24 +138,33 @@ module FacilitiesManagement
       validate_numbers
       return if errors.present?
 
+      validate_number_ranges
+      return if errors.present?
+
       validate_time_range
     end
 
     def validate_numbers
-      %i[start_hour start_minute end_hour end_minute].each { |s| test_for_integer(s) }
+      %i[start_hour start_minute end_hour end_minute].each { |s| test_for_integer(s, :start_time) }
+      %i[end_hour end_minute].each { |s| test_for_integer(s, :end_time) }
     end
 
-    def test_for_integer(symbol)
-      errors.add(symbol, :invalid) unless attributes[symbol].to_s == attributes[symbol].to_i.to_s
+    def test_for_integer(attribute, error_symbol)
+      errors.add(error_symbol, :invalid) unless attributes[attribute].to_s == attributes[attribute].to_i.to_s
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
     def validate_time_range
-      errors.add(:end_hour, :after) if [:end_ampm] != [:start_ampm] && [:end_ampm] == 'pm' && end_time_value <= start_time_value
+      errors.add(:end_time, :after) if [:end_ampm] != [:start_ampm] && [:end_ampm] == 'pm' && end_time_value <= start_time_value
 
-      errors.add(:start_hour, :before) if [:end_ampm] != [:start_ampm] && [:end_ampm] == 'am' && end_time_value >= start_time_value
+      errors.add(:start_time, :before) if [:end_ampm] != [:start_ampm] && [:end_ampm] == 'am' && end_time_value >= start_time_value
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+
+    def validate_number_ranges
+      errors.add(:start_time, :invalid) unless start_hour.between?(0, 12) || start_minute.between?(0, 59)
+      errors.add(:end_time, :invalid) unless end_hour.between?(0, 12) || end_minute.between?(0, 59)
+    end
 
     def start_time_value
       time_value(format('%02d', start_hour), format('%02d', start_minute))
