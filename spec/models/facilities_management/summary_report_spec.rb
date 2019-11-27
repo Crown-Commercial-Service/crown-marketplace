@@ -652,7 +652,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   it 'price multiple buildings and services with rate card' do
     results = {}
 
-    supplier_names = rate_card.data['Prices'].keys
+    supplier_names = rate_card.data[:Prices].keys
     supplier_names.each do |s|
       # p s
 
@@ -669,7 +669,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     sorted_results = results.sort_by { |_key, value| value }
 
     # p rate_card
-    expect(sorted_results.first[0]).to eq 'Cartwright and Sons'
+    expect(sorted_results.first[0].to_s).to eq 'Cartwright and Sons'
 
     expect(sorted_results.first[1].round(2)).to equal 2566970.06
   end

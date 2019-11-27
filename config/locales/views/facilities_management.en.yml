@@ -83,6 +83,8 @@ en:
               invalid: Select one or more buildings you want to include in your procurement
             region_codes:
               invalid: Select at least one region you need to include in your procurement
+            security_policy_document_file:
+              blank: The selected file is empty
             service_codes:
               invalid: Select at least one service you need to include in your procurement
             tupe:
@@ -358,6 +360,14 @@ en:
           save_and_return_to_detailed_summary: Save and return to detailed search summary
           save_for_later: Save for later
           search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
+          security_policy_document:
+            document: Security policy document
+            document_date: Security policy document date
+            document_name: Security policy document name
+            document_version_number: Security policy document version number
+            guidance: The site monitors file uploads for unusual activity. Security incidents resulting from buyer file uploads may be subject to CCS investigation with the Buyer.
+            question: Do you have an organisation security policy that you wish to form part of this contract? If yes, can you provide this document?
+            title: Security policy document
           services:
             service_specification_doc: Read the service specification document
           tupe:
