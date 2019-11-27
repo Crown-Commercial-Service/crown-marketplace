@@ -16,6 +16,22 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
+        facilities_management/service_hours:
+          attributes:
+            sunday:
+              invalid: Select not required if you don't need the service on Sunday
+            saturday:
+              invalid: Select not required if you don't need the service on Saturday
+            friday:
+              invalid: Select not required if you don't need the service on Friday
+            thursday:
+              invalid: Select not required if you don't need the service on Thursday
+            wednesday:
+              invalid: Select not required if you don't need the service on Wednesday
+            tuesday:
+              invalid: Select not required if you don't need the service on Tuesday
+            monday:
+              invalid: Select not required if you don't need the service on Monday
     service_hour_choice:
       all_day: All day (24 hours)
       hourly: Specified hours 2
