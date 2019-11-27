@@ -681,7 +681,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       results = {}
       report_results = {}
-      supplier_names = rate_card.data['Prices'].keys
+      supplier_names = rate_card.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -690,20 +690,20 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       sorted_list = results.sort_by { |_k, v| v }
-      expect(sorted_list.first[0]).to eq 'Hirthe-Mills'
+      expect(sorted_list.first[0].to_s).to eq 'Hirthe-Mills'
       expect(sorted_list.first[1].round(2)).to eq 1325326.66
 
-      supplier_name = 'Hirthe-Mills'
+      supplier_name = 'Hirthe-Mills'.to_sym
       expect(report_results[supplier_name][report_results[supplier_name].keys.third].count).to eq 22
 
       spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
 
       IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
 
-      # uvals.each(&:deep_symbolize_keys!)
+      # create deliverable matrix spreadsheet
       buildings_ids = uvals.collect { |u| u['building_id'] }.compact.uniq
 
-      building_ids_with_service_codes2 = buildings_ids.collect do |b|
+      building_ids_with_service_codes2 = buildings_ids.sort.collect do |b|
         services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
         { building_id: b.downcase, service_codes: services_per_building }
       end
@@ -808,7 +808,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     report = described_class.new(start_date, 'test@example.com', procurement)
 
     results = {}
-    supplier_names = rate_card.data['Prices'].keys
+    supplier_names = rate_card.data[:Prices].keys
     supplier_names.each do |supplier_name|
       # dummy_supplier_name = 'Hickle-Schinner'
       results[supplier_name] = {}

@@ -105,6 +105,11 @@ ActiveRecord::Schema.define(version: 2019_11_21_104947) do
     t.boolean "estimated_cost_known"
     t.boolean "mobilisation_period_required"
     t.boolean "extensions_required"
+    t.boolean "security_policy_document_required"
+    t.string "security_policy_document_name"
+    t.string "security_policy_document_version_number"
+    t.date "security_policy_document_date"
+    t.string "security_policy_document_file"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
