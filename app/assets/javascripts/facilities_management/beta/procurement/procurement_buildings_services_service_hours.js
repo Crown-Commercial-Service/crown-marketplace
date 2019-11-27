@@ -3,19 +3,19 @@
 function SvcHoursDataUI(jqContainer) {
     this.containerDiv = jqContainer;
     this.dataContainer = jqContainer.find(".servicehoursdata");
-    let formObject = jqContainer.closest('form');
+    let formObject = jqContainer.closest("form");
     if (formObject.length > 0) {
-        this.form_helper = new form_validation_component(formObject[0], this.validateForm, true);
-        this.form_helper.prevErrorMessage = this.form_helper.errorMessage;
-        this.form_helper.errorMessage = function (prop_name, errType) {
+        this.formHelper = new form_validation_component(formObject[0], this.validateForm, true);
+        this.formHelper.prevErrorMessage = this.formHelper.errorMessage;
+        this.formHelper.errorMessage = function (propertyName, errType) {
             let message = "";
 
             if (errType === "required") {
                 message = "Select not required if you don't need services on this day"
             } else {
-                switch (prop_name) {
+                switch (propertyName) {
                     default:
-                        message = this.prevErrorMessage(prop_name, errType);
+                        message = this.prevErrorMessage(propertyName, errType);
                 }
             }
         };
@@ -28,27 +28,27 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
     this.clearBannerErrorList();
     this.clearAllFieldErrors();
     this.toggleBannerError(false);
-    let fnRequiredValidator = this.validationFunctions['required'];
-    let fnNumberValidator = this.validationFunctions['type']['number'];
-    let fnLengthValidator = this.validationFunctions['maxlength'];
-    let fnMaxValidator = this.validationFunctions['max'];
-    let fnMinValidator = this.validationFunctions['min'];
+    let fnRequiredValidator = this.validationFunctions["required"];
+    let fnNumberValidator = this.validationFunctions["type"]["number"];
+    let fnLengthValidator = this.validationFunctions["maxlength"];
+    let fnMaxValidator = this.validationFunctions["max"];
+    let fnMinValidator = this.validationFunctions["min"];
 
     this.fnGetDayInputs = function (strDay, strFieldName) {
-        let jqField = $('input[name=facilities_management_procurement_building_service[service_hours[' + strDay + '[' + strFieldName + ']]]');
+        let jqField = $("input[name=facilities_management_procurement_building_service[service_hours[" + strDay + "[" + strFieldName + "]]]");
         if (jqField.length > 0) {
             return jqField;
         }
     };
 
     this.fnCheckRadioButtons = function (day, choices) {
-        let fieldValue_service_choice = this.form["facilities_management_procurement_building_service[service_hours[" + day + "[service_choice]]]"];
-        if (fieldValue_service_choice.value === "") {
-            choices[day] = {field: fieldValue_service_choice, status: "none"};
+        let fieldValueServiceChoice = this.form["facilities_management_procurement_building_service[service_hours[" + day + "[service_choice]]]"];
+        if (fieldValueServiceChoice.value === "") {
+            choices[day] = {field: fieldValueServiceChoice, status: "none"};
             return false;
         }
 
-        choices[day] = {field: fieldValue_service_choice, status: "ok"};
+        choices[day] = {field: fieldValueServiceChoice, status: "ok"};
         return true;
     };
 
@@ -59,8 +59,8 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
         let jqMinute = $("#" + day + "_" + part + "_minute");
         let jqAmPm = $("#" + day + "_" + part + "_ampm");
 
-        if (daily_choices[day][part] === undefined) {
-            daily_choices[day][part] = {};
+        if (choices[day][part] === undefined) {
+            choices[day][part] = {};
         }
 
         this.fnCheckTimeUnit = function (jqElem, section) {
@@ -69,70 +69,70 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
             isValid = !fnMaxValidator(jqElem) && isValid;
             isValid = !fnMinValidator(jqElem) && isValid;
 
-            daily_choices[day][part][section] = {status: isValid, elem: jqElem, value: jqElem.val()};
+            choices[day][part][section] = {status: isValid, elem: jqElem, value: jqElem.val()};
 
             return isValid;
         };
 
         isValid = this.fnCheckTimeUnit(jqHour, "hour") && isValid;
         isValid = this.fnCheckTimeUnit(jqMinute, "minute") && isValid;
-        daily_choices[day][part]['ampmElem'] = jqAmPm;
-        daily_choices[day][part]['status'] = isValid;
+        choices[day][part]["ampmElem"] = jqAmPm;
+        choices[day][part]["status"] = isValid;
 
         return isValid;
     };
 
-    let daily_choices = {};
+    let dailyChoices = {};
     // check primary radio buttons
-    isValid = this.fnCheckRadioButtons("monday", daily_choices) && isValid;
-    isValid = this.fnCheckRadioButtons("tuesday", daily_choices) && isValid;
-    isValid = this.fnCheckRadioButtons("wednesday", daily_choices) && isValid;
-    isValid = this.fnCheckRadioButtons("thursday", daily_choices) && isValid;
-    isValid = this.fnCheckRadioButtons("friday", daily_choices) && isValid;
-    isValid = this.fnCheckRadioButtons("saturday", daily_choices) && isValid;
-    isValid = this.fnCheckRadioButtons("sunday", daily_choices) && isValid;
+    isValid = this.fnCheckRadioButtons("monday", dailyChoices) && isValid;
+    isValid = this.fnCheckRadioButtons("tuesday", dailyChoices) && isValid;
+    isValid = this.fnCheckRadioButtons("wednesday", dailyChoices) && isValid;
+    isValid = this.fnCheckRadioButtons("thursday", dailyChoices) && isValid;
+    isValid = this.fnCheckRadioButtons("friday", dailyChoices) && isValid;
+    isValid = this.fnCheckRadioButtons("saturday", dailyChoices) && isValid;
+    isValid = this.fnCheckRadioButtons("sunday", dailyChoices) && isValid;
 
-    for (let key in daily_choices) {
-        if (daily_choices.hasOwnProperty(key)) {
-            if (daily_choices[key].status === "none") {
+    for (let key in dailyChoices) {
+        if (dailyChoices.hasOwnProperty(key)) {
+            if (dailyChoices[key].status === "none") {
                 let topFormGroup = $("#" + key + "_form-group");
-                this.toggleError($(daily_choices[key].field[0]), true, 'required');
+                this.toggleError($(dailyChoices[key].field[0]), true, "required");
             } else {
-                if (daily_choices[key].field.value === "hourly") {
-                    let timeIsValid = this.fnCheckTime(key, "start", daily_choices[key]);
-                    timeIsValid = this.fnCheckTime(key, "end", daily_choices[key]) && timeIsValid;
+                if (dailyChoices[key].field.value === "hourly") {
+                    let timeIsValid = this.fnCheckTime(key, "start", dailyChoices[key]);
+                    timeIsValid = this.fnCheckTime(key, "end", dailyChoices[key]) && timeIsValid;
 
                     isValid = isValid && timeIsValid;
                     if (!timeIsValid) {
-                        if (daily_choices[key]['start'].status === false) {
-                            this.toggleError(daily_choices[key]['start']['hour'].elem, true, 'invalid');
-                            this.addErrorClass(daily_choices[key]['start']['minute'].elem);
-                            this.addErrorClass(daily_choices[key]['start']['ampmElem']);
+                        if (dailyChoices[key]["start"].status === false) {
+                            this.toggleError(dailyChoices[key]["start"]["hour"].elem, true, "invalid");
+                            this.addErrorClass(dailyChoices[key]["start"]["minute"].elem);
+                            this.addErrorClass(dailyChoices[key]["start"]["ampmElem"]);
                         }
-                        if (daily_choices[key]['end'].status === false) {
-                            this.toggleError(daily_choices[key]['end']['hour'].elem, true, 'invalid');
-                            this.addErrorClass(daily_choices[key]['end']['minute'].elem);
-                            this.addErrorClass(daily_choices[key]['end']['ampmElem']);
+                        if (dailyChoices[key]["end"].status === false) {
+                            this.toggleError(dailyChoices[key]["end"]["hour"].elem, true, "invalid");
+                            this.addErrorClass(dailyChoices[key]["end"]["minute"].elem);
+                            this.addErrorClass(dailyChoices[key]["end"]["ampmElem"]);
                         }
                     } else {
-                        // let startTime = daily_choices[key]['start']['hour'].value + daily_choices[key]['start']['minute'].value;
-                        // let startampm = daily_choices[key]['start']['ampmElem'].val();
-                        // let endTime = daily_choices[key]['end']['hour'].value + daily_choices[key]['end']['minute'].value;
-                        // let endampm = daily_choices[key]['start']['ampmElem'].val();
+                        // let startTime = daily_choices[key]["start"]["hour"].value + daily_choices[key]["start"]["minute"].value;
+                        // let startampm = daily_choices[key]["start"]["ampmElem"].val();
+                        // let endTime = daily_choices[key]["end"]["hour"].value + daily_choices[key]["end"]["minute"].value;
+                        // let endampm = daily_choices[key]["start"]["ampmElem"].val();
                         // if (endampm !== startampm) {
-                        //     if (endampm === 'pm' && endTime <= startTime) {
-                        //         this.toggleError(daily_choices[key]['end']['hour'].elem, true, 'min');
-                        //         this.addErrorClass(daily_choices[key]['end']['minute'].elem);
-                        //         this.addErrorClass(daily_choices[key]['end']['ampmElem']);
-                        //     } else if (endampm === 'am' && startTime <= endTime) {
-                        //         this.toggleError(daily_choices[key]['start']['hour'].elem, true, 'max');
-                        //         this.addErrorClass(daily_choices[key]['start']['minute'].elem);
-                        //         this.addErrorClass(daily_choices[key]['start']['ampmElem']);
+                        //     if (endampm === "pm" && endTime <= startTime) {
+                        //         this.toggleError(daily_choices[key]["end"]["hour"].elem, true, "min");
+                        //         this.addErrorClass(daily_choices[key]["end"]["minute"].elem);
+                        //         this.addErrorClass(daily_choices[key]["end"]["ampmElem"]);
+                        //     } else if (endampm === "am" && startTime <= endTime) {
+                        //         this.toggleError(daily_choices[key]["start"]["hour"].elem, true, "max");
+                        //         this.addErrorClass(daily_choices[key]["start"]["minute"].elem);
+                        //         this.addErrorClass(daily_choices[key]["start"]["ampmElem"]);
                         //     }
                         // } else if (endTime <= startTime) {
-                        //     this.toggleError(daily_choices[key]['end']['hour'].elem, true, 'min');
-                        //     this.addErrorClass(daily_choices[key]['end']['minute'].elem);
-                        //     this.addErrorClass(daily_choices[key]['end']['ampmElem']);
+                        //     this.toggleError(daily_choices[key]["end"]["hour"].elem, true, "min");
+                        //     this.addErrorClass(daily_choices[key]["end"]["minute"].elem);
+                        //     this.addErrorClass(daily_choices[key]["end"]["ampmElem"]);
                         // }
                     }
                 }

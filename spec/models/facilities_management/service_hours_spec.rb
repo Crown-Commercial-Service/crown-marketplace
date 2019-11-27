@@ -67,7 +67,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
 
       it 'succeeds when serializing from a json' do
         target = described_class.load(source)
-        expect(target[:saturday][:service_choice]).to eq nil
+        expect(target[:saturday][:service_choice]).to eq 'hourly'
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         expect(target[:tuesday][:service_choice]).to eq 'all_day'
       end
 
-      it 'succeeds when serializing from a hash' do
+      it 'succeeds when serializing from a nil hash' do
         source = nil
         target = described_class.load(source)
         expect(target[:tuesday][:service_choice]).to eq nil
