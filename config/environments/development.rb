@@ -66,6 +66,7 @@ Rails.application.configure do
 end
 
 if Rails.env.development?
+  ENV['I18N_DEBUG'] = '1'
   OmniAuth.config.test_mode = true
 
   OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(

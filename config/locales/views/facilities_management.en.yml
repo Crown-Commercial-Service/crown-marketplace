@@ -1,6 +1,11 @@
 ---
 en:
   activemodel:
+    attributes:
+      service_choice:
+        all_day: All day
+        hourly: Specified Hours
+        not_required: Not required
     errors:
       models:
         facilities_management/journey/choose_locations:
@@ -13,6 +18,7 @@ en:
               too_short: Select at least one service you need to include in your procurement
     service_hour_choice:
       all_day: All day (24 hours)
+      hourly: Specified hours 2
       not_required: Not required
       time_to: to
   activerecord:
@@ -127,6 +133,18 @@ en:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
+        facilities_management/service_hour_choice:
+          attributes:
+            end_time:
+              greater_than: The end time must be after the start time of your specified hours
+              invalid: Enter a real end time
+              less_than: The start time must be before the end time of your specified hours
+            service_choice:
+              blank: Select not required if you don't need the service on this day
+            start_time:
+              greater_than: The end time must be after the start time of your specified hours
+              invalid: Enter a real start time
+              less_than: The start time must be before the end time of your specified hours
   facilities_management:
     basket:
       basket_header: selected
