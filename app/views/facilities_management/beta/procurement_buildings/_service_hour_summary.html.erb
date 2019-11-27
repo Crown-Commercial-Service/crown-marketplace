@@ -1,10 +1,10 @@
-<div class="service_hours govuk-summary-list">
+<div class="details-expando govuk-summary-list">
   <input type="checkbox" id="#_<%=position%>_check"/>
-  <span class="service_hours-data"><%= service_hours.total_hours_annually %></span>
-  <div class="service_hours-caption">
-    <label for="#_<%=position%>_check" title="Click to show details"><span></span><span><%= t('.service_hours_caption') %></span></label>
+  <span class="details-expando--data"><%= service_hours.total_hours_annually %></span>
+  <div class="details-expando--caption">
+    <label for="#_<%=position%>_check" title="Click to show details"><span><%= t('.service_hours_caption') %></span></label>
   </div>
-  <ul id="_<%=position%>_details" class="service_hours-details">
+  <ul id="_<%=position%>_details" class="details-expando--details">
     <% service_hours.attributes.each do |k, v|%>
       <li class="govuk-summary-list__row">
         <span><%=k.to_s.capitalize %></span>,

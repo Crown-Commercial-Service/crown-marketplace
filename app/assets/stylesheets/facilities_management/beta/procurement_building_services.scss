@@ -28,7 +28,7 @@
   border-top : 1px solid #bfc1c3;
   }
 
-.service_hours {
+.details-expando {
   font-size : smaller;
   min-width : 14rem;
 
@@ -39,48 +39,47 @@
     display : none;
     }
 
-  span.service_hours-data {
+  span.details-expando--data {
     position : relative;
     top      : 3px;
     }
 
-  .service_hours-caption {
-    color       : #007194 !important;
-    margin-left : 0.5em;
-    margin-top  : 0.5rem;
+  .details-expando--caption {
+    color           : #007194 !important;
+    margin-left     : 0.5rem;
+    margin-top      : 0.5rem;
+    text-decoration : none !important;
 
     label {
-      color : #007194 !important;
-
-      span:last-child {
-        text-decoration : underline;
-        }
+      color           : #007194 !important;
+      text-decoration : underline;
 
       span:first-child {
         &::before {
           content         : "▶︎";
+          display         : inline-block;
           position        : relative;
-          top             : 1px;
-          left            : 1px;
+          top             : 0;
+          left            : 0;
           margin-left     : -1em;
           padding-right   : 0.5em;
-          text-decoration : none !important;
+          text-decoration : unset;
           }
         }
       }
     }
 
-  input[type=checkbox]:checked ~ .service_hours-details {
+  input[type=checkbox]:checked ~ .details-expando--details {
     display : block;
     }
 
-  input[type=checkbox]:checked ~ .service_hours-caption label span:first-child {
+  input[type=checkbox]:checked ~ .details-expando--caption label span:first-child {
     &::before {
       content : "▼";
       }
     }
 
-  .service_hours-details {
+  .details-expando--details {
     padding     : 0 0 0 1em;
     margin      : 5px 0 0;
     display     : none;

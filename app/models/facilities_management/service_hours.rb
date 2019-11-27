@@ -49,17 +49,7 @@ module FacilitiesManagement
     def self.load(service_hours)
       return ServiceHours.new if service_hours.blank?
 
-      new_obj = ServiceHours.new
-
-      new_obj[:monday] = ServiceHourChoice.load(service_hours['monday'])
-      new_obj[:tuesday] = ServiceHourChoice.load(service_hours['tuesday'])
-      new_obj[:wednesday] = ServiceHourChoice.load(service_hours['wednesday'])
-      new_obj[:thursday] = ServiceHourChoice.load(service_hours['thursday'])
-      new_obj[:friday] = ServiceHourChoice.load(service_hours['friday'])
-      new_obj[:saturday] = ServiceHourChoice.load(service_hours['saturday'])
-      new_obj[:sunday] = ServiceHourChoice.load(service_hours['sunday'])
-
-      new_obj
+      new(service_hours)
     end
 
     def total_hours_annually
