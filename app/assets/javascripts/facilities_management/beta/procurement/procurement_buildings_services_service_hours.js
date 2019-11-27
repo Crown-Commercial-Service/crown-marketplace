@@ -4,7 +4,7 @@ function SvcHoursDataUI(jqContainer) {
     this.dataContainer = jqContainer.find(".servicehoursdata");
     let formObject = jqContainer.closest("form");
     if (formObject.length > 0) {
-        this.formHelper = new form_validation_component(formObject[0], this.validateForm, true);
+        /*this.formHelper = new form_validation_component(formObject[0], this.validateForm, true);
         this.formHelper.prevErrorMessage = this.formHelper.errorMessage;
         this.formHelper.errorMessage = function (propertyName, errType) {
             let message = "";
@@ -19,7 +19,7 @@ function SvcHoursDataUI(jqContainer) {
             }
 
             return message;
-        };
+        };*/
     }
 }
 
