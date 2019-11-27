@@ -1,7 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 function SvcHoursDataUI(jqContainer) {
-    this.containerDiv = jqContainer;
     this.dataContainer = jqContainer.find(".servicehoursdata");
     let formObject = jqContainer.closest("form");
     if (formObject.length > 0) {
@@ -11,18 +10,20 @@ function SvcHoursDataUI(jqContainer) {
             let message = "";
 
             if (errType === "required") {
-                message = "Select not required if you don't need services on this day"
+                message = "Select not required if you don't need services on this day";
             } else {
                 switch (propertyName) {
                     default:
                         message = this.prevErrorMessage(propertyName, errType);
                 }
             }
+
+            return message;
         };
     }
 }
 
-SvcHoursDataUI.prototype.validateForm = function (formElements) {
+SvcHoursDataUI.prototype.validateForm = function (_formElements) {
     let isValid = true;
 
     this.clearBannerErrorList();
@@ -30,16 +31,8 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
     this.toggleBannerError(false);
     let fnRequiredValidator = this.validationFunctions["required"];
     let fnNumberValidator = this.validationFunctions["type"]["number"];
-    let fnLengthValidator = this.validationFunctions["maxlength"];
     let fnMaxValidator = this.validationFunctions["max"];
     let fnMinValidator = this.validationFunctions["min"];
-
-    this.fnGetDayInputs = function (strDay, strFieldName) {
-        let jqField = $("input[name=facilities_management_procurement_building_service[service_hours[" + strDay + "[" + strFieldName + "]]]");
-        if (jqField.length > 0) {
-            return jqField;
-        }
-    };
 
     this.fnCheckRadioButtons = function (day, choices) {
         let fieldValueServiceChoice = this.form["facilities_management_procurement_building_service[service_hours[" + day + "[service_choice]]]"];
@@ -59,8 +52,8 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
         let jqMinute = $("#" + day + "_" + part + "_minute");
         let jqAmPm = $("#" + day + "_" + part + "_ampm");
 
-        if (choices[day][part] === undefined) {
-            choices[day][part] = {};
+        if (choices[part] === undefined) {
+            choices[part] = {};
         }
 
         this.fnCheckTimeUnit = function (jqElem, section) {
@@ -69,15 +62,15 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
             isValid = !fnMaxValidator(jqElem) && isValid;
             isValid = !fnMinValidator(jqElem) && isValid;
 
-            choices[day][part][section] = {status: isValid, elem: jqElem, value: jqElem.val()};
+            choices[part][section] = {status: isValid, elem: jqElem, value: jqElem.val()};
 
             return isValid;
         };
 
         isValid = this.fnCheckTimeUnit(jqHour, "hour") && isValid;
         isValid = this.fnCheckTimeUnit(jqMinute, "minute") && isValid;
-        choices[day][part]["ampmElem"] = jqAmPm;
-        choices[day][part]["status"] = isValid;
+        choices[part]["ampmElem"] = jqAmPm;
+        choices[part]["status"] = isValid;
 
         return isValid;
     };
@@ -95,7 +88,6 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
     for (let key in dailyChoices) {
         if (dailyChoices.hasOwnProperty(key)) {
             if (dailyChoices[key].status === "none") {
-                let topFormGroup = $("#" + key + "_form-group");
                 this.toggleError($(dailyChoices[key].field[0]), true, "required");
             } else {
                 if (dailyChoices[key].field.value === "hourly") {
@@ -148,6 +140,7 @@ SvcHoursDataUI.prototype.validateForm = function (formElements) {
 
     return isValid;
 };
+
 SvcHoursDataUI.prototype.initialise = function () {
     let inputs = this.dataContainer.find("input[type=number]");
     let i = 0;
@@ -155,14 +148,11 @@ SvcHoursDataUI.prototype.initialise = function () {
         this.restrictInput(inputs[i]);
     }
 };
+
 SvcHoursDataUI.prototype.restrictInput = function (jqElem) {
     $(jqElem).keypress(function (e) {
-        if (e.target.value.length < 2) {
-            let verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
-            if (verified) {
-                e.preventDefault();
-            }
-        } else {
+        let verified = (e.which === 8 || e.which === undefined || e.which === 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
+        if (verified || e.target.value.length >= 2 ) {
             e.preventDefault();
         }
     });
