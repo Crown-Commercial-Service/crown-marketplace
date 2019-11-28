@@ -9,8 +9,7 @@ module FacilitiesManagement
 
     has_many :procurement_buildings, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
-    acts_as_gov_uk_date :initial_call_off_start_date, validate_if: :validate_contract_data?, error_clash_behaviour: :omit_gov_uk_date_field_error
-    acts_as_gov_uk_date :security_policy_document_date
+    acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
     mount_uploader :security_policy_document_file, FacilitiesManagementSecurityPolicyDocumentUploader
 
     def unanswered_contract_date_questions?
