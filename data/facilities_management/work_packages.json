@@ -1151,7 +1151,7 @@
   {
     "code": "K.3",
     "name": "Recycled Waste",
-    "description": "Recycled Waste",
+    "description": "Collection and removal of all recyclable waste from the buyer premises",
     "mandatory": true,
     "metric": "Number of tonnes",
     "work_package_code": "K",
