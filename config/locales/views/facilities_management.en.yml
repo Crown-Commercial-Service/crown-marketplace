@@ -79,8 +79,16 @@ en:
               invalid: Select one or more buildings you want to include in your procurement
             region_codes:
               invalid: Select at least one region you need to include in your procurement
+            security_policy_document_date:
+              not_a_date: The selected date is not valid
             security_policy_document_file:
               blank: The selected file is empty
+            security_policy_document_name:
+              blank: Enter a security policy document name
+            security_policy_document_required:
+              inclusion: Select yes if a security policy document is required for your contract
+            security_policy_document_version_number:
+              blank: Enter a security policy document version number
             service_codes:
               invalid: Select at least one service you need to include in your procurement
             tupe:
