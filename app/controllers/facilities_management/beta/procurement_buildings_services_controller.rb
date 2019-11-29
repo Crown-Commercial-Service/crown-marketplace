@@ -38,7 +38,7 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
   def update_service_hours
     @building_service.assign_attributes(servicehours_params.select { |attribute| attribute unless attribute.empty? }.to_h)
 
-    if @building_service.save(context: :service_hours)
+    if @building_service.save!(context: :service_hours)
       redirect_to facilities_management_beta_procurement_building_path(@procurement_building)
     else
       render :edit
@@ -69,7 +69,8 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
   def servicehours_params
     params.require(:facilities_management_procurement_building_service)
           .permit(
-            service_hours: FacilitiesManagement::ServiceHours::PARAMETERS
+              service_hours: [FacilitiesManagement::ServiceHours::PARAMETERS]
+
           )
   end
 

@@ -22,13 +22,11 @@ module FacilitiesManagement
     attribute :saturday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :sunday, ServiceHourChoice, default: ServiceHourChoice.new
 
-    define_model_callbacks :initialize, only: [:after]
-    after_initialize :valid?
-
     validate :all_present?
 
     def initialize(params = {})
       super(params)
+      valid?
     end
 
     def self.dump(service_hours)
@@ -76,7 +74,8 @@ module FacilitiesManagement
 
     def all_present?
       attributes.each do |key, value|
-        errors.add key, :invalid unless value.valid?
+        value.valid?
+        errors.merge!(value.errors)
       end
     end
 
