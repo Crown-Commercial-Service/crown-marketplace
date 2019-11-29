@@ -26,7 +26,7 @@ module FacilitiesManagement
 
     def initialize(params = {})
       super(params)
-      # valid?
+      valid?  if params != {}
     end
 
     def self.dump(service_hours)
