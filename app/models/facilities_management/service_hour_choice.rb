@@ -36,7 +36,7 @@ module FacilitiesManagement
 
     def initialize(params = {})
       super(params)
-      valid?
+      # valid?
     end
 
     def self.dump(service_hour_choice)
