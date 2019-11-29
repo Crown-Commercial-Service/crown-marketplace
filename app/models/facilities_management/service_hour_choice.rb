@@ -20,7 +20,6 @@ module FacilitiesManagement
     attr_accessor :start_time
     attr_accessor :end_time
 
-    validates :service_choice, presence: true
     validates :service_choice, inclusion: { in: SERVICE_CHOICES }
     validates :start_ampm, inclusion: { in: %w[AM PM] }, if: -> { service_choice&.to_sym == :hourly }
     validates :end_ampm, inclusion: { in: %w[AM PM] }, if: -> { service_choice&.to_sym == :hourly }
@@ -35,11 +34,9 @@ module FacilitiesManagement
 
     validate :validate_choice
 
-    define_model_callbacks :initialize, only: [:after]
-    after_initialize :valid?
-
     def initialize(params = {})
       super(params)
+      valid?
     end
 
     def self.dump(service_hour_choice)
@@ -85,11 +82,11 @@ module FacilitiesManagement
     end
 
     def to_summary
-      return 'na' unless valid?
+      return 'na' if service_choice.nil?
 
-      return I18n.t('activemodel.service_hour_choice.not_required') if service_choice.to_sym == :not_required
+      return I18n.t('activemodel.service_hour_choice.not_required') if service_choice&.to_sym == :not_required
 
-      return I18n.t('activemodel.service_hour_choice.all_day') if service_choice.to_sym == :all_day
+      return I18n.t('activemodel.service_hour_choice.all_day') if service_choice&.to_sym == :all_day
 
       time_message
     end
@@ -145,25 +142,25 @@ module FacilitiesManagement
     end
 
     def validate_numbers
-      %i[start_hour start_minute end_hour end_minute].each { |s| test_for_integer(s, :start_time) }
+      %i[start_hour start_minute].each { |s| test_for_integer(s, :start_time) }
       %i[end_hour end_minute].each { |s| test_for_integer(s, :end_time) }
     end
 
     def test_for_integer(attribute, error_symbol)
-      errors.add(error_symbol, :invalid) unless attributes[attribute].to_s == attributes[attribute].to_i.to_s
+      errors.add(error_symbol, :not_a_date) unless attributes[attribute].to_s == attributes[attribute].to_i.to_s
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
     def validate_time_range
-      errors.add(:end_time, :after) if [:end_ampm] != [:start_ampm] && [:end_ampm] == 'pm' && end_time_value <= start_time_value
+      errors.add(:end_time, :after) if end_ampm != start_ampm && end_ampm == 'pm' && end_time_value <= start_time_value
 
-      errors.add(:start_time, :before) if [:end_ampm] != [:start_ampm] && [:end_ampm] == 'am' && end_time_value >= start_time_value
+      errors.add(:start_time, :before) if end_ampm != start_ampm && end_ampm == 'am' && end_time_value >= start_time_value
     end
     # rubocop:enable Metrics/CyclomaticComplexity
 
     def validate_number_ranges
-      errors.add(:start_time, :invalid) unless start_hour.between?(0, 12) || start_minute.between?(0, 59)
-      errors.add(:end_time, :invalid) unless end_hour.between?(0, 12) || end_minute.between?(0, 59)
+      errors.add(:start_time, :not_a_date) unless start_hour.between?(0, 12) && start_minute.between?(0, 59)
+      errors.add(:end_time, :not_a_date) unless end_hour.between?(0, 12) && end_minute.between?(0, 59)
     end
 
     def start_time_value
