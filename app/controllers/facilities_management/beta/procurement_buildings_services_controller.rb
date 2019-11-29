@@ -9,7 +9,6 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
   end
 
   def edit
-    @building_service[:service_hours] ||= FacilitiesManagement::ServiceHours.new
     raise ActionController::RoutingError, 'not found' if @building_service.blank?
   end
 

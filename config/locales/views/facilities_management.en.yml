@@ -18,6 +18,8 @@ en:
               too_short: Select at least one service you need to include in your procurement
         facilities_management/service_hour_choice:
           attributes:
+            service_choice:
+              inclusion: Select not required if you don't need the service on this day
             end_time:
               not_a_date: Enter a real end time
             start_time:
