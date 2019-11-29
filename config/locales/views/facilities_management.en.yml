@@ -18,20 +18,27 @@ en:
               too_short: Select at least one service you need to include in your procurement
         facilities_management/service_hours:
           attributes:
-            sunday:
-              invalid: Select not required if you don't need the service on Sunday
-            saturday:
-              invalid: Select not required if you don't need the service on Saturday
             friday:
               invalid: Select not required if you don't need the service on Friday
-            thursday:
-              invalid: Select not required if you don't need the service on Thursday
-            wednesday:
-              invalid: Select not required if you don't need the service on Wednesday
-            tuesday:
-              invalid: Select not required if you don't need the service on Tuesday
+              not_a_date: Enter a real start time or end time for Friday
             monday:
               invalid: Select not required if you don't need the service on Monday
+              not_a_date: Enter a real start time or end time for Monday
+            saturday:
+              invalid: Select not required if you don't need the service on Saturday
+              not_a_date: Enter a real start time or end time for Saturday
+            sunday:
+              invalid: Select not required if you don't need the service on Sunday
+              not_a_date: Enter a real start time or end time for Sunday
+            thursday:
+              invalid: Select not required if you don't need the service on Thursday
+              not_a_date: Enter a real start time or end time for Thursday
+            tuesday:
+              invalid: Select not required if you don't need the service on Tuesday
+              not_a_date: Enter a real start time or end time for Tuesday
+            wednesday:
+              invalid: Select not required if you don't need the service on Wednesday
+              not_a_date: Enter a real start time or end time for Wednesday
     service_hour_choice:
       all_day: All day (24 hours)
       hourly: Specified hours 2
@@ -135,14 +142,14 @@ en:
             service_hours:
               end_time:
                 greater_than: The end time must be after the start time of your specified hours
-                invalid: Enter a real end time
                 less_than: The start time must be before the end time of your specified hours
+                not_a_date: Enter a real end time
               service_choice:
                 blank: Select not required if you don't need the service on this day
               start_time:
                 greater_than: The end time must be after the start time of your specified hours
-                invalid: Enter a real start time
                 less_than: The start time must be before the end time of your specified hours
+                not_a_date: Enter a real start time
             service_standard:
               blank: Select level of standard for your
             size_of_external_area:
@@ -153,14 +160,14 @@ en:
           attributes:
             end_time:
               greater_than: The end time must be after the start time of your specified hours
-              invalid: Enter a real end time
               less_than: The start time must be before the end time of your specified hours
+              not_a_date: Enter a real end time
             service_choice:
-              blank: Select not required if you don't need the service on this day
+              inclusion: Select not required if you don't need the service on this day
             start_time:
               greater_than: The end time must be after the start time of your specified hours
-              invalid: Enter a real start time
               less_than: The start time must be before the end time of your specified hours
+              not_a_date: Enter a real start time
   facilities_management:
     basket:
       basket_header: selected

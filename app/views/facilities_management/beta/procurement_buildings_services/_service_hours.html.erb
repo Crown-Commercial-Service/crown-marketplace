@@ -9,7 +9,7 @@
         <%= f.fields_for f.object[:service_hours] do |sh| %>
           <% sh.object.attributes.each do |key, value| %>
             <%= sh.fields_for sh.object[key] do |shc| %>
-              <%= render partial: 'day_section', locals: {day: key, f: shc, service_choice: value} %>
+              <%= render partial: 'day_section', locals: {day: key, f: f, service_hours:sh.object, service_choice: value} %>
               <% if key == :monday %>
                 <button>Copy</button>
               <%end %>
