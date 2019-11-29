@@ -72,8 +72,11 @@ module ProcurementValidator
     # End of validation rules for contract-dates
     #############################################
 
+    validates :security_policy_document_required, inclusion: { in: [true, false] }, on: :security_policy_document
     validates :security_policy_document_file, presence: true, if: :security_policy_document_required?, on: :security_policy_document
-    validates :security_policy_document_date, date: { allow_nil: true }, on: :security_policy_document
+    validates :security_policy_document_name, presence: true, if: :security_policy_document_required?, on: :security_policy_document
+    validates :security_policy_document_version_number, presence: true, if: :security_policy_document_required?, on: :security_policy_document
+    validate :security_policy_document_date_valid?, on: :security_policy_document
 
     private
 
@@ -105,6 +108,16 @@ module ProcurementValidator
 
     def service_codes_not_empty
       errors.add(:service_codes, :invalid) if defined?(service_codes) && service_codes.empty?
+    end
+
+    def security_policy_document_date_valid?
+      errors.add(:security_policy_document_date, :not_a_date) unless all_security_policy_document_date_fields_valid?
+    end
+
+    def all_security_policy_document_date_fields_valid?
+      return false if security_policy_document_date_yyyy.to_i < 1970
+
+      Date.valid_date? security_policy_document_date_yyyy.to_i, security_policy_document_date_mm.to_i, security_policy_document_date_dd.to_i
     end
   end
   # rubocop:enable Metrics/BlockLength
