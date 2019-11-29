@@ -26,7 +26,7 @@ module FacilitiesManagement
 
     def initialize(params = {})
       super(params)
-      valid?
+      # valid?
     end
 
     def self.dump(service_hours)
@@ -75,7 +75,8 @@ module FacilitiesManagement
     def all_present?
       attributes.each do |key, value|
         value.valid?
-        errors.merge!(value.errors)
+        errors.add(key, :invalid) if value.errors.include? :service_choice
+        errors.add(key, :not_a_date) if value.errors.include?(:start_time) || value.errors.include?(:end_time)
       end
     end
 
