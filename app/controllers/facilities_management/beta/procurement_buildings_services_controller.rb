@@ -36,7 +36,7 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
   end
 
   def update_service_hours
-    @building_service.assign_attributes(servicehours_params.select { |attribute| attribute unless attribute.empty? }.to_h)
+    @building_service.assign_attributes(service_hours_params.select { |attribute| attribute unless attribute.empty? }.to_h)
 
     if @building_service.save(context: :service_hours)
       redirect_to facilities_management_beta_procurement_building_path(@procurement_building)
@@ -60,18 +60,12 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
 
   def lift_params
     params.require(:facilities_management_procurement_building_service)
-        .permit(
-            :lift_data,
-            lift_data: []
-        )
+          .permit(:lift_data, lift_data: [])
   end
 
-  def servicehours_params
+  def service_hours_params
     params.require(:facilities_management_procurement_building_service)
-        .permit(
-            # service_hours: [FacilitiesManagement::ServiceHours::PARAMETERS]
-            service_hours: [
-                {
+          .permit(service_hours: [{
                     monday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
                     tuesday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
                     wednesday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
@@ -79,8 +73,7 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
                     friday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
                     saturday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
                     sunday: FacilitiesManagement::ServiceHourChoice::PARAMETERS
-                }]
-        )
+                    }])
   end
 
   def set_building_and_service_data
