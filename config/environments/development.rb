@@ -63,10 +63,18 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.log_level = ENV['LOG_LEVEL'].present? ? ENV['LOG_LEVEL'] : :DEBUG
+  config.logger = ActiveSupport::Logger.new("log/#{Rails.env}_new.log")
+  config.logger.formatter = proc do |severity, datetime, prog_name, msg, other|
+    "#{datetime.strftime("%I:%M%p")}, #{severity}: #{msg} #{'from' unless prog_name.blank?} #{prog_name} #{other}} \n"
+  end
 end
 
 if Rails.env.development?
-  ENV['I18N_DEBUG'] = '1'
+  # Use the lowest log level to ensure availability of diagnostic information
+  # when problems arise.
+  ENV['I18N_DEBUG'] = '0'
   OmniAuth.config.test_mode = true
 
   OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(

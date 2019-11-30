@@ -11,7 +11,7 @@ if ['1.7.0'].include?(I18n::VERSION)
           init_translations unless initialized?
           keys = I18n.normalize_keys(locale, key, scope, options[:separator])
 
-          puts "I18N keys: #{keys}"  if ENV['I18N_DEBUG']
+          puts "I18N keys: #{keys}"  if ENV['I18N_DEBUG'] == '1'
 
           keys.inject(translations) do |result, _key|
             _key = _key.to_sym
@@ -19,7 +19,7 @@ if ['1.7.0'].include?(I18n::VERSION)
             result = result[_key]
             result = resolve(locale, _key, result, options.merge(:scope => nil)) if result.is_a?(Symbol)
 
-            puts "\t\t => " + result.to_s + "\n" if ENV['I18N_DEBUG'] && (result.class == String)
+            puts "\t\t => " + result.to_s + "\n" if ENV['I18N_DEBUG'] == '1' && (result.class == String)
 
             result
           end
