@@ -24,11 +24,6 @@ module FacilitiesManagement
 
     validate :all_present?
 
-    def initialize(params = {})
-      super(params)
-      valid?  if params != {}
-    end
-
     def self.dump(service_hours)
       return {} if service_hours.blank?
 
@@ -59,7 +54,7 @@ module FacilitiesManagement
       attributes.each do |_k, v|
         total += v.total_hours
       end
-      total
+      total.ceil
     end
 
     PARAMETERS = { monday: ServiceHourChoice::PARAMETERS,

@@ -1,5 +1,5 @@
-<%= form_with model: @building_service, url: facilities_management_beta_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: false, novalidate: true, multipart: true} do |f| %>
-  <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, render_empty: true } %>
+<%= form_for @building_service, url: facilities_management_beta_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: false, novalidate: true, multipart: true} do |f| %>
+  <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
   <%= f.hidden_field :step, value: @partial_prefix %>
   <div class="servicehourscontainer">
     <div class="servicehoursdata">
@@ -7,16 +7,10 @@
       <p class="govuk-caption-m govuk-!-margin-bottom-6"><%= t('.service_hours_description_html') %></p>
       <div class="service_hours_container">
         <%@building_service.valid?(:service_hours) %>
-        <%= debug f.object.errors %>
         <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
-          <%= debug sh.object %>
           <% sh.object.attributes.each do |key, _value| %>
             <%= sh.fields_for key, sh.object[key] do |day|%>
-              <%= debug day.object %>
               <%= render partial: 'day_section', locals: { day: key, f: day, service_hours:sh.object, service_choice: day.object } %>
-              <%if key == :monday %>
-                <button>Here</button>
-              <%end%>
             <%end%>
           <%end%>
         <%end%>
