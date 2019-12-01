@@ -28,6 +28,16 @@
   border-top : 1px solid #bfc1c3;
   }
 
+.servicehourscontainer .govuk-fieldset {
+  border-bottom : 2px solid #bfc1c3;
+  padding-bottom: 1em;
+
+  .govuk-fieldset {
+    border: 0;
+    padding-bottom: 0;
+    }
+  }
+
 .details-expando {
   font-size : smaller;
   min-width : 14rem;
@@ -46,7 +56,6 @@
 
   .details-expando--caption {
     color           : #007194 !important;
-    margin-left     : 1em;
     margin-top      : 0.5rem;
     text-decoration : none !important;
 
@@ -61,7 +70,6 @@
           position        : relative;
           top             : 0;
           left            : 0;
-          margin-left     : -1em;
           padding-right   : 0.5em;
           text-decoration : unset;
           }
@@ -81,9 +89,11 @@
 
   .details-expando--details {
     padding     : 0 0 0 1em;
-    margin      : 5px 0 0 5px;
+    margin      : 5px 0 0 0;
     display     : none;
     border-left : 3px solid grey;
+    position    : relative;
+    left: 5px;
 
     li {
       margin-bottom : 0 !important;

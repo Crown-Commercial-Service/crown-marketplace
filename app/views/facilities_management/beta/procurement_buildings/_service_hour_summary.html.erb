@@ -1,15 +1,15 @@
-<div class="details-expando">
-  <input type="checkbox" id="#_<%=position%>_check"/>
-  <span class="details-expando--data"><%= service_hours.total_hours_annually %></span>
+<section class="details-expando" aria-labelledby="shs_<%= position %>_title">
+  <input type="checkbox" id="shs_<%= position %>_check"/>
+  <span class="details-expando--data" title="<%= t('.total_hours_tip') %>"><%= service_hours.total_hours_annually %></span>
   <div class="details-expando--caption">
-    <label for="#_<%=position%>_check" title="Click to show details"><span><%= t('.service_hours_caption') %></span></label>
+    <label for="shs_<%= position %>_check" title="Click to show details"><span id="shs_<%= position %>_title"><%= t('.service_hours_caption') %></span></label>
   </div>
-  <ul id="_<%=position%>_details" class="details-expando--details">
-    <% service_hours.attributes.each do |k, v|%>
+  <ul id="_<%= position %>_details" class="details-expando--details">
+    <% service_hours.attributes.each do |k, v| %>
       <li class="govuk-summary-list__row">
-        <span><%=k.to_s.capitalize %></span>,
-        <span><%=v.to_summary %></span>
+        <span><%= k.to_s.capitalize %></span>,
+        <span><%= v.to_summary.html_safe %></span>
       </li>
     <% end %>
   </ul>
-</div>
+</section>
