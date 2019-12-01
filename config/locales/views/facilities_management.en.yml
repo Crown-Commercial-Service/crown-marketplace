@@ -2,10 +2,11 @@
 en:
   activemodel:
     attributes:
-      service_choice:
-        all_day: All day
+      facilities_management/service_hour_choice/service_choice:
+        all_day: All day (24 hours)
         hourly: Specified Hours
         not_required: Not required
+        time_to: to
     errors:
       models:
         facilities_management/journey/choose_locations:
@@ -16,14 +17,6 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
-        facilities_management/service_hour_choice:
-          attributes:
-            service_choice:
-              inclusion: Select not required if you don't need the service on this day
-            end_time:
-              not_a_date: Enter a real end time
-            start_time:
-              not_a_date: Enter a real start time
         facilities_management/service_hours:
           attributes:
             friday:
@@ -47,11 +40,6 @@ en:
             wednesday:
               invalid: Select not required if you don't need the service on Wednesday
               not_a_date: Enter a real start time or end time for Wednesday
-    service_hour_choice:
-      all_day: All day (24 hours)
-      hourly: Specified hours 2
-      not_required: Not required
-      time_to: to
   activerecord:
     errors:
       models:
@@ -150,14 +138,14 @@ en:
             service_hours:
               end_time:
                 greater_than: The end time must be after the start time of your specified hours
+                invalid: Enter a real end time
                 less_than: The start time must be before the end time of your specified hours
-                not_a_date: Enter a real end time
               service_choice:
-                blank: Select not required if you don't need the service on this day
+                inclusion: Select not required if you don't need the service on this day
               start_time:
                 greater_than: The end time must be after the start time of your specified hours
+                invalid: Enter a real start time
                 less_than: The start time must be before the end time of your specified hours
-                not_a_date: Enter a real start time
             service_standard:
               blank: Select level of standard for your
             size_of_external_area:
@@ -168,12 +156,14 @@ en:
           attributes:
             end_time:
               greater_than: The end time must be after the start time of your specified hours
+              invalid: Enter a real end time
               less_than: The start time must be before the end time of your specified hours
               not_a_date: Enter a real end time
             service_choice:
               inclusion: Select not required if you don't need the service on this day
             start_time:
               greater_than: The end time must be after the start time of your specified hours
+              invalid: Enter a real start time
               less_than: The start time must be before the end time of your specified hours
               not_a_date: Enter a real start time
   facilities_management:
@@ -327,6 +317,7 @@ en:
           subheading: What standard are you applying to all selected planned maintenance services?
         service_hour_summary:
           service_hours_caption: Service times
+          total_hours_tip: Total annual hours this service will be used
         show:
           answer_question: Answer question
           back_to_detailed_summary: Back to detailed search summary
@@ -340,12 +331,13 @@ en:
           no_of_hours_of_service_provision: The number of hours of service provision per annum
           no_of_units_to_be_serviced: The number of units to be serviced per annum
           service: Service
+          service_hours: Service hours
           service_standard: The service standard required
           size_of_external_area: The size of the external area (in square metres)
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
           total_floors_per_lift: The sum total of number of floors per lift
           volume_required_heading: Volume required (per annum)
-          volume_required_html: "<b>Volume required <br> (per anum)</b>"
+          volume_required_html: "<b>Volume required <br> (per annum)</b>"
         volume:
           back_to_service_information: Back to service information
           caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
@@ -366,7 +358,6 @@ en:
         service_hours:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
-          service_hours_description: Please ensure that the detail breakdown of hours matches the hours requirement each year entered in the first box.
           service_hours_description_html: "<p>The hours you enter will be used to:</p><ul><li>inform the supplier the exact hours you require this service to be delivered</li><li>calculate the cost of this service</li></ul><p>The calculation will assume 52 weeks x 7 days in one year.</p>"
           service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard week
         show:

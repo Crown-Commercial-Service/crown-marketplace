@@ -17,38 +17,26 @@ module FacilitiesManagement
     attribute :end_minute, Integer, default: nil
     attribute :end_ampm, String, default: nil
 
+    # these are used to capture validation messages for the time input-groups
     attr_accessor :start_time
     attr_accessor :end_time
 
     validates :service_choice, inclusion: { in: SERVICE_CHOICES }
     validates :start_ampm, inclusion: { in: %w[AM PM] }, if: -> { service_choice&.to_sym == :hourly }
     validates :end_ampm, inclusion: { in: %w[AM PM] }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :start_hour, numericality: { only_integer: true }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :start_hour, inclusion: { in: 1..12 }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :start_minute, numericality: { only_integer: true }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :start_minute, inclusion: { in: 0..59 }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :end_hour, numericality: { only_integer: true }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :end_hour, inclusion: { in: 1..12 }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :end_minute, numericality: { only_integer: true }, if: -> { service_choice&.to_sym == :hourly }
-    # validates :end_minute, inclusion: { in: 0..59 }, if: -> { service_choice&.to_sym == :hourly }
 
+    # numerical validation occurs implicitly below, and captures any failures in high-level errors
+    # against start_time and end_time
     validate :validate_choice
 
-    def initialize(params = {})
-      super(params)
-      valid?
-    end
-
+    # Used to serialise object to a hash
     def self.dump(service_hour_choice)
-      # new_hash = {}
-      # new_hash.merge!(service_hour_choice.attributes.select { |_key, value| value.present? })
-      # new_hash
-
       return service_hour_choice if service_hour_choice.is_a? ServiceHourChoice
 
       service_hour_choice.select { |attribute| attribute unless attribute.empty? }.to_h
     end
 
+    # Used to deserialise object form a hash
     def self.load(service_hour_choice)
       new if service_hour_choice.is_a? String
 
@@ -56,43 +44,24 @@ module FacilitiesManagement
     end
 
     def total_hours
-      return 0 if service_choice.nil?
+      return 0 unless SERVICE_CHOICES.include?(service_choice)
 
-      return 0 if service_choice.to_sym == :not_required
-
-      return 24 if service_choice.to_sym == :all_day
-
-      return time_range if service_choice.to_sym == :hourly
-
-      0
-    end
-
-    def time_range
-      start_time = time_value(format('%02d', start_hour), format('%02d', start_minute))
-      end_time = time_value(format('%02d', end_hour), format('%02d', end_minute))
-      (max(start_time.to_i, end_time.to_i) - min(start_time.to_i, end_time.to_i)) / 60
-    end
-
-    def max(lhs, rhs)
-      lhs > rhs ? lhs : rhs
-    end
-
-    def min(lhs, rhs)
-      lhs < rhs ? lhs : rhs
+      options = { nil: 0, not_required: 0, all_day: 24, hourly: time_range }
+      options[service_choice.to_sym]
     end
 
     def to_summary
       return 'na' if service_choice.nil?
 
-      return I18n.t('activemodel.service_hour_choice.not_required') if service_choice&.to_sym == :not_required
+      return I18n.t('activemodel.attributes.facilities_management/service_hour_choice/service_choice.not_required') if service_choice&.to_sym == :not_required
 
-      return I18n.t('activemodel.service_hour_choice.all_day') if service_choice&.to_sym == :all_day
+      return I18n.t('activemodel.attributes.facilities_management/service_hour_choice/service_choice.all_day') if service_choice&.to_sym == :all_day
 
       time_message
     end
 
     def time_message
-      "#{start_time_summary} #{I18n.t('activemodel.service_hour_choice.time_to')} #{end_time_summary}"
+      "<span aria-role='#{I18n.t('activemodel.attributes.facilities_management/service_hour_choice/service_choice.hourly')}'>#{start_time_summary} #{I18n.t('activemodel.attributes.facilities_management/service_hour_choice/service_choice.time_to')} #{end_time_summary}</span>"
     end
 
     def end_time_summary
@@ -127,18 +96,41 @@ module FacilitiesManagement
 
     private
 
+    # Used to render summary information
+    def time_range
+      return 0 if start_hour.blank? || start_minute.blank?
+
+      return 0 if end_hour.blank? || end_minute.blank?
+
+      hours_between_times
+    end
+
+    def hours_between_times
+      start_time = start_time_value
+      end_time = end_time_value
+      (max(start_time.to_i, end_time.to_i) - min(start_time.to_i, end_time.to_i)) .fdiv(60).round(2)
+    end
+
+    def max(lhs, rhs)
+      lhs > rhs ? lhs : rhs
+    end
+
+    def min(lhs, rhs)
+      lhs < rhs ? lhs : rhs
+    end
+    ########
+
+    # Used to validate the week
     def validate_choice
       return if errors.present?
 
       return if %i[not_required all_day].include? service_choice.to_sym
 
       validate_numbers
-      return if errors.present?
-
       validate_number_ranges
       return if errors.present?
 
-      validate_time_range
+      validate_time_sequence
     end
 
     def validate_numbers
@@ -147,32 +139,65 @@ module FacilitiesManagement
     end
 
     def test_for_integer(attribute, error_symbol)
-      errors.add(error_symbol, :not_a_date) unless attributes[attribute].to_s == attributes[attribute].to_i.to_s
+      errors.add(error_symbol, :invalid) unless attributes[attribute].to_s == attributes[attribute].to_i.to_s
+    end
+
+    def integer?(attribute_symbol)
+      attributes[attribute_symbol].to_s == attributes[attribute_symbol].to_i.to_s
+    end
+
+    def validate_number_ranges
+      validate_minute_range(:start_time, 'start') if validate_hour_range(:start_time, 'start')
+
+      validate_minute_range(:end_time, 'end') if validate_hour_range(:end_time, 'end')
+    end
+
+    def validate_hour_range(error_symbol, attribute_prefix)
+      attribute_symbol = "#{attribute_prefix}_hour".to_sym
+      return unless integer? attribute_symbol
+
+      errors.add(error_symbol.to_sym, :not_a_date) unless attributes[attribute_symbol].between?(0, 12)
+      attributes[attribute_symbol].between?(0, 12)
+    end
+
+    def validate_minute_range(error_symbol, attribute_prefix)
+      attribute_symbol = "#{attribute_prefix}_minute".to_sym
+      return unless integer? attribute_symbol
+
+      errors.add(error_symbol.to_sym, :not_a_date) unless attributes[attribute_symbol].between?(0, 59)
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
-    def validate_time_range
+    def validate_time_sequence
       errors.add(:end_time, :after) if end_ampm != start_ampm && end_ampm == 'pm' && end_time_value <= start_time_value
 
       errors.add(:start_time, :before) if end_ampm != start_ampm && end_ampm == 'am' && end_time_value >= start_time_value
     end
     # rubocop:enable Metrics/CyclomaticComplexity
 
-    def validate_number_ranges
-      errors.add(:start_time, :not_a_date) unless start_hour.between?(0, 12) && start_minute.between?(0, 59)
-      errors.add(:end_time, :not_a_date) unless end_hour.between?(0, 12) && end_minute.between?(0, 59)
-    end
-
     def start_time_value
-      time_value(format('%02d', start_hour), format('%02d', start_minute))
+      time_value(format('%02d', start_hour_inc_meridian), format('%02d', start_minute))
     end
 
     def end_time_value
-      time_value(format('%02d', end_hour), format('%02d', end_minute))
+      time_value(format('%02d', end_hour_inc_meridian), format('%02d', end_minute))
+    end
+
+    def start_hour_inc_meridian
+      return start_hour if start_ampm == 'AM'
+
+      start_hour + 12
+    end
+
+    def end_hour_inc_meridian
+      return end_hour if end_ampm == 'AM'
+
+      end_hour + 12
     end
 
     def time_value(first, second)
       first + second
     end
+    #######
   end
 end
