@@ -13,10 +13,10 @@ if ['1.7.0'].include?(I18n::VERSION)
           keys = I18n.normalize_keys(locale, key, scope, options[:separator])
 
           Rails.logger.debug "I18N keys: #{keys}" if ENV['I18N_DEBUG']
-          process_keys
+          process_keys keys
         end
 
-        def process_keys
+        def process_keys(keys)
           keys.inject(translations) do |result, inner_key|
             inner_key = inner_key.to_sym
             return nil unless result.is_a?(Hash) && result.key?(inner_key)
