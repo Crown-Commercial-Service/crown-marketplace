@@ -1,4 +1,4 @@
-<%= form_for @building_service, url: facilities_management_beta_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: false, novalidate: true, multipart: true} do |f| %>
+<%= form_for @building_service, url: facilities_management_beta_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: true, novalidate: true, multipart: true} do |f| %>
   <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
   <%= f.hidden_field :step, value: @partial_prefix %>
   <div class="servicehourscontainer">
