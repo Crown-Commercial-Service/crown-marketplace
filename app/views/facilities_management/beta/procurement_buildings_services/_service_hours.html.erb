@@ -8,9 +8,11 @@
       <div class="service_hours_container">
         <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
           <% sh.object.attributes.each do |key, _value| %>
-            <%= sh.fields_for key, sh.object[key] do |day|%>
-              <%= render partial: 'day_section', locals: { day: key, f: day, service_hours:sh.object, service_choice: day.object } %>
-            <%end%>
+            <% if key != :uom %>
+              <%= sh.fields_for key, sh.object[key] do |day|%>
+                <%= render partial: 'day_section', locals: { day: key, f: day, service_hours:sh.object, service_choice: day.object } %>
+              <%end%>
+            <%end %>
           <%end%>
         <%end%>
       </div>
