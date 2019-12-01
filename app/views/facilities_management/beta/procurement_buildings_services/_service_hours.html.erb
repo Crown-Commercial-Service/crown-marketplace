@@ -6,7 +6,6 @@
       <h3 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.service_hours_subtitle') %></h3>
       <p class="govuk-caption-m govuk-!-margin-bottom-6"><%= t('.service_hours_description_html') %></p>
       <div class="service_hours_container">
-        <%@building_service.valid?(:service_hours) %>
         <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
           <% sh.object.attributes.each do |key, _value| %>
             <%= sh.fields_for key, sh.object[key] do |day|%>
