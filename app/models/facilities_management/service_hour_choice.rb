@@ -16,6 +16,7 @@ module FacilitiesManagement
     attribute :end_hour, Integer, default: nil
     attribute :end_minute, Integer, default: nil
     attribute :end_ampm, String, default: nil
+    attribute :uom, Integer, default: nil
 
     # these are used to capture validation messages for the time input-groups
     attr_accessor :start_time
@@ -33,14 +34,45 @@ module FacilitiesManagement
     def self.dump(service_hour_choice)
       return service_hour_choice if service_hour_choice.is_a? ServiceHourChoice
 
-      service_hour_choice.select { |attribute| attribute unless attribute.empty? }.to_h
+      service_hour_choice.select { |attribute| attribute unless attribute.empty? }.to_h.merge('uom': ServiceHourChoice.calculate_total_hours(service_hour_choice))
     end
 
     # Used to deserialise object form a hash
     def self.load(service_hour_choice)
       new if service_hour_choice.is_a? String
 
-      new(service_hour_choice)
+      result = new(service_hour_choice)
+      result[:uom] = ServiceHourChoice.calculate_total_hours(service_hour_choice)
+
+      result
+    end
+
+    def self.calculate_total_hours(service_hours_hash)
+      return 0 if service_hours_hash.nil?
+
+      options = { nil: 0, not_required: 0, all_day: 24, hourly: 0 }
+
+      return options[service_hours_hash[:service_choice].to_sym] unless service_hours_hash[:service_choice].to_sym == :hourly
+
+      return 0 if service_hours_hash[:start_hour].blank? || service_hours_hash[:start_minute].blank?
+
+      return 0 if service_hours_hash[:end_hour].blank? || service_hours_hash[:end_minute].blank?
+
+      time_range(service_hours_hash)
+    end
+
+    def self.time_range(service_hours_hash)
+      start_hour_value_proc = -> { service_hours_hash[:start_ampm] == 'PM' ? service_hours_hash[:start_hour].to_i + 12 : service_hours_hash[:start_hour].to_i }
+      start_hour_value = start_hour_value_proc.call
+      start_minute_value = service_hours_hash[:start_hour]
+      end_hour_value_proc = -> { service_hours_hash[:end_ampm] == 'PM' ? service_hours_hash[:end_hour].to_i + 12 : service_hours_hash[:end_hour].to_i }
+      end_hour_value = end_hour_value_proc.call
+      end_minute_value = service_hours_hash[:end_hour]
+
+      start_time = (format('%02d', start_hour_value) + format('%02d', start_minute_value)).to_i
+      end_time = (format('%02d', end_hour_value) + format('%02d', end_minute_value)).to_i
+
+      (ServiceHourChoice.max(start_time.to_i, end_time.to_i) - ServiceHourChoice.min(start_time.to_i, end_time.to_i)) .fdiv(60).round(2)
     end
 
     def total_hours
@@ -94,6 +126,16 @@ module FacilitiesManagement
       errors.blank?
     end
 
+    class << self
+      def max(lhs, rhs)
+        lhs > rhs ? lhs : rhs
+      end
+
+      def min(lhs, rhs)
+        lhs < rhs ? lhs : rhs
+      end
+    end
+
     private
 
     # Used to render summary information
@@ -108,15 +150,7 @@ module FacilitiesManagement
     def hours_between_times
       start_time = start_time_value
       end_time = end_time_value
-      (max(start_time.to_i, end_time.to_i) - min(start_time.to_i, end_time.to_i)) .fdiv(60).round(2)
-    end
-
-    def max(lhs, rhs)
-      lhs > rhs ? lhs : rhs
-    end
-
-    def min(lhs, rhs)
-      lhs < rhs ? lhs : rhs
+      (ServiceHourChoice.max(start_time.to_i, end_time.to_i) - ServiceHourChoice.min(start_time.to_i, end_time.to_i)) .fdiv(60).round(2)
     end
     ########
 
