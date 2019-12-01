@@ -4,7 +4,7 @@ function SvcHoursDataUI(jqContainer) {
     this.dataContainer = jqContainer.find(".servicehoursdata");
     let formObject = jqContainer.closest("form");
     if (formObject.length > 0) {
-        /*this.formHelper = new form_validation_component(formObject[0], this.validateForm, true);
+        this.formHelper = new form_validation_component(formObject[0], this.validateForm, true);
         this.formHelper.prevErrorMessage = this.formHelper.errorMessage;
         this.formHelper.errorMessage = function (propertyName, errType) {
             let message = "";
@@ -19,7 +19,7 @@ function SvcHoursDataUI(jqContainer) {
             }
 
             return message;
-        };*/
+        };
     }
 }
 
@@ -35,7 +35,7 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
     let fnMinValidator = this.validationFunctions["min"];
 
     this.fnCheckRadioButtons = function (day, choices) {
-        let fieldValueServiceChoice = this.form["facilities_management_procurement_building_service[service_hours[" + day + "[service_choice]]]"];
+        let fieldValueServiceChoice = this.form["facilities_management_procurement_building_service[service_hours][" + day + "][service_choice]"];
         if (fieldValueServiceChoice.value === "") {
             choices[day] = {field: fieldValueServiceChoice, status: "none"};
             return false;
