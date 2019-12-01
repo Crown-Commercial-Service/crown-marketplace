@@ -21,6 +21,7 @@ module FacilitiesManagement
     attribute :friday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :saturday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :sunday, ServiceHourChoice, default: ServiceHourChoice.new
+    attribute :uom, Integer, default: 0
 
     validate :all_present?
 
@@ -35,7 +36,8 @@ module FacilitiesManagement
       new_hash[:friday] = ServiceHourChoice.dump(service_hours[:friday])
       new_hash[:saturday] = ServiceHourChoice.dump(service_hours[:saturday])
       new_hash[:sunday] = ServiceHourChoice.dump(service_hours[:sunday])
-      # service_hours.to_h
+      total_hours = new_hash.sum { |_key, shc| shc[:uom] }
+      new_hash[uom: total_hours * 52]
       new_hash
     end
 
@@ -51,8 +53,8 @@ module FacilitiesManagement
 
     def total_hours
       total = 0
-      attributes.each do |_k, v|
-        total += v.total_hours
+      attributes.each do |k, v|
+        total += v.total_hours unless k == :uom
       end
       total.ceil
     end
@@ -69,6 +71,8 @@ module FacilitiesManagement
 
     def all_present?
       attributes.each do |key, value|
+        next if key == :uom
+
         value.valid?
         errors.add(key, :invalid) if value.errors.include? :service_choice
         errors.add(key, :not_a_date) if value.errors.include?(:start_time) || value.errors.include?(:end_time)
@@ -76,7 +80,7 @@ module FacilitiesManagement
     end
 
     def any_values?
-      attributes.any? { |_k, v| v.valid? }
+      attributes.any? { |k, v| k != :uom ? v.valid? : true }
     end
   end
 end

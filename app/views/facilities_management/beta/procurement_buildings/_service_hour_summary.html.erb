@@ -5,7 +5,7 @@
     <label for="shs_<%= position %>_check" title="Click to show details"><span id="shs_<%= position %>_title"><%= t('.service_hours_caption') %></span></label>
   </div>
   <ul id="_<%= position %>_details" class="details-expando--details">
-    <% service_hours.attributes.each do |k, v| %>
+    <% service_hours.attributes.reject{|k| k == :uom}.each do |k, v| %>
       <li class="govuk-summary-list__row">
         <span><%= k.to_s.capitalize %></span>,
         <span><%= v.to_summary.html_safe %></span>
