@@ -32,9 +32,14 @@ module FacilitiesManagement
 
     # Used to serialise object to a hash
     def self.dump(service_hour_choice)
-      return service_hour_choice if service_hour_choice.is_a? ServiceHourChoice
+      return {} if service_hour_choice.nil?
 
-      service_hour_choice.select { |attribute| attribute unless attribute.empty? }.to_h.merge('uom': ServiceHourChoice.calculate_total_hours(service_hour_choice))
+      result = {}
+      result = service_hour_choice.to_h if service_hour_choice.is_a? ServiceHourChoice
+
+      result = service_hour_choice.select { |attribute| attribute unless attribute.empty? }.to_h unless service_hour_choice.is_a? ServiceHourChoice
+
+      result.merge('uom': ServiceHourChoice.calculate_total_hours(service_hour_choice))
     end
 
     # Used to deserialise object form a hash
