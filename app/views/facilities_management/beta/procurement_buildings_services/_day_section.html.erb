@@ -18,10 +18,11 @@
         </div>
         <div class="govuk-radios__conditional <%= 'govuk-radios__conditional--hidden' if service_choice[:service_choice] != 'hourly' %>" id="<%= day %>-conditional-specified">
           <%= govuk_fieldset_with_optional_error service_choice, :start_time do %>
-            <legend>Start</legend>
+            <legend style="padding-left: 0 !important">Start</legend>
             <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(service_choice, :start_time) %>" data-propertyname="<%= day %>_start_time">
               <%= display_potential_errors service_choice, :start_time, f.object_name, nil, nil, day %>
               <div class="govuk-date-input">
+                <%= f.hidden_field :start_time, class: "#{day}_start_time govuk-visually-hidden", id: "start_time"  %>
                 <div class="govuk-date-input__item">
                   <label class="govuk-label govuk-date-input__label" for="<%= day %>_start_hour"></label>
                   <%= f.text_field :start_hour, class: "govuk-input govuk-date-input__input #{'govuk-input--error' if model_attribute_has_error(service_choice, :start_time)} govuk-input--width-2", id: "#{day}_start_hour", maxlength: "2", type: "text", min: "0", max: "12" %>
@@ -39,10 +40,11 @@
             <br/>
           <% end %>
           <%= govuk_fieldset_with_optional_error service_choice, :end_time do %>
-            <legend>End</legend>
+            <legend style="padding-left: 0 !important">End</legend>
             <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(service_choice, :end_time) %>" data-propertyname="<%= day %>_end_time">
               <%= display_potential_errors service_choice, :end_time, f.object_name, nil, nil, day %>
               <div class="govuk-date-input">
+                <%= f.hidden_field :end_time, class: "#{day}_end_time govuk-visually-hidden", id: "end_time" %>
                 <div class="govuk-date-input__item">
                   <label class="govuk-label govuk-date-input__label" for="<%= day %>_end_hour"></label>
                   <%= f.text_field :end_hour, class: "govuk-input govuk-date-input__input #{'govuk-input--error' if model_attribute_has_error(service_choice, :end_time)} govuk-input--width-2", id: "#{day}_end_hour", maxlength: "2", type: "text", min: "0", max: "12" %>
