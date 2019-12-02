@@ -76,19 +76,19 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
     };
 
     this.validateTimes = function ( day, choices ) {
-        let timeIsValid = this.fnCheckTime(day, "start", choices[day]);
-        return this.fnCheckTime(day, "end", choices[day]) && timeIsValid;
+        let timeIsValid = this.fnCheckTime(day, "start", choices);
+        return this.fnCheckTime(day, "end", choices) && timeIsValid;
     };
 
     this.validateChronologicalSequence = function ( day, choices ) {
         let isValid = true ;
 
-        let startTime = choices[day]["start"]["hour"].value + choices[day]["start"]["minute"].value;
-        //let startampm = choices[day]["start"]["ampmElem"].val();
-        let endTime = choices[day]["end"]["hour"].value + choices[day]["end"]["minute"].value;
-        //let endampm = choices[day]["start"]["ampmElem"].val();
+        let afternoon_start = choices[day]["start"]["ampmElem"].val() === 'PM';
+        let startTime = (parseInt(choices[day]["start"]["hour"].value) + (afternoon_start ? 12 : 0)) + choices[day]["start"]["minute"].value;
+        let afternoon_end = choices[day]["end"]["ampmElem"].val() === 'PM';
+        let endTime = (parseInt(choices[day]["end"]["hour"].value) + (afternoon_end ? 12 : 0)) + choices[day]["end"]["minute"].value;
 
-        if ( endTime <= startTime) {
+        if ( parseInt(endTime) <= parseInt(startTime)) {
             isValid = false;
             choices[day]["end"].status = false;
             choices[day]["end"].errorType = 'min';
@@ -98,7 +98,8 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
     } ;
     this.displayTimeErrors = function (day, part, choices ) {
         if (choices[day][part].status === false) {
-            this.toggleError(choices[day][part]["hour"].elem, true, choices[day][part].errorType ? choices[day][part].errorType : "invalid");
+            this.toggleError($("." + day + "_" + part + "_time"), true, choices[day][part].errorType ? choices[day][part].errorType : "invalid");
+            this.addErrorClass(choices[day][part]["hour"].elem);
             this.addErrorClass(choices[day][part]["minute"].elem);
             this.addErrorClass(choices[day][part]["ampmElem"]);
         }
@@ -112,15 +113,17 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
             if (dailyChoices[key].status === "none") {
                 this.toggleError($(dailyChoices[key].field[0]), true, "required");
             } else if (dailyChoices[key].field.value === "hourly") {
-                isValid = isValid && this.validateTimes (key, dailyChoices[key]);
+                let isTimeValid = this.validateTimes (key, dailyChoices[key]);
+                isValid = isTimeValid && isValid;
 
-                if (!isValid) {
+                if (!isTimeValid) {
                     this.displayTimeErrors(key, "start", dailyChoices);
                     this.displayTimeErrors(key, "end", dailyChoices);
                 } else {
-                    isValid = this.validateChronologicalSequence(key, dailyChoices);
+                    isTimeValid = this.validateChronologicalSequence(key, dailyChoices) && isValid;
+                    isValid = isTimeValid && isValid;
 
-                    if (!isValid) {
+                    if (!isTimeValid) {
                         this.displayTimeErrors(key, "end", dailyChoices);
                     }
                 }
@@ -138,8 +141,8 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
 };
 
 SvcHoursDataUI.prototype.initialise = function () {
-    let inputs = this.dataContainer.find("input[type=number]");
-    let i = 0;
+    let inputs = this.dataContainer.find("input[type=text]");
+    let i;
     for (i = 0; i < inputs.length; i++) {
         this.restrictInput(inputs[i]);
     }
