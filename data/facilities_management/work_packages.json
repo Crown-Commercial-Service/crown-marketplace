@@ -1110,7 +1110,7 @@
   {
     "code": "J.10",
     "name": "Key Holding",
-    "description": "A professional key holding service - custodian of building access keys and alarm system codes. compliance with security industry authority",
+    "description": "A professional key holding service - custodian of building access keys and alarm system codes. Compliance with security industry authority",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "J",
