@@ -173,7 +173,7 @@
   {
     "code": "C.1",
     "name": "Mechanical and Electrical Engineering Maintenance",
-    "description": "Mechanical and Electrical Engineering Maintenance",
+    "description": "Maintenance of mechanical, electrical and plumbing systems, ensuring optimum performance and statutory obligations",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -183,7 +183,7 @@
   {
     "code": "C.2",
     "name": "Ventilation and Air Conditioning System Maintenance",
-    "description": "Ventilation and Air Conditioning System Maintenance",
+    "description": "Maintenance of ventilation and air conditioning systems ensuring optimum performance and statutory obligations",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -193,7 +193,7 @@
   {
     "code": "C.3",
     "name": "Environmental Cleaning Service",
-    "description": "Environmental Cleaning Service",
+    "description": "Environmental cleaning service to ensure compliance with all statutory requirements",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -203,7 +203,7 @@
   {
     "code": "C.4",
     "name": "Fire Detection and Firefighting Systems Maintenance",
-    "description": "Fire Detection and Firefighting Systems Maintenance",
+    "description": "Maintenance and testing of fire detection and firefighting systems",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -213,7 +213,7 @@
   {
     "code": "C.6",
     "name": "Security, Access and Intruder Systems Maintenance",
-    "description": "Security, Access and Intruder Systems Maintenance",
+    "description": "Maintenance of all security, access and intruder systems within the buyer’s premises",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -223,7 +223,7 @@
   {
     "code": "C.7",
     "name": "Internal & External Building Fabric Maintenance",
-    "description": "Internal & External Building Fabric Maintenance",
+    "description": "Maintenance of the internal and external building fabric, taking account of the asset registers, and planned maintenance schedules",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -233,7 +233,7 @@
   {
     "code": "C.11",
     "name": "Building Management System (BMS) Maintenance",
-    "description": "Building Management System (BMS) Maintenance",
+    "description": "Maintenance of the building management system to allow an efficient and effective building engineering service",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -243,7 +243,7 @@
   {
     "code": "C.12",
     "name": "Standby Power System Maintenance",
-    "description": "Standby Power System Maintenance",
+    "description": "Maintenance and operation of backup generators and uninterrupted power supply equipment",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -253,7 +253,7 @@
   {
     "code": "C.13",
     "name": "High Voltage (HV) and Switchgear Maintenance",
-    "description": "High Voltage (HV) and Switchgear Maintenance",
+    "description": "Maintenance of high voltage (hv) and switchgear in accordance with manufacturers’ recommendations and statutory obligations",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -263,7 +263,7 @@
   {
     "code": "C.5",
     "name": "Lifts, Hoists & Conveyance Systems Maintenance",
-    "description": "Lifts, Hoists & Conveyance Systems Maintenance",
+    "description": "Maintenance of the lifts, hoists and conveyance systems within the buyer premises",
     "mandatory": true,
     "metric": "The sum total of number of floors per lift",
     "work_package_code": "C",
@@ -274,7 +274,7 @@
   {
     "code": "C.14",
     "name": "Catering Equipment Maintenance",
-    "description": "Catering Equipment Maintenance",
+    "description": "Maintenance of catering equipment in accordance with manufacturers’ and installers’ recommendations and statutory obligations",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -284,7 +284,7 @@
   {
     "code": "C.8",
     "name": "Reactive Maintenance Services",
-    "description": "Reactive Maintenance Services",
+    "description": "Provision of a professionally managed service for reactive repairs and maintenance 24 hours per day, 365 days per year",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -294,7 +294,7 @@
   {
     "code": "C.9",
     "name": "Planned / Group Re-Lamping Service",
-    "description": "Planned / Group Re-Lamping Service",
+    "description": "Re-lamping service within the buyers premise, achieving the greatest possible reduction in replacement frequency and cost",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -304,7 +304,7 @@
   {
     "code": "C.10",
     "name": "Automated Barrier Control System Maintenance",
-    "description": "Automated Barrier Control System Maintenance",
+    "description": "Maintenance service for automated barriers, shutters, turn-styles, doors and electrified fencing",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -314,7 +314,7 @@
   {
     "code": "C.15",
     "name": "Audio Visual (AV) Equipment Maintenance",
-    "description": "Audio Visual (AV) Equipment Maintenance",
+    "description": "Maintenance of any av equipment which is designed to display or take input from portable media or is computer driven",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -324,7 +324,7 @@
   {
     "code": "C.16",
     "name": "Television Cabling Maintenance",
-    "description": "Television Cabling Maintenance",
+    "description": "Maintenance of the existing cabling infrastructure which is designated for the transmission of television pictures",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -334,7 +334,7 @@
   {
     "code": "C.17",
     "name": "Mail Room Equipment Maintenance",
-    "description": "Mail Room Equipment Maintenance",
+    "description": "Operation and maintenance of mail room equipment, including franking machines, sorters, postal scales and x-ray scanners",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -344,7 +344,7 @@
   {
     "code": "C.18",
     "name": "Office Machinery Servicing and Maintenance",
-    "description": "Office Machinery Servicing and Maintenance",
+    "description": "Office machinery servicing and maintenance, including photocopiers, fax machines, scanners and shredders",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -354,7 +354,7 @@
   {
     "code": "C.19",
     "name": "Voice Announcement System Maintenance",
-    "description": "Voice Announcement System Maintenance",
+    "description": "Provision and maintenance of all voice announcement systems and equipment",
     "mandatory": false,
     "metric": "",
     "work_package_code": "C",
@@ -364,7 +364,7 @@
   {
     "code": "C.20",
     "name": "Locksmith Services",
-    "description": "Locksmith Services",
+    "description": "Specialist locksmith service to repair or replace ironmongery",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "C",
@@ -374,7 +374,7 @@
   {
     "code": "C.21",
     "name": "Airport and Aerodrome Maintenance Services",
-    "description": "Airport and Aerodrome Maintenance Services",
+    "description": "Maintenance activities and inspections at airports, aerodromes and associated support facilities",
     "mandatory": false,
     "metric": "",
     "work_package_code": "C",
@@ -384,7 +384,7 @@
   {
     "code": "C.22",
     "name": "Specialist Maintenance Services",
-    "description": "Specialist Maintenance Services",
+    "description": "Specialist maintenance services, including bulk aircraft fuel supply, offshore hazard markers, coal-fired boilers, sewerage plants",
     "mandatory": false,
     "metric": "",
     "work_package_code": "C",
@@ -394,7 +394,7 @@
   {
     "code": "D.1",
     "name": "Grounds Maintenance Services",
-    "description": "Grounds Maintenance Services",
+    "description": "Grounds maintenance services including planned and reactive maintenance, and hard and soft landscaping maintenance",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "D",
@@ -404,7 +404,7 @@
   {
     "code": "D.2",
     "name": "Tree Surgery (Arboriculture)",
-    "description": "Tree Surgery (Arboriculture)",
+    "description": "Tree surgery service, including development and implementation of an arboriculture management plan, and ad hoc tree surgery",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "D",
@@ -414,7 +414,7 @@
   {
     "code": "D.3",
     "name": "Professional Snow & Ice Clearance",
-    "description": "Professional Snow & Ice Clearance",
+    "description": "Professionally managed and proactive snow and ice clearance service",
     "mandatory": false,
     "metric": "",
     "work_package_code": "D",
@@ -424,7 +424,7 @@
   {
     "code": "D.4",
     "name": "Reservoirs, Ponds, River Walls and Water Features Maintenance",
-    "description": "Reservoirs, Ponds, River Walls and Water Features Maintenance",
+    "description": "Maintenance services and inspection reports for reservoirs, ponds, river walls and water features",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "D",
@@ -434,7 +434,7 @@
   {
     "code": "D.5",
     "name": "Internal Planting",
-    "description": "Internal Planting",
+    "description": "Provision and maintenance of all indoor planting",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "D",
@@ -444,7 +444,7 @@
   {
     "code": "D.6",
     "name": "Cut Flowers and Christmas Trees",
-    "description": "Cut Flowers and Christmas Trees",
+    "description": "Cut flowers and christmas tree service",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "D",
@@ -454,7 +454,7 @@
   {
     "code": "E.1",
     "name": "Asbestos Management",
-    "description": "Asbestos Management",
+    "description": "Ensuring buyer premises are statutory compliant with asbestos regulations. managing asbestos register and surveys",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
@@ -464,7 +464,7 @@
   {
     "code": "E.2",
     "name": "Water Hygiene Maintenance",
-    "description": "Water Hygiene Maintenance",
+    "description": "Water hygience maintenance services including statutory compliance, risk assessments, cleaning regime, inspection and monitoring",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
@@ -474,7 +474,7 @@
   {
     "code": "E.3",
     "name": "Statutory Inspections",
-    "description": "Statutory Inspections",
+    "description": "Statutory inspections and certification, air monitoring, risk assessments, insurance inspections. Achieve and maintain statutory compliance",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
@@ -484,7 +484,7 @@
   {
     "code": "E.5",
     "name": "Compliance Plans, Specialist Surveys and Audits",
-    "description": "Compliance Plans, Specialist Surveys and Audits",
+    "description": "Provision of a full compliance plans, specialist surveys and audit service",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
@@ -494,7 +494,7 @@
   {
     "code": "E.6",
     "name": "Conditions Survey",
-    "description": "Conditions Survey",
+    "description": "Manage condition surveys that shall cover all systems, assets and building fabric",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
@@ -504,7 +504,7 @@
   {
     "code": "E.7",
     "name": "Electrical Testing",
-    "description": "Electrical Testing",
+    "description": "Electrical installation condition reports in accordance with current regulations",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
@@ -514,7 +514,7 @@
   {
     "code": "E.8",
     "name": "Fire Risk Assessments",
-    "description": "Fire Risk Assessments",
+    "description": "Review of fire risk assessment and fire safety plans. Subsequent reviews to ensure compliance",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
@@ -524,7 +524,7 @@
   {
     "code": "E.4",
     "name": "Portable Appliance Testing",
-    "description": "Portable Appliance Testing",
+    "description": "Portable appliance testing service for buyers equipment",
     "mandatory": true,
     "metric": "Number of appliances to be tested",
     "work_package_code": "E",
@@ -535,7 +535,7 @@
   {
     "code": "E.9",
     "name": "Building Information Modelling and Government Soft Landings",
-    "description": "Building Information Modelling and Government Soft Landings",
+    "description": "Delivery of strategic priorities related to the wider government policy in line with building information modelling (level 2) and government soft landings",
     "mandatory": false,
     "metric": "",
     "work_package_code": "E",
@@ -545,7 +545,7 @@
   {
     "code": "F.1",
     "name": "Chilled Potable Water",
-    "description": "Chilled Potable Water",
+    "description": "The provision of chilled potable water",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "F",
@@ -555,7 +555,7 @@
   {
     "code": "F.2",
     "name": "Retail Services / Convenience Store",
-    "description": "Retail Services / Convenience Store",
+    "description": "Provision of a self-service retail outlet offering chilled food, beverages, confectionery and non-food items",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -565,7 +565,7 @@
   {
     "code": "F.3",
     "name": "Deli/Coffee Bar",
-    "description": "Deli/Coffee Bar",
+    "description": "Provision of a counter service offering with a mix of ready-made items and made to order choices",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -575,7 +575,7 @@
   {
     "code": "F.4",
     "name": "Events and Functions",
-    "description": "Events and Functions",
+    "description": "Provision of on-demand catering service for events and functions as required",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -585,7 +585,7 @@
   {
     "code": "F.5",
     "name": "Full Service Restaurant",
-    "description": "Full Service Restaurant",
+    "description": "A full service restaurant provision offering freshly prepared meals, snacks and beverages with seating areas",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -595,7 +595,7 @@
   {
     "code": "F.6",
     "name": "Hospitality and Meetings",
-    "description": "Hospitality and Meetings",
+    "description": "An on-demand service providing working lunches, beverages, hot meals and buffets",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -605,7 +605,7 @@
   {
     "code": "F.7",
     "name": "Outside Catering",
-    "description": "Outside Catering",
+    "description": "Providing an on-demand outside catering service as required",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -615,7 +615,7 @@
   {
     "code": "F.8",
     "name": "Trolley Service",
-    "description": "Trolley Service",
+    "description": "Supplier shall provide a trolley service offering a range of snacks and hot/cold beverages which follows a pre-determined route",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -625,7 +625,7 @@
   {
     "code": "F.9",
     "name": "Vending Services (Food & Beverage)",
-    "description": "Vending Services (Food & Beverage)",
+    "description": "A vending service that will include hot and cold drinks, sweets and snacks, fresh fruit and pre-packed food items",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -635,7 +635,7 @@
   {
     "code": "F.10",
     "name": "Residential Catering Services",
-    "description": "Residential Catering Services",
+    "description": "Catering services for full time residents within a buyers premises, examples include a full board food offering comprising breakfast, luncheon and dinner",
     "mandatory": false,
     "metric": "",
     "work_package_code": "F",
@@ -645,7 +645,7 @@
   {
     "code": "G.1",
     "name": "Routine Cleaning",
-    "description": "Routine Cleaning",
+    "description": "Professional office cleaning to all areas, furniture, walls and floor spaces",
     "mandatory": true,
     "metric": "Number of building occupants",
     "work_package_code": "G",
@@ -656,7 +656,7 @@
   {
     "code": "G.2",
     "name": "Cleaning of Integral Barrier Mats",
-    "description": "Cleaning of Integral Barrier Mats",
+    "description": "Maintenance and cleaning of barrier matting",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -666,7 +666,7 @@
   {
     "code": "G.3",
     "name": "Mobile Cleaning",
-    "description": "Mobile Cleaning",
+    "description": "Professional office cleaning to all areas, furniture, walls and floor spaces. delivered via a mobile cleaning solution",
     "mandatory": true,
     "metric": "Number of building occupants",
     "work_package_code": "G",
@@ -677,7 +677,7 @@
   {
     "code": "G.4",
     "name": "Deep (Periodic) Cleaning",
-    "description": "Deep (Periodic) Cleaning",
+    "description": "Deep (periodic) cleaning service - programme management, deep clean service, coordination with onsite staff",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -687,7 +687,7 @@
   {
     "code": "G.6",
     "name": "Window Cleaning (Internal)",
-    "description": "Window Cleaning (Internal)",
+    "description": "Internal window cleaning service including provision of access equipment, labour and materials",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -697,7 +697,7 @@
   {
     "code": "G.7",
     "name": "Window Cleaning (External)",
-    "description": "Window Cleaning (External)",
+    "description": "External window cleaning service including provision of access equipment, labour and materials",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -707,7 +707,7 @@
   {
     "code": "G.15",
     "name": "Pest Control Services",
-    "description": "Pest Control Services",
+    "description": "Planned and reactive pest control services, to keep the premises free from all types of rodents, birds and insects",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -717,7 +717,7 @@
   {
     "code": "G.5",
     "name": "Cleaning of External Areas",
-    "description": "Cleaning of External Areas",
+    "description": "Cleaning of external building fabric, lighting, fixtures and fittings, and external areas",
     "mandatory": true,
     "metric": "Size of external area (square metres)",
     "work_package_code": "G",
@@ -728,7 +728,7 @@
   {
     "code": "G.9",
     "name": "Reactive Cleaning (outside cleaning operational hours)",
-    "description": "Reactive Cleaning (outside cleaning operational hours)",
+    "description": "Managing and supplying reactive cleaning services",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -738,7 +738,7 @@
   {
     "code": "G.8",
     "name": "Cleaning of Communications and Equipment Rooms",
-    "description": "Cleaning of Communications and Equipment Rooms",
+    "description": "Cleaning of communication and equipment rooms to the required cleaning standard",
     "mandatory": false,
     "metric": "",
     "work_package_code": "G",
@@ -748,7 +748,7 @@
   {
     "code": "G.10",
     "name": "Housekeeping ",
-    "description": "Housekeeping ",
+    "description": "Professionally managed housekeeping service for staff and visitors at the buyer premises",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -758,7 +758,7 @@
   {
     "code": "G.11",
     "name": "IT Equipment Cleaning",
-    "description": "IT Equipment Cleaning",
+    "description": "Cleaning of desktop computers, screens and keyboards",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -768,7 +768,7 @@
   {
     "code": "G.12",
     "name": "Specialist Cleaning",
-    "description": "Specialist Cleaning",
+    "description": "Specialist cleaning service, for example, for antiques, artwork, ceramics, pictures, fabrics and chandeliers",
     "mandatory": false,
     "metric": "",
     "work_package_code": "G",
@@ -778,7 +778,7 @@
   {
     "code": "G.13",
     "name": "Cleaning of Curtains and Window Blinds",
-    "description": "Cleaning of Curtains and Window Blinds",
+    "description": "Professionally managed curtain and window blinds cleaning service",
     "mandatory": false,
     "metric": "occupants (each year)",
     "work_package_code": "G",
@@ -788,7 +788,7 @@
   {
     "code": "G.14",
     "name": "Medical and Clinical Cleaning",
-    "description": "Medical and Clinical Cleaning",
+    "description": "Cleaning of all medical, clinical and laboratories",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -798,7 +798,7 @@
   {
     "code": "G.16",
     "name": "Linen and Laundry Services",
-    "description": "Linen and Laundry Services",
+    "description": "Laundering, organisation and control of linen stocks. Supply of linen",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "G",
@@ -808,7 +808,7 @@
   {
     "code": "H.4",
     "name": "Handyman Services",
-    "description": "Handyman Services",
+    "description": "Responsive handyman services during operational working hours",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "H",
@@ -819,7 +819,7 @@
   {
     "code": "H.5",
     "name": "Move and Space Management - Internal Moves",
-    "description": "Move and Space Management - Internal Moves",
+    "description": "Managing the moves, working with space planners",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "H",
@@ -830,7 +830,7 @@
   {
     "code": "H.7",
     "name": "Clocks",
-    "description": "Clocks",
+    "description": "Managing clocks on the premises, including battery replacement, clock adustment and maintenance",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -840,7 +840,7 @@
   {
     "code": "H.1",
     "name": "Mail Services",
-    "description": "Mail Services",
+    "description": "The management and successful operation of a mail room service",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -850,7 +850,7 @@
   {
     "code": "H.2",
     "name": "Internal Messenger Service",
-    "description": "Internal Messenger Service",
+    "description": "Provision of a messenger service at each buyer premises",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -860,7 +860,7 @@
   {
     "code": "H.3",
     "name": "Courier Booking and External Distribution",
-    "description": "Courier Booking and External Distribution",
+    "description": "Managing and co-ordinating a national and international courier service for the buyer",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -870,7 +870,7 @@
   {
     "code": "H.6",
     "name": "Porterage",
-    "description": "Porterage",
+    "description": "Provision of a professionally managed flexible porterage service",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -880,7 +880,7 @@
   {
     "code": "H.8",
     "name": "Signage",
-    "description": "Signage",
+    "description": "Responsibility for signage regarding health and safety regulations, means of escape, statutory / mandatory signage",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -890,7 +890,7 @@
   {
     "code": "H.9",
     "name": "Archiving (on-site)",
-    "description": "Archiving (on-site)",
+    "description": "A holistic document storage service, based on the buyer’s requirement and the on-site storage capacity",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -900,7 +900,7 @@
   {
     "code": "H.10",
     "name": "Furniture Management",
-    "description": "Furniture Management",
+    "description": "Provision of all necessary office items for new starters, as moves occur, or for new premises",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -910,7 +910,7 @@
   {
     "code": "H.11",
     "name": "Space Management",
-    "description": "Space Management",
+    "description": "Space management services and office moves",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -920,7 +920,7 @@
   {
     "code": "H.12",
     "name": "Cable Management",
-    "description": "Cable Management",
+    "description": "Cable management service including installation of additional data cabling, and moving floor boxes and grommets",
     "mandatory": false,
     "metric": "",
     "work_package_code": "H",
@@ -930,7 +930,7 @@
   {
     "code": "H.13",
     "name": "Reprographics Service",
-    "description": "Reprographics Service",
+    "description": "A service for the bulk copying, finishing and binding of documents",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "H",
@@ -940,7 +940,7 @@
   {
     "code": "H.14",
     "name": "Stores Management",
-    "description": "Stores Management",
+    "description": "Provision, management and operation of a storage and supply service on behalf of the buyer at the buyer premises",
     "mandatory": false,
     "metric": "",
     "work_package_code": "H",
@@ -950,7 +950,7 @@
   {
     "code": "H.15",
     "name": "Portable Washroom Solutions",
-    "description": "Portable Washroom Solutions",
+    "description": "Management and cleaning of latrines. supply of portable facilities on behalf of the buyer as-and-when required",
     "mandatory": false,
     "metric": "",
     "work_package_code": "H",
@@ -960,7 +960,7 @@
   {
     "code": "H.16",
     "name": "Administrative Support Services",
-    "description": "Administrative Support Services",
+    "description": "Provision of administrative support services, for example, clerical support, event management, switchboard services",
     "mandatory": false,
     "metric": "",
     "work_package_code": "H",
@@ -970,7 +970,7 @@
   {
     "code": "I.1",
     "name": "Reception Service",
-    "description": "Reception Service",
+    "description": "Provision of a professional, reception service appropriate to the business use of the buyer premises",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "I",
@@ -981,7 +981,7 @@
   {
     "code": "I.2",
     "name": "Taxi Booking Service",
-    "description": "Taxi Booking Service",
+    "description": "Managing and co-ordinating a taxi booking service for the buyer",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "I",
@@ -992,7 +992,7 @@
   {
     "code": "I.3",
     "name": "Car Park Management and Booking",
-    "description": "Car Park Management and Booking",
+    "description": "A car park management and booking service",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "I",
@@ -1003,7 +1003,7 @@
   {
     "code": "I.4",
     "name": "Voice Announcement System Operation",
-    "description": "Voice Announcement System Operation",
+    "description": "A service making broadcasts or announcements via the voice announcement system, as requested by the buyer",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "I",
@@ -1014,7 +1014,7 @@
   {
     "code": "J.1",
     "name": "Manned Guarding Service",
-    "description": "Manned Guarding Service",
+    "description": "Guarding service including building access control, alarm response, monitoring security, patrols, building passes, and perimeter guarding",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "J",
@@ -1025,7 +1025,7 @@
   {
     "code": "J.2",
     "name": "CCTV / Alarm Monitoring",
-    "description": "CCTV / Alarm Monitoring",
+    "description": "Managing all CCTV systems on the buyers premise, monitoring activity, and providing evidence footage where necessary",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "J",
@@ -1036,7 +1036,7 @@
   {
     "code": "J.3",
     "name": "Control of Access and Security Passes",
-    "description": "Control of Access and Security Passes",
+    "description": "Managing the control of access and security passes, produce passes as required, and manage the log of visitors",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "J",
@@ -1047,7 +1047,7 @@
   {
     "code": "J.4",
     "name": "Emergency Response",
-    "description": "Emergency Response",
+    "description": "Provision of emergency response service, including alarm responses, and manage plans to deal with emergency situations",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "J",
@@ -1058,7 +1058,7 @@
   {
     "code": "J.5",
     "name": "Patrols (Fixed or Static Guarding)",
-    "description": "Patrols (Fixed or Static Guarding)",
+    "description": "Fixed or static guarding service - covering the interior and exterior of each buyer premises",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "J",
@@ -1069,7 +1069,7 @@
   {
     "code": "J.6",
     "name": "Management of Visitors and Passes",
-    "description": "Management of Visitors and Passes",
+    "description": "Managing, producing and issuing visitor passes",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "J",
@@ -1080,7 +1080,7 @@
   {
     "code": "J.7",
     "name": "Reactive Guarding",
-    "description": "Reactive Guarding",
+    "description": "A reactive guarding service to meet the buyer’s requirements",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "J",
@@ -1090,7 +1090,7 @@
   {
     "code": "J.8",
     "name": "Additional Security Services",
-    "description": "Additional Security Services",
+    "description": "Additional security services for specific sites with particular requirements for example, court or prison security officers",
     "mandatory": false,
     "metric": "",
     "work_package_code": "J",
@@ -1100,7 +1100,7 @@
   {
     "code": "J.9",
     "name": "Enhanced Security Requirements",
-    "description": "Enhanced Security Requirements",
+    "description": "Supplier shall provide enhanced security service requirements to meet customers needs",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "J",
@@ -1110,7 +1110,7 @@
   {
     "code": "J.10",
     "name": "Key Holding",
-    "description": "Key Holding",
+    "description": "A professional key holding service - custodian of building access keys and alarm system codes. compliance with security industry authority",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "J",
@@ -1120,7 +1120,7 @@
   {
     "code": "J.11",
     "name": "Lock Up / Open Up of Buyer Premises",
-    "description": "Lock Up / Open Up of Buyer Premises",
+    "description": "Key holding, providing assistance to emergency services, and ensuring premises are secure",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "J",
@@ -1130,7 +1130,7 @@
   {
     "code": "J.12",
     "name": "Patrols (Mobile via a Specific Visiting Vehicle)",
-    "description": "Patrols (Mobile via a Specific Visiting Vehicle)",
+    "description": "Mobile security patrol service for vacant/surplus buyer premises, and on occasion at an occupied buyer premises",
     "mandatory": false,
     "metric": "",
     "work_package_code": "J",
@@ -1140,7 +1140,7 @@
   {
     "code": "K.2",
     "name": "General Waste",
-    "description": "General Waste",
+    "description": "Collection, storage and removal of general waste from the supplier premise. supply of waste dispose reports",
     "mandatory": true,
     "metric": "Number of tonnes",
     "work_package_code": "K",
@@ -1151,7 +1151,7 @@
   {
     "code": "K.3",
     "name": "Recycled Waste",
-    "description": "Recycled Waste",
+    "description": "Collection and removal all recyclable waste from the buyer premises",
     "mandatory": true,
     "metric": "Number of tonnes",
     "work_package_code": "K",
@@ -1162,7 +1162,7 @@
   {
     "code": "K.1",
     "name": "Classified Waste",
-    "description": "Classified Waste",
+    "description": "Provision of a suitable classified waste service, ensuring the secure collection, storage, removal and disposal of all classified materials",
     "mandatory": true,
     "metric": "Number of consoles",
     "work_package_code": "K",
@@ -1173,7 +1173,7 @@
   {
     "code": "K.7",
     "name": "Feminine Hygiene Waste",
-    "description": "Feminine Hygiene Waste",
+    "description": "Disposal of feminine hygiene waste and provision of standard sized and suitable receptacles for this type of waste",
     "mandatory": true,
     "metric": "Number of units",
     "work_package_code": "K",
@@ -1184,7 +1184,7 @@
   {
     "code": "K.4",
     "name": "Hazardous Waste",
-    "description": "Hazardous Waste",
+    "description": "Disposal of hazardous wastes, and provision of suitable receptacles for this type of waste",
     "mandatory": false,
     "metric": "Number of tonnes",
     "work_package_code": "K",
@@ -1194,7 +1194,7 @@
   {
     "code": "K.5",
     "name": "Clinical Waste",
-    "description": "Clinical Waste",
+    "description": "Disposal of clinical waste, may include the provision of sharps bins, sanitary towel disposal service and other specialist receptacles",
     "mandatory": false,
     "metric": "Number of tonnes",
     "work_package_code": "K",
@@ -1204,7 +1204,7 @@
   {
     "code": "K.6",
     "name": "Medical Waste",
-    "description": "Medical Waste",
+    "description": "Disposal of medical and pharmaceutical waste, and provision of suitable receptacles for this type of waste",
     "mandatory": false,
     "metric": "Number of tonnes",
     "work_package_code": "K",
@@ -1214,7 +1214,7 @@
   {
     "code": "L.1",
     "name": "Childcare Facility",
-    "description": "Childcare Facility",
+    "description": "Child care nursery service for children aged between three months and an age suitable for first entry to school",
     "mandatory": false,
     "metric": "",
     "work_package_code": "L",
@@ -1223,7 +1223,7 @@
   {
     "code": "L.2",
     "name": "Sports and Leisure",
-    "description": "Sports and Leisure",
+    "description": "Full management of the sports and leisure facilities including the booking of activity rooms, equipment and managing payment systems",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "L",
@@ -1233,7 +1233,7 @@
   {
     "code": "L.3",
     "name": "Driver and Vehicle Service",
-    "description": "Driver and Vehicle Service",
+    "description": "Driver and vehicle service may include vehicle inspection and maintenance services, valet services, breakdown services",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "L",
@@ -1243,7 +1243,7 @@
   {
     "code": "L.4",
     "name": "First Aid and Medical Service",
-    "description": "First Aid and Medical Service",
+    "description": "First aid and medical services in line with health and safety executive guidance to visitors or staff who are injured whilst on the buyer premises",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "L",
@@ -1253,7 +1253,7 @@
   {
     "code": "L.5",
     "name": "Flag Flying Service",
-    "description": "Flag Flying Service",
+    "description": "Provision of a flag flying service",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "L",
@@ -1263,7 +1263,7 @@
   {
     "code": "L.6",
     "name": "Journal, Magazine and Newspaper Supply",
-    "description": "Journal, Magazine and Newspaper Supply",
+    "description": "Managing the provision of journals, magazines and newspapers",
     "mandatory": false,
     "metric": "",
     "work_package_code": "L",
@@ -1272,7 +1272,7 @@
   {
     "code": "L.7",
     "name": "Hairdressing Services",
-    "description": "Hairdressing Services",
+    "description": "Hairdressing service at the buyer premises, including provision of all hairdressing equipment and materials",
     "mandatory": false,
     "metric": "",
     "work_package_code": "L",
@@ -1281,7 +1281,7 @@
   {
     "code": "L.8",
     "name": "Footwear Cobbling Services",
-    "description": "Footwear Cobbling Services",
+    "description": "Provision of footwear cobbling service",
     "mandatory": false,
     "metric": "",
     "work_package_code": "L",
@@ -1290,7 +1290,7 @@
   {
     "code": "L.9",
     "name": "Provision of Chaplaincy Support Services",
-    "description": "Provision of Chaplaincy Support Services",
+    "description": "Provision of chaplaincy support service at the buyer premises",
     "mandatory": false,
     "metric": "",
     "work_package_code": "L",
@@ -1299,7 +1299,7 @@
   {
     "code": "L.10",
     "name": "Housing and Residential Accommodation Management",
-    "description": "Housing and Residential Accommodation Management",
+    "description": "Professionally managed housing and estates management service, for residential occupancy and potential occupancy by buyer staff",
     "mandatory": false,
     "metric": "",
     "work_package_code": "L",
@@ -1308,7 +1308,7 @@
   {
     "code": "L.11",
     "name": "Training Establishment Management and Booking Service",
-    "description": "Training Establishment Management and Booking Service",
+    "description": "Managing the delivery, bid and allocation processes associated with all types of specialist training events held at the buyer premises",
     "mandatory": false,
     "metric": "",
     "work_package_code": "L",
