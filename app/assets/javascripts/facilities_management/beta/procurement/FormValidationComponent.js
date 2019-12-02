@@ -297,6 +297,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         let ul = this.bannerErrorContainer.find("ul");
         let display_text = "";
         if (ul.length > 0) {
+            let href_value = "#" + this.getErrorID(inputElement);
             let propertyName = this.getPropertyName(inputElement);
             if (typeof message_text === "undefined" || message_text + "" === "") {
                 display_text = this.errorMessage(propertyName, error_type)
@@ -313,9 +314,16 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                     return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
                 });
             }
+
+            if ( link.length === 0 ) {
+                link = ul.find("a").filter(function () {
+                    return $(this).attr("href") === href_value && $(this).text() === display_text;
+                });
+            }
+
             // ensure duplicates
             if (link.length <= 0) {
-                let link = "<a href=\"#" + this.getErrorID(inputElement) + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
+                let link = "<a href=\"" + href_value + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
                 ul.append("<li>" + link + "</li>");
             }
         }

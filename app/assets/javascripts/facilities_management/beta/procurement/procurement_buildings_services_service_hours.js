@@ -1,4 +1,4 @@
-/* global: FormValidationComponent */
+/*global FormValidationComponent */
 
 function SvcHoursDataUI(jqContainer) {
     this.dataContainer = jqContainer.find(".servicehoursdata");
