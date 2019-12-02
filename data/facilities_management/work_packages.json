@@ -666,7 +666,7 @@
   {
     "code": "G.3",
     "name": "Mobile Cleaning",
-    "description": "Professional office cleaning to all areas, furniture, walls and floor spaces. delivered via a mobile cleaning solution",
+    "description": "Professional office cleaning to all areas, furniture, walls and floor spaces. Delivered via a mobile cleaning solution",
     "mandatory": true,
     "metric": "Number of building occupants",
     "work_package_code": "G",
