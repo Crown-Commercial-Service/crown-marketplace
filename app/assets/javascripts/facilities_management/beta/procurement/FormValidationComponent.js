@@ -298,7 +298,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         let display_text = "";
         if (ul.length > 0) {
             let propertyName = this.getPropertyName(inputElement);
-            if (typeof message_text === undefined || message_text + "" === "") {
+            if (typeof message_text === "undefined" || message_text + "" === "") {
                 display_text = this.errorMessage(propertyName, error_type)
             } else {
                 display_text = message_text;
@@ -443,7 +443,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
     this.getPropertyName = function (jqueryInputElement) {
         let propertyName = jqueryInputElement.attr("data-propertyname");
-        if (typeof propertyName === undefined || propertyName === "") {
+        if (typeof propertyName === "undefined" || propertyName === "") {
             let newParent = null;
             if ((newParent = jqueryInputElement.closest("[data-propertyname]")).length > 0) {
                 propertyName = newParent.attr("data-propertyname")
@@ -451,7 +451,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                 propertyName = "";
             }
         }
-        if (typeof propertyName === undefined || propertyName === "") {
+        if (typeof propertyName === "undefined" || propertyName === "") {
             propertyName = jqueryInputElement[0].id;
         }
 
@@ -460,7 +460,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
 
     if (this.verify_connection_to_form(formDOMObject, thisisspecial)) {
-        this.connect_to_form(formDOMObject, typeof validationCallback === undefined ? this.validateForm : validationCallback);
+        this.connect_to_form(formDOMObject, typeof validationCallback === "undefined" ? this.validateForm : validationCallback);
         this.initialise();
     }
 }
