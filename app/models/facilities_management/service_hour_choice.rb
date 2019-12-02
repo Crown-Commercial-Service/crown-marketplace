@@ -56,6 +56,8 @@ module FacilitiesManagement
     def self.calculate_total_hours(service_hours_hash)
       return 0 if service_hours_hash.nil?
 
+      return 0 if service_hours_hash[:service_choice].nil?
+
       options = { nil: 0, not_required: 0, all_day: 24, hourly: 0 }
 
       return options[service_hours_hash[:service_choice].to_sym] unless service_hours_hash[:service_choice].to_sym == :hourly
