@@ -454,7 +454,7 @@
   {
     "code": "E.1",
     "name": "Asbestos Management",
-    "description": "Ensuring buyer premises are statutory compliant with asbestos regulations. managing asbestos register and surveys",
+    "description": "Ensuring buyer premises are statutory compliant with asbestos regulations. Managing asbestos register and surveys",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
@@ -484,7 +484,7 @@
   {
     "code": "E.5",
     "name": "Compliance Plans, Specialist Surveys and Audits",
-    "description": "Provision of a full compliance plans, specialist surveys and audit service",
+    "description": "Provision of full compliance plans, specialist surveys and audit service",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
