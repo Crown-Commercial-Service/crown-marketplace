@@ -67,7 +67,7 @@ Rails.application.configure do
   config.log_level = ENV['LOG_LEVEL'].present? ? ENV['LOG_LEVEL'] : :DEBUG
   config.logger = ActiveSupport::Logger.new("log/#{Rails.env}_new.log")
   config.logger.formatter = proc do |severity, datetime, prog_name, msg, other|
-    "#{datetime.strftime("%I:%M%p")}, #{severity}: #{msg} #{'from' unless prog_name.blank?} #{prog_name} #{other}} \n"
+    "#{datetime.strftime("%I:%M%p")}, #{severity}: #{msg} #{'from' if prog_name.present?} #{prog_name} #{other}} \n"
   end
 end
 

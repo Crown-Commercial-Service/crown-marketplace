@@ -2,8 +2,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     this.verify_connection_to_form = function (formDOMObject, requestedSpecialTreatment) {
         let canConnect = false;
         if (null != formDOMObject && null == formDOMObject.formValidator) {
-            if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") === "true") ||
-                ((!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) || (!requestedSpecialTreatment && !(formDOMObject.getAttribute("specialvalidation") == "true")))) {
+            if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") == "true") ||
+                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation") || !formDOMObject.getAttribute("specialvalidation") == "false")) {
                 canConnect = true;
             }
         }
@@ -81,7 +81,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                             if (jElem.prop("pattern") !== undefined && jElem.prop("pattern") !== "" && submitForm) {
                                 submitForm = submitForm && this.testError(
                                     this.validationFunctions["regex"],
-                                    jElem, "invalid");
+                                    jElem, "pattern");
                             }
                             if (jElem.prop("min") !== undefined && jElem.prop("min") !== "" && submitForm) {
                                 submitForm = submitForm && this.testError(
@@ -107,11 +107,6 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         if (!this.validationResult) {
             this.toggleBannerError(true);
         }
-
-        if ( formElements["preventsubmission"] === "true") {
-            return false;
-        }
-
         return this.validationResult;
     };
     this.validationFunctions = {
@@ -196,11 +191,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
     this.clearAllFieldErrors = function () {
         $(this.form).find(".govuk-input--error").removeClass("govuk-input--error");
-        $(this.form).find(".govuk-select--error").removeClass("govuk-select--error");
         $(this.form).find(".govuk-form-group--error").removeClass("govuk-form-group--error");
         $(this.form).find("label[class=govuk-error-message]").addClass("govuk-visually-hidden");
     };
-
     this.clearFieldErrors = function (jElem) {
         let errorCollection = jElem.siblings("label[class=govuk-error-message]");
         jElem.closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
@@ -302,9 +295,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         let ul = this.bannerErrorContainer.find("ul");
         let display_text = "";
         if (ul.length > 0) {
-            let href_value = "#" + this.getErrorID(inputElement);
             let propertyName = this.getPropertyName(inputElement);
-            if (typeof message_text === "undefined" || message_text + "" === "") {
+            if (undefined === message_text || message_text + "" === "") {
                 display_text = this.errorMessage(propertyName, error_type)
             } else {
                 display_text = message_text;
@@ -319,22 +311,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                     return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
                 });
             }
-
-            if ( link.length === 0 ) {
-                link = ul.find("a").filter(function () {
-                    return $(this).attr("href") === href_value && $(this).text() === display_text;
-                });
-            }
-
-            if ( link.length === 0) {
-                link = ul.find("a").filter(function () {
-                    return $(this).text() === display_text;
-                });
-            }
-
             // ensure duplicates
             if (link.length <= 0) {
-                let link = "<a href=\"" + href_value + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
+                let link = "<a href=\"#" + this.getErrorID(inputElement) + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
                 ul.append("<li>" + link + "</li>");
             }
         }
@@ -399,12 +378,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
 
     this.toggleError = function (jQueryElement, show, errorType) {
+        let jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group");
         let error_text = "";
-        let jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group-error-placeholder");
-
-        if (jqueryElementForInputGroup.length === 0 ) {
-            jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group");
-        }
         if (jqueryElementForInputGroup.length === 0) {
             jqueryElementForInputGroup = this.insertElementToCreateFieldBlock(jQueryElement);
         }
@@ -466,7 +441,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
     this.getPropertyName = function (jqueryInputElement) {
         let propertyName = jqueryInputElement.attr("data-propertyname");
-        if (typeof propertyName === "undefined" || propertyName === "") {
+        if (propertyName === undefined || propertyName === "") {
             let newParent = null;
             if ((newParent = jqueryInputElement.closest("[data-propertyname]")).length > 0) {
                 propertyName = newParent.attr("data-propertyname")
@@ -474,7 +449,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                 propertyName = "";
             }
         }
-        if (typeof propertyName === "undefined" || propertyName === "") {
+        if (propertyName === undefined || propertyName === "") {
             propertyName = jqueryInputElement[0].id;
         }
 
@@ -483,21 +458,21 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
 
     if (this.verify_connection_to_form(formDOMObject, thisisspecial)) {
-        this.connect_to_form(formDOMObject, typeof validationCallback === "undefined" ? this.validateForm : validationCallback);
+        this.connect_to_form(formDOMObject, validationCallback === undefined ? this.validateForm : validationCallback);
         this.initialise();
     }
 }
 
-const anyArbitraryName = {};
+const anyArbritatryName = {};
 
 $(function () {
-    anyArbitraryName.global_formValidators = [];
+    anyArbritatryName.global_formValidators = [];
     let jqForms = $("form");
     if (jqForms.length > 0) {
         for (let index = 0; index < jqForms.length; index++) {
-            anyArbitraryName.global_formValidators[jqForms[index].id] = new FormValidationComponent(
-                jqForms[index], void 0, false);
-            anyArbitraryName.global_formValidators.push(anyArbitraryName.global_formValidators[jqForms[index].id]);
+            anyArbritatryName.global_formValidators[jqForms[index].id] = new FormValidationComponent(
+                jqForms[index], undefined, false);
+            anyArbritatryName.global_formValidators.push(anyArbritatryName.global_formValidators[jqForms[index].id]);
         }
     }
 });

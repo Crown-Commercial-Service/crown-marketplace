@@ -47,6 +47,7 @@ module FacilitiesManagement
       result
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity
     def self.calculate_total_hours(service_hours_hash)
       return 0 if service_hours_hash.nil?
 
@@ -60,7 +61,9 @@ module FacilitiesManagement
 
       time_range(service_hours_hash)
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
+    # rubocop:disable Metrics/AbcSize
     def self.time_range(service_hours_hash)
       start_hour_value_proc = -> { service_hours_hash[:start_ampm] == 'PM' ? service_hours_hash[:start_hour].to_i + 12 : service_hours_hash[:start_hour].to_i }
       start_hour_value = start_hour_value_proc.call
@@ -74,6 +77,7 @@ module FacilitiesManagement
 
       (ServiceHourChoice.max(start_time.to_i, end_time.to_i) - ServiceHourChoice.min(start_time.to_i, end_time.to_i)) .fdiv(60).round(2)
     end
+    # rubocop:enable Metrics/AbcSize
 
     def total_hours
       return 0 unless SERVICE_CHOICES.include?(service_choice)
