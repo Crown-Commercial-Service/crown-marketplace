@@ -347,10 +347,18 @@ en:
           save_for_later: Save for later
           search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sub-lots below, subject to your total contract value.
           security_policy_document:
-            document: Security policy document
-            document_date: Security policy document date
-            document_name: Security policy document name
-            document_version_number: Security policy document version number
+            document:
+              guidance: Supported file types are DOC, DOCX and PDF. Maximum file size is 10MB.
+              title: Security policy document
+            document_date:
+              label: Please input the date of your security policy document. For example, 31 3 2019
+              title: Security policy document date
+            document_name:
+              label: Please input the name of your security policy document
+              title: Security policy document name
+            document_version_number:
+              label: Please input the version number of your security policy document
+              title: Security policy document version number
             guidance: The site monitors file uploads for unusual activity. Security incidents resulting from buyer file uploads may be subject to CCS investigation with the Buyer.
             question: Do you have an organisation security policy that you wish to form part of this contract? If yes, can you provide this document?
             title: Security policy document

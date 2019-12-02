@@ -115,6 +115,8 @@ module ProcurementValidator
     end
 
     def all_security_policy_document_date_fields_valid?
+      return true if security_policy_document_date_yyyy.blank? && security_policy_document_date_mm.blank? && security_policy_document_date_dd.blank?
+
       return false if security_policy_document_date_yyyy.to_i < 1970
 
       Date.valid_date? security_policy_document_date_yyyy.to_i, security_policy_document_date_mm.to_i, security_policy_document_date_dd.to_i
