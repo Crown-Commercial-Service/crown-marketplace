@@ -1,4 +1,4 @@
-function form_validation_component(formDOMObject, validationCallback, thisisspecial = false) {
+function FormValidationComponent(formDOMObject, validationCallback, thisisspecial = false) {
     this.verify_connection_to_form = function (formDOMObject, requestedSpecialTreatment) {
         let canConnect = false;
         if (null != formDOMObject && null == formDOMObject.formValidator) {
@@ -470,7 +470,7 @@ $(function () {
     let jqForms = $("form");
     if (jqForms.length > 0) {
         for (let index = 0; index < jqForms.length; index++) {
-            anyArbritatryName.global_formValidators[jqForms[index].id] = new form_validation_component(
+            anyArbritatryName.global_formValidators[jqForms[index].id] = new FormValidationComponent(
                 jqForms[index], undefined, false);
             anyArbritatryName.global_formValidators.push(anyArbritatryName.global_formValidators[jqForms[index].id]);
         }
