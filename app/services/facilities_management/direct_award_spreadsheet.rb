@@ -13,7 +13,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   private
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)
-    standard_style = sheet.styles.add_style sz: 12, format_code: '£#,###.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
 
     new_row = []
     sum = 0
@@ -27,7 +27,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
   # rubocop:disable Metrics/AbcSize
   def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2, just_one = false)
-    standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
     new_row = [label, nil, nil]
 
@@ -70,7 +70,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
       price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
-      percentage_style = sheet.styles.add_style sz: 12, format_code: '#.00 %', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+      percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
       standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
 
       sheet.add_row [@supplier_name]
@@ -129,10 +129,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @workbook.add_worksheet(name: 'Contract Price Matrix') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
       standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
-      standard_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
-      total_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: '70AD47', alignment: { wrap_text: true, vertical: :center }
-      year_total_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'ED7D31', alignment: { wrap_text: true, vertical: :center }
-      variance_style = sheet.styles.add_style sz: 12, format_code: '£#.00', border: { style: :thin, color: '00000000' }, bg_color: 'BDD6EE', alignment: { wrap_text: true, vertical: :center }
+      standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+      total_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: '70AD47', alignment: { wrap_text: true, vertical: :center }
+      year_total_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'ED7D31', alignment: { wrap_text: true, vertical: :center }
+      variance_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'BDD6EE', alignment: { wrap_text: true, vertical: :center }
 
       sheet.add_row
       sheet.add_row ['Table 1. Baseline service costs for year 1']
