@@ -53,6 +53,7 @@ module FacilitiesManagement
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def self.calculate_total_hours(service_hours_hash)
       return 0 if service_hours_hash.nil?
 
@@ -69,6 +70,7 @@ module FacilitiesManagement
       time_range(service_hours_hash)
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
 
     # rubocop:disable Metrics/AbcSize
     def self.time_range(service_hours_hash)
