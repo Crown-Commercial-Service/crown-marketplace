@@ -352,7 +352,7 @@ en:
               title: Security policy document
             document_date:
               label: Please input the date of your security policy document. For example, 31 3 2019
-              title: Security policy document date
+              title: Security policy document date (optional)
             document_name:
               label: Please input the name of your security policy document
               title: Security policy document name
