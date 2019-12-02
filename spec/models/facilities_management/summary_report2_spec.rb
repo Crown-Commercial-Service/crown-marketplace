@@ -691,7 +691,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Hirthe-Mills'
-      expect(sorted_list.first[1].round(2)).to eq 1325326.66
+      expect(sorted_list.first[1].round(2)).to eq 1437977.86
 
       supplier_name = 'Hirthe-Mills'.to_sym
       expect(report_results[supplier_name][report_results[supplier_name].keys.third].count).to eq 22

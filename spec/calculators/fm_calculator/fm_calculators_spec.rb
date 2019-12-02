@@ -1,4 +1,3 @@
-require 'csv'
 require 'rails_helper'
 require 'fm_calculator/calculator'
 
@@ -7,186 +6,73 @@ require 'fm_calculator/calculator'
 RSpec.describe FMCalculator::Calculator do
   subject(:calculator) do
   end
-  
-  let(:json_test_data) { JSON.parse(file_fixture('fm-calculator-test-specifications.json').read, symbolize_names: false) }
-  let(:csv_test_data) { CSV.parse(file_fixture('fm-calculator-test-data-duplicate_origin.csv').read, headers: true) }
-  let(:rates) { CCS::FM::Rate.read_benchmark_rates }
-  let(:rate_card) { CCS::FM::RateCard.latest }
 
-  describe 'FM Calculator' do
-    it 'FMCalculator for basic math using CSV' do
-      csv_test_data.each do |row|
-        method_to_call = row['expectation_name']
-        puts "Test #{row['test_name']}: #{method_to_call}"
-        
-        calculator = described_class.new(
-          row['contract_length_years'].to_i, row['service_ref'], row['uom_vol'].to_i, row['occupants'].to_i, row['tupe_flag'] == 'true', row['london_flag'] == 'true', row['cafm_flag'] == 'true', row['helpdesk_flag'] == 'true', rates, rate_card
-        )
-        
-        result = calculator.send(method_to_call.to_sym)
-        
-        expect(result.round(0)).to eq(row['expectation_value'].to_i)
-      end
-    end
-    
-    it 'computes test from JSON specifications' do
-      json_test_data['fixtures'].each do |fixture_name|
-        fixture   = json_test_data[fixture_name]
-        test_data = JSON.parse(file_fixture(fixture['test']).read)
-        
-        test_data.each do |test|
-          puts test['test_name']
-          
-          calculator = described_class.new(
-            test['contract_length_years'].to_i, test['service_ref'], test['uom_vol'].to_i, test['occupants'].to_i, test['tupe_flag'] == 'true', test['london_flag'], test['cafm_flag'], test['helpdesk_flag'], rates, rate_card
-          )
-          
-          test['expectations'].each do |method_name, expect_value|
-            result = calculator.send(method_name.to_sym)
-            
-            expect(result.round(2)).to eq(expect_value.sub(',','').to_f.round(2))
-          end
-        end
-      end
-    end
-    
-    describe 'spreadsheet parsing', skip: true  do
-      context 'parsing reduced CSV' do
-        it 'will create JSON data' do
-          csv_table = CSV.parse(file_fixture('fm-calculator-test-data-3.csv').read, headers: true)
-          json_data = []
-          status    = {
-            expectation_name: ''
-          }
-          
-          csv_table.each do |reduced_row|
-            json_data << create_json_from(reduced_row, status)
-          end
-          
-          expect(json_data.count).to eq(csv_table)
-          puts json_data
-        end
-      end
-      
-      context 'parsing direct CSV' do
-        let(:spreadsheet_property_map) {
-          {
-            test_name:             {
-              col_num:  0,
-              col_name: 'Customer\'s Buildings/Services'
-            },
-            contract_length_years: 1,
-            service_name:          {
-              col_num:  2,
-              col_name: 'Service Name'
-            },
-            service_ref:           {
-              col_num:  1,
-              col_name: 'Service reference'
-            },
-            uom_vol:               {
-              col_num:  4,
-              col_name: 'UoM volume'
-            },
-            occupants:             {
-              col_num:  5,
-              col_name: 'Number of Building Occupants'
-            },
-            tupe_flag:             {
-              col_num:  6,
-              col_name: 'TUPE involved?'
-            },
-            london_flag:           {
-              col_num:  7,
-              col_name: 'London location'
-            },
-            cafm_flag:             {
-              col_num:  8,
-              col_name: 'CAFM (M.1)'
-            },
-            helpdesk_flag:         {
-              col_num:  9,
-              col_name: 'Helpdesk (N.1)'
-            },
-            expectations:          {
-            
-            }
-          }
-        }
-        
-        it 'will parse assessed value spreadsheet and create tests' do
-          spreadsheet_property_map[:contract_length_years]              = 6
-          spreadsheet_property_map[:expectations][:sumunitofmeasure]    = {
-            col_num:  31,
-            col_name: 'Total Charges'
-          }
-          spreadsheet_property_map[:expectations][:benchmarkedcostssum] = {
-            col_num:  49,
-            col_name: 'Total Charges'
-          }
-          
-          csv_input = CSV.parse(file_fixture('fm-calculator-test-data-3_direct.csv').read, headers: true)
-          json_data = process_direct_csv_input(
-            csv_input,
-            spreadsheet_property_map
-          )
-          
-          expect(json_data.count).to eq(csv_input.count)
-          puts json_data
-        end
-      end
-      
-      def process_direct_csv_input(csv_table, property_map)
-        json_data = []
-        status    = {
-          in_expectations_list: false,
-          expectation_name:     ''
-        }
-        
-        csv_table.each do |direct_row|
-          json_data << create_json_from(reduce(direct_row, property_map), status)
-        end
-        
-        json_data
-      end
-      
-      def reduce(direct_row, property_map)
-        cells = []
-        direct_row.each_with_index do |cell, index|
-          cells << [:contract_length_years, property_map[:contract_length_years]] if index == 1
-          translated_cell = property_map.select { |k, v| v.is_a?(Hash) && k != :expectations ? cell[0].start_with?(v[:col_name]) && index == v[:col_num] : k == cell[0] }
-          translated_cell = [translated_cell.first[0], cell[1]] if translated_cell.present?
-          translated_cell = [cell[0], cell[1]] if translated_cell.nil?
-          cells << translated_cell if translated_cell.present?
-        end
-        
-        property_map[:expectations].each do |k, v|
-          expectation_name  = ['expectation_name', k.to_s]
-          expectation_value = ['expectation_value', direct_row[v[:col_num]][1..100000]]
-          cells << expectation_name
-          cells << expectation_value
-        end
-        
-        cells
-      end
-      
-      def create_json_from(row, status)
-        hash                 = {}
-        hash['expectations'] = {}
-        row.each do |cell|
-          hash[cell[0]] = cell[1] unless %w[expectation_name expectation_value].include? cell[0]
-          if cell[0] == 'expectation_name'
-            hash['expectations']["#{cell[1]}"] = 0
-            status[:expectation_name]          = cell[1]
-          end
-          if cell[0] == 'expectation_value'
-            hash['expectations'][status[:expectation_name]] = cell[1]
-          end
-        end
-        
-        hash
-      end
-    end
+  before do
+    @rates = CCS::FM::Rate.read_benchmark_rates
+  end
+
+  describe 'FM CalcFMulator'
+  it 'FMCalcFMulator for sum' do
+    rates = @rates
+    X1 = FMCalculator::Calculator.new(3, 'G1', 23000, 125, 'Y', 'Y', 'Y', 'N', rates).sumunitofmeasure
+    expect(X1.round(0)).to eq(1376629)
+
+    X2 = FMCalculator::Calculator.new(3, 'C5', 54, 0, 'Y', 'Y', 'Y', 'N', rates).sumunitofmeasure
+    expect(X2.round(0)).to eq(55712)
+
+    X3 = FMCalculator::Calculator.new(3, 'C19', 0, 0, 'Y', 'Y', 'Y', 'N', rates).sumunitofmeasure
+    expect(X3.round(0)).to eq(0)
+
+    X4 = FMCalculator::Calculator.new(3, 'E4', 450, 0, 'N', 'N', 'M', 'Y', rates).sumunitofmeasure
+    expect(X4.round(0)).to eq(1516)
+
+    X5 = FMCalculator::Calculator.new(3, 'K1', 75, 0, 'N', 'N', 'N', 'Y', rates).sumunitofmeasure
+    expect(X5.round(0)).to eq(29806)
+
+    X6 = FMCalculator::Calculator.new(3, 'H4', 2350, 0, 'N', 'N', 'N', 'Y', rates).sumunitofmeasure
+    expect(X6.round(0)).to eq(196663)
+
+    X7 = FMCalculator::Calculator.new(3, 'G5', 56757, 0, 'N', 'N', 'N', 'N', rates).sumunitofmeasure
+    expect(X7.round(0)).to eq(606772)
+
+    X8 = FMCalculator::Calculator.new(3, 'K2', 125, 0, 'N', 'N', 'N', 'N', rates).sumunitofmeasure
+    expect(X8.round(0)).to eq(114746)
+
+    X9 = FMCalculator::Calculator.new(3, 'K7', 680, 0, 'N', 'N', 'N', 'N', rates).sumunitofmeasure
+    expect(X9.round(0)).to eq(65222)
+
+    Y1 = FMCalculator::Calculator.new(3, 'G1', 23000, 125, 'Y', 'Y', 'Y', 'N', rates).benchmarkedcostssum
+    expect(Y1.round(0)).to eq(600241)
+
+    Y2 = FMCalculator::Calculator.new(3, 'C5', 54, 0, 'Y', 'Y', 'Y', 'N', rates).benchmarkedcostssum
+    expect(Y2.round(0)).to eq(55712)
+
+    Y3 = FMCalculator::Calculator.new(3, 'C19', 0, 0, 'Y', 'Y', 'Y', 'N', rates).benchmarkedcostssum
+    expect(Y3.round(0)).to eq(0)
+
+    Y4 = FMCalculator::Calculator.new(3, 'E4', 450, 0, 'N', 'N', 'M', 'Y', rates).benchmarkedcostssum
+    expect(Y4.round(0)).to eq(1376)
+
+    Y5 = FMCalculator::Calculator.new(3, 'K1', 75, 0, 'N', 'N', 'N', 'Y', rates).benchmarkedcostssum
+    expect(Y5.round(0)).to eq(27055)
+
+    Y6 = FMCalculator::Calculator.new(3, 'H4', 2350, 0, 'N', 'N', 'N', 'Y', rates).benchmarkedcostssum
+    expect(Y6.round(0)).to eq(178515)
+
+    Y7 = FMCalculator::Calculator.new(3, 'G5', 56757, 0, 'N', 'N', 'N', 'N', rates).benchmarkedcostssum
+    expect(Y7.round(0)).to eq(550777)
+
+    Y8 = FMCalculator::Calculator.new(3, 'K2', 125, 0, 'N', 'N', 'N', 'N', rates).benchmarkedcostssum
+    expect(Y8.round(0)).to eq(104157)
+
+    Y9 = FMCalculator::Calculator.new(3, 'K7', 680, 0, 'N', 'N', 'N', 'N', rates).benchmarkedcostssum
+    expect(Y9.round(0)).to eq(59203)
+
+    SumX = X1 + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9
+    expect(SumX.round(0)).to eq(2447065)
+
+    SumY = Y1 + Y2 + Y3 + Y4 + Y5 + Y6 + Y7 + Y8 + Y9
+    expect(SumY.round(0)).to eq(1577036)
   end
 end
 # rubocop:enable all
