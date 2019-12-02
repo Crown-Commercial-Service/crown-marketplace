@@ -276,7 +276,7 @@ $(function () {
     let form_helper = null;
 
     if (formObject.length > 0 ) {
-        form_helper = new form_validation_component(formObject[0], validateForm, true);
+        form_helper = new FormValidationComponent(formObject[0], validateForm, true);
         form_helper.prevErrorMessage = form_helper.errorMessage;
         form_helper.errorMessage = function (prop_name, errType) {
             let message = "";

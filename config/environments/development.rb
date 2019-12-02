@@ -67,7 +67,7 @@ Rails.application.configure do
   config.log_level = ENV['LOG_LEVEL'].present? ? ENV['LOG_LEVEL'] : :DEBUG
   config.logger = ActiveSupport::Logger.new("log/#{Rails.env}_new.log")
   config.logger.formatter = proc do |severity, datetime, prog_name, msg, other|
-    "#{datetime.strftime("%I:%M%p")}, #{severity}: #{msg} #{'from' if prog_name.present?} #{prog_name} #{other}} \n"
+    "#{datetime.strftime('%I:%M%p')}, #{severity}: #{msg} #{'from' if prog_name.present?} #{prog_name} #{other}} \n"
   end
 end
 
@@ -75,6 +75,7 @@ if Rails.env.development?
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
   ENV['I18N_DEBUG'] = '0'
+
   OmniAuth.config.test_mode = true
 
   OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
