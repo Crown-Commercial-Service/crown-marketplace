@@ -48,7 +48,7 @@
                 <%= 'Standard ' if qa_h[:answer].present? and qa_h[:question] == :service_standard %><%= qa_h[:answer].to_s unless %i[lift_data service_hours].include? qa_h[:question] %>
                 <div class="floating-div">
                   <% link_text = 'Change' %>
-                  <% link_text = 'Answer question' if qa_h[:answer].blank? || qa_h[:answer].invalid? %>
+                  <% link_text = 'Answer question' if qa_h[:answer].blank? || (qa_h[:answer].respond_to?(:invalid) && (qa_h[:answer].invalid?)) %>
                   <% if %i[service_hours lift_data].include?(qa_h[:question])%>
                     <%= link_to link_text, facilities_management_beta_procurement_buildings_service_path(service) %>
                   <% else %>
