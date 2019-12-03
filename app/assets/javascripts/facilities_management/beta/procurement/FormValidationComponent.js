@@ -321,6 +321,12 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                 });
             }
 
+            if ( link.length === 0) {
+                link = ul.find("a").filter(function () {
+                    return $(this).text() === display_text;
+                });
+            }
+
             // ensure duplicates
             if (link.length <= 0) {
                 let link = "<a href=\"" + href_value + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
