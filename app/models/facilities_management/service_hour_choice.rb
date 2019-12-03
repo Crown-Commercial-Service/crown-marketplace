@@ -72,21 +72,25 @@ module FacilitiesManagement
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Style/RescueStandardError
     def self.time_range(service_hours_hash)
+      return 0 if service_hours_hash.nil?
+
       start_hour_value_proc = -> { service_hours_hash[:start_ampm] == 'PM' ? service_hours_hash[:start_hour].to_i + 12 : service_hours_hash[:start_hour].to_i }
       start_hour_value = start_hour_value_proc.call
-      start_minute_value = service_hours_hash[:start_hour]
+      start_minute_value = service_hours_hash[:start_minute]
       end_hour_value_proc = -> { service_hours_hash[:end_ampm] == 'PM' ? service_hours_hash[:end_hour].to_i + 12 : service_hours_hash[:end_hour].to_i }
       end_hour_value = end_hour_value_proc.call
-      end_minute_value = service_hours_hash[:end_hour]
+      end_minute_value = service_hours_hash[:end_minute]
 
       start_time = (format('%02d', start_hour_value) + format('%02d', start_minute_value)).to_i
       end_time = (format('%02d', end_hour_value) + format('%02d', end_minute_value)).to_i
 
-      ([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min).fdiv(60).round(2)
+      (([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min) / 100).round(2)
+    rescue
+      0
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Style/RescueStandardError
 
     def total_hours
       return 0 unless SERVICE_CHOICES.include?(service_choice)
@@ -153,7 +157,7 @@ module FacilitiesManagement
     def hours_between_times
       start_time = start_time_value
       end_time = end_time_value
-      ([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min).fdiv(60).round(2)
+      (([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min) / 100).round(2)
     end
     ########
 
