@@ -48,7 +48,7 @@ module FacilitiesManagement
     end
 
     def total_hours_annually
-      total_hours * 52
+      (total_hours * 52)
     end
 
     def total_hours
@@ -56,7 +56,7 @@ module FacilitiesManagement
       attributes.each do |k, v|
         total += v.total_hours unless k == :uom
       end
-      total.ceil
+      total
     end
 
     PARAMETERS = { monday: ServiceHourChoice::PARAMETERS,
