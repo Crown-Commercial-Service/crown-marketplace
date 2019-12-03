@@ -73,7 +73,6 @@ module ProcurementValidator
     #############################################
 
     validates :security_policy_document_required, inclusion: { in: [true, false] }, on: :security_policy_document
-    validates :security_policy_document_file, presence: true, if: :security_policy_document_required?, on: :security_policy_document
     validates :security_policy_document_name, presence: true, if: :security_policy_document_required?, on: :security_policy_document
     validates :security_policy_document_version_number, presence: true, if: :security_policy_document_required?, on: :security_policy_document
     validate :security_policy_document_date_valid?, on: :security_policy_document
