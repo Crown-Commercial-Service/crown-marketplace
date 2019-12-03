@@ -24,22 +24,22 @@ RSpec.describe FMCalculator::Calculator do
     expect(X3.round(0)).to eq(0)
 
     X4 = FMCalculator::Calculator.new(3, 'E4', 450, 0, 'N', 'N', 'M', 'Y', rates).sumunitofmeasure
-    expect(X4.round(0)).to eq(1376)
+    expect(X4.round(0)).to eq(1516)
 
     X5 = FMCalculator::Calculator.new(3, 'K1', 75, 0, 'N', 'N', 'N', 'Y', rates).sumunitofmeasure
-    expect(X5.round(0)).to eq(27055)
+    expect(X5.round(0)).to eq(29806)
 
     X6 = FMCalculator::Calculator.new(3, 'H4', 2350, 0, 'N', 'N', 'N', 'Y', rates).sumunitofmeasure
-    expect(X6.round(0)).to eq(178515)
+    expect(X6.round(0)).to eq(196663)
 
     X7 = FMCalculator::Calculator.new(3, 'G5', 56757, 0, 'N', 'N', 'N', 'N', rates).sumunitofmeasure
-    expect(X7.round(0)).to eq(550777)
+    expect(X7.round(0)).to eq(606772)
 
     X8 = FMCalculator::Calculator.new(3, 'K2', 125, 0, 'N', 'N', 'N', 'N', rates).sumunitofmeasure
-    expect(X8.round(0)).to eq(104157)
+    expect(X8.round(0)).to eq(114746)
 
     X9 = FMCalculator::Calculator.new(3, 'K7', 680, 0, 'N', 'N', 'N', 'N', rates).sumunitofmeasure
-    expect(X9.round(0)).to eq(59203)
+    expect(X9.round(0)).to eq(65222)
 
     Y1 = FMCalculator::Calculator.new(3, 'G1', 23000, 125, 'Y', 'Y', 'Y', 'N', rates).benchmarkedcostssum
     expect(Y1.round(0)).to eq(600241)
@@ -69,7 +69,7 @@ RSpec.describe FMCalculator::Calculator do
     expect(Y9.round(0)).to eq(59203)
 
     SumX = X1 + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9
-    expect(SumX.round(0)).to eq(2353424)
+    expect(SumX.round(0)).to eq(2447065)
 
     SumY = Y1 + Y2 + Y3 + Y4 + Y5 + Y6 + Y7 + Y8 + Y9
     expect(SumY.round(0)).to eq(1577036)
