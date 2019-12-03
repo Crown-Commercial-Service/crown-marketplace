@@ -119,7 +119,8 @@ module FMCalculator
 
     # if tupe_flag set then calculate tupe risk premium = subtotal3 * framework rate
     def tupe(subtotal3)
-      if @tupe_flag == 'Y'
+      # note: @tube_flag is now; true or false, not "Y" or "N"
+      if @tupe_flag
         if @supplier_name
           subtotal3 * @rate_card_variances[:'TUPE Risk Premium (DA %)'].to_f
         else

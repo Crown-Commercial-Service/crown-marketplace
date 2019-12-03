@@ -412,7 +412,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
-      expect(sorted_list.first[1].round(2)).to eq 1469124.32
+      expect(sorted_list.first[1].round(2)).to eq 1651508.1
     end
 
     it 'price for one supplier' do
