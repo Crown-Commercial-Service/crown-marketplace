@@ -11,6 +11,9 @@ module FacilitiesManagement
     accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
     mount_uploader :security_policy_document_file, FacilitiesManagementSecurityPolicyDocumentUploader
+    # needed to move this validation here as it was being called incorrectly in the validator, ie when a file with the wrong
+    # extension or size was being uploaded. The error message for this rather than the carrierwave error messages were being displayed
+    validates :security_policy_document_file, presence: true, if: :security_policy_document_required?
 
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
