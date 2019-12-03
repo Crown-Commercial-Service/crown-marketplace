@@ -93,15 +93,23 @@ module ApplicationHelper
     end
   end
 
-  def display_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
-    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
+  def property_name(section_name, attributes)
+    return "#{section_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}" unless section_name.nil?
 
-    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attribute}" do
+    (attributes.is_a?(Array) ? attributes.last : attributes).to_s
+  end
+
+  # rubocop:disable Metrics/ParameterLists
+  def display_potential_errors(model_object, attributes, form_object_name, error_lookup = nil, error_position = nil, section_name = nil)
+    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
+
+    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}", property_name: property_name(section_name, attributes) do
       collection.each do |key, val|
-        concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
+        concat(govuk_validation_error({ model_object: model_object, attribute: attributes.is_a?(Array) ? attributes.last : attributes, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
       end
     end
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def display_specialised_error(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
     error = model_object.errors[attribute].first
@@ -115,11 +123,21 @@ module ApplicationHelper
 
   # looks up the locals data for validation messages
   def validation_messages(model_object_sym, attribute_sym = nil)
-    translation_hash = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
-    translation_hash = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes.#{attribute_sym.to_s.downcase}") unless attribute_sym.nil?
-    return {} if translation_hash.to_s.include?('translation_missing')
+    translation_key = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
 
-    translation_hash
+    translation_key = "activerecord.errors.models.#{model_object_sym.downcase}.attributes"
+    if attribute_sym.is_a? Array
+      attribute_sym.each do |attr|
+        translation_key += ".#{attr}"
+      end
+    else
+      translation_key += ".#{attribute_sym}"
+    end
+
+    result = t(translation_key)
+    return {} if result.include? 'translation_missing'
+
+    result
   end
 
   # Renders a govuk compliant error-content div with a client-compatible validation type
@@ -142,7 +160,7 @@ module ApplicationHelper
 
   def model_attribute_has_error(model_object, *attributes)
     result = false
-    attributes.each { |a| result |= model_object.errors[a]&.any? }
+    attributes.any? { |a| result |= model_object.errors[a]&.any? }
   end
 
   def model_has_error?(model_object, error_type, *attributes)
@@ -168,6 +186,7 @@ module ApplicationHelper
     too_long: 'maxlength',
     too_short: 'minlength',
     blank: 'required',
+    inclusion: 'required',
     after: 'max',
     greater_than: 'min',
     greater_than_or_equal_to: 'min',
