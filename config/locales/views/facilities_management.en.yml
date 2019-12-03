@@ -570,6 +570,7 @@ en:
         remove_all: Remove all
         service_specification_doc: Read the service specification document
         services_selected: Services selected
+        start_a_new_procurement_header: Start a new procurement
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     passwords:
       edit:
