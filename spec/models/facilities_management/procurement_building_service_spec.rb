@@ -653,4 +653,52 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
   end
+
+  # rubocop:disable RSpec/BeforeAfterAll
+  describe '#service_hours' do
+    let(:mock_ar_class) { build_mock_ar }
+    let(:record) { mock_ar_class.create(service_hours: {}) }
+
+    before(:all) do
+      ActiveRecord::Base.connection.drop_table :pbs_mock if ActiveRecord::Base.connection.data_source_exists? 'pbs_mock'
+      ActiveRecord::Base.connection.create_table :pbs_mock do |t|
+        t.jsonb :service_hours, null: true
+      end
+    end
+
+    after(:all) do
+      ActiveRecord::Base.connection.drop_table :pbs_mock
+    end
+
+    def build_mock_ar
+      Class.new(ApplicationRecord) do
+        self.table_name = 'pbs_mock'
+        serialize :service_hours, FacilitiesManagement::ServiceHours
+
+        attr_accessor :id
+      end
+    end
+
+    context 'when saving' do
+      let(:sh) { FacilitiesManagement::ServiceHours.new }
+
+      before do
+        sh[:tuesday][:service_choice] = :all_day
+        sh[:wednesday][:start_hour] = '10'
+        sh[:wednesday][:start_minute] = '00'
+        sh[:wednesday][:start_ampm] = 'am'
+        sh[:wednesday][:end_hour] = '10'
+        sh[:wednesday][:end_minute] = '00'
+        sh[:wednesday][:end_ampm] = 'pm'
+      end
+
+      it 'will produce a hash' do
+        record[:service_hours] = sh
+        record.save
+        result = ActiveRecord::Base.connection.execute('select service_hours from pbs_mock')
+        expect(result).not_to eq nil
+      end
+    end
+  end
+  # rubocop:enable RSpec/BeforeAfterAll
 end
