@@ -84,7 +84,7 @@ module FacilitiesManagement
       start_time = (format('%02d', start_hour_value) + format('%02d', start_minute_value)).to_i
       end_time = (format('%02d', end_hour_value) + format('%02d', end_minute_value)).to_i
 
-      (ServiceHourChoice.max(start_time.to_i, end_time.to_i) - ServiceHourChoice.min(start_time.to_i, end_time.to_i)) .fdiv(60).round(2)
+      ([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min).fdiv(60).round(2)
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -139,16 +139,6 @@ module FacilitiesManagement
       errors.blank?
     end
 
-    class << self
-      def max(lhs, rhs)
-        lhs > rhs ? lhs : rhs
-      end
-
-      def min(lhs, rhs)
-        lhs < rhs ? lhs : rhs
-      end
-    end
-
     private
 
     # Used to render summary information
@@ -163,7 +153,7 @@ module FacilitiesManagement
     def hours_between_times
       start_time = start_time_value
       end_time = end_time_value
-      (ServiceHourChoice.max(start_time.to_i, end_time.to_i) - ServiceHourChoice.min(start_time.to_i, end_time.to_i)) .fdiv(60).round(2)
+      ([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min).fdiv(60).round(2)
     end
     ########
 
