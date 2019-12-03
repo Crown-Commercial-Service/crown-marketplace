@@ -265,7 +265,7 @@
     "name": "Lifts, Hoists & Conveyance Systems Maintenance",
     "description": "Maintenance of the lifts, hoists and conveyance systems within the buyer premises",
     "mandatory": true,
-    "metric": "The sum total of number of floors per lift",
+    "metric": "The sum total of number of floors",
     "work_package_code": "C",
     "unit_text": "Number (per lift per floor) per annum",
     "has_standards": true,
