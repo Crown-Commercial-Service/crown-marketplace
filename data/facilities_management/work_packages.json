@@ -1214,7 +1214,7 @@
   {
     "code": "L.1",
     "name": "Childcare Facility",
-    "description": "Child care nursery service for children aged between three months and an age suitable for first entry to school",
+    "description": "Childcare nursery service for children aged between three months and an age suitable for first entry to school",
     "mandatory": false,
     "metric": "",
     "work_package_code": "L",
