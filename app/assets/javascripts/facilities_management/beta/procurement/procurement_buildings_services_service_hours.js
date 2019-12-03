@@ -84,9 +84,9 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         let isValid = true ;
 
         let afternoon_start = choices[day]["start"]["ampmElem"].val() === 'PM';
-        let startTime = (parseInt(choices[day]["start"]["hour"].value) + (afternoon_start ? 12 : 0)) + choices[day]["start"]["minute"].value;
+        let startTime = (parseInt(choices[day]["start"]["hour"].value) + (afternoon_start ? 12 : 0)) + choices[day]["start"]["minute"].value.padStart(2, '0');
         let afternoon_end = choices[day]["end"]["ampmElem"].val() === 'PM';
-        let endTime = (parseInt(choices[day]["end"]["hour"].value) + (afternoon_end ? 12 : 0)) + choices[day]["end"]["minute"].value;
+        let endTime = (parseInt(choices[day]["end"]["hour"].value) + (afternoon_end ? 12 : 0)) + choices[day]["end"]["minute"].value.padStart(2, '0');
 
         if ( parseInt(endTime) <= parseInt(startTime)) {
             isValid = false;
