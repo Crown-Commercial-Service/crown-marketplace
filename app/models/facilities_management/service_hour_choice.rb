@@ -154,7 +154,7 @@ module FacilitiesManagement
     end
 
     def hours_between_times
-      ServiceHourChoice.time_range(self.to_h)
+      ServiceHourChoice.time_range(to_h)
     end
     ########
 
