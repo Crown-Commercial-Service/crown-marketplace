@@ -84,7 +84,7 @@ module FacilitiesManagement
       start_time = (format('%02d', start_hour_value) + format('%02d', start_minute_value)).to_i
       end_time = (format('%02d', end_hour_value) + format('%02d', end_minute_value)).to_i
 
-      ([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min).fdiv(60).round(2)
+      (([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min) / 100).round(2)
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -153,7 +153,7 @@ module FacilitiesManagement
     def hours_between_times
       start_time = start_time_value
       end_time = end_time_value
-      ([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min).fdiv(60).round(2)
+      (([start_time.to_i, end_time.to_i].max - [start_time.to_i, end_time.to_i].min) / 100).round(2)
     end
     ########
 
