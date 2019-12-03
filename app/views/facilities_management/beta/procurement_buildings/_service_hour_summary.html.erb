@@ -1,6 +1,6 @@
 <section class="details-expando" aria-labelledby="shs_<%= position %>_title">
   <input type="checkbox" id="shs_<%= position %>_check"/>
-  <span class="details-expando--data" title="<%= t('.total_hours_tip') %>"><%= service_hours.total_hours_annually %></span>
+  <span class="details-expando--data" title="<%= t('.total_hours_tip') %>"><%= service_hours.total_hours_annually.ceil %></span>
   <div class="details-expando--caption">
     <label for="shs_<%= position %>_check" title="Click to show details"><span id="shs_<%= position %>_title"><%= t('.service_hours_caption') %></span></label>
   </div>
