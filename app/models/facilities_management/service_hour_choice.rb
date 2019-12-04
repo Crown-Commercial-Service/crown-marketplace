@@ -119,7 +119,7 @@ module FacilitiesManagement
 
         et += ":#{end_minute}" unless end_minute.zero?
 
-        et += end_ampm
+        et += end_ampm.downcase
       end
 
       et
@@ -131,7 +131,7 @@ module FacilitiesManagement
         st = start_hour.to_s
         st += ":#{start_minute}" unless start_minute.zero?
 
-        st += start_ampm
+        st += start_ampm.downcase
       end
 
       st
