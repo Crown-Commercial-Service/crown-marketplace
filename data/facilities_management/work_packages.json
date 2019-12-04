@@ -1140,7 +1140,7 @@
   {
     "code": "K.2",
     "name": "General Waste",
-    "description": "Collection, storage and removal of general waste from the supplier premise. supply of waste dispose reports",
+    "description": "Collection, storage and removal of general waste from the supplier premise. Supply of waste dispose reports",
     "mandatory": true,
     "metric": "Number of tonnes",
     "work_package_code": "K",
