@@ -41,14 +41,14 @@
             <dd class="govuk-summary-list__value" style="vertical-align: top">
               <%= t(".#{qa_h[:question].to_s}") %>
             </dd>
-            <dd class="govuk-summary-list__value" style="vertical-align: top; min-width: 7em">
+            <dd class="govuk-summary-list__value" style="vertical-align: top; min-width: 9em">
               <div style="position: relative">
                 <%= render partial: 'service_hour_summary', locals: {position: index, service_hours: qa_h[:answer]} if qa_h[:question] == :service_hours && qa_h[:answer].valid? %>
                 <%= qa_h[:answer].map(&:to_i).reduce(:+) if qa_h[:question] == :lift_data %>
-                <%= 'Standard ' if qa_h[:answer].present? and qa_h[:question] == :service_standard %><%= qa_h[:answer].to_s unless %i[lift_data service_hours].include? qa_h[:question] %>
+                <%= 'Standard ' if qa_h[:answer].present? && qa_h[:question] == :service_standard %><%= qa_h[:answer].to_s unless %i[lift_data service_hours].include? qa_h[:question] %>
                 <div class="floating-div">
                   <% link_text = 'Change' %>
-                  <% link_text = 'Answer question' if qa_h[:answer].blank? || (qa_h[:answer].respond_to?(:invalid) && (qa_h[:answer].invalid?)) %>
+                  <% link_text = 'Answer question' if qa_h[:answer].blank? || qa_h[:answer].try(:invalid?) %>
                   <% if %i[service_hours lift_data].include?(qa_h[:question])%>
                     <%= link_to link_text, facilities_management_beta_procurement_buildings_service_path(service) %>
                   <% else %>
