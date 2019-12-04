@@ -1,5 +1,27 @@
-$(function () {
+function findCharsLeft(value) {
+    
+    if (value.length > 0) {
+        $('#fm-building-security-type-other').val(value);
+    } else {
+        $('#fm-building-security-type-other').val("other");
+    }
 
+    let charsLeft = FM.calcCharsLeft(value, 150);
+    $('#fm-bm-bs-char-count').text('You have ' + charsLeft + ' characters remaining');
+}
+    
+$(function () {
+    
+    // Puts the 'characters remaining' count when the page loads
+    let otherSecurityType = document.getElementById("fm-building-security-type-more-detail");
+    let value = 0;
+    
+    if (otherSecurityType != null) {
+        value = otherSecurityType.value;
+    }
+    
+    findCharsLeft(value);
+    
     $("input:radio[name=fm-building-security-type-radio]").on('click', function (e) {
         $('#inline-error-message').addClass('govuk-visually-hidden');
         if (e.target.id !== 'fm-building-security-type-other') {
@@ -14,12 +36,9 @@ $(function () {
 
     });
 
-    $('#fm-building-security-type-more-detail').on('keyup', function (e) {
+    $('#fm-building-security-type-more-detail').on('keyup', function(e) {
         let value = e.target.value;
-        $('#fm-building-security-type-other').val(value);
-
-        let charsLeft = FM.calcCharsLeft(value, 150);
-        $('#fm-bm-bs-char-count').text('You have ' + charsLeft + ' characters remaining');
+        findCharsLeft(value);
     });
 
     $('#fm-bm-security-type-footer #fm-bm-cancel-and-return').on('click', function (e) {
