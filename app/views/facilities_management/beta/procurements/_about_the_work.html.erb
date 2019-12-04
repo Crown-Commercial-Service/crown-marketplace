@@ -80,7 +80,11 @@
       </dd>
     <% else %>
       <dd class="govuk-summary-list__value">
-        You must select buildings first
+        <% if @active_procurement_buildings.any? %>
+          You must select service first
+        <% else %>
+          You must select building first
+        <% end %>
       </dd>
       <dd class="govuk-summary-list__actions">
         <strong class="govuk-tag">

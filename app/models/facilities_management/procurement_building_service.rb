@@ -9,6 +9,7 @@ module FacilitiesManagement
     scope :require_volume, -> { where(code: [REQUIRE_VOLUME_CODES]) }
     scope :has_service_questions, -> { where(code: [SERVICES_DEFINITION.pluck(:code)]) }
     belongs_to :procurement_building, class_name: 'FacilitiesManagement::ProcurementBuilding', foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building_services
+    serialize :service_hours, ServiceHours
 
     # Lookup data for 'constants' are taken from this service object
     services_and_questions = ServicesAndQuestions.new
@@ -19,6 +20,7 @@ module FacilitiesManagement
     # validates on :lifts
     validates :lift_data, length: { minimum: 1, maximum: 1000 }, on: :lifts
     validate :validate_lift_data, on: :lifts
+    validate :service_hours_complete?, on: :service_hours
 
     # validates on the service_standard service question
     validate :validate_ppm_standard_presence, on: :ppm_standards
@@ -68,6 +70,10 @@ module FacilitiesManagement
       required_contexts.include?(:lifts)
     end
 
+    def requires_service_hours?
+      required_contexts.include?(:service_hours)
+    end
+
     def required_contexts
       @required_contexts ||= this_service[:context]
     end
@@ -92,6 +98,10 @@ module FacilitiesManagement
     end
 
     private
+
+    def service_hours_complete?
+      errors.merge!(service_hours.errors) if service_hours.invalid?
+    end
 
     def validate_lift_data
       errors.add(:lift_data, :required, position: 0) if lift_data.blank?

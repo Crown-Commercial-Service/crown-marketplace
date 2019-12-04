@@ -43,10 +43,10 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
       let(:state) { 'detailed_search' }
 
       context 'when on the first step' do
-        let(:step) { 'contract_name' }
+        let(:step) { 'security_policy_document' }
 
         it 'returns a route for the next edit step' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=estimated_annual_cost')
+          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=contract_name')
         end
       end
 
@@ -81,7 +81,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
       let(:state) { 'detailed_search' }
 
       context 'when on the first step' do
-        let(:step) { 'contract_name' }
+        let(:step) { 'security_policy_document' }
 
         it 'returns a route for the show page' do
           expect(procurement_router.back_link).to eq('/facilities-management/beta/procurements/1')
