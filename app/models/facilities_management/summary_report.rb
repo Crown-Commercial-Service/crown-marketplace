@@ -309,7 +309,6 @@ module FacilitiesManagement
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     def copy_params(building_data, uvals)
-
       # Note: I think @fm_gross_internal_area can be removed as it is not used (also it does not work as :gia needs to be 'gia'
       @fm_gross_internal_area =
         begin
