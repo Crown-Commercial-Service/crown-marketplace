@@ -3,7 +3,7 @@ function findCharsLeft(value) {
     if (value.length > 0) {
         $('#fm-building-security-type-other').val(value);
     } else {
-        $('#fm-building-security-type-other').val('other');
+        $('#fm-building-security-type-other').val("other");
     }
 
     let charsLeft = FM.calcCharsLeft(value, 150);
@@ -13,7 +13,7 @@ function findCharsLeft(value) {
 $(function () {
     
     // Puts the 'characters remaining' count when the page loads
-    let otherSecurityType = document.getElementById('fm-building-security-type-more-detail');
+    let otherSecurityType = document.getElementById("fm-building-security-type-more-detail");
     let value = 0;
     
     if (otherSecurityType != null) {
