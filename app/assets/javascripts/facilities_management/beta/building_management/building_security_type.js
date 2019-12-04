@@ -1,29 +1,31 @@
+function findCharsLeft(value) {
+    
+    if (value.length > 0) {
+        $('#fm-building-security-type-other').val(value);
+    } else {
+        $('#fm-building-security-type-other').val('other');
+    }
+
+    let charsLeft = FM.calcCharsLeft(value, 150);
+    $('#fm-bm-bs-char-count').text('You have ' + charsLeft + ' characters remaining');
+}
+    
 $(function () {
     
-    function putCharsLeft(value) {
-        if (value.length > 0) {
-            $('#fm-building-security-type-other').val(value);
-        } else {
-            $('#fm-building-security-type-other').val("");
-        }
-    
-        let charsLeft = FM.calcCharsLeft(value, 150);
-        $('#fm-bm-bs-char-count').text('You have ' + charsLeft + ' characters remaining');
-    }
-    
     // Puts the 'characters remaining' count when the page loads
-    if ($("#fm-building-security-type-more-detail").length){
-        putCharsLeft(document.getElementById("fm-building-security-type-more-detail").value);
+    let otherSecurityType = document.getElementById('fm-building-security-type-more-detail');
+    let value = 0;
+    
+    if (otherSecurityType != null) {
+        value = otherSecurityType.value;
     }
+    
+    findCharsLeft(value);
     
     $("input:radio[name=fm-building-security-type-radio]").on('click', function (e) {
         $('#inline-error-message').addClass('govuk-visually-hidden');
         if (e.target.id !== 'fm-building-security-type-other') {
             $('#fm-bm-sec-other-container').addClass('govuk-visually-hidden');
-            $('#inline-no-description-error-message').addClass('govuk-visually-hidden');
-            $('#no-dexcription-error-text').addClass('govuk-visually-hidden');
-            $('#no-dexcription-error-details').removeClass('govuk-form-group--error');
-            $('#fm-building-security-type-more-detail').removeClass('govuk-textarea--error');
         }
     });
 
@@ -36,7 +38,7 @@ $(function () {
 
     $('#fm-building-security-type-more-detail').on('keyup', function(e) {
         let value = e.target.value;
-        putCharsLeft(value);
+        findCharsLeft(value);
     });
 
     $('#fm-bm-security-type-footer #fm-bm-cancel-and-return').on('click', function (e) {
@@ -55,14 +57,8 @@ $(function () {
         let bRet = false;
 
         let radioValue = $("input[name='fm-building-security-type-radio']:checked").val();
-        
-        if (radioValue === "") {
-            $('#inline-no-description-error-message').removeClass('govuk-visually-hidden');
-            $('#no-dexcription-error-text').removeClass('govuk-visually-hidden');
-            $('#no-dexcription-error-details').addClass('govuk-form-group--error');
-            $('#fm-building-security-type-more-detail').addClass('govuk-textarea--error');
-            $('html, body').animate({scrollTop: 0}, 500);
-        } else if (!radioValue) {
+
+        if (!radioValue) {
             $('#inline-error-message').removeClass('govuk-visually-hidden');
             $('html, body').animate({scrollTop: 0}, 500);
         } else {
