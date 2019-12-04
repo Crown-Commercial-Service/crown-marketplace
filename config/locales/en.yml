@@ -693,6 +693,9 @@ en:
     maintenance:
       explanation: You will be able to use the service later.
       title: Service unavailable
+    messages:
+      extension_whitelist_error: The selected file must be a DOC, DOCX or PDF
+      max_size_error: The selected file must be smaller than %{max_size}
   faker:
     company:
       name:

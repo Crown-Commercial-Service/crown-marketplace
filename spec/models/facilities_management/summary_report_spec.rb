@@ -615,7 +615,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # report.workout_current_lot
     # p report.assessed_value
     # assessed_value.round == GBP 8,171,866.21
-    expect(report.assessed_value.round(2)).to be 3832725.24
+    expect(report.assessed_value.round(2)).to be 4038866.18
   end
 
   it 'price individual services E.4' do
@@ -652,7 +652,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   it 'price multiple buildings and services with rate card' do
     results = {}
 
-    supplier_names = rate_card.data['Prices'].keys
+    supplier_names = rate_card.data[:Prices].keys
     supplier_names.each do |s|
       # p s
 
@@ -669,9 +669,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     sorted_results = results.sort_by { |_key, value| value }
 
     # p rate_card
-    expect(sorted_results.first[0]).to eq 'Cartwright and Sons'
+    expect(sorted_results.first[0].to_s).to eq 'Cartwright and Sons'
 
-    expect(sorted_results.first[1].round(2)).to equal 2566970.06
+    expect(sorted_results.first[1].round(2)).to equal 2882642.01
   end
 
   # rubocop:disable RSpec/ExampleLength
@@ -815,7 +815,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       sum_benchmark += calc_fm.benchmarkedcostssum
     end
 
-    expect(sum_uom.round(2)).to be 958366.62
+    expect(sum_uom.round(2)).to be 1057001.99
     expect(sum_benchmark.round(2)).to be 949771.07
   end
   # rubocop:enable RSpec/ExampleLength

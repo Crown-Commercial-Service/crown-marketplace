@@ -1,17 +1,108 @@
 .building-services {
+  display : block;
+
+  .govuk-summary-list {
+    font-size : smaller;
+    }
+
   .govuk-summary-list__value, .govuk-summary-list__actions {
-    vertical-align: middle;
-  }
+    vertical-align : middle;
+    }
 
   .border-top {
-    border-top: 1px solid #bfc1c3;
+    border-top : 1px solid #bfc1c3;
+    }
+
+  .floating-div {
+    position : absolute;
+    top      : 0;
+    right    : 0
+    }
   }
-}
 
 .procurement-building-service .procurement-building-service__form-group {
-  border-bottom: 1px solid #bfc1c3;
-}
+  border-bottom : 1px solid #bfc1c3;
+  }
 
 .procurement-building-service .border-top {
-  border-top: 1px solid #bfc1c3;
-}
+  border-top : 1px solid #bfc1c3;
+  }
+
+.servicehourscontainer .govuk-fieldset {
+  border-bottom : 2px solid #bfc1c3;
+  padding-bottom: 1em;
+
+  .govuk-fieldset {
+    border: 0;
+    padding-bottom: 0;
+    }
+  }
+
+.details-expando {
+  font-size : smaller;
+  min-width : 14rem;
+
+  input[type=checkbox] {
+    opacity : 0;
+    width   : 1px;
+    height  : 1px;
+    display : none;
+    }
+
+  span.details-expando--data {
+    position : relative;
+    top      : 3px;
+    }
+
+  .details-expando--caption {
+    color           : #007194 !important;
+    margin-top      : 0.5rem;
+    text-decoration : none !important;
+
+    label {
+      color           : #007194 !important;
+      text-decoration : underline;
+
+      span:first-child {
+        &::before {
+          content         : "▶︎";
+          display         : inline-block;
+          position        : relative;
+          top             : 0;
+          left            : 0;
+          padding-right   : 0.5em;
+          text-decoration : unset;
+          }
+        }
+      }
+    }
+
+  input[type=checkbox]:checked ~ .details-expando--details {
+    display : block;
+    }
+
+  input[type=checkbox]:checked ~ .details-expando--caption label span:first-child {
+    &::before {
+      content : "▼";
+      }
+    }
+
+  .details-expando--details {
+    padding     : 0 0 0 1em;
+    margin      : 5px 0 0 0;
+    display     : none;
+    border-left : 3px solid grey;
+    position    : relative;
+    left: 5px;
+
+    li {
+      margin-bottom : 0 !important;
+      padding-left  : 0 !important;
+      font-size     : smaller;
+      }
+
+    span {
+      font-weight : normal !important;
+      }
+    }
+  }
