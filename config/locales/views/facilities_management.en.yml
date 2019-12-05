@@ -1,6 +1,12 @@
 ---
 en:
   activemodel:
+    attributes:
+      facilities_management/service_hour_choice/service_choice:
+        all_day: All day (24 hours)
+        hourly: Specified Hours
+        not_required: Not required
+        time_to: to
     errors:
       models:
         facilities_management/journey/choose_locations:
@@ -11,6 +17,29 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
+        facilities_management/service_hours:
+          attributes:
+            friday:
+              invalid: Select not required if you don't need the service on Friday
+              not_a_date: Enter a real start time or end time for Friday
+            monday:
+              invalid: Select not required if you don't need the service on Monday
+              not_a_date: Enter a real start time or end time for Monday
+            saturday:
+              invalid: Select not required if you don't need the service on Saturday
+              not_a_date: Enter a real start time or end time for Saturday
+            sunday:
+              invalid: Select not required if you don't need the service on Sunday
+              not_a_date: Enter a real start time or end time for Sunday
+            thursday:
+              invalid: Select not required if you don't need the service on Thursday
+              not_a_date: Enter a real start time or end time for Thursday
+            tuesday:
+              invalid: Select not required if you don't need the service on Tuesday
+              not_a_date: Enter a real start time or end time for Tuesday
+            wednesday:
+              invalid: Select not required if you don't need the service on Wednesday
+              not_a_date: Enter a real start time or end time for Wednesday
   activerecord:
     errors:
       models:
@@ -51,7 +80,7 @@ en:
               blank: Estimated annual cost must be an amount of money, like 12000 or 1200.45
               greater_than_or_equal_to: Estimated annual cost must be an amount of money, like 12000 or 1200.45
             estimated_cost_known:
-              inclusion: Select yes if you know your annual cost
+              inclusion: Select yes if you know your annual cost, if you do not please select no
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -114,12 +143,37 @@ en:
               invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
+            service_hours:
+              end_time:
+                greater_than: The end time must be after the start time of your specified hours
+                invalid: Enter a real end time
+                less_than: The start time must be before the end time of your specified hours
+              service_choice:
+                inclusion: Select not required if you don't need the service on this day
+              start_time:
+                greater_than: The end time must be after the start time of your specified hours
+                invalid: Enter a real start time
+                less_than: The start time must be before the end time of your specified hours
             service_standard:
               blank: Select level of standard for your
             size_of_external_area:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
+        facilities_management/service_hour_choice:
+          attributes:
+            end_time:
+              greater_than: The end time must be after the start time of your specified hours
+              invalid: Enter a real end time
+              less_than: The start time must be before the end time of your specified hours
+              not_a_date: Enter a real end time
+            service_choice:
+              inclusion: Select not required if you don't need the service on this day
+            start_time:
+              greater_than: The end time must be after the start time of your specified hours
+              invalid: Enter a real start time
+              less_than: The start time must be before the end time of your specified hours
+              not_a_date: Enter a real start time
   facilities_management:
     basket:
       basket_header: selected
@@ -241,7 +295,7 @@ en:
           fabric_standard_b_copy: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
           fabric_standard_b_title: Standard B - this is the minimum level of service required
           fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
-          fabric_standard_c_title: This level of Service will be bespoke and site or area specific
+          fabric_standard_c_title: Standard C - This level of Service will be bespoke and site or area specific
           heading: Building fabric maintenance services standards
           save_and_return_to_service_information: Save and return to service information
           subheading: What standard are you applying to all selected building fabric maintenance services?
@@ -253,7 +307,7 @@ en:
           cleaning_standard_b_copy: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
           cleaning_standard_b_title: Standard B - the highest service level
           cleaning_standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-          cleaning_standard_c_title: a bespoke service level
+          cleaning_standard_c_title: Standard C - a bespoke service level
           heading: Cleaning services standards
           save_and_return_to_service_information: Save and return to service information
           subheading: What standard are you applying to all selected cleaning services?
@@ -269,6 +323,9 @@ en:
           standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
           standard_c_title: Standard C - a bespoke service level
           subheading: What standard are you applying to all selected planned maintenance services?
+        service_hour_summary:
+          service_hours_caption: Service times
+          total_hours_tip: Total annual hours this service will be used
         show:
           answer_question: Answer question
           back_to_detailed_summary: Back to detailed search summary
@@ -282,12 +339,13 @@ en:
           no_of_hours_of_service_provision: The number of hours of service provision per annum
           no_of_units_to_be_serviced: The number of units to be serviced per annum
           service: Service
+          service_hours: Service hours
           service_standard: The service standard required
           size_of_external_area: The size of the external area (in square metres)
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
           total_floors_per_lift: The sum total of number of floors per lift
           volume_required_heading: Volume required (per annum)
-          volume_required_html: "<b>Volume required <br> (per anum)</b>"
+          volume_required_html: "<b>Volume required <br> (per annum)</b>"
         volume:
           back_to_service_information: Back to service information
           caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
@@ -302,9 +360,14 @@ en:
           save_and_return_to_service_information: Save and return to service information
           subheading: Answer additional questions about the services
       procurement_buildings_services:
-        edit:
+        lifts:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
+        service_hours:
+          back_to_service_information: Back to service information
+          save_and_return_to_service_information: Save and return to service information
+          service_hours_description_html: "<p>The hours you enter will be used to:</p><ul><li>inform the supplier the exact hours you require this service to be delivered</li><li>calculate the cost of this service</li></ul><p>The calculation will assume 52 weeks x 7 days in one year.</p>"
+          service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard week
         show:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
@@ -366,9 +429,9 @@ en:
             service_specification_doc: Read the service specification document
           tupe:
             body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
-            first_question: Do you believe that Transfer of Undertakings (TUPE) applies to your contract?
+            first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
             tupe_title: TUPE
-            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees<br /> when the business or commercial contract that they are working on changes to new ownership. It ensures<br /> that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br /> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
+            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees<br /> when the business or commercial contract that they are working on changes to new ownership. It ensures<br /> that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br /> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
             what_you_need_to_know_title: What you need to know about TUPE
         edit_procurement:
           cancel_and_return: Cancel and return to Procurements
@@ -570,6 +633,7 @@ en:
         remove_all: Remove all
         service_specification_doc: Read the service specification document
         services_selected: Services selected
+        start_a_new_procurement_header: Start a new procurement
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     passwords:
       edit:
