@@ -970,7 +970,7 @@
   {
     "code": "I.1",
     "name": "Reception Service",
-    "description": "Provision of a professional reception service appropriate to the business of the buyer",
+    "description": "Provision of a professional reception service appropriate to the business use of the buyer premises",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "I",
