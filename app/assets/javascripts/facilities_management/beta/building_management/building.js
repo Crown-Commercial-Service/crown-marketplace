@@ -16,11 +16,11 @@ $(function () {
     
     // Puts the 'characters remaining' count when the page loads
     if ($("#fm-building-name-input").length) {
-        putCharsLeft($('#fm-building-name-chars-left'), document.getElementById("fm-building-name-input").value, 25);
+        putCharsLeft($("#fm-building-name-chars-left"), document.getElementById("fm-building-name-input").value, 25);
     }
     
     if ($("#fm-building-desc-chars-left").length) {
-        putCharsLeft($('#fm-building-desc-chars-left'), document.getElementById("fm-building-desc-input").value, 50);
+        putCharsLeft($("#fm-building-desc-chars-left"), document.getElementById("fm-building-desc-input").value, 50);
     }
     
     
