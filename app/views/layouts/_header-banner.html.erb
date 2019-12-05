@@ -16,13 +16,12 @@
     <% end %>
 
     <button type="button" role="button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
-
     <nav>
       <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
         <% unless landing_or_admin_page || fm_buyer_landing_page || not_permitted_page %>
           <li class="govuk-header__navigation-item">
             <% if request.path_info == '/facilities-management/beta' %>
-            <% elsif request.path_info.include? 'building'%>
+            <% elsif controller.controller_name == 'buildings_management'%>
               <%= link_to 'My account', service_start_page_path, class: 'govuk-header__link' %>
             <% else %>
               <%= link_to 'Back to start', service_start_page_path, class: 'govuk-header__link' %>
