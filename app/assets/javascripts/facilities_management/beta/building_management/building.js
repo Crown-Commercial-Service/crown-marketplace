@@ -43,7 +43,7 @@ $(function () {
     };
 
     $('#fm-building-desc-input').on('keyup', function (e) {
-        putCharsLeft($('#fm-building-desc-chars-left'), e.target.value, 50);
+        putCharsLeft($("#fm-building-desc-chars-left"), e.target.value, 50);
     });
 
     $('#fm-building-desc-input').on('change', function (e) {
