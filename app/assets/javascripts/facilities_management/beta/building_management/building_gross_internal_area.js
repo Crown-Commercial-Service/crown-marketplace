@@ -11,12 +11,12 @@ $(function () {
     
     // Puts the 'characters remaining' count when the page loads
     if ($("#fm-bm-internal-square-area").length) {
-        putCharsLeft($('#fm-internal-square-area-chars-left'), document.getElementById("fm-bm-internal-square-area").value);
+        putCharsLeft($("#fm-internal-square-area-chars-left"), document.getElementById("fm-bm-internal-square-area").value);
     }
     
     // GIA
     $('#fm-bm-internal-square-area').on('keyup', function (e) {
-        putCharsLeft($('#fm-internal-square-area-chars-left'), e.target.value);
+        putCharsLeft($("#fm-internal-square-area-chars-left"), e.target.value);
     });
     
     $('#fm-bm-internal-square-area').on('keypress', function (event) {
