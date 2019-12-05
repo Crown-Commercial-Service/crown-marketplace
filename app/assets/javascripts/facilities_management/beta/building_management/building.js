@@ -9,6 +9,11 @@ $(function () {
     $('#fm-find-address-btn').text('Find address');
     $('fm-bm-postcode-lookup-container').removeClass('govuk-!-margin-top-3');
     
+    function putCharsLeft(messageLocation,  value, maxChars) {
+        let charsLeft = FM.calcCharsLeft(value, maxChars);
+        messageLocation.text("You have " + charsLeft + " characters remaining");
+    }
+    
     // Puts the 'characters remaining' count when the page loads
     if ($("#fm-building-name-input").length) {
         putCharsLeft($('#fm-building-name-chars-left'), document.getElementById("fm-building-name-input").value, 25);
@@ -18,10 +23,6 @@ $(function () {
         putCharsLeft($('#fm-building-desc-chars-left'), document.getElementById("fm-building-desc-input").value, 50);
     }
     
-    function putCharsLeft(messageLocation,  value, maxChars) {
-        let charsLeft = FM.calcCharsLeft(value, maxChars);
-        messageLocation.text("You have " + charsLeft + " characters remaining");
-    }
     
     $('#fm-building-name-input').on('keyup', function (e) {
         putCharsLeft($('#fm-building-name-chars-left'), e.target.value, 25);
