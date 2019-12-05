@@ -25,7 +25,7 @@ $(function () {
     
     
     $('#fm-building-name-input').on('keyup', function (e) {
-        putCharsLeft($('#fm-building-name-chars-left'), e.target.value, 25);
+        putCharsLeft($("#fm-building-name-chars-left"), e.target.value, 25);
     });
     
     $('#fm-building-name-input').on('change', function (e) {
