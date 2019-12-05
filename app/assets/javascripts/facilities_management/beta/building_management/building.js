@@ -9,27 +9,22 @@ $(function () {
     $('#fm-find-address-btn').text('Find address');
     $('fm-bm-postcode-lookup-container').removeClass('govuk-!-margin-top-3');
     
+    // Puts the 'characters remaining' count when the page loads
+    if ($("#fm-building-name-input").length) {
+        putCharsLeft($('#fm-building-name-chars-left'), document.getElementById("fm-building-name-input").value, 25);
+    }
+    
+    if ($("#fm-building-desc-chars-left").length) {
+        putCharsLeft($('#fm-building-desc-chars-left'), document.getElementById("fm-building-desc-input").value, 50);
+    }
+    
     function putCharsLeft(messageLocation,  value, maxChars) {
         let charsLeft = FM.calcCharsLeft(value, maxChars);
         messageLocation.text("You have " + charsLeft + " characters remaining");
     }
     
-    // Puts the 'characters remaining' count when the page loads
-    if ($("#fm-building-name-input").length) {
-        putCharsLeft($("#fm-building-name-chars-left"), document.getElementById("fm-building-name-input").value, 25);
-    }
-    
-    if ($("#fm-building-desc-chars-left").length) {
-        putCharsLeft($("#fm-building-desc-chars-left"), document.getElementById("fm-building-desc-input").value, 50);
-    }
-    
-    const updateRegion = function (region, code) {
-        FM.building.address["fm-address-region"] = region;
-        FM.building.address["fm-address-region-code"] = code;
-    };
-
     $('#fm-building-name-input').on('keyup', function (e) {
-        putCharsLeft($("#fm-building-name-chars-left"), e.target.value, 25);
+        putCharsLeft($('#fm-building-name-chars-left'), e.target.value, 25);
     });
     
     $('#fm-building-name-input').on('change', function (e) {
@@ -40,34 +35,14 @@ $(function () {
             pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
         }
     });
-  
-    const displaySelectedAddress = function (address) {
-        var build_address = '';
-        build_address += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1'] + ',' : '';
-        build_address += (address['fm-address-line-2'].length > 0) ? address['fm-address-line-2'] + ',' : '';
-        build_address += (address['fm-address-town'].length > 0) ? address['fm-address-town'] + ',' : '';
-        build_address += (address['fm-address-county'].length > 0) ? address['fm-address-county'] : '';
 
-        var buildingAddress = build_address;
-        $('#fm-building-postcode').html(address['fm-address-postcode']);
-        $('#fm-building-address').html(buildingAddress);
-        if (address['fm-address-region'].length > 0) {
-            removeRegionDropdown();
-            $('#fm-building-region').html(address['fm-address-region']);
-        } else {
-            $('#fm-building-region').html('');
-            var region_response = buildRegionDropdown(address['fm-address-postcode']);
-        }
-
-        $('.fm-bulding-address-wrapper').show();
-    };
     const assign_building_name = function (new_name) {
         newBuilding.name = new_name;
         FM.building = newBuilding;
     };
 
     $('#fm-building-desc-input').on('keyup', function (e) {
-        putCharsLeft($("#fm-building-desc-chars-left"), e.target.value, 50);
+        putCharsLeft($('#fm-building-desc-chars-left'), e.target.value, 50);
     });
 
     $('#fm-building-desc-input').on('change', function (e) {
@@ -79,31 +54,14 @@ $(function () {
         FM.building = newBuilding;
     };
 
-    // const displaySelectedAddress = function (address) {
-    //     var buildAddress = "";
-    //     buildAddress += (address["fm-address-line-1"].length > 0) ? address["fm-address-line-1"] + "," : "";
-    //     buildAddress += (address["fm-address-line-2"].length > 0) ? address["fm-address-line-2"] + "," : "";
-    //     buildAddress += (address["fm-address-town"].length > 0) ? address["fm-address-town"] + "," : "";
-    //     buildAddress += (address["fm-address-county"].length > 0) ? address["fm-address-county"] : "";
-
-    //     var buildingAddressUpdated = buildAddress;
-    //     $("#fm-building-postcode").html(address["fm-address-postcode"]);
-    //     $("#fm-building-address").html(buildingAddressUpdated);
-    //     $("#fm-building-region").html(address["fm-address-region"].replace(/##/g, ","));
-    //     $(".fm-bulding-address-wrapper").show();
-    // };
-
     $('#fm-find-address-results').on('change', function (e) {
         let selectedAddress = $("select#fm-find-address-results > option:selected").val();
 
         //$('#fm-find-address-results').css("background", '#28a197');
         let address = {};
-        let selectOption = $("select#fm-find-address-results")[0].selectedOptions[0];
-
         if (extract_address_data(selectedAddress, address)) {
             cache_address ( selectedAddress) ;
             assign_building_address(address, address['building-ref']);
-            displaySelectedAddress(address);
         }
     });
 
@@ -126,23 +84,6 @@ $(function () {
         }
     };
 
-    const convert_address_data = function ( source_address) {
-        new_address = {};
-
-        if (source_address) {
-            new_address['fm-address-line-1'] = source_address['add1'] ? source_address['add1'] : '';
-            new_address['fm-address-line-2'] = source_address['village'] ? source_address['village'] : '';
-            new_address['fm-address-town'] = source_address['post_town'] ? source_address['post_town'] : '';
-            new_address['fm-address-county'] = source_address['county'] ? source_address['county'] : '';
-            new_address['fm-address-postcode'] = source_address['postcode'] ? source_address['postcode'] : '';
-            new_address['fm-address-region'] = source_address['region'] ? source_address['region'].replace(/,/g, "##") : '';
-            new_address['fm-address-region-code'] = source_address['regioncode'] ? source_address['regioncode'].replace(/,/g, "##") : '';
-            new_address['building-ref'] = source_address['building_ref'] ? source_address['building_ref'] : '';
-        }
-
-        return new_address;
-    };
-
     const extract_address_data = function (selectedAddress, new_address) {
         if (selectedAddress) {
             let addressElements = selectedAddress.split(',');
@@ -151,10 +92,7 @@ $(function () {
             new_address['fm-address-town'] = addressElements[2];
             new_address['fm-address-county'] = addressElements[3];
             new_address['fm-address-postcode'] = addressElements[4].trim();
-            new_address['fm-address-region'] = addressElements[5].replace(/##/g, ",").trim();
-            new_address['fm-address-region-code'] = addressElements[7].replace(/##/g, ",").trim();
-            new_address['building-ref'] = addressElements[6].trim();
-
+            new_address['building-ref'] = addressElements[5];
             return true;
         }
 
@@ -172,39 +110,31 @@ $(function () {
     $('#fm-find-address-btn').on('click', function (e) {
         e.preventDefault();
 
-        let selectElement = $($('#fm-find-address-results')[0]);
         let postCode = pageUtils.formatPostCode($('#fm-bm-postcode').val());
 
-        selectElement.empty();
-        selectElement.append('<option value="status-option" selected>0 addresses found</option>');
+        $('#fm-find-address-results').empty();
+        $('#fm-find-address-results').append('<option value="status-option" selected>0 addresses found</option>');
 
         $.get(encodeURI("/api/v1/postcodes/" + postCode))
             .done(function (data) {
                 if (data && data.result && data.result.length > 0) {
-                    selectElement.find('option').remove();
-                    selectElement.append('<option value="status-option" selected>' + data.result.length + ' addresses found</option>');
+                    $('#fm-find-address-results').find('option').remove();
+                    $('#fm-find-address-results').append('<option value="status-option" selected>' + data.result.length + ' addresses found</option>');
                     let addresses = data.result;
 
                     for (let x = 0; x < addresses.length; x++) {
-                        let address = convert_address_data(addresses[x]);
+                        let address = addresses[x];
 
-                        let add1 = addresses[x]['add1'] ? addresses[x]['add1'] + ', ' : '';
-                        let add2 = addresses[x]['village'] ? addresses[x]['village'] + ', ' : '';
-                        let postTown = addresses[x]['post_town'] ? addresses[x]['post_town'] + ', ' : '';
-                        let county = addresses[x]['county'] ? addresses[x]['county'] + ', ' : '';
-                        let postCode = addresses[x]['postcode'] ? addresses[x]['postcode'] : '';
-                        /**replace all commas so later when we split the selected address we can replace these hashes with commas to avoid conflicts */
-                        let region = addresses[x]['region'] ? addresses[x]['region'].replace(/,/g, "##")+' ' : '';
-                        let regioncode = addresses[x]['regioncode'] ? addresses[x]['regioncode'].replace(/,/g, "##")+' ' : '';
-                        let buildingRef = addresses[x]['building_ref'] ? addresses[x]['building_ref'] : '';
+                        let add1 = address['add1'] ? address['add1'] + ', ' : '';
+                        let add2 = address['village'] ? address['village'] + ', ' : '';
+                        let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
+                        let county = address['county'] ? address['county'] + ', ' : '';
+                        let postCode = address['postcode'] ? address['postcode'] : '';
+                        let buildingRef = address['building_ref'] ? address['building_ref'] : '';
                         let newOptionData = add1 + add2 + postTown + county + postCode;
-                        let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + region.trim() + ', ' + buildingRef.trim() + ', ' + regioncode.trim();
-
-                        let newOption = document.createElement('option');
-                        newOption.value = newOptionValue;
-                        newOption.innerText = newOptionData;
-                        newOption.setAttribute ( 'data-address', address) ;
-                        selectElement.append(newOption);
+                        let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + buildingRef;
+                        let newOption = '<option value="' + newOptionValue + '">' + newOptionData + '</option>';
+                        $('#fm-find-address-results').append(newOption);
                     }
                 }
                 showCantFindAddressLink();
@@ -263,9 +193,6 @@ $(function () {
         if (!validateBuildingDetailsForm()) {
             e.preventDefault();
         } else {
-            console.log('FM.building.address');
-            console.log(FM.building.address);
-            console.log('FM.building.address');
             $('#address-json').val(JSON.stringify(FM.building.address));
             $('#building-ref').val(FM.building['building-ref']);
             $('#fm-bm-building-details-form').submit();
@@ -291,64 +218,10 @@ $(function () {
 
         return bRet;
     };
-
-
-    const removeRegionDropdown = function() {
-        $('#fm-region-dropdown').remove();
-        $('#fm-building-region').html('');
-    };
-    const buildRegionDropdown = function (postCode) {
-        $.get(encodeURI("/api/v1/find-region/" + postCode))
-            .done(function (data) {
-                $('#fm-region-dropdown').remove();
-                if (data && data.result && data.result.length > 1) {
-                    let regions = data.result;
-                    var select_dropdown = '<select id="fm-region-dropdown" class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0"></select>';
-                    $('#fm-building-region').after(select_dropdown);
-                    var region_text = (data.result.length > 1)? " Region's found":" Region found";
-                    select_dropdown_default_text = '<option value="">' + data.result.length + region_text + '</option>';
-                    $('#fm-region-dropdown').append(select_dropdown_default_text);
-
-                    for (let x = 0; x < regions.length; x++) {
-                        let region_obj = regions[x];
-                        select_dropdown_options = '<option data-code="' + region_obj.code + '" value="' + region_obj.region + '">' + region_obj.region + '</option>';
-                        $('#fm-region-dropdown').append(select_dropdown_options);
-                    }
-
-                }
-
-                if (data && data.result && data.result.length === 1) {
-                    var region_name = data.result[0].region ;
-                    $('#fm-building-region').html(region_name);
-                    updateRegion(region_name, data.result[0].code);
-                }
-
-            })
-            .fail(function (data) {
-                showCantFindAddressLink();
-            });
-    };
-
-
-    $('#fm-show-address-postode').on('click', function (e) { 
-        e.preventDefault();
-        $('.fm-bulding-postcode-wrapper').show();
-        $(this).hide();
-    });
-
-
-
-    $('.fm-bulding-address-wrapper').on('change', '#fm-region-dropdown', function (e) {
-        e.preventDefault();
-        updateRegion($("option:selected", this).val(), $("option:selected", this).attr('data-code'));
-    });
-
 });
-
-
 $(window).on("load", function () {
-    // if ( $.restore_last_known_addr !== undefined) {
-    //     $.restore_last_known_addr();
-    // }
+    if ( $.restore_last_known_addr !== undefined) {
+        $.restore_last_known_addr();
+    }
 });
 

@@ -4,19 +4,19 @@ $(function () {
     window.FM = window.FM || {};
     FM.building.GIA = {};
     
+    // Puts the 'characters remaining' count when the page loads
+    if ($("#fm-bm-internal-square-area").length) {
+        putCharsLeft($('#fm-internal-square-area-chars-left'), document.getElementById("fm-bm-internal-square-area").value);
+    }
+    
     function putCharsLeft(messageLocation,  value) {
         let charsLeft = FM.calcCharsLeft(value, 10);
         messageLocation.text("You have " + charsLeft + " characters remaining");
     }
     
-    // Puts the 'characters remaining' count when the page loads
-    if ($("#fm-bm-internal-square-area").length) {
-        putCharsLeft($("#fm-internal-square-area-chars-left"), document.getElementById("fm-bm-internal-square-area").value);
-    }
-    
     // GIA
     $('#fm-bm-internal-square-area').on('keyup', function (e) {
-        putCharsLeft($("#fm-internal-square-area-chars-left"), e.target.value);
+        putCharsLeft($('#fm-internal-square-area-chars-left'), e.target.value);
     });
     
     $('#fm-bm-internal-square-area').on('keypress', function (event) {
