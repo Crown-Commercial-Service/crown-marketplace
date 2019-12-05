@@ -8,11 +8,25 @@ $(function () {
     $('#fm-find-address-btn').addClass('govuk-button');
     $('#fm-find-address-btn').text('Find address');
     $('fm-bm-postcode-lookup-container').removeClass('govuk-!-margin-top-3');
-
+    
+    // Puts the 'characters remaining' count when the page loads
+    if ($("#fm-building-name-input").length) {
+        putCharsLeft($('#fm-building-name-chars-left'), document.getElementById("fm-building-name-input").value, 25);
+    }
+    
+    if ($("#fm-building-desc-chars-left").length) {
+        putCharsLeft($('#fm-building-desc-chars-left'), document.getElementById("fm-building-desc-input").value, 50);
+    }
+    
+    function putCharsLeft(messageLocation,  value, maxChars) {
+        let charsLeft = FM.calcCharsLeft(value, maxChars);
+        messageLocation.text("You have " + charsLeft + " characters remaining");
+    }
+    
     $('#fm-building-name-input').on('keyup', function (e) {
-        $('#fm-building-name-chars-left').text(FM.calcCharsLeft(e.target.value, 25));
+        putCharsLeft($('#fm-building-name-chars-left'), e.target.value, 25);
     });
-
+    
     $('#fm-building-name-input').on('change', function (e) {
         if (e.target.value) {
             assign_building_name(e.target.value);
@@ -28,7 +42,7 @@ $(function () {
     };
 
     $('#fm-building-desc-input').on('keyup', function (e) {
-        $('#fm-building-desc-chars-left').text(FM.calcCharsLeft(e.target.value, 50));
+        putCharsLeft($('#fm-building-desc-chars-left'), e.target.value, 50);
     });
 
     $('#fm-building-desc-input').on('change', function (e) {

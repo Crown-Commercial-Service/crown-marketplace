@@ -1,26 +1,20 @@
-function findCharsLeft(value) {
-    
-    if (value.length > 0) {
-        $('#fm-building-security-type-other').val(value);
-    } else {
-        $('#fm-building-security-type-other').val("other");
-    }
-
-    let charsLeft = FM.calcCharsLeft(value, 150);
-    $('#fm-bm-bs-char-count').text('You have ' + charsLeft + ' characters remaining');
-}
-    
 $(function () {
     
     // Puts the 'characters remaining' count when the page loads
-    let otherSecurityType = document.getElementById("fm-building-security-type-more-detail");
-    let value = 0;
-    
-    if (otherSecurityType != null) {
-        value = otherSecurityType.value;
+    if ($("#fm-building-security-type-more-detail").length){
+        putCharsLeft(document.getElementById("fm-building-security-type-more-detail").value);
     }
     
-    findCharsLeft(value);
+    function putCharsLeft(value) {
+        if (value.length > 0) {
+            $('#fm-building-security-type-other').val(value);
+        } else {
+            $('#fm-building-security-type-other').val("other");
+        }
+    
+        let charsLeft = FM.calcCharsLeft(value, 150);
+        $('#fm-bm-bs-char-count').text('You have ' + charsLeft + ' characters remaining');
+    }
     
     $("input:radio[name=fm-building-security-type-radio]").on('click', function (e) {
         $('#inline-error-message').addClass('govuk-visually-hidden');
@@ -38,7 +32,7 @@ $(function () {
 
     $('#fm-building-security-type-more-detail').on('keyup', function(e) {
         let value = e.target.value;
-        findCharsLeft(value);
+        putCharsLeft(value);
     });
 
     $('#fm-bm-security-type-footer #fm-bm-cancel-and-return').on('click', function (e) {

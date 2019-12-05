@@ -16,7 +16,7 @@
 
     <input id="fm-building-name-input" class="govuk-input" type="text" maxlength="25" style="width:300px;"
            value="<%= @building['name'] %>" name="fm-building-name">
-    <span class="govuk-caption-m">You have <span id="fm-building-name-chars-left">25</span> characters remaining</span>
+    <span class="govuk-caption-m" id="fm-building-name-chars-left"></span>
     <!-- building description -->
     <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the description? - Optional</span>
     <span class="govuk-caption-m govuk-!-margin-top-0">
@@ -25,7 +25,7 @@
   </span>
     <input id="fm-building-desc-input" class="govuk-input" type="text" maxlength="50" style="width:300px;"
            value="<%= @building['description'] %>" name="fm-building-desc">
-    <span class="govuk-caption-m">You have <span id="fm-building-desc-chars-left">50</span> characters remaining</span>
+    <span class="govuk-caption-m" id="fm-building-desc-chars-left"></span>
     <!-- Address -->
     <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the address?</span>
     <span class="govuk-caption-m govuk-!-margin-top-0">
