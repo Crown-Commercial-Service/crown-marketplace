@@ -1,3 +1,4 @@
+<% if params[:validate].present? && !procurement.valid_on_continue? %>
 <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
   <h2 class="govuk-error-summary__title" id="error-summary-title">
     <%= t("shared.error_summary.there_is_a_problem") %>
@@ -19,3 +20,4 @@
     </ul>
   </div>
 </div>
+<% end %>
