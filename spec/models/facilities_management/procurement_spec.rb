@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Procurement, type: :model do
-  subject(:procurement) { build(:facilities_management_procurement, user: user) }
+  subject(:procurement) { create(:facilities_management_procurement, user: user) }
 
-  let(:user) { build(:user) }
+  let(:user) { create(:user) }
 
   it { is_expected.to be_valid }
 
@@ -17,11 +17,9 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
 
     context 'when the name is not unique' do
-      let(:second_procurement) {  build(:facilities_management_procurement, name: procurement.name, user: user) }
+      let(:second_procurement) {  create(:facilities_management_procurement, name: procurement.name, user: user) }
 
       it 'expected to not be valid' do
-        procurement.save
-
         expect(second_procurement.valid?(:name)).to eq false
       end
     end
@@ -96,15 +94,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   describe '#procurement_buildings' do
     context 'when there are no procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
-        procurement.save
+        procurement.procurement_buildings.destroy_all
         expect(procurement.valid?(:procurement_buildings)).to eq false
       end
     end
 
     context 'when there are no active procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
-        procurement.save
-        procurement.procurement_buildings.create(active: false)
+        procurement.procurement_buildings.first.update(active: false)
         expect(procurement.valid?(:procurement_buildings)).to eq false
       end
     end
@@ -128,8 +125,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when the procurement_building is present but without any service codes' do
       it 'expected to not be valid' do
         procurement.save
-        procurement.procurement_buildings.create(active: true)
-        expect(procurement.procurement_buildings.first.valid?(:building_services)).to eq false
+        procurement_building = procurement.procurement_buildings.create(active: true)
+        expect(procurement_building.valid?(:building_services)).to eq false
       end
     end
   end
@@ -162,37 +159,37 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       it 'keeps the name' do
         procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.first
+        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
         expect(procurement_building.name).to eq building_data['name']
       end
 
       it 'updates its address line 1' do
         procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.first
+        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
         expect(procurement_building.address_line_1).to eq building_data['address']['fm-address-line-1']
       end
 
       it 'updates its address line 2' do
         procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.first
+        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
         expect(procurement_building.address_line_2).to eq building_data['address']['fm-address-line-2']
       end
 
       it 'updates its town' do
         procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.first
+        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
         expect(procurement_building.town).to eq building_data['address']['fm-address-town']
       end
 
       it 'updates its county' do
         procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.first
+        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
         expect(procurement_building.county).to eq building_data['address']['fm-address-county']
       end
 
       it 'updates its postcode' do
         procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.first
+        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
         expect(procurement_building.postcode).to eq building_data['address']['fm-address-postcode']
       end
     end
@@ -201,6 +198,86 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'creates one' do
         procurement.save
         expect { procurement.find_or_build_procurement_building(building_data, building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
+      end
+    end
+  end
+
+  describe 'validations on :all' do
+    context 'when the contract name is blank' do
+      it 'is expected to not be valid' do
+        procurement.contract_name = ''
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the estimated_annual_cost is blank' do
+      it 'is expected to not be valid' do
+        procurement.estimated_cost_known = nil
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the tupe is blank' do
+      it 'is expected to not be valid' do
+        procurement.tupe = nil
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the initial_call_off_period is blank' do
+      it 'is expected to not be valid' do
+        procurement.initial_call_off_period = nil
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the initial_call_off_period is blank' do
+      it 'is expected to not be valid' do
+        procurement.initial_call_off_period = nil
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the initial_call_off_period is blank' do
+      it 'is expected to not be valid' do
+        procurement.initial_call_off_period = nil
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the tupe is selected and mobilisation length is less than 4 weeks' do
+      it 'is expected to not be valid' do
+        procurement.tupe = true
+        procurement.mobilisation_period = 3
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the tupe is selected and mobilisation length is more than 4 weeks' do
+      it 'is expected to be valid' do
+        procurement.tupe = true
+        procurement.mobilisation_period = 5
+        expect(procurement.valid?(:all)).to eq true
+      end
+    end
+
+    context 'when the there are no procurement buildings' do
+      it 'is expected not to be valid' do
+        procurement.procurement_buildings.destroy_all
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the there is a procurement building but no procurement_building_services' do
+      it 'is expected not to be valid' do
+        procurement.procurement_buildings.first.procurement_building_services.destroy_all
+        expect(procurement.valid?(:all)).to eq false
+      end
+    end
+
+    context 'when the there is a procurement building but no procurement_building_services' do
+      it 'is expected not to be valid' do
+        expect(procurement.valid?(:all)).to eq true
       end
     end
   end

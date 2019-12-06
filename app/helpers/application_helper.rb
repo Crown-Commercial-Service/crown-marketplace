@@ -173,11 +173,11 @@ module ApplicationHelper
     safe_join(attributes.map { |a| display_error(journey, a) })
   end
 
-  def display_error(journey, attribute)
+  def display_error(journey, attribute, margin = true)
     error = journey.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
+    content_tag :span, id: error_id(attribute), class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}" do
       error.to_s
     end
   end

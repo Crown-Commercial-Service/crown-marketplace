@@ -1,112 +1,125 @@
-<div class="govuk-summary-list__row ">
-  <dt class="govuk-summary-list__key govuk-!-font-size-24">
-    About the work
-  </dt>
-  <dd class="govuk-summary-list__value">
-  </dd>
-  <dd class="govuk-summary-list__actions">
-  </dd>
-</div>
 
-<div class="govuk-summary-list__row">
-  <dt class="govuk-summary-list__key">
-    1. Buildings
-  </dt>
+<table class="govuk-table">
+  <tbody class="govuk-table__body">
+  <tr class="govuk-table__row">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-24" width="30%">About the work</th>
+    <td class="govuk-table__cell">
+    </td>
+    <td class="govuk-table__cell">
+    </td>
+  </tr>
+  <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:procurement_buildings].any? %>">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-18 <%= 'govuk-!-padding-left-2' if @procurement.errors[:procurement_buildings].any? %>" width="30%"> 1. Buildings</th>
     <% if @active_procurement_buildings.any? %>
-      <dd class="govuk-summary-list__value">
-        <ul class="buildings-list">
+
+      <td class="govuk-table__cell">
+        <ul class="buildings-list govuk-!-margin-0 govuk-!-padding-top-2">
           <% @active_procurement_buildings.each do |procurement_building| %>
-              <li><%= procurement_building.name %></li>
+            <li><%= procurement_building.name %></li>
           <% end %>
         </ul>
-      </dd>
-      <dd class="govuk-summary-list__actions">
+      </td>
+      <td class="govuk-table__cell">
         <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
-      </dd>
+      </td>
     <% else %>
-      <dd class="govuk-summary-list__value">
+
+      <td class="govuk-table__cell">
         <%= link_to "Select buildings", edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-
-      </dd>
+      </td>
+      <td class="govuk-table__cell">
+      </td>
     <% end %>
-</div>
+    <% if @procurement.errors[:procurement_buildings].any? %>
+      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
+        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3"><%= display_error(@procurement, :procurement_buildings, false) %></td>
+      </tr>
+    <% end %>
+  </tr>
+  <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:base].any? %>">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:base].any? %>" width="30%">2. Services</th>
 
-<div class="govuk-summary-list__row">
-  <dt class="govuk-summary-list__key">
-    2. Services
-  </dt>
-  <% if @active_procurement_buildings.any? %>
-    <% if any_service_codes(@active_procurement_buildings) %>
-      <dd class="govuk-summary-list__value">
-        <% @active_procurement_buildings.each do |procurement_building| %>
-          <%= render 'procurement_building_services', procurement_building: procurement_building %>
-        <% end %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-        <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
-      </dd>
+    <% if @active_procurement_buildings.any? %>
+      <% if any_service_codes(@active_procurement_buildings) %>
+        <td class="govuk-table__cell">
+          <% @active_procurement_buildings.each do |procurement_building| %>
+            <%= render 'procurement_building_services', procurement_building: procurement_building %>
+          <% end %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
+        </td>
+      <% else %>
+        <td class="govuk-table__cell">
+          <%= link_to "Select services", edit_facilities_management_beta_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
+        </td>
+        <td class="govuk-table__cell">
+        </td>
+      <% end %>
     <% else %>
-      <dd class="govuk-summary-list__value">
-        <%= link_to "Select services", edit_facilities_management_beta_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-      </dd>
+      <td class="govuk-table__cell">
+        You must select buildings first
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag">
+          CAN'T START YET
+        </strong>
+      </td>
     <% end %>
-  <% else %>
-    <dd class="govuk-summary-list__value">
-      You must select buildings first
-    </dd>
-    <dd class="govuk-summary-list__actions">
-      <strong class="govuk-tag">
-        CAN'T START YET
-      </strong>
-    </dd>
-  <% end %>
-</div>
+    <% if @procurement.errors[:base].any? %>
+      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
+        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3"><%= display_error(@procurement, :base, false) %></td>
+      </tr>
+    <% end %>
+  </tr>
 
-
-<div class="govuk-summary-list__row">
-
-  <dt class="govuk-summary-list__key vertical-align-top">
-    3. Services information
+  <tr class="govuk-table__row">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">3. Services information</th>
     <% if any_service_codes(@active_procurement_buildings) %>
-      <dd class="govuk-summary-list__value govuk-!-padding-top-8">
+      <td class="govuk-table__cell">
         <strong>Buildings</strong>
-      </dd>
-      <dd class="govuk-summary-list__actions govuk-!-padding-top-8">
+      </td>
+      <td class="govuk-table__cell">
         <strong>Status</strong>
-      </dd>
+      </td>
     <% else %>
-      <dd class="govuk-summary-list__value">
+      <td class="govuk-table__cell">
         <% if @active_procurement_buildings.any? %>
           You must select service first
         <% else %>
           You must select building first
         <% end %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
+      </td>
+      <td class="govuk-table__cell">
         <strong class="govuk-tag">
           CAN'T START YET
         </strong>
-      </dd>
+      </td>
     <% end %>
-  </dt>
-</div>
+  </tr>
 
-<% if any_service_codes(@active_procurement_buildings) %>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    <dd class="govuk-summary-list__value govuk-!-padding-0 govuk-!-margin-0">
+
+  <% if any_service_codes(@active_procurement_buildings) %>
       <% @active_procurement_buildings.each do |procurement_building| %>
-        <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%= link_to procurement_building.name, facilities_management_beta_procurement_building_path(procurement_building) %></p>
+        <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if !procurement_building.valid?(:procurement_building_services) && params[:validate] %>">
+          <td class="govuk-table__cell">
+          </td>
+          <td class="govuk-table__cell">
+            <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%= link_to procurement_building.name, facilities_management_beta_procurement_building_path(procurement_building) %></p>
+          </td>
+          <td class="govuk-table__cell">
+            <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%=building_services_status? procurement_building.valid?(:procurement_building_services) %></p>
+          </td>
+        </tr>
+        <% if procurement_building.errors.any? && params[:validate] %>
+          <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error govuk-no-border">
+            <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3">
+              <span id="<%= procurement_building.id %>" class="govuk-error-message govuk-!-margin-bottom-0"><%= t('activerecord.errors.models.facilities_management/procurement.attributes.procurement_building_services.invalid_html', building_name: procurement_building.name) %></span>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
-    </dd>
-    <dd class="govuk-summary-list__actions govuk-!-padding-0 govuk-!-margin-0">
-      <% @active_procurement_buildings.each do |procurement_building| %>
-        <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%=building_services_status? procurement_building.valid?(:procurement_building_services) %></p>
-      <% end %>
-    </dd>
-  </div>
-<% end %>
+  <% end %>
+
+  </tbody>
+</table>
