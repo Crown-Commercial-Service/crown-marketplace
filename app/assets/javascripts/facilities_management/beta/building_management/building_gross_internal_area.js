@@ -3,10 +3,22 @@ $(function () {
     /* namespace */
     window.FM = window.FM || {};
     FM.building.GIA = {};
+    
+    function putCharsLeft(messageLocation,  value) {
+        let charsLeft = FM.calcCharsLeft(value, 10);
+        messageLocation.text("You have " + charsLeft + " characters remaining");
+    }
+    
+    // Puts the 'characters remaining' count when the page loads
+    if ($("#fm-bm-internal-square-area").length) {
+        putCharsLeft($("#fm-internal-square-area-chars-left"), document.getElementById("fm-bm-internal-square-area").value);
+    }
+    
     // GIA
     $('#fm-bm-internal-square-area').on('keyup', function (e) {
-        $('#fm-internal-square-area-chars-left').text(FM.calcCharsLeft(e.target.value, 10));
+        putCharsLeft($("#fm-internal-square-area-chars-left"), e.target.value);
     });
+    
     $('#fm-bm-internal-square-area').on('keypress', function (event) {
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
