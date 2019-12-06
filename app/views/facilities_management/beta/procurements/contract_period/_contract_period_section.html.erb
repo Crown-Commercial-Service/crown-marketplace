@@ -1,4 +1,4 @@
-<tr class="govuk-table__row">
+<tr class="govuk-table__row" id="initial_call_off_period-error">
   <th scope="row" class="govuk-table__header govuk-!-font-size-24" width="30%">Contract period</th>
   <td class="govuk-table__cell">
     <%= link_to('Answer all questions', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") if @procurement.unanswered_contract_date_questions? %>
@@ -25,9 +25,6 @@
 </tr>
 <tr class="govuk-table__row">
   <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Initial call-off period end date</th>
-  <td class="govuk-table__cell">
-    <%= initial_call_off_period_start_date %>
-  </td>
   <td class="govuk-table__cell">
     <% unless @procurement.initial_call_off_period.nil? %>
       <%= initial_call_off_period_end_date %>
