@@ -295,7 +295,7 @@ en:
           fabric_standard_b_copy: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
           fabric_standard_b_title: Standard B - this is the minimum level of service required
           fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
-          fabric_standard_c_title: This level of Service will be bespoke and site or area specific
+          fabric_standard_c_title: Standard C - this level of service will be bespoke and site or area specific
           heading: Building fabric maintenance services standards
           save_and_return_to_service_information: Save and return to service information
           subheading: What standard are you applying to all selected building fabric maintenance services?
@@ -307,7 +307,7 @@ en:
           cleaning_standard_b_copy: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
           cleaning_standard_b_title: Standard B - the highest service level
           cleaning_standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-          cleaning_standard_c_title: a bespoke service level
+          cleaning_standard_c_title: Standard C - a bespoke service level
           heading: Cleaning services standards
           save_and_return_to_service_information: Save and return to service information
           subheading: What standard are you applying to all selected cleaning services?
