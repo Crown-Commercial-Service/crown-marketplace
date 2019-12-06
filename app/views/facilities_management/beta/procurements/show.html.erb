@@ -12,6 +12,7 @@
 <% else %>
   <div class="govuk-body">
       <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+      <%= render('facilities_management/beta/procurements/errors_on_show', procurement: @procurement) %>
       <% if params[:template] == 'review-contract' %>
         <%= render('review_contract') %>
       <% else %>
@@ -25,9 +26,13 @@
             <%= render('about_the_contract') %>
           </dl>
           <dl class="govuk-summary-list">
-            <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_period_section' %>
-            <%= render partial: 'facilities_management/beta/procurements/contract_period/mobilisation_section' %>
-            <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_extension_section' %>
+            <table class="govuk-table">
+              <tbody class="govuk-table__body">
+                <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_period_section' %>
+                <%= render partial: 'facilities_management/beta/procurements/contract_period/mobilisation_section' %>
+                <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_extension_section' %>
+              </tbody>
+            </table>
           </dl>
           <dl class="govuk-summary-list">
             <%= render 'about_the_work', procurement: @procurement %>
