@@ -387,7 +387,7 @@ en:
           contract_name:
             contract_name_info: This will help you to refer to your contracts when talking to suppliers.
             contract_name_question: What do you want to call your contract?
-          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
+          delete_message: Are you sure you want to delete this search result?  This action cannot be undone.
           detailed_search: Detailed search
           next_step:
             building_services: 'Next: Service information'
