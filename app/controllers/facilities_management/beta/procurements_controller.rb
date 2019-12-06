@@ -203,7 +203,7 @@ module FacilitiesManagement
       end
 
       def procurement_valid?
-        @procurement.valid?(:all) && !@procurement.procurement_buildings.map { |p| p.valid?(:procurement_building_services) }.include?(false)
+        @procurement.valid_on_continue?
       end
     end
   end

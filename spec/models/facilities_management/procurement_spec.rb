@@ -275,9 +275,31 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
-    context 'when the there is a procurement building but no procurement_building_services' do
-      it 'is expected not to be valid' do
+    context 'when the there is a procurement building with two procurement_building_services' do
+      it 'is expected to be valid' do
         expect(procurement.valid?(:all)).to eq true
+      end
+    end
+  end
+
+  describe '#valid_on_continue?' do
+    context 'when valid on all' do
+      it 'is expected to return true' do
+        expect(procurement.valid_on_continue?).to eq true
+      end
+    end
+
+    context 'when procurement not valid' do
+      it 'is expected to return false' do
+        procurement.initial_call_off_period = nil
+        expect(procurement.valid_on_continue?).to eq false
+      end
+    end
+
+    context 'when procurement_building does not have procurement_building_services' do
+      it 'is expected to return false' do
+        procurement.procurement_buildings.first.procurement_building_services.destroy_all
+        expect(procurement.valid_on_continue?).to eq false
       end
     end
   end
