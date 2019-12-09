@@ -11,7 +11,7 @@
         </li>
       <% end %>
       <% @active_procurement_buildings.each do |procurement_building| %>
-        <% if procurement_building.valid?(:procurement_building_service) && params[:validate] %>
+        <% if procurement_building.procurement_building_services.any? && procurement_building.valid?(:procurement_building_service) && params[:validate] %>
           <li>
             <%= link_to t('activerecord.errors.models.facilities_management/procurement.attributes.procurement_building_services.invalid_html', building_name: procurement_building.name), "##{procurement_building.id}" %>
           </li>
