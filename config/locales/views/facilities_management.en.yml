@@ -49,18 +49,25 @@ en:
               blank: Select the type of public sector organisation you're buying for
             full_name:
               blank: Enter your full name
+              invalid: Full name is not valid
             job_title:
               blank: Enter your job title
+              invalid: Job title is not valid
             organisation_address_line_1:
               blank: Enter your building or street name
+              invalid: Address is not valid
             organisation_address_postcode:
               blank: Enter your postcode
+              invalid: Postcode is not valid
             organisation_address_town:
               blank: Enter your town or city
+              invalid: Town or city is not valid
             organisation_name:
               blank: Enter your organisation name
+              invalid: Organisation name is not valid
             telephone_number:
               blank: Enter your telephone number
+              invalid: Telephone number is not valid
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -71,8 +78,11 @@ en:
               too_short: Select at least one service you need to include in your procurement
         facilities_management/procurement:
           attributes:
+            base:
+              services_not_present: You must select at least one service
             contract_name:
               blank: Enter your contract name
+              not_present: You must answer the question about 'Contract name'
               taken: This contract name is already in use
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
@@ -81,6 +91,7 @@ en:
               greater_than_or_equal_to: Estimated annual cost must be an amount of money, like 12000 or 1200.45
             estimated_cost_known:
               inclusion: Select yes if you know your annual cost, if you do not please select no
+              not_present: You must answer the question about 'Estimated cost'
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -89,6 +100,7 @@ en:
               greater_than_or_equal_to: Enter initial call-off period
               less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
               not_a_number: Enter initial call-off period
+              not_present: You must answer the questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
@@ -97,6 +109,7 @@ en:
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
+              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             name:
               blank: Enter the name for the search
               taken: This name is already in use
@@ -104,8 +117,11 @@ en:
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               too_long: Call-off period and extensions must be 10 years or less
+            procurement_building_services:
+              invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be 'Complete'
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
+              not_present: You must select at least one building
             region_codes:
               invalid: Select at least one region you need to include in your procurement
             security_policy_document_date:
@@ -122,6 +138,7 @@ en:
               invalid: Select at least one service you need to include in your procurement
             tupe:
               inclusion: Select yes if you know TUPE applies to your contract
+              not_present: You must answer the question about 'TUPE'
         facilities_management/procurement_building:
           attributes:
             service_codes:
@@ -243,7 +260,7 @@ en:
           add_address: Add address
           building_and_street: Building and street
           county: County (optional)
-          postcode: Postcode
+          postcode: Post code
           submit: Save and continue
           town_or_city: Town or city
           your_details: Your details
@@ -295,7 +312,7 @@ en:
           fabric_standard_b_copy: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
           fabric_standard_b_title: Standard B - this is the minimum level of service required
           fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
-          fabric_standard_c_title: This level of Service will be bespoke and site or area specific
+          fabric_standard_c_title: Standard C - this level of service will be bespoke and site or area specific
           heading: Building fabric maintenance services standards
           save_and_return_to_service_information: Save and return to service information
           subheading: What standard are you applying to all selected building fabric maintenance services?
@@ -307,7 +324,7 @@ en:
           cleaning_standard_b_copy: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
           cleaning_standard_b_title: Standard B - the highest service level
           cleaning_standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-          cleaning_standard_c_title: a bespoke service level
+          cleaning_standard_c_title: Standard C - a bespoke service level
           heading: Cleaning services standards
           save_and_return_to_service_information: Save and return to service information
           subheading: What standard are you applying to all selected cleaning services?
@@ -387,7 +404,7 @@ en:
           contract_name:
             contract_name_info: This will help you to refer to your contracts when talking to suppliers.
             contract_name_question: What do you want to call your contract?
-          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
+          delete_message: Are you sure you want to delete this search result?  This action cannot be undone.
           detailed_search: Detailed search
           next_step:
             building_services: 'Next: Service information'
