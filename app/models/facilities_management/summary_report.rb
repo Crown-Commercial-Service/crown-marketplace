@@ -367,7 +367,9 @@ module FacilitiesManagement
 
       copy_params building_data, uvals
 
-      uvals.each do |v|
+      uvals_remove_cafm_help = uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
+
+      uvals_remove_cafm_help.each do |v|
         uom_value = v[:uom_value].to_f
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
