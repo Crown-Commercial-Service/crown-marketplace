@@ -2,8 +2,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     this.verify_connection_to_form = function (formDOMObject, requestedSpecialTreatment) {
         let canConnect = false;
         if (null != formDOMObject && null == formDOMObject.formValidator) {
-            if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") == "true") ||
-                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation") || !formDOMObject.getAttribute("specialvalidation") == "false")) {
+            if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") === "true") ||
+                ((!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) || (!requestedSpecialTreatment && !(formDOMObject.getAttribute("specialvalidation") == "true")))) {
                 canConnect = true;
             }
         }
@@ -107,6 +107,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         if (!this.validationResult) {
             this.toggleBannerError(true);
         }
+
+        if ( formElements["preventsubmission"] === 'true') return false;
+
         return this.validationResult;
     };
     this.validationFunctions = {

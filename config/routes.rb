@@ -224,6 +224,10 @@ Rails.application.routes.draw do
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
     get '/', to: 'home#index'
+    get '/new_layout', to: 'home#new_layout'
+    get '/prototypes', to: 'prototype#index'
+    get '/prototypes/results', to: 'prototype#results'
+    get '/prototypes/pricing', to: 'prototype#pricing'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'

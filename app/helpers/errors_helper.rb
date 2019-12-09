@@ -2,23 +2,23 @@ module ErrorsHelper
   # Encapsulates the error rendering functions
 
   ERROR_TYPE = {
-    too_short: 'minlength',
-    blank: 'required',
-    inclusion: 'required',
-    too_long: 'maxlength',
-    after: 'max',
-    greater_than_or_equal_to: 'min',
-    before: 'min',
-    less_than: 'max',
-    less_than_or_equal_to: 'max',
-    greater_than: 'min',
-    not_a_date: 'pattern',
-    not_an_integer: 'number',
-    not_a_number: 'number'
+      too_short: 'minlength',
+      blank: 'required',
+      inclusion: 'required',
+      too_long: 'maxlength',
+      after: 'max',
+      greater_than_or_equal_to: 'min',
+      before: 'min',
+      less_than: 'max',
+      less_than_or_equal_to: 'max',
+      greater_than: 'min',
+      not_a_date: 'pattern',
+      not_an_integer: 'number',
+      not_a_number: 'number'
   }.freeze
 
   def list_errors_for_attributes(form, *attributes)
-    attributes.each_with_index do |attribute, _index|
+    attributes.each_with_index do |attribute, index|
       collection = validation_messages(form.object.class.name.underscore.downcase.to_sym, attribute)
       capture do
         content_tag :div, class: 'error-collection govuk-visually-hidden', id: "error_#{form.object_name}_#{attribute}" do
@@ -44,7 +44,7 @@ module ErrorsHelper
 
     content_tag :label, content_tag(:span, model_data[:text]), class: css_classes,
                                                                for: "#{model_data[:form_object_name]}_#{model_data[:attribute]}",
-                                                               id: "#{model_data[:attribute]}-#{model_data[:error_type]}-error",
+                                                               id: "#{model_data[:attribute]}-error",
                                                                data: { propertyname: model_data[:attribute].to_s, validation: tag_validation_type }
   end
 
