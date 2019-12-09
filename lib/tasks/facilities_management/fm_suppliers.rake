@@ -28,9 +28,7 @@ module CCS
       db.query query
 
       # for now delete all suppliers on Preview
-      if ENV['CCS_DEFAULT_DB_HOST'].nil? || ENV['CCS_DEFAULT_DB_HOST'].include?('preview')
-        FacilitiesManagement::Supplier.destroy_all
-      end
+      FacilitiesManagement::Supplier.destroy_all if ENV['CCS_DEFAULT_DB_HOST'].nil? || ENV['CCS_DEFAULT_DB_HOST'].include?('preview')
 
       supplier_data.each do |supplier|
         values = supplier.to_json.gsub("'") { "''" }
