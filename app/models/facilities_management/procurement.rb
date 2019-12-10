@@ -14,6 +14,7 @@ module FacilitiesManagement
     # needed to move this validation here as it was being called incorrectly in the validator, ie when a file with the wrong
     # extension or size was being uploaded. The error message for this rather than the carrierwave error messages were being displayed
     validates :security_policy_document_file, presence: true, if: :security_policy_document_required?
+    validates :security_policy_document_file, antivirus: true
 
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
