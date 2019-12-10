@@ -3,7 +3,7 @@ module FacilitiesManagement
     include ActiveModel::Model
     include Virtus.model
 
-    attribute :route_to_market
+    attribute :route_to_market, :confirm_direct_award
 
     validates :route_to_market, inclusion: %w[direct further]
   end

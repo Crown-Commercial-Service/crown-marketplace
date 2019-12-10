@@ -16,7 +16,12 @@ module CcsPatterns
       @page_data[:services] = ['cut flowers and christmas trees', 'grounds maintenance services', 'internal planting', 'professional snow and ice clearance', 'reservoirs, ponds, river walls and water-feature maintenance', 'tree surgery', 'taxi booking service']
     end
 
-    def pricing; end
+    def pricing
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+      @page_data[:sorted_supplier_list] = [{ name: 'Cleaning London LTD', price: 1280500 }, { name: 'Example Corporation LTD', price: '1300000' }, { name: 'Another example Corp Ltd', price: '1353400' },
+                                           { name: 'HG Cleaning', price: '1300000' }, { name: 'Marco LTD', price: '1300000' }, { name: 'Gig Beta Company', price: '1300000' }, { name: 'Mega Beta Ltd', price: '1300000' }, 
+                                           { name: 'Jacob Beta Company', price: '1300000' }, { name: 'Kile Beta', price: '1300000' }, { name: 'Oscar Wild Corp.', price: '1300000' }, { name: 'X-ray Cleaning Ltd', price: '1300000' }]
+    end
 
     private
 
@@ -68,14 +73,14 @@ module CcsPatterns
           secondary_text: 'Change requirements'
         },
         pricing: {
-          back_url: ccs_patterns_prototypes_path,
+          back_url: ccs_patterns_prototypes_results_path,
           page_title: 'Direct award pricing',
           caption1: 'Procurement name',
-          continuation_text: 'Continue',
+          continuation_text: 'Continue to direct award',
           return_url: ccs_patterns_path,
           return_text: 'Return to procurement dashboard',
           secondary_url: ccs_patterns_prototypes_path,
-          secondary_text: 'Change requirements'
+          secondary_text: 'Return to results'
         }
       }.freeze
     end

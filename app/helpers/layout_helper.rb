@@ -57,6 +57,11 @@ module LayoutHelper
       @back_button = back_button
       @navigation_details = continuation
     end
+
+    def continuation_buttons(form_builder)
+      out = form_builder.button(navigation_details[:primary_text], class: "govuk-button govuk-!-margin-right-2")
+        # out << form_builder.button()
+    end
   end
 
   # Renders the top of the page including back-button, and the 3 elements of the main header
