@@ -49,13 +49,17 @@ module ApplicationHelper
 
     content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
       content_tag :div, class: form_group_css, data: top_level_data_options do
-        concat display_error_label(model_object, attribute, label_text, "#{form_object_name}_#{attribute}")
-        concat display_label(label_text, "#{form_object_name}_#{attribute}") if label_text.present?
+        concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
+        concat display_label(attribute, label_text, "#{form_object_name}_#{attribute}") if label_text.present?
         concat yield
       end
     end
   end
   # rubocop:enable Metrics/ParameterLists
+
+  def display_label(attribute, text, form_object_name)
+    content_tag :label, text, class: 'govuk-label', for: "#{form_object_name}_#{attribute}"
+  end
 
   def govuk_form_group_with_optional_error(journey, *attributes)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
@@ -79,33 +83,84 @@ module ApplicationHelper
     end
   end
 
-  def display_potential_errors(model_object, attribute)
-    collection = validation_messages(model_object.class.name.demodulize.downcase.to_sym, attribute)
+  def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
+    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
-    content_tag :div, class: 'error_collection' do
+    content_tag :div, class: 'error-collection govuk-visually-hidden', id: "error_#{form_object_name}_#{attribute}" do
       collection.each do |key, val|
-        concat(govuk_validation_error(model_object, attribute, key, val))
+        concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
       end
     end
   end
 
+  def property_name(section_name, attributes)
+    return "#{section_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}" unless section_name.nil?
+
+    (attributes.is_a?(Array) ? attributes.last : attributes).to_s
+  end
+
+  # rubocop:disable Metrics/ParameterLists
+  def display_potential_errors(model_object, attributes, form_object_name, error_lookup = nil, error_position = nil, section_name = nil)
+    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
+
+    content_tag :div, class: 'error-collection', id: "error_#{form_object_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}", property_name: property_name(section_name, attributes) do
+      collection.each do |key, val|
+        concat(govuk_validation_error({ model_object: model_object, attribute: attributes.is_a?(Array) ? attributes.last : attributes, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
+      end
+    end
+  end
+  # rubocop:enable Metrics/ParameterLists
+
+  def display_specialised_error(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
+    error = model_object.errors[attribute].first
+    return if error.blank?
+
+    error_type = model_object.errors.details[attribute].first[:error]
+    error_message = model_object.errors[attribute]&.first
+
+    govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: error_type, text: error_message, form_object_name: form_object_name }, error_lookup, error_position)
+  end
+
   # looks up the locals data for validation messages
   def validation_messages(model_object_sym, attribute_sym = nil)
-    translation_hash = t("activerecord.errors.models.facilities_management/#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
-    translation_hash = t("activerecord.errors.models.facilities_management/#{model_object_sym.downcase}.attributes.#{attribute_sym.to_s.downcase}") unless attribute_sym.nil?
-    return {} if translation_hash.to_s.include?('translation_missing')
+    translation_key = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
 
-    translation_hash
+    translation_key = "activerecord.errors.models.#{model_object_sym.downcase}.attributes"
+    if attribute_sym.is_a? Array
+      attribute_sym.each do |attr|
+        translation_key += ".#{attr}"
+      end
+    else
+      translation_key += ".#{attribute_sym}"
+    end
+
+    result = t(translation_key)
+    return {} if result.include? 'translation_missing'
+
+    result
   end
 
   # Renders a govuk compliant error-content div with a client-compatible validation type
   # and text for use as static content in the page
-  def govuk_validation_error(model_object, attribute, error_type, text)
-    tag_validation_type = ERROR_TYPES.include?(error_type) ? ERROR_TYPES[error_type] : error_type
-    css_classes = ['govuk-error-message']
-    css_classes += ['govuk-visually-hidden'] unless model_has_error? model_object, error_type, attribute
+  def govuk_validation_error(model_data, error_lookup = nil, error_position = nil)
+    tag_validation_type = ERROR_TYPES.include?(model_data[:error_type]) ? ERROR_TYPES[model_data[:error_type]] : model_data[:error_type]
+    model_has_error = false
+    model_has_error = error_lookup.call(model_data[:model_object], model_data[:error_type], error_position) unless error_lookup.nil?
 
-    content_tag :div, content_tag(:span, text), class: css_classes, data: { validation: tag_validation_type }
+    model_has_error = model_has_error?(model_data[:model_object], model_data[:error_type], model_data[:attribute]) if error_lookup.nil?
+
+    css_classes = ['govuk-error-message']
+    css_classes += ['govuk-visually-hidden'] unless model_has_error
+
+    content_tag :label, content_tag(:span, model_data[:text]), class: css_classes,
+                                                               for: "#{model_data[:form_object_name]}_#{model_data[:attribute]}",
+                                                               id: "#{model_data[:attribute]}-error",
+                                                               data: { propertyname: model_data[:attribute].to_s, validation: tag_validation_type }
+  end
+
+  def model_attribute_has_error(model_object, *attributes)
+    result = false
+    attributes.any? { |a| result |= model_object.errors[a]&.any? }
   end
 
   def model_has_error?(model_object, error_type, *attributes)
@@ -118,11 +173,11 @@ module ApplicationHelper
     safe_join(attributes.map { |a| display_error(journey, a) })
   end
 
-  def display_error(journey, attribute)
+  def display_error(journey, attribute, margin = true)
     error = journey.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(attribute), class: 'govuk-error-message govuk-!-margin-top-3' do
+    content_tag :span, id: error_id(attribute), class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}" do
       error.to_s
     end
   end
@@ -131,19 +186,20 @@ module ApplicationHelper
     too_long: 'maxlength',
     too_short: 'minlength',
     blank: 'required',
+    inclusion: 'required',
     after: 'max',
-    greater_than: 'max',
-    greater_than_or_equal_to: 'max',
+    greater_than: 'min',
+    greater_than_or_equal_to: 'min',
     before: 'min',
-    less_than: 'min',
-    less_than_or_equal_to: 'min',
+    less_than: 'max',
+    less_than_or_equal_to: 'max',
     not_a_date: 'pattern',
-    not_a_number: 'pattern',
-    not_an_integer: 'pattern'
+    not_a_number: 'number',
+    not_an_integer: 'number'
   }.freeze
 
   def get_client_side_error_type_from_errors(errors, attribute)
-    return ERROR_TYPES[errors.details[attribute].first[:error]] if ERROR_TYPES.key?(errors.details[attribute].first[:error])
+    return ERROR_TYPES[errors.details[attribute].first[:error]] if ERROR_TYPES.key?(errors.details[attribute].try(:first)[:error])
 
     errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(errors.details[attribute].first[:error])
   end
@@ -168,6 +224,15 @@ module ApplicationHelper
     return if error.blank?
 
     content_tag :span, id: error_id(attribute.to_s), class: 'govuk-error-message govuk-!-margin-top-3' do
+      error.to_s
+    end
+  end
+
+  def display_error_nested_models(object, attribute)
+    error = object.errors[attribute].first
+    return if error.blank?
+
+    content_tag :span, id: error_id(object.id), class: 'govuk-error-message govuk-!-margin-top-3' do
       error.to_s
     end
   end

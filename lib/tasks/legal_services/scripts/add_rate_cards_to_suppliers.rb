@@ -3,12 +3,10 @@ require 'json'
 
 # rubocop:disable Metrics/AbcSize
 
-def add_rate_cards_to_suppliers(upload_id)
-  upload = LegalServices::Admin::Upload.find(upload_id)
-
-  suppliers = upload.data
+def add_rate_cards_to_suppliers
+  suppliers = JSON.parse(File.read(get_ls_output_file_path('suppliers_with_all_services.json')))
   suppliers.each { |supplier| supplier['rate_cards'] = [] }
-  rate_cards_workbook = Roo::Spreadsheet.open(file_path(upload.rate_cards))
+  rate_cards_workbook = Roo::Spreadsheet.open(rate_cards_file_path, extension: :xlsx)
   lot_numbers = ['1', '2a', '2b', '2c', '3', '4']
 
   (0..5).each do |sheet_number|
@@ -48,8 +46,7 @@ def add_rate_cards_to_suppliers(upload_id)
     end
   end
 
-  upload.data = suppliers
-  upload.save!
+  write_ls_output_file('data.json', suppliers)
 end
 
 def extract_duns(supplier_name)
@@ -60,10 +57,8 @@ def convert_price_to_pence(price)
   price.to_i * 100
 end
 
-def file_path(file)
-  return file.path if Rails.env.development?
-
-  file.url
+def rate_cards_file_path
+  'storage/legal_services/current_data/input/rate_cards.xlsx'
 end
 
 # rubocop:enable Metrics/AbcSize

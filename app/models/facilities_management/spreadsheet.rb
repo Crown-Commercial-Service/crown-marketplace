@@ -200,7 +200,7 @@ class FacilitiesManagement::Spreadsheet
 
       # sheet.add_row ['5. Regions summary']
       label = '5. Regions summary'
-      FacilitiesManagement::Region.all.select { |region| @data['posted_locations'].include? region.code }.each do |region|
+      FacilitiesManagement::Region.all.select { |region| @data[:posted_locations].include? region.code }.each do |region|
         sheet.add_row [label, region.name]
         label = nil
       end

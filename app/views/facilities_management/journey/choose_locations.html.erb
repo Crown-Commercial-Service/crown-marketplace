@@ -1,4 +1,4 @@
-<%= render('errors/inline_error_summary') %>
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.steps[1].errors, multiple: false, render_empty: true }  %>
 <div class="procurement">
   <div class="locations chooser-component">
     <div id="ccs-dynamic-accordian" class="govuk-grid-row">
@@ -16,7 +16,7 @@
                 <span class="govuk-caption-m">
                   <%= t('.subtitle') %>
                 </span>
-                <%= display_error(@journey, :region_codes) %>
+                <%= display_potential_errors(@journey.steps[1], :region_codes, '')%>
               </legend>
               <div class="chooser-input">
                 <div class="govuk-accordion" data-module="accordion" id="procurement-region-accordion">

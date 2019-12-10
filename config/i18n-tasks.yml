@@ -70,6 +70,7 @@ search:
     - app/assets/images
     - app/assets/fonts
     - app/assets/videos
+    - app/assets/files
 
   ## Alternatively, the only files or `File.fnmatch patterns` to search in `paths`:
   ## If specified, this settings takes priority over `exclude`, but `exclude` still applies.
@@ -119,7 +120,8 @@ ignore_unused:
   - supply_teachers.home.fta_to_perm_fee.no_fee.hire_not_within_6_months
   - supply_teachers.home.fta_to_perm_fee.no_fee.length_not_within_12_months
   - supply_teachers.home.fta_to_perm_fee.no_fee.end_not_within_6_months
-  - facilities_management.beta.procurement_buildings.edit.question.*
+  - facilities_management.beta.procurement_buildings.volume.question.*
+  - facilities_management.beta.procurements.review_contract.contract_documents.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
   - 'devise.*'

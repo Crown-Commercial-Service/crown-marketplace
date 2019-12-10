@@ -4,7 +4,7 @@ module FacilitiesManagement
       before_action :authenticate_user!
       before_action :authorize_user
 
-      before_action do
+      prepend_before_action do
         session[:last_visited_framework] = 'facilities_management/beta'
       end
 

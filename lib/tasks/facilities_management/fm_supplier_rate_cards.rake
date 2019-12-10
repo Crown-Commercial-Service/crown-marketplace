@@ -28,7 +28,7 @@ module FM
 
     data = {}
 
-    ['Variances', 'Discounts', 'Prices'].each do |sheet_name|
+    ['Prices', 'Discounts', 'Variances'].each do |sheet_name|
       sheet = rate_cards_workbook.sheet(sheet_name)
 
       data[sheet_name] = {}

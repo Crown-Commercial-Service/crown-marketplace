@@ -55,6 +55,10 @@ public/management_consultancy/data/*
 
 public/legal_services/data/*
 
+# Facilities Management data folders
+
+public/facilities_management/data/*
+
 # Redis dump
 dump.rdb
 lib/tasks/supply_teachers/input/
@@ -62,3 +66,5 @@ nbproject/
 launch.json
 ~$RM3830 Direct Award Data (for Dev & Test).xlsx
 .env.local.iulia
+.history/
+.vscode/

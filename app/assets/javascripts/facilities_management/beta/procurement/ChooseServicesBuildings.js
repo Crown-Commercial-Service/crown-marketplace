@@ -31,6 +31,11 @@ $(function () {
         $('.govuk-checkboxes').each(function () {
             $(this).click(function(){
                 setSelectedServices($(this).closest('.services-pane').attr('id'));
+                if ($(this).find('input.procurement-building__input').length === $(this).find('input.procurement-building__input:checked').length) {
+                    $(this).find('.box1-all').prop('checked', true);
+                } else {
+                    $(this).find('.box1-all').prop('checked', false);
+                }
             });
             if ($(this).find('input.procurement-building__input').length === $(this).find('input.procurement-building__input:checked').length) {
                 $(this).find('.box1-all').prop('checked', true);

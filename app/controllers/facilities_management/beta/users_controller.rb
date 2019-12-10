@@ -8,6 +8,8 @@ module FacilitiesManagement
       end
 
       def after_sign_in_path_for(resource)
+        return edit_facilities_management_beta_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user)) if current_user.fm_buyer_details_incomplete?
+
         stored_location_for(resource) || facilities_management_beta_path
       end
 

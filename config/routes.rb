@@ -117,7 +117,7 @@ Rails.application.routes.draw do
       put '/building-type', to: 'buildings_management#update_building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
       post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      put  '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
+      put '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
       get '/building-address', to: 'buildings_management#building_address'
       get '/building-security-type', to: 'buildings_management#building_security_type'
       post '/building-security-type', to: 'buildings_management#building_security_type'
@@ -130,14 +130,22 @@ Rails.application.routes.draw do
       match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
       match '/save-building-gia', to: 'buildings_management#save_building_gia', via: %i[get post]
       match '/save-building-security-type', to: 'buildings_management#save_security_type', via: %i[get post]
-      post '/summary', to: 'summary#index'
+      # post '/summary', to: 'summary#index'
+      match '/summary', to: 'summary#index', via: %i[get post]
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
       get '/start', to: 'journey#start', as: 'journey_start'
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
-      resources :procurements
+      resources :procurements do
+        post 'continue'
+        get 'summary'
+      end
       resources :procurement_buildings, only: %i[show edit update]
+      resources :procurement_buildings_services, only: %i[show update]
+      resources :buyer_details, only: %i[edit update] do
+        get 'edit_address'
+      end
     end
 
     get '/', to: 'home#index'
@@ -279,9 +287,6 @@ Rails.application.routes.draw do
     get '/auth/dfe/callback' => 'auth#callback'
   end
 
-  # scope module: :postcode do
-  #  resources :postcodes, only: :show
-  # end
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :postcodes, only: :show

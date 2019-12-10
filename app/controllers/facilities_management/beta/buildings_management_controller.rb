@@ -140,7 +140,7 @@ module FacilitiesManagement
 
         @type_list = fm_building_data.building_type_list
         @type_list_titles = fm_building_data.building_type_list_titles
-        @building_id = building_details['id'].blank? ? nil : building_details['id']
+        @building_id = building_details['id'].blank? ? local_building_id : building_details['id']
         @building = JSON.parse(building_details['building_json'])
         @building_name = @building['name']
         @page_title = @editing ? 'Change building type' : 'Building type'

@@ -2,11 +2,12 @@ module FacilitiesManagement
   module Beta
     class BuyerAccountController < FrameworkController
       before_action :redirect_if_needed
-      before_action :authenticate_user!, only: %i[buyer_account].freeze
-      before_action :authorize_user, only: %i[buyer_account].freeze
+      before_action :authenticate_user!
+      before_action :authorize_user
 
       def buyer_account
         @current_login_email = current_user.email.to_s
+        @buyer_detail = FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user)
       end
 
       private

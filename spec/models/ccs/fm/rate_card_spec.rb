@@ -8,9 +8,9 @@ RSpec.describe CCS::FM::RateCard, type: :model do
   end
 
   it 'contains data' do
-    expect(CCS::FM::RateCard.latest.data['Prices'].count).to be > 0
-    expect(CCS::FM::RateCard.latest.data['Discounts'].count).to be > 0
-    expect(CCS::FM::RateCard.latest.data['Variances'].count).to be > 0
+    expect(CCS::FM::RateCard.latest.data[:Prices].count).to be > 0
+    expect(CCS::FM::RateCard.latest.data[:Discounts].count).to be > 0
+    expect(CCS::FM::RateCard.latest.data[:Variances].count).to be > 0
   end
 
   it 'can retrieve latest entry' do
@@ -27,17 +27,17 @@ RSpec.describe CCS::FM::RateCard, type: :model do
 
     # sheet_name == 'Prices'
     # data['Prices'][rate_card['Supplier']][rate_card['Service Ref']] = rate_card
-    prices = rate_card.data['Prices'].keys.map { |k| rate_card.data['Prices'][k]['C.1'] }
+    prices = rate_card.data[:Prices].keys.map { |k| rate_card.data[:Prices][k][:'C.1'] }
     expect(prices.count).to be > 0
 
     # sheet_name == 'Discount'
     # data['Discount'][rate_card['Supplier']][rate_card['Ref']] = rate_card
-    discount = rate_card.data['Discounts'].keys.map { |k| rate_card.data['Discounts'][k]['C.1'] }
+    discount = rate_card.data[:Discounts].keys.map { |k| rate_card.data[:Discounts][k][:'C.1'] }
     expect(discount.count).to be > 0
 
     # sheet_name == 'Variances'
     # data['Variances'][rate_card['Supplier']] = rate_card
-    variances = rate_card.data['Variances'].keys.map { |k| rate_card.data['Discounts'][k] }
+    variances = rate_card.data[:Variances].keys.map { |k| rate_card.data[:Discounts][k] }
     expect(variances.count).to be > 0
   end
 end

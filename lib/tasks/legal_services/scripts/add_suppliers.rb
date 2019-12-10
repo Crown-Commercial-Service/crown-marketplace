@@ -1,9 +1,8 @@
 require 'roo'
 require 'json'
 
-def add_suppliers(upload_id)
-  upload = LegalServices::Admin::Upload.find(upload_id)
-  suppliers_workbook = Roo::Spreadsheet.open(file_path(upload.suppliers))
+def add_suppliers
+  suppliers_workbook = Roo::Spreadsheet.open(suppliers_file_path, extension: :xlsx)
 
   headers = {
     name: 'Supplier Name',
@@ -29,12 +28,9 @@ def add_suppliers(upload_id)
     supplier[:id] = SecureRandom.uuid
   end
 
-  upload.data = suppliers
-  upload.save!
+  write_ls_output_file('suppliers.json', suppliers)
 end
 
-def file_path(file)
-  return file.path if Rails.env.development?
-
-  file.url
+def suppliers_file_path
+  'storage/legal_services/current_data/input/Suppliers.xlsx'
 end

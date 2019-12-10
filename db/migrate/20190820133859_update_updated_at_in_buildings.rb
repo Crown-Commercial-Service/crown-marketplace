@@ -5,6 +5,6 @@ class UpdateUpdatedAtInBuildings < ActiveRecord::Migration[5.2]
   end
 
   def down
-    raise ActiveRecord::IrreversibleMigration
+    execute "update public.facilities_management_buildings set updated_at = ''"
   end
 end

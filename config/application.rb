@@ -78,6 +78,10 @@ module Marketplace
     'https://www.crowncommercial.gov.uk/'
   end
 
+  def self.service_information_doc
+    'https://assets.crowncommercial.gov.uk/wp-content/uploads/Framework-Schedule-1-Specification-v1.0-1.docx'
+  end
+
   # :nocov:
   def self.http_basic_auth_name
     @http_basic_auth_name ||= ENV.fetch('HTTP_BASIC_AUTH_NAME')

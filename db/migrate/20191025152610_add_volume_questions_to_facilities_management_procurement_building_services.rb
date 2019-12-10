@@ -1,4 +1,4 @@
-class AddNoOfAppliancesForTestingNoOfBuildingOccupantsSizeOfExternalAreaNoOfConsolesToBeServicedTonesToBeCollectedAndRemovedAndNoOfUnitsToBeServicedToFacilitiesManagementProcurementBuildingServices < ActiveRecord::Migration[5.2]
+class AddVolumeQuestionsToFacilitiesManagementProcurementBuildingServices < ActiveRecord::Migration[5.2]
   def change
     add_column :facilities_management_procurement_building_services, :no_of_appliances_for_testing, :integer
     add_column :facilities_management_procurement_building_services, :no_of_building_occupants, :integer
