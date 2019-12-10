@@ -120,6 +120,7 @@ en:
             security_policy_document_date:
               not_a_date: The selected date is not valid
             security_policy_document_file:
+              antivirus_virus_detected: The selected file contains a virus
               blank: The selected file is empty
             security_policy_document_name:
               blank: Enter a security policy document name
