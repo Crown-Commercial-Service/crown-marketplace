@@ -49,26 +49,26 @@ en:
               blank: Select the type of public sector organisation you're buying for
             full_name:
               blank: Enter your full name
-              invalid: Full name is not valid
+              invalid: Enter your full name
             job_title:
               blank: Enter your job title
-              invalid: Job title is not valid
+              invalid: Enter your job title
             organisation_address_line_1:
               blank: Enter your building or street name
-              invalid: Address is not valid
+              invalid: Enter your building or street name
             organisation_address_postcode:
               address_not_complete: Address not provided
               blank: Enter your postcode
-              invalid: Postcode is not valid
+              invalid: Enter a valid postcode
             organisation_address_town:
               blank: Enter your town or city
-              invalid: Town or city is not valid
+              invalid: Enter your town or city
             organisation_name:
               blank: Enter your organisation name
-              invalid: Organisation name is not valid
+              invalid: Enter your organisation name
             telephone_number:
               blank: Enter your telephone number
-              invalid: Telephone number is not valid
+              invalid: Enter a telephone number
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
