@@ -19,13 +19,13 @@
         <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:full_name].any? %>">
           <%= f.label :full_name, t('.name'), class: 'govuk-label' %>
           <%= display_error(f.object, :full_name) %>
-          <%= f.text_field :full_name, class: 'govuk-input', maxlength: 255 %>
+          <%= f.text_field :full_name, class: 'govuk-input' %>
         </div>
 
         <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:job_title].any? %>">
           <%= f.label :job_title, class: 'govuk-label' %>
           <%= display_error(f.object, :job_title) %>
-          <%= f.text_field :job_title, class: 'govuk-input', maxlength: 255 %>
+          <%= f.text_field :job_title, class: 'govuk-input' %>
         </div>
 
         <div class="govuk-form-group govuk-!-margin-bottom-6 govuk-!-width-one-half <%= "govuk-form-group--error" if f.object.errors[:telephone_number].any? %>">
@@ -41,7 +41,7 @@
         <div class="govuk-form-group  <%= "govuk-form-group--error" if f.object.errors[:organisation_name].any? %>">
           <%= f.label :organisation_name, class: 'govuk-label' %>
           <%= display_error(f.object, :organisation_name) %>
-          <%= f.text_field :organisation_name, class: 'govuk-input', maxlength: 255 %>
+          <%= f.text_field :organisation_name, class: 'govuk-input' %>
         </div>
 
         <div class="govuk-!-margin-top-7">
@@ -57,7 +57,7 @@
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1' %>
                   <%= display_error(f.object, :organisation_address_postcode) %>
-                  <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10 %>
+                  <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode' %>
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
