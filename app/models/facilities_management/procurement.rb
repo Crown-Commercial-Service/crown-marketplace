@@ -38,5 +38,17 @@ module FacilitiesManagement
       procurement_building.building_id = building_id
       procurement_building.save
     end
+
+    def valid_on_continue?
+      valid?(:all) && valid_services?
+    end
+
+    def valid_services?
+      active_procurement_buildings.map(&:procurement_building_services).any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) }
+    end
+
+    def active_procurement_buildings
+      procurement_buildings.active
+    end
   end
 end

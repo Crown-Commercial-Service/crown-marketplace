@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
       end
 
       context 'when on the last step' do
-        let(:procurement_building) { create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, id: 1)) }
+        let(:procurement_building) { create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, id: 1, procurement_buildings: [])) }
         let(:procurement_router) { described_class.new(id: procurement_building.procurement.id, procurement_state: state, step: step) }
         let(:step) { 'building_services' }
 

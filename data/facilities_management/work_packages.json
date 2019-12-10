@@ -970,7 +970,7 @@
   {
     "code": "I.1",
     "name": "Reception Service",
-    "description": "Provision of a professional reception service appropriate to the business of the buyer",
+    "description": "Provision of a professional reception service appropriate to the business use of the buyer premises",
     "mandatory": true,
     "metric": "Number of hours required",
     "work_package_code": "I",
@@ -1140,7 +1140,7 @@
   {
     "code": "K.2",
     "name": "General Waste",
-    "description": "Collection, storage and removal of general waste from the supplier premise. supply of waste dispose reports",
+    "description": "Collection, storage and removal of general waste from the supplier premise. Supply of waste dispose reports",
     "mandatory": true,
     "metric": "Number of tonnes",
     "work_package_code": "K",
