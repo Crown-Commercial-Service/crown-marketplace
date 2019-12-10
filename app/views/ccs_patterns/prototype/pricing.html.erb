@@ -12,11 +12,11 @@
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
   <%end %>
   </div>
-  <div class="govuk-body govuk-!-width-two-thirds">
+  <div class="govuk-body govuk-!-width-two-thirds govuk-!-margin-bottom-4">
     <p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p>
     <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p>
     <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p>
-    <p>You can switch to a further competition at any time.  You may wish to consider a further competition if:</p>
+    <p class="ccs-font-weight-semi-bold">You can switch to a further competition at any time.  You may wish to consider a further competition if:</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements</li>
       <li>you wish to further test quality</li>
@@ -24,10 +24,7 @@
       <li>you have sufficient time in your procurement schedule</li>
     </ul>
   </div>
-  <%=form_for @page_data[:model_object], :confirm_direct_award do |f| %>
-    <%=pd.continuation_buttons(f) %>
-    <button class="govuk-button govuk-!-margin-right-2"><%=pd.navigation_details.primary_text %></button>
-    <button class="govuk-button govuk-button--secondary"><%=pd.navigation_details.secondary_text %></button><br/>
-    <%=link_to pd.navigation_details.return_text, url: pd.navigation_details.return_url, role: 'button', class: 'govuk-button govuk-!-margin-top-4' %>
-  <%end %>>
+  <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+    <%= govuk_continuation_buttons(pd, f) %>
+  <%end %>
 <%end%>

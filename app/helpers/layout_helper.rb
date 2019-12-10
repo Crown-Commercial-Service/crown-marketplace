@@ -57,11 +57,6 @@ module LayoutHelper
       @back_button = back_button
       @navigation_details = continuation
     end
-
-    def continuation_buttons(form_builder)
-      out = form_builder.button(navigation_details[:primary_text], class: "govuk-button govuk-!-margin-right-2")
-        # out << form_builder.button()
-    end
   end
 
   # Renders the top of the page including back-button, and the 3 elements of the main header
@@ -100,11 +95,17 @@ module LayoutHelper
             class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6')
   end
 
-  def govuk_continuation(builder, continuation_details)
-
-  end
-
   # rubocop:enable Rails/OutputSafety
+  def govuk_continuation_buttons(page_description, form_builder)
+    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button__secondary', data: { disable_with: false }, name: 'commit')
+    buttons << capture { tag.br }
+    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
+
+    content_tag :div, class: 'govuk-!-margin-top-9' do
+      buttons
+    end
+  end
 
   def govuk_page_error_summary(model_object)
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }

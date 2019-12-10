@@ -98,9 +98,7 @@
         </div>
       <%end %>
       <p>Any changes to the information provided may result in a different outcome.</p>
-      <button class="govuk-button govuk-!-margin-right-2"><%=pd.navigation_details.primary_text %></button>
-      <button class="govuk-button govuk-button--secondary"><%=pd.navigation_details.secondary_text %></button><br/>
-      <%=link_to pd.navigation_details.return_text, url: pd.navigation_details.return_url, role: 'button', class: 'govuk-button govuk-!-margin-top-4' %>
+      <%= govuk_continuation_buttons(pd, f) %>
       <br/><a href="javascript:window.print()" class="govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon">Print this page</a>
     <%end %>
   <%end %>
