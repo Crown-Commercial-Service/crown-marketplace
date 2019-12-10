@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
-  subject(:procurement_building) { build(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement)) }
+  subject(:procurement_building) { build(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement), procurement_building_services: []) }
 
   describe '#validations' do
     context 'when inactive and service_codes empty' do

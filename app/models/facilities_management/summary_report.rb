@@ -309,6 +309,7 @@ module FacilitiesManagement
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     def copy_params(building_data, uvals)
+      # Note: I think @fm_gross_internal_area can be removed as it is not used (also it does not work as :gia needs to be 'gia'
       @fm_gross_internal_area =
         begin
           building_data[:gia].to_i
@@ -318,7 +319,11 @@ module FacilitiesManagement
 
       @london_flag =
         begin
-          if building_data[:isLondon] == 'Yes'
+          # Note: a symbol is passed from rspec, and string key from the front end.I did not want to change too much.
+          if (building_data[:isLondon] || building_data['isLondon']) == 'Yes'
+            'Y'
+          # TODO:  remove this line when postcode london logic is implemented
+          elsif building_data['address']['fm-address-postcode'].downcase.gsub(/\s+/, '') == 'sw1a2aa'
             'Y'
           else
             'N'
@@ -362,7 +367,10 @@ module FacilitiesManagement
 
       copy_params building_data, uvals
 
-      uvals.each do |v|
+      # TODO : Validation must be put in the front end to NOT allow just CAFM or HELP services otherwise an exception be ge generated below in .max
+      uvals_remove_cafm_help = uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
+
+      uvals_remove_cafm_help.each do |v|
         uom_value = v[:uom_value].to_f
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')

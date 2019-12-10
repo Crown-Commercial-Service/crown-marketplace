@@ -292,10 +292,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       'fm-building-type': 'Residential Buildings' }
   end
 
-  let(:building3) do
+  let(:buildingLondon) do
     { 'id' => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'gia' => 12345, 'name' => 'ccs', 'region' => 'London',
       'address' => { 'fm-address-town' => 'London', 'fm-address-line-1' => '151 Buckingham Palace Road', 'fm-address-postcode' => 'SW1W 9SZ' },
-      'isLondon' => 'No',
+      'isLondon' => 'Yes',
       'services' => [
         { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
         { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
@@ -420,7 +420,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   let(:buildings) do
     [
       OpenStruct.new(building_json: building1),
-      OpenStruct.new(building_json: building2)
+      OpenStruct.new(building_json: building2),
+      OpenStruct.new(building_json: buildingLondon)
     ]
   end
 
@@ -429,6 +430,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.4', 'uom_value' => '150', :building_id => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'title_text' => 'How many appliances do you have for testing each year?', 'example_text' => 'For example, 150. When 100 PC computers, 50 laptops needs PAT service each year' },
       { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.1', 'uom_value' => '56', :building_id => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
       { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.3', 'uom_value' => '66', :building_id => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
+      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'M.1', 'uom_value' => '1000', :building_id => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
+      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'N.1', 'uom_value' => '10', :building_id => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
       { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.5', 'uom_value' => '1200', :building_id => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'title_text' => "What's the total external area of this building?", 'example_text' => 'For example, 21000 sqm. When the total external area measures 21000 sqm' },
       { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.4', 'uom_value' => '520', :building_id => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
       { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.5', 'uom_value' => '320', :building_id => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
@@ -615,7 +618,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # report.workout_current_lot
     # p report.assessed_value
     # assessed_value.round == GBP 8,171,866.21
-    expect(report.assessed_value.round(2)).to be 4038866.18
+    expect(report.assessed_value.round(2)).to be 8733916.62
   end
 
   it 'price individual services E.4' do
@@ -628,7 +631,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     u = uvals.select { |s| s['service_code'] == 'E.4' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
     report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
     # GBP 470.80
-    expect(report.direct_award_value.round(2)).to be 470.80
+    expect(report.direct_award_value.round(2)).to be 941.60
   end
 
   it 'price individual services G.3' do
@@ -637,15 +640,35 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     u = uvals.select { |s| s['service_code'] == 'G.3' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
     report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
     # GBP 1,119,698.27
-    expect(report.direct_award_value.round(2)).to be 1119698.27
+    expect(report.direct_award_value.round(2)).to be 2239396.54
 
     u = uvals.select { |s| s['service_code'] == 'C.11' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
     report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
     # GBP 52,655.96
-    expect(report.direct_award_value.round(2)).to be 52655.96
+    expect(report.direct_award_value.round(2)).to be 105311.91
 
     report.calculate_services_for_buildings buildings, uvals, rates, rate_card, dummy_supplier_name
-    expect(report.direct_award_value.round(2)).to be 4806671.50
+    expect(report.direct_award_value.round(2)).to be 9725609.33
+    # -------------------
+  end
+
+  it 'price individual services G.3 and M.1' do
+    dummy_supplier_name = 'Hickle-Schinner'
+
+    u = uvals.select { |s| (s['service_code'] == 'G.3' || s['service_code'] == 'M.1') && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+
+    report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    expect(report.direct_award_value.round(2)).to be 2266269.30
+    # -------------------
+  end
+
+  it 'price individual services G.3 and N.1' do
+    dummy_supplier_name = 'Hickle-Schinner'
+
+    u = uvals.select { |s| (s['service_code'] == 'G.3' || s['service_code'] == 'N.1') && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+
+    report.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    expect(report.direct_award_value.round(2)).to be 2239396.54
     # -------------------
   end
 
@@ -671,7 +694,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # p rate_card
     expect(sorted_results.first[0].to_s).to eq 'Cartwright and Sons'
 
-    expect(sorted_results.first[1].round(2)).to equal 2882642.01
+    expect(sorted_results.first[1].round(2)).to equal 6042565.97
   end
 
   # rubocop:disable RSpec/ExampleLength
@@ -716,7 +739,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         {
           'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\\n',
           :service_code => 'M.1',
-          :uom_value => nil,
+          :uom_value => '1000',
           :building_id => id
         }
       ]
