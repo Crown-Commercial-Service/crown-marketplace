@@ -367,7 +367,10 @@ module FacilitiesManagement
 
       copy_params building_data, uvals
 
-      uvals.each do |v|
+      # TODO : Validation must be put in the front end to NOT allow just CAFM or HELP services otherwise an exception be ge generated below in .max
+      uvals_remove_cafm_help = uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
+
+      uvals_remove_cafm_help.each do |v|
         uom_value = v[:uom_value].to_f
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
