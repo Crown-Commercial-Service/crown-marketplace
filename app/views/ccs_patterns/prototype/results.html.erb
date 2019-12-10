@@ -66,7 +66,7 @@
                 </span>
               </summary>
               <div class="govuk-details__text">
-                <ul>
+                <ul class="govuk-list govuk-list--bullet">
                   <li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li>
                   <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework</li>
                   <li>standard call-off terms and conditions</li>
@@ -86,7 +86,7 @@
                 </span>
               </summary>
               <div class="govuk-details__text">
-                <ul>
+                <ul class="govuk-list govuk-list--bullet">
                   <li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li>
                   <li>both price and quality are tested in a further competition</li>
                   <li>you can tailor service requirements and terms and conditions to suit your needs</li>
@@ -101,6 +101,7 @@
       <button class="govuk-button govuk-!-margin-right-2"><%=pd.navigation_details.primary_text %></button>
       <button class="govuk-button govuk-button--secondary"><%=pd.navigation_details.secondary_text %></button><br/>
       <%=link_to pd.navigation_details.return_text, url: pd.navigation_details.return_url, role: 'button', class: 'govuk-button govuk-!-margin-top-4' %>
+      <br/><a href="javascript:window.print()" class="govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon">Print this page</a>
     <%end %>
   <%end %>
 <% end %>
