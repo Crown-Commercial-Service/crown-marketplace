@@ -48,7 +48,11 @@ ul.buildings-list {
 }
 
 div.govuk-radios details.govuk-details {
-  margin-left: 1rem
+  margin-left: 1em;
+
+  summary + div {
+    margin-left: 0.35rem;
+    }
   }
 
 blockquote.cmp-inset-text {
