@@ -308,14 +308,12 @@ $(function () {
                     break;
                 case "Mobilisation period":
                     switch (errType) {
-                        case "pattern":
-                            message = "Enter mobilisation length";
+                        case "number":
+                            message = "Please enter a whole number";
                             break;
                         case "max":
                             message = "Mobilisation period must be a minimum of 4 weeks when TUPE is selected";
                             break;
-                        default:
-                            message = "Enter mobilisation length";
                     }
                     break;
                 default:
