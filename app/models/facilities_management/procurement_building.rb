@@ -49,9 +49,9 @@ module FacilitiesManagement
         end
       end
     end
-    
+
     def answers_present?
-      service_codes.all? { |service_code| procurement_building_services.find_by(code: service_code).answer_store[:questions].all? { |question|  not question[:answer].nil? } }
+      service_codes.all? { |service_code| procurement_building_services.find_by(code: service_code).answer_store[:questions].all? { |question| !question[:answer].nil? } }
     end
   end
 end
