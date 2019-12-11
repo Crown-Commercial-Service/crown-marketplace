@@ -11,14 +11,14 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         expect(procurement_building.valid?(:procurement_building_services)).to eq false
       end
     end
-    
+
     context 'when active and service_codes are empty' do
       it 'is valid' do
         procurement_building.active = true
         expect(procurement_building.valid?(:procurement_building_services)).to eq true
       end
     end
-    
+
     context 'when active and service_codes equals k.2 and required questions are answered' do
       it 'is valid' do
         procurement_building.active
@@ -30,7 +30,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         expect(procurement_building.valid?(:procurement_building_services)).to eq true
       end
     end
-    
+
     context 'when active and service_codes equals k.2 as well as k.1 and required questions are not answered' do
       it 'is invalid' do
         procurement_building.active
@@ -39,8 +39,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         expect(procurement_building.valid?(:procurement_building_services)).to eq false
       end
     end
-    
-    
+
     context 'when active and service_codes equals k.2 as well as k.1 and some required questions are not answered' do
       it 'is invalid' do
         procurement_building.active
@@ -51,7 +50,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         expect(procurement_building.valid?(:procurement_building_services)).to eq false
       end
     end
-    
+
     context 'when active and service_codes equals k.2 as well as k.1 and required questions are answered' do
       it 'is valid' do
         procurement_building.active
