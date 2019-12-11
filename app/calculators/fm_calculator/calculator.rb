@@ -99,7 +99,6 @@ module FMCalculator
     def helpdesk(subtotal2)
       if @helpdesk_flag == 'Y'
         if @supplier_name
-          #  subtotal2 * @rate_card_prices[:'M.1'][@building_data[:fm_building_type]].to_f
           subtotal2 * @rate_card_prices[:'N.1'][@building_type].to_f
         else
           subtotal2 * @framework_rates['N138']
