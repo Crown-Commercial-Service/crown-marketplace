@@ -23,10 +23,8 @@ module FacilitiesManagement
     end
 
     def validate_postcode_exist
-        if organisation_address_line_1 == '' && organisation_address_town == '' && organisation_address_postcode !=''
-            self.errors.messages.delete(:organisation_address_postcode)
-            errors.add(:error_postcode, :blank)
-        end
+            self.errors.messages.delete(:organisation_address_postcode)  if organisation_address_line_1 == '' && organisation_address_town == '' && organisation_address_postcode !=''
+            errors.add(:error_postcode, :blank)  if organisation_address_line_1 == '' && organisation_address_town == '' && organisation_address_postcode !=''
     end
 
   end
