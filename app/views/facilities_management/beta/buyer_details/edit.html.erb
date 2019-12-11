@@ -50,13 +50,14 @@
           </h2>
         </div>
 
-        <div class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
+        <div class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? || f.object.errors[:error_postcode].any? %>">
           <div class="">
             <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1' %>
                   <%= display_error(f.object, :organisation_address_postcode) %>
+                  <%= display_error(f.object, :error_postcode) %>
                   <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode' %>
                 </div>
               </div>
@@ -105,7 +106,6 @@
               <%= f.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>
               <%= f.hidden_field :organisation_address_town, id: 'organisation-address-town' %>
               <%= f.hidden_field :organisation_address_county, id: 'organisation-address-county' %>
-              <%= f.hidden_field :organisation_address_postcode, id: 'organisation-address-postcode' %>
             </div>
           </div>
         </div>
