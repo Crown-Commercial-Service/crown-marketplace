@@ -23,6 +23,10 @@ module CcsPatterns
                                            { name: 'Jacob Beta Company', price: '1300000' }, { name: 'Kile Beta', price: '1300000' }, { name: 'Oscar Wild Corp.', price: '1300000' }, { name: 'X-ray Cleaning Ltd', price: '1300000' }]
     end
 
+    def what_next
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
+
     private
 
     # rubocop:disable Metrics/AbcSize
@@ -60,26 +64,38 @@ module CcsPatterns
           page_title: 'Prototype List',
           caption1: 'Prototype Skeleton',
           caption2: 'Home',
-          sub_title: 'View the prepared prototype views'
+          sub_title: 'View the prepared prototype views',
+          secondary_url: ccs_patterns_prototypes_path,
         },
         results: {
           back_url: ccs_patterns_prototypes_path,
           page_title: 'Results',
           caption1: 'Procurement name',
           continuation_text: 'Continue',
-          return_url: ccs_patterns_path,
+          return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to procurement dashboard',
-          secondary_url: ccs_patterns_prototypes_path,
           secondary_text: 'Change requirements'
         },
         pricing: {
           back_url: ccs_patterns_prototypes_results_path,
+          back_text: 'Return to Results',
+          back_label: 'Return to Results',
           page_title: 'Direct award pricing',
           caption1: 'Procurement name',
           continuation_text: 'Continue to direct award',
-          return_url: ccs_patterns_path,
+          return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to procurement dashboard',
-          secondary_url: ccs_patterns_prototypes_path,
+          secondary_text: 'Return to results'
+        },
+        what_next: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Return to Pricing',
+          back_label: 'Return to Pricing',
+          page_title: 'What happens next',
+          caption1: 'Procurement name',
+          continuation_text: 'Continue to direct award',
+          return_url: ccs_patterns_prototypes_results_path,
+          return_text: 'Return to Results',
           secondary_text: 'Return to results'
         }
       }.freeze
