@@ -103,6 +103,10 @@ gem 'sprockets-bumble_d', '>= 2.1.0'
 gem 'gov_uk_date_fields', '>= 4.1.0'
 gem 'date_validator'
 
+# for clamav
+gem 'ratonvirus'
+gem 'ratonvirus-clamby'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
