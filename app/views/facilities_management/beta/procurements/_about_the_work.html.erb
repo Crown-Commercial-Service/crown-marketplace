@@ -72,10 +72,18 @@
       </tr>
     <% end %>
   </tr>
-
-  <tr class="govuk-table__row">
-    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">3. Services information</th>
+    <th scope="row" class=" govuk-table__header govuk-table__header govuk-!-font-size-19" colspan="3" style="border:0" width="30%">
+      3. Services information
+      <span id="event-name-hint" class="govuk-hint">
+          We need additional information. You only need to answer questions related to the buildings listed below.
+      </span>
+    </th>
+    <tr>
+      
     <% if any_service_codes(@active_procurement_buildings) %>
+      <td class="govuk-table__cell">
+      
+      </td>
       <td class="govuk-table__cell">
         <strong>Buildings</strong>
       </td>
@@ -100,7 +108,7 @@
 
 
   <% if any_service_codes(@active_procurement_buildings) %>
-      <% @active_procurement_buildings.each do |procurement_building| %>
+      <% @active_procurement_buildings.requires_service_information.each do |procurement_building| %>
         <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if !procurement_building.valid?(:procurement_building_services) && params[:validate] %>">
           <td class="govuk-table__cell">
           </td>
