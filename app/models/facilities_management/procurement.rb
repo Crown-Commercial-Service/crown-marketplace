@@ -19,6 +19,10 @@ module FacilitiesManagement
     validates :security_policy_document_file, presence: true, if: :security_policy_document_required?
     validates :security_policy_document_file, antivirus: true
 
+    # attribute to hold and validate the user's selection from the view
+    attribute :route_to_market
+    validates :route_to_market, inclusion: { in: %w[direct_award further_competition] }, on: :results
+
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
     end
@@ -26,9 +30,19 @@ module FacilitiesManagement
     aasm do
       state :quick_search, initial: true
       state :detailed_search
+      state :direct_award
+      state :further_competition
 
       event :start_detailed_search do
         transitions from: :quick_search, to: :detailed_search
+      end
+
+      event :start_direct_award do
+        transitions from: :detailed_search, to: :direct_award
+      end
+
+      event :start_further_competition do
+        transitions from: :detailed_search, to: :further_competition
       end
     end
 

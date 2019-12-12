@@ -488,6 +488,22 @@ en:
           question: Where are your buildings located?
           remove_all: Remove all
           subtitle: Choose one or more regions, based on building's location where you require facilities management services.
+        results:
+          any_changes: Any changes to the information provided may result in a different outcome.
+          building_services_summary: Building and services summary
+          da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework</li> <li>standard call-off terms and conditions</li>\n"
+          direct_award_label_html: "<b>Direct award</b> (the most competitive direct award price is %{price})"
+          estimated_cost: Estimated cost
+          estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework and benchmark pricing, and your current cost.  <br/>This cost has been used to place you in the correct sub-lot.
+          estimated_cost_how: How your estimated cost was calculated
+          fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are long than a direct award</li>\n"
+          further_competition: Further competition
+          sub-lot: Sub-lot
+          sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
+          suppliers_shortlisted_html: There are <span style=""font-size:larger"">%{count}</span> suppliers shortlisted
+          what_is_da: What is a direct award?
+          what_is_fc: What is further competition?
+          who_are: who are able to provide the services your require in your location(s)
         review_contract:
           attachment_1:
             guidance: This document tells the supplier important information about the contract you have offered.
