@@ -46,3 +46,19 @@ ul.buildings-list {
   padding-top: 15px;
   padding-bottom: 3px;
 }
+
+div.govuk-radios details.govuk-details {
+  margin-left: 1em;
+
+  summary + div {
+    margin-left: 0.35rem;
+    }
+  }
+
+blockquote.cmp-inset-text {
+  margin:1em 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1rem;
+  }

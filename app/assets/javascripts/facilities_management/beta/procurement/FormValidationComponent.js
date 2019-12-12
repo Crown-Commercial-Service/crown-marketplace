@@ -2,8 +2,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     this.verify_connection_to_form = function (formDOMObject, requestedSpecialTreatment) {
         let canConnect = false;
         if (null != formDOMObject && null == formDOMObject.formValidator) {
-            if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") == "true") ||
-                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation") || !formDOMObject.getAttribute("specialvalidation") == "false")) {
+            if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") === "true") ||
+                ((!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) || (!requestedSpecialTreatment && !(formDOMObject.getAttribute("specialvalidation") == "true")))) {
                 canConnect = true;
             }
         }
@@ -81,7 +81,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                             if (jElem.prop("pattern") !== undefined && jElem.prop("pattern") !== "" && submitForm) {
                                 submitForm = submitForm && this.testError(
                                     this.validationFunctions["regex"],
-                                    jElem, "pattern");
+                                    jElem, "invalid");
                             }
                             if (jElem.prop("min") !== undefined && jElem.prop("min") !== "" && submitForm) {
                                 submitForm = submitForm && this.testError(
@@ -107,6 +107,11 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         if (!this.validationResult) {
             this.toggleBannerError(true);
         }
+
+        if ( formElements["preventsubmission"] === "true") {
+            return false;
+        }
+
         return this.validationResult;
     };
     this.validationFunctions = {

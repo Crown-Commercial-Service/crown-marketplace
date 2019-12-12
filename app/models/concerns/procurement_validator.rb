@@ -7,6 +7,7 @@ module ProcurementValidator
     validates :name, presence: true, on: :name
     validates :name, uniqueness: { scope: :user }, on: :name
     validates :name, length: 1..100, on: :name
+    validates :name, format: { with: /\A([a-zA-Z(0-9)_\''\-])([a-zA-Z(0-9) _\''\-]*)([a-zA-Z(0-9)_\''\-])\z/ }, on: :name
 
     # validations on :contract_name step
     validates :contract_name, presence: true, on: %i[contract_name]

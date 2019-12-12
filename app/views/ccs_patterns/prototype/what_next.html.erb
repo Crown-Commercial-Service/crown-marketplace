@@ -1,0 +1,79 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+  <p class="govuk-body-l">Check what you need to know about direct award.</p>
+  <div class="numbered_details govuk-!-width-two-thirds">
+    <div class="show_all">
+      <input type="checkbox" id="show_all_check"/>
+      <div class="details-expando--caption">
+        <label for="show_all_check" title="Click to show all details"><span id="show_all_title">Show all</span></label>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item"></span>
+      <span class="caption govuk-!-font-size-24">Creating your contract</span>
+      <div class="details">
+        <details>
+          <summary>Show</summary>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>we will inform you about some key contract information</li>
+            <li>you will be asked a few questions that will help us build your contract</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item"></span>
+      <span class="caption govuk-!-font-size-24">Review contract and send offer</span>
+      <div class="details">
+        <details>
+          <summary>Show</summary>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>you can review details of your contract before deciding how to proceed</li>
+            <li>if you are happy with the content of your contract, you can send your offer to the supplier</li>
+            <li>the supplier has <b><u>2 working days (48 hours)</u></b> to accept or decline your offer</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item"></span>
+      <span class="caption govuk-!-font-size-24">When your offer has been accepted</span>
+      <div class="details">
+        <details>
+          <summary>Show</summary>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>the system will notify you that the offer has been accepted, and take you through the next steps</li>
+            <li>the supplier will sign the contract and send it back to you (this step will happen offline, outside of
+              this portal)
+            </li>
+            <li>you will then sign the contract and send it back to the supplier (this step will happen offline, outside
+              of this portal)
+            </li>
+            <li>you will confirm on this portal that the contract has been signed by both parties</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item"></span>
+      <span class="caption govuk-!-font-size-24">If you offer was declined</span>
+      <div class="details">
+        <details>
+          <summary>Show</summary>
+          <p>You will be notified that the supplier has declined your offer, and the reason why. You will have a choice
+            to:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>offer the contract to the next placed supplier (after reviewing their price)</li>
+            <li>switch to a further competition</li>
+            <li>change your requirements</li>
+            <li>stop the process</li>
+          </ul>
+          <p>If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the
+            offer.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+    <%= govuk_continuation_buttons(pd, f) %>
+  <% end %>
+<% end %>
