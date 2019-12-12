@@ -108,7 +108,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
             this.toggleBannerError(true);
         }
 
-        if ( formElements["preventsubmission"] === 'true') return false;
+        if ( formElements["preventsubmission"] === 'true') {
+            return false;
+        }
 
         return this.validationResult;
     };
