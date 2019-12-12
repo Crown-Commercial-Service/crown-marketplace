@@ -275,7 +275,7 @@ en:
           gia: Gross internal area (GIA)
           gia-summary: The gross internal area of the building (in square meters)
           heading: Service information
-          lift_data: The sum total of number of floors per lift
+          lift_data: The sum total of number of floors
           no_of_appliances_for_testing: The number of appliances to be tested per annum
           no_of_building_occupants: The number of building occupants
           no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
@@ -285,7 +285,7 @@ en:
           service_standard: The service standard required
           size_of_external_area: The size of the external area (in square metres)
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
-          total_floors_per_lift: The sum total of number of floors per lift
+          total_floors_per_lift: The sum total of number of floors
           volume_required_heading: Volume required (per annum)
           volume_required_html: "<b>Volume required <br> (per anum)</b>"
         volume:
