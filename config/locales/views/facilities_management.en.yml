@@ -49,19 +49,26 @@ en:
               blank: Select the type of public sector organisation you're buying for
             full_name:
               blank: Enter your full name
+              invalid: Enter your full name
             job_title:
               blank: Enter your job title
+              invalid: Enter your job title
             organisation_address_line_1:
               blank: Enter your building or street name
+              invalid: Enter your building or street name
             organisation_address_postcode:
               address_not_complete: Address not provided
               blank: Enter your postcode
+              invalid: Enter a valid postcode
             organisation_address_town:
               blank: Enter your town or city
+              invalid: Enter your town or city
             organisation_name:
               blank: Enter your organisation name
+              invalid: Enter your organisation name
             telephone_number:
               blank: Enter your telephone number
+              invalid: Enter a telephone number
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -106,8 +113,9 @@ en:
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             name:
               blank: Enter the name for the search
+              invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
               taken: This name is already in use
-              too_long: Your search name must be 100 characters or fewer
+              too_long: Search name must be 100 characters or less
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               too_long: Call-off period and extensions must be 10 years or less
@@ -121,6 +129,7 @@ en:
             security_policy_document_date:
               not_a_date: The selected date is not valid
             security_policy_document_file:
+              antivirus_virus_detected: The selected file contains a virus
               blank: The selected file is empty
             security_policy_document_name:
               blank: Enter a security policy document name
