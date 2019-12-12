@@ -50,14 +50,13 @@
           </h2>
         </div>
 
-        <div class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? || f.object.errors[:error_postcode].any? %>">
+        <div class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
           <div class="">
             <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1' %>
                   <%= display_error(f.object, :organisation_address_postcode) %>
-                  <%= display_error(f.object, :error_postcode) %>
                   <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode' %>
                 </div>
               </div>

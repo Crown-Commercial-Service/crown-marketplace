@@ -54,9 +54,8 @@ en:
             organisation_address_line_1:
               blank: Enter your building or street name
             organisation_address_postcode:
+              address_not_complete: Address not provided
               blank: Enter your postcode
-            error_postcode:
-              blank: Address not provided
             organisation_address_town:
               blank: Enter your town or city
             organisation_name:
