@@ -81,7 +81,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                             if (jElem.prop("pattern") !== undefined && jElem.prop("pattern") !== "" && submitForm) {
                                 submitForm = submitForm && this.testError(
                                     this.validationFunctions["regex"],
-                                    jElem, "pattern");
+                                    jElem, "invalid");
                             }
                             if (jElem.prop("min") !== undefined && jElem.prop("min") !== "" && submitForm) {
                                 submitForm = submitForm && this.testError(
