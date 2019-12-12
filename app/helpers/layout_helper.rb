@@ -99,7 +99,7 @@ module LayoutHelper
   # rubocop:enable Rails/OutputSafety
   def govuk_continuation_buttons(page_description, form_builder)
     buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button__secondary', data: { disable_with: false }, name: 'commit')
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit')
     buttons << capture { tag.br }
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
 
@@ -160,6 +160,7 @@ module LayoutHelper
     content_tag :fieldset, options do
       capture do
         concat(list_errors_for_attributes(attribute)) if attributes_is_an_array
+        concat(display_error(form.object, attribute)) unless attributes_is_an_array
         concat(content_tag(:legend,
                            content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
                            class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
