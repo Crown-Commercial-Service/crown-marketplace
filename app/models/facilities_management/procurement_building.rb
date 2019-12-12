@@ -35,10 +35,8 @@ module FacilitiesManagement
 
     def services_valid?
       false if procurement_building_services.empty?
-
       result = procurement_building_services.all? { |pbs| pbs.valid?(:all) }
-      errors.add(:procurement_building_services, :invalid, message: 'Some services are invalid') unless result
-
+      errors.add(:procurement_building_services, :invalid, message: 'Some services are invalid') unless result && answers_present?
       result
     end
 
@@ -50,6 +48,10 @@ module FacilitiesManagement
           procurement_building_services.find_by(code: service_code).destroy
         end
       end
+    end
+
+    def answers_present?
+      service_codes.all? { |service_code| procurement_building_services.find_by(code: service_code).answer_store[:questions].all? { |question| !question[:answer].nil? } }
     end
   end
 end
