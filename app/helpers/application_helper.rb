@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
+  include LayoutHelper
+
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
   PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'facilities_management/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
 
@@ -119,43 +121,6 @@ module ApplicationHelper
     error_message = model_object.errors[attribute]&.first
 
     govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: error_type, text: error_message, form_object_name: form_object_name }, error_lookup, error_position)
-  end
-
-  # looks up the locals data for validation messages
-  def validation_messages(model_object_sym, attribute_sym = nil)
-    translation_key = t("activerecord.errors.models.#{model_object_sym.downcase}.attributes") if attribute_sym.nil?
-
-    translation_key = "activerecord.errors.models.#{model_object_sym.downcase}.attributes"
-    if attribute_sym.is_a? Array
-      attribute_sym.each do |attr|
-        translation_key += ".#{attr}"
-      end
-    else
-      translation_key += ".#{attribute_sym}"
-    end
-
-    result = t(translation_key)
-    return {} if result.include? 'translation_missing'
-
-    result
-  end
-
-  # Renders a govuk compliant error-content div with a client-compatible validation type
-  # and text for use as static content in the page
-  def govuk_validation_error(model_data, error_lookup = nil, error_position = nil)
-    tag_validation_type = ERROR_TYPES.include?(model_data[:error_type]) ? ERROR_TYPES[model_data[:error_type]] : model_data[:error_type]
-    model_has_error = false
-    model_has_error = error_lookup.call(model_data[:model_object], model_data[:error_type], error_position) unless error_lookup.nil?
-
-    model_has_error = model_has_error?(model_data[:model_object], model_data[:error_type], model_data[:attribute]) if error_lookup.nil?
-
-    css_classes = ['govuk-error-message']
-    css_classes += ['govuk-visually-hidden'] unless model_has_error
-
-    content_tag :label, content_tag(:span, model_data[:text]), class: css_classes,
-                                                               for: "#{model_data[:form_object_name]}_#{model_data[:attribute]}",
-                                                               id: "#{model_data[:attribute]}-error",
-                                                               data: { propertyname: model_data[:attribute].to_s, validation: tag_validation_type }
   end
 
   def model_attribute_has_error(model_object, *attributes)
