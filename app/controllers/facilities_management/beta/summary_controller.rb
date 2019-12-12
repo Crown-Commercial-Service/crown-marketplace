@@ -21,7 +21,6 @@ module FacilitiesManagement
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
       def sorted_suppliers
         init
 
@@ -45,7 +44,7 @@ module FacilitiesManagement
 
         # create deliverable matrix spreadsheet
         # buildings_ids = building_uvals.collect { |u| u[:id] }.compact.uniq
-        building_ids_with_service_codes2 = buildings_ids.sort.collect do |b|
+        building_ids_with_service_codes2 = buildings_ids.collect do |b|
           services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
           { building_id: b.downcase, service_codes: services_per_building }
         end
@@ -60,7 +59,6 @@ module FacilitiesManagement
         ### render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
         download_report 'fm_spreadsheets', [['direct_award_prices', spreadsheet1], ['deliverable_matrix', spreadsheet_builder]]
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 
