@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module LayoutHelper
   include ErrorsHelper
 
@@ -185,7 +186,7 @@ module LayoutHelper
   end
 
   def govuk_button(builder, text, options = { submit: true })
-    return builder.submit(text, class: 'govuk-button' ) if options.key?(:submit) ? options[:submit] : false
+    return builder.submit(text, class: 'govuk-button') if options.key?(:submit) ? options[:submit] : false
 
     builder.button(value: nil, options: { class: 'govuk-button' })
   end
@@ -206,3 +207,4 @@ module LayoutHelper
     content_tag :input, nil, name: 'preventsubmission', value: value, type: 'hidden'
   end
 end
+# rubocop:enable Metrics/ModuleLength
