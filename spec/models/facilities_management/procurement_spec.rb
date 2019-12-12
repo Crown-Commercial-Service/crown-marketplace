@@ -349,4 +349,34 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       expect { procurement.save }.to change { procurement.procurement_buildings.first.service_codes }.from(['C.1', 'C.2']).to([])
     end
   end
+  
+  describe '#requires_service_information' do
+    context 'when a building has services that require questions' do
+      it 'is in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: ['C.5', 'E.4', 'K.8'])
+        expect(procurement.procurement_buildings.requires_service_information).to eq [procurement_building]
+      end
+    end
+
+    context 'when a building has no services that require questions' do
+      it 'is not in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: ['K.11', 'K.14', 'K.8'])
+        expect(procurement.procurement_buildings.requires_service_information).not_to eq [procurement_building]
+      end
+    end
+
+    context 'when a building has a service that require questions' do
+      it 'is in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: ['K.7'])
+        expect(procurement.procurement_buildings.requires_service_information).to eq [procurement_building]
+      end
+    end
+
+    context 'when a building has no services' do
+      it 'is not in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: [])
+        expect(procurement.procurement_buildings.requires_service_information).not_to eq [procurement_building]
+      end
+    end
+  end
 end
