@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       end
     end
   end
-  
+
   describe '#validations' do
     context 'when inactive and service_codes empty' do
       it 'is valid' do
