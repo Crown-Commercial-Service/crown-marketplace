@@ -14,8 +14,8 @@ class User < ApplicationRecord
           dependent: :destroy
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :registerable, :recoverable
+  # :confirmable, :lockable, :trackable and :omniauthable
+  devise :registerable, :recoverable, :timeoutable
 
   roles_attribute :roles_mask
 
