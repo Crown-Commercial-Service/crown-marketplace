@@ -25,6 +25,7 @@ module FacilitiesManagement
 
       def create
         @procurement = current_user.procurements.build(procurement_params)
+        @procurement.name = remove_excess_spaces(@procurement.name)
 
         if @procurement.save(context: :name)
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
@@ -204,6 +205,10 @@ module FacilitiesManagement
 
       def procurement_valid?
         @procurement.valid_on_continue?
+      end
+
+      def remove_excess_spaces(name)
+        name.split.join(' ')
       end
     end
   end
