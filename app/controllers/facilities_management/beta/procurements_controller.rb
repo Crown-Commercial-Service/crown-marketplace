@@ -208,7 +208,7 @@ module FacilitiesManagement
       end
 
       def remove_excess_spaces(name)
-        name.split.join(' ')
+        name&.split&.join(' ')
       end
     end
   end
