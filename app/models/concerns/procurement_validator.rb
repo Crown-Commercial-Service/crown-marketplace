@@ -4,6 +4,7 @@ module ProcurementValidator
   # rubocop:disable Metrics/BlockLength
   included do
     # validations on :name step
+    before_validation :remove_excess_whitespace_from_name, on: :name
     validates :name, presence: true, on: :name
     validates :name, uniqueness: { scope: :user }, on: :name
     validates :name, length: 1..100, on: :name
@@ -69,6 +70,13 @@ module ProcurementValidator
     validate :validate_mobilisation_and_tupe, on: :all
 
     private
+
+    #############################################
+    # Start of validation methods for contract-dates
+
+    def remove_excess_whitespace_from_name
+      self.name = name&.split&.join(' ')
+    end
 
     #############################################
     # Start of validation methods for contract-dates
