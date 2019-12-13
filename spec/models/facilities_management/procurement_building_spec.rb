@@ -3,6 +3,21 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
   subject(:procurement_building) { build(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement), procurement_building_services: []) }
 
+  describe 'verify active scope works' do
+    context 'when not active exclude' do
+      it 'is active' do
+        procurement_building.active = false
+        procurement_building.save
+        expect(described_class.active.count).to eq 1
+      end
+      it 'is not active' do
+        procurement_building.active = true
+        procurement_building.save
+        expect(described_class.active.count).to eq 2
+      end
+    end
+  end
+
   describe '#validations' do
     context 'when inactive and service_codes empty' do
       it 'is valid' do
