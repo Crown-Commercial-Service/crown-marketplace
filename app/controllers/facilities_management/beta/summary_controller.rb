@@ -70,7 +70,7 @@ module FacilitiesManagement
 
         # @procurement.procurement_buildings.first.procurement_building_services
         if @procurement
-          @selected_buildings = @procurement.procurement_buildings
+          @selected_buildings = @procurement.procurement_buildings.active
           # uvals = @procurement.procurement_buildings.first.procurement_building_services
           # uvals = nil
         else
