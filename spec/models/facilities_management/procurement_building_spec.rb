@@ -8,12 +8,12 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       it 'is active' do
         procurement_building.active = false
         procurement_building.save
-        expect(FacilitiesManagement::ProcurementBuilding.active.count).to eq 1
+        expect(described_class.active.count).to eq 1
       end
       it 'is not active' do
         procurement_building.active = true
         procurement_building.save
-        expect(FacilitiesManagement::ProcurementBuilding.active.count).to eq 2
+        expect(described_class.active.count).to eq 2
       end
     end
   end
