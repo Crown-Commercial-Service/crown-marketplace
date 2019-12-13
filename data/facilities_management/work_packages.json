@@ -293,7 +293,7 @@
   },
   {
     "code": "C.9",
-    "name": "Planned / group re-Lamping service",
+    "name": "Planned / group re-lamping service",
     "description": "Re-lamping service within the buyers premise, achieving the greatest possible reduction in replacement frequency and cost",
     "mandatory": false,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
