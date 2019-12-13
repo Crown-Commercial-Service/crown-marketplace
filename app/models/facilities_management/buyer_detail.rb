@@ -22,7 +22,7 @@ module FacilitiesManagement
     private
 
     def address_entered_when_postcode_provided
-      errors.add(:organisation_address_postcode, :address_not_complete)  if organisation_address_line_1 == '' && organisation_address_town == '' && organisation_address_postcode !=''
+      errors.add(:organisation_address_postcode, :address_not_complete) if organisation_address_line_1 == '' && organisation_address_town == '' && organisation_address_postcode != ''
     end
   end
 end
