@@ -1,4 +1,7 @@
 <a href="/facilities-management/beta" class="govuk-back-link ccs-no-print">Back</a>
+<div class="govuk-grid-column-full">
+  <%= render('errors/inline_error_summary') %>
+</div>
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.index.manage_building') %></h1>
 <a href="/facilities-management/beta/building"
    class="govuk-button ccs-no-print govuk-!-margin-bottom-6"
@@ -10,15 +13,11 @@
    role="button">
   <%= t('facilities_management.beta.index.procurements_dashboard_button') %>
 </a>
-<div class="govuk-body">
-<p class="govuk-body-l ">
+<p class="govuk-caption-l">
     <%= t('facilities_management.beta.index.start_paragraph')%>
 </p>
-
-<p class="govuk-caption-m govuk-!-margin-top-6 govuk-margin-bottom-3">
+<p class="govuk-caption-l govuk-!-margin-top-6 govuk-margin-bottom-3">
   <%= t('facilities_management.beta.index.start_warning') %>
 </p>
-</div>
-
 <h2 class="govuk-heading-l govuk-!-margin-top-6"><%= t('facilities_management.beta.index.my_buildings_header') %></h2>
 <%= render partial: 'building_list'%>
