@@ -120,6 +120,7 @@ module FacilitiesManagement
           result = uvals_for_public(building)
           all_building_uvals = result[0]
           building_data = result[1]
+          id = result[0][0][:building_id]
 
           # TBC filter out nil values for now
           building_uvals = all_building_uvals.reject { |v| v[:uom_value].nil? }
