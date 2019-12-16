@@ -331,4 +331,22 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '#update_building_services' do
+    before do
+      procurement.procurement_buildings.first.procurement_building_services.destroy_all
+
+      procurement.procurement_buildings.first.update(service_codes: procurement.service_codes)
+
+      procurement.service_codes = ['C.3']
+    end
+
+    it 'will remove any procurement_building_services that have a service code not included in the procurement service_codes' do
+      expect { procurement.save }.to change { procurement.procurement_building_services.count }.by(-2)
+    end
+
+    it 'will remove service codes from the procurement_buildings service codes that are not selected for the procurement' do
+      expect { procurement.save }.to change { procurement.procurement_buildings.first.service_codes }.from(['C.1', 'C.2']).to([])
+    end
+  end
 end
