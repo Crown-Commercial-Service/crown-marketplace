@@ -45,7 +45,7 @@ module FacilitiesManagement
         if service_codes.include?(service_code)
           procurement_building_services.create(code: service_code, name: Service.find_by(code: service_code).try(:name)) if procurement_building_services.find_by(code: service_code).blank?
         else
-          procurement_building_services.find_by(code: service_code).destroy
+          procurement_building_services.find_by(code: service_code)&.destroy
         end
       end
     end
