@@ -34,7 +34,7 @@
                     <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.please_enter_a_valid_email_address') %>
                 </span>
 
-                <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" aria-describedby="email-hint" autocomplete="email" spellcheck="false">
+                <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" aria-describedby="email-hint" autocomplete="off" spellcheck="false">
             </div>
 
             <div class="govuk-form-group govuk-!-margin-bottom-7">
@@ -46,7 +46,7 @@
                     <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.enter_your_password') %>
                 </span>
 
-                <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" autocomplete="new-password">
+                <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" autocomplete="off">
             </div>
 
             <%= submit_tag t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
