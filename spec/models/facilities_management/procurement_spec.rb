@@ -17,10 +17,38 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
 
     context 'when the name is not unique' do
-      let(:second_procurement) {  create(:facilities_management_procurement, name: procurement.name, user: user) }
+      let(:second_procurement) { create(:facilities_management_procurement, name: procurement.name, user: user) }
 
       it 'expected to not be valid' do
         expect(second_procurement.valid?(:name)).to eq false
+      end
+    end
+
+    context 'when the name has trailing and preceeding whitespace' do
+      let(:third_procurement) { create(:facilities_management_procurement, name: "  #{procurement.name}  ", user: user) }
+
+      it 'expected to remove trailing and preceeding whitespace' do
+        expect(third_procurement.send(:remove_excess_whitespace_from_name)).to eq procurement.name
+      end
+
+      it 'expected not to be valid if the same name is in database without additional whitespace' do
+        expect(third_procurement.valid?(:name)).to eq false
+      end
+    end
+
+    context 'when the name has multiple space in the middle' do
+      let(:forth_procurement) { create(:facilities_management_procurement, name: 'This   is a  test     name', user: user) }
+
+      it 'expected to remove excess spaces' do
+        expect(forth_procurement.send(:remove_excess_whitespace_from_name)).to eq 'This is a test name'
+      end
+    end
+
+    context 'when the name uses invalid characters' do
+      let(:fith_procurement) { create(:facilities_management_procurement, name: '!@£ $%^&* ()+=|<>,?', user: user) }
+
+      it 'expected to be invalid' do
+        expect(fith_procurement.valid?(:name)).to eq false
       end
     end
 
