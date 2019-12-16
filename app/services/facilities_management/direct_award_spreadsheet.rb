@@ -142,7 +142,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       end
       sheet.add_row new_row, style: header_row_style
 
-      sorted_building_keys = @data.keys.sort
+      sorted_building_keys = @data.keys
       sumsum = 0
       sum_building = {}
       sum_building_cafm = {}
