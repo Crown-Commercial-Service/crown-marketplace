@@ -277,7 +277,8 @@ en:
         column_lstup_header: Last updated
         column_name_header: Name
         column_status_header: Status
-        create_new_button: "+ Create Single Building"
+        create_new_button: Create Single Building
+        procurements_dashboard_button: Procurements dashboard
         link_to_building_summary: View details for building
         manage_building: Manage buildings
         manage_buildings_header: Manage buildings
