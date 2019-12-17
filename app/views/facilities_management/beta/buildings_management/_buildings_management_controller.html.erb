@@ -8,11 +8,20 @@
    role="button">
   <%= t('facilities_management.beta.index.create_new_button') %>
 </a>
-<p class="govuk-caption-l">
+<a href="/facilities-management/beta/procurements"
+   class="govuk-button ccs-no-print govuk-button--secondary govuk-!-margin-left-3 govuk-!-margin-bottom-6"
+   role="button">
+  <%= t('facilities_management.beta.index.procurements_dashboard_button') %>
+</a>
+<div class="govuk-body">
+<p class="govuk-body-l ">
     <%= t('facilities_management.beta.index.start_paragraph')%>
 </p>
-<p class="govuk-caption-l govuk-!-margin-top-6 govuk-margin-bottom-3">
+
+<p class="govuk-caption-m govuk-!-margin-top-6 govuk-margin-bottom-3">
   <%= t('facilities_management.beta.index.start_warning') %>
 </p>
+</div>
+
 <h2 class="govuk-heading-l govuk-!-margin-top-6"><%= t('facilities_management.beta.index.my_buildings_header') %></h2>
 <%= render partial: 'building_list'%>
