@@ -1,5 +1,5 @@
 <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:mobilisation_period].any? %>">
-  <th scope="row" class="govuk-table__header govuk-!-font-size-19  <%= 'govuk-!-padding-left-2' if @procurement.errors[:mobilisation_period].any? %>" width="30%">Mobilisation period</th>
+  <th scope="row" class="govuk-table__header govuk-!-font-size-19  <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>" width="30%">Mobilisation period</th>
   <td class="govuk-table__cell">
     <%= mobilisation_period %>
   </td>
