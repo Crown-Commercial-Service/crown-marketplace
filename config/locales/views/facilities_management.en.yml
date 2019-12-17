@@ -101,7 +101,7 @@ en:
               greater_than_or_equal_to: Enter initial call-off period
               less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
               not_a_number: Enter initial call-off period
-              not_present: You must answer the questions about 'Contract period'
+              not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
