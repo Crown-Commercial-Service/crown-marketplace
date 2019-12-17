@@ -3,7 +3,8 @@ module ApplicationHelper
   include LayoutHelper
 
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
-  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'facilities_management/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
+  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
+  FACILITIES_MANAGEMENT_LANDINGPAGES = ['facilities_management/home', 'facilities_management/beta/home'].freeze
 
   def miles_to_metres(miles)
     DistanceConverter.miles_to_metres(miles)
@@ -263,6 +264,10 @@ module ApplicationHelper
 
   def landing_or_admin_page
     (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
+  end
+
+  def fm_landing_page
+    (FACILITIES_MANAGEMENT_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index')
   end
 
   def fm_buyer_landing_page
