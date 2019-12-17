@@ -27,11 +27,19 @@
           </dl>
           <dl class="govuk-summary-list">
             <table class="govuk-table">
+              <% if @procurement.errors[:initial_call_off_period].any? %>
+              <tbody class="govuk-table__body <%= 'govuk-no-border govuk-form-group--error' if @procurement.unanswered_contract_date_questions? %>">
+                <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_period_section' %>
+                <%= render partial: 'facilities_management/beta/procurements/contract_period/mobilisation_section' %>
+                <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_extension_section' %>
+              </tbody>
+              <% else %>
               <tbody class="govuk-table__body">
                 <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_period_section' %>
                 <%= render partial: 'facilities_management/beta/procurements/contract_period/mobilisation_section' %>
                 <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_extension_section' %>
               </tbody>
+              <% end %>
             </table>
           </dl>
           <dl class="govuk-summary-list">
