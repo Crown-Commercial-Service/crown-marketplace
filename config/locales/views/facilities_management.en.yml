@@ -278,14 +278,14 @@ en:
         column_name_header: Name
         column_status_header: Status
         create_new_button: Create Single Building
-        procurements_dashboard_button: Procurements dashboard
         link_to_building_summary: View details for building
         manage_building: Manage buildings
         manage_buildings_header: Manage buildings
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
+        procurements_dashboard_button: Procurements dashboard
         start_paragraph: You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements.
-        start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to show a cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require. 
+        start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to show a cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require.
       passwords:
         edit:
           confirm_code: Confirm Code
