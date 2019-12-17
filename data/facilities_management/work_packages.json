@@ -464,7 +464,7 @@
   {
     "code": "E.2",
     "name": "Water hygiene maintenance",
-    "description": "Water hygience maintenance services including statutory compliance, risk assessments, cleaning regime, inspection and monitoring",
+    "description": "Water hygiene maintenance services including statutory compliance, risk assessments, cleaning regime, inspection and monitoring",
     "mandatory": true,
     "metric": "Number of square metres (the Gross Internal Area (GIA) of the building)",
     "work_package_code": "E",
