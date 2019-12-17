@@ -110,11 +110,7 @@ module FacilitiesManagement
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         @procurement.assign_attributes(procurement_route_params)
-        if @procurement.valid?(:results)
-          redirect_to facilities_management_beta_procurement_summary_path(@procurement)
-        else
-
-        end
+        redirect_to facilities_management_beta_procurement_summary_path(@procurement) if @procurement.valid?(:results)
       end
 
       def estimated_cost
@@ -127,11 +123,12 @@ module FacilitiesManagement
       end
 
       private
+
       def set_results_page_data
         @page_data = {}
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @suppliers_lot1a.length
-        @page_data[:supplier_collection] = @suppliers_lot1a.map { |s| s["name"] }
+        @page_data[:supplier_collection] = @suppliers_lot1a.map { |s| s['name'] }
         @page_data[:estimated_cost] = estimated_cost
         @page_data[:selected_sublot] = '1a'
         @page_data[:buildings] = @active_procurement_buildings.map { |b| b[:name] }
@@ -140,10 +137,7 @@ module FacilitiesManagement
       end
 
       def procurement_route_params
-        params.require(:facilities_management_procurement)
-              .permit(
-           :route_to_market
-       )
+        params.require(:facilities_management_procurement).permit(:route_to_market)
       end
 
       def procurement_params
@@ -302,6 +296,7 @@ module FacilitiesManagement
           }
         }.freeze
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
