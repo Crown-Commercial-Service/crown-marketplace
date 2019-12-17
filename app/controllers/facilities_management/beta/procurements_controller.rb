@@ -286,22 +286,19 @@ module FacilitiesManagement
             caption1: @procurement[:name],
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
-            return_text: 'Return to procurement dashboard',
+            return_text: 'Return to procurements dashboard',
+            secondary_text: 'Change requirements',
             back_text: 'Back'
           },
           results: {
             page_title: 'Results',
-            secondary_text: 'Change requirements'
           },
           set_route_to_market: {
             page_title: 'Results',
-            secondary_text: 'Change requirements'
           },
           summary: {
             page_title: 'Summary',
             return_url: facilities_management_beta_procurements_path,
-            return_text: 'Return to procurement dashboard',
-            secondary_text: 'Change requirements'
           }
         }.freeze
       end
