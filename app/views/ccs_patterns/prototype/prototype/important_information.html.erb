@@ -1,5 +1,6 @@
 <%= govuk_page_content(@page_description) do %>
   <dl>
+    <span class="govuk-caption-m"><%= @procurement.name %></span>
     <h1 class="govuk-heading-xl">Important information</h1>
     <dd></dd>
     
@@ -9,5 +10,7 @@
         Please read the below information to ensure that a direct award is suitable for you.
       </span>
     </summary>
+    
+    <%= render('continue_button_footer') %>
   </dl>
 <%end %>
