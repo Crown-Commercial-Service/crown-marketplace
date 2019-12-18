@@ -52,14 +52,14 @@ Rails.application.routes.draw do
     end
 
     namespace 'management_consultancy', path: 'management-consultancy' do
-      concerns %i[authenticatable registrable]
+      concerns %i[authenticatable]
       namespace :admin do
         concerns :authenticatable
       end
     end
 
     namespace 'legal_services', path: 'legal-services' do
-      concerns %i[authenticatable registrable]
+      concerns %i[authenticatable]
       namespace :admin do
         concerns :authenticatable
       end
