@@ -88,8 +88,8 @@ en:
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
             estimated_annual_cost:
-              blank: Estimated annual cost must be an amount of money, like 12000 or 1200.45
-              greater_than_or_equal_to: Estimated annual cost must be an amount of money, like 12000 or 1200.45
+              blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
+              greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
             estimated_cost_known:
               inclusion: Select yes if you know your annual cost, if you do not please select no
               not_present: You must answer the question about 'Estimated cost'
