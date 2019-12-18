@@ -349,7 +349,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       expect { procurement.save }.to change { procurement.procurement_buildings.first.service_codes }.from(['C.1', 'C.2']).to([])
     end
   end
-  
+
   describe '#requires_service_information' do
     context 'when a building has services that require questions' do
       it 'is in the array' do
