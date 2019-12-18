@@ -1,0 +1,27 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+    <p class="govuk-body govuk-!-width-three-quarters govuk-!-font-size-24">Please provide further information that will help us put your contract together.</p>
+    <div class="govuk-!-width-full govuk-!-font-size-19">
+        <dl class="govuk-summary-list govuk-body govuk-!-width-three-quarters">
+        <table class="govuk-table">
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__cell" scope="row"></th>
+                    <td class="govuk-table__cell"></td>
+                    <td class="govuk-table__cell"></td>
+                </tr>
+    <%@page_data[:further_information].each do |s| %>
+        <tr class="govuk-table__row">
+            <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%=s %></th>
+            <td class="govuk-link govuk-table__cell"><a href='filler'>Answer question</a></td>
+            <td class="govuk-table__cell"></td>
+        </tr>
+    <%end %>
+            </tbody>
+        </table>
+        </dl>
+    </div>
+    <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+        <%= govuk_continuation_buttons(pd, f) %>
+    <%end %>
+<%end %>
+

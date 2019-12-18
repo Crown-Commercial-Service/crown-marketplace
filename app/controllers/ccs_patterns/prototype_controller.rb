@@ -16,6 +16,11 @@ module CcsPatterns
       @page_data[:services] = ['cut flowers and christmas trees', 'grounds maintenance services', 'internal planting', 'professional snow and ice clearance', 'reservoirs, ponds, river walls and water-feature maintenance', 'tree surgery', 'taxi booking service']
     end
 
+    def contract_details
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+      @page_data[:further_information] = ['Payment method', 'Invoicing contact details', 'Authorised representative', 'Notices contact details', 'Security policy', 'Local government pension scheme']
+    end
+
     def pricing
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:sorted_supplier_list] = [{ name: 'Cleaning London LTD', price: 1280500 }, { name: 'Example Corporation LTD', price: '1300000' }, { name: 'Another example Corp Ltd', price: '1353400' },
@@ -53,6 +58,7 @@ module CcsPatterns
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
 
+    # rubocop:disable Metrics/MethodLength
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -97,8 +103,19 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
+        },
+        contract_details: {
+          back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          page_title: 'Contract Details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_path,
+          return_text: 'Return to procurement dashboard',
+          secondary_text: 'Return to results'
         }
       }.freeze
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end
