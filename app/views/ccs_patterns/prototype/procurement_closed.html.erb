@@ -1,0 +1,22 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+    <div class="govuk-grid-column-three-quarters">
+        <div class="govuk-grid-row">
+          <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">
+              Your procurement has been closed
+            </h1>
+            <div class="govuk-panel__body">
+              The '<%= @page_data[:procurement_name]  %>' (<%= @page_data[:procurement_number] %>)  procurement has been closed.
+            </div>
+          </div>
+        </div>
+        <div class="govuk-body">
+            Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+        </div>
+        <div class="govuk-!-margin-top-9">
+        <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
+                <%= f.submit(pd.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary') %>
+        <% end %>
+        </div>
+    </div>
+<% end %>
