@@ -52,14 +52,14 @@ Rails.application.routes.draw do
     end
 
     namespace 'management_consultancy', path: 'management-consultancy' do
-      concerns %i[authenticatable]
+      concerns %i[authenticatable registrable]
       namespace :admin do
         concerns :authenticatable
       end
     end
 
     namespace 'legal_services', path: 'legal-services' do
-      concerns %i[authenticatable]
+      concerns %i[authenticatable registrable]
       namespace :admin do
         concerns :authenticatable
       end
@@ -229,7 +229,7 @@ Rails.application.routes.draw do
     get '/prototypes/results', to: 'prototype#results'
     get '/prototypes/pricing', to: 'prototype#pricing'
     get '/prototypes/what-next', to: 'prototype#what_next'
-    get '/prototypes/contract-details', to: 'prototype#contract_details'
+    get '/prototypes/invoicing-contact-details', to: 'prototype#invoicing_contact_details'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'

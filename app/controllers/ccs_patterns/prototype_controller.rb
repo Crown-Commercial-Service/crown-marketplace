@@ -16,11 +16,6 @@ module CcsPatterns
       @page_data[:services] = ['cut flowers and christmas trees', 'grounds maintenance services', 'internal planting', 'professional snow and ice clearance', 'reservoirs, ponds, river walls and water-feature maintenance', 'tree surgery', 'taxi booking service']
     end
 
-    def contract_details
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
-      @page_data[:further_information] = ['Payment method', 'Invoicing contact details', 'Authorised representative', 'Notices contact details', 'Security policy', 'Local government pension scheme']
-    end
-
     def pricing
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:sorted_supplier_list] = [{ name: 'Cleaning London LTD', price: 1280500 }, { name: 'Example Corporation LTD', price: '1300000' }, { name: 'Another example Corp Ltd', price: '1353400' },
@@ -30,6 +25,13 @@ module CcsPatterns
 
     def what_next
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
+
+    def invoicing_contact_details
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+      @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
+      @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
+      @page_data[:invoicing_contact_address] = ['1 Fake Address', '1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
     private
@@ -104,15 +106,16 @@ module CcsPatterns
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
         },
-        contract_details: {
-          back_url: ccs_patterns_prototypes_path,
+        invoicing_contact_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
           back_text: 'Back',
-          page_title: 'Contract Details',
+          back_label: 'Back',
+          page_title: 'Invoicing contact details',
           caption1: 'Total facilities management',
           continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_path,
-          return_text: 'Return to procurement dashboard',
-          secondary_text: 'Return to results'
+          return_url: ccs_patterns_prototypes_results_path,
+          return_text: 'Return to contract details',
+          secondary_text: 'Return to contract details'
         }
       }.freeze
     end
