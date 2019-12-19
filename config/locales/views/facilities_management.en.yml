@@ -469,7 +469,7 @@ en:
         index:
           manage_procurements: Procurements dashboard
         new:
-          cancel_text: Cancel, and return to the procurement dashboard
+          cancel_text: Cancel, and return to the procurements dashboard
           save_for_later: Save for later
           save_your_search: Save your search
           search_result_body_html: Here are the suppliers that can provide your services in the regions selected.<br/>Your requirements will fall into one of the sublots below, subject to your total contract value.
