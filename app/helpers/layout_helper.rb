@@ -99,11 +99,11 @@ module LayoutHelper
   # rubocop:enable Rails/OutputSafety
   def govuk_continuation_buttons(page_description, form_builder, secondary_button = true)
     buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button__secondary', data: { disable_with: false }, name: 'commit') if secondary_button
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') if secondary_button
     buttons << capture { tag.br }
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
 
-    content_tag :div, class: 'govuk-!-margin-top-9' do
+    content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
   end
@@ -192,7 +192,7 @@ module LayoutHelper
   end
 
   def govuk_label(builder, model, attribute)
-    builder.label attribute, generate_label_text(model, attribute), class: 'govuk-label'
+    builder.label attribute, generate_label_text(model, attribute), class: 'govuk-label govuk-!-margin-bottom-6'
   end
 
   def generate_label_text(obj, attribute)
