@@ -1,0 +1,37 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|  %>
+
+  <p class="govuk-body-l">
+    There are some elements of a direct award contract that cannot be amended.
+    Please read the below information to ensure that a direct award is suitable for you.
+  </p>
+
+  <div>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <p><b>Insurance</b></p>
+      <p>Fixed levels of insurance will apply and cannot be changed within a direct award. To view the levels and for further information, please see <a href="http://www.url.com">joint schedule 3 - insurance requirements.</a></p>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <p><b>Indexation</b></p>
+      <p>Your supplier will have the opportunity to adjust their pricing using the CPI index data on the first anniversary of your contract start date. Further information on this can be found in <a href="http://www.url.com">call off schedule 5 - call-off pricing.</a> </p>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <p><b>Services</b></p>
+      <p>The service specifications and service standards cannot be amended within a direct award. Please check within the <a href="http://www.url.com">service requirements and standards</a>  that you're happy with the details for the services you are buying.</p>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <p><b>Price</b></p>
+      <p>Your price has been calculated using rates that were submitted by suppliers when they competed to join the framework. There can be no further negotiation on the price within a direct award. </p>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  </div>
+  
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+    If you wish to change any of the above criteria, you will need to consider switching to a further competition. 
+  </strong>
+  </div>
+  
+  
+  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+    <%= govuk_continuation_buttons(pd, f) %>
+  <% end %>
+
+<% end%>
