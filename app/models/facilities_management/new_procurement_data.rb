@@ -9,6 +9,7 @@ module FacilitiesManagement
     attribute :job_title
     attribute :email_address
     attribute :postcode
+    attribute :telephone_number
 
     validates :route_to_market, inclusion: %w[direct further]
   end
