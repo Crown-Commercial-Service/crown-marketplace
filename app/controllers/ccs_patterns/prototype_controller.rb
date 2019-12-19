@@ -31,7 +31,7 @@ module CcsPatterns
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
       @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
-      @page_data[:invoicing_contact_address] = ['1 Fake Address', '1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
+      @page_data[:invoicing_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
     private
