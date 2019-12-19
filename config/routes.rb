@@ -229,6 +229,7 @@ Rails.application.routes.draw do
     get '/prototypes/results', to: 'prototype#results'
     get '/prototypes/pricing', to: 'prototype#pricing'
     get '/prototypes/what-next', to: 'prototype#what_next'
+    get '/prototypes/payment-method', to: 'prototype#payment_method'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'

@@ -27,6 +27,10 @@ module CcsPatterns
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
 
+    def payment_method
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
+
     private
 
     # rubocop:disable Metrics/AbcSize
@@ -53,6 +57,7 @@ module CcsPatterns
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
 
+    # rubocop:disable Metrics/MethodLength
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -97,8 +102,17 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
+        },
+        payment_method: {
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Payment method',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
+          return_text: 'Return to contract details',
+          return_url: ccs_patterns_prototypes_path,
         }
       }.freeze
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end
