@@ -26,6 +26,10 @@ module CcsPatterns
     def what_next
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
+    
+    def did_you_know
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
 
     def invoicing_contact_details
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
@@ -124,8 +128,8 @@ module CcsPatterns
           page_title: 'Important information',
           caption1: 'Total facilities management',
           continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_results_path,
-          return_text: 'Return to Results',
+          return_url: ccs_patterns_prototypes_path,
+          return_text: 'Return to procurement dashboard',
           secondary_text: 'Return to results'
         }
       }.freeze
