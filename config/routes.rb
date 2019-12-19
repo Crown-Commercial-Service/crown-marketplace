@@ -231,6 +231,7 @@ Rails.application.routes.draw do
     get '/prototypes/what-next', to: 'prototype#what_next'
     get '/prototypes/new-invoicing-contact-details', to: 'prototype#new_invoicing_contact_details'
     get '/prototypes/new-invoicing-contact-details-edit-address-path', to: 'prototype#new_invoicing_contact_details_edit_address_path'
+    get '/prototypes/did-you-know', to: 'prototype#did_you_know'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
