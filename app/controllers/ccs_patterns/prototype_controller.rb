@@ -32,6 +32,10 @@ module CcsPatterns
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
 
+    def did_you_know
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
+
     def invoicing_contact_details
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
@@ -143,6 +147,17 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
+        },
+        did_you_know: {
+          back_url: ccs_patterns_prototypes_what_next_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'Important information',
+          caption1: 'Total facilities management',
+          continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_path,
+          return_text: 'Return to procurement dashboard',
+          secondary_text: 'Return to results'
         }
       }.freeze
     end
