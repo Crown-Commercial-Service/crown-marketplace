@@ -43,6 +43,10 @@ module CcsPatterns
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
 
+    def new_authorised_representative_details
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
+
     private
 
     # rubocop:disable Metrics/AbcSize
@@ -131,7 +135,21 @@ module CcsPatterns
           back_label: 'Back',
           page_title: 'Invoicing contact details',
           caption1: 'Total facilities management',
-          continuation_text: 'Continue'
+          continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_results_path,
+          return_text: 'Return to contract details',
+          secondary_text: 'Return to contract details'
+        },
+        new_authorised_representative_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'New authorised representative details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
+          return_url: ccs_patterns_prototypes_results_path,
+          return_text: 'Return to contract details',
+          secondary_text: 'Return to contract details'
         },
         new_invoicing_contact_details: {
           back_url: ccs_patterns_prototypes_pricing_path,
