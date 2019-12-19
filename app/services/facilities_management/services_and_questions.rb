@@ -23,6 +23,10 @@ class FacilitiesManagement::ServicesAndQuestions
     @service_collection.select { |svc| svc[:context].include?(context.to_sym) }.map { |svc| svc[:code] }
   end
 
+  def codes
+    @service_collection.map { |sc| sc[:code] }
+  end
+
   private
 
   def define_context_questions
