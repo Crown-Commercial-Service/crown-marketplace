@@ -6,6 +6,10 @@ module FacilitiesManagement
     attribute :route_to_market
     attribute :confirm_direct_award
     attribute :select_an_invoicing_contact
+    attribute :name
+    attribute :job_title
+    attribute :email_address
+    attribute :postcode
 
     validates :route_to_market, inclusion: %w[direct further]
   end
