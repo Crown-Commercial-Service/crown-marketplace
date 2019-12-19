@@ -50,15 +50,29 @@ module CcsPatterns
 
     def new_authorised_representative_details; end
 
+<<<<<<< HEAD
     def authorised_representative
       @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
       @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
       @page_data[:invoicing_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
+=======
+>>>>>>> Created initial view
     def new_notices_contact_details; end
 
     def payment_method; end
+  
+    def procurement_closed
+      @page_data[:procurement_name] = 'Total facilities management'
+      @page_data[:procurement_number] = 'FM-094-2019'
+    end
+
+    def notices
+      @page_data[:notices_contact_full_name] = 'Fake Full Name'
+      @page_data[:notices_contact_job_title] = 'Fake Job Title'
+      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
+    end
 
     def confirmation_of_signed_contract
       @page_data[:form_text] = 'Please confirm if both parties have signed and exchanged the contract'
@@ -73,6 +87,7 @@ module CcsPatterns
       @page_data[:postcode] = 'SW1 2AA'
     end
 
+<<<<<<< HEAD
     def contract_signed
       @page_data[:start_date] = Date.new(2019, 11, 19)&.strftime '%d %B %Y'
       @page_data[:end_date] = Date.new(2026, 12, 26)&.strftime '%d %B %Y'
@@ -80,11 +95,14 @@ module CcsPatterns
       @page_data[:contract_code] = 'FM-094-2019'
     end
 
+=======
+>>>>>>> Created initial view
     def new_notices_new_address
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'SW1 2AA'
     end
 
+<<<<<<< HEAD
     def lgps_check; end
 
     def notices
@@ -93,12 +111,8 @@ module CcsPatterns
       @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
-    def contract_confirmation
-      @page_data[:contact_name] = 'Total facilities management'
-      @page_data[:contact_code] = 'FM-094-2019'
-      @page_data[:supplier_name] = 'Cleaning London LTD'
-    end
-
+=======
+>>>>>>> Created initial view
     private
 
     def set_page_model
@@ -181,6 +195,12 @@ module CcsPatterns
           continuation_text: 'Close this procurement',
           secondary_text: 'Cancel'
         },
+        procurement_closed: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          secondary_text: 'Return to procurement dashboard'
+        },
         contract_details: {
           back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
@@ -253,7 +273,7 @@ module CcsPatterns
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
-          return_url: ccs_patterns_prototypes_path,
+          return_url: ccs_patterns_prototypes_path
         },
         new_notices_contact_details: {
           back_url: ccs_patterns_prototypes_pricing_path,
@@ -267,7 +287,6 @@ module CcsPatterns
         },
         payment_method: {
           back_url: ccs_patterns_prototypes_path,
-          back_text: 'Back',
           page_title: 'Payment method',
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
@@ -330,13 +349,7 @@ module CcsPatterns
           continuation_text: 'Save and Continue',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
-        },
-        contract_confirmation: {
-          back_url: ccs_patterns_prototypes_path,
-          back_text: 'Back',
-          continuation_text: false,
-          secondary_text: 'Return to procurement dashboard',
-        },
+        }
       }.freeze
     end
     # rubocop:enable Metrics/AbcSize
