@@ -26,7 +26,7 @@ module CcsPatterns
     def what_next
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
-    
+
     def did_you_know
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
@@ -60,9 +60,9 @@ module CcsPatterns
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
-    # rubocop:disable Metrics/MethodLength
 
     # rubocop:disable Metrics/MethodLength
+
 
     def page_definitions
       @page_definitions ||= {
