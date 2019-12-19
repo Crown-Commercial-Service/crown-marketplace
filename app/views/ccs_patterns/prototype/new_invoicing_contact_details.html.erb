@@ -1,0 +1,24 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+    <%= govuk_grouped_fields(f, '', :name, :job_title, :email_address) do |ff, attr| %>
+      <%= govuk_start_individual_field(ff,attr) do |a| %>
+        <div class="govuk-form-group govuk-!-width-two-thirds">
+          <%= f.text_field attr, class: 'govuk-input', maxlength: 255 %>
+        </div>
+      <% end %>
+    <% end %>
+    <label class="govuk-label ccs-font-weight-semi-bold govuk-!-margin-bottom-2">Address</label>
+    <%= govuk_start_individual_field(f, :postcode) do |a| %>
+      <div class="govuk-form-group govuk-!-width-one-third">
+          <%= f.text_field :postcode, class: 'govuk-input', maxlength: 255 %>
+      </div>
+      <div class="govuk-!-margin-top-0">
+      <%= f.button t('Find address'), class: 'govuk-button'%>
+      </div>
+      <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+        <%= link_to t("I can't find my address in the list"), ccs_patterns_prototypes_new_invoicing_contact_details_edit_address_path_path(@invoicing_contact_detail, update_address: true),  class: "govuk-link--no-visited-state govuk-caption-m" %>
+      </div>
+      <%= govuk_continuation_buttons(@page_description, f, false) %>
+    <% end %>
+  <% end %>
+<% end %>

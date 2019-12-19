@@ -27,6 +27,10 @@ module CcsPatterns
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
 
+    def new_invoicing_contact_details
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
+
     private
 
     # rubocop:disable Metrics/AbcSize
@@ -52,6 +56,7 @@ module CcsPatterns
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
+    # rubocop:disable Metrics/MethodLength
 
     def page_definitions
       @page_definitions ||= {
@@ -97,8 +102,20 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
+        },
+        new_invoicing_contact_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'New invoicing contact details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
+          return_url: ccs_patterns_prototypes_results_path,
+          return_text: 'Return to contract details',
+          secondary_text: 'Return to contract details'
         }
       }.freeze
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end
