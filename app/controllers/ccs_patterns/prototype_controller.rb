@@ -31,11 +31,8 @@ module CcsPatterns
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
 
-    def invoicing_contact_details
+    def new_invoicing_contact_details
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
-      @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
-      @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
-      @page_data[:invoicing_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
     private
@@ -63,8 +60,10 @@ module CcsPatterns
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
+    # rubocop:disable Metrics/MethodLength
 
     # rubocop:disable Metrics/MethodLength
+
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -110,13 +109,13 @@ module CcsPatterns
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
         },
-        invoicing_contact_details: {
+        new_invoicing_contact_details: {
           back_url: ccs_patterns_prototypes_pricing_path,
           back_text: 'Back',
           back_label: 'Back',
-          page_title: 'Invoicing contact details',
+          page_title: 'New invoicing contact details',
           caption1: 'Total facilities management',
-          continuation_text: 'Continue',
+          continuation_text: 'Save and return',
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
