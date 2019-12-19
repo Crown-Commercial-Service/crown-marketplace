@@ -5,16 +5,12 @@
       <%= govuk_grouped_field(f, 'Please select the payment method that will be used', :route_to_market) do |ff, attr| %>
           <div class="govuk-radios">
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="BACS_payment" name="payment" type="radio" value="BACS_payment"/>
-                <label class="govuk-label govuk-radios__label" for="route_to_market">
-                  BACS payment
-                </label>
+              <%= f.radio_button :route_to_market, 'BACS payment', value: 'BACS_payment', class: 'govuk-radios__input' %>
+              <%= f.label :route_to_market, "BACS payment", class: 'govuk-label govuk-radios__label'%>
             </div>
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="government_procurement_card" name="payment" type="radio" value="government_procurement_card"/>
-                <label class="govuk-label govuk-radios__label" for="route_to_market">
-                  Government procurement card
-                </label>
+              <%= f.radio_button :route_to_market, 'Government procurement card', value: 'Government_procurement_card', class: 'govuk-radios__input' %>
+              <%= f.label :route_to_market, "Government procurement card", class: 'govuk-label govuk-radios__label'%>
             </div>
           </div>
         <%end %>
