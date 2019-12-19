@@ -62,6 +62,8 @@ module CcsPatterns
     end
     # rubocop:disable Metrics/MethodLength
 
+    # rubocop:disable Metrics/MethodLength
+
     def page_definitions
       @page_definitions ||= {
         default: {
