@@ -36,7 +36,15 @@ module CcsPatterns
       @page_data[:invoicing_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
-    def new_invoicing_contact_details; end
+    def new_invoicing_contact_details
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
+
+    def invoicing_contact_details_edit_address
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+      @page_data[:county] = 'County (optional)'
+      @page_data[:postcode] = 'FA1 5KE'
+    end
 
     def new_authorised_representative_details; end
 
@@ -160,6 +168,17 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
+        },
+        invoicing_contact_details_edit_address: {
+          back_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'Add address',
+          caption1: 'New invoicing contact details',
+          continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
+          return_text: 'Return to new invoicing contact details',
+          secondary_text: 'Return to new invoicing contact details'
         },
         did_you_know: {
           back_url: ccs_patterns_prototypes_what_next_path,
