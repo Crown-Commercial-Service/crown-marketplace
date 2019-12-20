@@ -42,6 +42,10 @@ module CcsPatterns
 
     def payment_method; end
 
+    def add_missing_address
+      @page_data[:postcode] = 'SW1 2AA'
+    end
+
     private
 
     def set_page_model
@@ -178,6 +182,14 @@ module CcsPatterns
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        add_missing_address: {
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Add address',
+          caption1: 'New authorised representative',
+          continuation_text: 'Continue',
+          return_text: 'Return to new authorised representative',
           return_url: ccs_patterns_prototypes_path,
         },
       }.freeze

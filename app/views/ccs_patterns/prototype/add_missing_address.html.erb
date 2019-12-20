@@ -1,0 +1,30 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+
+  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+
+    <%= f.label "Building and street", class: 'govuk-label'%>
+      <div class="govuk-form-group govuk-!-width-two-thirds">
+        <%= f.text_field :building, class: 'govuk-input', maxlength: 255 %>
+      </div>
+      <div class="govuk-form-group govuk-!-width-two-thirds">
+        <%= f.text_field :street, class: 'govuk-input', maxlength: 255 %>
+      </div>
+
+    <%= f.label "Town or city", class: 'govuk-label' %>
+    <div class="govuk-form-group govuk-!-width-one-half">
+        <%= f.text_field :town_or_city, class: 'govuk-input', maxlength: 255 %>
+    </div>
+
+    <%= f.label "County (Optional)", class: 'govuk-label'%>
+    <div class="govuk-form-group govuk-!-width-one-half">
+        <%= f.text_field :county, class: 'govuk-input', maxlength: 255 %>
+    </div>
+
+    <%= f.label "Post code", class: 'govuk-label, govuk-heading-s'%>
+    <p><%=@page_data[:postcode]%></p>
+  <%end%>
+  </form>
+      <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+        <%= govuk_continuation_buttons(pd, f, false) %>
+      <% end %>
+<% end %>

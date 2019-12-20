@@ -9,6 +9,10 @@ module FacilitiesManagement
     attribute :name
     attribute :job_title
     attribute :email_address
+    attribute :building
+    attribute :street
+    attribute :town_or_city
+    attribute :county
     attribute :postcode
     attribute :telephone_number
 
