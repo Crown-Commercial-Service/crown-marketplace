@@ -2,6 +2,8 @@ require 'axlsx'
 require 'axlsx_rails'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
+  include FacilitiesManagement::Beta::SummaryHelper
+
   def initialize(building_ids_with_service_codes, units_of_measure_values = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
@@ -219,7 +221,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
         suv = uvs.find { |u| s['code'] == u[:service_code] }
 
-        new_row << suv[:uom_value] if suv
+        new_row << calculate_uom_value(suv) if suv
         new_row << nil unless suv
       end
 
