@@ -103,7 +103,7 @@ module LayoutHelper
     buttons << capture { tag.br }
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
 
-    content_tag :div, class: 'govuk-!-margin-top-9' do
+    content_tag :div, class: 'govuk-!-margin-top-6' do
       buttons
     end
   end
@@ -112,7 +112,7 @@ module LayoutHelper
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
-  def govuk_start_individual_field(builder, attribute, &block)
+  def govuk_start_individual_field(builder, attribute, require_label = true, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attribute_errors
@@ -122,7 +122,7 @@ module LayoutHelper
 
     content_tag :div, options do
       capture do
-        concat(govuk_label(builder, builder.object, attribute))
+        concat(govuk_label(builder, builder.object, attribute)) if require_label
         concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil))
         block.call(attribute) if block_given?
       end
@@ -194,6 +194,15 @@ module LayoutHelper
 
   def govuk_label(builder, model, attribute)
     builder.label attribute, generate_label_text(model, attribute), class: 'govuk-label'
+  end
+
+  def govuk_details(summary_text, &block)
+    content_tag :details, class: 'govuk-details govuk-!-width-two-thirds govuk-!-margin-bottom-6', data: { module: 'govuk-details' } do
+      capture do
+        concat(content_tag(:summary, content_tag(:span, summary_text, class: 'govuk-details__summary-text'), class: 'govuk-details__summary'))
+        concat(content_tag(:div, class: 'govuk-details__text', &block))
+      end
+    end
   end
 
   def generate_label_text(obj, attribute)

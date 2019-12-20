@@ -496,8 +496,8 @@ en:
           estimated_cost: Estimated cost
           estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework and benchmark pricing, and your current cost.  <br/>This cost has been used to place you in the correct sub-lot.
           estimated_cost_how: How your estimated cost was calculated
-          fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are long than a direct award</li>\n"
-          further_competition: Further competition
+          fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
+          further_competition_html: "<b>Further competition</b>"
           sub-lot: Sub-lot
           sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
           suppliers_shortlisted_html: There are <span style=""font-size:larger"">%{count}</span> suppliers shortlisted
