@@ -233,7 +233,7 @@ Rails.application.routes.draw do
     get '/prototypes/contract-details', to: 'prototype#contract_details'
     get '/prototypes/invoicing-contact-details', to: 'prototype#invoicing_contact_details'
     get '/prototypes/new-invoicing-contact-details', to: 'prototype#new_invoicing_contact_details'
-    get '/prototypes/new-invoicing-contact-details-edit-address', to: 'prototype#new_invoicing_contact_details_edit_address'
+    get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
     get '/prototypes/new-authorised-representative-details', to: 'prototype#new_authorised_representative_details'
     get '/prototypes/did-you-know', to: 'prototype#did_you_know'
     get '/prototypes/new-notices-contact-details-address', to: 'prototype#new_notices_contact_details_address'
