@@ -41,6 +41,10 @@ module CcsPatterns
     def new_authorised_representative_details; end
 
     def payment_method; end
+    
+    def new_notices_contact_details_address
+      @page_data[:postcode] = "SW1A 2AA"
+    end
 
     private
 
@@ -180,6 +184,14 @@ module CcsPatterns
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
         },
+        new_notices_contact_details_address: {
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Add address',
+          caption1: 'New notices contact details',
+          continuation_text: 'Continue',
+          return_text: 'Return to new notices contact details',
+          return_url: ccs_patterns_prototypes_path,
+        }
       }.freeze
     end
     # rubocop:enable Metrics/MethodLength

@@ -236,6 +236,7 @@ Rails.application.routes.draw do
     get '/prototypes/new-invoicing-contact-details-edit-address', to: 'prototype#new_invoicing_contact_details_edit_address'
     get '/prototypes/new-authorised-representative-details', to: 'prototype#new_authorised_representative_details'
     get '/prototypes/did-you-know', to: 'prototype#did_you_know'
+    get '/prototypes/new-notices-contact-details-address', to: 'prototype#new_notices_contact_details_address'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
