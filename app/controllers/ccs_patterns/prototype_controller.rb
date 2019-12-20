@@ -49,6 +49,8 @@ module CcsPatterns
     def payment_method; end
     
     def new_notices_contact_details_address
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+      @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = "SW1A 2AA"
     end
 
@@ -203,6 +205,8 @@ module CcsPatterns
         },
         new_notices_contact_details_address: {
           back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          back_label: 'Back',
           page_title: 'Add address',
           caption1: 'New notices contact details',
           continuation_text: 'Continue',
