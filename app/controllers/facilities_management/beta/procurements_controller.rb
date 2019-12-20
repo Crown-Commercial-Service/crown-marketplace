@@ -99,10 +99,6 @@ module FacilitiesManagement
       end
 
       def results
-        # this wil render the results page
-        # iteration is around the display for lot1a
-        # it will use @suppliers_lot1a to display the supplier list
-        # @active_procurement_buildings to list the buildings
         set_page_details
         set_results_page_data
       end
@@ -114,13 +110,14 @@ module FacilitiesManagement
       end
 
       def estimated_cost
-        '1280000'
+        @procurement[:estimated_annual_cost]
       end
 
       def eligible_for_direct_award?
         # this is hard-coded at present and will determine the view that is rendered
-        true
+        @procurement[:estimated_annual_cost] < 1500000
       end
+      helper_method :eligible_for_direct_award?
 
       private
 
