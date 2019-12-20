@@ -237,7 +237,7 @@ en:
           facilities_management:
             beta:
               index:
-                manage_procurements_link: Procurement dashboard
+                manage_procurements_link: Procurements dashboard
           link_text: Update buyer details
       buyer_details:
         edit:
