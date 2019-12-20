@@ -40,7 +40,7 @@ module CcsPatterns
 
     def invoicing_contact_details_edit_address
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
-      @page_data[:county] = 'County (optional)'
+      @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'FA1 5KE'
     end
 
