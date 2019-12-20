@@ -101,7 +101,7 @@ module LayoutHelper
     buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') if secondary_button
     buttons << capture { tag.br }
-    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
+    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m')
 
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
@@ -192,11 +192,13 @@ module LayoutHelper
   end
 
   def govuk_label(builder, model, attribute)
-    builder.label attribute, generate_label_text(model, attribute), class: 'govuk-label govuk-!-margin-bottom-6'
+    builder.label attribute, generate_label_text(model, attribute), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 
   def generate_label_text(obj, attribute)
-    if obj.class.respond_to?(:human_attribute_name)
+    if @page_data.key?(attribute)
+      @page_data[attribute]
+    elsif obj.class.respond_to?(:human_attribute_name)
       obj.class.human_attribute_name(attribute.to_s)
     else
       attribute.to_s.humanize
