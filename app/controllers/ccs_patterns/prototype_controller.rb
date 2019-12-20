@@ -40,7 +40,8 @@ module CcsPatterns
 
     def new_authorised_representative_details; end
 
-    def payment_method; end 
+    def payment_method; end
+
     private
 
     def set_page_model
