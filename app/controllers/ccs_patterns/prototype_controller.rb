@@ -47,11 +47,11 @@ module CcsPatterns
     def new_authorised_representative_details; end
 
     def payment_method; end
-    
+
     def new_notices_contact_details_address
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:label_text] = { county: 'County (optional)' }
-      @page_data[:postcode] = "SW1A 2AA"
+      @page_data[:postcode] = 'SW1A 2AA'
     end
 
     private
