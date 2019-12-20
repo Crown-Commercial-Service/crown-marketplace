@@ -39,7 +39,6 @@ module CcsPatterns
     def new_invoicing_contact_details; end
 
     def invoicing_contact_details_edit_address
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'FA1 5KE'
     end
@@ -47,6 +46,11 @@ module CcsPatterns
     def new_authorised_representative_details; end
 
     def payment_method; end
+
+    def add_missing_address
+      @page_data[:label_text] = { county: 'County (optional)' }
+      @page_data[:postcode] = 'SW1 2AA'
+    end
 
     private
 
@@ -195,6 +199,14 @@ module CcsPatterns
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        add_missing_address: {
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Add address',
+          caption1: 'New authorised representative',
+          continuation_text: 'Continue',
+          return_text: 'Return to new authorised representative',
           return_url: ccs_patterns_prototypes_path,
         },
       }.freeze
