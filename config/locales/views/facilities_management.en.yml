@@ -351,7 +351,7 @@ en:
           gia: Gross internal area (GIA)
           gia-summary: The gross internal area of the building (in square meters)
           heading: Service information
-          lift_data: The sum total of number of floors per lift
+          lift_data: The sum total of number of floors
           no_of_appliances_for_testing: The number of appliances to be tested per annum
           no_of_building_occupants: The number of building occupants
           no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
@@ -362,7 +362,7 @@ en:
           service_standard: The service standard required
           size_of_external_area: The size of the external area (in square metres)
           tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
-          total_floors_per_lift: The sum total of number of floors per lift
+          total_floors_per_lift: The sum total of number of floors
           volume_required_heading: Volume required (per annum)
           volume_required_html: "<b>Volume required <br> (per annum)</b>"
         volume:
@@ -492,8 +492,8 @@ en:
           estimated_cost: Estimated cost
           estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework and benchmark pricing, and your current cost.  <br/>This cost has been used to place you in the correct sub-lot.
           estimated_cost_how: How your estimated cost was calculated
-          fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are long than a direct award</li>\n"
-          further_competition: Further competition
+          fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
+          further_competition_html: "<b>Further competition</b>"
           sub-lot: Sub-lot
           sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
           suppliers_shortlisted_html: There are <span style=""font-size:larger"">%{count}</span> suppliers shortlisted
