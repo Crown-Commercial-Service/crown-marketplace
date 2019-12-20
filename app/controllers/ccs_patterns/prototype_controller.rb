@@ -106,7 +106,6 @@ module CcsPatterns
     end
 
     # rubocop:disable Metrics/MethodLength
-    # rubocop:disable Metrics/AbcSize
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -282,8 +281,6 @@ module CcsPatterns
         },
       }.freeze
     end
-    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
-    # rubocop:enable Metrics/AbcSize
   end
 end
