@@ -76,7 +76,6 @@ module CcsPatterns
                                            page_details(action_name)[:secondary_text])
       )
     end
-    # rubocop:enable Metrics/AbcSize
 
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
@@ -211,6 +210,7 @@ module CcsPatterns
         },
       }.freeze
     end
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
   end
 end
