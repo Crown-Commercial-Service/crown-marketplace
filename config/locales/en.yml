@@ -554,9 +554,12 @@ en:
       cog_forgot_password_reset:
         confirm_new_password: Confirm new password
         heading: Reset your password
+        heading1: A reset email has been sent
         lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
         password: Your password must have
+        text01: If you don't receive this, contact CCS customer services team.
       cog_forgot_password_reset2:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
@@ -871,9 +874,12 @@ en:
         confirm_code: Confirm Code
         confirm_new_password: Confirm new password
         heading: Reset your password
+        heading1: A reset email has been sent
         lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
         password: Your password must have
+        text01: If you don't receive this, contact CCS customer services team.
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -975,9 +981,12 @@ en:
           confirm_code: Confirm Code
           confirm_new_password: Confirm new password
           heading: Reset your password
+          heading1: A reset email has been sent
           lead: Reset password for
+          lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
           new_password: New password
           password: Your password must have
+          text01: If you don't receive this, contact CCS customer services team.
         forgot_password_confirmation:
           heading: A reset email has been sent
           lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1210,9 +1219,12 @@ en:
         confirm_code: Confirm Code
         confirm_new_password: Confirm new password
         heading: Reset your password
+        heading1: A reset email has been sent
         lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
         password: Your password must have
+        text01: If you don't receive this, contact CCS customer services team.
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1387,9 +1399,12 @@ en:
           confirm_code: Confirm Code
           confirm_new_password: Confirm new password
           heading: Reset your password
+          heading1: A reset email has been sent
           lead: Reset password for
+          lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
           new_password: New password
           password: Your password must have
+          text01: If you don't receive this, contact CCS customer services team.
         forgot_password_confirmation:
           heading: A reset email has been sent
           lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1722,9 +1737,12 @@ en:
         confirm_code: Confirm Code
         confirm_new_password: Confirm new password
         heading: Reset your password
+        heading1: A reset email has been sent
         lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
         password: Your password must have
+        text01: If you don't receive this, contact CCS customer services team.
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.

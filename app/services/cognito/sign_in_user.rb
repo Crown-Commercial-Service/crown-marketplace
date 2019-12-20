@@ -17,6 +17,9 @@ module Cognito
 
     def call
       initiate_auth if valid?
+    rescue Aws::CognitoIdentityProvider::Errors::UserNotFoundException
+      @error = I18n.t('activemodel.errors.models.user.incorrect_username_or_password')
+      errors.add(:base, @error)
     rescue Aws::CognitoIdentityProvider::Errors::PasswordResetRequiredException => e
       @error = e.message
       errors.add(:base, e.message)
