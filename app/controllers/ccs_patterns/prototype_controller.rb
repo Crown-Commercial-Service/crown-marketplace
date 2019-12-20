@@ -38,14 +38,20 @@ module CcsPatterns
 
     def new_invoicing_contact_details; end
 
+    def invoicing_contact_details_edit_address
+      @page_data[:label_text] = { county: 'County (optional)' }
+      @page_data[:postcode] = 'FA1 5KE'
+    end
+
     def new_authorised_representative_details; end
+
+    def new_notices_contact_details; end
 
     def payment_method; end
 
-    def notices
-      @page_data[:notices_contact_full_name] = 'Fake Full Name'
-      @page_data[:notices_contact_job_title] = 'Fake Job Title'
-      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
+    def add_missing_address
+      @page_data[:label_text] = { county: 'County (optional)' }
+      @page_data[:postcode] = 'SW1 2AA'
     end
 
     private
@@ -72,13 +78,13 @@ module CcsPatterns
                                            page_details(action_name)[:secondary_text])
       )
     end
-    # rubocop:enable Metrics/AbcSize
 
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
 
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -167,6 +173,16 @@ module CcsPatterns
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
         },
+        invoicing_contact_details_edit_address: {
+          back_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'Add address',
+          caption1: 'New invoicing contact details',
+          continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
+          return_text: 'Return to new invoicing contact details',
+        },
         did_you_know: {
           back_url: ccs_patterns_prototypes_what_next_path,
           back_text: 'Back',
@@ -178,15 +194,15 @@ module CcsPatterns
           return_text: 'Return to procurement dashboard',
           secondary_text: 'Return to results'
         },
-        notices: {
-          back_url: ccs_patterns_prototypes_path,
+        new_notices_contact_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
           back_text: 'Back',
           back_label: 'Back',
-          page_title: 'Notices contact details',
+          page_title: 'New notice contact details',
           caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_text: 'Return to contract details',
-          return_url: ccs_patterns_prototypes_path,
+          continuation_text: 'Save and Return',
+          return_url: ccs_patterns_prototypes_pricing_path,
+          return_text: 'Return to contract details'
         },
         payment_method: {
           back_url: ccs_patterns_prototypes_path,
@@ -196,8 +212,18 @@ module CcsPatterns
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
         },
+        add_missing_address: {
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Add address',
+          caption1: 'New authorised representative',
+          continuation_text: 'Continue',
+          return_text: 'Return to new authorised representative',
+          return_url: ccs_patterns_prototypes_path,
+        },
       }.freeze
     end
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
   end
 end
