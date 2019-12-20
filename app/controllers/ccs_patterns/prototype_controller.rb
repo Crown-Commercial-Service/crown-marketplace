@@ -39,7 +39,6 @@ module CcsPatterns
     def new_invoicing_contact_details; end
 
     def invoicing_contact_details_edit_address
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'FA1 5KE'
     end
@@ -52,6 +51,11 @@ module CcsPatterns
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = "SW1A 2AA"
+    end
+
+    def add_missing_address
+      @page_data[:label_text] = { county: 'County (optional)' }
+      @page_data[:postcode] = 'SW1 2AA'
     end
 
     private
@@ -78,7 +82,6 @@ module CcsPatterns
                                            page_details(action_name)[:secondary_text])
       )
     end
-    # rubocop:enable Metrics/AbcSize
 
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
@@ -212,9 +215,18 @@ module CcsPatterns
           continuation_text: 'Continue',
           return_text: 'Return to new notices contact details',
           return_url: ccs_patterns_prototypes_path,
+        },
+        add_missing_address: {
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Add address',
+          caption1: 'New authorised representative',
+          continuation_text: 'Continue',
+          return_text: 'Return to new authorised representative',
+          return_url: ccs_patterns_prototypes_path,
         }
       }.freeze
     end
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
   end
 end
