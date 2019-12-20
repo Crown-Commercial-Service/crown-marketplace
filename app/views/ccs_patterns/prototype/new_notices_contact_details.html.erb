@@ -1,0 +1,20 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+    <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
+        <%= govuk_grouped_fields(f, '', :name, :job_title, :email_address) do |ff, attr| %>
+            <%= govuk_start_individual_field(ff,attr) do |a| %>
+                <%= govuk_text_input(ff, attr, :two_thirds, [:maxlength, 255]) %>
+            <% end %>
+        <% end %>
+        <%= govuk_grouped_fields(f, '', :postcode) do |ff, attr| %>
+            <label class="govuk-label ccs-font-weight-semi-bold govuk-!-margin-bottom-2">
+                Address
+            </label>
+            <%= govuk_start_individual_field(ff, attr) do |a| %>
+                <%= govuk_text_input(ff, a, :one_quarter, [:maxlength, 10]) %>
+            <% end %>
+            <%= govuk_button(f, "Find Adress") %>
+            <%= link_to "I can't find my address in the list", nil, class: "govuk-link--no-visited-state govuk-caption-m govuk-!-margin-bottom-1" %>
+        <% end %>
+        <%= govuk_continuation_buttons(pd, f, false) %>
+    <% end %>
+<% end %>
