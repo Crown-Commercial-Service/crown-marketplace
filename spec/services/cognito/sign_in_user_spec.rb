@@ -101,6 +101,28 @@ RSpec.describe Cognito::SignInUser do
       end
     end
 
+    context 'when Cogito error is UserNotFoundException' do
+      before do
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+        allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('oops', 'Oops'))
+      end
+
+      it 'does not return success' do
+        response = described_class.call(email, password, cookies_disabled)
+        expect(response.success?).to eq false
+      end
+
+      it 'does returns cognito error' do
+        response = described_class.call(email, password, cookies_disabled)
+        expect(response.error).to eq I18n.t('activemodel.errors.models.user.incorrect_username_or_password')
+      end
+
+      it 'returns need_password_reset false' do
+        response = described_class.call(email, password, cookies_disabled)
+        expect(response.needs_password_reset).to eq false
+      end
+    end
+
     context 'when cookies are disabled' do
       let(:cookies_disabled) { true }
 
