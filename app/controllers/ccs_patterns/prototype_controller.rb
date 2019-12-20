@@ -38,24 +38,9 @@ module CcsPatterns
 
     def new_invoicing_contact_details; end
 
-    def invoicing_contact_details_edit_address
-      @page_data[:label_text] = { county: 'County (optional)' }
-      @page_data[:postcode] = 'FA1 5KE'
-    end
-
     def new_authorised_representative_details; end
 
     def payment_method; end
-
-    def add_missing_address
-      @page_data[:label_text] = { county: 'County (optional)' }
-      @page_data[:postcode] = 'SW1 2AA'
-    end
-    
-    def new_notices_new_address
-      @page_data[:label_text] = { county: 'County (optional)' }
-      @page_data[:postcode] = 'SW1 2AA'
-    end
 
     def notices
       @page_data[:notices_contact_full_name] = 'Fake Full Name'
@@ -87,6 +72,7 @@ module CcsPatterns
                                            page_details(action_name)[:secondary_text])
       )
     end
+    # rubocop:enable Metrics/AbcSize
 
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
@@ -181,17 +167,6 @@ module CcsPatterns
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
         },
-        invoicing_contact_details_edit_address: {
-          back_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'Add address',
-          caption1: 'New invoicing contact details',
-          continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
-          return_text: 'Return to new invoicing contact details',
-          secondary_text: 'Return to new invoicing contact details'
-        },
         did_you_know: {
           back_url: ccs_patterns_prototypes_what_next_path,
           back_text: 'Back',
@@ -221,29 +196,8 @@ module CcsPatterns
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
         },
-        add_missing_address: {
-          back_label: 'Back', 
-          back_text: 'Back',
-          back_url: ccs_patterns_prototypes_path,
-          page_title: 'Add address',
-          caption1: 'New authorised representative',
-          continuation_text: 'Continue',
-          return_text: 'Return to new authorised representative',
-          return_url: ccs_patterns_prototypes_path,
-        },
-        new_notices_new_address: {
-          back_label: 'Back',
-          back_text: 'Back',
-          back_url: ccs_patterns_prototypes_path,
-          page_title: 'Add address',
-          caption1: 'New notices contact details',
-          continuation_text: 'Continue',
-          return_text: 'Return to new notices contact details',
-          return_url: ccs_patterns_prototypes_path,
-        },
       }.freeze
     end
-    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
   end
 end
