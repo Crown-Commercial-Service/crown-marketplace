@@ -264,7 +264,7 @@ module CcsPatterns
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
-          return_url: ccs_patterns_prototypes_path
+          return_url: ccs_patterns_prototypes_path,
         },
         new_notices_contact_details: {
           back_url: ccs_patterns_prototypes_pricing_path,
