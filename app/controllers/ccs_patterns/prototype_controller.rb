@@ -58,6 +58,11 @@ module CcsPatterns
       @page_data[:postcode] = 'SW1 2AA'
     end
 
+    def add_missing_address
+      @page_data[:label_text] = { county: 'County (optional)' }
+      @page_data[:postcode] = 'SW1 2AA'
+    end
+
     private
 
     def set_page_model
