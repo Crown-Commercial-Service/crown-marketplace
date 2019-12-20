@@ -174,7 +174,8 @@ module LayoutHelper
                   medium: 'govuk-input--width-10',
                   large: 'govuk-input--width-20',
                   one_half: 'govuk-!-width-one-half',
-                  two_thirds: 'govuk-!-width-two-thirds' }.freeze
+                  two_thirds: 'govuk-!-width-two-thirds',
+                  one_quarter: 'govuk-!-width-one-quarter' }.freeze
 
   def govuk_text_input(builder, attribute, text_size, *option)
     css_classes = ['govuk-input']
