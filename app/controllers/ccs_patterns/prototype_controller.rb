@@ -2,11 +2,11 @@ module CcsPatterns
   class PrototypeController < FrameworkController
     skip_before_action :authenticate_user!
     before_action :set_page_detail
+    before_action :set_page_model
 
     def index; end
 
     def results
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:selected_sublot] = 'Lot 1a'
       @page_data[:estimated_cost] = '1450000'
       @page_data[:no_suppliers] = 11
@@ -17,41 +17,36 @@ module CcsPatterns
     end
 
     def contract_details
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:further_information] = ['Payment method', 'Invoicing contact details', 'Authorised representative', 'Notices contact details', 'Security policy', 'Local government pension scheme']
     end
 
     def pricing
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:sorted_supplier_list] = [{ name: 'Cleaning London LTD', price: 1280500 }, { name: 'Example Corporation LTD', price: '1300000' }, { name: 'Another example Corp Ltd', price: '1353400' },
                                            { name: 'HG Cleaning', price: '1300000' }, { name: 'Marco LTD', price: '1300000' }, { name: 'Gig Beta Company', price: '1300000' }, { name: 'Mega Beta Ltd', price: '1300000' },
                                            { name: 'Jacob Beta Company', price: '1300000' }, { name: 'Kile Beta', price: '1300000' }, { name: 'Oscar Wild Corp.', price: '1300000' }, { name: 'X-ray Cleaning Ltd', price: '1300000' }]
     end
 
-    def what_next
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
-    end
+    def what_next; end
 
-    def did_you_know
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
-    end
+    def did_you_know; end
 
     def invoicing_contact_details
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
       @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
       @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
       @page_data[:invoicing_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
-    def new_invoicing_contact_details
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
-    end
+    def new_invoicing_contact_details; end
 
-    def new_authorised_representative_details
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
-    end
+    def new_authorised_representative_details; end
+
+    def payment_method; end
 
     private
+
+    def set_page_model
+      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
+    end
 
     # rubocop:disable Metrics/AbcSize
     def set_page_detail
@@ -176,7 +171,15 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to procurement dashboard',
           secondary_text: 'Return to results'
-        }
+        },
+        payment_method: {
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Payment method',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
+          return_text: 'Return to contract details',
+          return_url: ccs_patterns_prototypes_path,
+        },
       }.freeze
     end
     # rubocop:enable Metrics/MethodLength
