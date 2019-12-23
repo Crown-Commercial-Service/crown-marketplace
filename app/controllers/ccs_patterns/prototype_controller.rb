@@ -44,6 +44,12 @@ module CcsPatterns
     end
 
     def new_authorised_representative_details; end
+      
+    def authorised_representative
+      @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
+      @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
+      @page_data[:invoicing_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
+    end
 
     def new_notices_contact_details; end
 
@@ -248,6 +254,17 @@ module CcsPatterns
           caption1: 'Total facilities management',
           continuation_text: 'Save and continue',
           secondary_text: 'Cancel'
+        },
+        authorised_representative: {
+          back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          back_label: 'Return to Pricing',
+          page_title: 'Authorised representative',
+          caption1: 'Total facilities management',
+          continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_path,
+          return_text: 'Return to contract details',
+          secondary_text: 'Return to results'
         },
         add_missing_address: {
           back_label: 'Back',
