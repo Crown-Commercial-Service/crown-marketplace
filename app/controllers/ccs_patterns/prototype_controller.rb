@@ -43,10 +43,6 @@ module CcsPatterns
       @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
     end
 
-    def new_authorised_representative_details
-      @page_data[:model_object] = FacilitiesManagement::NewProcurementData.new
-    end
-
     private
 
     # rubocop:disable Metrics/AbcSize
