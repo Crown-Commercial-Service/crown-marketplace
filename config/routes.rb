@@ -52,14 +52,14 @@ Rails.application.routes.draw do
     end
 
     namespace 'management_consultancy', path: 'management-consultancy' do
-      concerns %i[authenticatable]
+      concerns %i[authenticatable registrable]
       namespace :admin do
         concerns :authenticatable
       end
     end
 
     namespace 'legal_services', path: 'legal-services' do
-      concerns %i[authenticatable]
+      concerns %i[authenticatable registrable]
       namespace :admin do
         concerns :authenticatable
       end
@@ -229,11 +229,15 @@ Rails.application.routes.draw do
     get '/prototypes/results', to: 'prototype#results'
     get '/prototypes/pricing', to: 'prototype#pricing'
     get '/prototypes/what-next', to: 'prototype#what_next'
+    get '/prototypes/payment-method', to: 'prototype#payment_method'
+    get '/prototypes/add-missing-address', to: 'prototype#add_missing_address'
     get '/prototypes/contract-details', to: 'prototype#contract_details'
     get '/prototypes/invoicing-contact-details', to: 'prototype#invoicing_contact_details'
     get '/prototypes/new-invoicing-contact-details', to: 'prototype#new_invoicing_contact_details'
-    get '/prototypes/new-invoicing-contact-details-edit-address', to: 'prototype#new_invoicing_contact_details_edit_address'
+    get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
     get '/prototypes/new-authorised-representative-details', to: 'prototype#new_authorised_representative_details'
+    get '/prototypes/did-you-know', to: 'prototype#did_you_know'
+    get '/prototypes/new-notices-new-address', to: 'prototype#new_notices_new_address'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
