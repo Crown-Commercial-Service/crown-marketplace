@@ -238,6 +238,7 @@ Rails.application.routes.draw do
     get '/prototypes/new-authorised-representative-details', to: 'prototype#new_authorised_representative_details'
     get '/prototypes/did-you-know', to: 'prototype#did_you_know'
     get '/prototypes/new-notices-new-address', to: 'prototype#new_notices_new_address'
+    get '/prototypes/notices', to: 'prototype#notices'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
