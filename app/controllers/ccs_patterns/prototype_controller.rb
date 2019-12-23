@@ -127,17 +127,6 @@ module CcsPatterns
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
         },
-        new_authorised_representative_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'New authorised representative details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_url: ccs_patterns_prototypes_results_path,
-          return_text: 'Return to contract details',
-          secondary_text: 'Return to contract details'
-        },
         contract_details: {
           back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
@@ -155,6 +144,17 @@ module CcsPatterns
           page_title: 'Invoicing contact details',
           caption1: 'Total facilities management',
           continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_results_path,
+          return_text: 'Return to contract details',
+          secondary_text: 'Return to contract details'
+        },
+        new_authorised_representative_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'New authorised representative',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
