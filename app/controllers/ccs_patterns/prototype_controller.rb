@@ -59,6 +59,8 @@ module CcsPatterns
       @page_data[:postcode] = 'SW1 2AA'
     end
 
+    def lgps_check; end
+
     private
 
     def set_page_model
@@ -234,6 +236,16 @@ module CcsPatterns
           caption1: 'New notices contact details',
           continuation_text: 'Continue',
           return_text: 'Return to new notices contact details',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        lgps_check: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Local Government Pension Scheme',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and Continue',
+          return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
         },
       }.freeze

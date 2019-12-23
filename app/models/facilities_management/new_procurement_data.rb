@@ -15,6 +15,7 @@ module FacilitiesManagement
     attribute :email_address
     attribute :postcode
     attribute :telephone_number
+    attribute :LGPS
 
     validates :route_to_market, inclusion: %w[direct further]
   end
