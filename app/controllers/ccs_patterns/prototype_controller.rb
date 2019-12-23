@@ -52,6 +52,11 @@ module CcsPatterns
       @page_data[:postcode] = 'SW1 2AA'
     end
 
+    def new_notices_new_address
+      @page_data[:label_text] = { county: 'County (optional)' }
+      @page_data[:postcode] = 'SW1 2AA'
+    end
+
     private
 
     def set_page_model
@@ -201,11 +206,23 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
         },
         add_missing_address: {
+          back_label: 'Back',
+          back_text: 'Back',
           back_url: ccs_patterns_prototypes_path,
           page_title: 'Add address',
           caption1: 'New authorised representative',
           continuation_text: 'Continue',
           return_text: 'Return to new authorised representative',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        new_notices_new_address: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Add address',
+          caption1: 'New notices contact details',
+          continuation_text: 'Continue',
+          return_text: 'Return to new notices contact details',
           return_url: ccs_patterns_prototypes_path,
         },
       }.freeze
