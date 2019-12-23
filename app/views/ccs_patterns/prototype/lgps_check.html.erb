@@ -1,0 +1,23 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+  <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
+    <%= govuk_prevent_submission(f, true) %>
+    <div>
+        <%= govuk_grouped_field(f, 'Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?', :LGPS) do |ff, attr| %>
+    </div>
+        <div class="govuk-radios">
+            <div class="govuk-radios__item">
+              <%= f.radio_button :LGPS, 'Yes', value: 'LGPS_eligible', class: 'govuk-radios__input' %>
+              <%= f.label :LGPS, "Yes", class: 'govuk-label govuk-radios__label'%>
+            </div>
+            <div class="govuk-radios__item">
+              <%= f.radio_button :LGPS, 'No', value: 'LGPS_ineligible', class: 'govuk-radios__input' %>
+              <%= f.label :LGPS, "No", class: 'govuk-label govuk-radios__label'%>
+            </div>
+        </div>
+        <%end %>
+      <%end %>
+  </form>
+    <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+    <%= govuk_continuation_buttons(pd, f, false) %>
+  <% end %>
+<%end%>

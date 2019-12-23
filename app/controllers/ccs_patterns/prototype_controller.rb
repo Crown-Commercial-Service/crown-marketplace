@@ -54,6 +54,13 @@ module CcsPatterns
       @page_data[:postcode] = 'SW1 2AA'
     end
 
+    def new_notices_new_address
+      @page_data[:label_text] = { county: 'County (optional)' }
+      @page_data[:postcode] = 'SW1 2AA'
+    end
+
+    def lgps_check; end
+
     private
 
     def set_page_model
@@ -129,17 +136,6 @@ module CcsPatterns
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
         },
-        new_authorised_representative_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'New authorised representative details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_url: ccs_patterns_prototypes_results_path,
-          return_text: 'Return to contract details',
-          secondary_text: 'Return to contract details'
-        },
         contract_details: {
           back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
@@ -157,6 +153,17 @@ module CcsPatterns
           page_title: 'Invoicing contact details',
           caption1: 'Total facilities management',
           continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_results_path,
+          return_text: 'Return to contract details',
+          secondary_text: 'Return to contract details'
+        },
+        new_authorised_representative_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'New authorised representative',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
@@ -212,11 +219,33 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
         },
         add_missing_address: {
+          back_label: 'Back',
+          back_text: 'Back',
           back_url: ccs_patterns_prototypes_path,
           page_title: 'Add address',
           caption1: 'New authorised representative',
           continuation_text: 'Continue',
           return_text: 'Return to new authorised representative',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        new_notices_new_address: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Add address',
+          caption1: 'New notices contact details',
+          continuation_text: 'Continue',
+          return_text: 'Return to new notices contact details',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        lgps_check: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Local Government Pension Scheme',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and Continue',
+          return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
         },
       }.freeze
