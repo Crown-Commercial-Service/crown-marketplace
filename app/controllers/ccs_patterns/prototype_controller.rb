@@ -52,6 +52,12 @@ module CcsPatterns
       @page_data[:postcode] = 'SW1 2AA'
     end
 
+    def notices
+      @page_data[:notices_contact_full_name] = 'Fake Full Name'
+      @page_data[:notices_contact_job_title] = 'Fake Job Title'
+      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
+    end
+
     private
 
     def set_page_model
@@ -191,6 +197,16 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to procurement dashboard',
           secondary_text: 'Return to results'
+        },
+        notices: {
+          back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'Notices contact details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
+          return_text: 'Return to contract details',
+          return_url: ccs_patterns_prototypes_path,
         },
         payment_method: {
           back_url: ccs_patterns_prototypes_path,
