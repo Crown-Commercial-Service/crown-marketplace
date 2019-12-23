@@ -44,7 +44,7 @@ module CcsPatterns
     end
 
     def new_authorised_representative_details; end
-  
+
     def authorised_representative
       @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
       @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
