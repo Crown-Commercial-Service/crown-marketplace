@@ -45,6 +45,8 @@ module CcsPatterns
 
     def new_authorised_representative_details; end
 
+    def new_notices_contact_details; end
+
     def payment_method; end
 
     def add_missing_address
@@ -190,7 +192,6 @@ module CcsPatterns
           continuation_text: 'Continue',
           return_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
           return_text: 'Return to new invoicing contact details',
-          secondary_text: 'Return to new invoicing contact details'
         },
         did_you_know: {
           back_url: ccs_patterns_prototypes_what_next_path,
@@ -212,6 +213,16 @@ module CcsPatterns
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
+        },
+        new_notices_contact_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'New notice contact details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and Return',
+          return_url: ccs_patterns_prototypes_pricing_path,
+          return_text: 'Return to contract details'
         },
         payment_method: {
           back_url: ccs_patterns_prototypes_path,
