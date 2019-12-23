@@ -13,10 +13,10 @@
           <%= f.text_field :postcode, class: 'govuk-input', maxlength: 255 %>
       </div>
       <div class="govuk-!-margin-top-0">
-      <%= f.button t('Find address'), class: 'govuk-button'%>
+      <%= f.button "Find address", class: 'govuk-button'%>
       </div>
       <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-0">
-        <%= link_to t("I can't find my address in the list"), ccs_patterns_prototypes_new_invoicing_contact_details_edit_address_path(@invoicing_contact_detail, update_address: true),  class: "govuk-link--no-visited-state govuk-caption-m" %>
+        <%= link_to "I can't find my address in the list", ccs_patterns_prototypes_new_invoicing_contact_details_edit_address_path(@invoicing_contact_detail, update_address: true),  class: "govuk-link--no-visited-state govuk-caption-m" %>
       </div>
       <%= govuk_continuation_buttons(@page_description, f, false) %>
     <% end %>
