@@ -18,7 +18,7 @@ module FacilitiesManagement
 
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
-    validates :route_to_market, inclusion: { in: %w[direct_award further_competition] }, on: :results
+    validates :route_to_market, inclusion: { in: %w[direct_award further_competition] }, on: :route_to_market
 
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?

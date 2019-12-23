@@ -103,10 +103,26 @@ module FacilitiesManagement
         set_results_page_data
       end
 
+      def direct_award_pricing
+        set_page_details
+      end
+
+      def further_competition
+        set_page_details
+      end
+
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         @procurement.assign_attributes(procurement_route_params)
-        redirect_to facilities_management_beta_procurement_summary_path(@procurement) if @procurement.valid?(:results)
+        return unless @procurement.valid?('route_to_market')
+
+        #if @procurement[:route_to_market] == 'direct_award'
+        #  @procurement.start_detailed_search
+        #  redirect_to facilities_management_beta_procurement_direct_award_pricing_path(@procurement)
+        #else
+        #  @procurement.start_further_competition
+        #  redirect_to facilities_management_beta_procurement_further_competition_path(@procurement)
+        #end
       end
 
       def estimated_cost
