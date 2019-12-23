@@ -49,6 +49,14 @@ module CcsPatterns
 
     def payment_method; end
 
+    def confirmation_of_signed_contract
+      @page_data[:form_text] = 'Please confirm if both parties have signed and exchanged the contract'
+      @page_data[:label_text] = { contract_signed_yes: 'Yes', contract_signed_no: 'No', contract_not_signed: 'This contract will not be signed.<br />Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.'.html_safe }
+      @page_data[:checked] = ''
+      @page_data[:yes_is_used] = @page_data[:checked] == 'yes'
+      @page_data[:no_is_used] = @page_data[:checked] == 'no'
+    end
+
     def add_missing_address
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'SW1 2AA'
@@ -217,6 +225,15 @@ module CcsPatterns
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
+        },
+        confirmation_of_signed_contract: {
+          back_url: ccs_patterns_prototypes_results_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'Confirmation of signed contract',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and continue',
+          secondary_text: 'Cancel'
         },
         add_missing_address: {
           back_label: 'Back',
