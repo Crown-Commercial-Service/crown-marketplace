@@ -7,6 +7,10 @@ module FacilitiesManagement
     attribute :confirm_direct_award
     attribute :select_an_invoicing_contact
     attribute :name
+    attribute :building
+    attribute :street
+    attribute :town_or_city
+    attribute :county
     attribute :job_title
     attribute :email_address
     attribute :postcode

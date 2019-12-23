@@ -112,7 +112,7 @@ module LayoutHelper
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
-  def govuk_start_individual_field(builder, attribute, &block)
+  def govuk_start_individual_field(builder, attribute, label_text = {}, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attribute_errors
@@ -122,7 +122,7 @@ module LayoutHelper
 
     content_tag :div, options do
       capture do
-        concat(govuk_label(builder, builder.object, attribute))
+        concat(govuk_label(builder, builder.object, attribute, label_text))
         concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil))
         block.call(attribute) if block_given?
       end
@@ -172,7 +172,9 @@ module LayoutHelper
   INPUT_WIDTH = { tiny: 'govuk-input--width-2',
                   small: 'govuk-input--width-4',
                   medium: 'govuk-input--width-10',
-                  large: 'govuk-input--width-20' }.freeze
+                  large: 'govuk-input--width-20',
+                  one_half: 'govuk-!-width-one-half',
+                  two_thirds: 'govuk-!-width-two-thirds' }.freeze
 
   def govuk_text_input(builder, attribute, text_size, *option)
     css_classes = ['govuk-input']
@@ -191,12 +193,14 @@ module LayoutHelper
     builder.button(value: nil, options: { class: 'govuk-button' })
   end
 
-  def govuk_label(builder, model, attribute)
-    builder.label attribute, generate_label_text(model, attribute), class: 'govuk-label govuk-!-margin-bottom-6'
+  def govuk_label(builder, model, attribute, label_text = {})
+    builder.label attribute, generate_label_text(model, attribute, label_text), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 
-  def generate_label_text(obj, attribute)
-    if obj.class.respond_to?(:human_attribute_name)
+  def generate_label_text(obj, attribute, label_text = {})
+    if label_text.key?(attribute)
+      label_text[attribute]
+    elsif obj.class.respond_to?(:human_attribute_name)
       obj.class.human_attribute_name(attribute.to_s)
     else
       attribute.to_s.humanize
