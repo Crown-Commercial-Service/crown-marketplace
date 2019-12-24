@@ -238,7 +238,7 @@ Rails.application.routes.draw do
     get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
     get '/prototypes/confirmation-of-signed-contract', to: 'prototype#confirmation_of_signed_contract'
     get '/prototypes/new-authorised-representative-details', to: 'prototype#new_authorised_representative_details'
-    get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
+    get '/prototypes/contract-signed', to: 'prototype#contract_signed'
     get '/prototypes/new-notices-contact-details', to: 'prototype#new_notices_contact_details'
     get '/prototypes/did-you-know', to: 'prototype#did_you_know'
     get '/prototypes/new-notices-new-address', to: 'prototype#new_notices_new_address'
