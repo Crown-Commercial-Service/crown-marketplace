@@ -62,7 +62,7 @@ module CcsPatterns
     def new_notices_contact_details; end
 
     def payment_method; end
-  
+
     def procurement_closed
       @page_data[:procurement_name] = 'Total facilities management'
       @page_data[:procurement_number] = 'FM-094-2019'
