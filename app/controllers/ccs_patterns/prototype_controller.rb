@@ -62,6 +62,13 @@ module CcsPatterns
       @page_data[:postcode] = 'SW1 2AA'
     end
 
+    def contract_signed
+      @page_data[:start_date] = Date.new(2019, 11, 19)&.strftime '%d %B %Y'
+      @page_data[:end_date] = Date.new(2026, 12, 26)&.strftime '%d %B %Y'
+      @page_data[:contract_name] = 'School facilities London'
+      @page_data[:contract_code] = 'FM-094-2019'
+    end
+
     def new_notices_new_address
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'SW1 2AA'
@@ -225,6 +232,13 @@ module CcsPatterns
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
+        },
+        contract_signed: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          secondary_text: 'Return to procurement dashboard',
+          secondary_url: ccs_patterns_prototypes_path
         },
         confirmation_of_signed_contract: {
           back_url: ccs_patterns_prototypes_results_path,
