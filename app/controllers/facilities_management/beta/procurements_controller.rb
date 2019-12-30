@@ -9,6 +9,7 @@ module FacilitiesManagement
       before_action :set_procurement_data, only: %i[show edit update results set_route_to_market]
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
+      before_action :set_page_details
 
       def index
         @procurements = current_user.procurements
@@ -93,28 +94,26 @@ module FacilitiesManagement
       end
 
       def summary
-        set_page_details
         @page_data = {}
         @page_data[:model_object] = @procurement
       end
 
       def results
-        set_page_details
         set_results_page_data
       end
 
-      def direct_award_pricing
-        set_page_details
-      end
+      def direct_award_pricing; end
 
-      def further_competition
-        set_page_details
-      end
+      def further_competition; end
 
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         @procurement.assign_attributes(procurement_route_params)
-        return unless @procurement.valid?('route_to_market')
+
+        unless @procurement.valid?(:route_to_market)
+          set_results_page_data
+          render 'results'
+        end
 
         #if @procurement[:route_to_market] == 'direct_award'
         #  @procurement.start_detailed_search
@@ -267,20 +266,22 @@ module FacilitiesManagement
       # rubocop:disable Metrics/AbcSize
       def set_page_details
         @page_data = {}
-        @page_description = LayoutHelper::PageDescription.new(
-          LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
-                                          page_details(action_name)[:caption1],
-                                          page_details(action_name)[:caption2],
-                                          page_details(action_name)[:sub_title]),
-          LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
-                                             page_details(action_name)[:back_label],
-                                             page_details(action_name)[:back_text]),
-          LayoutHelper::NavigationDetail.new(page_details(action_name)[:continuation_text],
-                                             page_details(action_name)[:return_url],
-                                             page_details(action_name)[:return_text],
-                                             page_details(action_name)[:secondary_url],
-                                             page_details(action_name)[:secondary_text])
-        )
+        if page_definitions.key?(action_name.to_sym)
+          @page_description = LayoutHelper::PageDescription.new(
+            LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
+                                            page_details(action_name)[:caption1],
+                                            page_details(action_name)[:caption2],
+                                            page_details(action_name)[:sub_title]),
+            LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
+                                               page_details(action_name)[:back_label],
+                                               page_details(action_name)[:back_text]),
+            LayoutHelper::NavigationDetail.new(page_details(action_name)[:continuation_text],
+                                               page_details(action_name)[:return_url],
+                                               page_details(action_name)[:return_text],
+                                               page_details(action_name)[:secondary_url],
+                                               page_details(action_name)[:secondary_text])
+          )
+        end
       end
 
       def page_details(action)
