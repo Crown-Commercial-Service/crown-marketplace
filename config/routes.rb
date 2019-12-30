@@ -308,6 +308,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :postcodes, only: :show
       post '/postcode/:slug', to: 'uploads#postcodes'
+      get '/search-postcode/:postcode', to: 'nuts#show_post_code'
+      get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
     end
   end
 

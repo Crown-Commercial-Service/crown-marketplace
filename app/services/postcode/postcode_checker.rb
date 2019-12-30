@@ -7,35 +7,23 @@ module Postcode
       info = location_info(postcode)
       @london_burroughs.include? info[0]['county'].upcase
     end
-
+    
     # SELECT * FROM os_address_view where postcode='G32 0RP';
     def self.location_info(postcode)
-      query = <<~HEREDOC
-        select  distinct  initcap(add1)  as  add1,  initcap(village) as village,
-        initcap(post_town)  as  post_town,
-        initcap(county)  as  county,
-        upper(public.os_address_view.postcode) as postcode, building_ref,
-        public.nuts_regions.name as region,
-        public.postcodes_nuts_regions.code as regioncode
-        from public.os_address_view
-        left join public.postcodes_nuts_regions ON public.postcodes_nuts_regions.postcode = '#{postcode.delete(' ')}'
-        left join public.nuts_regions ON public.nuts_regions.code = public.postcodes_nuts_regions.code
-        where public.os_address_view.postcode = '#{postcode}'
-      HEREDOC
-      ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
-    rescue StandardError => e
-      raise e
-    end
-
-    def self.find_region(postcode)
-      query = <<~HEREDOC
-        select
-        distinct public.postcodes_nuts_regions.code,
-        initcap(public.nuts_regions.name) as region
-        from public.postcodes_nuts_regions
-        left join public.nuts_regions ON public.nuts_regions.code = public.postcodes_nuts_regions.code
-        where public.postcodes_nuts_regions.postcode like '#{postcode.upcase}%'
-      HEREDOC
+      #query = "select distinct initcap(add1) as add1, initcap(village) as village, initcap(post_town) as post_town, initcap(county) as county, upper(postcode) as postcode, building_ref
+      #from public.os_address_view where postcode = '" + postcode + "';"
+      query =<<~HEREDOC 
+              select distinct initcap(add1) as add1, initcap(village) as village, 
+              initcap(post_town) as post_town, 
+              initcap(county) as county, 
+              upper(public.os_address_view.postcode) as postcode, building_ref,
+              public.nuts_regions.name as region,
+              public.postcodes_nuts_regions.code as regioncode
+              from public.os_address_view  
+              left join public.postcodes_nuts_regions ON public.postcodes_nuts_regions.postcode = '#{postcode.delete(' ')}'
+              left join public.nuts_regions ON public.nuts_regions.code = public.postcodes_nuts_regions.code
+              where public.os_address_view.postcode = '#{postcode}'
+            HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     rescue StandardError => e
       raise e

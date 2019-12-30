@@ -1,8 +1,8 @@
 module OrdnanceSurvey
-  require 'csv'
+  require "csv"
   require 'aws-sdk-s3'
   require 'json'
-  require Rails.root.join('lib', 'tasks', 'distributed_locks')
+  require './lib/tasks/distributed_locks'
 
   def self.create_postcode_table
     str = File.read(Rails.root + 'data/postcode/PostgreSQL_AddressBase_Plus_CreateTable.sql')
@@ -92,7 +92,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
     object = Aws::S3::Resource.new(region: region)
     object.bucket(bucket).objects.each do |obj|
-      next unless obj.key.starts_with? 'dataPostcode2files'
+      next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
 
       next if postcode_file_already_loaded(obj.key)
 
@@ -101,6 +101,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       puts "*** Loading file #{obj.key}"
       chunks = ''
       obj.get do |chunk|
+        # rc.put_copy_data chunk
         chunks << chunk
       end
       ActiveRecord::Base.connection_pool.with_connection do |conn|
@@ -159,4 +160,26 @@ namespace :db do
     p 'Creating address lookup view'
     OrdnanceSurvey.create_address_lookup_view
   end
+
+
+  desc 'import postcode and nuts region data which matches postcode to a region code'
+  task importpostcoderegion: :environment do
+    p 'Truncate table postcodes_nuts_regions'
+    PostcodesNutsRegions.delete_all
+    postcode_regions = []
+    columns = [:postcode, :code]
+    CSV.foreach("data/facilities_management/pc_uk_NUTS-2013_vFM-CAT.csv") do |row|
+      p row[0].delete(' ') + '  ' + row[1]
+      postcode_regions << PostcodesNutsRegions.new(postcode:row[0].delete(' '), code:row[1])
+    end
+    p 'Importing records into database table postcodes_nuts_regions'
+    PostcodesNutsRegions.import columns, postcode_regions
+    p 'Finished importing records into database table postcodes_nuts_regions'
+  end
+
+
 end
+
+
+
+
