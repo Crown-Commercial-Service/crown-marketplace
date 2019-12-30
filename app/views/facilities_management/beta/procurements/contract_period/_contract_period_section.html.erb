@@ -1,14 +1,19 @@
-<tr class="govuk-table__row" id="initial_call_off_period-error">
-  <th scope="row" class="govuk-table__header govuk-!-font-size-24" width="30%">Contract period</th>
+<tr class="govuk-table__row govuk-no-border" id="initial_call_off_period-error">
+  <th scope="row" class="govuk-table__header govuk-!-font-size-24 <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>" width="30%">Contract period </th>
   <td class="govuk-table__cell">
     <%= link_to('Answer all questions', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") if @procurement.unanswered_contract_date_questions? %>
   </td>
   <td class="govuk-table__cell">
     <%= link_to('Change all', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") unless @procurement.unanswered_contract_date_questions? %>
   </td>
+  <% if @procurement.unanswered_contract_date_questions? %>
+    <tr class="govuk-table__row  govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_period].any? %>">
+      <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :initial_call_off_period, false) %></td>
+    </tr>
+  <% end %>
 </tr>
 <tr class="govuk-table__row">
-  <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Initial call-off period</th>
+  <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>" width="30%">Initial call-off period</th>
   <td class="govuk-table__cell">
     <%= initial_call_off_period @procurement.initial_call_off_period %>
   </td>
@@ -16,7 +21,7 @@
   </td>
 </tr>
 <tr class="govuk-table__row">
-  <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Initial call-off period start date</th>
+  <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>" width="30%">Initial call-off period start date</th>
   <td class="govuk-table__cell">
     <%= initial_call_off_period_start_date %>
   </td>
@@ -24,7 +29,7 @@
   </td>
 </tr>
 <tr class="govuk-table__row">
-  <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Initial call-off period end date</th>
+  <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>" width="30%">Initial call-off period end date</th>
   <td class="govuk-table__cell">
     <% unless @procurement.initial_call_off_period.nil? %>
       <%= initial_call_off_period_end_date %>

@@ -2,6 +2,8 @@ require 'axlsx'
 require 'axlsx_rails'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
+  include FacilitiesManagement::Beta::SummaryHelper
+
   def initialize(building_ids_with_service_codes, units_of_measure_values = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
@@ -211,14 +213,15 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_volumes_information(sheet)
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40'
 
-    @services.each do |s|
+    services_without_help_cafm = remove_help_cafm_services(@services)
+    services_without_help_cafm.each do |s|
       new_row = [s['code'], s['name'], s['metric'], s['unit_of_measure']]
       @buildings_with_service_codes.each do |b|
         uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
 
         suv = uvs.find { |u| s['code'] == u[:service_code] }
 
-        new_row << suv[:uom_value] if suv
+        new_row << calculate_uom_value(suv) if suv
         new_row << nil unless suv
       end
 
@@ -229,7 +232,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def style_volume_sheet(sheet, style)
     column_widths = [15, 100, 50, 50]
     @buildings.count.times { column_widths << 20 }
-    sheet["A2:D#{@services.count + 1}"].each { |c| c.style = style }
+    sheet["A2:D#{remove_help_cafm_services(@services).count + 1}"].each { |c| c.style = style }
     sheet.column_widths(*column_widths)
+  end
+
+  def remove_help_cafm_services(services)
+    services.reject { |x| x['code'] == 'M.1' || x['code'] == 'N.1' }
   end
 end

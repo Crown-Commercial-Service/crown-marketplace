@@ -17,10 +17,38 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
 
     context 'when the name is not unique' do
-      let(:second_procurement) {  create(:facilities_management_procurement, name: procurement.name, user: user) }
+      let(:second_procurement) { create(:facilities_management_procurement, name: procurement.name, user: user) }
 
       it 'expected to not be valid' do
         expect(second_procurement.valid?(:name)).to eq false
+      end
+    end
+
+    context 'when the name has trailing and preceeding whitespace' do
+      let(:third_procurement) { create(:facilities_management_procurement, name: "  #{procurement.name}  ", user: user) }
+
+      it 'expected to remove trailing and preceeding whitespace' do
+        expect(third_procurement.send(:remove_excess_whitespace_from_name)).to eq procurement.name
+      end
+
+      it 'expected not to be valid if the same name is in database without additional whitespace' do
+        expect(third_procurement.valid?(:name)).to eq false
+      end
+    end
+
+    context 'when the name has multiple space in the middle' do
+      let(:forth_procurement) { create(:facilities_management_procurement, name: 'This   is a  test     name', user: user) }
+
+      it 'expected to remove excess spaces' do
+        expect(forth_procurement.send(:remove_excess_whitespace_from_name)).to eq 'This is a test name'
+      end
+    end
+
+    context 'when the name uses invalid characters' do
+      let(:fith_procurement) { create(:facilities_management_procurement, name: '!@£ $%^&* ()+=|<>,?', user: user) }
+
+      it 'expected to be invalid' do
+        expect(fith_procurement.valid?(:name)).to eq false
       end
     end
 
@@ -300,6 +328,54 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'is expected to return false' do
         procurement.procurement_buildings.first.procurement_building_services.destroy_all
         expect(procurement.valid_on_continue?).to eq false
+      end
+    end
+  end
+
+  describe '#update_building_services' do
+    before do
+      procurement.procurement_buildings.first.procurement_building_services.destroy_all
+
+      procurement.procurement_buildings.first.update(service_codes: procurement.service_codes)
+
+      procurement.service_codes = ['C.3']
+    end
+
+    it 'will remove any procurement_building_services that have a service code not included in the procurement service_codes' do
+      expect { procurement.save }.to change { procurement.procurement_building_services.count }.by(-2)
+    end
+
+    it 'will remove service codes from the procurement_buildings service codes that are not selected for the procurement' do
+      expect { procurement.save }.to change { procurement.procurement_buildings.first.service_codes }.from(['C.1', 'C.2']).to([])
+    end
+  end
+
+  describe '#requires_service_information' do
+    context 'when a building has services that require questions' do
+      it 'is in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: ['C.5', 'E.4', 'K.8'])
+        expect(procurement.procurement_buildings.requires_service_information).to eq [procurement_building]
+      end
+    end
+
+    context 'when a building has no services that require questions' do
+      it 'is not in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: ['K.11', 'K.14', 'K.8'])
+        expect(procurement.procurement_buildings.requires_service_information).not_to eq [procurement_building]
+      end
+    end
+
+    context 'when a building has a service that require questions' do
+      it 'is in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: ['K.7'])
+        expect(procurement.procurement_buildings.requires_service_information).to eq [procurement_building]
+      end
+    end
+
+    context 'when a building has no services' do
+      it 'is not in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: [])
+        expect(procurement.procurement_buildings.requires_service_information).not_to eq [procurement_building]
       end
     end
   end

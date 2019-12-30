@@ -1,5 +1,7 @@
 module FacilitiesManagement
   class SummaryReport
+    include FacilitiesManagement::Beta::SummaryHelper
+
     attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :errors
 
     def initialize(start_date, user_id, data, procurement = nil)
@@ -120,6 +122,7 @@ module FacilitiesManagement
           result = uvals_for_public(building)
           all_building_uvals = result[0]
           building_data = result[1]
+          id = result[0][0][:building_id]
 
           # TBC filter out nil values for now
           building_uvals = all_building_uvals.reject { |v| v[:uom_value].nil? }
@@ -371,7 +374,7 @@ module FacilitiesManagement
       uvals_remove_cafm_help = uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
 
       uvals_remove_cafm_help.each do |v|
-        uom_value = v[:uom_value].to_f
+        uom_value = calculate_uom_value(v)
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
