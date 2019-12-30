@@ -1,14 +1,19 @@
 require 'csv'
 require 'json'
 
-namespace :db do
+namespace :pnr do
   desc 'import postcode and nuts region data which matches postcode to a region code'
-  task run_postcodes_to_nuts_worker: :environment do
-    Sidekiq::Queue.new('fm').clear # clear previous jobs before starting new one
-    ActiveRecord::Base.connection.execute('TRUNCATE TABLE postcodes_nuts_regions;')
-    Dir.entries(Rails.root.join('data', 'facilities_management', 'pc_uk_NUTS')).reject { |f| File.directory? f }.each do |filename|
-      p "Starting task for: #{filename}"
-      FacilitiesManagement::PostcodesToNutsWorker.perform_async(Rails.root.join('data', 'facilities_management', 'pc_uk_NUTS', filename))
+  task importpostcoderegion: :environment do
+    p 'Truncate table postcodes_nuts_regions'
+    PostcodesNutsRegions.delete_all
+    postcode_regions = []
+    columns = %i[postcode code]
+    CSV.foreach('data/facilities_management/pc_uk_NUTS-2013_vFM-CAT.csv') do |row|
+      p row[0].delete(' ') + '  ' + row[1]
+      postcode_regions << PostcodesNutsRegions.new(postcode: row[0].delete(' '), code: row[1])
     end
+    p 'Importing records into database table postcodes_nuts_regions'
+    PostcodesNutsRegions.import columns, postcode_regions
+    p 'Finished importing records into database table postcodes_nuts_regions'
   end
 end

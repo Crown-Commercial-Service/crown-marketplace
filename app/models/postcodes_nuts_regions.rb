@@ -1,4 +1,2 @@
-class PostcodesNutsRegions < ActiveRecord::Base
-
+class PostcodesNutsRegions < ApplicationRecord
 end
-
