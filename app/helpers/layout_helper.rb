@@ -95,8 +95,8 @@ module LayoutHelper
             aria: { label: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label },
             class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6')
   end
-
   # rubocop:enable Rails/OutputSafety
+
   def govuk_continuation_buttons(page_description, form_builder)
     buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit')
@@ -112,6 +112,7 @@ module LayoutHelper
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def govuk_start_individual_field(builder, attribute, require_label = true, show_errors = true, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
@@ -128,6 +129,7 @@ module LayoutHelper
       end
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def govuk_grouped_fields(form, caption, *attributes)
     attributes_with_errors = attributes.flatten.select { |a| form.object.errors[a].any? }
@@ -167,6 +169,7 @@ module LayoutHelper
     end
   end
 
+  # rubocop:disable Metrics/ParameterLists
   def fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block)
     content_tag :fieldset, options do
       capture do
@@ -179,6 +182,7 @@ module LayoutHelper
       end
     end
   end
+  # rubocop:enable Metrics/ParameterLists
 
   INPUT_WIDTH = { tiny: 'govuk-input--width-2',
                   small: 'govuk-input--width-4',
