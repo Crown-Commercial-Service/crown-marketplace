@@ -125,6 +125,8 @@ en:
               not_present: You must select at least one building
             region_codes:
               invalid: Select at least one region you need to include in your procurement
+            route_to_market:
+              inclusion: Select direct award if you want to award a contract directly to the supplier with the best price
             security_policy_document_date:
               not_a_date: The selected date is not valid
             security_policy_document_file:

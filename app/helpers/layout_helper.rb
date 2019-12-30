@@ -112,10 +112,10 @@ module LayoutHelper
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
-  def govuk_start_individual_field(builder, attribute, require_label = true, &block)
+  def govuk_start_individual_field(builder, attribute, require_label = true, show_errors = true, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
-    css_classes += ['govuk-form-group--error'] if attribute_errors
+    css_classes += ['govuk-form-group--error'] if attribute_errors && show_errors
 
     options = { class: css_classes }
     options['aria-describedby'] = error_id(attribute) if attribute_errors
@@ -123,7 +123,7 @@ module LayoutHelper
     content_tag :div, options do
       capture do
         concat(govuk_label(builder, builder.object, attribute)) if require_label
-        concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil))
+        concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil)) if show_errors
         block.call(attribute) if block_given?
       end
     end
@@ -150,22 +150,32 @@ module LayoutHelper
     end
   end
 
-  def govuk_grouped_field(form, caption, attribute)
+  def govuk_grouped_field(form, caption, attribute, &block)
     attribute_has_errors = form.object.errors[attribute].any?
-    attributes_is_an_array = form.object[attribute].is_a? Array
+    attribute_is_an_array = form.object[attribute].is_a? Array
 
-    options = { class: 'govuk-fieldset' }
+    options = {}
     options['aria-describedby'] = error_id(attribute) if attribute_has_errors
+    css_classes = ['govuk-fieldset']
+    options['class'] = css_classes
 
+    if attribute_has_errors
+      content_tag :div, fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block),
+                  class: 'govuk-form-group govuk-form-group--error'
+    else
+      fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block)
+    end
+  end
+
+  def fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block)
     content_tag :fieldset, options do
       capture do
-        concat(list_errors_for_attributes(attribute)) if attributes_is_an_array
-        concat(display_error(form.object, attribute)) unless attributes_is_an_array
         concat(content_tag(:legend,
                            content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
                            class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
-
-        yield(form, attribute)
+        concat(list_errors_for_attributes(attribute)) if attribute_is_an_array
+        concat(display_error(form.object, attribute)) unless attribute_is_an_array
+        block.call(form, attribute)
       end
     end
   end
