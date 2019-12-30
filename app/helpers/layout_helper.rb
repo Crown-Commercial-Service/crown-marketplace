@@ -96,14 +96,13 @@ module LayoutHelper
             class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6')
   end
   # rubocop:enable Rails/OutputSafety
-
-  def govuk_continuation_buttons(page_description, form_builder)
+  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true)
     buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit')
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') if secondary_button
     buttons << capture { tag.br }
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
 
-    content_tag :div, class: 'govuk-!-margin-top-6' do
+    content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
   end
@@ -112,8 +111,7 @@ module LayoutHelper
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
-  def govuk_start_individual_field(builder, attribute, require_label = true, show_errors = true, &block)
+  def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attribute_errors && show_errors
@@ -123,7 +121,7 @@ module LayoutHelper
 
     content_tag :div, options do
       capture do
-        concat(govuk_label(builder, builder.object, attribute)) if require_label
+        concat(govuk_label(builder, builder.object, attribute, label_text))  if require_label
         concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil)) if show_errors
         block.call(attribute) if block_given?
       end
@@ -187,7 +185,10 @@ module LayoutHelper
   INPUT_WIDTH = { tiny: 'govuk-input--width-2',
                   small: 'govuk-input--width-4',
                   medium: 'govuk-input--width-10',
-                  large: 'govuk-input--width-20' }.freeze
+                  large: 'govuk-input--width-20',
+                  one_half: 'govuk-!-width-one-half',
+                  two_thirds: 'govuk-!-width-two-thirds',
+                  one_quarter: 'govuk-!-width-one-quarter' }.freeze
 
   def govuk_text_input(builder, attribute, text_size, *option)
     css_classes = ['govuk-input']
@@ -206,8 +207,8 @@ module LayoutHelper
     builder.button(value: nil, options: { class: 'govuk-button' })
   end
 
-  def govuk_label(builder, model, attribute)
-    builder.label attribute, generate_label_text(model, attribute), class: 'govuk-label'
+  def govuk_label(builder, model, attribute, label_text = {})
+    builder.label attribute, generate_label_text(model, attribute, label_text), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 
   def govuk_details(summary_text, &block)
@@ -219,8 +220,10 @@ module LayoutHelper
     end
   end
 
-  def generate_label_text(obj, attribute)
-    if obj.class.respond_to?(:human_attribute_name)
+  def generate_label_text(obj, attribute, label_text = {})
+    if label_text.key?(attribute)
+      label_text[attribute]
+    elsif obj.class.respond_to?(:human_attribute_name)
       obj.class.human_attribute_name(attribute.to_s)
     else
       attribute.to_s.humanize

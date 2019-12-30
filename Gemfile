@@ -8,9 +8,9 @@ gem 'rails', '~> 5.2.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0', '>= 5.0.7'
+gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -35,7 +35,7 @@ gem 'activerecord-postgis-adapter'
 gem 'uk_postcode'
 gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 gem 'rubyzip', '>= 1.2.1'
-gem 'caxlsx'
+gem 'caxlsx', '>= 3.0.1'
 gem 'axlsx_rails', '>= 0.6.0'
 gem 'phonejack'
 gem 'holidays'
@@ -84,7 +84,7 @@ gem 'sinatra', '~> 2.0.5', require: false
 gem 'slim', '~> 4.0.1'
 
 # for rspec and ST data generation script
-gem 'capybara'
+gem 'capybara', '>= 3.20.2'
 
 gem 'faker'
 
@@ -97,7 +97,7 @@ gem 'role_model', '~> 0.8.2'
 gem 'carrierwave-aws', '~> 1.3.0'
 
 gem 'sprockets'
-gem 'sprockets-bumble_d', '>= 2.1.0'
+gem 'sprockets-bumble_d', '>= 2.2.0'
 
 # for date layout and validation
 gem 'gov_uk_date_fields', '>= 4.1.0'
@@ -110,17 +110,17 @@ gem 'ratonvirus-clamby'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails', '>= 2.7.2'
-  gem 'factory_bot_rails', '>= 5.0.2'
+  gem 'dotenv-rails', '>= 2.7.5'
+  gem 'factory_bot_rails', '>= 5.1.1'
   gem 'launchy'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.4'
-  gem 'rspec-rails', '>= 3.8.2'
+  gem 'rspec-rails', '>= 3.9.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'rubyXL', '>= 3.4.3'
+  gem 'rubyXL', '>= 3.4.6'
   gem 'i18n-tasks', '>= 0.9.29'
-  gem 'poltergeist'
+  gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
 end
