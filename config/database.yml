@@ -18,6 +18,7 @@
 default: &default
   adapter: postgis
   encoding: unicode
+
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -61,7 +62,8 @@ test:
   <<: *default
   host: localhost
   database: marketplace_test
-
+  username:
+  password:
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
