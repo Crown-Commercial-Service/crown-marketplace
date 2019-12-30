@@ -2,7 +2,7 @@ require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FrameworkController
-      before_action :set_procurement, only: %i[show edit update destroy continue results set_route_to_market]
+      before_action :set_procurement, only: %i[show edit update destroy continue results set_route_to_market direct_award_pricing further_competition]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
       before_action :user_buildings_count, only: %i[show edit update]
@@ -102,9 +102,15 @@ module FacilitiesManagement
         set_results_page_data
       end
 
-      def direct_award_pricing; end
+      def direct_award_pricing
+        @page_data = {}
+        @page_data[:model_object] = @procurement
+      end
 
-      def further_competition; end
+      def further_competition
+        @page_data = {}
+        @page_data[:model_object] = @procurement
+      end
 
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
@@ -113,15 +119,18 @@ module FacilitiesManagement
         unless @procurement.valid?(:route_to_market)
           set_results_page_data
           render 'results'
+          return
         end
 
-        #if @procurement[:route_to_market] == 'direct_award'
-        #  @procurement.start_detailed_search
-        #  redirect_to facilities_management_beta_procurement_direct_award_pricing_path(@procurement)
-        #else
-        #  @procurement.start_further_competition
-        #  redirect_to facilities_management_beta_procurement_further_competition_path(@procurement)
-        #end
+        if @procurement[:route_to_market] == 'direct_award'
+          @procurement.start_direct_award
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_direct_award_pricing_path(@procurement)
+        else
+          @procurement.start_further_competition
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_further_competition_path(@procurement)
+        end
       end
 
       def estimated_cost
@@ -303,6 +312,16 @@ module FacilitiesManagement
           },
           set_route_to_market: {
             page_title: 'Results',
+          },
+          direct_award_pricing: {
+            caption1: @procurement[:name],
+            page_title: 'Direct Award',
+            back_url: facilities_management_beta_procurement_results_path
+          },
+          further_competition: {
+            caption1: @procurement[:name],
+            page_title: 'Further competition',
+            back_url: facilities_management_beta_procurement_results_path
           },
           summary: {
             page_title: 'Summary',
