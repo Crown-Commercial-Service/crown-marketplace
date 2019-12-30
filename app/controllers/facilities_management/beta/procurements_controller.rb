@@ -9,7 +9,7 @@ module FacilitiesManagement
       before_action :set_procurement_data, only: %i[show edit update results set_route_to_market]
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
-      before_action :set_page_details
+      before_action :set_page_details, only: %i[show edit update destroy continue results set_route_to_market direct_award_pricing further_competition]
 
       def index
         @procurements = current_user.procurements
@@ -317,12 +317,12 @@ module FacilitiesManagement
           direct_award_pricing: {
             caption1: @procurement[:name],
             page_title: 'Direct Award',
-            back_url: facilities_management_beta_procurement_results_path
+            back_url: facilities_management_beta_procurement_results_path(@procurement)
           },
           further_competition: {
             caption1: @procurement[:name],
             page_title: 'Further competition',
-            back_url: facilities_management_beta_procurement_results_path
+            back_url: facilities_management_beta_procurement_results_path(@procurement)
           },
           summary: {
             page_title: 'Summary',
