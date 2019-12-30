@@ -35,11 +35,11 @@ module FacilitiesManagement
       end
 
       event :start_direct_award do
-        transitions from: :detailed_search, to: :direct_award
+        transitions to: :direct_award
       end
 
       event :start_further_competition do
-        transitions from: :detailed_search, to: :further_competition
+        transitions to: :further_competition
       end
     end
 
