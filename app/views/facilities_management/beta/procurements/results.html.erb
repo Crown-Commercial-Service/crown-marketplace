@@ -2,7 +2,7 @@
   <h1 class="govuk-heading govuk-heading-l govuk-!-width-two-thirds"><%= t('.sub-text') %></h1>
   <h1 class="govuk-heading govuk-heading-l"><%= t('.sub-lot') %>&nbsp;<%= @page_data[:selected_sublot] %></h1>
   <h2 class="govuk-heading govuk-heading-m"><%= t('.estimated_cost') %>
-    <br/><span class="govuk-heading govuk-heading-l"><%= number_to_currency(@page_data[:estimated_cost]) %></span></h2>
+    <br/><span class="govuk-heading govuk-heading-l"><%= number_to_currency(@page_data[:estimated_cost], precision: 0) %></span></h2>
   <details class="govuk-details govuk-!-width-two-thirds govuk-!-margin-bottom-6" data-module="govuk-details">
     <summary class="govuk-details__summary">
       <span class="govuk-details__summary-text">
@@ -46,7 +46,7 @@
           <div class="govuk-radios__item">
             <%= f.radio_button :route_to_market, 'direct_award', class: 'govuk-radios__input' %>
             <%= f.label :route_to_market, value: 'direct_award', class: 'govuk-label govuk-radios__label' do %>
-              <%= t('.direct_award_label_html', price: number_to_currency(@page_data[:supplier_prices].min)) %>
+              <%= t('.direct_award_label_html', price: number_to_currency(@page_data[:supplier_prices].min, precision: 0)) %>
             <% end %>
             <%= govuk_details t('.what_is_da') do %>
               <ul class="govuk-list govuk-list--bullet">
