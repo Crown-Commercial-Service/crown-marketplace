@@ -17,7 +17,7 @@
   <h2 class="govuk-heading govuk-heading-s govuk-!-margin-top-0"><%= t('.who_are') %></h2>
   <% @page_data[:supplier_collection].each do |s| %>
     <p><%= s %></p>
-    <hr class="govuk-!-width-one-third govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    <%= '<hr class="govuk-!-width-one-third govuk-section-break govuk-section-break--m govuk-section-break--visible">'.html_safe unless s.equal?(@page_data[:supplier_collection].last) %>
   <% end %>
   <% if eligible_for_direct_award? %>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
