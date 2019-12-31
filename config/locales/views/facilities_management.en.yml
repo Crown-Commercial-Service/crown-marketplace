@@ -502,7 +502,7 @@ en:
           further_competition_html: "<b>Further competition</b>"
           sub-lot: Sub-lot
           sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
-          suppliers_shortlisted_html: There are <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
+          suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?
           who_are: who are able to provide the services your require in your location(s)
