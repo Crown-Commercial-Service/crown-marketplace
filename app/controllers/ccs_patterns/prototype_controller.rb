@@ -45,11 +45,24 @@ module CcsPatterns
 
     def new_authorised_representative_details; end
 
+    def new_notices_contact_details; end
+
     def payment_method; end
 
     def add_missing_address
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'SW1 2AA'
+    end
+
+    def new_notices_new_address
+      @page_data[:label_text] = { county: 'County (optional)' }
+      @page_data[:postcode] = 'SW1 2AA'
+    end
+
+    def notices
+      @page_data[:notices_contact_full_name] = 'Fake Full Name'
+      @page_data[:notices_contact_job_title] = 'Fake Job Title'
+      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
     private
@@ -127,17 +140,6 @@ module CcsPatterns
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
         },
-        new_authorised_representative_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'New authorised representative details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_url: ccs_patterns_prototypes_results_path,
-          return_text: 'Return to contract details',
-          secondary_text: 'Return to contract details'
-        },
         contract_details: {
           back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
@@ -155,6 +157,17 @@ module CcsPatterns
           page_title: 'Invoicing contact details',
           caption1: 'Total facilities management',
           continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_results_path,
+          return_text: 'Return to contract details',
+          secondary_text: 'Return to contract details'
+        },
+        new_authorised_representative_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'New authorised representative',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
@@ -179,7 +192,6 @@ module CcsPatterns
           continuation_text: 'Continue',
           return_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
           return_text: 'Return to new invoicing contact details',
-          secondary_text: 'Return to new invoicing contact details'
         },
         did_you_know: {
           back_url: ccs_patterns_prototypes_what_next_path,
@@ -192,6 +204,26 @@ module CcsPatterns
           return_text: 'Return to procurement dashboard',
           secondary_text: 'Return to results'
         },
+        notices: {
+          back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'Notices contact details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
+          return_text: 'Return to contract details',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        new_notices_contact_details: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'New notice contact details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and Return',
+          return_url: ccs_patterns_prototypes_pricing_path,
+          return_text: 'Return to contract details'
+        },
         payment_method: {
           back_url: ccs_patterns_prototypes_path,
           page_title: 'Payment method',
@@ -201,11 +233,23 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
         },
         add_missing_address: {
+          back_label: 'Back',
+          back_text: 'Back',
           back_url: ccs_patterns_prototypes_path,
           page_title: 'Add address',
           caption1: 'New authorised representative',
           continuation_text: 'Continue',
           return_text: 'Return to new authorised representative',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        new_notices_new_address: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Add address',
+          caption1: 'New notices contact details',
+          continuation_text: 'Continue',
+          return_text: 'Return to new notices contact details',
           return_url: ccs_patterns_prototypes_path,
         },
       }.freeze
