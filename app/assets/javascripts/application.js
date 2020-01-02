@@ -20,3 +20,4 @@
 //= require legal_services/ls_form_validation.js
 //= require cp/cp-sign-in.js
 //= require global/global.js
+//= require_tree ./ccs_patterns
