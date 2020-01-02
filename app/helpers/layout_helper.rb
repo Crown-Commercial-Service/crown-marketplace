@@ -205,6 +205,7 @@ module LayoutHelper
 
   def govuk_text_area_input(builder, attribute, char_count = false, *option)
     css_classes = ['govuk-textarea']
+    css_classes << option.to_h[:class] if option.to_h.key? :class
     css_classes += ['govuk-input--error'] if builder.object.errors.key?(attribute)
     css_classes += ['js-character-count'] if char_count
 
@@ -214,10 +215,15 @@ module LayoutHelper
     builder.text_area attribute, options
   end
 
-  def govuk_button(builder, text, options = { submit: true })
-    return builder.submit(text, class: 'govuk-button') if options.key?(:submit) ? options[:submit] : false
+  def govuk_button(builder, text, options = { submit: true, class: '' })
+    css_classes = ['govuk-button']
+    css_classes << options[:class]
+    css_classes += ['govuk-button--secondary'] if options[:button] == :secondary
+    css_classes += ['govuk-button--warning'] if options[:button] == :warning
 
-    builder.button(value: nil, options: { class: 'govuk-button' })
+    return builder.submit(text, class: css_classes) if options.key?(:submit) ? options[:submit] : false
+
+    builder.button(value: nil, class: css_classes)
   end
 
   def govuk_label(builder, model, attribute, label_text = {})
