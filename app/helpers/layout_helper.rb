@@ -97,11 +97,11 @@ module LayoutHelper
   end
 
   # rubocop:enable Rails/OutputSafety
-  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true)
+  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true)
     buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') if secondary_button
     buttons << capture { tag.br }
-    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
+    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
 
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
@@ -162,7 +162,7 @@ module LayoutHelper
         concat(list_errors_for_attributes(attribute)) if attributes_is_an_array
         concat(content_tag(:legend,
                            content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
-                           class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
+                           class: 'govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-width-one-half'))
 
         yield(form, attribute)
       end
@@ -186,6 +186,17 @@ module LayoutHelper
     options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
 
     builder.text_field attribute, options
+  end
+
+  def govuk_text_area_input(builder, attribute, char_count = false, *option)
+    css_classes = ['govuk-textarea']
+    css_classes += ['govuk-input--error'] if builder.object.errors.key?(attribute)
+    css_classes += ['js-character-count'] if char_count
+
+    options = option.to_h.merge(class: css_classes)
+    options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
+
+    builder.text_area attribute, options
   end
 
   def govuk_button(builder, text, options = { submit: true })
