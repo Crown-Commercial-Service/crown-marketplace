@@ -62,13 +62,13 @@ module LayoutHelper
 
   # Renders the top of the page including back-button, and the 3 elements of the main header
   # rubocop:disable Rails/OutputSafety
-  def govuk_page_content(page_details, model_object = nil)
+  def govuk_page_content(page_details, model_object = nil, no_headings = false)
     raise ArgumentError, 'Use PageDescription object' unless page_details.is_a? PageDescription
 
     out = ''
     out = capture { govuk_page_error_summary(model_object) } unless model_object.nil?
     out << capture { govuk_back_button(page_details.back_button) }
-    out << capture { govuk_page_header(page_details.heading_details) }
+    out << capture { govuk_page_header(page_details.heading_details) } unless no_headings
 
     out << capture do
       yield(page_details)
