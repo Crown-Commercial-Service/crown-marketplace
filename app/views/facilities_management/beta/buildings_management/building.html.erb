@@ -32,15 +32,14 @@
     We'll use this UK address to assess the region in which your building is located.
   </span>
     <!-- find address -->
-
-    <div class="fm-bulding-postcode-wrapper <%= !@building['address'].blank? ?  'fm-bulding-postcode-hide':'' %>">
+    <div class="fm-bulding-postcode-wrapper <%= @building['address']['fm-address-postcode']  ?  'fm-bulding-postcode-hide':'' %>">
       <span id="fm-address-sub-title" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0">Postcode</span>
       <input id="address-json" name="address-json" value="" type="hidden"/>
       <input id="building-ref" name="building-ref" value="" type="hidden"/>
       <input id="fm-bm-postcode" class="govuk-input govuk-!-margin-top-0 govuk-!-margin-bottom-0" type="text" maxlength="12" style="width:300px;"><br/><br/>
       <a id="fm-find-address-btn" href="#" class="govuk-button ">Find address</a><br/>
     </div>
-    <div id="fm-bm-postcode-lookup-container" class="govuk-visually-hidden govuk-!-margin-bottom-3 govuk-!-margin-top-6">
+    <div id="fm-bm-postcode-lookup-container" class="govuk-visually-hidden govuk-!-margin-bottom-6 govuk-!-margin-top-6">
       <span class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</span>
       <select class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0" id="fm-find-address-results" name="fm-find-address-results">
         <option value="status-option" selected>0 addresses found</option>
@@ -49,26 +48,17 @@
         find my building's address in the list</a>
     </div>
 
-    <div class="fm-bulding-address-wrapper <%= @building['address'].blank? ?  'fm-bulding-address-hide':'' %>" >
+    <div class="fm-bulding-address-wrapper <%= @building['address']['fm-address-postcode']  ?  '':'fm-bulding-address-hide' %>" >
       <br/>
       <span  class="govuk-heading-s govuk-!-margin-bottom-0">Postcode</span>
-      <span id="fm-building-postcode" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19">
-        <%= defined?(@building['address']['fm-address-postcode']) ? @building['address']['fm-address-postcode']:'' %>
-      </span>
+      <span id="fm-building-postcode" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19"><%= @building['address']['fm-address-postcode'] %></span>
       <span class="govuk-heading-s govuk-!-margin-bottom-0">Address</span>
-      <span id="fm-building-address" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19">
-        <% if !@building['address'].blank? %>
-          <% address = @building['address']['fm-address-line-1'].to_s + (@building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-line-2'].to_s + (@building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-town'].to_s + (@building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-county'].to_s + (@building['address']['fm-address-county'].to_s.length > 0 ? ', ' : ' ') %>
-          <%= address %>
-        <% end %>
-      </span>      
+      <span id="fm-building-address" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19"><%= @building['address']['fm-address-line-1'] %> <%= @building['address']['fm-address-line-2'] %> <%= @building['address']['fm-address-town'] %></span>      
       <span class="govuk-heading-s govuk-!-margin-bottom-0">Location (region)</span>
-      <span id="fm-building-region" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19">
-        <%= defined?(@building['address']['fm-address-region']) ? @building['address']['fm-address-region']:'' %>  
-      </span>
+      <span id="fm-building-region" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19"><%= @building['address']['fm-address-region'] %></span>
       
     </div>
-    <% if !@building['address'].blank?   %>
+    <% if @building['address']['fm-address-postcode'] %>
       <a id="fm-show-address-postode" href="#">Change</a>
     <% end %>
  
