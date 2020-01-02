@@ -17,6 +17,7 @@ module FacilitiesManagement
     attribute :contract_end_date_dd
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
+    attribute :contract_withdrawn_reason
     attribute :name
     attribute :building
     attribute :street

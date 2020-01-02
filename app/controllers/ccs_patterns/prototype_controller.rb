@@ -30,6 +30,11 @@ module CcsPatterns
 
     def did_you_know; end
 
+    def closing_direct_award_offer
+      @page_data[:contract_name] = 'Total facilities management'
+      @page_data[:contract_code] = 'FM-093-2019'
+    end
+
     def invoicing_contact_details
       @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
       @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
@@ -162,6 +167,13 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_results_path,
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
+        },
+        closing_direct_award_offer: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          continuation_text: 'Close this procurement',
+          secondary_text: 'Cancel'
         },
         contract_details: {
           back_url: ccs_patterns_prototypes_path,
