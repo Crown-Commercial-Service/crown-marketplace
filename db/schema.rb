@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2019_12_30_124912) do
+ActiveRecord::Schema.define(version: 2020_01_03_131101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -83,6 +82,15 @@ ActiveRecord::Schema.define(version: 2019_12_30_124912) do
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
+  create_table "facilities_management_procurement_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.uuid "supplier_id"
+    t.money "direct_award_value", scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
+  end
+
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "name", limit: 100
@@ -111,6 +119,8 @@ ActiveRecord::Schema.define(version: 2019_12_30_124912) do
     t.string "security_policy_document_version_number"
     t.date "security_policy_document_date"
     t.string "security_policy_document_file"
+    t.string "lot_number"
+    t.money "assessed_value", scale: 2
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -555,6 +565,7 @@ ActiveRecord::Schema.define(version: 2019_12_30_124912) do
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
+  add_foreign_key "facilities_management_procurement_suppliers", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
