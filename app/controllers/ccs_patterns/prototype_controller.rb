@@ -188,7 +188,7 @@ module CcsPatterns
           back_url: ccs_patterns_prototypes_pricing_path,
           back_text: 'Back',
           back_label: 'Back',
-          page_title: 'New authorised representative',
+          page_title: 'New authorised representative details',
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
           return_url: ccs_patterns_prototypes_results_path,
