@@ -88,6 +88,12 @@ module CcsPatterns
       @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
+    def contract_confirmation
+      @page_data[:contact_name] = 'Total facilities management'
+      @page_data[:contact_code] = 'FM-094-2019'
+      @page_data[:supplier_name] = 'Cleaning London LTD'
+    end
+
     private
 
     def set_page_model
@@ -249,6 +255,7 @@ module CcsPatterns
         },
         payment_method: {
           back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
           page_title: 'Payment method',
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
@@ -311,6 +318,12 @@ module CcsPatterns
           continuation_text: 'Save and Continue',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
+        },
+        contract_confirmation: {
+          back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          continuation_text: false,
+          secondary_text: 'Return to procurement dashboard',
         },
       }.freeze
     end
