@@ -60,6 +60,17 @@ module CcsPatterns
 
     def payment_method; end
 
+    def procurement_closed
+      @page_data[:procurement_name] = 'Total facilities management'
+      @page_data[:procurement_number] = 'FM-094-2019'
+    end
+
+    def notices
+      @page_data[:notices_contact_full_name] = 'Fake Full Name'
+      @page_data[:notices_contact_job_title] = 'Fake Job Title'
+      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
+    end
+
     def confirmation_of_signed_contract
       @page_data[:form_text] = 'Please confirm if both parties have signed and exchanged the contract'
       @page_data[:label_text] = { contract_signed_yes: 'Yes', contract_signed_no: 'No', contract_not_signed: 'This contract will not be signed.<br />Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.'.html_safe }
@@ -86,12 +97,6 @@ module CcsPatterns
     end
 
     def lgps_check; end
-
-    def notices
-      @page_data[:notices_contact_full_name] = 'Fake Full Name'
-      @page_data[:notices_contact_job_title] = 'Fake Job Title'
-      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
-    end
 
     private
 
@@ -175,6 +180,12 @@ module CcsPatterns
           continuation_text: 'Close this procurement',
           secondary_text: 'Cancel'
         },
+        procurement_closed: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          secondary_text: 'Return to procurement dashboard'
+        },
         contract_details: {
           back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
@@ -247,7 +258,7 @@ module CcsPatterns
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
-          return_url: ccs_patterns_prototypes_path,
+          return_url: ccs_patterns_prototypes_path
         },
         new_notices_contact_details: {
           back_url: ccs_patterns_prototypes_pricing_path,
@@ -323,7 +334,7 @@ module CcsPatterns
           continuation_text: 'Save and Continue',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
-        },
+        }
       }.freeze
     end
     # rubocop:enable Metrics/AbcSize
