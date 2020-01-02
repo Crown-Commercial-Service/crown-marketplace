@@ -50,15 +50,12 @@ module CcsPatterns
 
     def new_authorised_representative_details; end
 
-<<<<<<< HEAD
     def authorised_representative
       @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
       @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
       @page_data[:invoicing_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
     end
 
-=======
->>>>>>> Created initial view
     def new_notices_contact_details; end
 
     def payment_method; end
@@ -87,7 +84,6 @@ module CcsPatterns
       @page_data[:postcode] = 'SW1 2AA'
     end
 
-<<<<<<< HEAD
     def contract_signed
       @page_data[:start_date] = Date.new(2019, 11, 19)&.strftime '%d %B %Y'
       @page_data[:end_date] = Date.new(2026, 12, 26)&.strftime '%d %B %Y'
@@ -95,24 +91,13 @@ module CcsPatterns
       @page_data[:contract_code] = 'FM-094-2019'
     end
 
-=======
->>>>>>> Created initial view
     def new_notices_new_address
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'SW1 2AA'
     end
 
-<<<<<<< HEAD
     def lgps_check; end
 
-    def notices
-      @page_data[:notices_contact_full_name] = 'Fake Full Name'
-      @page_data[:notices_contact_job_title] = 'Fake Job Title'
-      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
-    end
-
-=======
->>>>>>> Created initial view
     private
 
     def set_page_model
