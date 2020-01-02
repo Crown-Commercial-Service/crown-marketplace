@@ -6,7 +6,7 @@ module Api
     class NutsController < ApplicationController
       protect_from_forgery with: :exception
       def show_post_code
-        result = PostcodesNutsRegions.select(:id, :code, :postcode).find_by(postcode: params[:postcode])
+        result = PostcodesNutsRegions.select(:id, :code, :postcode).find_by(postcode: params[:postcode].delete(' '))
         render json: { status: 200, result: result }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
