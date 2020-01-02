@@ -62,13 +62,13 @@ module LayoutHelper
 
   # Renders the top of the page including back-button, and the 3 elements of the main header
   # rubocop:disable Rails/OutputSafety
-  def govuk_page_content(page_details, model_object = nil, no_headings = false)
+  def govuk_page_content(page_details, model_object = nil)
     raise ArgumentError, 'Use PageDescription object' unless page_details.is_a? PageDescription
 
     out = ''
     out = capture { govuk_page_error_summary(model_object) } unless model_object.nil?
     out << capture { govuk_back_button(page_details.back_button) }
-    out << capture { govuk_page_header(page_details.heading_details) } unless no_headings
+    out << capture { govuk_page_header(page_details.heading_details) }
 
     out << capture do
       yield(page_details)
@@ -95,15 +95,25 @@ module LayoutHelper
             aria: { label: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label },
             class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6')
   end
-
   # rubocop:enable Rails/OutputSafety
-  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true)
+<<<<<<< HEAD
+
+  def govuk_continuation_buttons(page_description, form_builder)
+    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit')
+    buttons << capture { tag.br }
+    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
+
+    content_tag :div, class: 'govuk-!-margin-top-6' do
+=======
+  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true)
     buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') if secondary_button
     buttons << capture { tag.br }
-    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
+    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
 
     content_tag :div, class: 'govuk-!-margin-top-5' do
+>>>>>>> master
       buttons
     end
   end
@@ -112,8 +122,12 @@ module LayoutHelper
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity,Metrics/ParameterLists
-  def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, &block)
+<<<<<<< HEAD
+  # rubocop:disable Metrics/CyclomaticComplexity
+  def govuk_start_individual_field(builder, attribute, require_label = true, show_errors = true, &block)
+=======
+  def govuk_start_individual_field(builder, attribute, label_text = {}, &block)
+>>>>>>> master
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attribute_errors && show_errors
@@ -123,13 +137,18 @@ module LayoutHelper
 
     content_tag :div, options do
       capture do
-        concat(govuk_label(builder, builder.object, attribute, label_text)) if require_label
+<<<<<<< HEAD
+        concat(govuk_label(builder, builder.object, attribute)) if require_label
         concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil)) if show_errors
+=======
+        concat(govuk_label(builder, builder.object, attribute, label_text))
+        concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil))
+>>>>>>> master
         block.call(attribute) if block_given?
       end
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity,Metrics/ParameterLists
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def govuk_grouped_fields(form, caption, *attributes)
     attributes_with_errors = attributes.flatten.select { |a| form.object.errors[a].any? }
@@ -203,17 +222,6 @@ module LayoutHelper
     builder.text_field attribute, options
   end
 
-  def govuk_text_area_input(builder, attribute, char_count = false, *option)
-    css_classes = ['govuk-textarea']
-    css_classes += ['govuk-input--error'] if builder.object.errors.key?(attribute)
-    css_classes += ['js-character-count'] if char_count
-
-    options = option.to_h.merge(class: css_classes)
-    options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
-
-    builder.text_area attribute, options
-  end
-
   def govuk_button(builder, text, options = { submit: true })
     return builder.submit(text, class: 'govuk-button') if options.key?(:submit) ? options[:submit] : false
 
@@ -224,6 +232,7 @@ module LayoutHelper
     builder.label attribute, generate_label_text(model, attribute, label_text), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 
+<<<<<<< HEAD
   def govuk_details(summary_text, &block)
     content_tag :details, class: 'govuk-details govuk-!-width-two-thirds govuk-!-margin-bottom-6', data: { module: 'govuk-details' } do
       capture do
@@ -233,10 +242,14 @@ module LayoutHelper
     end
   end
 
+  def generate_label_text(obj, attribute)
+    if obj.class.respond_to?(:human_attribute_name)
+=======
   def generate_label_text(obj, attribute, label_text = {})
     if label_text.key?(attribute)
       label_text[attribute]
     elsif obj.class.respond_to?(:human_attribute_name)
+>>>>>>> master
       obj.class.human_attribute_name(attribute.to_s)
     else
       attribute.to_s.humanize
