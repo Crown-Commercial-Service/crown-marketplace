@@ -453,6 +453,13 @@ ActiveRecord::Schema.define(version: 2019_12_30_124912) do
     t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
   end
 
+  create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "postcode", limit: 255
+    t.string "code", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|
     t.string "current_accredited_suppliers", limit: 255
     t.string "geographical_data_all_suppliers", limit: 255
