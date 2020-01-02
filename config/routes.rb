@@ -235,6 +235,7 @@ Rails.application.routes.draw do
     get '/prototypes/what-next', to: 'prototype#what_next'
     get '/prototypes/payment-method', to: 'prototype#payment_method'
     get '/prototypes/add-missing-address', to: 'prototype#add_missing_address'
+    get '/prototypes/contract-confirmation', to: 'prototype#contract_confirmation'
     get '/prototypes/contract-details', to: 'prototype#contract_details'
     get '/prototypes/invoicing-contact-details', to: 'prototype#invoicing_contact_details'
     get '/prototypes/new-invoicing-contact-details', to: 'prototype#new_invoicing_contact_details'
