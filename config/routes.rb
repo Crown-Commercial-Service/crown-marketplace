@@ -140,6 +140,10 @@ Rails.application.routes.draw do
       resources :procurements do
         post 'continue'
         get 'summary'
+        get 'results'
+        get 'direct_award_pricing'
+        get 'further_competition'
+        put 'set_route_to_market'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
