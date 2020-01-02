@@ -1,11 +1,12 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
     <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
         <%= govuk_prevent_submission(f, true) %>
-        <%= govuk_grouped_field(f, 'This is the relevent contact for invoicing.', :select_an_invoicing_contact) do |ff, attr| %>
+        <div class="govuk-!-width-two-thirds">
+        <%= govuk_grouped_field(f, 'The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.', :select_an_authorised_representative) do |ff, attr| %>
             <%= govuk_start_individual_field(ff,attr) do |a| %>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
-                        <input class="govuk-radios__input" id="contact_name" name="select_an_invoicing_contact" type="radio" value="name"/>
+                        <input class="govuk-radios__input" id="contact_name" name="authorised_representative" type="radio" value="name"/>
                         <label class="govuk-label govuk-radios__label" for="direct_award">
                             <%= "#{@page_data[:invoicing_contact_full_name]}, #{@page_data[:invoicing_contact_job_title]}" %>
                             <span class="govuk-caption-m govuk-!-margin-top-2">
@@ -14,14 +15,15 @@
                         </label>
                     </div>
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="new_invoicing_contact" name="select_an_invoicing_contact" type="radio" value="new_contact"/>
+                        <input class="govuk-radios__input" id="authorised_representative" name="authorised_representative" type="radio" value="new_contact"/>
                         <label class="govuk-label govuk-radios__label ccs-font-weight-semi-bold" for="direct_award">
-                            Enter a new invoicing contact
+                            Enter a new authorised representative
                         </label>
                     </div>
                 </div>
             <% end %>
         <% end %>
+        </div>
         <%= govuk_continuation_buttons(pd, f, false) %>
     <% end %>
 <% end %>
