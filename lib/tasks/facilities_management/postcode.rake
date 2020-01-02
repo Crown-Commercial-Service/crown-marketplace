@@ -1,4 +1,5 @@
 module OrdnanceSurvey
+  require 'csv'
   require 'aws-sdk-s3'
   require 'json'
   require './lib/tasks/distributed_locks'
