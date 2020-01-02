@@ -12,7 +12,7 @@
             <%= govuk_start_individual_field(ff, attr) do |a| %>
                 <%= govuk_text_input(ff, a, :one_quarter, [:maxlength, 10]) %>
             <% end %>
-            <%= govuk_button(f, "Find Adress") %>
+            <%= govuk_button(f, "Find address") %>
             <%= link_to "I can't find my address in the list", nil, class: "govuk-link--no-visited-state govuk-caption-m govuk-!-margin-bottom-1" %>
         <% end %>
         <%= govuk_continuation_buttons(pd, f, false) %>
