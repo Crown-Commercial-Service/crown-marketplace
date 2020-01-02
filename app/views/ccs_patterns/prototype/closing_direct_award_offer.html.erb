@@ -7,7 +7,7 @@
             <div class="govuk-body govuk-!-margin-bottom-5">
                 Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that your are closing this procurement, and your offer is now withdrawn.
             </div>
-            <div id="contract-withdrawn-reason" class='govuk-!-margin-bottom-5 govuk-!-width-three-quarters' data-module="character-count" data-maxlength="500">
+            <div id="contract-withdrawn-reason" class='govuk-!-margin-bottom-5' data-module="character-count" data-maxlength="500">
                 <h1 class="govuk-heading govuk-heading-s">
                     Please provide a reason for closing this procurement
                 </h1>
@@ -18,7 +18,6 @@
             </div>
             <%= govuk_button(f, pd.navigation_details.primary_text, options = { submit: true, button: :warning, class: 'govuk-!-margin-right-4'}) %>
             <%= govuk_button(f, pd.navigation_details.secondary_text, options = { button: :secondary }) %>
-            <%= govuk_button(f, pd.navigation_details.secondary_text) %>
         </div>
     <% end %>
 <% end %>
