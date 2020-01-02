@@ -235,10 +235,10 @@ module CcsPatterns
           back_url: ccs_patterns_prototypes_pricing_path,
           back_text: 'Back',
           back_label: 'Back',
-          page_title: 'New notice contact details',
+          page_title: 'New notices contact details',
           caption1: 'Total facilities management',
-          continuation_text: 'Save and Return',
-          return_url: ccs_patterns_prototypes_pricing_path,
+          continuation_text: 'Save and return',
+          return_url: '#',
           return_text: 'Return to contract details'
         },
         payment_method: {
