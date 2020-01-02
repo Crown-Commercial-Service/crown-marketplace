@@ -1,4 +1,4 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+<%= govuk_page_content(@page_description, @procurement) do |pd|%>
   <h1 class="govuk-heading govuk-heading-l govuk-!-width-two-thirds">Based on information provided, this procurement is eligible for the following sub-lot:</h1>
   <h1 class="govuk-heading govuk-heading-l"><%= @page_data[:selected_sublot] %></h1>
   <h2 class="govuk-heading govuk-heading-m">Estimated cost<br/><span class="govuk-heading govuk-heading-l"><%= number_to_currency(@page_data[:estimated_cost]) %></span></h2>

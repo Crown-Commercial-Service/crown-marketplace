@@ -140,6 +140,10 @@ Rails.application.routes.draw do
       resources :procurements do
         post 'continue'
         get 'summary'
+        get 'results'
+        get 'direct_award_pricing'
+        get 'further_competition'
+        put 'set_route_to_market'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
@@ -236,11 +240,13 @@ Rails.application.routes.draw do
     get '/prototypes/new-invoicing-contact-details', to: 'prototype#new_invoicing_contact_details'
     get '/prototypes/new-invoicing-contact-details-edit-address', to: 'prototype#new_invoicing_contact_details_edit_address'
     get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
+    get '/prototypes/confirmation-of-signed-contract', to: 'prototype#confirmation_of_signed_contract'
     get '/prototypes/new-authorised-representative-details', to: 'prototype#new_authorised_representative_details'
-    get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
+    get '/prototypes/contract-signed', to: 'prototype#contract_signed'
     get '/prototypes/new-notices-contact-details', to: 'prototype#new_notices_contact_details'
     get '/prototypes/did-you-know', to: 'prototype#did_you_know'
     get '/prototypes/new-notices-new-address', to: 'prototype#new_notices_new_address'
+    get '/prototypes/lgps-check', to: 'prototype#lgps_check'
     get '/prototypes/notices', to: 'prototype#notices'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'

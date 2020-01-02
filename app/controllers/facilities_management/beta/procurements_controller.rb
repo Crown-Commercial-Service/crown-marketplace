@@ -2,13 +2,14 @@ require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FrameworkController
-      before_action :set_procurement, only: %i[show edit update destroy continue]
+      before_action :set_procurement, only: %i[show edit update destroy continue results set_route_to_market direct_award_pricing further_competition]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
       before_action :user_buildings_count, only: %i[show edit update]
-      before_action :set_procurement_data, only: %i[show edit update]
+      before_action :set_procurement_data, only: %i[show edit update results set_route_to_market]
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
+      before_action :set_page_details, only: %i[show edit update destroy continue results set_route_to_market direct_award_pricing further_competition]
 
       def index
         @procurements = current_user.procurements
@@ -86,15 +87,79 @@ module FacilitiesManagement
 
       def continue
         if procurement_valid?
-          redirect_to facilities_management_beta_procurement_summary_path(@procurement)
+          redirect_to facilities_management_beta_procurement_results_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
         end
       end
 
-      def summary; end
+      def summary
+        @page_data = {}
+        @page_data[:model_object] = @procurement
+      end
+
+      def results
+        set_results_page_data
+      end
+
+      def direct_award_pricing
+        @page_data = {}
+        @page_data[:model_object] = @procurement
+      end
+
+      def further_competition
+        @page_data = {}
+        @page_data[:model_object] = @procurement
+      end
+
+      # sets the state of the procurement depending on the submission from the results view
+      def set_route_to_market
+        @procurement.assign_attributes(procurement_route_params)
+
+        unless @procurement.valid?(:route_to_market)
+          set_results_page_data
+          render 'results'
+          return
+        end
+
+        if @procurement[:route_to_market] == 'direct_award'
+          @procurement.start_direct_award
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_direct_award_pricing_path(@procurement)
+        else
+          @procurement.start_further_competition
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_further_competition_path(@procurement)
+        end
+      end
+
+      def estimated_cost
+        @procurement[:estimated_annual_cost]
+      end
+
+      def eligible_for_direct_award?
+        # this is hard-coded at present and will determine the view that is rendered
+        @procurement[:estimated_annual_cost] < 1500000
+      end
+      helper_method :eligible_for_direct_award?
 
       private
+
+      def set_results_page_data
+        @page_data = {}
+        @page_data[:model_object] = @procurement
+        @page_data[:no_suppliers] = @suppliers_lot1a.length
+        @page_data[:supplier_collection] = @suppliers_lot1a.map { |s| s['name'] }
+        @page_data[:estimated_cost] = estimated_cost
+        @page_data[:selected_sublot] = '1a'
+        @page_data[:buildings] = @active_procurement_buildings.map { |b| b[:name] }
+        @page_data[:services] = @services.map { |s| s[:name] }
+        @page_data[:supplier_prices] = [estimated_cost]
+      end
+
+      def procurement_route_params
+        params.require(:facilities_management_procurement).permit(:route_to_market)
+      end
 
       def procurement_params
         params.require(:facilities_management_procurement)
@@ -204,6 +269,66 @@ module FacilitiesManagement
 
       def procurement_valid?
         @procurement.valid_on_continue?
+      end
+
+      # used to control page navigation and headers
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Style/MultilineIfModifier
+      def set_page_details
+        @page_data = {}
+        @page_description = LayoutHelper::PageDescription.new(
+          LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
+                                          page_details(action_name)[:caption1],
+                                          page_details(action_name)[:caption2],
+                                          page_details(action_name)[:sub_title]),
+          LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
+                                             page_details(action_name)[:back_label],
+                                             page_details(action_name)[:back_text]),
+          LayoutHelper::NavigationDetail.new(page_details(action_name)[:continuation_text],
+                                             page_details(action_name)[:return_url],
+                                             page_details(action_name)[:return_text],
+                                             page_details(action_name)[:secondary_url],
+                                             page_details(action_name)[:secondary_text])
+        ) if page_definitions.key?(action_name.to_sym)
+      end
+      # rubocop:enable Style/MultilineIfModifier
+      # rubocop:enable Metrics/AbcSize
+
+      def page_details(action)
+        @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
+      end
+
+      def page_definitions
+        @page_definitions ||= {
+          default: {
+            caption1: @procurement[:name],
+            continuation_text: 'Continue',
+            return_url: facilities_management_beta_procurements_path,
+            return_text: 'Return to procurements dashboard',
+            secondary_text: 'Change requirements',
+            back_text: 'Back'
+          },
+          results: {
+            page_title: 'Results',
+          },
+          set_route_to_market: {
+            page_title: 'Results',
+          },
+          direct_award_pricing: {
+            caption1: @procurement[:name],
+            page_title: 'Direct Award',
+            back_url: facilities_management_beta_procurement_results_path(@procurement)
+          },
+          further_competition: {
+            caption1: @procurement[:name],
+            page_title: 'Further competition',
+            back_url: facilities_management_beta_procurement_results_path(@procurement)
+          },
+          summary: {
+            page_title: 'Summary',
+            return_url: facilities_management_beta_procurements_path,
+          }
+        }.freeze
       end
     end
   end
