@@ -62,13 +62,13 @@ module LayoutHelper
 
   # Renders the top of the page including back-button, and the 3 elements of the main header
   # rubocop:disable Rails/OutputSafety
-  def govuk_page_content(page_details, model_object = nil)
+  def govuk_page_content(page_details, model_object = nil, no_headings = false)
     raise ArgumentError, 'Use PageDescription object' unless page_details.is_a? PageDescription
 
     out = ''
     out = capture { govuk_page_error_summary(model_object) } unless model_object.nil?
     out << capture { govuk_back_button(page_details.back_button) }
-    out << capture { govuk_page_header(page_details.heading_details) }
+    out << capture { govuk_page_header(page_details.heading_details) } unless no_headings
 
     out << capture do
       yield(page_details)
@@ -97,11 +97,11 @@ module LayoutHelper
   end
 
   # rubocop:enable Rails/OutputSafety
-  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true)
+  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true)
     buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') if secondary_button
     buttons << capture { tag.br }
-    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link')
+    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
 
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
@@ -201,6 +201,17 @@ module LayoutHelper
     options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
 
     builder.text_field attribute, options
+  end
+
+  def govuk_text_area_input(builder, attribute, char_count = false, *option)
+    css_classes = ['govuk-textarea']
+    css_classes += ['govuk-input--error'] if builder.object.errors.key?(attribute)
+    css_classes += ['js-character-count'] if char_count
+
+    options = option.to_h.merge(class: css_classes)
+    options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
+
+    builder.text_area attribute, options
   end
 
   def govuk_button(builder, text, options = { submit: true })
