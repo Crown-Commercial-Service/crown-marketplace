@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_20_134549) do
+ActiveRecord::Schema.define(version: 2019_12_30_124912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 2019_12_20_134549) do
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "name", limit: 100
-    t.string "aasm_state", limit: 15
+    t.string "aasm_state", limit: 21
     t.string "updated_by", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -441,23 +441,6 @@ ActiveRecord::Schema.define(version: 2019_12_20_134549) do
     t.string "voa_ndr_scat_code"
     t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
-  end
-
-  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "filename", limit: 255
-    t.integer "size"
-    t.string "etag", limit: 255
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
-  end
-
-  create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "postcode", limit: 255
-    t.string "code", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|
