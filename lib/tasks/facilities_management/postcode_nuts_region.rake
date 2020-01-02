@@ -1,7 +1,7 @@
 require 'csv'
 require 'json'
 
-namespace :pnr do
+namespace :db do
   desc 'import postcode and nuts region data which matches postcode to a region code'
   task importpostcoderegion: :environment do
     p 'Truncate table postcodes_nuts_regions'
