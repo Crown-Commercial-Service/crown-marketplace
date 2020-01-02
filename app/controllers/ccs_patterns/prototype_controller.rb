@@ -49,15 +49,32 @@ module CcsPatterns
 
     def payment_method; end
 
+    def confirmation_of_signed_contract
+      @page_data[:form_text] = 'Please confirm if both parties have signed and exchanged the contract'
+      @page_data[:label_text] = { contract_signed_yes: 'Yes', contract_signed_no: 'No', contract_not_signed: 'This contract will not be signed.<br />Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.'.html_safe }
+      @page_data[:checked] = ''
+      @page_data[:yes_is_used] = @page_data[:checked] == 'yes'
+      @page_data[:no_is_used] = @page_data[:checked] == 'no'
+    end
+
     def add_missing_address
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'SW1 2AA'
+    end
+
+    def contract_signed
+      @page_data[:start_date] = Date.new(2019, 11, 19)&.strftime '%d %B %Y'
+      @page_data[:end_date] = Date.new(2026, 12, 26)&.strftime '%d %B %Y'
+      @page_data[:contract_name] = 'School facilities London'
+      @page_data[:contract_code] = 'FM-094-2019'
     end
 
     def new_notices_new_address
       @page_data[:label_text] = { county: 'County (optional)' }
       @page_data[:postcode] = 'SW1 2AA'
     end
+
+    def lgps_check; end
 
     def notices
       @page_data[:notices_contact_full_name] = 'Fake Full Name'
@@ -218,10 +235,10 @@ module CcsPatterns
           back_url: ccs_patterns_prototypes_pricing_path,
           back_text: 'Back',
           back_label: 'Back',
-          page_title: 'New notice contact details',
+          page_title: 'New notices contact details',
           caption1: 'Total facilities management',
-          continuation_text: 'Save and Return',
-          return_url: ccs_patterns_prototypes_pricing_path,
+          continuation_text: 'Save and return',
+          return_url: '#',
           return_text: 'Return to contract details'
         },
         payment_method: {
@@ -231,6 +248,22 @@ module CcsPatterns
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
+        },
+        contract_signed: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          secondary_text: 'Return to procurement dashboard',
+          secondary_url: ccs_patterns_prototypes_path
+        },
+        confirmation_of_signed_contract: {
+          back_url: ccs_patterns_prototypes_results_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'Confirmation of signed contract',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and continue',
+          secondary_text: 'Cancel'
         },
         add_missing_address: {
           back_label: 'Back',
@@ -250,6 +283,16 @@ module CcsPatterns
           caption1: 'New notices contact details',
           continuation_text: 'Continue',
           return_text: 'Return to new notices contact details',
+          return_url: ccs_patterns_prototypes_path,
+        },
+        lgps_check: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Local Government Pension Scheme',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and Continue',
+          return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
         },
       }.freeze
