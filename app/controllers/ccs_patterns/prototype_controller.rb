@@ -82,6 +82,18 @@ module CcsPatterns
 
     def lgps_check; end
 
+    def notices
+      @page_data[:notices_contact_full_name] = 'Fake Full Name'
+      @page_data[:notices_contact_job_title] = 'Fake Job Title'
+      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
+    end
+
+    def contract_confirmation
+      @page_data[:contact_name] = 'Total facilities management'
+      @page_data[:contact_code] = 'FM-094-2019'
+      @page_data[:supplier_name] = 'Cleaning London LTD'
+    end
+
     private
 
     def set_page_model
@@ -221,6 +233,16 @@ module CcsPatterns
           return_text: 'Return to procurement dashboard',
           secondary_text: 'Return to results'
         },
+        notices: {
+          back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          page_title: 'Notices contact details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and return',
+          return_text: 'Return to contract details',
+          return_url: ccs_patterns_prototypes_path,
+        },
         new_notices_contact_details: {
           back_url: ccs_patterns_prototypes_pricing_path,
           back_text: 'Back',
@@ -233,6 +255,7 @@ module CcsPatterns
         },
         payment_method: {
           back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
           page_title: 'Payment method',
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
@@ -295,6 +318,12 @@ module CcsPatterns
           continuation_text: 'Save and Continue',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
+        },
+        contract_confirmation: {
+          back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          continuation_text: false,
+          secondary_text: 'Return to procurement dashboard',
         },
       }.freeze
     end
