@@ -55,6 +55,8 @@ GEM
       activemodel (= 5.2.3)
       activesupport (= 5.2.3)
       arel (>= 9.0)
+    activerecord-import (0.15.0)
+      activerecord (>= 3.2)
     activerecord-postgis-adapter (5.2.2)
       activerecord (~> 5.1)
       rgeo-activerecord (~> 6.0)
@@ -491,6 +493,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (~> 5.0)
+  activerecord-import (~> 0.15.0)
   activerecord-postgis-adapter
   aws-sdk-cognitoidentityprovider (~> 1.23.0)
   aws-sdk-s3 (~> 1)
