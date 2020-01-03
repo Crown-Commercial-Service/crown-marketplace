@@ -134,14 +134,10 @@ module FacilitiesManagement
         end
       end
 
-      def estimated_cost
-        @procurement[:estimated_annual_cost]
+      def eligible_for_direct_award?
+        DirectAward.new(@procurement.buildings_standard, @procurement.services_standard, @procurement.priced_at_framework, @procurement.assessed_value).calculate
       end
 
-      def eligible_for_direct_award?
-        # this is hard-coded at present and will determine the view that is rendered
-        @procurement[:estimated_annual_cost] < 1500000
-      end
       helper_method :eligible_for_direct_award?
 
       private
