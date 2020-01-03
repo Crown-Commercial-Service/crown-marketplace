@@ -98,12 +98,6 @@ module CcsPatterns
 
     def lgps_check; end
 
-    def notices
-      @page_data[:notices_contact_full_name] = 'Fake Full Name'
-      @page_data[:notices_contact_job_title] = 'Fake Job Title'
-      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
-    end
-
     def contract_confirmation
       @page_data[:contact_name] = 'Total facilities management'
       @page_data[:contact_code] = 'FM-094-2019'
