@@ -338,7 +338,7 @@ module CcsPatterns
           back_url: ccs_patterns_prototypes_path,
           page_title: 'Local Government Pension Scheme',
           caption1: 'Total facilities management',
-          continuation_text: 'Save and Continue',
+          continuation_text: 'Save and continue',
           return_text: 'Return to contract details',
           return_url: ccs_patterns_prototypes_path,
         },
