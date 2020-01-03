@@ -30,6 +30,11 @@ module CcsPatterns
 
     def did_you_know; end
 
+    def closing_direct_award_offer
+      @page_data[:contract_name] = 'Total facilities management'
+      @page_data[:contract_code] = 'FM-093-2019'
+    end
+
     def invoicing_contact_details
       @page_data[:invoicing_contact_full_name] = 'Fake Full Name'
       @page_data[:invoicing_contact_job_title] = 'Fake Job Title'
@@ -54,6 +59,17 @@ module CcsPatterns
     def new_notices_contact_details; end
 
     def payment_method; end
+
+    def procurement_closed
+      @page_data[:procurement_name] = 'Total facilities management'
+      @page_data[:procurement_number] = 'FM-094-2019'
+    end
+
+    def notices
+      @page_data[:notices_contact_full_name] = 'Fake Full Name'
+      @page_data[:notices_contact_job_title] = 'Fake Job Title'
+      @page_data[:notices_contact_address] = ['1 Fake Address', 'Fake Address Lane', 'Faketown', 'Fakedon', 'FA1 5KE'].join(', ')
+    end
 
     def confirmation_of_signed_contract
       @page_data[:form_text] = 'Please confirm if both parties have signed and exchanged the contract'
@@ -169,6 +185,19 @@ module CcsPatterns
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
         },
+        closing_direct_award_offer: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          continuation_text: 'Close this procurement',
+          secondary_text: 'Cancel'
+        },
+        procurement_closed: {
+          back_url: ccs_patterns_prototypes_pricing_path,
+          back_text: 'Back',
+          back_label: 'Back',
+          secondary_text: 'Return to procurement dashboard'
+        },
         contract_details: {
           back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
@@ -194,7 +223,7 @@ module CcsPatterns
           back_url: ccs_patterns_prototypes_pricing_path,
           back_text: 'Back',
           back_label: 'Back',
-          page_title: 'New authorised representative',
+          page_title: 'New authorised representative details',
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
           return_url: ccs_patterns_prototypes_results_path,
@@ -241,7 +270,7 @@ module CcsPatterns
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
-          return_url: ccs_patterns_prototypes_path,
+          return_url: ccs_patterns_prototypes_path
         },
         new_notices_contact_details: {
           back_url: ccs_patterns_prototypes_pricing_path,
