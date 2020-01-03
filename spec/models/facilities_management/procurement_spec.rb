@@ -379,4 +379,43 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '#save_eligible_suppliers' do
+    context 'when no eligible suppliers' do
+      it 'does not create any procurement suppliers' do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:sorted_list).and_return([])
+        # rubocop:enable RSpec/AnyInstance
+        expect { procurement.save_eligible_suppliers }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(0)
+      end
+    end
+
+    context 'when some eligible suppliers' do
+      let(:da_value_test) { 865.2478374540002 }
+      let(:da_value_test1) { 1517.20280381278 }
+      let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
+
+      before do
+        # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
+        allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
+        allow_any_instance_of(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
+        allow_any_instance_of(DirectAward).to receive(:calculate).and_return(true)
+        allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
+        # rubocop:enable RSpec/AnyInstance, RSpec/SubjectStub
+      end
+
+      it 'creates procurement_suppliers' do
+        expect { procurement.save_eligible_suppliers }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
+      end
+      it 'creates procurement_suppliers with the right direct award value' do
+        procurement.save_eligible_suppliers
+        expect(procurement.procurement_suppliers.first.direct_award_value).to eq da_value_test
+        expect(procurement.procurement_suppliers.last.direct_award_value).to eq da_value_test1
+      end
+      it 'creates procurement_suppliers with the right CCS::FM::Supplier id' do
+        procurement.save_eligible_suppliers
+        expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_uuid
+      end
+    end
+  end
 end
