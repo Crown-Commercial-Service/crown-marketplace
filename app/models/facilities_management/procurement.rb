@@ -83,8 +83,6 @@ module FacilitiesManagement
       end
     end
 
-    private
-
     def buildings_standard
       active_procurement_buildings.map { |pb| pb.building.building_standard }.include?('NON-STANDARD') ? 'NON-STANDARD' : 'STANDARD'
     end
@@ -100,6 +98,8 @@ module FacilitiesManagement
       # for now this always returns true
       true
     end
+
+    private
 
     def update_procurement_building_services
       procurement_buildings.each do |building|
