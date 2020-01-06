@@ -7,9 +7,13 @@
       <%= @building['name'] %>
     </h1>
       <% if @display_warning %>
-        <p class="govuk-caption-m govuk-!-margin-top-5"><%= t('facilities_management.beta.building-details-summary.status_warning_message', :name => @building['name']) %></p>
+        <div class="govuk-inset-text">
+          Building <%= t(@building['name']) %> is incomplete. You need to answer all questions before a building can be used in procurements.
+        </div>
       <%else %>
-        <p class="govuk-caption-m govuk-!-margin-top-5"><%= t('facilities_management.beta.building-details-summary.building_was_saved', :name => @building['name']) %></p>
+        <div class="govuk-inset-text">
+          Building <%= t(@building['name']) %> is ready for use in procurements.
+        </div>
       <% end %>
     <%= render partial: 'building_details_summary' %>
   <% else %>
