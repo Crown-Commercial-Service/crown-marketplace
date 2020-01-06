@@ -62,7 +62,7 @@
       <tr>
         <th><%= t('facilities_management.beta.building-details-summary.caption_gia') %></th>
         <td>
-          <% if !@building['gia'].blank? %><%= @building['gia'] %>
+          <% if !@building['gia'].blank? %><%=number_with_delimiter(@building['gia'], :delimiter => ',') + " sqm"  %>
           <% else %>
             <%= link_to t('facilities_management.beta.building-details-summary.answer_question_text'), "#{@base_path}building-gross-internal-area", { 'building-id': @building_id, role:'change', class: 'govuk-link' }%>
           <% end %></td>
