@@ -68,7 +68,7 @@ $(function () {
         } else {
             bRet = true;
         }
-        
+
         return bRet;
     };
 });
