@@ -104,7 +104,7 @@ module FacilitiesManagement
         @building_name = @building['name']
         @building_sec_type = @building['security-type']
         @other_is_used = false
-        @other_value = 'other'
+        @other_value = ''
         @building_id = local_building_id
         @security_types = fm_building_data.security_types
         @page_title = 'Change Security Type' if @editing
