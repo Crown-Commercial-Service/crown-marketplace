@@ -211,7 +211,6 @@ en:
         add_desc_text: Add description
         add_name_text: Add name
         answer_question_text: Answer question
-        building_was_saved: Your building was saved.  "%{name}" is ready for procurement.
         caption_addr: Address
         caption_desc: Description
         caption_gia: Gross internal area
@@ -224,7 +223,6 @@ en:
         return_to_management_text: Return to manage buildings
         section-header: Building details summary
         select_one_option_text: Select one option
-        status_warning_message: Your building was saved.  "%{name}" is incomplete.  You need to answer all questions to be used in procurement.
       building-gross-internal-area:
         add_header: Add building GIA
         edit_header: Change building GIA
