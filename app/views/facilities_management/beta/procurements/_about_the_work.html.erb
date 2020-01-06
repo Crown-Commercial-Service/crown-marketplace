@@ -75,7 +75,7 @@
     <th scope="row" class=" govuk-table__header govuk-table__header govuk-!-font-size-19" colspan="3" style="border:0" width="30%">
       3. Services information
       <% if any_service_codes(@active_procurement_buildings) %>
-        <% if (@active_procurement_buildings.length == @active_procurement_buildings.requires_service_information.length) %>
+        <% if (@active_procurement_buildings.requires_service_information.length > 0) %>
           <span id="event-name-hint" class="govuk-hint">
               We need additional information. You only need to answer questions related to the buildings listed below.
           </span>
@@ -85,7 +85,7 @@
     <tr>
       
     <% if any_service_codes(@active_procurement_buildings) %>
-      <% if (@active_procurement_buildings.length == @active_procurement_buildings.requires_service_information.length) %>
+      <% if (@active_procurement_buildings.requires_service_information.length > 0) %>
         <td class="govuk-table__cell">
          
         </td>
