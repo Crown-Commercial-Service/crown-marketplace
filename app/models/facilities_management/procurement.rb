@@ -79,7 +79,7 @@ module FacilitiesManagement
       # if any procurement_suppliers present, they need to be removed
       procurement_suppliers.destroy_all
       sorted_list.each do |supplier_data|
-        procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1]) if DirectAward.new(buildings_standard, services_standard, priced_at_framework, supplier_data[1]).calculate
+        procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
       end
     end
 
