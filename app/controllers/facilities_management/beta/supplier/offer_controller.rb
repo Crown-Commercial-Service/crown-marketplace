@@ -6,20 +6,25 @@ module FacilitiesManagement
         before_action :set_page_detail
         before_action :set_page_model
 
-        def declined
-          @page_data[:contract_name] = 'School facilities London'
-          @page_data[:contract_number] = 'RM330-DA2234-2019'
-        end
+        def declined; end
 
-        def accepted
-          @page_data[:contract_name] = 'School facilities London'
-          @page_data[:contract_number] = 'RM330-DA2234-2019'
+        def accepted; end
+
+        def respond_to_contract_offer
+          @page_data[:buyer_name] = 'Coal Authority'
+          @page_data[:form_text] = 'Do you accept the contract offer from Coal Authority?' 
+          @page_data[:checked] = ''
+          @page_data[:yes_is_used] = @page_data[:checked] == 'yes'
+          @page_data[:no_is_used] = @page_data[:checked] == 'no'
+          @page_data[:label_text] = { contract_accepted_yes: 'yes', contract_accepted_no: 'no', contract_not_accepted: 'When you decline a contract offer you need to give a reason. <br /> Please input the reason into the box below. The information will be shared with the buyer and CCS.'.html_safe }
         end
 
         private
 
         def set_page_model
           @page_data[:model_object] = FacilitiesManagement::Supplier::Offer.new
+          @page_data[:contract_name] = 'School facilities London'
+          @page_data[:contract_number] = 'RM330-DA2334-2019'
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -68,6 +73,18 @@ module FacilitiesManagement
               back_label: 'Back',
               secondary_text: 'Return to dashboard',
               # TODO: add the link when the page has been created
+              secondary_url: '#'
+            },
+            respond_to_contract_offer: {
+              # TODO: add link when path is known
+              back_url: '#',
+              back_text: 'Back',
+              back_label: 'Back',
+              page_title: 'Respond to the contract offer',
+              caption1: 'School facilities London',
+              continuation_text: 'Confirm and continue',
+              secondary_text: 'Cancel',
+              # TODO: add the link when the page is created
               secondary_url: '#'
             }
           }.freeze
