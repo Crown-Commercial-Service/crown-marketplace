@@ -6,19 +6,11 @@ module FacilitiesManagement
         before_action :set_page_detail
         before_action :set_page_model
 
-        def declined
-          @page_data[:contract_name] = 'School facilities London'
-          @page_data[:contract_number] = 'RM330-DA2234-2019'
-        end
+        def declined; end
 
-        def accepted
-          @page_data[:contract_name] = 'School facilities London'
-          @page_data[:contract_number] = 'RM330-DA2234-2019'
-        end
+        def accepted; end
 
         def respond_to_contract_offer
-          @page_data[:contract_name] = 'School facilities London'
-          @page_data[:contract_number] = 'RM330-DA2334-2019'
           @page_data[:buyer_name] = 'Coal Authority'
           @page_data[:form_text] = 'Do you accept the contract offer from Coal Authority?'
           @page_data[:checked] = ''
@@ -31,6 +23,8 @@ module FacilitiesManagement
 
         def set_page_model
           @page_data[:model_object] = FacilitiesManagement::Supplier::Offer.new
+          @page_data[:contract_name] = 'School facilities London'
+          @page_data[:contract_number] = 'RM330-DA2334-2019'
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -82,13 +76,16 @@ module FacilitiesManagement
               secondary_url: '#'
             },
             respond_to_contract_offer: {
-              back_url: ccs_patterns_path,
+              # TODO: add link when path is known
+              back_url: '#',
               back_text: 'Back',
               back_label: 'Back',
               page_title: 'Respond to the contract offer',
               caption1: 'School facilities London',
               continuation_text: 'Confirm and continue',
-              secondary_text: 'Cancel'
+              secondary_text: 'Cancel',
+              # TODO: add the link when the page is created
+              secondary_url: '#'
             }
           }.freeze
         end
