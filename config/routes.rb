@@ -152,6 +152,7 @@ Rails.application.routes.draw do
       end
       namespace :supplier do
         get 'offer-declined', to: 'offer#declined'
+        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
       end
     end
 
