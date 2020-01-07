@@ -1,25 +1,17 @@
 module FacilitiesManagement
   module Beta
     module Supplier
-      class OfferController < FrameworkController
+      class SupplierAccountController < FrameworkController
         skip_before_action :authenticate_user!
         before_action :set_page_detail
         before_action :set_page_model
 
-        def declined
-          @page_data[:contract_name] = 'School facilities London'
-          @page_data[:contract_number] = 'RM330-DA2234-2019'
-        end
-
-        def accepted
-          @page_data[:contract_name] = 'School facilities London'
-          @page_data[:contract_number] = 'RM330-DA2234-2019'
-        end
+        def supplier_account; end
 
         private
 
         def set_page_model
-          @page_data[:model_object] = FacilitiesManagement::Supplier::Offer.new
+          @page_data[:model_object] = FacilitiesManagement::Supplier::SupplierAccount.new
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -52,32 +44,7 @@ module FacilitiesManagement
               back_label: 'Return to prototype index',
               back_text: 'View prototypes'
             },
-            accepted: {
-              # TODO: add the link when path is known
-              back_url: '#',
-              back_text: 'Back',
-              back_label: 'Back',
-              secondary_text: 'Return to dashboard',
-              # TODO: add the link when the page has been created
-              secondary_url: '#'
-            },
-            declined: {
-<<<<<<< HEAD
-              # TODO: add the link when path is known
-              back_url: '#',
-              back_text: 'Back',
-              back_label: 'Back',
-              secondary_text: 'Return to dashboard',
-              # TODO: add the link when the page has been created
-=======
-              # TODO add the correct path
-              back_url: '#',
-              back_label: 'Back',
-              back_text: 'Back',
-              secondary_text: 'Return to dashboard',
-              # TOCO add correct path
->>>>>>> Created the content for the view
-              secondary_url: '#'
+            supplier_account: {
             }
           }.freeze
         end
