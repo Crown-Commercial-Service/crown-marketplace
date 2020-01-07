@@ -8,19 +8,19 @@
                 <div class="govuk-radios">
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" id="contract-accepted-yes" name="contract-accepted-status" type="radio" value="yes" <%= 'checked' if @page_data[:checked].to_s == 'yes' %>/>
-                        <label class="govuk-label govuk-radios__label" for="contract-signed-yes">
+                        <label class="govuk-label govuk-radios__label" for="contract-accepted-yes">
                             Yes
                         </label>
                     </div>
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="contract-signed-no" name="contract-signed-status" type="radio" value="no" <%= 'checked' if @page_data[:checked].to_s == 'no' %>/>
-                        <label class="govuk-label govuk-radios__label" for="contract-signed-no">
+                        <input class="govuk-radios__input" id="contract-accepted-no" name="contract-accepted-status" type="radio" value="no" <%= 'checked' if @page_data[:checked].to_s == 'no' %>/>
+                        <label class="govuk-label govuk-radios__label" for="contract-accepted-no">
                             No
                         </label>
                     </div>
-                <div id="contract-signed-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:no_is_used]%>" data-module="character-count" data-maxlength="500">
+                <div id="contract-accepted-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:no_is_used]%>" data-module="character-count" data-maxlength="500">
                     <%= govuk_label(ff, ff.object, :contract_not_accepted, @page_data[:label_text]) %>
-                    <%= govuk_text_area_input(ff, :contract_not_accepted, true, ['rows', 10], ['maxlength', 500]) %>
+                    <%= govuk_text_area_input(ff, :contract_not_accepted, true, ['rows', 5], ['maxlength', 500]) %>
                 </div>
         <% end %>
         <%= govuk_continuation_buttons(pd, f, true, false) %>
