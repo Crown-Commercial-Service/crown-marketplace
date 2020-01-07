@@ -8,7 +8,7 @@ module FacilitiesManagement
 
         def declined
           @page_data[:contract_name] = 'School facilities London'
-          @page_data[:contract_number] = 'RM330-DA2234-2019'  
+          @page_data[:contract_number] = 'RM330-DA2234-2019'
         end
 
         def accepted
@@ -66,6 +66,7 @@ module FacilitiesManagement
               back_text: 'View prototypes'
             },
             accepted: {
+              # TODO: add the link when path is known
               back_url: '#',
               back_text: 'Back',
               back_label: 'Back',
