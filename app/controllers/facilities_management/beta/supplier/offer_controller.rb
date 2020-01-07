@@ -7,6 +7,11 @@ module FacilitiesManagement
         before_action :set_page_model
 
         def declined; end
+          
+        def accepted
+      @page_data[:contract_name] = 'School facilities London'
+      @page_data[:contract_number] = 'RM330-DA2234-2019'
+        end
 
         private
 
@@ -43,6 +48,14 @@ module FacilitiesManagement
               back_url: ccs_patterns_path,
               back_label: 'Return to prototype index',
               back_text: 'View prototypes'
+            },
+            accepted: {
+          back_url: '#',
+          back_text: 'Back',
+          back_label: 'Back',
+          secondary_text: 'Return to dashboard',
+          secondary_url: '#'
+          
             },
             declined: {
             }
