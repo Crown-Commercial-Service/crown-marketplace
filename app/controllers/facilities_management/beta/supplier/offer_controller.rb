@@ -9,8 +9,8 @@ module FacilitiesManagement
         def declined; end
           
         def accepted
-      @page_data[:contract_name] = 'School facilities London'
-      @page_data[:contract_number] = 'RM330-DA2234-2019'
+          @page_data[:contract_name] = 'School facilities London'
+          @page_data[:contract_number] = 'RM330-DA2234-2019'
         end
 
         def respond_to_contract_offer
@@ -61,12 +61,11 @@ module FacilitiesManagement
               back_text: 'View prototypes'
             },
             accepted: {
-          back_url: '#',
-          back_text: 'Back',
-          back_label: 'Back',
-          secondary_text: 'Return to dashboard',
-          secondary_url: '#'
-          
+              back_url: '#',
+              back_text: 'Back',
+              back_label: 'Back',
+              secondary_text: 'Return to dashboard',
+              secondary_url: '#'
             },
             declined: {
             },
