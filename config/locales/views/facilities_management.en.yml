@@ -221,7 +221,7 @@ en:
         no_data_message: There are no building details to view
         return_to_management_text: Return to manage buildings
         section-header: Building details summary
-        select_one_option_text: Select one option
+        select_one_option_text: Please select one option
       building-gross-internal-area:
         add_header: Add building GIA
         edit_header: Change building GIA
