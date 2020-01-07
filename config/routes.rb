@@ -152,7 +152,7 @@ Rails.application.routes.draw do
       end
       namespace :supplier do
         get 'offer-declined', to: 'offer#declined'
-        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
+        get 'offer-accepted', to: 'offer#accepted'
       end
     end
 
@@ -239,6 +239,7 @@ Rails.application.routes.draw do
     get '/prototypes/what-next', to: 'prototype#what_next'
     get '/prototypes/payment-method', to: 'prototype#payment_method'
     get '/prototypes/add-missing-address', to: 'prototype#add_missing_address'
+    get '/prototypes/contract-confirmation', to: 'prototype#contract_confirmation'
     get '/prototypes/contract-details', to: 'prototype#contract_details'
     get '/prototypes/invoicing-contact-details', to: 'prototype#invoicing_contact_details'
     get '/prototypes/new-invoicing-contact-details', to: 'prototype#new_invoicing_contact_details'
