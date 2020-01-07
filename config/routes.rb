@@ -150,6 +150,9 @@ Rails.application.routes.draw do
       resources :buyer_details, only: %i[edit update] do
         get 'edit_address'
       end
+      namespace :supplier do
+        get 'offer-declined', to: 'offer#declined'
+      end
     end
 
     get '/', to: 'home#index'
