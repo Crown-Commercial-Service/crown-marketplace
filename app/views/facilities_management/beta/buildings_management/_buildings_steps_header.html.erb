@@ -15,9 +15,6 @@
 </div>
 <%if @step.present? %><span class="govuk-caption-m govuk-!-padding-bottom-0">Step <%= @step.floor() %> of 4</span><%end %>
 <span class="govuk-caption-l govuk-!-padding-top-0">Manage buildings</span>
-<% unless @page_title == 'Building type' || @page_title.nil? %>
-  <h1 class='govuk-heading-xl'><%= @page_title %></h1>
-<% end %>
 <span class="govuk-heading-xl govuk-!-padding-top-0"><%= unless @building_name.blank? then @building_name end %></span>
 
 <%= render('errors/inline_error_summary') %>
