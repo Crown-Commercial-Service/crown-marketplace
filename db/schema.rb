@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_134702) do
+
+ActiveRecord::Schema.define(version: 2019_12_30_124912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -94,7 +95,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_134702) do
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "name", limit: 100
-    t.string "aasm_state", limit: 30
+    t.string "aasm_state", limit: 21
     t.string "updated_by", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -121,8 +122,6 @@ ActiveRecord::Schema.define(version: 2020_01_17_134702) do
     t.string "security_policy_document_file"
     t.string "lot_number"
     t.money "assessed_value", scale: 2
-    t.boolean "eligible_for_da"
-    t.datetime "date_offer_sent"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -189,14 +188,12 @@ ActiveRecord::Schema.define(version: 2020_01_17_134702) do
   end
 
   create_table "fm_rates", id: false, force: :cascade do |t|
-    t.string "code", limit: 5
+    t.text "code"
     t.decimal "framework"
     t.decimal "benchmark"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.string "standard", limit: 1
-    t.boolean "direct_award"
-    t.index ["code"], name: "index_fm_rates_on_code"
+    t.index ["code"], name: "fm_rates_code_key", unique: true
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|
