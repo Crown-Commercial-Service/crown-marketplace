@@ -6,7 +6,10 @@ module FacilitiesManagement
         before_action :set_page_detail
         before_action :set_page_model
 
-        def declined; end
+        def declined
+          @page_data[:contract_name] = 'School facilities London'
+          @page_data[:contract_number] = 'RM330-DA2234-2019'  
+        end
 
         def accepted
           @page_data[:contract_name] = 'School facilities London'
