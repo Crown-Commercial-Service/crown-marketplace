@@ -72,7 +72,8 @@
       </tr>
     <% end %>
   </tr>
-    <th scope="row" class=" govuk-table__header govuk-table__header govuk-!-font-size-19" colspan="3" style="border:0" width="30%">
+  <tr class="govuk-table__row">
+    <th scope="row" class=" govuk-table__header govuk-table__header govuk-!-font-size-19" <%= 'colspan=3 style=border:0 width=30%' if (@active_procurement_buildings.requires_service_information.length > 0) %>>
       3. Services information
       <% if any_service_codes(@active_procurement_buildings) %>
         <% if (@active_procurement_buildings.requires_service_information.length > 0) %>
@@ -82,10 +83,9 @@
         <% end %>
       <% end %>
     </th>
-    <tr>
-      
     <% if any_service_codes(@active_procurement_buildings) %>
       <% if (@active_procurement_buildings.requires_service_information.length > 0) %>
+      <tr class="govuk-table__row">
         <td class="govuk-table__cell">
          
         </td>
@@ -95,10 +95,8 @@
         <td class="govuk-table__cell">
           <strong>Status</strong>
         </td>
+      </tr>
       <% else %>
-        <td class="govuk-table__cell">
-         
-        </td>
         <td class="govuk-table__cell">
           No additional information needed
         </td>
