@@ -6,7 +6,10 @@ module FacilitiesManagement
         before_action :set_page_detail
         before_action :set_page_model
 
-        def declined; end
+        def declined
+          @page_data[:contract_name] = 'School facilities London'
+          @page_data[:contract_number] = 'RM330-DA2234-2019'
+        end
 
         def accepted
           @page_data[:contract_name] = 'School facilities London'
@@ -50,13 +53,22 @@ module FacilitiesManagement
               back_text: 'View prototypes'
             },
             accepted: {
+              # TODO: add the link when path is known
               back_url: '#',
               back_text: 'Back',
               back_label: 'Back',
               secondary_text: 'Return to dashboard',
+              # TODO: add the link when the page has been created
               secondary_url: '#'
             },
             declined: {
+              # TODO: add the link when path is known
+              back_url: '#',
+              back_text: 'Back',
+              back_label: 'Back',
+              secondary_text: 'Return to dashboard',
+              # TODO: add the link when the page has been created
+              secondary_url: '#'
             }
           }.freeze
         end
