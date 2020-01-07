@@ -280,6 +280,10 @@ module ApplicationHelper
     request.path_info.include? 'buyer-account'
   end
 
+  def fm_supplier_landing_page
+    request.path_info.include? 'supplier-account'
+  end
+
   def not_permitted_page
     controller.action_name == 'not_permitted'
   end

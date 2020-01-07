@@ -157,6 +157,7 @@ Rails.application.routes.draw do
         get '/', to: 'home#index'
         get 'offer-declined', to: 'offer#declined'
         get 'offer-accepted', to: 'offer#accepted'
+        get 'supplier-account-dashboard', to: 'supplier_account#index'
       end
     end
 
