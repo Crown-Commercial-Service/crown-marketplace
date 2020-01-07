@@ -1,0 +1,27 @@
+<table class="govuk-table">
+    <% if !@page_data[:live_contracts].empty? %>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Contract name</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Buyer</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Start date</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col">End date</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <% @page_data[:live_contracts].each do |live_contract| %>
+                <tr class="govuk-table__row">
+                    <!-- TODO: Add the link in the future-->
+                    <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to live_contract[:contract_name], '#', class: 'govuk-link govuk-link--no-visited-state' %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= live_contract[:buyer] %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= live_contract[:start_date]&.strftime '%e %B %Y' %> </td>
+                    <td class="govuk-table__cell"> <%= live_contract[:end_date]&.strftime '%e %B %Y' %> </td>
+                </tr>
+            <% end %>
+        </tbody>
+    <% else %>
+        <hr class="govuk-section-break govuk-section-break--visible">
+                <span class="govuk-hint govuk-!-margin-top-3"> You do not have any live contracts </span>
+        <hr class="govuk-section-break govuk-section-break--visible">
+    <% end %>
+</table>
