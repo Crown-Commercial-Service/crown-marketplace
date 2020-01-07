@@ -57,6 +57,24 @@
             <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "#{@base_path}building", { 'building-id': @building_id, role:'change', class: 'govuk-link' }%>
           <% end %></td>
       </tr>
+
+      <tr>
+        <th><%= t('facilities_management.beta.building-details-summary.caption_region_nuts') %></th>
+        <td>
+          <% if !@building['address'].blank? %>
+            <%= @building['address']['fm-address-region'].to_s %>
+          <% end %>
+        </td>
+        <td>
+        </td>
+      </tr>
+
+
+
+
+
+
+
       <tr>
         <th><%= t('facilities_management.beta.building-details-summary.caption_gia') %></th>
         <td>
