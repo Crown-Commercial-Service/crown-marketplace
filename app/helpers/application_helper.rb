@@ -247,6 +247,9 @@ module ApplicationHelper
   end
 
   def service_start_page_path
+    # TODO: This needs to change when the sign in is implimented
+    return '#' if controller.class.parent_name == 'FacilitiesManagement::Beta::Supplier'
+
     send controller.class.parent_name.underscore.tr('/', '_') + '_path' if controller.class.parent_name
   end
 
@@ -255,6 +258,9 @@ module ApplicationHelper
   end
 
   def service_destroy_user_session_path
+    # TODO: This needs to change when the sign in is implimented
+    return '#' if controller.class.parent_name == 'FacilitiesManagement::Beta::Supplier'
+
     if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
       send "#{controller.class.parent_name.underscore.tr('/', '_')}_destroy_user_session_path"
     else
