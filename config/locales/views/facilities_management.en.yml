@@ -213,6 +213,7 @@ en:
         answer_question_text: Answer question
         building_was_saved: Your building was saved.  "%{name}" is ready for procurement.
         caption_addr: Address
+        caption_region_nuts: Location (NUTS region)
         caption_desc: Description
         caption_gia: Gross internal area
         caption_name: Name
