@@ -8,11 +8,11 @@
     </h1>
       <% if @display_warning %>
         <div class="govuk-inset-text">
-          Building <%= t(@building['name']) %> is incomplete. You need to answer all questions before a building can be used in procurements.
+          Building '<%= t(@building['name']) %>' is incomplete. You need to answer all questions before a building can be used in procurements.
         </div>
       <%else %>
         <div class="govuk-inset-text">
-          Building <%= t(@building['name']) %> is ready for use in procurements.
+          Building '<%= t(@building['name']) %>' is ready for use in procurements.
         </div>
       <% end %>
     <%= render partial: 'building_details_summary' %>
