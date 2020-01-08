@@ -16,7 +16,7 @@ module FacilitiesManagement
           @page_data[:checked] = ''
           @page_data[:yes_is_used] = @page_data[:checked] == 'yes'
           @page_data[:no_is_used] = @page_data[:checked] == 'no'
-          @page_data[:label_text] = { contract_accepted_yes: 'yes', contract_accepted_no: 'no', contract_not_accepted: 'When you decline a contract offer you need to give a reason. <br /> Please input the reason into the box below. The information will be shared with the buyer and CCS.'.html_safe }
+          @page_data[:label_text] = { contract_accepted_yes: 'yes', contract_accepted_no: 'no', contract_not_accepted: 'When you decline a contract offer you need to give a reason. <br /> Please input your answer into the box below. The reason given will be shared with the buyer and CCS.'.html_safe }
         end
 
         private
