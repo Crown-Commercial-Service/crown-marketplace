@@ -12,7 +12,7 @@ module FacilitiesManagement
 
         def respond_to_contract_offer
           @page_data[:buyer_name] = 'Coal Authority'
-          @page_data[:form_text] = 'Do you accept the contract offer from Coal Authority?' 
+          @page_data[:form_text] = 'Do you accept the contract offer from Coal Authority?'
           @page_data[:checked] = ''
           @page_data[:yes_is_used] = @page_data[:checked] == 'yes'
           @page_data[:no_is_used] = @page_data[:checked] == 'no'
@@ -84,7 +84,7 @@ module FacilitiesManagement
               caption1: 'School facilities London',
               continuation_text: 'Confirm and continue',
               secondary_text: 'Cancel',
-              # TODO: add the link when the page is created - contract summary page 
+              # TODO: add the link when the page is created - contract summary page
               secondary_url: '#'
             }
           }.freeze

@@ -8,7 +8,5 @@ module FacilitiesManagement
     attribute :contract_name
     attribute :contract_number
     attribute :buyer_name
-
-
   end
 end
