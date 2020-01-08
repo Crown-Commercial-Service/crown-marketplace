@@ -230,7 +230,13 @@ $(function () {
 
     
     const display_selected_address = function(address) {
-        var buildingAddress = address['fm-address-line-1'] + ' ' + address['fm-address-line-2'] + ' ' + address['fm-address-town'];
+        var build_address = '';
+        build_address += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1']+',':'';
+        build_address += (address['fm-address-line-2'].length > 0) ? address['fm-address-line-2'] + ',' : ''; 
+        build_address += (address['fm-address-town'].length > 0) ? address['fm-address-town'] + ',' : ''; 
+        build_address += (address['fm-address-county'].length > 0) ? address['fm-address-county'] : ''; 
+        
+        var buildingAddress = build_address;
         $('#fm-building-postcode').html(address['fm-address-postcode']);
         $('#fm-building-address').html(buildingAddress);
         $('#fm-building-region').html(address['fm-address-region']);
