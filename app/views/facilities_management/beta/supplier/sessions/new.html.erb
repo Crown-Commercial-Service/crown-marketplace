@@ -19,7 +19,7 @@
     <%= form_for resource, as: resource_name, url: facilities_management_beta_supplier_new_user_session_path, method: :post, html: { class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
       <div class="govuk-form-group govuk-!-margin-bottom-4 <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">
-          <%= t('.email_address') %>
+          <%= "Email address" %>
         </label>
         <span id="email-hint" class="govuk-hint">
                     <%= "Enter the email address you used to register" %>
@@ -34,7 +34,7 @@
 
       <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @result.errors[:password].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="password">
-          <%= t('.password') %>
+          <%= "Password" %>
         </label>
 
         <span id="password-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
