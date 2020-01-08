@@ -48,6 +48,9 @@ Rails.application.routes.draw do
       concerns %i[authenticatable registrable]
       namespace :beta do
         concerns :authenticatable
+        namespace :supplier do
+          concerns :authenticatable
+        end
       end
     end
 
@@ -151,6 +154,7 @@ Rails.application.routes.draw do
         get 'edit_address'
       end
       namespace :supplier do
+        get '/', to: 'home#index'
         get 'offer-declined', to: 'offer#declined'
         get 'offer-accepted', to: 'offer#accepted'
         get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
