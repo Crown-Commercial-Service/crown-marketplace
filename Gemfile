@@ -89,7 +89,7 @@ gem 'capybara', '>= 3.20.2'
 gem 'faker'
 
 # for authorization
-gem 'cancan', '~> 1.6.10'
+gem 'cancancan', '~> 3.0.1'
 
 gem 'role_model', '~> 0.8.2'
 
