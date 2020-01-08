@@ -1,0 +1,28 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+    <%=form_for @page_data[:model_object], url: facilities_management_suppliers_path do |f|%>
+        <div class="govuk-body govuk-!-padding-top-0 ">
+                <b>Contract name: </b> <%= @page_data[:contract_name]%> <br> 
+                <b>Contract number: </b> <%= @page_data[:contract_number]%> <br>
+        </div>
+        <%= govuk_grouped_field(f, @page_data[:form_text], :respond_to_contract_offer) do |ff, attr| %>
+                <div class="govuk-radios">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="contract-accepted-yes" name="contract-accepted-status" type="radio" value="yes" <%= 'checked' if @page_data[:checked].to_s == 'yes' %>/>
+                        <label class="govuk-label govuk-radios__label" for="contract-accepted-yes">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="contract-accepted-no" name="contract-accepted-status" type="radio" value="no" <%= 'checked' if @page_data[:checked].to_s == 'no' %>/>
+                        <label class="govuk-label govuk-radios__label" for="contract-accepted-no">
+                            No
+                        </label>
+                    </div>
+                <div id="contract-accepted-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:no_is_used]%>" data-module="character-count" data-maxlength="500">
+                    <%= govuk_label(ff, ff.object, :contract_not_accepted, @page_data[:label_text]) %>
+                    <%= govuk_text_area_input(ff, :contract_not_accepted, true, ['rows', 5], ['maxlength', 500]) %>
+                </div>
+        <% end %>
+        <%= govuk_continuation_buttons(pd, f, true, false) %>
+    <% end %>
+<% end %>
