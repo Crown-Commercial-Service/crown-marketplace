@@ -63,8 +63,7 @@ module FacilitiesManagement
               back_text: 'Back',
               back_label: 'Back',
               secondary_text: 'Return to dashboard',
-              # TODO: add the link when the page has been created
-              secondary_url: '#'
+              secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
             },
             declined: {
               # TODO: add the link when path is known
@@ -72,8 +71,7 @@ module FacilitiesManagement
               back_text: 'Back',
               back_label: 'Back',
               secondary_text: 'Return to dashboard',
-              # TODO: add the link when the page has been created
-              secondary_url: '#'
+              secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
             },
             respond_to_contract_offer: {
               # TODO: add link when path is known
