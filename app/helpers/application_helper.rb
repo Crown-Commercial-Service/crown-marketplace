@@ -247,8 +247,6 @@ module ApplicationHelper
   end
 
   def service_start_page_path
-    return 'facilities_management_beta_supplier_path' if controller.class.parent_name == 'FacilitiesManagement::Beta::Supplier'
-
     send controller.class.parent_name.underscore.tr('/', '_') + '_path' if controller.class.parent_name
   end
 
