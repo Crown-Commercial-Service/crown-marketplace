@@ -82,7 +82,7 @@ module FacilitiesManagement
               caption1: 'School facilities London',
               continuation_text: 'Confirm and continue',
               secondary_text: 'Cancel',
-              # TODO: add the link when the page is created - contract summary page 
+              # TODO: add the link when the page is created - contract summary page
               secondary_url: '#'
             }
           }.freeze
