@@ -62,21 +62,12 @@ module FacilitiesManagement
               secondary_url: '#'
             },
             declined: {
-<<<<<<< HEAD
               # TODO: add the link when path is known
               back_url: '#',
               back_text: 'Back',
               back_label: 'Back',
               secondary_text: 'Return to dashboard',
               # TODO: add the link when the page has been created
-=======
-              # TODO add the correct path
-              back_url: '#',
-              back_label: 'Back',
-              back_text: 'Back',
-              secondary_text: 'Return to dashboard',
-              # TOCO add correct path
->>>>>>> Created the content for the view
               secondary_url: '#'
             }
           }.freeze
