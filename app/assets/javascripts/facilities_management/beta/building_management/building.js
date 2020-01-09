@@ -94,7 +94,7 @@ $(function () {
             new_address['fm-address-town'] = addressElements[2];
             new_address['fm-address-county'] = addressElements[3];
             new_address['fm-address-postcode'] = addressElements[4].trim();
-            new_address['fm-address-region'] = addressElements[5].trim();
+            new_address['fm-address-region'] = addressElements[5].replace(/##/g, ",").trim();
             new_address['building-ref'] = addressElements[6];
 
             return true;
@@ -134,7 +134,8 @@ $(function () {
                         let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
                         let county = address['county'] ? address['county'] + ', ' : '';
                         let postCode = address['postcode'] ? address['postcode'] : '';
-                        let region = address['region'] ? address['region']+' ' : '';
+                        /**replace all commas so later when we split the selected address we can replace these hashes with commas to avoid conflicts */
+                        let region = address['region'] ? address['region'].replace(/,/g, "##")+' ' : '';
                         let buildingRef = address['building_ref'] ? address['building_ref'] : '';
                         let newOptionData = add1 + add2 + postTown + county + postCode;
                         let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + region + ', ' + buildingRef;
@@ -239,7 +240,7 @@ $(function () {
         var buildingAddress = build_address;
         $('#fm-building-postcode').html(address['fm-address-postcode']);
         $('#fm-building-address').html(buildingAddress);
-        $('#fm-building-region').html(address['fm-address-region']);
+        $('#fm-building-region').html(address['fm-address-region'].replace(/##/g, ","));
         $('.fm-bulding-address-wrapper').show();
     };
 
