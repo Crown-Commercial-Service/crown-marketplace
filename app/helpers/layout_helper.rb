@@ -62,12 +62,12 @@ module LayoutHelper
 
   # Renders the top of the page including back-button, and the 3 elements of the main header
   # rubocop:disable Rails/OutputSafety
-  def govuk_page_content(page_details, model_object = nil, no_headings = false)
+  def govuk_page_content(page_details, model_object = nil, no_headings = false, no_back_button = false)
     raise ArgumentError, 'Use PageDescription object' unless page_details.is_a? PageDescription
 
     out = ''
     out = capture { govuk_page_error_summary(model_object) } unless model_object.nil?
-    out << capture { govuk_back_button(page_details.back_button) }
+    out << capture { govuk_back_button(page_details.back_button) } unless no_back_button
     out << capture { govuk_page_header(page_details.heading_details) } unless no_headings
 
     out << capture do
@@ -97,8 +97,9 @@ module LayoutHelper
   end
 
   # rubocop:enable Rails/OutputSafety
-  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true)
-    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit')
+  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true)
+    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit') if primary_button
+    buttons = form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') unless primary_button
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') if secondary_button
     buttons << capture { tag.br }
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
@@ -205,6 +206,7 @@ module LayoutHelper
 
   def govuk_text_area_input(builder, attribute, char_count = false, *option)
     css_classes = ['govuk-textarea']
+    css_classes << option.to_h[:class] if option.to_h.key? :class
     css_classes += ['govuk-input--error'] if builder.object.errors.key?(attribute)
     css_classes += ['js-character-count'] if char_count
 
@@ -214,10 +216,15 @@ module LayoutHelper
     builder.text_area attribute, options
   end
 
-  def govuk_button(builder, text, options = { submit: true })
-    return builder.submit(text, class: 'govuk-button') if options.key?(:submit) ? options[:submit] : false
+  def govuk_button(builder, text, options = { submit: true, class: '' })
+    css_classes = ['govuk-button']
+    css_classes << options[:class]
+    css_classes += ['govuk-button--secondary'] if options[:button] == :secondary
+    css_classes += ['govuk-button--warning'] if options[:button] == :warning
 
-    builder.button(value: nil, options: { class: 'govuk-button' })
+    return builder.submit(text, class: css_classes) if options.key?(:submit) ? options[:submit] : false
+
+    builder.button(value: nil, class: css_classes)
   end
 
   def govuk_label(builder, model, attribute, label_text = {})

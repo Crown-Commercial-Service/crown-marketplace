@@ -7,7 +7,6 @@ module FacilitiesManagement
     attribute :confirm_direct_award
     attribute :select_an_invoicing_contact
     attribute :select_an_authorised_representative
-    attribute :select_a_notice
     attribute :contract_not_signed
     attribute :contract_start_date
     attribute :contract_start_date_dd
@@ -17,6 +16,8 @@ module FacilitiesManagement
     attribute :contract_end_date_dd
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
+    attribute :contract_withdrawn_reason
+    attribute :select_a_contact_for_notices
     attribute :name
     attribute :building
     attribute :street

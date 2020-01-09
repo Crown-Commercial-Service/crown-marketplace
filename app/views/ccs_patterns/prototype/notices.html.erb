@@ -1,7 +1,7 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
     <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
         <%= govuk_prevent_submission(f, true) %>
-        <%= govuk_grouped_field(f, 'This person to whom contract notices should be communicated to.', :select_a_notice) do |ff, attr| %>
+        <%= govuk_grouped_field(f, 'The person to whom contract notices should be communicated.', :select_a_contact_for_notices) do |ff, attr| %>
             <%= govuk_start_individual_field(ff,attr) do |a| %>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
@@ -16,7 +16,7 @@
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" id="new_notice_contact" name="select_an_notice_contact" type="radio" value="new_contact"/>
                         <label class="govuk-label govuk-radios__label ccs-font-weight-semi-bold" for="direct_award">
-                            Enter a new notices contact
+                            Enter a new contact for notices
                         </label>
                     </div>
                 </div>

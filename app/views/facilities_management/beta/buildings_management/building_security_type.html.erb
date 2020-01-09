@@ -19,18 +19,21 @@
           </label>
         </div>
       <% end %>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="fm-building-security-type-other"
-               name="fm-building-security-type-radio" type="radio" value="<%= @other_value%>" <%= 'checked' if @other_is_used %>>
-        <label class="govuk-label govuk-radios__label" for="fm-building-security-type-other">
-          Other<br>
-        </label>
-      </div>
-      <div id="fm-bm-sec-other-container" class="govuk-details__text govuk-!-margin-left-3 govuk-!-width-two-thirds govuk-!-margin-top-1 <%= 'govuk-visually-hidden' unless @other_is_used%>">
-        <span class="govuk-caption-m govuk-!-margin-bottom-1">Describe security level</span>
-        <textarea maxlength="150" class="govuk-textarea govuk-!-margin-bottom-1 govuk-!-margin-top-1" id="fm-building-security-type-more-detail"
-                  name="fm-building-security-type-more-detail" rows="4"><%= @other_value unless @other_value == 'other'%></textarea>
-        <span id="fm-bm-bs-char-count" class="govuk-caption-m govuk-!-margin-top-1 fm-security-type-text"></span>
+      <div id="no-dexcription-error-details">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="fm-building-security-type-other"
+                 name="fm-building-security-type-radio" type="radio" value="<%= @other_value%>" <%= 'checked' if @other_is_used %>>
+          <label class="govuk-label govuk-radios__label" for="fm-building-security-type-other">
+            Other<br>
+          </label>
+        </div>
+        <div id="fm-bm-sec-other-container" class="govuk-details__text govuk-!-margin-left-3 govuk-!-width-two-thirds govuk-!-margin-top-1 <%= 'govuk-visually-hidden' unless @other_is_used%>">
+          <span class="govuk-caption-m govuk-!-margin-bottom-1">Describe security level</span>
+          <span class="govuk-caption-m govuk-!-margin-bottom-1 govuk-visually-hidden govuk-error-message" id="no-dexcription-error-text" >You must describe your security level</span>
+          <textarea maxlength="150" class="govuk-textarea govuk-!-margin-bottom-1 govuk-!-margin-top-1" id="fm-building-security-type-more-detail"
+                    name="fm-building-security-type-more-detail" rows="4"><%= @other_value unless @other_value == ''%></textarea>
+          <span id="fm-bm-bs-char-count" class="govuk-caption-m govuk-!-margin-top-1 fm-security-type-text"></span>
+        </div>
       </div>
     </div>
   </form>

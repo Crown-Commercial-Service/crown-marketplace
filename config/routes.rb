@@ -48,6 +48,9 @@ Rails.application.routes.draw do
       concerns %i[authenticatable registrable]
       namespace :beta do
         concerns :authenticatable
+        namespace :supplier do
+          concerns :authenticatable
+        end
       end
     end
 
@@ -150,6 +153,13 @@ Rails.application.routes.draw do
       resources :buyer_details, only: %i[edit update] do
         get 'edit_address'
       end
+      namespace :supplier do
+        get '/', to: 'home#index'
+        get 'offer-declined', to: 'offer#declined'
+        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
+        get 'offer-accepted', to: 'offer#accepted'
+        get 'supplier-account-dashboard', to: 'supplier_account#index'
+      end
     end
 
     get '/', to: 'home#index'
@@ -235,18 +245,24 @@ Rails.application.routes.draw do
     get '/prototypes/what-next', to: 'prototype#what_next'
     get '/prototypes/payment-method', to: 'prototype#payment_method'
     get '/prototypes/add-missing-address', to: 'prototype#add_missing_address'
+    get '/prototypes/contract-confirmation', to: 'prototype#contract_confirmation'
     get '/prototypes/contract-details', to: 'prototype#contract_details'
     get '/prototypes/invoicing-contact-details', to: 'prototype#invoicing_contact_details'
     get '/prototypes/new-invoicing-contact-details', to: 'prototype#new_invoicing_contact_details'
+    get '/prototypes/authorised-representative', to: 'prototype#authorised_representative'
     get '/prototypes/new-invoicing-contact-details-edit-address', to: 'prototype#new_invoicing_contact_details_edit_address'
     get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
     get '/prototypes/confirmation-of-signed-contract', to: 'prototype#confirmation_of_signed_contract'
+    get '/prototypes/closing-direct-award-offer', to: 'prototype#closing_direct_award_offer'
     get '/prototypes/new-authorised-representative-details', to: 'prototype#new_authorised_representative_details'
     get '/prototypes/contract-signed', to: 'prototype#contract_signed'
+    get '/prototypes/lgps-check', to: 'prototype#lgps_check'
+    get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
     get '/prototypes/new-notices-contact-details', to: 'prototype#new_notices_contact_details'
     get '/prototypes/did-you-know', to: 'prototype#did_you_know'
+    get '/prototypes/new-invoicing-contact-details-edit-address', to: 'prototype#new_invoicing_contact_details_edit_address'
     get '/prototypes/new-notices-new-address', to: 'prototype#new_notices_new_address'
-    get '/prototypes/lgps-check', to: 'prototype#lgps_check'
+    get '/prototypes/procurement_closed', to: 'prototype#procurement_closed'
     get '/prototypes/notices', to: 'prototype#notices'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'

@@ -22,6 +22,10 @@ module FacilitiesManagement
       #{postcode}"
     end
 
+    def building
+      CCS::FM::Building.find_by(id: building_id)
+    end
+
     private
 
     def service_codes_not_empty

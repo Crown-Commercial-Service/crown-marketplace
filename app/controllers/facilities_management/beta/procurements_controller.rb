@@ -87,6 +87,7 @@ module FacilitiesManagement
 
       def continue
         if procurement_valid?
+          @procurement.save_eligible_suppliers
           redirect_to facilities_management_beta_procurement_results_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
@@ -133,14 +134,10 @@ module FacilitiesManagement
         end
       end
 
-      def estimated_cost
-        @procurement[:estimated_annual_cost]
+      def eligible_for_direct_award?
+        DirectAward.new(@procurement.buildings_standard, @procurement.services_standard, @procurement.priced_at_framework, @procurement.assessed_value).calculate
       end
 
-      def eligible_for_direct_award?
-        # this is hard-coded at present and will determine the view that is rendered
-        @procurement[:estimated_annual_cost] < 1500000
-      end
       helper_method :eligible_for_direct_award?
 
       private
@@ -148,13 +145,13 @@ module FacilitiesManagement
       def set_results_page_data
         @page_data = {}
         @page_data[:model_object] = @procurement
-        @page_data[:no_suppliers] = @suppliers_lot1a.length
-        @page_data[:supplier_collection] = @suppliers_lot1a.map { |s| s['name'] }
-        @page_data[:estimated_cost] = estimated_cost
-        @page_data[:selected_sublot] = '1a'
+        @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
+        @page_data[:supplier_collection] = @procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] }.shuffle
+        @page_data[:estimated_cost] = @procurement.assessed_value
+        @page_data[:selected_sublot] = @procurement.lot_number
         @page_data[:buildings] = @active_procurement_buildings.map { |b| b[:name] }
-        @page_data[:services] = @services.map { |s| s[:name] }
-        @page_data[:supplier_prices] = [estimated_cost]
+        @page_data[:services] = @procurement.procurement_building_services.map { |s| s[:name] }
+        @page_data[:supplier_prices] = @procurement.procurement_suppliers.map(&:direct_award_value)
       end
 
       def procurement_route_params

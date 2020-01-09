@@ -1,3 +1,4 @@
+require 'fm_calculator/fm_direct_award_calculator.rb'
 module FacilitiesManagement
   class Procurement < ApplicationRecord
     include AASM
@@ -12,6 +13,9 @@ module FacilitiesManagement
     has_many :procurement_buildings, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
     has_many :procurement_building_services, through: :procurement_buildings
     accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
+
+    has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
     mount_uploader :security_policy_document_file, FacilitiesManagementSecurityPolicyDocumentUploader
     # needed to move this validation here as it was being called incorrectly in the validator, ie when a file with the wrong
@@ -67,6 +71,32 @@ module FacilitiesManagement
 
     def active_procurement_buildings
       procurement_buildings.active
+    end
+
+    def save_eligible_suppliers
+      sorted_list = FacilitiesManagement::DirectAwardEligibleSuppliers.new(id).sorted_list
+
+      # if any procurement_suppliers present, they need to be removed
+      procurement_suppliers.destroy_all
+      sorted_list.each do |supplier_data|
+        procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
+      end
+    end
+
+    def buildings_standard
+      active_procurement_buildings.map { |pb| pb.building.building_standard }.include?('NON-STANDARD') ? 'NON-STANDARD' : 'STANDARD'
+    end
+
+    def services_standard
+      # 'A' if A or N/A, 'B' if 'B' or 'C' standards are present
+      (procurement_building_services.map(&:service_standard).uniq.flatten - ['A']).none? ? 'A' : 'B'
+    end
+
+    def priced_at_framework
+      # [procurement_building_services.map(&:code) - CCS::FM::Service.direct_award_services].none?
+      # this is not the right list, still need to import this data
+      # for now this always returns true
+      true
     end
 
     private

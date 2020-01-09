@@ -211,21 +211,18 @@ en:
         add_desc_text: Add description
         add_name_text: Add name
         answer_question_text: Answer question
-        building_was_saved: Your building was saved.  "%{name}" is ready for procurement.
         caption_addr: Address
         caption_region_nuts: Location (NUTS region)
         caption_desc: Description
         caption_gia: Gross internal area
         caption_name: Name
-        caption_reference: Reference
         caption_sec: Security clearance
         caption_type: Building type
         change_text: Change
         no_data_message: There are no building details to view
         return_to_management_text: Return to manage buildings
         section-header: Building details summary
-        select_one_option_text: Select one option
-        status_warning_message: Your building was saved.  "%{name}" is incomplete.  You need to answer all questions to be used in procurement.
+        select_one_option_text: Please select one option
       building-gross-internal-area:
         add_header: Add building GIA
         edit_header: Change building GIA
