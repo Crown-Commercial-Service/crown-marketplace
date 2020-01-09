@@ -1,0 +1,11 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|  %>
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+      Received contract offer
+  </strong>
+</div>
+        <%= render partial: 'procurement_requirements' %>
+    
+<% end %>
