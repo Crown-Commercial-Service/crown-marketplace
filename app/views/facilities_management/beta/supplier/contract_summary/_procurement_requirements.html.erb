@@ -7,53 +7,54 @@
     <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-width-one-third"></td>
-            <td class="govuk-table__cell govuk-!-width-two-thirds"></td>
+            <td class="govuk-table__cell govuk-!-width-two-third"></td>
         </tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Buyer</th>
+    <td class="govuk-table__cell"><%= @page_data[:procurement_data][:buyer] %></td>
+</tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Contract name</th>
+    <td class="govuk-table__cell"><%= @page_data[:procurement_data][:contract_name] %></td>
+</tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Contract number</th>
+    <td class="govuk-table__cell"><%= @page_data[:procurement_data][:contract_number] %></td>
+</tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Contract value</th>
+    <td class="govuk-table__cell"><%= @page_data[:procurement_data][:contract_value] %></td>
+</tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Framework, sub-lot</th>
+    <td class="govuk-table__cell"><%= "#{@page_data[:procurement_data][:framework]}, #{@page_data[:procurement_data][:sub_lot]}" %></td>
+</tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Initial call-off period</th>
+    <td class="govuk-table__cell">
+        <%= govuk_details('7 years') {"Start date: #{ @page_data[:procurement_data][:initial_call_off_period_start]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:initial_call_off_period_end]&.strftime '%e %B %Y'}"} %>
+    </td>
+</tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Mobilisation period</th>
+    <td class="govuk-table__cell">
+        <%= govuk_details('4 weeks') {"Start date: #{ @page_data[:procurement_data][:mobilisation_period_start]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:mobilisation_period_end]&.strftime '%e %B %Y'}"} %>
+    </td>
+</tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Optional call-off extension period 1</th>
+    <td class="govuk-table__cell">
+        <%= govuk_details('1 year') {"Start date: #{ @page_data[:procurement_data][:optional_call_off_period_start_1]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:optional_call_off_end_1]&.strftime '%e %B %Y'}"} %>
+    </td>
+</tr>
+<tr class="govuk-table__row">
+    <th class="govuk-table__cell">Optional call-off extension period 2</th>
+    <td class="govuk-table__cell">
+        <%= govuk_details('1 year') {"Start date: #{ @page_data[:procurement_data][:optional_call_off_period_start_2]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:optional_call_off_end_2]&.strftime '%e %B %Y'}"} %>
+    </td>
+</tr>
         <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Buyer</th>
-            <td class="govuk-table__cell"><%= @page_data[:procurement_data][:buyer] %></td>
-        </tr>
-        <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Contract name</th>
-            <td class="govuk-table__cell"><%= @page_data[:procurement_data][:contract_name] %></td>
-        </tr>
-        <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Contract number</th>
-            <td class="govuk-table__cell"><%= @page_data[:procurement_data][:contract_number] %></td>
-        </tr>
-            <th class="govuk-table__cell govuk-table__header">Contract value</th>
-            <td class="govuk-table__cell"><%= @page_data[:procurement_data][:contract_value] %></td>
-        </tr>
-        <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Framework, sub-lot</th>
-            <td class="govuk-table__cell"><%= "#{@page_data[:procurement_data][:framework]}, #{@page_data[:procurement_data][:sub_lot]}" %></td>
-        </tr>
-        <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Initial call-off period</th>
-            <td class="govuk-table__cell">
-                <%= govuk_details('7 years') {"Start date: #{ @page_data[:procurement_data][:initial_call_off_period_start]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:initial_call_off_period_end]&.strftime '%e %B %Y'}"} %>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Mobilisation period</th>
-            <td class="govuk-table__cell">
-                <%= govuk_details('4 weeks') {"Start date: #{ @page_data[:procurement_data][:mobilisation_period_start]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:mobilisation_period_end]&.strftime '%e %B %Y'}"} %>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 1</th>
-            <td class="govuk-table__cell">
-                <%= govuk_details('1 year') {"Start date: #{ @page_data[:procurement_data][:optional_call_off_period_start_1]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:optional_call_off_end_1]&.strftime '%e %B %Y'}"} %>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 2</th>
-            <td class="govuk-table__cell">
-                <%= govuk_details('1 year') {"Start date: #{ @page_data[:procurement_data][:optional_call_off_period_start_2]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:optional_call_off_end_2]&.strftime '%e %B %Y'}"} %>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <th class="govuk-table__cell govuk-table__header">Buildings and services</th>
+            <th class="govuk-table__cell">Buildings and services</th>
             <td class="govuk-table__cell">
                 <% @page_data[:procurement_data][:buildings_and_services].each do |bs| %>
                     <%= govuk_details(bs[:building]) do %>
@@ -66,3 +67,35 @@
         </tr>
     </tbody>
 </table>
+<h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+    Buyer contact details
+</h1>
+<div class="govuk-!-width-full govuk-!-font-size-19">
+<dl class="govuk-summary-list govuk-body">
+<table class="govuk-table">
+    <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-one-third"></td>
+            <td class="govuk-table__cell govuk-!-width-two-third"></td>
+        </tr>
+        <tr class="govuk-table__row">
+            <th class="govuk-table__cell"><%= @page_data[:procurement_data][:buyer] %></th>
+            <td class="govuk-table__cell">
+                <%= govuk_details('Contact details') do %>
+                    <%= "Name: #{@page_data[:buyer_details][:title]} #{@page_data[:buyer_details][:full_name]}"%> <br>
+                    <%= "Telephone: #{@page_data[:buyer_details][:telephone]}"%> <br>
+                    <%= "Email: #{@page_data[:buyer_details][:email]}"%> <br>
+                    <%= "Address: #{[@page_data[:buyer_details][:building_name], @page_data[:buyer_details][:street_name], @page_data[:buyer_details][:city], @page_data[:buyer_details][:county], @page_data[:buyer_details][:postcode]].reject{|a| a.empty?}.join(', ')}"%> 
+                <% end %>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</dl>
+</div>
+<h1 class="govuk-heading-m govuk-!-margin-bottom-4">
+    Call-off contract documents
+</h1>
+<hr class="govuk-section-break govuk-section-break--visible">
+Hello
+<hr class="govuk-section-break govuk-section-break--visible">
