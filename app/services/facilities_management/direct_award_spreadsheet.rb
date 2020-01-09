@@ -87,7 +87,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         @data.keys.collect { |k| @data[k].keys }
              .flatten.uniq
              .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-
           # I found :spreadsheet_label value is always nil,I did not want to alter code too much so left current code alone..
           # if buildings have different services then I put in the ,if, check below otherwise an exception is generated
           labels = @data.keys.sort.collect { |k| @data[k][s][:spreadsheet_label] if @data[k].key(s) }
