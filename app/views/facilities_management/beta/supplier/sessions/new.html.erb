@@ -19,10 +19,10 @@
     <%= form_for resource, as: resource_name, url: facilities_management_beta_supplier_new_user_session_path, method: :post, html: { class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
       <div class="govuk-form-group govuk-!-margin-bottom-4 <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">
-          <%= "Email address" %>
+          <%= t('.email_address') %>
         </label>
         <span id="email-hint" class="govuk-hint">
-                    <%= "Enter the email address you used to register" %>
+                    <%= t('.email_hint_html') %>
                 </span>
 
         <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
@@ -34,7 +34,7 @@
 
       <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @result.errors[:password].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="password">
-          <%= "Password" %>
+          <%= t('.password') %>
         </label>
 
         <span id="password-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
@@ -55,7 +55,7 @@
 
     <ul class="govuk-list">
       <li>
-        <%= link_to "I've forgotten my password", facilities_management_beta_supplier_new_user_password_path, class: 'govuk-link' %>
+        <%= link_to t('.forgotten_password_html'), facilities_management_beta_supplier_new_user_password_path, class: 'govuk-link' %>
       </li>
     </ul>
   </div>
