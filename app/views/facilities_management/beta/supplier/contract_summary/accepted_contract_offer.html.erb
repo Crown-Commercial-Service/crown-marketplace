@@ -5,19 +5,45 @@
     <span class="govuk-warning-text__assistive">Warning</span>
       Accepted
   </strong>
-  <strong class="govuk-warning-text__text">
-    Awaiting buyer confirmation of signed contract.
+</div>
+<div strong class="govuk-warning-text__text">
+    <b>Awaiting buyer confirmation of signed contract.</b>
   </strong>
-  <div class="govuk-inset-text">
+</div>
+<div class="govuk-inset-text">
   You accepted this contract offer on <%= %>. </br>
   This contract offer was received on <%= %>. 
-  </div>
 </div>
         <%= render partial: 'procurement_requirements' %>
-    
-  <div>
-    <th class="govuk-table__cell">What happens next</th>
-    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-  </div>
+<div>
+  <p class="govuk-heading-m">What happens next</p>
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
+  
+  <ol class="govuk-list govuk-list--number">
+  <b><li>You sign the contract</li></b>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>you will sign the contract first, in the order form, and share with the buyer</li>
+      <li>this would usually take place within 5 working days</li>
+    </ul>
+  <b><li>Buyer signs the contract</li></b>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the buyer will then complete the effective date (on page 4 of the order form - this is the </br> date the contract is fully signed), sign the contract, and share it back with you</li>
+      <li>this would usually take place within 2 working days</li>
+    </ul>
+  <b><li>Signature confirmation</li></b>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the buyer, in this online portal, will then confirm that both parties have signed </br> the contract, which moves the offer into the contracts section on your </br> dashboard, showing the start date and the end date</li>
+    </ul>
+  <b><li>Withdraw before signing</li></b>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>until the contract is fully signed, the buyer will have the option to withdraw </br> this offer if circumstances require this action, however you will be immediately </br> informed</li>
+      <li>if you have a change of circumstancesand need to decline this contract offer </br> after accepting it, please contact the buyer to discuss. They can then </br> close down this contract offer to you, and will then have the option to move to </br> another supplier</li>
+    </ul>
+  </ol>
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
+</div>
+  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+    <%= govuk_continuation_buttons(pd, f, false , false, false) %>
+  <% end %>
 <% end %>
