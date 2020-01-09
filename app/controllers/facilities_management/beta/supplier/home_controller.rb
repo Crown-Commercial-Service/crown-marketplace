@@ -7,7 +7,7 @@ module FacilitiesManagement
 
         def index
           if user_signed_in?
-            redirect_to facilities_management_beta_supplier_offer_declined_path
+            redirect_to facilities_management_beta_supplier_supplier_account_dashboard_path
           else
             redirect_to facilities_management_beta_supplier_new_user_session_path
           end

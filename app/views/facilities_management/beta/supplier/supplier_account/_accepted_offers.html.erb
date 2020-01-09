@@ -1,0 +1,27 @@
+<table class="govuk-table">
+    <% if !@page_data[:accepted_offers].empty? %>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Contract name</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Buyer</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Accepted</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <% @page_data[:accepted_offers].each do |accepted_offer| %>
+                <tr class="govuk-table__row">
+                    <!-- TODO: Add the link in the future-->
+                    <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to accepted_offer[:contract_name], '#', class: 'govuk-link govuk-link--no-visited-state' %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= accepted_offer[:buyer] %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= accepted_offer[:date_offer_accepted]&.strftime '%e %B %Y, %l:%M%p' %> </td>
+                    <td class="govuk-table__cell"></td>
+                </tr>
+            <% end %>
+        </tbody>
+    <% else %>
+        <hr class="govuk-section-break govuk-section-break--visible">
+                <span class="govuk-hint govuk-!-margin-top-3"> You do not have any accepted offers </span>
+        <hr class="govuk-section-break govuk-section-break--visible">
+    <% end %>
+</table>
