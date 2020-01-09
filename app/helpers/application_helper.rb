@@ -247,8 +247,6 @@ module ApplicationHelper
   end
 
   def service_start_page_path
-    return 'facilities_management_beta_supplier_path' if controller.class.parent_name == 'FacilitiesManagement::Beta::Supplier'
-
     send controller.class.parent_name.underscore.tr('/', '_') + '_path' if controller.class.parent_name
   end
 
@@ -278,6 +276,10 @@ module ApplicationHelper
 
   def fm_buyer_landing_page
     request.path_info.include? 'buyer-account'
+  end
+
+  def fm_supplier_landing_page
+    request.path_info.include? 'supplier-account'
   end
 
   def not_permitted_page

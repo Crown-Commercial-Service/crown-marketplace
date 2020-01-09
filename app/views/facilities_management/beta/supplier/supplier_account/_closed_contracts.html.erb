@@ -1,0 +1,27 @@
+<table class="govuk-table">
+    <% if !@page_data[:closed_contracts].empty? %>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Contract name</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Buyer</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Date</th>
+                <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"> Status </th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <% @page_data[:closed_contracts].each do |closed_contract| %>
+                <tr class="govuk-table__row">
+                    <!-- TODO: Add the link in the future-->
+                    <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to closed_contract[:contract_name], '#', class: 'govuk-link govuk-link--no-visited-state' %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= closed_contract[:buyer] %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= closed_contract[:date_closed]&.strftime '%e %B %Y, %l:%M%p' %> </td>
+                    <td class="govuk-table__cell"> <%= closed_contract[:status] %> </td>
+                </tr>
+            <% end %>
+        </tbody>
+    <% else %>
+        <hr class="govuk-section-break govuk-section-break--visible">
+                <span class="govuk-hint govuk-!-margin-top-3"> You do not have any items in this section </span>
+        <hr class="govuk-section-break govuk-section-break--visible">
+    <% end %>
+</table>
