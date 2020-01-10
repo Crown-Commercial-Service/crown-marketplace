@@ -6,7 +6,9 @@ module FacilitiesManagement
         before_action :set_page_detail
         before_action :set_page_model
 
-        def received_contract_offer; end
+        def received_contract_offer
+          @page_data[:expiration_date] = DateTime.new(2019, 7, 23, 14, 20, 0).in_time_zone('London') 
+        end
 
         def live_contract; end
 
