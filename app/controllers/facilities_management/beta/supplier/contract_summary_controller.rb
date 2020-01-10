@@ -5,7 +5,6 @@ module FacilitiesManagement
         skip_before_action :authenticate_user!
         before_action :set_page_detail
         before_action :set_page_model
-<<<<<<< HEAD
 
         def received_contract_offer; end
 
@@ -21,18 +20,6 @@ module FacilitiesManagement
                                           status2: 'The contract offer has therefore been closed.',
                                           message: "You accepted this contract offer on #{accepted_timestamp}.",
                                           message2: "This contract offer was received on #{received_timestamp}." }
-=======
-        
-        def received_contract_offer
-          @page_data[:procurement_data] = { contract_type: 'recieved', contract_name: 'School facilities London', buyer: 'Cabinet office', date_offer_expires: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), contract_number: 'RM330-DA2234-2019', contract_value: '£752,026', framework: 'RM3830', sub_lot: 'sub-lot 1a', initial_call_off_period_start: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), initial_call_off_period_end: DateTime.new(2026, 7, 7, 8, 2, 0).in_time_zone('London'), 
-            mobilisation_period_start: DateTime.new(2019, 10, 3, 8, 2, 0).in_time_zone('London'), mobilisation_period_end: DateTime.new(2019, 10, 31, 8, 2, 0).in_time_zone('London'),
-            optional_call_off_period_start_1: DateTime.new(2026, 10, 3, 8, 2, 0).in_time_zone('London'), optional_call_off_end_1: DateTime.new(2027, 10, 31, 8, 2, 0).in_time_zone('London'),
-            optional_call_off_period_start_2: DateTime.new(2027, 10, 3, 8, 2, 0).in_time_zone('London'), optional_call_off_end_2: DateTime.new(2028, 10, 31, 8, 2, 0).in_time_zone('London'),
-            buildings_and_services: [{building: 'Barton court store', services: []}, {building: 'CCS London office 5th floor', services: ['High voltage (HV) and switchgear maintenance', 'Locksmith services', 'Helpdesk services']}, {building: 'Phoenix house', services: []}, {building: 'Vale court', services: []}, {building: 'W Cabinet office 3rd floor', services: []}]
-          }
-          @page_data[:buyer_details] = { title: 'Miss', full_name: 'Evelyn Smith', telephone: '0300 821 4554', email: 'evelyn@cleaningltd.co.uk', building_name: 'Cleaning London LTD', street_name: '', city: 'London', county: '', postcode: 'SW1 1ET' }
-          @page_data[:offer_data] = { expiration_date: DateTime.new(2019, 7, 23, 14, 20, 0).in_time_zone('London') }
->>>>>>> Created the received contract html page
         end
 
         def declined_offer
