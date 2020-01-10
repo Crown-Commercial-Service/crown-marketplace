@@ -10,6 +10,8 @@ module FacilitiesManagement
 
         def live_contract; end
 
+        def accepted_contract_offer; end
+
         def not_signed_offer
           offer_timestamp = '23 June 2019, 3:20pm'
           accepted_timestamp = '23 January 2019, 2:30pm'
@@ -89,6 +91,15 @@ module FacilitiesManagement
               back_text: 'Back',
               page_title: 'Contract summary',
               caption1: 'Schools facilities London'
+            },
+            accepted_contract_offer: {
+              back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
+              back_label: 'Back',
+              back_text: 'Back',
+              page_title: 'Contract summary',
+              caption1: 'Cabinet office FM services',
+              continuation_text: false,
+              secondary_text: 'Return to dashboard'
             },
             not_signed_offer: {
               back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
