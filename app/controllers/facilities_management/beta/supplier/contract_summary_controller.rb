@@ -19,7 +19,7 @@ module FacilitiesManagement
                                           message: "You accepted this contract offer on #{accepted_timestamp}.",
                                           message2: "This contract offer was received on #{received_timestamp}." }
         end
-        
+
         def declined_offer
           offer_timestamp = '21 November 2019, 8:45pm'
           reason = 'conflict of interest'
