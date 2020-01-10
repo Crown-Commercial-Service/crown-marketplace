@@ -31,6 +31,8 @@ module FacilitiesManagement
                                           message2: "This contract offer was received on #{received_timestamp}." }
         end
 
+        def not_responded_to_contract_offer; end
+
         private
 
         def set_page_model
@@ -56,7 +58,7 @@ module FacilitiesManagement
           )
           @page_data[:procurement_data] = { contract_name: 'School facilities London', buyer: 'Cabinet office', date_offer_expires: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), contract_number: 'RM330-DA2234-2019', contract_value: '£752,026', framework: 'RM3830', sub_lot: 'sub-lot 1a',
                                             initial_call_off_period_start: Date.new(2019, 11, 1), initial_call_off_period_end: Date.new(2016, 10, 31),
-                                            date_contract_received: DateTime.new(2019, 11, 20, 14, 0, 0).in_time_zone('London'), date_contract_accepted: DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London'),
+                                            date_contract_received: DateTime.new(2019, 11, 20, 14, 0, 0).in_time_zone('London'), date_contract_accepted: DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London'), date_contract_closed: DateTime.new(2019, 11, 22, 14, 37, 0).in_time_zone('London'),
                                             mobilisation_period_start: Date.new(2019, 10, 3), mobilisation_period_end: Date.new(2019, 10, 31),
                                             optional_call_off_period_start_1: Date.new(2026, 11, 1), optional_call_off_end_1: Date.new(2027, 10, 31),
                                             optional_call_off_period_start_2: Date.new(2027, 11, 1), optional_call_off_end_2: Date.new(2028, 10, 31),
@@ -69,6 +71,7 @@ module FacilitiesManagement
           @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
         end
 
+        # rubocop:disable Metrics/MethodLength
         def page_definitions
           @page_definitions ||= {
             default: {
@@ -82,6 +85,15 @@ module FacilitiesManagement
               back_text: 'Back',
               page_title: 'Contract summary',
               caption1: 'Cabinet office service3',
+              secondary_text: 'Return to dashboard',
+              secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
+            },
+            not_responded_to_contract_offer: {
+              back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
+              back_label: 'Back',
+              back_text: 'Back',
+              page_title: 'Contract summary',
+              caption1: 'Cabinet office FM services',
               secondary_text: 'Return to dashboard',
               secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
             },
@@ -121,6 +133,7 @@ module FacilitiesManagement
             }
           }.freeze
         end
+        # rubocop:enable Metrics/MethodLength
         # rubocop:enable Metrics/AbcSize
       end
     end
