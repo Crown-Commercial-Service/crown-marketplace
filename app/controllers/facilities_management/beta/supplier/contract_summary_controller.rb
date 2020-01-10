@@ -29,7 +29,7 @@ module FacilitiesManagement
           @page_data[:model_object] = nil
         end
 
-        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        # rubocop:disable Metrics/AbcSize
         def set_page_detail
           @page_data = {}
           @page_description = LayoutHelper::PageDescription.new(
@@ -60,7 +60,8 @@ module FacilitiesManagement
         def page_details(action)
           @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
         end
-
+        
+        # rubocop:disable Metrics/MethodLength
         def page_definitions
           @page_definitions ||= {
             default: {
@@ -113,7 +114,8 @@ module FacilitiesManagement
             }
           }.freeze
         end
-        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+        # rubocop:enable Metrics/MethodLength
+        # rubocop:enable Metrics/AbcSize
       end
     end
   end
