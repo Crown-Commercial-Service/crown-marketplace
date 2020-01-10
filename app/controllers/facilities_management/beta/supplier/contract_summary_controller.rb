@@ -105,8 +105,8 @@ module FacilitiesManagement
               back_text: 'Back',
               page_title: 'Contract summary',
               caption1: 'Schools facilities London',
-              continuation_text: 'Respond to this offer',
-              return_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
+              secondary_text: 'Respond to this offer',
+              secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
               return_text: 'Return to dashboard'
             },
             accepted_contract_offer: {
