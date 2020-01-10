@@ -43,13 +43,13 @@
         <tr class="govuk-table__row">
             <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 1</th>
             <td class="govuk-table__cell">
-                <%= govuk_details('1 year') {"Start date: #{ @page_data[:procurement_data][:optional_call_off_period_start_1]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:optional_call_off_end_1]&.strftime '%e %B %Y'}"} %>
+                <%= govuk_details('1 year') {"#{ @page_data[:procurement_data][:optional_call_off_period_start_1]&.strftime '%e %B %Y'} to #{ @page_data[:procurement_data][:optional_call_off_end_1]&.strftime '%e %B %Y'}"} %>
             </td>
         </tr>
         <tr class="govuk-table__row">
             <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 2</th>
             <td class="govuk-table__cell">
-                <%= govuk_details('1 year') {"Start date: #{ @page_data[:procurement_data][:optional_call_off_period_start_2]&.strftime '%e %B %Y'}, End date: #{ @page_data[:procurement_data][:optional_call_off_end_2]&.strftime '%e %B %Y'}"} %>
+                <%= govuk_details('1 year') {"#{ @page_data[:procurement_data][:optional_call_off_period_start_2]&.strftime '%e %B %Y'} to #{ @page_data[:procurement_data][:optional_call_off_end_2]&.strftime '%e %B %Y'}"} %>
             </td>
         </tr>
         <tr class="govuk-table__row">
