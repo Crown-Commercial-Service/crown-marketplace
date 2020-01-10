@@ -1,0 +1,20 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|  %>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+        Not responded
+    </strong>
+  </div>
+  <div class="govuk-body ccs-font-weight-semi-bold govuk-!-width-two-thirds">
+   You did not respond to this contract offer within the required timescales, therefore it was automatically declined with the reason of 'no response'.
+  </div>
+  <div class="govuk-body govuk-details__text">
+    This contract offer was closed on <%= @page_data[:procurement_data][:date_contract_closed]&.strftime '%e %B %Y, %l:%M%P' %>. <br>
+    This contract offer was received on <%= @page_data[:procurement_data][:date_contract_received]&.strftime '%e %B %Y, %l:%M%P' %>.
+  </div>
+  <%= render partial: 'procurement_requirements' %>
+  <%= render partial: 'buyer_contact_details' %>
+  <%= render partial: 'call_off_contract_documents' %>
+  <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--secondary govuk-!-margin-top-9' %>
+<% end %>
