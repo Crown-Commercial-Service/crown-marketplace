@@ -23,6 +23,10 @@ module FacilitiesManagement
 
         def not_responded_to_contract_offer; end
 
+        def contract_withdrawn
+          @page_data[:reason_closed] = 'not enough resources to supply 1 or more services'
+        end
+
         private
 
         def set_page_model
@@ -79,6 +83,15 @@ module FacilitiesManagement
               secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
             },
             not_responded_to_contract_offer: {
+              back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
+              back_label: 'Back',
+              back_text: 'Back',
+              page_title: 'Contract summary',
+              caption1: 'Cabinet office FM services',
+              secondary_text: 'Return to dashboard',
+              secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
+            },
+            contract_withdrawn: {
               back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
               back_label: 'Back',
               back_text: 'Back',
