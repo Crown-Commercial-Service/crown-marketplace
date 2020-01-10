@@ -12,7 +12,7 @@
             <% @page_data[:live_contracts].each do |live_contract| %>
                 <tr class="govuk-table__row">
                     <!-- TODO: Add the link in the future-->
-                    <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to live_contract[:contract_name], '#', class: 'govuk-link govuk-link--no-visited-state' %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to live_contract[:contract_name], facilities_management_beta_supplier_contract_summary_live_contract_url, class: 'govuk-link govuk-link--no-visited-state' %> </td>
                     <td class="govuk-table__cell govuk-!-padding-right-4"> <%= live_contract[:buyer] %> </td>
                     <td class="govuk-table__cell govuk-!-padding-right-4"> <%= live_contract[:start_date]&.strftime '%e %B %Y' %> </td>
                     <td class="govuk-table__cell"> <%= live_contract[:end_date]&.strftime '%e %B %Y' %> </td>
