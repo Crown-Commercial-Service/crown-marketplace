@@ -19,6 +19,15 @@ module FacilitiesManagement
                                           message: "You accepted this contract offer on #{accepted_timestamp}.",
                                           message2: "This contract offer was received on #{received_timestamp}." }
         end
+        
+        def declined_offer
+          offer_timestamp = '21 November 2019, 8:45pm'
+          reason = 'conflict of interest'
+          received_timestamp = '20 November 2019, 2:00pm'
+          @page_data[:status_message] = { status: "You declined this contract offer on #{offer_timestamp}.",
+                                          message: "Your reason for declining was: #{reason}",
+                                          message2: "This contract offer was received on #{received_timestamp}." }
+        end
 
         private
 
@@ -82,6 +91,15 @@ module FacilitiesManagement
               caption1: 'Schools facilities London'
             },
             not_signed_offer: {
+              back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
+              back_label: 'Back',
+              back_text: 'Back',
+              page_title: 'Contract summary',
+              caption1: 'Schools facilities London',
+              secondary_text: 'Return to dashboard',
+              secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
+            },
+            declined_offer: {
               back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
               back_label: 'Back',
               back_text: 'Back',
