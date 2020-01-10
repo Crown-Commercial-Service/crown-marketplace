@@ -12,7 +12,8 @@ module FacilitiesManagement
         protected
 
         def authorize_user
-          authorize! :read, FacilitiesManagement
+          binding.pry
+          authorize! :read, FacilitiesManagement::Beta::Supplier
         end
       end
     end
