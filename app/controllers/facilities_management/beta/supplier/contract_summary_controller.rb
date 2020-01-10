@@ -71,6 +71,7 @@ module FacilitiesManagement
           @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
         end
 
+        # rubocop:disable Metrics/MethodLength
         def page_definitions
           @page_definitions ||= {
             default: {
@@ -132,6 +133,7 @@ module FacilitiesManagement
             }
           }.freeze
         end
+        # rubocop:enable Metrics/MethodLength
         # rubocop:enable Metrics/AbcSize
       end
     end
