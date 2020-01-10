@@ -160,6 +160,7 @@ Rails.application.routes.draw do
         get 'offer-accepted', to: 'offer#accepted'
         get 'supplier-account-dashboard', to: 'supplier_account#index'
         get 'contract-summary/received-contract-offer', to: 'contract_summary#received_contract_offer'
+        get 'contract-summary/contract-withdrawn', to: 'contract_summary#contract_withdrawn'
         get 'contract-summary/live-contract', to: 'contract_summary#live_contract'
         get 'contract-summary/accepted-contract-offer', to: 'contract_summary#accepted_contract_offer'
         get 'contract-summary/not-signed-offer', to: 'contract_summary#not_signed_offer'
