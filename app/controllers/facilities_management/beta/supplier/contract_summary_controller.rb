@@ -30,7 +30,7 @@ module FacilitiesManagement
                                           message: "Your reason for declining was: #{reason}",
                                           message2: "This contract offer was received on #{received_timestamp}." }
         end
-        
+
         def not_responded_to_contract_offer; end
 
         private
@@ -87,7 +87,7 @@ module FacilitiesManagement
               secondary_text: 'Return to dashboard',
               secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
             },
-            not_responded_to_contract_offer:{
+            not_responded_to_contract_offer: {
               back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
               back_label: 'Back',
               back_text: 'Back',
@@ -96,7 +96,7 @@ module FacilitiesManagement
               secondary_text: 'Return to dashboard',
               secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
             },
-            received_contract_offer:{
+            received_contract_offer: {
               back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
               back_label: 'Back',
               back_text: 'Back',
