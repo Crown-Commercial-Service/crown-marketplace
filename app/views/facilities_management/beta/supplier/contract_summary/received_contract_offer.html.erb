@@ -71,8 +71,8 @@
 <strong>
   Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
 </strong>
+<div>
+  <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--primary govuk-!-margin-top-9' %>
+</div>
 
-  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
-    <%= govuk_continuation_buttons(pd, f, false, true, true) %>
-  <% end %>
 <% end %>
