@@ -1,0 +1,29 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+    <%= render partial: 'contract_summary_head' %>
+    
+    <%= render partial: 'facilities_management/beta/supplier/supplier_account/contract_summary/contract_offer_dates' %>
+
+    <%= render partial: 'facilities_management/beta/supplier/supplier_account/contract_summary/procurement_requirements' %>
+    <%= render partial: 'facilities_management/beta/supplier/supplier_account/contract_summary/buyer_contact_details' %>
+    <%= render partial: 'facilities_management/beta/supplier/supplier_account/contract_summary/call_off_contract_documents' %>
+
+    <%= render partial: 'facilities_management/beta/supplier/supplier_account/contract_summary/whn_received_contract_offer' if @page_data[:procurement_data][:status] == 'received' %>
+    <%= render partial: 'facilities_management/beta/supplier/supplier_account/contract_summary/whn_accepted_contract_offer' if @page_data[:procurement_data][:status] == 'accepted' %>
+    
+    <% if @page_data[:procurement_data][:status] == 'received' %>
+        <div class ="govuk-body govuk-!-margin-top-9 govuk-!-margin-bottom-0">
+            <strong>
+                Please click on the button below to either accept or decline. If you accept, you will be given <br/> guidance about how to sign the contract. If you wish to decline you will also be asked to input a <br/> reason.
+            </strong>
+        </div>
+        <div>
+            <%= link_to pd.navigation_details.primary_text, facilities_management_beta_supplier_respond_to_contract_offer_path, class: 'govuk-button govuk-button--primary govuk-!-margin-top-6' %>
+        </div>
+        <div>
+            <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m govuk-link--no-visited-state') %>
+        </div>
+    <% else %>
+        <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--secondary govuk-!-margin-top-9' %>
+    <% end %>
+
+<% end %>
