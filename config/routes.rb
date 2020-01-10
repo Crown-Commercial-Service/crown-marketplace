@@ -162,6 +162,7 @@ Rails.application.routes.draw do
         get 'contract-summary/received-contract-offer', to: 'contract_summary#received_contract_offer'
         get 'contract-summary/live-contract', to: 'contract_summary#live_contract'
         get 'contract-summary/accepted-contract-offer', to: 'contract_summary#accepted_contract_offer'
+        get 'contract-summary/declined-offer', to: 'contract_summary#declined_offer'
       end
     end
 
