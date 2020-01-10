@@ -156,11 +156,12 @@ Rails.application.routes.draw do
       namespace :supplier do
         get '/', to: 'home#index'
         get 'offer-declined', to: 'offer#declined'
+        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
         get 'offer-accepted', to: 'offer#accepted'
         get 'supplier-account-dashboard', to: 'supplier_account#index'
         get 'contract-summary/received-contract-offer', to: 'contract_summary#received_contract_offer'
         get 'contract-summary/live-contract', to: 'contract_summary#live_contract'
-        get 'contract-summary/declined-offer', to: 'contract_summary#declined_offer'
+        get 'contract-summary/not-signed-offer', to: 'contract_summary#not_signed_offer'
       end
     end
 
