@@ -39,7 +39,7 @@ module FacilitiesManagement
           @page_data[:model_object] = nil
         end
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def set_page_detail
           @page_data = {}
           @page_description = LayoutHelper::PageDescription.new(
@@ -132,7 +132,7 @@ module FacilitiesManagement
             }
           }.freeze
         end
-        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
       end
     end
   end
