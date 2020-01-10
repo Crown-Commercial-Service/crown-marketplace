@@ -1,4 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|  %>
+<<<<<<< HEAD
 <div class="govuk-warning-text">
   <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
   <strong class="govuk-warning-text__text">
@@ -8,4 +9,16 @@
 </div>
         <%= render partial: 'procurement_requirements' %>
     
+=======
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+        Received contract offer
+    </strong>
+  </div>
+  <%= render partial: 'procurement_requirements' %>
+  <%= render partial: 'buyer_contact_details' %>
+  <%= render partial: 'call_off_contract_documents' %>
+>>>>>>> 677300b0eca67cc9202034d63bd3939f974a65bf
 <% end %>

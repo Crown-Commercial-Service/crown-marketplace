@@ -87,7 +87,9 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         @data.keys.collect { |k| @data[k].keys }
              .flatten.uniq
              .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-          labels = @data.keys.sort.collect { |k| @data[k][s][:spreadsheet_label] }
+          # I found :spreadsheet_label value is always nil,I did not want to alter code too much so left current code alone..
+          # if buildings have different services then I put in the ,if, check below otherwise an exception is generated
+          labels = @data.keys.sort.collect { |k| @data[k][s][:spreadsheet_label] if @data[k].key(s) }
 
           new_row = []
           CCS::FM::RateCard.building_types.each { |b| new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b] }
@@ -173,9 +175,20 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         new_row2 = []
         sum = 0
 
+        # this logic is to fix issue that the excel service prices were not allgned to the correct
+        # buildin column, so insert nil into cell if no service data to align.
+        prev_building_service_value = nil
         sorted_building_keys.each do |k|
+          if @data[k][s].nil?
+            if prev_building_service_value.nil?
+              new_row2 << nil
+            else
+              prev_building_service_value = nil
+            end
+          end
           next unless @data[k][s]
 
+          prev_building_service_value = @data[k][s][:subtotal1]
           new_row2 << @data[k][s][:subtotal1]
           sum += @data[k][s][:subtotal1]
           sum_building[k] += @data[k][s][:subtotal1]
