@@ -59,7 +59,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.1', 'uom_value' => '46', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.2', 'uom_value' => '47', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.3', 'uom_value' => '48', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.7', 'uom_value' => '49', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
@@ -391,6 +390,46 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/InstanceVariable
+    it 'create a direct-award report check service price cell position' do
+      user_email = 'test@example.com'
+      start_date = DateTime.now.utc
+
+      uvals.map!(&:deep_symbolize_keys)
+
+      report = described_class.new(start_date, user_email, data)
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
+
+      results = {}
+      report_results = {}
+      supplier_names = rate_card.data[:Prices].keys
+      supplier_names.each do |supplier_name|
+        report_results[supplier_name] = {}
+        # e.g. dummy supplier_name = 'Hickle-Schinner'
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        results[supplier_name] = report.direct_award_value
+      end
+
+      sorted_list = results.sort_by { |_k, v| v }
+
+      supplier_name = sorted_list.first[0]
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
+
+      IO.write('/tmp/direct_award_prices_3.xlsx', spreadsheet.to_xlsx)
+
+      # one building does not contain K.7, verify service cells are in correct position
+      wb = Roo::Excelx.new('/tmp/direct_award_prices_3.xlsx')
+      # wb.sheet('Contract Price Matrix').row(24)[0]).to eq 'K.7'
+      expect(wb.sheet('Contract Price Matrix').row(24)[2]).to eq 52.650000000000006
+      expect(wb.sheet('Contract Price Matrix').row(24)[3]).to eq nil
+      expect(wb.sheet('Contract Price Matrix').row(24)[4]).to eq 52.650000000000006
+    end
+    # rubocop:enable RSpec/InstanceVariable
+    # rubocop:enable RSpec/ExampleLength
+
+    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable RSpec/InstanceVariable
     it 'create a direct-award report check prices' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
@@ -414,7 +453,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
-      expect(sorted_list.first[1].round(2)).to eq 1739660.6
+      expect(sorted_list.first[1].round(2)).to eq 1738286.27
 
       supplier_name = sorted_list.first[0]
       expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
@@ -466,7 +505,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
       # expect(sorted_list.first[1].round(2)).to eq 244915.36
-      expect(sorted_list.first[1].round(2)).to eq 257988.20
+      expect(sorted_list.first[1].round(2)).to eq 257784.39
 
       supplier_name = sorted_list.first[0]
       expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
