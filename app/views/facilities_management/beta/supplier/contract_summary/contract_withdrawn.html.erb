@@ -1,0 +1,22 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|  %>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+        Withdrawn
+    </strong>
+  </div>
+  <div class="govuk-body ccs-font-weight-semi-bold govuk-!-width-two-thirds">
+    The buyer withdrew his contract offer and closed this procurement on <br/>
+    <%= @page_data[:procurement_data][:date_contract_closed]&.strftime '%e %B %Y, %l:%M%P' %>
+  </div>
+  <div class="govuk-body govuk-details__text govuk-!-width-two-thirds govuk-!-padding-top-0 govuk-!-padding-bottom-0">
+    The buyer's reason for withdrawing this contract offer was: <%= @page_data[:reason_closed] %><br>
+    You accepted this contract offer on <%= @page_data[:procurement_data][:date_contract_accepted]&.strftime '%e %B %Y, %l:%M%P' %>. <br>
+    This contract offer was received on <%= @page_data[:procurement_data][:date_contract_received]&.strftime '%e %B %Y, %l:%M%P' %>.
+  </div>
+  <%= render partial: 'procurement_requirements' %>
+  <%= render partial: 'buyer_contact_details' %>
+  <%= render partial: 'call_off_contract_documents' %>
+  <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--secondary govuk-!-margin-top-9' %>
+<% end %>
