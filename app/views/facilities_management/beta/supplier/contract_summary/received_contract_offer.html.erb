@@ -23,7 +23,7 @@
 </h1>
 <table class="govuk-table">
   <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
+    <tr class="govuk-table__row govuk-grid-column-three-quarters">
       <td class="govuk-table__cell">
         <ol class="govuk-list govuk-list--number">
           <li>
@@ -74,5 +74,9 @@
 <div>
   <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--primary govuk-!-margin-top-9' %>
 </div>
+<div>
+  <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link') %>
+</div>
+
 
 <% end %>
