@@ -39,6 +39,8 @@ module FacilitiesManagement
           @page_data[:reason_closed] = 'not enough resources to supply 1 or more services'
         end
 
+        def sending_the_contract; end
+
         private
 
         def set_page_model
