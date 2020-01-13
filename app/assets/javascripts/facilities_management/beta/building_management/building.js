@@ -280,7 +280,7 @@ $(function () {
             .fail(function (data) {
                 showCantFindAddressLink();
             });
-    }
+    };
 
 
     $('#fm-show-address-postode').on('click', function (e) { 
