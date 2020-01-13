@@ -38,17 +38,17 @@ RSpec.describe FMCalculator::Calculator do
       manage = calc.manage(year1)
       expect(manage.round(0)).to eq(39915)
       corporate = calc.corporate(year1)
-      expect(corporate.round(0)).to eq(19709)
+      expect(corporate.round(0)).to eq(16614)
       year1total = year1 + manage + corporate
-      expect(year1total.round(0)).to eq(455197)
+      expect(year1total.round(0)).to eq(452102)
       profit = calc.profit(year1)
-      expect(profit.round(0)).to eq(21472)
+      expect(profit.round(0)).to eq(12263)
       year1totalcharges = year1total + profit
-      expect(year1totalcharges.round(0)).to eq(476668)
+      expect(year1totalcharges.round(0)).to eq(464364)
       subyearstotal = calc.subyearstotal(year1totalcharges, mobilisation)
-      expect(subyearstotal.round(0)).to eq(899961)
+      expect(subyearstotal.round(0)).to eq(876887)
       totalcharges = year1totalcharges + subyearstotal
-      expect(totalcharges.round(0)).to eq(1376629)
+      expect(totalcharges.round(0)).to eq(1341251)
     end
     # rubocop:enable RSpec/MultipleExpectations:
     # rubocop:enable RSpec/ExampleLength:
@@ -81,17 +81,17 @@ RSpec.describe FMCalculator::Calculator do
       benchmanage = calc.benchmanage(benchyear1)
       expect(benchmanage.round(0)).to eq(17404)
       benchcorporate = calc.benchcorporate(benchyear1)
-      expect(benchcorporate.round(0)).to eq(8594)
+      expect(benchcorporate.round(0)).to eq(7244)
       benchyear1total = benchyear1 + benchmanage + benchcorporate
-      expect(benchyear1total.round(0)).to eq(198476)
+      expect(benchyear1total.round(0)).to eq(197126)
       benchprofit = calc.benchprofit(benchyear1)
-      expect(benchprofit.round(0)).to eq(9362)
+      expect(benchprofit.round(0)).to eq(5347)
       benchyear1totalcharges = benchyear1total + benchprofit
-      expect(benchyear1totalcharges.round(0)).to eq(207838)
+      expect(benchyear1totalcharges.round(0)).to eq(202473)
       benchsubyearstotal = calc.benchsubyearstotal(benchyear1totalcharges, benchmobilisation)
-      expect(benchsubyearstotal.round(0)).to eq(392403)
+      expect(benchsubyearstotal.round(0)).to eq(382342)
       benchtotalcharges = benchyear1totalcharges + benchsubyearstotal
-      expect(benchtotalcharges.round(0)).to eq(600241)
+      expect(benchtotalcharges.round(0)).to eq(584815)
     end
     # rubocop:enable RSpec/MultipleExpectations:
     # rubocop:enable RSpec/ExampleLength:
