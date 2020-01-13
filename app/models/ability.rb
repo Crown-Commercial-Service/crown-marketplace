@@ -9,7 +9,7 @@ class Ability
       admin_tool_specific_auth(user)
     elsif user.has_role? :supplier
       cannot :manage, :all
-      can :read, FacilitiesManagement::Beta::Supplier
+      can :read, :all
     elsif user.has_role? :buyer
       cannot :manage, :all
       service_specific_auth(user)
