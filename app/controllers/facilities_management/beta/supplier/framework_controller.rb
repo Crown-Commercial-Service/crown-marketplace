@@ -12,7 +12,7 @@ module FacilitiesManagement
         protected
 
         def authorize_user
-          authorize! :read, FacilitiesManagement
+          authorize! :read, FacilitiesManagement::Supplier
         end
       end
     end
