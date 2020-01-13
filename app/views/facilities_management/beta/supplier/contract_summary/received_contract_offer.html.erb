@@ -1,12 +1,82 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|  %>
-  <div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-      <span class="govuk-warning-text__assistive">Warning</span>
-        Received contract offer
-    </strong>
-  </div>
-  <%= render partial: 'procurement_requirements' %>
-  <%= render partial: 'buyer_contact_details' %>
-  <%= render partial: 'call_off_contract_documents' %>
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+      Received contract offer
+  </strong>
+</div>
+<div class="govuk-warning-text">
+  <strong>
+    This contract offer expires on <%= @page_data[:expiration_date]&.strftime '%e %B %Y, %l:%M%P.' %>
+  </strong>
+</div>
+<div class="govuk-inset-text">
+  The buyer is waiting for a response before the offer expiry deadline shown above.
+</div>
+        <%= render partial: 'procurement_requirements' %>
+        <%= render partial: 'buyer_contact_details' %>
+        <%= render partial: 'call_off_contract_documents' %>
+
+<h1 class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-0">
+    What happens next
+</h1>
+<table class="govuk-table">
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row govuk-grid-column-three-quarters">
+      <td class="govuk-table__cell">
+        <ol class="govuk-list govuk-list--number">
+          <li>
+            <strong>
+              You review the contract offer
+            </strong>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                you should review the offer to see if you wish to accept the contract
+              </li>
+              <li>
+                please ensure you download and review all the contract documents
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>
+              Accept or decline the contract offer
+            </strong>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                you are required to accept or decline this offer within 48 hours (Monday to Friday only, excluding weekends and bank holidays)
+              </li>
+              <li>
+                the deadline for your response is shown at the top of this page
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>
+              No response
+            </strong>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                if you do not respond within 48 hours it will be recorded as 'no response' and the offer will be automatically withrawn allowing the customer the option of offering the contract to the next lowest priced supplier
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<strong>
+  Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
+</strong>
+<div>
+  <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--primary govuk-!-margin-top-9' %>
+</div>
+<div>
+  <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link') %>
+</div>
+
+
 <% end %>

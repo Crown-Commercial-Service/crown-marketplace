@@ -6,7 +6,9 @@ module FacilitiesManagement
         before_action :set_page_detail
         before_action :set_page_model
 
-        def received_contract_offer; end
+        def received_contract_offer
+          @page_data[:expiration_date] = DateTime.new(2019, 7, 23, 14, 20, 0).in_time_zone('London')
+        end
 
         def live_contract; end
 
@@ -115,7 +117,10 @@ module FacilitiesManagement
               back_label: 'Back',
               back_text: 'Back',
               page_title: 'Contract summary',
-              caption1: 'Schools facilities London'
+              caption1: 'Schools facilities London',
+              secondary_text: 'Respond to this offer',
+              secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
+              return_text: 'Return to dashboard'
             },
             accepted_contract_offer: {
               back_url: facilities_management_beta_supplier_supplier_account_dashboard_path,
