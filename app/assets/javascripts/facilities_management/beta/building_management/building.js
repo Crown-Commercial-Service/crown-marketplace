@@ -36,7 +36,29 @@ $(function () {
             pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
         }
     });
+    const update_region = function (region) {
+        FM.building.address['fm-address-region'] = region;
+    };    
+    const display_selected_address = function (address) {
+        var build_address = '';
+        build_address += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1'] + ',' : '';
+        build_address += (address['fm-address-line-2'].length > 0) ? address['fm-address-line-2'] + ',' : '';
+        build_address += (address['fm-address-town'].length > 0) ? address['fm-address-town'] + ',' : '';
+        build_address += (address['fm-address-county'].length > 0) ? address['fm-address-county'] : '';
 
+        var buildingAddress = build_address;
+        $('#fm-building-postcode').html(address['fm-address-postcode']);
+        $('#fm-building-address').html(buildingAddress);
+        if (address['fm-address-region'].length > 0) {
+            remove_region_dropdown();
+            $('#fm-building-region').html(address['fm-address-region']);
+        } else {
+            $('#fm-building-region').html('');
+            var region_response = build_region_dropdown(address['fm-address-postcode']);
+        }
+
+        $('.fm-bulding-address-wrapper').show();
+    };
     const assign_building_name = function (new_name) {
         newBuilding.name = new_name;
         FM.building = newBuilding;
@@ -259,26 +281,7 @@ $(function () {
                 showCantFindAddressLink();
             });
     }
-    const display_selected_address = function(address) {
-        var build_address = '';
-        build_address += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1']+',':'';
-        build_address += (address['fm-address-line-2'].length > 0) ? address['fm-address-line-2'] + ',' : ''; 
-        build_address += (address['fm-address-town'].length > 0) ? address['fm-address-town'] + ',' : ''; 
-        build_address += (address['fm-address-county'].length > 0) ? address['fm-address-county'] : ''; 
-        
-        var buildingAddress = build_address;
-        $('#fm-building-postcode').html(address['fm-address-postcode']);
-        $('#fm-building-address').html(buildingAddress);
-        if (address['fm-address-region'].length > 0 ) {
-            remove_region_dropdown();
-            $('#fm-building-region').html(address['fm-address-region']);
-        } else {
-            $('#fm-building-region').html('');
-            var region_response = build_region_dropdown(address['fm-address-postcode']);
-        }
-        
-        $('.fm-bulding-address-wrapper').show();
-    };
+
 
     $('#fm-show-address-postode').on('click', function (e) { 
         e.preventDefault();
@@ -291,9 +294,7 @@ $('.fm-bulding-address-wrapper').on('change','#fm-region-dropdown', function (e)
     e.preventDefault();
     update_region($(this).val());
 });
-const update_region = function(region) {
-    FM.building.address['fm-address-region'] = region;
-}
+
 $(window).on("load", function () {
     // if ( $.restore_last_known_addr !== undefined) {
     //     $.restore_last_known_addr();
