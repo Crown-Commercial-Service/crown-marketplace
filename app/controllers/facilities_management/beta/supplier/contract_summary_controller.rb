@@ -42,7 +42,7 @@ module FacilitiesManagement
         private
 
         def set_page_model
-          @page_data[:model_object] = FacilitiesManagement::Supplier::Offer.new
+          @page_data[:model_object] = nil
         end
 
         # rubocop:disable Metrics/AbcSize
