@@ -39,12 +39,14 @@ module FacilitiesManagement
           @page_data[:reason_closed] = 'not enough resources to supply 1 or more services'
         end
 
-        def sending_the_contract; end
+        def sending_the_contract
+          @page_data[:supplier] = 'Cleaning London LTD'
+        end
 
         private
 
         def set_page_model
-          @page_data[:model_object] = nil
+          @page_data[:model_object] = FacilitiesManagement::Supplier::Offer.new
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -150,6 +152,16 @@ module FacilitiesManagement
               caption1: 'Schools facilities London',
               secondary_text: 'Return to dashboard',
               secondary_url: facilities_management_beta_supplier_supplier_account_dashboard_path
+            },
+            sending_the_contract: {
+              back_url: ccs_patterns_prototypes_path,
+          back_text: 'Back',
+          page_title: 'Contract Details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Continue',
+          return_url: ccs_patterns_prototypes_path,
+          return_text: 'Return to procurement dashboard',
+          secondary_text: 'Return to results'
             }
           }.freeze
         end

@@ -168,6 +168,10 @@ Rails.application.routes.draw do
         get 'contract-summary/not-responded-to-contract-offer', to: 'contract_summary#not_responded_to_contract_offer'
         get 'contract-summary/sending-the-contract', to: 'contract_summary#sending_the_contract'
       end
+      namespace :contract do
+        get '/', to: 'home#index'
+        get 'sending_the_contract', to: 'sending_the_contract'
+      end
     end
 
     get '/', to: 'home#index'
