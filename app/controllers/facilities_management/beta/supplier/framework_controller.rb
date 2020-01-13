@@ -13,7 +13,6 @@ module FacilitiesManagement
 
         def authorize_user
           authorize! :read, FacilitiesManagement::Supplier
-          
         end
       end
     end
