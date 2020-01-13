@@ -159,13 +159,14 @@ Rails.application.routes.draw do
         get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
         get 'offer-accepted', to: 'offer#accepted'
         get 'supplier-account-dashboard', to: 'supplier_account#index'
-        get 'contract-summary/received-contract-offer', to: 'supplier_account#show'
-        get 'contract-summary/accepted-contract-offer', to: 'supplier_account#show'
-        get 'contract-summary/declined-offer', to: 'supplier_account#show'
-        get 'contract-summary/live-contract', to: 'supplier_account#show'
-        get 'contract-summary/not-responded', to: 'supplier_account#show'
-        get 'contract-summary/not-signed', to: 'supplier_account#show'
-        get 'contract-summary/contract-withdrawn', to: 'supplier_account#show'
+        get 'contract-summary/received-contract-offer', to: 'contract_summary#received_contract_offer'
+        get 'contract-summary/contract-withdrawn', to: 'contract_summary#contract_withdrawn'
+        get 'contract-summary/live-contract', to: 'contract_summary#live_contract'
+        get 'contract-summary/accepted-contract-offer', to: 'contract_summary#accepted_contract_offer'
+        get 'contract-summary/not-signed-offer', to: 'contract_summary#not_signed_offer'
+        get 'contract-summary/declined-offer', to: 'contract_summary#declined_offer'
+        get 'contract-summary/not-responded-to-contract-offer', to: 'contract_summary#not_responded_to_contract_offer'
+        get 'contract-summary/sending-the-contract', to: 'contract_summary#sending_the_contract'
       end
     end
 
