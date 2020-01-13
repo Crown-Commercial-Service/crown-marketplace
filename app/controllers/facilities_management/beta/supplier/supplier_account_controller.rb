@@ -10,12 +10,13 @@ module FacilitiesManagement
           @page_data[:received_offers] = [{ contract_type: 'received', contract_name: 'School facilities London', buyer: 'Coal authority', date_offer_expiers: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), status: 'ACTION REQUIRED' }]
           @page_data[:accepted_offers] = [{ contract_type: 'accepted', contract_name: 'Cabinet office FM service', buyer: 'Department for Digital, Media and Sport', date_offer_accepted: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London') }]
           @page_data[:live_contracts] = [{ contract_type: 'live', contract_name: 'Cabinet office service3', buyer: 'Fleet Air Arm Museum 2', start_date: DateTime.new(2019, 7, 17, 0, 0, 0).in_time_zone('London'), end_date: DateTime.new(2029, 7, 6, 0, 0, 0).in_time_zone('London') }]
-          @page_data[:closed_contracts] = [{ contract_type: 'closed', contract_name: 'Cabinet office FM', buyer: 'Cabinet office', date_closed: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), status: 'Declined', path: facilities_management_beta_supplier_contract_summary_declined_offer_url},
-                                           { contract_type: 'closed', contract_name: 'Cabinet office FM', buyer: 'Cabinet office', date_closed: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), status: 'Not responded', path: facilities_management_beta_supplier_contract_summary_not_responded_url},
+          @page_data[:closed_contracts] = [{ contract_type: 'closed', contract_name: 'Cabinet office FM', buyer: 'Cabinet office', date_closed: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), status: 'Declined', path: facilities_management_beta_supplier_contract_summary_declined_offer_url },
+                                           { contract_type: 'closed', contract_name: 'Cabinet office FM', buyer: 'Cabinet office', date_closed: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), status: 'Not responded', path: facilities_management_beta_supplier_contract_summary_not_responded_url },
                                            { contract_type: 'closed', contract_name: 'Cabinet office FM', buyer: 'Cabinet office', date_closed: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), status: 'Not signed', path: facilities_management_beta_supplier_contract_summary_not_signed_url },
                                            { contract_type: 'closed', contract_name: 'Cabinet office FM', buyer: 'Cabinet office 1234567890', date_closed: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), status: 'Withdrawn', path: facilities_management_beta_supplier_contract_summary_contract_withdrawn_url }]
         end
 
+        # rubocop:disable Metrics/AbcSize
         def show
           @page_data[:procurement_data] = { contract_name: 'School facilities London', buyer: 'Cabinet office', date_offer_expires: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), contract_number: 'RM330-DA2234-2019', contract_value: '£752,026', framework: 'RM3830', sub_lot: 'sub-lot 1a',
                                             initial_call_off_period: 7, initial_call_off_start_date: Date.new(2019, 11, 1), initial_call_off_end_date: Date.new(2016, 10, 31),
@@ -29,6 +30,7 @@ module FacilitiesManagement
           @page_data[:procurement_data][:reason] = 'conflict of interest.' if @page_data[:procurement_data][:status] == 'declined'
           @page_data[:procurement_data][:reason] = 'not enough resources to supply 1 or more services.' if @page_data[:procurement_data][:status] == 'withdrawn'
         end
+        # rubocop:enable Metrics/AbcSize
 
         private
 
