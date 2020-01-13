@@ -2,7 +2,7 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
-  require Rails.root.join('lib', 'tasks', 'distributed_locks')
+  require './lib/tasks/distributed_locks'
 
   def self.csv_to_nuts_regions(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
@@ -40,7 +40,6 @@ module CCS
         column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
         values = row.fields.map { |i| i.blank? ? 'null' : "'#{i}'" }.join(',')
         query = 'insert into fm_rates ( ' + column_names + ') values (' + values + ')'
-        puts "adding #{column_names} (#{values})"
         db.query query
       end
     end

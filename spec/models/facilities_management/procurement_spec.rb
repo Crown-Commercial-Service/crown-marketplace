@@ -418,4 +418,28 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '#priced_at_framework' do
+    context 'when one of the services is not priced at framework' do
+      before do
+        procurement.procurement_building_services.first.update(code: 'C.1', service_standard: 'A')
+        procurement.procurement_building_services.last.update(code: 'C.2', service_standard: 'C')
+      end
+
+      it 'returns false' do
+        expect(procurement.send(:priced_at_framework)).to eq false
+      end
+    end
+
+    context 'when all services are priced at framework' do
+      before do
+        procurement.procurement_building_services.first.update(code: 'C.1', service_standard: 'A')
+        procurement.procurement_building_services.last.update(code: 'C.2', service_standard: 'A')
+      end
+
+      it 'returns true' do
+        expect(procurement.send(:priced_at_framework)).to eq true
+      end
+    end
+  end
 end
