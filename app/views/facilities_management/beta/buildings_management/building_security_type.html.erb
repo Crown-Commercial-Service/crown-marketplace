@@ -31,7 +31,7 @@
           <span class="govuk-caption-m govuk-!-margin-bottom-1">Describe security level</span>
           <span class="govuk-caption-m govuk-!-margin-bottom-1 govuk-visually-hidden govuk-error-message" id="no-dexcription-error-text" >You must describe your security level</span>
           <textarea maxlength="150" class="govuk-textarea govuk-!-margin-bottom-1 govuk-!-margin-top-1" id="fm-building-security-type-more-detail"
-                    name="fm-building-security-type-more-detail" rows="4"><%= @other_value unless @other_value == ''%></textarea>
+                    name="fm-building-security-type-more-detail" rows="4"><%= @other_value.capitalize unless @other_value == ''%></textarea>
           <span id="fm-bm-bs-char-count" class="govuk-caption-m govuk-!-margin-top-1 fm-security-type-text"></span>
         </div>
       </div>
