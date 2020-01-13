@@ -45,8 +45,17 @@ module FacilitiesManagement
               back_url: ccs_patterns_path,
               back_label: 'Return to prototype index',
               back_text: 'View prototypes'
+            },
+            sending_the_contract: {
+              back_url: ccs_patterns_prototypes_path,
+              back_text: 'Back',
+              page_title: 'Contract Details',
+              caption1: 'Total facilities management',
+              continuation_text: 'Continue',
+              return_url: ccs_patterns_prototypes_path,
+              return_text: 'Return to procurement dashboard',
+              secondary_text: 'Return to results'
             }
-            
           }.freeze
         end
         # rubocop:enable Metrics/AbcSize
