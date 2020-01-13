@@ -12,7 +12,7 @@ $(function () {
     function putCharsLeft(messageLocation,  value, maxChars) {
         let charsLeft = FM.calcCharsLeft(value, maxChars);
         messageLocation.text("You have " + charsLeft + " characters remaining");
-    }
+    };
     
     // Puts the 'characters remaining' count when the page loads
     if ($("#fm-building-name-input").length) {
@@ -249,7 +249,7 @@ $(function () {
     const remove_region_dropdown = function() {
         $('#fm-region-dropdown').remove();
         $('#fm-building-region').html('');
-    }
+    };
     const build_region_dropdown = function (postCode) {
         $.get(encodeURI("/api/v1/find-region/" + postCode))
             .done(function (data) {
