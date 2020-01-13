@@ -57,8 +57,10 @@
       </span>
       <span class="govuk-heading-s govuk-!-margin-bottom-0">Address</span>
       <span id="fm-building-address" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19">
-        <% address = @building['address']['fm-address-line-1'].to_s + (@building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-line-2'].to_s + (@building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-town'].to_s + (@building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-county'].to_s + (@building['address']['fm-address-county'].to_s.length > 0 ? ', ' : ' ') %>
-        <%= address %>
+        <% if !@building['address'].blank? %>
+          <% address = @building['address']['fm-address-line-1'].to_s + (@building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-line-2'].to_s + (@building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-town'].to_s + (@building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-county'].to_s + (@building['address']['fm-address-county'].to_s.length > 0 ? ', ' : ' ') %>
+          <%= address %>
+        <% end %>
       </span>      
       <span class="govuk-heading-s govuk-!-margin-bottom-0">Location (region)</span>
       <span id="fm-building-region" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19">
