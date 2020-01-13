@@ -167,7 +167,7 @@ Rails.application.routes.draw do
         get 'contract-summary/not-signed-offer', to: 'contract_summary#not_signed_offer'
         get 'contract-summary/declined-offer', to: 'contract_summary#declined_offer'
         get 'contract-summary/not-responded-to-contract-offer', to: 'contract_summary#not_responded_to_contract_offer'
-      end 
+      end
     end
 
     get '/', to: 'home#index'
