@@ -140,6 +140,7 @@ Rails.application.routes.draw do
       get '/start', to: 'journey#start', as: 'journey_start'
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
+      get '/direct-award/sending-the-contract', to: 'direct_award_contract#sending_the_contract'
       resources :procurements do
         post 'continue'
         get 'summary'
@@ -166,12 +167,7 @@ Rails.application.routes.draw do
         get 'contract-summary/not-signed-offer', to: 'contract_summary#not_signed_offer'
         get 'contract-summary/declined-offer', to: 'contract_summary#declined_offer'
         get 'contract-summary/not-responded-to-contract-offer', to: 'contract_summary#not_responded_to_contract_offer'
-        get 'contract-summary/sending-the-contract', to: 'contract_summary#sending_the_contract'
-      end
-      namespace :contract do
-        get '/', to: 'home#index'
-        get 'sending_the_contract', to: 'sending_the_contract'
-      end
+      end 
     end
 
     get '/', to: 'home#index'
