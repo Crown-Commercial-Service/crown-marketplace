@@ -652,7 +652,7 @@ en:
         sessions:
           new:
             email_address: Email address
-            email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+            email_hint_html: Enter the email address you used to register
             forgotten_password_html: I've forgotten my password
             password: Password
       users:
