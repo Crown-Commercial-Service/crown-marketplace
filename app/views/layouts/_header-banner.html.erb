@@ -25,6 +25,8 @@
               <%= link_to 'My account', service_start_page_path, class: 'govuk-header__link' %>
             <% elsif controller.class.parent == FacilitiesManagement::Beta::Supplier %>
               <%= link_to 'My dashboard', service_start_page_path, class: 'govuk-header__link'  if user_signed_in?%>
+            <% elsif controller.class.parent == FacilitiesManagement::DirectAwardContract %>
+              <%= link_to 'My dashboard', service_start_page_path, class: 'govuk-header__link' if user_signed_in? %>
             <% else %>
               <%= link_to 'Back to start', service_start_page_path, class: 'govuk-header__link' %>
             <% end %>
