@@ -48,7 +48,7 @@ module FacilitiesManagement
           sending_the_contract: {
             back_url: ccs_patterns_prototypes_path,
             back_text: 'Back',
-            page_title: 'Contract Details',
+            page_title: 'Sending the contract',
             caption1: 'Total facilities management',
             continuation_text: 'Confirm and send contract to supplier',
             return_url: ccs_patterns_prototypes_path,
