@@ -4,9 +4,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div id="ccs-error-sum" class="govuk-error-summary <%= 'govuk-visually-hidden' unless @result.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title">
+      <h1 class="govuk-error-summary__title" id="error-summary-title">
         <%= t('common.error_summary_title') %>
-      </h2>
+      </h1>
       <div class="govuk-error-summary__body">
         <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
           <% @result.errors.keys.each do |attribute| %>
