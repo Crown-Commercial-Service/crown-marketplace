@@ -81,8 +81,8 @@
                     <td class="govuk-table__cell">
                         <% @page_data[:procurement_data][:buildings_and_services].each do |bs| %>
                             <%= govuk_details(bs[:building]) do %>
-                                <% bs[:services].each do |s| %>
-                                  <li><%= to_lower_case(s) %></li>
+                                <% bs[:service_codes].each do |s| %>
+                                  <li><%= to_lower_case(FacilitiesManagement::StaticData.work_packages.select{|work_package| work_package['code'] == s}.first['name']) %></li>
                                 <% end %>
                             <% end %>
                         <%end%>
