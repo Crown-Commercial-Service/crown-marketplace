@@ -140,6 +140,7 @@ Rails.application.routes.draw do
       get '/start', to: 'journey#start', as: 'journey_start'
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
+      get '/direct-award/sending-the-contract', to: 'direct_award_contract#sending_the_contract'
       resources :procurements do
         post 'continue'
         get 'summary'
