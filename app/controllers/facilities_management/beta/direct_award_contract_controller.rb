@@ -4,7 +4,7 @@ module FacilitiesManagement
       skip_before_action :authenticate_user!
       before_action :set_page_detail
       before_action :set_page_model
-    
+
       def sending_the_contract
         @page_data[:supplier] = 'Cleaning London LTD'
       end
