@@ -88,6 +88,8 @@ module FacilitiesManagement
       def continue
         if procurement_valid?
           @procurement.save_eligible_suppliers
+          @procurement.set_state_to_results
+          @procurement.save
           redirect_to facilities_management_beta_procurement_results_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
@@ -101,6 +103,7 @@ module FacilitiesManagement
 
       def results
         set_results_page_data
+        @procurement[:route_to_market] = @procurement.aasm_state
       end
 
       def direct_award_pricing
@@ -115,6 +118,14 @@ module FacilitiesManagement
 
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
+        if params[:commit] == page_details(:results)[:secondary_text]
+          @procurement.set_state_to_detailed_search
+          @procurement.save
+
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+          return
+        end
+
         @procurement.assign_attributes(procurement_route_params)
 
         unless @procurement.valid?(:route_to_market)
@@ -123,7 +134,7 @@ module FacilitiesManagement
           return
         end
 
-        if @procurement[:route_to_market] == 'direct_award'
+        if @procurement[:route_to_market] == 'DA_draft'
           @procurement.start_direct_award
           @procurement.save
           redirect_to facilities_management_beta_procurement_direct_award_pricing_path(@procurement)
@@ -285,7 +296,8 @@ module FacilitiesManagement
                                              page_details(action_name)[:return_url],
                                              page_details(action_name)[:return_text],
                                              page_details(action_name)[:secondary_url],
-                                             page_details(action_name)[:secondary_text])
+                                             page_details(action_name)[:secondary_text],
+                                             page_details(action_name)[:secondary_name])
         ) if page_definitions.key?(action_name.to_sym)
       end
       # rubocop:enable Style/MultilineIfModifier
@@ -303,7 +315,8 @@ module FacilitiesManagement
             return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurements dashboard',
             secondary_text: 'Change requirements',
-            back_text: 'Back'
+            back_text: 'Back',
+            back_url: facilities_management_beta_procurements_path
           },
           results: {
             page_title: 'Results',
@@ -313,7 +326,7 @@ module FacilitiesManagement
           },
           direct_award_pricing: {
             caption1: @procurement[:name],
-            page_title: 'Direct Award',
+            page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement)
           },
           further_competition: {
