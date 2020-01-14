@@ -88,4 +88,16 @@ module FacilitiesManagement::Beta::ProcurementsHelper
 
     t('common.complete')
   end
+
+  PROCUREMENT_STATE = { DA_draft: 'DA draft',
+                        further_competition: 'Further competition',
+                        results: 'Results',
+                        quick_search: 'Quick search',
+                        detailed_search: 'Detailed search' }.freeze
+
+  def procurement_state(procurement_state)
+    return procurement_state.humanize unless PROCUREMENT_STATE.key?(procurement_state.to_sym)
+
+    PROCUREMENT_STATE[procurement_state.to_sym]
+  end
 end

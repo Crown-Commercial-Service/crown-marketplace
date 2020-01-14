@@ -25,7 +25,7 @@ module FacilitiesManagement
 
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
-    validates :route_to_market, inclusion: { in: %w[direct_award further_competition] }, on: :route_to_market
+    validates :route_to_market, inclusion: { in: %w[DA_draft further_competition] }, on: :route_to_market
 
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
@@ -34,15 +34,24 @@ module FacilitiesManagement
     aasm do
       state :quick_search, initial: true
       state :detailed_search
-      state :direct_award
+      state :results
+      state :DA_draft
       state :further_competition
+
+      event :set_state_to_results do
+        transitions to: :results
+      end
+
+      event :set_state_to_detailed_search do
+        transitions to: :detailed_search
+      end
 
       event :start_detailed_search do
         transitions from: :quick_search, to: :detailed_search
       end
 
       event :start_direct_award do
-        transitions to: :direct_award
+        transitions to: :DA_draft
       end
 
       event :start_further_competition do
