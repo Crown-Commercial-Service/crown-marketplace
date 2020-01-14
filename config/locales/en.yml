@@ -914,6 +914,7 @@ en:
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
+        sign_in_header: Sign into your legal services buyer account
     suppliers:
       download:
         back_to_start: Back to start
