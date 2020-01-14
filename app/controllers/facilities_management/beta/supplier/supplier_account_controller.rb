@@ -2,7 +2,6 @@ module FacilitiesManagement
   module Beta
     module Supplier
       class SupplierAccountController < FrameworkController
-        skip_before_action :authenticate_user!
         before_action :set_page_detail
         before_action :set_page_model
 
