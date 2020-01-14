@@ -7,14 +7,10 @@ class Ability
       can :manage, :all
     elsif user.has_role? :ccs_employee
       admin_tool_specific_auth(user)
-    elsif user.has_role? :supplier
-      cannot :manage, :all
-      can :read, FacilitiesManagement::Supplier if user.has_role? :fm_access
-    elsif user.has_role? :buyer
-      cannot :manage, :all
-      service_specific_auth(user)
     else
       cannot :manage, :all
+      service_specific_auth(user) if user.has_role? :buyer
+      can :read, FacilitiesManagement::Supplier if user.has_role?(:fm_access) && user.has_role?(:supplier)
     end
   end
 
