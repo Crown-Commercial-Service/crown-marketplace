@@ -23,7 +23,12 @@ $(function () {
         putCharsLeft($("#fm-building-desc-chars-left"), document.getElementById("fm-building-desc-input").value, 50);
     }
     
-    
+    const updateRegion = function (region) {
+        console.log('regionupdated');
+        FM.building.address['fm-address-region'] = region;
+        console.log(FM.building);
+    };
+
     $('#fm-building-name-input').on('keyup', function (e) {
         putCharsLeft($("#fm-building-name-chars-left"), e.target.value, 25);
     });
@@ -36,9 +41,7 @@ $(function () {
             pageUtils.toggleFieldValidationError(true, 'fm-building-name-input', 'A building name is required');
         }
     });
-    const update_region = function (region) {
-        FM.building.address['fm-address-region'] = region;
-    };    
+  
     const display_selected_address = function (address) {
         var build_address = '';
         build_address += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1'] + ',' : '';
@@ -273,7 +276,7 @@ $(function () {
                 if (data && data.result && data.result.length == 1) {
                     var region_name = data.result[0].region
                     $('#fm-building-region').html(region_name);
-                    update_region(region_name);
+                    updateRegion(region_name);
                 }
 
             })
@@ -288,12 +291,18 @@ $(function () {
         $('.fm-bulding-postcode-wrapper').show();
         $(this).hide();
     });
+
+
+    $('.fm-bulding-address-wrapper').on('change', '#fm-region-dropdown', function (e) {
+        e.preventDefault();
+        console.log($(this).val());
+        updateRegion($(this).val());
+    });
+
+
+
 });
 
-$('.fm-bulding-address-wrapper').on('change','#fm-region-dropdown', function (e) {
-    e.preventDefault();
-    update_region($(this).val());
-});
 
 $(window).on("load", function () {
     // if ( $.restore_last_known_addr !== undefined) {
