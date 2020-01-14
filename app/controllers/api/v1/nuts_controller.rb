@@ -24,8 +24,9 @@ module Api
       def find_region_query
         postcode_to_str = params['postcode'].to_s
         postcode_to_region = postcode_to_str[0, 3]
+        postcode_to_region_rm_white_space = postcode_to_region.delete(' ')
 
-        result = Postcode::PostcodeChecker.find_region postcode_to_region
+        result = Postcode::PostcodeChecker.find_region postcode_to_region_rm_white_space
         render json: { status: 200, result: result }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
