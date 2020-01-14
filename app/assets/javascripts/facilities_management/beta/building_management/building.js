@@ -24,9 +24,7 @@ $(function () {
     }
     
     const updateRegion = function (region) {
-        console.log('regionupdated');
         FM.building.address['fm-address-region'] = region;
-        console.log(FM.building);
     };
 
     $('#fm-building-name-input').on('keyup', function (e) {
@@ -295,7 +293,6 @@ $(function () {
 
     $('.fm-bulding-address-wrapper').on('change', '#fm-region-dropdown', function (e) {
         e.preventDefault();
-        console.log($(this).val());
         updateRegion($(this).val());
     });
 
