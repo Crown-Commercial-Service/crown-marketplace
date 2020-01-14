@@ -12,7 +12,7 @@ $(function () {
     function putCharsLeft(messageLocation,  value, maxChars) {
         let charsLeft = FM.calcCharsLeft(value, maxChars);
         messageLocation.text("You have " + charsLeft + " characters remaining");
-    };
+    }
     
     // Puts the 'characters remaining' count when the page loads
     if ($("#fm-building-name-input").length) {
