@@ -141,6 +141,7 @@ Rails.application.routes.draw do
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
       get '/direct-award/sending-the-contract', to: 'direct_award_contract#sending_the_contract'
+      get '/direct-award/review-and-generate-documents', to: 'direct_award_contract#review_and_generate_documents'
       resources :procurements do
         post 'continue'
         get 'summary'
