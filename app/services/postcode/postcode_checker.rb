@@ -27,6 +27,20 @@ module Postcode
       raise e
     end
 
+    def self.find_region(postcode)
+      query = <<~HEREDOC
+        select
+        distinct public.postcodes_nuts_regions.code,
+        initcap(public.nuts_regions.name) as region
+        from public.postcodes_nuts_regions
+        left join public.nuts_regions ON public.nuts_regions.code = public.postcodes_nuts_regions.code
+        where public.postcodes_nuts_regions.postcode like '#{postcode.upcase}%'
+      HEREDOC
+      ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
+    rescue StandardError => e
+      raise e
+    end
+
     # SELECT EXISTS (SELECT relname FROM pg_class WHERE relname = 'os_address');
     def self.table_exists
       ActiveRecord::Base.connection_pool.with_connection do |db|

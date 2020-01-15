@@ -215,6 +215,7 @@ en:
         caption_desc: Description
         caption_gia: Gross internal area
         caption_name: Name
+        caption_region_nuts: Location (NUTS region)
         caption_sec: Security clearance
         caption_type: Building type
         change_text: Change
