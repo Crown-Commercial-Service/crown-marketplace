@@ -15,78 +15,46 @@
                 </tr>
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header">Invoicing contact details</th>
-                    <td class="govuk-table__cell"><%= @page_data[:contract_data][:invoicing_contact_details] %></td>
+                    <td class="govuk-table__cell">
+                        <% @page_data[:contract_data][:invoicing_contact_details].each do |icd| %>
+                          <%= govuk_details(icd[:invoicing_contact]) do %>
+                            <% icd[:address].each do |a| %>
+                              <li><%= a%></li>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                    </td>
                 </tr>
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header">Authorised representative</th>
-                    <td class="govuk-table__cell"><%= @page_data[:contract_data][:authorised_representative] %></td>
-                </tr>
-                    <th class="govuk-table__cell govuk-table__header">Notices</th>
-                    <td class="govuk-table__cell"><%= @page_data[:contract_data][:Notices] %></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header">Security policy</th>
-                    <td class="govuk-table__cell"><%= @page_data[:contract_data][:security_policy] %></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header">Local government pension scheme</th>
                     <td class="govuk-table__cell">
-                        <%= govuk_details(pluralize(@page_data[:procurement_data][:initial_call_off_period], 'year')) {initial_call_off_period_description} %>
-                    </td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header">Mobilisation period</th>
-                    <td class="govuk-table__cell">
-                    <% if !@page_data[:procurement_data][:mobilisation_period].nil? %>
-                        <%= govuk_details(pluralize(@page_data[:procurement_data][:mobilisation_period], 'week')) { mobilisation_period_description } %>
-                    <% else %>
-                        None
+                    <% @page_data[:contract_data][:authorised_representative].each do |ar| %>
+                      <%= govuk_details(ar[:representative]) do %>
+                        <% ar[:address].each do |a| %>
+                          <li><%= a%></li>
+                        <% end %>
+                      <% end %>
                     <% end %>
                     </td>
                 </tr>
-                <% if !@page_data[:procurement_data][:optional_call_off_extensions_1].nil? %>
-                    <tr class="govuk-table__row">
-                        <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 1</th>
-                        <td class="govuk-table__cell">
-                            <%= govuk_details(pluralize(@page_data[:procurement_data][:optional_call_off_extensions_1], 'year')) { extension_one_description } %>
-                        </td>
-                    </tr>
-                <% end %>
-                <% if !@page_data[:procurement_data][:optional_call_off_extensions_2].nil? %>
-                    <tr class="govuk-table__row">
-                        <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 2</th>
-                        <td class="govuk-table__cell">
-                            <%= govuk_details(pluralize(@page_data[:procurement_data][:optional_call_off_extensions_2], 'year')) { extension_two_description } %>
-                        </td>
-                    </tr>
-                <% end %>
-                <% if !@page_data[:procurement_data][:optional_call_off_extensions_3].nil? %>
-                    <tr class="govuk-table__row">
-                        <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 3</th>
-                        <td class="govuk-table__cell">
-                            <%= govuk_details(pluralize(@page_data[:procurement_data][:optional_call_off_extensions_3], 'year')) { extension_three_description } %>
-                        </td>
-                    </tr>
-                <% end %>
-                <% if !@page_data[:procurement_data][:optional_call_off_extensions_4].nil? %>
-                    <tr class="govuk-table__row">
-                        <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 4</th>
-                        <td class="govuk-table__cell">
-                            <%= govuk_details(pluralize(@page_data[:procurement_data][:optional_call_off_extensions_4], 'year')) { extension_four_description } %>
-                        </td>
-                    </tr>
-                <% end %>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header">Buildings and services</th>
+                    <th class="govuk-table__cell govuk-table__header">Notices</th>
                     <td class="govuk-table__cell">
-                        <% @page_data[:procurement_data][:buildings_and_services].each do |bs| %>
-                            <%= govuk_details(bs[:building]) do %>
-                                <% bs[:service_codes].each do |s| %>
-                                  <li><%= to_lower_case(FacilitiesManagement::StaticData.work_packages.select{|work_package| work_package['code'] == s}.first['name']) %></li>
-                                <% end %>
-                            <% end %>
-                        <%end%>
+                    <% @page_data[:contract_data][:notices].each do |n| %>
+                      <%= govuk_details(n[:notice_contact]) do %>
+                        <% n[:address].each do |a| %>
+                          <li><%= a%></li>
+                        <% end %>
+                      <% end %>
+                    <% end %>
                     </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__cell govuk-table__header">Security policy</th>
+                    <td class="govuk-table__cell"><a href="#" class="govuk-link"><%= "#{@page_data[:contract_data][:security_policy]}" %></a></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__cell govuk-table__header">Local government pension scheme</th>
+                    <td class="govuk-table__cell"><%= @page_data[:contract_data][:local_government_pension_scheme] %></td>
                 </tr>
             </tbody>
         </table>
