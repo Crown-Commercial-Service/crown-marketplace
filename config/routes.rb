@@ -341,6 +341,7 @@ Rails.application.routes.draw do
       get '/search-postcode/:postcode', to: 'nuts#show_post_code'
       get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
       get '/find-region/:postcode', to: 'nuts#find_region_query'
+      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
     end
   end
 
