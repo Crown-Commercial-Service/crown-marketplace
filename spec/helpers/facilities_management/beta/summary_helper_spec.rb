@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::Beta::SummaryHelper, type: :helper do
           val[:uom_value][day.downcase.to_sym][:uom] = value
           value += 1
         end
-        result_value = ((1 + 2 + 3 + 4 + 5 + 6 + 7) * 52)
+        result_value = (1 + 2 + 3 + 4 + 5 + 6 + 7) * 52
         expect(calculate_uom_value(val)).to eq result_value
       end
 
