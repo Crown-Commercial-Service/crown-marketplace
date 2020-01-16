@@ -142,12 +142,9 @@ Rails.application.routes.draw do
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
       get '/direct-award/sending-the-contract', to: 'direct_award_contract#sending_the_contract'
       resources :procurements do
-        post 'continue'
-        get 'summary'
         get 'results'
         get 'direct_award_pricing'
         get 'further_competition'
-        put 'set_route_to_market'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]

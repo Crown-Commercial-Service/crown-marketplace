@@ -21,7 +21,7 @@
         <p>
           Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
         </p>
-        <form>
+        <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: {novalidate: true, multipart: true} do |f| %>
           <dl class="govuk-summary-list">
             <%= render('about_the_contract') %>
           </dl>
@@ -32,7 +32,6 @@
                 <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_period_section' %>
                 <%= render partial: 'facilities_management/beta/procurements/contract_period/mobilisation_section' %>
                 <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_extension_section' %>
-              </tbody>
               </tbody>
               <% else %>
               <tbody class="govuk-table__body">
@@ -46,8 +45,8 @@
           <dl class="govuk-summary-list">
             <%= render 'about_the_work', procurement: @procurement %>
           </dl>
-        </form>
-        <%= render('continue_button_footer') %>
+          <%= render partial: 'continue_button_footer', locals: {f: f} %>
+        <%end %>
       <% end %>
   </div>
 <% end %>

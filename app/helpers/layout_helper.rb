@@ -8,11 +8,12 @@ module LayoutHelper
 
   # Value Objects (Classes) to structure data for parameters to helper methods
   class NavigationDetail
-    attr_accessor(:primary_text, :return_url, :return_text, :secondary_url, :secondary_text, :secondary_name)
+    attr_accessor(:primary_text, :primary_name, :return_url, :return_text, :secondary_url, :secondary_text, :secondary_name)
 
     # rubocop:disable Metrics/ParameterLists
-    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text, secondary_name = '')
+    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text, primary_name = '', secondary_name = '')
       @primary_text = primary_text
+      @primary_name = primary_name
       @return_url = return_url
       @return_text = return_text
       @secondary_url = secondary_url
@@ -102,7 +103,7 @@ module LayoutHelper
 
   # rubocop:disable Metrics/AbcSize
   def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true)
-    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit') if primary_button
+    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
     buttons = form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) unless primary_button
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
     buttons << capture { tag.br }
