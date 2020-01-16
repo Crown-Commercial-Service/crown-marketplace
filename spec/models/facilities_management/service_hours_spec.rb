@@ -65,6 +65,11 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         expect(target[:tuesday][:service_choice]).to eq 'all_day'
       end
 
+      it 'validate uom when serializing to a hash' do
+        target = described_class.dump(service_hours)
+        expect(target[:saturday][:uom]).to eq 4.5
+      end
+
       it 'succeeds when serializing from a json' do
         target = described_class.load(source)
         expect(target[:saturday][:service_choice]).to eq 'hourly'
