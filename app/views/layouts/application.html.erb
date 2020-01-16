@@ -35,7 +35,7 @@
 
     <%= render partial: '/layouts/cookie-banner' %>
     
-    <div id="wrapper">
+    <!--<div id="wrapper">-->
 
       <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
 
@@ -45,23 +45,19 @@
 
       <%= render partial: '/layouts/beta-banner', locals: {end_of_journey: @end_of_journey.present?} %>
 
-      <div class="govuk-width-container">
-
+      <main id="main-content" class="govuk-width-container govuk-main-wrapper" role="main">
         <% if @back_path.present? %>
           <%= render partial: '/layouts/back-link' %>
         <% end %>
-
-        <main id="main-content" class="govuk-main-wrapper" role="main">
-          <%= yield %>
-        </main>
-
-      </div>
+        
+        <%= yield %>
+      </main>
 
       <footer id="main-footer" class="govuk-footer" role="contentinfo">
         <%= render partial: '/layouts/footer' %>
       </footer>
 
-    </div>
+    <!--</div>-->
 
     <%= javascript_include_tag 'application' %>
     <%= render partial: '/layouts/init-js' %>
