@@ -2,14 +2,14 @@ require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FrameworkController
-      before_action :set_procurement, only: %i[show edit update destroy continue results set_route_to_market direct_award_pricing further_competition]
+      before_action :set_procurement, only: %i[show edit update destroy results direct_award_pricing further_competition]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
       before_action :user_buildings_count, only: %i[show edit update]
-      before_action :set_procurement_data, only: %i[show edit update results set_route_to_market]
+      before_action :set_procurement_data, only: %i[show edit update results]
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
-      before_action :set_page_details, only: %i[show edit update destroy continue results set_route_to_market direct_award_pricing further_competition]
+      before_action :set_page_details, only: %i[show edit update destroy results direct_award_pricing further_competition]
 
       def index
         @procurements = current_user.procurements
@@ -48,29 +48,11 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/AbcSize
       def update
-        @procurement.assign_attributes(procurement_params)
+        continue_to_results && return if params['continue_to_results'].present?
 
-        # To need to do this is awful - it will trigger validations so that an invalid action can be recognised
-        # that action - resulting in clearing the service_code collection in the store will not happen
-        # we can however validate and push the custom message to the client from here
-        # !WHY?! The browser is not sending the [:facilities_management_procurement][:service_codes] value as empty
-        #        if no checkboxes are checked
-        #        Can the procurement_params specification not establish defaults?
-        @procurement.service_codes = [] if params[:facilities_management_procurement][:step].try(:to_sym) == :services &&
-                                           params[:facilities_management_procurement][:service_codes].nil?
+        set_route_to_market && return if params['set_route_to_market'].present?
 
-        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
-          @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
-          @procurement.reload
-
-          set_current_step
-
-          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
-        else
-          set_step_param
-
-          render :edit
-        end
+        update_procurement if params['facilities_management_procurement'].present?
       end
       # rubocop:enable Metrics/AbcSize
 
@@ -85,23 +67,14 @@ module FacilitiesManagement
         end
       end
 
-      def continue
-        if procurement_valid?
-          @procurement.save_eligible_suppliers
-          @procurement.set_state_to_results
-          @procurement.save
-          redirect_to facilities_management_beta_procurement_results_path(@procurement)
-        else
-          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
-        end
-      end
-
       def summary
         @page_data = {}
         @page_data[:model_object] = @procurement
       end
 
       def results
+        redirect_to(facilities_management_beta_procurement_path(@procurement)) && return unless verify_status('results')
+
         set_results_page_data
         @procurement[:route_to_market] = @procurement.aasm_state
       end
@@ -116,6 +89,50 @@ module FacilitiesManagement
         @page_data[:model_object] = @procurement
       end
 
+      private
+
+      def update_procurement
+        assign_procurement_parameters
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+          @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
+          @procurement.reload
+
+          set_current_step
+
+          redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
+        else
+          set_step_param
+          render :edit
+        end
+      end
+
+      def assign_procurement_parameters
+        @procurement.assign_attributes(procurement_params)
+
+        # To need to do this is awful - it will trigger validations so that an invalid action can be recognised
+        # that action - resulting in clearing the service_code collection in the store will not happen
+        # we can however validate and push the custom message to the client from here
+        # !WHY?! The browser is not sending the [:facilities_management_procurement][:service_codes] value as empty
+        #        if no checkboxes are checked
+        #        Can the procurement_params specification not establish defaults?
+        @procurement.service_codes = [] if params[:facilities_management_procurement][:step].try(:to_sym) == :services && params[:facilities_management_procurement][:service_codes].nil?
+      end
+
+      def verify_status(status)
+        @procurement.aasm_state.to_sym == status.to_sym
+      end
+
+      def continue_to_results
+        if procurement_valid?
+          @procurement.save_eligible_suppliers
+          @procurement[:eligible_for_da] = eligible_for_direct_award?
+          @procurement.set_state_to_results
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_results_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         if params[:commit] == page_details(:results)[:secondary_text]
@@ -150,8 +167,6 @@ module FacilitiesManagement
       end
 
       helper_method :eligible_for_direct_award?
-
-      private
 
       def set_results_page_data
         @page_data = {}
@@ -297,6 +312,7 @@ module FacilitiesManagement
                                              page_details(action_name)[:return_text],
                                              page_details(action_name)[:secondary_url],
                                              page_details(action_name)[:secondary_text],
+                                             page_details(action_name)[:primary_name],
                                              page_details(action_name)[:secondary_name])
         ) if page_definitions.key?(action_name.to_sym)
       end
@@ -315,14 +331,13 @@ module FacilitiesManagement
             return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurements dashboard',
             secondary_text: 'Change requirements',
+            secondary_url: facilities_management_beta_procurements_path,
             back_text: 'Back',
             back_url: facilities_management_beta_procurements_path
           },
           results: {
             page_title: 'Results',
-          },
-          set_route_to_market: {
-            page_title: 'Results',
+            primary_name: 'set_route_to_market'
           },
           direct_award_pricing: {
             caption1: @procurement[:name],

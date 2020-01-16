@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_131101) do
+ActiveRecord::Schema.define(version: 2020_01_15_160444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_131101) do
     t.string "security_policy_document_file"
     t.string "lot_number"
     t.money "assessed_value", scale: 2
+    t.boolean "eligible_for_da"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
