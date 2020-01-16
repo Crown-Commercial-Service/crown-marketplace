@@ -1,10 +1,8 @@
-<div class="govuk-grid-row">
-  <li class="govuk-list">
-    <h2 class="govuk-heading-m govuk-!-margin-top-0">
-      <%= link_to supplier.name, legal_services_supplier_path(supplier, lot: params[:lot], jurisdiction: params[:jurisdiction]), class: 'govuk-link ccs-no-underline' %>
-      <% if supplier.sme %>
-        <span class="ccs-tag"><%= t('sme') %></span>
-      <% end %>
-    </h2>
-  </li>
-</div>
+<li class=" govuk-grid-row govuk-list ">
+  <h2 class="govuk-heading-m govuk-!-margin-top-0">
+    <%= link_to supplier.name, legal_services_supplier_path(supplier, lot: params[:lot], jurisdiction: params[:jurisdiction]), class: 'govuk-link ccs-no-underline' %>
+    <% if supplier.sme %>
+      <span class="ccs-tag"><%= t('sme') %></span>
+    <% end %>
+  </h2>
+</li>
