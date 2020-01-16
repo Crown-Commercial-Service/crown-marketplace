@@ -27,6 +27,15 @@ module FacilitiesManagement
         # TODO: When db intigrated this section can be refactored or removed
         @page_data[:procurement_data][:status] = find_status(request.path_info)
       end
+      
+      def contract_details
+      @page_data[:payment_method] = @payment_method
+      @page_data[:invoicing_contact_details] = @invoicing_contact_details
+      @page_data[:authorised_representative] = @authorised_representative
+      @page_data[:notices_contact_details] = @notices_contact_details
+      @page_data[:security_policy] = @security_policy
+      @page_data[:lgps] = @lgps
+      end
 
       private
 
@@ -109,6 +118,15 @@ module FacilitiesManagement
             return_url: '#',
             return_text: 'Return to procurement dashboard',
             secondary_text: 'Close this procurement'
+          },
+          contract_details: {
+          page_title: 'Contract Details',
+          caption1: 'Total facilities management',
+          continuation_text: 'Continue', 
+          #TODO: Add continue link path
+          return_url: facilities_management_beta_procurements_path,
+          return_text: 'Return to procurement dashboard',
+          secondary_text: 'Return to results'
           }
         }.freeze
       end
