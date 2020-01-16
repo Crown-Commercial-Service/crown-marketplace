@@ -1,6 +1,6 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
   <p class="govuk-body">Content here</p>
-  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_set_route_to_market_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_continuation_buttons(pd, f) %>
   <% end %>
 <% end %>
