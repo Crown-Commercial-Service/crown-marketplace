@@ -89,6 +89,12 @@ module FacilitiesManagement
         @page_data = {}
         @page_data[:model_object] = @procurement
       end
+      
+      def pricing
+      @page_data[:sorted_supplier_list] = [{ name: 'Cleaning London LTD', price: 1280500 }, { name: 'Example Corporation LTD', price: '1300000' }, { name: 'Another example Corp Ltd', price: '1353400' },
+                                           { name: 'HG Cleaning', price: '1300000' }, { name: 'Marco LTD', price: '1300000' }, { name: 'Gig Beta Company', price: '1300000' }, { name: 'Mega Beta Ltd', price: '1300000' },
+                                           { name: 'Jacob Beta Company', price: '1300000' }, { name: 'Kile Beta', price: '1300000' }, { name: 'Oscar Wild Corp.', price: '1300000' }, { name: 'X-ray Cleaning Ltd', price: '1300000' }]
+      end
 
       private
 
@@ -354,6 +360,17 @@ module FacilitiesManagement
           summary: {
             page_title: 'Summary',
             return_url: facilities_management_beta_procurements_path,
+          },
+          pricing: {
+            back_url: '#',
+            back_text: 'Return to Results',
+            back_label: 'Return to Results',
+            page_title: 'Direct award pricing',
+            caption1: 'Procurement name',
+            continuation_text: 'Continue to direct award',
+            return_url: '#',
+            return_text: 'Return to procurement dashboard',
+            secondary_text: 'Return to results'
           }
         }.freeze
       end
