@@ -805,24 +805,24 @@ en:
         better_suited_framework_html: The <a href="https://www.crowncommercial.gov.uk/agreements/rm3786" target="_blank">General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     job_titles:
-      '1':
+      lot_1:
         junior: Legal Support Practitioner/Executive
         managing: Managing Practitioner
         senior: Senior Practitioner
         solicitor: Solicitor/Associate
-      '2':
+      lot_2:
         junior: Junior Solicitor
         managing: Partner including Managing Partner
         senior: Senior Solicitor/Senior Associate/Legal Director
         solicitor: Solicitor/Associate
         trainee: Trainee/Paralegal
-      '3':
+      lot_3:
         junior: Junior Solicitor
         managing: Partner including Managing Partner
         senior: Senior Solicitor/Senior Associate/Legal Director
         solicitor: Solicitor/Associate
         trainee: Trainee/Paralegal
-      '4':
+      lot_4:
         junior: Junior Solicitor
         managing: Partner including Managing Partner
         senior: Senior Solicitor/Senior Associate/Legal Director
