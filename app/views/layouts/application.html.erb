@@ -33,17 +33,17 @@
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
-    <%= render partial: '/layouts/cookie-banner' %>
     
-    <!--<div id="wrapper">-->
+    <div id="wrapper">
 
       <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
 
       <header id="main-header" class="govuk-header" role="banner" data-module="header">
+        <%= render partial: '/layouts/cookie-banner' %>
         <%= render partial: '/layouts/header-banner' %>
+        <%= render partial: '/layouts/beta-banner', locals: {end_of_journey: @end_of_journey.present?} %>
       </header>
 
-      <%= render partial: '/layouts/beta-banner', locals: {end_of_journey: @end_of_journey.present?} %>
 
       <main id="main-content" class="govuk-width-container govuk-main-wrapper" role="main">
         <% if @back_path.present? %>
@@ -57,7 +57,7 @@
         <%= render partial: '/layouts/footer' %>
       </footer>
 
-    <!--</div>-->
+    </div>
 
     <%= javascript_include_tag 'application' %>
     <%= render partial: '/layouts/init-js' %>
