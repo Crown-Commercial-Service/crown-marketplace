@@ -12,8 +12,7 @@ module FacilitiesManagement::Beta::DirectAwardContractHelper
                          'not-signed': '',
                          'declined': '',
                          'no response': '',
-                         'closed': ''
-    }
+                         'closed': '' }
     warning_messages.each { |status, text| return text if @page_data[:procurement_data][:status] == status.to_s }
   end
 
