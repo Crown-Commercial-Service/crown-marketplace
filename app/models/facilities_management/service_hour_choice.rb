@@ -16,7 +16,7 @@ module FacilitiesManagement
     attribute :end_hour, Integer, default: nil
     attribute :end_minute, Integer, default: nil
     attribute :end_ampm, String, default: nil
-    attribute :uom, Integer, default: nil
+    attribute :uom, Float, default: nil
 
     # these are used to capture validation messages for the time input-groups
     attr_accessor :start_time
