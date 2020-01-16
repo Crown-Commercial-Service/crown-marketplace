@@ -46,7 +46,6 @@ module FacilitiesManagement
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
       def update
         continue_to_results && return if params['continue_to_results'].present?
 
@@ -54,7 +53,6 @@ module FacilitiesManagement
 
         update_procurement if params['facilities_management_procurement'].present?
       end
-      # rubocop:enable Metrics/AbcSize
 
       # DELETE /procurements/1
       # DELETE /procurements/1.json
@@ -133,6 +131,7 @@ module FacilitiesManagement
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
         end
       end
+
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         if params[:commit] == page_details(:results)[:secondary_text]
