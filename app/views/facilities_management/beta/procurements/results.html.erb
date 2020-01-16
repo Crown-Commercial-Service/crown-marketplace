@@ -38,7 +38,7 @@
     <% end %>
   <% end %>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
-  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_set_route_to_market_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+  <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= f.hidden_field :route_to_market %>
     <%= govuk_grouped_field(f, 'Available routes to market', :route_to_market) do |ff, attr| %>
       <%= govuk_start_individual_field(ff, attr, false, false) do |a| %>
