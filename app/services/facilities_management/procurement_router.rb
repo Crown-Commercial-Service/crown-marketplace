@@ -11,6 +11,18 @@ class FacilitiesManagement::ProcurementRouter
     @step = step
   end
 
+  STATES_TO_VIEWS = {
+    'results': 'results',
+    'DA_draft': 'direct_award_pricing',
+    'further_competition': 'further_competition'
+  }.freeze
+
+  def view
+    return STATES_TO_VIEWS[@procurement_state.to_sym] if STATES_TO_VIEWS.key?(@procurement_state.to_sym)
+
+    'detailed_search_summary'
+  end
+
   def route
     if @procurement_state == 'quick_search'
       return QUICK_SEARCH_EDIT_STEPS.include?(@step) ? edit_facilities_management_beta_procurement_path(id: @id) : facilities_management_beta_procurements_path
