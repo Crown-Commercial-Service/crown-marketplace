@@ -105,6 +105,22 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
 
   describe '#sent_offer?' do
     context 'when supplied quick_search or detailed_search' do
+      it 'will return true' do
+        expect(controller.send(:search?, :quick_search)).to be true
+        expect(controller.send(:search?, :detailed_search)).to be true
+      end
+    end
+
+    context 'when further_competition or results' do
+      it 'will return true' do
+        expect(controller.send(:search?, :further_competition)).to be true
+        expect(controller.send(:search?, :results)).to be true
+      end
+    end
+  end
+
+  describe '#sent_offer?' do
+    context 'when supplied quick_search or detailed_search' do
       it 'will return false' do
         expect(controller.send(:sent_offer?, :quick_search)).to be false
         expect(controller.send(:sent_offer?, :detailed_search)).to be false
