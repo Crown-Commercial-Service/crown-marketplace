@@ -22,6 +22,10 @@ module CCS
         where('framework <> 0 and  benchmark <> 0')
       end
 
+      def self.priced_at_framework(code, standard)
+        find_by(code: code, standard: standard).framework.present?
+      end
+
       # read in the benchmark and framework rates - these were taken from the Damolas spreadsheet and put in the postgres database numbers are to 15dp
       #
       # usage:
@@ -31,11 +35,10 @@ module CCS
         benchmark_rates = {}
         framework_rates = {}
         all.each do |row|
-          code = row['code'].remove('.')
-          benchmark_rates[code] = row['benchmark'].to_f
-          framework_rates[code] = row['framework'].to_f
+          code_and_standard = "#{row['code'].remove('.')}#{'-' + row['standard'].to_s if row['standard']}"
+          benchmark_rates[code_and_standard] = row['benchmark'].to_f
+          framework_rates[code_and_standard] = row['framework'].to_f
         end
-
         {
           benchmark_rates: benchmark_rates,
           framework_rates: framework_rates
