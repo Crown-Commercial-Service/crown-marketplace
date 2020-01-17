@@ -15,4 +15,8 @@ namespace :db do
     PostcodesNutsRegions.import columns, postcode_regions
     p 'Finished importing records into database table postcodes_nuts_regions'
   end
+
+  task run_postcodes_to_nuts_worker: :environment do
+    FacilitiesManagement::PostcodesToNutsWorker.perform_async
+  end
 end
