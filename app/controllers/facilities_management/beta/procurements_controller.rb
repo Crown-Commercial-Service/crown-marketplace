@@ -13,6 +13,7 @@ module FacilitiesManagement
 
       def index
         @procurements = current_user.procurements
+        @searches = @procurements.select { |procurement| search?(procurement.aasm_state) }
         @sent_offers = @procurements.select { |procurement| sent_offer?(procurement.aasm_state) }
       end
 
@@ -294,10 +295,15 @@ module FacilitiesManagement
         @procurement.valid_on_continue?
       end
 
+      def search?(procurement_state)
+        SEARCH.any? { |status| status == procurement_state.to_sym }
+      end
+
       def sent_offer?(procurement_state)
         SENT_OFFER.any? { |status| status == procurement_state.to_sym }
       end
 
+      SEARCH = %i[further_competition results quick_search detailed_search].freeze
       SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
 
       # used to control page navigation and headers
