@@ -2,14 +2,14 @@ require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FrameworkController
-      before_action :set_procurement, only: %i[show edit update destroy results direct_award_pricing further_competition]
+      before_action :set_procurement, only: %i[show edit update destroy results]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
       before_action :user_buildings_count, only: %i[show edit update]
       before_action :set_procurement_data, only: %i[show edit update results]
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
-      before_action :set_page_details, only: %i[show edit update destroy results direct_award_pricing further_competition]
+      before_action :build_page_details, only: %i[show edit update destroy results]
 
       def index
         @procurements = current_user.procurements
@@ -21,6 +21,20 @@ module FacilitiesManagement
       def show
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search? && !@delete
+
+        view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).view
+        build_page_details(view_name.to_sym)
+
+        case view_name
+        when 'results'
+          set_results_page_data
+          @procurement[:route_to_market] = @procurement.aasm_state
+        else
+          @page_data = {}
+          @page_data[:model_object] = @procurement
+        end
+
+        render view_name
       end
 
       def new
@@ -49,13 +63,17 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
+        continue_to_summary && return if params['change_requirements'].present?
+
         continue_to_results && return if params['continue_to_results'].present?
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
         update_procurement if params['facilities_management_procurement'].present?
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       # DELETE /procurements/1
       # DELETE /procurements/1.json
@@ -78,16 +96,6 @@ module FacilitiesManagement
 
         set_results_page_data
         @procurement[:route_to_market] = @procurement.aasm_state
-      end
-
-      def direct_award_pricing
-        @page_data = {}
-        @page_data[:model_object] = @procurement
-      end
-
-      def further_competition
-        @page_data = {}
-        @page_data[:model_object] = @procurement
       end
 
       private
@@ -120,7 +128,19 @@ module FacilitiesManagement
       end
 
       def verify_status(status)
+        if status == 'results'
+          return false if %w[quick_search detailed_search].include?(@procurement.aasm_state.downcase)
+
+          return true
+        end
+
         @procurement.aasm_state.to_sym == status.to_sym
+      end
+
+      def continue_to_summary
+        @procurement.set_state_to_detailed_search
+        @procurement.save
+        redirect_to facilities_management_beta_procurement_path(@procurement)
       end
 
       def continue_to_results
@@ -129,7 +149,7 @@ module FacilitiesManagement
           @procurement[:eligible_for_da] = eligible_for_direct_award?
           @procurement.set_state_to_results
           @procurement.save
-          redirect_to facilities_management_beta_procurement_results_path(@procurement)
+          redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
         end
@@ -148,19 +168,20 @@ module FacilitiesManagement
         @procurement.assign_attributes(procurement_route_params)
 
         unless @procurement.valid?(:route_to_market)
+          build_page_details(:results)
           set_results_page_data
           render 'results'
-          return
+          return true
         end
 
         if @procurement[:route_to_market] == 'DA_draft'
           @procurement.start_direct_award
           @procurement.save
-          redirect_to facilities_management_beta_procurement_direct_award_pricing_path(@procurement)
+          redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           @procurement.start_further_competition
           @procurement.save
-          redirect_to facilities_management_beta_procurement_further_competition_path(@procurement)
+          redirect_to facilities_management_beta_procurement_path(@procurement)
         end
       end
 
@@ -299,24 +320,26 @@ module FacilitiesManagement
       # used to control page navigation and headers
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Style/MultilineIfModifier
-      def set_page_details
+      def build_page_details(action = nil)
+        action = action_name if action.nil?
+
         @page_data = {}
         @page_description = LayoutHelper::PageDescription.new(
-          LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
-                                          page_details(action_name)[:caption1],
-                                          page_details(action_name)[:caption2],
-                                          page_details(action_name)[:sub_title]),
-          LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
-                                             page_details(action_name)[:back_label],
-                                             page_details(action_name)[:back_text]),
-          LayoutHelper::NavigationDetail.new(page_details(action_name)[:continuation_text],
-                                             page_details(action_name)[:return_url],
-                                             page_details(action_name)[:return_text],
-                                             page_details(action_name)[:secondary_url],
-                                             page_details(action_name)[:secondary_text],
-                                             page_details(action_name)[:primary_name],
-                                             page_details(action_name)[:secondary_name])
-        ) if page_definitions.key?(action_name.to_sym)
+          LayoutHelper::HeadingDetail.new(page_details(action)[:page_title],
+                                          page_details(action)[:caption1],
+                                          page_details(action)[:caption2],
+                                          page_details(action)[:sub_title]),
+          LayoutHelper::BackButtonDetail.new(page_details(action)[:back_url],
+                                             page_details(action)[:back_label],
+                                             page_details(action)[:back_text]),
+          LayoutHelper::NavigationDetail.new(page_details(action)[:continuation_text],
+                                             page_details(action)[:return_url],
+                                             page_details(action)[:return_text],
+                                             page_details(action)[:secondary_url],
+                                             page_details(action)[:secondary_text],
+                                             page_details(action)[:primary_name],
+                                             page_details(action)[:secondary_name])
+        ) if page_definitions.key?(action.to_sym)
       end
       # rubocop:enable Style/MultilineIfModifier
       # rubocop:enable Metrics/AbcSize
@@ -332,6 +355,7 @@ module FacilitiesManagement
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurements dashboard',
+            secondary_name: 'change_requirements',
             secondary_text: 'Change requirements',
             secondary_url: facilities_management_beta_procurements_path,
             back_text: 'Back',
