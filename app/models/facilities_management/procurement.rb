@@ -102,10 +102,8 @@ module FacilitiesManagement
     end
 
     def priced_at_framework
-      # [procurement_building_services.map(&:code) - CCS::FM::Service.direct_award_services].none?
-      # this is not the right list, still need to import this data
-      # for now this always returns true
-      true
+      # if one service is not priced at framework, returns false
+      !procurement_building_services.map { |pbs| CCS::FM::Rate.priced_at_framework(pbs.code, pbs.service_standard) }.include?(false)
     end
 
     private

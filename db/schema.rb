@@ -188,12 +188,14 @@ ActiveRecord::Schema.define(version: 2020_01_15_160444) do
   end
 
   create_table "fm_rates", id: false, force: :cascade do |t|
-    t.text "code"
+    t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.index ["code"], name: "fm_rates_code_key", unique: true
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.index ["code"], name: "index_fm_rates_on_code"
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|

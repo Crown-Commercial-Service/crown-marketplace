@@ -35,14 +35,11 @@ module CCS
 
   def self.csv_to_fm_rates(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = 'create table IF NOT EXISTS fm_rates (code varchar(255) UNIQUE, framework numeric, benchmark numeric );
-      TRUNCATE TABLE fm_rates;'
-      db.query query
+      db.query 'DELETE FROM fm_rates'
       CSV.read(file_name, headers: true).each do |row|
         column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
-        values = row.fields.map { |i| "'#{i}'" }.join(',')
-        query = "DELETE FROM fm_rates where code = '" + row['code'] + "' ; " \
-                'insert into fm_rates ( ' + column_names + ') values (' + values + ')'
+        values = row.fields.map { |i| i.blank? ? 'null' : "'#{i}'" }.join(',')
+        query = 'insert into fm_rates ( ' + column_names + ') values (' + values + ')'
         db.query query
       end
     end
