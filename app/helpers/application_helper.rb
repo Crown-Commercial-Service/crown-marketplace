@@ -289,5 +289,13 @@ module ApplicationHelper
   def a_supply_teachers_path?
     controller.class.parent.name == 'SupplyTeachers'
   end
+
+  def format_date(date_object)
+    date_object&.strftime '%e %B %Y'
+  end
+
+  def format_date_time(date_object)
+    date_object&.strftime '%e %B %Y, %l:%M%P'
+  end
 end
 # rubocop:enable Metrics/ModuleLength

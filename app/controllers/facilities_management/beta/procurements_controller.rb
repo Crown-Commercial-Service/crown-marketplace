@@ -13,6 +13,7 @@ module FacilitiesManagement
 
       def index
         @procurements = current_user.procurements
+        @sent_offers = @procurements.select { |procurement| sent_offer?(procurement.aasm_state) }
       end
 
       def show
@@ -292,6 +293,12 @@ module FacilitiesManagement
       def procurement_valid?
         @procurement.valid_on_continue?
       end
+
+      def sent_offer?(procurement_state)
+        SENT_OFFER.any? { |status| status == procurement_state.to_sym }
+      end
+
+      SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
 
       # used to control page navigation and headers
       # rubocop:disable Metrics/AbcSize
