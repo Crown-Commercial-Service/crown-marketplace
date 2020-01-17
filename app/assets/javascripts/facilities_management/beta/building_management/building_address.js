@@ -76,7 +76,7 @@ $(function () {
                         select_dropdown_options = '<option value="' + region_obj.region + '">' + region_obj.region + '</option>';
                         $('#fm-bm-region-dropdown').append(select_dropdown_options);
                     }
-
+                    $('#fm-bm-address-region-display').show();
                     $('.fm-bm-region-txt').show();
 
                 }
@@ -89,11 +89,17 @@ $(function () {
 
     $('#fm-bm-address-wrapper').on('keyup', '#fm-bm-address-postcode', function (e) {
         e.preventDefault();
+        
         var postcode = $(this).val();
 
         if (postcode.length > 1 ) {
             searchForRegion($(this).val());
         }
+
+        if (postcode.length == 0) {
+            $('.fm-bm-region-txt').hide();
+            $('#fm-bm-address-region-display').hide();
+        }       
         
     });
 
