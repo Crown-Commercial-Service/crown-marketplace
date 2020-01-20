@@ -17,7 +17,7 @@ $(function () {
         let town = $('#fm-bm-address-town').val();
         let county = $('#fm-bm-address-county').val();
         let postcode = $('#fm-bm-address-postcode').val();
-        let region = (typeof $('#fm-bm-region-dropdown').val() != 'undefined')? $('#fm-bm-region-dropdown').val():'';
+        let region = (typeof $('#fm-bm-region-dropdown').val() !== 'undefined')? $('#fm-bm-region-dropdown').val():"";
         let errorMsg = '';
         let isValid = true;
         let elemID = '';
@@ -96,7 +96,7 @@ $(function () {
             searchForRegion($(this).val());
         }
 
-        if (postcode.length == 0) {
+        if (postcode.length === 0) {
             $('.fm-bm-region-txt').hide();
             $('#fm-bm-address-region-display').hide();
         }       
