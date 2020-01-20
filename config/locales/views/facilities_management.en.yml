@@ -656,6 +656,18 @@ en:
             email_hint_html: Enter the email address you used to register
             forgotten_password_html: I've forgotten my password
             password: Password
+        users:
+          new_password_required:
+            confirm_your_password: Confirm your password
+            create_your_password: Create a password you'll remember
+            heading: Change your password
+            intro: This is the first time you've signed in to your account. You need to reset your password.
+          sms_mfa:
+            access_code: Access code
+            content: It may take a few minutes to arrive.
+            heading: Enter your access code
+            lead: 'We just sent a 6 digit access code by text to:'
+            resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
       users:
         new_password_required:
           confirm_your_password: Confirm your password
