@@ -397,6 +397,10 @@ en:
       procurements:
         about_the_contract:
           no_cost_provided: None
+        detailed_search_summary:
+          delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
+          detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
+          detailed_search_summary_title: Detailed search summary
         edit:
           back_to_detailed_summary: Back to detailed search summary
           building_services:
@@ -620,8 +624,6 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
-        show:
-          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
       sessions:
         new:
           email_address: Email address
