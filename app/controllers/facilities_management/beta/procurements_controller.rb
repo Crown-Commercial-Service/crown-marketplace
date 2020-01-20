@@ -15,7 +15,7 @@ module FacilitiesManagement
         @procurements = current_user.procurements
         @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH)
         @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER)
-        @in_draft = @procurements.select { |procurement| in_draft?(procurement.aasm_state) }
+        @in_draft = current_user.procurements.where(aasm_state: :DA_draft)
       end
 
       def show
@@ -295,12 +295,6 @@ module FacilitiesManagement
       def procurement_valid?
         @procurement.valid_on_continue?
       end
-
-      def in_draft?(procurement_state)
-        IN_DRAFT.any? { |status| status == procurement_state.to_sym }
-      end
-
-      IN_DRAFT = %i[DA_draft].freeze
 
       # used to control page navigation and headers
       # rubocop:disable Metrics/AbcSize
