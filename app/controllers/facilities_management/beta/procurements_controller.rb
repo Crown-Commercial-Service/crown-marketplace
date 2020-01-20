@@ -13,6 +13,8 @@ module FacilitiesManagement
 
       def index
         @procurements = current_user.procurements
+        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH)
+        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER)
       end
 
       def show
