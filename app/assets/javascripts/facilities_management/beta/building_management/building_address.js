@@ -17,7 +17,7 @@ $(function () {
         let town = $('#fm-bm-address-town').val();
         let county = $('#fm-bm-address-county').val();
         let postcode = $('#fm-bm-address-postcode').val();
-        let region = (typeof $('#fm-bm-region-dropdown').val() !== 'undefined')? $('#fm-bm-region-dropdown').val():"";
+        let region = (typeof $("#fm-bm-region-dropdown").val() !== "undefined")? $("#fm-bm-region-dropdown").val():"";
         let errorMsg = '';
         let isValid = true;
         let elemID = '';
@@ -26,7 +26,7 @@ $(function () {
 
 
 
-        if (region.length == 0) {
+        if (region.length === 0) {
             errorMsg = 'Select your Region';
             isValid = false;
             elemID = 'fm-bm-region-dropdown';
