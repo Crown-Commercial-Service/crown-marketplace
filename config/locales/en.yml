@@ -46,8 +46,8 @@ en:
         ccs_patterns/home/cog_sign_in:
           attributes:
             cog_sign_in:
-              enter_your_password: Enter your password
-              please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
+              enter_your_password: You must provide your password
+              please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
         ccs_patterns/home/cog_sign_in_password_prompt_change:
           attributes:
             enter_a_password: Enter a password
