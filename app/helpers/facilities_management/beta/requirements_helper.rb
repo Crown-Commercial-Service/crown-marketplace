@@ -1,12 +1,4 @@
 module FacilitiesManagement::Beta::RequirementsHelper
-  def format_date(date_object)
-    date_object&.strftime '%e %B %Y'
-  end
-
-  def format_date_time(date_object)
-    date_object&.strftime '%e %B %Y, %l:%M%P'
-  end
-
   def initial_call_off_period_start_date
     @page_data[:procurement_data][:initial_call_off_start_date]
   end
