@@ -41,7 +41,7 @@ en:
               invalid: Select not required if you don't need the service on Wednesday
               not_a_date: Enter a real start time or end time for Wednesday
         user:
-          incorrect_username_or_password: Incorrect username or password
+          incorrect_username_or_password: You must provide a correct username or password
   activerecord:
     errors:
       models:
