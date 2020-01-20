@@ -17,9 +17,9 @@
       <%= render('review_contract') %>
     <% else %>
       <span class="govuk-caption-m"><%= @procurement.name %></span>
-      <h1 class="govuk-heading-xl">Detailed search summary</h1>
+      <h1 class="govuk-heading-xl"><%= t('.detailed_search_summary_title') %></h1>
       <p>
-        Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
+        <%=t('.detailed_search_description') %>
       </p>
       <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: {novalidate: true, multipart: true} do |f| %>
         <dl class="govuk-summary-list">
