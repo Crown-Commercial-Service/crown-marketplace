@@ -1,5 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
-    <p class="govuk-body govuk-!-width-three-quarters govuk-!-font-size-24">Please provide further information that will help us put your contract together.</p>
+    <p class="govuk-body govuk-!-width-three-quarters govuk-!-font-size-24"><%= t('.contract_details_description') %></p>
     <div class="govuk-!-width-full govuk-!-font-size-19">
         <dl class="govuk-summary-list govuk-body govuk-!-width-three-quarters">
         <table class="govuk-table">
@@ -9,13 +9,35 @@
                     <td class="govuk-table__cell"></td>
                     <td class="govuk-table__cell"></td>
                 </tr>
-    <%@page_data[:further_information].each do |s| %>
-        <tr class="govuk-table__row">
-            <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%=s %></th>
-            <td class="govuk-link govuk-table__cell"><a href='filler'>Answer question</a></td>
-            <td class="govuk-table__cell"></td>
-        </tr>
-    <%end %>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.payment_details') %></th>
+                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state"><%= link_to 'Answer question', ccs_patterns_prototypes_payment_method_path %></td>
+                    <td class="govuk-table__cell"></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.invoicing_contact_details') %></th>
+                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state"><%= link_to 'Answer question', ccs_patterns_prototypes_invoicing_contact_details_path %></td>
+                    <td class="govuk-table__cell"></td>
+                </tr><tr class="govuk-table__row">
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.authorised_representative') %></th>
+                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state"><%= link_to 'Answer question', ccs_patterns_prototypes_authorised_representative_path %></td>
+                    <td class="govuk-table__cell"></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.notices_contact_details') %></th>
+                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state"><%= link_to 'Answer question', ccs_patterns_prototypes_new_notices_contact_details_path %></td>
+                    <td class="govuk-table__cell"></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.security_policy_document') %></th>
+                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state"><%= link_to 'Answer question', edit_facilities_management_procurement_path(id: @page_data[:model_object].id, step: 'security_policy_document') %></td>
+                    <td class="govuk-table__cell"></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.local_government_pension_scheme') %></th>
+                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state"><%= link_to 'Answer question', ccs_patterns_prototypes_lgps_check_path %></td>
+                    <td class="govuk-table__cell"></td>
+                </tr>
             </tbody>
         </table>
         </dl>
