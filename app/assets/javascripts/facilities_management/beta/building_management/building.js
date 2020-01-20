@@ -24,7 +24,7 @@ $(function () {
     }
     
     const updateRegion = function (region) {
-        FM.building.address['fm-address-region'] = region;
+        FM.building.address["fm-address-region"] = region;
     };
 
     $('#fm-building-name-input').on('keyup', function (e) {
