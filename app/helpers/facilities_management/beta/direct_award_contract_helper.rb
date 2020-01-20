@@ -6,7 +6,7 @@ module FacilitiesManagement::Beta::DirectAwardContractHelper
   end
 
   def warning_message
-    warning_messages = { 'awaiting response': "This offer was sent on #{format_date_time(@page_data[:procurement_data][:contract_sent_date])} GMT.",
+    warning_messages = { 'awaiting response': "This offer was sent on #{format_date_time(@page_data[:procurement_data][:contract_sent_date])}.",
                          'awaiting signature': '',
                          'signed': '',
                          'not-signed': '',
