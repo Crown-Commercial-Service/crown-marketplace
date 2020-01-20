@@ -624,22 +624,22 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   it 'creates summary report for buildings for N.1' do
     dummy_supplier_name = 'Hickle-Schinner'
     cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
-    report_cafmhelp = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data, nil, cafm_help_used)
-    expect(report_cafmhelp.cafm_help_used).to include(isCafmUsed: false, isHelpUsed: false)
+    report_help = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data, nil, cafm_help_used)
+    expect(report_help.cafm_help_used).to include(isCafmUsed: false, isHelpUsed: false)
 
     u = uvals.select { |s| s['service_code'] == 'N.1' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
-    report_cafmhelp.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
-    expect(report_cafmhelp.cafm_help_used).to include(isCafmUsed: false, isHelpUsed: true)
+    report_help.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    expect(report_help.cafm_help_used).to include(isCafmUsed: false, isHelpUsed: true)
   end
 
   it 'creates summary report for buildings for M1' do
     dummy_supplier_name = 'Hickle-Schinner'
     cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
-    report_cafmhelp = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data, nil, cafm_help_used)
+    report_cafm = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data, nil, cafm_help_used)
 
     u = uvals.select { |s| s['service_code'] == 'M.1' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
-    report_cafmhelp.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
-    expect(report_cafmhelp.cafm_help_used).to include(isCafmUsed: true, isHelpUsed: false)
+    report_cafm.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    expect(report_cafm.cafm_help_used).to include(isCafmUsed: true, isHelpUsed: false)
   end
 
   it 'price individual services E.4' do
