@@ -140,13 +140,11 @@ Rails.application.routes.draw do
       get '/start', to: 'journey#start', as: 'journey_start'
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
+      get '/direct-award/sending-the-contract', to: 'direct_award_contract#sending_the_contract'
+      get '/direct-award/review-and-generate-documents', to: 'direct_award_contract#review_and_generate_documents'
+      get '/direct-award/awaiting-response', to: 'direct_award_contract#show'
       resources :procurements do
-        post 'continue'
-        get 'summary'
         get 'results'
-        get 'direct_award_pricing'
-        get 'further_competition'
-        put 'set_route_to_market'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
@@ -317,6 +315,7 @@ Rails.application.routes.draw do
       get '/search-postcode/:postcode', to: 'nuts#show_post_code'
       get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
       get '/find-region/:postcode', to: 'nuts#find_region_query'
+      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
     end
   end
 

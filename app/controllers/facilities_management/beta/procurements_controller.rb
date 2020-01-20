@@ -174,15 +174,11 @@ module FacilitiesManagement
           return true
         end
 
-        if @procurement[:route_to_market] == 'DA_draft'
-          @procurement.start_direct_award
-          @procurement.save
-          redirect_to facilities_management_beta_procurement_path(@procurement)
-        else
-          @procurement.start_further_competition
-          @procurement.save
-          redirect_to facilities_management_beta_procurement_path(@procurement)
-        end
+        @procurement.start_direct_award if @procurement[:route_to_market] == 'DA_draft'
+        @procurement.start_further_competition if @procurement[:route_to_market] == 'further_competition'
+        @procurement.save
+
+        redirect_to facilities_management_beta_procurement_path(@procurement)
       end
 
       def eligible_for_direct_award?
