@@ -621,6 +621,27 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     expect(report.assessed_value.round(2)).to be 8509504.71
   end
 
+  it 'creates summary report for buildings for N.1' do
+    dummy_supplier_name = 'Hickle-Schinner'
+    cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
+    report_cafmhelp = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data, nil, cafm_help_used)
+    expect(report_cafmhelp.cafm_help_used).to include(isCafmUsed: false, isHelpUsed: false)
+
+    u = uvals.select { |s| s['service_code'] == 'N.1' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+    report_cafmhelp.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    expect(report_cafmhelp.cafm_help_used).to include(isCafmUsed: false, isHelpUsed: true)
+  end
+
+  it 'creates summary report for buildings for M1' do
+    dummy_supplier_name = 'Hickle-Schinner'
+    cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
+    report_cafmhelp = FacilitiesManagement::SummaryReport.new(start_date, 'test@example.com', data, nil, cafm_help_used)
+
+    u = uvals.select { |s| s['service_code'] == 'M.1' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+    report_cafmhelp.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    expect(report_cafmhelp.cafm_help_used).to include(isCafmUsed: true, isHelpUsed: false)
+  end
+
   it 'price individual services E.4' do
     # data
     dummy_supplier_name = 'Hickle-Schinner'

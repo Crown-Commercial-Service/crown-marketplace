@@ -646,7 +646,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
             status: 'Incomplete',
             updated_by: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n')
       ]
-
       # populate db with dub buildings
       @selected_buildings2.each do |b|
         FacilitiesManagement::Buildings.delete b.id
@@ -696,7 +695,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       supplier_name = 'Hirthe-Mills'.to_sym
       expect(report_results[supplier_name][report_results[supplier_name].keys.third].count).to eq 22
 
-      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
+      cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card, cafm_help_used
 
       IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
 
@@ -712,6 +712,40 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       spreadsheet = spreadsheet_builder.build
       # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
       IO.write('/tmp/deliverable_matrix.xlsx', spreadsheet.to_stream.read)
+    end
+    # rubocop:enable RSpec/ExampleLength
+
+    # rubocop:disable RSpec/ExampleLength
+    it 'verify cafm and help in Contract Rate Card' do
+      user_email = 'test@example.com'
+      start_date = DateTime.now.utc
+
+      report = described_class.new(start_date, user_email, data)
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
+
+      results = {}
+      report_results = {}
+      supplier_names = rate_card.data[:Prices].keys
+      supplier_names.each do |supplier_name|
+        report_results[supplier_name] = {}
+        # e.g. dummy supplier_name = 'Hickle-Schinner'
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        results[supplier_name] = report.direct_award_value
+      end
+
+      supplier_name = 'Hirthe-Mills'.to_sym
+      cafm_help_used = { isCafmUsed: true, isHelpUsed: true }
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card, cafm_help_used
+
+      IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
+
+      # check CAFM,Help are added to table 2 in contract Rate Card worksheet, direct_award_prices.xlsx
+      wb = Roo::Excelx.new('/tmp/direct_award_prices.xlsx')
+      expect(wb.sheet('Contract Rate Card').row(37)[0]).to eq 'CAFM System'
+      expect(wb.sheet('Contract Rate Card').row(37)[2]).to eq 0.005
+      expect(wb.sheet('Contract Rate Card').row(38)[0]).to eq 'Helpdesk Services'
     end
     # rubocop:enable RSpec/ExampleLength
   end
