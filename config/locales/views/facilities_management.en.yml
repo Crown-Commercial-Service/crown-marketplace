@@ -426,6 +426,14 @@ en:
           delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
           detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
           detailed_search_summary_title: Detailed search summary
+        contract_details:
+          contract_details_description: Please provide further information that will help us put your contract together.
+          payment_method: Payment method
+          invoicing_contact_details: Invoicing contact details
+          authorised_representative: Authorised representative
+          notices_contact_details: Notices contact details
+          Security_policy: Security policy
+          local_government_pension_scheme: Local Government Pension Scheme
         edit:
           back_to_detailed_summary: Back to detailed search summary
           building_services:
