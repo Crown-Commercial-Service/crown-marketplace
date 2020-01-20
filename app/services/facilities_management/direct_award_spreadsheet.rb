@@ -1,8 +1,9 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(supplier_name, data, rate_card)
+  def initialize(supplier_name, data, rate_card, cafm_help_used = {})
     @supplier_name = supplier_name
     @data = data
     @rate_card_data = rate_card.data
+    @cafm_help_used = cafm_help_used
     create_spreadsheet
   end
 
@@ -119,10 +120,16 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
         sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
 
+        add_table2_cafm_help_rows sheet, standard_column_style, percentage_style
       end
     end
   end
   # rubocop:enable Metrics/AbcSize
+
+  def add_table2_cafm_help_rows(sheet, standard_column_style, percentage_style)
+    sheet.add_row ['CAFM System', 'Percentage of Year 1 Deliverables Value (excluding Management and Corporate Overhead, and Profit) at call-off.', @rate_card_data[:Prices][@supplier_name.to_sym][:'M.1'][:'General office - Customer Facing']], style: [standard_column_style, standard_column_style, percentage_style] if @cafm_help_used[:isCafmUsed]
+    sheet.add_row ['Helpdesk Services', 'Percentage of Year 1 Deliverables Value (excluding Management and Corporate Overhead, and Profit) at call-off.', @rate_card_data[:Prices][@supplier_name.to_sym][:'N.1'][:'General office - Customer Facing']], style: [standard_column_style, standard_column_style, percentage_style] if @cafm_help_used[:isHelpUsed]
+  end
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/BlockLength
