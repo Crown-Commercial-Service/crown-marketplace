@@ -22,19 +22,7 @@ module FacilitiesManagement
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search? && !@delete
 
-        view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).view
-        build_page_details(view_name.to_sym)
-
-        case view_name
-        when 'results'
-          set_results_page_data
-          @procurement[:route_to_market] = @procurement.aasm_state
-        else
-          @page_data = {}
-          @page_data[:model_object] = @procurement
-        end
-
-        render view_name
+        @view_name = set_view_data unless @procurement.quick_search?
       end
 
       def new
@@ -99,6 +87,22 @@ module FacilitiesManagement
       end
 
       private
+
+      def set_view_data
+        view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).view
+        build_page_details(view_name.to_sym)
+
+        case view_name
+        when 'results'
+          set_results_page_data
+          @procurement[:route_to_market] = @procurement.aasm_state
+        else
+          @page_data = {}
+          @page_data[:model_object] = @procurement
+        end
+
+        view_name
+      end
 
       def update_procurement
         assign_procurement_parameters
