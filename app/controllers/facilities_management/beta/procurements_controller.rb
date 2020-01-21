@@ -96,6 +96,8 @@ module FacilitiesManagement
         when 'results'
           set_results_page_data
           @procurement[:route_to_market] = @procurement.aasm_state
+        when 'direct_award'
+          set_da_buyer_page_data
         else
           @page_data = {}
           @page_data[:model_object] = @procurement
@@ -201,6 +203,13 @@ module FacilitiesManagement
         @page_data[:buildings] = @active_procurement_buildings.map { |b| b[:name] }
         @page_data[:services] = @procurement.procurement_building_services.map { |s| s[:name] }
         @page_data[:supplier_prices] = @procurement.procurement_suppliers.map(&:direct_award_value)
+      end
+
+      def set_da_buyer_page_data
+        @page_data = {}
+        @page_data[:model_object] = @procurement
+        @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map{ |i| {price: i[:direct_award_value], name: i.supplier['data']['supplier_name']} }.sort_by { |ii| ii[:price] }
       end
 
       def procurement_route_params
@@ -365,13 +374,11 @@ module FacilitiesManagement
             page_title: 'Results',
             primary_name: 'set_route_to_market'
           },
-          direct_award_pricing: {
-            caption1: @procurement[:name],
+          direct_award: {
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement)
           },
           further_competition: {
-            caption1: @procurement[:name],
             page_title: 'Further competition',
             back_url: facilities_management_beta_procurement_results_path(@procurement)
           },
