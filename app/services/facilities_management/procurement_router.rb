@@ -5,42 +5,17 @@ class FacilitiesManagement::ProcurementRouter
 
   STEPS = %w[security_policy_document contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
 
-  def initialize(id:, procurement_state:, step: nil, da_journey_state: nil)
+  def initialize(id:, procurement_state:, step: nil)
     @id = id
     @procurement_state = procurement_state
-    @da_journey_state = da_journey_state
     @step = step
   end
 
   STATES_TO_VIEWS = {
     'results': 'results',
-    'da_draft': 'direct_award',
+    'DA_draft': 'direct_award',
     'further_competition': 'further_competition'
   }.freeze
-
-  DA_JOURNEY_STATES_TO_VIEWS = {
-    'pricing': 'pricing',
-    'what_next': 'what_next',
-    'important_information': 'did_you_know',
-    'contract_details': 'contract_details',
-    'review_and_generate': 'review_and_generate',
-    'review': 'review_your_contract',
-    'sending': 'sending_the_contract',
-    'sent_awaiting_response': 'sent_awaiting_response',
-    'sent_offer_awaiting_response': 'sent_offer_awaiting_response',
-    'withdraw': 'withdraw',
-    'accept': 'accept',
-    'accepted_signed': 'accepted_signed',
-    'accepted_not_signed': 'accepted_not_signed',
-    'declined': 'declined',
-    'no_response': 'no_response',
-    'confirm_signed': 'confirmed_signed',
-    'closed': 'closed'
-  }.freeze
-
-  def da_journey_view
-    DA_JOURNEY_STATES_TO_VIEWS[@da_journey_state.to_sym][@step] if DA_JOURNEY_STATES_TO_VIEWS.key?(@da_journey_state.to_sym) && !@step.nil?
-  end
 
   def view
     return STATES_TO_VIEWS[@procurement_state.to_sym] if STATES_TO_VIEWS.key?(@procurement_state.to_sym)

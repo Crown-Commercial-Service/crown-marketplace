@@ -398,42 +398,15 @@ en:
         about_the_contract:
           no_cost_provided: None
         da_buyer:
-          contract_details:
-            authorised_representative: Authorised representative
-            contract_details_description: Please provide further information that will help us put your contract together.
-            invoicing_contact_details: Invoicing contact details
-            local_government_pension_scheme: Local Government Pension Scheme
-            notices_contact_details: Notices contact details
-            payment_details: Payment Details
-            security_policy_document: Security Policy Document
           pricing:
-            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
+            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
             lowest_price_supplier: lowest priced supplier
-            pricing_header: Here are the contract prices by supplier shown in ascending order.
+            pricing_header: Here are the contract prices by supplier shown in ascending order
             pricing_warning_html: You are only shown the name of the <strong>lowest price supplier</strong>, as they can offer the best price for your requirements.
-        dashboard_tables:
-          closed:
-            no_closed: You do not have any closed contracts
-          contracts:
-            no_live: You do not have any live contracts
-          in_draft:
-            no_drafts: You do not have any offers in the draft
-          searches:
-            no_searches: You do not have any searches
-          sent_offers:
-            no_sent: You do not have any sent offers
         detailed_search_summary:
           delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
           detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
           detailed_search_summary_title: Detailed search summary
-        contract_details:
-          contract_details_description: Please provide further information that will help us put your contract together.
-          payment_method: Payment method
-          invoicing_contact_details: Invoicing contact details
-          authorised_representative: Authorised representative
-          notices_contact_details: Notices contact details
-          Security_policy: Security policy
-          local_government_pension_scheme: Local Government Pension Scheme
         edit:
           back_to_detailed_summary: Back to detailed search summary
           building_services:
@@ -506,14 +479,7 @@ en:
           region: Region
           service: Service
         index:
-          closed_title: Closed
-          contracts_title: Contracts
-          direct_award_title: Direct award
-          in-draft-title: In draft
           manage_procurements: Procurements dashboard
-          searches_title: Searches
-          sent_offers: Sent offers
-          start_new_search: Start a new search
         new:
           cancel_text: Cancel, and return to the procurements dashboard
           save_for_later: Save for later
@@ -664,6 +630,15 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
+        show:
+          contract_details:
+            Security_policy: Security policy
+            authorised_representative: Authorised representative
+            contract_details_description: Please provide further information that will help us put your contract together.
+            invoicing_contact_details: Invoicing contact details
+            local_government_pension_scheme: Local Government Pension Scheme
+            notices_contact_details: Notices contact details
+            payment_method: Payment method
       sessions:
         new:
           email_address: Email address
