@@ -57,10 +57,10 @@ $(function () {
 
     const displaySelectedAddress = function (address) {
         var buildAddress = "";
-        buildAddress += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1'] + ',' : '';
-        buildAddress += (address['fm-address-line-2'].length > 0) ? address['fm-address-line-2'] + ',' : '';
-        buildAddress += (address['fm-address-town'].length > 0) ? address['fm-address-town'] + ',' : '';
-        buildAddress += (address['fm-address-county'].length > 0) ? address['fm-address-county'] : '';
+        buildAddress += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1'] + ',' : "";
+        buildAddress += (address['fm-address-line-2'].length > 0) ? address['fm-address-line-2'] + ',' : "";
+        buildAddress += (address['fm-address-town'].length > 0) ? address['fm-address-town'] + ',' : "";
+        buildAddress += (address['fm-address-county'].length > 0) ? address['fm-address-county'] : "";
 
         var buildingAddressUpdated = buildAddress;
         $('#fm-building-postcode').html(address['fm-address-postcode']);
