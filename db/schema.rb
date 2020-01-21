@@ -459,7 +459,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_102051) do
     t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
   end
-  
+
   create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "filename", limit: 255
     t.integer "size"
