@@ -124,9 +124,9 @@ ActiveRecord::Schema.define(version: 2020_01_21_102051) do
     t.money "assessed_value", scale: 2
     t.boolean "eligible_for_da"
     t.datetime "date_offer_sent"
+    t.date "contract_start_date"
     t.date "closed_contract_date"
     t.boolean "is_contract_closed"
-    t.date "contract_start_date"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
