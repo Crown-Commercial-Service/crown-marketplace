@@ -37,6 +37,13 @@ module FacilitiesManagement
       state :results
       state :da_draft
       state :further_competition
+      state :awaiting_supplier_response
+      state :supplier_declined
+      state :no_supplier_response
+      state :awaiting_contract_signature
+      state :accepted_not_signed
+      state :accepted_and_signed
+      state :withdrawn
 
       event :set_state_to_results do
         transitions to: :results

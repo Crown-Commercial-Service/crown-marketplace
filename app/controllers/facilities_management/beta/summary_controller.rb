@@ -21,14 +21,16 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def sorted_suppliers
         init
 
-        build_direct_award_report params[:'download-spreadsheet'] == 'yes'
+        cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
+        build_direct_award_report(params[:'download-spreadsheet'] == 'yes', cafm_help_used)
 
         return if params[:'download-spreadsheet'] != 'yes'
 
-        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card
+        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, cafm_help_used
 
         uvals = []
         buildings_ids = []
@@ -59,14 +61,15 @@ module FacilitiesManagement
         ### render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
         download_report 'fm_spreadsheets', [['direct_award_prices', spreadsheet1], ['deliverable_matrix', spreadsheet_builder]]
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 
       # rubocop:disable Metrics/AbcSize
-      def build_direct_award_report(cache__calculation_values_for_spreadsheet_flag)
+      def build_direct_award_report(cache__calculation_values_for_spreadsheet_flag, cafm_help_used = {})
         user_email = current_user.email.to_s
 
-        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
+        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement, cafm_help_used)
 
         # @procurement.procurement_buildings.first.procurement_building_services
         if @procurement
