@@ -89,12 +89,12 @@ module FacilitiesManagement::Beta::ProcurementsHelper
     t('common.complete')
   end
 
-  PROCUREMENT_STATE = { DA_draft: 'DA draft',
+  PROCUREMENT_STATE = { da_draft: 'DA draft',
                         further_competition: 'Further competition',
                         results: 'Results',
                         quick_search: 'Quick search',
                         detailed_search: 'Detailed search',
-                        awaiting_supplier_response: 'Awaing supplier response',
+                        awaiting_supplier_response: 'Awaiting supplier response',
                         supplier_declined: 'Supplier declined',
                         no_supplier_response: 'No supplier response',
                         awaiting_contract_signature: 'Awaiting contract signature',
