@@ -15,14 +15,7 @@
       <%= link_to_service_start_page %>
     <% end %>
 
-    <% if not_permitted_page && !request.referrer.blank? %>
-      <% if request.referer.include?("supplier/sign-in")%>
-        <%= render 'facilities_management/beta/supplier/link_to_start_page' %>
-      <% elsif request.referer.include?("facilities-management/beta/sign-in")%>
-        <span class="govuk-heading-m fm-buyer-account-heading"><%= t('home.index.facilities_management_link') %></span>
-        <% links_needed = true %>
-      <% end %>
-    <%end%>
+    <%= not_permitted_page_header_link if not_permitted_page && !request.referrer.blank? %>
     
     <button type="button" role="button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
     <nav>
@@ -48,14 +41,7 @@
           </li>
         <% end %>
 
-        <% if links_needed %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to 'My dashboard', facilities_management_beta_supplier_supplier_account_dashboard_path, class: 'govuk-header__link'  if user_signed_in?%>
-          </li>
-          <li class="govuk-header__navigation-item">
-            <%= link_to 'Sign out', service_destroy_user_session_path, method: :delete, class: 'govuk-header__link ccs-header__signout' %>
-          </li>
-        <% end %>
+        <%= navigation_link_suppluer_and_buyer() if not_permitted_page && !request.referrer.blank?%>
       </ul>
     </nav>
   </div>
