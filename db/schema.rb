@@ -10,15 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2020_01_20_153957) do
-=======
 ActiveRecord::Schema.define(version: 2020_01_21_102051) do
->>>>>>> added changes requested and view now renders fully
-=======
-ActiveRecord::Schema.define(version: 2020_01_21_102051) do
->>>>>>> 73ed7b4eeef48f020f77ce3502af83719b581856
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -131,9 +123,9 @@ ActiveRecord::Schema.define(version: 2020_01_21_102051) do
     t.money "assessed_value", scale: 2
     t.boolean "eligible_for_da"
     t.datetime "date_offer_sent"
+    t.date "contract_start_date"
     t.date "closed_contract_date"
     t.boolean "is_contract_closed"
-    t.date "contract_start_date"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
