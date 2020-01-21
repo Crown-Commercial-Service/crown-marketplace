@@ -38,7 +38,6 @@ class FacilitiesManagement::ServicesAndQuestions
       service_hours: %i[service_hours].freeze }
   end
 
-  # rubocop:disable Metrics/MethodLength
   def gather_services
     service_hours_questions = @context_questions[:service_hours]
     cleaning_questions = @context_questions[:cleaning_standards]
@@ -79,19 +78,6 @@ class FacilitiesManagement::ServicesAndQuestions
      { code: 'C.12', context: { ppm_standards: ppm_questions }, questions: ppm_questions },
      { code: 'C.13', context: { ppm_standards: ppm_questions }, questions: ppm_questions },
      { code: 'C.14', context: { ppm_standards: ppm_questions }, questions: ppm_questions },
-     { code: 'G.4', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.2', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.6', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.7', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.8', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.9', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.10', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.11', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.12', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.13', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.14', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.15', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
-     { code: 'G.16', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions }].freeze
+     { code: 'G.4', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions }].freeze
   end
-  # rubocop:enable Metrics/MethodLength
 end
