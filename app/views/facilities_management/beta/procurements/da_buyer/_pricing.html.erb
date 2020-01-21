@@ -1,12 +1,6 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
-  <h1 class="govuk-!-width-two-thirds govuk-body">
-    <% if @page_data[:sorted_supplier_list].count > 1 %>
-      <%= "There are <b>#{@page_data[:sorted_supplier_list].count} suppliers </b>".html_safe %>
-      <%= t('.supplier_description_plural') %>
-    <% else %>
-      <%= "There is <b>#{@page_data[:sorted_supplier_list].count} supplier </b>".html_safe %>
-      <%= t('.supplier_description_singular') %>
-    <% end %>
+  <h1 class="govuk-!-width-two-thirds govuk-heading govuk-heading-l">
+    <%= t('.pricing_header') %>
   </h1>
   <blockquote class="cmp-inset-text cmp-inset-text--neutral govuk-!-width-two-thirds govuk-!-font-size-27 govuk-heading-l">
     <span><%= @page_data[:sorted_supplier_list].first[:name] %></span>
@@ -14,6 +8,9 @@
     <span class="govuk-!-font-size-19"><%= t('.lowest_price_supplier') %> </span>
   </blockquote>
 
+  <p class="govuk-body govuk-!-width-two-thirds">
+    <%= t('.pricing_warning_html') %>
+  </p>
   <dl class="govuk-summary-list govuk-!-width-two-thirds">
     <hr class="govuk-section-break govuk-section-break--visible">
     <% @page_data[:sorted_supplier_list][1..-1].each_with_index do |s, i| %>

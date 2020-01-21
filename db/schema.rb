@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_102051) do
+ActiveRecord::Schema.define(version: 2020_01_21_135030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -124,8 +124,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_102051) do
     t.boolean "eligible_for_da"
     t.datetime "date_offer_sent"
     t.date "contract_start_date"
-    t.date "closed_contract_date"
-    t.boolean "is_contract_closed", default: false
+    t.string "da_journey_state"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
