@@ -18,9 +18,9 @@ $(function () {
         let county = $('#fm-bm-address-county').val();
         let postcode = $('#fm-bm-address-postcode').val();
         let region = (typeof $("#fm-bm-region-dropdown").val() !== "undefined")? $("#fm-bm-region-dropdown").val():"";
-        let errorMsg = '';
+        let errorMsg = "";
         let isValid = true;
-        let elemID = '';
+        let elemID = "";
 
         clearErrors();
 
@@ -47,7 +47,7 @@ $(function () {
         if ((address_line_one + address_line_two).length === 0) {
             errorMsg = 'Building and street name must be 100 characters or less';
             isValid = false;
-            elemID = 'fm-bm-address-line-1';
+            elemID = "fm-bm-address-line-1";
         }
 
         if (isValid === false) {
@@ -62,22 +62,22 @@ $(function () {
 
         $.get(encodeURI("/api/v1/find-region-postcode/" + postCode))
             .done(function (data) {
-                $('#fm-bm-region-dropdown').remove();
+                $("#fm-bm-region-dropdown").remove();
                 if (data && data.result) {
                     let regions = data.result;
                     var select_dropdown = '<select id="fm-bm-region-dropdown" class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0"></select>';
-                    $('#fm-bm-address-region-display').html(select_dropdown);
+                    $("#fm-bm-address-region-display").html(select_dropdown);
                     var region_text = (data.result.length > 1) ? " Region's found" : " Region found";
                     select_dropdown_default_text = '<option value="">' + data.result.length + region_text + '</option>';
-                    $('#fm-bm-region-dropdown').append(select_dropdown_default_text);
+                    $("#fm-bm-region-dropdown").append(select_dropdown_default_text);
 
                     for (let x = 0; x < regions.length; x++) {
                         let region_obj = regions[x];
                         select_dropdown_options = '<option value="' + region_obj.region + '">' + region_obj.region + '</option>';
-                        $('#fm-bm-region-dropdown').append(select_dropdown_options);
+                        $("#fm-bm-region-dropdown").append(select_dropdown_options);
                     }
-                    $('#fm-bm-address-region-display').show();
-                    $('.fm-bm-region-txt').show();
+                    $("#fm-bm-address-region-display").show();
+                    $("".fm-bm-region-txt").show();
 
                 }
 
