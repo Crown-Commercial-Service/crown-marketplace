@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-      <% @closed_contract.each do |closed_contract| %>
+      <% @closed_contracts.each do |closed_contract| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
             <%= link_to closed_contract.name, facilities_management_beta_procurement_path(closed_contract) %>
