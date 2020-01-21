@@ -458,16 +458,6 @@ ActiveRecord::Schema.define(version: 2020_01_20_153957) do
     t.index ["postcode"], name: "idx_postcode"
   end
 
-  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "filename", limit: 255
-    t.integer "size"
-    t.string "etag", limit: 255
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
-  end
-
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "postcode", limit: 255
     t.string "code", limit: 255
