@@ -13,7 +13,7 @@ class FacilitiesManagement::ProcurementRouter
 
   STATES_TO_VIEWS = {
     'results': 'results',
-    'DA_draft': 'direct_award_pricing',
+    'DA_draft': 'direct_award',
     'further_competition': 'further_competition'
   }.freeze
 
