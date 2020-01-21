@@ -25,7 +25,7 @@ module FacilitiesManagement
 
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
-    validates :route_to_market, inclusion: { in: %w[direct_award further_competition] }, on: :route_to_market
+    validates :route_to_market, inclusion: { in: %w[DA_draft further_competition] }, on: :route_to_market
 
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
@@ -34,15 +34,24 @@ module FacilitiesManagement
     aasm do
       state :quick_search, initial: true
       state :detailed_search
-      state :direct_award
+      state :results
+      state :DA_draft
       state :further_competition
+
+      event :set_state_to_results do
+        transitions to: :results
+      end
+
+      event :set_state_to_detailed_search do
+        transitions to: :detailed_search
+      end
 
       event :start_detailed_search do
         transitions from: :quick_search, to: :detailed_search
       end
 
       event :start_direct_award do
-        transitions to: :direct_award
+        transitions to: :DA_draft
       end
 
       event :start_further_competition do
@@ -93,11 +102,12 @@ module FacilitiesManagement
     end
 
     def priced_at_framework
-      # [procurement_building_services.map(&:code) - CCS::FM::Service.direct_award_services].none?
-      # this is not the right list, still need to import this data
-      # for now this always returns true
-      true
+      # if one service is not priced at framework, returns false
+      !procurement_building_services.map { |pbs| CCS::FM::Rate.priced_at_framework(pbs.code, pbs.service_standard) }.include?(false)
     end
+
+    SEARCH = %i[further_competition results quick_search detailed_search].freeze
+    SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
 
     private
 

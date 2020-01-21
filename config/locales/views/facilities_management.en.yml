@@ -41,7 +41,7 @@ en:
               invalid: Select not required if you don't need the service on Wednesday
               not_a_date: Enter a real start time or end time for Wednesday
         user:
-          incorrect_username_or_password: Incorrect username or password
+          incorrect_username_or_password: You must provide a correct username or password
   activerecord:
     errors:
       models:
@@ -397,6 +397,10 @@ en:
       procurements:
         about_the_contract:
           no_cost_provided: None
+        detailed_search_summary:
+          delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
+          detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
+          detailed_search_summary_title: Detailed search summary
         edit:
           back_to_detailed_summary: Back to detailed search summary
           building_services:
@@ -620,14 +624,52 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
-        show:
-          delete_message: Are you sure you want to delete this search result?  This action cannot be un-done.
       sessions:
         new:
           email_address: Email address
           email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
           forgotten_password_html: I've forgotten my password
           password: Password
+      supplier:
+        passwords:
+          edit:
+            confirm_code: Confirm Code
+            confirm_new_password: Confirm new password
+            heading: Reset your password
+            lead: Reset password for
+            new_password: New password
+            password: Your password must have
+          forgot_password_confirmation:
+            heading: A reset email has been sent
+            lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+            text01: If you don't receive this, email
+            text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+          new:
+            email: Email address
+            email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+            heading: Reset password
+            lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+          password_reset_success:
+            heading: You have successfully changed your password
+            lead: You can now sign in to your Crown Commercial Service account
+        sessions:
+          new:
+            email_address: Email address
+            email_hint_html: Enter the email address you used to register
+            forgotten_password_html: I've forgotten my password
+            password: Password
+        users:
+          new_password_required:
+            confirm_your_password: Confirm your password
+            create_your_password: Create a password you'll remember
+            heading: Change your password
+            intro: This is the first time you've signed in to your account. You need to reset your password.
+          sms_mfa:
+            access_code: Access code
+            content: It may take a few minutes to arrive.
+            heading: Enter your access code
+            lead: 'We just sent a 6 digit access code by text to:'
+            resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
       users:
         new_password_required:
           confirm_your_password: Confirm your password

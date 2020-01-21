@@ -1,0 +1,26 @@
+<h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+    Buyer contact details
+</h1>
+<div class="govuk-!-width-full govuk-!-font-size-19">
+    <dl class="govuk-summary-list govuk-body">
+        <table class="govuk-table govuk-!-margin-bottom-6">
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-width-one-third"></td>
+                    <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-width-two-thirds"></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__cell govuk-table__header"><%= @page_data[:procurement_data][:buyer] %></th>
+                    <td class="govuk-table__cell">
+                        <%= govuk_details('Contact details') do %>
+                            <%= "Name: #{@page_data[:buyer_details][:title]} #{@page_data[:buyer_details][:full_name]}"%> <br>
+                            <%= "Telephone: #{@page_data[:buyer_details][:telephone]}"%> <br>
+                            <%= mail_to @page_data[:buyer_details][:email], @page_data[:buyer_details][:email], class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+                            <%= "Address: #{[@page_data[:buyer_details][:building_name], @page_data[:buyer_details][:street_name], @page_data[:buyer_details][:city], @page_data[:buyer_details][:county], @page_data[:buyer_details][:postcode]].reject(&:empty?).join(', ')}"%> 
+                        <% end %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </dl>
+</div>

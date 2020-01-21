@@ -617,8 +617,29 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # report.workout_current_lot
     # p report.assessed_value
-    # assessed_value.round == GBP 8,171,866.21
-    expect(report.assessed_value.round(2)).to be 8733916.62
+    # assessed_value.round == GBP 8,509,504.71
+    expect(report.assessed_value.round(2)).to be 8509504.71
+  end
+
+  it 'creates summary report for buildings for N.1' do
+    dummy_supplier_name = 'Hickle-Schinner'
+    cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
+    report_help = described_class.new(start_date, 'test@example.com', data, nil, cafm_help_used)
+    expect(report_help.cafm_help_used).to include(isCafmUsed: false, isHelpUsed: false)
+
+    u = uvals.select { |s| s['service_code'] == 'N.1' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+    report_help.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    expect(report_help.cafm_help_used).to include(isCafmUsed: false, isHelpUsed: true)
+  end
+
+  it 'creates summary report for buildings for M1' do
+    dummy_supplier_name = 'Hickle-Schinner'
+    cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
+    report_cafm = described_class.new(start_date, 'test@example.com', data, nil, cafm_help_used)
+
+    u = uvals.select { |s| s['service_code'] == 'M.1' && s[:building_id] == '5D0901B0-E8C1-C6A7-191D-4710C4514EE1' }
+    report_cafm.calculate_services_for_buildings buildings, u, rates, rate_card, dummy_supplier_name
+    expect(report_cafm.cafm_help_used).to include(isCafmUsed: true, isHelpUsed: false)
   end
 
   it 'price individual services E.4' do
@@ -828,7 +849,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     cafm_flag = 'Y'
     helpdesk_flag = 'Y'
 
-    services = ['C1', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C2', 'C20', 'C21', 'C22', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7', 'E8', 'E9', 'F1', 'F10', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'G1', 'G10', 'G11', 'G12', 'G13', 'G14', 'G15', 'G16', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'H1', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'I1', 'I2', 'I3', 'I4', 'J1', 'J10', 'J11', 'J12', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'L1', 'L10', 'L11', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'M1', 'N1', 'O1', 'M5', 'M136', 'N138', 'M140', 'M141', 'M142', 'M144', 'M148', 'M146']
+    services = ['C1', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C2', 'C20', 'C21', 'C22', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7', 'E8', 'E9', 'F1', 'F10', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'G1', 'G10', 'G11', 'G12', 'G13', 'G14', 'G15', 'G16', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'H1', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'I1', 'I2', 'I3', 'I4', 'J1', 'J10', 'J11', 'J12', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'L1', 'L10', 'L11', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'M1', 'N1', 'O1', 'B1', 'M136', 'N138', 'M140', 'M141', 'M142', 'M144', 'M148', 'M146']
 
     services.each do |code|
       calc_fm = FMCalculator::Calculator.new(contract_length_years, code, uom_value, occupants,
@@ -838,8 +859,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       sum_benchmark += calc_fm.benchmarkedcostssum
     end
 
-    expect(sum_uom.round(2)).to be 1057001.99
-    expect(sum_benchmark.round(2)).to be 949771.07
+    expect(sum_uom.round(2)).to be 939817.98
+    expect(sum_benchmark.round(2)).to be 925409.13
   end
   # rubocop:enable RSpec/ExampleLength
 end

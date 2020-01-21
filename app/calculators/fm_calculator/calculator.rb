@@ -53,7 +53,7 @@ module FMCalculator
       if @supplier_name && @rate_card_discounts[@service_ref_sym]
         (1 - @rate_card_discounts[@service_ref_sym][:'Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref_sym][@building_type].to_f
       else
-        @uom_vol * @framework_rates[@service_ref.gsub('.', '')].to_f
+        @uom_vol * framework_rate_for(@service_ref.gsub('.', '')).to_f
       end
     rescue StandardError => e
       raise e
@@ -113,7 +113,7 @@ module FMCalculator
       if @supplier_name
         subtotal3 * @rate_card_variances[:'Mobilisation Cost (DA %)'].to_f
       else
-        subtotal3 * @framework_rates['M5']
+        subtotal3 * @framework_rates['B1']
       end
     end
 
@@ -173,7 +173,7 @@ module FMCalculator
 
     # benchmarked costs start = benchmark rates * unit of mesasure volume
     def benchmarkedcosts
-      benchmark_rate = @benchmark_rates[@service_ref.gsub('.', '')].to_f
+      benchmark_rate = benchmark_rate_for(@service_ref.gsub('.', '')).to_f
       benchmark_rate * @uom_vol
     end
 
@@ -211,7 +211,7 @@ module FMCalculator
 
     # benchmark mobilisation costs
     def benchmobilisation(benchsubtotal3)
-      benchsubtotal3 * @framework_rates['M5']
+      benchsubtotal3 * @framework_rates['B1']
     end
 
     # benchmark tupe costs if flag set
@@ -287,6 +287,16 @@ module FMCalculator
 
       benchyear1totalcharges = benchyear1total + benchprofit(benchyear1)
       benchyear1totalcharges + benchsubyearstotal(benchyear1totalcharges, bench_mobilisation)
+    end
+
+    protected
+
+    def framework_rate_for(service_ref)
+      @framework_rates[service_ref] || @framework_rates["#{service_ref}-A"]
+    end
+
+    def benchmark_rate_for(service_ref)
+      @benchmark_rates[service_ref] || @benchmark_rates["#{service_ref}-A"]
     end
   end
 end

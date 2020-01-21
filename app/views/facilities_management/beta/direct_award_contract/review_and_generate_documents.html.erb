@@ -1,0 +1,34 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, false) do |pd|  %>
+    <div class="govuk-body govuk-!-margin-left-0 govuk-!-padding-left-0 govuk-!-font-size-24 govuk-!-width-three-quarters">
+        Please review the full details of your requirements below in sections 1 and 2. If you wish to make any amendments, please use the change button relevant to that section. </br> Once you are satisfied that all the information is correct please use the generate documents button in section 3 to generate your call off documents. You will then be asked to review the generated contract and associated documents.
+    </div>
+    <%= render partial: 'facilities_management/beta/direct_award_contract/da_procurement_requirements' %>
+    
+    <button class="govuk-button govuk-button--warning" data-module="govuk-button">
+        Change requirements
+    </button>
+    
+    <%= render partial: 'facilities_management/beta/direct_award_contract/da_contract_details' %>
+
+    <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+        Change contract details
+    </button>
+    
+    <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+    3. Generate your direct award documents
+    </h1>
+    <span class="govuk-hint">
+    Click the 'Generate documents' button below to proceed and create all the documents that will form your direct award call-off contract.
+    </span>
+    <div>
+    <button class="govuk-button govuk-button--primary govuk-!-margin-right-5" data-module="govuk-button">
+        Generate documents
+    </button>
+    <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+        Return to results
+    </button>
+    </div>
+    <a href="#" class="govuk-link govuk-!-font-size-19">Return to procurement dashboard</a>
+    
+    
+<% end %>

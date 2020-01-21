@@ -1,8 +1,9 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(supplier_name, data, rate_card)
+  def initialize(supplier_name, data, rate_card, cafm_help_used = {})
     @supplier_name = supplier_name
     @data = data
     @rate_card_data = rate_card.data
+    @cafm_help_used = cafm_help_used
     create_spreadsheet
   end
 
@@ -87,7 +88,9 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         @data.keys.collect { |k| @data[k].keys }
              .flatten.uniq
              .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-          labels = @data.keys.sort.collect { |k| @data[k][s][:spreadsheet_label] }
+          # I found :spreadsheet_label value is always nil,I did not want to alter code too much so left current code alone..
+          # if buildings have different services then I put in the ,if, check below otherwise an exception is generated
+          labels = @data.keys.sort.collect { |k| @data[k][s][:spreadsheet_label] if @data[k].key(s) }
 
           new_row = []
           CCS::FM::RateCard.building_types.each { |b| new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b] }
@@ -117,10 +120,16 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
         sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
 
+        add_table2_cafm_help_rows sheet, standard_column_style, percentage_style
       end
     end
   end
   # rubocop:enable Metrics/AbcSize
+
+  def add_table2_cafm_help_rows(sheet, standard_column_style, percentage_style)
+    sheet.add_row ['CAFM System', 'Percentage of Year 1 Deliverables Value (excluding Management and Corporate Overhead, and Profit) at call-off.', @rate_card_data[:Prices][@supplier_name.to_sym][:'M.1'][:'General office - Customer Facing']], style: [standard_column_style, standard_column_style, percentage_style] if @cafm_help_used[:isCafmUsed]
+    sheet.add_row ['Helpdesk Services', 'Percentage of Year 1 Deliverables Value (excluding Management and Corporate Overhead, and Profit) at call-off.', @rate_card_data[:Prices][@supplier_name.to_sym][:'N.1'][:'General office - Customer Facing']], style: [standard_column_style, standard_column_style, percentage_style] if @cafm_help_used[:isHelpUsed]
+  end
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/BlockLength
@@ -173,9 +182,20 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         new_row2 = []
         sum = 0
 
+        # this logic is to fix issue that the excel service prices were not allgned to the correct
+        # buildin column, so insert nil into cell if no service data to align.
+        prev_building_service_value = nil
         sorted_building_keys.each do |k|
+          if @data[k][s].nil?
+            if prev_building_service_value.nil?
+              new_row2 << nil
+            else
+              prev_building_service_value = nil
+            end
+          end
           next unless @data[k][s]
 
+          prev_building_service_value = @data[k][s][:subtotal1]
           new_row2 << @data[k][s][:subtotal1]
           sum += @data[k][s][:subtotal1]
           sum_building[k] += @data[k][s][:subtotal1]

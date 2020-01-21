@@ -8,15 +8,19 @@ module LayoutHelper
 
   # Value Objects (Classes) to structure data for parameters to helper methods
   class NavigationDetail
-    attr_accessor(:primary_text, :return_url, :return_text, :secondary_url, :secondary_text)
+    attr_accessor(:primary_text, :primary_name, :return_url, :return_text, :secondary_url, :secondary_text, :secondary_name)
 
-    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text)
+    # rubocop:disable Metrics/ParameterLists
+    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text, primary_name = '', secondary_name = '')
       @primary_text = primary_text
+      @primary_name = primary_name
       @return_url = return_url
       @return_text = return_text
       @secondary_url = secondary_url
       @secondary_text = secondary_text
+      @secondary_name = secondary_name
     end
+    # rubocop:enable Metrics/ParameterLists
   end
 
   class BackButtonDetail
@@ -95,12 +99,13 @@ module LayoutHelper
             aria: { label: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label },
             class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6')
   end
-
   # rubocop:enable Rails/OutputSafety
+
+  # rubocop:disable Metrics/AbcSize
   def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true)
-    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'commit') if primary_button
-    buttons = form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') unless primary_button
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') if secondary_button
+    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
+    buttons = form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) unless primary_button
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
     buttons << capture { tag.br }
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
 
@@ -108,6 +113,7 @@ module LayoutHelper
       buttons
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def govuk_page_error_summary(model_object)
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
@@ -232,7 +238,7 @@ module LayoutHelper
   end
 
   def govuk_details(summary_text, &block)
-    content_tag :details, class: 'govuk-details govuk-!-width-two-thirds govuk-!-margin-bottom-6', data: { module: 'govuk-details' } do
+    content_tag :details, class: 'govuk-details', data: { module: 'govuk-details' } do
       capture do
         concat(content_tag(:summary, content_tag(:span, summary_text, class: 'govuk-details__summary-text'), class: 'govuk-details__summary'))
         concat(content_tag(:div, class: 'govuk-details__text', &block))

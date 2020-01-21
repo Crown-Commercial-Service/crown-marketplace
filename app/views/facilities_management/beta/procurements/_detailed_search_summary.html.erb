@@ -1,0 +1,52 @@
+<% if @delete %>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      <%= t('.delete_message') %>
+    </strong>
+  </div>
+<% end %>
+<% if @building_count.zero? %>
+  <%= render partial: 'no_buildings' %>
+<% else %>
+  <div class="govuk-body">
+    <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+    <%= render('facilities_management/beta/procurements/errors_on_show', procurement: @procurement) %>
+    <% if params[:template] == 'review-contract' %>
+      <%= render('review_contract') %>
+    <% else %>
+      <span class="govuk-caption-m"><%= @procurement.name %></span>
+      <h1 class="govuk-heading-xl"><%= t('.detailed_search_summary_title') %></h1>
+      <p>
+        <%=t('.detailed_search_description') %>
+      </p>
+      <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: {novalidate: true, multipart: true} do |f| %>
+        <dl class="govuk-summary-list">
+          <%= render('about_the_contract') %>
+        </dl>
+        <dl class="govuk-summary-list">
+          <table class="govuk-table">
+            <% if @procurement.errors[:initial_call_off_period].any? %>
+              <tbody class="govuk-table__body <%= 'govuk-form-group--error' if @procurement.unanswered_contract_date_questions? %>">
+              <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_period_section' %>
+              <%= render partial: 'facilities_management/beta/procurements/contract_period/mobilisation_section' %>
+              <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_extension_section' %>
+              </tbody>
+            <% else %>
+              <tbody class="govuk-table__body">
+              <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_period_section' %>
+              <%= render partial: 'facilities_management/beta/procurements/contract_period/mobilisation_section' %>
+              <%= render partial: 'facilities_management/beta/procurements/contract_period/contract_extension_section' %>
+              </tbody>
+            <% end %>
+          </table>
+        </dl>
+        <dl class="govuk-summary-list">
+          <%= render 'about_the_work', procurement: @procurement %>
+        </dl>
+        <%= render partial: 'continue_button_footer', locals: {f: f} %>
+      <%end %>
+    <% end %>
+  </div>
+<% end %>

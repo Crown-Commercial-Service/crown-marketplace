@@ -1,0 +1,30 @@
+<table class="govuk-table">
+  <% if !@sent_offers.empty? %>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="25%">Contract name</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="20%">Supplier</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="15%">Sent</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="20%">Stage</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="20%"></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @sent_offers.each do |sent_offer| %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
+            <%= link_to sent_offer.name, facilities_management_beta_procurement_path(sent_offer) %>
+          </th>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= sent_offer.procurement_suppliers.first.supplier.data['supplier_name'] %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date_time(sent_offer.date_offer_sent.in_time_zone('London')) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= procurement_state(sent_offer.aasm_state) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><strong class="govuk-tag <%= 'govuk-visually-hidden' if sent_offer.aasm_state.to_sym == :awaiting_supplier_response %>"> ACTION REQUIRED  </strong></td>
+        </tr>
+      <% end %>
+  </tbody>
+    <% else %>
+        <hr class="govuk-section-break govuk-section-break--visible">
+                <span class="govuk-hint govuk-!-margin-top-3"> You do not have any sent offers </span>
+        <hr class="govuk-section-break govuk-section-break--visible">
+    <% end %>
+</table>

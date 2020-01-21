@@ -1,0 +1,12 @@
+<div class="govuk-body govuk-inset-text govuk-!-width-two-thirds">
+    <% if @page_data[:procurement_data][:status] == 'received' %>
+        The buyer is waiting for a response before the offer expiry deadline shown above.
+    <% else %>
+        <%= "The buyer's reason for withdrawing this contract offer was: #{@page_data[:procurement_data][:reason]} <br>".html_safe if  @page_data[:procurement_data][:status] == 'withdrawn' %>
+        <%= "Your reason for declining was: #{@page_data[:procurement_data][:reason]} " if @page_data[:procurement_data][:status] == 'declined' %>
+        <%= "You accepted this contract offer on #{format_date_time(@page_data[:procurement_data][:date_responded_to_contract])}." if accepted_page.any? { |status| @page_data[:procurement_data][:status] == status } %>
+        <%= "This contract offer was closed on #{format_date_time(@page_data[:procurement_data][:date_contract_closed])} " if @page_data[:procurement_data][:status] == 'not responded' %>
+        <br>
+        This contract offer was received on <%= format_date_time(@page_data[:procurement_data][:date_contract_received]) %>.
+    <% end %>
+</div>

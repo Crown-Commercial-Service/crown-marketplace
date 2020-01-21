@@ -140,13 +140,11 @@ Rails.application.routes.draw do
       get '/start', to: 'journey#start', as: 'journey_start'
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
+      get '/direct-award/sending-the-contract', to: 'direct_award_contract#sending_the_contract'
+      get '/direct-award/review-and-generate-documents', to: 'direct_award_contract#review_and_generate_documents'
+      get '/direct-award/awaiting-response', to: 'direct_award_contract#show'
       resources :procurements do
-        post 'continue'
-        get 'summary'
         get 'results'
-        get 'direct_award_pricing'
-        get 'further_competition'
-        put 'set_route_to_market'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
@@ -159,6 +157,13 @@ Rails.application.routes.draw do
         get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
         get 'offer-accepted', to: 'offer#accepted'
         get 'supplier-account-dashboard', to: 'supplier_account#index'
+        get 'contract-summary/received-contract-offer', to: 'supplier_account#show'
+        get 'contract-summary/accepted-contract-offer', to: 'supplier_account#show'
+        get 'contract-summary/declined-offer', to: 'supplier_account#show'
+        get 'contract-summary/live-contract', to: 'supplier_account#show'
+        get 'contract-summary/not-responded', to: 'supplier_account#show'
+        get 'contract-summary/not-signed', to: 'supplier_account#show'
+        get 'contract-summary/contract-withdrawn', to: 'supplier_account#show'
       end
     end
 
@@ -240,30 +245,6 @@ Rails.application.routes.draw do
     get '/', to: 'home#index'
     get '/new_layout', to: 'home#new_layout'
     get '/prototypes', to: 'prototype#index'
-    get '/prototypes/results', to: 'prototype#results'
-    get '/prototypes/pricing', to: 'prototype#pricing'
-    get '/prototypes/what-next', to: 'prototype#what_next'
-    get '/prototypes/payment-method', to: 'prototype#payment_method'
-    get '/prototypes/add-missing-address', to: 'prototype#add_missing_address'
-    get '/prototypes/contract-confirmation', to: 'prototype#contract_confirmation'
-    get '/prototypes/contract-details', to: 'prototype#contract_details'
-    get '/prototypes/invoicing-contact-details', to: 'prototype#invoicing_contact_details'
-    get '/prototypes/new-invoicing-contact-details', to: 'prototype#new_invoicing_contact_details'
-    get '/prototypes/authorised-representative', to: 'prototype#authorised_representative'
-    get '/prototypes/new-invoicing-contact-details-edit-address', to: 'prototype#new_invoicing_contact_details_edit_address'
-    get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
-    get '/prototypes/confirmation-of-signed-contract', to: 'prototype#confirmation_of_signed_contract'
-    get '/prototypes/closing-direct-award-offer', to: 'prototype#closing_direct_award_offer'
-    get '/prototypes/new-authorised-representative-details', to: 'prototype#new_authorised_representative_details'
-    get '/prototypes/contract-signed', to: 'prototype#contract_signed'
-    get '/prototypes/lgps-check', to: 'prototype#lgps_check'
-    get '/prototypes/invoicing-contact-details-edit-address', to: 'prototype#invoicing_contact_details_edit_address'
-    get '/prototypes/new-notices-contact-details', to: 'prototype#new_notices_contact_details'
-    get '/prototypes/did-you-know', to: 'prototype#did_you_know'
-    get '/prototypes/new-invoicing-contact-details-edit-address', to: 'prototype#new_invoicing_contact_details_edit_address'
-    get '/prototypes/new-notices-new-address', to: 'prototype#new_notices_new_address'
-    get '/prototypes/procurement_closed', to: 'prototype#procurement_closed'
-    get '/prototypes/notices', to: 'prototype#notices'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
@@ -333,6 +314,8 @@ Rails.application.routes.draw do
       post '/postcode/:slug', to: 'uploads#postcodes'
       get '/search-postcode/:postcode', to: 'nuts#show_post_code'
       get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
+      get '/find-region/:postcode', to: 'nuts#find_region_query'
+      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
     end
   end
 
