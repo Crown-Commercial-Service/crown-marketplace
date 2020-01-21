@@ -90,6 +90,7 @@ module FacilitiesManagement
       private
 
       def set_view_data
+        set_current_step
         view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).view
         build_page_details(view_name.to_sym)
 
@@ -97,6 +98,8 @@ module FacilitiesManagement
         when 'results'
           set_results_page_data
           @procurement[:route_to_market] = @procurement.aasm_state
+        when 'direct_award'
+          set_da_buyer_page_data
         else
           @page_data = {}
           @page_data[:model_object] = @procurement
@@ -153,6 +156,7 @@ module FacilitiesManagement
           @procurement.save_eligible_suppliers
           @procurement[:eligible_for_da] = eligible_for_direct_award?
           @procurement.set_state_to_results
+          @procurement.start_da_journey
           @procurement.save
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
@@ -179,7 +183,7 @@ module FacilitiesManagement
           return true
         end
 
-        @procurement.start_direct_award if @procurement[:route_to_market] == 'DA_draft'
+        @procurement.start_direct_award if @procurement[:route_to_market] == 'da_draft'
         @procurement.start_further_competition if @procurement[:route_to_market] == 'further_competition'
         @procurement.save
 
@@ -202,6 +206,13 @@ module FacilitiesManagement
         @page_data[:buildings] = @active_procurement_buildings.map { |b| b[:name] }
         @page_data[:services] = @procurement.procurement_building_services.map { |s| s[:name] }
         @page_data[:supplier_prices] = @procurement.procurement_suppliers.map(&:direct_award_value)
+      end
+
+      def set_da_buyer_page_data
+        @page_data = {}
+        @page_data[:model_object] = @procurement
+        @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.sort_by { |ii| ii[:price] }
       end
 
       def procurement_route_params
@@ -250,6 +261,7 @@ module FacilitiesManagement
       end
 
       def set_current_step
+        @current_step = nil
         @current_step ||= params[:facilities_management_procurement][:step] if params['next_step'].present?
       end
 
@@ -366,13 +378,14 @@ module FacilitiesManagement
             page_title: 'Results',
             primary_name: 'set_route_to_market'
           },
-          direct_award_pricing: {
-            caption1: @procurement[:name],
+          direct_award: {
             page_title: 'Direct Award Pricing',
-            back_url: facilities_management_beta_procurement_results_path(@procurement)
+            back_url: facilities_management_beta_procurement_results_path(@procurement),
+            secondary_text: 'Return to results',
+            secondary_name: 'continue_to_results',
+            secondary_url: facilities_management_beta_procurement_results_path(@procurement),
           },
           further_competition: {
-            caption1: @procurement[:name],
             page_title: 'Further competition',
             back_url: facilities_management_beta_procurement_results_path(@procurement)
           },
