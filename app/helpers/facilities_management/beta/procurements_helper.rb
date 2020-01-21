@@ -99,7 +99,8 @@ module FacilitiesManagement::Beta::ProcurementsHelper
                         no_supplier_response: 'No supplier response',
                         awaiting_contract_signature: 'Awaiting contract signature',
                         accepted_not_signed: 'Accepted not signed',
-                        accepted_and_signed: 'Accepted and signed' }.freeze
+                        accepted_and_signed: 'Accepted and signed',
+                        closed: 'closed' }.freeze
 
   def procurement_state(procurement_state)
     return procurement_state.humanize unless PROCUREMENT_STATE.key?(procurement_state.to_sym)
