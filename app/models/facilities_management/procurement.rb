@@ -25,7 +25,7 @@ module FacilitiesManagement
 
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
-    validates :route_to_market, inclusion: { in: %w[DA_draft further_competition] }, on: :route_to_market
+    validates :route_to_market, inclusion: { in: %w[da_draft further_competition] }, on: :route_to_market
 
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
@@ -35,7 +35,7 @@ module FacilitiesManagement
       state :quick_search, initial: true
       state :detailed_search
       state :results
-      state :DA_draft
+      state :da_draft
       state :further_competition
 
       event :set_state_to_results do
@@ -51,11 +51,35 @@ module FacilitiesManagement
       end
 
       event :start_direct_award do
-        transitions to: :DA_draft
+        transitions to: :da_draft
       end
 
       event :start_further_competition do
         transitions to: :further_competition
+      end
+    end
+
+    aasm(:da_journey, column: 'da_journey_state') do
+      state :pricing, initial: true
+      state :what_next
+      state :important_information
+      state :contract_details
+      state :review_and_generate
+      state :review
+      state :sending
+      state :sent_awaiting_response
+      state :withdraw
+      state :accepted
+      state :confirmation
+      state :accepted_signed
+      state :accepted_not_signed
+      state :declined
+      state :no_response
+      state :confirm_signed
+      state :closed
+
+      event :start_da_journey do
+        transitions to: :pricing
       end
     end
 
