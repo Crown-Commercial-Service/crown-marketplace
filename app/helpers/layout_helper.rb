@@ -263,9 +263,9 @@ module LayoutHelper
   def navigation_link_suppluer_and_buyer
     html = []
     html << content_tag(:li, class: 'govuk-header__navigation-item') do
-      if current_user.has_role?(:supplier)
+      if current_user&.has_role?(:supplier)
         link_to 'My dashboard', facilities_management_beta_supplier_supplier_account_dashboard_path, class: 'govuk-header__link' if user_signed_in?
-      elsif current_user.has_role?(:buyer)
+      elsif current_user&.has_role?(:buyer)
         link_to 'My Account', facilities_management_beta_path, class: 'govuk-header__link' if user_signed_in?
       end
     end
@@ -276,9 +276,9 @@ module LayoutHelper
   end
 
   def not_permitted_page_header_link
-    if current_user.has_role?(:supplier)
+    if current_user&.has_role?(:supplier)
       render 'facilities_management/beta/supplier/link_to_start_page'
-    elsif current_user.has_role?(:buyer)
+    elsif current_user&.has_role?(:buyer)
       render 'facilities_management/beta/link_to_start_page'
     end
   end
