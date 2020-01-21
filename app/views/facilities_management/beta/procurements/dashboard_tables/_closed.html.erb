@@ -1,5 +1,5 @@
 <table class="govuk-table">
-  <% unless @closed_contracts.empty? %>
+  <% if !@closed_contracts.empty? %>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="25%">Contract name</th>
@@ -13,18 +13,18 @@
       <% @closed_contracts.each do |closed_contract| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
-            <%= link_to closed_contract.procurement.contract_name, facilities_management_beta_procurement_contract_path(procurement_id: closed_contract.procurement.id, id: closed_contract.id) %>
+            <%= link_to closed_contract.name, facilities_management_beta_procurement_path(closed_contract) %>
           </th>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= closed_contract.supplier.data['supplier_name'] %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(closed_contract.contract_closed_date) %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= closed_contract.procurement_suppliers.first.supplier.data['supplier_name'] %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(closed_contract.contract_start_date) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(closed_contract.initial_call_off_end_date) %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"></td>
         </tr>
       <% end %>
   </tbody>
   <% else %>
-    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-3">
-      <span class="govuk-body"> <%= t('.no_closed') %></span>
-    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-3">
+    <hr class="govuk-section-break govuk-section-break--visible">
+      <span class="govuk-hint govuk-!-margin-top-3"> You do not have any live contracts </span>
+    <hr class="govuk-section-break govuk-section-break--visible">
   <% end %>
 </table> 
