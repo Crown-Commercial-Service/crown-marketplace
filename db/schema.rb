@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2020_01_20_153957) do
-=======
 ActiveRecord::Schema.define(version: 2020_01_21_102051) do
->>>>>>> added changes requested and view now renders fully
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -129,7 +125,6 @@ ActiveRecord::Schema.define(version: 2020_01_21_102051) do
     t.datetime "date_offer_sent"
     t.date "closed_contract_date"
     t.boolean "is_contract_closed"
-    t.date "contract_start_date"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -195,14 +190,15 @@ ActiveRecord::Schema.define(version: 2020_01_21_102051) do
     t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "fm_rates", id: false, force: :cascade do |t|
     t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
-    t.string "standard", limit: 1
-    t.boolean "direct_award"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.index ["code"], name: "index_fm_rates_on_code"
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|
