@@ -56,7 +56,7 @@ $(function () {
     };
 
     const displaySelectedAddress = function (address) {
-        var build_address = '';
+        var build_address = "";
         build_address += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1'] + ',' : '';
         build_address += (address['fm-address-line-2'].length > 0) ? address['fm-address-line-2'] + ',' : '';
         build_address += (address['fm-address-town'].length > 0) ? address['fm-address-town'] + ',' : '';
