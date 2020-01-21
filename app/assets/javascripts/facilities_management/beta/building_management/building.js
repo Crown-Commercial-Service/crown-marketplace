@@ -55,7 +55,7 @@ $(function () {
         FM.building = newBuilding;
     };
 
-    const display_selected_address = function (address) {
+    const displaySelectedAddress = function (address) {
         var build_address = '';
         build_address += (address['fm-address-line-1'].length > 0) ? address['fm-address-line-1'] + ',' : '';
         build_address += (address['fm-address-line-2'].length > 0) ? address['fm-address-line-2'] + ',' : '';
@@ -68,7 +68,7 @@ $(function () {
         $('#fm-building-region').html(address['fm-address-region'].replace(/##/g, ","));
         $('.fm-bulding-address-wrapper').show();
     };
-    
+
     $('#fm-find-address-results').on('change', function (e) {
         let selectedAddress = $("select#fm-find-address-results > option:selected").val();
 
@@ -77,7 +77,7 @@ $(function () {
         if (extract_address_data(selectedAddress, address)) {
             cache_address ( selectedAddress) ;
             assign_building_address(address, address['building-ref']);
-            display_selected_address(address);
+            displaySelectedAddress(address);
         }
     });
 
