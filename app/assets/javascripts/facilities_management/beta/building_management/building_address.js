@@ -77,7 +77,7 @@ $(function () {
                         $("#fm-bm-region-dropdown").append(select_dropdown_options);
                     }
                     $("#fm-bm-address-region-display").show();
-                    $("".fm-bm-region-txt").show();
+                    $(".fm-bm-region-txt").show();
 
                 }
 
