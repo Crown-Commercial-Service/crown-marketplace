@@ -10,21 +10,21 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-      <% @closed_contract.each do |closed_contract| %>
+      <% @closed_contracts.each do |closed_contract| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
             <%= link_to closed_contract.name, facilities_management_beta_procurement_path(closed_contract) %>
           </th>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= closed_contract.procurement_suppliers.first.supplier.data['supplier_name'] %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(closed_contract.closed_contract_date) %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(closed_contract.contract_start_date) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(closed_contract.initial_call_off_end_date) %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"></td>
         </tr>
       <% end %>
   </tbody>
   <% else %>
     <hr class="govuk-section-break govuk-section-break--visible">
-      <span class="govuk-hint govuk-!-margin-top-3"> You do not have any closed contracts </span>
+      <span class="govuk-hint govuk-!-margin-top-3"> You do not have any live contracts </span>
     <hr class="govuk-section-break govuk-section-break--visible">
   <% end %>
 </table> 
