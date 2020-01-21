@@ -1,12 +1,12 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
     <%= render partial: 'contract_summary_head' %>
 
-    <%= render partial: 'facilities_management/beta/direct_award_contract/contract_summary/contract_offer_dates' %>
+    <%= render partial: '/facilities_management/beta/procurements/da_buyer/contract_summary/contract_offer_dates' %>
 
-    <%= render partial: 'facilities_management/beta/direct_award_contract/contract_summary/procurement_requirements' %>
-    <%= render partial: 'facilities_management/beta/direct_award_contract/contract_summary/call_off_contract_documents' %>
+    <%= render partial: '/facilities_management/beta/procurements/da_buyer/contract_summary/procurement_requirements' %>
+    <%= render partial: '/facilities_management/beta/procurements/da_buyer/contract_summary/call_off_contract_documents' %>
     
-    <%= render partial: 'facilities_management/beta/direct_award_contract/contract_summary/whn_awaiting_response' if @page_data[:procurement_data][:status] == 'awaiting response' %>
+    <%= render partial: '/facilities_management/beta/procurements/da_buyer/contract_summary/when_awaiting_response' if @page_data[:procurement_data][:status] == 'awaiting response' %>
     
     <% if @page_data[:procurement_data][:status] == 'awaiting response' %>
         <div class ="govuk-body govuk-!-margin-top-7 govuk-!-margin-bottom-0 govuk-!-width-three-quarters">
