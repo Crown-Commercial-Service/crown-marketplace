@@ -24,13 +24,11 @@ module FacilitiesManagement
       # rubocop:disable Metrics/AbcSize
       def sorted_suppliers
         init
-
-        cafm_help_used = { isCafmUsed: false, isHelpUsed: false }
-        build_direct_award_report(params[:'download-spreadsheet'] == 'yes', cafm_help_used)
+        build_direct_award_report params[:'download-spreadsheet'] == 'yes'
 
         return if params[:'download-spreadsheet'] != 'yes'
 
-        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, cafm_help_used
+        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, @report_results_no_cafmhelp_removed[@supplier_name]
 
         uvals = []
         buildings_ids = []
@@ -66,10 +64,10 @@ module FacilitiesManagement
       private
 
       # rubocop:disable Metrics/AbcSize
-      def build_direct_award_report(cache__calculation_values_for_spreadsheet_flag, cafm_help_used = {})
+      def build_direct_award_report(cache__calculation_values_for_spreadsheet_flag)
         user_email = current_user.email.to_s
 
-        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement, cafm_help_used)
+        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
 
         # @procurement.procurement_buildings.first.procurement_building_services
         if @procurement
@@ -86,12 +84,19 @@ module FacilitiesManagement
 
         @results = {}
         @report_results = {} if cache__calculation_values_for_spreadsheet_flag
+
+        # get the services including help & cafm for the,contract rate card,worksheet
+        @report_results_no_cafmhelp_removed = {} if cache__calculation_values_for_spreadsheet_flag
+
         supplier_names = @rate_card.data[:Prices].keys
         supplier_names.each do |supplier_name|
           # e.g. dummy_supplier_name = 'Hickle-Schinner'
           a_supplier_calculation_results = @report_results[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
-          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results
+          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results, true
           @results[supplier_name] = @report.direct_award_value
+
+          a_supplier_calculation_results_no_cafmhelp_removed = @report_results_no_cafmhelp_removed[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
+          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results_no_cafmhelp_removed, false
         end
 
         sorted_list = @results.sort_by { |_k, v| v }
