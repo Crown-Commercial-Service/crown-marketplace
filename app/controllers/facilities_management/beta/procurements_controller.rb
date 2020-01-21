@@ -15,8 +15,9 @@ module FacilitiesManagement
         @procurements = current_user.procurements
         @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH)
         @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER)
-        @in_draft = current_user.procurements.where(aasm_state: :DA_draft)
+        @in_draft = current_user.procurements.DA_draft
         @contracts = current_user.procurements.where(aasm_state: :accepted_and_signed)
+        @closed_contract = current_user.procurements.where(aasm_state: :closed)
       end
 
       def show
