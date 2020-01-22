@@ -654,6 +654,8 @@ en:
             no_live: "You do not have any live contracts"
           closed:
             no_closed: "You do not have any closed contracts"
+          searches:
+            no_searches: "You do not have any searches"
       sessions:
         new:
           email_address: Email address
