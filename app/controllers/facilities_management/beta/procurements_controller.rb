@@ -12,7 +12,7 @@ module FacilitiesManagement
       before_action :build_page_details, only: %i[show edit update destroy results]
 
       def index
-        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH)
+        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
         @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER, is_contract_closed: false)
         @in_draft = current_user.procurements.da_draft
         @contracts = current_user.procurements.accepted_and_signed
