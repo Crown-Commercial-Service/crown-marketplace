@@ -488,6 +488,13 @@ en:
           service: Service
         index:
           manage_procurements: Procurements dashboard
+          start_new_search: "Start a new search"
+          searches_title: "Searches"
+          direct_award_title: "Direct award"
+          in-draft-title: "In draft"
+          sent_offers: "Sent offers"
+          contracts_title: "Contracts"
+          closed_title: "Closed"
         new:
           cancel_text: Cancel, and return to the procurements dashboard
           save_for_later: Save for later
@@ -638,6 +645,15 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
+        dashboard_tables:
+          in_draft:
+            no_drafts: "You do not have any offers in the draft"
+          sent_offers:
+            no_sent: "You do not have any sent offers"
+          contracts:
+            no_live: "You do not have any live contracts"
+          closed:
+            no_closed: "You do not have any closed contracts"
       sessions:
         new:
           email_address: Email address
