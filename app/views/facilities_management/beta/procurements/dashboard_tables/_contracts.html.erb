@@ -13,7 +13,7 @@
       <% @contracts.each do |contract| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
-            <%= link_to contract.name, facilities_management_beta_procurement_path(contract) %>
+            <%= link_to contract.contract_name, facilities_management_beta_procurement_path(contract) %>
           </th>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= contract.procurement_suppliers.first.supplier.data['supplier_name'] %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(contract.contract_start_date) %></td>
