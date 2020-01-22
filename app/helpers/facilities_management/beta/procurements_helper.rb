@@ -98,7 +98,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
                         supplier_declined: 'Supplier declined',
                         no_supplier_response: 'No supplier response',
                         awaiting_contract_signature: 'Awaiting contract signature',
-                        accepted_not_signed: 'Accepted not signed',
+                        accepted_not_signed: 'Accepted, not signed',
                         accepted_and_signed: 'Accepted and signed',
                         closed: 'closed' }.freeze
 
