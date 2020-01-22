@@ -137,8 +137,9 @@ module FacilitiesManagement
       !procurement_building_services.map { |pbs| CCS::FM::Rate.priced_at_framework(pbs.code, pbs.service_standard) }.include?(false)
     end
 
-    SEARCH = %i[further_competition results quick_search detailed_search].freeze
+    SEARCH = %i[quick_search detailed_search results further_competition].freeze
     SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
+    SEARCH_ORDER = SEARCH.map(&:to_s)
 
     private
 
