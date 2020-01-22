@@ -2,13 +2,12 @@ module FacilitiesManagement
   class SummaryReport
     include FacilitiesManagement::Beta::SummaryHelper
 
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :errors, :cafm_help_used
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :errors
 
-    def initialize(start_date, user_id, data, procurement = nil, cafm_help_used = {})
+    def initialize(start_date, user_id, data, procurement = nil)
       @errors = ''
       @start_date = start_date
       @user_id = user_id
-      @cafm_help_used = cafm_help_used
 
       @sum_uom = 0
       @sum_benchmark = 0
@@ -96,7 +95,7 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/AbcSize
-    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil)
+    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true)
       # selected_services
 
       @sum_uom = 0
@@ -132,19 +131,13 @@ module FacilitiesManagement
         # p "building id: #{id}"
         results2 = results[id] = {} if results
 
-        vals_per_building = services(building_data, building_uvals, rates, rate_card, supplier_name, results2)
+        vals_per_building = services(building_data, building_uvals, rates, rate_card, supplier_name, results2, remove_cafm_help)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
-        set_cafm_help_used
       end
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
-
-    def set_cafm_help_used
-      @cafm_help_used[:isCafmUsed] = true if @cafm_flag == 'Y'
-      @cafm_help_used[:isHelpUsed] = true if @helpdesk_flag == 'Y'
-    end
 
     def with_pricing
       # CCS::FM::Rate.non_zero_rate
@@ -371,15 +364,18 @@ module FacilitiesManagement
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil, results = nil)
+    def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true)
       sum_uom = 0.0
       sum_benchmark = 0.0
 
       copy_params building_data, uvals
 
       # TODO : Validation must be put in the front end to NOT allow just CAFM or HELP services otherwise an exception be ge generated below in .max
-      uvals_remove_cafm_help = uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
-
+      uvals_remove_cafm_help = if remove_cafm_help == true
+                                 uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
+                               else
+                                 uvals
+                               end
       uvals_remove_cafm_help.each do |v|
         uom_value = calculate_uom_value(v)
 
