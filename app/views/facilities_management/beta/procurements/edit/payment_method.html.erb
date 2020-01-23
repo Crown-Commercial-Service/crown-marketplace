@@ -1,5 +1,16 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
-  
+
+  <div class="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+    <span class="govuk-visually-hidden">
+      <h2 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+        There is a problem
+      </h2>
+      <ul class="error-summary-list">
+        <li><a><u>Select one payment method</u></a></li>
+      </ul>
+    </span>
+  </div>
+
   <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
     <%= govuk_prevent_submission(f, true) %>
       <%= govuk_grouped_field(f, t('.description'), :payment_method) do |ff, attr| %>
