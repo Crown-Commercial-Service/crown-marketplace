@@ -3,29 +3,31 @@
   <div class="error-summary" role="alert" aria-labelledby="payment-method-heading-error" tabindex="-1">
     <span class="govuk-visually-hidden">
       <h2 class="heading-medium error-summary-heading" id="payment-method-heading-error">
-        There is a problem
+        <%= t(.'payment_problem') %>
       </h2>
       <ul class="error-summary-list">
-        <li><a>Select one payment method</a></li>
+        <li><a><%= t.('problem_description') %></a></li>
       </ul>
     </span>
   </div>
 
   <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
-    <%= govuk_prevent_submission(f, true) %>
-      <%= govuk_grouped_field(f, t('.description'), :payment_method) do |ff, attr| %>
-          <div class="govuk-radios <%= "govuk-form-group--error" if f.object.errors[:payment_method].any? %> ">
-            <div class="govuk-radios__item">
-              <%= f.radio_button :payment_method, 'BACS payment', value: 'BACS_payment', class: 'govuk-radios__input' %>
-              <%= f.label :payment_method, t('.bacs'), class: 'govuk-label govuk-radios__label'%>
+    <div id="ccs-error-sum" class="govuk-error-summary  <%= "govuk-form-group--error" if f.object.errors[:payment_method].any? %>  ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+      <%= govuk_prevent_submission(f, true) %>
+        <%= govuk_grouped_field(f, t('.description'), :payment_method) do |ff, attr| %>
+            <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                <%= f.radio_button :payment_method, 'BACS payment', value: 'BACS_payment', class: 'govuk-radios__input' %>
+                <%= f.label :payment_method, t('.bacs'), class: 'govuk-label govuk-radios__label'%>
+              </div>
+              <div class="govuk-radios__item">
+                <%= f.radio_button :payment_method, 'Government procurement card', value: 'Government_procurement_card', class: 'govuk-radios__input' %>
+                <%= f.label :payment_method, t('.government_procurement_card'), class: 'govuk-label govuk-radios__label'%>
+              </div>
             </div>
-            <div class="govuk-radios__item">
-              <%= f.radio_button :payment_method, 'Government procurement card', value: 'Government_procurement_card', class: 'govuk-radios__input' %>
-              <%= f.label :payment_method, t('.government_procurement_card'), class: 'govuk-label govuk-radios__label'%>
-            </div>
-          </div>
         <%end %>
       <%end %>
+    </div>
   </form>
     <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_da_buyer_contract_details_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_continuation_buttons(pd, f, false) %>
