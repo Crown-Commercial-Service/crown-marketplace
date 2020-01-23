@@ -1,14 +1,13 @@
 class FacilitiesManagement::ContractNumberGenerator
   ACRONYMS = { direct_award: 'DA', further_competition: 'FC' }.freeze
 
-  def initialize(procurement_state:, used_numbers: [])
+  def initialize(procurement_state:, used_numbers:)
     @used_numbers = used_numbers
     @procurement_state = procurement_state
   end
 
   def new_number
-    return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}" if ACRONYMS[@procurement_state] == 'DA'
-    return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}" if ACRONYMS[@procurement_state] == 'FC'
+    "RM3860-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}"
   end
 
   private
