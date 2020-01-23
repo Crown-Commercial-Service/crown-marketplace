@@ -411,6 +411,10 @@ en:
             lowest_price_supplier: lowest priced supplier
             pricing_header: Here are the contract prices by supplier shown in ascending order
             pricing_warning_html: You are only shown the name of the <strong>lowest price supplier</strong>, as they can offer the best price for your requirements.
+          payment_method:
+            bacs: BACS payment
+            description: Please select the payment method that will be used
+            government_procurement_card: Government procurement card
         dashboard_tables:
           closed:
             no_closed: You do not have any closed contracts
