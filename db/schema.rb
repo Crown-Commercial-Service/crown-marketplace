@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_135030) do
+ActiveRecord::Schema.define(version: 2020_01_23_101511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_135030) do
     t.money "direct_award_value", scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contract_number"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
   end
 
@@ -123,10 +124,10 @@ ActiveRecord::Schema.define(version: 2020_01_21_135030) do
     t.money "assessed_value", scale: 2
     t.boolean "eligible_for_da"
     t.datetime "date_offer_sent"
-    t.string "da_journey_state"
     t.date "contract_start_date"
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
+    t.string "da_journey_state"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
