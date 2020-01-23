@@ -11,13 +11,15 @@ module FacilitiesManagement
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
       before_action :build_page_details, only: %i[show edit update destroy results]
 
+      # rubocop:disable Metrics/AbcSize
       def index
         @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
-        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER, is_contract_closed: false)
-        @in_draft = current_user.procurements.da_draft
-        @contracts = current_user.procurements.accepted_and_signed
-        @closed_contracts = current_user.procurements.where(is_contract_closed: true)
+        @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
+        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER, is_contract_closed: false).order(date_offer_sent: :asc).sort_by { |search| FacilitiesManagement::Procurement::SENT_OFFER_ORDER.index(search.aasm_state) }
+        @contracts = current_user.procurements.accepted_and_signed.order(contract_start_date: :asc)
+        @closed_contracts = current_user.procurements.where(is_contract_closed: true).order(closed_contract_date: :asc)
       end
+      # rubocop:enable Metrics/AbcSize
 
       def show
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
