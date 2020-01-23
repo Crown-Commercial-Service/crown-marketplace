@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_27_104344) do
+ActiveRecord::Schema.define(version: 2020_01_23_092237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -82,32 +82,12 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
-  create_table "facilities_management_procurement_contact_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "type", limit: 100
-    t.string "name", limit: 50
-    t.string "job_title", limit: 150
-    t.text "email"
-    t.string "telephone_number", limit: 15
-    t.text "organisation_address_line_1"
-    t.text "organisation_address_line_2"
-    t.text "organisation_address_town"
-    t.text "organisation_address_county"
-    t.text "organisation_address_postcode"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "facilities_management_procurement_id"
-    t.index ["email"], name: "facilities_management_procurement_contact_detail_email_idx"
-    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_contact_details_on_fm_procurement_id"
-    t.index ["id"], name: "facilities_management_procurement_contact_detail_id_idx"
-  end
-
   create_table "facilities_management_procurement_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
     t.uuid "supplier_id"
     t.money "direct_award_value", scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "contract_number"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
   end
 
@@ -148,9 +128,6 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.boolean "is_contract_closed", default: false
     t.string "da_journey_state"
     t.string "payment_method"
-    t.boolean "using_buyer_detail_for_invoice_details"
-    t.boolean "using_buyer_detail_for_notices_detail"
-    t.boolean "using_buyer_detail_for_authorised_detail"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -265,7 +242,6 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.string "unit_text"
     t.string "data_type"
     t.string "spreadsheet_label"
-    t.string "unit_measure_label"
     t.text "service_usage", array: true
   end
 
@@ -486,22 +462,11 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.index ["postcode"], name: "idx_postcode"
   end
 
-  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "filename", limit: 255
-    t.integer "size"
-    t.string "etag", limit: 255
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
-  end
-
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "postcode", limit: 20
-    t.string "code", limit: 20
+    t.string "postcode", limit: 255
+    t.string "code", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|
@@ -598,7 +563,6 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
-  add_foreign_key "facilities_management_procurement_contact_details", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_suppliers", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
