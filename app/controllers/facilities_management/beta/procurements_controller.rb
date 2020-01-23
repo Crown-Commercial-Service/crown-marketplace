@@ -17,7 +17,7 @@ module FacilitiesManagement
         @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
         @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER, is_contract_closed: false).order(date_offer_sent: :asc).sort_by { |search| FacilitiesManagement::Procurement::SENT_OFFER_ORDER.index(search.aasm_state) }
         @contracts = current_user.procurements.accepted_and_signed.order(contract_start_date: :asc)
-        @closed_contracts = current_user.procurements.where(is_contract_closed: true).order(closed_contract_date: :asc)
+        @closed_contracts = current_user.procurements.where(is_contract_closed: true).order(closed_contract_date: :desc)
       end
       # rubocop:enable Metrics/AbcSize
 
