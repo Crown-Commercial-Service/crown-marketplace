@@ -23,7 +23,7 @@ module CCS
       end
 
       def self.priced_at_framework(code, standard)
-        find_by(code: code, standard: standard).framework.present?
+        find_by(code: code, standard: standard)&.framework&.present?
       end
 
       # read in the benchmark and framework rates - these were taken from the Damolas spreadsheet and put in the postgres database numbers are to 15dp

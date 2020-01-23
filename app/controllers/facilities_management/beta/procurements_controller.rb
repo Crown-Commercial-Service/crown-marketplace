@@ -59,6 +59,8 @@ module FacilitiesManagement
         continue_to_results && return if params['continue_to_results'].present?
 
         set_route_to_market && return if params['set_route_to_market'].present?
+        
+        continue_to_contract_details && return if params['continue_da'].present?
 
         update_procurement if params['facilities_management_procurement'].present?
       end
@@ -157,6 +159,16 @@ module FacilitiesManagement
           @procurement[:eligible_for_da] = eligible_for_direct_award?
           @procurement.set_state_to_results
           @procurement.start_da_journey
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+      
+      def continue_to_contract_details
+        if procurement_valid?
+          @procurement.set_to_contract_details
           @procurement.save
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
@@ -383,6 +395,7 @@ module FacilitiesManagement
             back_url: facilities_management_beta_procurement_results_path(@procurement),
             secondary_text: 'Return to results',
             secondary_name: 'continue_to_results',
+            primary_name: 'continue_da',
             secondary_url: facilities_management_beta_procurement_results_path(@procurement),
           },
           further_competition: {
