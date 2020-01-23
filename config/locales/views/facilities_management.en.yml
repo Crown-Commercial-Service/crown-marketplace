@@ -415,6 +415,8 @@ en:
             bacs: BACS payment
             description: Please select the payment method that will be used
             government_procurement_card: Government procurement card
+            payment_problem: There is a problem
+            problem_description: Select one payment method
         dashboard_tables:
           closed:
             no_closed: You do not have any closed contracts
