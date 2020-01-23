@@ -11,12 +11,15 @@ module FacilitiesManagement
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
       before_action :build_page_details, only: %i[show edit update destroy results]
 
+      # rubocop:disable Metrics/AbcSize
       def index
-        @procurements = current_user.procurements
-        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH)
-        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER)
-        @in_draft = current_user.procurements.where(aasm_state: :da_draft)
+        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
+        @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
+        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER, is_contract_closed: false).order(date_offer_sent: :asc).sort_by { |search| FacilitiesManagement::Procurement::SENT_OFFER_ORDER.index(search.aasm_state) }
+        @contracts = current_user.procurements.accepted_and_signed.order(contract_start_date: :asc)
+        @closed_contracts = current_user.procurements.where(is_contract_closed: true).order(closed_contract_date: :desc)
       end
+      # rubocop:enable Metrics/AbcSize
 
       def show
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
@@ -58,6 +61,8 @@ module FacilitiesManagement
         continue_to_results && return if params['continue_to_results'].present?
 
         set_route_to_market && return if params['set_route_to_market'].present?
+        
+        continue_to_contract_details && return if params['continue_da'].present?
 
         update_procurement if params['facilities_management_procurement'].present?
       end
@@ -99,6 +104,7 @@ module FacilitiesManagement
           @procurement[:route_to_market] = @procurement.aasm_state
         when 'direct_award'
           set_da_buyer_page_data
+          @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: @current_step).da_journey_view
         else
           @page_data = {}
           @page_data[:model_object] = @procurement
@@ -162,6 +168,16 @@ module FacilitiesManagement
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
         end
       end
+      
+      def continue_to_contract_details
+        if procurement_valid?
+          @procurement.set_to_contract_details
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
 
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
@@ -211,7 +227,7 @@ module FacilitiesManagement
         @page_data = {}
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] < 1500000 }.sort_by { |ii| ii[:price] }
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
       end
 
       def procurement_route_params
@@ -366,7 +382,7 @@ module FacilitiesManagement
             caption1: @procurement[:name],
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
-            return_text: 'Return to procurements dashboard',
+            return_text: 'Return to procurement dashboard',
             secondary_name: 'change_requirements',
             secondary_text: 'Change requirements',
             secondary_url: facilities_management_beta_procurements_path,
@@ -380,8 +396,10 @@ module FacilitiesManagement
           direct_award: {
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement),
+            continuation_text: 'Continue to direct award',
             secondary_text: 'Return to results',
             secondary_name: 'continue_to_results',
+            primary_name: 'continue_da',
             secondary_url: facilities_management_beta_procurement_results_path(@procurement),
           },
           further_competition: {
