@@ -104,6 +104,7 @@ module FacilitiesManagement
           @procurement[:route_to_market] = @procurement.aasm_state
         when 'direct_award'
           set_da_buyer_page_data
+          @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: @current_step).da_journey_view
         else
           @page_data = {}
           @page_data[:model_object] = @procurement
@@ -171,7 +172,6 @@ module FacilitiesManagement
       def continue_to_contract_details
         if procurement_valid?
           @procurement.set_to_contract_details
-          @procurement.start_da_journey
           @procurement.save
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
