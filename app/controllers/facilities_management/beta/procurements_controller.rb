@@ -12,8 +12,9 @@ module FacilitiesManagement
       before_action :build_page_details, only: %i[show edit update destroy results]
 
       def index
-        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
-        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER, is_contract_closed: false)
+        @procurements = current_user.procurements
+        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH)
+        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER)
         @in_draft = current_user.procurements.da_draft
         @contracts = current_user.procurements.accepted_and_signed
         @closed_contracts = current_user.procurements.where(is_contract_closed: true)
@@ -169,6 +170,7 @@ module FacilitiesManagement
       def continue_to_contract_details
         if procurement_valid?
           @procurement.set_to_contract_details
+          @procurement.start_da_journey
           @procurement.save
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
@@ -224,7 +226,7 @@ module FacilitiesManagement
         @page_data = {}
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.sort_by { |ii| ii[:price] }
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] < 1500000 }.sort_by { |ii| ii[:price] }
       end
 
       def procurement_route_params
