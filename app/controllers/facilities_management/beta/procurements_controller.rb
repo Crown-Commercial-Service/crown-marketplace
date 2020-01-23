@@ -214,7 +214,7 @@ module FacilitiesManagement
         @page_data = {}
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.sort_by { |ii| ii[:price] }
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
       end
 
       def procurement_route_params
@@ -369,7 +369,7 @@ module FacilitiesManagement
             caption1: @procurement[:name],
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
-            return_text: 'Return to procurements dashboard',
+            return_text: 'Return to procurement dashboard',
             secondary_name: 'change_requirements',
             secondary_text: 'Change requirements',
             secondary_url: facilities_management_beta_procurements_path,
@@ -383,6 +383,7 @@ module FacilitiesManagement
           direct_award: {
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement),
+            continuation_text: 'Continue to direct award',
             secondary_text: 'Return to results',
             secondary_name: 'continue_to_results',
             secondary_url: facilities_management_beta_procurement_results_path(@procurement),
