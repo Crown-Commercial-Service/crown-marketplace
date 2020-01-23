@@ -1,0 +1,22 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+  
+  <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
+    <%= govuk_prevent_submission(f, true) %>
+      <%= govuk_grouped_field(f, t('.description'), :route_to_market) do |ff, attr| %>
+          <div class="govuk-radios">
+            <div class="govuk-radios__item">
+              <%= f.radio_button :route_to_market, 'BACS payment', value: 'BACS_payment', class: 'govuk-radios__input' %>
+              <%= f.label :route_to_market, t('.bacs'), class: 'govuk-label govuk-radios__label'%>
+            </div>
+            <div class="govuk-radios__item">
+              <%= f.radio_button :route_to_market, 'Government procurement card', value: 'Government_procurement_card', class: 'govuk-radios__input' %>
+              <%= f.label :route_to_market, t('.government_procurement_card'), class: 'govuk-label govuk-radios__label'%>
+            </div>
+          </div>
+        <%end %>
+      <%end %>
+  </form>
+    <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+    <%= govuk_continuation_buttons(pd, f, false) %>
+  <% end %>
+<%end%>

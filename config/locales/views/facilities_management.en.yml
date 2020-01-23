@@ -121,8 +121,6 @@ en:
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               too_long: Call-off period and extensions must be 10 years or less
-            payment_method:
-              inclusion: Select one payment method
             procurement_building_services:
               invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be 'Complete'
             procurement_buildings:
@@ -148,8 +146,6 @@ en:
             tupe:
               inclusion: Select yes if you know TUPE applies to your contract
               not_present: You must answer the question about 'TUPE'
-            using_buyer_detail_for_invoice_details:
-              inclusion: Select one option
         facilities_management/procurement_building:
           attributes:
             service_codes:
@@ -403,28 +399,33 @@ en:
           no_cost_provided: None
         da_buyer:
           contract_details:
-            authorised_representative: Authorised representative details
+            authorised_representative: Authorised representative
             contract_details_description: Please provide further information that will help us put your contract together.
             invoicing_contact_details: Invoicing contact details
             local_government_pension_scheme: Local Government Pension Scheme
             notices_contact_details: Notices contact details
-            payment_method: Payment method
-            security_policy_document: Security policy
-          did_you_know:
-            indexation_body_html: Your supplier will have the opportunity to adjust their pricing using the CPI index data on the first anniversary of your contract start date. Further information on this can be found in <a href="http://www.url.com">call-off schedule 5 - call-off pricing.</a>
-            indexation_heading: Indexation
-            insurance_body_html: Fixed levels of insurance will apply and cannot be changed within a direct award. To view the levels and for further information, please see <a href="http://www.url.com">joint schedule 3 - insurance requirements.</a>
-            insurance_heading: Insurance
-            intro-text: There are some elements of a direct award contract that cannot be amended. Please read the below information to ensure that a direct award is suitable for you.
-            price_body_html: Your price has been calculated using rates that were submitted by suppliers when they competed to join the framework. There can be no further negotiation on the price within a direct award.
-            price_heading: Price
-            services_body_html: The service specifications and service standards cannot be amended within a direct award. Please check within the <a href="http://www.url.com">service requirements and standards</a> that you're happy with the details for the services you are buying.
-            services_heading: Services
+            payment_details: Payment Details
+            security_policy_document: Security Policy Document
           pricing:
-            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
+            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
             lowest_price_supplier: lowest priced supplier
             pricing_header: Here are the contract prices by supplier shown in ascending order
             pricing_warning_html: You are only shown the name of the <strong>lowest price supplier</strong>, as they can offer the best price for your requirements.
+          payment_method:
+            bacs: BACS payment
+            description: Please select the payment method that will be used
+            government_procurement_card: Government procurement card
+        dashboard_tables:
+          closed:
+            no_closed: You do not have any closed contracts
+          contracts:
+            no_live: You do not have any live contracts
+          in_draft:
+            no_drafts: You do not have any offers in the draft
+          searches:
+            no_searches: You do not have any searches
+          sent_offers:
+            no_sent: You do not have any sent offers
         detailed_search_summary:
           delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
           detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
@@ -452,10 +453,6 @@ en:
             procurement_buildings: 'Next: Services'
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
-          payment_method:
-            bacs_payment: BACS payment
-            government_procurement_card: Government procurement card
-            payment_description: Please select the payment method that will be used
           procurement_buildings:
             buildings_selected: Buildings selected
             content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
@@ -505,7 +502,14 @@ en:
           region: Region
           service: Service
         index:
+          closed_title: Closed
+          contracts_title: Contracts
+          direct_award_title: Direct award
+          in-draft-title: In draft
           manage_procurements: Procurements dashboard
+          searches_title: Searches
+          sent_offers: Sent offers
+          start_new_search: Start a new search
         new:
           cancel_text: Cancel, and return to the procurements dashboard
           save_for_later: Save for later
@@ -791,7 +795,7 @@ en:
       heading: Where are your buildings located?
       subheading: Choose one or more regions, based on building's location where you require facilities management services.
     select_services:
-      heading: Select the facilities management services that you need
+      heading: Select the facilities management services do you need
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
       servicespec_link_text: Read the service specification document
       subheading: Choose all facilities management services required within your estate, even if you want services in just one building.
