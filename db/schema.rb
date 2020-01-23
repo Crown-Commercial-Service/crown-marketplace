@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_135030) do
+ActiveRecord::Schema.define(version: 2020_01_23_092237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -123,10 +123,11 @@ ActiveRecord::Schema.define(version: 2020_01_21_135030) do
     t.money "assessed_value", scale: 2
     t.boolean "eligible_for_da"
     t.datetime "date_offer_sent"
-    t.string "da_journey_state"
     t.date "contract_start_date"
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
+    t.string "da_journey_state"
+    t.string "payment_method"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -459,16 +460,6 @@ ActiveRecord::Schema.define(version: 2020_01_21_135030) do
     t.string "voa_ndr_scat_code"
     t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
-  end
-
-  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "filename", limit: 255
-    t.integer "size"
-    t.string "etag", limit: 255
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
   end
 
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
