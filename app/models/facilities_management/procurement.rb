@@ -204,6 +204,7 @@ module FacilitiesManagement
     SEARCH = %i[quick_search detailed_search results further_competition].freeze
     SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
+    SENT_OFFER_ORDER = SENT_OFFER.map(&:to_s)
 
     private
 
