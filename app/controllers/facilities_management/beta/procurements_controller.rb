@@ -48,7 +48,7 @@ module FacilitiesManagement
         if @procurement.quick_search?
           render :edit
         else
-          @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).back_link
+          @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: nil).back_link
 
           unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
             # da journey follows
@@ -100,7 +100,7 @@ module FacilitiesManagement
 
       def set_view_data
         set_current_step
-        view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).view
+        view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).view
         build_page_details(view_name.to_sym)
 
         case view_name
@@ -108,7 +108,7 @@ module FacilitiesManagement
           set_results_page_data
           @procurement[:route_to_market] = @procurement.aasm_state
         when 'direct_award'
-          @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: @current_step).da_journey_view
+          @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: params['step']).da_journey_view
           set_da_buyer_page_data(@view_da)
         else
           @page_data = {}
@@ -408,7 +408,7 @@ module FacilitiesManagement
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
-            caption1: @procurement[:name],
+            caption1: @procurement[:contact_name],
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurement dashboard',
@@ -451,6 +451,7 @@ module FacilitiesManagement
             primary_name: 'set_route_to_market'
           },
           direct_award: {
+            caption1: @procurement[:name],
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement),
             continuation_text: 'Continue to direct award',
