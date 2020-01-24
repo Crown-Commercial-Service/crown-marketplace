@@ -8,14 +8,14 @@ module Api
       before_action :authenticate_user!
 
       def show_post_code
-        result = PostcodesNutsRegions.select(:id, :code, :postcode).find_by(postcode: params[:postcode].delete(' '))
+        result = PostcodesNutsRegion.select(:id, :code, :postcode).find_by(postcode: params[:postcode].delete(' '))
         render json: { status: 200, result: result }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
       end
 
       def show_nuts_code
-        result = PostcodesNutsRegions.select(:id, :code, :postcode).find_by(code: params[:code])
+        result = PostcodesNutsRegion.select(:id, :code, :postcode).find_by(code: params[:code])
         render json: { status: 200, result: result }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
