@@ -753,6 +753,45 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       expect(wb.sheet('Contract Rate Card').row(27)[0]).to eq 'N.1'
     end
     # rubocop:enable RSpec/ExampleLength
+
+    # rubocop:disable RSpec/ExampleLength
+    it 'verify Unit Of Measure column in Contract Rate Card  table 1' do
+      user_email = 'test@example.com'
+      start_date = DateTime.now.utc
+
+      report = described_class.new(start_date, user_email, data)
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
+
+      results = {}
+      report_results = {}
+      report_results_no_cafmhelp_removed = {}
+
+      supplier_names = rate_card.data[:Prices].keys
+      supplier_names.each do |supplier_name|
+        report_results[supplier_name] = {}
+        # e.g. dummy supplier_name = 'Hickle-Schinner'
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name], true
+        results[supplier_name] = report.direct_award_value
+
+        report_results_no_cafmhelp_removed[supplier_name] = {}
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results_no_cafmhelp_removed[supplier_name], false
+      end
+
+      supplier_name = 'Hirthe-Mills'.to_sym
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card, report_results_no_cafmhelp_removed[supplier_name]
+
+      IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
+
+      # check CAFM,Help are added to table 1 in contract Rate Card worksheet, direct_award_prices.xlsx
+      wb = Roo::Excelx.new('/tmp/direct_award_prices.xlsx')
+      expect(wb.sheet('Contract Rate Card').row(8)[0]).to eq 'C.5'
+      expect(wb.sheet('Contract Rate Card').row(8)[1]).to eq 'Lifts, Hoists & Conveyance Systems Maintenance - Standard A'
+      # note: enable once everyone runs otherwise all tests will fail: rake lib/tasks/facilities_management/fm.rake db:fmdata
+      # expect(wb.sheet('Contract Rate Card').row(8)[2]).to eq 'price per Number (per lift per floor)'
+    end
+    # rubocop:enable RSpec/ExampleLength
   end
   # rubocop:enable RSpec/InstanceVariable
   # rubocop:enable Layout/AlignArray
