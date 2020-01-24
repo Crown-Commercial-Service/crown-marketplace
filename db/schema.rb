@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_101511) do
+ActiveRecord::Schema.define(version: 2020_01_27_104344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -473,10 +473,11 @@ ActiveRecord::Schema.define(version: 2020_01_23_101511) do
   end
 
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "postcode", limit: 255
-    t.string "code", limit: 255
+    t.string "postcode", limit: 20
+    t.string "code", limit: 20
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|
