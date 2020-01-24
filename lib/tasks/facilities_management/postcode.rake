@@ -2,7 +2,7 @@ module OrdnanceSurvey
   require 'csv'
   require 'aws-sdk-s3'
   require 'json'
-  require './lib/tasks/distributed_locks'
+  require Rails.root.join('lib', 'tasks', 'distributed_locks')
 
   def self.create_postcode_table
     str = File.read(Rails.root + 'data/postcode/PostgreSQL_AddressBase_Plus_CreateTable.sql')
