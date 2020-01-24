@@ -109,7 +109,7 @@ module FacilitiesManagement
           @procurement[:route_to_market] = @procurement.aasm_state
         when 'direct_award'
           @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: params['step']).da_journey_view
-          set_da_buyer_page_data(@view_da)
+          da_buyer_page_data(@view_da)
         else
           @page_data = {}
           @page_data[:model_object] = @procurement
@@ -228,7 +228,7 @@ module FacilitiesManagement
         @page_data[:supplier_prices] = @procurement.procurement_suppliers.map(&:direct_award_value)
       end
 
-      def set_da_buyer_page_data(view_name)
+      def da_buyer_page_data(view_name)
         @page_data = {}
         build_da_journey_page_details(view_name)
         @page_data[:model_object] = @procurement
@@ -377,22 +377,22 @@ module FacilitiesManagement
       end
 
       def build_da_journey_page_details(view_name)
-          @page_description = LayoutHelper::PageDescription.new(
-            LayoutHelper::HeadingDetail.new(da_journey_page_details(view_name.to_sym)[:page_title],
-                                            da_journey_page_details(view_name.to_sym)[:caption1],
-                                            da_journey_page_details(view_name.to_sym)[:caption2],
-                                            da_journey_page_details(view_name.to_sym)[:sub_title]),
-            LayoutHelper::BackButtonDetail.new(da_journey_page_details(view_name.to_sym)[:back_url],
-                                               da_journey_page_details(view_name.to_sym)[:back_label],
-                                               da_journey_page_details(view_name.to_sym)[:back_text]),
-            LayoutHelper::NavigationDetail.new(da_journey_page_details(view_name.to_sym)[:continuation_text],
-                                               da_journey_page_details(view_name.to_sym)[:return_url],
-                                               da_journey_page_details(view_name.to_sym)[:return_text],
-                                               da_journey_page_details(view_name.to_sym)[:secondary_url],
-                                               da_journey_page_details(view_name.to_sym)[:secondary_text],
-                                               da_journey_page_details(view_name.to_sym)[:primary_name],
-                                               da_journey_page_details(view_name.to_sym)[:secondary_name])
-          ) if da_journey_definitions.key?(view_name.to_sym)
+        @page_description = LayoutHelper::PageDescription.new(
+          LayoutHelper::HeadingDetail.new(da_journey_page_details(view_name.to_sym)[:page_title],
+                                          da_journey_page_details(view_name.to_sym)[:caption1],
+                                          da_journey_page_details(view_name.to_sym)[:caption2],
+                                          da_journey_page_details(view_name.to_sym)[:sub_title]),
+          LayoutHelper::BackButtonDetail.new(da_journey_page_details(view_name.to_sym)[:back_url],
+                                             da_journey_page_details(view_name.to_sym)[:back_label],
+                                             da_journey_page_details(view_name.to_sym)[:back_text]),
+          LayoutHelper::NavigationDetail.new(da_journey_page_details(view_name.to_sym)[:continuation_text],
+                                             da_journey_page_details(view_name.to_sym)[:return_url],
+                                             da_journey_page_details(view_name.to_sym)[:return_text],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_url],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_text],
+                                             da_journey_page_details(view_name.to_sym)[:primary_name],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_name])
+        ) if da_journey_definitions.key?(view_name.to_sym)
       end
       # rubocop:enable Style/MultilineIfModifier
       # rubocop:enable Metrics/AbcSize
