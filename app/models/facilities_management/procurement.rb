@@ -15,6 +15,7 @@ module FacilitiesManagement
     accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
 
     has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+    has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
 
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
     mount_uploader :security_policy_document_file, FacilitiesManagementSecurityPolicyDocumentUploader
