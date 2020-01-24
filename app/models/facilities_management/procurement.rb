@@ -66,7 +66,8 @@ module FacilitiesManagement
       end
     end
 
-    # rubocop: disable Metrics/BlockLength
+    # rubocop:disable Metrics/BlockLength
+
     aasm(:da_journey, column: 'da_journey_state') do
       state :pricing, initial: true
       state :what_next
@@ -154,7 +155,8 @@ module FacilitiesManagement
         transitions to: :closed
       end
     end
-    # rubocop: enable Metrics/BlockLength
+
+    # rubocop:enable Metrics/BlockLength
 
     def find_or_build_procurement_building(building_data, building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(name: building_data['name'])

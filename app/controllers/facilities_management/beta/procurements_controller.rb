@@ -44,23 +44,20 @@ module FacilitiesManagement
         end
       end
 
-      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def edit
         if @procurement.quick_search?
           render :edit
         else
           @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: nil).back_link
 
-          unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @prcocurement.aasm_state == 'da_draft'
+          unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
             # da journey follows
             @view_name = set_view_data unless @procurement.quick_search?
-            render @view_da && return
           end
 
           redirect_to facilities_management_beta_procurement_url(id: @procurement.id) && return unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
         end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
@@ -110,9 +107,9 @@ module FacilitiesManagement
         when 'results'
           set_results_page_data
           @procurement[:route_to_market] = @procurement.aasm_state
-        when 'direct_award', 'edit'
+        when 'direct_award'
           @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: params['step']).da_journey_view
-          create_da_buyer_page_data(@view_da)
+          da_buyer_page_data(@view_da)
         else
           @page_data = {}
           @page_data[:model_object] = @procurement
@@ -231,7 +228,7 @@ module FacilitiesManagement
         @page_data[:supplier_prices] = @procurement.procurement_suppliers.map(&:direct_award_value)
       end
 
-      def create_da_buyer_page_data(view_name)
+      def da_buyer_page_data(view_name)
         @page_data = {}
         build_da_journey_page_details(view_name)
         @page_data[:model_object] = @procurement
@@ -380,32 +377,28 @@ module FacilitiesManagement
       end
 
       def build_da_journey_page_details(view_name)
-        da_page_details = da_journey_page_details(view_name) if da_journey_definitions.key?(view_name.to_sym)
-
         @page_description = LayoutHelper::PageDescription.new(
-          LayoutHelper::HeadingDetail.new(da_page_details[:page_title],
-                                          da_page_details[:caption1],
-                                          da_page_details[:caption2],
-                                          da_page_details[:sub_title]),
-          LayoutHelper::BackButtonDetail.new(da_page_details[:back_url],
-                                             da_page_details[:back_label],
-                                             da_page_details[:back_text]),
-          LayoutHelper::NavigationDetail.new(da_page_details[:continuation_text],
-                                             da_page_details[:return_url],
-                                             da_page_details[:return_text],
-                                             da_page_details[:secondary_url],
-                                             da_page_details[:secondary_text],
-                                             da_page_details[:primary_name],
-                                             da_page_details[:secondary_name])
-        ) unless da_page_details.nil?
+          LayoutHelper::HeadingDetail.new(da_journey_page_details(view_name.to_sym)[:page_title],
+                                          da_journey_page_details(view_name.to_sym)[:caption1],
+                                          da_journey_page_details(view_name.to_sym)[:caption2],
+                                          da_journey_page_details(view_name.to_sym)[:sub_title]),
+          LayoutHelper::BackButtonDetail.new(da_journey_page_details(view_name.to_sym)[:back_url],
+                                             da_journey_page_details(view_name.to_sym)[:back_label],
+                                             da_journey_page_details(view_name.to_sym)[:back_text]),
+          LayoutHelper::NavigationDetail.new(da_journey_page_details(view_name.to_sym)[:continuation_text],
+                                             da_journey_page_details(view_name.to_sym)[:return_url],
+                                             da_journey_page_details(view_name.to_sym)[:return_text],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_url],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_text],
+                                             da_journey_page_details(view_name.to_sym)[:primary_name],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_name])
+        ) if da_journey_definitions.key?(view_name.to_sym)
       end
       # rubocop:enable Style/MultilineIfModifier
       # rubocop:enable Metrics/AbcSize
 
       def da_journey_page_details(view_name)
-        @page_details = {} if @page_details.nil?
-
-        @da_journey_page_details ||= @page_details.merge(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))
+        @page_details.merge!(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))
       end
 
       def page_details(action)
@@ -415,7 +408,7 @@ module FacilitiesManagement
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
-            caption1: @procurement[:contract_name],
+            caption1: @procurement[:contact_name],
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurement dashboard',
@@ -432,6 +425,7 @@ module FacilitiesManagement
             back_url: '#',
             back_text: 'Back',
             page_title: 'Payment method',
+            caption1: 'Total facilities management',
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: '#',
