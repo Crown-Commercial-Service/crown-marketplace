@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_135030) do
+ActiveRecord::Schema.define(version: 2020_01_24_084544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -48,6 +48,15 @@ ActiveRecord::Schema.define(version: 2020_01_21_135030) do
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
+  create_table "facilities_management_pension_funds", force: :cascade do |t|
+    t.uuid "facilities_management_procurements_id", null: false
+    t.string "name", limit: 150
+    t.integer "percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurements_id"], name: "index_pension_funds_on_fm_procurement_id"
+  end
+
   create_table "facilities_management_procurement_building_services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_building_id", null: false
     t.string "code", limit: 10
@@ -80,6 +89,15 @@ ActiveRecord::Schema.define(version: 2020_01_21_135030) do
     t.boolean "active"
     t.uuid "building_id"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
+  end
+
+  create_table "facilities_management_procurement_pension_funds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.string "name", limit: 150
+    t.integer "percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_pension_funds_on_fm_procurement_id"
   end
 
   create_table "facilities_management_procurement_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -572,6 +590,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_135030) do
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
+  add_foreign_key "facilities_management_procurement_pension_funds", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_suppliers", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
