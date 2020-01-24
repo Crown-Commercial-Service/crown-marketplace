@@ -125,6 +125,65 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '#payment_method' do
+    context 'when a payment_method is not present' do
+      it 'is expected not to be valid' do
+        procurement.payment_method = ''
+        expect(procurement.valid?(:payment_method)).to eq false
+      end
+    end
+
+    context 'when bacs is a selected payment_method' do
+      it 'is expected to be valid' do
+        procurement.payment_method = 'bacs'
+        expect(procurement.valid?(:payment_method)).to eq true
+      end
+    end
+
+    context 'when card is a selected payment_method' do
+      it 'is expected to be valid' do
+        procurement.payment_method = 'card'
+        expect(procurement.valid?(:payment_method)).to eq true
+      end
+    end
+
+    context 'when a payment_method already exists' do
+      context 'when bacs is the payment_method' do
+        before do
+          procurement.payment_method = 'bacs'
+        end
+
+        it 'is expected to overwrite bacs' do
+          procurement.payment_method = 'card'
+          expect(procurement.payment_method).to eq 'card'
+        end
+
+        it 'is expected to revert back to bacs' do
+          procurement.payment_method = 'card'
+          procurement.payment_method = 'bacs'
+          expect(procurement.payment_method).to eq 'bacs'
+        end
+      end
+
+      context 'when card is the payment_method' do
+        before do
+          procurement.payment_method = 'card'
+        end
+
+        it 'is expected to overwrite card' do
+          procurement.payment_method = 'bacs'
+          expect(procurement.payment_method).to eq 'bacs'
+        end
+
+        it 'is expected to revert back to card' do
+          procurement.payment_method = 'bacs'
+          procurement.payment_method = 'card'
+          expect(procurement.payment_method).to eq 'card'
+        end
+      end
+    end
+  end
+
   describe '#procurement_buildings' do
     context 'when there are no procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
@@ -386,41 +445,52 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '#save_eligible_suppliers' do
+  describe '#save_eligible_suppliers_and_set_state' do
+    let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
+    let(:da_value_test) { 865.2478374540002 }
+    let(:da_value_test1) { 1517.20280381278 }
+    let(:obj) { double }
+
+    before do
+      # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
+      allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
+      allow(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
+      allow(obj).to receive(:assessed_value).and_return(0.1234)
+      allow(obj).to receive(:lot_number).and_return('1a')
+      allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
+      allow_any_instance_of(DirectAward).to receive(:calculate).and_return(true)
+      allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
+      allow(procurement).to receive(:priced_at_framework).and_return(true)
+      # rubocop:enable RSpec/AnyInstance, RSpec/SubjectStub
+    end
+
     context 'when no eligible suppliers' do
       it 'does not create any procurement suppliers' do
-        # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:sorted_list).and_return([])
-        # rubocop:enable RSpec/AnyInstance
-        expect { procurement.save_eligible_suppliers }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(0)
+        allow(obj).to receive(:sorted_list).and_return([])
+        expect { procurement.save_eligible_suppliers_and_set_state }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(0)
       end
     end
 
     context 'when some eligible suppliers' do
-      let(:da_value_test) { 865.2478374540002 }
-      let(:da_value_test1) { 1517.20280381278 }
-      let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
-
-      before do
-        # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
-        allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-        allow_any_instance_of(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
-        allow_any_instance_of(DirectAward).to receive(:calculate).and_return(true)
-        allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
-        # rubocop:enable RSpec/AnyInstance, RSpec/SubjectStub
-      end
-
       it 'creates procurement_suppliers' do
-        expect { procurement.save_eligible_suppliers }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
+        expect { procurement.save_eligible_suppliers_and_set_state }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
       end
       it 'creates procurement_suppliers with the right direct award value' do
-        procurement.save_eligible_suppliers
+        procurement.save_eligible_suppliers_and_set_state
         expect(procurement.procurement_suppliers.first.direct_award_value).to eq da_value_test
         expect(procurement.procurement_suppliers.last.direct_award_value).to eq da_value_test1
       end
       it 'creates procurement_suppliers with the right CCS::FM::Supplier id' do
-        procurement.save_eligible_suppliers
+        procurement.save_eligible_suppliers_and_set_state
         expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_uuid
+      end
+      it 'saves assessed_value' do
+        procurement.save_eligible_suppliers_and_set_state
+        expect(procurement.assessed_value).not_to be_nil
+      end
+      it 'saves lot_number' do
+        procurement.save_eligible_suppliers_and_set_state
+        expect(procurement.lot_number).not_to be_nil
       end
     end
   end
@@ -461,6 +531,257 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when the procurement is not set to direct award' do
       it 'is expected to be false' do
         expect(procurement.direct_award?).to eq(false)
+      end
+    end
+  end
+
+  describe 'extension periods start and end dates' do
+    let(:procurement) { create(:facilities_management_procurement_with_extension_periods) }
+
+    describe '#extension_period_1_start_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the initial call off period has ended' do
+          initial_call_off_period_end_date = procurement.initial_call_off_start_date + procurement.initial_call_off_period.years - 1.day
+
+          expect(procurement.extension_period_1_start_date).to eq(initial_call_off_period_end_date + 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_1 = nil
+
+          expect(procurement.extension_period_1_start_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_1_end_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the initial call off period has ended' do
+          extension_2_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1).years
+
+          expect(procurement.extension_period_1_end_date).to eq(extension_2_start_date - 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_1 = nil
+
+          expect(procurement.extension_period_1_end_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_2_start_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the first extension period period has ended' do
+          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1)
+          extension_period_1_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
+
+          expect(procurement.extension_period_2_start_date).to eq(extension_period_1_end_date + 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_2 = nil
+
+          expect(procurement.extension_period_2_start_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_2_end_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the first extension period has ended' do
+          extension_3_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2).years
+
+          expect(procurement.extension_period_2_end_date).to eq(extension_3_start_date - 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_2 = nil
+
+          expect(procurement.extension_period_2_end_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_3_start_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the second extension period period has ended' do
+          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2)
+          extension_period_2_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
+
+          expect(procurement.extension_period_3_start_date).to eq(extension_period_2_end_date + 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_3 = nil
+
+          expect(procurement.extension_period_3_start_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_3_end_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the initial call off period has ended' do
+          extension_4_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3).years
+
+          expect(procurement.extension_period_3_end_date).to eq(extension_4_start_date - 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_3 = nil
+
+          expect(procurement.extension_period_3_end_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_4_start_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the third extension period has ended' do
+          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3)
+          extension_period_3_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
+
+          expect(procurement.extension_period_4_start_date).to eq(extension_period_3_end_date + 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_4 = nil
+
+          expect(procurement.extension_period_4_end_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_4_end_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the initial call off period has ended' do
+          extension_5_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3 + procurement.optional_call_off_extensions_4).years
+
+          expect(procurement.extension_period_4_end_date).to eq(extension_5_start_date - 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_4 = nil
+
+          expect(procurement.extension_period_4_end_date).to be_nil
+        end
+      end
+    end
+  end
+
+  describe '#any_pension_errors?' do
+    let(:pension_fund) { build(:facilities_management_procurement_pension_fund, procurement: create(:facilities_management_procurement)) }
+    let(:attributes) { ActiveSupport::HashWithIndifferentAccess.new(pension_fund.attributes) }
+
+    before do
+      attributes['percentage'] = attributes['percentage'].to_s
+    end
+
+    # Validating the name
+    context 'when the name is more than 150 characters' do
+      it 'is expected to not be valid' do
+        attributes[:name] = (0...151).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+        attributes[:name] = (0...rand(151..300)).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the name is blank' do
+      it 'is expected to be true' do
+        attributes[:name] = ''
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+        attributes[:name] = '     '
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the name is between 1 and 150 characters inclusive' do
+      it 'is expected to be false' do
+        attributes[:name] = 'a'
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+        attributes[:name] = (0...150).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+        attributes[:name] = (0...rand(1..149)).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+      end
+    end
+
+    # Validating the percentage
+    context 'when the percentage is less than 1' do
+      it 'is expected to be true' do
+        attributes[:percentage] = 0.to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+        attributes[:percentage] = rand(-100..-1).to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is more than 100' do
+      it 'is expected to be true' do
+        attributes[:percentage] = 101.to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+        attributes[:percentage] = rand(101..200).to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is blank' do
+      it 'is expected to be true' do
+        attributes[:percentage] = ''
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is not a number' do
+      it 'is expected to be true' do
+        attributes[:percentage] = (0...5).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is not a whole number' do
+      it 'is expected to be true' do
+        attributes[:percentage] = (100 * rand(2..100) / 101.0).to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is between 1 and 100 percent inclusive' do
+      it 'is expected to be false' do
+        attributes[:percentage] = 1.to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+        attributes[:percentage] = rand(1..100).to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+        attributes[:percentage] = 100.to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+      end
+    end
+
+    # validating number of record
+    context 'when the number of records is greater than 99' do
+      it 'is expected to be true' do
+        99.times do
+          procurement.procurement_pension_funds.build
+        end
+        expect(procurement.any_pension_errors?(attributes)).to eq true
       end
     end
   end

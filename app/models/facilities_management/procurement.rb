@@ -1,4 +1,5 @@
 require 'fm_calculator/fm_direct_award_calculator.rb'
+
 module FacilitiesManagement
   class Procurement < ApplicationRecord
     include AASM
@@ -19,6 +20,9 @@ module FacilitiesManagement
     has_one :invoice_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementInvoiceContactDetail', inverse_of: :procurement, dependent: :destroy
     has_one :authorised_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementAuthorisedContactDetail', inverse_of: :procurement, dependent: :destroy
     has_one :notices_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementNoticesContactDetail', inverse_of: :procurement, dependent: :destroy
+
+    has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true
+    accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
 
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
     mount_uploader :security_policy_document_file, FacilitiesManagementSecurityPolicyDocumentUploader
@@ -225,6 +229,8 @@ module FacilitiesManagement
     SEARCH_ORDER = SEARCH.map(&:to_s)
     SENT_OFFER_ORDER = SENT_OFFER.map(&:to_s)
 
+    MAX_NUMBER_OF_PENSIONS = 99
+
     def direct_award?
       aasm_state.match?(/\Ada_/)
     end
@@ -285,6 +291,10 @@ module FacilitiesManagement
       end
 
       procurement_building_services.where.not(code: service_codes).destroy_all
+    end
+
+    def more_than_max_pensions?
+      procurement_pension_funds.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_PENSIONS
     end
   end
 end
