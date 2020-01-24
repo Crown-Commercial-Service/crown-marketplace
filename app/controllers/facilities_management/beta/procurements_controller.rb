@@ -50,7 +50,12 @@ module FacilitiesManagement
         else
           @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).back_link
 
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
+          unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
+            # da journey follows
+            @view_name = set_view_data unless @procurement.quick_search?
+          end
+
+          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) && return unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
         end
       end
 
@@ -61,7 +66,7 @@ module FacilitiesManagement
         continue_to_results && return if params['continue_to_results'].present?
 
         set_route_to_market && return if params['set_route_to_market'].present?
-        
+
         continue_to_contract_details && return if params['continue_da'].present?
 
         update_procurement if params['facilities_management_procurement'].present?
@@ -415,6 +420,15 @@ module FacilitiesManagement
           },
           contract_details: {
             page_title: 'Contract details'
+          },
+          payment_method: {
+            back_url: '#',
+            back_text: 'Back',
+            page_title: 'Payment method',
+            caption1: 'Total facilities management',
+            continuation_text: 'Save and return',
+            return_text: 'Return to contract details',
+            return_url: '#',
           }
         }
       end

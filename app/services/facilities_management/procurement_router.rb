@@ -3,7 +3,7 @@ class FacilitiesManagement::ProcurementRouter
 
   QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze
 
-  STEPS = %w[security_policy_document contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
+  STEPS = %w[contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
 
   def initialize(id:, procurement_state:, step: nil, da_journey_state: nil)
     @id = id
@@ -21,6 +21,8 @@ class FacilitiesManagement::ProcurementRouter
   DA_JOURNEY_STATES_TO_VIEWS = {
     'pricing': 'pricing',
     'what_next': 'what_next',
+    'security_policy_document': 'security_policy_document',
+    'payment_method': 'payment_method',
     'important_information': 'did_you_know',
     'contract_details': 'contract_details',
     'review_and_generate': 'review_and_generate',
