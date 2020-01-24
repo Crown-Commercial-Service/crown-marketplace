@@ -381,6 +381,7 @@ module FacilitiesManagement
             primary_name: 'set_route_to_market'
           },
           direct_award: {
+            caption1: @procurement[:contract_name],
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement),
             continuation_text: 'Continue to direct award',
