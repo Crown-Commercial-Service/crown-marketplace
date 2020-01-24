@@ -685,4 +685,104 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '#any_pension_errors?' do
+    let(:pension_fund) { build(:facilities_management_procurement_pension_fund, procurement: create(:facilities_management_procurement)) }
+    let(:attributes) { ActiveSupport::HashWithIndifferentAccess.new(pension_fund.attributes) }
+
+    before do
+      attributes['percentage'] = attributes['percentage'].to_s
+    end
+
+    # Validating the name
+    context 'when the name is more than 150 characters' do
+      it 'is expected to not be valid' do
+        attributes[:name] = (0...151).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+        attributes[:name] = (0...rand(151..300)).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the name is blank' do
+      it 'is expected to be true' do
+        attributes[:name] = ''
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+        attributes[:name] = '     '
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the name is between 1 and 150 characters inclusive' do
+      it 'is expected to be false' do
+        attributes[:name] = 'a'
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+        attributes[:name] = (0...150).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+        attributes[:name] = (0...rand(1..149)).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+      end
+    end
+
+    # Validating the percentage
+    context 'when the percentage is less than 1' do
+      it 'is expected to be true' do
+        attributes[:percentage] = 0.to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+        attributes[:percentage] = rand(-100..-1).to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is more than 100' do
+      it 'is expected to be true' do
+        attributes[:percentage] = 101.to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+        attributes[:percentage] = rand(101..200).to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is blank' do
+      it 'is expected to be true' do
+        attributes[:percentage] = ''
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is not a number' do
+      it 'is expected to be true' do
+        attributes[:percentage] = (0...5).map { ('a'..'z').to_a[rand(26)] }.join
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is not a whole number' do
+      it 'is expected to be true' do
+        attributes[:percentage] = (100 * rand(2..100) / 101.0).to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+
+    context 'when the percentage is between 1 and 100 percent inclusive' do
+      it 'is expected to be false' do
+        attributes[:percentage] = 1.to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+        attributes[:percentage] = rand(1..100).to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+        attributes[:percentage] = 100.to_s
+        expect(procurement.any_pension_errors?(attributes)).to eq false
+      end
+    end
+
+    # validating number of record
+    context 'when the number of records is greater than 99' do
+      it 'is expected to be true' do
+        99.times do
+          procurement.procurement_pension_funds.build
+        end
+        expect(procurement.any_pension_errors?(attributes)).to eq true
+      end
+    end
+  end
 end
