@@ -21,8 +21,12 @@ class FacilitiesManagement::ProcurementRouter
   DA_JOURNEY_STATES_TO_VIEWS = {
     'pricing': 'pricing',
     'what_next': 'what_next',
-    'security_policy_document': 'security_policy_document',
     'payment_method': 'payment_method',
+    'invoicing_contact_details': 'invoicing_contact_details',
+    'authorised_representative': 'authorised_representative',
+    'notices_contact_details': 'notices_contact_details',
+    'security_policy_document': 'security_policy_document',
+    'local_government_pension_scheme': 'local_government_pension_scheme',
     'important_information': 'did_you_know',
     'contract_details': 'contract_details',
     'review_and_generate': 'review_and_generate',
@@ -42,7 +46,6 @@ class FacilitiesManagement::ProcurementRouter
 
   def da_journey_view
     DA_JOURNEY_STATES_TO_VIEWS[@da_journey_state.to_sym] if DA_JOURNEY_STATES_TO_VIEWS.key?(@da_journey_state.to_sym)
-    DA_JOURNEY_STATES_TO_VIEWS[@step.to_sym] if DA_JOURNEY_STATES_TO_VIEWS.key?(@step.to_sym)
   end
 
   def view
