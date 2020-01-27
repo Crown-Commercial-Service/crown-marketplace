@@ -142,7 +142,7 @@ namespace :db do
       env_key: 'RAILS_MASTER_KEY_2',
       raise_if_missing_key: false
     )
-    p creds.aws_postcodes
+
     access_key = creds.aws_postcodes[:access_key_id]
     secret_key = creds.aws_postcodes[:secret_access_key]
     bucket = creds.aws_postcodes[:bucket]
