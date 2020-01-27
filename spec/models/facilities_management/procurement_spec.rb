@@ -8,9 +8,9 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   it { is_expected.to be_valid }
 
   describe 'associations' do
-    it { is_expected.to have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
-    it { is_expected.to have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
-    it { is_expected.to have_one(:invoice_contact_detail).class_name('FacilitiesManagement::ProcurementInvoiceContactDetail') }
+    it { should have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
+    it { should have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
+    it { should have_one(:invoice_contact_detail).class_name('FacilitiesManagement::ProcurementInvoiceContactDetail') }
   end
 
   describe '#name' do
@@ -120,65 +120,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'expected to be valid' do
           procurement.estimated_cost_known = false
           expect(procurement.valid?(:estimated_annual_cost)).to eq true
-        end
-      end
-    end
-  end
-
-  describe '#payment_method' do
-    context 'when a payment_method is not present' do
-      it 'is expected not to be valid' do
-        procurement.payment_method = ''
-        expect(procurement.valid?(:payment_method)).to eq false
-      end
-    end
-
-    context 'when bacs is a selected payment_method' do
-      it 'is expected to be valid' do
-        procurement.payment_method = 'bacs'
-        expect(procurement.valid?(:payment_method)).to eq true
-      end
-    end
-
-    context 'when card is a selected payment_method' do
-      it 'is expected to be valid' do
-        procurement.payment_method = 'card'
-        expect(procurement.valid?(:payment_method)).to eq true
-      end
-    end
-
-    context 'when a payment_method already exists' do
-      context 'when bacs is the payment_method' do
-        before do
-          procurement.payment_method = 'bacs'
-        end
-
-        it 'is expected to overwrite bacs' do
-          procurement.payment_method = 'card'
-          expect(procurement.payment_method).to eq 'card'
-        end
-
-        it 'is expected to revert back to bacs' do
-          procurement.payment_method = 'card'
-          procurement.payment_method = 'bacs'
-          expect(procurement.payment_method).to eq 'bacs'
-        end
-      end
-
-      context 'when card is the payment_method' do
-        before do
-          procurement.payment_method = 'card'
-        end
-
-        it 'is expected to overwrite card' do
-          procurement.payment_method = 'bacs'
-          expect(procurement.payment_method).to eq 'bacs'
-        end
-
-        it 'is expected to revert back to card' do
-          procurement.payment_method = 'bacs'
-          procurement.payment_method = 'card'
-          expect(procurement.payment_method).to eq 'card'
         end
       end
     end
@@ -504,6 +445,22 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       it 'returns true' do
         expect(procurement.send(:priced_at_framework)).to eq true
+      end
+    end
+  end
+
+  describe '#direct_award?' do
+    context 'when the procurement is set to direct award' do
+      it 'is expected to be true' do
+        procurement.aasm_state = 'da_draft'
+
+        expect(procurement.direct_award?).to eq(true)
+      end
+    end
+
+    context 'when the procurement is not set to direct award' do
+      it 'is expected to be false' do
+        expect(procurement.direct_award?).to eq(false)
       end
     end
   end
