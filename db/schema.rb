@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_135030) do
     t.string "unit_text"
     t.string "data_type"
     t.string "spreadsheet_label"
+    t.string "unit_measure_label"
     t.text "service_usage", array: true
   end
 
