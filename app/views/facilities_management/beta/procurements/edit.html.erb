@@ -16,8 +16,8 @@
       <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, multiple: false, render_empty: true }  %>
     </div>
     <div class="govuk-clearfix">
-      <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.name}" if @procurement.detailed_search? %></span>
       <% if !@procurement.persisted? || @procurement.quick_search?%>
+        <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.name}" if @procurement.detailed_search? %></span>
         <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
           <%= @procurement.name if @procurement.quick_search? %>
           <%= 'Search Results' unless @procurement.persisted? %>
