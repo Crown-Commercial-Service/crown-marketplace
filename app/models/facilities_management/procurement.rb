@@ -142,6 +142,10 @@ module FacilitiesManagement
     SEARCH_ORDER = SEARCH.map(&:to_s)
     SENT_OFFER_ORDER = SENT_OFFER.map(&:to_s)
 
+    def direct_award?
+      aasm_state.match?(/\Ada_/)
+    end
+
     private
 
     def update_procurement_building_services
