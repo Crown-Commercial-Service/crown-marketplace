@@ -179,7 +179,7 @@ module FMCalculator
 
     # cleaning consumables using benchmark rate
     def benchclean
-      @benchclean = @occupants * @framework_rates['M146']
+      @benchclean = @occupants * @benchmark_rates['M146']
     end
 
     # benchmark variation if london_flag set
@@ -194,7 +194,7 @@ module FMCalculator
     # benchmark cafm if flag set
     def benchcafm(benchsubtotal2)
       if @cafm_flag == 'Y'
-        @framework_rates['M136'] * benchsubtotal2
+        @benchmark_rates['M136'] * benchsubtotal2
       else
         0
       end
@@ -203,7 +203,7 @@ module FMCalculator
     # benchmark helpsdesk costs if helpdesk_flag set
     def benchhelpdesk(benchsubtotal2)
       if @helpdesk_flag == 'Y'
-        @benchhelpdesk = benchsubtotal2 * @framework_rates['N138']
+        @benchhelpdesk = benchsubtotal2 * @benchmark_rates['N138']
       else
         0
       end
@@ -211,13 +211,13 @@ module FMCalculator
 
     # benchmark mobilisation costs
     def benchmobilisation(benchsubtotal3)
-      benchsubtotal3 * @framework_rates['B1']
+      benchsubtotal3 * @benchmark_rates['B1']
     end
 
     # benchmark tupe costs if flag set
     def benchtupe(benchsubtotal3)
       if @tupe_flag == 'Y'
-        benchsubtotal3 * @framework_rates['M148']
+        benchsubtotal3 * @benchmark_rates['M148']
       else
         0
       end
@@ -225,22 +225,22 @@ module FMCalculator
 
     # benchmark mananagement overhead costs
     def benchmanage(benchyear1)
-      benchyear1 * @framework_rates['M140']
+      benchyear1 * @benchmark_rates['M140']
     end
 
     # bench mark corporate overhead cost
     def benchcorporate(benchyear1)
-      benchyear1 * @framework_rates['M141']
+      benchyear1 * @benchmark_rates['M141']
     end
 
     # bench mark profit
     def benchprofit(benchyear1)
-      benchyear1 * @framework_rates['M142']
+      benchyear1 * @benchmark_rates['M142']
     end
 
     # bench mark subsequent year(s) total charges
     def benchsubyearstotal(benchyear1totalcharges, benchmobilisation)
-      @subsequent_length_years * (benchyear1totalcharges - (((benchmobilisation + (benchmobilisation * @framework_rates['M140']) + (benchmobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
+      @subsequent_length_years * (benchyear1totalcharges - (((benchmobilisation + (benchmobilisation * @benchmark_rates['M140']) + (benchmobilisation * @benchmark_rates['M141'])) * (@benchmark_rates['M142'] + 1))))
     end
 
     # entry point to calculate sum of the unit of measure
@@ -271,7 +271,6 @@ module FMCalculator
         results[:contract_length_years] = @contract_length_years
         results[:subsequent_length_years] = @subsequent_length_years
       end
-
       year1totalcharges + subyearstotal(year1totalcharges, mobilisation)
     end
     # rubocop:enable Metrics/AbcSize
