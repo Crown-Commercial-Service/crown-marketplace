@@ -67,7 +67,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/BlockLength
   def contract_rate_card
+    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.select(:id, :service_usage, :unit_measure_label)
+
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
       price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
@@ -88,14 +91,16 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
                                  .flatten.uniq
                                  .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-          # I found :spreadsheet_label value is always nil,I did not want to alter code too much so left current code alone..
-          # if buildings have different services then I put in the ,if, check below otherwise an exception is generated
-          labels = @data_no_cafmhelp_removed.keys.sort.collect { |k| @data_no_cafmhelp_removed[k][s][:spreadsheet_label] if @data_no_cafmhelp_removed[k].key(s) }
-
           new_row = []
           CCS::FM::RateCard.building_types.each { |b| new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b] }
 
-          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], labels.first] << new_row).flatten
+          unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s + '%').first
+          unit_of_measurement_value = begin
+                                        unit_of_measurement_row['unit_measure_label']
+                                      rescue NameError
+                                        nil
+                                      end
+          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], unit_of_measurement_value] << new_row).flatten
 
           styles = [standard_column_style, standard_column_style, standard_column_style]
 
@@ -123,6 +128,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     end
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/BlockLength
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/BlockLength
