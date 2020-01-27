@@ -88,8 +88,8 @@ module LayoutHelper
           concat(heading_details.caption)
           concat("&nbsp;&mdash;&nbsp;#{heading_details.caption2}".html_safe) if heading_details.caption2.present?
         end).html_safe
-        concat(heading_details.text)
       end
+      concat(heading_details.text)
       concat(content_tag(:p, heading_details.subtitle, class: 'govuk-body-l')) if heading_details.subtitle.present?
     end
   end
