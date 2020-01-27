@@ -45,7 +45,9 @@ class FacilitiesManagement::ProcurementRouter
   }.freeze
 
   def da_journey_view
-    DA_JOURNEY_STATES_TO_VIEWS[@da_journey_state.to_sym] if DA_JOURNEY_STATES_TO_VIEWS.key?(@da_journey_state.to_sym)
+    return DA_JOURNEY_STATES_TO_VIEWS[@da_journey_state.to_sym] if DA_JOURNEY_STATES_TO_VIEWS.key?(@da_journey_state.to_sym)
+
+    DA_JOURNEY_STATES_TO_VIEWS[@step.to_sym] if DA_JOURNEY_STATES_TO_VIEWS.key?(@step.to_sym) && @step.present?
   end
 
   def view

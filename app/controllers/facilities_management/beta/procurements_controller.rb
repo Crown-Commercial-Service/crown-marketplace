@@ -380,24 +380,22 @@ module FacilitiesManagement
       end
 
       def build_da_journey_page_details(view_name)
-        da_page_details = da_journey_page_details(view_name) if da_journey_definitions.key?(view_name.to_sym)
-
         @page_description = LayoutHelper::PageDescription.new(
-          LayoutHelper::HeadingDetail.new(da_page_details[:page_title],
-                                          da_page_details[:caption1],
-                                          da_page_details[:caption2],
-                                          da_page_details[:sub_title]),
-          LayoutHelper::BackButtonDetail.new(da_page_details[:back_url],
-                                             da_page_details[:back_label],
-                                             da_page_details[:back_text]),
-          LayoutHelper::NavigationDetail.new(da_page_details[:continuation_text],
-                                             da_page_details[:return_url],
-                                             da_page_details[:return_text],
-                                             da_page_details[:secondary_url],
-                                             da_page_details[:secondary_text],
-                                             da_page_details[:primary_name],
-                                             da_page_details[:secondary_name])
-        ) unless da_page_details.nil?
+          LayoutHelper::HeadingDetail.new(da_journey_page_details(view_name.to_sym)[:page_title],
+                                          da_journey_page_details(view_name.to_sym)[:caption1],
+                                          da_journey_page_details(view_name.to_sym)[:caption2],
+                                          da_journey_page_details(view_name.to_sym)[:sub_title]),
+          LayoutHelper::BackButtonDetail.new(da_journey_page_details(view_name.to_sym)[:back_url],
+                                             da_journey_page_details(view_name.to_sym)[:back_label],
+                                             da_journey_page_details(view_name.to_sym)[:back_text]),
+          LayoutHelper::NavigationDetail.new(da_journey_page_details(view_name.to_sym)[:continuation_text],
+                                             da_journey_page_details(view_name.to_sym)[:return_url],
+                                             da_journey_page_details(view_name.to_sym)[:return_text],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_url],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_text],
+                                             da_journey_page_details(view_name.to_sym)[:primary_name],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_name])
+        ) if da_journey_definitions.key?(view_name.to_sym)
       end
       # rubocop:enable Style/MultilineIfModifier
       # rubocop:enable Metrics/AbcSize
@@ -429,6 +427,7 @@ module FacilitiesManagement
             page_title: 'Contract details'
           },
           payment_method: {
+            caption2: 'Contract details',
             back_url: '#',
             back_text: 'Back',
             page_title: 'Payment method',
