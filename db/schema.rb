@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_24_084544) do
+ActiveRecord::Schema.define(version: 2020_01_27_083539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(version: 2020_01_24_084544) do
     t.date "contract_start_date"
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
+    t.boolean "local_government_pension_scheme"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
