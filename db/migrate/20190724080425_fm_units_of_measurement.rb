@@ -10,6 +10,7 @@ class FmUnitsOfMeasurement < ActiveRecord::Migration[5.2]
       t.text 'unit_text'
       t.text 'data_type'
       t.text 'spreadsheet_label'
+      t.text 'unit_measure_label'
       t.text 'service_usage', array: true
     end
   end
