@@ -81,17 +81,17 @@ RSpec.describe FMCalculator::Calculator do
       benchmanage = calc.benchmanage(benchyear1)
       expect(benchmanage.round(0)).to eq(17404)
       benchcorporate = calc.benchcorporate(benchyear1)
-      expect(benchcorporate.round(0)).to eq(7244)
+      expect(benchcorporate.round(0)).to eq(8594)
       benchyear1total = benchyear1 + benchmanage + benchcorporate
-      expect(benchyear1total.round(0)).to eq(197126)
+      expect(benchyear1total.round(0)).to eq(198476)
       benchprofit = calc.benchprofit(benchyear1)
-      expect(benchprofit.round(0)).to eq(5347)
+      expect(benchprofit.round(0)).to eq(9362)
       benchyear1totalcharges = benchyear1total + benchprofit
-      expect(benchyear1totalcharges.round(0)).to eq(202473)
+      expect(benchyear1totalcharges.round(0)).to eq(207838)
       benchsubyearstotal = calc.benchsubyearstotal(benchyear1totalcharges, benchmobilisation)
-      expect(benchsubyearstotal.round(0)).to eq(382342)
+      expect(benchsubyearstotal.round(0)).to eq(392403)
       benchtotalcharges = benchyear1totalcharges + benchsubyearstotal
-      expect(benchtotalcharges.round(0)).to eq(584815)
+      expect(benchtotalcharges.round(0)).to eq(600241)
     end
     # rubocop:enable RSpec/MultipleExpectations:
     # rubocop:enable RSpec/ExampleLength:
