@@ -442,4 +442,20 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '#direct_award?' do
+    context 'when the procurement is set to direct award' do
+      it 'is expected to be true' do
+        procurement.aasm_state = 'da_draft'
+
+        expect(procurement.direct_award?).to eq(true)
+      end
+    end
+
+    context 'when the procurement is not set to direct award' do
+      it 'is expected to be false' do
+        expect(procurement.direct_award?).to eq(false)
+      end
+    end
+  end
 end
