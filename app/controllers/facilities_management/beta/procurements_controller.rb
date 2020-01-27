@@ -22,7 +22,6 @@ module FacilitiesManagement
       # rubocop:enable Metrics/AbcSize
 
       def show
-        puts "HELLO #{@procurement.payment_method}"
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search? && !@delete
         @view_name = set_view_data unless @procurement.quick_search?

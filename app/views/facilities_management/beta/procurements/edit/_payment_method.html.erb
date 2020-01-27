@@ -13,29 +13,25 @@
   </div>
 </div>
 
-
-
-
   <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
       <%= govuk_prevent_submission(f, true) %>
         <%= govuk_grouped_field(f, t('.payment_description'), :payment_method) do |ff, attr| %>
-        <div class="govuk-form-group govuk-form-group--error govuk-visually-hidden" id="payment-method-container">
+        <div class="govuk-form-group govuk-form-group--error govuk-visually-hidden" id="payment-container">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="payment-method-hint payment-method-error" role="alert">
             <span class="govuk-visually-hidden" id="payment-method-error" class="govuk-error-message" role="alert">
               <span class="govuk-visually-hidden">Error:</span> Select one payment method
             </span>
-            </fieldset>
+          </fieldset>
         </div>
-            <div class="govuk-radios">
-              <div class="govuk-radios__item" id="payment-method-bacs" name="payment-method">
-                <%= f.radio_button :payment_method, 'BACS payment', value: 'BACS_payment', class: 'govuk-radios__input' %>
-                <%= f.label :payment_method, t('.bacs_payment'), class: 'govuk-label govuk-radios__label'%>
-              </div>
-              <div class="govuk-radios__item" id="payment-method-card" name="payment-method">
-                <%= f.radio_button :payment_method, 'Government procurement card', value: 'Government_procurement_card', class: 'govuk-radios__input' %>
-                <%= f.label :payment_method, t('.government_procurement_card'), class: 'govuk-label govuk-radios__label'%>
-              </div>
-            </div>
+        <div class="govuk-radios">
+          <div class="govuk-radios__item" id="payment-method-bacs" name="payment-method">
+            <%= f.radio_button :payment_method, 'BACS payment', value: 'BACS_payment', class: 'govuk-radios__input' %>
+            <%= f.label :payment_method, t('.bacs_payment'), class: 'govuk-label govuk-radios__label'%>
+          </div>
+          <div class="govuk-radios__item" id="payment-method-card" name="payment-method">
+            <%= f.radio_button :payment_method, 'Government procurement card', value: 'Government_procurement_card', class: 'govuk-radios__input' %>
+            <%= f.label :payment_method, t('.government_procurement_card'), class: 'govuk-label govuk-radios__label'%>
+        </div>
         <%end %>
       <%end %>
   </form>
