@@ -12,7 +12,7 @@
   </div>
 
   <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
-    <div id="ccs-error-sum" class="govuk-error-summary  <%= "govuk-form-group--error" if f.object.errors[:payment_method].any? %>  ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+    <div id="ccs-error-sum" class="govuk-error-summary <%= "govuk-form-group--error" if f.object.errors[:payment_method].any? %>  ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
       <%= govuk_prevent_submission(f, true) %>
         <%= govuk_grouped_field(f, t('.description'), :payment_method) do |ff, attr| %>
             <div class="govuk-radios">
