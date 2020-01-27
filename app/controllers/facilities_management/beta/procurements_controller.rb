@@ -22,9 +22,9 @@ module FacilitiesManagement
       # rubocop:enable Metrics/AbcSize
 
       def show
+        puts "HELLO #{@procurement.payment_method}"
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search? && !@delete
-
         @view_name = set_view_data unless @procurement.quick_search?
       end
 
@@ -100,7 +100,11 @@ module FacilitiesManagement
 
       def set_view_data
         set_current_step
-        view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).view
+        if !params[:step].nil? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(params[:step].to_sym)
+          view_name = 'edit'
+        else
+          view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).view
+        end
         build_page_details(view_name.to_sym)
 
         case view_name
@@ -110,6 +114,8 @@ module FacilitiesManagement
         when 'direct_award'
           @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: params['step']).da_journey_view
           da_buyer_page_data(@view_da)
+        when 'edit'
+          da_buyer_page_data(params[:step])
         else
           @page_data = {}
           @page_data[:model_object] = @procurement
@@ -267,6 +273,7 @@ module FacilitiesManagement
                 :security_policy_document_date_mm,
                 :security_policy_document_date_yyyy,
                 :security_policy_document_file,
+                :payment_method,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
@@ -398,6 +405,7 @@ module FacilitiesManagement
       # rubocop:enable Metrics/AbcSize
 
       def da_journey_page_details(view_name)
+        @page_details = {}
         @page_details.merge!(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))
       end
 
@@ -408,7 +416,7 @@ module FacilitiesManagement
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
-            caption1: @procurement[:contact_name],
+            caption1: @procurement[:contract_name],
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurement dashboard',
@@ -425,7 +433,7 @@ module FacilitiesManagement
             back_url: '#',
             back_text: 'Back',
             page_title: 'Payment method',
-            caption1: 'Total facilities management',
+            caption1: @procurement[:contract_name],
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: '#',
