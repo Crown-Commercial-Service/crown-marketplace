@@ -51,7 +51,7 @@ module FacilitiesManagement
         else
           @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: nil).back_link
 
-          unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @prcocurement.aasm_state == 'da_draft'
+          unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @procurement.aasm_state == 'da_draft'
             # da journey follows
             @view_name = set_view_data unless @procurement.quick_search?
             render @view_da && return
