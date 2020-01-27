@@ -3,7 +3,7 @@ class FacilitiesManagement::ProcurementRouter
 
   QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze
 
-  STEPS = %w[security_policy_document contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
+  STEPS = %w[contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
 
   def initialize(id:, procurement_state:, step: nil, da_journey_state: nil)
     @id = id
@@ -21,6 +21,12 @@ class FacilitiesManagement::ProcurementRouter
   DA_JOURNEY_STATES_TO_VIEWS = {
     'pricing': 'pricing',
     'what_next': 'what_next',
+    'payment_method': 'payment_method',
+    'invoicing_contact_details': 'invoicing_contact_details',
+    'authorised_representative': 'authorised_representative',
+    'notices_contact_details': 'notices_contact_details',
+    'security_policy_document': 'security_policy_document',
+    'local_government_pension_scheme': 'local_government_pension_scheme',
     'important_information': 'did_you_know',
     'contract_details': 'contract_details',
     'review_and_generate': 'review_and_generate',
@@ -39,7 +45,7 @@ class FacilitiesManagement::ProcurementRouter
   }.freeze
 
   def da_journey_view
-    DA_JOURNEY_STATES_TO_VIEWS[@da_journey_state.to_sym][@step] if DA_JOURNEY_STATES_TO_VIEWS.key?(@da_journey_state.to_sym) && !@step.nil?
+    DA_JOURNEY_STATES_TO_VIEWS[@da_journey_state.to_sym] if DA_JOURNEY_STATES_TO_VIEWS.key?(@da_journey_state.to_sym)
   end
 
   def view
