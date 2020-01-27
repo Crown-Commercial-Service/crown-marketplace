@@ -44,15 +44,23 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def edit
         if @procurement.quick_search?
           render :edit
         else
-          @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).back_link
+          @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: nil).back_link
 
-          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
+          unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @prcocurement.aasm_state == 'da_draft'
+            # da journey follows
+            @view_name = set_view_data unless @procurement.quick_search?
+            render @view_da && return
+          end
+
+          redirect_to facilities_management_beta_procurement_url(id: @procurement.id) && return unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
         end
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
@@ -61,6 +69,8 @@ module FacilitiesManagement
         continue_to_results && return if params['continue_to_results'].present?
 
         set_route_to_market && return if params['set_route_to_market'].present?
+
+        continue_to_contract_details && return if params['continue_da'].present?
 
         update_procurement if params['facilities_management_procurement'].present?
       end
@@ -93,15 +103,16 @@ module FacilitiesManagement
 
       def set_view_data
         set_current_step
-        view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).view
+        view_name = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).view
         build_page_details(view_name.to_sym)
 
         case view_name
         when 'results'
           set_results_page_data
           @procurement[:route_to_market] = @procurement.aasm_state
-        when 'direct_award'
-          set_da_buyer_page_data
+        when 'direct_award', 'edit'
+          @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: params['step']).da_journey_view
+          create_da_buyer_page_data(@view_da)
         else
           @page_data = {}
           @page_data[:model_object] = @procurement
@@ -166,6 +177,16 @@ module FacilitiesManagement
         end
       end
 
+      def continue_to_contract_details
+        if procurement_valid?
+          @procurement.set_to_contract_details
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         if params[:commit] == page_details(:results)[:secondary_text]
@@ -210,8 +231,9 @@ module FacilitiesManagement
         @page_data[:supplier_prices] = @procurement.procurement_suppliers.map(&:direct_award_value)
       end
 
-      def set_da_buyer_page_data
+      def create_da_buyer_page_data(view_name)
         @page_data = {}
+        build_da_journey_page_details(view_name)
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
@@ -356,11 +378,64 @@ module FacilitiesManagement
                                              page_details(action)[:secondary_name])
         ) if page_definitions.key?(action.to_sym)
       end
+
+      def build_da_journey_page_details(view_name)
+        @page_description = LayoutHelper::PageDescription.new(
+          LayoutHelper::HeadingDetail.new(da_journey_page_details(view_name.to_sym)[:page_title],
+                                          da_journey_page_details(view_name.to_sym)[:caption1],
+                                          da_journey_page_details(view_name.to_sym)[:caption2],
+                                          da_journey_page_details(view_name.to_sym)[:sub_title]),
+          LayoutHelper::BackButtonDetail.new(da_journey_page_details(view_name.to_sym)[:back_url],
+                                             da_journey_page_details(view_name.to_sym)[:back_label],
+                                             da_journey_page_details(view_name.to_sym)[:back_text]),
+          LayoutHelper::NavigationDetail.new(da_journey_page_details(view_name.to_sym)[:continuation_text],
+                                             da_journey_page_details(view_name.to_sym)[:return_url],
+                                             da_journey_page_details(view_name.to_sym)[:return_text],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_url],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_text],
+                                             da_journey_page_details(view_name.to_sym)[:primary_name],
+                                             da_journey_page_details(view_name.to_sym)[:secondary_name])
+        ) if da_journey_definitions.key?(view_name.to_sym)
+      end
       # rubocop:enable Style/MultilineIfModifier
       # rubocop:enable Metrics/AbcSize
 
+      def da_journey_page_details(view_name)
+        @page_details = {} if @page_details.nil?
+
+        @da_journey_page_details ||= @page_details.merge(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))
+      end
+
       def page_details(action)
         @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
+      end
+
+      def da_journey_definitions
+        @da_journey_definitions ||= {
+          default: {
+            caption1: @procurement[:contract_name],
+            continuation_text: 'Continue',
+            return_url: facilities_management_beta_procurements_path,
+            return_text: 'Return to procurement dashboard',
+            secondary_name: 'change_requirements',
+            secondary_text: 'Change requirements',
+            secondary_url: facilities_management_beta_procurements_path,
+            back_text: 'Back',
+            back_url: facilities_management_beta_procurements_path
+          },
+          contract_details: {
+            page_title: 'Contract details'
+          },
+          payment_method: {
+            caption2: 'Contract details',
+            back_url: '#',
+            back_text: 'Back',
+            page_title: 'Payment method',
+            continuation_text: 'Save and return',
+            return_text: 'Return to contract details',
+            return_url: '#',
+          }
+        }
       end
 
       def page_definitions
@@ -381,12 +456,13 @@ module FacilitiesManagement
             primary_name: 'set_route_to_market'
           },
           direct_award: {
-            caption1: @procurement[:contract_name],
+            caption1: @procurement[:name],
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement),
             continuation_text: 'Continue to direct award',
             secondary_text: 'Return to results',
             secondary_name: 'continue_to_results',
+            primary_name: 'continue_da',
             secondary_url: facilities_management_beta_procurement_results_path(@procurement),
           },
           further_competition: {
