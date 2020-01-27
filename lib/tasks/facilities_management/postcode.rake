@@ -92,7 +92,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
     object = Aws::S3::Resource.new(region: region)
     object.bucket(bucket).objects.each do |obj|
-      next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
+      next unless obj.key.starts_with? 'dataPostcode2files'
 
       next if postcode_file_already_loaded(obj.key)
 
