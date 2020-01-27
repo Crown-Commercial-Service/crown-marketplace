@@ -1,6 +1,6 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
 
-  <div class="error-summary" role="alert" aria-labelledby="payment-method-heading-error" tabindex="-1">
+  <div class="error-summary govuk-visually-hidden" role="alert" aria-labelledby="payment-method-heading-error" tabindex="-1">
     <span class="govuk-visually-hidden">
       <h2 class="heading-medium error-summary-heading" id="payment-method-heading-error">
         <%= t(.'payment_problem') %>
@@ -16,11 +16,11 @@
       <%= govuk_prevent_submission(f, true) %>
         <%= govuk_grouped_field(f, t('.description'), :payment_method) do |ff, attr| %>
             <div class="govuk-radios">
-              <div class="govuk-radios__item">
+              <div class="govuk-radios__item" id="payment-method-bacs" name="payment-method">
                 <%= f.radio_button :payment_method, 'BACS payment', value: 'BACS_payment', class: 'govuk-radios__input' %>
                 <%= f.label :payment_method, t('.bacs'), class: 'govuk-label govuk-radios__label'%>
               </div>
-              <div class="govuk-radios__item">
+              <div class="govuk-radios__item"id="payment-method-card" name="payment-method">
                 <%= f.radio_button :payment_method, 'Government procurement card', value: 'Government_procurement_card', class: 'govuk-radios__input' %>
                 <%= f.label :payment_method, t('.government_procurement_card'), class: 'govuk-label govuk-radios__label'%>
               </div>
