@@ -7,10 +7,14 @@
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
                         <input class="govuk-radios__input" id="contact_name" name="authorised_representative" type="radio" value="name"/>
-                        <label class="govuk-label govuk-radios__label" for="direct_award">
-                            <%= "#{@page_data[:invoicing_contact_full_name]}, #{@page_data[:invoicing_contact_job_title]}" %>
+                        <label class="govuk-label govuk-radios__label ccs-font-weight-semi-bold" for="direct_award">
+                            <%= (@current_user.buyer_detail.full_name + ', ' + @current_user.buyer_detail.job_title) if @current_user.buyer_detail.full_name.present? && @current_user.buyer_detail.job_title.present? %>
                             <span class="govuk-caption-m govuk-!-margin-top-2">
-                                <%= @page_data[:invoicing_contact_address] %>
+                                <%= (@current_user.buyer_detail.organisation_address_line_1 + ', ') if @current_user.buyer_detail.organisation_address_line_1.present?%>
+                                <%= (@current_user.buyer_detail.organisation_address_line_2 + ', ') if @current_user.buyer_detail.organisation_address_line_2.present?%>
+                                <%= (@current_user.buyer_detail.organisation_address_town + ', ') if @current_user.buyer_detail.organisation_address_town.present?%>
+                                <%= (@current_user.buyer_detail.organisation_address_county + ', ') if @current_user.buyer_detail.organisation_address_county.present?%>
+                                <%= (@current_user.buyer_detail.organisation_address_postcode) if @current_user.buyer_detail.organisation_address_postcode.present? %>
                             </span>
                         </label>
                     </div>
