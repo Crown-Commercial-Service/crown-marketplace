@@ -260,7 +260,7 @@ module LayoutHelper
     content_tag :input, nil, name: 'preventsubmission', value: value, type: 'hidden'
   end
 
-  def navigation_link_suppluer_and_buyer
+  def navigation_link_supplier_and_buyer
     html = []
     html << content_tag(:li, class: 'govuk-header__navigation-item') do
       if current_user&.has_role?(:supplier)
