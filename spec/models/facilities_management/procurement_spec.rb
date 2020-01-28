@@ -8,9 +8,9 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   it { is_expected.to be_valid }
 
   describe 'associations' do
-    it { should have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
-    it { should have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
-    it { should have_one(:invoice_contact_detail).class_name('FacilitiesManagement::ProcurementInvoiceContactDetail') }
+    it { is_expected.to have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
+    it { is_expected.to have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
+    it { is_expected.to have_one(:invoice_contact_detail).class_name('FacilitiesManagement::ProcurementInvoiceContactDetail') }
   end
 
   describe '#name' do
