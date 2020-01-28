@@ -119,6 +119,29 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '#payment_method' do 
+    context 'when a payment_method is not present' do
+      it 'is expected not to be valid' do
+        procurement.payment_method = ''
+        expect(procurement.valid?(:payment_method)).to eq false
+      end
+    end
+
+    context 'when bacs is a selected payment_method' do
+      it 'is expected to be valid' do
+        procurement.payment_method = 'bacs'
+        expect(procurement.valid?(:payment_method)).to eq true
+      end
+    end
+
+    context 'when card is a selected payment_method' do
+      it 'is expected to be valid' do
+        procurement.payment_method = 'card'
+        expect(procurement.valid?(:payment_method)).to eq true
+      end
+    end
+  end
+
   describe '#procurement_buildings' do
     context 'when there are no procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
@@ -306,27 +329,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when the there is a procurement building with two procurement_building_services' do
       it 'is expected to be valid' do
         expect(procurement.valid?(:all)).to eq true
-      end
-    end
-
-    context 'when there is no payment_method' do
-      it 'is expected not to be valid' do
-        procurement.payment_method = nil
-        expect(procurement.valid(:all)).to eq false
-      end
-    end
-
-    context 'when BACS_payment is a selected payment_method' do
-      it 'is expected to be valid' do
-        procurement.payment_method = 'BACS payment'
-        expect(procurement.valid(:all)).to eq true
-      end
-    end
-
-    context 'when Government_procurement_card is a selected payment_method' do
-      it 'is expected to be valid' do
-        procurement.payment_method = 'Government procurement card'
-        expect(procurement.valid(:all)).to eq true
       end
     end
   end
