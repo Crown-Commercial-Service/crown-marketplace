@@ -56,6 +56,6 @@ RSpec.describe FacilitiesManagement::ProcurementAuthorisedContactDetail, type: :
   end
 
   describe 'associations' do
-    it { should belong_to(:procurement).class_name('FacilitiesManagement::Procurement') }
+    it { is_expected.to belong_to(:procurement).class_name('FacilitiesManagement::Procurement') }
   end
 end

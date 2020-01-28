@@ -4,6 +4,6 @@ RSpec.describe FacilitiesManagement::ProcurementInvoiceContactDetail, type: :mod
   let(:procurement_invoice_contact_detail) { create(:facilities_management_procurement_invoice_contact_detail) }
 
   describe 'associations' do
-    it { should belong_to(:procurement).class_name('FacilitiesManagement::Procurement') }
+    it { is_expected.to belong_to(:procurement).class_name('FacilitiesManagement::Procurement') }
   end
 end
