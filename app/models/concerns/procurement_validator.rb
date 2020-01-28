@@ -26,7 +26,7 @@ module ProcurementValidator
 
     validates :tupe, inclusion: { in: [true, false] }, on: %i[tupe]
 
-    validates :payment_method, inclusion: { in: ['BACS payment', 'Government procurement card'] }, on: %i[payment_method]
+    validates :payment_method, inclusion: { in: ['bacs', 'card'] }, on: %i[payment_method]
 
     #############################################
     # Validation rules for contract-dates
@@ -70,6 +70,7 @@ module ProcurementValidator
     validate :all_services_valid, on: :all
     validate :validate_contract_period_questions, on: :all
     validate :validate_mobilisation_and_tupe, on: :all
+    validate :payment_method, on: :all
 
     private
 
