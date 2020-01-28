@@ -47,11 +47,6 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
 
       expect(response).to render_template('edit')
     end
-
-    it 'renders the contract details page' do 
-      get :edit, params: { id: procurement.id, step: 'contract_details' }
-
-      expect(response).to render_template('contract_details')
   end
 
   describe 'POST create' do
