@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_092237) do
+ActiveRecord::Schema.define(version: 2020_01_27_104344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_01_23_092237) do
     t.money "direct_award_value", scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contract_number"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
   end
 
@@ -242,6 +243,7 @@ ActiveRecord::Schema.define(version: 2020_01_23_092237) do
     t.string "unit_text"
     t.string "data_type"
     t.string "spreadsheet_label"
+    t.string "unit_measure_label"
     t.text "service_usage", array: true
   end
 
@@ -462,11 +464,22 @@ ActiveRecord::Schema.define(version: 2020_01_23_092237) do
     t.index ["postcode"], name: "idx_postcode"
   end
 
-  create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "postcode", limit: 255
-    t.string "code", limit: 255
+  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "filename", limit: 255
+    t.integer "size"
+    t.string "etag", limit: 255
+    t.text "fail_reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
+  end
+
+  create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "postcode", limit: 20
+    t.string "code", limit: 20
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|
