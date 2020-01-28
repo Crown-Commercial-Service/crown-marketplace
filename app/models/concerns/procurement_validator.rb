@@ -70,7 +70,6 @@ module ProcurementValidator
     validate :all_services_valid, on: :all
     validate :validate_contract_period_questions, on: :all
     validate :validate_mobilisation_and_tupe, on: :all
-    validate :payment_method, on: :all
 
     private
 
