@@ -2,14 +2,14 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
-  require './lib/tasks/distributed_locks'
+  require Rails.root.join('lib', 'tasks', 'distributed_locks')
 
   def self.supplier_data
     is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
     # debug
     puts "CCS_DEFAULT_DB_HOST #{is_dev_db}"
     # nb reinstate || (is_dev_db.include? 'dev')
-    if is_dev_db.nil? || (is_dev_db.include? 'dev.') || (is_dev_db.include? 'cmpdefault.db.internal.fm-preview') || (is_dev_db.include? 'marketplace.preview')
+    if is_dev_db.nil? || (%w[dev. cmpdefault.db.internal.fm-preview marketplace.preview sandbox].any? { |env| is_dev_db.include?(env) })
       puts 'dummy supplier data'
       JSON File.read('data/' + 'facilities_management/dummy_supplier_data.json')
     elsif ENV['SECRET_KEY_BASE']

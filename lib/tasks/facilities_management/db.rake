@@ -2,7 +2,7 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
-  require './lib/tasks/distributed_locks'
+  require Rails.root.join('lib', 'tasks', 'distributed_locks')
 
   def self.csv_to_nuts_regions(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|

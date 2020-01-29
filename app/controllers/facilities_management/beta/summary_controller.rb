@@ -21,14 +21,14 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def sorted_suppliers
         init
-
         build_direct_award_report params[:'download-spreadsheet'] == 'yes'
 
         return if params[:'download-spreadsheet'] != 'yes'
 
-        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card
+        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, @report_results_no_cafmhelp_removed[@supplier_name]
 
         uvals = []
         buildings_ids = []
@@ -59,6 +59,7 @@ module FacilitiesManagement
         ### render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
         download_report 'fm_spreadsheets', [['direct_award_prices', spreadsheet1], ['deliverable_matrix', spreadsheet_builder]]
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 
@@ -83,12 +84,19 @@ module FacilitiesManagement
 
         @results = {}
         @report_results = {} if cache__calculation_values_for_spreadsheet_flag
+
+        # get the services including help & cafm for the,contract rate card,worksheet
+        @report_results_no_cafmhelp_removed = {} if cache__calculation_values_for_spreadsheet_flag
+
         supplier_names = @rate_card.data[:Prices].keys
         supplier_names.each do |supplier_name|
           # e.g. dummy_supplier_name = 'Hickle-Schinner'
           a_supplier_calculation_results = @report_results[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
-          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results
+          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results, true
           @results[supplier_name] = @report.direct_award_value
+
+          a_supplier_calculation_results_no_cafmhelp_removed = @report_results_no_cafmhelp_removed[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
+          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results_no_cafmhelp_removed, false
         end
 
         sorted_list = @results.sort_by { |_k, v| v }

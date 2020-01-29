@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_134702) do
+ActiveRecord::Schema.define(version: 2020_01_27_104344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_134702) do
     t.money "direct_award_value", scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contract_number"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
   end
 
@@ -123,6 +124,10 @@ ActiveRecord::Schema.define(version: 2020_01_17_134702) do
     t.money "assessed_value", scale: 2
     t.boolean "eligible_for_da"
     t.datetime "date_offer_sent"
+    t.date "contract_start_date"
+    t.date "closed_contract_date"
+    t.boolean "is_contract_closed", default: false
+    t.string "da_journey_state"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -188,15 +193,14 @@ ActiveRecord::Schema.define(version: 2020_01_17_134702) do
     t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_rates", id: false, force: :cascade do |t|
+  create_table "fm_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "standard", limit: 1
     t.boolean "direct_award"
-    t.index ["code"], name: "index_fm_rates_on_code"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|
@@ -238,6 +242,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_134702) do
     t.string "unit_text"
     t.string "data_type"
     t.string "spreadsheet_label"
+    t.string "unit_measure_label"
     t.text "service_usage", array: true
   end
 
@@ -469,10 +474,11 @@ ActiveRecord::Schema.define(version: 2020_01_17_134702) do
   end
 
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "postcode", limit: 255
-    t.string "code", limit: 255
+    t.string "postcode", limit: 20
+    t.string "code", limit: 20
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|

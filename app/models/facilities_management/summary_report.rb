@@ -95,7 +95,7 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/AbcSize
-    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil)
+    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true)
       # selected_services
 
       @sum_uom = 0
@@ -131,7 +131,7 @@ module FacilitiesManagement
         # p "building id: #{id}"
         results2 = results[id] = {} if results
 
-        vals_per_building = services(building_data, building_uvals, rates, rate_card, supplier_name, results2)
+        vals_per_building = services(building_data, building_uvals, rates, rate_card, supplier_name, results2, remove_cafm_help)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
@@ -364,15 +364,18 @@ module FacilitiesManagement
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil, results = nil)
+    def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true)
       sum_uom = 0.0
       sum_benchmark = 0.0
 
       copy_params building_data, uvals
 
       # TODO : Validation must be put in the front end to NOT allow just CAFM or HELP services otherwise an exception be ge generated below in .max
-      uvals_remove_cafm_help = uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
-
+      uvals_remove_cafm_help = if remove_cafm_help == true
+                                 uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
+                               else
+                                 uvals
+                               end
       uvals_remove_cafm_help.each do |v|
         uom_value = calculate_uom_value(v)
 

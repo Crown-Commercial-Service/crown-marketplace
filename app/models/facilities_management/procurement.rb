@@ -25,7 +25,7 @@ module FacilitiesManagement
 
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
-    validates :route_to_market, inclusion: { in: %w[DA_draft further_competition] }, on: :route_to_market
+    validates :route_to_market, inclusion: { in: %w[da_draft further_competition] }, on: :route_to_market
 
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
@@ -35,8 +35,15 @@ module FacilitiesManagement
       state :quick_search, initial: true
       state :detailed_search
       state :results
-      state :DA_draft
+      state :da_draft
       state :further_competition
+      state :awaiting_supplier_response
+      state :supplier_declined
+      state :no_supplier_response
+      state :awaiting_contract_signature
+      state :accepted_not_signed
+      state :accepted_and_signed
+      state :withdrawn
 
       event :set_state_to_results do
         transitions to: :results
@@ -51,13 +58,103 @@ module FacilitiesManagement
       end
 
       event :start_direct_award do
-        transitions to: :DA_draft
+        transitions to: :da_draft
       end
 
       event :start_further_competition do
         transitions to: :further_competition
       end
     end
+
+    # rubocop: disable Metrics/BlockLength
+    aasm(:da_journey, column: 'da_journey_state') do
+      state :pricing, initial: true
+      state :what_next
+      state :important_information
+      state :contract_details
+      state :review_and_generate
+      state :review
+      state :sending
+      state :sent_awaiting_response
+      state :withdraw
+      state :accepted
+      state :confirmation
+      state :accepted_signed
+      state :accepted_not_signed
+      state :declined
+      state :no_response
+      state :confirm_signed
+      state :closed
+
+      event :start_da_journey do
+        transitions to: :pricing
+      end
+
+      event :set_to_what_next do
+        transitions to: :what_next
+      end
+
+      event :set_to_important_information do
+        transitions to: :important_information
+      end
+
+      event :set_to_contract_details do
+        transitions to: :contract_details
+      end
+
+      event :set_to_review_and_generate do
+        transitions to: :review_and_generate
+      end
+
+      event :set_to_review do
+        transitions to: :review
+      end
+
+      event :set_to_sending do
+        transitions to: :sending
+      end
+
+      event :set_to_sent_awaiting_response do
+        transitions to: :sent_awaiting_response
+      end
+
+      event :set_to_withdraw do
+        transitions to: :withdraw
+      end
+
+      event :set_to_accepted do
+        transitions to: :accepted
+      end
+
+      event :set_to_confirmation do
+        transitions to: :confirmation
+      end
+
+      event :set_to_accepted_signed do
+        transitions to: :accepted_signed
+      end
+
+      event :set_to_accepted_not_signed do
+        transitions to: :accepted_not_signed
+      end
+
+      event :set_to_declined do
+        transitions to: :declined
+      end
+
+      event :set_to_no_response do
+        transitions to: :no_response
+      end
+
+      event :set_to_confirm_signed do
+        transitions to: :confirm_signed
+      end
+
+      event :set_to_closed do
+        transitions to: :closed
+      end
+    end
+    # rubocop: enable Metrics/BlockLength
 
     def find_or_build_procurement_building(building_data, building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(name: building_data['name'])
@@ -106,8 +203,14 @@ module FacilitiesManagement
       !procurement_building_services.map { |pbs| CCS::FM::Rate.priced_at_framework(pbs.code, pbs.service_standard) }.include?(false)
     end
 
-    SEARCH = %i[further_competition results quick_search detailed_search].freeze
+    SEARCH = %i[quick_search detailed_search results further_competition].freeze
     SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
+    SEARCH_ORDER = SEARCH.map(&:to_s)
+    SENT_OFFER_ORDER = SENT_OFFER.map(&:to_s)
+
+    def direct_award?
+      aasm_state.match?(/\Ada_/)
+    end
 
     private
 

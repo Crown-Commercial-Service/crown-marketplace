@@ -98,7 +98,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_buildings_information(sheet)
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }, fg_color: '6E6E6E'
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
 
     [building_name, building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_type, building_security_clearance].each do |row_type|
       sheet.add_row row_type, style: standard_style, height: standard_row_height
@@ -196,7 +196,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_service_matrix(sheet)
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }
 
     @services.each do |service|
       row_values = [service['code'], service['name']]
@@ -211,7 +211,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_volumes_information(sheet)
-    number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40'
+    number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
 
     services_without_help_cafm = remove_help_cafm_services(@services)
     services_without_help_cafm.each do |s|

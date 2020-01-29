@@ -139,6 +139,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'E.2', :uom_value=>1234.0, :building_id => 'e7eed6f6-5ef0-e387-ee35-6c1d39feb8a9', :title_text => 'What is the total internal area of this building?', :example_text => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', :spreadsheet_label => 'Square Metre (GIA) per annum' },
      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'G.7', :uom_value=>1234.0, :building_id => 'e7eed6f6-5ef0-e387-ee35-6c1d39feb8a9', :title_text => 'What is the total internal area of this building?', :example_text => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', :spreadsheet_label => 'Square Metre (GIA) per annum' },
      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'G.6', :uom_value=>1234.0, :building_id => 'e7eed6f6-5ef0-e387-ee35-6c1d39feb8a9', :title_text => 'What is the total internal area of this building?', :example_text => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', :spreadsheet_label => 'Square Metre (GIA) per annum' },
+     { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'N.1', :uom_value=>1000.0, :building_id => 'e7eed6f6-5ef0-e387-ee35-6c1d39feb8a9', :title_text => 'What is the total internal area of this building?', :example_text => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', :spreadsheet_label => 'Square Metre (GIA) per annum' },
+     { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'M.1', :uom_value=>1000.0, :building_id => 'e7eed6f6-5ef0-e387-ee35-6c1d39feb8a9', :title_text => 'What is the total internal area of this building?', :example_text => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', :spreadsheet_label => 'Square Metre (GIA) per annum' },
      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'H.9', :uom_value=>2000.0, :building_id => 'd6110725-33ed-b20d-47b2-d2e0cbc3ac83', :title_text => 'What is the total internal area of this building?', :example_text => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', :spreadsheet_label => 'Square Metre (GIA) per annum' },
      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'E.1', :uom_value=>2000.0, :building_id => 'd6110725-33ed-b20d-47b2-d2e0cbc3ac83', :title_text => 'What is the total internal area of this building?', :example_text => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', :spreadsheet_label => 'Square Metre (GIA) per annum' },
      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.10', :uom_value=>2000.0, :building_id => 'd6110725-33ed-b20d-47b2-d2e0cbc3ac83', :title_text => 'What is the total internal area of this building?', :example_text => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', :spreadsheet_label => 'Square Metre (GIA) per annum' },
@@ -646,7 +648,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
             status: 'Incomplete',
             updated_by: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n')
       ]
-
       # populate db with dub buildings
       @selected_buildings2.each do |b|
         FacilitiesManagement::Buildings.delete b.id
@@ -691,7 +692,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Hirthe-Mills'
-      expect(sorted_list.first[1].round(2)).to eq 1437977.86
+      expect(sorted_list.first[1].round(2)).to eq 1440358.46
 
       supplier_name = 'Hirthe-Mills'.to_sym
       expect(report_results[supplier_name][report_results[supplier_name].keys.third].count).to eq 22
@@ -712,6 +713,83 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       spreadsheet = spreadsheet_builder.build
       # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
       IO.write('/tmp/deliverable_matrix.xlsx', spreadsheet.to_stream.read)
+    end
+    # rubocop:enable RSpec/ExampleLength
+
+    # rubocop:disable RSpec/ExampleLength
+    it 'verify cafm and help in Contract Rate Card' do
+      user_email = 'test@example.com'
+      start_date = DateTime.now.utc
+
+      report = described_class.new(start_date, user_email, data)
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
+
+      results = {}
+      report_results = {}
+      report_results_no_cafmhelp_removed = {}
+
+      supplier_names = rate_card.data[:Prices].keys
+      supplier_names.each do |supplier_name|
+        report_results[supplier_name] = {}
+        # e.g. dummy supplier_name = 'Hickle-Schinner'
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name], true
+        results[supplier_name] = report.direct_award_value
+
+        report_results_no_cafmhelp_removed[supplier_name] = {}
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results_no_cafmhelp_removed[supplier_name], false
+      end
+
+      supplier_name = 'Hirthe-Mills'.to_sym
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card, report_results_no_cafmhelp_removed[supplier_name]
+
+      IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
+
+      # check CAFM,Help are added to table 1 in contract Rate Card worksheet, direct_award_prices.xlsx
+      wb = Roo::Excelx.new('/tmp/direct_award_prices.xlsx')
+      expect(wb.sheet('Contract Rate Card').row(26)[0]).to eq 'M.1'
+      expect(wb.sheet('Contract Rate Card').row(26)[3]).to eq 0.005
+      expect(wb.sheet('Contract Rate Card').row(27)[0]).to eq 'N.1'
+    end
+    # rubocop:enable RSpec/ExampleLength
+
+    # rubocop:disable RSpec/ExampleLength
+    it 'verify Unit Of Measure column in Contract Rate Card  table 1' do
+      user_email = 'test@example.com'
+      start_date = DateTime.now.utc
+
+      report = described_class.new(start_date, user_email, data)
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
+
+      results = {}
+      report_results = {}
+      report_results_no_cafmhelp_removed = {}
+
+      supplier_names = rate_card.data[:Prices].keys
+      supplier_names.each do |supplier_name|
+        report_results[supplier_name] = {}
+        # e.g. dummy supplier_name = 'Hickle-Schinner'
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name], true
+        results[supplier_name] = report.direct_award_value
+
+        report_results_no_cafmhelp_removed[supplier_name] = {}
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results_no_cafmhelp_removed[supplier_name], false
+      end
+
+      supplier_name = 'Hirthe-Mills'.to_sym
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card, report_results_no_cafmhelp_removed[supplier_name]
+
+      IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
+
+      # check CAFM,Help are added to table 1 in contract Rate Card worksheet, direct_award_prices.xlsx
+      wb = Roo::Excelx.new('/tmp/direct_award_prices.xlsx')
+      expect(wb.sheet('Contract Rate Card').row(8)[0]).to eq 'C.5'
+      expect(wb.sheet('Contract Rate Card').row(8)[1]).to eq 'Lifts, Hoists & Conveyance Systems Maintenance - Standard A'
+      # note: enable once everyone runs otherwise all tests will fail: rake lib/tasks/facilities_management/fm.rake db:fmdata
+      # expect(wb.sheet('Contract Rate Card').row(8)[2]).to eq 'price per Number (per lift per floor)'
     end
     # rubocop:enable RSpec/ExampleLength
   end

@@ -1,8 +1,9 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(supplier_name, data, rate_card)
+  def initialize(supplier_name, data, rate_card, data_no_cafmhelp_removed = {})
     @supplier_name = supplier_name
     @data = data
     @rate_card_data = rate_card.data
+    @data_no_cafmhelp_removed = data_no_cafmhelp_removed
     create_spreadsheet
   end
 
@@ -13,7 +14,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   private
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)
-    standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
 
     new_row = []
     sum = 0
@@ -27,7 +28,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
   # rubocop:disable Metrics/AbcSize
   def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2, just_one = false)
-    standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+    standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
     new_row = [label, nil, nil]
 
@@ -66,11 +67,14 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/BlockLength
   def contract_rate_card
+    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.select(:id, :service_usage, :unit_measure_label)
+
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
-      price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
-      percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
+      price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+      percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
       standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
 
       sheet.add_row [@supplier_name]
@@ -84,17 +88,19 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
         rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
 
-        @data.keys.collect { |k| @data[k].keys }
-             .flatten.uniq
-             .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-          # I found :spreadsheet_label value is always nil,I did not want to alter code too much so left current code alone..
-          # if buildings have different services then I put in the ,if, check below otherwise an exception is generated
-          labels = @data.keys.sort.collect { |k| @data[k][s][:spreadsheet_label] if @data[k].key(s) }
-
+        @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
+                                 .flatten.uniq
+                                 .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
           new_row = []
           CCS::FM::RateCard.building_types.each { |b| new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b] }
 
-          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], labels.first] << new_row).flatten
+          unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s + '%').first
+          unit_of_measurement_value = begin
+                                        unit_of_measurement_row['unit_measure_label']
+                                      rescue NameError
+                                        nil
+                                      end
+          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], unit_of_measurement_value] << new_row).flatten
 
           styles = [standard_column_style, standard_column_style, standard_column_style]
 
@@ -118,11 +124,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sheet.add_row ['London Location Variance Rate', 'variance to standard service rate', rate_card_variances[:'London Location Variance Rate (%)']], style: [standard_column_style, standard_column_style, percentage_style]
         sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
         sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
-
       end
     end
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/BlockLength
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/BlockLength
@@ -131,10 +137,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @workbook.add_worksheet(name: 'Contract Price Matrix') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
       standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
-      standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'FCFF40', alignment: { wrap_text: true, vertical: :center }
-      total_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: '70AD47', alignment: { wrap_text: true, vertical: :center }
-      year_total_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'ED7D31', alignment: { wrap_text: true, vertical: :center }
-      variance_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, bg_color: 'BDD6EE', alignment: { wrap_text: true, vertical: :center }
+      standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+      total_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+      year_total_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+      variance_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
 
       sheet.add_row
       sheet.add_row ['Table 1. Baseline service costs for year 1']
@@ -175,20 +181,16 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         new_row2 = []
         sum = 0
 
-        # this logic is to fix issue that the excel service prices were not allgned to the correct
-        # buildin column, so insert nil into cell if no service data to align.
-        prev_building_service_value = nil
+        # this logic is to fix issue that the excel service prices were not aligned to the correct
+        # building column, so insert nil into cell if no service data to align.
+
         sorted_building_keys.each do |k|
-          if @data[k][s].nil?
-            if prev_building_service_value.nil?
-              new_row2 << nil
-            else
-              prev_building_service_value = nil
-            end
-          end
+          new_row2 << nil if @data[k][s].nil?
+
+          # If there's no service data for this service in this building, just move on
+
           next unless @data[k][s]
 
-          prev_building_service_value = @data[k][s][:subtotal1]
           new_row2 << @data[k][s][:subtotal1]
           sum += @data[k][s][:subtotal1]
           sum_building[k] += @data[k][s][:subtotal1]

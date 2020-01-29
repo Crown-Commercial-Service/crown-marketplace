@@ -1,0 +1,2 @@
+class PostcodesNutsRegion < ApplicationRecord
+end
