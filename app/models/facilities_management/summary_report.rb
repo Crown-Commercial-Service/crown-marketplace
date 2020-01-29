@@ -48,12 +48,12 @@ module FacilitiesManagement
     # TBC check with Damola
     # what is the @contract_length_years ?
     def initialize_from_procurement(procurement)
-      @posted_services = procurement[:service_codes]
-      @posted_locations = procurement[:region_codes]
-      @contract_length_years = procurement[:initial_call_off_period].to_i
-      @contract_cost = procurement[:'fm-contract-cost'].to_f
+      @posted_services = procurement.service_codes
+      @posted_locations = procurement.region_codes
+      @contract_length_years = procurement.initial_call_off_period.to_i
+      @contract_cost = procurement.estimated_annual_cost.to_f
 
-      @tupe_flag = procurement[:tupe]
+      @tupe_flag = procurement.tupe ? 'Y' : 'N'
     end
 
     def user_buildings
