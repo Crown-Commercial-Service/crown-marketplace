@@ -12,13 +12,11 @@
 <% else %>
   <%= link_to 'Back', @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? %>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { specialvalidation: does_form_for_current_step_require_special_client_validation?(params), novalidate: true, multipart: true } do |f| %>
-    <% unless @page_description || @page_description&.no_error_block%>
-      <div class="govuk-grid-row">
-        <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, multiple: false, render_empty: true } %>
-      </div>
-    <%end %>
+    <div class="govuk-grid-row">
+      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, multiple: false, render_empty: true } %>
+    </div>
     <div class="govuk-clearfix">
-      <% if !@procurement.persisted? || @procurement.quick_search?%>
+      <% if !@procurement.persisted? || @procurement.quick_search? %>
         <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.name}" if @procurement.detailed_search? %></span>
         <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
           <%= @procurement.name if @procurement.quick_search? %>
@@ -28,18 +26,17 @@
       <% end %>
     </div>
     <div class="procurement">
-      <%= f.hidden_field :step, value: params[:step] if params[:step]%>
-      <%= f.hidden_field :step, value: params[:facilities_management_procurement][:step] if !params[:step] && params.dig(:facilities_management_procurement, :step) %>
-      <% if @procurement.quick_search? %>
-        <%= govuk_form_group_with_optional_error(@procurement, :name, :region_codes, :service_codes) do %>
+      <%= govuk_form_group_with_optional_error(@procurement, :name, :region_codes, :service_codes) do %>
+        <% if @procurement.quick_search? %>
           <div class="govuk-grid-column-full quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
             <%= render partial: 'quick_search_form', locals: { f: f, step: params[:step] } %>
           </div>
+        <% else %>
+          <%= render partial: "facilities_management/beta/procurements/edit/#{params[:step]}", locals: { f: f } %>
         <% end %>
-      <% else %>
-        <%= render partial: "facilities_management/beta/procurements/edit/#{params[:step]}", locals: { f: f } %>
       <% end %>
       <% if @procurement.detailed_search? || @procurement.quick_search? %>
+        <%= f.hidden_field :step, value: params[:step] if params[:step] %>
         <div class="govuk-!-margin-top-5">
           <% if @delete %>
             <%= link_to t('.confirm_delete'), facilities_management_beta_procurement_path(@procurement), :method => 'delete', class: "govuk-button govuk-button--warning" %>
