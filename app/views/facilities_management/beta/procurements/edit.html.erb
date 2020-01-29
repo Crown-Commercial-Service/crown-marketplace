@@ -35,8 +35,8 @@
           <%= render partial: "facilities_management/beta/procurements/edit/#{params[:step]}", locals: { f: f } %>
         <% end %>
       <% end %>
+      <%= f.hidden_field :step, value: params[:step] if params[:step] %>
       <% if @procurement.detailed_search? || @procurement.quick_search? %>
-        <%= f.hidden_field :step, value: params[:step] if params[:step] %>
         <div class="govuk-!-margin-top-5">
           <% if @delete %>
             <%= link_to t('.confirm_delete'), facilities_management_beta_procurement_path(@procurement), :method => 'delete', class: "govuk-button govuk-button--warning" %>
