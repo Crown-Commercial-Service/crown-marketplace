@@ -28,8 +28,6 @@ module FacilitiesManagement
 
         return if params[:'download-spreadsheet'] != 'yes'
 
-        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, @report_results_no_cafmhelp_removed[@supplier_name]
-
         uvals = []
         buildings_ids = []
         @selected_buildings.each do |building|
@@ -51,6 +49,8 @@ module FacilitiesManagement
 
         spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals)
         spreadsheet_builder.build
+
+        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, @report_results_no_cafmhelp_removed[@supplier_name], uvals
 
         # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
         # IO.write('/tmp/deliverable_matrix_3.xlsx', spreadsheet.to_stream.read)
