@@ -166,11 +166,7 @@ module FacilitiesManagement
 
       def continue_to_results
         if procurement_valid?
-          @procurement.save_eligible_suppliers
-          @procurement[:eligible_for_da] = eligible_for_direct_award?
-          @procurement.set_state_to_results
-          @procurement.start_da_journey
-          @procurement.save
+          @procurement.save_eligible_suppliers_and_set_state
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)

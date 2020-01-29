@@ -380,41 +380,52 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '#save_eligible_suppliers' do
+  describe '#save_eligible_suppliers_and_set_state' do
+    let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
+    let(:da_value_test) { 865.2478374540002 }
+    let(:da_value_test1) { 1517.20280381278 }
+    let(:obj) { double }
+
+    before do
+      # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
+      allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
+      allow(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
+      allow(obj).to receive(:assessed_value).and_return(0.1234)
+      allow(obj).to receive(:lot_number).and_return('1a')
+      allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
+      allow_any_instance_of(DirectAward).to receive(:calculate).and_return(true)
+      allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
+      allow(procurement).to receive(:priced_at_framework).and_return(true)
+      # rubocop:enable RSpec/AnyInstance, RSpec/SubjectStub
+    end
+
     context 'when no eligible suppliers' do
       it 'does not create any procurement suppliers' do
-        # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:sorted_list).and_return([])
-        # rubocop:enable RSpec/AnyInstance
-        expect { procurement.save_eligible_suppliers }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(0)
+        allow(obj).to receive(:sorted_list).and_return([])
+        expect { procurement.save_eligible_suppliers_and_set_state }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(0)
       end
     end
 
     context 'when some eligible suppliers' do
-      let(:da_value_test) { 865.2478374540002 }
-      let(:da_value_test1) { 1517.20280381278 }
-      let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
-
-      before do
-        # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
-        allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-        allow_any_instance_of(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
-        allow_any_instance_of(DirectAward).to receive(:calculate).and_return(true)
-        allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
-        # rubocop:enable RSpec/AnyInstance, RSpec/SubjectStub
-      end
-
       it 'creates procurement_suppliers' do
-        expect { procurement.save_eligible_suppliers }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
+        expect { procurement.save_eligible_suppliers_and_set_state }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
       end
       it 'creates procurement_suppliers with the right direct award value' do
-        procurement.save_eligible_suppliers
+        procurement.save_eligible_suppliers_and_set_state
         expect(procurement.procurement_suppliers.first.direct_award_value).to eq da_value_test
         expect(procurement.procurement_suppliers.last.direct_award_value).to eq da_value_test1
       end
       it 'creates procurement_suppliers with the right CCS::FM::Supplier id' do
-        procurement.save_eligible_suppliers
+        procurement.save_eligible_suppliers_and_set_state
         expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_uuid
+      end
+      it 'saves assessed_value' do
+        procurement.save_eligible_suppliers_and_set_state
+        expect(procurement.assessed_value).not_to be_nil
+      end
+      it 'saves lot_number' do
+        procurement.save_eligible_suppliers_and_set_state
+        expect(procurement.lot_number).not_to be_nil
       end
     end
   end
