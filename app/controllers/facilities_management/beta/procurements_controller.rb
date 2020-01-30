@@ -44,20 +44,23 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def edit
         if @procurement.quick_search?
           render :edit
         else
           @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: nil).back_link
 
-          unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
+          unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @procurement.aasm_state == 'da_draft'
             # da journey follows
             @view_name = set_view_data unless @procurement.quick_search?
+            render @view_da && return
           end
 
           redirect_to facilities_management_beta_procurement_url(id: @procurement.id) && return unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
         end
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
@@ -72,7 +75,7 @@ module FacilitiesManagement
         update_procurement if params['facilities_management_procurement'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      
+
       # DELETE /procurements/1
       # DELETE /procurements/1.json
       def destroy
@@ -139,6 +142,8 @@ module FacilitiesManagement
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: current_step).route
         else
           set_view_data
+
+          params[:step] = current_step
           render :edit
         end
       end
@@ -173,11 +178,7 @@ module FacilitiesManagement
 
       def continue_to_results
         if procurement_valid?
-          @procurement.save_eligible_suppliers
-          @procurement[:eligible_for_da] = eligible_for_direct_award?
-          @procurement.set_state_to_results
-          @procurement.start_da_journey
-          @procurement.save
+          @procurement.save_eligible_suppliers_and_set_state
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
@@ -239,6 +240,14 @@ module FacilitiesManagement
       end
 
       def da_buyer_page_data(view_name)
+        @page_data = {}
+        build_da_journey_page_details(view_name)
+        @page_data[:model_object]         = @procurement
+        @page_data[:no_suppliers]         = @procurement.procurement_suppliers.count
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
+      end
+
+      def create_da_buyer_page_data(view_name)
         @page_data = {}
         @page_data[:model_object]         = @procurement
         @page_data[:no_suppliers]         = @procurement.procurement_suppliers.count
@@ -378,8 +387,9 @@ module FacilitiesManagement
       # rubocop:enable Metrics/AbcSize
 
       def da_journey_page_details(view_name)
-        @page_details = {}
-        @page_details.merge!(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))
+        @page_details = {} if @page_details.nil?
+
+        @da_journey_page_details ||= @page_details.merge(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))
       end
 
       def page_details(action)
@@ -389,13 +399,27 @@ module FacilitiesManagement
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
-            caption1: @procurement[:contract_name], continuation_text: 'Continue', return_url: facilities_management_beta_procurements_path, return_text: 'Return to procurement dashboard', secondary_name: 'change_requirements', secondary_text: 'Change requirements', secondary_url: facilities_management_beta_procurements_path, back_text: 'Back', back_url: facilities_management_beta_procurements_path
+            caption1: @procurement[:contract_name],
+            continuation_text: 'Continue',
+            return_url: facilities_management_beta_procurements_path,
+            return_text: 'Return to procurement dashboard',
+            secondary_name: 'change_requirements',
+            secondary_text: 'Change requirements',
+            secondary_url: facilities_management_beta_procurements_path,
+            back_text: 'Back',
+            back_url: facilities_management_beta_procurements_path
           },
           contract_details: {
             page_title: 'Contract details'
           },
           payment_method: {
-            back_url: '#', back_text: 'Back', page_title: 'Payment method', caption1: @procurement[:contract_name], continuation_text: 'Save and return', return_text: 'Return to contract details', return_url: '#'
+            caption2: 'Contract details',
+            back_url: '#',
+            back_text: 'Back',
+            page_title: 'Payment method',
+            continuation_text: 'Save and return',
+            return_text: 'Return to contract details',
+            return_url: '#',
           }
         }
       end
