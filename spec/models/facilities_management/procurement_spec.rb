@@ -469,4 +469,155 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe 'extension periods start and end dates' do
+    let(:procurement) { create(:facilities_management_procurement_with_extension_periods) }
+
+    describe '#extension_period_1_start_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the initial call off period has ended' do
+          initial_call_off_period_end_date = procurement.initial_call_off_start_date + procurement.initial_call_off_period.years - 1.day
+
+          expect(procurement.extension_period_1_start_date).to eq(initial_call_off_period_end_date + 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_1 = nil
+
+          expect(procurement.extension_period_1_start_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_1_end_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the initial call off period has ended' do
+          extension_2_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1).years
+
+          expect(procurement.extension_period_1_end_date).to eq(extension_2_start_date - 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_1 = nil
+
+          expect(procurement.extension_period_1_end_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_2_start_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the first extension period period has ended' do
+          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1)
+          extension_period_1_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
+
+          expect(procurement.extension_period_2_start_date).to eq(extension_period_1_end_date + 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_2 = nil
+
+          expect(procurement.extension_period_2_start_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_2_end_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the first extension period has ended' do
+          extension_3_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2).years
+
+          expect(procurement.extension_period_2_end_date).to eq(extension_3_start_date - 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_2 = nil
+
+          expect(procurement.extension_period_2_end_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_3_start_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the second extension period period has ended' do
+          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2)
+          extension_period_2_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
+
+          expect(procurement.extension_period_3_start_date).to eq(extension_period_2_end_date + 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_3 = nil
+
+          expect(procurement.extension_period_3_start_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_3_end_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the initial call off period has ended' do
+          extension_4_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3).years
+
+          expect(procurement.extension_period_3_end_date).to eq(extension_4_start_date - 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_3 = nil
+
+          expect(procurement.extension_period_3_end_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_4_start_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the third extension period has ended' do
+          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3)
+          extension_period_3_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
+
+          expect(procurement.extension_period_4_start_date).to eq(extension_period_3_end_date + 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_4 = nil
+
+          expect(procurement.extension_period_4_end_date).to be_nil
+        end
+      end
+    end
+
+    describe '#extension_period_4_end_date' do
+      context 'when there is an extension period selected' do
+        it 'is expected to return a date after the initial call off period has ended' do
+          extension_5_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3 + procurement.optional_call_off_extensions_4).years
+
+          expect(procurement.extension_period_4_end_date).to eq(extension_5_start_date - 1.day)
+        end
+      end
+
+      context 'when an extension period isn\'t selected' do
+        it 'is expected to return nil' do
+          procurement.optional_call_off_extensions_4 = nil
+
+          expect(procurement.extension_period_4_end_date).to be_nil
+        end
+      end
+    end
+  end
 end

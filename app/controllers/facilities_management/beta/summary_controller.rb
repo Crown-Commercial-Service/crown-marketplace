@@ -47,7 +47,7 @@ module FacilitiesManagement
           { building_id: b.downcase, service_codes: services_per_building }
         end
 
-        spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals)
+        spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
         spreadsheet_builder.build
 
         spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, @report_results_no_cafmhelp_removed[@supplier_name], uvals

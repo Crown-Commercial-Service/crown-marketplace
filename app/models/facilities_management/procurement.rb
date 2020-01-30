@@ -66,8 +66,7 @@ module FacilitiesManagement
       end
     end
 
-    # rubocop:disable Metrics/BlockLength
-
+    # rubocop: disable Metrics/BlockLength
     aasm(:da_journey, column: 'da_journey_state') do
       state :pricing, initial: true
       state :what_next
@@ -155,8 +154,7 @@ module FacilitiesManagement
         transitions to: :closed
       end
     end
-
-    # rubocop:enable Metrics/BlockLength
+    # rubocop: enable Metrics/BlockLength
 
     def find_or_build_procurement_building(building_data, building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(name: building_data['name'])
@@ -217,6 +215,58 @@ module FacilitiesManagement
     SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
     SENT_OFFER_ORDER = SENT_OFFER.map(&:to_s)
+
+    def direct_award?
+      aasm_state.match?(/\Ada_/)
+    end
+
+    def extension_period_1_start_date
+      return nil if optional_call_off_extensions_1.nil?
+
+      initial_call_off_start_date + initial_call_off_period.years
+    end
+
+    def extension_period_1_end_date
+      return nil if optional_call_off_extensions_1.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1).years - 1.day
+    end
+
+    def extension_period_2_start_date
+      return nil if optional_call_off_extensions_2.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1).years
+    end
+
+    def extension_period_2_end_date
+      return nil if optional_call_off_extensions_2.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2).years - 1.day
+    end
+
+    def extension_period_3_start_date
+      return nil if optional_call_off_extensions_3.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2).years
+    end
+
+    def extension_period_3_end_date
+      return nil if optional_call_off_extensions_3.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3).years - 1.day
+    end
+
+    def extension_period_4_start_date
+      return nil if optional_call_off_extensions_4.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3).years
+    end
+
+    def extension_period_4_end_date
+      return nil if optional_call_off_extensions_4.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 + optional_call_off_extensions_4).years - 1.day
+    end
 
     private
 
