@@ -9,4 +9,12 @@ FactoryBot.define do
     association :user
     procurement_buildings { build_list :facilities_management_procurement_building, 1 }
   end
+
+  factory :facilities_management_procurement_direct_award, parent: :facilities_management_procurement do
+    aasm_state { 'da_draft' }
+  end
+
+  factory :facilities_management_procurement_further_competition, parent: :facilities_management_procurement do
+    aasm_state { 'further_competition' }
+  end
 end

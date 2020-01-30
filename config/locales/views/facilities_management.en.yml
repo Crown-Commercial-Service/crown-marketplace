@@ -401,13 +401,13 @@ en:
           no_cost_provided: None
         da_buyer:
           contract_details:
-            authorised_representative: Authorised representative
+            authorised_representative: Authorised representative details
             contract_details_description: Please provide further information that will help us put your contract together.
             invoicing_contact_details: Invoicing contact details
             local_government_pension_scheme: Local Government Pension Scheme
             notices_contact_details: Notices contact details
-            payment_method: Payment method
-            security_policy_document: Security policy document
+            payment_details: Payment method
+            security_policy_document: Security policy
           pricing:
             description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
             lowest_price_supplier: lowest priced supplier

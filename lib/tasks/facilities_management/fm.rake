@@ -1,7 +1,8 @@
+# rubocop:disable Metrics/ModuleLength
 module FM
   require 'pg'
   require 'json'
-  require './lib/tasks/distributed_locks'
+  require Rails.root.join('lib', 'tasks', 'distributed_locks')
 
   def self.create_uom_table
     ActiveRecord::Base.connection_pool.with_connection do |db|
@@ -12,18 +13,20 @@ module FM
 	unit_text varchar NULL,
   data_type varchar NULL,
   spreadsheet_label varchar NULL,
+  unit_measure_label varchar NULL,
 	service_usage text[] NULL
 );
 -- TRUNCATE TABLE public.fm_units_of_measurement;
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(2, 'How many lifts do you have in this building?', 'For example, 5', '', 'numeric', '', '{C.5}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(3, 'What''s the number of floors each lift can access?', 'For example, 10. A lift going up between floor 6 and floor 16, gives a total of 10 floors', '', 'numeric', 'The sum total of number of floors per lift', '{C.5}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(4, 'How many appliances do you have for testing each year?', 'For example, 150. When 100 PC computers, 50 laptops needs PAT service each year', 'units (each year)', 'numeric', 'Number of appliances in the building to be tested per annum', '{E.4}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(5, 'What''s the number of building users (occupants) in this building?', 'For example, 56. What''s the maximum capacity of this building.', 'occupants (each year)', 'numeric', 'Number of Building Users (Occupants)', '{G.1,G.3}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(6, 'What''s the total external area of this building?', 'For example, 21000 sqm. When the total external area measures 21000 sqm', 'sqm (square metres)', 'numeric', 'Square Metre (GIA) per annum', '{G.5}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(8, 'How many tonnes of waste need disposal each year?', 'Number of tonnes per annum', 'tonnes (each year)', 'numeric', 'Number of tonnes per annum', '{K.2,K.3}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(7, 'How many hours are required each year?', 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)', '', 'numeric', 'Number of hours required per annum', '{H.4,H.5,I.1,I.2,I.3,I.4,J.1,J.2,J.3,J.4,J.5,J.6}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(9, 'How many classified waste consoles need emptying each year?', 'Example 60. When 5 consoles are emptied monthly, enter 60 consoles each year', 'units (each year)', 'numeric', 'Number of consoles per annum', '{K.1}');
-INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, service_usage) VALUES(10, 'How many units of feminine hygiene waste need to be emptied each year?', 'Example, 600. When 50 units per month need emptying, enter 600 units each year', 'units (each year)', 'numeric', 'Number of units per annum', '{K.7}');"
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(3, 'What''s the number of floors each lift can access?', 'For example, 10. A lift going up between floor 6 and floor 16, gives a total of 10 floors', '', 'numeric', 'The sum total of number of floors per lift', 'price per Number (per lift per floor)', '{C.5}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(4, 'How many appliances do you have for testing each year?', 'For example, 150. When 100 PC computers, 50 laptops needs PAT service each year', 'units (each year)', 'numeric', 'Number of appliances in the building to be tested per annum', 'price per Number (per unit)', '{E.4}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(5, 'What''s the number of building users (occupants) in this building?', 'For example, 56. What''s the maximum capacity of this building.', 'occupants (each year)', 'numeric', 'Number of Building Users (Occupants)', 'price per Square Metre (GIA)', '{G.1,G.3}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(6, 'What''s the total external area of this building?', 'For example, 21000 sqm. When the total external area measures 21000 sqm', 'sqm (square metres)', 'numeric', 'Square Metre (GIA) per annum', 'price per Square Metre (external area)', '{G.5}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(8, 'How many tonnes of waste need disposal each year?', 'Number of tonnes per annum', 'tonnes (each year)', 'numeric', 'Number of tonnes per annum', 'price per tonne', '{K.2,K.3}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(7, 'How many hours are required each year?', 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)', '', 'numeric', 'Number of hours required per annum', 'hourly rate', '{H.4,H.5,I.1,I.2,I.3,I.4,J.1,J.2,J.3,J.4,J.5,J.6}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(9, 'How many classified waste consoles need emptying each year?', 'Example 60. When 5 consoles are emptied monthly, enter 60 consoles each year', 'units (each year)', 'numeric', 'Number of consoles per annum', 'price per console', '{K.1}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(10, 'How many units of feminine hygiene waste need to be emptied each year?', 'Example, 600. When 50 units per month need emptying, enter 600 units each year', 'units (each year)', 'numeric', 'Number of units per annum', 'price per unit', '{K.7}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(11, 'help,cafm', 'Example, help,cafm', 'units (each year)', 'numeric', 'Percentage of Year 1 Deliverables Value (excluding Management and Corporate Overhead, and Profit) at call-off.', 'per % of Year 1 Deliverables Value', '{N.1,M.1}');
+INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_text, data_type, spreadsheet_label, unit_measure_label, service_usage) VALUES(12, 'what''s the number of square metres?', 'Example, 1000 sqm', 'sqm (square metres)', 'numeric', 'Square Metre (GIA) per annum', 'price per Square Metre (GIA)', '{C.1,C.2,C.3,C.4,C.6,C.7,C.11,C.12,C.13,E.1,E.2,E.3,E.5,E.6,E.7,E.8,G.1,G.2,G.4,G.6,G.7,G.15}');"
       db.query query
     end
   rescue PG::Error => e
@@ -133,3 +136,4 @@ namespace :db do
   task static: :fmdata do
   end
 end
+# rubocop:enable Metrics/ModuleLength
