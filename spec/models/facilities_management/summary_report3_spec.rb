@@ -589,6 +589,51 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/InstanceVariable
+    it 'create a direct-award report, verify unit of measurement volume worksheeet' do
+      user_email = 'test@example.com'
+      start_date = DateTime.now.utc
+
+      uvals.map!(&:deep_symbolize_keys)
+
+      data[:'fm-contract-length'] = 1
+      report = described_class.new(start_date, user_email, data)
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
+
+      results = {}
+      report_results = {}
+      supplier_names = rate_card.data[:Prices].keys
+      supplier_names.each do |supplier_name|
+        report_results[supplier_name] = {}
+        # e.g. dummy supplier_name = 'Hickle-Schinner'
+        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        results[supplier_name] = report.direct_award_value
+      end
+
+      # create deliverable matrix spreadsheet
+      buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
+
+      building_ids_with_service_codes2 = buildings_ids.collect do |b|
+        services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
+        { building_id: b.downcase, service_codes: services_per_building }
+      end
+
+      spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals)
+      spreadsheet = spreadsheet_builder.build
+
+      # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
+      IO.write('/tmp/deliverable_matrix_3_1year.xlsx', spreadsheet.to_stream.read)
+
+      wb = Roo::Excelx.new('/tmp/deliverable_matrix_3_1year.xlsx')
+      expect(wb.sheet('Volume').row(4)[3]).to eq 'price per Square Metre (GIA)'
+      expect(wb.sheet('Volume').row(6)[3]).to eq 'price per Square Metre (external area)'
+    end
+    # rubocop:enable RSpec/InstanceVariable
+    # rubocop:enable RSpec/ExampleLength
+
+    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable RSpec/InstanceVariable
     it 'create a direct-award report with contract length of 1 year and verify a report for each building' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc

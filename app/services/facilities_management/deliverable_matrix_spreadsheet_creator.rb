@@ -210,12 +210,21 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def add_volumes_information(sheet)
+    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.select(:id, :service_usage, :unit_measure_label)
+
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
 
     services_without_help_cafm = remove_help_cafm_services(@services)
     services_without_help_cafm.each do |s|
-      new_row = [s['code'], s['name'], s['metric'], s['unit_of_measure']]
+      unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s['code'] + '%').first
+      unit_of_measurement_value = begin
+                                    unit_of_measurement_row['unit_measure_label']
+                                  rescue NameError
+                                    nil
+                                  end
+      new_row = [s['code'], s['name'], s['metric'], unit_of_measurement_value]
       @buildings_with_service_codes.each do |b|
         uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
 
@@ -228,6 +237,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       sheet.add_row new_row, style: number_column_style
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def style_volume_sheet(sheet, style)
     column_widths = [15, 100, 50, 50]
