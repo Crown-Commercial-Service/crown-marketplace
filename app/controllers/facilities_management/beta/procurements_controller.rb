@@ -287,6 +287,9 @@ module FacilitiesManagement
                 :security_policy_document_date_yyyy,
                 :security_policy_document_file,
                 :payment_method,
+                :using_buyer_detail_for_invoice_details,
+                :using_buyer_detail_for_notices_detail,
+                :using_buyer_detail_for_authorised_detail,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
@@ -420,6 +423,9 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: '#',
+          },
+          invoicing_contact_details: {
+            page_title: 'Invoicing contact details'
           }
         }
       end
