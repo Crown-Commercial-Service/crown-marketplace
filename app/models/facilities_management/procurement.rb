@@ -220,6 +220,54 @@ module FacilitiesManagement
       aasm_state.match?(/\Ada_/)
     end
 
+    def extension_period_1_start_date
+      return nil if optional_call_off_extensions_1.nil?
+
+      initial_call_off_start_date + initial_call_off_period.years
+    end
+
+    def extension_period_1_end_date
+      return nil if optional_call_off_extensions_1.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1).years - 1.day
+    end
+
+    def extension_period_2_start_date
+      return nil if optional_call_off_extensions_2.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1).years
+    end
+
+    def extension_period_2_end_date
+      return nil if optional_call_off_extensions_2.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2).years - 1.day
+    end
+
+    def extension_period_3_start_date
+      return nil if optional_call_off_extensions_3.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2).years
+    end
+
+    def extension_period_3_end_date
+      return nil if optional_call_off_extensions_3.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3).years - 1.day
+    end
+
+    def extension_period_4_start_date
+      return nil if optional_call_off_extensions_4.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3).years
+    end
+
+    def extension_period_4_end_date
+      return nil if optional_call_off_extensions_4.nil?
+
+      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 + optional_call_off_extensions_4).years - 1.day
+    end
+
     private
 
     def update_procurement_building_services
