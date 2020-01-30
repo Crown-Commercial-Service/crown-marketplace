@@ -773,7 +773,7 @@ en:
       heading: Where are your buildings located?
       subheading: Choose one or more regions, based on building's location where you require facilities management services.
     select_services:
-      heading: Select the facilities management services do you need
+      heading: Select the facilities management services that you need
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
       servicespec_link_text: Read the service specification document
       subheading: Choose all facilities management services required within your estate, even if you want services in just one building.
