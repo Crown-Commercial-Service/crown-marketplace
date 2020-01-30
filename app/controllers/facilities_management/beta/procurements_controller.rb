@@ -137,7 +137,6 @@ module FacilitiesManagement
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: current_step).route
         else
           set_view_data
-          params[:step] = current_step
           render :edit
         end
       end
@@ -292,8 +291,9 @@ module FacilitiesManagement
       end
 
       def current_step
-        @current_step = nil
-        @current_step ||= params[:facilities_management_procurement][:step] if params.dig(:facilities_management_procurement, :step).present?
+        return params[:facilities_management_procurement][:step] if params.dig(:facilities_management_procurement, :step)
+
+        params[:step] if params.dig(:step)
       end
 
       def set_procurement
@@ -363,7 +363,6 @@ module FacilitiesManagement
 
       # used to control page navigation and headers
       # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Style/MultilineIfModifier
       def build_page_details(action = nil)
         action = action_name if action.nil?
 
@@ -374,9 +373,8 @@ module FacilitiesManagement
       def build_da_journey_page_details(view_name)
         @page_description = LayoutHelper::PageDescription.new(LayoutHelper::HeadingDetail.new(da_journey_page_details(view_name.to_sym)[:page_title], da_journey_page_details(view_name.to_sym)[:caption1], da_journey_page_details(view_name.to_sym)[:caption2], da_journey_page_details(view_name.to_sym)[:sub_title]), LayoutHelper::BackButtonDetail.new(da_journey_page_details(view_name.to_sym)[:back_url], da_journey_page_details(view_name.to_sym)[:back_label], da_journey_page_details(view_name.to_sym)[:back_text]), LayoutHelper::NavigationDetail.new(da_journey_page_details(view_name.to_sym)[:continuation_text], da_journey_page_details(view_name.to_sym)[:return_url], da_journey_page_details(view_name.to_sym)[:return_text], da_journey_page_details(view_name.to_sym)[:secondary_url], da_journey_page_details(view_name.to_sym)[:secondary_text], da_journey_page_details(view_name.to_sym)[:primary_name], da_journey_page_details(view_name.to_sym)[:secondary_name])) if da_journey_definitions.key?(view_name.to_sym)
       end
-
-      # rubocop:enable Style/MultilineIfModifier
       # rubocop:enable Metrics/AbcSize
+
       def da_journey_page_details(view_name)
         @page_details = {}
         @page_details.merge!(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))

@@ -122,8 +122,7 @@ en:
             optional_call_off_extensions_1:
               too_long: Call-off period and extensions must be 10 years or less
             payment_method:
-              empty: There is a problem
-              empty_description: Select one payment method
+              inclusion: Select one payment method
             procurement_building_services:
               invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be 'Complete'
             procurement_buildings:
