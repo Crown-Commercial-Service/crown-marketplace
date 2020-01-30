@@ -75,7 +75,7 @@ module FacilitiesManagement
         update_procurement if params['facilities_management_procurement'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      
+
       # DELETE /procurements/1
       # DELETE /procurements/1.json
       def destroy
@@ -142,7 +142,7 @@ module FacilitiesManagement
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: current_step).route
         else
           set_view_data
-          
+
           params[:step] = current_step
           render :edit
         end
