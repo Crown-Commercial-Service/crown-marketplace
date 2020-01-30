@@ -50,6 +50,7 @@ module LayoutHelper
 
   class PageDescription
     attr_accessor(:heading_details, :back_button, :navigation_details)
+    attr_accessor(:no_back_button, :no_error_block, :no_headings)
 
     def initialize(heading_details, back_button = nil, continuation = nil)
       raise ArgumentError, 'Use a HeadingDetails object' unless heading_details.is_a? HeadingDetail
@@ -58,6 +59,7 @@ module LayoutHelper
 
       raise ArgumentError, 'Use a NavigationDetail object' unless continuation.nil? || continuation.is_a?(NavigationDetail)
 
+      @no_back_button = @no_error_block = @no_headings = false
       @heading_details = heading_details
       @back_button = back_button
       @navigation_details = continuation
@@ -66,12 +68,16 @@ module LayoutHelper
 
   # Renders the top of the page including back-button, and the 3 elements of the main header
   # rubocop:disable Rails/OutputSafety
-  def govuk_page_content(page_details, model_object = nil, no_headings = false, no_back_button = false)
+  def govuk_page_content(page_details, model_object = nil, no_headings = false, no_back_button = false, no_error_block = false)
     raise ArgumentError, 'Use PageDescription object' unless page_details.is_a? PageDescription
 
+    @no_back_button = no_back_button
+    @no_error_block = no_error_block
+    @no_headings = no_headings
+
     out = ''
-    out = capture { govuk_page_error_summary(model_object) } unless model_object.nil?
-    out << capture { govuk_back_button(page_details.back_button) } unless no_back_button
+    out = capture { govuk_back_button(page_details.back_button) } unless no_back_button
+    out << capture { govuk_page_error_summary(model_object) } unless model_object.nil? || no_error_block
     out << capture { govuk_page_header(page_details.heading_details) } unless no_headings
 
     out << capture do

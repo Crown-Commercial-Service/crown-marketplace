@@ -1,21 +1,19 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
   <%= govuk_grouped_field(f, t('.payment_description'), :payment_method) do |ff, attr| %>
-    <%= govuk_start_individual_field(ff, attr, {}, false, true) do |a| %>
-      <div class="govuk-radios">
-        <div class="govuk-radios__item" id="payment-method-bacs">
-          <%= f.radio_button :payment_method, 'bacs', class: 'govuk-radios__input' %>
-          <%= f.label :payment_method, value: 'bacs', class: 'govuk-label govuk-radios__label' do %>
-            <%= t('.bacs_payment') %>
-          <% end %>
-        </div>
-        <div class="govuk-radios__item" id="payment-method-card" name="payment-method">
-          <%= f.radio_button :payment_method, 'card', class: 'govuk-radios__input' %>
-          <%= f.label :payment_method, value: 'card', class: 'govuk-label govuk-radios__label' do %>
-            <%= t('.government_procurement_card') %>
-          <% end %>
-        </div>
+    <div class="govuk-radios">
+      <div class="govuk-radios__item" id="payment-method-bacs">
+        <%= f.radio_button :payment_method, 'bacs', class: 'govuk-radios__input' %>
+        <%= f.label :payment_method, value: 'bacs', class: 'govuk-label govuk-radios__label' do %>
+          <%= t('.bacs_payment') %>
+        <% end %>
       </div>
-    <% end %>
+      <div class="govuk-radios__item" id="payment-method-card" name="payment-method">
+        <%= f.radio_button :payment_method, 'card', class: 'govuk-radios__input' %>
+        <%= f.label :payment_method, value: 'card', class: 'govuk-label govuk-radios__label' do %>
+          <%= t('.government_procurement_card') %>
+        <% end %>
+      </div>
+    </div>
   <% end %>
   <%= govuk_continuation_buttons(pd, f, false) %>
 <% end %>
