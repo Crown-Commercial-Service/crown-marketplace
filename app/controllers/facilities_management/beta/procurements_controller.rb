@@ -71,8 +71,8 @@ module FacilitiesManagement
 
         update_procurement if params['facilities_management_procurement'].present?
       end
-
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      
       # DELETE /procurements/1
       # DELETE /procurements/1.json
       def destroy
@@ -98,6 +98,7 @@ module FacilitiesManagement
 
       private
 
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
       def set_view_data
         if current_step.present? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(current_step.to_sym)
           build_page_details(@procurement.da_journey_state.to_sym)
@@ -118,7 +119,7 @@ module FacilitiesManagement
           da_buyer_page_data(@view_da)
         when 'edit'
           @view_da = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: nil, da_journey_state: @procurement.da_journey_state, step: current_step).da_journey_view
-          build_page_details(@view_da.to_sym) unless @view_da.blank?
+          build_page_details(@view_da.to_sym) if @view_da.present?
           da_buyer_page_data(current_step)
         else
           build_page_details(view_name.to_sym)
@@ -127,6 +128,7 @@ module FacilitiesManagement
         end
         view_name
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/AbcSize
 
       def update_procurement
         assign_procurement_parameters
