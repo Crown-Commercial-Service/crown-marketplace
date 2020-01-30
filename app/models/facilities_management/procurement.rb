@@ -3,6 +3,7 @@ module FacilitiesManagement
   class Procurement < ApplicationRecord
     include AASM
     include ProcurementValidator
+    # include ProcurementPensionFundValidator
 
     belongs_to :user,
                foreign_key: :user_id,
@@ -15,7 +16,9 @@ module FacilitiesManagement
     accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
 
     has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+
     has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+    accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :any_pension_errors?
 
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
     mount_uploader :security_policy_document_file, FacilitiesManagementSecurityPolicyDocumentUploader
@@ -67,6 +70,7 @@ module FacilitiesManagement
       end
     end
 
+    # rubocop: disable Metrics/BlockLength
     aasm(:da_journey, column: 'da_journey_state') do
       state :pricing, initial: true
       state :what_next
@@ -89,7 +93,72 @@ module FacilitiesManagement
       event :start_da_journey do
         transitions to: :pricing
       end
+
+      event :set_to_what_next do
+        transitions to: :what_next
+      end
+
+      event :set_to_important_information do
+        transitions to: :important_information
+      end
+
+      event :set_to_contract_details do
+        transitions to: :contract_details
+      end
+
+      event :set_to_review_and_generate do
+        transitions to: :review_and_generate
+      end
+
+      event :set_to_review do
+        transitions to: :review
+      end
+
+      event :set_to_sending do
+        transitions to: :sending
+      end
+
+      event :set_to_sent_awaiting_response do
+        transitions to: :sent_awaiting_response
+      end
+
+      event :set_to_withdraw do
+        transitions to: :withdraw
+      end
+
+      event :set_to_accepted do
+        transitions to: :accepted
+      end
+
+      event :set_to_confirmation do
+        transitions to: :confirmation
+      end
+
+      event :set_to_accepted_signed do
+        transitions to: :accepted_signed
+      end
+
+      event :set_to_accepted_not_signed do
+        transitions to: :accepted_not_signed
+      end
+
+      event :set_to_declined do
+        transitions to: :declined
+      end
+
+      event :set_to_no_response do
+        transitions to: :no_response
+      end
+
+      event :set_to_confirm_signed do
+        transitions to: :confirm_signed
+      end
+
+      event :set_to_closed do
+        transitions to: :closed
+      end
     end
+    # rubocop: enable Metrics/BlockLength
 
     def find_or_build_procurement_building(building_data, building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(name: building_data['name'])
@@ -143,6 +212,28 @@ module FacilitiesManagement
     SEARCH_ORDER = SEARCH.map(&:to_s)
     SENT_OFFER_ORDER = SENT_OFFER.map(&:to_s)
 
+    MAX_NUMBER_OF_PENSIONS = 10
+
+    def direct_award?
+      aasm_state.match?(/\Ada_/)
+    end
+
+    # rubocop: disable Metrics/CyclomaticComplexity
+    # rubocop: disable Metrics/PerceivedComplexity
+    def any_pension_errors?(attributes)
+      return false if attributes[:_destroy] == 'true'
+      return true if valid_pension_count? >= MAX_NUMBER_OF_PENSIONS
+      return true if attributes[:name].empty?
+      return true if attributes[:name].length > 150
+      return true if attributes[:percentage].empty?
+      return true if attributes[:percentage].to_f < 1 || attributes[:percentage].to_f > 100
+      return true if attributes[:percentage].to_f % 1 != 0
+
+      false
+    end
+    # rubocop: enable Metrics/CyclomaticComplexity
+    # rubocop: enable Metrics/PerceivedComplexity
+
     private
 
     def update_procurement_building_services
@@ -151,6 +242,10 @@ module FacilitiesManagement
       end
 
       procurement_building_services.where.not(code: service_codes).destroy_all
+    end
+
+    def valid_pension_count?
+      procurement_pension_funds.reject(&:marked_for_destruction?).size
     end
   end
 end
