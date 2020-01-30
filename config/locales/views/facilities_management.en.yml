@@ -406,7 +406,7 @@ en:
             invoicing_contact_details: Invoicing contact details
             local_government_pension_scheme: Local Government Pension Scheme
             notices_contact_details: Notices contact details
-            payment_details: Payment method
+            payment_method: Payment method
             security_policy_document: Security policy
           pricing:
             description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
@@ -451,6 +451,10 @@ en:
             procurement_buildings: 'Next: Services'
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
+          payment_method:
+            bacs_payment: BACS payment
+            government_procurement_card: Government procurement card
+            payment_description: Please select the payment method that will be used
           procurement_buildings:
             buildings_selected: Buildings selected
             content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
@@ -458,10 +462,6 @@ en:
             no_buildings_selected: No buildings selected
             remove_all: Remove all
             sub_heading: Select all of the buildings you want to include in your procurement
-          payment_method:
-            bacs_payment: BACS payment
-            payment_description: Please select the payment method that will be used
-            government_procurement_card: Government procurement card
           quick_search: Search result
           save_and_continue: Save and continue
           save_and_return_to_detailed_summary: Save and return to detailed search summary
