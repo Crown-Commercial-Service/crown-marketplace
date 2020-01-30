@@ -27,6 +27,12 @@ module CCS
               "CREATE INDEX IF NOT EXISTS idxginlots ON fm_suppliers USING GIN ((data -> 'lots'));"
       db.query query
 
+      # for now delete all fm suppliers on Preview
+      if ENV['CCS_DEFAULT_DB_HOST'].nil? || ENV['CCS_DEFAULT_DB_HOST'].include?('preview')
+        FacilitiesManagement::Supplier.destroy_all
+        db.query 'DELETE FROM fm_suppliers;'
+      end
+
       supplier_data.each do |supplier|
         values = supplier.to_json.gsub("'") { "''" }
         query = "DELETE FROM fm_suppliers where data->'supplier_id' ? '" + supplier['supplier_id'] + "' ; " \
