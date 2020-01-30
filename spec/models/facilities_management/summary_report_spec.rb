@@ -617,8 +617,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # report.workout_current_lot
     # p report.assessed_value
-    # assessed_value.round == GBP 8,509,504.71
-    expect(report.assessed_value.round(2)).to be 8509504.71
+    # assessed_value.round == GBP 8,609,444.55
+    expect(report.assessed_value.round(2)).to be 8609444.55
   end
 
   it 'price individual services E.4' do
@@ -839,7 +839,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
 
     expect(sum_uom.round(2)).to be 939817.98
-    expect(sum_benchmark.round(2)).to be 925409.13
+    expect(sum_benchmark.round(2)).to be 949771.07
   end
   # rubocop:enable RSpec/ExampleLength
 end

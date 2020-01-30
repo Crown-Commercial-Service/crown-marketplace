@@ -2,7 +2,7 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
-  require './lib/tasks/distributed_locks'
+  require Rails.root.join('lib', 'tasks', 'distributed_locks')
 
   def self.supplier_data
     is_dev_db = ENV['CCS_DEFAULT_DB_HOST']

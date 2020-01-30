@@ -1,9 +1,10 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(supplier_name, data, rate_card, data_no_cafmhelp_removed = {})
+  def initialize(supplier_name, data, rate_card, data_no_cafmhelp_removed = {}, uvals = {})
     @supplier_name = supplier_name
     @data = data
     @rate_card_data = rate_card.data
     @data_no_cafmhelp_removed = data_no_cafmhelp_removed
+    @uvals_contract = uvals
     create_spreadsheet
   end
 
@@ -67,7 +68,16 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/BlockLength
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def contract_rate_card
+    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.select(:id, :service_usage, :unit_measure_label)
+
+    selected_building_names = []
+    selected_building_info = []
+    get_building_data(selected_building_names, selected_building_info)
+
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
       price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
@@ -78,24 +88,34 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row ['Table 1. Service rates']
 
       new_row = ['Service Reference', 'Service Name', 'Unit of Measure']
-      CCS::FM::RateCard.building_types.each { |b| new_row << b }
+      selected_building_names.each { |building_name| new_row << building_name }
       sheet.add_row new_row, style: header_row_style
 
       if @supplier_name
         rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
         rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
-
         @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
                                  .flatten.uniq
                                  .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-          # I found :spreadsheet_label value is always nil,I did not want to alter code too much so left current code alone..
-          # if buildings have different services then I put in the ,if, check below otherwise an exception is generated
-          labels = @data_no_cafmhelp_removed.keys.sort.collect { |k| @data_no_cafmhelp_removed[k][s][:spreadsheet_label] if @data_no_cafmhelp_removed[k].key(s) }
-
           new_row = []
-          CCS::FM::RateCard.building_types.each { |b| new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][b] }
 
-          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], labels.first] << new_row).flatten
+          selected_building_names.each do |building_name|
+            # only output the rate value for the cell if the service uval contains the building otherwise output nil for the excel cell value
+            building_id = selected_building_info.select { |building_info| building_info[:"building-type"] == building_name }[0][:id]
+            building_linking_to_this_service = @uvals_contract.select { |uval| uval[:service_code] == s && uval[:building_id] == building_id }
+
+            row_value = nil if building_linking_to_this_service.empty?
+            row_value = @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][building_name.to_sym] unless building_linking_to_this_service.empty?
+            new_row << row_value
+          end
+
+          unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s + '%').first
+          unit_of_measurement_value = begin
+                                        unit_of_measurement_row['unit_measure_label']
+                                      rescue NameError
+                                        nil
+                                      end
+          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], unit_of_measurement_value] << new_row).flatten
 
           styles = [standard_column_style, standard_column_style, standard_column_style]
 
@@ -123,6 +143,17 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     end
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/BlockLength
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+  def get_building_data(selected_building_names, selected_building_info)
+    selected_buildings_data = FacilitiesManagement::Buildings.where(id: @data.keys).select(:id, :building_json)
+    selected_buildings_data.each { |building_data| selected_building_names << building_data.building_json['building-type'] }
+    selected_building_names.uniq!
+
+    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_json['building-type'] } }
+  end
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/BlockLength

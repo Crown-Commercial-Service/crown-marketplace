@@ -66,8 +66,7 @@ module FacilitiesManagement
       end
     end
 
-    # rubocop:disable Metrics/BlockLength
-
+    # rubocop: disable Metrics/BlockLength
     aasm(:da_journey, column: 'da_journey_state') do
       state :pricing, initial: true
       state :what_next
@@ -155,8 +154,7 @@ module FacilitiesManagement
         transitions to: :closed
       end
     end
-
-    # rubocop:enable Metrics/BlockLength
+    # rubocop: enable Metrics/BlockLength
 
     def find_or_build_procurement_building(building_data, building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(name: building_data['name'])
@@ -181,14 +179,22 @@ module FacilitiesManagement
       procurement_buildings.active
     end
 
-    def save_eligible_suppliers
-      sorted_list = FacilitiesManagement::DirectAwardEligibleSuppliers.new(id).sorted_list
+    def save_eligible_suppliers_and_set_state
+      eligible_suppliers = FacilitiesManagement::DirectAwardEligibleSuppliers.new(id)
+
+      self.assessed_value = eligible_suppliers.assessed_value
+      self.lot_number = eligible_suppliers.lot_number
 
       # if any procurement_suppliers present, they need to be removed
       procurement_suppliers.destroy_all
-      sorted_list.each do |supplier_data|
+      eligible_suppliers.sorted_list.each do |supplier_data|
         procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
       end
+
+      self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
+      set_state_to_results
+      start_da_journey
+      save
     end
 
     def buildings_standard
@@ -209,6 +215,10 @@ module FacilitiesManagement
     SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
     SENT_OFFER_ORDER = SENT_OFFER.map(&:to_s)
+
+    def direct_award?
+      aasm_state.match?(/\Ada_/)
+    end
 
     private
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PostcodesNutsRegions, type: :model do
+RSpec.describe PostcodesNutsRegion, type: :model do
   it 'Create a record' do
     postcode_nuts_save_record = described_class.new(postcode: 'AB101AB', code: 'UKM50').save
     expect(postcode_nuts_save_record).to eq(true)
