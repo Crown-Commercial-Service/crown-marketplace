@@ -1,0 +1,16 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+  <div class="govuk-heading-m govuk-!-width-three-quarters">
+    Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
+  </div>
+  <div class="govuk-radios">
+      <div class="govuk-radios__item">
+        <%= f.radio_button :local_government_pension_scheme, true, value: true, class: 'govuk-radios__input' %>
+        <%= label :local_government_pension_scheme, true, "Yes", class: 'govuk-label govuk-radios__label' %>
+      </div>
+      <div class="govuk-radios__item">
+        <%= f.radio_button :local_government_pension_scheme, false, value: false, class: 'govuk-radios__input' %>
+        <%= label :local_government_pension_scheme, false, "No", class: 'govuk-label govuk-radios__label' %>
+      </div>
+  </div>
+  <%= govuk_continuation_buttons(pd, f, false) %>
+<%end%>
