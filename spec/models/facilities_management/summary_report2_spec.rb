@@ -828,8 +828,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       # check warehouse building is added to table 1 in contract Rate Card worksheet
       wb = Roo::Excelx.new('/tmp/direct_award_prices.xlsx')
-      expect(wb.sheet('Contract Rate Card').row(3).length).to eq 4
       expect(wb.sheet('Contract Rate Card').row(3)[3]).to eq 'Warehouses'
+      expect(wb.sheet('Contract Rate Card').row(4)[3]).to eq 0.6778947368421055
+      expect(wb.sheet('Contract Rate Card').row(5)[3]).to eq 0.8400000000000002
     end
     # rubocop:enable RSpec/ExampleLength
   end
