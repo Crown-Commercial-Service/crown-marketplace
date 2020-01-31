@@ -150,6 +150,8 @@ en:
               not_present: You must answer the question about 'TUPE'
             using_buyer_detail_for_invoice_details:
               inclusion: Select one option
+            using_buyer_detail_for_authorised_detail:
+              inclusion: Select one option
         facilities_management/procurement_building:
           attributes:
             service_codes:
