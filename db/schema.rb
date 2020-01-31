@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
     t.string "da_journey_state"
+    t.string "payment_method"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 

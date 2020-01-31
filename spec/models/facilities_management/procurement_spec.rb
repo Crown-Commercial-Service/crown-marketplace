@@ -119,6 +119,65 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '#payment_method' do
+    context 'when a payment_method is not present' do
+      it 'is expected not to be valid' do
+        procurement.payment_method = ''
+        expect(procurement.valid?(:payment_method)).to eq false
+      end
+    end
+
+    context 'when bacs is a selected payment_method' do
+      it 'is expected to be valid' do
+        procurement.payment_method = 'bacs'
+        expect(procurement.valid?(:payment_method)).to eq true
+      end
+    end
+
+    context 'when card is a selected payment_method' do
+      it 'is expected to be valid' do
+        procurement.payment_method = 'card'
+        expect(procurement.valid?(:payment_method)).to eq true
+      end
+    end
+
+    context 'when a payment_method already exists' do
+      context 'when bacs is the payment_method' do
+        before do
+          procurement.payment_method = 'bacs'
+        end
+
+        it 'is expected to overwrite bacs' do
+          procurement.payment_method = 'card'
+          expect(procurement.payment_method).to eq 'card'
+        end
+
+        it 'is expected to revert back to bacs' do
+          procurement.payment_method = 'card'
+          procurement.payment_method = 'bacs'
+          expect(procurement.payment_method).to eq 'bacs'
+        end
+      end
+
+      context 'when card is the payment_method' do
+        before do
+          procurement.payment_method = 'card'
+        end
+
+        it 'is expected to overwrite card' do
+          procurement.payment_method = 'bacs'
+          expect(procurement.payment_method).to eq 'bacs'
+        end
+
+        it 'is expected to revert back to card' do
+          procurement.payment_method = 'bacs'
+          procurement.payment_method = 'card'
+          expect(procurement.payment_method).to eq 'card'
+        end
+      end
+    end
+  end
+
   describe '#procurement_buildings' do
     context 'when there are no procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
