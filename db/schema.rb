@@ -82,6 +82,25 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
+  create_table "facilities_management_procurement_contact_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type", limit: 100
+    t.string "name", limit: 50
+    t.string "job_title", limit: 150
+    t.text "email"
+    t.string "telephone_number", limit: 15
+    t.text "organisation_address_line_1"
+    t.text "organisation_address_line_2"
+    t.text "organisation_address_town"
+    t.text "organisation_address_county"
+    t.text "organisation_address_postcode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "facilities_management_procurement_id"
+    t.index ["email"], name: "facilities_management_procurement_contact_detail_email_idx"
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_contact_details_on_fm_procurement_id"
+    t.index ["id"], name: "facilities_management_procurement_contact_detail_id_idx"
+  end
+
   create_table "facilities_management_procurement_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
     t.uuid "supplier_id"
@@ -128,6 +147,9 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
     t.string "da_journey_state"
+    t.boolean "using_buyer_detail_for_invoice_details"
+    t.boolean "using_buyer_detail_for_notices_detail"
+    t.boolean "using_buyer_detail_for_authorised_detail"
     t.string "payment_method"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
@@ -194,14 +216,15 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "fm_rates", id: false, force: :cascade do |t|
     t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
-    t.string "standard", limit: 1
-    t.boolean "direct_award"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.index ["code"], name: "index_fm_rates_on_code"
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|
@@ -243,7 +266,6 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.string "unit_text"
     t.string "data_type"
     t.string "spreadsheet_label"
-    t.string "unit_measure_label"
     t.text "service_usage", array: true
   end
 
@@ -576,6 +598,7 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
+  add_foreign_key "facilities_management_procurement_contact_details", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_suppliers", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"

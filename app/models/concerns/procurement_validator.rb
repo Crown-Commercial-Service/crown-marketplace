@@ -28,6 +28,8 @@ module ProcurementValidator
 
     validates :payment_method, inclusion: { in: ['bacs', 'card'] }, on: %i[payment_method]
 
+    validates :using_buyer_detail_for_invoice_details, inclusion: { in: [true, false] }, on: %i[invoicing_contact_details]
+
     #############################################
     # Validation rules for contract-dates
     # these rules need to cover
@@ -148,10 +150,6 @@ module ProcurementValidator
 
     def validate_mobilisation_and_tupe
       errors.add(:mobilisation_period, :not_valid_with_tupe) if (!mobilisation_period || mobilisation_period < 4) && tupe == true
-    end
-
-    def validate_payment_method
-      errors.add(:payment_method, :empty_description) if payment_method.nil?
     end
   end
   # rubocop:enable Metrics/BlockLength
