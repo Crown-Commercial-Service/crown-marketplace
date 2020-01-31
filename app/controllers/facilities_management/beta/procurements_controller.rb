@@ -431,9 +431,6 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: '#',
-          },
-          authorised_representative: {
-            
           }
         }
       end

@@ -30,6 +30,8 @@ module ProcurementValidator
 
     validates :using_buyer_detail_for_invoice_details, inclusion: { in: [true, false] }, on: %i[invoicing_contact_details]
 
+    validates :using_buyer_detail_for_authorised_detail, inclusion: { in: [true, false] }, on: %i[authorised_representative]
+
     #############################################
     # Validation rules for contract-dates
     # these rules need to cover
