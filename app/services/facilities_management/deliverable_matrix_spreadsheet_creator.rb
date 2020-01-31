@@ -288,12 +288,16 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     sheet.add_row []
     sheet.add_row ['2. Contract requirements'], style: bold_style
     add_initial_call_off_period(sheet)
-    sheet.add_row ['Mobbilisation Period', "#{@procurement.mobilisation_period} weeks"]
-    sheet.add_row ['Mobilisation Start Date', @procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day]
-    sheet.add_row ['Mobilisation End Date', @procurement.initial_call_off_start_date - 1.day]
+    add_mobilisation_period(sheet)
     sheet.add_row ['Date of First Indexation', @procurement.initial_call_off_start_date + 1.year]
     add_extension_periods(sheet)
     add_tupe(sheet)
+  end
+
+  def add_mobilisation_period(sheet)
+    sheet.add_row ['Mobbilisation Period', ("#{@procurement.mobilisation_period} weeks" unless @procurement.mobilisation_period.nil?)]
+    sheet.add_row ['Mobilisation Start Date', (@procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day unless @procurement.mobilisation_period.nil?)]
+    sheet.add_row ['Mobilisation End Date', (@procurement.initial_call_off_start_date - 1.day unless @procurement.mobilisation_period.nil?)]
   end
 
   def add_initial_call_off_period(sheet)
