@@ -4,10 +4,11 @@ require 'axlsx_rails'
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   include FacilitiesManagement::Beta::SummaryHelper
 
-  def initialize(building_ids_with_service_codes, units_of_measure_values = nil)
+  def initialize(building_ids_with_service_codes, units_of_measure_values = nil, procurement_id = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
     @buildings = FacilitiesManagement::Buildings.where(id: building_ids)
+    @procurement = FacilitiesManagement::Procurement.find(procurement_id) unless procurement_id.nil?
     buildings_with_service_codes
     set_services
     @units_of_measure_values = units_of_measure_values
@@ -42,11 +43,21 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
             style_volume_sheet(sheet, standard_column_style)
           end
         end
+
+        add_customer_and_contract_details(p) if @procurement
       end
     end
   end
 
   private
+
+  def add_customer_and_contract_details(package)
+    package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
+      add_contract_number(sheet)
+      add_customer_details(sheet)
+      add_contract_requirements(sheet)
+    end
+  end
 
   def standard_row_height
     35
@@ -248,5 +259,63 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def remove_help_cafm_services(services)
     services.reject { |x| x['code'] == 'M.1' || x['code'] == 'N.1' }
+  end
+
+  def add_contract_number(sheet)
+    time = Time.now.getlocal
+    contract_number = FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: []).new_number
+    sheet.add_row ["#{contract_number} - #{time.strftime('%Y/%m/%d')} - #{time.strftime('%l:%M%P')}"]
+    sheet.add_row []
+  end
+
+  def add_customer_details(sheet)
+    bold_style = sheet.styles.add_style b: true
+    telephone_number_style = sheet.styles.add_style format_code: '0##########'
+    buyer_detail = @procurement.user.buyer_detail
+
+    sheet.add_row ['1. Customer details'], style: bold_style
+    sheet.add_row ['Contract name', @procurement.contract_name]
+    sheet.add_row ['Buyer Organisation Name', buyer_detail.organisation_name]
+    sheet.add_row ['Buyer Organisation Sector']
+    sheet.add_row ['Buyer Contact Name', buyer_detail.full_name]
+    sheet.add_row ['Buyer Contact Job Title', buyer_detail.job_title]
+    sheet.add_row ['Buyer Contact Email Address', @procurement.user.email]
+    sheet.add_row ['Buyer Contact Telephone Number', buyer_detail.telephone_number], style: [nil, telephone_number_style]
+  end
+
+  def add_contract_requirements(sheet)
+    bold_style = sheet.styles.add_style b: true
+    sheet.add_row []
+    sheet.add_row ['2. Contract requirements'], style: bold_style
+    add_initial_call_off_period(sheet)
+    sheet.add_row ['Mobbilisation Period', "#{@procurement.mobilisation_period} weeks"]
+    sheet.add_row ['Mobilisation Start Date', @procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day]
+    sheet.add_row ['Mobilisation End Date', @procurement.initial_call_off_start_date - 1.day]
+    sheet.add_row ['Date of First Indexation', @procurement.initial_call_off_start_date + 1.year]
+    add_extension_periods(sheet)
+    add_tupe(sheet)
+  end
+
+  def add_initial_call_off_period(sheet)
+    sheet.add_row ['Initial Call-Off Period', "#{@procurement.initial_call_off_period} years"]
+    sheet.add_row ['Initial Call-Off Period Start Date', @procurement.initial_call_off_start_date]
+    sheet.add_row ['Initial Call-Off Period End Date', @procurement.initial_call_off_start_date + @procurement.initial_call_off_period.years - 1.day]
+  end
+
+  def add_extension_periods(sheet)
+    (1..4).each do |period|
+      sheet.add_row ["Extension Period #{period}", extension_period(period)]
+    end
+  end
+
+  def extension_period(period)
+    return nil if @procurement.try("optional_call_off_extensions_#{period}").nil?
+
+    @procurement.try("extension_period_#{period}_start_date").strftime('%d/%m/%Y') + ' - ' + @procurement.try("extension_period_#{period}_end_date").strftime('%d/%m/%Y')
+  end
+
+  def add_tupe(sheet)
+    sheet.add_row []
+    sheet.add_row ['TUPE involved', @procurement.tupe? ? 'Yes' : 'No']
   end
 end
