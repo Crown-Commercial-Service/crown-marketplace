@@ -62,7 +62,7 @@ module FacilitiesManagement
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
       def update
         continue_to_summary && return if params['change_requirements'].present?
 
@@ -72,9 +72,11 @@ module FacilitiesManagement
 
         continue_to_contract_details && return if params['continue_da'].present?
 
+        continue_to_new_invoice && return if params['facilities_management_procurement']['step'] == 'invoicing_contact_details'
+
         update_procurement if params['facilities_management_procurement'].present?
       end
-      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
       # DELETE /procurements/1
       # DELETE /procurements/1.json
@@ -195,6 +197,14 @@ module FacilitiesManagement
         end
       end
 
+      def continue_to_new_invoice
+        return if params['facilities_management_procurement']['using_buyer_detail_for_invoice_details'] == 'true'
+
+        @procurement.assign_attributes(procurement_params)
+        @procurement.save
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details')
+      end
+
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         if params[:commit] == page_details(:results)[:secondary_text]
@@ -245,6 +255,7 @@ module FacilitiesManagement
         @page_data[:model_object]         = @procurement
         @page_data[:no_suppliers]         = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
+        set_invoice_data if !params['step'].nil? && params['step'] == 'new_invoicing_contact_details'
       end
 
       def create_da_buyer_page_data(view_name)
@@ -253,6 +264,11 @@ module FacilitiesManagement
         @page_data[:no_suppliers]         = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
         build_da_journey_page_details(view_name)
+      end
+
+      def set_invoice_data
+        @procurement.create_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
+        @procurement.invoice_contact_detail
       end
 
       def procurement_route_params
@@ -426,6 +442,9 @@ module FacilitiesManagement
           },
           invoicing_contact_details: {
             page_title: 'Invoicing contact details'
+          },
+          new_invoicing_contact_details: {
+            page_title: 'New Invoicing contact details',
           }
         }
       end
