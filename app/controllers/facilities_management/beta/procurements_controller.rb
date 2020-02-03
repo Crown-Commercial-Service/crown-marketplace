@@ -46,6 +46,7 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def edit
+        @procurement.procurement_pension_funds.build
         if @procurement.quick_search?
           render :edit
         else
