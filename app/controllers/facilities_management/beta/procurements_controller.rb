@@ -425,7 +425,6 @@ module FacilitiesManagement
           },
           payment_method: {
             caption2: 'Contract details',
-            
             back_text: 'Back',
             page_title: 'Payment method',
             continuation_text: 'Save and return',
