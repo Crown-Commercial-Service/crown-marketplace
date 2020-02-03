@@ -198,8 +198,16 @@ en:
         facilities_management/procurement_pension_fund:
           attributes:
             name:
+              blank: Enter a pension fund name
+              inclusion: Enter a pension fund name
               required: Enter a pension fund name
             percentage:
+              blank: Enter a percentage of pensionable pay
+              greater_than_or_equal_to: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
+              inclusion: Enter a percentage of pensionable pay
+              less_than_or_equal_to: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
+              not_a_number: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
+              not_an_integer: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
               required: Enter a percentage of pensionable pay
         facilities_management/service_hour_choice:
           attributes:
