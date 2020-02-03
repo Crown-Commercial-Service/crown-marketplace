@@ -49,6 +49,7 @@ module LayoutHelper
   end
 
   class PageDescription
+
     attr_accessor(:heading_details, :back_button, :navigation_details)
     attr_accessor(:no_back_button, :no_error_block, :no_headings)
 
