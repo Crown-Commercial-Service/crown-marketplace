@@ -270,7 +270,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def add_customer_details(sheet)
     bold_style = sheet.styles.add_style b: true
-    telephone_number_style = sheet.styles.add_style format_code: '0##########'
+    telephone_number_style = sheet.styles.add_style format_code: '0##########', alignment: { horizontal: :left }
     buyer_detail = @procurement.user.buyer_detail
 
     sheet.add_row ['1. Customer details'], style: bold_style
