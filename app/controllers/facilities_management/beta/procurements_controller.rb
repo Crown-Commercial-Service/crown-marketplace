@@ -433,7 +433,6 @@ module FacilitiesManagement
             return_url: '#',
           },
           authorised_representative: {
-            back_url: '#',
             back_text: 'Back',
             back_label: 'Return to Pricing',
             page_title: 'Authorised representative details',
@@ -444,7 +443,6 @@ module FacilitiesManagement
             secondary_text: 'Return to results',
           },
           notices_contact_details: {
-            back_url: '#',
             back_text: 'Back',
             back_label: 'Back',
             page_title: 'Notices contact details',
