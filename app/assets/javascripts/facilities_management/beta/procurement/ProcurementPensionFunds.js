@@ -1,77 +1,98 @@
 /*global FormValidationComponent */
 
-function PensionFundDataUI(jqContainer) {
-    this.dataContainer = jqContainer;
-    let formObject = jqContainer.closest("form");
-    if (formObject.length > 0) {
-        this.formHelper = new FormValidationComponent(formObject[0], this.validateForm, true);
-        this.formHelper.prevErrorMessage = this.formHelper.errorMessage;
-    }
-}
+// function PensionFundDataUI(jqContainer) {
+//     this.dataContainer = jqContainer;
+//     let formObject = jqContainer.closest("form");
+//     if (formObject.length > 0) {
+//         this.formHelper = new FormValidationComponent(formObject[0], this.validateForm, true);
+//         this.formHelper.prevErrorMessage = this.formHelper.errorMessage;
+//     }
+// }
 
-PensionFundDataUI.prototype.validateForm = function (_formElements) {
-    let fv = this;
-    fv.clearBannerErrorList();
-    fv.clearAllFieldErrors();
-    fv.toggleBannerError(false);
+// PensionFundDataUI.prototype.validateForm = function (_formElements) {
+//     let fv = this;
+//     fv.clearBannerErrorList();
+//     fv.clearAllFieldErrors();
+//     fv.toggleBannerError(false);
 
-    var anyErrors = false;
-    var firstNameError = false;
-    var firstPercentageError = false;
+//     var anyErrors = false;
+//     var firstNameError = false;
+//     var firstPercentageError = false;
+//     var firstPercentageValueError = false;
 
-    var numberOfPensions = document.getElementsByClassName("pension-row").length;
-    if (numberOfPensions > 99) {
-      return false;
-    }
+//     var numberOfPensions = document.getElementsByClassName("pension-row").length;
+//     if (numberOfPensions > 99) {
+//       return false;
+//     }
+    
+//     function anyPensionError(value) {
+//       if (value > 100 || value < 1) {
+//         return true;
+//       }
+//       if ((value % 1) != 0){
+//         return true;
+//       }
+//       return false;
+//     }
 
-    $(".pension-row").each(function( i ) {
+//     $(".pension-row").each(function( i ) {
 
-      $($(this).find(":input.pension-name").get(0)).removeClass("govuk-input--error");
-      $(this).find("*[data-propertyname='name']").addClass("govuk-visually-hidden");
-      $($(this).find(":input.pension-percentage").get(0)).removeClass("govuk-input--error");
-      $(this).find("*[data-propertyname='percentage']").addClass("govuk-visually-hidden");
+//       $($(this).find(":input.pension-name").get(0)).removeClass("govuk-input--error");
+//       $(this).find("*[data-propertyname='name']").addClass("govuk-visually-hidden");
+//       $($(this).find(":input.pension-percentage").get(0)).removeClass("govuk-input--error");
+//       $(this).find("*[data-propertyname='percentage']").addClass("govuk-visually-hidden");
 
-      var anyRowErrors = false;
-      if (!$(this).find(":input.pension-name").get(0).value.trim()) {
-        $($(this).find(":input.pension-name").get(0)).addClass("govuk-input--error");
-        $(this).find("*[data-propertyname='name']").removeClass("govuk-visually-hidden");
-        if (!firstNameError) {
-          fv.insertListElementInBannerError($($(this).find(":input.pension-name").get(0)), "required", "Enter a pension fund name");
-          firstNameError = true;
-        }
-        anyErrors = true;
-        anyRowErrors = true;
-      }
-      if (!$(this).find(":input.pension-percentage").get(0).value) {
-        $($(this).find(":input.pension-percentage").get(0)).addClass("govuk-input--error");
-        $(this).find("*[data-propertyname='percentage']").removeClass("govuk-visually-hidden");
-        if (!firstPercentageError) {
-          fv.insertListElementInBannerError($($(this).find(":input.pension-percentage").get(0)), "required", "Enter a percentage of pensionable pay");
-          firstPercentageError = true;
-        }
-        anyErrors = true;
-        anyRowErrors = true;
-      }
-      if (anyRowErrors) {
-        $(this).addClass("govuk-form-group--error");
-      }
-    });
+//       var anyRowErrors = false;
+//       if (!$(this).find(":input.pension-name").get(0).value.trim()) {
+//         $($(this).find(":input.pension-name").get(0)).addClass("govuk-input--error");
+//         $(this).find("*[data-propertyname='name']").removeClass("govuk-visually-hidden");
+//         if (!firstNameError) {
+//           fv.insertListElementInBannerError($($(this).find(":input.pension-name").get(0)), "required", "Enter a pension fund name");
+//           firstNameError = true;
+//         }
+//         anyErrors = true;
+//         anyRowErrors = true;
+//       }
+//       if (!$(this).find(":input.pension-percentage").get(0).value) {
+//         $($(this).find(":input.pension-percentage").get(0)).addClass("govuk-input--error");
+//         $($(this).find("*[data-propertyname='percentage']")[0]).removeClass("govuk-visually-hidden");
+//         if (!firstPercentageError) {
+//           fv.insertListElementInBannerError($($(this).find(":input.pension-percentage").get(0)), "required", "Enter a percentage of pensionable pay");
+//           firstPercentageError = true;
+//         }
+//         anyErrors = true;
+//         anyRowErrors = true;
+//       } else if (anyPensionError($(this).find(":input.pension-percentage").get(0).value)) {
+//         $($(this).find(":input.pension-percentage").get(0)).addClass("govuk-input--error");
+//         $(this).find("*[data-validation='invalid']").removeClass("govuk-visually-hidden");
+//         if (!firstPercentageValueError) {
+//           fv.insertListElementInBannerError($($(this).find(":input.pension-percentage").get(0)), "invalid", "Percentage of pensionable pay must be a whole number between 1 to 100 inclusive");
+//           firstPercentageValueError = true;
+//         }
+//         anyErrors = true;
+//         anyRowErrors = true;
+//       }
 
-    if (anyErrors){
-      fv.toggleBannerError(true);
-      return false;
-    }
-    return true;
-};
+//       if (anyRowErrors) {
+//         $(this).addClass("govuk-form-group--error");
+//       }
+//     });
 
-PensionFundDataUI.prototype.initialise = function () {};
+//     if (anyErrors){
+//       fv.toggleBannerError(true);
+//       return false;
+//     }
+//     return true;
+// };
+
+// PensionFundDataUI.prototype.initialise = function () {};
 
 $(function () {
   let pensionFundsContainer = $("#pension-funds");
-  if (pensionFundsContainer.length > 0) {
-      this.pensionfundsHelper = new PensionFundDataUI(pensionFundsContainer);
-      this.pensionfundsHelper.initialise();
-  }
+  // if (pensionFundsContainer.length > 0) {
+  //     this.pensionfundsHelper = new PensionFundDataUI(pensionFundsContainer);
+  //     this.pensionfundsHelper.initialise();
+  // }
 
   var maxPensionFunds = 99;
 
