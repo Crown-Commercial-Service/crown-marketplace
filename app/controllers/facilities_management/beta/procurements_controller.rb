@@ -442,6 +442,16 @@ module FacilitiesManagement
             return_text: 'Return to contract details',
             secondary_text: 'Return to results',
           },
+          notices_contact_details: {
+            back_url: '#',
+            back_text: 'Back',
+            back_label: 'Back',
+            page_title: 'Notices contact details',
+            caption1: @procurement[:contract_name],
+            continuation_text: 'Save and return',
+            return_text: 'Return to contract details',
+            return_url: '#',
+          },
         }
       end
 
