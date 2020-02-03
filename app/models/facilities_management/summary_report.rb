@@ -35,25 +35,19 @@ module FacilitiesManagement
 
       @tupe_flag =
         begin
-          if data[:'is-tupe'] == 'yes'
-            'Y'
-          else
-            'N'
-          end
+          data[:'is-tupe'] == 'yes'
         rescue StandardError
-          'N'
+          false
         end
     end
 
-    # TBC check with Damola
-    # what is the @contract_length_years ?
     def initialize_from_procurement(procurement)
       @posted_services = procurement.service_codes
       @posted_locations = procurement.region_codes
       @contract_length_years = procurement.initial_call_off_period.to_i
-      @contract_cost = procurement.estimated_annual_cost.to_f
+      @contract_cost = procurement.estimated_cost_known? ? procurement.estimated_annual_cost.to_f : 0
 
-      @tupe_flag = procurement.tupe ? 'Y' : 'N'
+      @tupe_flag = procurement.tupe
     end
 
     def user_buildings
@@ -132,6 +126,7 @@ module FacilitiesManagement
         results2 = results[id] = {} if results
 
         vals_per_building = services(building_data, building_uvals, rates, rate_card, supplier_name, results2, remove_cafm_help)
+
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
       end
