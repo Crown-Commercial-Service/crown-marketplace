@@ -70,6 +70,11 @@ module FacilitiesManagement
       end
     end
 
+    def move_to_next_da_step
+      next_event = aasm(:da_journey).events(reject: :start_da_journey, permitted: true).first
+      aasm(:da_journey).fire!(next_event.name) if next_event.present?
+    end
+
     # rubocop: disable Metrics/BlockLength
     aasm(:da_journey, column: 'da_journey_state') do
       state :pricing, initial: true
@@ -95,67 +100,67 @@ module FacilitiesManagement
       end
 
       event :set_to_what_next do
-        transitions to: :what_next
+        transitions from: :pricing, to: :what_next
       end
 
       event :set_to_important_information do
-        transitions to: :important_information
+        transitions from: :what_next, to: :important_information
       end
 
       event :set_to_contract_details do
-        transitions to: :contract_details
+        transitions from: :important_information, to: :contract_details
       end
 
       event :set_to_review_and_generate do
-        transitions to: :review_and_generate
+        transitions from: :contract_details, to: :review_and_generate
       end
 
       event :set_to_review do
-        transitions to: :review
+        transitions from: :review_and_generate, to: :review
       end
 
       event :set_to_sending do
-        transitions to: :sending
+        transitions from: :review, to: :sending
       end
 
       event :set_to_sent_awaiting_response do
-        transitions to: :sent_awaiting_response
+        transitions from: :review, to: :sent_awaiting_response
       end
 
       event :set_to_withdraw do
-        transitions to: :withdraw
+        transitions from: :review, to: :withdraw
       end
 
       event :set_to_accepted do
-        transitions to: :accepted
+        transitions from: :review, to: :accepted
       end
 
       event :set_to_confirmation do
-        transitions to: :confirmation
+        transitions from: :review, to: :confirmation
       end
 
       event :set_to_accepted_signed do
-        transitions to: :accepted_signed
+        transitions from: :review, to: :accepted_signed
       end
 
       event :set_to_accepted_not_signed do
-        transitions to: :accepted_not_signed
+        transitions from: :review, to: :accepted_not_signed
       end
 
       event :set_to_declined do
-        transitions to: :declined
+        transitions from: :review, to: :declined
       end
 
       event :set_to_no_response do
-        transitions to: :no_response
+        transitions from: :review, to: :no_response
       end
 
       event :set_to_confirm_signed do
-        transitions to: :confirm_signed
+        transitions from: :review, to: :confirm_signed
       end
 
       event :set_to_closed do
-        transitions to: :closed
+        transitions from: :review, to: :closed
       end
     end
     # rubocop: enable Metrics/BlockLength

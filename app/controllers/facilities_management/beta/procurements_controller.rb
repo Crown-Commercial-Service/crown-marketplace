@@ -70,6 +70,8 @@ module FacilitiesManagement
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
+        continue_da_journey && return if params['continue_da'].present?
+
         continue_to_contract_details && return if params['continue_da'].present?
 
         update_procurement if params['facilities_management_procurement'].present?
@@ -179,6 +181,16 @@ module FacilitiesManagement
       def continue_to_results
         if procurement_valid?
           @procurement.save_eligible_suppliers_and_set_state
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
+      def continue_da_journey
+        if procurement_valid?
+          @procurement.move_to_next_da_step
+          @procurement.save
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
@@ -392,11 +404,11 @@ module FacilitiesManagement
       def da_journey_page_details(view_name)
         @page_details = {} if @page_details.nil?
 
-        @da_journey_page_details ||= @page_details.merge(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))
+        @da_journey_page_details ||= @page_details.merge(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym].to_h))
       end
 
       def page_details(action)
-        @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
+        page_definitions[:default].merge(page_definitions[action.to_sym].to_h)
       end
 
       def da_journey_definitions
@@ -413,7 +425,29 @@ module FacilitiesManagement
             back_url: facilities_management_beta_procurements_path
           },
           contract_details: {
-            page_title: 'Contract details'
+            page_title: 'Contract details',
+            primary_name: 'continue_da',
+          },
+          pricing: {
+            page_title: 'Direct award pricing',
+            primary_name: 'continue_da',
+            continuation_text: 'Continue to direct award',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
+          },
+          what_next: {
+            page_title: 'What happens next',
+            primary_name: 'continue_da',
+            continuation_text: 'Continue to direct award',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
+          },
+          important_information: {
+            page_title: 'What you need to know',
+            primary_name: 'continue_da',
+            continuation_text: 'Continue to direct award',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
           },
           payment_method: {
             caption2: 'Contract details',
