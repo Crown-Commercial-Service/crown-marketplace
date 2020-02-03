@@ -26,6 +26,12 @@ module ProcurementValidator
 
     validates :tupe, inclusion: { in: [true, false] }, on: %i[tupe]
 
+    validates :payment_method, inclusion: { in: ['bacs', 'card'] }, on: %i[payment_method]
+
+    validates :using_buyer_detail_for_invoice_details, inclusion: { in: [true, false] }, on: %i[invoicing_contact_details]
+
+    validates :using_buyer_detail_for_authorised_detail, inclusion: { in: [true, false] }, on: %i[authorised_representative]
+
     #############################################
     # Validation rules for contract-dates
     # these rules need to cover
