@@ -23,6 +23,7 @@ class FacilitiesManagement::ProcurementRouter
     'what_next': 'what_next',
     'payment_method': 'payment_method',
     'invoicing_contact_details': 'invoicing_contact_details',
+    'new_invoicing_contact_details': 'new_invoicing_contact_details',
     'authorised_representative': 'authorised_representative',
     'notices_contact_details': 'notices_contact_details',
     'security_policy_document': 'security_policy_document',
