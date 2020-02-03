@@ -267,6 +267,7 @@ module FacilitiesManagement
                 :security_policy_document_date_yyyy,
                 :security_policy_document_file,
                 :authorised_representative,
+                :notices_contact_details,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
