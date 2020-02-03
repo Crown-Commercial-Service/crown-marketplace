@@ -276,7 +276,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     sheet.add_row ['1. Customer details'], style: bold_style
     sheet.add_row ['Contract name', @procurement.contract_name]
     sheet.add_row ['Buyer Organisation Name', buyer_detail.organisation_name]
-    sheet.add_row ['Buyer Organisation Sector']
+    sheet.add_row ['Buyer Organisation Sector', buyer_detail.central_government? ? 'Central Government' : 'Wider Public Sector']
     sheet.add_row ['Buyer Contact Name', buyer_detail.full_name]
     sheet.add_row ['Buyer Contact Job Title', buyer_detail.job_title]
     sheet.add_row ['Buyer Contact Email Address', @procurement.user.email]
@@ -289,21 +289,21 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     sheet.add_row ['2. Contract requirements'], style: bold_style
     add_initial_call_off_period(sheet)
     add_mobilisation_period(sheet)
-    sheet.add_row ['Date of First Indexation', @procurement.initial_call_off_start_date + 1.year]
+    sheet.add_row ['Date of First Indexation', (@procurement.initial_call_off_start_date + 1.year).strftime('%d/%m/%Y')]
     add_extension_periods(sheet)
     add_tupe(sheet)
   end
 
   def add_mobilisation_period(sheet)
-    sheet.add_row ['Mobbilisation Period', ("#{@procurement.mobilisation_period} weeks" unless @procurement.mobilisation_period.nil?)]
-    sheet.add_row ['Mobilisation Start Date', (@procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day unless @procurement.mobilisation_period.nil?)]
-    sheet.add_row ['Mobilisation End Date', (@procurement.initial_call_off_start_date - 1.day unless @procurement.mobilisation_period.nil?)]
+    sheet.add_row ['Mobilisation Period', ("#{@procurement.mobilisation_period} weeks" unless @procurement.mobilisation_period.nil?)]
+    sheet.add_row ['Mobilisation Start Date', ((@procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day).strftime('%d/%m/%Y') unless @procurement.mobilisation_period.nil?)]
+    sheet.add_row ['Mobilisation End Date', ((@procurement.initial_call_off_start_date - 1.day).strftime('%d/%m/%Y') unless @procurement.mobilisation_period.nil?)]
   end
 
   def add_initial_call_off_period(sheet)
     sheet.add_row ['Initial Call-Off Period', "#{@procurement.initial_call_off_period} years"]
-    sheet.add_row ['Initial Call-Off Period Start Date', @procurement.initial_call_off_start_date]
-    sheet.add_row ['Initial Call-Off Period End Date', @procurement.initial_call_off_start_date + @procurement.initial_call_off_period.years - 1.day]
+    sheet.add_row ['Initial Call-Off Period Start Date', @procurement.initial_call_off_start_date.strftime('%d/%m/%Y')]
+    sheet.add_row ['Initial Call-Off Period End Date', (@procurement.initial_call_off_start_date + @procurement.initial_call_off_period.years - 1.day).strftime('%d/%m/%Y')]
   end
 
   def add_extension_periods(sheet)
