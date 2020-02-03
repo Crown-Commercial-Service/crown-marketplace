@@ -8,7 +8,7 @@ RSpec.describe FacilitiesManagement::ContractNumberGenerator do
       let(:procurement_state) { :direct_award }
 
       it 'has the correct format' do
-        expect(contract_number_generator.new_number).to match(/\ARM3860-DA\d{4}-\d{4}\z/)
+        expect(contract_number_generator.new_number).to match(/\ARM3830-DA\d{4}-\d{4}\z/)
       end
 
       it 'has the current year as the final 4 digits' do
@@ -22,7 +22,7 @@ RSpec.describe FacilitiesManagement::ContractNumberGenerator do
       let(:procurement_state) { :further_competition }
 
       it 'has the correct format' do
-        expect(contract_number_generator.new_number).to match(/\ARM3860-FC\d{4}-\d{4}\z/)
+        expect(contract_number_generator.new_number).to match(/\ARM3830-FC\d{4}-\d{4}\z/)
       end
 
       it 'has the current year as the final 4 digits' do
