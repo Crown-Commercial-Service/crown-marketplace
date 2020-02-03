@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
     t.string "da_journey_state"
+    t.string "payment_method"
     t.boolean "using_buyer_detail_for_invoice_details"
     t.boolean "using_buyer_detail_for_notices_detail"
     t.boolean "using_buyer_detail_for_authorised_detail"
@@ -215,15 +216,14 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_rates", id: false, force: :cascade do |t|
+  create_table "fm_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "standard", limit: 1
     t.boolean "direct_award"
-    t.index ["code"], name: "index_fm_rates_on_code"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.string "unit_text"
     t.string "data_type"
     t.string "spreadsheet_label"
+    t.string "unit_measure_label"
     t.text "service_usage", array: true
   end
 
