@@ -1,31 +1,28 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
     <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
-        <%= govuk_prevent_submission(f, true) %>
         <div class="govuk-!-width-two-thirds">
-        <%= govuk_grouped_field(f, 'The person to whom contract notices should be communicated.', :select_a_contact_for_notices) do |ff, attr| %>
-            <%= govuk_start_individual_field(ff,attr) do |a| %>
+        <%= govuk_grouped_field(f, t('.description'), :select_a_contact_for_notices) do |ff, attr| %>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
-                        <input class="govuk-radios__input" id="contact_name" name="select_an_invoicing_contact" type="radio" value="name"/>
-                        <label class="govuk-label govuk-radios__label ccs-font-weight-semi-bold" for="direct_award">
-                            <%= (@current_user.buyer_detail.full_name + ', ' + @current_user.buyer_detail.job_title) if @current_user.buyer_detail.full_name.present? && @current_user.buyer_detail.job_title.present? %>
-                            <span class="govuk-caption-m govuk-!-margin-top-2">
-                                <%= (@current_user.buyer_detail.organisation_address_line_1 + ', ') if @current_user.buyer_detail.organisation_address_line_1.present?%>
-                                <%= (@current_user.buyer_detail.organisation_address_line_2 + ', ') if @current_user.buyer_detail.organisation_address_line_2.present?%>
-                                <%= (@current_user.buyer_detail.organisation_address_town + ', ') if @current_user.buyer_detail.organisation_address_town.present?%>
-                                <%= (@current_user.buyer_detail.organisation_address_county + ', ') if @current_user.buyer_detail.organisation_address_county.present?%>
-                                <%= (@current_user.buyer_detail.organisation_address_postcode) if @current_user.buyer_detail.organisation_address_postcode.present? %>
-                            </span>
-                        </label>
+                        <%= f.radio_button :using_buyer_detail_for_notices_detail, true, class: 'govuk-radios__input' %>
+                        <%= f.label :using_buyer_detail_for_notices_detail, value: true, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
+                        <%= (@current_user.buyer_detail.full_name + ', ' + @current_user.buyer_detail.job_title) if @current_user.buyer_detail.full_name.present? && @current_user.buyer_detail.job_title.present? %>
+                        <span class="govuk-caption-m govuk-!-margin-top-2 ">
+                            <%= (@current_user.buyer_detail.organisation_address_line_1 + ', ') if @current_user.buyer_detail.organisation_address_line_1.present?%>
+                            <%= (@current_user.buyer_detail.organisation_address_line_2 + ', ') if @current_user.buyer_detail.organisation_address_line_2.present?%>
+                            <%= (@current_user.buyer_detail.organisation_address_town + ', ') if @current_user.buyer_detail.organisation_address_town.present?%>
+                            <%= (@current_user.buyer_detail.organisation_address_county + ', ') if @current_user.buyer_detail.organisation_address_county.present?%>
+                            <%= (@current_user.buyer_detail.organisation_address_postcode) if @current_user.buyer_detail.organisation_address_postcode.present? %>
+                        </span>
+                        <% end %>
                     </div>
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="new_notice_contact" name="select_an_notice_contact" type="radio" value="new_contact"/>
-                        <label class="govuk-label govuk-radios__label ccs-font-weight-semi-bold" for="direct_award">
-                            Enter a new contact for notices
-                        </label>
+                        <%= f.radio_button :using_buyer_detail_for_notices_detail, false, class: 'govuk-radios__input' %>
+                        <%= f.label :using_buyer_detail_for_notices_detail, value: false, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
+                        <%= t('.new') %>
+                        <% end %>
                     </div>
                 </div>
-            <% end %>
         <% end %>
         </div>
         <%= govuk_continuation_buttons(pd, f, false) %>
