@@ -2,6 +2,7 @@
     <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
         <div class="govuk-!-width-two-thirds">
         <%= govuk_grouped_field(f, t('.description'), :select_a_contact_for_notices) do |ff, attr| %>
+            <%= t('.caption') %>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
                         <%= f.radio_button :using_buyer_detail_for_notices_detail, true, class: 'govuk-radios__input' %>
