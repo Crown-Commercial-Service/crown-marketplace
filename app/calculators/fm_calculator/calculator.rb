@@ -216,7 +216,7 @@ module FMCalculator
 
     # benchmark tupe costs if flag set
     def benchtupe(benchsubtotal3)
-      if @tupe_flag == 'Y'
+      if @tupe_flag
         benchsubtotal3 * @benchmark_rates['M148']
       else
         0
@@ -271,6 +271,7 @@ module FMCalculator
         results[:contract_length_years] = @contract_length_years
         results[:subsequent_length_years] = @subsequent_length_years
       end
+
       year1totalcharges + subyearstotal(year1totalcharges, mobilisation)
     end
     # rubocop:enable Metrics/AbcSize
