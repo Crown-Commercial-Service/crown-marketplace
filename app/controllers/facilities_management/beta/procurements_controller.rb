@@ -425,13 +425,24 @@ module FacilitiesManagement
           },
           payment_method: {
             caption2: 'Contract details',
-            back_url: '#',
+            
             back_text: 'Back',
             page_title: 'Payment method',
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: '#',
-          }
+          },
+          authorised_representative: {
+            back_url: '#',
+            back_text: 'Back',
+            back_label: 'Return to Pricing',
+            page_title: 'Authorised representative details',
+            caption1: @procurement[:contract_name],
+            continuation_text: 'Continue',
+            return_url: '#',
+            return_text: 'Return to contract details',
+            secondary_text: 'Return to results',
+          },
         }
       end
 
