@@ -99,13 +99,20 @@ class FacilitiesManagement::DirectAwardSpreadsheet
                                  .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
           new_row = []
 
+          # for each building type, I need to see if the actual building name (which can contain several building id's if the same service
+          # is contained in several building) has the service. for example two buildings may have the type warehouse and contain the same same C.1 service
           selected_building_names.each do |building_name|
-            # only output the rate value for the cell if the service uval contains the building otherwise output nil for the excel cell value
-            building_id = selected_building_info.select { |building_info| building_info[:"building-type"] == building_name }[0][:id]
-            building_linking_to_this_service = @uvals_contract.select { |uval| uval[:service_code] == s && uval[:building_id] == building_id }
+            building_type_ids = selected_building_info.select { |building_info| building_info[:"building-type"] == building_name }
+            building_linking_to_this_service = []
+            building_type_ids.each do |building_type_id|
+              contract_building_service = @uvals_contract.select { |uval| uval[:service_code] == s && uval[:building_id] == building_type_id[:id] }
+              building_linking_to_this_service << contract_building_service unless contract_building_service.empty?
+            end
 
-            row_value = nil if building_linking_to_this_service.empty?
-            row_value = @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][building_name.to_sym] unless building_linking_to_this_service.empty?
+            # only output the rate value for the cell if the service uval contains the building type otherwise output nil for the excel cell value
+            is_building_containing_service = !building_linking_to_this_service.empty?
+            row_value = nil unless is_building_containing_service
+            row_value = @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][building_name.to_sym] if is_building_containing_service
             new_row << row_value
           end
 
