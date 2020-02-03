@@ -572,17 +572,17 @@ module FacilitiesManagement
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
           new_invoicing_contact_details: {
-              back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
-              page_title: 'New invoicing contact details',
-              continuation_text: 'Save and return',
-              return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
-              return_text: 'Return to invoicing contact details',
+            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+            page_title: 'New invoicing contact details',
+            continuation_text: 'Save and return',
+            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+            return_text: 'Return to invoicing contact details'
           },
           new_invoicing_address: {
-              back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
-              page_title: 'Add address',
-              return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
-              return_text: 'Return to new invoicing contact details',
+            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+            page_title: 'Add address',
+            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+            return_text: 'Return to new invoicing contact details'
           },
           notices_contact_details: {
             back_url: facilities_management_beta_procurement_path(@procurement),
