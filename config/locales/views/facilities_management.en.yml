@@ -462,7 +462,7 @@ en:
             tupe: 'Next: Contract period'
           notices_contact_details:
             description: The person to whom contract notices should be communicated.
-            content: Select a contact for notices
+            caption: Select a contact for notices
             new: Enter a new contact for notices
           payment_method:
             bacs_payment: BACS payment
