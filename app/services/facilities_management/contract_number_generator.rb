@@ -7,7 +7,7 @@ class FacilitiesManagement::ContractNumberGenerator
   end
 
   def new_number
-    "RM3860-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}"
+    "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}"
   end
 
   private
