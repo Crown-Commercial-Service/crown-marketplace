@@ -154,6 +154,8 @@ en:
               inclusion: Select one option
             using_buyer_detail_for_authorised_detail:
               inclusion: Select one option
+            using_buyer_detail_for_notices_detail:
+              inclusion: Select one option
         facilities_management/procurement_building:
           attributes:
             service_codes:
