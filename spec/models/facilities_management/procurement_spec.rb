@@ -685,4 +685,22 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '#more_than_max_pensions?' do
+    let(:pension_fund) { build(:facilities_management_procurement_pension_fund, procurement: create(:facilities_management_procurement)) }
+    let(:attributes) { ActiveSupport::HashWithIndifferentAccess.new(pension_fund.attributes) }
+
+    before do
+      attributes['percentage'] = attributes['percentage'].to_s
+    end
+
+    # validating number of record
+    context 'when the number of records is greater than 99' do
+      it 'is expected to be true' do
+        99.times do
+          procurement.procurement_pension_funds.build(attributes)
+        end
+      end
+    end
+  end
 end
