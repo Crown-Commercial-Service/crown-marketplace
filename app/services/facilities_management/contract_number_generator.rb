@@ -1,13 +1,13 @@
 class FacilitiesManagement::ContractNumberGenerator
   ACRONYMS = { direct_award: 'DA', further_competition: 'FC' }.freeze
 
-  def initialize(procurement_state:, used_numbers:)
+  def initialize(procurement_state:, used_numbers: [])
     @used_numbers = used_numbers
     @procurement_state = procurement_state
   end
 
   def new_number
-    "RM3860-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}"
+    "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}"
   end
 
   private
