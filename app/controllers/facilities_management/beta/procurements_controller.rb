@@ -444,9 +444,9 @@ module FacilitiesManagement
             secondary_text: 'Return to results'
           },
           did_you_know: {
-            page_title: 'What you need to know',
+            page_title: 'Important information',
             primary_name: 'continue_da',
-            continuation_text: 'Continue to direct award',
+            continuation_text: 'Continue',
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
