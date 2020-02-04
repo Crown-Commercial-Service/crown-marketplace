@@ -425,6 +425,8 @@ module FacilitiesManagement
           contract_details: {
             page_title: 'Contract details',
             primary_name: 'continue_da',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
           },
           pricing: {
             page_title: 'Direct award pricing',
@@ -440,7 +442,7 @@ module FacilitiesManagement
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
-          important_information: {
+          did_you_know: {
             page_title: 'What you need to know',
             primary_name: 'continue_da',
             continuation_text: 'Continue to direct award',
