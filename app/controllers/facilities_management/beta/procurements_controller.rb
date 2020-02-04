@@ -409,6 +409,7 @@ module FacilitiesManagement
         page_definitions[:default].merge(page_definitions[action.to_sym].to_h)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
@@ -463,6 +464,7 @@ module FacilitiesManagement
           }
         }
       end
+      # rubocop:enable Metrics/MethodLength
 
       def page_definitions
         @page_definitions ||= {
