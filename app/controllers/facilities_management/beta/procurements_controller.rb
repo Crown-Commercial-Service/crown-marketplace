@@ -72,7 +72,7 @@ module FacilitiesManagement
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
-        continue_to_contract_details && return if params['continue_da'].present?
+        continue_da_journey && return if params['continue_da'].present?
 
         continue_to_new_invoice && return if params['facilities_management_procurement']['step'] == 'invoicing_contact_details'
 
@@ -188,6 +188,16 @@ module FacilitiesManagement
         end
       end
 
+      def continue_da_journey
+        if procurement_valid?
+          @procurement.move_to_next_da_step
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
       def continue_to_contract_details
         if procurement_valid?
           @procurement.set_to_contract_details
@@ -256,7 +266,6 @@ module FacilitiesManagement
         @page_data[:model_object]         = @procurement
         @page_data[:no_suppliers]         = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
-        set_invoice_data if !params['step'].nil? && params['step'] == 'new_invoicing_contact_details'
       end
 
       def create_da_buyer_page_data(view_name)
@@ -265,11 +274,6 @@ module FacilitiesManagement
         @page_data[:no_suppliers]         = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
         build_da_journey_page_details(view_name)
-      end
-
-      def set_invoice_data
-        @procurement.create_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
-        @procurement.invoice_contact_detail
       end
 
       def procurement_route_params
@@ -409,11 +413,11 @@ module FacilitiesManagement
       def da_journey_page_details(view_name)
         @page_details = {} if @page_details.nil?
 
-        @da_journey_page_details ||= @page_details.merge(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym]))
+        @da_journey_page_details ||= @page_details.merge(da_journey_definitions[:default].merge(da_journey_definitions[view_name.to_sym].to_h))
       end
 
       def page_details(action)
-        @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
+        page_definitions[:default].merge(page_definitions[action.to_sym].to_h)
       end
 
       def da_journey_definitions
@@ -430,23 +434,50 @@ module FacilitiesManagement
             back_url: facilities_management_beta_procurements_path
           },
           contract_details: {
-            page_title: 'Contract details'
+            page_title: 'Contract details',
+            primary_name: 'continue_da',
+          },
+          pricing: {
+            page_title: 'Direct award pricing',
+            primary_name: 'continue_da',
+            continuation_text: 'Continue to direct award',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
+          },
+          what_next: {
+            page_title: 'What happens next',
+            primary_name: 'continue_da',
+            continuation_text: 'Continue to direct award',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
+          },
+          important_information: {
+            page_title: 'What you need to know',
+            primary_name: 'continue_da',
+            continuation_text: 'Continue to direct award',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
           },
           payment_method: {
             caption2: 'Contract details',
-            back_url: '#',
             back_text: 'Back',
             page_title: 'Payment method',
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: '#',
           },
+          authorised_representative: {
+            page_title: 'Authorised representative details',
+          },
+          notices_contact_details: {
+            page_title: 'Notices contact details',
+          },
           invoicing_contact_details: {
             page_title: 'Invoicing contact details'
           },
           new_invoicing_contact_details: {
             page_title: 'New Invoicing contact details',
-          }
+          },
         }
       end
 
