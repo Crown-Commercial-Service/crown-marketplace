@@ -341,7 +341,7 @@ module FacilitiesManagement
         @buildings_data.each do |building|
           building_data = JSON.parse(building['building_json'].to_s)
           @procurement.find_or_build_procurement_building(building_data, building_data['id']) if building['status'] == 'Ready'
-      end
+        end
       end
 
       def find_regions(region_codes)
