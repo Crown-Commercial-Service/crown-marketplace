@@ -307,15 +307,10 @@ module FacilitiesManagement
                 :security_policy_document_date_mm,
                 :security_policy_document_date_yyyy,
                 :security_policy_document_file,
-<<<<<<< HEAD
-                :using_buyer_detail_for_authorised_detail,
-                :using_buyer_detail_for_notices_detail,
-=======
                 :payment_method,
                 :using_buyer_detail_for_invoice_details,
                 :using_buyer_detail_for_notices_detail,
                 :using_buyer_detail_for_authorised_detail,
->>>>>>> 065e5d3e8fe9ccfee59090cb0b803dc48c3d7dfe
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
@@ -471,7 +466,6 @@ module FacilitiesManagement
             return_text: 'Return to contract details',
             return_url: '#',
           },
-<<<<<<< HEAD
           authorised_representative: {
             page_title: 'Authorised representative details',
           },
@@ -484,11 +478,6 @@ module FacilitiesManagement
           new_invoicing_contact_details: {
             page_title: 'New Invoicing contact details',
           },
-=======
-          invoicing_contact_details: {
-            page_title: 'Invoicing contact details'
-          }
->>>>>>> 065e5d3e8fe9ccfee59090cb0b803dc48c3d7dfe
         }
       end
 
