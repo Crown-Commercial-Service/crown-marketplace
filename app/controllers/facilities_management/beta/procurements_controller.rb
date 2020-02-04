@@ -64,6 +64,8 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
       def update
+        update_procurement if params['facilities_management_procurement'].present?
+
         continue_to_summary && return if params['change_requirements'].present?
 
         continue_to_results && return if params['continue_to_results'].present?
@@ -74,7 +76,6 @@ module FacilitiesManagement
 
         continue_to_new_invoice && return if params['facilities_management_procurement']['step'] == 'invoicing_contact_details'
 
-        update_procurement if params['facilities_management_procurement'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
