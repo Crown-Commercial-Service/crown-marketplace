@@ -148,9 +148,9 @@ en:
             tupe:
               inclusion: Select yes if you know TUPE applies to your contract
               not_present: You must answer the question about 'TUPE'
-            using_buyer_detail_for_invoice_details:
-              inclusion: Select one option
             using_buyer_detail_for_authorised_detail:
+              inclusion: Select one option
+            using_buyer_detail_for_invoice_details:
               inclusion: Select one option
             using_buyer_detail_for_notices_detail:
               inclusion: Select one option
@@ -471,8 +471,8 @@ en:
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
           notices_contact_details:
-            description: The person to whom contract notices should be communicated.
             caption: Select a contact for notices
+            description: The person to whom contract notices should be communicated.
             new: Enter a new contact for notices
           payment_method:
             bacs_payment: BACS payment
