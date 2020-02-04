@@ -14,7 +14,7 @@
             Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
         </div>
         <div class="govuk-!-margin-top-9">
-        <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
+          <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
                 <%= f.submit(pd.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary') %>
         <% end %>
         </div>

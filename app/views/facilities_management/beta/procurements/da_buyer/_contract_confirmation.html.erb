@@ -37,7 +37,7 @@
 
   <p>If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.</p>
 
-  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f| %>
+  <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_continuation_buttons(pd, f, false , false, false) %>
   <% end %>
 <% end %>
