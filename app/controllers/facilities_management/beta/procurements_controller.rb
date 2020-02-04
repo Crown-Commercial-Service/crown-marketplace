@@ -70,9 +70,9 @@ module FacilitiesManagement
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
-        continue_da_journey && return if params['continue_da'].present?
-
         update_procurement if params['facilities_management_procurement'].present?
+
+        continue_da_journey && return if params['continue_da'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
@@ -409,6 +409,7 @@ module FacilitiesManagement
         page_definitions[:default].merge(page_definitions[action.to_sym].to_h)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
@@ -425,6 +426,8 @@ module FacilitiesManagement
           contract_details: {
             page_title: 'Contract details',
             primary_name: 'continue_da',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
           },
           pricing: {
             page_title: 'Direct award pricing',
@@ -440,7 +443,7 @@ module FacilitiesManagement
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
-          important_information: {
+          did_you_know: {
             page_title: 'What you need to know',
             primary_name: 'continue_da',
             continuation_text: 'Continue to direct award',
@@ -461,6 +464,7 @@ module FacilitiesManagement
           }
         }
       end
+      # rubocop:enable Metrics/MethodLength
 
       def page_definitions
         @page_definitions ||= {
