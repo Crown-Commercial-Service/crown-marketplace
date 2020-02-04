@@ -1,8 +1,6 @@
 <div class="pension-row govuk-body govuk-row govuk-!-margin-bottom-6 <%= 'govuk-form-group--error' if ff.object.errors.any? %>">
     <%= display_potential_errors(ff.object, :name, ff.object_name)%>
     <%= display_potential_errors(ff.object, :percentage, ff.object_name)%>
-    <%= display_error_nested_models(ff.object, :name) %>
-    <%= display_error_nested_models(ff.object, :percentage) %>
     <div class="govuk-grid-column-one-half govuk-!-margin-right-2 govuk-!-padding-left-0">
         <p class="govuk-!-margin-bottom-2">
             <%= t('.name_text') %> <span class="pension-number"></span>
