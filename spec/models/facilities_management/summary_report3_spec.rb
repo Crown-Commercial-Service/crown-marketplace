@@ -453,7 +453,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
-      expect(sorted_list.first[1].round(2)).to eq 1738286.27
+      expect(sorted_list.first[1].round(2)).to eq 1546319.17
 
       supplier_name = sorted_list.first[0]
       expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
@@ -505,7 +505,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
       # expect(sorted_list.first[1].round(2)).to eq 244915.36
-      expect(sorted_list.first[1].round(2)).to eq 257784.39
+      expect(sorted_list.first[1].round(2)).to eq 230360.52
 
       supplier_name = sorted_list.first[0]
       expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
