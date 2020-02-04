@@ -42,13 +42,14 @@ class FacilitiesManagement::ProcurementRouter
     'declined': 'declined',
     'no_response': 'no_response',
     'confirm_signed': 'confirmed_signed',
-    'closed': 'closed'
+    'closed': 'closed',
+    'pension_funds': 'pension_funds'
   }.freeze
 
   def da_journey_view
-    return DA_JOURNEY_STATES_TO_VIEWS[@step.to_sym] if @step.present?
+    return DA_JOURNEY_STATES_TO_VIEWS[@step.to_sym] if @step.present? && DA_JOURNEY_STATES_TO_VIEWS.key?(@step.to_sym)
 
-    DA_JOURNEY_STATES_TO_VIEWS[@da_journey_state.to_sym] if DA_JOURNEY_STATES_TO_VIEWS.key?(@da_journey_state.to_sym) && @step.nil?
+    DA_JOURNEY_STATES_TO_VIEWS[@da_journey_state.to_sym] if DA_JOURNEY_STATES_TO_VIEWS.key?(@da_journey_state.to_sym)
   end
 
   def view
