@@ -225,6 +225,11 @@ function initDynamicAccordian(){
 
     updateList(govcheckboxes, id, basketheader);
 }
+function initStepByStepNav() {
+    let $element = $('#step-by-step-navigation') ;
+    let stepByStepNavigation = new window.GOVUKFrontend.AppStepNav();
+    stepByStepNavigation.start($element)
+}
 
 function initCustomFnc() {
     var filt = $('#ccs-at-results-filters');
@@ -234,6 +239,10 @@ function initCustomFnc() {
 
     if($('#ccs-dynamic-accordian').length){//if this pg has this ID
         initDynamicAccordian();
+    }
+
+    if($('#step-by-step-navigation').length){
+        initStepByStepNav();
     }
 }
 
