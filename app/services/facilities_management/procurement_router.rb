@@ -29,7 +29,7 @@ class FacilitiesManagement::ProcurementRouter
     'local_government_pension_scheme': 'local_government_pension_scheme',
     'important_information': 'did_you_know',
     'contract_details': 'contract_details',
-    'review_and_generate': 'review_and_generate',
+    'review_and_generate': 'review_and_generate_documents',
     'review': 'review_your_contract',
     'sending': 'sending_the_contract',
     'sent_awaiting_response': 'sent_awaiting_response',
