@@ -155,15 +155,6 @@ module ProcurementValidator
     def validate_mobilisation_and_tupe
       errors.add(:mobilisation_period, :not_valid_with_tupe) if (!mobilisation_period || mobilisation_period < 4) && tupe == true
     end
-
-    def validate_authorised_representative
-      errors.add(:authorised_representative, :empty_description) if using_buyer_detail_for_authorised_detail.nil?
-    end
-
-    def validate_notices_contact_details
-      errors.add(:notices_contact_details, :empty_description) if using_buyer_detail_for_notices_detail.nil?
-    end
-
   end
   # rubocop:enable Metrics/BlockLength
 end
