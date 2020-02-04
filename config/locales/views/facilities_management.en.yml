@@ -148,7 +148,11 @@ en:
             tupe:
               inclusion: Select yes if you know TUPE applies to your contract
               not_present: You must answer the question about 'TUPE'
+            using_buyer_detail_for_authorised_detail:
+              inclusion: Select one option
             using_buyer_detail_for_invoice_details:
+              inclusion: Select one option
+            using_buyer_detail_for_notices_detail:
               inclusion: Select one option
         facilities_management/procurement_building:
           attributes:
@@ -441,6 +445,9 @@ en:
           detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
           detailed_search_summary_title: Detailed search summary
         edit:
+          authorised_representative:
+            content: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
+            new: Enter a new authorised representative
           back_to_detailed_summary: Back to detailed search summary
           building_services:
             change_buildings: "+ Change buildings"
@@ -463,6 +470,10 @@ en:
             procurement_buildings: 'Next: Services'
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
+          notices_contact_details:
+            caption: Select a contact for notices
+            description: The person to whom contract notices should be communicated.
+            new: Enter a new contact for notices
           payment_method:
             bacs_payment: BACS payment
             government_procurement_card: Government procurement card
