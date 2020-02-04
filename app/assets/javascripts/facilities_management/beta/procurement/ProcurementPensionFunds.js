@@ -103,14 +103,6 @@ $(function () {
     }
   }
 
-  function checkIfMaxPension() {
-    if (getNumberOfPensions() === maxPensionFunds) {
-      $(".add-pension-button").addClass("govuk-visually-hidden");
-    } else {
-      $(".add-pension-button").removeClass("govuk-visually-hidden");
-    }
-  }
-
   function getRowCount() {
     $(".pension-row").each(function( i ) {
       this.getElementsByClassName("pension-number")[0].textContent = (i + 1);
@@ -121,14 +113,21 @@ $(function () {
     return e.value * 10 + ev.charCode - 48;
   }
 
+  function pensionToAddLeft() {
+    var pensionsLeft = maxPensionFunds - getNumberOfPensions();
+    if (!!document.getElementsByClassName("add-pension-button").length) {
+      $(".add-pension-button")[0].textContent = "Add another pension fund (" + pensionsLeft + " remaining)"
+    }
+  }
+
   $("form").on("click", ".remove-record", function(e) {
     $(this).next().val("true");
     $(this).closest("div").parent().closest("div").addClass("removed-pension-row");
     $(this).closest("div").parent().closest("div").removeClass("pension-row");
     $(this).closest("div").parent().closest("div").hide();
     checkIfOneRow();
-    checkIfMaxPension();
     getRowCount();
+    pensionToAddLeft();
     return e.preventDefault();
   });
 
@@ -139,10 +138,11 @@ $(function () {
       regexp = new RegExp($(this).data("id"), "g");
       $(".fields").append($(this).data("fields").replace(regexp, time));
       checkIfOneRow();
-      checkIfMaxPension();
       getRowCount();
+      pensionToAddLeft();
       return e.preventDefault();
     }
+    return e.preventDefault();
   });
 
   $("#pension-funds").on("keypress", ".pension-percentage", (function (e) {
@@ -167,12 +167,12 @@ $(function () {
     $(".pension-destroy-box").last().removeClass("pension-destroy-box");
     $(".invalid-pension-row").hide();
     checkIfOneRow();
-    checkIfMaxPension();
     getRowCount();
+    pensionToAddLeft();
   }
   
   // Functions to run on load
   checkIfOneRow();
-  checkIfMaxPension();
   getRowCount();
+  pensionToAddLeft();
 });
