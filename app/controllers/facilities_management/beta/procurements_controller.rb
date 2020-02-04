@@ -450,6 +450,9 @@ module FacilitiesManagement
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
+          review_and_generate_documents: {
+            page_title: 'Review and generate documents'
+          },
           payment_method: {
             caption2: 'Contract details',
             back_url: '#',
@@ -462,7 +465,7 @@ module FacilitiesManagement
           invoicing_contact_details: {
             page_title: 'Invoicing contact details'
           },
-          notices_contact_datils: {
+          notices_contact_details: {
             page_title: 'Notices contact details'
           },
           authorised_representative: {
