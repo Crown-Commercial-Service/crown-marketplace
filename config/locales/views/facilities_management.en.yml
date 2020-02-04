@@ -150,13 +150,10 @@ en:
               not_present: You must answer the question about 'TUPE'
             using_buyer_detail_for_invoice_details:
               inclusion: Select one option
-<<<<<<< HEAD
             using_buyer_detail_for_authorised_detail:
               inclusion: Select one option
             using_buyer_detail_for_notices_detail:
               inclusion: Select one option
-=======
->>>>>>> 065e5d3e8fe9ccfee59090cb0b803dc48c3d7dfe
         facilities_management/procurement_building:
           attributes:
             service_codes:
@@ -463,13 +460,10 @@ en:
             procurement_buildings: 'Next: Services'
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
-<<<<<<< HEAD
           notices_contact_details:
             description: The person to whom contract notices should be communicated.
             caption: Select a contact for notices
             new: Enter a new contact for notices
-=======
->>>>>>> 065e5d3e8fe9ccfee59090cb0b803dc48c3d7dfe
           payment_method:
             bacs_payment: BACS payment
             government_procurement_card: Government procurement card

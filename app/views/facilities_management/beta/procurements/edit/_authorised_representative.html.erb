@@ -4,7 +4,6 @@
         <%= govuk_grouped_field(f, t('.content'), :select_an_authorised_representative) do |ff, attr| %>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
-<<<<<<< HEAD
                         <%= f.radio_button :using_buyer_detail_for_authorised_detail, true, class: 'govuk-radios__input' %>
                         <%= f.label :using_buyer_detail_for_authorised_detail, value: true, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
                         <%= (@current_user.buyer_detail.full_name + ', ' + @current_user.buyer_detail.job_title) if @current_user.buyer_detail.full_name.present? && @current_user.buyer_detail.job_title.present? %>
@@ -16,19 +15,6 @@
                             <%= (@current_user.buyer_detail.organisation_address_postcode) if @current_user.buyer_detail.organisation_address_postcode.present? %>
                         </span>
                         <% end %>
-=======
-                        <input class="govuk-radios__input" id="contact_name" name="authorised_representative" type="radio" value="name"/>
-                        <label class="govuk-label govuk-radios__label ccs-font-weight-semi-bold" for="direct_award">
-                            <%= (@current_user.buyer_detail.full_name + ', ' + @current_user.buyer_detail.job_title) if @current_user.buyer_detail.full_name.present? && @current_user.buyer_detail.job_title.present? %>
-                            <span class="govuk-caption-m govuk-!-margin-top-2">
-                                <%= (@current_user.buyer_detail.organisation_address_line_1 + ', ') if @current_user.buyer_detail.organisation_address_line_1.present?%>
-                                <%= (@current_user.buyer_detail.organisation_address_line_2 + ', ') if @current_user.buyer_detail.organisation_address_line_2.present?%>
-                                <%= (@current_user.buyer_detail.organisation_address_town + ', ') if @current_user.buyer_detail.organisation_address_town.present?%>
-                                <%= (@current_user.buyer_detail.organisation_address_county + ', ') if @current_user.buyer_detail.organisation_address_county.present?%>
-                                <%= (@current_user.buyer_detail.organisation_address_postcode) if @current_user.buyer_detail.organisation_address_postcode.present? %>
-                            </span>
-                        </label>
->>>>>>> 065e5d3e8fe9ccfee59090cb0b803dc48c3d7dfe
                     </div>
                     <div class="govuk-radios__item">
                         <%= f.radio_button :using_buyer_detail_for_authorised_detail, false, class: 'govuk-radios__input' %>
