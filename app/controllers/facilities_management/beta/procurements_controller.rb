@@ -72,8 +72,6 @@ module FacilitiesManagement
 
         continue_da_journey && return if params['continue_da'].present?
 
-        continue_to_contract_details && return if params['continue_da'].present?
-
         update_procurement if params['facilities_management_procurement'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
