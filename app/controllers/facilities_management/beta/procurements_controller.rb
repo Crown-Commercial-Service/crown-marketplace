@@ -70,9 +70,9 @@ module FacilitiesManagement
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
-        continue_da_journey && return if params['continue_da'].present?
-
         update_procurement if params['facilities_management_procurement'].present?
+
+        continue_da_journey && return if params['continue_da'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
