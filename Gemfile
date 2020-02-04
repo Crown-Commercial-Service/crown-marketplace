@@ -118,6 +118,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.4'
   gem 'rspec-rails', '>= 3.9.0'
+  gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'rubyXL', '>= 3.4.6'
