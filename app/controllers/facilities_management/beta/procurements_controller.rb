@@ -62,22 +62,19 @@ module FacilitiesManagement
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
-        update_procurement if params['facilities_management_procurement'].present?
-
         continue_to_summary && return if params['change_requirements'].present?
 
         continue_to_results && return if params['continue_to_results'].present?
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
+        update_procurement if params['facilities_management_procurement'].present?
+
         continue_da_journey && return if params['continue_da'].present?
-
-        continue_to_new_invoice && return if params['facilities_management_procurement']['step'] == 'invoicing_contact_details'
-
       end
-      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       # DELETE /procurements/1
       # DELETE /procurements/1.json
@@ -206,14 +203,6 @@ module FacilitiesManagement
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
         end
-      end
-
-      def continue_to_new_invoice
-        return if params['facilities_management_procurement']['using_buyer_detail_for_invoice_details'] == 'true'
-
-        @procurement.assign_attributes(procurement_params)
-        @procurement.save
-        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details')
       end
 
       # sets the state of the procurement depending on the submission from the results view
@@ -420,6 +409,7 @@ module FacilitiesManagement
         page_definitions[:default].merge(page_definitions[action.to_sym].to_h)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
@@ -436,6 +426,8 @@ module FacilitiesManagement
           contract_details: {
             page_title: 'Contract details',
             primary_name: 'continue_da',
+            secondary_name: 'continue_to_results',
+            secondary_text: 'Return to results'
           },
           pricing: {
             page_title: 'Direct award pricing',
@@ -451,7 +443,7 @@ module FacilitiesManagement
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
-          important_information: {
+          did_you_know: {
             page_title: 'What you need to know',
             primary_name: 'continue_da',
             continuation_text: 'Continue to direct award',
@@ -460,26 +452,25 @@ module FacilitiesManagement
           },
           payment_method: {
             caption2: 'Contract details',
+            back_url: '#',
             back_text: 'Back',
             page_title: 'Payment method',
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: '#',
           },
-          authorised_representative: {
-            page_title: 'Authorised representative details',
-          },
-          notices_contact_details: {
-            page_title: 'Notices contact details',
-          },
           invoicing_contact_details: {
             page_title: 'Invoicing contact details'
           },
-          new_invoicing_contact_details: {
-            page_title: 'New Invoicing contact details',
+          notices_contact_datils: {
+            page_title: 'Notices contact details'
           },
+          authorised_representative: {
+            page_title: 'Authorised representative'
+          }
         }
       end
+      # rubocop:enable Metrics/MethodLength
 
       def page_definitions
         @page_definitions ||= {
