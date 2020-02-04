@@ -1,0 +1,58 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+
+    <%= form_for @procurement.invoice_contact_detail, url: 'path', method: :patch, html: { specialvalidation: false, multipart: true } do |f| %>
+
+  <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:name].any? %>">
+      <%= f.label :name, 'Name', class: 'govuk-label govuk-!-margin-bottom-3' %>
+      <%= display_error(f.object, :name) %>
+      <%= f.text_field :name, class: 'govuk-input ', maxlength: 50 %>
+    </div>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:job_title].any? %>">
+      <%= f.label :job_title, 'job_title', class: 'govuk-label govuk-!-margin-bottom-3' %>
+      <%= display_error(f.object, :job_title) %>
+      <%= f.text_field :job_title, class: 'govuk-input ', maxlength: 50 %>
+    </div>
+    
+    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:email].any? %>">
+      <%= f.label :email, 'email', class: 'govuk-label govuk-!-margin-bottom-3' %>
+      <%= display_error(f.object, :email) %>
+      <%= f.text_field :email, class: 'govuk-input ', maxlength: 50 %>
+    </div>
+
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_line_1].any? %>">
+      <%= f.label :organisation_address_line_1, 'organisation_address_line_1', class: 'govuk-label govuk-!-margin-bottom-3' %>
+      <%= display_error(f.object, :organisation_address_line_1) %>
+      <%= f.text_field :organisation_address_line_1, class: 'govuk-input ', maxlength: 50 %>
+    </div>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_line_2].any? %>">
+      <%= f.label :organisation_address_line_2, 'organisation_address_line_2', class: 'govuk-label govuk-!-margin-bottom-3' %>
+      <%= display_error(f.object, :organisation_address_line_2) %>
+      <%= f.text_field :organisation_address_line_2, class: 'govuk-input ', maxlength: 50 %>
+    </div>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_town].any? %>">
+      <%= f.label :organisation_address_town, 'organisation_address_town', class: 'govuk-label govuk-!-margin-bottom-3' %>
+      <%= display_error(f.object, :organisation_address_town) %>
+      <%= f.text_field :organisation_address_town, class: 'govuk-input ', maxlength: 50 %>
+    </div>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_county].any? %>">
+      <%= f.label :organisation_address_county, 'organisation_address_county', class: 'govuk-label govuk-!-margin-bottom-3' %>
+      <%= display_error(f.object, :organisation_address_county) %>
+      <%= f.text_field :organisation_address_county, class: 'govuk-input ', maxlength: 50 %>
+    </div>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
+      <%= f.label :organisation_address_postcode, 'organisation_address_postcode', class: 'govuk-label govuk-!-margin-bottom-3' %>
+      <%= display_error(f.object, :organisation_address_postcode) %>
+      <%= f.text_field :organisation_address_postcode, class: 'govuk-input ', maxlength: 50 %>
+    </div>
+
+    <% end %>
+    <%= govuk_continuation_buttons(@page_description, f, false) %>
+</div>
+<% end %>
