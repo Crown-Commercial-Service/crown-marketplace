@@ -121,6 +121,8 @@ en:
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               too_long: Call-off period and extensions must be 10 years or less
+            payment_method:
+              inclusion: Select one payment method
             procurement_building_services:
               invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be 'Complete'
             procurement_buildings:
@@ -146,6 +148,8 @@ en:
             tupe:
               inclusion: Select yes if you know TUPE applies to your contract
               not_present: You must answer the question about 'TUPE'
+            using_buyer_detail_for_invoice_details:
+              inclusion: Select one option
         facilities_management/procurement_building:
           attributes:
             service_codes:
@@ -404,7 +408,7 @@ en:
             invoicing_contact_details: Invoicing contact details
             local_government_pension_scheme: Local Government Pension Scheme
             notices_contact_details: Notices contact details
-            payment_details: Payment method
+            payment_method: Payment method
             security_policy_document: Security policy
           pricing:
             description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
@@ -438,6 +442,10 @@ en:
             procurement_buildings: 'Next: Services'
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
+          payment_method:
+            bacs_payment: BACS payment
+            government_procurement_card: Government procurement card
+            payment_description: Please select the payment method that will be used
           procurement_buildings:
             buildings_selected: Buildings selected
             content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
