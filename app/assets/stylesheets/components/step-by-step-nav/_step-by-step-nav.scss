@@ -184,6 +184,62 @@ $top-border: solid 2px govuk-colour("grey-3");
     }
   }
 
+.app-step-nav__square {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 5;
+  top: govuk-spacing(2);
+  left: -1em;
+  width: $number-circle-size * 2;
+  height: auto;
+  padding: 5px 0;
+  color: govuk-colour("black");
+  background: govuk-colour("white");
+  text-align: center;
+
+  .app-step-nav--large & {
+    @include govuk-media-query($from: tablet) {
+      top: govuk-spacing(5)/2;
+      width: $number-circle-size-large * 2;
+      height: auto;
+      }
+    }
+  }
+
+.app-step-nav__square--number {
+  @include step-nav-font(18, $weight: bold, $line-height: 1.2rem);
+  border: 0;
+
+  .app-step-nav--large & {
+    @include step-nav-font(18, $tablet-size: 16, $weight: bold, $line-height: 1.2rem, $tablet-line-height: 1.2rem);
+
+    @include govuk-media-query($from: tablet) {
+      border-width: $stroke-width-large;
+      }
+    }
+  }
+
+.app-step-nav__square--text {
+  @include step-nav-font(14, $weight: bold, $line-height: 1rem);
+  border: 0;
+
+  .app-step-nav--large & {
+    @include step-nav-font(18, $tablet-size: 16, $weight: bold, $line-height: 1.2rem, $tablet-line-height: 1.2rem);
+
+    @include govuk-media-query($from: tablet) {
+      border-width: 0;
+      }
+    }
+  }
+
+.app-step-nav__square--logic {
+  @include step-nav-font(14, $weight: bold, $line-height: 1rem);
+
+  .app-step-nav--large & {
+    @include step-nav-font(18, $tablet-size: 18, $weight: bold, $line-height: 1.2rem, $tablet-line-height: 1.2rem);
+    }
+  }
+
 .app-step-nav__circle {
   box-sizing: border-box;
   position: absolute;
@@ -343,7 +399,8 @@ $top-border: solid 2px govuk-colour("grey-3");
 .app-step-nav__list {
   padding: 0;
   padding-bottom: 10px;
-  list-style: none;
+  list-style: disc;
+  margin-left: 2em;
 
   .app-step-nav--large & {
     @include govuk-media-query($from: tablet) {

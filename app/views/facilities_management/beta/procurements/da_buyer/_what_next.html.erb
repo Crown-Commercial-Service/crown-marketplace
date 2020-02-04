@@ -3,11 +3,6 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
-        <div class="app-step-nav__controls">
-          <button aria-expanded="true" class="app-step-nav__button app-step-nav__button--controls js-step-controls-button" aria-controls="step-panel-creating-your-contract">Hide
-            all
-          </button>
-        </div>
         <ol class="app-step-nav__steps">
           <li class="app-step-nav__step js-step step-is-shown" id="creating-your-contract">
             <div class="app-step-nav__header js-toggle-panel" data-position="1">
@@ -68,9 +63,21 @@
                 </li>
               </ol>
             </div>
-
           </li>
-
+          <li class="app-step-nav__step" id="waiting">
+            <div class="app-step-nav__header js-toggle-panel" data-position="4">
+              <h2 class="app-step-nav__title">
+              <span class="app-step-nav__square app-step-nav__square--logic">
+                <span class="app-step-nav__square-inner">
+                  <span class="app-step-nav__square-background">
+                    waiting<br/>on<br/>response
+                  </span>
+                </span>
+              </span>
+                <span class="js-step-title" style="margin-left:0">&nbsp;</span>
+              </h2>
+            </div>
+          </li>
           <li class="app-step-nav__step js-step step-is-shown" id="offer-accepted">
             <div class="app-step-nav__header js-toggle-panel" data-position="3">
               <h2 class="app-step-nav__title">
@@ -104,26 +111,20 @@
                 </li>
               </ol>
             </div>
-
           </li>
-
-          <li class="app-step-nav__step js-step step-is-shown" id="waiting">
+          <li class="app-step-nav__step" id="or">
             <div class="app-step-nav__header js-toggle-panel" data-position="4">
               <h2 class="app-step-nav__title">
-              <span class="app-step-nav__circle app-step-nav__circle--logic">
-                <span class="app-step-nav__circle-inner">
-                  <span class="app-step-nav__circle-background">
-                    waiting
-                    on
-                    response
+              <span class="app-step-nav__square app-step-nav__square--logic">
+                <span class="app-step-nav__square-inner">
+                  <span class="app-step-nav__square-background">
+                    or
                   </span>
                 </span>
               </span>
-                <span class="js-step-title">&nbsp;</span>
               </h2>
             </div>
           </li>
-
           <li class="app-step-nav__step js-step step-is-shown" id="offer-declined">
             <div class="app-step-nav__header js-toggle-panel" data-position="4">
               <h2 class="app-step-nav__title">
