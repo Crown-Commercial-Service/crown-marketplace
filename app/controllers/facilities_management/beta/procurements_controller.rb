@@ -193,6 +193,16 @@ module FacilitiesManagement
         end
       end
 
+      def continue_da_journey
+        if procurement_valid?
+          @procurement.move_to_next_da_step
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
       def continue_to_procurment_pension_funds
         @procurement.assign_attributes(procurement_params)
         if @procurement.valid?(:local_government_pension_scheme)
