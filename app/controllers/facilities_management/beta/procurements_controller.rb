@@ -70,15 +70,13 @@ module FacilitiesManagement
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
-        continue_to_contract_details && return if params['continue_da'].present?
-
-        continue_to_procurment_pension_funds && return if params['facilities_management_procurement']['step'] == 'local_government_pension_scheme'
-
-        update_pension_funds && return if params['facilities_management_procurement']['step'] == 'pension_funds'
-
         update_procurement if params['facilities_management_procurement'].present?
 
-        continue_da_journey && return if params['continue_da'].present?
+        continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
+
+        update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
+
+        continue_da_journey if params['continue_da'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
@@ -195,7 +193,17 @@ module FacilitiesManagement
         end
       end
 
-      def continue_to_procurment_pension_funds
+      def continue_da_journey
+        if procurement_valid?
+          @procurement.move_to_next_da_step
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
+      def continue_to_procurement_pensions
         @procurement.assign_attributes(procurement_params)
         if @procurement.valid?(:local_government_pension_scheme)
           @procurement.save

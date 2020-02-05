@@ -91,7 +91,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
 
   PROCUREMENT_STATE = { da_draft: 'DA draft',
                         further_competition: 'Further competition',
-                        results: 'Results',
+                        results: 'Detailed search',
                         quick_search: 'Quick search',
                         detailed_search: 'Detailed search',
                         awaiting_supplier_response: 'Awaiting supplier response',
