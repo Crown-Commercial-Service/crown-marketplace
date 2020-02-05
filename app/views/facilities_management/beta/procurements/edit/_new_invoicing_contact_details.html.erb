@@ -1,58 +1,59 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
 
-    <%= form_for @procurement.invoice_contact_detail, url: 'path', method: :patch, html: { specialvalidation: false, multipart: true } do |f| %>
+    <%= form_for @procurement, url: {action: "update"}, method: :put, html: { specialvalidation: true, multipart: false } do |f| %>
 
-  <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
-    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:name].any? %>">
-      <%= f.label :name, 'Name', class: 'govuk-label govuk-!-margin-bottom-3' %>
-      <%= display_error(f.object, :name) %>
-      <%= f.text_field :name, class: 'govuk-input ', maxlength: 50 %>
-    </div>
+      <%= f.fields_for :invoice_contact_detail do |ff|%>
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+          <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:name].any? %>">
+            <%= ff.label :name, 'Name', class: 'govuk-label govuk-!-margin-bottom-3' %>
+            <%= display_error(ff.object, :name) %>
+            <%= ff.text_field :name, class: 'govuk-input ', maxlength: 50 %>
+          </div>
 
-    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:job_title].any? %>">
-      <%= f.label :job_title, 'job_title', class: 'govuk-label govuk-!-margin-bottom-3' %>
-      <%= display_error(f.object, :job_title) %>
-      <%= f.text_field :job_title, class: 'govuk-input ', maxlength: 50 %>
-    </div>
-    
-    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:email].any? %>">
-      <%= f.label :email, 'email', class: 'govuk-label govuk-!-margin-bottom-3' %>
-      <%= display_error(f.object, :email) %>
-      <%= f.text_field :email, class: 'govuk-input ', maxlength: 50 %>
-    </div>
+          <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:job_title].any? %>">
+            <%= ff.label :job_title, 'Job title', class: 'govuk-label govuk-!-margin-bottom-3' %>
+            <%= display_error(ff.object, :job_title) %>
+            <%= ff.text_field :job_title, class: 'govuk-input ', maxlength: 50 %>
+          </div>
+          
+          <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:email].any? %>">
+            <%= ff.label :email, 'Email address', class: 'govuk-label govuk-!-margin-bottom-3' %>
+            <%= display_error(ff.object, :email) %>
+            <%= ff.text_field :email, class: 'govuk-input ', maxlength: 50 %>
+          </div>
 
 
-    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_line_1].any? %>">
-      <%= f.label :organisation_address_line_1, 'organisation_address_line_1', class: 'govuk-label govuk-!-margin-bottom-3' %>
-      <%= display_error(f.object, :organisation_address_line_1) %>
-      <%= f.text_field :organisation_address_line_1, class: 'govuk-input ', maxlength: 50 %>
-    </div>
+          <div class="govuk-heading-s govuk-!-margin-bottom-2">
+              Address
+          </div>
+          <% if @procurement.invoice_contact_detail.valid_postcode? %>
+            <p class="govuk-body "><%= @procurement.invoice_contact_detail.contact_address %></p>
+            <div class="govuk-!-margin-top-2" >
+              <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'new_invoicing_address'),  class: "govuk-link--no-visited-state govuk-caption-m" %>
+            </div>
+            <%= ff.hidden_field :organisation_address_line_1 %>
+            <%= ff.hidden_field :organisation_address_line_2 %>
+            <%= ff.hidden_field :organisation_address_town %>
+            <%= ff.hidden_field :organisation_address_county %>   
+            <%= ff.hidden_field :organisation_address_postcode %>   
 
-    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_line_2].any? %>">
-      <%= f.label :organisation_address_line_2, 'organisation_address_line_2', class: 'govuk-label govuk-!-margin-bottom-3' %>
-      <%= display_error(f.object, :organisation_address_line_2) %>
-      <%= f.text_field :organisation_address_line_2, class: 'govuk-input ', maxlength: 50 %>
-    </div>
+          <% else %>
+          <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>">
+            <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-3' %>
+            <%= display_error(ff.object, :organisation_address_postcode) %>
+            <%= ff.text_field :organisation_address_postcode, class: 'govuk-input govuk-!-width-one-third', maxlength: 50 %>
+          </div>
 
-    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_town].any? %>">
-      <%= f.label :organisation_address_town, 'organisation_address_town', class: 'govuk-label govuk-!-margin-bottom-3' %>
-      <%= display_error(f.object, :organisation_address_town) %>
-      <%= f.text_field :organisation_address_town, class: 'govuk-input ', maxlength: 50 %>
-    </div>
-
-    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_county].any? %>">
-      <%= f.label :organisation_address_county, 'organisation_address_county', class: 'govuk-label govuk-!-margin-bottom-3' %>
-      <%= display_error(f.object, :organisation_address_county) %>
-      <%= f.text_field :organisation_address_county, class: 'govuk-input ', maxlength: 50 %>
-    </div>
-
-    <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
-      <%= f.label :organisation_address_postcode, 'organisation_address_postcode', class: 'govuk-label govuk-!-margin-bottom-3' %>
-      <%= display_error(f.object, :organisation_address_postcode) %>
-      <%= f.text_field :organisation_address_postcode, class: 'govuk-input ', maxlength: 50 %>
-    </div>
-
-    <% end %>
-    <%= govuk_continuation_buttons(@page_description, f, false) %>
-</div>
-<% end %>
+          <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
+                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn">Find address</a>
+          </div>         
+          <div class="govuk-!-margin-top-3">
+            <%= link_to 'I cant find my address in the list', edit_facilities_management_beta_procurement_path(:step => 'new_invoicing_address', id: @procurement.id, name: @name, job_title: @job_title, email: @email),  class: "govuk-link--no-visited-state govuk-caption-m" %>
+          </div>
+          <% end %>
+      
+          <%= govuk_continuation_buttons(@page_description, f, false) %>
+        </div>
+        <% end %>
+      <% end %>
+  <% end %>

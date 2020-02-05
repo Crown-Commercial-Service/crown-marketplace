@@ -1,0 +1,45 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+
+    <%= form_for @procurement, url: {action: "update"}, method: :put, html: { specialvalidation: false, multipart: true } do |f| %>
+        <%= f.fields_for :invoice_contact_detail do |ff|%>
+        
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+            
+            <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_line_1].any? %>">
+            <%= ff.label :organisation_address_line_1, 'Building and street', class: 'govuk-label govuk-!-margin-bottom-3' %>
+            <%= display_error(ff.object, :organisation_address_line_1) %>
+            <%= ff.text_field :organisation_address_line_1, class: 'govuk-input ', maxlength: 50 %>
+            </div>
+
+            <div class="govuk-form-group">
+            <%= ff.text_field :organisation_address_line_2, class: 'govuk-input', maxlength: 50 %>
+            </div>
+
+            <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_town].any? %>">
+            <%= ff.label :organisation_address_town, 'Town or city', class: 'govuk-label govuk-!-margin-bottom-3' %>
+            <%= display_error(ff.object, :organisation_address_town) %>
+            <%= ff.text_field :organisation_address_town, class: 'govuk-input govuk-!-width-two-thirds', maxlength: 50 %>
+            </div>
+
+            <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_county].any? %>">
+            <%= ff.label :organisation_address_county, 'County (optional)', class: 'govuk-label govuk-!-margin-bottom-3' %>
+            <%= display_error(ff.object, :organisation_address_county) %>
+            <%= ff.text_field :organisation_address_county, class: 'govuk-input govuk-!-width-two-thirds', maxlength: 50 %>
+            </div>
+
+            <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>">
+            <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-3' %>
+            <%= display_error(ff.object, :organisation_address_postcode) %>
+            <%= ff.text_field :organisation_address_postcode, class: 'govuk-input govuk-!-width-one-third', maxlength: 50 %>
+          </div>
+
+            <%= ff.hidden_field :name %>
+            <%= ff.hidden_field :job_title %>
+            <%= ff.hidden_field :email %>
+            
+            <%= govuk_continuation_buttons(@page_description, f, false) %>
+
+        </div>
+        <% end %>
+    <% end %>
+<% end %>

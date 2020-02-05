@@ -46,6 +46,8 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def edit
+        set_invoice_data if params['step'] == 'new_invoicing_address'
+
         if @procurement.quick_search?
           render :edit
         else
@@ -73,6 +75,8 @@ module FacilitiesManagement
         continue_to_contract_details && return if params['continue_da'].present?
 
         continue_to_new_invoice && return if params['facilities_management_procurement']['step'] == 'invoicing_contact_details'
+
+        continue_to_new_invoice_from_add_address && return if params['facilities_management_procurement']['step'] == 'new_invoicing_address'
 
         update_procurement if params['facilities_management_procurement'].present?
       end
@@ -198,10 +202,15 @@ module FacilitiesManagement
       end
 
       def continue_to_new_invoice
-        return if params['facilities_management_procurement']['using_buyer_detail_for_invoice_details'] == 'true'
+        @procurement.update(procurement_params)
 
-        @procurement.assign_attributes(procurement_params)
-        @procurement.save
+        return if @procurement.using_buyer_detail_for_invoice_details
+
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details') if !@procurement.using_buyer_detail_for_invoice_details && @procurement.invoice_contact_detail.blank?
+      end
+
+      def continue_to_new_invoice_from_add_address
+        @procurement.update(procurement_params)
         redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details')
       end
 
@@ -267,8 +276,8 @@ module FacilitiesManagement
       end
 
       def set_invoice_data
-        @procurement.create_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
-        @procurement.invoice_contact_detail
+        @procurement.build_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
+        @invoice_contact_detail = @procurement.invoice_contact_detail
       end
 
       def procurement_route_params
@@ -316,7 +325,8 @@ module FacilitiesManagement
                                                    :county,
                                                    :postcode,
                                                    :active,
-                                                   service_codes: []]
+                                                   service_codes: []],
+                invoice_contact_detail_attributes: %i[name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
               )
       end
 
@@ -441,10 +451,23 @@ module FacilitiesManagement
             return_url: '#',
           },
           invoicing_contact_details: {
-            page_title: 'Invoicing contact details'
+            page_title: 'Invoicing contact details',
+            back_url: facilities_management_beta_procurement_path(id: @procurement.id),
+            return_text: 'Return to contract details',
+            return_url: facilities_management_beta_procurement_path(id: @procurement.id),
           },
           new_invoicing_contact_details: {
             page_title: 'New Invoicing contact details',
+            continuation_text: 'Save and return',
+            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+            return_text: 'Return to contract details',
+          },
+          new_invoicing_address: {
+            page_title: 'Add address',
+            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+            return_text: 'Return to new invoicing contact details',
           }
         }
       end

@@ -24,6 +24,7 @@ class FacilitiesManagement::ProcurementRouter
     'payment_method': 'payment_method',
     'invoicing_contact_details': 'invoicing_contact_details',
     'new_invoicing_contact_details': 'new_invoicing_contact_details',
+    'new_invoicing_address': 'new_invoicing_address',
     'authorised_representative': 'authorised_representative',
     'notices_contact_details': 'notices_contact_details',
     'security_policy_document': 'security_policy_document',

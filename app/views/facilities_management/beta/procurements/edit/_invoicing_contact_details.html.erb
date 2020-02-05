@@ -2,29 +2,44 @@
     <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
         <div class="govuk-!-width-two-thirds">
         <%= govuk_grouped_field(f, 'This is the relevent contact for invoicing.', :select_an_invoicing_contact) do |ff, attr| %>
+            <p class="govuk-body govuk-!-margin-bottom-6">Select an invoicing contact</p>
+
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
                         <%= f.radio_button :using_buyer_detail_for_invoice_details, true, class: 'govuk-radios__input' %>
                         <%= f.label :using_buyer_detail_for_invoice_details, value: true, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
                         <%= @current_user.buyer_detail.full_name %>
                         <span class="govuk-caption-m govuk-!-margin-top-2 ">
-                            <%= (@current_user.buyer_detail.organisation_address_line_1 + ', ') if @current_user.buyer_detail.organisation_address_line_1.present?%>
-                            <%= (@current_user.buyer_detail.organisation_address_line_2 + ', ') if @current_user.buyer_detail.organisation_address_line_2.present?%>
-                            <%= (@current_user.buyer_detail.organisation_address_town + ', ') if @current_user.buyer_detail.organisation_address_town.present?%>
-                            <%= (@current_user.buyer_detail.organisation_address_county + ', ') if @current_user.buyer_detail.organisation_address_county.present?%>
-                            <%= (@current_user.buyer_detail.organisation_address_postcode) if @current_user.buyer_detail.organisation_address_postcode.present? %>
+                            <%= @current_user.buyer_detail.full_organisation_address %>
                         </span>
                         <% end %>
                     </div>
+                    <% if @procurement.invoice_contact_detail.blank? %>
                     <div class="govuk-radios__item">
                         <%= f.radio_button :using_buyer_detail_for_invoice_details, false, class: 'govuk-radios__input' %>
                         <%= f.label :using_buyer_detail_for_invoice_details, value: false, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
                         <%= 'Enter a new invoicing contact' %>
                         <% end %>
                     </div>
+                    <% else %>
+                     <div class="govuk-radios__item">
+                        <%= f.radio_button :using_buyer_detail_for_invoice_details, false, class: 'govuk-radios__input' %>
+                        <%= f.label :using_buyer_detail_for_invoice_details, value: false, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
+                        <%= @procurement.invoice_contact_detail.name %>
+                        <span class="govuk-caption-m govuk-!-margin-top-2 ">
+                            <%= @procurement.invoice_contact_detail.contact_address %>
+                            </br>
+                            <div class="govuk-!-margin-top-2" >
+                            <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'new_invoicing_contact_details') %>
+                            </div>
+                        </span>
+                        <a>
+                        <% end %>
+                    </div>
+                    <% end %>
                 </div>
+            <%= govuk_continuation_buttons(pd, f, false) %>
         <% end %>
         </div>
-        <%= govuk_continuation_buttons(pd, f, false) %>
     <% end %>
 <% end %>
