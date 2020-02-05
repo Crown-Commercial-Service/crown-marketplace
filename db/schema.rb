@@ -48,15 +48,6 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
-  create_table "facilities_management_pension_funds", force: :cascade do |t|
-    t.uuid "facilities_management_procurements_id", null: false
-    t.string "name", limit: 150
-    t.integer "percentage"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["facilities_management_procurements_id"], name: "index_pension_funds_on_fm_procurement_id"
-  end
-
   create_table "facilities_management_procurement_building_services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_building_id", null: false
     t.string "code", limit: 10
@@ -161,15 +152,15 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.money "assessed_value", scale: 2
     t.boolean "eligible_for_da"
     t.datetime "date_offer_sent"
-    t.string "da_journey_state"
     t.date "contract_start_date"
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
-    t.boolean "local_government_pension_scheme"
+    t.string "da_journey_state"
     t.string "payment_method"
     t.boolean "using_buyer_detail_for_invoice_details"
     t.boolean "using_buyer_detail_for_notices_detail"
     t.boolean "using_buyer_detail_for_authorised_detail"
+    t.boolean "local_government_pension_scheme"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
