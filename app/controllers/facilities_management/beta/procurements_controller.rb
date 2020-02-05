@@ -70,11 +70,11 @@ module FacilitiesManagement
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
-        update_procurement if params['facilities_management_procurement'].present?
-
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
         update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
+
+        update_procurement if params['facilities_management_procurement'].present?
 
         continue_da_journey if params['continue_da'].present?
       end
