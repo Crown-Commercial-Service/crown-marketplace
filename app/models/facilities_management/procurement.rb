@@ -23,6 +23,7 @@ module FacilitiesManagement
 
     has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true
     accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
+    accepts_nested_attributes_for :invoice_contact_detail, allow_destroy: true
 
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
     mount_uploader :security_policy_document_file, FacilitiesManagementSecurityPolicyDocumentUploader
