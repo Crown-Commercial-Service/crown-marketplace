@@ -1,0 +1,22 @@
+<div class="pension-row govuk-body govuk-row govuk-!-margin-bottom-6 <%= 'govuk-form-group--error' if ff.object.errors.any? %>">
+    <%= display_potential_errors(ff.object, :name, ff.object_name)%>
+    <%= display_potential_errors(ff.object, :percentage, ff.object_name)%>
+    <div class="govuk-grid-column-one-half govuk-!-margin-right-2 govuk-!-padding-left-0">
+        <p class="govuk-!-margin-bottom-2">
+            <%= t('.name_text') %> <span class="pension-number"></span>
+        </p>
+        <p class="govuk-!-margin-bottom-0">
+            <%= ff.text_field :name, class: "pension-name govuk-input govuk-!-width-full #{'govuk-input--error' if !ff.object.errors[:name].empty?}", maxlength: 150%>
+        </p>
+    </div>
+    <div>
+        <p class="govuk-!-margin-bottom-2">
+            <%= t('.percentage_text') %>
+        </p>
+        <p class="govuk-!-margin-bottom-0">
+            <%= ff.number_field :percentage, min: 1, max: 100, class: "pension-percentage govuk-input govuk-input--width-4 #{'govuk-input--error' if !ff.object.errors[:percentage].empty?}", maxlength: '3' %> %
+            <%= link_to 'Remove', '#', class: 'remove-record govuk-button govuk-button--secondary govuk-!-margin-left-4 govuk-!-margin-bottom-0' %>
+            <%= ff.text_field :_destroy, as: :hidden, class: 'pension-destroy-box govuk-visually-hidden' %>
+        </p>
+    </div>
+</div>
