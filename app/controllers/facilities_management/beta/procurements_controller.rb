@@ -208,7 +208,7 @@ module FacilitiesManagement
         if @procurement.valid?(:local_government_pension_scheme)
           @procurement.save
           if @procurement.local_government_pension_scheme
-            @procurement.procurement_pension_funds.build
+            @procurement.procurement_pension_funds.build if @procurement.procurement_pension_funds.empty?
             params[:step] = 'pension_funds'
             create_da_buyer_page_data('pension_funds')
             render :edit

@@ -304,7 +304,7 @@ module ApplicationHelper
     fields = form.fields_for(association, new_object, child_index: id) do |builder|
       render("facilities_management/beta/procurements/edit/#{association.to_s.singularize}", ff: builder)
     end
-    link_to(name, '#', class: 'add-fields ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
+    link_to(name, '#', class: 'add-pension-fields ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
   end
 end
 # rubocop:enable Metrics/ModuleLength
