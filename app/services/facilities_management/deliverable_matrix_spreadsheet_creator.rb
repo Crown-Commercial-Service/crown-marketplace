@@ -20,7 +20,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @package.to_stream.read
   end
 
-  # rubocop:disable Metrics/AbcSize
   def build
     @package = Axlsx::Package.new do |p|
       p.workbook.styles do |s|
@@ -47,11 +46,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           end
         end
 
-        p.workbook.add_worksheet(name: 'Service Periods') do |sheet|
-          add_header_row(sheet, ['Service Reference', 'Service Name', 'Specific Service Periods'])
-          rows_added = add_service_periods(sheet)
-          style_service_periods_matrix_sheet(sheet, standard_column_style, rows_added) if sheet.rows.size > 1
-        end
+        add_service_periods_worksheet(p, standard_column_style)
 
         add_customer_and_contract_details(p) if @procurement
 
@@ -59,9 +54,16 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
+
+  def add_service_periods_worksheet(package, standard_column_style)
+    package.workbook.add_worksheet(name: 'Service Periods') do |sheet|
+      add_header_row(sheet, ['Service Reference', 'Service Name', 'Specific Service Periods'])
+      rows_added = add_service_periods(sheet)
+      style_service_periods_matrix_sheet(sheet, standard_column_style, rows_added) if sheet.rows.size > 1
+    end
+  end
 
   def add_customer_and_contract_details(package)
     package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
@@ -344,7 +346,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end_ampm = service_measure[:uom_value][day_symbol]['end_ampm'].downcase
     end_hour + ':' + end_minute + end_ampm
   end
-
 
   def remove_help_cafm_services(services)
     services.reject { |x| x['code'] == 'M.1' || x['code'] == 'N.1' }
