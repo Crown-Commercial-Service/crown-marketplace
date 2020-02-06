@@ -488,7 +488,7 @@ en:
             government_procurement_card: Government procurement card
             payment_description: Please select the payment method that will be used
           pension_funds:
-            description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a memeber of that fund.
+            description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
             form_title: List of pension funds
             heading: How many pension funds are involved?
           procurement_buildings:
