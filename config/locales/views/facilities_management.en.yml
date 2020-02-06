@@ -496,10 +496,28 @@ en:
             caption: Select a contact for notices
             description: The person to whom contract notices should be communicated.
             new: Enter a new contact for notices
+          new_invoicing_contact_details:
+            name: Name
+            job_title: Job title
+            email: Email address
+            address: Address
+            change: Change
+            choose_address: Select an address
+            missing_address:  I cant find my address in the list
+          new_invoicing_address:
+            building_and_street: Building and street
+            town_or_city: Town or city
+            county: County (optional)
+            postcode: Postcode
           payment_method:
             bacs_payment: BACS payment
             government_procurement_card: Government procurement card
             payment_description: Please select the payment method that will be used
+          invoicing_contact_details:
+            invoicing_contact_detail_description_header: This is the relevent contact for invoicing.
+            invoicing_contact_detail_description: Select an invoicing contact
+            new: Enter a new invoicing contact
+            change: Change
           pension_funds:
             description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
             form_title: List of pension funds
