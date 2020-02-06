@@ -64,11 +64,11 @@
                 <tr class="govuk-table__row">
                     <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.local_government_pension_scheme') %></th>
                     <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
-                      <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'local_government_pension_scheme') if @page_data[:model_object][:local_government_pension_scheme].blank? %>
-                      <%= @page_data[:model_object][:local_government_pension_scheme] if @page_data[:model_object][:local_government_pension_scheme].present?%>
+                      <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'local_government_pension_scheme') if @page_data[:model_object][:local_government_pension_scheme].nil? %>
+                      <%= @page_data[:model_object][:local_government_pension_scheme] unless @page_data[:model_object][:local_government_pension_scheme].nil?%>
                     </td>
                     <td class="govuk-table__cell">
-                      <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'local_government_pension_scheme') if @page_data[:model_object][:local_government_pension_scheme].present? %>
+                      <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'local_government_pension_scheme') unless @page_data[:model_object][:local_government_pension_scheme].nil? %>
                     </td>
                 </tr>
             </tbody>
