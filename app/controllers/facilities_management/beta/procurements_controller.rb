@@ -82,7 +82,7 @@ module FacilitiesManagement
 
         continue_to_invoice_from_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_contact_details'
 
-        update_procurement and return if params['facilities_management_procurement'].present?
+        update_procurement && return if params['facilities_management_procurement'].present?
 
         continue_da_journey if params['continue_da'].present?
       end
