@@ -333,6 +333,8 @@ Rails.application.routes.draw do
       get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
       get '/find-region/:postcode', to: 'nuts#find_region_query'
       get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
+      get '/test-notification', to: 'api_test_notifications#send_notification'
+      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
     end
   end
 
