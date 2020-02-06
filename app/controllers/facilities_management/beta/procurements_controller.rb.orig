@@ -2,6 +2,7 @@ require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FrameworkController
+      include RequirementsHelper
       before_action :set_procurement, only: %i[show edit update destroy results]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
@@ -73,9 +74,15 @@ module FacilitiesManagement
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
         update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
+<<<<<<< HEAD
 
         update_procurement && return if params['facilities_management_procurement'].present?
 
+=======
+
+        update_procurement if params['facilities_management_procurement'].present?
+
+>>>>>>> master
         continue_da_journey if params['continue_da'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
@@ -508,7 +515,6 @@ module FacilitiesManagement
             page_title: 'Review and generate documents'
           },
           payment_method: {
-            caption2: 'Contract details',
             back_url: '#',
             back_text: 'Back',
             page_title: 'Payment method',
