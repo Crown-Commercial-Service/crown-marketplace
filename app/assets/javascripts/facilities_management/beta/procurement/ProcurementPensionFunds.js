@@ -28,10 +28,6 @@ function PensionFundDataUI(jqContainer) {
       });
     }
   
-    function getPercentageValue(e, ev) {
-      return e.value * 10 + ev.charCode - 48;
-    }
-  
     function pensionToAddLeft() {
       var pensionsLeft = maxPensionFunds - getNumberOfPensions();
       if (!!document.getElementsByClassName("add-pension-button").length) {
@@ -114,10 +110,6 @@ function PensionFundDataUI(jqContainer) {
       var ev = e || window.event;
       if(ev.charCode < 48 || ev.charCode > 57) {
         return false; // not a digit
-      } else if(getPercentageValue(this, ev) === 0) {
-        return false;
-      } else if(getPercentageValue(this, ev) > this.max) {
-        return false;
       } else {
         return true;
       }

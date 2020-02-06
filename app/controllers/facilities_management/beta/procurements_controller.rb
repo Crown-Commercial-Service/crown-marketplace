@@ -210,7 +210,7 @@ module FacilitiesManagement
 
       def continue_da_journey
         if procurement_valid?
-          @procurement.move_tomove_to_next_da_step
+          @procurement.move_to_next_da_step
           @procurement.save
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
@@ -366,11 +366,11 @@ module FacilitiesManagement
                 :security_policy_document_date_mm,
                 :security_policy_document_date_yyyy,
                 :security_policy_document_file,
-                :local_government_pension_scheme,
                 :payment_method,
                 :using_buyer_detail_for_invoice_details,
-                :using_buyer_detail_for_notices_detail,
                 :using_buyer_detail_for_authorised_detail,
+                :using_buyer_details_for_notices_detail,
+                :local_government_pension_scheme,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
@@ -558,48 +558,49 @@ module FacilitiesManagement
             page_title: 'Review and generate documents'
           },
           payment_method: {
-            back_url: facilities_management_beta_procurement_path(id: @procurement.id),
-            back_text: 'Back',
+            back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Payment method',
-            caption1: @procurement[:contract_name],
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
-            return_url: facilities_management_beta_procurement_path(id: @procurement.id)
+            return_url: facilities_management_beta_procurement_path(@procurement)
           },
           invoicing_contact_details: {
-            back_url: facilities_management_beta_procurement_path(id: @procurement.id),
-            caption1: @procurement[:contract_name],
+            back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Invoicing contact details',
             continuation_text: 'Continue',
-            secondary_text: 'Return to contract details',
             return_text: 'Return to contract details',
-            return_url: facilities_management_beta_procurement_path(id: @procurement.id),
+            return_url: facilities_management_beta_procurement_path(@procurement)
           },
           new_invoicing_contact_details: {
-            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
-            page_title: 'New invoicing contact details',
-            continuation_text: 'Save and return',
-            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
-            return_text: 'Return to invoicing contact details',
+              back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+              page_title: 'New invoicing contact details',
+              continuation_text: 'Save and return',
+              return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+              return_text: 'Return to invoicing contact details',
           },
           new_invoicing_address: {
-            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
-            page_title: 'Add address',
-            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
-            return_text: 'Return to new invoicing contact details',
+              back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+              page_title: 'Add address',
+              return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+              return_text: 'Return to new invoicing contact details',
           },
           notices_contact_details: {
-            back_url: facilities_management_beta_procurement_path(id: @procurement.id),
-            page_title: 'Notices contact details'
+            back_url: facilities_management_beta_procurement_path(@procurement),
+            page_title: 'Notices contact details',
+            continuation_text: 'Save and continue',
+            return_text: 'Return to contract details',
+            return_url: facilities_management_beta_procurement_path(@procurement)
           },
           authorised_representative: {
-            back_url: facilities_management_beta_procurement_path(id: @procurement.id),
-            page_title: 'Authorised representative'
+            back_url: facilities_management_beta_procurement_path(@procurement),
+            page_title: 'Authorised representative',
+            continuation_text: 'Save and continue',
+            return_text: 'Return to contract details',
+            return_url: facilities_management_beta_procurement_path(@procurement)
           },
           local_government_pension_scheme: {
             back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Local Government Pension Scheme',
-            caption1: @procurement[:contract_name],
             continuation_text: 'Save and continue',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
@@ -607,7 +608,6 @@ module FacilitiesManagement
           pension_funds: {
             back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'local_government_pension_scheme'),
             page_title: 'Pension funds',
-            caption1: @procurement[:contract_name],
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
