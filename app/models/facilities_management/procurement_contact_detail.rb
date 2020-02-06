@@ -6,12 +6,14 @@ module FacilitiesManagement
 
     validates :organisation_address_line_1, presence: true, format: { with: /\A([a-zA-Z\- (0-9)]*)\z/ }, on: :new_invoicing_address
     validates :organisation_address_town, presence: true, format: { with: /\A([a-zA-Z\- ]*)\z/ }, on: :new_invoicing_address
-    validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: :new_invoicing_address && :new_invoicing_contact_details
+    validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: :new_invoicing_address
+    validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: :new_invoicing_contact_details
+
     def contact_address
       "#{organisation_address_line_1}#{', ' + organisation_address_line_2 if organisation_address_line_2&.present?}#{', ' + organisation_address_town}#{', ' + organisation_address_county if organisation_address_county&.present?}#{', ' + organisation_address_postcode}"
     end
 
-    def valid_postcode?
+    def valid_contact_address?
       organisation_address_line_1&.present? && organisation_address_town&.present? && organisation_address_postcode&.present?
     end
   end
