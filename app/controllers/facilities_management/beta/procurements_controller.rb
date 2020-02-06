@@ -76,11 +76,11 @@ module FacilitiesManagement
 
         update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
 
-        continue_to_new_invoice && return if params['facilities_management_procurement']['step'] == 'invoicing_contact_details' && params['facilities_management_procurement']['using_buyer_detail_for_invoice_details'] == 'false'
+        continue_to_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'invoicing_contact_details' && params.dig('facilities_management_procurement', 'using_buyer_detail_for_invoice_details') == 'false'
 
-        continue_to_new_invoice_from_add_address && return if params['facilities_management_procurement']['step'] == 'new_invoicing_address'
+        continue_to_new_invoice_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_address'
 
-        continue_to_invoice_from_new_invoice && return if params['facilities_management_procurement']['step'] == 'new_invoicing_contact_details'
+        continue_to_invoice_from_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_contact_details'
 
         update_procurement if params['facilities_management_procurement'].present?
 
