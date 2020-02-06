@@ -82,7 +82,7 @@ module FacilitiesManagement
 
         continue_to_invoice_from_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_contact_details'
 
-        update_procurement if params['facilities_management_procurement'].present?
+        update_procurement and return if params['facilities_management_procurement'].present?
 
         continue_da_journey if params['continue_da'].present?
       end
@@ -210,7 +210,7 @@ module FacilitiesManagement
 
       def continue_da_journey
         if procurement_valid?
-          @procurement.move_to_next_da_step
+          @procurement.move_tomove_to_next_da_step
           @procurement.save
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
