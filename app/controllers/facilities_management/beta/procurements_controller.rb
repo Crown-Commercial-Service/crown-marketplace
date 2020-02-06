@@ -150,8 +150,13 @@ module FacilitiesManagement
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
           set_step_param
+          set_da_journey_render
           render :edit
         end
+      end
+
+      def set_da_journey_render
+        create_da_buyer_page_data(params[:step]) if FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.key?(params[:step]&.to_sym)
       end
 
       def assign_procurement_parameters
@@ -570,10 +575,10 @@ module FacilitiesManagement
           },
           new_invoicing_contact_details: {
             back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
-            page_title: 'New Invoicing contact details',
+            page_title: 'New invoicing contact details',
             continuation_text: 'Save and return',
             return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
-            return_text: 'Return to contract details',
+            return_text: 'Return to invoicing contact details',
           },
           new_invoicing_address: {
             back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),

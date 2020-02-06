@@ -197,20 +197,19 @@ en:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
         facilities_management/procurement_contact_detail:
           attributes:
-            name:
-              blank: Enter the new invoicing contact name
+            email:
+              blank: Enter the new invoicing contact email address
+              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
             job_title:
               blank: Enter the new invoicing contact job title
-            email:
-              blank:  Enter the new invoicing contact email address
-              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
+            name:
+              blank: Enter the new invoicing contact name
             organisation_address_line_1:
               blank: Enter the building or street name of the address
-            organisation_address_town:
-              blank: Enter the town or city of the address
             organisation_address_postcode:
               blank: Enter the postcode of the address
-
+            organisation_address_town:
+              blank: Enter the town or city of the address
         facilities_management/procurement_pension_fund:
           attributes:
             name:
