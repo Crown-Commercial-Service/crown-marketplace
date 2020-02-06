@@ -7,24 +7,24 @@
           <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:name].any? %>">
             <%= ff.label :name, t('.name'), class: 'govuk-label govuk-!-margin-bottom-3' %>
             <%= display_error(ff.object, :name) %>
-            <%= ff.text_field :name, class: 'govuk-input ', maxlength: 50 %>
+            <%= ff.text_field :name, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:name].any? } ", maxlength: 50 %>
           </div>
 
           <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:job_title].any? %>">
             <%= ff.label :job_title, t('.job_title'), class: 'govuk-label govuk-!-margin-bottom-3' %>
             <%= display_error(ff.object, :job_title) %>
-            <%= ff.text_field :job_title, class: 'govuk-input ', maxlength: 50 %>
+            <%= ff.text_field :job_title, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:job_title].any? } ", maxlength: 50 %>
           </div>
           
           <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:email].any? %>">
             <%= ff.label :email, t('.email'), class: 'govuk-label govuk-!-margin-bottom-3' %>
             <%= display_error(ff.object, :email) %>
-            <%= ff.text_field :email, class: 'govuk-input ', maxlength: 50 %>
+            <%= ff.text_field :email, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:email].any? } ", maxlength: 50 %>
           </div>
 
 
           <div class="govuk-heading-s govuk-!-margin-bottom-2">
-              Address
+              <%= t('.address') %>
           </div>
          <div id="fm-postcode-error-form-group" class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>">
           <div class="">
@@ -34,7 +34,7 @@
                   <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1' %>
                   <div class="govuk-error-message" id="fm-postcode-error"></div>
                   <%= display_error(ff.object, :organisation_address_postcode) %>
-                  <%= ff.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10 %>
+                  <%= ff.text_field :organisation_address_postcode, class: "govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", id: 'buyer-details-postcode', maxlength: 10 %>
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
@@ -57,9 +57,6 @@
               </div>
               <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4"><%= t('.choose_address') %></label>
               <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
-                  <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
-                    <%= t('.no_addr_selected') %>
-                  </span>
                 <select class="govuk-select govuk-!-width-full" id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
                 </select>
               </div>
@@ -69,7 +66,7 @@
             </div>
             <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless ff.object.organisation_address_line_1.present? %>" id="selected-address-container">
               <div id="selected-address-label"  class=" govuk-body govuk-!-margin-bottom-4">
-                <%= @procurement.invoice_contact_detail.contact_address if @procurement.invoice_contact_detail.valid_postcode? %>
+                <%= @procurement.invoice_contact_detail.contact_address if @procurement.invoice_contact_detail.valid_contact_address? %>
               </div>
               <a id="change-selected-address-link" href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
               <%= ff.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>

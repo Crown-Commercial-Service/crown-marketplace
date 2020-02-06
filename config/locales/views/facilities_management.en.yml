@@ -195,6 +195,22 @@ en:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
+        facilities_management/procurement_contact_detail:
+          attributes:
+            name:
+              blank: Enter the new invoicing contact name
+            job_title:
+              blank: Enter the new invoicing contact job title
+            email:
+              blank:  Enter the new invoicing contact email address
+              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
+            organisation_address_line_1:
+              blank: Enter the building or street name of the address
+            organisation_address_town:
+              blank: Enter the town or city of the address
+            organisation_address_postcode:
+              blank: Enter the postcode of the address
+
         facilities_management/procurement_pension_fund:
           attributes:
             name:
@@ -479,8 +495,26 @@ en:
             contract_name_question: What do you want to call your contract?
           delete_message: Are you sure you want to delete this search result?  This action cannot be undone.
           detailed_search: Detailed search
+          invoicing_contact_details:
+            change: Change
+            invoicing_contact_detail_description: Select an invoicing contact
+            invoicing_contact_detail_description_header: This is the relevent contact for invoicing.
+            new: Enter a new invoicing contact
           local_government_pension_scheme:
             description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
+          new_invoicing_address:
+            building_and_street: Building and street
+            county: County (optional)
+            postcode: Postcode
+            town_or_city: Town or city
+          new_invoicing_contact_details:
+            address: Address
+            change: Change
+            choose_address: Select an address
+            email: Email address
+            job_title: Job title
+            missing_address: I cant find my address in the list
+            name: Name
           next_step:
             building_services: 'Next: Service information'
             contract_dates: 'Next: Buildings'
@@ -493,28 +527,10 @@ en:
             caption: Select a contact for notices
             description: The person to whom contract notices should be communicated.
             new: Enter a new contact for notices
-          new_invoicing_contact_details:
-            name: Name
-            job_title: Job title
-            email: Email address
-            address: Address
-            change: Change
-            choose_address: Select an address
-            missing_address:  I cant find my address in the list
-          new_invoicing_address:
-            building_and_street: Building and street
-            town_or_city: Town or city
-            county: County (optional)
-            postcode: Postcode
           payment_method:
             bacs_payment: BACS payment
             government_procurement_card: Government procurement card
             payment_description: Please select the payment method that will be used
-          invoicing_contact_details:
-            invoicing_contact_detail_description_header: This is the relevent contact for invoicing.
-            invoicing_contact_detail_description: Select an invoicing contact
-            new: Enter a new invoicing contact
-            change: Change
           pension_funds:
             description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
             form_title: List of pension funds
