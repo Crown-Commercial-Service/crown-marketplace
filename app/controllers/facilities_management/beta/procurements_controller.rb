@@ -148,7 +148,7 @@ module FacilitiesManagement
       end
 
       def set_da_journey_render
-        create_da_buyer_page_data(params[:step]) if FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.key?(params[:step].to_sym)
+        create_da_buyer_page_data(params[:step]) if FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.key?(params[:step]&.to_sym)
       end
 
       def assign_procurement_parameters
