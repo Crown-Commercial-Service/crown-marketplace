@@ -142,6 +142,7 @@ module FacilitiesManagement
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
           set_step_param
+          create_da_buyer_page_data(params[:step]) if FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.key?(params[:step].to_sym)
           render :edit
         end
       end
@@ -471,9 +472,9 @@ module FacilitiesManagement
             return_text: 'Return to procurement dashboard',
             secondary_name: 'change_requirements',
             secondary_text: 'Change requirements',
-            secondary_url: facilities_management_beta_procurements_path(@procurement),
+            secondary_url: facilities_management_beta_procurements_path,
             back_text: 'Back',
-            back_url: facilities_management_beta_procurements_path(@procurement)
+            back_url: facilities_management_beta_procurements_path
           },
           contract_details: {
             page_title: 'Contract details',
@@ -506,30 +507,35 @@ module FacilitiesManagement
             page_title: 'Review and generate documents'
           },
           payment_method: {
+            back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Payment method',
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
           invoicing_contact_details: {
+            back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Invoicing contact details',
             continuation_text: 'Continue',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
           notices_contact_details: {
+            back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Notices contact details',
             continuation_text: 'Save and continue',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
           authorised_representative: {
+            back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Authorised representative',
             continuation_text: 'Save and continue',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
           local_government_pension_scheme: {
+            back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Local Government Pension Scheme',
             continuation_text: 'Save and continue',
             return_text: 'Return to contract details',
