@@ -82,9 +82,9 @@ module FacilitiesManagement
 
         continue_to_invoice_from_new_invoice && return if params['facilities_management_procurement']['step'] == 'new_invoicing_contact_details'
 
-        continue_da_journey if params['continue_da'].present?
-
         update_procurement if params['facilities_management_procurement'].present?
+
+        continue_da_journey if params['continue_da'].present?
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
@@ -506,7 +506,7 @@ module FacilitiesManagement
         @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
@@ -611,7 +611,7 @@ module FacilitiesManagement
           }
         }
       end
-      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def page_definitions
         @page_definitions ||= {
