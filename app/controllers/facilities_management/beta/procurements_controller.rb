@@ -142,9 +142,13 @@ module FacilitiesManagement
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
           set_step_param
-          create_da_buyer_page_data(params[:step]) if FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.key?(params[:step].to_sym)
+          set_da_journey_render
           render :edit
         end
+      end
+
+      def set_da_journey_render
+        create_da_buyer_page_data(params[:step]) if FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.key?(params[:step].to_sym)
       end
 
       def assign_procurement_parameters
