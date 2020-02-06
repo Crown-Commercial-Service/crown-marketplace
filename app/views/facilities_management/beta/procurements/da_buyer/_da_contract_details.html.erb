@@ -11,12 +11,12 @@
                 </tr>
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header">Payment method</th>
-                    <td class="govuk-table__cell"><%= @page_data[:contract_data][:payment_method] %></td>
+                    <td class="govuk-table__cell"><%= @page_data[:model_object][:payment_method] %></td>
                 </tr>
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header">Invoicing contact details</th>
                     <td class="govuk-table__cell">
-                        <% @page_data[:contract_data][:invoicing_contact_details].each do |icd| %>
+                        <% @page_data[:model_object][:invoicing_contact_details].each do |icd| %>
                           <%= govuk_details(icd[:invoicing_contact]) do %>
                             <% icd[:address].each do |a| %>
                               <li><%= a%></li>
@@ -28,7 +28,7 @@
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header">Authorised representative</th>
                     <td class="govuk-table__cell">
-                    <% @page_data[:contract_data][:authorised_representative].each do |ar| %>
+                    <% @page_data[:model_object][:authorised_representative].each do |ar| %>
                       <%= govuk_details(ar[:representative]) do %>
                         <% ar[:address].each do |a| %>
                           <li><%= a%></li>
@@ -39,7 +39,7 @@
                 </tr>
                     <th class="govuk-table__cell govuk-table__header">Notices</th>
                     <td class="govuk-table__cell">
-                    <% @page_data[:contract_data][:notices].each do |n| %>
+                    <% @page_data[:model_object][:notices].each do |n| %>
                       <%= govuk_details(n[:notice_contact]) do %>
                         <% n[:address].each do |a| %>
                           <li><%= a%></li>
@@ -50,11 +50,11 @@
                 </tr>
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header">Security policy</th>
-                    <td class="govuk-table__cell"><a href="#" class="govuk-link"><%= "#{@page_data[:contract_data][:security_policy]}" %></a></td>
+                    <td class="govuk-table__cell"><a href="#" class="govuk-link"><%= "#{@page_data[:model_object][:security_policy]}" %></a></td>
                 </tr>
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header">Local Government Pension Scheme</th>
-                    <td class="govuk-table__cell"><%= @page_data[:contract_data][:local_government_pension_scheme] %></td>
+                    <td class="govuk-table__cell"><%= @page_data[:model_object][:local_government_pension_scheme] %></td>
                 </tr>
             </tbody>
         </table>

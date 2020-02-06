@@ -2,6 +2,7 @@ require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FrameworkController
+      include RequirementsHelper
       before_action :set_procurement, only: %i[show edit update destroy results]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
@@ -70,11 +71,11 @@ module FacilitiesManagement
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
-        update_procurement if params['facilities_management_procurement'].present?
-
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
         update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
+
+        update_procurement && return if params['facilities_management_procurement'].present?
 
         continue_da_journey if params['continue_da'].present?
       end
@@ -141,6 +142,8 @@ module FacilitiesManagement
 
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
+          @view_name = set_view_data unless @procurement.quick_search?
+
           set_step_param
           render :edit
         end
@@ -316,6 +319,10 @@ module FacilitiesManagement
                 :security_policy_document_date_yyyy,
                 :security_policy_document_file,
                 :local_government_pension_scheme,
+                :payment_method,
+                :using_buyer_detail_for_invoice_details,
+                :using_buyer_detail_for_notices_detail,
+                :using_buyer_detail_for_authorised_detail,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
@@ -543,6 +550,15 @@ module FacilitiesManagement
             back_text: 'Back',
             back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'local_government_pension_scheme'),
             page_title: 'Pension funds',
+            caption1: @procurement[:contract_name],
+            continuation_text: 'Save and return',
+            return_text: 'Return to contract details',
+            return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          security_policy_document: {
+            page_title: 'Security policy document',
+            back_url: facilities_management_beta_procurement_path(@procurement),
+            back_text: 'Back',
             caption1: @procurement[:contract_name],
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
