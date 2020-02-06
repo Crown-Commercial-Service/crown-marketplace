@@ -6,7 +6,7 @@ RSpec.describe FacilitiesManagement::GovNotifyNotification do
       {
         'subject': 'testing subject',
         'message-body': 'testing body'
-      }.to_json
+      }.freeze
     end
 
     it 'Send basic email' do

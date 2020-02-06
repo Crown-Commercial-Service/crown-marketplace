@@ -109,6 +109,8 @@ gem 'ratonvirus'
 gem 'ratonvirus-clamby'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
+# gov notify
+gem 'notifications-ruby-client'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
