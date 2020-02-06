@@ -463,7 +463,7 @@ module FacilitiesManagement
           default: {
             caption1: @procurement[:contract_name],
             continuation_text: 'Continue',
-            return_url: facilities_management_beta_procurements_path(@procurement),
+            return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurement dashboard',
             secondary_name: 'change_requirements',
             secondary_text: 'Change requirements',
@@ -516,7 +516,8 @@ module FacilitiesManagement
           notices_contact_details: {
             page_title: 'Notices contact details',
             continuation_text: 'Save and continue',
-            return_text: 'Return to contract details'
+            return_text: 'Return to contract details',
+            return_url: facilities_management_beta_procurement_path(@procurement)
           },
           authorised_representative: {
             page_title: 'Authorised representative',
