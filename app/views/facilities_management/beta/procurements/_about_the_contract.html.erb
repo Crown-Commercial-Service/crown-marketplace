@@ -25,7 +25,7 @@
       <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:estimated_cost_known].any? %>" width="30%">Estimated annual cost</th>
       <td class="govuk-table__cell">
         <% unless @procurement.estimated_cost_known.nil? %>
-          <%= @procurement.estimated_annual_cost if @procurement.estimated_cost_known? %>
+          <%= "£#{number_with_delimiter(@procurement.estimated_annual_cost, :delimiter => ',')}" if @procurement.estimated_cost_known? %>
           <%= t('.no_cost_provided') if !@procurement.estimated_cost_known? %>
         <% else %>
           <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link"%>
