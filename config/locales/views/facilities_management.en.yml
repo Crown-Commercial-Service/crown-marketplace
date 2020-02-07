@@ -208,6 +208,7 @@ en:
             organisation_address_line_1:
               blank: Enter the building or street name of the address
             organisation_address_postcode:
+              address_not_complete: Placeholder
               blank: Enter the postcode of the address
             organisation_address_town:
               blank: Enter the town or city of the address
