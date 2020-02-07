@@ -16,7 +16,7 @@ module FacilitiesManagement
     validates :organisation_address_line_1, presence: true, format: { with: /\A([a-zA-Z\- (0-9)]*)\z/ }, on: :update_address
 
     def full_organisation_address
-      "#{organisation_address_line_1}#{', ' + organisation_address_line_2 if organisation_address_line_2.present?}#{', ' + organisation_address_town}#{', ' + organisation_address_county if organisation_address_county.present?}#{', ' + organisation_address_postcode}"
+      [organisation_address_line_1, organisation_address_line_2, organisation_address_town, organisation_address_county, organisation_address_postcode].reject(&:nil?).reject(&:empty?).join(', ')
     end
 
     private
