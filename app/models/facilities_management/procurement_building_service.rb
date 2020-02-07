@@ -103,8 +103,11 @@ module FacilitiesManagement
       errors.merge!(service_hours.errors) if service_hours.invalid?
     end
 
+    # rubocop:disable Metrics/AbcSize
     def validate_lift_data
       errors.add(:lift_data, :required, position: 0) if lift_data.blank?
+
+      errors.add(:lift_data, :above_maximum) if lift_data.size > 99
 
       Array(lift_data).each_with_index do |value, index|
         errors.add(:lift_data.to_sym, :greater_than, position: index) if value.to_i.zero?
@@ -114,6 +117,7 @@ module FacilitiesManagement
         errors.add(:lift_data.to_sym, :not_an_integer, position: index) unless value.to_i.to_s == value
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def validate_ppm_standard_presence
       validate_standard if validation_needed_for?(:ppm_standards)
