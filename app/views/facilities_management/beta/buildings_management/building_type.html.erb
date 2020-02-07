@@ -1,9 +1,9 @@
 <div>
   <div>
     <%= render 'buildings_steps_header' %>
-    <span class="govuk-heading-m govuk-!-margin-bottom-0">Choose the building type that best describes your building</span>
+    <span class="govuk-heading-m govuk-!-margin-bottom-0 <%='govuk-!-margin-bottom-2' if @editing%> ">Choose the building type that best describes your building</span>
     <% if !@editing %>
-      <span class="govuk-caption-m">You can change your selection later.</span>
+      <span class="govuk-caption-m govuk-!-margin-bottom-2">You can change your selection later.</span>
     <% end %>
   </div>
   <form name="fm-bm-building-type-form" id="fm-bm-building-type-form" action="./building-details-summary" method="POST">
@@ -27,8 +27,10 @@
           <span class="govuk-caption-m"><%= @type_list_titles[@type_list[1]] %></span>
         </label>
       </div>
-      <p></p>
-      <details class="govuk-details" data-module="govuk-details">
+      <div class="govuk-body">
+        Or
+      </div>
+      <details class="govuk-details govuk-!-margin-left-0" data-module="govuk-details">
         <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
           More
