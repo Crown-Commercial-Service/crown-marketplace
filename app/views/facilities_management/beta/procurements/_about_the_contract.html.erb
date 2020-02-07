@@ -6,7 +6,7 @@
       <td class="govuk-table__cell"></td>
     </tr>
     <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:contract_name].any? %>">
-      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:contract_name].any? %>" width="30%">Contract Name</th>
+      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:contract_name].any? %>" width="30%">Contract name</th>
       <td class="govuk-table__cell">
         <% unless @procurement.contract_name.nil? %>
           <%= @procurement.contract_name %>
