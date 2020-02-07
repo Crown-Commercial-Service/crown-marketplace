@@ -526,9 +526,9 @@ en:
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
           notices_contact_details:
+            new: Enter a new contact for notices
             notices_contact_detail_description: Select a contact for notices
             notices_contact_detail_description_header: The person to whom contract notices should be communicated.
-            new: Enter a new contact for notices
           payment_method:
             bacs_payment: BACS payment
             government_procurement_card: Government procurement card
