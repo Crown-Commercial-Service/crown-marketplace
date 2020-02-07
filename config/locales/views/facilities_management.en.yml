@@ -164,6 +164,7 @@ en:
         facilities_management/procurement_building_service:
           attributes:
             lift_data:
+              above_maximum: The maximum number of lifts is 99
               greater_than: The number of floors accessed must be a whole number greater than 0.
               less_than: The number of floors accessed must be a whole number greater than 0.
               not_an_integer: The number of floors accessed must be a whole number greater than 0.
