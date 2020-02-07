@@ -210,7 +210,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Location (NUTS Region)']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:address][:'fm-nuts-region']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-address-region']
     end
 
     row
