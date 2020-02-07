@@ -46,6 +46,8 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def edit
+        set_invoice_data if params['step'] == 'new_invoicing_address'
+
         if @procurement.quick_search?
           render :edit
         else
@@ -74,7 +76,13 @@ module FacilitiesManagement
 
         update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
 
-        update_procurement if params['facilities_management_procurement'].present?
+        continue_to_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'invoicing_contact_details' && params.dig('facilities_management_procurement', 'using_buyer_detail_for_invoice_details') == 'false'
+
+        continue_to_new_invoice_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_address'
+
+        continue_to_invoice_from_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_contact_details'
+
+        update_procurement && return if params['facilities_management_procurement'].present?
 
         continue_da_journey if params['continue_da'].present?
       end
@@ -141,6 +149,8 @@ module FacilitiesManagement
 
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
+          @view_name = set_view_data unless @procurement.quick_search?
+
           set_step_param
           set_da_journey_render
           render :edit
@@ -237,6 +247,36 @@ module FacilitiesManagement
         end
       end
 
+      def continue_to_new_invoice
+        @procurement.update(procurement_params)
+
+        return if @procurement.using_buyer_detail_for_invoice_details
+
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details') if !@procurement.using_buyer_detail_for_invoice_details && @procurement.invoice_contact_detail.blank?
+      end
+
+      def continue_to_new_invoice_from_add_address
+        assign_procurement_parameters
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details')
+        else
+          create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
+          set_step_param
+          render :edit
+        end
+      end
+
+      def continue_to_invoice_from_new_invoice
+        assign_procurement_parameters
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details')
+        else
+          create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
+          set_step_param
+          render :edit
+        end
+      end
+
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         if params[:commit] == page_details(:results)[:secondary_text]
@@ -287,6 +327,12 @@ module FacilitiesManagement
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
+        set_invoice_data if !params['step'].nil? && params['step'] == 'new_invoicing_contact_details'
+      end
+
+      def set_invoice_data
+        @procurement.build_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
+        @invoice_contact_detail = @procurement.invoice_contact_detail
       end
 
       def procurement_route_params
@@ -336,7 +382,8 @@ module FacilitiesManagement
                                                    :postcode,
                                                    :active,
                                                    service_codes: []],
-                procurement_pension_funds_attributes: %i[id name percentage _destroy]
+                procurement_pension_funds_attributes: %i[id name percentage _destroy],
+                invoice_contact_detail_attributes: %i[name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
               )
       end
 
@@ -466,7 +513,7 @@ module FacilitiesManagement
         @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def da_journey_definitions
         @da_journey_definitions ||= {
           default: {
@@ -524,6 +571,19 @@ module FacilitiesManagement
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
+          new_invoicing_contact_details: {
+              back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+              page_title: 'New invoicing contact details',
+              continuation_text: 'Save and return',
+              return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+              return_text: 'Return to invoicing contact details',
+          },
+          new_invoicing_address: {
+              back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+              page_title: 'Add address',
+              return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+              return_text: 'Return to new invoicing contact details',
+          },
           notices_contact_details: {
             back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Notices contact details',
@@ -551,10 +611,19 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          security_policy_document: {
+            page_title: t('facilities_management.beta.procurements.edit.security_policy_document.title'),
+            back_url: facilities_management_beta_procurement_path(@procurement),
+            back_text: 'Back',
+            caption1: @procurement[:contract_name],
+            continuation_text: 'Save and return',
+            return_text: 'Return to contract details',
+            return_url: facilities_management_beta_procurement_path(@procurement)
           }
         }
       end
-      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def page_definitions
         @page_definitions ||= {
