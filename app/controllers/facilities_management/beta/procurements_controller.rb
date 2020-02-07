@@ -149,9 +149,9 @@ module FacilitiesManagement
 
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
+          set_step_param
           @view_name = set_view_data unless @procurement.quick_search?
 
-          set_step_param
           set_da_journey_render
           render :edit
         end
