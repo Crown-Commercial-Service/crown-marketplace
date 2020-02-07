@@ -18,6 +18,7 @@
 
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:email].any? %>">
           <%= ff.label :email, t('.email'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'invoice_contact_detail.email-error' if ff.object.errors[:email].any?}" %>
+          <%= display_error(ff.object, :email) %>
           <%= ff.text_field :email, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:email].any? } ", maxlength: 50 %>
         </div>
 
@@ -31,7 +32,8 @@
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1', id: "#{'invoice_contact_detail.organisation_address_postcode-error' if ff.object.errors[:organisation_address_postcode].any?}" %>
-                  <div class="govuk-error-message" id="fm-postcode-error"></div>
+                  <% error_id = ff.object.errors[:organisation_address_postcode].any? ? "" : "fm-postcode-error" %>
+                  <div class="govuk-error-message" id= <%=error_id%>></div>
                   <%= display_error(ff.object, :organisation_address_postcode) %>
                   <%= ff.text_field :organisation_address_postcode, class: "govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", id: 'buyer-details-postcode', maxlength: 10 %>
                 </div>
