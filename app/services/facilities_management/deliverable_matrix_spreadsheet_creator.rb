@@ -40,9 +40,9 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
         unless @units_of_measure_values.nil?
           p.workbook.add_worksheet(name: 'Volume') do |sheet|
-            add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
-            add_volumes_information(sheet)
-            style_volume_sheet(sheet, standard_column_style)
+            add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
+            number_volume_services = add_volumes_information(sheet)
+            style_volume_sheet(sheet, standard_column_style, number_volume_services)
           end
         end
 
@@ -53,6 +53,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
         add_service_details_sheet(p)
       end
     end
+  end
+
+  def list_of_allowed_volume_services
+    # FM-736 requirement
+    %w[C.5 E.4 G.1 G.3 G.5 H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6 K.1 K.2 K.3 K.7]
   end
 
   private
@@ -256,21 +261,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def add_volumes_information(sheet)
-    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.select(:id, :service_usage, :unit_measure_label)
-
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
 
-    services_without_help_cafm = remove_help_cafm_services(@services)
-    services_without_help_cafm.each do |s|
-      unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s['code'] + '%').first
-      unit_of_measurement_value = begin
-                                    unit_of_measurement_row['unit_measure_label']
-                                  rescue NameError
-                                    nil
-                                  end
-      new_row = [s['code'], s['name'], s['metric'], unit_of_measurement_value]
+    allowed_volume_services = @services.dup
+    remove_not_allowed_volume_services(allowed_volume_services)
+
+    allowed_volume_services.each do |s|
+      new_row = [s['code'], s['name'], s['metric']]
       @buildings_with_service_codes.each do |b|
         uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
 
@@ -282,13 +280,13 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
       sheet.add_row new_row, style: number_column_style
     end
+    allowed_volume_services.count
   end
-  # rubocop:enable Metrics/AbcSize
 
-  def style_volume_sheet(sheet, style)
+  def style_volume_sheet(sheet, style, number_volume_services)
     column_widths = [15, 100, 50, 50]
     @buildings.count.times { column_widths << 20 }
-    sheet["A2:D#{remove_help_cafm_services(@services).count + 1}"].each { |c| c.style = style }
+    sheet["A2:D#{number_volume_services + 1}"].each { |c| c.style = style }
     sheet.column_widths(*column_widths)
   end
 
@@ -347,8 +345,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end_hour + ':' + end_minute + end_ampm
   end
 
-  def remove_help_cafm_services(services)
-    services.reject { |x| x['code'] == 'M.1' || x['code'] == 'N.1' }
+  def remove_not_allowed_volume_services(services)
+    services.keep_if { |x| list_of_allowed_volume_services.include? x['code'] }
   end
 
   def add_contract_number(sheet)
