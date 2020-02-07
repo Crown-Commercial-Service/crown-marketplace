@@ -1,8 +1,10 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
     <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
         <div class="govuk-!-width-two-thirds">
-        <%= govuk_grouped_field(f, t('.authorised_representative_detail_description_header'), :using_buyer_detail_for_authorised_detail) do |ff, attr| %>
-            <p class="govuk-body govuk-!-margin-bottom-6"><%= t('.authorised_representative_detail_description')%></p>
+          <h1 class="govuk-heading-m"> <%= t('.authorised_representative_detail_description_header') %> </h1>
+            <div class="govuk-form-group <%= 'govuk-form-group--error' unless @procurement.errors[:using_buyer_detail_for_authorised_detail].empty? %>">
+                <p class="govuk-body <%= 'govuk-!-margin-bottom-6' if @procurement.errors[:using_buyer_detail_for_authorised_detail].empty? %>"><%= t('.authorised_representative_detail_description')%></p>
+                <%= display_errors(f.object, :using_buyer_detail_for_authorised_detail)%>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
                         <%= f.radio_button :using_buyer_detail_for_authorised_detail, true, class: 'govuk-radios__input' %>
@@ -24,8 +26,7 @@
                         <% end %>
                     </div>
                 </div>
-        <% end %>
-        </div>
+            </div>
         <%= govuk_continuation_buttons(pd, f, false) %>
     <% end %>
 <% end %>
