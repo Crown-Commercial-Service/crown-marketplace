@@ -480,7 +480,8 @@ en:
           detailed_search_summary_title: Detailed search summary
         edit:
           authorised_representative:
-            content: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
+            authorised_representative_detail_description: Select an authorised representative
+            authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
             new: Enter a new authorised representative
           back_to_detailed_summary: Back to detailed search summary
           building_services:
@@ -525,9 +526,9 @@ en:
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
           notices_contact_details:
-            caption: Select a contact for notices
-            description: The person to whom contract notices should be communicated.
             new: Enter a new contact for notices
+            notices_contact_detail_description: Select a contact for notices
+            notices_contact_detail_description_header: The person to whom contract notices should be communicated.
           payment_method:
             bacs_payment: BACS payment
             government_procurement_card: Government procurement card
