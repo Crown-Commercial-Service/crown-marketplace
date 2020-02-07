@@ -701,4 +701,24 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
   end
   # rubocop:enable RSpec/BeforeAfterAll
+
+  describe '#lift_data' do
+    context 'when more than 99 lifts are added' do
+      it 'will not be valid' do
+        procurement_building_service.lift_data = Array.new(100, 10)
+        expect(procurement_building_service.valid?(:lifts)).to be false
+        procurement_building_service.lift_data = Array.new(rand(100..200), 10)
+        expect(procurement_building_service.valid?(:lifts)).to be false
+      end
+    end
+
+    context 'when up to 99 lifts are added' do
+      it 'will be valid' do
+        procurement_building_service.lift_data = Array.new(rand(1..98), 10)
+        expect(procurement_building_service.valid?(:lifts)).to be true
+        procurement_building_service.lift_data = Array.new(99, 10)
+        expect(procurement_building_service.valid?(:lifts)).to be true
+      end
+    end
+  end
 end
