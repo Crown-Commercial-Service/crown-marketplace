@@ -137,7 +137,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
 
     # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/InstanceVariable
-    it 'verify,service periods, worksheet headers' do
+    it 'verify for ,service periods worksheet, worksheet headers' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
 
