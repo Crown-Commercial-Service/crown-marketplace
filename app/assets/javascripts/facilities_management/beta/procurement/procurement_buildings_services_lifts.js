@@ -33,6 +33,7 @@ LiftDataUI.prototype.addNewLift = function() {
 LiftDataUI.prototype.removeLift = function(nLiftIndex) {
     let toRemove = this.liftDataContainer.find("div[data-liftcount=" + nLiftIndex + "]");
     toRemove.remove();
+    $($(".addliftbtn").get(0)).val("Add new lift (" + (100 - nLiftIndex) +" remaining)");
     this.liftDataContainer.find("button[data-liftcount=" + (nLiftIndex-1) + "]").removeClass("govuk-visually-hidden");
 };
 LiftDataUI.prototype.connectAddLiftButton = function(){
@@ -40,8 +41,13 @@ LiftDataUI.prototype.connectAddLiftButton = function(){
         let addNewButton = this.containerDiv.find(".addliftbtn");
         if ( addNewButton.length > 0 ) {
             addNewButton.on("click", function(e){
-                e.preventDefault();
-                this.addNewLift();
+                if ($(".govuk-form-group").length < 99 ) {
+                    e.preventDefault();
+                    this.addNewLift();
+                    $($(".addliftbtn").get(0)).val("Add new lift (" + (99 - $(".govuk-form-group").length) +" remaining)");
+                } else {
+                    e.preventDefault();
+                }
             }.bind(this));
         }
     }

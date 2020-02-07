@@ -21,7 +21,7 @@
         <% index += 1 %>
       <% end %>
     </div>
-    <%= button_to 'Add new lift', 'addnewlift', class: 'govuk-button govuk-button--secondary addliftbtn' %>
+    <%= button_to "Add new lift (#{99 - index} remaining)", 'addnewlift', class: 'govuk-button govuk-button--secondary addliftbtn' %>
     <div class="govuk-grid-row govuk-!-margin-top-5">
       <%= f.submit t('.save_and_return_to_service_information'), class: 'govuk-button govuk-button--primary govuk-!-margin-left-3 govuk-!-margin-bottom-4', data: {disable_with: false} %>
     </div>
