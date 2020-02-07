@@ -1,7 +1,8 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
     <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
         <div class="govuk-!-width-two-thirds">
-        <%= govuk_grouped_field(f, t('.content'), :select_an_authorised_representative) do |ff, attr| %>
+        <%= govuk_grouped_field(f, t('.authorised_representative_detail_description_header'), :using_buyer_detail_for_authorised_detail) do |ff, attr| %>
+            <p class="govuk-body govuk-!-margin-bottom-6"><%= t('.authorised_representative_detail_description')%></p>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
                         <%= f.radio_button :using_buyer_detail_for_authorised_detail, true, class: 'govuk-radios__input' %>
