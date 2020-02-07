@@ -548,9 +548,9 @@ module FacilitiesManagement
             secondary_text: 'Return to results'
           },
           did_you_know: {
-            page_title: 'What you need to know',
+            page_title: 'Important information',
             primary_name: 'continue_da',
-            continuation_text: 'Continue to direct award',
+            continuation_text: 'Continue',
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
@@ -576,13 +576,13 @@ module FacilitiesManagement
             page_title: 'New invoicing contact details',
             continuation_text: 'Save and return',
             return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
-            return_text: 'Return to invoicing contact details'
+            return_text: 'Return to invoicing contact details',
           },
           new_invoicing_address: {
             back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
             page_title: 'Add address',
             return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
-            return_text: 'Return to new invoicing contact details'
+            return_text: 'Return to new invoicing contact details',
           },
           notices_contact_details: {
             back_url: facilities_management_beta_procurement_path(@procurement),
