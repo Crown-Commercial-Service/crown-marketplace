@@ -281,7 +281,7 @@ const pageUtils = {
 
         showPostCodeError: function (show, errorMsg) {
 
-            errorMsg = errorMsg || "Enter a valid postcode";
+            errorMsg = errorMsg || "Enter a valid postcode, for example SW1A 1AA";
             if (show === true) {
                 $('#fm-postcode-error').text(errorMsg);
                 $('#fm-postcode-error').removeClass('govuk-visually-hidden');

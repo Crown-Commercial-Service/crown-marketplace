@@ -209,6 +209,7 @@ en:
               blank: Enter the building or street name of the address
             organisation_address_postcode:
               blank: Enter the postcode of the address
+              address_not_complete: Placeholder
             organisation_address_town:
               blank: Enter the town or city of the address
         facilities_management/procurement_pension_fund:
