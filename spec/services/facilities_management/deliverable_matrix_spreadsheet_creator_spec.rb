@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
               'fm-address-town' => 'London',
               'fm-address-line-1' => '1 Horseferry Road',
               'fm-address-postcode' => 'SW1P 2BA',
-              'fm-nuts-region' => 'Westminster'
+              'fm-address-region' => 'Outer London - South'
             },
             'isLondon' => 'No',
             :'security-type' => 'Baseline Personnel Security Standard',
@@ -87,7 +87,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
               'fm-address-town' => 'London',
               'fm-address-line-1' => '151 Buckingham Palace Road',
               'fm-address-postcode' => 'SW1W 9SZ',
-              'fm-nuts-region' => 'Westminster'
+              'fm-address-region' => 'Outer London - South'
             },
             'isLondon' => 'No',
             :'security-type' => 'Baseline Personnel Security Standard',
@@ -136,28 +136,8 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     # rubocop:enable RSpec/InstanceVariable
 
     # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/InstanceVariable
     it 'verify for ,service periods worksheet, worksheet headers' do
-      user_email = 'test@example.com'
-      start_date = DateTime.now.utc
-
       uvals.map!(&:deep_symbolize_keys)
-
-      data[:'fm-contract-length'] = 1
-      report = FacilitiesManagement::SummaryReport.new(start_date, user_email, data)
-
-      rates = CCS::FM::Rate.read_benchmark_rates
-      rate_card = CCS::FM::RateCard.latest
-
-      results = {}
-      report_results = {}
-      supplier_names = rate_card.data[:Prices].keys
-      supplier_names.each do |supplier_name|
-        report_results[supplier_name] = {}
-        # e.g. dummy supplier_name = 'Hickle-Schinner'
-        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
-        results[supplier_name] = report.direct_award_value
-      end
 
       # create deliverable matrix spreadsheet
       buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
@@ -178,6 +158,27 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
       expect(wb.sheet('Service Periods').row(4)).to match_array(['I.1', 'Reception service', 'Wednesday', '08:00am to 05:30pm', '08:00am to 05:30pm'])
     end
     # rubocop:enable RSpec/ExampleLength
-    # rubocop:enable RSpec/InstanceVariable
+
+    # rubocop:disable RSpec/ExampleLength
+    it 'verify for ,Building Information, worksheet the NUTS region' do
+      uvals.map!(&:deep_symbolize_keys)
+
+      # create deliverable matrix spreadsheet
+      buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
+
+      building_ids_with_service_codes2 = buildings_ids.collect do |b|
+        services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
+        { building_id: b.downcase, service_codes: services_per_building }
+      end
+
+      spreadsheet_builder = described_class.new(building_ids_with_service_codes2, uvals)
+      spreadsheet = spreadsheet_builder.build
+
+      IO.write('/tmp/deliverable_matrix_3_1year.xlsx', spreadsheet.to_stream.read)
+      wb = Roo::Excelx.new('/tmp/deliverable_matrix_3_1year.xlsx')
+      expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1', 'Building 2'])
+      expect(wb.sheet('Buildings information').row(7)).to match_array(['Building Location (NUTS Region)', 'Outer London - South', 'Outer London - South'])
+    end
+    # rubocop:enable RSpec/ExampleLength
   end
 end
