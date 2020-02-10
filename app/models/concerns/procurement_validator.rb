@@ -22,7 +22,7 @@ module ProcurementValidator
     # validations on :procurement_buildings step
     validate :at_least_one_active_procurement_building, on: %i[procurement_buildings]
 
-    validate :service_codes_not_empty, on: :services
+    validate :service_codes_not_empty, on: %i[services]
 
     validates :tupe, inclusion: { in: [true, false] }, on: %i[tupe]
 
@@ -74,10 +74,10 @@ module ProcurementValidator
     # Additional validations for the 'Continue' button on the 'Detailed search summary' page - validating on :all
     validate :presence_of_about_the_contract, on: :all
     validate :at_least_one_building, on: :all
-    validate :at_least_one_service_per_building, on: :all
     validate :all_services_valid, on: :all
     validate :validate_contract_period_questions, on: :all
     validate :validate_mobilisation_and_tupe, on: :all
+    validate :at_least_one_service_per_building, on: :all
 
     private
 
