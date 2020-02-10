@@ -415,6 +415,8 @@ GEM
       rubyzip (~> 1.2, >= 1.2.2)
     shoulda-matchers (4.2.0)
       activesupport (>= 4.2.0)
+    show_me_the_cookies (5.0.0)
+      capybara (>= 2, < 4)
     sidekiq (5.2.7)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
@@ -548,6 +550,7 @@ DEPENDENCIES
   sass-rails (~> 5.1, >= 5.1.0)
   selenium-webdriver (>= 3.142.3)
   shoulda-matchers (>= 4.2.0)
+  show_me_the_cookies (>= 5.0.0)
   sidekiq (~> 5.2.7)
   simplecov
   sinatra (~> 2.0.5)
