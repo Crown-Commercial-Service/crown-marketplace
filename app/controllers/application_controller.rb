@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     when 'legal_services'
       legal_services_gateway_url
     else
-      facilities_management_gateway_url
+      facilities_management_url
     end
   end
 
