@@ -82,6 +82,12 @@ module FacilitiesManagement
 
         continue_to_invoice_from_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_contact_details'
 
+        continue_to_new_authorised && return if params.dig('facilities_management_procurement', 'step') == 'authorised_representative' && params.dig('facilities_management_procurement', 'using_buyer_detail_for_authorised_detail') == 'false'
+
+        continue_to_new_authorised_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'add_missing_address'
+
+        continue_to_authorised_from_new_authorised && return if params.dig('facilities_management_procurement', 'step') == 'new_authorised_representative_details'
+
         update_procurement && return if params['facilities_management_procurement'].present?
 
         continue_da_journey if params['continue_da'].present?
@@ -270,6 +276,36 @@ module FacilitiesManagement
         assign_procurement_parameters
         if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details')
+        else
+          create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
+          set_step_param
+          render :edit
+        end
+      end
+
+      def continue_to_new_authorised
+        @procurement.update(procurement_params)
+
+        return if @procurement.using_buyer_detail_for_authorised_detail
+
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details') if !@procurement.using_buyer_detail_for_authorised_detail && @procurement.invoice_contact_detail.blank?
+      end
+
+      def continue_to_new_authorised_from_add_address
+        assign_procurement_parameters
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details')
+        else
+          create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
+          set_step_param
+          render :edit
+        end
+      end
+
+      def continue_to_authorised_from_new_authorised
+        assign_procurement_parameters
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative')
         else
           create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
           set_step_param
@@ -598,6 +634,13 @@ module FacilitiesManagement
             continuation_text: 'Save and continue',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          new_authorised_representative_details: {
+            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative'),
+            page_title: 'New authorised representative details',
+            continuation_text: 'Save and return',
+            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative'),
+            return_text: 'Return to authorised representative details',
           },
           local_government_pension_scheme: {
             back_url: facilities_management_beta_procurement_path(@procurement),
