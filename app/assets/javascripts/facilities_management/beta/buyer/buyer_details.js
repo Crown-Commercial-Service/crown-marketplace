@@ -49,4 +49,12 @@ $(function () {
         $("#selected-address-postcode").text(postcode);
         $("#organisation_address").text(selectedAddress);
     });
+
+    let postcodeDetails = document.getElementById('buyer-details-postcode')
+    if (postcodeDetails) {
+        if (!!postcodeDetails.value) {
+            let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
+            pageUtils.addressLookUp(postCode, false);
+        }
+    }
 });
