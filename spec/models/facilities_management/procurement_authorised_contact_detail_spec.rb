@@ -20,9 +20,9 @@ RSpec.describe FacilitiesManagement::ProcurementAuthorisedContactDetail, type: :
       end
     end
 
-    context 'when telephone_number uses invalid characters: space' do
+    context 'when telephone_number uses invalid characters: letters' do
       it 'expected to be invalid' do
-        procurement_authorised_contact_detail.telephone_number = '01234 56789'
+        procurement_authorised_contact_detail.telephone_number = 'qmdhfbsbdh'
         expect(procurement_authorised_contact_detail.valid?(:telephone_number)).to eq false
       end
     end
@@ -33,23 +33,37 @@ RSpec.describe FacilitiesManagement::ProcurementAuthorisedContactDetail, type: :
       end
     end
 
-    context 'when telephone_number is 11 character long' do
+    context 'when telephone_number has spaces' do
       it 'expected to be valid' do
-        procurement_authorised_contact_detail.telephone_number = 12345678912
+        procurement_authorised_contact_detail.telephone_number = '123 4567 8910'
         expect(procurement_authorised_contact_detail.valid?(:telephone_number)).to eq true
       end
     end
 
-    context 'when telephone_number is 12 character long' do
-      it 'expected to be invalid' do
-        procurement_authorised_contact_detail.telephone_number = 123456789122
+    context 'when telephone_number is all spaces' do
+      it 'expected to be valid' do
+        procurement_authorised_contact_detail.telephone_number = '           '
         expect(procurement_authorised_contact_detail.valid?(:telephone_number)).to eq false
       end
     end
 
-    context 'when telephone_number is 12 character long' do
+    context 'when telephone_number is less than 11 character long' do
+      it 'expected to not be valid' do
+        procurement_authorised_contact_detail.telephone_number = 1234567891
+        expect(procurement_authorised_contact_detail.valid?(:telephone_number)).to eq false
+      end
+    end
+
+    context 'when telephone_number is 15 character long' do
+      it 'expected to be valid' do
+        procurement_authorised_contact_detail.telephone_number = 123456789123456
+        expect(procurement_authorised_contact_detail.valid?(:telephone_number)).to eq true
+      end
+    end
+
+    context 'when telephone_number is 16 character long' do
       it 'expected to be invalid' do
-        procurement_authorised_contact_detail.telephone_number = 123456789123
+        procurement_authorised_contact_detail.telephone_number = 1234567891234567
         expect(procurement_authorised_contact_detail.valid?(:telephone_number)).to eq false
       end
     end

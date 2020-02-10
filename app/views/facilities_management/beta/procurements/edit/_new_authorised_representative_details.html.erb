@@ -24,7 +24,7 @@
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:telephone_number].any? %>">
           <%= ff.label :telephone_number, t('.telephone_number'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_contact_detail.telephone_number-error' if ff.object.errors[:telephone_number].any?}" %>
           <%= display_error(ff.object, :telephone_number) %>
-          <%= ff.text_field :telephone_number, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:telephone_number].any? } ", maxlength: 50 %>
+          <%= ff.text_field :telephone_number, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:telephone_number].any? } ", maxlength: 15 %>
         </div>
 
         <div class="govuk-heading-s govuk-!-margin-bottom-2">
