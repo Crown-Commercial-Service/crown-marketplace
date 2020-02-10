@@ -47,6 +47,7 @@ module FacilitiesManagement
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def edit
         set_invoice_data if params['step'] == 'new_invoicing_address'
+        set_authorised_data if params['step'] == 'new_authorised_representative_details'
 
         if @procurement.quick_search?
           render :edit
@@ -84,7 +85,7 @@ module FacilitiesManagement
 
         continue_to_new_authorised && return if params.dig('facilities_management_procurement', 'step') == 'authorised_representative' && params.dig('facilities_management_procurement', 'using_buyer_detail_for_authorised_detail') == 'false'
 
-        continue_to_new_authorised_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'add_missing_address'
+        continue_to_new_authorised_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_authorised_representative_address'
 
         continue_to_authorised_from_new_authorised && return if params.dig('facilities_management_procurement', 'step') == 'new_authorised_representative_details'
 
@@ -371,6 +372,10 @@ module FacilitiesManagement
         @invoice_contact_detail = @procurement.invoice_contact_detail
       end
 
+      def set_authorised_data
+        @procurement.build_authorised_contact_detail if @procurement.authorised_contact_detail.blank?
+      end
+
       def procurement_route_params
         params.require(:facilities_management_procurement).permit(:route_to_market)
       end
@@ -641,6 +646,12 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative'),
             return_text: 'Return to authorised representative details',
+          },
+          new_authorised_representative_address: {
+            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details'),
+            page_title: 'Add address',
+            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details'),
+            return_text: 'Return to new authorised representative details',
           },
           local_government_pension_scheme: {
             back_url: facilities_management_beta_procurement_path(@procurement),
