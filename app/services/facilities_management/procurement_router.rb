@@ -26,6 +26,8 @@ class FacilitiesManagement::ProcurementRouter
     'new_invoicing_contact_details': 'new_invoicing_contact_details',
     'new_invoicing_address': 'new_invoicing_address',
     'authorised_representative': 'authorised_representative',
+    'new_authorised_representative_details': 'new_authorised_representative_details',
+    'new_authorised_representative_address': 'new_authorised_representative_address',
     'notices_contact_details': 'notices_contact_details',
     'security_policy_document': 'security_policy_document',
     'local_government_pension_scheme': 'local_government_pension_scheme',
