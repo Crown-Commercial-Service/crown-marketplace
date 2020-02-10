@@ -289,12 +289,12 @@ module FacilitiesManagement
 
         return if @procurement.using_buyer_detail_for_authorised_detail
 
-        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details') if !@procurement.using_buyer_detail_for_authorised_detail && @procurement.invoice_contact_detail.blank?
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details') if !@procurement.using_buyer_detail_for_authorised_detail && @procurement.authorised_contact_detail.blank?
       end
 
       def continue_to_new_authorised_from_add_address
         assign_procurement_parameters
-        if @procurement.save(context: :new_invoicing_contact_details)
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details')
         else
           create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
@@ -305,7 +305,7 @@ module FacilitiesManagement
 
       def continue_to_authorised_from_new_authorised
         assign_procurement_parameters
-        if @procurement.save(context: :new_invoicing_contact_details)
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative')
         else
           create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
@@ -643,7 +643,7 @@ module FacilitiesManagement
           new_authorised_representative_details: {
             back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative'),
             page_title: 'New authorised representative details',
-            continuation_text: 'Save and return',
+            continuation_text: 'Continue',
             return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative'),
             return_text: 'Return to authorised representative details',
           },
