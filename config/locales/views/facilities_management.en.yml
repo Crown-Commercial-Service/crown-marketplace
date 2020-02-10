@@ -157,6 +157,17 @@ en:
               inclusion: Select one option
             using_buyer_detail_for_notices_detail:
               inclusion: Select one option
+        facilities_management/procurement_authorised_contact_detail:
+          attributes:
+            email:
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
+            job_title:
+              blank: Enter the new authorised representative job title
+            name:
+              blank: Enter the new authorised representative name
+            telephone_number:
+              blank: Enter a UK telephone number, for example 020 7688 8888
+              invalid: Enter a UK telephone number, for example 020 7688 8888
         facilities_management/procurement_building:
           attributes:
             service_codes:
@@ -199,12 +210,7 @@ en:
         facilities_management/procurement_contact_detail:
           attributes:
             email:
-              blank: Enter the new invoicing contact email address
               invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
-            job_title:
-              blank: Enter the new invoicing contact job title
-            name:
-              blank: Enter the new invoicing contact name
             organisation_address_line_1:
               blank: Enter the building or street name of the address
             organisation_address_postcode:
@@ -212,6 +218,14 @@ en:
               blank: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter the town or city of the address
+        facilities_management/procurement_invoice_contact_detail:
+          attributes:
+            email:
+              blank: Enter the new invoicing contact email address
+            job_title:
+              blank: Enter the new invoicing contact job title
+            name:
+              blank: Enter the new invoicing contact name
         facilities_management/procurement_pension_fund:
           attributes:
             name:
@@ -482,6 +496,7 @@ en:
           authorised_representative:
             authorised_representative_detail_description: Select an authorised representative
             authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
+            change: Change
             new: Enter a new authorised representative
           back_to_detailed_summary: Back to detailed search summary
           building_services:
@@ -504,6 +519,20 @@ en:
             new: Enter a new invoicing contact
           local_government_pension_scheme:
             description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
+          new_authorised_representative_address:
+            building_and_street: Building and street
+            county: County (optional)
+            postcode: Postcode
+            town_or_city: Town or city
+          new_authorised_representative_details:
+            address: Address
+            change: Change
+            choose_address: Select an address
+            email: Email address
+            job_title: Job title
+            missing_address: I can't find my address in the list
+            name: Name
+            telephone_number: Telephone number
           new_invoicing_address:
             building_and_street: Building and street
             county: County (optional)
