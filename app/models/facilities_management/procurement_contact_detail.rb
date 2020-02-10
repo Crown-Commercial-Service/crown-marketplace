@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class ProcurementContactDetail < ApplicationRecord
-    validates :name, presence: true, format: { with: /\A([a-zA-Z\- ]*[\.]?[a-zA-Z\- ]*)\z/ }, length: { maximum: 50 }, on: :new_invoicing_contact_details
+    validates :name, presence: true, format: { with: /\A([a-zA-Z\- ]*[\.]?[a-zA-Z\- ]*)\z/ }, length: { maximum: 50 }, on: :new_invoicing_contact_details :new_authorised_representative_details
     validates :job_title, presence: true, format: { with: /\A([a-zA-Z\- ]*)\z/ }, length: { maximum: 150 }, on: :new_invoicing_contact_details
     validates :email, presence: true, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }, on: :new_invoicing_contact_details
     validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: :new_invoicing_contact_details
