@@ -94,7 +94,7 @@ en:
               greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
-              not_present: You must answer the question about 'Estimated annual cost'
+              not_present: You must answer the question about 'Estimated cost'
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -157,16 +157,6 @@ en:
               inclusion: Select one option
             using_buyer_detail_for_notices_detail:
               inclusion: Select one option
-        facilities_management/procurement_authorised_contact_detail:
-          attributes:
-            email:
-              blank: Enter the new authorised representative email address
-            job_title:
-              blank: Enter the new authorised representative job title
-            name:
-              blank: Enter the new authorised representative name
-            telephone_number:
-              blank: Enter a valid telephone number
         facilities_management/procurement_building:
           attributes:
             service_codes:
@@ -209,7 +199,12 @@ en:
         facilities_management/procurement_contact_detail:
           attributes:
             email:
+              blank: Enter the new invoicing contact email address
               invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
+            job_title:
+              blank: Enter the new invoicing contact job title
+            name:
+              blank: Enter the new invoicing contact name
             organisation_address_line_1:
               blank: Enter the building or street name of the address
             organisation_address_postcode:
@@ -217,14 +212,6 @@ en:
               blank: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter the town or city of the address
-        facilities_management/procurement_invoice_contact_detail:
-          attributes:
-            email:
-              blank: Enter the new invoicing contact email address
-            job_title:
-              blank: Enter the new invoicing contact job title
-            name:
-              blank: Enter the new invoicing contact name
         facilities_management/procurement_pension_fund:
           attributes:
             name:
@@ -495,7 +482,6 @@ en:
           authorised_representative:
             authorised_representative_detail_description: Select an authorised representative
             authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
-            change: Change
             new: Enter a new authorised representative
           back_to_detailed_summary: Back to detailed search summary
           building_services:
@@ -518,20 +504,14 @@ en:
             new: Enter a new invoicing contact
           local_government_pension_scheme:
             description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
-          new_authorised_representative_address:
-            building_and_street: Building and street
-            county: County (optional)
-            postcode: Postcode
-            town_or_city: Town or city
           new_authorised_representative_details:
             address: Address
             change: Change
             choose_address: Select an address
             email: Email address
             job_title: Job title
-            missing_address: I can't find my address in the list
+            missing_address: I cant find my address in the list
             name: Name
-            telephone_number: Telephone number
           new_invoicing_address:
             building_and_street: Building and street
             county: County (optional)
