@@ -160,13 +160,13 @@ en:
         facilities_management/procurement_authorised_contact_detail:
           attributes:
             email:
-              blank: Enter the new authorised representative email address
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
             job_title:
               blank: Enter the new authorised representative job title
             name:
               blank: Enter the new authorised representative name
             telephone_number:
-              blank: Enter a valid telephone number
+              blank: Enter a UK telephone number, for example 020 7688 8888
         facilities_management/procurement_building:
           attributes:
             service_codes:
