@@ -2,9 +2,9 @@
 
     <%= form_for @procurement, url: {action: "update"}, method: :put, html: { specialvalidation: false, multipart: true } do |f| %>
         <%= f.fields_for :authorised_contact_detail do |ff|%>
-
+        
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
-
+            
             <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_line_1].any? %>">
             <%= ff.label :organisation_address_line_1, t('.building_and_street'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_contact_detail.organisation_address_line_1-error' if ff.object.errors[:organisation_address_line_1].any?}" %>
             <%= display_error(ff.object, :organisation_address_line_1) %>
@@ -13,7 +13,7 @@
               <%= ff.text_field :organisation_address_line_2, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:organisation_address_line_1].any? } ", maxlength: 50 %>
             </div>
             </div>
-
+            
             <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_town].any? %>">
             <%= ff.label :organisation_address_town, t('.town_or_city'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_contact_detail.organisation_address_town-error' if ff.object.errors[:organisation_address_town].any?}" %>
             <%= display_error(ff.object, :organisation_address_town) %>
