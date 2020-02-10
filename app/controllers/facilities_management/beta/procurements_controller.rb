@@ -364,6 +364,10 @@ module FacilitiesManagement
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
+        set_contact_details_data
+      end
+
+      def set_contact_details_data
         set_invoice_data if !params['step'].nil? && params['step'] == 'new_invoicing_contact_details'
         set_authorised_data if !params['step'].nil? && params['step'] == 'new_authorised_representative_details'
       end
