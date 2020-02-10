@@ -90,11 +90,11 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         let startTimeFirstDigits = startTime.substring(0,2);
         let endTimeFirstDigits = endTime.substring(0,2);
         
-        if ( startTimeFirstDigits == '12' ||  startTimeFirstDigits == '24') {
+        if ( startTimeFirstDigits === '12' ||  startTimeFirstDigits === '24') {
             startTime = (parseInt(startTime) - 1200).toString();
         }
         
-        if ( endTimeFirstDigits == '12' || endTimeFirstDigits == '24') {
+        if ( endTimeFirstDigits === '12' || endTimeFirstDigits === '24') {
             endTime = (parseInt(endTime) - 1200).toString();
         }
         
