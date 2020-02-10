@@ -94,7 +94,7 @@ en:
               greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
-              not_present: You must answer the question about 'Estimated cost'
+              not_present: You must answer the question about 'Estimated  annual cost'
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
