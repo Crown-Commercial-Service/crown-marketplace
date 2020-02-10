@@ -196,7 +196,25 @@ en:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
-        facilities_management/procurement_contact_detail:
+        facilities_management/procurement_authorised_contact_detail:
+          attributes:
+            email:
+              blank: Enter the new authorised representative email address
+              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
+            job_title:
+              blank: Enter the new authorised representative job title
+            name:
+              blank: Enter the new authorised representative name
+            organisation_address_line_1:
+              blank: Enter the building or street name of the address
+            organisation_address_postcode:
+              address_not_complete: Placeholder
+              blank: Enter a valid postcode, for example SW1A 1AA
+            organisation_address_town:
+              blank: Enter the town or city of the address
+            telephone_number:
+              blank: Enter a valid telephone number
+        facilities_management/procurement_invoice_contact_detail:
           attributes:
             email:
               blank: Enter the new invoicing contact email address
