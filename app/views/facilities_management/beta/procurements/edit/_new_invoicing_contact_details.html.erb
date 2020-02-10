@@ -28,7 +28,7 @@
         </div>
         <div id="fm-postcode-error-form-group" class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>">
           <div class="">
-            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if ff.object.organisation_address_line_1.present? %>">
+            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if ff.object.organisation_address_line_1.present? && ff.object.organisation_address_postcode.present? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1', id: "#{'invoice_contact_detail.organisation_address_postcode-error' if ff.object.errors[:organisation_address_postcode].any?}" %>
