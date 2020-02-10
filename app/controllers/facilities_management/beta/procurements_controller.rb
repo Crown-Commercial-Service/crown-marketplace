@@ -635,14 +635,14 @@ module FacilitiesManagement
           notices_contact_details: {
             back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Notices contact details',
-            continuation_text: 'Save and continue',
+            continuation_text: 'Continue',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
           authorised_representative: {
             back_url: facilities_management_beta_procurement_path(@procurement),
-            page_title: 'Authorised representative',
-            continuation_text: 'Save and continue',
+            page_title: 'Authorised representative details',
+            continuation_text: 'Continue',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
