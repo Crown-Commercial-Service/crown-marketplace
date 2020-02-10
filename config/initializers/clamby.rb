@@ -1,0 +1,3 @@
+Clamby.configure({
+  stream: true
+})
