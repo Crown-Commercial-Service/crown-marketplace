@@ -208,7 +208,7 @@ en:
             organisation_address_line_1:
               blank: Enter the building or street name of the address
             organisation_address_postcode:
-              address_not_complete: Placeholder
+              address_not_complete: Select an address from the list or add a missing address
               blank: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter the town or city of the address
