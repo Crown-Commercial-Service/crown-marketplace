@@ -10,19 +10,19 @@
         </div>
 
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:job_title].any? %>">
-          <%= ff.label :job_title, t('.job_title'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_representative_detail.job_title-error' if ff.object.errors[:job_title].any?}" %>
+          <%= ff.label :job_title, t('.job_title'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_contact_detail.job_title-error' if ff.object.errors[:job_title].any?}" %>
           <%= display_error(ff.object, :job_title) %>
           <%= ff.text_field :job_title, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:job_title].any? } ", maxlength: 50 %>
         </div>
 
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:email].any? %>">
-          <%= ff.label :email, t('.email'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_representative_detail.email-error' if ff.object.errors[:email].any?}" %>
+          <%= ff.label :email, t('.email'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_contact_detail.email-error' if ff.object.errors[:email].any?}" %>
           <%= display_error(ff.object, :email) %>
           <%= ff.text_field :email, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:email].any? } ", maxlength: 50 %>
         </div>
 
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:telephone_number].any? %>">
-          <%= ff.label :telephone_number, t('.telephone_number'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_representative_detail.telephone-number-error' if ff.object.errors[:telephone_number].any?}" %>
+          <%= ff.label :telephone_number, t('.telephone_number'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'authorised_contact_detail.telephone_number-error' if ff.object.errors[:telephone_number].any?}" %>
           <%= display_error(ff.object, :telephone_number) %>
           <%= ff.text_field :telephone_number, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:telephone_number].any? } ", maxlength: 50 %>
         </div>
@@ -35,7 +35,7 @@
             <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if ff.object.organisation_address_line_1.present? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
-                  <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1', id: "#{'authorised_representative_detail.organisation_address_postcode-error' if ff.object.errors[:organisation_address_postcode].any?}" %>
+                  <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1', id: "#{'authorised_contact_detail.organisation_address_postcode-error' if ff.object.errors[:organisation_address_postcode].any?}" %>
                   <% error_id = ff.object.errors[:organisation_address_postcode].any? ? "" : "fm-postcode-error" %>
                   <div class="govuk-error-message" id= <%=error_id%>></div>
                   <%= display_error(ff.object, :organisation_address_postcode) %>
