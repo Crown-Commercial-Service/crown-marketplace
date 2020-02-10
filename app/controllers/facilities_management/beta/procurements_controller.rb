@@ -369,7 +369,7 @@ module FacilitiesManagement
                 :payment_method,
                 :using_buyer_detail_for_invoice_details,
                 :using_buyer_detail_for_authorised_detail,
-                :using_buyer_details_for_notices_detail,
+                :using_buyer_detail_for_notices_detail,
                 :local_government_pension_scheme,
                 service_codes: [],
                 region_codes: [],
