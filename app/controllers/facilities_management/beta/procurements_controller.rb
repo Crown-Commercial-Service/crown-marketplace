@@ -47,7 +47,7 @@ module FacilitiesManagement
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
       def edit
         set_invoice_data if params['step'] == 'new_invoicing_address'
-        set_authorised_data if params['step'] == 'new_authorised_representative_details'
+        set_authorised_data if params['step'] == 'new_authorised_representative_address'
 
         if @procurement.quick_search?
           render :edit
@@ -374,6 +374,7 @@ module FacilitiesManagement
 
       def set_authorised_data
         @procurement.build_authorised_contact_detail if @procurement.authorised_contact_detail.blank?
+        @authorised_contact_detail = @procurement.authorised_contact_detail
       end
 
       def procurement_route_params
