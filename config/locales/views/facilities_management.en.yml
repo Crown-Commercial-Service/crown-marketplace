@@ -510,6 +510,7 @@ en:
             choose_address: Select an address
             email: Email address
             job_title: Job title
+            telephone_number: Telephone number
             missing_address: I can't find my address in the list
             name: Name
           new_invoicing_address:
