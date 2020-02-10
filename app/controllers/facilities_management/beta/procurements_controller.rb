@@ -44,7 +44,7 @@ module FacilitiesManagement
         end
       end
 
-      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
       def edit
         set_invoice_data if params['step'] == 'new_invoicing_address'
         set_authorised_data if params['step'] == 'new_authorised_representative_details'
@@ -65,7 +65,7 @@ module FacilitiesManagement
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
         continue_to_summary && return if params['change_requirements'].present?
 
