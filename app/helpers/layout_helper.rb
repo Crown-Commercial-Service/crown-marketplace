@@ -283,18 +283,7 @@ module LayoutHelper
         link_to 'My Account', facilities_management_beta_path, class: 'govuk-header__link' if user_signed_in?
       end
     end
-    html << content_tag(:li, class: 'govuk-header__navigation-item') do
-      link_to 'Sign out', service_destroy_user_session_path, method: :delete, class: 'govuk-header__link ccs-header__signout'
-    end
     safe_join(html)
-  end
-
-  def not_permitted_page_header_link
-    if current_user&.has_role?(:supplier)
-      render 'facilities_management/beta/supplier/link_to_start_page'
-    elsif current_user&.has_role?(:buyer)
-      render 'facilities_management/beta/link_to_start_page'
-    end
   end
 end
 # rubocop:enable Metrics/ModuleLength
