@@ -3,7 +3,7 @@
         <div class="govuk-!-width-two-thirds">
           <h1 class="govuk-heading-m"> <%= t('.notices_contact_detail_description_header') %> </h1>
             <div class="govuk-form-group <%= 'govuk-form-group--error' unless @procurement.errors[:using_buyer_detail_for_notices_detail].empty? %>">
-                <p class="govuk-body <%= 'govuk-!-margin-bottom-6' if @procurement.errors[:using_buyer_detail_for_notices_detail].empty? %>"><%= t('.notices_contact_detail_description')%></p>
+                <p class="govuk-body <%= 'govuk-!-margin-bottom-6' if @procurement.errors[:using_buyer_detail_for_notices_detail].empty? %>"><%= t('.notices_contact_detail_description_header')%></p>
                 <%= display_errors(f.object, :using_buyer_detail_for_notices_detail)%>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
