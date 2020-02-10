@@ -383,7 +383,7 @@ module FacilitiesManagement
                                                    :active,
                                                    service_codes: []],
                 procurement_pension_funds_attributes: %i[id name percentage _destroy],
-                invoice_contact_detail_attributes: %i[name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
+                invoice_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
               )
       end
 
