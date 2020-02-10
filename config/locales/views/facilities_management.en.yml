@@ -504,6 +504,14 @@ en:
             new: Enter a new invoicing contact
           local_government_pension_scheme:
             description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
+          new_authorised_representative_details:
+            address: Address
+            change: Change
+            choose_address: Select an address
+            email: Email address
+            job_title: Job title
+            missing_address: I cant find my address in the list
+            name: Name
           new_invoicing_address:
             building_and_street: Building and street
             county: County (optional)
