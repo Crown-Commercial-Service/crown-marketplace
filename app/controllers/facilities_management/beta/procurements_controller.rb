@@ -294,7 +294,7 @@ module FacilitiesManagement
 
       def continue_to_new_authorised_from_add_address
         assign_procurement_parameters
-        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+        if @procurement.save(context: :new_invoicing_contact_details)
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details')
         else
           create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
@@ -305,7 +305,7 @@ module FacilitiesManagement
 
       def continue_to_authorised_from_new_authorised
         assign_procurement_parameters
-        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+        if @procurement.save(context: :new_invoicing_contact_details)
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative')
         else
           create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
