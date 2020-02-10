@@ -167,6 +167,7 @@ en:
               blank: Enter the new authorised representative name
             telephone_number:
               blank: Enter a UK telephone number, for example 020 7688 8888
+              invalid: Enter a UK telephone number, for example 020 7688 8888
         facilities_management/procurement_building:
           attributes:
             service_codes:
