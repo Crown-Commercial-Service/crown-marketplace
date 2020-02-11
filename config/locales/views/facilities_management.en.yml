@@ -547,7 +547,6 @@ en:
             missing_address: I cant find my address in the list
             name: Name
           next_step:
-            building_services: 'Next: Service information'
             contract_dates: 'Next: Buildings'
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
