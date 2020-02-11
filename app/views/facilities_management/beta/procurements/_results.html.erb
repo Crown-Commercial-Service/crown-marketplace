@@ -29,9 +29,9 @@
         <% end %>
       </ul>
     <% end %>
-    <%= govuk_details "#{'Service'.pluralize(@page_data[:services].length)} (#{@page_data[:services].length})" do %>
+    <%= govuk_details "#{'Service'.pluralize(@page_data[:services].uniq.length)} (#{@page_data[:services].uniq.length})" do %>
       <ul>
-        <% @page_data[:services].each do |s| %>
+        <% @page_data[:services].uniq.each do |s| %>
           <li><%= s %></li>
         <% end %>
       </ul>
