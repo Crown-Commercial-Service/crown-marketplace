@@ -2,7 +2,7 @@ require 'facilities_management/fm_buildings_data'
 
 module FacilitiesManagement
   module Beta
-    class SpreadsheetTestController < FacilitiesManagement::FrameworkController
+    class SpreadsheetTestController < FacilitiesManagement::Beta::FrameworkController
       def index; end
 
       def dm_spreadsheet_download

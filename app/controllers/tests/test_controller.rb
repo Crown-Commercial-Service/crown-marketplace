@@ -1,5 +1,5 @@
 module Tests
-  class TestController < ActionController::Base
+  class TestController < FacilitiesManagement::FrameworkController
     ## skip_before_action :authenticate_user!
     # skip_before_action :authorize_user
     skip_before_action :verify_authenticity_token, only: [:index]
