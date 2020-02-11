@@ -516,7 +516,8 @@ module FacilitiesManagement
           LayoutHelper::HeadingDetail.new(page_details(action)[:page_title],
                                           page_details(action)[:caption1],
                                           page_details(action)[:caption2],
-                                          page_details(action)[:sub_title]),
+                                          page_details(action)[:sub_title],
+                                          page_details(action)[:caption3]),
           LayoutHelper::BackButtonDetail.new(page_details(action)[:back_url],
                                              page_details(action)[:back_label],
                                              page_details(action)[:back_text]),
@@ -535,7 +536,8 @@ module FacilitiesManagement
           LayoutHelper::HeadingDetail.new(da_journey_page_details(view_name.to_sym)[:page_title],
                                           da_journey_page_details(view_name.to_sym)[:caption1],
                                           da_journey_page_details(view_name.to_sym)[:caption2],
-                                          da_journey_page_details(view_name.to_sym)[:sub_title]),
+                                          da_journey_page_details(view_name.to_sym)[:sub_title],
+                                          da_journey_page_details(view_name.to_sym)[:caption3]),
           LayoutHelper::BackButtonDetail.new(da_journey_page_details(view_name.to_sym)[:back_url],
                                              da_journey_page_details(view_name.to_sym)[:back_label],
                                              da_journey_page_details(view_name.to_sym)[:back_text]),
@@ -631,6 +633,8 @@ module FacilitiesManagement
             page_title: 'Add address',
             return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
             return_text: 'Return to new invoicing contact details',
+            caption3: @procurement[:contract_name],
+            caption1: 'New invoicing contact details'
           },
           notices_contact_details: {
             back_url: facilities_management_beta_procurement_path(@procurement),
@@ -658,6 +662,8 @@ module FacilitiesManagement
             page_title: 'Add address',
             return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details'),
             return_text: 'Return to new authorised representative details',
+            caption3: @procurement[:contract_name],
+            caption1: 'New authorised representative details'
           },
           local_government_pension_scheme: {
             back_url: facilities_management_beta_procurement_path(@procurement),
