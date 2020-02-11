@@ -326,7 +326,7 @@ module FacilitiesManagement
 
         return if @procurement.using_buyer_detail_for_notices_detail
 
-        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details') if !@procurement.using_buyer_detail_for_notices_detail && @procurement.notices_contact_detail.blank?
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_notices_contact_details') if !@procurement.using_buyer_detail_for_notices_detail && @procurement.notices_contact_detail.blank?
       end
 
       def continue_to_new_notices_from_add_address
@@ -723,6 +723,8 @@ module FacilitiesManagement
             page_title: 'Add address',
             return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_notices_contact_details'),
             return_text: 'Return to new notices contact details',
+            caption3: @procurement[:contract_name],
+            caption1: 'New notices contact details'
           },
           local_government_pension_scheme: {
             back_url: facilities_management_beta_procurement_path(@procurement),
