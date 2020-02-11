@@ -34,17 +34,18 @@ module LayoutHelper
   end
 
   class HeadingDetail
-    attr_accessor(:text, :caption, :caption2, :subtitle)
+    attr_accessor(:text, :caption, :caption2, :subtitle, :caption3)
 
-    def initialize(header_text, caption1, caption2, sub_text)
+    def initialize(header_text, caption1, caption2, sub_text, caption3)
       @text = header_text
       @caption = caption1
       @caption2 = caption2
       @subtitle = sub_text
+      @caption3 = caption3
     end
 
     def caption?
-      @caption.present? || caption2.present?
+      @caption.present? || caption2.present? || caption3.present?
     end
   end
 
@@ -87,8 +88,14 @@ module LayoutHelper
     out.html_safe
   end
 
+  # rubocop:disable Metrics/AbcSize
   def govuk_page_header(heading_details)
     content_tag(:h1, class: 'govuk-heading-xl') do
+      if heading_details.caption3.present?
+        concat(content_tag(:span, class: 'govuk-caption-m govuk-!-margin-bottom-1') do
+          concat(heading_details.caption3)
+        end).html_safe
+      end
       if heading_details.caption?
         concat(content_tag(:span, class: 'govuk-caption-xl') do
           concat(heading_details.caption)
@@ -99,6 +106,7 @@ module LayoutHelper
       concat(content_tag(:p, heading_details.subtitle, class: 'govuk-body-l')) if heading_details.subtitle.present?
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def govuk_back_button(back_button)
     link_to(back_button.text.nil? ? t('layouts.application.back') : back_button.text, back_button.url,
