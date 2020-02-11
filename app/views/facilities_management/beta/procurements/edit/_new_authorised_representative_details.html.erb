@@ -62,7 +62,6 @@
               </div>
               <div class= <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>>
                 <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4"><%= t('.choose_address') %></label>
-                <%binding.pry%>
                 <%= display_error(ff.object, :organisation_address_postcode) %>
                 <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
                   <select class="govuk-select govuk-!-width-full" id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
