@@ -1,14 +1,14 @@
 module FacilitiesManagement
   class ProcurementContactDetail < ApplicationRecord
-    validates :name, presence: true, format: { with: /\A([a-zA-Z\- ]*[\.]?[a-zA-Z\- ]*)\z/ }, length: { maximum: 50 }, on: %i[new_invoicing_contact_details new_authorised_representative_details]
-    validates :job_title, presence: true, format: { with: /\A([a-zA-Z\- ]*)\z/ }, length: { maximum: 150 }, on: %i[new_invoicing_contact_details new_authorised_representative_details]
-    validates :email, presence: true, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }, on: %i[new_invoicing_contact_details new_authorised_representative_details]
-    validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: %i[new_invoicing_contact_details new_authorised_representative_details]
-    validate  :address_entered_when_postcode_provided, on: %i[new_invoicing_contact_details new_authorised_representative_details]
+    validates :name, presence: true, format: { with: /\A([a-zA-Z\- ]*[\.]?[a-zA-Z\- ]*)\z/ }, length: { maximum: 50 }, on: %i[new_invoicing_contact_details new_authorised_representative_details new_notices_contact_details]
+    validates :job_title, presence: true, format: { with: /\A([a-zA-Z\- ]*)\z/ }, length: { maximum: 150 }, on: %i[new_invoicing_contact_details new_authorised_representative_details new_notices_contact_details]
+    validates :email, presence: true, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }, on: %i[new_invoicing_contact_details new_authorised_representative_details new_notices_contact_details]
+    validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: %i[new_invoicing_contact_details new_authorised_representative_details new_notices_contact_details]
+    validate  :address_entered_when_postcode_provided, on: %i[new_invoicing_contact_details new_authorised_representative_details new_notices_contact_details]
 
-    validates :organisation_address_line_1, presence: true, format: { with: /\A([a-zA-Z\- (0-9)]*)\z/ }, on: %i[new_invoicing_address new_authorised_representative_address]
-    validates :organisation_address_town, presence: true, format: { with: /\A([a-zA-Z\- ]*)\z/ }, on: %i[new_invoicing_address new_authorised_representative_address]
-    validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: %i[new_invoicing_address new_authorised_representative_address]
+    validates :organisation_address_line_1, presence: true, format: { with: /\A([a-zA-Z\- (0-9)]*)\z/ }, on: %i[new_invoicing_address new_authorised_representative_address new_notices_address]
+    validates :organisation_address_town, presence: true, format: { with: /\A([a-zA-Z\- ]*)\z/ }, on: %i[new_invoicing_address new_authorised_representative_address new_notices_address]
+    validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: %i[new_invoicing_address new_authorised_representative_address new_notices_address]
 
     def contact_address
       "#{organisation_address_line_1}#{', ' + organisation_address_line_2 if organisation_address_line_2&.present?}#{', ' + organisation_address_town}#{', ' + organisation_address_county if organisation_address_county&.present?}#{', ' + organisation_address_postcode}"

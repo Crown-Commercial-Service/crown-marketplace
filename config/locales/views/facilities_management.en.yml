@@ -226,6 +226,14 @@ en:
               blank: Enter the new invoicing contact job title
             name:
               blank: Enter the new invoicing contact name
+        facilities_management/procurement_notices_contact_detail:
+          attributes:
+            email:
+              blank: Enter the new notices contact email address
+            job_title:
+              blank: Enter the new notices contact job title
+            name:
+              blank: Enter the new notices contact name
         facilities_management/procurement_pension_fund:
           attributes:
             name:
@@ -546,8 +554,20 @@ en:
             job_title: Job title
             missing_address: I cant find my address in the list
             name: Name
+          new_notices_address:
+            building_and_street: Building and street
+            county: County (optional)
+            postcode: Postcode
+            town_or_city: Town or city
+          new_notices_contact_details:
+            address: Address
+            change: Change
+            choose_address: Select an address
+            email: Email address
+            job_title: Job title
+            missing_address: I cant find my address in the list
+            name: Name
           next_step:
-            building_services: 'Next: Service information'
             contract_dates: 'Next: Buildings'
             contract_name: 'Next: Estimated annual cost'
             estimated_annual_cost: 'Next: TUPE'
@@ -555,6 +575,7 @@ en:
             services: 'Next: Select services for detailed search'
             tupe: 'Next: Contract period'
           notices_contact_details:
+            change: Change
             new: Enter a new contact for notices
             notices_contact_detail_description: Select a contact for notices
             notices_contact_detail_description_header: The person to whom contract notices should be communicated.
