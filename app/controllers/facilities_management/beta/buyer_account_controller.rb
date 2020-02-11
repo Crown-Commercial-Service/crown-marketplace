@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module Beta
-    class BuyerAccountController < FrameworkController
+    class BuyerAccountController < FacilitiesManagement::Beta::FrameworkController
       before_action :redirect_if_needed
       before_action :authenticate_user!
       before_action :authorize_user

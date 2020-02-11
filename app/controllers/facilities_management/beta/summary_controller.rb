@@ -3,7 +3,7 @@ require 'zip'
 
 module FacilitiesManagement
   module Beta
-    class SummaryController < FrameworkController
+    class SummaryController < FacilitiesManagement::Beta::FrameworkController
       def index
         init
         build_direct_award_report params['download-spreadsheet'] == 'yes'
