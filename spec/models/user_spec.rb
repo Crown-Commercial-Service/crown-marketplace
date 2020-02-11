@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when user is a buyer and has complete details' do
-      it 'will return true' do
+      it 'will return false' do
         user.roles = %i[buyer fm_access]
         user.buyer_detail = FacilitiesManagement::BuyerDetail.new
         user.buyer_detail.full_name = 'Test name'

@@ -4,7 +4,7 @@ module FacilitiesManagement
 
     validates :full_name, presence: true, on: :update
     validates :job_title, presence: true, on: :update
-    validates :telephone_number, presence: true, format: { with: /\A[\s()\d-]{10,14}\d\z/ }, on: :update
+    validates :telephone_number, presence: true, format: { with: /\A(\d{0,11})\z/ }, on: :update
     validates :telephone_number, numericality: { greater_than: 0, message: :blank }, on: :update
     validates :organisation_name, presence: true, on: :update
     validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: :update
