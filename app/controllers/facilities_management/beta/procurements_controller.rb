@@ -262,7 +262,7 @@ module FacilitiesManagement
       end
 
       def continue_to_new_invoice
-        @procurement.update(procurement_params)
+        @procurement.assign_attributes(procurement_params)
 
         return if @procurement.using_buyer_detail_for_invoice_details
 
@@ -282,6 +282,7 @@ module FacilitiesManagement
 
       def continue_to_invoice_from_new_invoice
         assign_procurement_parameters
+        @procurement.assign_attributes(using_buyer_detail_for_invoice_details: false)
         if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details')
         else
@@ -292,7 +293,7 @@ module FacilitiesManagement
       end
 
       def continue_to_new_authorised
-        @procurement.update(procurement_params)
+        @procurement.assign_attributes(procurement_params)
 
         return if @procurement.using_buyer_detail_for_authorised_detail
 
@@ -312,6 +313,7 @@ module FacilitiesManagement
 
       def continue_to_authorised_from_new_authorised
         assign_procurement_parameters
+        @procurement.assign_attributes(using_buyer_detail_for_authorised_detail: false)
         if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative')
         else
@@ -322,7 +324,7 @@ module FacilitiesManagement
       end
 
       def continue_to_new_notices
-        @procurement.update(procurement_params)
+        @procurement.assign_attributes(procurement_params)
 
         return if @procurement.using_buyer_detail_for_notices_detail
 
@@ -342,6 +344,7 @@ module FacilitiesManagement
 
       def continue_to_notices_from_new_notices
         assign_procurement_parameters
+        @procurement.assign_attributes(using_buyer_detail_for_notices_detail: false)
         if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'notices_contact_details')
         else
