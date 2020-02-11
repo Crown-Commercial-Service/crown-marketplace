@@ -840,11 +840,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # rubocop:enable Layout/AlignHash
 
   # rubocop:disable RSpec/ExampleLength
-  it 'can calculate a direct award procurement' do
-    # p '*********'
-    # p CCS::FM::UnitsOfMeasurement.all.count
-    # p '*********'
-
+  it 'can calculate a direct award procurement for in and outside london' do
     uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
     uom2 = {}
     uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
@@ -852,30 +848,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     FacilitiesManagement::Service
       .all
       .sort_by { |s| [s.work_package_code, s.code[s.code.index('.') + 1..-1].to_i] }.each do |service|
-
-      # p service
-      # p '  has uom ' if uom2[service.code]
     end
-
-    # p FacilitiesManagement::Service.all.map(&:code)
-
-    # ----------
-    # region_codes = Nuts3Region.all.map(&:code)
-
-    # p Nuts3Region.all.first.inspect
-    # p region_codes
-
-    # ----------
 
     # input params
     vals = {}
     vals['tupe'] = 'no' # 'yes' : 'no',
     vals['contract-length'] = 3
     vals['gia'] = 12345
-    vals['isLondon'] = true
+    vals['isLondon'] = false
     id = SecureRandom.uuid
-
-    # p 'procurement info'
 
     start_date = DateTime.now.utc
     procurement =
@@ -884,17 +865,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         'is-tupe' => vals['tupe'] ? 'yes' : 'no',
         'fm-contract-length' => vals['contract-length']
       }
-    # set data2['posted_locations']
     procurement[:posted_locations] = ['UKC14', 'UKC21', 'UKC22', 'UKD11']
-    # procurement['posted_locations'] = vals.keys.select { |k| k.start_with?('region-') }.collect { |k| vals[k] }
 
-    # p 'Buildings info'
     b =
       {
         id: id,
         gia: vals['gia'].to_f,
-        isLondon: vals['isLondon'] ? 'Yes' : 'No',
-        fm_building_type: 'General office - Customer Facing'
+        # isLondon: vals['isLondon'] ? 'Yes' : 'No',
+        fm_building_type: 'General office - Customer Facing',
+        address: { 'fm-address-town' => 'London', 'fm-address-line-1' => '121 Buckingham Palace Road', 'fm-address-postcode' => 'M45FT' }
       }
 
     all_buildings =
@@ -902,16 +881,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         OpenStruct.new(building_json: b)
       ]
 
-    # p "There are #{uom2.count} services with a specific * units of measure *"
-    # p "There are #{Nuts3Region.all.count} NUTS3 regions"
-
-    # --------
     rate_card = CCS::FM::RateCard.latest
     rates = CCS::FM::Rate.read_benchmark_rates
 
-    # ------
     uom_vals = []
-    # posted_services = FacilitiesManagement::Service.all.map(&:code)
     posted_services = uom2.keys
     posted_services.each do |s|
       uom_vals <<
@@ -922,21 +895,25 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
           building_id: id,
         }
     end
-    # ------
 
     report = described_class.new(start_date, 'test@example.com', procurement)
 
+    allow(report).to receive(:building_in_london?).and_return(false)
     results = {}
     supplier_names = rate_card.data[:Prices].keys
     supplier_names.each do |supplier_name|
-      # dummy_supplier_name = 'Hickle-Schinner'
       results[supplier_name] = {}
       report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name, results[supplier_name]
-      results[supplier_name][:direct_award_value] = report.direct_award_value
     end
+    expect(report.direct_award_value).to eq 415.824288
 
-    # p report.direct_award_value
-    expect(report.direct_award_value).to be > -1
+    allow(report).to receive(:building_in_london?).and_return(true)
+    results = {}
+    supplier_names.each do |supplier_name|
+      results[supplier_name] = {}
+      report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name, results[supplier_name]
+    end
+    expect(report.direct_award_value).to eq 498.9891456
   end
   # rubocop:enable RSpec/ExampleLength
 end
