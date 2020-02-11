@@ -7,13 +7,23 @@
     <div>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
       <h2 class="govuk-heading-s"><%=t('.insurance_heading') %></h2>
-      <p><%=t('.insurance_body_html') %></p>
+      <p>
+        <%=t('.insurance_body_html') %>
+        <a href="<%= asset_path(t(".contract_documents.joint_schedule_3.document_name")) %>?format=doc" type="<%= t('common.type_doc') %>" download> <%= t(".contract_documents.joint_schedule_3.title") %> </a>
+      </p>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
       <h2 class="govuk-heading-s"><%=t('.indexation_heading') %></h2>
-      <p><%=t('.indexation_body_html') %></p>
+      <p>
+        <%=t('.indexation_body_html') %>
+        <a href="<%= asset_path(t(".contract_documents.call_off_schedule_5.document_name")) %>?format=doc" type="<%= t('common.type_doc') %>" download> <%= t(".contract_documents.call_off_schedule_5.title") %> </a>
+      </p>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
       <h2 class="govuk-heading-s"><%= t('.services_heading') %></h2>
-      <p><%= t('.services_body_html') %></p>
+      <p>
+        <%= t('.services_body_html_1') %>
+        <a href="<%= asset_path(t(".contract_documents.service_requirements_and_standards.document_name")) %>?format=doc" type="<%= t('common.type_doc') %>" download> <%= t(".contract_documents.service_requirements_and_standards.title") %> </a>
+        <%= t('.services_body_html_2') %>
+      </p>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
       <h2 class="govuk-heading-s"><%=t('.price_heading') %></h2>
       <p><%=t('.price_body_html') %></p>
