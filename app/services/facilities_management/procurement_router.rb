@@ -29,6 +29,8 @@ class FacilitiesManagement::ProcurementRouter
     'new_authorised_representative_details': 'new_authorised_representative_details',
     'new_authorised_representative_address': 'new_authorised_representative_address',
     'notices_contact_details': 'notices_contact_details',
+    'new_notices_contact_details': 'new_notices_contact_details',
+    'new_notices_address': 'new_notices_address',
     'security_policy_document': 'security_policy_document',
     'local_government_pension_scheme': 'local_government_pension_scheme',
     'important_information': 'did_you_know',
