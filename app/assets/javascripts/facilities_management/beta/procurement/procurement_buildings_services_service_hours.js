@@ -79,6 +79,14 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         let timeIsValid = this.fnCheckTime(day, "start", choices);
         return this.fnCheckTime(day, "end", choices) && timeIsValid;
     };
+    
+    this.validateTwelveHourTime = function( time, digits ){
+        if (digits === "12" || digits === "24") {
+            return time = (parseInt(time) - 1200).toString();
+        } else {
+            return time;
+        }
+    }
 
     this.validateChronologicalSequence = function ( day, choices ) {
         let isValid = true ;
@@ -89,22 +97,26 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         let endTime = (parseInt(choices[day]["end"]["hour"].value) + (afternoon_end ? 12 : 0)) + choices[day]["end"]["minute"].value.padStart(2, '0');
         let startTimeFirstDigits = startTime.substring(0,2);
         let endTimeFirstDigits = endTime.substring(0,2);
-        
-        if ( startTimeFirstDigits === "12" ||  startTimeFirstDigits === "24") {
-            startTime = (parseInt(startTime) - 1200).toString();
-        }
-        
-        if ( endTimeFirstDigits === "12" || endTimeFirstDigits === "24") {
-            endTime = (parseInt(endTime) - 1200).toString();
-        }
-        
+        startTime = this.validateTwelveHourTime( startTime, startTimeFirstDigits);
+        endTime = this.validateTwelveHourTime( endTime, endTimeFirstDigits);
         if ( parseInt(endTime) <= parseInt(startTime)) {
             isValid = false;
             choices[day]["end"].status = false;
             choices[day]["end"].errorType = 'min';
         }
-
-        return isValid ;
+        if (endTimeFirstDigits === "00"){
+            isValid = false;
+            choices[day]["end"].status = false;
+            choices[day]["end"].errorType = 'invalid';
+            this.displayTimeErrors(day, "start", choices);
+        }
+        if (startTimeFirstDigits === "00") {
+            isValid = false;
+            choices[day]["start"].status = false;
+            choices[day]["start"].errorType = 'invalid';
+            this.displayTimeErrors(day, "start", choices);
+        }
+        return isValid;
     } ;
     this.displayTimeErrors = function (day, part, choices ) {
         if (choices[day][part].status === false) {
