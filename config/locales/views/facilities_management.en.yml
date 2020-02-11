@@ -471,14 +471,25 @@ en:
             payment_method: Payment method
             security_policy_document: Security policy
           did_you_know:
-            indexation_body_html: Your supplier will have the opportunity to adjust their pricing using the CPI index data on the first anniversary of your contract start date. Further information on this can be found in <a href="http://www.url.com">call-off schedule 5 - call-off pricing.</a>
+            contract_documents:
+              call_off_schedule_5:
+                document_name: Call-Off Schedule 5 - Call-Off Pricing (DA).docx
+                title: call-off schedule 5 - call-off pricing.
+              joint_schedule_3:
+                document_name: Joint Schedule 3 - Insurance Requirements (DA).docx
+                title: joint schedule 3 - insurance requirements.
+              service_requirements_and_standards:
+                document_name: FM3830 Service requirements and standards.docx
+                title: service requirements and standards
+            indexation_body_html: Your supplier will have the opportunity to adjust their pricing using the CPI index data on the first anniversary of your contract start date. Further information on this can be found in
             indexation_heading: Indexation
-            insurance_body_html: Fixed levels of insurance will apply and cannot be changed within a direct award. To view the levels and for further information, please see <a href="http://www.url.com">joint schedule 3 - insurance requirements.</a>
+            insurance_body_html: Fixed levels of insurance will apply and cannot be changed within a direct award. To view the levels and for further information, please see
             insurance_heading: Insurance
             intro-text: There are some elements of a direct award contract that cannot be amended. Please read the below information to ensure that a direct award is suitable for you.
             price_body_html: Your price has been calculated using rates that were submitted by suppliers when they competed to join the framework. There can be no further negotiation on the price within a direct award.
             price_heading: Price
-            services_body_html: The service specifications and service standards cannot be amended within a direct award. Please check within the <a href="http://www.url.com">service requirements and standards</a> that you're happy with the details for the services you are buying.
+            services_body_html_1: The service specifications and service standards cannot be amended within a direct award. Please check within the
+            services_body_html_2: that you're happy with the details for the services you are buying.
             services_heading: Services
           pricing:
             description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
