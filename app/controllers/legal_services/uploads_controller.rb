@@ -1,5 +1,5 @@
 module LegalServices
-  class UploadsController < FrameworkController
+  class UploadsController < LegalServices::FrameworkController
     before_action :authenticate_user!, except: :create
     before_action :authorize_user, except: :create
 
