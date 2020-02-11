@@ -3,7 +3,7 @@
     <%= form_for @procurement, url: {action: "update"}, method: :put, html: { specialvalidation: false, multipart: true } do |f| %>
         <%= f.fields_for :notices_contact_detail do |ff|%>
         
-        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0" id="new_notices_contact_details_adress">
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             
             <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_line_1].any? %>">
             <%= ff.label :organisation_address_line_1, t('.building_and_street'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'notices_contact_detail.organisation_address_line_1-error' if ff.object.errors[:organisation_address_line_1].any?}" %>
@@ -31,7 +31,13 @@
             <%= display_error(ff.object, :organisation_address_postcode) %>
             <%= ff.text_field :organisation_address_postcode, class: "govuk-input govuk-!-width-one-third #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", maxlength: 50 %>
           </div>
-        <%= govuk_continuation_buttons(@page_description, f, false) %>
+
+            <%= ff.hidden_field :name %>
+            <%= ff.hidden_field :job_title %>
+            <%= ff.hidden_field :email %>
+            
+            <%= govuk_continuation_buttons(@page_description, f, false) %>
+
         </div>
         <% end %>
     <% end %>

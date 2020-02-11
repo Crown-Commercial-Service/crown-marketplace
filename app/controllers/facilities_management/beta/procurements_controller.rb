@@ -48,6 +48,7 @@ module FacilitiesManagement
       def edit
         set_invoice_data if params['step'] == 'new_invoicing_address'
         set_authorised_data if params['step'] == 'new_authorised_representative_address'
+        set_notices_data if params['step'] == 'new_notices_address'
 
         if @procurement.quick_search?
           render :edit
@@ -88,6 +89,12 @@ module FacilitiesManagement
         continue_to_new_authorised_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_authorised_representative_address'
 
         continue_to_authorised_from_new_authorised && return if params.dig('facilities_management_procurement', 'step') == 'new_authorised_representative_details'
+
+        continue_to_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'notices_contact_details' && params.dig('facilities_management_procurement', 'using_buyer_detail_for_notices_detail') == 'false'
+
+        continue_to_new_notices_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_address'
+
+        continue_to_notices_from_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_contact_details'
 
         update_procurement && return if params['facilities_management_procurement'].present?
 
@@ -314,6 +321,36 @@ module FacilitiesManagement
         end
       end
 
+      def continue_to_new_notices
+        @procurement.update(procurement_params)
+
+        return if @procurement.using_buyer_detail_for_notices_detail
+
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details') if !@procurement.using_buyer_detail_for_notices_detail && @procurement.notices_contact_detail.blank?
+      end
+
+      def continue_to_new_notices_from_add_address
+        assign_procurement_parameters
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_notices_contact_details')
+        else
+          create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
+          set_step_param
+          render :edit
+        end
+      end
+
+      def continue_to_notices_from_new_notices
+        assign_procurement_parameters
+        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'notices_contact_details')
+        else
+          create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
+          set_step_param
+          render :edit
+        end
+      end
+
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         if params[:commit] == page_details(:results)[:secondary_text]
@@ -367,10 +404,13 @@ module FacilitiesManagement
         set_contact_details_data
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity
       def set_contact_details_data
         set_invoice_data if !params['step'].nil? && params['step'] == 'new_invoicing_contact_details'
         set_authorised_data if !params['step'].nil? && params['step'] == 'new_authorised_representative_details'
+        set_notices_data if !params['step'].nil? && params['step'] == 'new_notices_contact_details'
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       def set_invoice_data
         @procurement.build_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
@@ -380,6 +420,11 @@ module FacilitiesManagement
       def set_authorised_data
         @procurement.build_authorised_contact_detail if @procurement.authorised_contact_detail.blank?
         @authorised_contact_detail = @procurement.authorised_contact_detail
+      end
+
+      def set_notices_data
+        @procurement.build_notices_contact_detail if @procurement.notices_contact_detail.blank?
+        @notices_contact_detail = @procurement.notices_contact_detail
       end
 
       def procurement_route_params
@@ -431,7 +476,8 @@ module FacilitiesManagement
                                                    service_codes: []],
                 procurement_pension_funds_attributes: %i[id name percentage _destroy],
                 invoice_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode],
-                authorised_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode telephone_number]
+                authorised_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode telephone_number],
+                notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
               )
       end
 
@@ -636,13 +682,6 @@ module FacilitiesManagement
             caption3: @procurement[:contract_name],
             caption1: 'New invoicing contact details'
           },
-          notices_contact_details: {
-            back_url: facilities_management_beta_procurement_path(@procurement),
-            page_title: 'Notices contact details',
-            continuation_text: 'Continue',
-            return_text: 'Return to contract details',
-            return_url: facilities_management_beta_procurement_path(@procurement)
-          },
           authorised_representative: {
             back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Authorised representative details',
@@ -664,6 +703,26 @@ module FacilitiesManagement
             return_text: 'Return to new authorised representative details',
             caption3: @procurement[:contract_name],
             caption1: 'New authorised representative details'
+          },
+          notices_contact_details: {
+            back_url: facilities_management_beta_procurement_path(@procurement),
+            page_title: 'Notices contact details',
+            continuation_text: 'Continue',
+            return_text: 'Return to contract details',
+            return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          new_notices_contact_details: {
+            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'notices_contact_details'),
+            page_title: 'New notices contact details',
+            continuation_text: 'Save and return',
+            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'notices_contact_details'),
+            return_text: 'Return to notices contact details',
+          },
+          new_notices_address: {
+            back_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_notices_contact_details'),
+            page_title: 'Add address',
+            return_url: edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'new_notices_contact_details'),
+            return_text: 'Return to new notices contact details',
           },
           local_government_pension_scheme: {
             back_url: facilities_management_beta_procurement_path(@procurement),
