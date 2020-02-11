@@ -59,17 +59,18 @@
                 <div class="govuk-grid-column-one-quarter">
                   <a id="buyer-details-change-postcode" href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
                 </div>
-                <div class= <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>>
+              </div>
+              <div class= <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>>
                 <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4"><%= t('.choose_address') %></label>
+                <%binding.pry%>
                 <%= display_error(ff.object, :organisation_address_postcode) %>
                 <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
                   <select class="govuk-select govuk-!-width-full" id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
                   </select>
                 </div>
+                <div class="govuk-!-margin-top-2">
+                  <%= link_to t('.missing_address'), edit_facilities_management_beta_procurement_path(:step => 'new_authorised_representative_address'), class: "govuk-link--no-visited-state govuk-caption-m" %>
                 </div>
-              </div>
-              <div class="govuk-!-margin-top-2">
-                <%= link_to t('.missing_address'), edit_facilities_management_beta_procurement_path(:step => 'new_authorised_representative_address'), class: "govuk-link--no-visited-state govuk-caption-m" %>
               </div>
             </div>
             <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless ff.object.organisation_address_line_1.present? %>" id="selected-address-container">
@@ -84,7 +85,6 @@
             </div>
           </div>
         </div>
-
         <%= govuk_continuation_buttons(@page_description, f, false) %>
       </div>
     <% end %>
