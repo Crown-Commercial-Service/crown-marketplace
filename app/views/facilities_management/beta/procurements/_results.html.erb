@@ -28,12 +28,13 @@
       <% end %>
     </ul>
   <% end %>
-  <%= govuk_details "#{'Service'.pluralize(@page_data[:services].length)} (#{@page_data[:services].length})" do %>
+  <%= govuk_details "#{'Service'.pluralize(@page_data[:services].uniq.length)} (#{@page_data[:services].uniq.length})" do %>
     <ul>
-      <% @page_data[:services].each do |s| %>
+      <% @page_data[:services].uniq.each do |s| %>
         <li><%= s %></li>
       <% end %>
     </ul>
+  <% end %>
   <% end %>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
