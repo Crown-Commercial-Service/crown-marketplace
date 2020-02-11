@@ -50,10 +50,11 @@ $(function () {
         $("#organisation_address").text(selectedAddress);
     });
 
-    let postcodeDetails = document.getElementById('buyer-details-postcode')
-    if (postcodeDetails) {
-        if (!!postcodeDetails.value) {
-            let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
+    let postcodeDetails = document.getElementById("buyer-details-postcode");
+    let addressEntered = document.getElementById("organisation-address-line-1");
+    if (postcodeDetails && addressEntered) {
+        if (!!postcodeDetails.value && !addressEntered.value) {
+            let postCode = pageUtils.formatPostCode($("#buyer-details-postcode").val());
             pageUtils.addressLookUp(postCode, false);
         }
     }
