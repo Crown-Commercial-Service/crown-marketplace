@@ -317,11 +317,11 @@ module FacilitiesManagement
 
       @london_flag =
         begin
+          fm_address_postcode = building_data[:address][:'fm-address-postcode'] if building_data['address'].nil? # rspec tests
+          fm_address_postcode = building_data['address']['fm-address-postcode'] if building_data[:address].nil?  # real data
+
           # Note: a symbol is passed from rspec, and string key from the front end.I did not want to change too much.
-          if (building_data[:isLondon] || building_data['isLondon']) == 'Yes'
-            'Y'
-          # TODO:  remove this line when postcode london logic is implemented
-          elsif building_data['address']['fm-address-postcode'].downcase.gsub(/\s+/, '') == 'sw1a2aa'
+          if (building_data[:isLondon] || building_data['isLondon']) == 'Yes' || building_in_london?(fm_address_postcode)
             'Y'
           else
             'N'
@@ -414,5 +414,12 @@ module FacilitiesManagement
     # rubocop:enable Metrics/ParameterLists (with a s)
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
+
+    # london nuts are defined in FM-703
+    def building_in_london?(post_code)
+      nuts_region = PostcodesNutsRegion.find_by(postcode: post_code.upcase.gsub(/\s+/, ''))
+      code = nuts_region.nil? ? '' : nuts_region['code']
+      %w[UKI3 UKI4 UKI5 UKI6 UKI7].include? code
+    end
   end
 end
