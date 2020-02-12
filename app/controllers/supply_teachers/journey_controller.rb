@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class JourneyController < FrameworkController
+  class JourneyController < SupplyTeachers::FrameworkController
     include JourneyControllerActions
 
     def journey_class
