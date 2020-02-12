@@ -23,12 +23,12 @@
           <ol class="govuk-list govuk-list--number govuk-!-width-three-quarters">
             <li class="govuk-!-font-weight-bold">You can offer your contract to this supplier</li>
               <ul class="govuk-list govuk-list--bullet govuk-!-width-three-quarters">
-              <li >we have generated your contract documents using this suppliers details and pricing.</li>
-              <li>the supplier will have 2 working days to respond to your offer.</li></ul>
+              <li >we have generated your contract documents using this suppliers details and pricing</li>
+              <li>the supplier will have 2 working days to respond to your offer</li></ul>
             <li class="govuk-!-font-weight-bold">You can close this procurement</li>
               <ul class="govuk-list govuk-list--bullet govuk-!-width-three-quarters">
                 <li>
-                  by clicking on the button below, it will then be viewable in closed section in your procurements dashboard. 
+                  by clicking on the button below, it will then be viewable in closed section in your procurements dashboard.
                   You will then have the option to create a copy of the requirements for use in a new/similar procurement, or further competition
                 </li>
               </ul>
@@ -37,22 +37,18 @@
                 <li >you can simply return to your procurements dashboard in which you will find a saved copy of this contract for when you are ready </li>
               </ul>
           </ol>
-        </div>
-        <div class="govuk-!-width-one-half">
-          <table class="govuk-table govuk-!-margin-bottom-0 govuk-!-width-three-quarters">
+          <table class="govuk-table govuk-!-margin-bottom-0 govuk-!-width-one-half">
             <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">
-                        <%= image_tag('zip_image.png', :alt => 'download zip file', width: '60px') %>
-                    </td>
-                    <td class="govuk-table__cell">
-                        <%= link_to 'Download Call-off contract', '#', class: 'govuk-!-font-size-20 govuk-link govuk-link--no-visited-state' %><br/>
-                        <p class="govuk-hint govuk-!-margin-bottom-0">Created Tuesday 14th May 2019 at 11:49am</p>
-                    </td>
-                </tr>
+                <td class="govuk-table__cell">
+                    <%= image_tag('zip_image.png', :alt => 'download zip file', width: '60px') %>
+                </td>
+                <td class="govuk-table__cell">
+                    <%= link_to 'Download Call-off contract', '#', class: 'govuk-!-font-size-20 govuk-link govuk-link--no-visited-state' %><br/>
+                    <p class="govuk-hint govuk-!-margin-bottom-0">Created Tuesday 14th May 2019 at 11:49am</p>
+                </td>
             </tbody>
           </table>
+          <%= govuk_continuation_buttons(pd, f, true) %>
         </div>
-        <%= govuk_continuation_buttons(pd, f, true) %>
     <% end %>
 <% end %>
