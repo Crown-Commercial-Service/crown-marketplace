@@ -1,0 +1,10 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+  
+  <%= render partial: 'procurement_requirements' %>
+  <%= render partial: 'call_off_contract_documents' %>
+
+
+  <%= form_for @page_data[:model_object], url: '#', method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+    <%= govuk_continuation_buttons(pd, f,true,true,true,true) %>
+  <%end %>
+<%end %>
