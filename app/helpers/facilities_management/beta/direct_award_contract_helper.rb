@@ -1,4 +1,6 @@
 module FacilitiesManagement::Beta::DirectAwardContractHelper
+  include FacilitiesManagement::Beta::RequirementsHelper
+
   def warning_title
     WARNINGS.each { |status, text| return text if @page_data[:procurement_data][:status] == status.to_s }
   end
