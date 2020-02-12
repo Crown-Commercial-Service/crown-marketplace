@@ -26,7 +26,7 @@ LiftDataUI.prototype.addNewLift = function() {
         this.removeLift(targetLift);
     }.bind(this));
     //this.restrictInput(newInputElement.find("input")[0]);
-    this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").addClass("govuk-visually-hidden");
+    this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").hide("button");
     this.liftDataContainer.append(newInputElement);
 };
 
@@ -34,7 +34,7 @@ LiftDataUI.prototype.removeLift = function(nLiftIndex) {
     let toRemove = this.liftDataContainer.find("div[data-liftcount=" + nLiftIndex + "]");
     toRemove.remove();
     $($(".addliftbtn").get(0)).val("Add new lift (" + (100 - nLiftIndex) +" remaining)");
-    this.liftDataContainer.find("button[data-liftcount=" + (nLiftIndex-1) + "]").removeClass("govuk-visually-hidden");
+    this.liftDataContainer.find("button[data-liftcount=" + (nLiftIndex-1) + "]").show("button");
 };
 LiftDataUI.prototype.connectAddLiftButton = function(){
     if (this.containerDiv) {
