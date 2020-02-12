@@ -376,6 +376,7 @@ module FacilitiesManagement
         building_element_valid?(building, 'name') &&
           (building_element_valid?(building, 'region') ||
            building['address']&.dig('fm-address-postcode').present?) &&
+          building['address']&.dig('fm-address-region').present? &&
           building_element_valid?(building, 'building-type') &&
           building_element_valid?(building, 'security-type') &&
           building_element_valid?(building, 'gia')
