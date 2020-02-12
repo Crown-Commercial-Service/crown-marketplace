@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module Beta
-    class BuyerDetailsController < FrameworkController
+    class BuyerDetailsController < FacilitiesManagement::Beta::FrameworkController
       before_action :set_buyer_detail
 
       def edit; end

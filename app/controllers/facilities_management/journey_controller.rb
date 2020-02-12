@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class JourneyController < FrameworkController
+  class JourneyController < FacilitiesManagement::FrameworkController
     include JourneyControllerActions
 
     def journey_class
