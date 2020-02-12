@@ -104,7 +104,9 @@ module CcsPatterns
       @page_data[:supplier_name] = 'Cleaning London LTD'
     end
 
-    def next_supplier; end
+    def next_supplier
+      @page_data[:contact_name] = 'Total facilities management'
+    end
 
     private
 
