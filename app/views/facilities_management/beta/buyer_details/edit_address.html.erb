@@ -1,5 +1,5 @@
 <div class="govuk-body govuk-grid-row buyer-details">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds" id="buyer-details-add-address-form">
     <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path(@buyer_detail, context: :update_address), method: :patch, html: { multipart: true } do |f| %>
       <%= link_to 'Back', edit_facilities_management_beta_buyer_detail_path(@buyer_detail), class: "govuk-back-link govuk-!-margin-bottom-2" %>
 
