@@ -1,3 +1,1 @@
-Clamby.configure({
-  stream: true
-})
+Clamby.configure(daemonize: true, stream: true)
