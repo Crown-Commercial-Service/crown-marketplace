@@ -789,7 +789,7 @@ module FacilitiesManagement
           },
           summary: {
             page_title: 'Summary',
-            return_url: facilities_management_beta_procurements_path,
+            return_url: facilities_management_beta_procurements_path(@procurement)
           }
         }.freeze
       end
