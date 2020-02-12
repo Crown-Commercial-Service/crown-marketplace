@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module Beta
     module Supplier
-      class OfferController < FrameworkController
+      class OfferController < FacilitiesManagement::Beta::Supplier::FrameworkController
         before_action :set_page_detail
         before_action :set_page_model
 
@@ -33,7 +33,8 @@ module FacilitiesManagement
             LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
                                             page_details(action_name)[:caption1],
                                             page_details(action_name)[:caption2],
-                                            page_details(action_name)[:sub_title]),
+                                            page_details(action_name)[:sub_title],
+                                            page_details(action_name)[:caption3]),
             LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
                                                page_details(action_name)[:back_label],
                                                page_details(action_name)[:back_text]),

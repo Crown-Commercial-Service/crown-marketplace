@@ -1,6 +1,6 @@
 module LegalServices
   module Admin
-    class UploadsController < FrameworkController
+    class UploadsController < LegalServices::FrameworkController
       before_action :authenticate_user!
       before_action :authorize_user
 

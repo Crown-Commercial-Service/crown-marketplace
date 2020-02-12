@@ -1,6 +1,6 @@
 module ManagementConsultancy
   module Admin
-    class UploadsController < FrameworkController
+    class UploadsController < ManagementConsultancy::FrameworkController
       skip_before_action :verify_authenticity_token, only: :create
       before_action :authenticate_user!
       before_action :authorize_user

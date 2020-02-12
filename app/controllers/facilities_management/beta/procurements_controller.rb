@@ -1,7 +1,7 @@
 require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
-    class ProcurementsController < FrameworkController
+    class ProcurementsController < FacilitiesManagement::Beta::FrameworkController
       before_action :set_procurement, only: %i[show edit update destroy results]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
@@ -789,7 +789,7 @@ module FacilitiesManagement
           },
           summary: {
             page_title: 'Summary',
-            return_url: facilities_management_beta_procurements_path,
+            return_url: facilities_management_beta_procurements_path(@procurement)
           }
         }.freeze
       end
