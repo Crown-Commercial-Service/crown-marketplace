@@ -6,6 +6,15 @@ module CcsPatterns
 
     def index; end
 
+    def no_response
+      @page_data[:procurement_data] = { contract_name: 'School facilities London', supplier: 'Cabinet office', date_offer_expires: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), contract_number: 'RM330-DA2234-2019', contract_value: '£752,026', framework: 'RM3830', sub_lot: 'sub-lot 1a',
+        initial_call_off_period: 7, initial_call_off_start_date: Date.new(2019, 11, 1), initial_call_off_end_date: Date.new(2016, 10, 31),
+        contract_sent_date: DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London'), expiration_date: DateTime.new(2019, 7, 23, 14, 20, 0).in_time_zone('London'), date_contract_received: DateTime.new(2019, 11, 20, 14, 0, 0).in_time_zone('London'), date_responded_to_contract: DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London'), date_contract_signed: DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London'), date_contract_closed: DateTime.new(2019, 11, 22, 14, 37, 0).in_time_zone('London'),
+        mobilisation_period: 4, optional_call_off_extensions_1: 1, optional_call_off_extensions_2: 1, optional_call_off_extensions_3: nil, optional_call_off_extensions_4: nil,
+        buildings_and_services: [{ building: 'Barton court store', service_codes: [] }, { building: 'CCS London office 5th floor', service_codes: ['C.13', 'C.20', 'N.1'] }, { building: 'Phoenix house', service_codes: [] }, { building: 'Vale court', service_codes: [] }, { building: 'W Cabinet office 3rd floor', service_codes: [] }], call_off_documents_creation_date: DateTime.new(2019, 5, 14, 10, 47, 0).in_time_zone('London') }
+        # TODO: When db intigrated this section can be refactored or removed
+    end
+
     def results
       @page_data[:selected_sublot] = 'Lot 1a'
       @page_data[:estimated_cost] = '1450000'
@@ -134,13 +143,13 @@ module CcsPatterns
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
 
-    # rubocop:disable Metrics/MethodLength
     def page_definitions
       @page_definitions ||= {
         default: {
           back_url: ccs_patterns_path,
           back_label: 'Return to prototype index',
-          back_text: 'View prototypes'
+          back_text: 'View prototypes',
+          return_text: 'return'
         },
         index: {
           page_title: 'Prototype List',
@@ -149,209 +158,17 @@ module CcsPatterns
           sub_title: 'View the prepared prototype views',
           secondary_url: ccs_patterns_prototypes_path,
         },
-        results: {
-          back_url: ccs_patterns_prototypes_path,
-          page_title: 'Results',
-          caption1: 'Procurement name',
-          continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_path,
+        no_response: {
+          page_title: 'CCT repairs services',
+          back_text: 'Back',
+          continuation_text: "View next supplier's price",
+          caption1: 'Contract summary',
+          secondary_text: 'Close this procurement',
           return_text: 'Return to procurement dashboard',
-          secondary_text: 'Change requirements'
-        },
-        pricing: {
-          back_url: ccs_patterns_prototypes_results_path,
-          back_text: 'Return to Results',
-          back_label: 'Return to Results',
-          page_title: 'Direct award pricing',
-          caption1: 'Procurement name',
-          continuation_text: 'Continue to direct award',
-          return_url: ccs_patterns_prototypes_path,
-          return_text: 'Return to procurement dashboard',
-          secondary_text: 'Return to results'
-        },
-        what_next: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Return to Pricing',
-          back_label: 'Return to Pricing',
-          page_title: 'What happens next',
-          caption1: 'Procurement name',
-          continuation_text: 'Continue to direct award',
-          return_url: ccs_patterns_prototypes_results_path,
-          return_text: 'Return to Results',
-          secondary_text: 'Return to results'
-        },
-        closing_direct_award_offer: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          continuation_text: 'Close this procurement',
-          secondary_text: 'Cancel'
-        },
-        procurement_closed: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          secondary_text: 'Return to procurement dashboard'
-        },
-        contract_details: {
-          back_url: ccs_patterns_prototypes_path,
-          back_text: 'Back',
-          page_title: 'Contract Details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_path,
-          return_text: 'Return to procurement dashboard',
-          secondary_text: 'Return to results'
-        },
-        invoicing_contact_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'Invoicing contact details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_results_path,
-          return_text: 'Return to contract details',
-          secondary_text: 'Return to contract details'
-        },
-        new_authorised_representative_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'New authorised representative details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_url: ccs_patterns_prototypes_results_path,
-          return_text: 'Return to contract details',
-          secondary_text: 'Return to contract details'
-        },
-        new_invoicing_contact_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'New invoicing contact details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_url: ccs_patterns_prototypes_results_path,
-          return_text: 'Return to contract details',
-          secondary_text: 'Return to contract details'
-        },
-        invoicing_contact_details_edit_address: {
-          back_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'Add address',
-          caption1: 'New invoicing contact details',
-          continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
-          return_text: 'Return to new invoicing contact details',
-        },
-        did_you_know: {
-          back_url: ccs_patterns_prototypes_what_next_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'Important information',
-          caption1: 'Total facilities management',
-          continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_path,
-          return_text: 'Return to procurement dashboard',
-          secondary_text: 'Return to results'
-        },
-        notices: {
-          back_url: ccs_patterns_prototypes_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'Notices contact details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_text: 'Return to contract details',
-          return_url: ccs_patterns_prototypes_path,
-        },
-        new_notices_contact_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'New notices contact details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_url: '#',
-          return_text: 'Return to contract details'
-        },
-        payment_method: {
-          back_url: ccs_patterns_prototypes_path,
-          back_text: 'Back',
-          page_title: 'Payment method',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and return',
-          return_text: 'Return to contract details',
-          return_url: ccs_patterns_prototypes_path,
-        },
-        contract_signed: {
-          back_label: 'Back',
-          back_text: 'Back',
-          back_url: ccs_patterns_prototypes_path,
-          secondary_text: 'Return to procurement dashboard',
-          secondary_url: ccs_patterns_prototypes_path
-        },
-        confirmation_of_signed_contract: {
-          back_url: ccs_patterns_prototypes_results_path,
-          back_text: 'Back',
-          back_label: 'Back',
-          page_title: 'Confirmation of signed contract',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and continue',
-          secondary_text: 'Cancel'
-        },
-        authorised_representative: {
-          back_url: ccs_patterns_prototypes_path,
-          back_text: 'Back',
-          back_label: 'Return to Pricing',
-          page_title: 'Authorised representative details',
-          caption1: 'Total facilities management',
-          continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_path,
-          return_text: 'Return to contract details',
-          secondary_text: 'Return to results'
-        },
-        add_missing_address: {
-          back_label: 'Back',
-          back_text: 'Back',
-          back_url: ccs_patterns_prototypes_path,
-          page_title: 'Add address',
-          caption1: 'New authorised representative',
-          continuation_text: 'Continue',
-          return_text: 'Return to new authorised representative',
-          return_url: ccs_patterns_prototypes_path,
-        },
-        new_notices_new_address: {
-          back_label: 'Back',
-          back_text: 'Back',
-          back_url: ccs_patterns_prototypes_path,
-          page_title: 'Add address',
-          caption1: 'New notices contact details',
-          continuation_text: 'Continue',
-          return_text: 'Return to new notices contact details',
-          return_url: ccs_patterns_prototypes_path,
-        },
-        lgps_check: {
-          back_label: 'Back',
-          back_text: 'Back',
-          back_url: ccs_patterns_prototypes_path,
-          page_title: 'Local Government Pension Scheme',
-          caption1: 'Total facilities management',
-          continuation_text: 'Save and continue',
-          return_text: 'Return to contract details',
-          return_url: ccs_patterns_prototypes_path,
-        },
-        contract_confirmation: {
-          back_url: ccs_patterns_prototypes_path,
-          back_text: 'Back',
-          continuation_text: false,
-          secondary_text: 'Return to procurement dashboard',
-        },
+          return_link: '#'
+        }
       }.freeze
     end
     # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
 end

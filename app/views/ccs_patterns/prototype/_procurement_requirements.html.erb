@@ -77,12 +77,6 @@
                     </tr>
                 <% end %>
                 <tr class="govuk-table__row">
-                  <th class="govuk-table__cell govuk-table__header">Date of first indexation</th>
-                  <td class="govuk-table__cell">
-                    <%= date_of_first_indexation %>
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header">Buildings and services</th>
                     <td class="govuk-table__cell">
                         <% @page_data[:procurement_data][:buildings_and_services].each do |bs| %>
@@ -98,3 +92,4 @@
         </table>
     </dl>
 </div>
+
