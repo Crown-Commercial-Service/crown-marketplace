@@ -86,7 +86,7 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         } else {
             return time;
         }
-    }
+    };
 
     this.validateChronologicalSequence = function ( day, choices ) {
         let isValid = true ;
@@ -101,19 +101,19 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         endTime = this.validateTwelveHourTime( endTime, endTimeFirstDigits);
         if ( parseInt(endTime) <= parseInt(startTime)) {
             isValid = false;
-            choices[day]["end"].status = false;
-            choices[day]["end"].errorType = 'min';
+            choices[String(day)]["end"].status = false;
+            choices[String(day)]["end"].errorType = "min";
         }
         if (endTimeFirstDigits === "00"){
             isValid = false;
-            choices[day]["end"].status = false;
-            choices[day]["end"].errorType = 'invalid';
+            choices[String(day)]["end"].status = false;
+            choices[String(day)]["end"].errorType = "invalid";
             this.displayTimeErrors(day, "start", choices);
         }
         if (startTimeFirstDigits === "00") {
             isValid = false;
-            choices[day]["start"].status = false;
-            choices[day]["start"].errorType = 'invalid';
+            choices[String(day)]["start"].status = false;
+            choices[String(day)]["start"].errorType = "invalid";
             this.displayTimeErrors(day, "start", choices);
         }
         return isValid;
