@@ -1,5 +1,5 @@
 module ManagementConsultancy
-  class HtmlController < FrameworkController
+  class HtmlController < ManagementConsultancy::FrameworkController
     def select_location
       @back_path = :back
     end
