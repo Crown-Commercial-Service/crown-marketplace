@@ -1,4 +1,6 @@
 module FacilitiesManagement::Beta::Supplier::SupplierAccountHelper
+  include FacilitiesManagement::Beta::RequirementsHelper
+
   def accepted_page
     ['accepted', 'live', 'not signed', 'withdrawn']
   end
