@@ -106,6 +106,7 @@ module CcsPatterns
 
     def next_supplier
       @page_data[:contact_name] = 'Total facilities management'
+      @page_data[:supplier_name] = 'Next supplier LTD'
     end
 
     private
