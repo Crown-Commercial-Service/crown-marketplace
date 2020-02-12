@@ -86,7 +86,11 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         } else {
             return time;
         }
+<<<<<<< HEAD
     };
+=======
+    }
+>>>>>>> 8fcb46a9b739456ba2ebf3e67a4289e90be7346e
 
     this.validateChronologicalSequence = function ( day, choices ) {
         let isValid = true ;
