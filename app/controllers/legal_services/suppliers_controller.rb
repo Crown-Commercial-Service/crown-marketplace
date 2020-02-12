@@ -1,5 +1,5 @@
 module LegalServices
-  class SuppliersController < FrameworkController
+  class SuppliersController < LegalServices::FrameworkController
     before_action :fetch_suppliers, only: %i[index download]
 
     def index

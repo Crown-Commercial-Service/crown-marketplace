@@ -1,7 +1,7 @@
 require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   module Beta
-    class ProcurementBuildingsController < FrameworkController
+    class ProcurementBuildingsController < FacilitiesManagement::Beta::FrameworkController
       before_action :set_procurement_building
       before_action :set_building_data
       before_action :set_back_path
