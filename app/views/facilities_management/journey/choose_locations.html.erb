@@ -20,7 +20,6 @@
               </legend>
               <div class="chooser-input">
                 <div class="govuk-accordion" data-module="accordion" id="procurement-region-accordion">
-                  <% i = 0 %>
                   <% Nuts1Region.all.each do |nuts1_region| %>
                     <div class="govuk-accordion__section chooser-section" data-section="<%= nuts1_region.code %>" data-sectionname="<%= nuts1_region.name %>">
                       <div class="govuk-accordion__section-header">
@@ -30,19 +29,19 @@
                           </span>
                         </h2>
                       </div>
-                      <div id="procurement-region-accordion-content-<%= i+=1 %>" class="govuk-accordion__section-content CCS-fm-region-filter-check-box-label">
+                      <div class="govuk-accordion__section-content CCS-fm-region-filter-check-box-label">
                         <div class="govuk-form-group chooser-input" sectionname="<%= nuts1_region.name %>" section="<%= nuts1_region.code %>">
                           <div class="govuk-checkboxes">
                             <% FacilitiesManagement::Region.all.each do |region| %>
                               <% if region.code.start_with?(nuts1_region.code) %>
                                 <div class="govuk-checkboxes__item">
                                   <%= check_box_tag("region_codes[]", region.code, @journey.current_step.regions.include?(region),
-                                                    title: region.name.gsub(160.chr("UTF-8"), " "),
+                                                    title: region.name,
                                                     class: "govuk-checkboxes__input", sectionid: nuts1_region.code,
                                                     id: "region_#{region.code}"
                                       ) %>
                                   <label class="govuk-label govuk-checkboxes__label" for="region_<%= region.code %>">
-                                    <%= region.name.gsub(160.chr("UTF-8"), " ") %>
+                                    <%= region.name %>
                                   </label>
                                 </div>
                               <% end %>
