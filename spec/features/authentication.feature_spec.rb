@@ -14,6 +14,7 @@ RSpec.feature 'Authentication', type: :feature do
     allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
     allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(session: '1234667'))
     allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+    create_cookie('foo', 'bar')
   end
 
   scenario 'Unauthenticated users cannot access protected pages' do
@@ -56,7 +57,6 @@ RSpec.feature 'Authentication', type: :feature do
     click_on 'Sign out'
 
     visit '/management-consultancy/start'
-
     expect(page).to have_text('Sign in with Cognito')
   end
 

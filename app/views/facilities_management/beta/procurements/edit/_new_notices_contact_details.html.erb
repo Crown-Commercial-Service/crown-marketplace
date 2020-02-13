@@ -3,7 +3,7 @@
   <%= form_for @procurement, url: { action: "update" }, method: :put, html: { specialvalidation: true, multipart: false } do |f| %>
 
     <%= f.fields_for :notices_contact_detail do |ff| %>
-      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0" id = "new_notices_contact_details">
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:name].any? %>">
           <%= ff.label :name, t('.name'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'notices_contact_detail.name-error' if ff.object.errors[:name].any?}" %>
           <%= display_error(ff.object, :name) %>
@@ -42,7 +42,7 @@
                 <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn"><%= 'Find Address' %></a>
               </div>
               <div class="govuk-!-margin-top-0">
-                <%= link_to t('.missing_address'), edit_facilities_management_beta_procurement_path(:step => 'new_notices_address'), class: "govuk-link--no-visited-state govuk-caption-m" %>
+                <%= link_to t('.missing_address'), edit_facilities_management_beta_procurement_path(:step => 'new_notices_address'), class: "govuk-link--no-visited-state govuk-caption-m", id: 'add_new_notices_contact_details_adress_1' %>
               </div>
             </div>
 
@@ -64,7 +64,7 @@
                     </select>
                 </div>
                 <div class="govuk-!-margin-top-2">
-                    <%= link_to t('.missing_address'), edit_facilities_management_beta_procurement_path(:step => 'new_notices_address'), class: "govuk-link--no-visited-state govuk-caption-m" %>
+                    <%= link_to t('.missing_address'), edit_facilities_management_beta_procurement_path(:step => 'new_notices_address'), class: "govuk-link--no-visited-state govuk-caption-m", id: 'add_new_notices_contact_details_adress_2' %>
                 </div>
             </div>
             </div>
