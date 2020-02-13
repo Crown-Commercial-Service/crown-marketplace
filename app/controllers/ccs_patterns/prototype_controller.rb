@@ -80,7 +80,7 @@ module CcsPatterns
       # TODO: When db intigrated this section can be refactored or removed
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def set_page_detail
       @page_data = {}
       @page_description = LayoutHelper::PageDescription.new(
@@ -104,6 +104,7 @@ module CcsPatterns
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
 
+  
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -158,6 +159,6 @@ module CcsPatterns
         }
       }.freeze
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end
