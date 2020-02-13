@@ -9,6 +9,10 @@
             <% when 'awaiting signature' %>
                 <%= "The supplier has accepetd the contract offer on #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
                 <%= "You sent this contract to the supplier on #{format_date_time @page_data[:procurement_data][:contract_sent_date]}." %>
+            <% when 'signed' %>
+                <%= "You confirmed on the #{format_date_time @page_data[:procurement_data][:date_contract_signed]} that the contract has been signed by both parties.<br/>".html_safe %>
+                <%= "The supplier accepted this contract offer on the #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
+                <%= "You sent this contract to the supplier on #{format_date_time @page_data[:procurement_data][:contract_sent_date]}." %>
             <% else %>
             <% end %>
         <% end %>
