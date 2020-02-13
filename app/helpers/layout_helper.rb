@@ -115,21 +115,18 @@ module LayoutHelper
   end
   # rubocop:enable Rails/OutputSafety
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/ParameterLists
+  # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists
   def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false)
-    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
-    buttons = form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) unless primary_button
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button && !red_secondary_button
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button && red_secondary_button
-
+    buttons = ActiveSupport::SafeBuffer.new
+    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
     buttons << capture { tag.br }
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
-
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/ParameterLists
+  # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists
 
   def govuk_page_error_summary(model_object)
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
