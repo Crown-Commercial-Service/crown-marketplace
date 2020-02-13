@@ -7,8 +7,8 @@ module CcsPatterns
     def index; end
 
     def no_response; end
-    
-    def closed 
+
+    def closed
       @page_data[:date_contract_closed] = DateTime.new(2019, 6, 23, 12, 30, 0).in_time_zone('London')
       @page_data[:date_contract_declined] = DateTime.new(2019, 6, 12, 15, 35, 0).in_time_zone('London')
       @page_data[:date_contract_sent] = DateTime.new(2019, 6, 11, 13, 37, 0).in_time_zone('London')
