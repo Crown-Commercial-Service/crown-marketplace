@@ -248,6 +248,7 @@ Rails.application.routes.draw do
     get '/prototypes', to: 'prototype#index'
     get '/prototypes/no-response', to: 'prototype#no_response'
     get '/prototypes/closed', to: 'prototype#closed'
+    get '/prototypes/declined', to: 'prototype#declined'
     get '/prototypes/next-supplier', to: 'prototype#next_supplier'
     get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
     get '/prototypes/create-a-copy', to: 'prototype#create_a_copy'
