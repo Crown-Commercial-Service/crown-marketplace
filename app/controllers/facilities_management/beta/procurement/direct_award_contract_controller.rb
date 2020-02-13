@@ -2,15 +2,14 @@ module FacilitiesManagement
   module Beta
     module Procurement
       class DirectAwardContractController < FrameworkController
-        
         skip_before_action :authenticate_user!
         before_action :set_page_detail
         before_action :set_page_model
-  
+
         def sending_the_contract
           @page_data[:supplier] = 'Cleaning London LTD'
         end
-  
+
         def review_and_generate_documents
           @page_data[:procurement_data] = { contract_name: 'School facilities London', supplier: 'Cabinet office', date_offer_expires: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), contract_number: 'RM330-DA2234-2019', contract_value: '£752,026', framework: 'RM3830', sub_lot: 'sub-lot 1a',
                                             initial_call_off_period: 7, initial_call_off_start_date: Date.new(2019, 11, 1), initial_call_off_end_date: Date.new(2016, 10, 31),
@@ -19,7 +18,7 @@ module FacilitiesManagement
                                             buildings_and_services: [{ building: 'Barton court store', service_codes: [] }, { building: 'CCS London office 5th floor', service_codes: ['C.13', 'C.20', 'N.1'] }, { building: 'Phoenix house', service_codes: [] }, { building: 'Vale court', service_codes: [] }, { building: 'W Cabinet office 3rd floor', service_codes: [] }] }
           @page_data[:contract_data] = { payment_method: 'BACS payment', invoicing_contact_details: [{ invoicing_contact: 'Robert Smith, FM administrator', address: [] }], authorised_representative: [{ representative: 'Attila the Hun, Warrior', address: ['Email: theruler@greatwarriors.com', 'Telephone: 0721 222 3334', 'Address: 21 Caucasus Rd, Westminster, London SW1A 2HQ'] }], notices: [{ notice_contact: 'Ildico Hun, Warrior`s wife', address: [] }], security_policy: 'Cabinet_office_document.pdf', local_government_pension_scheme: 'Not applicable' }
         end
-  
+
         def show
           @page_data[:procurement_data] = { contract_name: 'School facilities London', supplier: 'Cabinet office', date_offer_expires: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), contract_number: 'RM330-DA2234-2019', contract_value: '£752,026', framework: 'RM3830', sub_lot: 'sub-lot 1a',
                                             initial_call_off_period: 7, initial_call_off_start_date: Date.new(2019, 11, 1), initial_call_off_end_date: Date.new(2016, 10, 31),
@@ -29,9 +28,9 @@ module FacilitiesManagement
           # TODO: When db intigrated this section can be refactored or removed
           @page_data[:procurement_data][:status] = find_status(request.path_info)
         end
-  
+
         private
-  
+
         # rubocop:disable Metrics/CyclomaticComplexity
         # rubocop:disable Metrics/PerceivedComplexity
         def find_status(path)
@@ -45,11 +44,11 @@ module FacilitiesManagement
         end
         # rubocop:enable Metrics/PerceivedComplexity
         # rubocop:enable Metrics/CyclomaticComplexity
-  
+
         def set_page_model
           @page_data[:model_object] = FacilitiesManagement::DirectAwardContract.new
         end
-  
+
         # rubocop:disable Metrics/AbcSize
         def set_page_detail
           @page_data = {}
@@ -69,11 +68,11 @@ module FacilitiesManagement
                                                page_details(action_name)[:secondary_text])
           )
         end
-  
+
         def page_details(action)
           @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
         end
-  
+
         def page_definitions
           @page_definitions ||= {
             default: {
