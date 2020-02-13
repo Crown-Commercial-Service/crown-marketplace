@@ -1,0 +1,10 @@
+<%= render 'layouts/logo' %>
+<div class="govuk-header__content">
+  <%= render 'layouts/header-title', service: 'ccs_patterns', path: ccs_patterns_path %>
+  <nav>
+    <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+      <%= render 'layouts/back-to-start', back_to_start_path: ccs_patterns_path %>
+      <%= render 'layouts/sign-out-link', sign_out_path: facilities_management_destroy_user_session_path %>
+    </ul>
+  </nav>
+</div>

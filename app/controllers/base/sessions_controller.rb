@@ -28,7 +28,7 @@ module Base
     protected
 
     def after_sign_in_path_for(resource)
-      stored_location_for(resource) || home_page_url
+      stored_location_for(resource) || gateway_url
     end
 
     def after_sign_out_path_for(_resource)
