@@ -94,6 +94,8 @@ module CcsPatterns
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
 
+    # rubocop:disable Metrics/MethodLength
+
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -154,5 +156,6 @@ module CcsPatterns
       }.freeze
     end
     # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
   end
 end
