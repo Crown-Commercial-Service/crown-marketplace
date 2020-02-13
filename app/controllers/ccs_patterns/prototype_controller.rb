@@ -69,6 +69,8 @@ module CcsPatterns
 
     def no_suppliers; end
 
+    def create_a_copy; end
+
     private
 
     def set_page_model
@@ -103,8 +105,8 @@ module CcsPatterns
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
-
-  
+    
+    
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -119,6 +121,17 @@ module CcsPatterns
           caption2: 'Home',
           sub_title: 'View the prepared prototype views',
           secondary_url: ccs_patterns_prototypes_path,
+        },
+        next_supplier: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Offer to next supplier',
+          caption1: 'Total facilities management',
+          continuation_text: 'Confirm and send offer to supplier',
+          secondary_text: 'Cancel and close this procurement',
+          return_text: 'Return to procurement dashboard',
+          return_url: ccs_patterns_prototypes_path,
         },
         no_response: {
           page_title: 'CCT repairs services',
@@ -156,6 +169,17 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to procurement dashboard',
           primary_text: false,
+        },
+        create_a_copy: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Create a copy',
+          caption1: 'Total facilities management',
+          continuation_text: 'Save and continue',
+          secondary_text: 'Cancel',
+          return_text: 'Return to procurement dashboard',
+          return_url: ccs_patterns_prototypes_path,
         }
       }.freeze
     end
