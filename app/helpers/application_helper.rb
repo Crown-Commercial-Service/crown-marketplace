@@ -283,6 +283,10 @@ module ApplicationHelper
     date_object&.strftime '%e %B %Y, %l:%M%P'
   end
 
+  def format_money(cost)
+    "£#{number_with_delimiter(cost, delimiter: ',')}"
+  end
+
   def link_to_add_row(name, form, association, **args)
     new_object = form.object.send(association).klass.new
     id = new_object.object_id
