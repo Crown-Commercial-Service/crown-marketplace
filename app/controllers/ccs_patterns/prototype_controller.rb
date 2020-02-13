@@ -12,7 +12,7 @@ module CcsPatterns
 
     def declined
       @page_data[:date_contract_closed] = DateTime.new(2019, 6, 23, 12, 30, 0).in_time_zone('London')
-      @page_data[:date_contract_declined] = DateTime.new(2019, 11, 20, 13, 0, 0).in_time_zone('London')
+      @page_data[:date_contract_sent] = DateTime.new(2019, 6, 22, 14, 20, 0).in_time_zone('London')
       @page_data[:reason_for_declining] = "'conflict of interest or other reason, maybe a lot longer reason that usually is recorded here, but this is strictly for testing purposes and it would require a long declining reason.'"
     end
 
