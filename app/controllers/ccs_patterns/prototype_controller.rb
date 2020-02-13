@@ -16,6 +16,12 @@ module CcsPatterns
       @page_data[:reason_for_declining] = "'conflict of interest or other reason, maybe a lot longer reason that usually is recorded here, but this is strictly for testing purposes and it would require a long declining reason.'"
     end
 
+    def accepted_not_signed
+      @page_data[:date_of_confirmation] = DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London')
+      @page_data[:date_contract_accepted] = DateTime.new(2019, 6, 23, 12, 20, 0).in_time_zone('London')
+      @page_data[:date_contract_sent] = DateTime.new(2019, 6, 22, 14, 20, 0).in_time_zone('London')
+    end
+
     def closed
       @page_data[:date_contract_closed] = DateTime.new(2019, 6, 23, 12, 30, 0).in_time_zone('London')
       @page_data[:date_contract_declined] = DateTime.new(2019, 6, 12, 15, 35, 0).in_time_zone('London')
@@ -84,7 +90,7 @@ module CcsPatterns
       # TODO: When db intigrated this section can be refactored or removed
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def set_page_detail
       @page_data = {}
       @page_description = LayoutHelper::PageDescription.new(
@@ -107,8 +113,6 @@ module CcsPatterns
     def page_details(action)
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
-
-    # rubocop:disable Metrics/MethodLength
 
     def page_definitions
       @page_definitions ||= {
@@ -154,6 +158,15 @@ module CcsPatterns
           return_text: 'Return to procurement dashboard',
           return_link: '#'
         },
+        accepted_not_signed: {
+          page_title: 'Contract summary',
+          back_text: 'Back',
+          continuation_text: "View next supplier's price",
+          caption1: 'Total facilities management',
+          secondary_text: 'Close this procurement',
+          return_text: 'Return to procurement dashboard',
+          return_link: '#'
+        },
         no_suppliers: {
           back_label: 'Back',
           back_text: 'Back',
@@ -186,7 +199,6 @@ module CcsPatterns
         }
       }.freeze
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end
