@@ -6,19 +6,8 @@ module CcsPatterns
 
     def index; end
 
-    def no_response; end
-
-    def accepted_not_signed
-      @page_data[:date_of_confirmation] = DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London')
-      @page_data[:date_contract_accepted] = DateTime.new(2019, 6, 23, 12, 20, 0).in_time_zone('London')
-      @page_data[:date_contract_sent] = DateTime.new(2019, 6, 22, 14, 20, 0).in_time_zone('London')
-    end
-
-    def closed
-      @page_data[:date_contract_closed] = DateTime.new(2019, 6, 23, 12, 30, 0).in_time_zone('London')
-      @page_data[:date_contract_declined] = DateTime.new(2019, 6, 12, 15, 35, 0).in_time_zone('London')
-      @page_data[:date_contract_sent] = DateTime.new(2019, 6, 11, 13, 37, 0).in_time_zone('London')
-      @page_data[:reason_for_declining] = "'conflict of interest or other reason, maybe a lot longer reason that usually is recorded here, but this is strictly for testing purposes and it would require a long declining reason.'"
+    def no_response
+      @page_data[:supplier_respond_deadline] = DateTime.new(2019, 11, 20, 14, 37, 0).in_time_zone('London')
     end
 
     def results
@@ -82,15 +71,14 @@ module CcsPatterns
       # TODO: When db intigrated this section can be refactored or removed
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def set_page_detail
       @page_data = {}
       @page_description = LayoutHelper::PageDescription.new(
         LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
                                         page_details(action_name)[:caption1],
                                         page_details(action_name)[:caption2],
-                                        page_details(action_name)[:sub_title],
-                                        page_details(action_name)[:caption3]),
+                                        page_details(action_name)[:sub_title]),
         LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
                                            page_details(action_name)[:back_label],
                                            page_details(action_name)[:back_text]),
@@ -106,7 +94,8 @@ module CcsPatterns
       @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
     end
 
-  
+    # rubocop:disable Metrics/MethodLength
+
     def page_definitions
       @page_definitions ||= {
         default: {
@@ -134,30 +123,13 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
         },
         no_response: {
-          page_title: 'CCT repairs services',
-          back_text: 'Back',
-          continuation_text: "View next supplier's price",
-          caption1: 'Contract summary',
-          secondary_text: 'Close this procurement',
-          return_text: 'Return to procurement dashboard',
-          return_link: '#'
-        },
-        closed: {
           page_title: 'Contract summary',
           back_text: 'Back',
           continuation_text: "View next supplier's price",
-          caption1: 'Total facilities management',
-          secondary_text: 'Make a copy of your requirements',
-          return_text: 'Return to procurement dashboard',
-          return_link: '#'
-        },
-        accepted_not_signed: {
-          page_title: 'Contract summary',
-          back_text: 'Back',
-          continuation_text: "View next supplier's price",
-          caption1: 'Total facilities management',
+          caption1: 'CCT repairs services',
           secondary_text: 'Close this procurement',
           return_text: 'Return to procurement dashboard',
+          return_url: ccs_patterns_prototypes_path,
           return_link: '#'
         },
         no_suppliers: {
@@ -183,6 +155,7 @@ module CcsPatterns
         }
       }.freeze
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
   end
 end
