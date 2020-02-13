@@ -60,4 +60,8 @@ module FacilitiesManagement::Beta::RequirementsHelper
     str[0] = str[0].downcase
     str
   end
+
+  def full_address(organisation_type)
+    [@page_data[organisation_type][:building_name], @page_data[organisation_type][:street_name], @page_data[organisation_type][:city], @page_data[organisation_type][:county], @page_data[organisation_type][:postcode]].reject(&:nil?).reject(&:empty?).join(', ')
+  end
 end
