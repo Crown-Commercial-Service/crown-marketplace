@@ -1,0 +1,7 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, false) do |pd|  %>
+    <div class="govuk-body govuk-!-margin-left-0 govuk-!-padding-left-0 govuk-!-font-size-24 govuk-!-width-three-quarters">
+        Please review the full details of your requirements below in sections 1 and 2. If you wish to make any amendments, please use the change button relevant to that section. </br> Once you are satisfied that all the information is correct please use the generate documents button in section 3 to generate your call off documents. You will then be asked to review the generated contract and associated documents.
+    </div>
+    <%= render partial: 'facilities_management/beta/procurements/da_buyer/review_and_generate_documents' %>
+    
+<% end %>
