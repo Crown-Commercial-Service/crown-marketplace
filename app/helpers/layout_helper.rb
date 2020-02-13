@@ -36,7 +36,7 @@ module LayoutHelper
   class HeadingDetail
     attr_accessor(:text, :caption, :caption2, :subtitle, :caption3)
 
-    def initialize(header_text, caption1, caption2, sub_text, *caption3)
+    def initialize(header_text, caption1, caption2, sub_text, caption3)
       @text = header_text
       @caption = caption1
       @caption2 = caption2
@@ -115,18 +115,18 @@ module LayoutHelper
   end
   # rubocop:enable Rails/OutputSafety
 
-# rubocop:disable Metrics/AbcSize, Metrics/ParameterLists
+  # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity
   def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false)
     buttons = ActiveSupport::SafeBuffer.new
     buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
-    buttons << capture { tag.br }
+    buttons << capture { tag.br } if secondary_button || primary_button
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists
+  # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity
 
   def govuk_page_error_summary(model_object)
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
