@@ -1,6 +1,6 @@
 <div class="govuk-body govuk-grid-row buyer-details">
 
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds" id="buyer-details-form">
     <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { specialvalidation: false, multipart: true } do |f| %>
       <%= link_to 'Back', facilities_management_beta_path, class: "govuk-back-link govuk-!-margin-bottom-2" %>
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
@@ -65,7 +65,7 @@
                 <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn"><%= t('.find_addr') %></a>
               </div>
               <div class="govuk-!-margin-top-0">
-                <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail),  class: "govuk-link--no-visited-state govuk-caption-m" %>
+                <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail),  class: "govuk-link--no-visited-state govuk-caption-m", id: 'add-buyer-address-link-1' %>
               </div>
             </div>
 
@@ -89,7 +89,7 @@
                 </select>
               </div>
               <div class="govuk-!-margin-top-2">
-                <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail, update_address: true),  class: "govuk-link--no-visited-state govuk-caption-m" %>
+                <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail, update_address: true),  class: "govuk-link--no-visited-state govuk-caption-m", id: 'add-buyer-address-link-2'%>
               </div>
             </div>
             <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? %>" id="selected-address-container">

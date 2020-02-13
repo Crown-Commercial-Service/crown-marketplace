@@ -85,6 +85,7 @@ gem 'slim', '~> 4.0.1'
 
 # for rspec and ST data generation script
 gem 'capybara', '>= 3.20.2'
+gem 'show_me_the_cookies', '>= 5.0.0'
 
 gem 'faker'
 

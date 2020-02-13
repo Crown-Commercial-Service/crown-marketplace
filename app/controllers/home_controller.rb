@@ -14,6 +14,6 @@ class HomeController < ApplicationController
   def landing_page; end
 
   def not_permitted
-    @permission_required = params[:permission_required]
+    @service = params[:service]
   end
 end
