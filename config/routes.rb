@@ -142,8 +142,7 @@ Rails.application.routes.draw do
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
       get '/direct-award/sending-the-contract', to: 'direct_award_contract#sending_the_contract'
       get '/direct-award/review-and-generate-documents', to: 'direct_award_contract#review_and_generate_documents'
-      get '/direct-award/awaiting-response', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/awaiting-signature', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/awaiting-response', to: 'direct_award_contract#show'
       resources :procurements do
         get 'results'
       end
@@ -248,8 +247,6 @@ Rails.application.routes.draw do
     get '/prototypes', to: 'prototype#index'
     get '/prototypes/no-response', to: 'prototype#no_response'
     get '/prototypes/closed', to: 'prototype#closed'
-    get '/prototypes/next-supplier', to: 'prototype#next_supplier'
-    get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
