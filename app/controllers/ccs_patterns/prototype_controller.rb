@@ -104,6 +104,11 @@ module CcsPatterns
       @page_data[:supplier_name] = 'Cleaning London LTD'
     end
 
+    def next_supplier
+      @page_data[:contact_name] = 'Total facilities management'
+      @page_data[:supplier_name] = 'Next supplier LTD'
+    end
+
     private
 
     def set_page_model
@@ -117,8 +122,7 @@ module CcsPatterns
         LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
                                         page_details(action_name)[:caption1],
                                         page_details(action_name)[:caption2],
-                                        page_details(action_name)[:sub_title],
-                                        page_details(action_name)[:caption3]),
+                                        page_details(action_name)[:sub_title]),
         LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
                                            page_details(action_name)[:back_label],
                                            page_details(action_name)[:back_text]),
@@ -159,7 +163,7 @@ module CcsPatterns
           secondary_text: 'Change requirements'
         },
         pricing: {
-          back_url: ccs_patterns_prototypes_results_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Return to Results',
           back_label: 'Return to Results',
           page_title: 'Direct award pricing',
@@ -170,25 +174,25 @@ module CcsPatterns
           secondary_text: 'Return to results'
         },
         what_next: {
-          back_url: ccs_patterns_prototypes_pricing_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Return to Pricing',
           back_label: 'Return to Pricing',
           page_title: 'What happens next',
           caption1: 'Procurement name',
           continuation_text: 'Continue to direct award',
-          return_url: ccs_patterns_prototypes_results_path,
+          return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to Results',
           secondary_text: 'Return to results'
         },
         closing_direct_award_offer: {
-          back_url: ccs_patterns_prototypes_pricing_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
           back_label: 'Back',
           continuation_text: 'Close this procurement',
           secondary_text: 'Cancel'
         },
         procurement_closed: {
-          back_url: ccs_patterns_prototypes_pricing_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
           back_label: 'Back',
           secondary_text: 'Return to procurement dashboard'
@@ -204,50 +208,50 @@ module CcsPatterns
           secondary_text: 'Return to results'
         },
         invoicing_contact_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
           back_label: 'Back',
           page_title: 'Invoicing contact details',
           caption1: 'Total facilities management',
           continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_results_path,
+          return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
         },
         new_authorised_representative_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
           back_label: 'Back',
           page_title: 'New authorised representative details',
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
-          return_url: ccs_patterns_prototypes_results_path,
+          return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
         },
         new_invoicing_contact_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
           back_label: 'Back',
           page_title: 'New invoicing contact details',
           caption1: 'Total facilities management',
           continuation_text: 'Save and return',
-          return_url: ccs_patterns_prototypes_results_path,
+          return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to contract details',
           secondary_text: 'Return to contract details'
         },
         invoicing_contact_details_edit_address: {
-          back_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
+          back_url: ccs_patterns_path,
           back_text: 'Back',
           back_label: 'Back',
           page_title: 'Add address',
           caption1: 'New invoicing contact details',
           continuation_text: 'Continue',
-          return_url: ccs_patterns_prototypes_new_invoicing_contact_details_path,
+          return_url: ccs_patterns_prototypes_path,
           return_text: 'Return to new invoicing contact details',
         },
         did_you_know: {
-          back_url: ccs_patterns_prototypes_what_next_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
           back_label: 'Back',
           page_title: 'Important information',
@@ -268,7 +272,7 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
         },
         new_notices_contact_details: {
-          back_url: ccs_patterns_prototypes_pricing_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
           back_label: 'Back',
           page_title: 'New notices contact details',
@@ -294,7 +298,7 @@ module CcsPatterns
           secondary_url: ccs_patterns_prototypes_path
         },
         confirmation_of_signed_contract: {
-          back_url: ccs_patterns_prototypes_results_path,
+          back_url: ccs_patterns_prototypes_path,
           back_text: 'Back',
           back_label: 'Back',
           page_title: 'Confirmation of signed contract',
@@ -349,6 +353,17 @@ module CcsPatterns
           continuation_text: false,
           secondary_text: 'Return to procurement dashboard',
         },
+        next_supplier: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Offer to next supplier',
+          caption1: 'Total facilities management',
+          continuation_text: 'Confirm and send offer to supplier',
+          secondary_text: 'Cancel and close this procurement',
+          return_text: 'Return to procurement dashboard',
+          return_url: ccs_patterns_prototypes_path,
+        }
       }.freeze
     end
     # rubocop:enable Metrics/AbcSize
