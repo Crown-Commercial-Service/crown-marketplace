@@ -28,6 +28,7 @@ module FacilitiesManagement
     attribute :postcode
     attribute :telephone_number
     attribute :LGPS
+    attribute :new_contract_name
 
     validates :route_to_market, inclusion: %w[direct further]
   end
