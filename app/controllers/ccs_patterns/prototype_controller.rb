@@ -6,8 +6,13 @@ module CcsPatterns
 
     def index; end
 
-    def no_response
-      @page_data[:supplier_respond_deadline] = DateTime.new(2019, 11, 20, 14, 37, 0).in_time_zone('London')
+    def no_response; end
+
+    def closed
+      @page_data[:date_contract_closed] = DateTime.new(2019, 6, 23, 12, 30, 0).in_time_zone('London')
+      @page_data[:date_contract_declined] = DateTime.new(2019, 6, 12, 15, 35, 0).in_time_zone('London')
+      @page_data[:date_contract_sent] = DateTime.new(2019, 6, 11, 13, 37, 0).in_time_zone('London')
+      @page_data[:reason_for_declining] = "'conflict of interest or other reason, maybe a lot longer reason that usually is recorded here, but this is strictly for testing purposes and it would require a long declining reason.'"
     end
 
     def results
@@ -76,7 +81,8 @@ module CcsPatterns
         LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
                                         page_details(action_name)[:caption1],
                                         page_details(action_name)[:caption2],
-                                        page_details(action_name)[:sub_title]),
+                                        page_details(action_name)[:sub_title],
+                                        page_details(action_name)[:caption3]),
         LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
                                            page_details(action_name)[:back_label],
                                            page_details(action_name)[:back_text]),
@@ -108,13 +114,21 @@ module CcsPatterns
           secondary_url: ccs_patterns_prototypes_path,
         },
         no_response: {
+          page_title: 'CCT repairs services',
+          back_text: 'Back',
+          continuation_text: "View next supplier's price",
+          caption1: 'Contract summary',
+          secondary_text: 'Close this procurement',
+          return_text: 'Return to procurement dashboard',
+          return_link: '#'
+        },
+        closed: {
           page_title: 'Contract summary',
           back_text: 'Back',
           continuation_text: "View next supplier's price",
-          caption1: 'CCT repairs services',
-          secondary_text: 'Close this procurement',
+          caption1: 'Total facilities management',
+          secondary_text: 'Make a copy of your requirements',
           return_text: 'Return to procurement dashboard',
-          return_url: ccs_patterns_prototypes_path,
           return_link: '#'
         },
         no_suppliers: {
