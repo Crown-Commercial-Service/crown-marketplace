@@ -36,7 +36,7 @@ module LayoutHelper
   class HeadingDetail
     attr_accessor(:text, :caption, :caption2, :subtitle, :caption3)
 
-    def initialize(header_text, caption1, caption2, sub_text, *caption3)
+    def initialize(header_text, caption1, caption2, sub_text, caption3)
       @text = header_text
       @caption = caption1
       @caption2 = caption2
