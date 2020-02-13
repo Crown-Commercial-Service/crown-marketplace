@@ -17,6 +17,7 @@ module FacilitiesManagement
         @page_data[:contract_data] = { payment_method: 'BACS payment', invoicing_contact_details: [{ invoicing_contact: 'Robert Smith, FM administrator', address: [] }], authorised_representative: [{ representative: 'Attila the Hun, Warrior', address: ['Email: theruler@greatwarriors.com', 'Telephone: 0721 222 3334', 'Address: 21 Caucasus Rd, Westminster, London SW1A 2HQ'] }], notices: [{ notice_contact: 'Ildico Hun, Warrior`s wife', address: [] }], security_policy: 'Cabinet_office_document.pdf', local_government_pension_scheme: 'Not applicable' }
       end
 
+      # rubocop:disable Metrics/AbcSize
       def show
         @page_data[:procurement_data] = { contract_name: 'School facilities London', supplier: 'Cleaning London LTD', date_offer_expires: DateTime.new(2019, 7, 7, 8, 2, 0).in_time_zone('London'), contract_number: 'RM330-DA2234-2019', contract_value: 752026, framework: 'RM3830', sub_lot: 'sub-lot 1a',
                                           initial_call_off_period: 7, initial_call_off_start_date: Date.new(2019, 11, 1), initial_call_off_end_date: Date.new(2016, 10, 31),
@@ -28,6 +29,7 @@ module FacilitiesManagement
         @page_data[:supplier_details] = { title: 'Miss', full_name: 'Evelyn Smith', telephone: '0300 821 4554', email: 'evelyn@cleaningltd.co.uk', building_name: 'Cleaning London LTD', street_name: '', city: 'London', county: '', postcode: 'SW1 1ET' }
         @page_data[:procurement_data][:status] = find_status(request.path_info)
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 
@@ -76,16 +78,14 @@ module FacilitiesManagement
       def set_continuation_text
         case find_status(request.path_info)
         when 'awaiting signature'
-          return 'Confirm if contract signed or not'
-        else
-          return nil
-        end        
+          'Confirm if contract signed or not'
+        end
       end
 
       def set_secondary_text
         case find_status(request.path_info)
         when 'signed'
-          return 'Make a copy of your requirements'
+          'Make a copy of your requirements'
         else
           'Close this procurement'
         end
