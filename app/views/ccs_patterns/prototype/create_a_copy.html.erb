@@ -14,13 +14,10 @@
               <label class="govuk-heading-m govuk-!-font-weight-bold govuk-!-margin-bottom-3">
                 What do you want to call your contract?
               </label>
-              <%= govuk_text_input(f, :new_contract_name, 100) %>
-              <span class="govuk-hint">
-                You have 100 characters remaining
-              </span>
+              <%= govuk_text_area_input(f, attr, 100) %>
             </div>
           </div>
-          <%= govuk_continuation_buttons(pd, f, true, false, true) %>
+          <%= govuk_continuation_buttons(pd, f, true) %>
         </div>
     <% end %>
 <% end %>
