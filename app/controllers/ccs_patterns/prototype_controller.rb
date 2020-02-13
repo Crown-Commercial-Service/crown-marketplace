@@ -372,8 +372,8 @@ module CcsPatterns
           back_url: ccs_patterns_prototypes_path,
           page_title: 'Supplier shortlist',
           caption1: 'Total facilities management',
-          return_text: 'Return to procurement dashboard',
           return_url: ccs_patterns_prototypes_path,
+          return_text: 'Return to procurement dashboard'
         }
       }.freeze
     end
