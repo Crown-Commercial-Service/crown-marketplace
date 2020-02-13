@@ -51,6 +51,11 @@ module CcsPatterns
       @page_data[:supplier_name] = 'Cleaning London LTD'
     end
 
+    def next_supplier
+      @page_data[:contact_name] = 'Total facilities management'
+      @page_data[:supplier_name] = 'Next supplier LTD'
+    end
+
     private
 
     def set_page_model
@@ -69,8 +74,7 @@ module CcsPatterns
         LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
                                         page_details(action_name)[:caption1],
                                         page_details(action_name)[:caption2],
-                                        page_details(action_name)[:sub_title],
-                                        page_details(action_name)[:caption3]),
+                                        page_details(action_name)[:sub_title]),
         LayoutHelper::BackButtonDetail.new(page_details(action_name)[:back_url],
                                            page_details(action_name)[:back_label],
                                            page_details(action_name)[:back_text]),
