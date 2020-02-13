@@ -6,27 +6,18 @@
         <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/contract_offer_dates' %>
     
         <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/procurement_requirements' %>
-        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/supplier_contact_details' unless @page_data[:procurement_data][:status] == 'awaiting response' %>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/supplier_contact_details' if @page_data[:procurement_data][:status] == 'awaiting signature' %>
         <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/call_off_contract_documents' %>
         
         <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/when_awaiting_response' if @page_data[:procurement_data][:status] == 'awaiting response' %>
         <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/whn_awaiting_signature' if @page_data[:procurement_data][:status] == 'awaiting signature' %>
         
-        <div class ="govuk-body govuk-!-margin-top-7 govuk-!-margin-bottom-8 govuk-!-width-three-quarters">
-            <strong>
-                <% case @page_data[:procurement_data][:status] %>
-                <% when 'awaiting response' %>
-                    You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
-                <% when 'awaiting signature'%>
-                    Use the ‘confirm if contract signed or not’ button below to confirm whether or not the contract was signed. <br/>
-                    You can still withdraw this contract offer; if you need to, use the 'Close this procurement' button below, which will withdraw the offer from the supplier, and close the procurement.
-                <% else %>
-                <% end %>
-            </strong>
-        </div>
+        <%= render partial: 'contract_summary_foot' %>
 
         <% if @page_data[:procurement_data][:status] == 'awaiting response' %>
             <%= govuk_continuation_buttons(pd, f, true, true, false, true) %>
+        <% elsif @page_data[:procurement_data][:status] == 'signed' %>
+            <%= govuk_continuation_buttons(pd, f, true, true, false) %>
         <% else %>
             <%= govuk_continuation_buttons(pd, f, true, true, true, true) %>
         <% end %>
