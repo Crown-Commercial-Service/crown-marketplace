@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class DirectAwardContract
+  class ProcurementDirectAwardContract
     include ActiveModel::Model
     include Virtus.model
   end
