@@ -7,8 +7,6 @@
         <li class="govuk-header__navigation-item">
           <% if controller.controller_name == 'buildings_management'%>
             <%= link_to 'My account', facilities_management_path, class: 'govuk-header__link' %>
-          <% elsif controller.class.parent == FacilitiesManagement::DirectAwardContract %>
-            <%= link_to 'My dashboard', facilities_management_path, class: 'govuk-header__link' if user_signed_in? %>
           <% else %>
             <%= link_to 'Back to start', facilities_management_path, class: 'govuk-header__link' %>
           <% end %>
