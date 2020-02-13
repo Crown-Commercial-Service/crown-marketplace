@@ -56,6 +56,8 @@ module CcsPatterns
       @page_data[:supplier_name] = 'Next supplier LTD'
     end
 
+    def no_suppliers; end
+
     private
 
     def set_page_model
@@ -112,7 +114,18 @@ module CcsPatterns
           caption1: 'CCT repairs services',
           secondary_text: 'Close this procurement',
           return_text: 'Return to procurement dashboard',
+          return_url: ccs_patterns_prototypes_path,
           return_link: '#'
+        },
+        no_suppliers: {
+          back_label: 'Back',
+          back_text: 'Back',
+          back_url: ccs_patterns_prototypes_path,
+          page_title: 'Supplier shortlist',
+          caption1: 'Total facilities management',
+          return_url: ccs_patterns_prototypes_path,
+          return_text: 'Return to procurement dashboard',
+          primary_text: false,
         }
       }.freeze
     end

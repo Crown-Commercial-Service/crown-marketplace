@@ -247,6 +247,7 @@ Rails.application.routes.draw do
     get '/prototypes', to: 'prototype#index'
     get '/prototypes/no-response', to: 'prototype#no_response'
     get '/prototypes/next-supplier', to: 'prototype#next_supplier'
+    get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
