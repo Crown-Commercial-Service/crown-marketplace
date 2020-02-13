@@ -16,7 +16,6 @@
 require 'simplecov'
 require 'capybara'
 require 'show_me_the_cookies'
-require 'active_storage_validations/matchers'
 
 SimpleCov.start do
   add_filter '/bin/'
@@ -30,7 +29,6 @@ Capybara.register_driver :poltergeist_no_errors do |app|
 end
 
 RSpec.configure do |config|
-  config.include ActiveStorageValidations::Matchers
   config.include ShowMeTheCookies, type: :feature
 
   # rspec-expectations config goes here. You can use an alternate

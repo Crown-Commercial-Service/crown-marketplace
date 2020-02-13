@@ -8,11 +8,5 @@ module SupplyTeachers
     def authorize_user
       authorize! :read, SupplyTeachers
     end
-
-    protected
-
-    def authorize_user
-      authorize! :read, SupplyTeachers
-    end
   end
 end

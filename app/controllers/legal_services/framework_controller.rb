@@ -8,11 +8,5 @@ module LegalServices
     def authorize_user
       authorize! :read, LegalServices
     end
-
-    protected
-
-    def authorize_user
-      authorize! :read, LegalServices
-    end
   end
 end

@@ -8,11 +8,5 @@ module Apprenticeships
     def authorize_user
       authorize! :read, Apprenticeships
     end
-
-    protected
-
-    def authorize_user
-      authorize! :read, Apprenticeships
-    end
   end
 end

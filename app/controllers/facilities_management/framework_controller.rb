@@ -8,11 +8,5 @@ module FacilitiesManagement
     def authorize_user
       authorize! :read, FacilitiesManagement
     end
-
-    protected
-
-    def authorize_user
-      authorize! :read, FacilitiesManagement
-    end
   end
 end

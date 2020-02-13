@@ -8,11 +8,5 @@ module ManagementConsultancy
     def authorize_user
       authorize! :read, ManagementConsultancy
     end
-
-    protected
-
-    def authorize_user
-      authorize! :read, ManagementConsultancy
-    end
   end
 end

@@ -1,5 +1,5 @@
 <% if landing_or_admin_page %>
   <span class="govuk-header__link--service-name">Crown Marketplace</span>
 <% else %>
-  <span class="govuk-header__link--service-name" ><%= t("home.index.#{service}_link") %></span>
+  <%= link_to t("home.index.#{service}_link"), path, { class: 'govuk-header__link govuk-header__link--service-name', 'aria-label' => t('layouts.header.go_start_page_aria_label', service_name: t("home.index.#{service}_link")) } %>
 <% end %>
