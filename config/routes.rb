@@ -247,11 +247,7 @@ Rails.application.routes.draw do
     get '/new_layout', to: 'home#new_layout'
     get '/prototypes', to: 'prototype#index'
     get '/prototypes/no-response', to: 'prototype#no_response'
-<<<<<<< HEAD
     get '/prototypes/closed', to: 'prototype#closed'
-=======
-    get '/prototypes/closed', to: 'prototype#closed
->>>>>>> 21569757acde6e42bf7bda3406302da0bc2b5dff
     get '/prototypes/next-supplier', to: 'prototype#next_supplier'
     get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
