@@ -1,4 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+
   <div class= "govuk-body govuk-!-width-two-thirds ">
     <div class="govuk-warning-text ">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
@@ -22,7 +23,7 @@
 
     <p class="govuk-body-m ccs-font-weight-semi-bold govuk-!-padding-top-8">The supplier did not respond within the required timescale, so this has been automatically recorded as declined with 'no reponse' as the reason.</p>
 
-    <h2 class="govuk-heading-m">Available next steps</h4>
+    <h2 class="govuk-heading-m">Available next steps</h2>
 
     <p class="govuk-body-m ccs-font-weight-semi-bold govuk-!-margin-bottom-2">You can look at the next lowest priced supplier and the option of offering them your contract. Click on the 'View next supplier's price’ button below.</p>
     <p class="govuk-body-m ccs-font-weight-semi-bold govuk-!-margin-bottom-2">or</p>
@@ -32,6 +33,5 @@
 
   <%= form_for @page_data[:model_object], url: '#', method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_continuation_buttons(pd, f,true,true,true,true) %>
-  <%end %>
-<%end %>
-
+  <% end %>
+<% end %>

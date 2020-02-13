@@ -6,7 +6,15 @@ module CcsPatterns
 
     def index; end
 
-    def no_response; end
+    def no_response
+      @page_data[:supplier_respond_deadline] = DateTime.new(2019, 11, 20, 14, 37, 0).in_time_zone('London')
+    end
+
+    def declined
+      @page_data[:date_contract_closed] = DateTime.new(2019, 6, 23, 12, 30, 0).in_time_zone('London')
+      @page_data[:date_contract_declined] = DateTime.new(2019, 11, 20, 13, 0, 0).in_time_zone('London')
+      @page_data[:reason_for_declining] = "'conflict of interest or other reason, maybe a lot longer reason that usually is recorded here, but this is strictly for testing purposes and it would require a long declining reason.'"
+    end
 
     def accepted_not_signed
       @page_data[:date_of_confirmation] = DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London')
@@ -179,6 +187,15 @@ module CcsPatterns
           secondary_text: 'Cancel',
           return_text: 'Return to procurement dashboard',
           return_url: ccs_patterns_prototypes_path,
+        },
+        declined: {
+          page_title: 'Contract summary',
+          back_text: 'Back',
+          continuation_text: "View next supplier's price",
+          caption1: 'Total facilities management',
+          secondary_text: 'Make a copy of your requirements',
+          return_text: 'Return to procurement dashboard',
+          return_link: '#'
         }
       }.freeze
     end
