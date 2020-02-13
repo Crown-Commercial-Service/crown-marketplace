@@ -1,19 +1,19 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
-
-  <div class= "govuk-body govuk-!-width-two-thirds ">
-    <div class="govuk-warning-text ">
+  <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        Not responded
-      </strong>
+          <strong class="govuk-warning-text__text">
+              <span class="govuk-warning-text__assistive">Warning</span>
+                  Declined
+          </strong>
+  </div>
+  <div class="govuk-body ccs-font-weight-semi-bold govuk-!-width-two-thirds govuk-!-width-full-width">
+    <%= "This contract offer was closed on #{format_date_time(@page_data[:date_contract_closed])}" %>
+  </div>
+  <div class= "govuk-body govuk-!-width-two-thirds ">
+    <div class = "govuk-!-padding-bottom-3">
+      <%= govuk_details(('Contract offer history')) { "The supplier declined this contract on #{format_date_time@page_data[:date_contract_declined]}."} %>
     </div>
-    
-    <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-4">The supplier did not respond to your contract offer within the required 2 working days (48 hours).</p>
-
-    <%= govuk_details('Contract offer history') { "You sent this contract offer to the supplier on #{ format_date_time @page_data[:supplier_respond_deadline] }."} %>
-
-    <div class="govuk-!-margin-bottom-6 "></div>
+    <%= govuk_details(('Reason for declining')) { "The supplier's reason for declining was: #{@page_data[:reason_for_declining]}" } %>
   </div>
 
   <%= render partial: 'procurement_requirements' %>
@@ -26,7 +26,9 @@
     <h2 class="govuk-heading-m">Available next steps</h2>
 
     <p class="govuk-body-m ccs-font-weight-semi-bold govuk-!-margin-bottom-2">You can look at the next lowest priced supplier and the option of offering them your contract. Click on the 'View next supplier's price’ button below.</p>
+
     <p class="govuk-body-m ccs-font-weight-semi-bold govuk-!-margin-bottom-2">or</p>
+
     <p class="govuk-body-m ccs-font-weight-semi-bold ">you can close this procurement by clicking on the 'Close this procurement' button below, it will then be viewable in the closed section in your procurements dashboard. If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. This is a quick way to amend some of your requirements and re-run the results.</p>
 
   </div>
