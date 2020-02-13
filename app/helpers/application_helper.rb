@@ -242,29 +242,18 @@ module ApplicationHelper
     html
   end
 
-  def link_to_service_start_page
-    render partial: "#{controller.class.parent_name.underscore}/link_to_start_page" if controller.class.parent_name
-  end
-
-  def service_start_page_path
-    send controller.class.parent_name.underscore.tr('/', '_') + '_path' if controller.class.parent_name
-  end
-
-  def service_gateway_path
-    send controller.class.parent_name.underscore.tr('/', '_') + '_gateway_path' if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
-  end
-
-  # rubocop:disable Metrics/AbcSize
-  def service_destroy_user_session_path
-    if controller.class.parent_name && controller.class.parent_name != 'CcsPatterns'
-      send "#{controller.class.parent_name.underscore.tr('/', '_')}_destroy_user_session_path"
-    elsif controller.class.parent_name && controller.class.parent_name == 'FacilitiesManagement::Beta::Supplier'
-      send "#{controller.class.parent_name.underscore.tr('/', '_')}_destroy_user_session_path"
+  def service_header_banner
+    if params[:service]
+      render partial: "#{params[:service]}/header-banner"
     else
-      send 'destroy_user_session_path'
+      service_name = controller.class.parent_name&.underscore
+      if service_name && lookup_context.template_exists?("#{service_name}/_header-banner")
+        render partial: "#{service_name}/header-banner"
+      else
+        render partial: 'layouts/header-banner'
+      end
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def landing_or_admin_page
     (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
@@ -286,16 +275,16 @@ module ApplicationHelper
     controller.action_name == 'not_permitted'
   end
 
-  def a_supply_teachers_path?
-    controller.class.parent.name == 'SupplyTeachers'
-  end
-
   def format_date(date_object)
     date_object&.strftime '%e %B %Y'
   end
 
   def format_date_time(date_object)
     date_object&.strftime '%e %B %Y, %l:%M%P'
+  end
+
+  def format_money(cost)
+    "£#{number_with_delimiter(cost, delimiter: ',')}"
   end
 
   def link_to_add_row(name, form, association, **args)
