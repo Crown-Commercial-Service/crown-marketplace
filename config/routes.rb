@@ -144,6 +144,7 @@ Rails.application.routes.draw do
       get '/direct-award/review-and-generate-documents', to: 'direct_award_contract#review_and_generate_documents'
       get '/direct-award/awaiting-response', to: 'procurement_direct_award_contract#show'
       get '/direct-award/awaiting-signature', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/signed', to: 'procurement_direct_award_contract#show'
       resources :procurements do
         get 'results'
       end
