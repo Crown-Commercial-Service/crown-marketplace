@@ -8,6 +8,12 @@ module CcsPatterns
 
     def no_response; end
 
+    def accepted_not_signed
+      @page_data[:date_of_confirmation] = DateTime.new(2019, 6, 23, 14, 20, 0).in_time_zone('London')
+      @page_data[:date_contract_accepted] = DateTime.new(2019, 6, 23, 12, 20, 0).in_time_zone('London')
+      @page_data[:date_contract_sent] = DateTime.new(2019, 6, 22, 14, 20, 0).in_time_zone('London')
+    end
+
     def closed
       @page_data[:date_contract_closed] = DateTime.new(2019, 6, 23, 12, 30, 0).in_time_zone('London')
       @page_data[:date_contract_declined] = DateTime.new(2019, 6, 12, 15, 35, 0).in_time_zone('London')
@@ -128,6 +134,15 @@ module CcsPatterns
           continuation_text: "View next supplier's price",
           caption1: 'Total facilities management',
           secondary_text: 'Make a copy of your requirements',
+          return_text: 'Return to procurement dashboard',
+          return_link: '#'
+        },
+        accepted_not_signed: {
+          page_title: 'Contract summary',
+          back_text: 'Back',
+          continuation_text: "View next supplier's price",
+          caption1: 'Total facilities management',
+          secondary_text: 'Close this procurement',
           return_text: 'Return to procurement dashboard',
           return_link: '#'
         },
