@@ -26,6 +26,6 @@
 
 
   <%= form_for @page_data[:model_object], url: '#', method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
-    <%= govuk_continuation_buttons(pd, f,false,true,false,false) %>
+    <%= govuk_continuation_buttons(pd, f,true,true,false,false) %>
   <%end %>
 <%end %>
