@@ -1,0 +1,5 @@
+<% unless landing_or_admin_page || not_permitted_page %>
+  <li class="govuk-header__navigation-item">
+    <%= link_to 'Back to start', back_to_start_path, class: 'govuk-header__link' %>
+  </li>
+<% end %>

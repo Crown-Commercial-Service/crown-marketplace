@@ -58,4 +58,79 @@ $(function () {
             pageUtils.addressLookUp(postCode, false);
         }
     }
+
+    if (typeof(Storage) !== "undefined") {
+        let formBuyerDetails = document.getElementById('buyer-details-form');
+        let formBuyerDetailsAddress = document.getElementById('buyer-details-add-address-form');
+
+
+        if (formBuyerDetails && window.sessionStorage.buyerDetails) {
+            fillInDetails(formBuyerDetails);
+            if (window.sessionStorage.buyerDetailsCentralGovStatus) {
+                updateCentralGovCheckedStatus(window.sessionStorage.buyerDetailsCentralGovStatus);
+            }
+        }
+
+        if (formBuyerDetails) {
+            $('#add-buyer-address-link-1').on('click', function(e) {
+                getDetails(formBuyerDetails);
+            });
+            $('#add-buyer-address-link-2').on('click', function(e) {
+                getDetails(formBuyerDetails);
+            });
+            $('#facilities_management_buyer_detail_central_government_true').on('click', function(e) {
+                window.sessionStorage.buyerDetailsCentralGovStatus = true;
+            });
+            $('#facilities_management_buyer_detail_central_government_false').on('click', function(e) {
+                window.sessionStorage.buyerDetailsCentralGovStatus = false;
+            });
+        } else if (!formBuyerDetailsAddress) {
+            removeDetails();
+        }
+    }
+
+    function fillInDetails(form){
+        let [nameElem, jobTitleElem, telephoneNumberElem, orgNameElem] = makeElementName();
+        document.getElementById(nameElem).value     = window.sessionStorage.buyerDetailsName;
+        document.getElementById(jobTitleElem).value = window.sessionStorage.buyerDetailsJobTitle;
+        document.getElementById(telephoneNumberElem).value  = window.sessionStorage.buyerDetailsTelephoneNumber;
+        document.getElementById(orgNameElem).value  = window.sessionStorage.buyerDetailsOrgName;
+    }
+
+    function getDetails(form){
+        let [nameElem, jobTitleElem, telephoneNumberElem, orgNameElem] = makeElementName(form);
+
+        window.sessionStorage.buyerDetailsName        = document.getElementById(nameElem).value;
+        window.sessionStorage.buyerDetailsJobTitle    = document.getElementById(jobTitleElem).value;
+        window.sessionStorage.buyerDetailsTelephoneNumber = document.getElementById(telephoneNumberElem).value;
+        window.sessionStorage.buyerDetailsOrgName = document.getElementById(orgNameElem).value;
+        window.sessionStorage.buyerDetails = true;
+    }
+
+    function removeDetails(){
+        window.sessionStorage.removeItem('buyerDetails');
+        window.sessionStorage.removeItem('buyerDetailsName');
+        window.sessionStorage.removeItem('buyerDetailsJobTitle');
+        window.sessionStorage.removeItem('buyerDetailsTelephoneNumber');
+        window.sessionStorage.removeItem('buyerDetailsOrgName');
+        window.sessionStorage.removeItem('buyerDetailsCentralGovStatus');
+    }
+
+    function makeElementName(e) {
+        let nameElem            = 'facilities_management_buyer_detail_full_name';
+        let jobTitleElem        = 'facilities_management_buyer_detail_job_title';
+        let telephoneNumberElem = 'facilities_management_buyer_detail_telephone_number';
+        let orgNameElem         = 'facilities_management_buyer_detail_organisation_name';
+
+        return [nameElem, jobTitleElem, telephoneNumberElem, orgNameElem];
+    }
+
+    function updateCentralGovCheckedStatus(e) {
+        var checkStatus = (e == 'true');
+        if (checkStatus) {
+            $('#facilities_management_buyer_detail_central_government_true').get(0).setAttribute('checked', 'checked')
+        } else {
+            $('#facilities_management_buyer_detail_central_government_false').get(0).setAttribute('checked', 'checked')
+        }
+    }
 });
