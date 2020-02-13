@@ -141,10 +141,10 @@ module CcsPatterns
           return_url: ccs_patterns_prototypes_path,
         },
         no_response: {
-          page_title: 'CCT repairs services',
+          page_title: 'Contract summary',
           back_text: 'Back',
           continuation_text: "View next supplier's price",
-          caption1: 'Contract summary',
+          caption1: 'CCT repairs services',
           secondary_text: 'Close this procurement',
           return_text: 'Return to procurement dashboard',
           return_link: '#'
@@ -192,8 +192,8 @@ module CcsPatterns
           page_title: 'Contract summary',
           back_text: 'Back',
           continuation_text: "View next supplier's price",
-          caption1: 'Total facilities management',
-          secondary_text: 'Make a copy of your requirements',
+          caption1: 'Building factilities',
+          secondary_text: 'Close this procurement',
           return_text: 'Return to procurement dashboard',
           return_link: '#'
         }
