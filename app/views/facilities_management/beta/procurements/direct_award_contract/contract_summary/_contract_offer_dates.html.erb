@@ -1,4 +1,0 @@
-<div class="govuk-body govuk-inset-text govuk-!-width-two-thirds">
-    <%= "Awaiting a response from the supplier. <br/>".html_safe if @page_data[:procurement_data][:status] == 'awaiting response' %>
-    <%= "Your contract number is #{@page_data[:procurement_data][:contract_number]}." if @page_data[:procurement_data][:status] == 'awaiting response' %>
-</div>
