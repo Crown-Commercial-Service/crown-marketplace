@@ -1,14 +1,38 @@
-<div class ="govuk-body govuk-!-margin-top-7 govuk-!-margin-bottom-8 govuk-!-width-three-quarters">
+<hr class="govuk-section-break govuk-section-break--m"/>
+
+<% if @page_data[:procurement_data][:aasm_state] == :no_supplier_response && !@page_data[:procurement_data][:closed] %>
+    <div class ="govuk-body govuk-!-width-three-quarters">
+        <strong>
+            The supplier did not respond within the required timescale, so this has been automatically recorded as declined with 'no response' as the reason.
+        </strong>
+    </div>
+<% end %>
+
+<% unless @page_data[:procurement_data][:closed] %>
+    <% case @page_data[:procurement_data][:aasm_state] %>
+    <% when :accepted_not_signed, :supplier_declined, :no_supplier_response %>
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Available next steps</h2>
+    <% end %>
+<% end %>
+
+<div class ="govuk-body govuk-!-margin-bottom-8 govuk-!-width-three-quarters">
     <strong>
-        <% case @page_data[:procurement_data][:status] %>
-        <% when 'awaiting response' %>
-            You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
-        <% when 'awaiting signature'%>
-            Use the ‘confirm if contract signed or not’ button below to confirm whether or not the contract was signed. <br/>
-            You can still withdraw this contract offer; if you need to, use the 'Close this procurement' button below, which will withdraw the offer from the supplier, and close the procurement.
-        <% when 'signed' %>
+        <% if @page_data[:procurement_data][:closed] %>
             If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
         <% else %>
+            <% case @page_data[:procurement_data][:aasm_state] %>
+            <% when :awaiting_supplier_response %>
+                You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+            <% when :awaiting_contract_signature %>
+                Use the ‘confirm if contract signed or not’ button below to confirm whether or not the contract was signed. <br/>
+                You can still withdraw this contract offer; if you need to, use the 'Close this procurement' button below, which will withdraw the offer from the supplier, and close the procurement.
+            <% when :accepted_and_signed %>
+                If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
+            <% when :accepted_not_signed, :supplier_declined, :no_supplier_response %>
+                <div class='govuk-!-margin-bottom-2'> You can look at the next lowest priced supplier and the option of offering them your contract. Click on the 'View next supplier's price’ button below.</div>
+                <div class='govuk-!-margin-bottom-2'>or</div>
+                <div>You can close this procurement by clicking on the 'Close this procurement' button below, it will then be viewable in the closed section in your procurements dashboard. If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. This is a quick way to amend some of your requirements and re-run the results.</div>
+            <% end %>
         <% end %>
     </strong>
 </div>

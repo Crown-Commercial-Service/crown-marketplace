@@ -1,20 +1,39 @@
-<% if  @page_data[:procurement_data][:status] == 'awaiting response' %>
-    <div class="govuk-body govuk-inset-text govuk-!-width-two-thirds">
-        The supplier has not yet responded.
-    </div>
-<% else %>
-    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
-        <%= govuk_details('Contract offer history') do %>
-            <% case @page_data[:procurement_data][:status]%>
-            <% when 'awaiting signature' %>
-                <%= "The supplier has accepetd the contract offer on #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
-                <%= "You sent this contract to the supplier on #{format_date_time @page_data[:procurement_data][:contract_sent_date]}." %>
-            <% when 'signed' %>
-                <%= "You confirmed on the #{format_date_time @page_data[:procurement_data][:date_contract_signed]} that the contract has been signed by both parties.<br/>".html_safe %>
-                <%= "The supplier accepted this contract offer on the #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
-                <%= "You sent this contract to the supplier on #{format_date_time @page_data[:procurement_data][:contract_sent_date]}." %>
+<div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+    <%= govuk_details('Contract offer history') do %>
+        <% case @page_data[:procurement_data][:aasm_state]%>
+        <% when :awaiting_supplier_response %>
+            The supplier has not yet responded.
+        <% when :awaiting_contract_signature %>
+            <%= "The supplier has accepetd the contract offer on #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
+        <% when :accepted_and_signed %>
+            <%= "You confirmed on the #{format_date_time @page_data[:procurement_data][:date_contract_signed]} that the contract has been signed by both parties.<br/>".html_safe %>
+            <%= "The supplier accepted this contract offer on the #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
+        <% when :accepted_not_signed %>
+            <% if @page_data[:procurement_data][:closed] %>
+                <%= "This contract was recorded as 'not signed' on #{format_date_time @page_data[:procurement_data][:contract_declined_date]}.<br/>".html_safe %>
             <% else %>
+                <%= "The supplier accepted this contract offer on the #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
             <% end %>
+        <% when :supplier_declined %>
+            <%= "The supplier declined this contract offer on #{format_date_time @page_data[:procurement_data][:contract_declined_date]}.<br/>".html_safe if @page_data[:procurement_data][:closed] %>
+        <% when :no_supplier_response %>
+            <%= "This offer expired on #{format_date (@page_data[:procurement_data][:contract_sent_date] + 48.hours)}, because the supplier didn't respond. <br/>".html_safe if @page_data[:procurement_data][:closed] %>
+        <% when :withdrawn %>
+            <%= "You withdrew this offer on #{format_date @page_data[:procurement_data][:date_offer_withdrawn]}.<br/>".html_safe %>
         <% end %>
-    </div>
-<% end %>
+        <%= "You sent this contract offer to the supplier on #{format_date_time @page_data[:procurement_data][:contract_sent_date]}." unless @page_data[:procurement_data][:aasm_state] == :awaiting_supplier_response %>
+    <% end %>
+</div>
+
+<div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+    <% case @page_data[:procurement_data][:aasm_state] %>
+    <% when :supplier_declined %>
+        <%= govuk_details('Reason for declining') do %>
+            <%= "The supplier's reason for declining was: '#{@page_data[:procurement_data][:declined_reason]}'" %>
+        <% end %>
+    <% when :withdrawn %>
+        <%= govuk_details('Reason for withdrawing') do %>
+            <%= "Your reason for withdrawing this offer was: '#{@page_data[:procurement_data][:withdrawn_reason]}'" %>
+        <% end %>
+    <% end %>
+</div>
