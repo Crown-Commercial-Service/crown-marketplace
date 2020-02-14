@@ -147,6 +147,7 @@ Rails.application.routes.draw do
       get '/direct-award/signed', to: 'procurement_direct_award_contract#show'
       resources :procurements do
         get 'results'
+        get 'further_competition_spreadsheet'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
