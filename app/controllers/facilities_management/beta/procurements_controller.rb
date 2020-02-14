@@ -1,7 +1,11 @@
 require 'facilities_management/fm_buildings_data'
+require 'rubygems'
+
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FacilitiesManagement::Beta::FrameworkController
+      include FurtherCompetitionConcern
+
       before_action :set_procurement, only: %i[show edit update destroy results]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
@@ -113,6 +117,18 @@ module FacilitiesManagement
         end
       end
 
+      def further_competition_spreadsheet
+        init_further_competition
+        build_direct_award_report true
+
+        uvals = []
+        building_ids_with_service_codes2 = get_building_ids_uvals(uvals)
+
+        spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
+        spreadsheet_builder.build
+        send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
+      end
+
       def summary
         @page_data = {}
         @page_data[:model_object] = @procurement
@@ -126,6 +142,15 @@ module FacilitiesManagement
       end
 
       private
+
+      def init_further_competition
+        if params[:procurement_id]
+          @procurement = current_user.procurements.where(id: params[:procurement_id]).first
+          @start_date = @procurement[:initial_call_off_start_date]
+        else
+          @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+        end
+      end
 
       # rubocop:disable Metrics/AbcSize
       def set_view_data
