@@ -31,13 +31,7 @@
             <%= display_error(ff.object, :organisation_address_postcode) %>
             <%= ff.text_field :organisation_address_postcode, class: "govuk-input govuk-!-width-one-third #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", maxlength: 50 %>
           </div>
-
-            <%= ff.hidden_field :name %>
-            <%= ff.hidden_field :job_title %>
-            <%= ff.hidden_field :email %>
-            
-            <%= govuk_continuation_buttons(@page_description, f, false) %>
-
+        <%= govuk_continuation_buttons(@page_description, f, false) %>
         </div>
         <% end %>
     <% end %>
