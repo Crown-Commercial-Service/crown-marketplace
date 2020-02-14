@@ -372,6 +372,7 @@ module FacilitiesManagement
         (building[key_name].present? ? !building[key_name].empty? : false)
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity
       def get_building_ready_status(building)
         building_element_valid?(building, 'name') &&
           (building_element_valid?(building, 'region') ||
@@ -381,6 +382,7 @@ module FacilitiesManagement
           building_element_valid?(building, 'security-type') &&
           building_element_valid?(building, 'gia')
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       def validate_input_building
         # used to verify building-id parameter
