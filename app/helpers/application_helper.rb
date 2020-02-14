@@ -282,9 +282,9 @@ module ApplicationHelper
   def format_date_time(date_object)
     date_object&.strftime '%e %B %Y, %l:%M%P'
   end
-  
+
   def format_date_time_day(date_object)
-    date_object&.strftime '%A %e %B %Y, %l:%M%P'
+    date_object&.strftime '%A %e %B %Y at %l:%M%P'
   end
 
   def format_money(cost)
