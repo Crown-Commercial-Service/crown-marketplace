@@ -1,9 +1,9 @@
 <hr class="govuk-section-break govuk-section-break--m"/>
 
-<% if @page_data[:procurement_data][:aasm_state] == :no_supplier_response %>
+<% if @page_data[:procurement_data][:aasm_state] == :no_supplier_response && !@page_data[:procurement_data][:closed] %>
     <div class ="govuk-body govuk-!-width-three-quarters">
         <strong>
-            The supplier did not respond within the required timescale, so this has been automatically recorded as declined with 'no reponse' as the reason.
+            The supplier did not respond within the required timescale, so this has been automatically recorded as declined with 'no response' as the reason.
         </strong>
     </div>
 <% end %>

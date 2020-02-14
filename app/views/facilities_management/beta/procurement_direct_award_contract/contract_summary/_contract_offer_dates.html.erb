@@ -10,16 +10,16 @@
             <%= "The supplier accepted this contract offer on the #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
         <% when :accepted_not_signed %>
             <% if @page_data[:procurement_data][:closed] %>
-                <%= "This contract was recorded as 'not signed' on #{format_date_time @page_data[:procurement_data][:contract_declined_date]}<br/>".html_safe %>
+                <%= "This contract was recorded as 'not signed' on #{format_date_time @page_data[:procurement_data][:contract_declined_date]}.<br/>".html_safe %>
             <% else %>
                 <%= "The supplier accepted this contract offer on the #{format_date_time @page_data[:procurement_data][:contract_accepted_date]}.<br/>".html_safe %>
             <% end %>
         <% when :supplier_declined %>
-            <%= "The supplier declined this contract offer on #{format_date_time @page_data[:procurement_data][:contract_declined_date]}<br/>".html_safe if @page_data[:procurement_data][:closed] %>
+            <%= "The supplier declined this contract offer on #{format_date_time @page_data[:procurement_data][:contract_declined_date]}.<br/>".html_safe if @page_data[:procurement_data][:closed] %>
         <% when :no_supplier_response %>
-            <%= "This offer expired on #{format_date (@page_data[:procurement_data][:contract_sent_date] + 48.hours)}, because the supplier didn't respond <br/>".html_safe if @page_data[:procurement_data][:closed] %>
+            <%= "This offer expired on #{format_date (@page_data[:procurement_data][:contract_sent_date] + 48.hours)}, because the supplier didn't respond. <br/>".html_safe if @page_data[:procurement_data][:closed] %>
         <% when :withdrawn %>
-            <%= "You withdrew this offer on #{format_date @page_data[:procurement_data][:date_offer_withdrawn]}<br/>".html_safe %>
+            <%= "You withdrew this offer on #{format_date @page_data[:procurement_data][:date_offer_withdrawn]}.<br/>".html_safe %>
         <% end %>
         <%= "You sent this contract offer to the supplier on #{format_date_time @page_data[:procurement_data][:contract_sent_date]}." unless @page_data[:procurement_data][:aasm_state] == :awaiting_supplier_response %>
     <% end %>
