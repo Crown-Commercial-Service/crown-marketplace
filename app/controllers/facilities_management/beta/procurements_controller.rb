@@ -419,7 +419,7 @@ module FacilitiesManagement
         @page_data[:estimated_cost] = @procurement.assessed_value
         @page_data[:selected_sublot] = @procurement.lot_number
         @page_data[:buildings] = @active_procurement_buildings.map { |b| b[:name] }
-        @page_data[:services] = @procurement.procurement_building_services.map { |s| s[:name] }
+        @page_data[:services] = @procurement.procurement_building_services.where(facilities_management_procurement_building_id: @active_procurement_buildings).map { |s| s[:name] }
         @page_data[:supplier_prices] = @procurement.procurement_suppliers.map(&:direct_award_value)
       end
 
