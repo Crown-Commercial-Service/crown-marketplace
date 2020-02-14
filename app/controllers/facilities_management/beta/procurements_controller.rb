@@ -50,10 +50,6 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
       def edit
-        set_invoice_data if params['step'] == 'new_invoicing_address'
-        set_authorised_data if params['step'] == 'new_authorised_representative_address'
-        set_notices_data if params['step'] == 'new_notices_address'
-
         if @procurement.quick_search?
           render :edit
         else
@@ -429,30 +425,96 @@ module FacilitiesManagement
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
-        set_contact_details_data
+        contact_details_data_setup(params[:step])
+        verify_completed_contact_details(params[:step])
       end
 
-      # rubocop:disable Metrics/CyclomaticComplexity
-      def set_contact_details_data
-        set_invoice_data if !params['step'].nil? && params['step'] == 'new_invoicing_contact_details'
-        set_authorised_data if !params['step'].nil? && params['step'] == 'new_authorised_representative_details'
-        set_notices_data if !params['step'].nil? && params['step'] == 'new_notices_contact_details'
+      def contact_details_data_setup(step)
+        return if step.nil?
+
+        case step
+        when 'new_invoicing_contact_details', 'new_invoicing_address'
+          set_invoice_data
+        when 'new_authorised_representative_details', 'new_authorised_representative_address'
+          set_authorised_data
+        when 'new_notices_contact_details', 'new_notices_address'
+          set_notices_data
+        end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity
+
+      # rubocop:disable Style/GuardClause
+      def verify_completed_contact_details(step)
+        if delete_pension_data? step
+          @procurement.procurement_pension_funds.delete
+          @procurement.update(local_government_pension_scheme: nil)
+          @procurement.reload
+        end
+
+        return if step.nil?
+
+        if delte_invoice_data? step
+          @procurement.invoice_contact_detail.delete
+          @procurement.reload
+        end
+        if delete_authorised_data? step
+          @procurement.authorised_contact_detail.delete
+          @procurement.reload
+        end
+        if delete_notices_data? step
+          @procurement.notices_contact_detail.delete
+          @procurement.reload
+        end
+      end
+      # rubocop:enable Style/GuardClause
 
       def set_invoice_data
         @procurement.build_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
-        @invoice_contact_detail = @procurement.invoice_contact_detail
       end
 
       def set_authorised_data
         @procurement.build_authorised_contact_detail if @procurement.authorised_contact_detail.blank?
-        @authorised_contact_detail = @procurement.authorised_contact_detail
       end
 
       def set_notices_data
         @procurement.build_notices_contact_detail if @procurement.notices_contact_detail.blank?
-        @notices_contact_detail = @procurement.notices_contact_detail
+      end
+
+      def delte_invoice_data?(step)
+        case step
+        when 'new_invoicing_contact_details', 'new_invoicing_address'
+          false
+        else
+          !@procurement.invoice_contact_detail.nil? && @procurement.invoice_contact_detail.name.nil?
+        end
+      end
+
+      def delete_authorised_data?(step)
+        case step
+        when 'new_authorised_representative_details', 'new_authorised_representative_address'
+          false
+        else
+          !@procurement.authorised_contact_detail.nil? && @procurement.authorised_contact_detail.name.nil?
+        end
+      end
+
+      def delete_notices_data?(step)
+        case step
+        when 'new_notices_contact_details', 'new_notices_address'
+          false
+        else
+          !@procurement.notices_contact_detail.nil? && @procurement.notices_contact_detail.name.nil?
+        end
+      end
+
+      def delete_pension_data?(step)
+        return false unless @procurement.local_government_pension_scheme
+
+        case step
+        when 'local_government_pension_scheme', 'pension_funds'
+          false
+        else
+          @procurement.procurement_pension_funds.empty?
+        end
       end
 
       def procurement_route_params
