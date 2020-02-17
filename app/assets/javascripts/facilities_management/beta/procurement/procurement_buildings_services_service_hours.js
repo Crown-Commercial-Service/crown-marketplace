@@ -95,8 +95,8 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         let startTime = (parseInt(choices[day]["start"]["hour"].value) + (afternoon_start ? 12 : 0)) + choices[day]["start"]["minute"].value.padStart(2, '0');
         let afternoon_end = choices[day]["end"]["ampmElem"].val() === 'PM';
         let endTime = (parseInt(choices[day]["end"]["hour"].value) + (afternoon_end ? 12 : 0)) + choices[day]["end"]["minute"].value.padStart(2, '0');
-        let startTimeFirstDigits = startTime.substring(0,2);
-        let endTimeFirstDigits = endTime.substring(0,2);
+        let startTimeFirstDigits = startTime.substring(0,1);
+        let endTimeFirstDigits = endTime.substring(0,1);
         startTime = this.validateTwelveHourTime( startTime, startTimeFirstDigits);
         endTime = this.validateTwelveHourTime( endTime, endTimeFirstDigits);
         if ( parseInt(endTime) <= parseInt(startTime)) {
@@ -104,13 +104,13 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
             choices[String(day)]["end"].status = false;
             choices[String(day)]["end"].errorType = "min";
         }
-        if (endTimeFirstDigits === "00"){
+        if (endTimeFirstDigits === "0"){
             isValid = false;
             choices[String(day)]["end"].status = false;
             choices[String(day)]["end"].errorType = "invalid";
             this.displayTimeErrors(day, "start", choices);
         }
-        if (startTimeFirstDigits === "00") {
+        if (startTimeFirstDigits === "0") {
             isValid = false;
             choices[String(day)]["start"].status = false;
             choices[String(day)]["start"].errorType = "invalid";
