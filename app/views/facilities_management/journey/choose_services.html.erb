@@ -39,7 +39,7 @@
                             <% @journey.current_step.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
                               <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
                                 <fieldset class="govuk-fieldset" aria-describedby="<%= work_package['name'] %>">
-                                  <div id="services-checkboxes" class="govuk-checkboxes">
+                                  <div class="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
                                       <%= check_box_tag("service_codes[]", work_package['code'], @journey.current_step.service_codes.include?(work_package['code']),
                                                         title: work_package['name'],
@@ -60,7 +60,7 @@
                             <% end %>
                             <% if @journey.current_step.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
                               <p><%= t('facilities_management.basket.or_text') %></p>
-                              <div id="services-checkboxes" class="govuk-checkboxes">
+                              <div class="govuk-checkboxes">
                                 <div class="govuk-checkboxes__item">
                                   <input title="Select all code-<%= service['code'] %> services"
                                          style="margin-top:4px"
