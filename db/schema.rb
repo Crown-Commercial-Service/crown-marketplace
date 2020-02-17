@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_27_104344) do
+ActiveRecord::Schema.define(version: 2020_02_03_170223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -156,10 +156,10 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
     t.string "da_journey_state"
-    t.string "payment_method"
     t.boolean "using_buyer_detail_for_invoice_details"
     t.boolean "using_buyer_detail_for_notices_detail"
     t.boolean "using_buyer_detail_for_authorised_detail"
+    t.string "payment_method"
     t.boolean "local_government_pension_scheme"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
@@ -182,6 +182,29 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.datetime "updated_at", null: false
     t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
     t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
+  end
+
+  create_table "facilities_management_supplier_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "name", limit: 255
+    t.boolean "lot1a"
+    t.boolean "lot1b"
+    t.boolean "lot1c"
+    t.boolean "direct_award"
+    t.boolean "sme"
+    t.string "contact_name", limit: 255
+    t.string "contact_email", limit: 255
+    t.string "contact_number", limit: 255
+    t.string "duns", limit: 255
+    t.string "registration_number", limit: 255
+    t.string "address_line_1", limit: 255
+    t.string "address_line_2", limit: 255
+    t.string "address_town", limit: 255
+    t.string "address_county", limit: 255
+    t.string "address_postcode", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_facilities_management_supplier_details_on_user_id"
   end
 
   create_table "facilities_management_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -226,14 +249,15 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "fm_rates", id: false, force: :cascade do |t|
     t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
-    t.string "standard", limit: 1
-    t.boolean "direct_award"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.index ["code"], name: "index_fm_rates_on_code"
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|
@@ -275,7 +299,6 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
     t.string "unit_text"
     t.string "data_type"
     t.string "spreadsheet_label"
-    t.string "unit_measure_label"
     t.text "service_usage", array: true
   end
 
@@ -614,6 +637,7 @@ ActiveRecord::Schema.define(version: 2020_01_27_104344) do
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
+  add_foreign_key "facilities_management_supplier_details", "users"
   add_foreign_key "legal_services_regional_availabilities", "legal_services_suppliers"
   add_foreign_key "legal_services_service_offerings", "legal_services_suppliers"
   add_foreign_key "management_consultancy_rate_cards", "management_consultancy_suppliers"

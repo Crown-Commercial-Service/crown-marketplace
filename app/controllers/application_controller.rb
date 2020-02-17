@@ -4,11 +4,11 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   rescue_from CanCan::AccessDenied do
-    redirect_to not_permitted_path(permission_required: request.path_parameters[:controller].split('/').first)
+    redirect_to not_permitted_path(service: request.path_parameters[:controller].split('/').first)
   end
 
   def gateway_url
-    case session[:last_visited_framework]
+    case controller_path.split('/').first
     when 'supply_teachers'
       st_gateway_path
     when 'management_consultancy'
@@ -20,24 +20,7 @@ class ApplicationController < ActionController::Base
     when 'legal_services'
       legal_services_gateway_url
     else
-      supply_teachers_gateway_url
-    end
-  end
-
-  def home_page_url
-    case session[:last_visited_framework]
-    when 'supply_teachers'
-      st_home_url
-    when 'management_consultancy'
-      management_consultancy_url
-    when 'facilities_management'
       facilities_management_url
-    when 'apprenticeships'
-      apprenticeships_url
-    when 'legal_services'
-      legal_services_url
-    else
-      ccs_homepage_url
     end
   end
 
@@ -76,14 +59,6 @@ class ApplicationController < ActionController::Base
   def st_gateway_path
     if request.headers['REQUEST_PATH']&.include?('/supply-teachers/admin')
       supply_teachers_admin_user_session_url
-    else
-      supply_teachers_gateway_url
-    end
-  end
-
-  def st_home_url
-    if request.headers['REQUEST_PATH']&.include?('/supply-teachers/admin')
-      supply_teachers_admin_uploads_path
     else
       supply_teachers_gateway_url
     end

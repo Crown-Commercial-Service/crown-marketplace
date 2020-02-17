@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module Beta
     module Supplier
-      class HomeController < FrameworkController
+      class HomeController < FacilitiesManagement::Beta::Supplier::FrameworkController
         before_action :authenticate_user!, except: :index
         before_action :authorize_user, except: :index
 

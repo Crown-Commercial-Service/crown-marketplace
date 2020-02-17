@@ -40,11 +40,13 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
         unless @units_of_measure_values.nil?
           p.workbook.add_worksheet(name: 'Volume') do |sheet|
-            add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric',	'Unit of Measure'])
-            add_volumes_information(sheet)
-            style_volume_sheet(sheet, standard_column_style)
+            add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
+            number_volume_services = add_volumes_information(sheet)
+            style_volume_sheet(sheet, standard_column_style, number_volume_services)
           end
         end
+
+        add_service_periods_worksheet(p, standard_column_style)
 
         add_customer_and_contract_details(p) if @procurement
 
@@ -53,7 +55,20 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
+  def list_of_allowed_volume_services
+    # FM-736 requirement
+    %w[C.5 E.4 G.1 G.3 G.5 H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6 K.1 K.2 K.3 K.7]
+  end
+
   private
+
+  def add_service_periods_worksheet(package, standard_column_style)
+    package.workbook.add_worksheet(name: 'Service Periods') do |sheet|
+      add_header_row(sheet, ['Service Reference', 'Service Name', 'Specific Service Periods'])
+      rows_added = add_service_periods(sheet)
+      style_service_periods_matrix_sheet(sheet, standard_column_style, rows_added) if sheet.rows.size > 1
+    end
+  end
 
   def add_customer_and_contract_details(package)
     package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
@@ -97,6 +112,13 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     column_widths = [15, 100]
     @buildings.count.times { column_widths << 50 }
     sheet["A2:B#{@services.count + 1}"].each { |c| c.style = style }
+    sheet.column_widths(*column_widths)
+  end
+
+  def style_service_periods_matrix_sheet(sheet, style, rows_added)
+    column_widths = [15, 100]
+    @buildings.count.times { column_widths << 50 }
+    sheet["A2:B#{rows_added + 1}"].each { |c| c.style = style }
     sheet.column_widths(*column_widths)
   end
 
@@ -188,7 +210,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Location (NUTS Region)']
 
     @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:address][:'fm-nuts-region']
+      row << building_with_service_codes[:building].building_json[:address][:'fm-address-region']
     end
 
     row
@@ -239,21 +261,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def add_volumes_information(sheet)
-    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.select(:id, :service_usage, :unit_measure_label)
-
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
 
-    services_without_help_cafm = remove_help_cafm_services(@services)
-    services_without_help_cafm.each do |s|
-      unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s['code'] + '%').first
-      unit_of_measurement_value = begin
-                                    unit_of_measurement_row['unit_measure_label']
-                                  rescue NameError
-                                    nil
-                                  end
-      new_row = [s['code'], s['name'], s['metric'], unit_of_measurement_value]
+    allowed_volume_services = @services.dup
+    remove_not_allowed_volume_services(allowed_volume_services)
+
+    allowed_volume_services.each do |s|
+      new_row = [s['code'], s['name'], s['metric']]
       @buildings_with_service_codes.each do |b|
         uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
 
@@ -265,18 +280,73 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
       sheet.add_row new_row, style: number_column_style
     end
+    allowed_volume_services.count
   end
-  # rubocop:enable Metrics/AbcSize
 
-  def style_volume_sheet(sheet, style)
+  def style_volume_sheet(sheet, style, number_volume_services)
     column_widths = [15, 100, 50, 50]
     @buildings.count.times { column_widths << 20 }
-    sheet["A2:D#{remove_help_cafm_services(@services).count + 1}"].each { |c| c.style = style }
+    sheet["A2:D#{number_volume_services + 1}"].each { |c| c.style = style }
     sheet.column_widths(*column_widths)
   end
 
-  def remove_help_cafm_services(services)
-    services.reject { |x| x['code'] == 'M.1' || x['code'] == 'N.1' }
+  def add_service_periods(sheet)
+    rows_added = 0
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
+
+    hours_required_services.each do |service|
+      Date::DAYNAMES.rotate(1).each do |day|
+        row_values = [service['code'], service['name'], day]
+        @building_ids_with_service_codes.each do |building|
+          service_measure = @units_of_measure_values.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+          row_values << add_service_measure_row_value(service_measure, day)
+        end
+
+        rows_added += 1
+        sheet.add_row row_values, style: standard_style, height: standard_row_height
+      end
+    end
+    rows_added
+  end
+
+  def hours_required_services
+    allowed_services = []
+    FacilitiesManagement::StaticData.work_packages.select { |work_package| allowed_services << work_package['code'] if work_package['metric'] == 'Number of hours required' }
+    @services.select { |service| allowed_services.include? service['code'] }
+  end
+
+  def add_service_measure_row_value(service_measure, day)
+    return nil if service_measure.nil? || service_measure[:uom_value].instance_of?(String)
+
+    day_symbol = day.downcase.to_sym
+    case service_measure[:uom_value][day_symbol]['service_choice']
+    when 'not_required'
+      'Not required'
+    when 'all_day'
+      'All day (24 hours)'
+    when 'hourly'
+      determine_start_hourly_text(service_measure, day_symbol) + ' to ' + determine_end_hourly_text(service_measure, day_symbol)
+    else
+      'unknown??' + service_measure[:uom_value][day_symbol]['service_choice']
+    end
+  end
+
+  def determine_start_hourly_text(service_measure, day_symbol)
+    start_hour = format('%02d', service_measure[:uom_value][day_symbol]['start_hour'])
+    start_minute = format('%02d', service_measure[:uom_value][day_symbol]['start_minute'])
+    start_ampm = service_measure[:uom_value][day_symbol]['start_ampm'].downcase
+    start_hour + ':' + start_minute + start_ampm
+  end
+
+  def determine_end_hourly_text(service_measure, day_symbol)
+    end_hour = format('%02d', service_measure[:uom_value][day_symbol]['end_hour'])
+    end_minute = format('%02d', service_measure[:uom_value][day_symbol]['end_minute'])
+    end_ampm = service_measure[:uom_value][day_symbol]['end_ampm'].downcase
+    end_hour + ':' + end_minute + end_ampm
+  end
+
+  def remove_not_allowed_volume_services(services)
+    services.keep_if { |x| list_of_allowed_volume_services.include? x['code'] }
   end
 
   def add_contract_number(sheet)

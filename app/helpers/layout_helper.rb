@@ -34,17 +34,18 @@ module LayoutHelper
   end
 
   class HeadingDetail
-    attr_accessor(:text, :caption, :caption2, :subtitle)
+    attr_accessor(:text, :caption, :caption2, :subtitle, :caption3)
 
-    def initialize(header_text, caption1, caption2, sub_text)
+    def initialize(header_text, caption1, caption2, sub_text, caption3)
       @text = header_text
       @caption = caption1
       @caption2 = caption2
       @subtitle = sub_text
+      @caption3 = caption3
     end
 
     def caption?
-      @caption.present? || caption2.present?
+      @caption.present? || caption2.present? || caption3.present?
     end
   end
 
@@ -87,8 +88,14 @@ module LayoutHelper
     out.html_safe
   end
 
+  # rubocop:disable Metrics/AbcSize
   def govuk_page_header(heading_details)
     content_tag(:h1, class: 'govuk-heading-xl') do
+      if heading_details.caption3.present?
+        concat(content_tag(:span, class: 'govuk-caption-m govuk-!-margin-bottom-1') do
+          concat(heading_details.caption3)
+        end).html_safe
+      end
       if heading_details.caption?
         concat(content_tag(:span, class: 'govuk-caption-xl') do
           concat(heading_details.caption)
@@ -99,6 +106,7 @@ module LayoutHelper
       concat(content_tag(:p, heading_details.subtitle, class: 'govuk-body-l')) if heading_details.subtitle.present?
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def govuk_back_button(back_button)
     link_to(back_button.text.nil? ? t('layouts.application.back') : back_button.text, back_button.url,
@@ -107,19 +115,18 @@ module LayoutHelper
   end
   # rubocop:enable Rails/OutputSafety
 
-  # rubocop:disable Metrics/AbcSize
-  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true)
-    buttons = form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
-    buttons = form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) unless primary_button
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
-    buttons << capture { tag.br }
+  # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity
+  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false)
+    buttons = ActiveSupport::SafeBuffer.new
+    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
+    buttons << capture { tag.br } if secondary_button || primary_button
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
-
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity
 
   def govuk_page_error_summary(model_object)
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
@@ -275,18 +282,7 @@ module LayoutHelper
         link_to 'My Account', facilities_management_beta_path, class: 'govuk-header__link' if user_signed_in?
       end
     end
-    html << content_tag(:li, class: 'govuk-header__navigation-item') do
-      link_to 'Sign out', service_destroy_user_session_path, method: :delete, class: 'govuk-header__link ccs-header__signout'
-    end
     safe_join(html)
-  end
-
-  def not_permitted_page_header_link
-    if current_user&.has_role?(:supplier)
-      render 'facilities_management/beta/supplier/link_to_start_page'
-    elsif current_user&.has_role?(:buyer)
-      render 'facilities_management/beta/link_to_start_page'
-    end
   end
 end
 # rubocop:enable Metrics/ModuleLength

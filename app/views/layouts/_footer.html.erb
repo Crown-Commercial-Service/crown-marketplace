@@ -26,7 +26,7 @@
           <div class="govuk-grid-column-two-thirds">
             <div class="govuk-footer__meta">
               <div class="govuk-footer__meta-item">
-                <a href="/cookies" aria-label= "<%= t('layouts.application.cookie_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t("layouts.application.cookie_link") %></a>
+                <%= link_to t("layouts.application.cookie_link"), cookies_path(service: controller.class.parent_name&.underscore), class: "ccs-footer__links ccs-no-print", aria: {label: t('layouts.application.cookie_link_aria_label')} %>
               </div>
               <div class="govuk-footer__meta-item">
                 <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice/crown-commercial-service-privacy-notice" aria-label= "<%= t('layouts.application.privacy_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t("layouts.application.privacy_link") %></a>

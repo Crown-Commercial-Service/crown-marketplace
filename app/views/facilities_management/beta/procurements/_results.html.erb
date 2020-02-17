@@ -19,23 +19,21 @@
     <p><%= s %></p>
     <%= '<hr class="govuk-!-width-one-third govuk-section-break govuk-section-break--m govuk-section-break--visible">'.html_safe unless s.equal?(@page_data[:supplier_collection].last) %>
   <% end %>
-  <% if eligible_for_direct_award? %>
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
-    <h2 class="govuk-heading govuk-heading-m"><%= t('.building_services_summary') %></h2>
-    <%= govuk_details "#{'Building'.pluralize(@page_data[:buildings].length)} (#{@page_data[:buildings].length})" do %>
-      <ul>
-        <% @page_data[:buildings].each do |b| %>
-          <li><%= b %></li>
-        <% end %>
-      </ul>
-    <% end %>
-    <%= govuk_details "#{'Service'.pluralize(@page_data[:services].length)} (#{@page_data[:services].length})" do %>
-      <ul>
-        <% @page_data[:services].each do |s| %>
-          <li><%= s %></li>
-        <% end %>
-      </ul>
-    <% end %>
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
+  <h2 class="govuk-heading govuk-heading-m"><%= t('.building_services_summary') %></h2>
+  <%= govuk_details "#{'Building'.pluralize(@page_data[:buildings].length)} (#{@page_data[:buildings].length})" do %>
+    <ul>
+      <% @page_data[:buildings].each do |b| %>
+        <li><%= b %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <%= govuk_details "#{'Service'.pluralize(@page_data[:services].uniq.length)} (#{@page_data[:services].uniq.length})" do %>
+    <ul>
+      <% @page_data[:services].uniq.each do |s| %>
+        <li><%= s %></li>
+      <% end %>
+    </ul>
   <% end %>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
