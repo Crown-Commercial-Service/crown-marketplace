@@ -5,67 +5,134 @@
         <table class="govuk-table">
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                    <th class="govuk-table__cell" scope="row"></th>
-                    <td class="govuk-table__cell"></td>
-                    <td class="govuk-table__cell"></td>
+                    <th class="govuk-table__cell" scope="row" width="45%"></th>
+                    <td class="govuk-table__cell" width="45%"></td>
+                    <td class="govuk-table__cell" width="10%"></td>
                 </tr>
                 <tr class="govuk-table__row">
-                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.payment_method') %></th>
-                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
-                      <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'payment_method') if @page_data[:model_object][:payment_method].blank? %>
-                      <%= t('facilities_management.beta.procurements.edit.payment_method.bacs_payment') if @page_data[:model_object][:payment_method] == 'bacs' and @page_data[:model_object][:payment_method].present? %>
-                      <%= t('facilities_management.beta.procurements.edit.payment_method.government_procurement_card') if @page_data[:model_object][:payment_method] == 'card' and @page_data[:model_object][:payment_method].present? %>
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.payment_method') %></th>
+                    <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @page_data[:model_object][:payment_method].nil? %>">
+                      <% case @page_data[:model_object][:payment_method] %>
+                      <% when 'bacs' %>
+                        <%= t('facilities_management.beta.procurements.edit.payment_method.bacs_payment') %>
+                      <% when 'card' %>
+                        <%= t('facilities_management.beta.procurements.edit.payment_method.government_procurement_card') %>
+                      <% else %>
+                        <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'payment_method') %>
+                      <% end %>
                     </td>
                     <td class="govuk-table__cell">
                       <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'payment_method') if @page_data[:model_object][:payment_method].present? %>
                     </td>
                 </tr>
+
                 <tr class="govuk-table__row">
-                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.invoicing_contact_details') %></th>
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.invoicing_contact_details') %></th>
                     <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
-                      <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'invoicing_contact_details') if @page_data[:model_object][:using_buyer_detail_for_invoice_details].nil?%>
-                      <%= @page_data[:model_object][:using_buyer_detail_for_invoice_details] unless @page_data[:model_object][:using_buyer_detail_for_invoice_details].nil?%>
+                      <% case @page_data[:model_object][:using_buyer_detail_for_invoice_details] %>
+                      <% when true %>
+                        <%= govuk_details("#{@current_user.buyer_detail.full_name}, #{@current_user.buyer_detail.job_title}", true) do %>
+                            <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+                            <%= "Address: #{@current_user.buyer_detail.full_organisation_address}"%>
+                        <% end %>
+                      <% when false %>
+                        <%= govuk_details("#{@procurement.invoice_contact_detail.name}, #{@procurement.invoice_contact_detail.job_title}", true) do %>
+                            <%= mail_to @procurement.invoice_contact_detail.email, @procurement.invoice_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+                            <%= "Address: #{@procurement.invoice_contact_detail.contact_address}"%>
+                        <% end %>
+                      <% else %>
+                        <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'invoicing_contact_details') %>
+                      <% end %>
                     </td>
                     <td class="govuk-table__cell">
                       <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'invoicing_contact_details') unless @page_data[:model_object][:using_buyer_detail_for_invoice_details].nil?%>
                     </td>
                 </tr>
+
                 <tr class="govuk-table__row">
-                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.authorised_representative') %></th>
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.authorised_representative') %></th>
                     <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
-                      <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'authorised_representative') if @page_data[:model_object][:using_buyer_detail_for_authorised_detail].nil? %>
-                      <%= @page_data[:model_object][:using_buyer_detail_for_authorised_detail] unless @page_data[:model_object][:using_buyer_detail_for_authorised_detail].nil?%>
+                      <% case @page_data[:model_object][:using_buyer_detail_for_authorised_detail] %>
+                      <% when true %>
+                        <%= govuk_details("#{@current_user.buyer_detail.full_name}, #{@current_user.buyer_detail.job_title}", true) do %>
+                            <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br/>
+                            <%= "Telephone: #{@current_user.buyer_detail.telephone_number}" %>  <br/>
+                            <%= "Address: #{@current_user.buyer_detail.full_organisation_address}"%>
+                        <% end %>
+                      <% when false %>
+                        <%= govuk_details("#{@procurement.authorised_contact_detail.name}, #{@procurement.authorised_contact_detail.job_title}", true) do %>
+                            <%= mail_to @procurement.authorised_contact_detail.email, @procurement.authorised_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br/>
+                            <%= "Telephone: #{@procurement.authorised_contact_detail.telephone_number}"%> <br/>
+                            <%= "Address: #{@procurement.authorised_contact_detail.contact_address}"%>
+                        <% end %>
+                      <% else %>
+                        <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'authorised_representative') %>
+                      <% end %>
                     </td>
                     <td class="govuk-table__cell">
                       <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'authorised_representative') unless @page_data[:model_object][:using_buyer_detail_for_authorised_detail].nil? %>
                     </td>
                 </tr>
+
                 <tr class="govuk-table__row">
-                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.notices_contact_details') %></th>
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.notices_contact_details') %></th>
                     <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
-                      <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'notices_contact_details') if @page_data[:model_object][:using_buyer_detail_for_notices_detail].nil? %>
-                      <%= @page_data[:model_object][:using_buyer_detail_for_notices_detail] unless @page_data[:model_object][:using_buyer_detail_for_notices_detail].nil?%>
+                      <% case @page_data[:model_object][:using_buyer_detail_for_notices_detail] %>
+                      <% when true %>
+                        <%= govuk_details("#{@current_user.buyer_detail.full_name}, #{@current_user.buyer_detail.job_title}", true) do %>
+                            <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br/>
+                            <%= "Address: #{@current_user.buyer_detail.full_organisation_address}"%>
+                        <% end %>
+                      <% when false %>
+                        <%= govuk_details("#{@procurement.notices_contact_detail.name}, #{@procurement.notices_contact_detail.job_title}", true) do %>
+                            <%= mail_to @procurement.notices_contact_detail.email, @procurement.notices_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br/>
+                            <%= "Address: #{@procurement.notices_contact_detail.contact_address}"%>
+                        <% end %>
+                      <% else %>
+                        <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'notices_contact_details') %>
+                      <% end %>
                     </td>
                     <td class="govuk-table__cell">
                       <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'notices_contact_details') unless @page_data[:model_object][:using_buyer_detail_for_notices_detail].nil? %>
                     </td>
                 </tr>
+
                 <tr class="govuk-table__row">
-                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.security_policy_document') %></th>
-                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
-                      <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'security_policy_document') if @page_data[:model_object][:security_policy_document_required].blank? %>
-                      <%= @page_data[:model_object][:security_policy_document_name] if @page_data[:model_object][:security_policy_document_required] == true and @page_data[:model_object][:security_policy_document_required].present?%>
-                      <%= 'Not Applicable' if @page_data[:model_object][:security_policy_document_required] == false and @page_data[:model_object][:security_policy_document_required].present?%>
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.security_policy_document') %></th>
+                    <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @page_data[:model_object][:security_policy_document_required] %>", style="overflow-wrap: anywhere">
+                      <% case @procurement.security_policy_document_required %>
+                      <% when true %>
+                          <!--<a href="<%#= asset_path() %>?format=doc" download> <%#= @procurement.security_policy_document_file.to_s.split('/').last %> </a> -->
+                          <a href="#"> <%= @procurement.security_policy_document_file.to_s.split('/').last %> </a>
+                      <% when false %>
+                        Not applicable
+                      <% else %>
+                        <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'security_policy_document') %>
+                      <% end %>
                     </td>
                     <td class="govuk-table__cell">
-                      <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'security_policy_document') if @page_data[:model_object][:security_policy_document_required].present?%>
+                      <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'security_policy_document') unless @page_data[:model_object][:security_policy_document_required].nil? %>
                     </td>
                 </tr>
+
                 <tr class="govuk-table__row">
-                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header" width="55%"><%= t('.local_government_pension_scheme') %></th>
-                    <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
-                      <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'local_government_pension_scheme') if @page_data[:model_object][:local_government_pension_scheme].nil? %>
-                      <%= @page_data[:model_object][:local_government_pension_scheme] unless @page_data[:model_object][:local_government_pension_scheme].nil?%>
+                    <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.local_government_pension_scheme') %></th>
+                    <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @page_data[:model_object][:local_government_pension_scheme] %>">
+                      <% case @page_data[:model_object][:local_government_pension_scheme] %>
+                      <% when true %>
+                        <%= govuk_details("Pension scheme details", true) do %>
+                            <ul class="govuk-list govuk-list--bullet">
+                              <% @procurement.procurement_pension_funds.each do | pension_fund | %>
+                                <li> <%= "#{pension_fund.name}, #{pension_fund.percentage}%" %> </li>
+                              <% end %>
+                            </ul>
+                        <% end %>
+                        <%= link_to 'Add or remove pension funds', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'pension_funds'), class: "govuk-link--no-visited-state" %>
+                      <% when false %>
+                        Not applicable
+                      <% else %>
+                        <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'local_government_pension_scheme') %>
+                      <% end %>
                     </td>
                     <td class="govuk-table__cell">
                       <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @page_data[:model_object].id, step: 'local_government_pension_scheme') unless @page_data[:model_object][:local_government_pension_scheme].nil? %>

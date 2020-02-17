@@ -250,11 +250,11 @@ module LayoutHelper
     builder.label attribute, generate_label_text(model, attribute, label_text), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 
-  def govuk_details(summary_text, &block)
+  def govuk_details(summary_text, reduce_padding = false, &block)
     content_tag :details, class: 'govuk-details', data: { module: 'govuk-details' } do
       capture do
         concat(content_tag(:summary, content_tag(:span, summary_text, class: 'govuk-details__summary-text'), class: 'govuk-details__summary'))
-        concat(content_tag(:div, class: 'govuk-details__text', &block))
+        concat(content_tag(:div, class: "govuk-details__text #{'govuk-!-padding-bottom-0 govuk-!-padding-top-0' if reduce_padding}", &block))
       end
     end
   end
