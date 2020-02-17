@@ -1,4 +1,4 @@
-<tr class="govuk-table__row govuk-no-border" id="initial_call_off_period-error">
+<tr class="govuk-table__row govuk-no-border">
   <th scope="row" class="govuk-table__header govuk-!-font-size-24 <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>" width="30%">Contract period </th>
   <td class="govuk-table__cell">
     <%= link_to('Answer all questions', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") if @procurement.unanswered_contract_date_questions? %>
