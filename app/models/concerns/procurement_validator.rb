@@ -141,15 +141,15 @@ module ProcurementValidator
     end
 
     def at_least_one_building
-      errors.add(:procurement_buildings, :not_present) if procurement_buildings.active.none?
+      errors.add(:procurement_buildings, :not_present) if active_procurement_buildings.none?
     end
 
     def at_least_one_service_per_building
-      errors.add(:base, :services_not_present) if procurement_buildings.active.none? || procurement_buildings.active.map(&:procurement_building_services).flatten.none?
+      errors.add(:base, :services_not_present) if active_procurement_buildings.none? || procurement_building_services.none?
     end
 
     def all_services_valid
-      procurement_buildings.active.each do |pb|
+      active_procurement_buildings.each do |pb|
         pb.errors.add(:base, :services_invalid) unless pb.valid?(:procurement_building_services)
       end
     end
