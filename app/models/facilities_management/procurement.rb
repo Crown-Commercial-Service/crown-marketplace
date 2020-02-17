@@ -12,7 +12,8 @@ module FacilitiesManagement
     before_save :update_procurement_building_services, if: :service_codes_changed?
 
     has_many :procurement_buildings, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
-    has_many :procurement_building_services, through: :procurement_buildings
+    has_many :active_procurement_buildings, -> { where(active: true) }, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementBuilding', inverse_of: :procurement, dependent: :destroy
+    has_many :procurement_building_services, through: :active_procurement_buildings
     accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
 
     has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
@@ -190,11 +191,7 @@ module FacilitiesManagement
     end
 
     def valid_services?
-      active_procurement_buildings.map(&:procurement_building_services).any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) }
-    end
-
-    def active_procurement_buildings
-      procurement_buildings.active
+      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) }
     end
 
     def save_eligible_suppliers_and_set_state
