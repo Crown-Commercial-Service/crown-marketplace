@@ -7,6 +7,8 @@
         <li class="govuk-header__navigation-item">
           <% if controller.controller_name == 'buildings_management'%>
             <%= link_to 'My account', facilities_management_path, class: 'govuk-header__link' %>
+          <% elsif controller.controller_name == 'journey'%>
+            <%= link_to 'Back to start', facilities_management_beta_path, class: 'govuk-header__link' %>
           <% else %>
             <%= link_to 'Back to start', facilities_management_path, class: 'govuk-header__link' %>
           <% end %>
