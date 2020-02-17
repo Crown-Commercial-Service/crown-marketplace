@@ -28,7 +28,7 @@
         </td>
       </tr>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_desc') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_desc') %></th>
         <td>
           <% if !@building['description'].blank? %>
             <%= @building['description'] %>
@@ -43,7 +43,7 @@
         </td>
       </tr>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_addr') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_addr') %></th>
         <td>
           <% if !@building['address'].blank? %>
             <% address = @building['address']['fm-address-line-1'].to_s + (@building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-line-2'].to_s + (@building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-town'].to_s + (@building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-county'].to_s + (@building['address']['fm-address-county'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-postcode'].to_s %>
@@ -59,7 +59,7 @@
       </tr>
 
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_region_nuts') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_region_nuts') %></th>
         <td>
           <% if !@building['address'].blank? %>
             <%= @building['address']['fm-address-region'].to_s %>
@@ -76,7 +76,7 @@
 
 
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_gia') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_gia') %></th>
         <td>
           <% if !@building['gia'].blank? %><%= @building['gia'] %>
           <% else %>
@@ -88,7 +88,7 @@
           <% end %></td>
       </tr>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_type') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_type') %></th>
         <td>
           <% if !@building['building-type'].blank? %><%= @building['building-type'] %>
           <% else %>
@@ -100,7 +100,7 @@
           <% end %></td>
       </tr>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_sec') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_sec') %></th>
         <td>
           <% if !@building['security-type'].blank? %>
             <%= @building['security-type'].capitalize %>
