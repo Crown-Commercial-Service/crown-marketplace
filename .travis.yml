@@ -25,7 +25,6 @@ before_script:
   - psql -U postgres -c 'create database marketplace_test'
   - psql -U postgres -d marketplace_test -c 'create extension postgis'
   - sudo systemctl stop clamav-freshclam.service
-  - sudo cp /usr/local/etc/clamav/clamd.conf.sample /usr/local/etc/clamav/clamd.conf
   - sudo echo TCPADDR $CLAMAV_SERVER_ADDRESS >> /usr/local/etc/clamav/clamd.conf
   - sudo echo TCPPORT 3310 >> /usr/local/etc/clamav/clamd.conf
   - sudo service clamav-daemon restart
