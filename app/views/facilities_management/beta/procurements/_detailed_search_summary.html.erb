@@ -22,10 +22,10 @@
         <%=t('.detailed_search_description') %>
       </p>
       <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: {novalidate: true, multipart: true} do |f| %>
-        <dl class="govuk-summary-list">
+        <div class="govuk-summary-list">
           <%= render('about_the_contract') %>
-        </dl>
-        <dl class="govuk-summary-list">
+        </div>
+        <div class="govuk-summary-list">
           <table class="govuk-table">
             <% if @procurement.errors[:initial_call_off_period].any? %>
               <tbody class="govuk-table__body <%= 'govuk-form-group--error' if @procurement.unanswered_contract_date_questions? %>">
@@ -41,10 +41,10 @@
               </tbody>
             <% end %>
           </table>
-        </dl>
-        <dl class="govuk-summary-list">
+        </div>
+        <div class="govuk-summary-list">
           <%= render 'about_the_work', procurement: @procurement %>
-        </dl>
+        </div>
         <%= render partial: 'continue_button_footer', locals: {f: f} %>
       <%end %>
     <% end %>
