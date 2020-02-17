@@ -76,7 +76,7 @@ module FacilitiesManagement
     def self.time_range(service_hours_hash)
       return 0 if service_hours_hash.nil?
 
-      start_hour_value_proc = -> { service_hours_hash[:start_ampm] == 'PM' ? service_hours_hash[:start_hour].to_i + 12 : service_hours_hash[:start_hour].to_i }
+      start_hour_value_proc = -> { service_hours_hash[:start_ampm] == 'PM' ? service_hours_hash[:start_hour].to_i + 12 : service_hours_hash[:start_hour].to_i % 12 }
       start_hour_value = start_hour_value_proc.call
       start_minute_value = service_hours_hash[:start_minute]
       end_hour_value_proc = -> { service_hours_hash[:end_ampm] == 'PM' ? service_hours_hash[:end_hour].to_i + 12 : service_hours_hash[:end_hour].to_i }
