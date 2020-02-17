@@ -10,7 +10,7 @@
     <div id="root" class="pane root-pane">
       <h2 class="govuk-heading-m" tabindex="-1"><%= t('.your_buildings') %></h2>
       <ul>
-        <% f.object.procurement_buildings.active.each_with_index do |building, i| %>
+        <% f.object.active_procurement_buildings.each_with_index do |building, i| %>
           <li class="<%= 'active' if i == 0 %>">
             <a id="<%= 'building-' + building.id %>" class="building-button govuk-!-font-size-19" href="#"><%= building.name %>
               <strong class="<%= 'building-services-' + building.id %>">(0 selected)</strong></a>
@@ -23,7 +23,7 @@
       <%= f.fields_for :procurement_buildings do |procurement_building| %>
         <% if procurement_building.object.active %>
           <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
-          <div id="<%= 'building-services-' + procurement_building.object.id %>" class="pane-inner services-pane <%= 'hidden-pane' if procurement_building.object.id != f.object.procurement_buildings.active.first.id %>">
+          <div id="<%= 'building-services-' + procurement_building.object.id %>" class="pane-inner services-pane <%= 'hidden-pane' if procurement_building.object.id != f.object.active_procurement_buildings.first.id %>">
             <div class="govuk-form-group <%= 'govuk-form-group--error' if procurement_building.object.errors.any? %>">
               <h2 tabindex="-1" class="govuk-heading-m govuk-!-margin-top-7">Choose from <%= @services.count %>
                 services</h2>
