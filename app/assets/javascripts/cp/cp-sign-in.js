@@ -195,6 +195,21 @@ function cog_forgot_password_reset_form(form){
             }
 
         }
+        var confirmationCodeValue = $("#confirmation-code").val()
+        removeErrorSummary("confirmation-code");//clean up ...
+        removeInlineError("confirmation-code", form);
+
+        if (confirmationCodeValue === ''){
+            e.preventDefault();//stop the form.submit()
+
+            fireErrorSummary("confirmation-code");
+            fireInlineError("confirmation-code");
+        }else if(confirmationCodeValue.length< 6){
+            e.preventDefault();//stop the form.submit()
+
+            fireErrorSummary("confirmation-code", 'six');
+            fireInlineError("confirmation-code", 'six');
+        }
     });
 }
 
