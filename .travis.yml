@@ -25,10 +25,11 @@ before_script:
   - psql -U postgres -c 'create database marketplace_test'
   - psql -U postgres -d marketplace_test -c 'create extension postgis'
   - sudo systemctl stop clamav-freshclam.service
+  - sudo systemctl stop clamav-daemon.service
   - sudo chown -R $USER:$USER /etc/clamav/clamd.conf
   - sudo echo TCPADDR $CLAMAV_SERVER_ADDRESS >> /etc/clamav/clamd.conf
   - sudo echo TCPPORT 3310 >> /etc/clamav/clamd.conf
-  - sudo service clamav-daemon restart
+  - sudo systemctl start clamav-daemon.service
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
