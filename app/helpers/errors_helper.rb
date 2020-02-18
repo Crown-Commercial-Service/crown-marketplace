@@ -44,7 +44,7 @@ module ErrorsHelper
 
     content_tag :label, content_tag(:span, model_data[:text]), class: css_classes,
                                                                for: "#{model_data[:form_object_name]}_#{model_data[:attribute]}",
-                                                               id: "#{model_data[:attribute]}-error",
+                                                               id: "#{model_data[:attribute]}-#{model_data[:error_type]}-error",
                                                                data: { propertyname: model_data[:attribute].to_s, validation: tag_validation_type }
   end
 
