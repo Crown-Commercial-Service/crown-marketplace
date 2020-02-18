@@ -10,7 +10,7 @@
       The cost should include all the buildings and services included in the procurement.
       The cost shouldn't include additional or project work.
     </span>
-    <%= display_potential_errors @procurement, :estimated_cost_known, f.object_name %>
+    <%= display_errors @procurement, :estimated_cost_known %>
     <div class="radio-content-toggle govuk-radios govuk-radios">
       <div class="govuk-radios__item">
         <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input", required: true %>
@@ -18,7 +18,7 @@
         <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
           <div class="govuk-!-margin-left-3" data-propertyname="Estimated annual cost">
             <%= f.label :estimated_annual_cost, 'Enter the estimated annual cost, excluding VAT', class: "govuk-label" %>
-            <%= display_potential_errors @procurement, :estimated_annual_cost, f.object_name %>
+            <%= display_errors @procurement, :estimated_annual_cost %>
             <%= f.number_field :estimated_annual_cost, class: 'govuk-input govuk-input--width-20', placeholder: '£', min: 1 %>
           </div>
         </div>
