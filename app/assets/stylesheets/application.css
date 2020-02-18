@@ -7941,22 +7941,22 @@ li code, td code, p code {
     overflow-x: auto;
 }
 
-.govuk-align-center-table__td {
-    text-align: center !important;
-}
-.govuk-align-left-table__td {
-    text-align: left !important;
-}
-.supplier-rates-td {
-    border: none !important;
-}
-.govuk-brand-light-grey {
-    color: #cecece !important;
-}
-.govuk-brand-light-grey-benchmark {
-    color:#6F777B !important;
-}
-.govuk-accordion .govuk-accordion__section-button {
-    color: #007194;
-    font-weight: normal;
-}
+a.offscreen
+{
+ clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; /* added line */
+  width: 1px;
+ }
+
+a.offscreen:focus
+ {
+position:relative;
+ clip:auto;
+ width:auto;
+ height:auto;
+ overflow:auto;
+ }
