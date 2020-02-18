@@ -7940,23 +7940,3 @@ li code, td code, p code {
     overflow: hidden;
     overflow-x: auto;
 }
-
-a.offscreen
-{
- clip: rect(1px 1px 1px 1px); /* IE 6/7 */
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap; /* added line */
-  width: 1px;
- }
-
-a.offscreen:focus
- {
-position:relative;
- clip:auto;
- width:auto;
- height:auto;
- overflow:auto;
- }
