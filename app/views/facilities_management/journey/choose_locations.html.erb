@@ -37,12 +37,12 @@
                               <% if region.code.start_with?(nuts1_region.code) %>
                                 <div class="govuk-checkboxes__item">
                                   <%= check_box_tag("region_codes[]", region.code, @journey.current_step.regions.include?(region),
-                                                    title: region.name,
+                                                    title: region.name.gsub(160.chr("UTF-8"), " "),
                                                     class: "govuk-checkboxes__input", sectionid: nuts1_region.code,
                                                     id: "region_#{region.code}"
                                       ) %>
                                   <label class="govuk-label govuk-checkboxes__label" for="region_<%= region.code %>">
-                                    <%= region.name %>
+                                    <%= region.name.gsub(160.chr("UTF-8"), " ") %>
                                   </label>
                                 </div>
                               <% end %>
