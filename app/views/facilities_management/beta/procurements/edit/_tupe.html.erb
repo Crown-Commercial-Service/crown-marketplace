@@ -17,22 +17,22 @@
       <%= t('.what_you_need_to_know_title') %>
     </span>
       </summary>
-      <div class="govuk-details__text">
+      <div class="govuk-details__text" tabindex="-1">
         <%= t('.what_you_need_to_know_html') %>
       </div>
     </details>
   </div>
 
   <div class="govuk-!-margin-top-3">
-    <%= display_potential_errors(@procurement, :tupe, f.object_name)%>
+    <%= display_errors(@procurement, :tupe)%>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
-        <%= f.radio_button :tupe, true, value: true, class: 'govuk-radios__input' %>
-        <%= label :tupe, true, 'Yes', class: 'govuk-label govuk-radios__label' %>
+        <%= f.radio_button :tupe, true, class: 'govuk-radios__input' %>
+        <%= f.label :tupe, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
       </div>
       <div class="govuk-radios__item">
-        <%= f.radio_button :tupe, false, value: false, class: 'govuk-radios__input' %>
-        <%= label :tupe, false, 'No', class: 'govuk-label govuk-radios__label' %>
+        <%= f.radio_button :tupe, false, class: 'govuk-radios__input' %>
+        <%= f.label :tupe, 'No', value: false , class: 'govuk-label govuk-radios__label' %>
       </div>
     </div>
   </div>
