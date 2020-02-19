@@ -1,6 +1,6 @@
-<h2 class="govuk-heading-m">
+<h1 class="govuk-heading-m">
   <%= t('.heading') %>
-</h2>
+</h1>
 
 <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-20">
     <%= t('.content_html') %>
@@ -16,7 +16,7 @@
               <strong class="<%= 'building-services-' + building.id %>">(0 selected)</strong></a>
           </li>
         <% end %>
-        <%= link_to t('.change_buildings'), edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), class: "govuk-link--no-visited-state govuk-!-margin-top-2 govuk-!-font-size-19" %>
+        <li><%= link_to t('.change_buildings'), edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), class: "govuk-link--no-visited-state govuk-!-margin-top-2 govuk-!-font-size-19" %></li>
       </ul>
     </div>
     <div id="section" class="section-pane pane with-sort">
