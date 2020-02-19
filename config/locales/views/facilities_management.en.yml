@@ -461,6 +461,9 @@ en:
       procurements:
         about_the_contract:
           no_cost_provided: None
+        call_off_extensions:
+          add_extension_period: Add another extension period
+          description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         da_buyer:
           contract_details:
             authorised_representative: Authorised representative details
@@ -658,6 +661,8 @@ en:
           searches_title: Searches
           sent_offers: Sent offers
           start_new_search: Start a new search
+        mobilisation_period:
+          description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
         new:
           cancel_text: Cancel, and return to the procurements dashboard
           save_for_later: Save for later
