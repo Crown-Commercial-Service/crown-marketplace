@@ -122,7 +122,7 @@
                       <% when true %>
                         <%= govuk_details("Pension scheme details", true) do %>
                             <ul class="govuk-list govuk-list--bullet">
-                              <% @procurement.procurement_pension_funds.each do | pension_fund | %>
+                              <% @procurement.procurement_pension_funds.order(created_at: :asc).each do | pension_fund | %>
                                 <li> <%= "#{pension_fund.name}, #{pension_fund.percentage}%" %> </li>
                               <% end %>
                             </ul>
