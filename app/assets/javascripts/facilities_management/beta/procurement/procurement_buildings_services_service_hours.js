@@ -104,13 +104,13 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
             choices[String(day)]["end"].status = false;
             choices[String(day)]["end"].errorType = "min";
         }
-        if (endTimeFirstDigits === "0"){
+        if (endTimeFirstDigits === "0" || endTime.substring(0,2) === '12'){
             isValid = false;
             choices[String(day)]["end"].status = false;
             choices[String(day)]["end"].errorType = "invalid";
             this.displayTimeErrors(day, "start", choices);
         }
-        if (startTimeFirstDigits === "0") {
+        if (startTimeFirstDigits === "0" || startTime.substring(0,2) === '12') {
             isValid = false;
             choices[String(day)]["start"].status = false;
             choices[String(day)]["start"].errorType = "invalid";

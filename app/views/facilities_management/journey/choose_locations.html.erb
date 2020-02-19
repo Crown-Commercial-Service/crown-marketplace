@@ -20,6 +20,7 @@
               </legend>
               <div class="chooser-input">
                 <div class="govuk-accordion" data-module="accordion" id="procurement-region-accordion">
+                  <% i = 0 %>
                   <% Nuts1Region.all.each do |nuts1_region| %>
                     <div class="govuk-accordion__section chooser-section" data-section="<%= nuts1_region.code %>" data-sectionname="<%= nuts1_region.name %>">
                       <div class="govuk-accordion__section-header">
@@ -29,7 +30,7 @@
                           </span>
                         </h2>
                       </div>
-                      <div class="govuk-accordion__section-content CCS-fm-region-filter-check-box-label">
+                      <div id="procurement-region-accordion-content-<%= i+=1 %>" class="govuk-accordion__section-content CCS-fm-region-filter-check-box-label">
                         <div class="govuk-form-group chooser-input" sectionname="<%= nuts1_region.name %>" section="<%= nuts1_region.code %>">
                           <div class="govuk-checkboxes">
                             <% FacilitiesManagement::Region.all.each do |region| %>
