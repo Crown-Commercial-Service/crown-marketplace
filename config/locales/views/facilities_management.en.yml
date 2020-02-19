@@ -814,7 +814,7 @@ en:
           email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
           forgotten_password_html: I've forgotten my password
           password: Password
-          sign_in_header: Sign in to your buyer account
+          sign_in_header: Sign in to your account
       supplier:
         sessions:
           new:
@@ -822,7 +822,7 @@ en:
             email_hint_html: Enter the email address you used to register
             forgotten_password_html: I've forgotten my password
             password: Password
-            sign_in_header: Sign in to your supplier account
+            sign_in_header: Sign in to your account
         users:
           new_password_required:
             confirm_your_password: Confirm your password
@@ -934,7 +934,7 @@ en:
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
-        sign_in_header: Sign in to your buyer account
+        sign_in_header: Sign in to your account
     users:
       confirm_new:
         confirmation_code: Confirmation code
