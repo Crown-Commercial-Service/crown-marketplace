@@ -14,6 +14,36 @@ input[type=radio]:checked + label + div#radio-inner-content {
   left: -22px;
 }
 
+input[type=radio] + label + div#radio-inner-content-for-call-off-extensions {
+  visibility: hidden;
+  height: 0px;
+}
+
+input[type=radio]:checked + label + div#radio-inner-content-for-call-off-extensions {
+  visibility: visible;
+  border-left: solid;
+  border-left-color: #BFC1C3;
+  border-left-width: 4px;
+  height: auto;
+  position: relative;
+  left: -22px;
+}
+
+input[type=radio] + label + div#radio-inner-content-for-mobilisation-period {
+  visibility: hidden;
+  height: 0px;
+}
+
+input[type=radio]:checked + label + div#radio-inner-content-for-mobilisation-period {
+  visibility: visible;
+  border-left: solid;
+  border-left-color: #BFC1C3;
+  border-left-width: 4px;
+  height: auto;
+  position: relative;
+  left: -22px;
+}
+
 input.govuk-radios__input + label + div.govuk-radios__conditional {
   visibility: hidden;
   height: 0 ;
