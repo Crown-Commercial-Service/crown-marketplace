@@ -1,3 +1,4 @@
+require 'csv'
 require 'rails_helper'
 require 'fm_calculator/calculator'
 
@@ -7,13 +8,21 @@ RSpec.describe FMCalculator::Calculator do
   subject(:calculator) do
   end
 
+  let(:json_test_data) { JSON.parse(file_fixture('fm-calculator-test-data.json').read, symbolize_names: true) }
+  let(:csv_test_data) { CSV.parse(file_fixture('fm-calculator-test-data.csv').read, headers: true) }
+
   before do
     @rates = CCS::FM::Rate.read_benchmark_rates
   end
 
-  describe 'FM CalcFMulator' do
+  describe 'FM Calculator' do
     it 'FMCalcFMulator for sum' do
+      json_list = json_test_data
+      csv_table = csv_test_data
       rates = @rates
+      
+      
+      
       X1 = FMCalculator::Calculator.new(3, 'G1', 23000, 125, true, 'Y', 'Y', 'N', rates).sumunitofmeasure
       expect(X1.round(0)).to eq(1341251)
 
