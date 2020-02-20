@@ -2,11 +2,11 @@
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header govuk-!-font-size-24" width="30%">About the contract</th>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell" width="45%"></td>
+      <td class="govuk-table__cell" width="25%"></td>
     </tr>
     <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:contract_name].any? %>">
-      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:contract_name].any? %>" width="30%">Contract name</th>
+      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:contract_name].any? %>">Contract name</th>
       <td class="govuk-table__cell">
         <% unless @procurement.contract_name.nil? %>
           <%= @procurement.contract_name %>
@@ -22,7 +22,7 @@
       </tr>
     <% end %>
     <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:estimated_cost_known].any? %>">
-      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:estimated_cost_known].any? %>" width="30%">Estimated annual cost</th>
+      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:estimated_cost_known].any? %>">Estimated annual cost</th>
       <td class="govuk-table__cell">
         <% unless @procurement.estimated_cost_known.nil? %>
           <%= "£#{number_with_delimiter(@procurement.estimated_annual_cost, :delimiter => ',')}" if @procurement.estimated_cost_known? %>
@@ -39,7 +39,7 @@
       </tr>
     <% end %>
     <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:tupe].any? %>">
-      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:tupe].any? %>" width="30%">TUPE</th>
+      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:tupe].any? %>">TUPE</th>
       <td class="govuk-table__cell">
         <% unless @procurement.tupe.nil? %>
           <%= @procurement.tupe? ? 'Yes' : 'No' %>
