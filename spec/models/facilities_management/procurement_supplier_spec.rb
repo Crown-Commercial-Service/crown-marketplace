@@ -6,10 +6,10 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
   let(:da_current_year_2) { create(:facilities_management_procurement_supplier_da, contract_number: "RM3860-DA0002-#{current_year}") }
   let(:da_previous_year_1) { create(:facilities_management_procurement_supplier_da, contract_number: 'RM3860-DA0003-2019') }
   let(:da_previous_year_2) { create(:facilities_management_procurement_supplier_da, contract_number: 'RM3860-DA0004-2019') }
-  let(:fc_current_year_1) { create(:facilities_management_procurement_supplier_fc, contract_number: "RM3860-FC0005-#{current_year}") }
-  let(:fc_current_year_2) { create(:facilities_management_procurement_supplier_fc, contract_number: "RM3860-FC0006-#{current_year}") }
-  let(:fc_previous_year_1) { create(:facilities_management_procurement_supplier_fc, contract_number: 'RM3860-FC0007-2019') }
-  let(:fc_previous_year_2) { create(:facilities_management_procurement_supplier_fc, contract_number: 'RM3860-FC0008-2019') }
+  let(:fc_current_year_1) { create(:facilities_management_procurement_supplier_fc, contract_number: "RM3860-FC005-#{current_year}") }
+  let(:fc_current_year_2) { create(:facilities_management_procurement_supplier_fc, contract_number: "RM3860-FC006-#{current_year}") }
+  let(:fc_previous_year_1) { create(:facilities_management_procurement_supplier_fc, contract_number: 'RM3860-FC007-2019') }
+  let(:fc_previous_year_2) { create(:facilities_management_procurement_supplier_fc, contract_number: 'RM3860-FC008-2019') }
 
   before do
     da_current_year_1
@@ -34,7 +34,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
   describe '.used_further_competition_contract_numbers_for_current_year' do
     it 'presents all of the further competition contract numbers used for the current year' do
-      expect(described_class.used_further_competition_contract_numbers_for_current_year).to match(['0005', '0006'])
+      expect(described_class.used_further_competition_contract_numbers_for_current_year).to match(['005', '006'])
     end
 
     it 'does not present any of the further competition contract numbers used for the previous years' do
@@ -48,9 +48,12 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
     let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
     let(:expected_number) { number_array.sample }
 
+    let(:number_array_fc) { (1..999).map { |integer| format('%03d', integer % 10000) } }
+    let(:expected_number_fc) { number_array_fc.sample }
+
     before do
       allow(described_class).to receive(:used_direct_award_contract_numbers_for_current_year) { number_array - [expected_number] }
-      allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
+      allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array_fc - [expected_number_fc] }
     end
 
     context 'with a procurement in direct award' do
@@ -61,7 +64,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
     context 'with a procurement in direct award' do
       it 'returns an available number for a further competition contract' do
-        expect(further_competition.send(:generate_contract_number)).to eq("RM3830-FC#{expected_number}-#{current_year}")
+        expect(further_competition.send(:generate_contract_number)).to eq("RM3830-FC#{expected_number_fc}-#{current_year}")
       end
     end
   end

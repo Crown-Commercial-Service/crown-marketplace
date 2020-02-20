@@ -2,16 +2,16 @@ module FurtherCompetitionConcern
   extend ActiveSupport::Concern
 
   # rubocop:disable Metrics/AbcSize
-  def build_direct_award_report(cache__calculation_values_for_spreadsheet_flag)
+  def build_direct_award_report(cache__calculation_values_for_spreadsheet_flag, start_date, current_user, session_data)
     user_email = current_user.email.to_s
 
-    @report = FacilitiesManagement::SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
+    @report = FacilitiesManagement::SummaryReport.new(start_date, user_email, session_data, @procurement)
 
     if @procurement
       @selected_buildings = @procurement.active_procurement_buildings
     else
       @selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
-      uvals = @report.uom_values(selected_buildings)
+      uvals = @report.uom_values(@selected_buildings)
     end
 
     rates = CCS::FM::Rate.read_benchmark_rates
