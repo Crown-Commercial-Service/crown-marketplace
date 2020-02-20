@@ -6,7 +6,7 @@ module FacilitiesManagement
     validates :region_codes, length: { minimum: 1 }
 
     def regions
-      Nuts2Region.where(code: region_codes)
+      FacilitiesManagement::Region.where(code: region_codes)
     end
 
     def next_step_class
