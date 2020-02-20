@@ -119,13 +119,13 @@ module FacilitiesManagement
 
       def further_competition_spreadsheet
         init_further_competition
-        build_direct_award_report true
+        build_direct_award_report(true, @start_date, current_user, TransientSessionInfo[session.id])
 
         uvals = []
         building_ids_with_service_codes2 = get_building_ids_uvals(uvals)
 
-        spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
-        spreadsheet_builder.build
+        spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
+        spreadsheet_builder.build(@start_date, current_user)
         send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
       end
 
