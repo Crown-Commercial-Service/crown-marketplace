@@ -612,7 +612,7 @@ module FacilitiesManagement
       end
 
       def find_regions(region_codes)
-        @regions = Nuts2Region.where(code: region_codes)
+        @regions = Nuts2Region.where(code: region_codes).concat(Nuts3Region.where(code: region_codes))
       end
 
       def find_services(service_codes)
