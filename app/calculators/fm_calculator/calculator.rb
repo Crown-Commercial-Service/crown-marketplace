@@ -31,8 +31,8 @@ module FMCalculator
       @cafm_flag = cafm_flag
       @helpdesk_flag = helpdesk_flag
 
-      @benchmark_rates = rates[:benchmark_rates]
-      @framework_rates = rates[:framework_rates]
+      @benchmark_rates = rates[:benchmark_rates] || rates['benchmark_rates']
+      @framework_rates = rates[:framework_rates] || rates['framework_rates']
 
       if supplier_name
         @supplier_name = supplier_name.to_sym
