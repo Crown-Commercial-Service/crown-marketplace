@@ -1,4 +1,4 @@
-<a href="<%= request.referer %>" class="govuk-back-link">Back</a>
+<%= link_to "Back", request.referer, class: 'govuk-back-link' %>
 <%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors, multiple: false, render_empty: true  } %>
 <h1 class="govuk-heading-xl"><%= t('.search_results') %></h1>
 <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
