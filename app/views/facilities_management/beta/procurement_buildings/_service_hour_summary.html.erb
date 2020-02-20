@@ -1,4 +1,4 @@
-<span class="details-expando--data" title="<%= t('.total_hours_tip') %>"><%= service_hours.total_hours_annually.ceil %></span>
+<span class="details-expando--data" title="<%= t('.total_hours_tip') %>"><%= number_with_precision(service_hours.total_hours_annually, precision: 2) %></span>
 <%= content_tag :details, class: 'govuk-details', data: { module: 'govuk-details' } do %>
   <% capture do %>
     <% concat(content_tag(:summary, content_tag(:span, t('.service_hours_caption'), class: 'govuk-details__summary-text govuk-!-font-size-16'), class: 'govuk-details__summary')) %>
