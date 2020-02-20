@@ -1,0 +1,42 @@
+[
+  {
+    "test_name": "XY1",
+    "contract_length_years": 3,
+    "service_ref": "G1",
+    "uom_vol": 23000,
+    "occupants": 125,
+    "tupe_flag": true,
+    "london_flag": "Y",
+    "cafm_flag": "Y",
+    "helpdesk_flag": "N",
+    "rates": {},
+    "outputs": {
+      "sumunitofmeasure": 0,
+      "benchmarkedcostssum": 0
+    },
+    "expectations": {
+      "sumunitofmeasure": 1341251,
+      "benchmarkedcostssum": 600241
+    }
+  },
+  {
+    "test_name": "XY2",
+    "contract_length_years": 3,
+    "service_ref": "C5",
+    "uom_vol": 54,
+    "occupants": 0,
+    "tupe_flag": true,
+    "london_flag": "Y",
+    "cafm_flag": "Y",
+    "helpdesk_flag": "N",
+    "rates": {},
+    "outputs": {
+      "sumunitofmeasure": 0,
+      "benchmarkedcostssum": 0
+    },
+    "expectations": {
+      "sumunitofmeasure": 54280,
+      "benchmarkedcostssum": 55712
+    }
+  }
+]
