@@ -63,7 +63,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def add_shortlist_contract_number(sheet, style)
     time = Time.now.getlocal
-    sheet.add_row ["#{calculate_contract_number} - #{time.strftime('%Y/%m/%d')} - #{time.strftime('%l:%M%P')}"], style: style, height: standard_row_height
+    sheet.add_row ["#{calculate_contract_number} - #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"], style: style, height: standard_row_height
     sheet.add_row [], style: style, height: standard_row_height
   end
 
