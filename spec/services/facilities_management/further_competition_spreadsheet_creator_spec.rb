@@ -5,10 +5,6 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   let(:service_hours) { FacilitiesManagement::ServiceHours.new }
 
-  let(:start_date) { DateTime.now.utc }
-  let(:user_email) { 'test@example.com' }
-  let(:user) { FactoryBot.create(:user, email: user_email, id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
-
   # rubocop:disable Style/HashSyntax
   let(:data) do
     {
@@ -26,13 +22,13 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   let(:uvals) do
     [
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'I.1', :uom_value => service_hours, :service_standard => 'A', :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'I.1', :uom_value => service_hours, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'K.3', :uom_value => 8, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :service_standard => 'A', :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'M.1', :uom_value => 1000, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'CAFM' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'N.1', :uom_value => 1000, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'Help' }
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.1', 'uom_value' => service_hours, 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.1', 'uom_value' => service_hours, 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.3', 'uom_value' => '48', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'M.1', :uom_value => 1000, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'CAFM' },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'N.1', :uom_value => 1000, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'Help' }
     ]
   end
 
@@ -65,7 +61,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
               'fm-address-postcode' => 'SW1P 2BA',
               'fm-address-region' => 'Outer London - South'
             },
-            'isLondon' => false,
+            'isLondon' => 'No',
             :'security-type' => 'Baseline Personnel Security Standard',
             'services' => [
               { 'code' => 'M-1', 'name' => 'CAFM system' },
@@ -93,7 +89,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
               'fm-address-postcode' => 'SW1W 9SZ',
               'fm-address-region' => 'Outer London - South'
             },
-            'isLondon' => false,
+            'isLondon' => 'No',
             :'security-type' => 'Baseline Personnel Security Standard',
             'services' => [
               { 'code' => 'M-1', 'name' => 'CAFM system' },
@@ -118,6 +114,8 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
           updated_by: Base64.encode64('test@example.com'),
           building_json: b.building_json
         )
+        # new_building[:building_json]['building-type'] = 'General office - Customer Facing',
+        # new_building[:building_json]['address'][:'fm-nuts-region'] = 'Westminster'
 
         new_building.save
       rescue StandardError => e
@@ -138,36 +136,22 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     # rubocop:enable RSpec/InstanceVariable
 
     # rubocop:disable RSpec/ExampleLength
-    it 'verify address formatting' do
-      buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
-
-      building_ids_with_service_codes2 = buildings_ids.collect do |b|
-        services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
-        { building_id: b.downcase, service_codes: services_per_building }
-      end
-
-      spreadsheet_builder = described_class.new(building_ids_with_service_codes2)
-
-      buyer_detail = OpenStruct.new(
-        organisation_address_line_1: 'ab',
-        organisation_address_line_2: 'cd',
-        organisation_address_town: 'london',
-        organisation_address_county: 'kk',
-        organisation_address_postcode: 'sw14567'
-      )
-
-      expect(spreadsheet_builder.get_address(buyer_detail)).to eq('ab, cd, london, kk. sw14567')
-    end
-    # rubocop:enable RSpec/ExampleLength
-
-    # rubocop:disable RSpec/ExampleLength
     it 'verify worksheets are present' do
+      user_email = 'test@example.com'
+      start_date = DateTime.now.utc
+
+      uvals.map!(&:deep_symbolize_keys)
+
+      # create deliverable matrix spreadsheet
       buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
 
       building_ids_with_service_codes2 = buildings_ids.collect do |b|
         services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
         { building_id: b.downcase, service_codes: services_per_building }
       end
+
+      user = OpenStruct.new(email: user_email,
+                            id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n')
 
       spreadsheet_builder = described_class.new(building_ids_with_service_codes2, uvals)
       spreadsheet_builder.session_data = data
@@ -182,28 +166,6 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
       rows_found = false if wb.sheet('Service Periods').last_row == 0
       rows_found = false if wb.sheet('Shortlist').last_row == 0
       expect(rows_found).to be true
-    end
-    # rubocop:enable RSpec/ExampleLength
-
-    # rubocop:disable RSpec/ExampleLength
-    it 'verify service matrix worksheet' do
-      buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
-
-      building_ids_with_service_codes2 = buildings_ids.collect do |b|
-        services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
-        { building_id: b.downcase, service_codes: services_per_building }
-      end
-
-      spreadsheet_builder = described_class.new(building_ids_with_service_codes2, uvals)
-      spreadsheet_builder.session_data = data
-      spreadsheet = spreadsheet_builder.build(start_date, user)
-
-      IO.write('/tmp/further_competition_procurement_summary.xlsx', spreadsheet.to_stream.read)
-
-      wb = Roo::Excelx.new('/tmp/further_competition_procurement_summary.xlsx')
-      expect(wb.sheet('Service Matrix').row(2)).to eq ['C.5', 'Lifts, hoists & conveyance systems maintenance - Standard A', 'Yes', 'Yes']
-      expect(wb.sheet('Service Matrix').row(4)).to eq ['K.3', 'Recycled waste', nil, 'Yes']
-      expect(wb.sheet('Service Matrix').row(5)).to eq ['M.1', 'CAFM system', nil, 'Yes']
     end
     # rubocop:enable RSpec/ExampleLength
   end

@@ -351,9 +351,12 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def add_contract_number(sheet)
     time = Time.now.getlocal
-    contract_number = FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: []).new_number
-    sheet.add_row ["#{contract_number} - #{time.strftime('%Y/%m/%d')} - #{time.strftime('%l:%M%P')}"]
+    sheet.add_row ["#{calculate_contract_number} - #{time.strftime('%Y/%m/%d')} - #{time.strftime('%l:%M%P')}"]
     sheet.add_row []
+  end
+
+  def calculate_contract_number
+    FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: []).new_number
   end
 
   def add_customer_details(sheet)
