@@ -3,7 +3,7 @@ en:
   activemodel:
     attributes:
       facilities_management/service_hour_choice/service_choice:
-        all_day: All day (24 hours)
+        all_day: All day <br/> (24 hours)
         hourly: Specified Hours
         not_required: Not required
         time_to: to
