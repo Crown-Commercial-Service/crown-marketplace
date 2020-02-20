@@ -11,20 +11,16 @@ RSpec.describe FMCalculator::Calculator do
   let(:json_test_data) { JSON.parse(file_fixture('fm-calculator-test-specifications.json').read, symbolize_names: false) }
   let(:csv_test_data) { CSV.parse(file_fixture('fm-calculator-test-data-duplicate_origin.csv').read, headers: true) }
   
-  before do
-    @rates = CCS::FM::Rate.read_benchmark_rates
-  end
-  
   describe 'FM Calculator' do
     it 'FMCalculator for basic math using CSV' do
       csv_table = csv_test_data
-      rates     = @rates
       
       csv_table.each do |row|
         method_to_call = row['expectation_name']
-
+        puts "Test #{row['test_name']}: #{method_to_call}"
+        
         calculator = Object.const_get("FMCalculator::Calculator").method('new').call(
-          row['contract_length_years'].to_i, row['service_ref'], row['uom_vol'].to_i, row['occupants'].to_i, row['tupe_flag'] == 'true', row['london_flag'], row['cafm_flag'], row['helpdesk_flag'], rates
+          row['contract_length_years'].to_i, row['service_ref'], row['uom_vol'].to_i, row['occupants'].to_i, row['tupe_flag'] == 'true', row['london_flag'] == 'true', row['cafm_flag'] == 'true', row['helpdesk_flag'] == 'true'
         )
         
         result = calculator.__send__(method_to_call.to_sym)
@@ -38,11 +34,11 @@ RSpec.describe FMCalculator::Calculator do
         fixture   = json_test_data[fixture_name]
         test_data = JSON.parse(file_fixture(fixture['test']).read)
         
-        rates = fixture['rates'] || @rates
-        
         test_data.each do |test|
+          puts test['test_name']
+          
           calculator = Object.const_get("FMCalculator::Calculator").method('new').call(
-            test['contract_length_years'].to_i, test['service_ref'], test['uom_vol'].to_i, test['occupants'].to_i, test['tupe_flag'] == 'true', test['london_flag'], test['cafm_flag'], test['helpdesk_flag'], rates
+            test['contract_length_years'].to_i, test['service_ref'], test['uom_vol'].to_i, test['occupants'].to_i, test['tupe_flag'] == 'true', test['london_flag'], test['cafm_flag'], test['helpdesk_flag']
           )
           
           test['expectations'].each do |method_name, expect_value|
@@ -68,6 +64,7 @@ RSpec.describe FMCalculator::Calculator do
           end
           
           expect(json_data.count).to eq(csv_table)
+          puts json_data
         end
       end
       
@@ -135,6 +132,7 @@ RSpec.describe FMCalculator::Calculator do
           )
           
           expect(json_data.count).to eq(csv_input.count)
+          puts json_data
         end
       end
       

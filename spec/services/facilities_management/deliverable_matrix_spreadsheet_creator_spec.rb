@@ -61,7 +61,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
               'fm-address-postcode' => 'SW1P 2BA',
               'fm-address-region' => 'Outer London - South'
             },
-            'isLondon' => 'No',
+            'isLondon' => false,
             :'security-type' => 'Baseline Personnel Security Standard',
             'services' => [
               { 'code' => 'M-1', 'name' => 'CAFM system' },
@@ -89,7 +89,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
               'fm-address-postcode' => 'SW1W 9SZ',
               'fm-address-region' => 'Outer London - South'
             },
-            'isLondon' => 'No',
+            'isLondon' => false,
             :'security-type' => 'Baseline Personnel Security Standard',
             'services' => [
               { 'code' => 'M-1', 'name' => 'CAFM system' },

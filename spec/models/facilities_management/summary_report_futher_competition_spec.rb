@@ -18,6 +18,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     }
   end
 
+  let(:user) { create(:user, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+
   let(:uvals) do
     [
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'E.4', 'uom_value' => '1', :service_standard => 'A', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
@@ -70,130 +72,128 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'N.1', :uom_value => 1000, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'Help' }
     ]
   end
+  # rubocop:enable Style/HashSyntax
 
-  # rubocop:disable RSpec/BeforeAfterAll
   context 'and dummy buildings to a db' do
-    before :all do
-      @selected_buildings2 = [
-        OpenStruct.new(
-          id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
-          user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
-          building_json: {
-            'id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
-            'gia' => 4200,
-            'name' => 'c4',
-            'region' => 'London',
-            'description' => 'Channel 4',
-            'address' => {
-              'fm-address-town' => 'London',
-              'fm-address-line-1' => '1 Horseferry Road',
-              'fm-address-postcode' => 'SW1P 2BA',
-              'fm-nuts-region' => 'Westminster'
-            },
-            'isLondon' => 'No',
-            :'security-type' => 'Baseline Personnel Security Standard',
-            'services' => [
-              { 'code' => 'J-8', 'name' => 'Additional security services' },
-              { 'code' => 'H-16', 'name' => 'Administrative support services' },
-              { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
-              { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
-              { 'code' => 'E-1', 'name' => 'Asbestos management' },
-              { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
-              { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
-              { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
-              { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
-              { 'code' => 'H-12', 'name' => 'Cable management' },
-              { 'code' => 'M-1', 'name' => 'CAFM system' },
-              { 'code' => 'I-3', 'name' => 'Car park management and booking' },
-              { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
-              { 'code' => 'J-2', 'name' => 'CCTV / alarm monitoring' },
-              { 'code' => 'L-1', 'name' => 'Childcare facility' },
-              { 'code' => 'F-1', 'name' => 'Chilled potable water' },
-              { 'code' => 'K-1', 'name' => 'Classified waste' },
-              { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
-              { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
-              { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
-              { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
-              { 'code' => 'K-5', 'name' => 'Clinical waste' },
-              { 'code' => 'H-7', 'name' => 'Clocks' },
-              { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
-              { 'code' => 'E-6', 'name' => 'Conditions survey' },
-              { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
-              { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
-              { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
-              { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
-              { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
-              { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
-              { 'code' => 'E-7', 'name' => 'Electrical testing' },
-              { 'code' => 'J-4', 'name' => 'Emergency response' },
-              { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
-              { 'code' => 'C-3', 'name' => 'Environmental cleaning service' },
-              { 'code' => 'F-4', 'name' => 'Events and functions' },
-              { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
-            ],
-            :'fm-building-type' => 'General office - Customer Facing',
-            'building-type' => 'General office - Customer Facing'
+    let(:selected_buildings2) do
+      [OpenStruct.new(
+        id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
+        user_id: user.id,
+        building_json: {
+          'id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
+          'gia' => 4200,
+          'name' => 'c4',
+          'region' => 'London',
+          'description' => 'Channel 4',
+          'address' => {
+            'fm-address-town' => 'London',
+            'fm-address-line-1' => '1 Horseferry Road',
+            'fm-address-postcode' => 'SW1P 2BA',
+            'fm-nuts-region' => 'Westminster'
           },
-          status: 'Incomplete'
-        ),
+          'isLondon' => false,
+          :'security-type' => 'Baseline Personnel Security Standard',
+          'services' => [
+            { 'code' => 'J-8', 'name' => 'Additional security services' },
+            { 'code' => 'H-16', 'name' => 'Administrative support services' },
+            { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
+            { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
+            { 'code' => 'E-1', 'name' => 'Asbestos management' },
+            { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
+            { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
+            { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
+            { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
+            { 'code' => 'H-12', 'name' => 'Cable management' },
+            { 'code' => 'M-1', 'name' => 'CAFM system' },
+            { 'code' => 'I-3', 'name' => 'Car park management and booking' },
+            { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
+            { 'code' => 'J-2', 'name' => 'CCTV / alarm monitoring' },
+            { 'code' => 'L-1', 'name' => 'Childcare facility' },
+            { 'code' => 'F-1', 'name' => 'Chilled potable water' },
+            { 'code' => 'K-1', 'name' => 'Classified waste' },
+            { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
+            { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
+            { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
+            { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
+            { 'code' => 'K-5', 'name' => 'Clinical waste' },
+            { 'code' => 'H-7', 'name' => 'Clocks' },
+            { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
+            { 'code' => 'E-6', 'name' => 'Conditions survey' },
+            { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
+            { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
+            { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
+            { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
+            { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
+            { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
+            { 'code' => 'E-7', 'name' => 'Electrical testing' },
+            { 'code' => 'J-4', 'name' => 'Emergency response' },
+            { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
+            { 'code' => 'C-3', 'name' => 'Environmental cleaning service' },
+            { 'code' => 'F-4', 'name' => 'Events and functions' },
+            { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
+          ],
+          :'fm-building-type' => 'General office - Customer Facing',
+          'building-type' => 'General office - Customer Facing'
+        },
+        status: 'Incomplete'
+      ),
 
-        OpenStruct.new(
-          id: 'e60f5b57-5f15-604c-b729-a689ede34a99',
-          user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
-          building_json: {
-            'id' => 'e60f5b57-5f15-604c-b729-a689ede34a99',
-            'gia' => 12000,
-            'name' => 'ccs',
-            'region' => 'London',
-            'description' => 'Crown Commercial Service',
-            'address' => {
-              'fm-address-town' => 'London',
-              'fm-address-line-1' => '151 Buckingham Palace Road',
-              'fm-address-postcode' => 'SW1W 9SZ',
-              'fm-nuts-region' => 'Westminster'
-            },
-            'isLondon' => 'No',
-            :'security-type' => 'Baseline Personnel Security Standard',
-            'services' => [
-              { 'code' => 'J-8', 'name' => 'Additional security services' },
-              { 'code' => 'H-16', 'name' => 'Administrative support services' },
-              { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
-              { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
-              { 'code' => 'E-1', 'name' => 'Asbestos management' },
-              { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
-              { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
-              { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
-              { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
-              { 'code' => 'H-12', 'name' => 'Cable management' },
-              { 'code' => 'M-1', 'name' => 'CAFM system' },
-              { 'code' => 'I-3', 'name' => 'Car park management and booking' },
-              { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
-              { 'code' => 'J-2', 'name' => 'CCTV / alarm monitoring' },
-              { 'code' => 'L-1', 'name' => 'Childcare facility' },
-              { 'code' => 'F-1', 'name' => 'Chilled potable water' },
-              { 'code' => 'K-1', 'name' => 'Classified waste' },
-              { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
-              { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
-              { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
-              { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
-              { 'code' => 'K-5', 'name' => 'Clinical waste' },
-              { 'code' => 'H-7', 'name' => 'Clocks' },
-              { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
-              { 'code' => 'E-6', 'name' => 'Conditions survey' },
-              { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
-              { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
-              { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
-            ],
-            :'fm-building-type' => 'General office - Customer Facing',
-            'building-type' => 'General office - Customer Facing'
-          },
-          status: 'Incomplete'
-        )
-      ]
+       OpenStruct.new(
+         id: 'e60f5b57-5f15-604c-b729-a689ede34a99',
+         user_id: user.id,
+         building_json: {
+           'id' => 'e60f5b57-5f15-604c-b729-a689ede34a99',
+           'gia' => 12000,
+           'name' => 'ccs',
+           'region' => 'London',
+           'description' => 'Crown Commercial Service',
+           'address' => {
+             'fm-address-town' => 'London',
+             'fm-address-line-1' => '151 Buckingham Palace Road',
+             'fm-address-postcode' => 'SW1W 9SZ',
+             'fm-nuts-region' => 'Westminster'
+           },
+           'isLondon' => false,
+           :'security-type' => 'Baseline Personnel Security Standard',
+           'services' => [
+             { 'code' => 'J-8', 'name' => 'Additional security services' },
+             { 'code' => 'H-16', 'name' => 'Administrative support services' },
+             { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
+             { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
+             { 'code' => 'E-1', 'name' => 'Asbestos management' },
+             { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
+             { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
+             { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
+             { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
+             { 'code' => 'H-12', 'name' => 'Cable management' },
+             { 'code' => 'M-1', 'name' => 'CAFM system' },
+             { 'code' => 'I-3', 'name' => 'Car park management and booking' },
+             { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
+             { 'code' => 'J-2', 'name' => 'CCTV / alarm monitoring' },
+             { 'code' => 'L-1', 'name' => 'Childcare facility' },
+             { 'code' => 'F-1', 'name' => 'Chilled potable water' },
+             { 'code' => 'K-1', 'name' => 'Classified waste' },
+             { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
+             { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
+             { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
+             { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
+             { 'code' => 'K-5', 'name' => 'Clinical waste' },
+             { 'code' => 'H-7', 'name' => 'Clocks' },
+             { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
+             { 'code' => 'E-6', 'name' => 'Conditions survey' },
+             { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
+             { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
+             { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
+           ],
+           :'fm-building-type' => 'General office - Customer Facing',
+           'building-type' => 'General office - Customer Facing'
+         },
+         status: 'Incomplete'
+       )]
+    end
 
-      # populate db with dub buildings
-      # rubocop:disable RSpec/InstanceVariable
-      @selected_buildings2.each do |b|
+    before do
+      selected_buildings2.each do |b|
         FacilitiesManagement::Buildings.delete b.id
         new_building = FacilitiesManagement::Buildings.new(
           id: b.id,
@@ -201,29 +201,13 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
           updated_by: Base64.encode64('test@example.com'),
           building_json: b.building_json
         )
-        # new_building[:building_json]['building-type'] = 'General office - Customer Facing',
-        # new_building[:building_json]['address'][:'fm-nuts-region'] = 'Westminster'
-
         new_building.save
       rescue StandardError => e
         Rails.logger.warn "Couldn't update new building id: #{e}"
       end
     end
-    # rubocop:enable Style/HashSyntax
-
-    after :all do
-      # teardown
-      @selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
-      rescue StandardError => e
-        Rails.logger.warn "Couldn't delete new building id: #{e}"
-      end
-    end
-    # rubocop:enable RSpec/BeforeAfterAll
-    # rubocop:enable RSpec/InstanceVariable
 
     # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/InstanceVariable
     it 'create a further competition excel,very worksheets are there' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
@@ -232,17 +216,14 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       data[:'fm-contract-length'] = 1
 
-      report = described_class.new(start_date, user_email, data)
-
-      rates = CCS::FM::Rate.read_benchmark_rates
-      rate_card = CCS::FM::RateCard.latest
+      report = described_class.new(start_date: start_date, user_email: user_email, data: data)
 
       results = {}
       report_results = {}
-      supplier_names = rate_card.data[:Prices].keys
+      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
-        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
         results[supplier_name] = report.direct_award_value
       end
 
@@ -255,8 +236,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(building_ids_with_service_codes2, uvals)
-      user = OpenStruct.new(email: user_email,
-                            id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n')
 
       report = instance_double('FacilitiesManagement::SummaryReport.new')
 
@@ -274,7 +253,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       rows_found = false if wb.sheet('Shortlist').last_row == 0
       expect(rows_found).to be true
     end
-    # rubocop:enable RSpec/InstanceVariable
     # rubocop:enable RSpec/ExampleLength
   end
 end

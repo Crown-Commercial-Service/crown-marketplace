@@ -18,8 +18,7 @@ module FMCalculator
 
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag,
-                   rates, rate_card = nil, supplier_name = nil, building_data = nil)
+    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, supplier_name = nil, building_data = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
@@ -27,9 +26,12 @@ module FMCalculator
       @uom_vol = uom_vol
       @occupants = occupants
       @tupe_flag = tupe_flag
-      @london_flag = london_flag.downcase == 'y'
-      @cafm_flag = cafm_flag.downcase == 'y'
-      @helpdesk_flag = helpdesk_flag.downcase == 'y'
+      @london_flag = london_flag
+      @cafm_flag = cafm_flag
+      @helpdesk_flag = helpdesk_flag
+
+      rates = CCS::FM::Rate.read_benchmark_rates
+      rate_card = CCS::FM::RateCard.latest
 
       @benchmark_rates = rates[:benchmark_rates] || rates['benchmark_rates']
       @framework_rates = rates[:framework_rates] || rates['framework_rates']
@@ -65,7 +67,7 @@ module FMCalculator
         if @supplier_name
           @occupants * @rate_card_variances[:'Cleaning Consumables per Building User (£)']
         else
-          @occupants * @framework_rates['M146']
+          @occupants * framework_rate_for('M146')
         end
     end
 
