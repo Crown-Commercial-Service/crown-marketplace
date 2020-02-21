@@ -1,4 +1,7 @@
-<%= link_to "Back", request.referer, class: 'govuk-back-link' %>
+<% unless @procurement.persisted? %>
+  <%= link_to 'Back', journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes]), class: 'govuk-back-link' if controller.action_name == "new"%>
+  <%= link_to 'Back', journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), class: 'govuk-back-link' if controller.action_name == "create" %>
+<% end %>
 <%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors, multiple: false, render_empty: true  } %>
 <h1 class="govuk-heading-xl"><%= t('.search_results') %></h1>
 <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
