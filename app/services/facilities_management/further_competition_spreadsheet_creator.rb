@@ -119,4 +119,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     column_widths = [50, 50, 50]
     sheet.column_widths(*column_widths)
   end
+
+  def list_of_allowed_volume_services
+    %w[C.5 E.4 G.1 G.3 G.5 H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6 K.1 K.2 K.3 K.4 K.5 K.6 K.7]
+  end
 end

@@ -55,13 +55,20 @@ module FacilitiesManagement
     end
 
     # rubocop:disable Metrics/AbcSize
-    def uvals_for_public(building)
+    def uvals_for_public(building, spreadsheet_type = :da)
       building_uvals = building.procurement_building_services
 
-      uvals_not_da = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.direct_award_services }
-      @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
+      if spreadsheet_type == :da
+        uvals_not_da = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+        @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
 
-      building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+        building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+      else
+        uvals_not_fc = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.further_competition_services }
+        @errors = 'The following services are not further Competition: ' + uvals_not_fc.collect { |s| s[:service_code] }.to_s if uvals_not_fc.count
+
+        building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.further_competition_services }
+      end
 
       # building_data = building
       building_data = FacilitiesManagement::Buildings.find_by(id: building.building_id).building_json
@@ -89,7 +96,7 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/AbcSize
-    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true)
+    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true, spreadsheet_type = :da)
       # selected_services
 
       @sum_uom = 0
@@ -113,7 +120,7 @@ module FacilitiesManagement
 
           building_uvals.select! { |u| u[:service_code].in? CCS::FM::Service.direct_award_services }
         else
-          result = uvals_for_public(building)
+          result = uvals_for_public(building, spreadsheet_type)
           all_building_uvals = result[0]
           building_data = result[1]
           id = result[0][0][:building_id]
