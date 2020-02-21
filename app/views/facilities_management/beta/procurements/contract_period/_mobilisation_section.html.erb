@@ -16,7 +16,7 @@
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Mobilisation start date</th>
     <td class="govuk-table__cell">
-      <%= mobilisation_start_date unless @procurement.initial_call_off_start_date.blank?%>
+      <%= format_date mobilisation_start_date unless @procurement.initial_call_off_start_date.blank?%>
     </td>
     <td class="govuk-table__cell">
     </td>
@@ -27,7 +27,7 @@
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Mobilisation end date</th>
     <td class="govuk-table__cell">
-      <%= mobilisation_end_date unless @procurement.initial_call_off_start_date.blank?%>
+      <%= format_date mobilisation_end_date unless @procurement.initial_call_off_start_date.blank?%>
     </td>
     <td class="govuk-table__cell">
     </td>
