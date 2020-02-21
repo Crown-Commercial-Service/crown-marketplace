@@ -7,20 +7,14 @@ class FacilitiesManagement::ContractNumberGenerator
   end
 
   def new_number
-    return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number_da}-#{current_year}" if ACRONYMS[@procurement_state] == 'DA'
-    return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number_fc}-#{current_year}" if ACRONYMS[@procurement_state] == 'FC'
+    return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}" if ACRONYMS[@procurement_state] == 'DA'
+    return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}" if ACRONYMS[@procurement_state] == 'FC'
   end
 
   private
 
-  def unique_number_da
+  def unique_number
     potential_numbers = (1..9999).map { |integer| format('%04d', integer % 10000) }
-
-    (potential_numbers - @used_numbers).sample
-  end
-
-  def unique_number_fc
-    potential_numbers = (1..999).map { |integer| format('%03d', integer % 1000) }
 
     (potential_numbers - @used_numbers).sample
   end
