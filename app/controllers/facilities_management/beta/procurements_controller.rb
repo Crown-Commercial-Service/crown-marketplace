@@ -118,7 +118,7 @@ module FacilitiesManagement
         build_direct_award_report(true, @start_date, current_user, TransientSessionInfo[session.id])
 
         uvals = []
-        building_ids_with_service_codes2 = get_building_ids_uvals(uvals)
+        building_ids_with_service_codes2 = get_building_ids_uvals(uvals, :fc)
 
         spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
         spreadsheet_builder.build(@start_date, current_user)
