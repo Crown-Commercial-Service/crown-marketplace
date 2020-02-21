@@ -43,12 +43,6 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     add_customer_and_contract_details(package) if @procurement
   end
 
-  def add_header_row(sheet, initial_values)
-    header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
-    # header_row = initial_values
-    sheet.add_row initial_values, style: header_row_style, height: standard_row_height
-  end
-
   def add_shortlist_details(package, standard_column_style, standard_bold_style, start_date, current_user)
     package.workbook.add_worksheet(name: 'Shortlist') do |sheet|
       add_shortlist_contract_number(sheet, standard_column_style)
