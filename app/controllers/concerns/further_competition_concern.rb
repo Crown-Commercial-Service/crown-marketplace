@@ -26,11 +26,11 @@ module FurtherCompetitionConcern
     supplier_names = @rate_card.data[:Prices].keys
     supplier_names.each do |supplier_name|
       a_supplier_calculation_results = @report_results[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
-      @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results, true
+      @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results, true, :fa
       @results[supplier_name] = @report.direct_award_value
 
       a_supplier_calculation_results_no_cafmhelp_removed = @report_results_no_cafmhelp_removed[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
-      @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results_no_cafmhelp_removed, false
+      @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results_no_cafmhelp_removed, false, :fa
     end
 
     sorted_list = @results.sort_by { |_k, v| v }
@@ -38,10 +38,10 @@ module FurtherCompetitionConcern
   end
   # rubocop:enable Metrics/AbcSize
 
-  def get_building_ids_uvals(uvals)
+  def get_building_ids_uvals(uvals, spreadsheet_type)
     buildings_ids = []
     @selected_buildings.each do |building|
-      result = @report.uvals_for_public(building)
+      result = @report.uvals_for_public(building, spreadsheet_type)
       building_uvals = result[0]
       uvals.concat building_uvals
       buildings_ids << building.building_id
