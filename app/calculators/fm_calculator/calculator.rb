@@ -17,7 +17,7 @@ module FMCalculator
     @framework_rates = nil
 
     # rubocop:disable Metrics/ParameterLists (with a s)
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag,
                    rates, rate_card = nil, supplier_name = nil, building_data = nil)
       @contract_length_years = contract_length_years
@@ -27,9 +27,9 @@ module FMCalculator
       @uom_vol = uom_vol
       @occupants = occupants
       @tupe_flag = tupe_flag
-      @london_flag = london_flag
-      @cafm_flag = cafm_flag
-      @helpdesk_flag = helpdesk_flag
+      @london_flag = london_flag.downcase == 'y'
+      @cafm_flag = cafm_flag.downcase == 'y'
+      @helpdesk_flag = helpdesk_flag.downcase == 'y'
 
       @benchmark_rates = rates[:benchmark_rates] || rates['benchmark_rates']
       @framework_rates = rates[:framework_rates] || rates['framework_rates']
@@ -45,7 +45,7 @@ module FMCalculator
       @building_type = @building_data[:'fm-building-type'] || @building_data['building-type'] if building_data
       @building_type = @building_type.to_sym if @building_type
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/ParameterLists (with a s)
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
@@ -71,7 +71,7 @@ module FMCalculator
 
     # London location variance based on being in london and a framework rate multiplied by subtotal1
     def variance(subtotal1)
-      if @london_flag == 'Y'
+      if @london_flag
         if @supplier_name
           subtotal1 * @rate_card_variances[:'London Location Variance Rate (%)'].to_f
         else
@@ -84,7 +84,7 @@ module FMCalculator
 
     # if cafm flag is set then subtotal * framework rate
     def cafm(subtotal2)
-      if @cafm_flag == 'Y'
+      if @cafm_flag
         if @supplier_name
           subtotal2 * @rate_card_prices[:'M.1'][@building_type].to_f
         else
@@ -97,7 +97,7 @@ module FMCalculator
 
     # if helpdesk_flag is set then multiply by subtotal2
     def helpdesk(subtotal2)
-      if @helpdesk_flag == 'Y'
+      if @helpdesk_flag
         if @supplier_name
           subtotal2 * @rate_card_prices[:'N.1'][@building_type].to_f
         else
@@ -184,7 +184,7 @@ module FMCalculator
 
     # benchmark variation if london_flag set
     def benchvariation(benchsubtotal1)
-      if @london_flag == 'Y'
+      if @london_flag
         @benchvariance = benchsubtotal1 * @benchmark_rates['M144'].to_f
       else
         0
@@ -193,7 +193,7 @@ module FMCalculator
 
     # benchmark cafm if flag set
     def benchcafm(benchsubtotal2)
-      if @cafm_flag == 'Y'
+      if @cafm_flag
         @benchmark_rates['M136'] * benchsubtotal2
       else
         0
@@ -202,7 +202,7 @@ module FMCalculator
 
     # benchmark helpsdesk costs if helpdesk_flag set
     def benchhelpdesk(benchsubtotal2)
-      if @helpdesk_flag == 'Y'
+      if @helpdesk_flag
         @benchhelpdesk = benchsubtotal2 * @benchmark_rates['N138']
       else
         0
