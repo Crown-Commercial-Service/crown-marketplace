@@ -10,7 +10,7 @@
         </div>
         <div class="govuk-radios__item">
           <%= f.radio_button :service_choice, value = "all_day", class: 'govuk-radios__input', id: "#{day}_all_day", data: {propertyname: "#{day}_service_choice"} %>
-          <%= f.label :service_choice, value: :all_day, for: "#{day}_all_day", class: "govuk-label govuk-radios__label" %>
+          <%= f.label :service_choice, value: 'All day (24 hours)', for: "#{day}_all_day", class: "govuk-label govuk-radios__label" %>
         </div>
         <div class="govuk-radios__item">
           <%= f.radio_button :service_choice, value = "hourly", class: 'govuk-radios__input', id: "#{day}_hourly", aria: {controls: "#{day}-conditional-specified"}, data: {propertyname: "#{day}_service_choice"} %>
