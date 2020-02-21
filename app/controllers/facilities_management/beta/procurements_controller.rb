@@ -74,6 +74,8 @@ module FacilitiesManagement
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
+        change_contract_details && return if params['change_contract_details'].present?
+
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
         update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
@@ -231,6 +233,11 @@ module FacilitiesManagement
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
         end
+      end
+
+      def change_contract_details
+        @procurement.update(da_journey_state: :contract_details)
+        redirect_to facilities_management_beta_procurement_path(@procurement)
       end
 
       def continue_to_contract_details
@@ -452,7 +459,7 @@ module FacilitiesManagement
 
         return if step.nil?
 
-        if delte_invoice_data? step
+        if delete_invoice_data? step
           @procurement.invoice_contact_detail.delete
           @procurement.reload
         end
@@ -479,7 +486,7 @@ module FacilitiesManagement
         @procurement.build_notices_contact_detail if @procurement.notices_contact_detail.blank?
       end
 
-      def delte_invoice_data?(step)
+      def delete_invoice_data?(step)
         case step
         when 'new_invoicing_contact_details', 'new_invoicing_address'
           false
@@ -551,7 +558,7 @@ module FacilitiesManagement
                 :payment_method,
                 :using_buyer_detail_for_invoice_details,
                 :using_buyer_detail_for_authorised_detail,
-                :using_buyer_details_for_notices_detail,
+                :using_buyer_detail_for_notices_detail,
                 :local_government_pension_scheme,
                 service_codes: [],
                 region_codes: [],
@@ -740,10 +747,6 @@ module FacilitiesManagement
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
-          review_and_generate_documents: {
-            page_title: 'Review and generate documents',
-            secondary_name: 'continue_to_results'
-          },
           payment_method: {
             back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Payment method',
@@ -839,6 +842,14 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          review_and_generate_documents: {
+            page_title: 'Review and generate documents',
+            continuation_text: 'Generate documents',
+            secondary_text: 'Return to results',
+            secondary_name: 'continue_to_results',
+          },
+          review_contract: {
           }
         }
       end

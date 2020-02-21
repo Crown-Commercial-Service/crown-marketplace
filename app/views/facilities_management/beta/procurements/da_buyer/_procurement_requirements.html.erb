@@ -6,32 +6,32 @@
                 <td class="govuk-table__cell" width="55%"></td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.supplier') %></th>
-                <td class="govuk-table__cell"><%= @procurement.procurement_suppliers.first.supplier.data['supplier_name'] %></td>
+                <th class="govuk-table__cell govuk-table__header">Buyer</th>
+                <td class="govuk-table__cell"><%= @current_user.buyer_detail.organisation_name %></td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.contract_name') %></th>
+                <th class="govuk-table__cell govuk-table__header">Contract name</th>
                 <td class="govuk-table__cell"><%= @procurement.contract_name %></td>
             </tr>
-                <th class="govuk-table__cell govuk-table__header" ><%= t('.contract_value') %></th>
-                <td class="govuk-table__cell"><%= format_money @procurement.procurement_suppliers.first.direct_award_value %></td>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__cell govuk-table__header">Contract number</th>
+                <td class="govuk-table__cell"><%= @procurement.procurement_suppliers.first.contract_number %></td>
+            </tr>
+                <th class="govuk-table__cell govuk-table__header">Contract value</th>
+                <td class="govuk-table__cell"><%= format_money @page_data[:sorted_supplier_list].first[:price] %></td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.framework_sublot_title') %></th>
-                <td class="govuk-table__cell"> <%= t('.framework_sublot_value') %></td>
+                <th class="govuk-table__cell govuk-table__header">Framework, sub-lot</th>
+                <td class="govuk-table__cell"> RM3830, sub-lot 1a </td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.route_to_market') %></th>
-                <td class="govuk-table__cell"> <%= t('.direct_award') %></td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.initial_call_off_period') %></th>
+                <th class="govuk-table__cell govuk-table__header">Initial call-off period</th>
                 <td class="govuk-table__cell">
                     <%= govuk_details(pluralize(@procurement.initial_call_off_period, 'year'), true) {initial_call_off_period_description} %>
                 </td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.mobilisation_period') %></th>
+                <th class="govuk-table__cell govuk-table__header">Mobilisation period</th>
                 <td class="govuk-table__cell">
                 <% if !@procurement.mobilisation_period.nil? %>
                     <%= govuk_details(pluralize(@procurement.mobilisation_period, 'week'), true) { mobilisation_period_description } %>
@@ -42,7 +42,7 @@
             </tr>
             <% if !@procurement.optional_call_off_extensions_1.nil? %>
                 <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_1') %></th>
+                    <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 1</th>
                     <td class="govuk-table__cell">
                         <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_1, 'year'), true) { format_extension @procurement.extension_period_1_start_date, @procurement.extension_period_1_end_date } %>
                     </td>
@@ -50,7 +50,7 @@
             <% end %>
             <% if !@procurement.optional_call_off_extensions_2.nil? %>
                 <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_2') %></th>
+                    <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 2</th>
                     <td class="govuk-table__cell">
                         <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_2, 'year'), true) { format_extension @procurement.extension_period_2_start_date, @procurement.extension_period_2_end_date } %>
                     </td>
@@ -58,7 +58,7 @@
             <% end %>
             <% if !@procurement.optional_call_off_extensions_3.nil? %>
                 <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_3') %></th>
+                    <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 3</th>
                     <td class="govuk-table__cell">
                         <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_3, 'year'), true) { format_extension @procurement.extension_period_3_start_date, @procurement.extension_period_3_end_date } %>
                     </td>
@@ -66,20 +66,20 @@
             <% end %>
             <% if !@procurement.optional_call_off_extensions_4.nil? %>
                 <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_4') %></th>
+                    <th class="govuk-table__cell govuk-table__header">Optional call-off extension period 4</th>
                     <td class="govuk-table__cell">
                         <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_4, 'year'), true) { format_extension @procurement.extension_period_4_start_date, @procurement.extension_period_4_end_date } %>
                     </td>
                 </tr>
             <% end %>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.date_of_first_indexation') %></th>
+                <th class="govuk-table__cell govuk-table__header">Date of first indexation</th>
                 <td class="govuk-table__cell"><%= format_date(@procurement.initial_call_off_start_date.next_year) %></td>
             </tr>
             <tr class="govuk-table__row">
-              <th class="govuk-table__cell govuk-table__header"><%= t('.buildings_services') %></th>
+              <th class="govuk-table__cell govuk-table__header">Buildings and services</th>
               <td class="govuk-table__cell">
-                <% @procurement.procurement_buildings.active.each.with_index do |bs, index| %>
+                <% @procurement.procurement_buildings.each.with_index do |bs, index| %>
                   <div class="<%= 'govuk-!-margin-bottom-2' unless index == @procurement.procurement_buildings.size - 1 %>">
                     <%= govuk_details(bs.name, true) do %>
                         <ul class="govuk-list govuk-list--bullet">
