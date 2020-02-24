@@ -76,6 +76,37 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     sheet.add_row ['Sub-lot value range', determine_lot_range], style: standard_style, height: standard_row_height
   end
 
+  def add_customer_and_contract_details(package)
+    package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
+      add_customer_details(sheet)
+      add_contract_requirements(sheet)
+    end
+  end
+
+  def add_customer_details(sheet)
+    bold_style = sheet.styles.add_style b: true
+    telephone_number_style = sheet.styles.add_style format_code: '0##########', alignment: { horizontal: :left }
+    buyer_detail = @procurement.user.buyer_detail
+
+    sheet.add_row ['1. Customer details'], style: bold_style
+    sheet.add_row ['Contract Name', @procurement.contract_name]
+    sheet.add_row ['Buyer Organisation Name', buyer_detail.organisation_name]
+    sheet.add_row ['Buyer Organisation Address', get_address(buyer_detail)]
+    sheet.add_row ['Buyer Organisation Sector', buyer_detail.central_government? ? 'Central Government' : 'Wider Public Sector']
+    sheet.add_row ['Buyer Contact Name', buyer_detail.full_name]
+    sheet.add_row ['Buyer Contact Job Title', buyer_detail.job_title]
+    sheet.add_row ['Buyer Contact Email Address', @procurement.user.email]
+    sheet.add_row ['Buyer Contact Telephone Number', buyer_detail.telephone_number], style: [nil, telephone_number_style]
+  end
+
+  def get_address(buyer_detail)
+    str_array = [buyer_detail.organisation_address_line_1,
+                 buyer_detail.organisation_address_line_2,
+                 buyer_detail.organisation_address_town,
+                 buyer_detail.organisation_address_county]
+    str_array.reject(&:blank?).join(', ') + '. ' + buyer_detail.organisation_address_postcode
+  end
+
   def determine_lot_range
     lot_range = 'UNKNOWN'
     case @report.current_lot
