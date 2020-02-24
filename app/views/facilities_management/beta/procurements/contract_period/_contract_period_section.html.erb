@@ -18,7 +18,7 @@
   <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>">Initial call-off period end date</th>
   <td class="govuk-table__cell">
     <% unless @procurement.initial_call_off_period.nil? %>
-      <%= initial_call_off_period_end_date %>
+      <%= format_date initial_call_off_period_end_date %>
     <% end %>
   </td>
   <td class="govuk-table__cell">

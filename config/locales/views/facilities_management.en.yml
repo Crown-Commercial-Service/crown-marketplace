@@ -466,8 +466,9 @@ en:
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         da_buyer:
           contract_details:
-            authorised_representative: Authorised representative details
             contract_details_description: Please provide further information that will help us put your contract together.
+          contract_details_summary:
+            authorised_representative: Authorised representative details
             invoicing_contact_details: Invoicing contact details
             local_government_pension_scheme: Local Government Pension Scheme
             notices_contact_details: Notices contact details
