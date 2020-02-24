@@ -473,8 +473,9 @@ en:
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         da_buyer:
           contract_details:
-            authorised_representative: Authorised representative details
             contract_details_description: Please provide further information that will help us put your contract together.
+          contract_details_summary:
+            authorised_representative: Authorised representative details
             invoicing_contact_details: Invoicing contact details
             local_government_pension_scheme: Local Government Pension Scheme
             notices_contact_details: Notices contact details
@@ -502,7 +503,7 @@ en:
             services_body_html_2: that you're happy with the details for the services you are buying.
             services_heading: Services
           pricing:
-            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
+            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If there is more than one supplier that can meet your requirements, and the lowest priced supplier declines the opportunity, then the details of the second place supplier will be presented to you, with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
             lowest_price_supplier: lowest priced supplier
             supplier_description_plural: that can offer your services under direct award, their contract prices are shown below in ascending order.
             supplier_description_singular: that can offer your services under direct award, their contract price is shown below.
