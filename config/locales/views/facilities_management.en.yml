@@ -85,10 +85,10 @@ en:
               services_not_present: You must select at least one service
             contract_details:
               inclusion: You must answer the question about 'Authorised representative'
-              inclusion: You must answer the question about 'Invoicing contact details'
+              no_invoicing_contact_details: You must answer the question about 'Invoicing contact details'
               inclusion: You must answer the question about 'Local Government Pension Scheme'
               inclusion: You must answer the question about 'Notices'
-              inclusion: You must answer the question about 'Payment method'
+              no_payment_method: You must answer the question about 'Payment method'
               inclusion: You must answer the question about 'Security policy'
             contract_name:
               blank: Enter your contract name

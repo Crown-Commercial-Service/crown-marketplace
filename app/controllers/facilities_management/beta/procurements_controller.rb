@@ -741,7 +741,8 @@ module FacilitiesManagement
             secondary_text: 'Return to results'
           },
           review_and_generate_documents: {
-            page_title: 'Review and generate documents'
+            page_title: 'Review and generate documents',
+            secondary_name: 'continue_to_results'
           },
           payment_method: {
             back_url: facilities_management_beta_procurement_path(@procurement),
