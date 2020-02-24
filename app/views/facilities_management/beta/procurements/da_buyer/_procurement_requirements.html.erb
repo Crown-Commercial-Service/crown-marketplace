@@ -79,7 +79,7 @@
             <tr class="govuk-table__row">
               <th class="govuk-table__cell govuk-table__header">Buildings and services</th>
               <td class="govuk-table__cell">
-                <% @procurement.procurement_buildings.each.with_index do |bs, index| %>
+                <% @procurement.procurement_buildings.active.each.with_index do |bs, index| %>
                   <div class="<%= 'govuk-!-margin-bottom-2' unless index == @procurement.procurement_buildings.size - 1 %>">
                     <%= govuk_details(bs.name, true) do %>
                         <ul class="govuk-list govuk-list--bullet">
