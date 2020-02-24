@@ -76,6 +76,8 @@ module FacilitiesManagement
 
         change_contract_details && return if params['change_contract_details'].present?
 
+        return_to_review_and_generate && return if params['return_to_review_and_generate'].present?
+
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
         update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
@@ -237,6 +239,11 @@ module FacilitiesManagement
 
       def change_contract_details
         @procurement.update(da_journey_state: :contract_details)
+        redirect_to facilities_management_beta_procurement_path(@procurement)
+      end
+
+      def return_to_review_and_generate
+        @procurement.update(da_journey_state: :review_and_generate)
         redirect_to facilities_management_beta_procurement_path(@procurement)
       end
 
@@ -746,6 +753,22 @@ module FacilitiesManagement
             continuation_text: 'Continue',
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
+          },
+          review_and_generate_documents: {
+            page_title: 'Review and generate documents',
+            back_url: facilities_management_beta_procurement_path(@procurement),
+            caption1: @procurement[:contract_name],
+            continuation_text: 'Generate documents',
+            secondary_text: 'Return to results',
+            secondary_url: facilities_management_beta_procurement_results_path(@procurement),
+            return_text: 'Return to procurement dashboard',
+            return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          review_your_contract: {
+            page_title: 'Review your contract',
+            continuation_text: 'Create final contract and send to supplier',
+            secondary_text: 'Return to results',
+            secondary_url: facilities_management_beta_procurement_results_path(@procurement)
           },
           payment_method: {
             back_url: facilities_management_beta_procurement_path(@procurement),
