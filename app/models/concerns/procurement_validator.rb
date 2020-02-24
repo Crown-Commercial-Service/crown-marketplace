@@ -36,6 +36,15 @@ module ProcurementValidator
 
     validates :local_government_pension_scheme, inclusion: { in: [true, false] }, on: %i[local_government_pension_scheme]
 
+    validates :contract_details, inclusion: { 
+      in: [:payment_method, 
+      :using_buyer_detail_for_authorised_detail, 
+      :using_buyer_detail_for_invoice_details, 
+      :using_buyer_detail_for_notices_detail, 
+      :local_government_pension_scheme, 
+      :security_policy_document] }, 
+      on: %i[contract_details] 
+
     #############################################
     # Validation rules for contract-dates
     # these rules need to cover
