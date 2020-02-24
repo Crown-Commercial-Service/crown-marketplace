@@ -27,6 +27,9 @@ module FacilitiesManagement
     has_one :notices_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementNoticesContactDetail', inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :notices_contact_detail, allow_destroy: true
 
+    has_one :contract_details, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementContractDetails', inverse_of: procurement, dependent: :destroy
+    accepts_nested_attributes_for :contract_details, allow_destroy: true
+
     has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true
     accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
 
