@@ -136,6 +136,29 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     # rubocop:enable RSpec/InstanceVariable
 
     # rubocop:disable RSpec/ExampleLength
+    it 'verify address formatting' do
+      buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
+
+      building_ids_with_service_codes2 = buildings_ids.collect do |b|
+        services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
+        { building_id: b.downcase, service_codes: services_per_building }
+      end
+
+      spreadsheet_builder = described_class.new(building_ids_with_service_codes2)
+
+      buyer_detail = OpenStruct.new(
+        organisation_address_line_1: 'ab',
+        organisation_address_line_2: 'cd',
+        organisation_address_town: 'london',
+        organisation_address_county: 'kk',
+        organisation_address_postcode: 'sw14567'
+      )
+
+      expect(spreadsheet_builder.get_address(buyer_detail)).to eq('ab, cd, london, kk. sw14567')
+    end
+    # rubocop:enable RSpec/ExampleLength
+
+    # rubocop:disable RSpec/ExampleLength
     it 'verify worksheets are present' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
