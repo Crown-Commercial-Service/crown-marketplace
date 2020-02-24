@@ -27,7 +27,10 @@
   </dl>
 
   <div class="govuk-body govuk-!-width-two-thirds govuk-!-margin-bottom-4">
-    <%= t('.description_html') %>
+    <% if @page_data[:sorted_supplier_list].count == 2 %>
+      <%= t('.description_html_two_suppliers') %>
+    <% else %>
+      <%= t('.description_html_multiple_suppliers') %>
   </div>
   <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_continuation_buttons(pd, f) %>
