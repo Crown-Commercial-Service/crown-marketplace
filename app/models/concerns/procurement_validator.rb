@@ -36,14 +36,15 @@ module ProcurementValidator
 
     validates :local_government_pension_scheme, inclusion: { in: [true, false] }, on: %i[local_government_pension_scheme]
 
-    validates :contract_details, inclusion: { 
-      in: [:payment_method, 
-      :using_buyer_detail_for_authorised_detail, 
-      :using_buyer_detail_for_invoice_details, 
-      :using_buyer_detail_for_notices_detail, 
-      :local_government_pension_scheme, 
-      :security_policy_document] }, 
-      on: %i[contract_details] 
+    validates :contract_details,
+    inclusion: { in: [
+      :payment_method,
+      :using_buyer_detail_for_authorised_detail,
+      :using_buyer_detail_for_notices_detail,
+      :using_buyer_detail_for_invoice_details,
+      :local_government_pension_scheme,
+      :security_policy_document] },
+    on: %i[continue_da]
 
     #############################################
     # Validation rules for contract-dates
@@ -87,6 +88,7 @@ module ProcurementValidator
     validate :validate_contract_period_questions, on: :all
     validate :validate_mobilisation_and_tupe, on: :all
     validate :at_least_one_service_per_building, on: :all
+    validate :validate_contract_details, on: :all
 
     private
 
@@ -166,6 +168,11 @@ module ProcurementValidator
     def validate_mobilisation_and_tupe
       errors.add(:mobilisation_period, :not_valid_with_tupe) if (!mobilisation_period || mobilisation_period < 4) && tupe == true
     end
+
+    def validate_contract_details
+      errors.add(:contract_details, :no_payment_method) if self.valid?(:payment_method)
+    end
+
   end
   # rubocop:enable Metrics/BlockLength
 end
