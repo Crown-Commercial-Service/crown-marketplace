@@ -94,7 +94,7 @@ module FacilitiesManagement
       state :what_next
       state :important_information
       state :contract_details
-      state :review_and_generate
+      state :review_and_generate, before_enter: :assign_contract_number_to_procurement
       state :review
       state :sending
       state :sent_awaiting_response
@@ -304,6 +304,14 @@ module FacilitiesManagement
 
     def contract_details_valid?
       errors.add(:contract_details, :inclusion) if self.valid?(:payment_method)
+    end
+    
+    def assign_contract_number_to_procurement
+      procurement_supplier = procurement_suppliers.first
+      return unless procurement_supplier.contract_number.nil?
+
+      procurement_supplier.assign_contract_number
+      procurement_supplier.save
     end
   end
 end

@@ -233,6 +233,11 @@ module FacilitiesManagement
         end
       end
 
+      def change_contract_details
+        @procurement.update(da_journey_state: :contract_details)
+        redirect_to facilities_management_beta_procurement_path(@procurement)
+      end
+
       def continue_to_contract_details
         if procurement_valid?
           @procurement.set_to_contract_details
@@ -452,7 +457,7 @@ module FacilitiesManagement
 
         return if step.nil?
 
-        if delte_invoice_data? step
+        if delete_invoice_data? step
           @procurement.invoice_contact_detail.delete
           @procurement.reload
         end
@@ -479,7 +484,7 @@ module FacilitiesManagement
         @procurement.build_notices_contact_detail if @procurement.notices_contact_detail.blank?
       end
 
-      def delte_invoice_data?(step)
+      def delete_invoice_data?(step)
         case step
         when 'new_invoicing_contact_details', 'new_invoicing_address'
           false
@@ -740,10 +745,6 @@ module FacilitiesManagement
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
-          review_and_generate_documents: {
-            page_title: 'Review and generate documents',
-            secondary_name: 'continue_to_results'
-          },
           payment_method: {
             back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Payment method',
@@ -839,6 +840,14 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          review_and_generate_documents: {
+            page_title: 'Review and generate documents',
+            continuation_text: 'Generate documents',
+            secondary_text: 'Return to results',
+            secondary_name: 'continue_to_results',
+          },
+          review_contract: {
           }
         }
       end

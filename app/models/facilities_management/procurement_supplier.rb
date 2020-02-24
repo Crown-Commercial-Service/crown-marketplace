@@ -21,6 +21,10 @@ module FacilitiesManagement
       CCS::FM::Supplier.find(supplier_id)
     end
 
+    def assign_contract_number
+      self.contract_number = generate_contract_number
+    end
+
     private
 
     def generate_contract_number
