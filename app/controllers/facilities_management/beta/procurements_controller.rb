@@ -866,12 +866,6 @@ module FacilitiesManagement
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
-          review_and_generate_documents: {
-            page_title: 'Review and generate documents',
-            continuation_text: 'Generate documents',
-            secondary_text: 'Return to results',
-            secondary_name: 'continue_to_results',
-          },
           review_contract: {
           }
         }
