@@ -1,0 +1,17 @@
+{
+  "duplicate_origin" : {
+    "rates_files": {
+      "rates": "fm-calculator-rates.json",
+      "rate_cards":""
+    },
+    "test": "fm-calculator-tests-duplicate_origin.json"
+  },
+  "em380-3": {
+    "rate_files": {
+      "rates": "fm-calculator-rates.json",
+      "rate_cards": ""
+    },
+    "test": "fm-calculator-test-data-3_direct.json"
+  },
+  "fixtures": [ "em380-3", "duplicate_origin"]
+}
