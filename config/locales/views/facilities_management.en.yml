@@ -507,7 +507,7 @@ en:
             lowest_price_supplier: lowest priced supplier
             supplier_description_plural: that can offer your services under direct award, their contract prices are shown below in ascending order.
             supplier_description_singular: that can offer your services under direct award, their contract price is shown below.
-          review_your_contract:
+          review_contract:
             attachment_1:
               document_name: About the Direct Award.docx
               guidance: This document tells the supplier important information about the contract you have offered.
