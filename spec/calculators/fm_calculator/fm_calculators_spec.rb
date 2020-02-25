@@ -9,7 +9,7 @@ RSpec.describe FMCalculator::Calculator do
   end
   
   let(:json_test_data) { JSON.parse(file_fixture('fm-calculator-test-specifications.json').read, symbolize_names: false) }
-  let(:csv_test_data) { CSV.parse(file_fixture('fm-calculator-test-data-3.csv').read, headers: true) }
+  let(:csv_test_data) { CSV.parse(file_fixture('fm-calculator-test-data-duplicate_origin.csv').read, headers: true) }
   
   before do
     @rates = CCS::FM::Rate.read_benchmark_rates
@@ -39,7 +39,7 @@ RSpec.describe FMCalculator::Calculator do
         fixture   = json_test_data[fixture_name]
         test_data = JSON.parse(file_fixture(fixture['test']).read)
         
-        rates = json_test_data['rates'] || @rates
+        rates = fixture['rates'] || @rates
         
         test_data.each do |test|
           puts test['test_name']
@@ -51,14 +51,13 @@ RSpec.describe FMCalculator::Calculator do
           test['expectations'].each do |method_name, expect_value|
             result = calculator.__send__(method_name.to_sym)
             
-            expect(result.round(0)).to eq(expect_value.to_i)
+            expect(result.round(2)).to eq(expect_value.sub(',','').to_f.round(2))
           end
         end
-      
       end
     end
     
-    describe 'spreadsheet parsing' do
+    describe 'spreadsheet parsing', skip: true  do
       context 'parsing reduced CSV' do
         it 'will create JSON data' do
           csv_table = CSV.parse(file_fixture('fm-calculator-test-data-3.csv').read, headers: true)
