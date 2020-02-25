@@ -53,14 +53,9 @@ module FacilitiesManagement
       state :detailed_search
       state :results
       state :da_draft
+      state :direct_award, before_enter: :offer_to_next_supplier
       state :further_competition
-      state :awaiting_supplier_response
-      state :supplier_declined
-      state :no_supplier_response
-      state :awaiting_contract_signature
-      state :accepted_not_signed
-      state :accepted_and_signed
-      state :withdrawn
+      state :closed
 
       event :set_state_to_results do
         transitions to: :results
@@ -78,6 +73,14 @@ module FacilitiesManagement
         transitions to: :da_draft
       end
 
+      event :set_state_to_direct_award do
+        transitions to: :direct_award
+      end
+
+      event :set_state_to_closed do
+        transitions to: :closed
+      end
+
       event :start_further_competition do
         transitions to: :further_competition
       end
@@ -87,8 +90,6 @@ module FacilitiesManagement
       next_event = aasm(:da_journey).events(reject: :start_da_journey, permitted: true).first
       aasm(:da_journey).fire!(next_event.name) if next_event.present?
     end
-
-    # rubocop: disable Metrics/BlockLength
     aasm(:da_journey, column: 'da_journey_state') do
       state :pricing, initial: true
       state :what_next
@@ -97,16 +98,7 @@ module FacilitiesManagement
       state :review_and_generate
       state :review
       state :sending
-      state :sent_awaiting_response
-      state :withdraw
-      state :accepted
-      state :confirmation
-      state :accepted_signed
-      state :accepted_not_signed
-      state :declined
-      state :no_response
-      state :confirm_signed
-      state :closed
+      state :sent
 
       event :start_da_journey do
         transitions to: :pricing
@@ -136,47 +128,10 @@ module FacilitiesManagement
         transitions from: :review, to: :sending
       end
 
-      event :set_to_sent_awaiting_response do
-        transitions from: :review, to: :sent_awaiting_response
-      end
-
-      event :set_to_withdraw do
-        transitions from: :review, to: :withdraw
-      end
-
-      event :set_to_accepted do
-        transitions from: :review, to: :accepted
-      end
-
-      event :set_to_confirmation do
-        transitions from: :review, to: :confirmation
-      end
-
-      event :set_to_accepted_signed do
-        transitions from: :review, to: :accepted_signed
-      end
-
-      event :set_to_accepted_not_signed do
-        transitions from: :review, to: :accepted_not_signed
-      end
-
-      event :set_to_declined do
-        transitions from: :review, to: :declined
-      end
-
-      event :set_to_no_response do
-        transitions from: :review, to: :no_response
-      end
-
-      event :set_to_confirm_signed do
-        transitions from: :review, to: :confirm_signed
-      end
-
-      event :set_to_closed do
-        transitions from: :review, to: :closed
+      event :set_to_sent do
+        transitions from: :sending, to: :sent
       end
     end
-    # rubocop: enable Metrics/BlockLength
 
     def find_or_build_procurement_building(building_data, building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(name: building_data['name'])
@@ -230,9 +185,7 @@ module FacilitiesManagement
     end
 
     SEARCH = %i[quick_search detailed_search results further_competition].freeze
-    SENT_OFFER = %i[awaiting_supplier_response supplier_declined no_supplier_response awaiting_contract_signature accepted_not_signed].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
-    SENT_OFFER_ORDER = SENT_OFFER.map(&:to_s)
 
     MAX_NUMBER_OF_PENSIONS = 99
 
@@ -286,6 +239,24 @@ module FacilitiesManagement
       return nil if optional_call_off_extensions_4.nil?
 
       initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 + optional_call_off_extensions_4).years - 1.day
+    end
+
+    def sent_offers
+      procurement_suppliers.where.not(aasm_state: 'unsent').reject(&:closed?)
+    end
+
+    def live_contracts
+      procurement_suppliers.where(aasm_state: 'signed')
+    end
+
+    def closed_contracts
+      procurement_suppliers.where.not(aasm_state: 'unsent').select(&:closed?)
+    end
+
+    def offer_to_next_supplier
+      return false if procurement_suppliers.unsent.empty?
+
+      procurement_suppliers.unsent&.first&.offer_to_supplier!
     end
 
     private
