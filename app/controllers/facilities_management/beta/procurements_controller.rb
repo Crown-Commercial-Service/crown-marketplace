@@ -76,7 +76,7 @@ module FacilitiesManagement
 
         change_contract_details && return if params['change_contract_details'].present?
 
-        return_to_review_and_generate && return if params['return_to_review_and_generate'].present?
+        continue_to_review_and_generate && return if params['continue_to_review_and_generate'].present?
 
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
@@ -242,9 +242,14 @@ module FacilitiesManagement
         redirect_to facilities_management_beta_procurement_path(@procurement)
       end
 
-      def return_to_review_and_generate
-        @procurement.update(da_journey_state: :review_and_generate)
-        redirect_to facilities_management_beta_procurement_path(@procurement)
+      def continue_to_review_and_generate
+        if @procurement.valid?(:contract_details)
+          @procurement.update(da_journey_state: :review_and_generate)
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          @view_name = set_view_data
+          render :show
+        end
       end
 
       def continue_to_contract_details

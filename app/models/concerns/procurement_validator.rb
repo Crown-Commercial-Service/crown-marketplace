@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module ProcurementValidator
   extend ActiveSupport::Concern
 
@@ -79,6 +80,9 @@ module ProcurementValidator
     validate :validate_mobilisation_and_tupe, on: :all
     validate :at_least_one_service_per_building, on: :all
 
+    # Validation for the contract_details page
+    validate :validate_contract_details, on: :contract_details
+
     private
 
     #############################################
@@ -157,6 +161,18 @@ module ProcurementValidator
     def validate_mobilisation_and_tupe
       errors.add(:mobilisation_period, :not_valid_with_tupe) if (!mobilisation_period || mobilisation_period < 4) && tupe == true
     end
+
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
+    def validate_contract_details
+      errors.add(:payment_method, :not_present_contract_details) if payment_method.nil?
+      errors.add(:using_buyer_detail_for_invoice_details, :not_present_contract_details) if using_buyer_detail_for_invoice_details.nil?
+      errors.add(:using_buyer_detail_for_authorised_detail, :not_present_contract_details) if using_buyer_detail_for_authorised_detail.nil?
+      errors.add(:using_buyer_detail_for_notices_detail, :not_present_contract_details) if using_buyer_detail_for_notices_detail.nil?
+      errors.add(:security_policy_document_required, :not_present_contract_details) if security_policy_document_required.nil?
+      errors.add(:local_government_pension_scheme, :not_present_contract_details) if local_government_pension_scheme.nil?
+      errors.any?
+    end
   end
-  # rubocop:enable Metrics/BlockLength
+  # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 end
+# rubocop:enable Metrics/ModuleLength
