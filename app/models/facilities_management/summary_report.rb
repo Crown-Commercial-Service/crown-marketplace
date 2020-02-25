@@ -88,7 +88,7 @@ module FacilitiesManagement
           building_id: building.building_id,
           service_code: u[:code],
           uom_value: val,
-          service_standard: u['service_standard']
+          service_standard: u[:service_standard]
         }
       end
       [building_uvals, building_data]
