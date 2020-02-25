@@ -13,5 +13,5 @@
     },
     "test": "fm-calculator-test-data-3_direct.json"
   },
-  "fixtures": [ "em380-3", "duplicate_origin"]
+  "fixtures": [ "em380-3"]
 }
