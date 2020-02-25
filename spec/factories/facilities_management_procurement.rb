@@ -28,4 +28,9 @@ FactoryBot.define do
   factory :facilities_management_procurement_further_competition, parent: :facilities_management_procurement do
     aasm_state { 'further_competition' }
   end
+
+  factory :facilities_management_procurement_no_procurement_buildings, parent: :facilities_management_procurement do
+    procurement_buildings { [] }
+  end
+
 end

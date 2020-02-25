@@ -42,6 +42,8 @@ module FacilitiesManagement
     end
 
     def initialize_from_procurement(procurement)
+      @start_date = procurement.initial_call_off_start_date
+      @user_id = procurement.user.id
       @posted_services = procurement.service_codes
       @posted_locations = procurement.region_codes
       @contract_length_years = procurement.initial_call_off_period.to_i
@@ -50,12 +52,8 @@ module FacilitiesManagement
       @tupe_flag = procurement.tupe
     end
 
-    def user_buildings
-      CCS::FM::Building.buildings_for_user(@user_id)
-    end
-
     # rubocop:disable Metrics/AbcSize
-    def uvals_for_public(building, spreadsheet_type = :da)
+    def uvals_for_public(building, spreadsheet_type)
       building_uvals = building.procurement_building_services
 
       if spreadsheet_type == :da
@@ -63,7 +61,7 @@ module FacilitiesManagement
         @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
 
         building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
-      else
+      elsif spreadsheet_type == :fc
         uvals_not_fc = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.further_competition_services }
         @errors = 'The following services are not further Competition: ' + uvals_not_fc.collect { |s| s[:service_code] }.to_s if uvals_not_fc.count
 
@@ -73,6 +71,7 @@ module FacilitiesManagement
       # building_data = building
       building_data = FacilitiesManagement::Buildings.find_by(id: building.building_id).building_json
       services_and_questions = FacilitiesManagement::ServicesAndQuestions.new
+
       building_uvals = building_uvals.map do |u|
         # p u[:code]
 
@@ -97,13 +96,12 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/AbcSize
-    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true, spreadsheet_type = :da)
+    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true, spreadsheet_type = nil)
       # selected_services
 
       @sum_uom = 0
       @sum_benchmark = 0
 
-      # selected_buildings = user_buildings
       uvals ||= uom_values(selected_buildings) unless
 
       selected_buildings.each do |building|
@@ -141,47 +139,6 @@ module FacilitiesManagement
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
-
-    def with_pricing
-      # CCS::FM::Rate.non_zero_rate
-      services_with_pricing = CCS::FM::Rate.non_zero_rate.map(&:code)
-
-      services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
-      services_selected = services_selected.map { |s| s['code'] }
-      services_selected.uniq!
-
-      FacilitiesManagement::Service.all.select do |service|
-        # (@posted_services.include? service.code) && (services_with_pricing.include? service.code)
-        (services_selected.include? service.code) && (services_with_pricing.include? service.code)
-      end
-    end
-
-    def without_pricing
-      # CCS::FM::Rate.zero_rate
-      services_without_pricing = CCS::FM::Rate.zero_rate.map(&:code)
-
-      services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
-      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') if s }
-      services_selected = services_selected.uniq
-
-      FacilitiesManagement::Service.all.select do |service|
-        # (@posted_services.include? service.code) && (services_without_pricing.include? service.code)
-        (services_selected.include? service.code) && (services_without_pricing.include? service.code)
-      end
-    end
-
-    # usage:
-    #   ["K.1", "K.5"]
-    def list_of_services
-      services_selected = user_buildings.collect { |b| b.building_json['services'] }.flatten # s.collect { |s| s['code'].gsub('-', '.') }
-      services_selected = services_selected.map { |s| s['code'].gsub('-', '.') if s }.uniq
-
-      services = FacilitiesManagement::Service.all.select { |service| services_selected.include? service.code }
-      mandatory = FacilitiesManagement::Service.all.select { |service| service.code == 'A.18' || service.work_package_code == 'B' }
-      services +
-        mandatory <<
-        FacilitiesManagement::Service.new(code: 'A.1 - A.17', name: 'Contract management', work_package_code: 'A', mandatory: true)
-    end
 
     def selected_suppliers(for_lot)
       suppliers = CCS::FM::Supplier.all.select do |s|
