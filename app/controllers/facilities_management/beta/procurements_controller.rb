@@ -764,7 +764,7 @@ module FacilitiesManagement
             return_text: 'Return to procurement dashboard',
             return_url: facilities_management_beta_procurement_path(@procurement)
           },
-          review_your_contract: {
+          review_contract: {
             page_title: 'Review your contract',
             continuation_text: 'Create final contract and send to supplier',
             secondary_text: 'Return to results',
@@ -865,8 +865,6 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
-          },
-          review_contract: {
           }
         }
       end
