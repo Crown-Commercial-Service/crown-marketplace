@@ -81,6 +81,8 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def to_lower_case(str)
+    return str if !/[[:upper:]]/.match(str[0]).nil? && !/[[:upper:]]/.match(str[1]).nil?
+
     str[0] = str[0].downcase
     str
   end
