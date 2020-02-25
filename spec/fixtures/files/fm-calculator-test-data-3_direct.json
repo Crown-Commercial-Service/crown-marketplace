@@ -1,10 +1,9 @@
 [
   {
     "expectations": {
-      "sumunitofmeasure": "3,994.55",
-      "benchmarkedcostssum": "2,267.40"
+      "sumunitofmeasure": "3,429.17",
+      "benchmarkedcostssum": "1,946.48"
     },
-    "test_name": "Building 1/Service 1",
     "contract_length_years": 6,
     "service_ref": "C.1",
     "service_name": "Mechanical and Electrical Engineering Maintenance - Standard A, B or C",
@@ -17,10 +16,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "1,784.72",
-      "benchmarkedcostssum": "2,437.04"
+      "sumunitofmeasure": "1,532.11",
+      "benchmarkedcostssum": "2,092.12"
     },
-    "test_name": "Building 1/Service 2",
     "contract_length_years": 6,
     "service_ref": "C.2",
     "service_name": "Ventilation and Air Conditioning System Maintenance - Standard A, B or C",
@@ -33,10 +31,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "217.09",
-      "benchmarkedcostssum": "125.67"
+      "sumunitofmeasure": "186.36",
+      "benchmarkedcostssum": "107.89"
     },
-    "test_name": "Building 1/Service 3",
     "contract_length_years": 6,
     "service_ref": "C.3",
     "service_name": "Environmental Cleaning Service - Standard A, B or C",
@@ -49,10 +46,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "865.82",
-      "benchmarkedcostssum": "786.83"
+      "sumunitofmeasure": "743.27",
+      "benchmarkedcostssum": "675.47"
     },
-    "test_name": "Building 1/Service 4",
     "contract_length_years": 6,
     "service_ref": "C.4",
     "service_name": "Fire Detection and Firefighting Systems Maintenance - Standard A, B or C",
@@ -65,10 +61,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "418.22",
-      "benchmarkedcostssum": "443.55"
+      "sumunitofmeasure": "359.03",
+      "benchmarkedcostssum": "380.77"
     },
-    "test_name": "Building 1/Service 5",
     "contract_length_years": 6,
     "service_ref": "C.6",
     "service_name": "Security, Access and Intruder Systems Maintenance - Standard A, B or C",
@@ -81,10 +76,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "1,225.00",
-      "benchmarkedcostssum": "2,374.34"
+      "sumunitofmeasure": "1,051.61",
+      "benchmarkedcostssum": "2,038.30"
     },
-    "test_name": "Building 1/Service 6",
     "contract_length_years": 6,
     "service_ref": "C.7",
     "service_name": "Internal \u0026 External Building Fabric Maintenance - Standard A, B or C",
@@ -97,10 +91,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "464.07",
-      "benchmarkedcostssum": "342.38"
+      "sumunitofmeasure": "398.39",
+      "benchmarkedcostssum": "293.92"
     },
-    "test_name": "Building 1/Service 7",
     "contract_length_years": 6,
     "service_ref": "C.11",
     "service_name": "Building Management System (BMS) Maintenance - Standard A, B or C",
@@ -113,10 +106,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "473.21",
-      "benchmarkedcostssum": "475.80"
+      "sumunitofmeasure": "406.23",
+      "benchmarkedcostssum": "408.45"
     },
-    "test_name": "Building 1/Service 8",
     "contract_length_years": 6,
     "service_ref": "C.12",
     "service_name": "Standby Power System Maintenance - Standard A, B or C",
@@ -129,10 +121,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "243.39",
-      "benchmarkedcostssum": "237.25"
+      "sumunitofmeasure": "208.94",
+      "benchmarkedcostssum": "203.67"
     },
-    "test_name": "Building 1/Service 9",
     "contract_length_years": 6,
     "service_ref": "C.13",
     "service_name": "High Voltage (HV) and Switchgear Maintenance - Standard A, B or C",
@@ -145,10 +136,9 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "5,234.28",
-      "benchmarkedcostssum": "5,372.07"
+      "sumunitofmeasure": "4,493.43",
+      "benchmarkedcostssum": "4,611.75"
     },
-    "test_name": "Building 1/Service 10",
     "contract_length_years": 6,
     "service_ref": "C.5",
     "service_name": "Lifts, Hoists \u0026 Conveyance Systems Maintenance - Standard A, B or C",
