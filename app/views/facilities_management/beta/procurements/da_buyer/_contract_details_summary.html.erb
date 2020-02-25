@@ -6,8 +6,8 @@
         <td class="govuk-table__cell" width="45%"></td>
         <td class="govuk-table__cell" width="10%"></td>
       </tr>
-      <tr class="govuk-table__row">
-        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.payment_method') %></th>
+      <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:payment_method].any? %>">
+        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:payment_method].any? %>"><%= t('.payment_method') %></th>
         <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.payment_method.nil? %>">
           <% case @procurement.payment_method %>
           <% when 'bacs' %>
@@ -22,9 +22,14 @@
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'payment_method') unless @procurement.payment_method.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
-      
-      <tr class="govuk-table__row">
-        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.invoicing_contact_details') %></th>
+      <% if @procurement.errors[:payment_method].any? %>
+        <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if @procurement.errors[:payment_method].any? %>">
+          <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :payment_method, false) %></td>
+        </tr>
+      <% end %>
+
+      <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_invoice_details].any? %>">
+        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:using_buyer_detail_for_invoice_details].any? %>"><%= t('.invoicing_contact_details') %></th>
         <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
           <% case @procurement.using_buyer_detail_for_invoice_details %>
           <% when true %>
@@ -45,9 +50,14 @@
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details') unless @procurement.using_buyer_detail_for_invoice_details.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
-      
-      <tr class="govuk-table__row">
-        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.authorised_representative') %></th>
+      <% if @procurement.errors[:using_buyer_detail_for_invoice_details].any? %>
+        <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_invoice_details].any? %>">
+          <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :using_buyer_detail_for_invoice_details, false) %></td>
+        </tr>
+      <% end %>
+
+      <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_authorised_detail].any? %>">
+        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:using_buyer_detail_for_authorised_detail].any? %>"><%= t('.authorised_representative') %></th>
         <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
           <% case @procurement.using_buyer_detail_for_authorised_detail %>
           <% when true %>
@@ -70,9 +80,14 @@
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative') unless @procurement.using_buyer_detail_for_authorised_detail.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
-      
-      <tr class="govuk-table__row">
-        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.notices_contact_details') %></th>
+      <% if @procurement.errors[:using_buyer_detail_for_authorised_detail].any? %>
+        <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_authorised_detail].any? %>">
+          <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :using_buyer_detail_for_authorised_detail, false) %></td>
+        </tr>
+      <% end %>
+
+      <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_notices_detail].any? %>">
+        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:using_buyer_detail_for_notices_detail].any? %>"><%= t('.notices_contact_details') %></th>
         <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
           <% case @procurement.using_buyer_detail_for_notices_detail %>
           <% when true %>
@@ -93,9 +108,14 @@
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'notices_contact_details') unless @procurement.using_buyer_detail_for_notices_detail.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
-      
-      <tr class="govuk-table__row">
-        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.security_policy_document') %></th>
+      <% if @procurement.errors[:using_buyer_detail_for_notices_detail].any? %>
+        <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_notices_detail].any? %>">
+          <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :using_buyer_detail_for_notices_detail, false) %></td>
+        </tr>
+      <% end %>
+
+      <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:security_policy_document_required].any? %>">
+        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:security_policy_document_required].any? %>"><%= t('.security_policy_document') %></th>
         <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.security_policy_document_required %>", style="overflow-wrap: anywhere">
           <% case @procurement.security_policy_document_required %>
           <% when true %>
@@ -111,9 +131,14 @@
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'security_policy_document') unless @procurement.security_policy_document_required.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
+      <% if @procurement.errors[:security_policy_document_required].any? %>
+        <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if @procurement.errors[:security_policy_document_required].any? %>">
+          <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :security_policy_document_required, false) %></td>
+        </tr>
+      <% end %>
       
-      <tr class="govuk-table__row">
-        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header"><%= t('.local_government_pension_scheme') %></th>
+      <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:local_government_pension_scheme].any? %>">
+        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:local_government_pension_scheme].any? %>"><%= t('.local_government_pension_scheme') %></th>
         <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.local_government_pension_scheme %>">
           <% case @procurement.local_government_pension_scheme %>
           <% when true %>
@@ -135,6 +160,12 @@
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'local_government_pension_scheme') unless @procurement.local_government_pension_scheme.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
+      <% if @procurement.errors[:local_government_pension_scheme].any? %>
+        <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if @procurement.errors[:local_government_pension_scheme].any? %>">
+          <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :local_government_pension_scheme, false) %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
+
