@@ -754,22 +754,6 @@ module FacilitiesManagement
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
-          review_and_generate_documents: {
-            page_title: 'Review and generate documents',
-            back_url: facilities_management_beta_procurement_path(@procurement),
-            caption1: @procurement[:contract_name],
-            continuation_text: 'Generate documents',
-            secondary_text: 'Return to results',
-            secondary_url: facilities_management_beta_procurement_results_path(@procurement),
-            return_text: 'Return to procurement dashboard',
-            return_url: facilities_management_beta_procurement_path(@procurement)
-          },
-          review_contract: {
-            page_title: 'Review your contract',
-            continuation_text: 'Create final contract and send to supplier',
-            secondary_text: 'Return to results',
-            secondary_url: facilities_management_beta_procurement_results_path(@procurement)
-          },
           payment_method: {
             back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Payment method',
@@ -865,6 +849,18 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          review_and_generate_documents: {
+            page_title: 'Review and generate documents',
+            continuation_text: 'Generate documents',
+            secondary_text: 'Return to results',
+            secondary_name: 'continue_to_results'
+          },
+          review_contract: {
+            page_title: 'Review your contract',
+            continuation_text: 'Create final contract and send to supplier',
+            secondary_text: 'Return to results',
+            secondary_name: 'continue_to_results'
           }
         }
       end
