@@ -83,13 +83,6 @@ en:
           attributes:
             base:
               services_not_present: You must select at least one service
-            contract_details:
-              inclusion: You must answer the question about 'Authorised representative'
-              no_invoicing_contact_details: You must answer the question about 'Invoicing contact details'
-              inclusion: You must answer the question about 'Local Government Pension Scheme'
-              inclusion: You must answer the question about 'Notices'
-              no_payment_method: You must answer the question about 'Payment method'
-              inclusion: You must answer the question about 'Security policy'
             contract_name:
               blank: Enter your contract name
               not_present: You must answer the question about 'Contract name'
@@ -117,6 +110,7 @@ en:
             local_government_pension_scheme:
               inclusion: Select one answer
               not_present: Select one answer
+              not_present_contract_details: You must answer the question about 'Local Government Pension Scheme'
             mobilisation_period:
               greater_than: Enter mobilisation length
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
@@ -133,6 +127,7 @@ en:
               too_long: Call-off period and extensions must be 10 years or less
             payment_method:
               inclusion: Select one payment method
+              not_present_contract_details: You must answer the question about 'Payment method'
             procurement_building_services:
               invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be 'Complete'
             procurement_buildings:
@@ -151,6 +146,7 @@ en:
               blank: Enter a security policy document name
             security_policy_document_required:
               inclusion: Select yes if a security policy document is required for your contract
+              not_present_contract_details: You must answer the question about 'Security policy'
             security_policy_document_version_number:
               blank: Enter a security policy document version number
             service_codes:
@@ -160,10 +156,13 @@ en:
               not_present: You must answer the question about 'TUPE'
             using_buyer_detail_for_authorised_detail:
               inclusion: Select one option
+              not_present_contract_details: You must answer the question about 'Authorised representative details'
             using_buyer_detail_for_invoice_details:
               inclusion: Select one option
+              not_present_contract_details: You must answer the question about 'Invoicing contact details'
             using_buyer_detail_for_notices_detail:
               inclusion: Select one option
+              not_present_contract_details: You must answer the question about 'Notices contact details'
         facilities_management/procurement_authorised_contact_detail:
           attributes:
             email:

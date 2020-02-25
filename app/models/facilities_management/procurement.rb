@@ -27,9 +27,6 @@ module FacilitiesManagement
     has_one :notices_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementNoticesContactDetail', inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :notices_contact_detail, allow_destroy: true
 
-    has_one :contract_details, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
-    accepts_nested_attributes_for :contract_details, allow_destroy: true
-
     has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true
     accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
 
@@ -125,7 +122,7 @@ module FacilitiesManagement
       end
 
       event :set_to_review_and_generate do
-        transitions from: :contract_details, to: :review_and_generate, guards: :contract_details_valid?
+        transitions from: :contract_details, to: :review_and_generate
       end
 
       event :set_to_review do
@@ -302,10 +299,6 @@ module FacilitiesManagement
       procurement_pension_funds.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_PENSIONS
     end
 
-    def contract_details_valid?
-      errors.add(:contract_details, :inclusion) if self.valid?(:payment_method)
-    end
-    
     def assign_contract_number_to_procurement
       procurement_supplier = procurement_suppliers.first
       return unless procurement_supplier.contract_number.nil?
