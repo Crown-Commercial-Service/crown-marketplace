@@ -470,6 +470,25 @@ en:
         call_off_extensions:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
+        contracts:
+          sent:
+            index:
+              accepts_header: 1. If the supplier accepts the offer
+              accepts_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
+              accepts_list_2: the supplier will sign the contract and send it back to you (offline)
+              accepts_list_3: you will then sign the contract and send it back to the supplier (offline)
+              accepts_list_4: you will confirm on this portal that the contract has been signed by both parties
+              declines_header: 2. If the supplier declines the offer
+              declines_list_1: you will be notified that they have declined your offer, and provided a reason why
+              declines_list_2: you have the choice to
+              declines_list_2_sub_1: "- offer the contract to the next placed supplier (after reviewing their price)"
+              declines_list_2_sub_2: "- switch to a further competition"
+              declines_list_2_sub_3: "- change your requirements"
+              declines_list_2_sub_4: "- stop the process"
+              futher_inforamtion: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
+              header: Your contract was sent
+              what_happens_next: What happens next
+              what_happens_next_sub: The supplier has 2 working days (48 hours) to accept or decline your offer.
         da_buyer:
           contract_details:
             contract_details_description: Please provide further information that will help us put your contract together.
