@@ -5,9 +5,9 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
   let(:source) do
     { 'monday': { service_choice: :not_required },
       'tuesday': { service_choice: :all_day },
-      'wednesday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'am' },
+      'wednesday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'pm' },
       'thursday': { service_choice: :all_day }, friday: { service_choice: :not_required },
-      'saturday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'am' },
+      'saturday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm' },
       'sunday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm' } }
   end
 
@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
     service_hours[:wednesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '08', start_minute: '00', start_ampm: 'am', end_hour: '05', end_minute: '30', end_ampm: 'pm')
     service_hours[:thursday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required)
     service_hours[:friday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day)
-    service_hours[:saturday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: '05', end_minute: '30', end_ampm: 'am')
+    service_hours[:saturday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: '05', end_minute: '30', end_ampm: 'pm')
     service_hours[:sunday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required)
   end
 
@@ -67,7 +67,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
 
       it 'validate uom when serializing to a hash' do
         target = described_class.dump(service_hours)
-        expect(target[:saturday][:uom]).to eq 4.5
+        expect(target[:saturday][:uom]).to eq 7.5
       end
 
       it 'succeeds when serializing from a json' do
