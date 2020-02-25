@@ -6,8 +6,8 @@
                 <td class="govuk-table__cell" width="55%"></td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header">Buyer</th>
-                <td class="govuk-table__cell"><%= @current_user.buyer_detail.organisation_name %></td>
+                <th class="govuk-table__cell govuk-table__header">Supplier</th>
+                <td class="govuk-table__cell"><%= @procurement.procurement_suppliers.first.supplier.data['supplier_name'] %></td>
             </tr>
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header">Contract name</th>
@@ -18,7 +18,7 @@
                 <td class="govuk-table__cell"><%= @procurement.procurement_suppliers.first.contract_number %></td>
             </tr>
                 <th class="govuk-table__cell govuk-table__header">Contract value</th>
-                <td class="govuk-table__cell"><%= format_money @page_data[:sorted_supplier_list].first[:price] %></td>
+                <td class="govuk-table__cell"><%= format_money @procurement.procurement_suppliers.first.direct_award_value %></td>
             </tr>
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header">Framework, sub-lot</th>
