@@ -13,10 +13,6 @@
                 <th class="govuk-table__cell govuk-table__header">Contract name</th>
                 <td class="govuk-table__cell"><%= @procurement.contract_name %></td>
             </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header">Contract number</th>
-                <td class="govuk-table__cell"><%= @procurement.procurement_suppliers.first.contract_number %></td>
-            </tr>
                 <th class="govuk-table__cell govuk-table__header">Contract value</th>
                 <td class="govuk-table__cell"><%= format_money @procurement.procurement_suppliers.first.direct_award_value %></td>
             </tr>
