@@ -3,7 +3,7 @@ class FacilitiesManagement::ProcurementRouter
 
   QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze
 
-  STEPS = %w[contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services contract_details].freeze
+  STEPS = %w[contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
 
   def initialize(id:, procurement_state:, step: nil, da_journey_state: nil)
     @id = id
