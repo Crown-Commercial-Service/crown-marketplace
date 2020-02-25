@@ -6,19 +6,15 @@
                 <td class="govuk-table__cell" width="55%"></td>
             </tr>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header">Buyer</th>
-                <td class="govuk-table__cell"><%= @current_user.buyer_detail.organisation_name %></td>
+                <th class="govuk-table__cell govuk-table__header">Supplier</th>
+                <td class="govuk-table__cell"><%= @procurement.procurement_suppliers.first.supplier.data['supplier_name'] %></td>
             </tr>
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header">Contract name</th>
                 <td class="govuk-table__cell"><%= @procurement.contract_name %></td>
             </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header">Contract number</th>
-                <td class="govuk-table__cell"><%= @procurement.procurement_suppliers.first.contract_number %></td>
-            </tr>
                 <th class="govuk-table__cell govuk-table__header">Contract value</th>
-                <td class="govuk-table__cell"><%= format_money @page_data[:sorted_supplier_list].first[:price] %></td>
+                <td class="govuk-table__cell"><%= format_money @procurement.procurement_suppliers.first.direct_award_value %></td>
             </tr>
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header">Framework, sub-lot</th>
@@ -79,7 +75,7 @@
             <tr class="govuk-table__row">
               <th class="govuk-table__cell govuk-table__header">Buildings and services</th>
               <td class="govuk-table__cell">
-                <% @procurement.procurement_buildings.each.with_index do |bs, index| %>
+                <% @procurement.procurement_buildings.active.each.with_index do |bs, index| %>
                   <div class="<%= 'govuk-!-margin-bottom-2' unless index == @procurement.procurement_buildings.size - 1 %>">
                     <%= govuk_details(bs.name, true) do %>
                         <ul class="govuk-list govuk-list--bullet">

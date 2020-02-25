@@ -94,7 +94,7 @@ module FacilitiesManagement
       state :what_next
       state :important_information
       state :contract_details
-      state :review_and_generate, before_enter: :assign_contract_number_to_procurement
+      state :review_and_generate
       state :review
       state :sending
       state :sent_awaiting_response
