@@ -91,7 +91,7 @@ module FacilitiesManagement
       state :what_next
       state :important_information
       state :contract_details
-      state :review_and_generate, before_enter: :assign_contract_number_to_procurement
+      state :review_and_generate
       state :review
       state :sending
       state :sent_awaiting_response
@@ -297,14 +297,6 @@ module FacilitiesManagement
 
     def more_than_max_pensions?
       procurement_pension_funds.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_PENSIONS
-    end
-
-    def assign_contract_number_to_procurement
-      procurement_supplier = procurement_suppliers.first
-      return unless procurement_supplier.contract_number.nil?
-
-      procurement_supplier.assign_contract_number
-      procurement_supplier.save
     end
   end
 end
