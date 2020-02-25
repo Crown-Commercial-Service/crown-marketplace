@@ -1,4 +1,4 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|  %>
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, true, true) do |pd|  %>
     <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
         <div class="govuk-body govuk-!-font-size-24 govuk-!-width-three-quarters">
             Please review the full details of your requirements below in sections 1 and 2. If you wish to make any amendments, please use the change button relevant to that section. </br>
