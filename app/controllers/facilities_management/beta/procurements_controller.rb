@@ -14,16 +14,13 @@ module FacilitiesManagement
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
       before_action :build_page_details, only: %i[show edit update destroy results]
-
-      # rubocop:disable Metrics/AbcSize
       def index
         @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
         @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
-        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER, is_contract_closed: false).order(date_offer_sent: :asc).sort_by { |search| FacilitiesManagement::Procurement::SENT_OFFER_ORDER.index(search.aasm_state) }
-        @contracts = current_user.procurements.accepted_and_signed.order(contract_start_date: :asc)
-        @closed_contracts = current_user.procurements.where(is_contract_closed: true).order(closed_contract_date: :desc)
+        @sent_offers = sent_offers
+        @contracts = live_contracts
+        @closed_contracts = closed_contracts
       end
-      # rubocop:enable Metrics/AbcSize
 
       def show
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
@@ -77,6 +74,8 @@ module FacilitiesManagement
         change_contract_details && return if params['change_contract_details'].present?
 
         continue_to_review_and_generate && return if params['continue_to_review_and_generate'].present?
+
+        return_to_review_contract && return if params['return_to_review_contract'].present?
 
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
@@ -325,6 +324,11 @@ module FacilitiesManagement
         end
       end
 
+      def return_to_review_contract
+        @procurement.update(da_journey_state: :review)
+        redirect_to facilities_management_beta_procurement_path(@procurement)
+      end
+
       def continue_to_contract_details
         if procurement_valid?
           @procurement.set_to_contract_details
@@ -339,10 +343,16 @@ module FacilitiesManagement
         if procurement_valid?
           @procurement.move_to_next_da_step
           @procurement.save
+          send_contract && return if @procurement.da_journey_state == 'sent'
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
         end
+      end
+
+      def send_contract
+        @procurement.set_state_to_direct_award!
+        redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: @procurement.procurement_suppliers.first.id)
       end
 
       def continue_to_procurement_pensions
@@ -607,6 +617,22 @@ module FacilitiesManagement
         else
           @procurement.procurement_pension_funds.empty?
         end
+      end
+
+      def contracts(state)
+        current_user.procurements.direct_award.map { |procurement| procurement.public_send(state) }&.flatten
+      end
+
+      def sent_offers
+        current_user.procurements.direct_award.map(&:sent_offers)&.flatten&.sort_by { |sent_offer| [sent_offer.offer_sent_date, FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(sent_offer.aasm_state)] }
+      end
+
+      def live_contracts
+        current_user.procurements.direct_award.map(&:live_contracts)&.flatten&.sort_by(&:contract_signed_date)
+      end
+
+      def closed_contracts
+        current_user.procurements.where(aasm_state: ['direct_award', 'closed']).map(&:closed_contracts)&.flatten&.sort_by { |sent_offer| sent_offer.contract_closed_date }&.reverse
       end
 
       def procurement_route_params
@@ -939,6 +965,12 @@ module FacilitiesManagement
             continuation_text: 'Create final contract and send to supplier',
             secondary_text: 'Return to results',
             secondary_name: 'continue_to_results'
+          },
+          sending_the_contract: {
+            page_title: 'Sending the contract',
+            continuation_text: 'Confirm and send contract to supplier',
+            secondary_text: 'Cancel, return to review your contract',
+            secondary_name: 'return_to_review_contract'
           }
         }
       end
