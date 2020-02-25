@@ -149,7 +149,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_buildings_information(sheet)
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }
 
     [building_name, building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_type, building_security_clearance].each do |row_type|
       sheet.add_row row_type, style: standard_style, height: standard_row_height
@@ -286,7 +286,9 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def style_volume_sheet(sheet, style, number_volume_services)
     column_widths = [15, 100, 50, 50]
     @buildings.count.times { column_widths << 20 }
-    sheet["A2:D#{number_volume_services + 1}"].each { |c| c.style = style }
+
+    last_column_name = ('A'..'ZZ').to_a[2 + @buildings.count]
+    sheet["A2:#{last_column_name}#{number_volume_services + 1}"].each { |c| c.style = style }
     sheet.column_widths(*column_widths)
   end
 

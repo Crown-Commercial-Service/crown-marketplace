@@ -50,9 +50,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
       row_values = [service['code'], service['name']]
 
       @building_ids_with_service_codes.each do |building|
-        unit_of_measure = @units_of_measure_values.find { |unit| unit[:building_id] = building[:building_id] && unit[:service_code] == service['code'] }
-        service_name = service['name'] + ' - Standard ' + unit_of_measure[:service_standard] if unit_of_measure
-        service_name = service['name'] unless unit_of_measure
+        unit_of_measure = @units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
+        service_name = determine_service_name(service['name'], unit_of_measure)
 
         row_values = [service['code'], service_name]
         v = building[:service_codes].include?(service['code']) ? 'Yes' : ''
@@ -61,6 +60,12 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
       sheet.add_row row_values, style: standard_style, height: standard_row_height
     end
+  end
+
+  def determine_service_name(name, unit_of_measure)
+    return name + ' - Standard ' + unit_of_measure[:service_standard] if unit_of_measure && unit_of_measure[:service_standard]
+
+    name
   end
 
   def add_shortlist_details(package, standard_column_style, standard_bold_style, start_date, current_user)
@@ -141,7 +146,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def add_shortlist_supplier_names(sheet)
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }, fg_color: '6E6E6E'
     bold_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }, b: true
 
     label = 'Suppliers shortlist'
