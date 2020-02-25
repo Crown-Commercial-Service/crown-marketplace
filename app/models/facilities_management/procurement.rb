@@ -298,5 +298,13 @@ module FacilitiesManagement
     def more_than_max_pensions?
       procurement_pension_funds.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_PENSIONS
     end
+
+    def assign_contract_number_to_procurement
+      procurement_supplier = procurement_suppliers.first
+      return unless procurement_supplier.contract_number.nil?
+
+      procurement_supplier.assign_contract_number
+      procurement_supplier.save
+    end
   end
 end
