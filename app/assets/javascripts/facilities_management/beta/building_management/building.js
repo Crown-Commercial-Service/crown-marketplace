@@ -97,6 +97,8 @@ $(function () {
 
         //$('#fm-find-address-results').css("background", '#28a197');
         let address = {};
+        let selectOption = $("select#fm-find-address-results")[0].selectedOptions[0];
+
         if (extract_address_data(selectedAddress, address)) {
             cache_address ( selectedAddress) ;
             assign_building_address(address, address['building-ref']);
@@ -123,6 +125,23 @@ $(function () {
         }
     };
 
+    const convert_address_data = function ( source_address) {
+        new_address = {};
+
+        if (source_address) {
+            new_address['fm-address-line-1'] = source_address['add1'] ? source_address['add1'] : '';
+            new_address['fm-address-line-2'] = source_address['village'] ? source_address['village'] : '';
+            new_address['fm-address-town'] = source_address['post_town'] ? source_address['post_town'] : '';
+            new_address['fm-address-county'] = source_address['county'] ? source_address['county'] : '';
+            new_address['fm-address-postcode'] = source_address['postcode'] ? source_address['postcode'] : '';
+            new_address['fm-address-region'] = source_address['region'] ? source_address['region'].replace(/,/g, "##") : '';
+            new_address['fm-address-region-code'] = source_address['regioncode'] ? source_address['regioncode'].replace(/,/g, "##") : '';
+            new_address['building-ref'] = source_address['building_ref'] ? source_address['building_ref'] : '';
+        }
+
+        return new_address;
+    };
+
     const extract_address_data = function (selectedAddress, new_address) {
         if (selectedAddress) {
             let addressElements = selectedAddress.split(',');
@@ -132,7 +151,8 @@ $(function () {
             new_address['fm-address-county'] = addressElements[3];
             new_address['fm-address-postcode'] = addressElements[4].trim();
             new_address['fm-address-region'] = addressElements[5].replace(/##/g, ",").trim();
-            new_address['building-ref'] = addressElements[6];
+            new_address['fm-address-region-code'] = addressElements[7].replace(/##/g, ",").trim();
+            new_address['building-ref'] = addressElements[6].trim();
 
             return true;
         }
@@ -151,33 +171,39 @@ $(function () {
     $('#fm-find-address-btn').on('click', function (e) {
         e.preventDefault();
 
+        let selectElement = $($('#fm-find-address-results')[0]);
         let postCode = pageUtils.formatPostCode($('#fm-bm-postcode').val());
 
-        $('#fm-find-address-results').empty();
-        $('#fm-find-address-results').append('<option value="status-option" selected>0 addresses found</option>');
+        selectElement.empty();
+        selectElement.append('<option value="status-option" selected>0 addresses found</option>');
 
         $.get(encodeURI("/api/v1/postcodes/" + postCode))
             .done(function (data) {
                 if (data && data.result && data.result.length > 0) {
-                    $('#fm-find-address-results').find('option').remove();
-                    $('#fm-find-address-results').append('<option value="status-option" selected>' + data.result.length + ' addresses found</option>');
+                    selectElement.find('option').remove();
+                    selectElement.append('<option value="status-option" selected>' + data.result.length + ' addresses found</option>');
                     let addresses = data.result;
 
                     for (let x = 0; x < addresses.length; x++) {
-                        let address = addresses[x];
+                        let address = convert_address_data(addresses[x]);
 
-                        let add1 = address['add1'] ? address['add1'] + ', ' : '';
-                        let add2 = address['village'] ? address['village'] + ', ' : '';
-                        let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
-                        let county = address['county'] ? address['county'] + ', ' : '';
-                        let postCode = address['postcode'] ? address['postcode'] : '';
+                        let add1 = addresses[x]['add1'] ? addresses[x]['add1'] + ', ' : '';
+                        let add2 = addresses[x]['village'] ? addresses[x]['village'] + ', ' : '';
+                        let postTown = addresses[x]['post_town'] ? addresses[x]['post_town'] + ', ' : '';
+                        let county = addresses[x]['county'] ? addresses[x]['county'] + ', ' : '';
+                        let postCode = addresses[x]['postcode'] ? addresses[x]['postcode'] : '';
                         /**replace all commas so later when we split the selected address we can replace these hashes with commas to avoid conflicts */
-                        let region = address['region'] ? address['region'].replace(/,/g, "##")+' ' : '';
-                        let buildingRef = address['building_ref'] ? address['building_ref'] : '';
+                        let region = addresses[x]['region'] ? addresses[x]['region'].replace(/,/g, "##")+' ' : '';
+                        let regioncode = addresses[x]['regioncode'] ? addresses[x]['regioncode'].replace(/,/g, "##")+' ' : '';
+                        let buildingRef = addresses[x]['building_ref'] ? addresses[x]['building_ref'] : '';
                         let newOptionData = add1 + add2 + postTown + county + postCode;
-                        let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + region + ', ' + buildingRef;
-                        let newOption = '<option value="' + newOptionValue + '">' + newOptionData + '</option>';
-                        $('#fm-find-address-results').append(newOption);
+                        let newOptionValue = add1 + add2 + postTown + county + postCode + ', ' + region.trim() + ', ' + buildingRef.trim() + ', ' + regioncode.trim();
+
+                        let newOption = document.createElement('option');
+                        newOption.value = newOptionValue;
+                        newOption.innerText = newOptionData;
+                        newOption.setAttribute ( 'data-address', address) ;
+                        selectElement.append(newOption);
                     }
                 }
                 showCantFindAddressLink();
