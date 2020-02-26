@@ -87,6 +87,9 @@
               </div>
             <% end %>
           <% end %>
+          <% params[:region_codes]&.split(" ") do |region_code| %>
+            <%= hidden_field_tag "region_codes[]", region_code %>
+          <% end %>
           <%= submit_tag t('common.submit'), class: "govuk-button" %>
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
