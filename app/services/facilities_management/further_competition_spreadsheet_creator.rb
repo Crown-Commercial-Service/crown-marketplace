@@ -47,15 +47,15 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }
 
     @services.each do |service|
-      row_values = [service['code'], service['name']]
-
+      first_loop = true
+      row_values = []
       @building_ids_with_service_codes.each do |building|
         unit_of_measure = @units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
         service_name = determine_service_name(service['name'], unit_of_measure)
-
-        row_values = [service['code'], service_name]
+        row_values << service['code'] << service_name if first_loop
         v = building[:service_codes].include?(service['code']) ? 'Yes' : ''
         row_values << v
+        first_loop = false
       end
 
       sheet.add_row row_values, style: standard_style, height: standard_row_height
