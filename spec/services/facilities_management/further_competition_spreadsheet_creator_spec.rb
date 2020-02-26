@@ -202,7 +202,9 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
       wb = Roo::Excelx.new('/tmp/further_competition_procurement_summary.xlsx')
 
-      expect(wb.sheet('Service Matrix').row(2)).to eq ['C.5', 'Lifts, hoists & conveyance systems maintenance - Standard A', 'Yes', nil]
+      expect(wb.sheet('Service Matrix').row(2)).to eq ['C.5', 'Lifts, hoists & conveyance systems maintenance - Standard A', 'Yes', 'Yes']
+      expect(wb.sheet('Service Matrix').row(3)).to eq ['M.1', 'CAFM system', nil, 'Yes']
+      expect(wb.sheet('Service Matrix').row(4)).to eq ['N.1', 'Helpdesk services', nil, 'Yes']
     end
     # rubocop:enable RSpec/ExampleLength
   end
