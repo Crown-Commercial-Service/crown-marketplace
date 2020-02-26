@@ -1,6 +1,8 @@
 require 'notifications/client'
 module FacilitiesManagement
   class GovNotifyNotification
+    include Sidekiq::Worker
+
     # Template Ids
     EMAIL_TEMPLATES = {
       'RM3830_DA_generic_notification': 'cca9f44c-5ccd-45d6-865c-5305655a0f16',
@@ -16,15 +18,17 @@ module FacilitiesManagement
     }.freeze
 
     def self.send_email_notification(template_name, email_to, template_args)
-      Rails.logger.info EMAIL_TEMPLATES[template_name.to_sym]
-
       @client = Notifications::Client.new(ENV['GOV_NOTIFY_API_KEY'])
 
       @client.send_email(
         email_address: email_to,
         template_id: EMAIL_TEMPLATES[template_name.to_sym],
-        personalisation: template_args
+        personalisation: JSON.parse(template_args)
       )
+    end
+
+    def perform(template_name, email_to, template_args)
+      FacilitiesManagement::GovNotifyNotification.send_email_notification(template_name, email_to, template_args)
     end
   end
 end
