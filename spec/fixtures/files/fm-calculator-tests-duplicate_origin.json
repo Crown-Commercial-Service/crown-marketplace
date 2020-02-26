@@ -5,10 +5,10 @@
     "service_ref": "G1",
     "uom_vol": "23000",
     "occupants": "125",
-    "tupe_flag": true,
-    "london_flag": true,
-    "cafm_flag": true,
-    "helpdesk_flag": false,
+    "tupe_flag": "true",
+    "london_flag": "Y",
+    "cafm_flag": "Y",
+    "helpdesk_flag": "N",
     "expectations": {
       "sumunitofmeasure": "1341251",
       "benchmarkedcostssum": "600241"
@@ -20,10 +20,10 @@
     "service_ref": "C5",
     "uom_vol": "54",
     "occupants": "0",
-    "tupe_flag": true,
-    "london_flag": true,
-    "cafm_flag": true,
-    "helpdesk_flag": false,
+    "tupe_flag": "true",
+    "london_flag": "Y",
+    "cafm_flag": "Y",
+    "helpdesk_flag": "N",
     "expectations": {
       "sumunitofmeasure": "54280",
       "benchmarkedcostssum": "55712"
@@ -35,10 +35,10 @@
     "service_ref": "C19",
     "uom_vol": "0",
     "occupants": "0",
-    "tupe_flag": true,
-    "london_flag": true,
-    "cafm_flag": true,
-    "helpdesk_flag": false,
+    "tupe_flag": "true",
+    "london_flag": "Y",
+    "cafm_flag": "Y",
+    "helpdesk_flag": "N",
     "expectations": {
       "sumunitofmeasure": "0",
       "benchmarkedcostssum": "0"
@@ -50,10 +50,10 @@
     "service_ref": "E4",
     "uom_vol": "450",
     "occupants": "0",
-    "tupe_flag": false,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": true,
+    "tupe_flag": "false",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "Y",
     "expectations": {
       "sumunitofmeasure": "1340"
     }
@@ -64,10 +64,10 @@
     "service_ref": "K1",
     "uom_vol": "75",
     "occupants": "0",
-    "tupe_flag": false,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": true,
+    "tupe_flag": "false",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "Y",
     "expectations": {
       "sumunitofmeasure": "26360"
     }
@@ -78,10 +78,10 @@
     "service_ref": "H4",
     "uom_vol": "2350",
     "occupants": "0",
-    "tupe_flag": false,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": true,
+    "tupe_flag": "false",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "Y",
     "expectations": {
       "sumunitofmeasure": "173929"
     }
@@ -92,10 +92,10 @@
     "service_ref": "G5",
     "uom_vol": "56757",
     "occupants": "0",
-    "tupe_flag": false,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": false,
+    "tupe_flag": "false",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "N",
     "expectations": {
       "sumunitofmeasure": "536629"
     }
@@ -106,10 +106,10 @@
     "service_ref": "K2",
     "uom_vol": "125",
     "occupants": "0",
-    "tupe_flag": false,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": false,
+    "tupe_flag": "false",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "N",
     "expectations": {
       "sumunitofmeasure": "101481"
     }
@@ -120,10 +120,10 @@
     "service_ref": "K7",
     "uom_vol": "680",
     "occupants": "0",
-    "tupe_flag": false,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": false,
+    "tupe_flag": "false",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "N",
     "expectations": {
       "sumunitofmeasure": "57682"
     }
@@ -134,10 +134,10 @@
     "service_ref": "E4",
     "uom_vol": "450",
     "occupants": "0",
-    "tupe_flag": true,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": true,
+    "tupe_flag": "true",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "Y",
     "expectations": {
       "benchmarkedcostssum": "1516"
     }
@@ -148,10 +148,10 @@
     "service_ref": "K1",
     "uom_vol": "75",
     "occupants": "0",
-    "tupe_flag": true,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": true,
+    "tupe_flag": "true",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "Y",
     "expectations": {
       "benchmarkedcostssum": "29806"
     }
@@ -162,10 +162,10 @@
     "service_ref": "H4",
     "uom_vol": "2350",
     "occupants": "0",
-    "tupe_flag": true,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": true,
+    "tupe_flag": "true",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "Y",
     "expectations": {
       "benchmarkedcostssum": "196663"
     }
@@ -176,10 +176,10 @@
     "service_ref": "G5",
     "uom_vol": "56757",
     "occupants": "0",
-    "tupe_flag": true,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": false,
+    "tupe_flag": "true",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "N",
     "expectations": {
       "benchmarkedcostssum": "606772"
     }
@@ -190,10 +190,10 @@
     "service_ref": "K2",
     "uom_vol": "125",
     "occupants": "0",
-    "tupe_flag": true,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": false,
+    "tupe_flag": "true",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "N",
     "expectations": {
       "benchmarkedcostssum": "114746"
     }
@@ -204,10 +204,10 @@
     "service_ref": "K7",
     "uom_vol": "680",
     "occupants": "0",
-    "tupe_flag": true,
-    "london_flag": false,
-    "cafm_flag": false,
-    "helpdesk_flag": false,
+    "tupe_flag": "true",
+    "london_flag": "N",
+    "cafm_flag": "N",
+    "helpdesk_flag": "N",
     "expectations": {
       "benchmarkedcostssum": "65222"
     }
