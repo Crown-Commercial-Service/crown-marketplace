@@ -18,8 +18,6 @@ module FacilitiesManagement
     }.freeze
 
     def self.send_email_notification(template_name, email_to, template_args)
-      Rails.logger.info EMAIL_TEMPLATES[template_name.to_sym]
-
       @client = Notifications::Client.new(ENV['GOV_NOTIFY_API_KEY'])
 
       @client.send_email(
