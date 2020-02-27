@@ -159,69 +159,72 @@ function updateList(govb, id, basket){
 
 function initDynamicAccordian(){
     var govcheckboxes = $('#accordion-default').find('.govuk-checkboxes');
-    var id = $('#css-list-basket');
-    var basketheader = id.find('.govuk-heading-m');
-    headerTxt(basketheader, false);
 
-    govcheckboxes.each(function(){
-
-        var hasAll = $(this).find('.ccs-select-all');
-        var hasFull = $(this).find('.ccs-select-full');
-
-        var thecheckboxes = $(this).find('.govuk-checkboxes__item')
-        .not(hasAll).not(hasFull)
-        .find('.govuk-checkboxes__input');
-
-        if(hasAll.length){//start 'select all' checkbox functionality
-
-            var hasAllInput = hasAll.find('.govuk-checkboxes__input');
-
-            hasAllInput.on('change', function(){
-                var checkstate = hasAllInput.is(':checked');
-
-                thecheckboxes.each(function(){
+    if ( 0 < govcheckboxes.length ) {
+        var id = $('#css-list-basket');
+        var basketheader = id.find('.govuk-heading-m');
+        headerTxt(basketheader, false);
+    
+        govcheckboxes.each(function(){
+    
+            var hasAll = $(this).find('.ccs-select-all');
+            var hasFull = $(this).find('.ccs-select-full');
+    
+            var thecheckboxes = $(this).find('.govuk-checkboxes__item')
+            .not(hasAll).not(hasFull)
+            .find('.govuk-checkboxes__input');
+    
+            if(hasAll.length){//start 'select all' checkbox functionality
+    
+                var hasAllInput = hasAll.find('.govuk-checkboxes__input');
+    
+                hasAllInput.on('change', function(){
+                    var checkstate = hasAllInput.is(':checked');
+    
+                    thecheckboxes.each(function(){
+                        if(checkstate){//$(this).prop("checked", !$(this).prop("checked"));
+                            $(this).prop('checked', true);
+                        }else{
+                            $(this).prop('checked', false);
+                        }
+                    });
+                    updateList(govcheckboxes, id, basketheader);
+                });
+    
+                thecheckboxes.on('change', function(){
+                    if(!$(this).is(':checked')){//if NOT checked
+                        hasAll.find('.govuk-checkboxes__input').prop('checked', false);
+                    }
+                });//end: 'select all' checkbox functionality
+    
+            } else if(hasFull.length){//start has a 'Full' coverage link
+    
+                var hasFullInput = hasFull.find('.govuk-checkboxes__input');
+    
+                hasFullInput.on('change', function(){
+                    var checkstate = hasFullInput.is(':checked');
+    
                     if(checkstate){//$(this).prop("checked", !$(this).prop("checked"));
                         $(this).prop('checked', true);
-                    }else{
-                        $(this).prop('checked', false);
+                        thecheckboxes.prop('checked', false);
                     }
+    
+                    updateList(govcheckboxes, id, basketheader);
                 });
-                updateList(govcheckboxes, id, basketheader);
-            });
-
-            thecheckboxes.on('change', function(){
-                if(!$(this).is(':checked')){//if NOT checked
-                    hasAll.find('.govuk-checkboxes__input').prop('checked', false);
-                }
-            });//end: 'select all' checkbox functionality
-
-        } else if(hasFull.length){//start has a 'Full' coverage link
-
-            var hasFullInput = hasFull.find('.govuk-checkboxes__input');
-
-            hasFullInput.on('change', function(){
-                var checkstate = hasFullInput.is(':checked');
-
-                if(checkstate){//$(this).prop("checked", !$(this).prop("checked"));
-                    $(this).prop('checked', true);
-                    thecheckboxes.prop('checked', false);
-                }
-
-                updateList(govcheckboxes, id, basketheader);
-            });
-
-            thecheckboxes.on('change', function(){
-                if($(this).is(':checked')){//if it IS checked
-                    hasFull.find('.govuk-checkboxes__input').prop('checked', false);
-                }
-            });//end: has a 'Full' coverage link
-
+    
+                thecheckboxes.on('change', function(){
+                    if($(this).is(':checked')){//if it IS checked
+                        hasFull.find('.govuk-checkboxes__input').prop('checked', false);
+                    }
+                });//end: has a 'Full' coverage link
+            
         }
 
         thecheckboxes.on('change', function(){//for all checkboxes
             updateList(govcheckboxes, id, basketheader);
         });
     });
+    }
 
     updateList(govcheckboxes, id, basketheader);
 }

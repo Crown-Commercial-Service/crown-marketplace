@@ -41,9 +41,23 @@ ARG APP_RUN_STATIC_TASK
 LABEL app_run_static_task=$APP_RUN_STATIC_TASK
 ENV APP_RUN_STATIC_TASK=$APP_RUN_STATIC_TASK
 
+ARG CLAMAV_SERVER_IP
+LABEL clam_av_server_ip=$CLAMAV_SERVER_IP
+ENV CLAMAV_SERVER_IP=$CLAMAV_SERVER_IP
+
 ##_PARAMETER_STORE_MARKER_##
 
-ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata
+ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata clamav clamav-daemon
+
+# Change clamav config to use remote server for scanning
+
+RUN systemctl stop clamav-freshclam.service && systemctl stop clamav-daemon.service
+
+RUN chown -R $USER:$USER /etc/clamav/clamd.conf
+
+RUN echo TCPAddr $CLAMAV_SERVER_ADDRESS >> /etc/clamav/clamd.conf && sudo echo TCPSocket 3310 >> /etc/clamav/clamd.conf
+
+RUN systemctl start clamav-daemon.service
 
 # Update and install base packages
 RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs-current-npm git

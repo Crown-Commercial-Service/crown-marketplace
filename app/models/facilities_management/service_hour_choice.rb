@@ -72,24 +72,14 @@ module FacilitiesManagement
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/AbcSize, Style/RescueStandardError
     def self.time_range(service_hours_hash)
       return 0 if service_hours_hash.nil?
 
-      start_hour_value_proc = -> { service_hours_hash[:start_ampm] == 'PM' ? service_hours_hash[:start_hour].to_i + 12 : service_hours_hash[:start_hour].to_i }
-      start_hour_value = start_hour_value_proc.call
-      start_minute_value = service_hours_hash[:start_minute]
-      end_hour_value_proc = -> { service_hours_hash[:end_ampm] == 'PM' ? service_hours_hash[:end_hour].to_i + 12 : service_hours_hash[:end_hour].to_i }
-      end_hour_value = end_hour_value_proc.call
-      end_minute_value = service_hours_hash[:end_minute]
+      start_time = Time.parse("#{service_hours_hash[:start_hour]}:#{service_hours_hash[:start_minute]} #{service_hours_hash[:start_ampm]}").utc
+      end_time = Time.parse("#{service_hours_hash[:end_hour]}:#{service_hours_hash[:end_minute]} #{service_hours_hash[:end_ampm]}").utc
 
-      start_time = Time.parse("#{format('%02d', start_hour_value)}:#{format('%02d', start_minute_value)}").utc
-      end_time = Time.parse("#{format('%02d', end_hour_value)}:#{format('%02d', end_minute_value)}").utc
       (end_time - start_time).abs / 3600
-    rescue
-      0
     end
-    # rubocop:enable Metrics/AbcSize, Style/RescueStandardError
 
     def total_hours
       return 0 unless SERVICE_CHOICES.include?(service_choice)

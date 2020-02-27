@@ -36,7 +36,7 @@ class FacilitiesManagement::ProcurementRouter
     'important_information': 'did_you_know',
     'contract_details': 'contract_details',
     'review_and_generate': 'review_and_generate_documents',
-    'review': 'review_your_contract',
+    'review': 'review_contract',
     'sending': 'sending_the_contract',
     'sent_awaiting_response': 'sent_awaiting_response',
     'sent_offer_awaiting_response': 'sent_offer_awaiting_response',
@@ -68,7 +68,7 @@ class FacilitiesManagement::ProcurementRouter
       return QUICK_SEARCH_EDIT_STEPS.include?(@step) ? edit_facilities_management_beta_procurement_path(id: @id) : facilities_management_beta_procurements_path
     end
     return edit_facilities_management_beta_procurement_path(id: @id, step: previous_step) if @step == 'services'
-    return facilities_management_beta_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).procurement_buildings.first) if @step == 'building_services'
+    return facilities_management_beta_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
 
     next_step.nil? ? facilities_management_beta_procurement_path(id: @id) : edit_facilities_management_beta_procurement_path(id: @id, step: next_step)
   end

@@ -7,10 +7,6 @@ module FacilitiesManagement::Beta::ProcurementsHelper
     %i[contract_dates estimated_annual_cost pension_funds].include? params[:step].try(:to_sym)
   end
 
-  def format_date(date_object)
-    date_object&.strftime '%d %B %Y'
-  end
-
   def initial_call_off_period_start_date
     format_date @procurement.initial_call_off_start_date
   end
@@ -18,8 +14,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   def initial_call_off_period_end_date
     return '' if @procurement.initial_call_off_start_date.blank?
 
-    end_date = Date.parse(@procurement.initial_call_off_start_date.to_s).next_year(@procurement.initial_call_off_period) - 1
-    format_date end_date
+    Date.parse(@procurement.initial_call_off_start_date.to_s).next_year(@procurement.initial_call_off_period) - 1
   end
 
   def mobilisation_period
@@ -32,16 +27,12 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def mobilisation_start_date
-    # start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - (@procurement.mobilisation_period * 7)
-    # align server-side calculation to client-side logic
     start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - 1
-    start_date -= (@procurement.mobilisation_period * 7)
-    format_date start_date
+    start_date - (@procurement.mobilisation_period * 7)
   end
 
   def mobilisation_end_date
-    end_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - 1
-    format_date end_date
+    Date.parse(@procurement.initial_call_off_start_date.to_s) - 1
   end
 
   def initial_call_off_period(period)
@@ -49,34 +40,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def format_extension(start_date, end_date)
-    "#{start_date} to #{end_date}"
-  end
-
-  def extension_one_description
-    extension_one_start_date = @procurement.initial_call_off_start_date.next_year(@procurement.initial_call_off_period)
-    extension_one_end_date   = extension_one_start_date.next_year(@procurement.optional_call_off_extensions_1) - 1
-    format_extension extension_one_start_date, extension_one_end_date
-  end
-
-  def extension_two_description
-    extension_one_start_date = @procurement.initial_call_off_start_date.next_year(@procurement.initial_call_off_period)
-    start_date               = extension_one_start_date.next_year(@procurement.optional_call_off_extensions_1)
-    end_date                 = (start_date - 1).next_year(@procurement.optional_call_off_extensions_2)
-    format_extension start_date, end_date
-  end
-
-  def extension_three_description
-    extension_one_start_date = @procurement.initial_call_off_start_date.next_year(@procurement.initial_call_off_period)
-    start_date               = extension_one_start_date.next_year(@procurement.optional_call_off_extensions_1 + +@procurement.optional_call_off_extensions_2)
-    end_date                 = (start_date - 1).next_year(@procurement.optional_call_off_extensions_3)
-    format_extension start_date, end_date
-  end
-
-  def extension_four_description
-    extension_one_start_date = @procurement.initial_call_off_start_date.next_year(@procurement.initial_call_off_period)
-    start_date               = extension_one_start_date.next_year(@procurement.optional_call_off_extensions_1 + @procurement.optional_call_off_extensions_2 + @procurement.optional_call_off_extensions_3)
-    end_date                 = (start_date - 1).next_year(@procurement.optional_call_off_extensions_4)
-    format_extension start_date, end_date
+    "#{format_date start_date} to #{format_date end_date}"
   end
 
   def any_service_codes(procurement_buildings)
@@ -113,10 +77,12 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def initial_call_off_period_description
-    format_extension(initial_call_off_period_start_date, initial_call_off_period_end_date)
+    format_extension(@procurement.initial_call_off_start_date, initial_call_off_period_end_date)
   end
 
   def to_lower_case(str)
+    return str if !/[[:upper:]]/.match(str[0]).nil? && !/[[:upper:]]/.match(str[1]).nil?
+
     str[0] = str[0].downcase
     str
   end

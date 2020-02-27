@@ -121,7 +121,7 @@ module LayoutHelper
     buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
     buttons << capture { tag.br } if secondary_button || primary_button
-    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link') if return_link
+    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') if return_link
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
@@ -250,11 +250,11 @@ module LayoutHelper
     builder.label attribute, generate_label_text(model, attribute, label_text), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 
-  def govuk_details(summary_text, &block)
+  def govuk_details(summary_text, reduce_padding = false, &block)
     content_tag :details, class: 'govuk-details', data: { module: 'govuk-details' } do
       capture do
         concat(content_tag(:summary, content_tag(:span, summary_text, class: 'govuk-details__summary-text'), class: 'govuk-details__summary'))
-        concat(content_tag(:div, class: 'govuk-details__text', &block))
+        concat(content_tag(:div, class: "govuk-details__text #{'govuk-!-padding-bottom-0 govuk-!-padding-top-0' if reduce_padding}", &block))
       end
     end
   end

@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       end
     end
 
-    context 'with a procurement in direct award' do
+    context 'with a procurement in further competition' do
       it 'returns an available number for a further competition contract' do
         expect(further_competition.send(:generate_contract_number)).to eq("RM3830-FC#{expected_number}-#{current_year}")
       end

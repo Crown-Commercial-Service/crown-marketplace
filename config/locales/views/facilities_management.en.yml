@@ -3,7 +3,7 @@ en:
   activemodel:
     attributes:
       facilities_management/service_hour_choice/service_choice:
-        all_day: All day (24 hours)
+        all_day: All day <br/> (24 hours)
         hourly: Specified Hours
         not_required: Not required
         time_to: to
@@ -110,6 +110,7 @@ en:
             local_government_pension_scheme:
               inclusion: Select one answer
               not_present: Select one answer
+              not_present_contract_details: You must answer the question about 'Local Government Pension Scheme'
             mobilisation_period:
               greater_than: Enter mobilisation length
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
@@ -126,6 +127,7 @@ en:
               too_long: Call-off period and extensions must be 10 years or less
             payment_method:
               inclusion: Select one payment method
+              not_present_contract_details: You must answer the question about 'Payment method'
             procurement_building_services:
               invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be 'Complete'
             procurement_buildings:
@@ -144,6 +146,7 @@ en:
               blank: Enter a security policy document name
             security_policy_document_required:
               inclusion: Select yes if a security policy document is required for your contract
+              not_present_contract_details: You must answer the question about 'Security policy'
             security_policy_document_version_number:
               blank: Enter a security policy document version number
             service_codes:
@@ -153,10 +156,13 @@ en:
               not_present: You must answer the question about 'TUPE'
             using_buyer_detail_for_authorised_detail:
               inclusion: Select one option
+              not_present_contract_details: You must answer the question about 'Authorised representative details'
             using_buyer_detail_for_invoice_details:
               inclusion: Select one option
+              not_present_contract_details: You must answer the question about 'Invoicing contact details'
             using_buyer_detail_for_notices_detail:
               inclusion: Select one option
+              not_present_contract_details: You must answer the question about 'Notices contact details'
         facilities_management/procurement_authorised_contact_detail:
           attributes:
             email:
@@ -461,10 +467,14 @@ en:
       procurements:
         about_the_contract:
           no_cost_provided: None
+        call_off_extensions:
+          add_extension_period: Add another extension period
+          description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         da_buyer:
           contract_details:
-            authorised_representative: Authorised representative details
             contract_details_description: Please provide further information that will help us put your contract together.
+          contract_details_summary:
+            authorised_representative: Authorised representative details
             invoicing_contact_details: Invoicing contact details
             local_government_pension_scheme: Local Government Pension Scheme
             notices_contact_details: Notices contact details
@@ -492,10 +502,116 @@ en:
             services_body_html_2: that you're happy with the details for the services you are buying.
             services_heading: Services
           pricing:
-            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If the lowest priced supplier declines the opportunity, the details of the second place supplier will be displayed to you with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
+            description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If there is more than one supplier that can meet your requirements, and the lowest priced supplier declines the opportunity, then the details of the second place supplier will be presented to you, with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
             lowest_price_supplier: lowest priced supplier
-            pricing_header: Here are the contract prices by supplier shown in ascending order.
-            pricing_warning_html: You are only shown the name of the <strong>lowest price supplier</strong>, as they can offer the best price for your requirements.
+            supplier_description_plural: that can offer your services under direct award, their contract prices are shown below in ascending order.
+            supplier_description_singular: that can offer your services under direct award, their contract price is shown below.
+          review_contract:
+            attachment_1:
+              document_name: About the Direct Award.docx
+              guidance: This document tells the supplier important information about the contract you have offered.
+              heading: Attachment 1
+              title: About the direct award
+            attachment_2:
+              annex_a:
+                guidance: This document sets out the processes, standards and service delivery response times the suppliers must adhere to in delivery of the services.
+                title: Annex A - standards & processes
+              heading: Attachment 2
+              statement_of_requirements:
+                guidance: This document forms the basis of your requirement, and includes your building information, the services you require in each building, and the service specification.
+                title: Statement of requirements (deliverables matrix)
+            attachment_3:
+              heading: Attachment 3
+              price_matrix:
+                guidance: This document contains the details of your contractual pricing, and a breakdown of the component parts.
+                title: Price matrix
+            attachment_4:
+              core_terms:
+                guidance: The Core Terms are based on CCS's standard commercial terms under The Public Sector Contract.
+                title: Core terms
+              heading: Attachment 4 - Contract (Order form and Schedules)
+              order_form:
+                guidance: The Order Form is the overarching contract document where key contractual decisions are highlighted, the Core Terms, Joint Schedules and Call-off Schedules are listed and contract signatures from both parties are captured.
+                title: Order form
+            change_requirements:
+              guidance: If you wish to make changes to your requirements, click on the 'Change requirements' button below.
+              title: Change requirements
+            change_schedule:
+              guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended
+            contract_documents:
+              call_off_schedule_1:
+                document_name: Call-Off Schedule 1 Transparency Reports (DA).docx
+                title: Call-off Schedule 1 - Transparency Reports
+              call_off_schedule_10:
+                document_name: Call-Off Schedule 10 - Exit Management (DA).docx
+                title: Call-off Schedule 10 - Exit Management
+              call_off_schedule_13:
+                document_name: Call-Off Schedule 13 - Mobilisation Plan and Testing (DA).docx
+                title: Call-off Schedule 13 - Mobilisation Plan and Testing
+              call_off_schedule_2:
+                document_name: "#"
+                title: Call-off Schedule 2 - Staff Transfer
+              call_off_schedule_3:
+                document_name: Call-Off Schedule 3 - Continuous Improvement (DA).docx
+                title: Call-off Schedule 3 - Continuous Improvement
+              call_off_schedule_4:
+                document_name: Call-Off Schedule 4 - Facilities Management (DA).docx
+                title: Call-off Schedule 4 - Facilities Management
+              call_off_schedule_4A:
+                document_name: Call-Off Schedule 4A - Billable Works and Projects (DA).docx
+                title: Call-off Schedule 4A - Billable Work and Projects
+              call_off_schedule_5:
+                document_name: Call-Off Schedule 5 - Call-Off Pricing (DA).docx
+                title: Call-off Schedule 5 - Call-off Pricing
+              call_off_schedule_6:
+                document_name: Call-Off Schedule 6 - TUPE Surcharge (DA).docx
+                title: Call-off Schedule 6 - TUPE Surcharge
+              call_off_schedule_7:
+                document_name: Call-Off Schedule 7 - Key Staff (DA).docx
+                title: Call-off Schedule 7 - Key Staff
+              call_off_schedule_8:
+                document_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
+                title: Call-Off Schedule 8 - Business Continuity and Disaster Recovery
+              call_off_schedule_9:
+                document_name: Call-Off Schedule 9 - Security (DA).docx
+                title: Call-off Schedule 9 - Security
+              joint_schedule_1:
+                document_name: Joint Schedule 1 - Definitions (DA).docx
+                title: Joint Schedule 1 - Definitions
+              joint_schedule_10:
+                document_name: Joint Schedule 10 - Rectification Plan (DA).docx
+                title: Joint Schedule 10 - Rectification Plan
+              joint_schedule_11:
+                document_name: Joint Schedule 11 - Processing Data (DA).docx
+                title: Joint Schedule 11 - Processing Data
+              joint_schedule_2:
+                document_name: Joint Schedule 2 - Variation Form (DA).docx
+                title: Joint Schedule 2 - Variation Form
+              joint_schedule_3:
+                document_name: Joint Schedule 3 - Insurance Requirements (DA).docx
+                title: Joint Schedule 3 - Insurance Requirements
+              joint_schedule_5:
+                document_name: Joint Schedule 5 - Corporate Social Responsibility (DA).docx
+                title: Joint Schedule 5 - Corporate Social Responsibility
+              joint_schedule_6:
+                document_name: Joint Schedule 6 - Key Subcontractors (DA).docx
+                title: Joint Schedule 6 - Key Subcontractors
+              joint_schedule_7:
+                document_name: Joint Schedule 7 - Financial Distress (DA).docx
+                title: Joint Schedule 7 - Financial Distress
+            documents:
+              heading: 1. Contract documents
+              text: Please review the contract documents below. These documents will form the contract between the supplier and your organisation.
+            download_documents:
+              guidance: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to the supplier.
+              title: Download all contract documents
+            security_policy:
+              guidance: The buyer's security policy document.
+              heading: Security policy
+              title: Security policy
+            sending_contract:
+              guidance: Following your review of the contract documents in section 1 above, please click on the button below to create a zipped folder of the documents ready to send as an offer to the supplier.
+              heading: 2. Sending the contract
         dashboard_tables:
           closed:
             no_closed: You do not have any closed contracts
@@ -632,10 +748,10 @@ en:
           services:
             service_specification_doc: Read the service specification document
           tupe:
-            body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.<br /> For example, a new supplier is awarded the contract to provide cleaning services to a building.<br /> The cleaners, who are employed by the current service provider, may be protected under TUPE.
+            body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
             tupe_title: TUPE
-            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees<br /> when the business or commercial contract that they are working on changes to new ownership. It ensures<br /> that employees who find themselves transferred to a new business, retain exactly the same hours and rate<br /> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
+            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state" tabindex="-1">Find out when TUPE applies</a>
             what_you_need_to_know_title: What you need to know about TUPE
         edit_procurement:
           cancel_and_return: Cancel and return to Procurements
@@ -658,6 +774,8 @@ en:
           searches_title: Searches
           sent_offers: Sent offers
           start_new_search: Start a new search
+        mobilisation_period:
+          description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
         new:
           cancel_text: Cancel, and return to the procurements dashboard
           save_for_later: Save for later
@@ -692,115 +810,6 @@ en:
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?
           who_are: who are able to provide the services your require in your location(s)
-        review_contract:
-          attachment_1:
-            guidance: This document tells the supplier important information about the contract you have offered.
-            heading: Attachment 1
-            title: About the direct award
-          attachment_2:
-            annex_a:
-              guidance: This document sets out the processes, standards and service delivery response times the suppliers must adhere to in delivery of the services.
-              title: Annex A - standards & processes
-            heading: Attachment 2
-            statement_of_requirements:
-              guidance: This document forms the basis of your requirement, and includes your building information, the services you require in each building, and the service specification.
-              title: Statement of requirements (deliverables matrix)
-          attachment_3:
-            heading: Attachment 3
-            price_matrix:
-              guidance: This document contains the details of your contractual pricing, and a breakdown of the component parts.
-              title: Price matrix
-          attachment_4:
-            core_terms:
-              guidance: The Core Terms are based on CCS's standard commercial terms under The Public Sector Contract.
-              title: Core terms
-            heading: Attachment 4 - Contract (Order form and Schedules)
-            order_form:
-              guidance: The Order Form is the overarching contract document where key contractual decisions are highlighted, the Core Terms, Joint Schedules and Call-off Schedules are listed and contract signatures from both parties are captured.
-              title: Order form
-          change_requirements:
-            guidance: If you wish to make changes to your requirements, click on the 'Change requirements' button below.
-            title: Change requirements
-          change_schedule:
-            guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended
-          continue: Create final contract and send to supplier
-          contract_documents:
-            call_off_schedule_1:
-              document_name: Call-Off Schedule 1 Transparency Reports (DA).docx
-              title: Call-off Schedule 1 - Transparency Reports
-            call_off_schedule_10:
-              document_name: Call-Off Schedule 10 - Exit Management (DA).docx
-              title: Call-off Schedule 10 - Exit Management
-            call_off_schedule_13:
-              document_name: Call-Off Schedule 13 - Mobilisation Plan and Testing (DA).docx
-              title: Call-off Schedule 13 - Mobilisation Plan and Testing
-            call_off_schedule_2:
-              document_name: "#"
-              title: Call-off Schedule 2 - Staff Transfer
-            call_off_schedule_3:
-              document_name: Call-Off Schedule 3 - Continuous Improvement (DA).docx
-              title: Call-off Schedule 3 - Continuous Improvement
-            call_off_schedule_4:
-              document_name: Call-Off Schedule 4 - Facilities Management (DA).docx
-              title: Call-off Schedule 4 - Facilities Management
-            call_off_schedule_4A:
-              document_name: Call-Off Schedule 4A - Billable Works and Projects (DA).docx
-              title: Call-off Schedule 4A - Billable Work and Projects
-            call_off_schedule_5:
-              document_name: Call-Off Schedule 5 - Call-Off Pricing (DA).docx
-              title: Call-off Schedule 5 - Call-off Pricing
-            call_off_schedule_6:
-              document_name: Call-Off Schedule 6 - TUPE Surcharge (DA).docx
-              title: Call-off Schedule 6 - TUPE Surcharge
-            call_off_schedule_7:
-              document_name: Call-Off Schedule 7 - Key Staff (DA).docx
-              title: Call-off Schedule 7 - Key Staff
-            call_off_schedule_8:
-              document_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
-              title: Call-Off Schedule 8 - Business Continuity and Disaster Recovery
-            call_off_schedule_9:
-              document_name: Call-Off Schedule 9 - Security (DA).docx
-              title: Call-off Schedule 9 - Security
-            joint_schedule_1:
-              document_name: Joint Schedule 1 - Definitions (DA).docx
-              title: Joint Schedule 1 - Definitions
-            joint_schedule_10:
-              document_name: Joint Schedule 10 - Rectification Plan (DA).docx
-              title: Joint Schedule 10 - Rectification Plan
-            joint_schedule_11:
-              document_name: Joint Schedule 11 - Processing Data (DA).docx
-              title: Joint Schedule 11 - Processing Data
-            joint_schedule_2:
-              document_name: Joint Schedule 2 - Variation Form (DA).docx
-              title: Joint Schedule 2 - Variation Form
-            joint_schedule_3:
-              document_name: Joint Schedule 3 - Insurance Requirements (DA).docx
-              title: Joint Schedule 3 - Insurance Requirements
-            joint_schedule_5:
-              document_name: Joint Schedule 5 - Corporate Social Responsibility (DA).docx
-              title: Joint Schedule 5 - Corporate Social Responsibility
-            joint_schedule_6:
-              document_name: Joint Schedule 6 - Key Subcontractors (DA).docx
-              title: Joint Schedule 6 - Key Subcontractors
-            joint_schedule_7:
-              document_name: Joint Schedule 7 - Financial Distress (DA).docx
-              title: Joint Schedule 7 - Financial Distress
-          documents:
-            heading: 1. Contract documents
-            text: Please review the contract documents below. These documents will form the contract between the supplier and your organisation.
-          download_documents:
-            guidance: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to the supplier.
-            title: Download all contract documents
-          heading: Review your contract
-          return_to_dashboard: Return to procurement dashboard
-          security_policy:
-            guidance: The buyer's security policy document.
-            heading: Security policy
-            title: Security policy
-          sending_contract:
-            guidance: Following your review of the contract documents in section 1 above, please click on the button below to create a zipped folder of the documents ready to send as an offer to the supplier.
-            heading: 2. Sending the contract
-          switch_to_further_competition: Switch to further competition
         services:
           no_services_selected: No services selected
           question: Select the facilities management services that you need
@@ -814,34 +823,15 @@ en:
           email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
           forgotten_password_html: I've forgotten my password
           password: Password
+          sign_in_header: Sign in to your account
       supplier:
-        passwords:
-          edit:
-            confirm_code: Confirm Code
-            confirm_new_password: Confirm new password
-            heading: Reset your password
-            lead: Reset password for
-            new_password: New password
-            password: Your password must have
-          forgot_password_confirmation:
-            heading: A reset email has been sent
-            lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
-            text01: If you don't receive this, email
-            text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-          new:
-            email: Email address
-            email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
-            heading: Reset password
-            lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
-          password_reset_success:
-            heading: You have successfully changed your password
-            lead: You can now sign in to your Crown Commercial Service account
         sessions:
           new:
             email_address: Email address
             email_hint_html: Enter the email address you used to register
             forgotten_password_html: I've forgotten my password
             password: Password
+            sign_in_header: Sign in to your account
         users:
           new_password_required:
             confirm_your_password: Confirm your password
@@ -953,6 +943,7 @@ en:
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
+        sign_in_header: Sign in to your account
     users:
       confirm_new:
         confirmation_code: Confirmation code

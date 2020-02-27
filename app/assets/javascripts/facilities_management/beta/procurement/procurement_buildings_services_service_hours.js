@@ -91,26 +91,27 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
     this.validateChronologicalSequence = function ( day, choices ) {
         let isValid = true ;
 
-        let afternoon_start = choices[day]["start"]["ampmElem"].val() === 'PM';
-        let startTime = (parseInt(choices[day]["start"]["hour"].value) + (afternoon_start ? 12 : 0)) + choices[day]["start"]["minute"].value.padStart(2, '0');
-        let afternoon_end = choices[day]["end"]["ampmElem"].val() === 'PM';
-        let endTime = (parseInt(choices[day]["end"]["hour"].value) + (afternoon_end ? 12 : 0)) + choices[day]["end"]["minute"].value.padStart(2, '0');
+        let afternoonStart = choices[day]["start"]["ampmElem"].val() === 'PM';
+        let startTime = (parseInt(choices[day]["start"]["hour"].value) + (afternoonStart ? 12 : 0)) + choices[day]["start"]["minute"].value.padStart(2, '0');
+        let afternoonEnd = choices[day]["end"]["ampmElem"].val() === 'PM';
+        let endTime = (parseInt(choices[day]["end"]["hour"].value) + (afternoonEnd ? 12 : 0)) + choices[day]["end"]["minute"].value.padStart(2, '0');
         let startTimeFirstDigits = startTime.substring(0,2);
         let endTimeFirstDigits = endTime.substring(0,2);
         startTime = this.validateTwelveHourTime( startTime, startTimeFirstDigits);
         endTime = this.validateTwelveHourTime( endTime, endTimeFirstDigits);
+
         if ( parseInt(endTime) <= parseInt(startTime)) {
             isValid = false;
             choices[String(day)]["end"].status = false;
             choices[String(day)]["end"].errorType = "min";
         }
-        if (endTimeFirstDigits === "00"){
+        if (endTimeFirstDigits.substring(0,1) === "0" || (endTimeFirstDigits === "12" && afternoonEnd)){
             isValid = false;
             choices[String(day)]["end"].status = false;
             choices[String(day)]["end"].errorType = "invalid";
             this.displayTimeErrors(day, "start", choices);
         }
-        if (startTimeFirstDigits === "00") {
+        if (startTimeFirstDigits.substring(0,1) === "0" || (startTimeFirstDigits === "12" && afternoonStart)) {
             isValid = false;
             choices[String(day)]["start"].status = false;
             choices[String(day)]["start"].errorType = "invalid";

@@ -28,6 +28,7 @@
                   <%= display_potential_errors(@journey.steps[0], :service_codes, '')%>
                   <div class="chooser-input">
                     <div class="govuk-accordion" data-module="accordion" id="procurement-services-accordion">
+                      <% i = 0 %>
                       <% @journey.current_step.services.each do |service| %>
                         <div class="govuk-accordion__section chooser-section" data-section="<%= service['code'] %>" data-sectionname="<%= service['name'] %>">
                           <div class="govuk-accordion__section-header">
@@ -35,11 +36,11 @@
                               <span class="govuk-accordion__section-button" id="<%= service['code'] %>"><%= service['name'] %></span>
                             </h2>
                           </div>
-                          <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
+                          <div id="procurement-services-accordion-content-<%= i+=1 %>" class="govuk-accordion__section-content" aria-labelledby="<%= service['code'] %>">
                             <% @journey.current_step.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
                               <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
                                 <fieldset class="govuk-fieldset" aria-describedby="<%= work_package['name'] %>">
-                                  <div id="services-checkboxes" class="govuk-checkboxes">
+                                  <div class="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
                                       <%= check_box_tag("service_codes[]", work_package['code'], @journey.current_step.service_codes.include?(work_package['code']),
                                                         title: work_package['name'],
@@ -60,7 +61,7 @@
                             <% end %>
                             <% if @journey.current_step.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
                               <p><%= t('facilities_management.basket.or_text') %></p>
-                              <div id="services-checkboxes" class="govuk-checkboxes">
+                              <div class="govuk-checkboxes">
                                 <div class="govuk-checkboxes__item">
                                   <input title="Select all code-<%= service['code'] %> services"
                                          style="margin-top:4px"
@@ -85,6 +86,9 @@
                 <% end %>
               </div>
             <% end %>
+          <% end %>
+          <% params[:region_codes]&.split(" ") do |region_code| %>
+            <%= hidden_field_tag "region_codes[]", region_code %>
           <% end %>
           <%= submit_tag t('common.submit'), class: "govuk-button" %>
         </div>

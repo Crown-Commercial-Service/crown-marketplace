@@ -1,7 +1,11 @@
 require 'facilities_management/fm_buildings_data'
+require 'rubygems'
+
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FacilitiesManagement::Beta::FrameworkController
+      include FurtherCompetitionConcern
+
       before_action :set_procurement, only: %i[show edit update destroy results]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
@@ -46,10 +50,6 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
       def edit
-        set_invoice_data if params['step'] == 'new_invoicing_address'
-        set_authorised_data if params['step'] == 'new_authorised_representative_address'
-        set_notices_data if params['step'] == 'new_notices_address'
-
         if @procurement.quick_search?
           render :edit
         else
@@ -73,6 +73,10 @@ module FacilitiesManagement
         continue_to_results && return if params['continue_to_results'].present?
 
         set_route_to_market && return if params['set_route_to_market'].present?
+
+        change_contract_details && return if params['change_contract_details'].present?
+
+        continue_to_review_and_generate && return if params['continue_to_review_and_generate'].present?
 
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
@@ -113,6 +117,18 @@ module FacilitiesManagement
         end
       end
 
+      def further_competition_spreadsheet
+        init_further_competition
+        build_direct_award_report(true, @start_date, current_user, TransientSessionInfo[session.id])
+
+        uvals = []
+        building_ids_with_service_codes2 = get_building_ids_uvals(uvals, :fc)
+
+        spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
+        spreadsheet_builder.build(@start_date, current_user)
+        send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
+      end
+
       def summary
         @page_data = {}
         @page_data[:model_object] = @procurement
@@ -126,6 +142,15 @@ module FacilitiesManagement
       end
 
       private
+
+      def init_further_competition
+        if params[:procurement_id]
+          @procurement = current_user.procurements.where(id: params[:procurement_id]).first
+          @start_date = @procurement[:initial_call_off_start_date]
+        else
+          @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+        end
+      end
 
       # rubocop:disable Metrics/AbcSize
       def set_view_data
@@ -209,6 +234,21 @@ module FacilitiesManagement
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
+      def change_contract_details
+        @procurement.update(da_journey_state: :contract_details)
+        redirect_to facilities_management_beta_procurement_path(@procurement)
+      end
+
+      def continue_to_review_and_generate
+        if @procurement.valid?(:contract_details)
+          @procurement.update(da_journey_state: :review_and_generate)
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          @view_name = set_view_data
+          render :show
         end
       end
 
@@ -404,30 +444,96 @@ module FacilitiesManagement
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
         @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
-        set_contact_details_data
+        contact_details_data_setup(params[:step])
+        verify_completed_contact_details(params[:step])
       end
 
-      # rubocop:disable Metrics/CyclomaticComplexity
-      def set_contact_details_data
-        set_invoice_data if !params['step'].nil? && params['step'] == 'new_invoicing_contact_details'
-        set_authorised_data if !params['step'].nil? && params['step'] == 'new_authorised_representative_details'
-        set_notices_data if !params['step'].nil? && params['step'] == 'new_notices_contact_details'
+      def contact_details_data_setup(step)
+        return if step.nil?
+
+        case step
+        when 'new_invoicing_contact_details', 'new_invoicing_address'
+          set_invoice_data
+        when 'new_authorised_representative_details', 'new_authorised_representative_address'
+          set_authorised_data
+        when 'new_notices_contact_details', 'new_notices_address'
+          set_notices_data
+        end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity
+
+      # rubocop:disable Style/GuardClause
+      def verify_completed_contact_details(step)
+        if delete_pension_data? step
+          @procurement.procurement_pension_funds.delete
+          @procurement.update(local_government_pension_scheme: nil)
+          @procurement.reload
+        end
+
+        return if step.nil?
+
+        if delete_invoice_data? step
+          @procurement.invoice_contact_detail.delete
+          @procurement.reload
+        end
+        if delete_authorised_data? step
+          @procurement.authorised_contact_detail.delete
+          @procurement.reload
+        end
+        if delete_notices_data? step
+          @procurement.notices_contact_detail.delete
+          @procurement.reload
+        end
+      end
+      # rubocop:enable Style/GuardClause
 
       def set_invoice_data
         @procurement.build_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
-        @invoice_contact_detail = @procurement.invoice_contact_detail
       end
 
       def set_authorised_data
         @procurement.build_authorised_contact_detail if @procurement.authorised_contact_detail.blank?
-        @authorised_contact_detail = @procurement.authorised_contact_detail
       end
 
       def set_notices_data
         @procurement.build_notices_contact_detail if @procurement.notices_contact_detail.blank?
-        @notices_contact_detail = @procurement.notices_contact_detail
+      end
+
+      def delete_invoice_data?(step)
+        case step
+        when 'new_invoicing_contact_details', 'new_invoicing_address'
+          false
+        else
+          !@procurement.invoice_contact_detail.nil? && @procurement.invoice_contact_detail.name.nil?
+        end
+      end
+
+      def delete_authorised_data?(step)
+        case step
+        when 'new_authorised_representative_details', 'new_authorised_representative_address'
+          false
+        else
+          !@procurement.authorised_contact_detail.nil? && @procurement.authorised_contact_detail.name.nil?
+        end
+      end
+
+      def delete_notices_data?(step)
+        case step
+        when 'new_notices_contact_details', 'new_notices_address'
+          false
+        else
+          !@procurement.notices_contact_detail.nil? && @procurement.notices_contact_detail.name.nil?
+        end
+      end
+
+      def delete_pension_data?(step)
+        return false unless @procurement.local_government_pension_scheme
+
+        case step
+        when 'local_government_pension_scheme', 'pension_funds'
+          false
+        else
+          @procurement.procurement_pension_funds.empty?
+        end
       end
 
       def procurement_route_params
@@ -525,7 +631,7 @@ module FacilitiesManagement
       end
 
       def find_regions(region_codes)
-        @regions = Nuts2Region.where(code: region_codes)
+        @regions = FacilitiesManagement::Region.where(code: region_codes)
       end
 
       def find_services(service_codes)
@@ -653,9 +759,6 @@ module FacilitiesManagement
             secondary_name: 'continue_to_results',
             secondary_text: 'Return to results'
           },
-          review_and_generate_documents: {
-            page_title: 'Review and generate documents'
-          },
           payment_method: {
             back_url: facilities_management_beta_procurement_path(@procurement),
             page_title: 'Payment method',
@@ -751,6 +854,18 @@ module FacilitiesManagement
             continuation_text: 'Save and return',
             return_text: 'Return to contract details',
             return_url: facilities_management_beta_procurement_path(@procurement)
+          },
+          review_and_generate_documents: {
+            page_title: 'Review and generate documents',
+            continuation_text: 'Generate documents',
+            secondary_text: 'Return to results',
+            secondary_name: 'continue_to_results'
+          },
+          review_contract: {
+            page_title: 'Review your contract',
+            continuation_text: 'Create final contract and send to supplier',
+            secondary_text: 'Return to results',
+            secondary_name: 'continue_to_results'
           }
         }
       end

@@ -7,7 +7,8 @@ class FacilitiesManagement::ContractNumberGenerator
   end
 
   def new_number
-    "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}"
+    return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}" if ACRONYMS[@procurement_state] == 'DA'
+    return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}" if ACRONYMS[@procurement_state] == 'FC'
   end
 
   private

@@ -144,8 +144,17 @@ Rails.application.routes.draw do
       get '/direct-award/review-and-generate-documents', to: 'direct_award_contract#review_and_generate_documents'
       get '/direct-award/awaiting-response', to: 'procurement_direct_award_contract#show'
       get '/direct-award/awaiting-signature', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/accepted-signed', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/not-signed', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/declined', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/no-response', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/closed-1', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/closed-2', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/closed-3', to: 'procurement_direct_award_contract#show'
+      get '/direct-award/closed-4', to: 'procurement_direct_award_contract#show'
       resources :procurements do
         get 'results'
+        get 'further_competition_spreadsheet'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
@@ -248,6 +257,8 @@ Rails.application.routes.draw do
     get '/prototypes', to: 'prototype#index'
     get '/prototypes/no-response', to: 'prototype#no_response'
     get '/prototypes/closed', to: 'prototype#closed'
+    get '/prototypes/accepted-not-signed', to: 'prototype#accepted_not_signed'
+    get '/prototypes/declined', to: 'prototype#declined'
     get '/prototypes/next-supplier', to: 'prototype#next_supplier'
     get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
     get '/prototypes/create-a-copy', to: 'prototype#create_a_copy'
@@ -322,6 +333,8 @@ Rails.application.routes.draw do
       get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
       get '/find-region/:postcode', to: 'nuts#find_region_query'
       get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
+      get '/test-notification', to: 'api_test_notifications#send_notification'
+      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
     end
   end
 

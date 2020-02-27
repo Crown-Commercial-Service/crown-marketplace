@@ -9,7 +9,7 @@
         <%= t('.form_title') %>
     </h1>
     <div id="pension-funds" class='fields'>
-        <%= f.fields_for :procurement_pension_funds do |builder| %>
+        <%= f.fields_for :procurement_pension_funds, @procurement.procurement_pension_funds.sort_by(&:created_at) do |builder| %>
             <%= render("facilities_management/beta/procurements/edit/procurement_pension_fund", ff: builder) %>
         <% end %>
     </div>

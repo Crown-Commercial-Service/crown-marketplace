@@ -69,11 +69,8 @@ module FacilitiesManagement
 
         @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
 
-        # @procurement.procurement_buildings.first.procurement_building_services
         if @procurement
-          @selected_buildings = @procurement.procurement_buildings.active
-          # uvals = @procurement.procurement_buildings.first.procurement_building_services
-          # uvals = nil
+          @selected_buildings = @procurement.active_procurement_buildings
         else
           @selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
           uvals = @report.uom_values(selected_buildings)
