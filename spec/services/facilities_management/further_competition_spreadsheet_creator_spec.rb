@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   let(:start_date) { DateTime.now.utc }
   let(:user_email) { 'test@example.com' }
-  let(:user) { OpenStruct.new(email: user_email, id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+  let(:user) { FactoryBot.create(:user, email: user_email, id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
 
   # rubocop:disable Style/HashSyntax
   let(:data) do
@@ -65,7 +65,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
               'fm-address-postcode' => 'SW1P 2BA',
               'fm-address-region' => 'Outer London - South'
             },
-            'isLondon' => 'No',
+            'isLondon' => false,
             :'security-type' => 'Baseline Personnel Security Standard',
             'services' => [
               { 'code' => 'M-1', 'name' => 'CAFM system' },
@@ -93,7 +93,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
               'fm-address-postcode' => 'SW1W 9SZ',
               'fm-address-region' => 'Outer London - South'
             },
-            'isLondon' => 'No',
+            'isLondon' => false,
             :'security-type' => 'Baseline Personnel Security Standard',
             'services' => [
               { 'code' => 'M-1', 'name' => 'CAFM system' },
