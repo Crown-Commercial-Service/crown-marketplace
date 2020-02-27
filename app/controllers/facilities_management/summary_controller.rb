@@ -57,16 +57,14 @@ module FacilitiesManagement
     def build_assessed_value_report
       user_email = current_user.email.to_s
 
-      @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id])
+      @report = SummaryReport.new(start_date: @start_date, user_email: user_email, data: TransientSessionInfo[session.id])
 
       selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
 
       uvals = @report.uom_values(selected_buildings)
 
       # move this into the model
-      @report.calculate_services_for_buildings selected_buildings,
-                                               uvals,
-                                               CCS::FM::Rate.read_benchmark_rates
+      @report.calculate_services_for_buildings selected_buildings, uvals
 
       workout_current_lot
     end

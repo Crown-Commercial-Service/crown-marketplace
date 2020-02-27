@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   include ActionView::Helpers::NumberHelper
 
+  let(:user) { create(:user, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
   # rubocop:disable Style/HashSyntax
   let(:data) do
     {
@@ -20,345 +21,343 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:uvals) do
     [
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'E.4', 'uom_value' => '1', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'G.1', 'uom_value' => '2', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'G.3', 'uom_value' => '3', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'G.5', 'uom_value' => '4', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'H.4', 'uom_value' => '5', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'H.5', 'uom_value' => '6', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.1', 'uom_value' => '7', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.2', 'uom_value' => '8', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.3', 'uom_value' => '9', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.4', 'uom_value' => '10', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.1', 'uom_value' => '11', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.2', 'uom_value' => '12', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.3', 'uom_value' => '13', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.4', 'uom_value' => '14', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.5', 'uom_value' => '15', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.6', 'uom_value' => '16', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.1', 'uom_value' => '17', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.2', 'uom_value' => '18', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.3', 'uom_value' => '19', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.7', 'uom_value' => '20', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'E.4', 'uom_value' => '30', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'G.1', 'uom_value' => '31', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'G.3', 'uom_value' => '32', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'G.5', 'uom_value' => '33', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'H.4', 'uom_value' => '34', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'H.5', 'uom_value' => '35', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.1', 'uom_value' => '36', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.2', 'uom_value' => '37', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.3', 'uom_value' => '38', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.4', 'uom_value' => '39', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.1', 'uom_value' => '40', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.2', 'uom_value' => '41', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.3', 'uom_value' => '42', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.4', 'uom_value' => '43', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.5', 'uom_value' => '44', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'J.6', 'uom_value' => '45', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.1', 'uom_value' => '46', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.2', 'uom_value' => '47', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.3', 'uom_value' => '48', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 4, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 6, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'M.1', :uom_value => 1000, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'CAFM' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'N.1', :uom_value => 1000, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'Help' }
+      { :user_id => user.id, 'service_code' => 'E.4', 'uom_value' => '1', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'G.1', 'uom_value' => '2', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'G.3', 'uom_value' => '3', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'G.5', 'uom_value' => '4', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'H.4', 'uom_value' => '5', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'H.5', 'uom_value' => '6', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'I.1', 'uom_value' => '7', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'I.2', 'uom_value' => '8', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'I.3', 'uom_value' => '9', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'I.4', 'uom_value' => '10', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.1', 'uom_value' => '11', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.2', 'uom_value' => '12', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.3', 'uom_value' => '13', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.4', 'uom_value' => '14', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.5', 'uom_value' => '15', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.6', 'uom_value' => '16', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'K.1', 'uom_value' => '17', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'K.2', 'uom_value' => '18', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'K.3', 'uom_value' => '19', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'K.7', 'uom_value' => '20', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'E.4', 'uom_value' => '30', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'G.1', 'uom_value' => '31', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'G.3', 'uom_value' => '32', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'G.5', 'uom_value' => '33', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'H.4', 'uom_value' => '34', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'H.5', 'uom_value' => '35', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'I.1', 'uom_value' => '36', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'I.2', 'uom_value' => '37', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'I.3', 'uom_value' => '38', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'I.4', 'uom_value' => '39', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.1', 'uom_value' => '40', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.2', 'uom_value' => '41', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.3', 'uom_value' => '42', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.4', 'uom_value' => '43', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.5', 'uom_value' => '44', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'J.6', 'uom_value' => '45', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'K.1', 'uom_value' => '46', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'K.2', 'uom_value' => '47', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, 'service_code' => 'K.3', 'uom_value' => '48', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => user.id, :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => user.id, :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => user.id, :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => user.id, :service_code => 'C.5', :uom_value => 5, :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => user.id, :service_code => 'C.5', :uom_value => 5, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => user.id, :service_code => 'C.5', :uom_value => 4, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => user.id, :service_code => 'C.5', :uom_value => 6, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => user.id, :service_code => 'M.1', :uom_value => 1000, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'CAFM' },
+      { :user_id => user.id, :service_code => 'N.1', :uom_value => 1000, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'Help' }
     ]
   end
+  # rubocop:enable Style/HashSyntax
 
-  # rubocop:disable Layout/MultilineHashBraceLayout
-  # rubocop:disable RSpec/BeforeAfterAll
   context 'and dummy buildings to a db' do
-    before :all do
-      @selected_buildings2 = [
-        OpenStruct.new(
-          id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
-          user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
-          building_json: {
-            'id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
-            'gia' => 4200,
-            'name' => 'c4',
-            'region' => 'London',
-            'description' => 'Channel 4',
-            'address' => {
-              'fm-address-town' => 'London',
-              'fm-address-line-1' => '1 Horseferry Road',
-              'fm-address-postcode' => 'SW1P 2BA',
-              'fm-nuts-region' => 'Westminster'
-            },
-            'isLondon' => 'No',
-            :'security-type' => 'Baseline Personnel Security Standard',
-            'services' => [
-              { 'code' => 'J-8', 'name' => 'Additional security services' },
-              { 'code' => 'H-16', 'name' => 'Administrative support services' },
-              { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
-              { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
-              { 'code' => 'E-1', 'name' => 'Asbestos management' },
-              { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
-              { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
-              { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
-              { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
-              { 'code' => 'H-12', 'name' => 'Cable management' },
-              { 'code' => 'M-1', 'name' => 'CAFM system' },
-              { 'code' => 'I-3', 'name' => 'Car park management and booking' },
-              { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
-              { 'code' => 'J-2', 'name' => 'CCTV / alarm monitoring' },
-              { 'code' => 'L-1', 'name' => 'Childcare facility' },
-              { 'code' => 'F-1', 'name' => 'Chilled potable water' },
-              { 'code' => 'K-1', 'name' => 'Classified waste' },
-              { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
-              { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
-              { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
-              { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
-              { 'code' => 'K-5', 'name' => 'Clinical waste' },
-              { 'code' => 'H-7', 'name' => 'Clocks' },
-              { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
-              { 'code' => 'E-6', 'name' => 'Conditions survey' },
-              { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
-              { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
-              { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
-              { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
-              { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
-              { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
-              { 'code' => 'E-7', 'name' => 'Electrical testing' },
-              { 'code' => 'J-4', 'name' => 'Emergency response' },
-              { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
-              { 'code' => 'C-3', 'name' => 'Environmental cleaning service' },
-              { 'code' => 'F-4', 'name' => 'Events and functions' },
-              { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
-              { 'code' => 'C-4', 'name' => 'Fire detection and firefighting systems maintenance' },
-              { 'code' => 'E-8', 'name' => 'Fire risk assessments' },
-              { 'code' => 'L-4', 'name' => 'First aid and medical service' },
-              { 'code' => 'L-5', 'name' => 'Flag flying service' },
-              { 'code' => 'L-8', 'name' => 'Footwear cobbling services' },
-              { 'code' => 'F-5', 'name' => 'Full service restaurant' },
-              { 'code' => 'H-10', 'name' => 'Furniture management' },
-              { 'code' => 'K-2', 'name' => 'General waste' },
-              { 'code' => 'D-1', 'name' => 'Grounds maintenance services' },
-              { 'code' => 'L-7', 'name' => 'Hairdressing services' },
-              { 'code' => 'H-4', 'name' => 'Handyman services' },
-              { 'code' => 'K-4', 'name' => 'Hazardous waste' },
-              { 'code' => 'N-1', 'name' => 'Helpdesk services' },
-              { 'code' => 'C-13', 'name' => 'High voltage (HV) and switchgear maintenance' },
-              { 'code' => 'F-6', 'name' => 'Hospitality and meetings' },
-              { 'code' => 'G-10', 'name' => 'Housekeeping' },
-              { 'code' => 'L-10', 'name' => 'Housing and residential accommodation management' },
-              { 'code' => 'C-7', 'name' => 'Internal and external building fabric maintenance' },
-              { 'code' => 'H-2', 'name' => 'Internal messenger service' },
-              { 'code' => 'D-5', 'name' => 'Internal planting' },
-              { 'code' => 'G-11', 'name' => 'It equipment cleaning' },
-              { 'code' => 'L-6', 'name' => 'Journal, magazine and newspaper supply' },
-              { 'code' => 'J-10', 'name' => 'Key holding' },
-              { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
-              { 'code' => 'G-16', 'name' => 'Linen and laundry services' },
-              { 'code' => 'J-11', 'name' => 'Lock up / open up of buyer premises' },
-              { 'code' => 'C-20', 'name' => 'Locksmith services' },
-              { 'code' => 'C-17', 'name' => 'Mail room equipment maintenance' },
-              { 'code' => 'H-1', 'name' => 'Mail services' },
-              { 'code' => 'J-6', 'name' => 'Management of visitors and passes' },
-              { 'code' => 'J-1', 'name' => 'Manned guarding service' },
-              { 'code' => 'C-1', 'name' => 'Mechanical and electrical engineering maintenance' },
-              { 'code' => 'G-14', 'name' => 'Medical and clinical cleaning' },
-              { 'code' => 'K-6', 'name' => 'Medical waste' },
-              { 'code' => 'G-3', 'name' => 'Mobile cleaning services' },
-              { 'code' => 'H-5', 'name' => 'Move and space management - internal moves' },
-              { 'code' => 'C-18', 'name' => 'Office machinery servicing and maintenance' },
-              { 'code' => 'F-7', 'name' => 'Outside catering' },
-              { 'code' => 'J-5', 'name' => 'Patrols (fixed or static guarding)' },
-              { 'code' => 'J-12', 'name' => 'Patrols (mobile via a specific visiting vehicle)' },
-              { 'code' => 'G-15', 'name' => 'Pest control services' },
-              { 'code' => 'C-9', 'name' => 'Planned / group re-lamping service' },
-              { 'code' => 'E-4', 'name' => 'Portable appliance testing' },
-              { 'code' => 'H-15', 'name' => 'Portable washroom solutions' },
-              { 'code' => 'H-6', 'name' => 'Porterage' },
-              { 'code' => 'D-3', 'name' => 'Professional snow & ice clearance' },
-              { 'code' => 'L-9', 'name' => 'Provision of chaplaincy support services' },
-              { 'code' => 'G-9', 'name' => 'Reactive cleaning (outside cleaning operational hours)' },
-              { 'code' => 'J-7', 'name' => 'Reactive guarding' },
-              { 'code' => 'C-8', 'name' => 'Reactive maintenance services' },
-              { 'code' => 'I-1', 'name' => 'Reception service' },
-              { 'code' => 'K-3', 'name' => 'Recycled waste' },
-              { 'code' => 'H-13', 'name' => 'Reprographics service' },
-              { 'code' => 'D-4', 'name' => 'Reservoirs, ponds, river walls and water features maintenance' },
-              { 'code' => 'F-10', 'name' => 'Residential catering services' },
-              { 'code' => 'F-2', 'name' => 'Retail services / convenience store' },
-              { 'code' => 'G-1', 'name' => 'Routine cleaning' },
-              { 'code' => 'C-6', 'name' => 'Security, access and intruder systems maintenance' },
-              { 'code' => 'H-8', 'name' => 'Signage' },
-              { 'code' => 'H-11', 'name' => 'Space management' },
-              { 'code' => 'G-12', 'name' => 'Specialist cleaning' },
-              { 'code' => 'C-22', 'name' => 'Specialist maintenance services' },
-              { 'code' => 'L-2', 'name' => 'Sports and leisure' },
-              { 'code' => 'C-12', 'name' => 'Standby power system maintenance' },
-              { 'code' => 'E-3', 'name' => 'Statutory inspections' },
-              { 'code' => 'H-14', 'name' => 'Stores management' },
-              { 'code' => 'I-2', 'name' => 'Taxi booking service' },
-              { 'code' => 'C-16', 'name' => 'Television cabling maintenance' },
-              { 'code' => 'L-11', 'name' => 'Training establishment management and booking service' },
-              { 'code' => 'D-2', 'name' => 'Tree surgery (arboriculture)' },
-              { 'code' => 'F-8', 'name' => 'Trolley service' },
-              { 'code' => 'F-9', 'name' => 'Vending services (food & beverage)' },
-              { 'code' => 'C-2', 'name' => 'Ventilation and air conditioning system maintenance' },
-              { 'code' => 'C-19', 'name' => 'Voice announcement system maintenance' },
-              { 'code' => 'I-4', 'name' => 'Voice announcement system operation' },
-              { 'code' => 'E-2', 'name' => 'Water hygiene maintenance' },
-              { 'code' => 'G-7', 'name' => 'Window cleaning (external)' },
-              { 'code' => 'G-6', 'name' => 'Window cleaning (internal)' }
-            ],
-            :'fm-building-type' => 'General office - Customer Facing',
-            'building-type' => 'General office - Customer Facing' },
-          status: 'Incomplete'
-        ),
-
-        OpenStruct.new(
-          id: 'e60f5b57-5f15-604c-b729-a689ede34a99',
-          user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
-          building_json: {
-            'id' => 'e60f5b57-5f15-604c-b729-a689ede34a99',
-            'gia' => 12000,
-            'name' => 'ccs',
-            'region' => 'London',
-            'description' => 'Crown Commercial Service',
-            'address' => {
-              'fm-address-town' => 'London',
-              'fm-address-line-1' => '151 Buckingham Palace Road',
-              'fm-address-postcode' => 'SW1W 9SZ',
-              'fm-nuts-region' => 'Westminster'
-            },
-            'isLondon' => 'No',
-            :'security-type' => 'Baseline Personnel Security Standard',
-            'services' => [
-              { 'code' => 'J-8', 'name' => 'Additional security services' },
-              { 'code' => 'H-16', 'name' => 'Administrative support services' },
-              { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
-              { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
-              { 'code' => 'E-1', 'name' => 'Asbestos management' },
-              { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
-              { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
-              { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
-              { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
-              { 'code' => 'H-12', 'name' => 'Cable management' },
-              { 'code' => 'M-1', 'name' => 'CAFM system' },
-              { 'code' => 'I-3', 'name' => 'Car park management and booking' },
-              { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
-              { 'code' => 'J-2', 'name' => 'CCTV / alarm monitoring' },
-              { 'code' => 'L-1', 'name' => 'Childcare facility' },
-              { 'code' => 'F-1', 'name' => 'Chilled potable water' },
-              { 'code' => 'K-1', 'name' => 'Classified waste' },
-              { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
-              { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
-              { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
-              { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
-              { 'code' => 'K-5', 'name' => 'Clinical waste' },
-              { 'code' => 'H-7', 'name' => 'Clocks' },
-              { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
-              { 'code' => 'E-6', 'name' => 'Conditions survey' },
-              { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
-              { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
-              { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
-              { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
-              { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
-              { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
-              { 'code' => 'E-7', 'name' => 'Electrical testing' },
-              { 'code' => 'J-4', 'name' => 'Emergency response' },
-              { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
-              { 'code' => 'C-3', 'name' => 'Environmental cleaning service' },
-              { 'code' => 'F-4', 'name' => 'Events and functions' },
-              { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
-              { 'code' => 'C-4', 'name' => 'Fire detection and firefighting systems maintenance' },
-              { 'code' => 'E-8', 'name' => 'Fire risk assessments' },
-              { 'code' => 'L-4', 'name' => 'First aid and medical service' },
-              { 'code' => 'L-5', 'name' => 'Flag flying service' },
-              { 'code' => 'L-8', 'name' => 'Footwear cobbling services' },
-              { 'code' => 'F-5', 'name' => 'Full service restaurant' },
-              { 'code' => 'H-10', 'name' => 'Furniture management' },
-              { 'code' => 'K-2', 'name' => 'General waste' },
-              { 'code' => 'D-1', 'name' => 'Grounds maintenance services' },
-              { 'code' => 'L-7', 'name' => 'Hairdressing services' },
-              { 'code' => 'H-4', 'name' => 'Handyman services' },
-              { 'code' => 'K-4', 'name' => 'Hazardous waste' },
-              { 'code' => 'N-1', 'name' => 'Helpdesk services' },
-              { 'code' => 'C-13', 'name' => 'High voltage (HV) and switchgear maintenance' },
-              { 'code' => 'F-6', 'name' => 'Hospitality and meetings' },
-              { 'code' => 'G-10', 'name' => 'Housekeeping' },
-              { 'code' => 'L-10', 'name' => 'Housing and residential accommodation management' },
-              { 'code' => 'C-7', 'name' => 'Internal and external building fabric maintenance' },
-              { 'code' => 'H-2', 'name' => 'Internal messenger service' },
-              { 'code' => 'D-5', 'name' => 'Internal planting' },
-              { 'code' => 'G-11', 'name' => 'It equipment cleaning' },
-              { 'code' => 'L-6', 'name' => 'Journal, magazine and newspaper supply' },
-              { 'code' => 'J-10', 'name' => 'Key holding' },
-              { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
-              { 'code' => 'G-16', 'name' => 'Linen and laundry services' },
-              { 'code' => 'J-11', 'name' => 'Lock up / open up of buyer premises' },
-              { 'code' => 'C-20', 'name' => 'Locksmith services' },
-              { 'code' => 'C-17', 'name' => 'Mail room equipment maintenance' },
-              { 'code' => 'H-1', 'name' => 'Mail services' },
-              { 'code' => 'J-6', 'name' => 'Management of visitors and passes' },
-              { 'code' => 'J-1', 'name' => 'Manned guarding service' },
-              { 'code' => 'C-1', 'name' => 'Mechanical and electrical engineering maintenance' },
-              { 'code' => 'G-14', 'name' => 'Medical and clinical cleaning' },
-              { 'code' => 'K-6', 'name' => 'Medical waste' },
-              { 'code' => 'G-3', 'name' => 'Mobile cleaning services' },
-              { 'code' => 'H-5', 'name' => 'Move and space management - internal moves' },
-              { 'code' => 'C-18', 'name' => 'Office machinery servicing and maintenance' },
-              { 'code' => 'F-7', 'name' => 'Outside catering' },
-              { 'code' => 'J-5', 'name' => 'Patrols (fixed or static guarding)' },
-              { 'code' => 'J-12', 'name' => 'Patrols (mobile via a specific visiting vehicle)' },
-              { 'code' => 'G-15', 'name' => 'Pest control services' },
-              { 'code' => 'C-9', 'name' => 'Planned / group re-lamping service' },
-              { 'code' => 'E-4', 'name' => 'Portable appliance testing' },
-              { 'code' => 'H-15', 'name' => 'Portable washroom solutions' },
-              { 'code' => 'H-6', 'name' => 'Porterage' },
-              { 'code' => 'D-3', 'name' => 'Professional snow & ice clearance' },
-              { 'code' => 'L-9', 'name' => 'Provision of chaplaincy support services' },
-              { 'code' => 'G-9', 'name' => 'Reactive cleaning (outside cleaning operational hours)' },
-              { 'code' => 'J-7', 'name' => 'Reactive guarding' },
-              { 'code' => 'C-8', 'name' => 'Reactive maintenance services' },
-              { 'code' => 'I-1', 'name' => 'Reception service' },
-              { 'code' => 'K-3', 'name' => 'Recycled waste' },
-              { 'code' => 'H-13', 'name' => 'Reprographics service' },
-              { 'code' => 'D-4', 'name' => 'Reservoirs, ponds, river walls and water features maintenance' },
-              { 'code' => 'F-10', 'name' => 'Residential catering services' },
-              { 'code' => 'F-2', 'name' => 'Retail services / convenience store' },
-              { 'code' => 'G-1', 'name' => 'Routine cleaning' },
-              { 'code' => 'C-6', 'name' => 'Security, access and intruder systems maintenance' },
-              { 'code' => 'H-8', 'name' => 'Signage' },
-              { 'code' => 'H-11', 'name' => 'Space management' },
-              { 'code' => 'G-12', 'name' => 'Specialist cleaning' },
-              { 'code' => 'C-22', 'name' => 'Specialist maintenance services' },
-              { 'code' => 'L-2', 'name' => 'Sports and leisure' },
-              { 'code' => 'C-12', 'name' => 'Standby power system maintenance' },
-              { 'code' => 'E-3', 'name' => 'Statutory inspections' },
-              { 'code' => 'H-14', 'name' => 'Stores management' },
-              { 'code' => 'I-2', 'name' => 'Taxi booking service' },
-              { 'code' => 'C-16', 'name' => 'Television cabling maintenance' },
-              { 'code' => 'L-11', 'name' => 'Training establishment management and booking service' },
-              { 'code' => 'D-2', 'name' => 'Tree surgery (arboriculture)' },
-              { 'code' => 'F-8', 'name' => 'Trolley service' },
-              { 'code' => 'F-9', 'name' => 'Vending services (food & beverage)' },
-              { 'code' => 'C-2', 'name' => 'Ventilation and air conditioning system maintenance' },
-              { 'code' => 'C-19', 'name' => 'Voice announcement system maintenance' },
-              { 'code' => 'I-4', 'name' => 'Voice announcement system operation' },
-              { 'code' => 'E-2', 'name' => 'Water hygiene maintenance' },
-              { 'code' => 'G-7', 'name' => 'Window cleaning (external)' },
-              { 'code' => 'G-6', 'name' => 'Window cleaning (internal)' }
-            ],
-            :'fm-building-type' => 'General office - Customer Facing',
-            'building-type' => 'General office - Customer Facing'
+    let(:selected_buildings2) do
+      [OpenStruct.new(
+        id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
+        user_id: user.id,
+        building_json: {
+          'id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
+          'gia' => 4200,
+          'name' => 'c4',
+          'region' => 'London',
+          'description' => 'Channel 4',
+          'address' => {
+            'fm-address-town' => 'London',
+            'fm-address-line-1' => '1 Horseferry Road',
+            'fm-address-postcode' => 'SW1P 2BA',
+            'fm-nuts-region' => 'Westminster'
           },
-          status: 'Incomplete'
-        )
-      ]
+          'isLondon' => false,
+          :'security-type' => 'Baseline Personnel Security Standard',
+          'services' => [
+            { 'code' => 'J-8', 'name' => 'Additional security services' },
+            { 'code' => 'H-16', 'name' => 'Administrative support services' },
+            { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
+            { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
+            { 'code' => 'E-1', 'name' => 'Asbestos management' },
+            { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
+            { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
+            { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
+            { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
+            { 'code' => 'H-12', 'name' => 'Cable management' },
+            { 'code' => 'M-1', 'name' => 'CAFM system' },
+            { 'code' => 'I-3', 'name' => 'Car park management and booking' },
+            { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
+            { 'code' => 'J-2', 'name' => 'CCTV / alarm monitoring' },
+            { 'code' => 'L-1', 'name' => 'Childcare facility' },
+            { 'code' => 'F-1', 'name' => 'Chilled potable water' },
+            { 'code' => 'K-1', 'name' => 'Classified waste' },
+            { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
+            { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
+            { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
+            { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
+            { 'code' => 'K-5', 'name' => 'Clinical waste' },
+            { 'code' => 'H-7', 'name' => 'Clocks' },
+            { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
+            { 'code' => 'E-6', 'name' => 'Conditions survey' },
+            { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
+            { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
+            { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
+            { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
+            { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
+            { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
+            { 'code' => 'E-7', 'name' => 'Electrical testing' },
+            { 'code' => 'J-4', 'name' => 'Emergency response' },
+            { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
+            { 'code' => 'C-3', 'name' => 'Environmental cleaning service' },
+            { 'code' => 'F-4', 'name' => 'Events and functions' },
+            { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
+            { 'code' => 'C-4', 'name' => 'Fire detection and firefighting systems maintenance' },
+            { 'code' => 'E-8', 'name' => 'Fire risk assessments' },
+            { 'code' => 'L-4', 'name' => 'First aid and medical service' },
+            { 'code' => 'L-5', 'name' => 'Flag flying service' },
+            { 'code' => 'L-8', 'name' => 'Footwear cobbling services' },
+            { 'code' => 'F-5', 'name' => 'Full service restaurant' },
+            { 'code' => 'H-10', 'name' => 'Furniture management' },
+            { 'code' => 'K-2', 'name' => 'General waste' },
+            { 'code' => 'D-1', 'name' => 'Grounds maintenance services' },
+            { 'code' => 'L-7', 'name' => 'Hairdressing services' },
+            { 'code' => 'H-4', 'name' => 'Handyman services' },
+            { 'code' => 'K-4', 'name' => 'Hazardous waste' },
+            { 'code' => 'N-1', 'name' => 'Helpdesk services' },
+            { 'code' => 'C-13', 'name' => 'High voltage (HV) and switchgear maintenance' },
+            { 'code' => 'F-6', 'name' => 'Hospitality and meetings' },
+            { 'code' => 'G-10', 'name' => 'Housekeeping' },
+            { 'code' => 'L-10', 'name' => 'Housing and residential accommodation management' },
+            { 'code' => 'C-7', 'name' => 'Internal and external building fabric maintenance' },
+            { 'code' => 'H-2', 'name' => 'Internal messenger service' },
+            { 'code' => 'D-5', 'name' => 'Internal planting' },
+            { 'code' => 'G-11', 'name' => 'It equipment cleaning' },
+            { 'code' => 'L-6', 'name' => 'Journal, magazine and newspaper supply' },
+            { 'code' => 'J-10', 'name' => 'Key holding' },
+            { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
+            { 'code' => 'G-16', 'name' => 'Linen and laundry services' },
+            { 'code' => 'J-11', 'name' => 'Lock up / open up of buyer premises' },
+            { 'code' => 'C-20', 'name' => 'Locksmith services' },
+            { 'code' => 'C-17', 'name' => 'Mail room equipment maintenance' },
+            { 'code' => 'H-1', 'name' => 'Mail services' },
+            { 'code' => 'J-6', 'name' => 'Management of visitors and passes' },
+            { 'code' => 'J-1', 'name' => 'Manned guarding service' },
+            { 'code' => 'C-1', 'name' => 'Mechanical and electrical engineering maintenance' },
+            { 'code' => 'G-14', 'name' => 'Medical and clinical cleaning' },
+            { 'code' => 'K-6', 'name' => 'Medical waste' },
+            { 'code' => 'G-3', 'name' => 'Mobile cleaning services' },
+            { 'code' => 'H-5', 'name' => 'Move and space management - internal moves' },
+            { 'code' => 'C-18', 'name' => 'Office machinery servicing and maintenance' },
+            { 'code' => 'F-7', 'name' => 'Outside catering' },
+            { 'code' => 'J-5', 'name' => 'Patrols (fixed or static guarding)' },
+            { 'code' => 'J-12', 'name' => 'Patrols (mobile via a specific visiting vehicle)' },
+            { 'code' => 'G-15', 'name' => 'Pest control services' },
+            { 'code' => 'C-9', 'name' => 'Planned / group re-lamping service' },
+            { 'code' => 'E-4', 'name' => 'Portable appliance testing' },
+            { 'code' => 'H-15', 'name' => 'Portable washroom solutions' },
+            { 'code' => 'H-6', 'name' => 'Porterage' },
+            { 'code' => 'D-3', 'name' => 'Professional snow & ice clearance' },
+            { 'code' => 'L-9', 'name' => 'Provision of chaplaincy support services' },
+            { 'code' => 'G-9', 'name' => 'Reactive cleaning (outside cleaning operational hours)' },
+            { 'code' => 'J-7', 'name' => 'Reactive guarding' },
+            { 'code' => 'C-8', 'name' => 'Reactive maintenance services' },
+            { 'code' => 'I-1', 'name' => 'Reception service' },
+            { 'code' => 'K-3', 'name' => 'Recycled waste' },
+            { 'code' => 'H-13', 'name' => 'Reprographics service' },
+            { 'code' => 'D-4', 'name' => 'Reservoirs, ponds, river walls and water features maintenance' },
+            { 'code' => 'F-10', 'name' => 'Residential catering services' },
+            { 'code' => 'F-2', 'name' => 'Retail services / convenience store' },
+            { 'code' => 'G-1', 'name' => 'Routine cleaning' },
+            { 'code' => 'C-6', 'name' => 'Security, access and intruder systems maintenance' },
+            { 'code' => 'H-8', 'name' => 'Signage' },
+            { 'code' => 'H-11', 'name' => 'Space management' },
+            { 'code' => 'G-12', 'name' => 'Specialist cleaning' },
+            { 'code' => 'C-22', 'name' => 'Specialist maintenance services' },
+            { 'code' => 'L-2', 'name' => 'Sports and leisure' },
+            { 'code' => 'C-12', 'name' => 'Standby power system maintenance' },
+            { 'code' => 'E-3', 'name' => 'Statutory inspections' },
+            { 'code' => 'H-14', 'name' => 'Stores management' },
+            { 'code' => 'I-2', 'name' => 'Taxi booking service' },
+            { 'code' => 'C-16', 'name' => 'Television cabling maintenance' },
+            { 'code' => 'L-11', 'name' => 'Training establishment management and booking service' },
+            { 'code' => 'D-2', 'name' => 'Tree surgery (arboriculture)' },
+            { 'code' => 'F-8', 'name' => 'Trolley service' },
+            { 'code' => 'F-9', 'name' => 'Vending services (food & beverage)' },
+            { 'code' => 'C-2', 'name' => 'Ventilation and air conditioning system maintenance' },
+            { 'code' => 'C-19', 'name' => 'Voice announcement system maintenance' },
+            { 'code' => 'I-4', 'name' => 'Voice announcement system operation' },
+            { 'code' => 'E-2', 'name' => 'Water hygiene maintenance' },
+            { 'code' => 'G-7', 'name' => 'Window cleaning (external)' },
+            { 'code' => 'G-6', 'name' => 'Window cleaning (internal)' }
+          ],
+          :'fm-building-type' => 'General office - Customer Facing',
+          'building-type' => 'General office - Customer Facing'
+        },
+        status: 'Incomplete'
+      ),
 
-      # populate db with dub buildings
-      # rubocop:disable RSpec/InstanceVariable
-      @selected_buildings2.each do |b|
+       OpenStruct.new(
+         id: 'e60f5b57-5f15-604c-b729-a689ede34a99',
+         user_id: user.id,
+         building_json: {
+           'id' => 'e60f5b57-5f15-604c-b729-a689ede34a99',
+           'gia' => 12000,
+           'name' => 'ccs',
+           'region' => 'London',
+           'description' => 'Crown Commercial Service',
+           'address' => {
+             'fm-address-town' => 'London',
+             'fm-address-line-1' => '151 Buckingham Palace Road',
+             'fm-address-postcode' => 'SW1W 9SZ',
+             'fm-nuts-region' => 'Westminster'
+           },
+           'isLondon' => false,
+           :'security-type' => 'Baseline Personnel Security Standard',
+           'services' => [
+             { 'code' => 'J-8', 'name' => 'Additional security services' },
+             { 'code' => 'H-16', 'name' => 'Administrative support services' },
+             { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
+             { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
+             { 'code' => 'E-1', 'name' => 'Asbestos management' },
+             { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
+             { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
+             { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
+             { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
+             { 'code' => 'H-12', 'name' => 'Cable management' },
+             { 'code' => 'M-1', 'name' => 'CAFM system' },
+             { 'code' => 'I-3', 'name' => 'Car park management and booking' },
+             { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
+             { 'code' => 'J-2', 'name' => 'CCTV / alarm monitoring' },
+             { 'code' => 'L-1', 'name' => 'Childcare facility' },
+             { 'code' => 'F-1', 'name' => 'Chilled potable water' },
+             { 'code' => 'K-1', 'name' => 'Classified waste' },
+             { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
+             { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
+             { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
+             { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
+             { 'code' => 'K-5', 'name' => 'Clinical waste' },
+             { 'code' => 'H-7', 'name' => 'Clocks' },
+             { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
+             { 'code' => 'E-6', 'name' => 'Conditions survey' },
+             { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
+             { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
+             { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
+             { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
+             { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
+             { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
+             { 'code' => 'E-7', 'name' => 'Electrical testing' },
+             { 'code' => 'J-4', 'name' => 'Emergency response' },
+             { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
+             { 'code' => 'C-3', 'name' => 'Environmental cleaning service' },
+             { 'code' => 'F-4', 'name' => 'Events and functions' },
+             { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
+             { 'code' => 'C-4', 'name' => 'Fire detection and firefighting systems maintenance' },
+             { 'code' => 'E-8', 'name' => 'Fire risk assessments' },
+             { 'code' => 'L-4', 'name' => 'First aid and medical service' },
+             { 'code' => 'L-5', 'name' => 'Flag flying service' },
+             { 'code' => 'L-8', 'name' => 'Footwear cobbling services' },
+             { 'code' => 'F-5', 'name' => 'Full service restaurant' },
+             { 'code' => 'H-10', 'name' => 'Furniture management' },
+             { 'code' => 'K-2', 'name' => 'General waste' },
+             { 'code' => 'D-1', 'name' => 'Grounds maintenance services' },
+             { 'code' => 'L-7', 'name' => 'Hairdressing services' },
+             { 'code' => 'H-4', 'name' => 'Handyman services' },
+             { 'code' => 'K-4', 'name' => 'Hazardous waste' },
+             { 'code' => 'N-1', 'name' => 'Helpdesk services' },
+             { 'code' => 'C-13', 'name' => 'High voltage (HV) and switchgear maintenance' },
+             { 'code' => 'F-6', 'name' => 'Hospitality and meetings' },
+             { 'code' => 'G-10', 'name' => 'Housekeeping' },
+             { 'code' => 'L-10', 'name' => 'Housing and residential accommodation management' },
+             { 'code' => 'C-7', 'name' => 'Internal and external building fabric maintenance' },
+             { 'code' => 'H-2', 'name' => 'Internal messenger service' },
+             { 'code' => 'D-5', 'name' => 'Internal planting' },
+             { 'code' => 'G-11', 'name' => 'It equipment cleaning' },
+             { 'code' => 'L-6', 'name' => 'Journal, magazine and newspaper supply' },
+             { 'code' => 'J-10', 'name' => 'Key holding' },
+             { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
+             { 'code' => 'G-16', 'name' => 'Linen and laundry services' },
+             { 'code' => 'J-11', 'name' => 'Lock up / open up of buyer premises' },
+             { 'code' => 'C-20', 'name' => 'Locksmith services' },
+             { 'code' => 'C-17', 'name' => 'Mail room equipment maintenance' },
+             { 'code' => 'H-1', 'name' => 'Mail services' },
+             { 'code' => 'J-6', 'name' => 'Management of visitors and passes' },
+             { 'code' => 'J-1', 'name' => 'Manned guarding service' },
+             { 'code' => 'C-1', 'name' => 'Mechanical and electrical engineering maintenance' },
+             { 'code' => 'G-14', 'name' => 'Medical and clinical cleaning' },
+             { 'code' => 'K-6', 'name' => 'Medical waste' },
+             { 'code' => 'G-3', 'name' => 'Mobile cleaning services' },
+             { 'code' => 'H-5', 'name' => 'Move and space management - internal moves' },
+             { 'code' => 'C-18', 'name' => 'Office machinery servicing and maintenance' },
+             { 'code' => 'F-7', 'name' => 'Outside catering' },
+             { 'code' => 'J-5', 'name' => 'Patrols (fixed or static guarding)' },
+             { 'code' => 'J-12', 'name' => 'Patrols (mobile via a specific visiting vehicle)' },
+             { 'code' => 'G-15', 'name' => 'Pest control services' },
+             { 'code' => 'C-9', 'name' => 'Planned / group re-lamping service' },
+             { 'code' => 'E-4', 'name' => 'Portable appliance testing' },
+             { 'code' => 'H-15', 'name' => 'Portable washroom solutions' },
+             { 'code' => 'H-6', 'name' => 'Porterage' },
+             { 'code' => 'D-3', 'name' => 'Professional snow & ice clearance' },
+             { 'code' => 'L-9', 'name' => 'Provision of chaplaincy support services' },
+             { 'code' => 'G-9', 'name' => 'Reactive cleaning (outside cleaning operational hours)' },
+             { 'code' => 'J-7', 'name' => 'Reactive guarding' },
+             { 'code' => 'C-8', 'name' => 'Reactive maintenance services' },
+             { 'code' => 'I-1', 'name' => 'Reception service' },
+             { 'code' => 'K-3', 'name' => 'Recycled waste' },
+             { 'code' => 'H-13', 'name' => 'Reprographics service' },
+             { 'code' => 'D-4', 'name' => 'Reservoirs, ponds, river walls and water features maintenance' },
+             { 'code' => 'F-10', 'name' => 'Residential catering services' },
+             { 'code' => 'F-2', 'name' => 'Retail services / convenience store' },
+             { 'code' => 'G-1', 'name' => 'Routine cleaning' },
+             { 'code' => 'C-6', 'name' => 'Security, access and intruder systems maintenance' },
+             { 'code' => 'H-8', 'name' => 'Signage' },
+             { 'code' => 'H-11', 'name' => 'Space management' },
+             { 'code' => 'G-12', 'name' => 'Specialist cleaning' },
+             { 'code' => 'C-22', 'name' => 'Specialist maintenance services' },
+             { 'code' => 'L-2', 'name' => 'Sports and leisure' },
+             { 'code' => 'C-12', 'name' => 'Standby power system maintenance' },
+             { 'code' => 'E-3', 'name' => 'Statutory inspections' },
+             { 'code' => 'H-14', 'name' => 'Stores management' },
+             { 'code' => 'I-2', 'name' => 'Taxi booking service' },
+             { 'code' => 'C-16', 'name' => 'Television cabling maintenance' },
+             { 'code' => 'L-11', 'name' => 'Training establishment management and booking service' },
+             { 'code' => 'D-2', 'name' => 'Tree surgery (arboriculture)' },
+             { 'code' => 'F-8', 'name' => 'Trolley service' },
+             { 'code' => 'F-9', 'name' => 'Vending services (food & beverage)' },
+             { 'code' => 'C-2', 'name' => 'Ventilation and air conditioning system maintenance' },
+             { 'code' => 'C-19', 'name' => 'Voice announcement system maintenance' },
+             { 'code' => 'I-4', 'name' => 'Voice announcement system operation' },
+             { 'code' => 'E-2', 'name' => 'Water hygiene maintenance' },
+             { 'code' => 'G-7', 'name' => 'Window cleaning (external)' },
+             { 'code' => 'G-6', 'name' => 'Window cleaning (internal)' }
+           ],
+           :'fm-building-type' => 'General office - Customer Facing',
+           'building-type' => 'General office - Customer Facing'
+         },
+         status: 'Incomplete'
+       )]
+    end
+
+    before do
+      selected_buildings2.each do |b|
         FacilitiesManagement::Buildings.delete b.id
         new_building = FacilitiesManagement::Buildings.new(
           id: b.id,
@@ -374,47 +373,23 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         Rails.logger.warn "Couldn't update new building id: #{e}"
       end
     end
-    # rubocop:enable Layout/MultilineHashBraceLayout
-    # rubocop:enable Style/HashSyntax
-
-    after :all do
-      # teardown
-      @selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
-      rescue StandardError => e
-        Rails.logger.warn "Couldn't delete new building id: #{e}"
-      end
-    end
-    # rubocop:enable RSpec/BeforeAfterAll
-    # rubocop:enable RSpec/InstanceVariable
 
     # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/InstanceVariable
     it 'create a direct-award report check service price cell position' do
-      user_email = 'test@example.com'
-      start_date = DateTime.now.utc
-
       uvals.map!(&:deep_symbolize_keys)
-
-      report = described_class.new(start_date, user_email, data)
-
-      rates = CCS::FM::Rate.read_benchmark_rates
-      rate_card = CCS::FM::RateCard.latest
-
+      report = described_class.new(start_date: DateTime.now.utc, user_email: user.email, data: data)
       results = {}
       report_results = {}
-      supplier_names = rate_card.data[:Prices].keys
+      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
-        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
         results[supplier_name] = report.direct_award_value
       end
 
-      sorted_list = results.sort_by { |_k, v| v }
-
-      supplier_name = sorted_list.first[0]
-      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
+      supplier_name = results.min_by { |_k, v| v }[0]
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name]
 
       IO.write('/tmp/direct_award_prices_3.xlsx', spreadsheet.to_xlsx)
 
@@ -425,40 +400,29 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       expect(wb.sheet('Contract Price Matrix').row(24)[3]).to eq nil
       expect(wb.sheet('Contract Price Matrix').row(24)[4]).to eq 52.650000000000006
     end
-    # rubocop:enable RSpec/InstanceVariable
-    # rubocop:enable RSpec/ExampleLength
 
-    # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/InstanceVariable
     it 'create a direct-award report check prices' do
-      user_email = 'test@example.com'
-      start_date = DateTime.now.utc
-
       uvals.map!(&:deep_symbolize_keys)
 
-      report = described_class.new(start_date, user_email, data)
-
-      rates = CCS::FM::Rate.read_benchmark_rates
-      rate_card = CCS::FM::RateCard.latest
-
+      report = described_class.new(start_date: DateTime.now.utc, user_email: user.email, data: data)
       results = {}
       report_results = {}
-      supplier_names = rate_card.data[:Prices].keys
+      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
-        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
         results[supplier_name] = report.direct_award_value
       end
 
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
-      expect(sorted_list.first[1].round(2)).to eq 1546319.17
+      expect(sorted_list.first[1].round(2)).to eq 1658887.92
 
       supplier_name = sorted_list.first[0]
       expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
 
-      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name]
 
       IO.write('/tmp/direct_award_prices_3.xlsx', spreadsheet.to_xlsx)
 
@@ -475,11 +439,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
       IO.write('/tmp/deliverable_matrix_3.xlsx', spreadsheet.to_stream.read)
     end
-    # rubocop:enable RSpec/InstanceVariable
-    # rubocop:enable RSpec/ExampleLength
 
-    # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/InstanceVariable
     it 'create a direct-award report with contract length of 1 year' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
@@ -487,30 +447,25 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       uvals.map!(&:deep_symbolize_keys)
 
       data[:'fm-contract-length'] = 1
-      report = described_class.new(start_date, user_email, data)
-
-      rates = CCS::FM::Rate.read_benchmark_rates
-      rate_card = CCS::FM::RateCard.latest
-
+      report = described_class.new(start_date: start_date, user_email: user_email, data: data)
       results = {}
       report_results = {}
-      supplier_names = rate_card.data[:Prices].keys
+      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
-        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
         results[supplier_name] = report.direct_award_value
       end
 
       sorted_list = results.sort_by { |_k, v| v }
       expect(sorted_list.first[0].to_s).to eq 'Cartwright and Sons'
-      # expect(sorted_list.first[1].round(2)).to eq 244915.36
-      expect(sorted_list.first[1].round(2)).to eq 230360.52
+      expect(sorted_list.first[1].round(2)).to eq 247130.27
 
       supplier_name = sorted_list.first[0]
       expect(report_results[supplier_name][report_results[supplier_name].keys.second].count).to eq 21
 
-      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], rate_card
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name]
 
       IO.write('/tmp/direct_award_prices_3_1year.xlsx', spreadsheet.to_xlsx)
 
@@ -528,11 +483,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
       IO.write('/tmp/deliverable_matrix_3_1year.xlsx', spreadsheet.to_stream.read)
     end
-    # rubocop:enable RSpec/InstanceVariable
-    # rubocop:enable RSpec/ExampleLength
 
-    # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/InstanceVariable
     it 'create a direct-award report, verify only allowed volume worksheet services are displayed' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
@@ -540,17 +491,13 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       uvals.map!(&:deep_symbolize_keys)
 
       data[:'fm-contract-length'] = 1
-      report = described_class.new(start_date, user_email, data)
-
-      rates = CCS::FM::Rate.read_benchmark_rates
-      rate_card = CCS::FM::RateCard.latest
-
+      report = described_class.new(start_date: start_date, user_email: user_email, data: data)
       results = {}
       report_results = {}
-      supplier_names = rate_card.data[:Prices].keys
+      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
-        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
         results[supplier_name] = report.direct_award_value
       end
 
@@ -580,11 +527,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       expect(number_rows).to be > 1
       expect(not_allowed).to eq false
     end
-    # rubocop:enable RSpec/InstanceVariable
-    # rubocop:enable RSpec/ExampleLength
 
-    # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/InstanceVariable
     it 'create a direct-award report with contract length of 1 year and verify a report for each building' do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
@@ -592,23 +535,18 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       uvals.map!(&:deep_symbolize_keys)
 
       data[:'fm-contract-length'] = 1
-      report = described_class.new(start_date, user_email, data)
-
-      rates = CCS::FM::Rate.read_benchmark_rates
-      rate_card = CCS::FM::RateCard.latest
-
+      report = described_class.new(start_date: start_date, user_email: user_email, data: data)
       results = {}
       report_results = {}
 
-      supplier_names = rate_card.data[:Prices].keys
+      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
-        report.calculate_services_for_buildings @selected_buildings2, uvals, rates, rate_card, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
         results[supplier_name] = report.direct_award_value
       end
 
       buildings_ids = uvals.collect { |u| u[:building_id] }.compact.uniq
-      supplier_names = rate_card.data[:Prices].keys
       supplier_names.each do |supplier_name|
         # verify a report is generated for each building
         buildings_ids.each do |building_id|
@@ -616,16 +554,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         end
       end
     end
-    # rubocop:enable RSpec/InstanceVariable
-    # rubocop:enable RSpec/ExampleLength
   end
 
-  # rubocop:disable RSpec/ExampleLength
   it 'can calculate a direct award procurement' do
-    # p '*********'
-    # p CCS::FM::UnitsOfMeasurement.all.count
-    # p '*********'
-
     uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
     uom2 = {}
     uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
@@ -658,7 +589,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       {
         id: id,
         gia: vals['gia'].to_f,
-        isLondon: vals['isLondon'] ? 'Yes' : 'No',
+        isLondon: vals['isLondon'] ? true : false,
         fm_building_type: 'General office - Customer Facing'
       }
 
@@ -671,9 +602,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # p 'There are #{Nuts3Region.all.count} NUTS3 regions'
 
     # --------
-    rate_card = CCS::FM::RateCard.latest
-    rates = CCS::FM::Rate.read_benchmark_rates
-
     # ------
     uom_vals = []
     # posted_services = FacilitiesManagement::Service.all.map(&:code)
@@ -689,14 +617,14 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
     # ------
 
-    report = described_class.new(start_date, 'test@example.com', procurement)
+    report = described_class.new(start_date: start_date, user_email: 'test@example.com', data: procurement)
 
     results = {}
-    supplier_names = rate_card.data[:Prices].keys
+    supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
     supplier_names.each do |supplier_name|
       # dummy_supplier_name = 'Hickle-Schinner'
       results[supplier_name] = {}
-      report.calculate_services_for_buildings all_buildings, uom_vals, rates, rate_card, supplier_name, results[supplier_name]
+      report.calculate_services_for_buildings all_buildings, uom_vals, supplier_name, results[supplier_name]
       results[supplier_name][:direct_award_value] = report.direct_award_value
     end
 

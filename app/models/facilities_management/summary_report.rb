@@ -4,104 +4,87 @@ module FacilitiesManagement
 
     attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :errors
 
-    def initialize(start_date, user_id, data, procurement = nil)
-      @errors = ''
-      @start_date = start_date
-      @user_id = user_id
-
+    def initialize(params)
       @sum_uom = 0
       @sum_benchmark = 0
+      @errors = ''
 
-      initialize_from_data data if data
-      initialize_from_procurement procurement if procurement
+      if params.is_a?(FacilitiesManagement::Procurement)
+        @procurement = params
+        initialize_from_procurement
+      else
+        @data = params[:data]
+        @start_date = params[:start_date]
+        @user_id = User.find_by(email: params[:user_email])&.id
+        initialize_from_data
+      end
 
       regions
     end
 
-    def initialize_from_data(data)
-      data.deep_symbolize_keys!
+    def initialize_from_data
+      @data.deep_symbolize_keys!
 
       @posted_services =
-        if data[:'fm-services']
-          data[:'fm-services'].collect { |x| x[:code].gsub('-', '.') }
+        if @data[:'fm-services']
+          @data[:'fm-services'].collect { |x| x[:code].gsub('-', '.') }
         else
-          data[:posted_services]
+          @data[:posted_services]
         end
 
-      @posted_locations = data[:posted_locations]
+      @posted_locations = @data[:posted_locations]
 
-      @contract_length_years = data[:'fm-contract-length'].to_i
-      @contract_cost = data[:'fm-contract-cost'].to_f
+      @contract_length_years = @data[:'fm-contract-length'].to_i
+      @contract_cost = @data[:'fm-contract-cost'].to_f
 
-      @tupe_flag =
-        begin
-          data[:'is-tupe'] == 'yes'
-        rescue StandardError
-          false
-        end
+      @tupe_flag = @data[:'is-tupe'] == 'yes'
     end
 
-    def initialize_from_procurement(procurement)
-      @start_date = procurement.initial_call_off_start_date
-      @user_id = procurement.user.id
-      @posted_services = procurement.service_codes
-      @posted_locations = procurement.region_codes
-      @contract_length_years = procurement.initial_call_off_period.to_i
-      @contract_cost = procurement.estimated_cost_known? ? procurement.estimated_annual_cost.to_f : 0
-
-      @tupe_flag = procurement.tupe
+    def initialize_from_procurement
+      @start_date = @procurement.initial_call_off_start_date
+      @user_id = @procurement.user.id
+      @posted_services = @procurement.procurement_building_services.map(&:code)
+      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building['building_json']['address']['fm-address-region-code'] }
+      @contract_length_years = @procurement.initial_call_off_period.to_i
+      @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
+      @tupe_flag = @procurement.tupe
     end
 
     # rubocop:disable Metrics/AbcSize
-    def uvals_for_public(building, spreadsheet_type)
-      building_uvals = building.procurement_building_services
+    def uvals_for_public(procurement_building, spreadsheet_type)
+      procurement_building_services = procurement_building.procurement_building_services
 
       if spreadsheet_type == :da
         uvals_not_da = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.direct_award_services }
         @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
 
-        building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+        procurement_building_services = procurement_building_services.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
       elsif spreadsheet_type == :fc
         uvals_not_fc = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.further_competition_services }
         @errors = 'The following services are not further Competition: ' + uvals_not_fc.collect { |s| s[:service_code] }.to_s if uvals_not_fc.count
 
-        building_uvals = building_uvals.select { |u| u[:code].in? CCS::FM::Service.further_competition_services }
+        procurement_building_services = procurement_building_services.select { |u| u[:code].in? CCS::FM::Service.further_competition_services }
       end
 
-      # building_data = building
-      building_data = FacilitiesManagement::Buildings.find_by(id: building.building_id).building_json
-      services_and_questions = FacilitiesManagement::ServicesAndQuestions.new
-
-      building_uvals = building_uvals.map do |u|
-        # p u[:code]
-
-        lookup = services_and_questions.service_detail(u[:code])
-        value_field = lookup[:questions].reject { |v| v == :service_standard }
-
-        val = u[value_field.first]
-        val = building_data['gia'] if value_field.empty?
-        val = u[value_field.first].map(&:to_i).inject(&:+) if value_field.first == :lift_data
-
+      building_uvals = procurement_building_services.map do |procurement_building_service|
         {
-          # building_id: building.id,
-          building_id: building.building_id,
-          service_code: u[:code],
-          uom_value: val,
-          service_standard: u[:service_standard]
+          building_id: procurement_building.building_id,
+          service_code: procurement_building_service.code,
+          uom_value: procurement_building_service.uval,
+          service_standard: procurement_building_service.service_standard
         }
       end
-      [building_uvals, building_data]
+      [building_uvals, procurement_building.building.building_json]
     end
     # rubocop:enable Metrics/AbcSize
 
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/AbcSize
-    def calculate_services_for_buildings(selected_buildings, uvals = nil, rates = nil, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true, spreadsheet_type = nil)
+    def calculate_services_for_buildings(selected_buildings, uvals = nil, supplier_name = nil, results = nil, remove_cafm_help = true, spreadsheet_type = nil)
       # selected_services
 
       @sum_uom = 0
       @sum_benchmark = 0
-
       uvals ||= uom_values(selected_buildings) unless
 
       selected_buildings.each do |building|
@@ -131,7 +114,7 @@ module FacilitiesManagement
         # p "building id: #{id}"
         results2 = results[id] = {} if results
 
-        vals_per_building = services(building_data, building_uvals, rates, rate_card, supplier_name, results2, remove_cafm_help)
+        vals_per_building = services(building_data, building_uvals, supplier_name, results2, remove_cafm_help)
 
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
@@ -267,64 +250,27 @@ module FacilitiesManagement
       FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
       @subregions.select! { |k, _v| posted_locations.include? k }
     end
+
     # rubocop:enable Rails/FindEach
-
-    # rubocop:disable Metrics/CyclomaticComplexity
-    # rubocop:disable Metrics/PerceivedComplexity
     def copy_params(building_data, uvals)
-      # Note: I think @fm_gross_internal_area can be removed as it is not used (also it does not work as :gia needs to be 'gia'
-      @fm_gross_internal_area =
-        begin
-          building_data[:gia].to_i
-        rescue StandardError
-          0
-        end
+      if @data
+        @london_flag = building_data[:isLondon].present? && building_data[:isLondon] == true
 
-      @london_flag =
-        begin
-          fm_address_postcode = building_data[:address][:'fm-address-postcode'] if building_data['address'].nil? # rspec tests
-          fm_address_postcode = building_data['address']['fm-address-postcode'] if building_data[:address].nil?  # real data
+        @cafm_flag ||= uvals.any? { |x| x[:service_code] == 'M.1' }
 
-          # Note: a symbol is passed from rspec, and string key from the front end.I did not want to change too much.
-          if (building_data[:isLondon] || building_data['isLondon']) == 'Yes' || building_in_london?(fm_address_postcode)
-            'Y'
-          else
-            'N'
-          end
-        rescue StandardError
-          'N'
-        end
-
-      @cafm_flag =
-        begin
-          if uvals.any? { |x| x[:service_code] == 'M.1' }
-            'Y'
-          else
-            'N'
-          end
-        rescue StandardError
-          'N'
-        end
-
-      @helpdesk_flag =
-        begin
-          if uvals.any? { |x| x[:service_code] == 'N.1' }
-            'Y'
-          else
-            'N'
-          end
-        rescue StandardError
-          'N'
-        end
+        @helpdesk_flag ||= uvals.any? { |x| x[:service_code] == 'N.1' }
+      else
+        @london_flag = building_in_london?(building_data['address']['fm-address-region-code'])
+        procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data['id'])
+        @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
+        @cafm_flag = procurement_building.procurement_building_services.where(code: 'M.1').any?
+      end
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
-    # rubocop:enable Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def services(building_data, uvals, rates, rate_card = nil, supplier_name = nil, results = nil, remove_cafm_help = true)
+    def services(building_data, uvals, supplier_name = nil, results = nil, remove_cafm_help = true)
       sum_uom = 0.0
       sum_benchmark = 0.0
 
@@ -334,6 +280,7 @@ module FacilitiesManagement
       uvals_remove_cafm_help = if remove_cafm_help == true
                                  uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
                                else
+
                                  uvals
                                end
       uvals_remove_cafm_help.each do |v|
@@ -354,8 +301,6 @@ module FacilitiesManagement
                                                @london_flag,
                                                @cafm_flag,
                                                @helpdesk_flag,
-                                               rates,
-                                               rate_card,
                                                supplier_name,
                                                building_data)
 
@@ -376,14 +321,11 @@ module FacilitiesManagement
         sum_benchmark: sum_benchmark }
     end
     # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/ParameterLists (with a s)
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
 
     # london nuts are defined in FM-703
-    def building_in_london?(post_code)
-      nuts_region = PostcodesNutsRegion.find_by(postcode: post_code.upcase.gsub(/\s+/, ''))
-      code = nuts_region.nil? ? '' : nuts_region['code']
+    def building_in_london?(code)
       %w[UKI3 UKI4 UKI5 UKI6 UKI7].include? code
     end
   end
