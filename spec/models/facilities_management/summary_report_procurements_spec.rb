@@ -720,6 +720,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is G.3' do
         let(:code) { 'G.3' }
+        let(:no_of_building_occupants) { 192 }
 
         it 'returns the right assessed value' do
           procurement = procurement_building_service.procurement_building.procurement
@@ -728,7 +729,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
           rates = CCS::FM::Rate.read_benchmark_rates
           rate_card = CCS::FM::RateCard.latest
           report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
-          expect(report.assessed_value.round(2)).to eq 19475.45
+          expect(report.assessed_value.round(2)).to eq 25850.04
         end
       end
 
@@ -785,6 +786,766 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
           rate_card = CCS::FM::RateCard.latest
           report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
           expect(report.assessed_value.round(2)).to eq 493.15
+        end
+      end
+
+      context 'when service is G.5' do
+        let(:code) { 'G.5' }
+        let(:size_of_external_area) { 925 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 3079.65
+        end
+      end
+
+      context 'when service is G.9' do
+        let(:code) { 'G.9' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 540.32
+        end
+      end
+
+      context 'when service is G.8' do
+        let(:code) { 'G.8' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is G.10' do
+        let(:code) { 'G.10' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 1717.49
+        end
+      end
+
+      context 'when service is G.11' do
+        let(:code) { 'G.11' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 111.24
+        end
+      end
+
+      context 'when service is G.12' do
+        let(:code) { 'G.12' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is G.13' do
+        let(:code) { 'G.13' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is G.14' do
+        let(:code) { 'G.14' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is G.16' do
+        let(:code) { 'G.16' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 3902.53
+        end
+      end
+
+      context 'when service is H.4' do
+        let(:code) { 'H.4' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 556.74
+        end
+      end
+
+      context 'when service is H.5' do
+        let(:code) { 'H.5' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 456.25
+        end
+      end
+
+      context 'when service is H.7' do
+        let(:code) { 'H.7' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 115.08
+        end
+      end
+
+      context 'when service is H.1' do
+        let(:code) { 'H.1' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 2085.69
+        end
+      end
+
+      context 'when service is H.2' do
+        let(:code) { 'H.2' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 2724.13
+        end
+      end
+
+      context 'when service is H.3' do
+        let(:code) { 'H.3' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 294.43
+        end
+      end
+
+      context 'when service is H.6' do
+        let(:code) { 'H.6' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 1407.34
+        end
+      end
+
+      context 'when service is H.8' do
+        let(:code) { 'H.8' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 18.10
+        end
+      end
+
+      context 'when service is H.10' do
+        let(:code) { 'H.10' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 235.78
+        end
+      end
+
+      context 'when service is H.11' do
+        let(:code) { 'H.11' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 1297.81
+        end
+      end
+
+      context 'when service is H.12' do
+        let(:code) { 'H.12' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is H.13' do
+        let(:code) { 'H.13' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 7288.32
+        end
+      end
+
+      context 'when service is H.14' do
+        let(:code) { 'H.14' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is H.15' do
+        let(:code) { 'H.15' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is H.16' do
+        let(:code) { 'H.16' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is I.1' do
+        let(:code) { 'I.1' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 529.12
+        end
+      end
+
+      context 'when service is I.2' do
+        let(:code) { 'I.2' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 504.59
+        end
+      end
+
+      context 'when service is I.3' do
+        let(:code) { 'I.3' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 506.13
+        end
+      end
+
+      context 'when service is I.4' do
+        let(:code) { 'I.4' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 508.29
+        end
+      end
+
+      context 'when service is I.4' do
+        let(:code) { 'I.4' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 508.29
+        end
+      end
+
+      context 'when service is J.1' do
+        let(:code) { 'J.1' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 356.25
+        end
+      end
+
+      context 'when service is J.2' do
+        let(:code) { 'J.2' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 364.47
+        end
+      end
+
+      context 'when service is J.3' do
+        let(:code) { 'J.3' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 362.67
+        end
+      end
+
+      context 'when service is J.4' do
+        let(:code) { 'J.4' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 407.76
+        end
+      end
+
+      context 'when service is J.5' do
+        let(:code) { 'J.5' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 365.81
+        end
+      end
+
+      context 'when service is J.6' do
+        let(:code) { 'J.6' }
+        let(:hourly_rate) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 362.78
+        end
+      end
+
+      context 'when service is J.7' do
+        let(:code) { 'J.7' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 179.91
+        end
+      end
+
+      context 'when service is J.8' do
+        let(:code) { 'J.8' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.0
+        end
+      end
+
+      context 'when service is J.9' do
+        let(:code) { 'J.9' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 1855.17
+        end
+      end
+
+      context 'when service is J.10' do
+        let(:code) { 'J.10' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 734.14
+        end
+      end
+
+      context 'when service is J.11' do
+        let(:code) { 'J.11' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 985.78
+        end
+      end
+
+      context 'when service is J.12' do
+        let(:code) { 'J.12' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.00
+        end
+      end
+
+      context 'when service is K.2' do
+        let(:code) { 'K.2' }
+        let(:tones_to_be_collected_and_removed) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 6289.31
+        end
+      end
+
+      context 'when service is K.3' do
+        let(:code) { 'K.3' }
+        let(:tones_to_be_collected_and_removed) { 2 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 4994.04
+        end
+      end
+
+      context 'when service is K.1' do
+        let(:code) { 'K.1' }
+        let(:no_of_consoles_to_be_serviced) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 2643.88
+        end
+      end
+
+      context 'when service is K.1' do
+        let(:code) { 'K.1' }
+        let(:no_of_units_to_be_serviced) { 22 }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 657.14
+        end
+      end
+
+      context 'when service is K.4' do
+        let(:code) { 'K.4' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.00
+        end
+      end
+
+      context 'when service is K.5' do
+        let(:code) { 'K.5' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.00
+        end
+      end
+
+      context 'when service is K.6' do
+        let(:code) { 'K.6' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.00
+        end
+      end
+
+      context 'when service is L.1' do
+        let(:code) { 'L.1' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 0.00
+        end
+      end
+
+      context 'when service is L.2' do
+        let(:code) { 'L.2' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 262.06
+        end
+      end
+
+      context 'when service is L.3' do
+        let(:code) { 'L.3' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 11493.34
+        end
+      end
+
+      context 'when service is L.4' do
+        let(:code) { 'L.4' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 323.05
+        end
+      end
+
+      context 'when service is L.5' do
+        let(:code) { 'L.5' }
+
+        it 'returns the right assessed value' do
+          procurement = procurement_building_service.procurement_building.procurement
+          report = FacilitiesManagement::SummaryReport.new(nil, nil, nil, procurement)
+          selected_buildings = procurement.active_procurement_buildings
+          rates = CCS::FM::Rate.read_benchmark_rates
+          rate_card = CCS::FM::RateCard.latest
+          report.calculate_services_for_buildings selected_buildings, nil, rates, rate_card, nil, nil
+          expect(report.assessed_value.round(2)).to eq 136.64
         end
       end
     end
