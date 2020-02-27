@@ -9,7 +9,7 @@ RSpec.describe CCS::FM::Building, type: :model do
                      'fm-address-line-2' => '151 Buckingham Palace Road',
                      'fm-address-town' => 'London',
                      'fm-address-county' => 'London' },
-      'isLondon' => 'Yes',
+      'isLondon' => true,
       'gia' => 12345 }
   end
 

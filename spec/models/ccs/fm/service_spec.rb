@@ -6,6 +6,6 @@ RSpec.describe CCS::FM::Service, type: :model do
   end
 
   it 'DA contains an example service' do
-    expect((described_class.direct_award_services.include? 'A.6')).to be true
+    expect((described_class.direct_award_services.include? 'C.1')).to be true
   end
 end

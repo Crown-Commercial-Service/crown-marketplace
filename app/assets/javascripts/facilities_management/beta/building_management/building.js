@@ -23,8 +23,9 @@ $(function () {
         putCharsLeft($("#fm-building-desc-chars-left"), document.getElementById("fm-building-desc-input").value, 50);
     }
     
-    const updateRegion = function (region) {
+    const updateRegion = function (region, code) {
         FM.building.address["fm-address-region"] = region;
+        FM.building.address["fm-address-region-code"] = code;
     };
 
     $('#fm-building-name-input').on('keyup', function (e) {
@@ -310,14 +311,14 @@ $(function () {
 
                     for (let x = 0; x < regions.length; x++) {
                         let region_obj = regions[x];
-                        select_dropdown_options = '<option value="' + region_obj.region + '">' + region_obj.region + '</option>';
+                        select_dropdown_options = '<option data-code="' + region_obj.code + '" value="' + region_obj.region + '">' + region_obj.region + '</option>';
                         $('#fm-region-dropdown').append(select_dropdown_options);
                     }
 
                 }
 
-                if (data && data.result && data.result.length == 1) {
-                    var region_name = data.result[0].region
+                if (data && data.result && data.result.length === 1) {
+                    var region_name = data.result[0].region ;
                     $('#fm-building-region').html(region_name);
                     updateRegion(region_name);
                 }
@@ -339,7 +340,7 @@ $(function () {
 
     $('.fm-bulding-address-wrapper').on('change', '#fm-region-dropdown', function (e) {
         e.preventDefault();
-        updateRegion($(this).val());
+        updateRegion($("option:selected", this).val(), $("option:selected", this).attr('data-code'));
     });
 
 });
