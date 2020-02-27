@@ -26,9 +26,9 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   let(:uvals) do
     [
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.1', 'uom_value' => service_hours, :service_standard => 'A', 'building_id' => 'e60f5b57-5f15-604c-b729-a689ede34a99', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'I.1', 'uom_value' => service_hours, :service_standard => 'A', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', 'service_code' => 'K.3', 'uom_value' => '48', :service_standard => 'A', 'building_id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', 'title_text' => nil, 'example_text' => nil },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'I.1', :uom_value => service_hours, :service_standard => 'A', :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'I.1', :uom_value => service_hours, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'K.3', :uom_value => 8, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :service_standard => 'A', :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'M.1', :uom_value => 1000, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'CAFM' },
@@ -201,10 +201,9 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
       IO.write('/tmp/further_competition_procurement_summary.xlsx', spreadsheet.to_stream.read)
 
       wb = Roo::Excelx.new('/tmp/further_competition_procurement_summary.xlsx')
-
       expect(wb.sheet('Service Matrix').row(2)).to eq ['C.5', 'Lifts, hoists & conveyance systems maintenance - Standard A', 'Yes', 'Yes']
-      expect(wb.sheet('Service Matrix').row(3)).to eq ['M.1', 'CAFM system', nil, 'Yes']
-      expect(wb.sheet('Service Matrix').row(4)).to eq ['N.1', 'Helpdesk services', nil, 'Yes']
+      expect(wb.sheet('Service Matrix').row(4)).to eq ['K.3', 'Recycled waste', nil, 'Yes']
+      expect(wb.sheet('Service Matrix').row(5)).to eq ['M.1', 'CAFM system', nil, 'Yes']
     end
     # rubocop:enable RSpec/ExampleLength
   end

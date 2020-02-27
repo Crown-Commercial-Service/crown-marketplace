@@ -288,7 +288,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @buildings.count.times { column_widths << 20 }
 
     last_column_name = ('A'..'ZZ').to_a[2 + @buildings.count]
-    sheet["A2:#{last_column_name}#{number_volume_services + 1}"].each { |c| c.style = style }
+    sheet["A2:#{last_column_name}#{number_volume_services + 1}"].each { |c| c.style = style } if number_volume_services.positive?
     sheet.column_widths(*column_widths)
   end
 
