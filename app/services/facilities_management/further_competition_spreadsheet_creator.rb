@@ -18,8 +18,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
         p.workbook.add_worksheet(name: 'Service Matrix') do |sheet|
           add_header_row(sheet, ['Service Reference', 'Service Name'])
-          add_service_matrix(sheet)
-          style_service_matrix_sheet(sheet, standard_column_style)
+          number_rows_added = add_service_matrix(sheet)
+          style_service_matrix_sheet(sheet, standard_column_style, number_rows_added)
         end
 
         unless @units_of_measure_values.nil?
@@ -44,26 +44,56 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def add_service_matrix(sheet)
+    rows_added = 0
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }
 
     @services.each do |service|
-      first_loop = true
-      row_values = []
-      @building_ids_with_service_codes.each do |building|
-        unit_of_measure = @units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
-        service_name = determine_service_name(service['name'], unit_of_measure)
-        row_values << service['code'] << service_name if first_loop
-        v = building[:service_codes].include?(service['code']) ? 'Yes' : ''
-        row_values << v
-        first_loop = false
+      list_standards = get_sorted_list_unique_standards_per_building service
+      list_standards.each do |standard|
+        first_loop = true
+        row_values = []
+        @building_ids_with_service_codes.each do |building|
+          unit_of_measure = @units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
+          service_name = determine_service_name(service['name'], unit_of_measure, standard)
+          row_values << service['code'] << service_name if first_loop
+          row_values << determine_service_matrix_cell_text(building, unit_of_measure, standard, service)
+          first_loop = false
+        end
+        sheet.add_row row_values, style: standard_style, height: standard_row_height
+        rows_added += 1
       end
-
-      sheet.add_row row_values, style: standard_style, height: standard_row_height
     end
+    rows_added
   end
 
-  def determine_service_name(name, unit_of_measure)
-    return name + ' - Standard ' + unit_of_measure[:service_standard] if unit_of_measure && unit_of_measure[:service_standard]
+  def determine_service_matrix_cell_text(building, unit_of_measure, standard, service)
+    cell_text = ''
+    cell_text = (building[:service_codes].include?(service['code']) ? 'Yes' : '') if standard.nil? || (building[:service_codes].include?(service['code']) && unit_of_measure[:service_standard] == standard)
+    cell_text
+  end
+
+  def get_sorted_list_unique_standards_per_building(service)
+    list_standards = Set[]
+    @building_ids_with_service_codes.each do |building|
+      unit_of_measure = @units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
+      list_standards.add(unit_of_measure[:service_standard]) if unit_of_measure && unit_of_measure[:service_standard]
+    end
+    list_standards.add nil if list_standards.empty?
+    list_standards.sort
+  end
+
+  def style_service_matrix_sheet(sheet, style, number_rows_added)
+    column_widths = [15, 100]
+    @buildings.count.times { column_widths << 50 }
+
+    last_column_name = ('A'..'ZZ').to_a[1 + @buildings.count]
+    sheet["A2:#{last_column_name}#{number_rows_added + 1}"].each { |c| c.style = style } if number_rows_added.positive?
+
+    sheet.column_widths(*column_widths)
+  end
+
+  def determine_service_name(name, unit_of_measure, standard_name)
+    return name + ' - Standard ' + standard_name if unit_of_measure && unit_of_measure[:service_standard]
 
     name
   end
@@ -161,7 +191,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def style_supplier_names_sheet(sheet, style, rows_added)
     column_widths = [75, 50]
-    sheet["A2:B#{rows_added + 1}"].each { |c| c.style = style }
+    sheet["A2:B#{rows_added + 1}"].each { |c| c.style = style } if rows_added.positive?
     sheet.column_widths(*column_widths)
   end
 
