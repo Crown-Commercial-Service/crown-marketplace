@@ -20,16 +20,9 @@ before_install:
   - gem install bundler
 before_script:
   - sudo apt-get -qq update
-  - sudo apt-get install clamav clamav-daemon
   - sudo apt-get install -y postgresql-9.6-postgis-2.4
   - psql -U postgres -c 'create database marketplace_test'
   - psql -U postgres -d marketplace_test -c 'create extension postgis'
-  - sudo systemctl stop clamav-freshclam.service
-  - sudo systemctl stop clamav-daemon.service
-  - sudo chown -R $USER:$USER /etc/clamav/clamd.conf
-  - sudo echo TCPAddr $CLAMAV_SERVER_ADDRESS >> /etc/clamav/clamd.conf
-  - sudo echo TCPSocket 3310 >> /etc/clamav/clamd.conf
-  - sudo systemctl start clamav-daemon.service
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
