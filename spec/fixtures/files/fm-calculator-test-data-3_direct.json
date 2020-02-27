@@ -1,7 +1,7 @@
 [
   {
     "expectations": {
-      "sumunitofmeasure": "3,429.17",
+      "sumunitofmeasure": "3,393.11",
       "benchmarkedcostssum": "1,946.48"
     },
     "contract_length_years": 6,
@@ -9,14 +9,14 @@
     "service_name": "Mechanical and Electrical Engineering Maintenance - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "1,532.11",
+      "sumunitofmeasure": "1,516.00",
       "benchmarkedcostssum": "2,092.12"
     },
     "contract_length_years": 6,
@@ -24,14 +24,14 @@
     "service_name": "Ventilation and Air Conditioning System Maintenance - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "186.36",
+      "sumunitofmeasure": "184.40",
       "benchmarkedcostssum": "107.89"
     },
     "contract_length_years": 6,
@@ -39,14 +39,14 @@
     "service_name": "Environmental Cleaning Service - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "743.27",
+      "sumunitofmeasure": "735.45",
       "benchmarkedcostssum": "675.47"
     },
     "contract_length_years": 6,
@@ -54,14 +54,14 @@
     "service_name": "Fire Detection and Firefighting Systems Maintenance - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "359.03",
+      "sumunitofmeasure": "355.25",
       "benchmarkedcostssum": "380.77"
     },
     "contract_length_years": 6,
@@ -69,14 +69,14 @@
     "service_name": "Security, Access and Intruder Systems Maintenance - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "1,051.61",
+      "sumunitofmeasure": "1,040.55",
       "benchmarkedcostssum": "2,038.30"
     },
     "contract_length_years": 6,
@@ -84,14 +84,14 @@
     "service_name": "Internal \u0026 External Building Fabric Maintenance - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "398.39",
+      "sumunitofmeasure": "394.20",
       "benchmarkedcostssum": "293.92"
     },
     "contract_length_years": 6,
@@ -99,14 +99,14 @@
     "service_name": "Building Management System (BMS) Maintenance - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "406.23",
+      "sumunitofmeasure": "401.96",
       "benchmarkedcostssum": "408.45"
     },
     "contract_length_years": 6,
@@ -114,14 +114,14 @@
     "service_name": "Standby Power System Maintenance - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "208.94",
+      "sumunitofmeasure": "206.74",
       "benchmarkedcostssum": "203.67"
     },
     "contract_length_years": 6,
@@ -129,14 +129,14 @@
     "service_name": "High Voltage (HV) and Switchgear Maintenance - Standard A, B or C",
     "uom_vol": "100",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   },
   {
     "expectations": {
-      "sumunitofmeasure": "4,493.43",
+      "sumunitofmeasure": "4,446.17",
       "benchmarkedcostssum": "4,611.75"
     },
     "contract_length_years": 6,
@@ -144,9 +144,9 @@
     "service_name": "Lifts, Hoists \u0026 Conveyance Systems Maintenance - Standard A, B or C",
     "uom_vol": "3",
     "occupants": null,
-    "tupe_flag": "N",
-    "london_flag": "N",
-    "cafm_flag": "N",
-    "helpdesk_flag": "N"
+    "tupe_flag": false,
+    "london_flag": false,
+    "cafm_flag": false,
+    "helpdesk_flag": false
   }
 ]

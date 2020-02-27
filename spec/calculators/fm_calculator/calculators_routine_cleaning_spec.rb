@@ -6,7 +6,7 @@ RSpec.describe FMCalculator::Calculator do
 
   let(:calc) do
     # args  Service ref, uom_vol, occupants, tuoe involved, london_location, CAFM, helpdesk
-    described_class.new(3, 'G1', 23000, 125, 'Y', 'Y', 'Y', 'N', rates)
+    described_class.new(3, 'G1', 23000, 125, true, true, true, false)
   end
 
   describe 'calculate routine cleaning', type: :model do
@@ -14,41 +14,41 @@ RSpec.describe FMCalculator::Calculator do
     # rubocop:disable RSpec/MultipleExpectations:
     it 'calculate routine cleaning assessed value' do
       uomd = calc.uomd
-      expect(uomd.round(0)).to eq(277491)
+      expect(uomd.round(2)).to eq(277490.56)
       clean = calc.clean
-      expect(clean.round(0)).to eq(3276)
+      expect(clean.round(2)).to eq(3276.14)
       subtotal1 = uomd + clean
-      expect(subtotal1.round(0)).to eq(280767)
+      expect(subtotal1.round(2)).to eq(280766.71)
       variance = calc.variance(subtotal1)
-      expect(variance.round(0)).to eq(52816)
+      expect(variance.round(2)).to eq(52815.82)
       subtotal2 = subtotal1 + variance
-      expect(subtotal2.round(0)).to eq(333583)
+      expect(subtotal2.round(2)).to eq(333582.53)
       cafm = calc.cafm(subtotal2)
-      expect(cafm.round(0)).to eq(4850)
+      expect(cafm.round(2)).to eq(4850.09)
       helpdesk = calc.helpdesk(subtotal2)
-      expect(helpdesk.round(0)).to eq(0)
+      expect(helpdesk.round(2)).to eq(0.00)
       subtotal3 = subtotal2 + cafm + helpdesk
-      expect(subtotal3.round(0)).to eq(338433)
+      expect(subtotal3.round(2)).to eq(338432.62)
       mobilisation = calc.mobilisation(subtotal3)
-      expect(mobilisation.round(0)).to eq(21998)
+      expect(mobilisation.round(2)).to eq(0.00)
       tupe = calc.tupe(subtotal3)
-      expect(tupe.round(0)).to eq(35142)
+      expect(tupe.round(2)).to eq(35141.84)
       year1 = subtotal3 + mobilisation + tupe
-      expect(year1.round(0)).to eq(395573)
+      expect(year1.round(2)).to eq(373574.46)
       manage = calc.manage(year1)
-      expect(manage.round(0)).to eq(39915)
+      expect(manage.round(2)).to eq(37695.31)
       corporate = calc.corporate(year1)
-      expect(corporate.round(0)).to eq(16614)
+      expect(corporate.round(2)).to eq(15690.13)
       year1total = year1 + manage + corporate
-      expect(year1total.round(0)).to eq(452102)
+      expect(year1total.round(2)).to eq(426959.90)
       profit = calc.profit(year1)
-      expect(profit.round(0)).to eq(12263)
+      expect(profit.round(2)).to eq(11580.81)
       year1totalcharges = year1total + profit
-      expect(year1totalcharges.round(0)).to eq(464364)
+      expect(year1totalcharges.round(2)).to eq(438540.71)
       subyearstotal = calc.subyearstotal(year1totalcharges, mobilisation)
-      expect(subyearstotal.round(0)).to eq(876887)
+      expect(subyearstotal.round(2)).to eq(877081.41)
       totalcharges = year1totalcharges + subyearstotal
-      expect(totalcharges.round(0)).to eq(1341251)
+      expect(totalcharges.round(2)).to eq(1315622.12)
     end
     # rubocop:enable RSpec/MultipleExpectations:
     # rubocop:enable RSpec/ExampleLength:

@@ -1,8 +1,8 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(supplier_name, data, rate_card, data_no_cafmhelp_removed = {}, uvals = {})
+  def initialize(supplier_name, data, data_no_cafmhelp_removed = {}, uvals = {})
     @supplier_name = supplier_name
     @data = data
-    @rate_card_data = rate_card.data
+    @rate_card_data = CCS::FM::RateCard.latest.data
     @data_no_cafmhelp_removed = data_no_cafmhelp_removed
     @uvals_contract = uvals
     create_spreadsheet

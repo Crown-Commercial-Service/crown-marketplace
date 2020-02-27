@@ -180,7 +180,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     bold_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }, b: true
 
     label = 'Suppliers shortlist'
-    supplier_names = @rate_card.data[:Prices].keys
+    supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
     supplier_names.each do |supplier_name|
       sheet.add_row [label, supplier_name], style: standard_style, height: standard_row_height
       label = nil
