@@ -159,6 +159,7 @@ function updateList(govb, id, basket){
 
 function initDynamicAccordian(){
     var govcheckboxes = $('#accordion-default').find('.govuk-checkboxes');
+
     if ( 0 < govcheckboxes.length ) {
         var id = $('#css-list-basket');
         var basketheader = id.find('.govuk-heading-m');
@@ -224,6 +225,7 @@ function initDynamicAccordian(){
         });
     });
     }
+
     updateList(govcheckboxes, id, basketheader);
 }
 function initStepByStepNav() {
