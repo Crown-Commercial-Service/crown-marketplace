@@ -1,0 +1,41 @@
+<%= govuk_page_content(@page_description, @contract) do |pd| %>
+    <%= form_for @contract, url: facilities_management_beta_procurement_contract_path do |f| %>
+        <%= render partial: 'contract_summary_head' %>
+
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/contract_offer_dates' %>
+
+        <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+            Requirements
+        </h1>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/procurement_requirements' %>
+
+        <% if  @procurement.aasm_state == :awaiting_contract_signature %>
+            <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+                Supplier contact details
+            </h1>
+            <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/supplier_contact_details' %>
+        <% end %>
+
+        <h1 class="govuk-heading-m govuk-!-margin-bottom-2">
+            Call-off contract documents
+        </h1>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/call_off_contract_documents' %>
+
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/when_awaiting_response' if  @procurement.aasm_state == :awaiting_supplier_response %>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/whn_awaiting_signature' if  @procurement.aasm_state == :awaiting_contract_signature %>
+
+        <%= render partial: 'contract_summary_foot' %>
+        <% unless @procurement.procurement_closed %>
+            <% case  @procurement.aasm_state %>
+            <% when :awaiting_supplier_response %>
+                <%= govuk_continuation_buttons(pd, f, true, true, false, true) %>
+            <% when :accepted_and_signed %>
+                <%= govuk_continuation_buttons(pd, f, true, true, false) %>
+            <% else %>
+                <%= govuk_continuation_buttons(pd, f, true, true, true, true) %>
+            <% end %>
+        <% else %>
+            <%= govuk_continuation_buttons(pd, f, true, true, false) %>
+        <% end %>
+    <% end %>
+<% end %>
