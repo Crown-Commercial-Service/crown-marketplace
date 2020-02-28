@@ -87,7 +87,7 @@ module FacilitiesManagement
 
     def set_date_and_send_email
       self.offer_sent_date = DateTime.now.in_time_zone('London')
-      send_offer_email
+      # send_offer_email
     end
 
     def contract_expiry_date
