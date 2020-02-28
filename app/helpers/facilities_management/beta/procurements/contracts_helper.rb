@@ -5,7 +5,7 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     if @contract.closed?
       'Closed'
     else
-      WARNINGS[@contract.aasm_state]
+      WARNINGS[@contract.aasm_state.to_sym]
     end
   end
 
@@ -19,7 +19,7 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     if @contract.closed?
       "This contract offer was closed on #{format_date_time(@contract.contract_closed_date)}."
     else
-      warning_messages[@contract.aasm_state]
+      warning_messages[@contract.aasm_state.to_sym]
     end
   end
 

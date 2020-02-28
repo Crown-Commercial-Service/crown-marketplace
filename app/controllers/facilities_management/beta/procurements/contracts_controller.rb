@@ -70,7 +70,7 @@ module FacilitiesManagement
               back_label: 'Back',
               back_text: 'Back',
               page_title: 'Contract summary',
-              caption1: 'School facilities London',
+              caption1: @procurement.contract_name,
               continuation_text: set_continuation_text,
               return_url: facilities_management_beta_procurement_path,
               return_text: 'Return to procurement dashboard',
