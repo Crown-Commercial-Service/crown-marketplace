@@ -2,57 +2,40 @@
     <%= form_for @contract, url: facilities_management_beta_procurement_contract_path do |f| %>
         <%= render partial: 'contract_summary_head' %>
 
-        <%= render partial: 'contract_offer_details' %>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/contract_offer_dates' %>
 
         <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-            <%= t('.requirements') %> 
+            Requirements
         </h1>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/procurement_requirements' %>
 
-        <%= render partial: 'procurement_requirements_head' %>
-        <%= render partial: 'procurement_requirements' %>
-
-        <% if  @contract.aasm_state == 'accepted' %>
+        <% if  @procurement.aasm_state == :awaiting_contract_signature %>
             <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-                <%= t('.supplier_contact_details') %>
+                Supplier contact details
             </h1>
-            <%= render partial: 'supplier_contact_details' %>
+            <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/supplier_contact_details' %>
         <% end %>
 
         <h1 class="govuk-heading-m govuk-!-margin-bottom-2">
-            <%= t('.call_off_contract_documents') %>
+            Call-off contract documents
         </h1>
-        <%= render partial: 'call_off_contract_documents' %>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/call_off_contract_documents' %>
 
-        <%= render partial: 'awaiting_response' if  @contract.aasm_state == 'sent' %>
-        <%= render partial: 'awaiting_signature' if  @contract.aasm_state == 'accepted' %>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/when_awaiting_response' if  @procurement.aasm_state == :awaiting_supplier_response %>
+        <%= render partial: '/facilities_management/beta/procurement_direct_award_contract/contract_summary/whn_awaiting_signature' if  @procurement.aasm_state == :awaiting_contract_signature %>
 
         <%= render partial: 'contract_summary_foot' %>
-        <% unless @contract.closed? %>
-            <% case  @contract.aasm_state %>
-            <% when 'sent' %>
-                <div class= 'govuk-!-margin-top-5'>
-                    <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'withdraw'), role: 'button', class: 'govuk-button govuk-button--warning') %>
-                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
-                </div>
-            <% when 'signed' %>
-                <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'copy'), role: 'button', class: 'govuk-button govuk-button--secondary') %>
-                <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
-            <% when 'not_signed' , 'declined' %>
-                <div class= 'govuk-!-margin-top-5'>
-                    <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'next_supplier'), role: 'button', class: 'govuk-button govuk-!-margin-right-4') %>
-                    <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'withdraw'), role: 'button', class: 'govuk-button govuk-button--warning') %> <br />
-                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
-                </div>
+        <% unless @procurement.procurement_closed %>
+            <% case  @procurement.aasm_state %>
+            <% when :awaiting_supplier_response %>
+                <%= govuk_continuation_buttons(pd, f, true, true, false, true) %>
+            <% when :accepted_and_signed %>
+                <%= govuk_continuation_buttons(pd, f, true, true, false) %>
             <% else %>
-                <div class= 'govuk-!-margin-top-5'>
-                    <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'signed'), role: 'button', class: 'govuk-button govuk-!-margin-right-4') %>
-                    <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'withdraw'), role: 'button', class: 'govuk-button govuk-button--warning') %> <br />
-                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
-                </div>
+                <%= govuk_continuation_buttons(pd, f, true, true, true, true) %>
             <% end %>
         <% else %>
-            <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'copy'), role: 'button', class: 'govuk-button govuk-button--secondary') %>
-            <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+            <%= govuk_continuation_buttons(pd, f, true, true, false) %>
         <% end %>
     <% end %>
 <% end %>
