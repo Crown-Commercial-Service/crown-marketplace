@@ -1,4 +1,4 @@
-module FacilitiesManagement::Beta::ContractsHelper
+module FacilitiesManagement::Beta::Procurements::ContractsHelper
   include FacilitiesManagement::Beta::RequirementsHelper
 
   def warning_title
