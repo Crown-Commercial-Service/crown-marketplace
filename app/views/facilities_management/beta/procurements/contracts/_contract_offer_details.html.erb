@@ -1,0 +1,42 @@
+<% if @contract.aasm_state == 'sent' %>
+    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6 govuk-body govuk-inset-text" >
+        The supplier has not yet responded.
+    </div>
+<% else %>
+    <div class="govuk-!-margin-bottom-6 <%= 'govuk-!-width-two-thirds' unless @contract.closed? %>">
+        <%= govuk_details('Contract offer history', true) do %>
+            <% case @contract.aasm_state%>
+            <% when 'accepted' %>
+                <%= "The supplier has accepetd the contract offer on #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
+            <% when 'signed' %>
+                <%= "You confirmed on the #{format_date_time @contract.contract_signed_date} that the contract has been signed by both parties.<br/>".html_safe %>
+                <%= "The supplier accepted this contract offer on the #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
+            <% when 'not_signed' %>
+                <% if @contract.closed? %>
+                    <%= "You confirmed on #{format_date_time @contract.contract_closed_date} that the contract has not been signed.<br/>".html_safe %>
+                <% end %>
+                <%= "The supplier accepted this contract offer on the #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
+            <% when 'declined' %>
+                <%= "The supplier declined this contract offer on #{format_date_time @contract.supplier_response_date}.<br/>".html_safe if @contract.closed? %>
+            <% when 'expired' %>
+                <%= "This contract offer expired on #{format_date_time (@contract.contract_expiry_date)}. <br/>".html_safe if @contract.closed? %>
+            <% when 'withdrawn' %>
+                <%= "The supplier accepted this contract offer on the #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
+            <% end %>
+            <%= "You sent this contract offer to the supplier on #{format_date_time @contract.offer_sent_date}." unless @contract.aasm_state == 'sent' %>
+        <% end %>
+    </div>
+<% end %>
+
+<div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+    <% case @contract.aasm_state %>
+    <% when 'declined' %>
+        <%= govuk_details('Reason for declining', true) do %>
+            <%= "The supplier's reason for declining was: '#{@contract.reason_for_closing}'." %>
+        <% end %>
+    <% when 'withdrawn' %>
+        <%= govuk_details('Reason for closing', true) do %>
+            <%= "Your reason for withdrawing this offer was: '#{@contract.reason_for_closing}'." %>
+        <% end %>
+    <% end %>
+</div>
