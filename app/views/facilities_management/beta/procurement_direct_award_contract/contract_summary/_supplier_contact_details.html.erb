@@ -10,13 +10,13 @@
                     <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-width-two-thirds"></td>
                 </tr>
                 <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= @page_data[:procurement_data][:supplier] %></th>
+                    <th class="govuk-table__cell govuk-table__header"><%= @contract.supplier.data['supplier_name'] %></th>
                     <td class="govuk-table__cell">
                         <%= govuk_details('Contact details') do %>
-                            <%= "Name: #{@page_data[:supplier_details][:title]} #{@page_data[:supplier_details][:full_name]}"%> <br>
-                            <%= "Telephone: #{@page_data[:supplier_details][:telephone]}"%> <br>
-                            <%= mail_to @page_data[:supplier_details][:email], @page_data[:supplier_details][:email], class: 'govuk-link govuk-link--no-visited-state' %>  <br>
-                            <%= "Address: #{full_address(:supplier_details)}"%> 
+                            <%= "Name: #{@contract.supplier.data['contact_name']}"%> <br>
+                            <%= "Telephone: #{@contract.supplier.data['contact_phone']}"%> <br>
+                            <%= mail_to @contract.supplier.data['contact_email'], @contract.supplier.data['contact_email'], class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+                            <%= "Address: #{FacilitiesManagement::SupplierDetail.find_by(name: @contract.supplier.data['supplier_name']).full_organisation_address}"%> 
                         <% end %>
                     </td>
                 </tr>
