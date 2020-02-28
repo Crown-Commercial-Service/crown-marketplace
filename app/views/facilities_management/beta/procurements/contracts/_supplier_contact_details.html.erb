@@ -1,0 +1,26 @@
+<h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+    Supplier contact details
+</h1>
+<div class="govuk-!-width-full govuk-!-font-size-19">
+    <dl class="govuk-summary-list govuk-body">
+        <table class="govuk-table govuk-!-margin-bottom-6">
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-width-one-third"></td>
+                    <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-width-two-thirds"></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__cell govuk-table__header"><%= @page_data[:procurement_data][:supplier] %></th>
+                    <td class="govuk-table__cell">
+                        <%= govuk_details('Contact details') do %>
+                            <%= "Name: #{@page_data[:supplier_details][:title]} #{@page_data[:supplier_details][:full_name]}"%> <br>
+                            <%= "Telephone: #{@page_data[:supplier_details][:telephone]}"%> <br>
+                            <%= mail_to @page_data[:supplier_details][:email], @page_data[:supplier_details][:email], class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+                            <%= "Address: #{full_address(:supplier_details)}"%> 
+                        <% end %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </dl>
+</div>
