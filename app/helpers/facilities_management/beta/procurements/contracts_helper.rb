@@ -1,5 +1,5 @@
 module FacilitiesManagement::Beta::Procurements::ContractsHelper
-  include FacilitiesManagement::Beta::RequirementsHelper
+  include FacilitiesManagement::Beta::ProcurementsHelper
 
   def warning_title
     if @contract.closed?
@@ -24,4 +24,5 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
   end
 
   WARNINGS = { sent: 'Sent', accepted: 'Accepted, awaiting contract signature', signed: 'Accepted and signed', not_signed: 'Accepted, not signed', declined: 'Declined', expired: 'Not responded' }.freeze
+
 end
