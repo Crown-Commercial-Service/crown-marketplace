@@ -13,7 +13,7 @@
       <% @sent_offers.each do |sent_offer| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
-            <%= link_to sent_offer.procurement.contract_name, '#' %>
+            <%= link_to sent_offer.procurement.contract_name, facilities_management_beta_procurement_contract_path(procurement_id: sent_offer.procurement.id, id: sent_offer.id) %>
           </th>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= sent_offer.supplier.data['supplier_name'] %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date_time(sent_offer.offer_sent_date.in_time_zone('London')) %></td>
