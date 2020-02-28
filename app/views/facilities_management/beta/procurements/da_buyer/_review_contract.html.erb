@@ -1,6 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, false) do |pd|  %>
   <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
-
       <div class= "govuk-body govuk-!-width-three-quarters">
         <h2 class="govuk-heading-m"><%= t('.documents.heading') %></h2>
         <p class="govuk-body govuk-!-margin-left-6 govuk-!-font-size-28"><%= t('.documents.text') %></p>
@@ -19,9 +18,9 @@
           <h3 class="govuk-heading-s"><%= t('.attachment_2.heading') %></h3>
           <ul class="govuk-list documents">
             <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
-              <a href="#?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
-                <%= t('.attachment_2.statement_of_requirements.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
-              </a>
+             <a href="<%= facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "prices_spreadsheet") %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
+              <%= t('.attachment_2.statement_of_requirements.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
+            </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.statement_of_requirements.guidance') %></p>
             </li>
             <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
@@ -35,7 +34,7 @@
           <h3 class="govuk-heading-s"><%= t('.attachment_3.heading') %></h3>
           <ul class="govuk-list documents">
             <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
-              <a href="#?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+              <a href="<%= facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "matrix_spreadsheet") %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
                 <%= t('.attachment_3.price_matrix.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
               </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_3.price_matrix.guidance') %></p>
@@ -45,7 +44,7 @@
           <h3 class="govuk-heading-s"><%= t('.attachment_4.heading') %></h3>
           <ul class="govuk-list documents">
             <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
-              <a href="#?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <a href="#?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>">
                 <%= t('.attachment_4.order_form.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
               </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_4.order_form.guidance') %></p>
