@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     end
 
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
+    get '/session-active', to: 'base/sessions#session_active', as: :session_active
 
     namespace 'supply_teachers', path: 'supply-teachers' do
       concerns :authenticatable

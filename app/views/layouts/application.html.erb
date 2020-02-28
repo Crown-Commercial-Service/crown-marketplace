@@ -1,68 +1,84 @@
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
-  <head>
-    <meta charset="utf-8" />
-    <title><%= page_title %></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0b0c0c" />
+<head>
+  <meta charset="utf-8"/>
+  <title><%= page_title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0c0c"/>
 
-    <link rel="shortcut icon" href="<%= image_path('favicon.ico') %>" type="image/x-icon" />
-    <link rel="mask-icon" href="<%= image_path('mask-icon.svg') %>" color="#0b0c0c">
-    <% %w[ 180x180 167x167 152x152 ].each do |size| %>
-      <link rel="apple-touch-icon" sizes="<%= size %>" href="<%= image_path("ccs-apple-touch-icon-#{size}.png") %>">
-    <% end %>
+  <link rel="shortcut icon" href="<%= image_path('favicon.ico') %>" type="image/x-icon"/>
+  <link rel="mask-icon" href="<%= image_path('mask-icon.svg') %>" color="#0b0c0c">
+  <% %w[ 180x180 167x167 152x152 ].each do |size| %>
+    <link rel="apple-touch-icon" sizes="<%= size %>" href="<%= image_path("ccs-apple-touch-icon-#{size}.png") %>">
+  <% end %>
 
-    <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+  <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
 
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
+  <% if params[:controller].present? && params[:controller].start_with?('apprenticeships') %>
+    <%= stylesheet_link_tag 'apprenticeships', media: 'all' %>
+  <% else %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+  <% end %>
 
+  <%= render partial: '/shared/google_analytics' %>
+</head>
+<body class="govuk-template__body">
 
-    <% if params[:controller].present? && params[:controller].start_with?('apprenticeships') %>
-      <%= stylesheet_link_tag 'apprenticeships', media: 'all' %>
-    <% else %>
-      <%= stylesheet_link_tag 'application', media: 'all' %>
-    <% end %>
-
-    <%= render partial: '/shared/google_analytics' %>
-  </head>
-  <body class="govuk-template__body">
-
-    <script>
-      document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-    </script>
-
-    
-    <div id="wrapper">
-
-      <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
-
-      <header id="main-header" class="govuk-header" role="banner" data-module="header">
-        <%= render partial: '/layouts/cookie-banner' %>
-        <div class="govuk-header__container govuk-width-container">
-          <%= service_header_banner %>
-        </div>
-        <%= render partial: '/layouts/beta-banner', locals: {end_of_journey: @end_of_journey.present?} %>
-      </header>
+<script>
+    document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+</script>
 
 
-      <main id="main-content" class="govuk-width-container govuk-main-wrapper" role="main">
-        <% if @back_path.present? %>
-          <%= render partial: '/layouts/back-link' %>
-        <% end %>
-        
-        <%= yield %>
-      </main>
+<div id="wrapper">
 
-      <footer id="main-footer" class="govuk-footer" role="contentinfo">
-        <%= render partial: '/layouts/footer' %>
-      </footer>
+  <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
 
+  <header id="main-header" class="govuk-header" role="banner" data-module="header">
+    <%= render partial: '/layouts/cookie-banner' %>
+    <div class="govuk-header__container govuk-width-container">
+      <%= service_header_banner %>
     </div>
+    <%= render partial: '/layouts/beta-banner', locals: { end_of_journey: @end_of_journey.present? } %>
+  </header>
 
-    <%= javascript_include_tag 'application' %>
-    <%= render partial: '/layouts/init-js' %>
+  <aside id="session_validation_message" data-rendertime="<%= Time.now.to_i %>" data-session="<%= session_active_url %>" class="govuk-width-container govuk-main-wrapper">
+  </aside>
+  <aside style="display:none" class="govuk-width-container govuk-main-wrapper" id="session_needs_login">
+    <div class="govuk-body">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
 
-  </body>
+          <h1 class="govuk-heading-xl"><%= t("facilities_management.beta.gateway.index.heading") %></h1>
+
+          <p><%= t('facilities_management.beta.gateway.index.cmp_support_email_html', link: support_email_link(t('facilities_management.beta.gateway.index.cmp_support_aria_label'))) %></p>
+
+          <p>
+            <%= link_to 'Sign in with Cognito', facilities_management_new_user_session_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main style="display:none" id="main-content" class="govuk-width-container govuk-main-wrapper" role="main">
+    <% if @back_path.present? %>
+      <%= render partial: '/layouts/back-link' %>
+    <% end %>
+
+    <%= yield %>
+  </main>
+
+  <footer id="main-footer" class="govuk-footer" role="contentinfo">
+    <%= render partial: '/layouts/footer' %>
+  </footer>
+
+</div>
+
+<%= javascript_include_tag 'application' %>
+<%= render partial: '/layouts/init-js' %>
+
+</body>
 </html>

@@ -1,8 +1,8 @@
 module Base
   class SessionsController < Devise::SessionsController
     skip_forgery_protection
-    before_action :authenticate_user!, except: %i[new create destroy]
-    before_action :authorize_user, except: %i[new create destroy]
+    before_action :authenticate_user!, except: %i[new create destroy session_active]
+    before_action :authorize_user, except: %i[new create destroy session_active]
 
     def new
       @result = Cognito::SignInUser.new(nil, nil, nil)
@@ -19,6 +19,13 @@ module Base
       else
         result_unsuccessful_path
       end
+    end
+
+    def session_active
+      result = signed_in?
+
+      j = { 'status': result }
+      render json: j, status: result ? 200 : 401
     end
 
     def destroy

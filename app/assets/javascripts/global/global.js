@@ -231,7 +231,61 @@ function initStepByStepNav() {
     stepByStepNavigation.start($element)
 }
 
+function currentTime() {
+    let d = new Date();
+    return parseInt(d.getTime() / 1000);
+}
+
+function renderedTime() {
+    let result = 0;
+
+    try {
+        result = parseInt($('#session_validation_message').attr("data-rendertime"));
+    } catch {
+        result = currentTime();
+    }
+
+    return result;
+}
+
+function showContent(){
+    $('#main-content').show();
+    $('#session_validation_message').hide();
+}
+function removeContent(){
+    $('#session_validation_message').hide();
+    $('#session_needs_login').show();
+    $('#main-content').remove();
+}
+function validateSession(url, fnSuccess, fnFail) {
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        data: JSON.stringify("validate"),
+        processData: true,
+        success: function (data, textStatus, jQxhr) {
+            if (data['status'] === true) {
+                fnSuccess();
+            } else {
+                fnFail();
+            }
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            console.log(errorThrown);
+            fnFail();
+        }
+    });
+}
+
 function initCustomFnc() {
+    if (currentTime() - renderedTime() > 5) {
+        validateSession($('#session_validation_message').attr('data-session'), showContent, removeContent);
+    }  else {
+        showContent();
+    }
+
     var filt = $('#ccs-at-results-filters');
     if(filt.length){//call function only if this id is on this page
         initSearchResults(filt);
