@@ -24,5 +24,4 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
   end
 
   WARNINGS = { sent: 'Sent', accepted: 'Accepted, awaiting contract signature', signed: 'Accepted and signed', not_signed: 'Accepted, not signed', declined: 'Declined', expired: 'Not responded' }.freeze
-
 end

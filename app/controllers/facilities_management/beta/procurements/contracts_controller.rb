@@ -2,7 +2,6 @@ module FacilitiesManagement
   module Beta
     module Procurements
       class ContractsController < FacilitiesManagement::Beta::FrameworkController
-
         before_action :set_procurement
         before_action :set_contract
         before_action :set_page_detail
@@ -39,11 +38,11 @@ module FacilitiesManagement
                                                page_details(action_name)[:secondary_text])
           )
         end
-  
+
         def page_details(action)
           @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
         end
-  
+
         def set_continuation_text
           case @contract.aasm_state
           when :awaiting_contract_signature
@@ -52,7 +51,7 @@ module FacilitiesManagement
             "View next supplier's price"
           end
         end
-  
+
         def set_secondary_text
           if @contract.closed? || @contract.aasm_state == :accepted_and_signed
             'Make a copy of your requirements'
@@ -60,7 +59,7 @@ module FacilitiesManagement
             'Close this procurement'
           end
         end
-  
+
         def page_definitions
           @page_definitions ||= {
             default: {
@@ -80,6 +79,7 @@ module FacilitiesManagement
             }
           }.freeze
         end
+        # rubocop:enable Metrics/AbcSize
       end
     end
   end
