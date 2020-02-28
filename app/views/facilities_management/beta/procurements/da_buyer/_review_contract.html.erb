@@ -18,9 +18,9 @@
           <h3 class="govuk-heading-s"><%= t('.attachment_2.heading') %></h3>
           <ul class="govuk-list documents">
             <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
-              <a href="#?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>">
-              <%= link_to t('.attachment_2.statement_of_requirements.title'), facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "prices_spreadsheet"), method: "post", class: 'govuk-link--no-visited-state' %>
-              </a>
+             <a href="<%= facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "prices_spreadsheet") %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
+              <%= t('.attachment_2.statement_of_requirements.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
+            </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.statement_of_requirements.guidance') %></p>
             </li>
             <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
@@ -34,8 +34,8 @@
           <h3 class="govuk-heading-s"><%= t('.attachment_3.heading') %></h3>
           <ul class="govuk-list documents">
             <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
-              <a href="#?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>">
-                <%= link_to t('.attachment_3.price_matrix.title'), facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "matrix_spreadsheet"), method: "post", class: 'govuk-link--no-visited-state' %>
+              <a href="<%= facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "matrix_spreadsheet") %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
+                <%= t('.attachment_3.price_matrix.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
               </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_3.price_matrix.guidance') %></p>
             </li>
