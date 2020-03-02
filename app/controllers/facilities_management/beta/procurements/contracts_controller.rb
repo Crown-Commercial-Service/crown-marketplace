@@ -6,10 +6,7 @@ module FacilitiesManagement
         before_action :set_contract
         before_action :set_page_detail
 
-        def show
-          # TODO: This needs to be replaced with an actual call to a method with the correct date for when the contracts are generated
-          @page_data[:call_off_documents_creation_date] = DateTime.now.in_time_zone('London')
-        end
+        def show; end
 
         def edit; end
 
