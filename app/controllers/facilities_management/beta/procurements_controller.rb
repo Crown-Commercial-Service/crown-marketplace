@@ -171,12 +171,18 @@ module FacilitiesManagement
           create_da_buyer_page_data(@view_da)
         else
           @page_data = {}
+          @precurement_reference = generate_contract_number_further_competition
           @page_data[:model_object] = @procurement
         end
 
         view_name
       end
       # rubocop:enable Metrics/AbcSize
+
+      def generate_contract_number_further_competition
+        time = Time.now.getlocal
+        FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number + " -  #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
+      end
 
       def update_procurement
         assign_procurement_parameters
@@ -900,6 +906,9 @@ module FacilitiesManagement
           },
           further_competition: {
             page_title: 'Further competition',
+            secondary_name: 'change_requirements',
+            secondary_text: 'Return to results',
+            continuation_text: 'Make a copy of your requirements',
             back_url: facilities_management_beta_procurement_results_path(@procurement)
           },
           summary: {
