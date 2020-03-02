@@ -19,4 +19,6 @@ module FacilitiesManagement::Beta::Supplier::SupplierAccountHelper
   end
 
   WARNINGS = { 'received': 'Received contract offer', 'accepted': 'Accepted', 'live': 'Accepted and signed', 'declined': 'Declined', 'not responded': 'Not responded', 'not signed': 'Not signed', 'withdrawn': 'Withdrawn' }.freeze
+
+  SUPPLIER_STATUS = { declined: 'Declined', expired: 'Not responded', not_signed: 'Not signed', withdrawn: 'Withdrawn' }.freeze
 end
