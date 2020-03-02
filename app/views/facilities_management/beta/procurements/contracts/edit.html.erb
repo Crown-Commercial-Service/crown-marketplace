@@ -1,29 +1,3 @@
-<%= govuk_page_content(@page_description, @contract, true) do |pd| %>
-    <%= form_for @contract, url: facilities_management_beta_procurement_contract_path, method: :put do |f| %>
-        <% case params[:name]%>
-        <% when 'withdraw' %>
-            <%= render partial: 'closing_direct_award_offer', :locals=>{:f=>f} %>
-            <div class= 'govuk-!-margin-top-5'>
-                <%= f.submit(value:"Close this procurement", class: 'govuk-!-margin-right-4 govuk-button govuk-button--warning', data: { disable_with: false }, name: :close_procurement) %>
-                <%= link_to(pd.navigation_details.secondary_text, facilities_management_beta_procurement_contract_path(@procurement), role: 'button', class: 'govuk-button govuk-button--secondary') %> <br />
-            </div>
-        <% when 'next_supplier' %>
-            <%= render partial: 'next_supplier', :locals=>{:f=>f} %>
-            <div class= 'govuk-!-margin-top-5'>
-                <%#= link_to("Confirm and send offer to supplier", facilities_management_beta_procurement_contract_sent_index_path(@procurement, contract_id: @procurement.procurement_suppliers.sent.first), role: 'button', class: 'govuk-button govuk-button--secondary') %> <br />
-                <%= f.submit(value:"Confirm and send offer to supplier", class: 'govuk-!-margin-right-4 govuk-button', data: { disable_with: false }, name: :send_contract_to_next_supplier) %>
-                <%= link_to(pd.navigation_details.secondary_text, facilities_management_beta_procurement_contract_path(@procurement), role: 'button', class: 'govuk-button govuk-button--secondary') %> <br />
-                <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
-            </div>
-        <%  %>
-        <% when 'copy' %>
-            <%= render partial: 'create_a_copy' %>
-        <% else %>
-            <%= render partial: 'confirmation_of_signed_contract', :locals=>{:f=>f} %>
-            <div class= 'govuk-!-margin-top-5'>
-                <%= f.submit(value:"Save and continue", class: 'govuk-!-margin-right-4 govuk-button', data: { disable_with: false }, name: :sign_procurement) %>
-                <%= link_to(pd.navigation_details.secondary_text, facilities_management_beta_procurement_contract_path(@procurement), role: 'button', class: 'govuk-button govuk-button--secondary') %> <br />
-            </div>
-        <% end %>
-    <% end %>
-<% end %>
+<h1 class='govuk-heading-xl'>
+    "Are you sure you want to withdraw the offer..." page
+</h1>
