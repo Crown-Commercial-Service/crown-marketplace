@@ -5,19 +5,19 @@
         <%= render partial: 'contract_offer_details' %>
 
         <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-            Requirements
+            <%= t('.requirements') %> 
         </h1>
         <%= render partial: 'procurement_requirements' %>
 
         <% if  @contract.aasm_state == 'accepted' %>
             <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-                Supplier contact details
+                <%= t('.supplier_contact_details') %>
             </h1>
             <%= render partial: 'supplier_contact_details' %>
         <% end %>
 
         <h1 class="govuk-heading-m govuk-!-margin-bottom-2">
-            Call-off contract documents
+            <%= t('.call_off_contract_documents') %>
         </h1>
         <%= render partial: 'call_off_contract_documents' %>
 
