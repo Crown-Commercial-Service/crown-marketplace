@@ -51,8 +51,6 @@ ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata clamav cla
 
 # Change clamav config to use remote server for scanning
 
-RUN chown -R docker:docker /etc/clamav/clamd.conf
-
 RUN echo TCPAddr $CLAMAV_SERVER_ADDRESS >> /etc/clamav/clamd.conf && sudo echo TCPSocket 3310 >> /etc/clamav/clamd.conf
 
 RUN clamd
