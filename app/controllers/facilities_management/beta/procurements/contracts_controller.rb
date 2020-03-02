@@ -11,6 +11,10 @@ module FacilitiesManagement
           @page_data[:call_off_documents_creation_date] = DateTime.now.in_time_zone('London')
         end
 
+        def edit; end
+
+        def update; end
+
         def set_procurement
           @procurement = Procurement.find(params[:procurement_id])
         end
@@ -76,7 +80,8 @@ module FacilitiesManagement
               return_url: facilities_management_beta_procurements_path,
               return_text: 'Return to procurement dashboard',
               secondary_text: set_secondary_text
-            }
+            },
+            edit: {}
           }.freeze
         end
         # rubocop:enable Metrics/AbcSize
