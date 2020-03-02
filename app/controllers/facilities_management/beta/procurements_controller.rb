@@ -143,7 +143,7 @@ module FacilitiesManagement
       # rubocop:disable Metrics/AbcSize
       def da_spreadsheets
         init
-        build_direct_award_report
+        build_direct_award_report_da
 
         uvals = []
         buildings_ids = []
@@ -176,7 +176,7 @@ module FacilitiesManagement
         @start_date = @procurement.initial_call_off_start_date
       end
 
-      def build_direct_award_report
+      def build_direct_award_report_da
         user_email = current_user.email.to_s
 
         cache__calculation_values_for_spreadsheet_flag = true
