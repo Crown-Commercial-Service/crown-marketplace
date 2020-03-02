@@ -2,6 +2,6 @@
   <%= render :partial => 'facilities_management/beta/procurements/further_competition/further_competition_partial', locals: { post: pd } %>
   <p class="govuk-body"><%= link_to "further competition procurement summary download", facilities_management_beta_procurement_further_competition_spreadsheet_path(@procurement.id) %></p>
   <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
-    <%= govuk_continuation_buttons(pd, f) %>
+    <%= govuk_continuation_buttons(pd, f, false) %>
   <% end %>
 <% end %>
