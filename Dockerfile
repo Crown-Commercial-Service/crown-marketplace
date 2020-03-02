@@ -49,14 +49,14 @@ ENV CLAMAV_SERVER_IP=$CLAMAV_SERVER_IP
 
 ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata clamav clamav-daemon
 
+# Update and install base packages
+RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs-current-npm git
+
 # Change clamav config to use remote server for scanning
 
 RUN echo TCPAddr $CLAMAV_SERVER_ADDRESS >> /etc/clamav/clamd.conf && sudo echo TCPSocket 3310 >> /etc/clamav/clamd.conf
 
 RUN clamd
-
-# Update and install base packages
-RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs-current-npm git
 
 # Install yarn to manage Node.js dependencies
 RUN npm install yarn -g
