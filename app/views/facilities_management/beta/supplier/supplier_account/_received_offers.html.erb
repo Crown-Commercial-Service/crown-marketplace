@@ -1,5 +1,5 @@
 <table class="govuk-table">
-    <% if !@page_data[:received_offers].empty? %>
+    <% unless @received_offers.empty? %>
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Contract name</th>
@@ -9,13 +9,13 @@
             </tr>
         </thead>
         <tbody class="govuk-table__body">
-            <% @page_data[:received_offers].each do |received_offer| %>
+            <% @received_offers.each do |received_offer| %>
                 <tr class="govuk-table__row">
                     <!-- TODO: Add the link in the future-->
-                    <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to received_offer[:contract_name], facilities_management_beta_supplier_contract_summary_received_contract_offer_url, class: 'govuk-link govuk-link--no-visited-state' %> </td>
-                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= received_offer[:buyer] %> </td>
-                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= received_offer[:date_offer_expires]&.strftime '%e %B %Y, %l:%M%p' %> </td>
-                    <td class="govuk-table__cell"><strong class="govuk-tag"> <%= received_offer[:status] %> </strong></td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to received_offer.procurement.contract_name, facilities_management_beta_supplier_contract_path(received_offer.id), class: 'govuk-link govuk-link--no-visited-state' %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= received_offer.procurement.user.buyer_detail.organisation_name %> </td>
+                    <td class="govuk-table__cell govuk-!-padding-right-4"> <%= format_date_time received_offer.contract_expiry_date %> </td>
+                    <td class="govuk-table__cell"><strong class="govuk-tag"> ACTION REQUIRED </strong></td>
                 </tr>
             <% end %>
         </tbody>
