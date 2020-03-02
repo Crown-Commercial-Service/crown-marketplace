@@ -14,16 +14,13 @@ module FacilitiesManagement
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
       before_action :build_page_details, only: %i[show edit update destroy results]
-
-      # rubocop:disable Metrics/AbcSize
       def index
         @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
         @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
-        @sent_offers = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SENT_OFFER, is_contract_closed: false).order(date_offer_sent: :asc).sort_by { |search| FacilitiesManagement::Procurement::SENT_OFFER_ORDER.index(search.aasm_state) }
-        @contracts = current_user.procurements.accepted_and_signed.order(contract_start_date: :asc)
-        @closed_contracts = current_user.procurements.where(is_contract_closed: true).order(closed_contract_date: :desc)
+        @sent_offers = sent_offers
+        @contracts = live_contracts
+        @closed_contracts = closed_contracts
       end
-      # rubocop:enable Metrics/AbcSize
 
       def show
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
@@ -77,6 +74,8 @@ module FacilitiesManagement
         change_contract_details && return if params['change_contract_details'].present?
 
         continue_to_review_and_generate && return if params['continue_to_review_and_generate'].present?
+
+        return_to_review_contract && return if params['return_to_review_contract'].present?
 
         continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
 
@@ -141,7 +140,80 @@ module FacilitiesManagement
         @procurement[:route_to_market] = @procurement.aasm_state
       end
 
+      # rubocop:disable Metrics/AbcSize
+      def da_spreadsheets
+        init
+        build_direct_award_report
+
+        uvals = []
+        buildings_ids = []
+        @selected_buildings.each do |building|
+          result = @report.uvals_for_public(building)
+          building_uvals = result[0]
+          uvals.concat building_uvals
+
+          buildings_ids << building.building_id
+        end
+
+        # create deliverable matrix spreadsheet
+        building_ids_with_service_codes2 = buildings_ids.collect do |b|
+          services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
+          { building_id: b.downcase, service_codes: services_per_building }
+        end
+
+        spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
+        spreadsheet2 = spreadsheet_builder.build
+
+        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, @report_results_no_cafmhelp_removed[@supplier_name], uvals
+        render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices' if params[:spreadsheet] == 'prices_spreadsheet'
+        render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix' if params[:spreadsheet] == 'matrix_spreadsheet'
+      end
+
       private
+
+      def init
+        @procurement = current_user.procurements.where(id: params[:procurement_id]).first
+        @start_date = @procurement.initial_call_off_start_date
+      end
+
+      def build_direct_award_report
+        user_email = current_user.email.to_s
+
+        cache__calculation_values_for_spreadsheet_flag = true
+
+        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
+
+        if @procurement
+          @selected_buildings = @procurement.active_procurement_buildings
+        else
+          @selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
+          uvals = @report.uom_values(selected_buildings)
+        end
+
+        rates = CCS::FM::Rate.read_benchmark_rates
+        @rate_card = CCS::FM::RateCard.latest
+
+        @results = {}
+        @report_results = {} if cache__calculation_values_for_spreadsheet_flag
+
+        # get the services including help & cafm for the,contract rate card,worksheet
+        @report_results_no_cafmhelp_removed = {} if cache__calculation_values_for_spreadsheet_flag
+
+        supplier_names = @rate_card.data[:Prices].keys
+        supplier_names.each do |supplier_name|
+          # e.g. dummy_supplier_name = 'Hickle-Schinner'
+          a_supplier_calculation_results = @report_results[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
+          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results, true
+          @results[supplier_name] = @report.direct_award_value
+
+          a_supplier_calculation_results_no_cafmhelp_removed = @report_results_no_cafmhelp_removed[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
+          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results_no_cafmhelp_removed, false
+        end
+
+        sorted_list = @results.sort_by { |_k, v| v }
+        @supplier_name = sorted_list.first[0]
+      end
+      # rubocop:enable Metrics/AbcSize
 
       def init_further_competition
         if params[:procurement_id]
@@ -258,6 +330,11 @@ module FacilitiesManagement
         end
       end
 
+      def return_to_review_contract
+        @procurement.update(da_journey_state: :review)
+        redirect_to facilities_management_beta_procurement_path(@procurement)
+      end
+
       def continue_to_contract_details
         if procurement_valid?
           @procurement.set_to_contract_details
@@ -272,10 +349,16 @@ module FacilitiesManagement
         if procurement_valid?
           @procurement.move_to_next_da_step
           @procurement.save
+          send_contract && return if @procurement.da_journey_state == 'sent'
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
         end
+      end
+
+      def send_contract
+        @procurement.set_state_to_direct_award!
+        redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: @procurement.procurement_suppliers.first.id)
       end
 
       def continue_to_procurement_pensions
@@ -540,6 +623,22 @@ module FacilitiesManagement
         else
           @procurement.procurement_pension_funds.empty?
         end
+      end
+
+      def contracts(state)
+        current_user.procurements.direct_award.map { |procurement| procurement.public_send(state) }&.flatten
+      end
+
+      def sent_offers
+        current_user.procurements.direct_award.map(&:sent_offers)&.flatten&.sort_by { |sent_offer| [sent_offer.offer_sent_date, FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(sent_offer.aasm_state)] }
+      end
+
+      def live_contracts
+        current_user.procurements.direct_award.map(&:live_contracts)&.flatten&.sort_by(&:contract_signed_date)
+      end
+
+      def closed_contracts
+        current_user.procurements.where(aasm_state: ['direct_award', 'closed']).map(&:closed_contracts)&.flatten&.sort_by { |sent_offer| sent_offer.contract_closed_date }&.reverse
       end
 
       def procurement_route_params
@@ -872,6 +971,12 @@ module FacilitiesManagement
             continuation_text: 'Create final contract and send to supplier',
             secondary_text: 'Return to results',
             secondary_name: 'continue_to_results'
+          },
+          sending_the_contract: {
+            page_title: 'Sending the contract',
+            continuation_text: 'Confirm and send contract to supplier',
+            secondary_text: 'Cancel, return to review your contract',
+            secondary_name: 'return_to_review_contract'
           }
         }
       end
