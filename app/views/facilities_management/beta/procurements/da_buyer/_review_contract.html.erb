@@ -1,4 +1,4 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object], false, false) do |pd|  %>
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, true) do |pd|  %>
   <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
       <div class= "govuk-body govuk-!-width-three-quarters">
         <h2 class="govuk-heading-m"><%= t('.documents.heading') %></h2>
