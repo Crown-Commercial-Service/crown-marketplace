@@ -1,28 +1,28 @@
 <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-6">
-    What happens next
+    <%= t('.title') %>
 </h1>
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
 <div class="govuk-body govuk-!-width-three-quarters">
     <%= govuk_details('1. Supplier signs the contract') do %>
         <ul class="govuk-list govuk-list--bullet">
-            <li>the supplier will sign the contract and send it back to you</li>
-            <li>this will happen offline (outside this portal)</li>
-            <li>usually within 5 working days</li>
+            <li><%= t('.supplier_signs_1') %></li>
+            <li><%= t('.supplier_signs_2') %></li>
+            <li><%= t('.supplier_signs_3') %></li>
         </ul>
     <% end %>
     <div class="govuk-!-margin-bottom-4 govuk-!-margin-top-4">
         <%= govuk_details('2. You sign the contract') do %>
             <ul class="govuk-list govuk-list--bullet">
-                <li>you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier</li>
-                <li>this will happen offline (outside this portal)</li>
-                <li>usually within 2 working days</li>
+                <li><%= t('.you_sign_1') %></li>
+                <li><%= t('.you_sign_2') %></li>
+                <li><%= t('.you_sign_3') %></li>
             </ul>
         <% end %>
     </div>
     <%= govuk_details('3. Confirmation of signed contract') do %>
         <ul class="govuk-list govuk-list--bullet">
-            <li>once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the 'effective date', and the term of the contract is calculated forwards from this date</li>
-            <li>you can then click on the link below to confirm that the contract is now signed, and on which date. The procurement dashboard will detail your live contracts, which is useful when it comes to contract management and renewal</li>
+            <li><%= t('.confirmation_1') %></li>
+            <li><%= t('.confirmation_2') %></li>
         </ul>
     <% end %>
 </div>
