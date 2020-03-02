@@ -189,9 +189,10 @@ function cog_forgot_password_reset_form(form){
                     fireErrorSummary(inputs[i][1],'match');
                     fireInlineError(inputs[i][1],'match');
 
+                }else{
+                    form.submit();
                 }
 
-                form.submit();
             }
 
         }
