@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo TCPAddr $CLAMAV_SERVER_ADDRESS >> /etc/clamav/clamd.conf && echo TCPSocket 3310 >> /etc/clamav/clamd.conf
+echo TCPAddr $CLAMAV_SERVER_IP > /etc/clamav/clamd.conf && echo TCPSocket 3310 >> /etc/clamav/clamd.conf
 
 bundle exec rails db:migrate
 
