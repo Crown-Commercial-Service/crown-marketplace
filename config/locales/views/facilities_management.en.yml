@@ -471,6 +471,43 @@ en:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         contracts:
+          contract_offer_details:
+            declined: The supplier declined this contract offer on
+            expired: This contract offer expired on
+            not_signed_1: You confirmed on
+            not_signed_2: that the contract has not been signed.
+            sent: You sent this contract offer to the supplier on
+            sent_accepted: The supplier has accepted the contract offer on
+            sent_no_response: The supplier has not yet responded.
+            signed_confirmed_1: You confirmed on the
+            signed_confirmed_2: that the contract has been signed by both parties.
+            supplier_declined_reason: 'The supplier''s reason for declining was:'
+            withdrawn_reason: 'Your reason for withdrawing this offer was:'
+          contract_summary_foot:
+            close: You can close this procurement by clicking on the 'Close this procurement' button below, it will then be viewable in the closed section of your procurements dashboard. If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. This is a quick way to amend some of your requirements and re-run the results.
+            confirm: Use the ‘confirm if contract signed or not’ button below to confirm whether or not the contract was signed.
+            confirm_and_close: You can still withdraw this contract offer; if you need to, use the 'Close this procurement' button below, which will withdraw the offer from the supplier, and close the procurement.
+            expired: The supplier did not respond within the required timescale, so this has been automatically recorded as declined with 'no response' as the reason.
+            next_steps: Available next steps
+            next_supplier: You can look at the next lowest priced supplier and the option of offering them your contract. Click on the 'View next supplier's price’ button below.
+            or: or
+            reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
+            withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          procurement_requirements:
+            buildings_services: Buildings and services
+            call_off_extensions_1: Optional call-off extension period 1
+            call_off_extensions_2: Optional call-off extension period 2
+            call_off_extensions_3: Optional call-off extension period 3
+            call_off_extensions_4: Optional call-off extension period 4
+            contract_name: Contract name
+            contract_number: Contract number
+            contract_value: Contract value
+            date_of_first_indexation: Date of first indexation
+            framework: Framework, sub-lot
+            framework_details: RM3830, sub-lot 1a
+            initial_call_off_period: Initial call-off period
+            mobilisation_period: Mobilisation period
+            supplier: Supplier
           sent:
             index:
               accepts_header: 1. If the supplier accepts the offer
@@ -489,6 +526,48 @@ en:
               header: Your contract was sent
               what_happens_next: What happens next
               what_happens_next_sub: The supplier has 2 working days (48 hours) to accept or decline your offer.
+          show:
+            call_off_contract_documents: Call-off contract documents
+            requirements: Requirements
+            supplier_contact_details: Supplier contact details
+          supplier_contact_details:
+            title: Supplier contact details
+          whn_awaiting_response:
+            else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
+            if_accepted_header: If the supplier accepts the offer
+            if_accepted_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
+            if_accepted_list_2: the supplier will sign the contract and send it back to you (offline)
+            if_accepted_list_3: you will then sign the contract and send it back to the supplier (offline)
+            if_accepted_list_4: you will confirm on this portal that the contract has been signed by both parties
+            if_declined_header: If the supplier declines the offer
+            if_declined_list_1: "- offer the contract to the next placed supplier (after reviewing their price)"
+            if_declined_list_2: "- switch to a further competition"
+            if_declined_list_3: "- change your requirements"
+            if_declined_list_4: "- stop the process"
+            if_declined_list_header_1: you will be notified that they have declined your offer, and be provided with a reason why
+            if_declined_list_header_2: 'you have the choice to:'
+            title: What happens next
+            two_working_days: The supplier has 2 working days (48 hours) to accept or decline your offer.
+          whn_awaiting_signature:
+            confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the 'effective date', and the term of the contract is calculated forwards from this date
+            confirmation_2: you can then click on the link below to confirm that the contract is now signed, and on which date. The procurement dashboard will detail your live contracts, which is useful when it comes to contract management and renewal
+            supplier_signs_1: the supplier will sign the contract and send it back to you
+            supplier_signs_2: this will happen offline (outside this portal)
+            supplier_signs_3: usually within 5 working days
+            title: What happens next
+            you_sign_1: you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
+            you_sign_2: this will happen offline (outside this portal)
+            you_sign_3: usually within 2 working days
+        contracts_helper:
+          warning_message:
+            accepted: Awaiting your confirmation of signed contract.
+            closed: This contract offer was closed on
+            declined: The supplier declined this offer
+            expired: The supplier did not respond to your contract offer within the required 2 working days (48 hours).
+            not_signed_1: You confirmed on the
+            not_signed_2: that the contract has not been signed
+            sent: This offer was sent to the supplier on
+            signed: You confirmed that the contract period is between
         da_buyer:
           contract_details:
             contract_details_description: Please provide further information that will help us put your contract together.
