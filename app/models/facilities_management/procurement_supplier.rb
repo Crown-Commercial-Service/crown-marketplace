@@ -8,7 +8,7 @@ module FacilitiesManagement
     aasm do
       state :unsent, initial: true
       state :sent, before_enter: %i[assign_contract_number set_date_and_send_email]
-      state :accepted
+      state :accepted, before_enter: %i[set_date_and_send_supplier_response]
       state :signed
       state :not_signed
       state :withdrawn
@@ -75,6 +75,12 @@ module FacilitiesManagement
 
     SENT_OFFER_ORDER = %i[sent declined expired accepted not_signed].freeze
 
+    CLOSED_TO_SUPPLIER = %w[declined expired withdrawn not_signed].freeze
+
+    def contract_expiry_date
+      offer_sent_date + 2.days # This needs to be change later so that it doesnt take in account weekend
+    end
+
     private
 
     def generate_contract_number
@@ -87,11 +93,11 @@ module FacilitiesManagement
 
     def set_date_and_send_email
       self.offer_sent_date = DateTime.now.in_time_zone('London')
-      send_offer_email
+      # send_offer_email
     end
 
-    def contract_expiry_date
-      offer_sent_date + 2.days # This needs to be change later so that it doesnt take in account weekend
+    def set_date_and_send_supplier_response
+      self.supplier_response_date = DateTime.now.in_time_zone('London')
     end
 
     def format_date_time_numeric
@@ -100,7 +106,7 @@ module FacilitiesManagement
 
     def send_offer_email
       template_name = 'DA_offer_sent'
-      email_to = FacilitiesManagement::SupplierDetail.find_by(name: supplier.data['supplier_name']).contact_email
+      email_to = supplier.data['contact_email']
       gov_notify_template_arg = {
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
