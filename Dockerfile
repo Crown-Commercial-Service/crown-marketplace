@@ -51,13 +51,11 @@ ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata clamav cla
 
 # Change clamav config to use remote server for scanning
 
-RUN systemctl stop clamav-freshclam.service && systemctl stop clamav-daemon.service
-
 RUN chown -R $USER:$USER /etc/clamav/clamd.conf
 
 RUN echo TCPAddr $CLAMAV_SERVER_ADDRESS >> /etc/clamav/clamd.conf && sudo echo TCPSocket 3310 >> /etc/clamav/clamd.conf
 
-RUN systemctl start clamav-daemon.service
+RUN clamd
 
 # Update and install base packages
 RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs-current-npm git
