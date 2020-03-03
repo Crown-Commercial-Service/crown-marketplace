@@ -538,10 +538,13 @@ en:
             contract_number: Contract number
             contract_value: Contract value
             date_of_first_indexation: Date of first indexation
+            direct_award: Direct award
             framework: Framework, sub-lot
             framework_details: RM3830, sub-lot 1a
             initial_call_off_period: Initial call-off period
             mobilisation_period: Mobilisation period
+            route_to_market: Route to market
+          procurement_requirements_head:
             supplier: Supplier
           sent:
             index:
@@ -930,6 +933,33 @@ en:
           password: Password
           sign_in_header: Sign in to your account
       supplier:
+        contracts:
+          accepted_contract_offer:
+            list01_1: you will sign the contract first, in the order form, and share with the buyer
+            list01_2: this would usually take place within 5 working days
+            list02_1: the buyer will then complete the effective date (on page 4 of the order form - this is the date the contract is fully signed), sign the contract, and share it back with you
+            list02_2: this would usually take place within 2 working days
+            list03_1: the buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date
+            list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
+            list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
+            what_happens_next: What happens next
+          contract_offer_details:
+            buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
+          contract_summary_foot:
+            respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
+          procurement_requirements_head:
+            buyer: Buyer
+          received_contract_offer:
+            list01_1: you should review the offer to see if you wish to accept the contract
+            list01_2: please ensure you download and review all the contract documents
+            list02_1: you are required to accept or decline this offer within 48 hours (Monday to Friday only, excluding weekends and bank holidays)
+            list02_2: the deadline for your response is shown at the top of this page
+            list03_1: if you do not respond within 48 hours it will be recorded as 'no response' and the offer will be automatically withrawn allowing the customer the option of offering the contract to the next lowest priced supplier
+            what_happens_next: What happens next
+          show:
+            buyer_contact_details: Buyer contact details
+            call_off_contract_documents: Call off contract documents
+            requirements: Requirements
         sessions:
           new:
             email_address: Email address
