@@ -1,0 +1,44 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+    <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
+        <%= govuk_grouped_field(f, t('.description') ) do |ff, attr| %>
+            <div class="govuk-radios">
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="contract-signed-yes" name="contract-signed-status" type="radio" value="no" <%= 'checked' if @page_data[:checked].to_s == 'yes' %>/>
+                    <label class="govuk-label govuk-radios__label" for="contract-signed-yes">
+                        Yes
+                    </label>
+                </div>
+                <div id="contract-signed-yes-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-margin-bottom-2 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:yes_is_used]%>">
+                    <span>
+                        <%= t('.contract_start_date'), class: 'govuk-body ccs-font-weight-semi-bold' %>
+                    </span>
+                    <span>
+                        <%= t('.contract_start_date_caption'), class: 'govuk-hint' %>
+                    </span>
+                    <%= ff.gov_uk_date_field @contract.contract_start_date, legend_options: { page_heading: false, visually_hidden: true } %>
+                    
+                    <span>
+                        <%= t(.'contract_end_date'), class: 'govuk-body ccs-font-weight-semi-bold' %>
+                    </span>
+                    <span class="govuk-hint">
+                        <%= t('.contract_end_date_caption'), class: 'govuk-hint' %>
+                    </span>
+                    <%= ff.gov_uk_date_field @contract.contract_end_date, legend_options: { page_heading: false, visually_hidden: true } %>
+                </div>
+    
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="contract-signed-no" name="contract-signed-status" type="radio" value="no" <%= 'checked' if @page_data[:checked].to_s == 'no' %>/>
+                    <label class="govuk-label govuk-radios__label" for="contract-signed-no">
+                        No
+                    </label>
+                </div>
+                <div id="contract-signed-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:no_is_used]%>" data-module="character-count" data-maxlength="100">
+                    <%= govuk_label(ff, ff.object, @contract.aasm_state = 'not_signed', @page_data[:label_text]) %>
+                    <%= govuk_text_area_input(ff, @contract.aasm_state = 'not_signed', true, ['rows', 10], ['maxlength', 100]) %>
+                </div>
+    
+            </div>
+        <% end %>
+        <%= govuk_continuation_buttons(pd, f, true, false) %>
+    <% end %>
+<% end %>

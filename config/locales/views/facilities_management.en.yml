@@ -471,6 +471,13 @@ en:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         contracts:
+          confirmation_of_signed_contract:
+            contract_end_date: Enter contract end date
+            contract_end_date_caption: The contract end date should be the same as the end of your initial call-off period. For example, 01 11 2030.
+            contract_start_date: Enter contract start date
+            contract_start_date_caption: The contract start date is the 'effective date' - this is the date the final party signed the contract. For example, 01 11 2030.
+            description: Please confirm if both parties have signed and <br /> exchanged the contract
+            title: Confirmation of signed contract
           contract_offer_details:
             declined: The supplier declined this contract offer on
             expired: This contract offer expired on
