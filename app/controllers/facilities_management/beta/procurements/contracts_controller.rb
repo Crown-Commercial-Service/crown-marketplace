@@ -48,15 +48,15 @@ module FacilitiesManagement
 
         def set_continuation_text
           case @contract.aasm_state
-          when :awaiting_contract_signature
+          when 'accepted'
             'Confirm if contract signed or not'
-          when :accepted_not_signed, :supplier_declined, :no_supplier_response
+          when 'not_signed', 'declined', 'expired'
             "View next supplier's price"
           end
         end
 
         def set_secondary_text
-          if @contract.closed? || @contract.aasm_state == :accepted_and_signed
+          if @contract.closed? || @contract.aasm_state == 'signed'
             'Make a copy of your requirements'
           else
             'Close this procurement'
