@@ -66,21 +66,22 @@ module FacilitiesManagement
         def page_definitions
           @page_definitions ||= {
             default: {
-              back_text: 'Back',
-              return_text: 'Return to procurement dashboard',
-            },
-            show: {
-              back_url: facilities_management_beta_procurements_path,
               back_label: 'Back',
               back_text: 'Back',
+              back_url: facilities_management_beta_procurements_path,
+              return_text: 'Return to procurement dashboard',
+              return_url: facilities_management_beta_procurements_path,
+            },
+            show: {
               page_title: 'Contract summary',
               caption1: @procurement.contract_name,
               continuation_text: set_continuation_text,
-              return_url: facilities_management_beta_procurements_path,
               return_text: 'Return to procurement dashboard',
               secondary_text: set_secondary_text
             },
-            edit: {}
+            edit: {
+              continuation_text: 'Save and continue',
+            }
           }.freeze
         end
         # rubocop:enable Metrics/AbcSize
