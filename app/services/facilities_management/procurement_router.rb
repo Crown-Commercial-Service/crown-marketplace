@@ -38,16 +38,6 @@ class FacilitiesManagement::ProcurementRouter
     'review_and_generate': 'review_and_generate_documents',
     'review': 'review_contract',
     'sending': 'sending_the_contract',
-    'sent_awaiting_response': 'sent_awaiting_response',
-    'sent_offer_awaiting_response': 'sent_offer_awaiting_response',
-    'withdraw': 'withdraw',
-    'accept': 'accept',
-    'accepted_signed': 'accepted_signed',
-    'accepted_not_signed': 'accepted_not_signed',
-    'declined': 'declined',
-    'no_response': 'no_response',
-    'confirm_signed': 'confirmed_signed',
-    'closed': 'closed',
     'pension_funds': 'pension_funds'
   }.freeze
 
