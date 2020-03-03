@@ -199,6 +199,7 @@ function cog_forgot_password_reset_form(form){
         var confirmationCodeValue = $("#confirmation-code").val()
         removeErrorSummary("confirmation-code");//clean up ...
         removeInlineError("confirmation-code", form);
+        removeInlineError("confirmation_code-error", form);
 
         if (confirmationCodeValue === ''){
             e.preventDefault();//stop the form.submit()
