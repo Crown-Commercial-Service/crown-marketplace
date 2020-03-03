@@ -196,17 +196,7 @@ module CcsPatterns
           secondary_text: 'Close this procurement',
           return_text: 'Return to procurement dashboard',
           return_link: '#'
-        },
-        confirmation_of_signed_contract: {
-          page_title: 'Confirmation of signed contract',
-          back_text: 'Back',
-          continuation_text: "View next supplier's price",
-          caption1: 'Building factilities',
-          secondary_text: 'Close this procurement',
-          return_text: 'Return to procurement dashboard',
-          return_link: '#'
         }
-
       }.freeze
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
