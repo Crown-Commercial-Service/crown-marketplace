@@ -140,21 +140,13 @@ Rails.application.routes.draw do
       get '/start', to: 'journey#start', as: 'journey_start'
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
-      get '/direct-award/sending-the-contract', to: 'direct_award_contract#sending_the_contract'
-      get '/direct-award/review-and-generate-documents', to: 'direct_award_contract#review_and_generate_documents'
-      get '/direct-award/awaiting-response', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/awaiting-signature', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/accepted-signed', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/not-signed', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/declined', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/no-response', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/closed-1', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/closed-2', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/closed-3', to: 'procurement_direct_award_contract#show'
-      get '/direct-award/closed-4', to: 'procurement_direct_award_contract#show'
       resources :procurements do
         get 'results'
         get 'further_competition_spreadsheet'
+        post 'da_spreadsheets'
+        resources :contracts, only: %i[show edit], controller: 'procurements/contracts' do
+          resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
+        end
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
@@ -167,13 +159,7 @@ Rails.application.routes.draw do
         get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
         get 'offer-accepted', to: 'offer#accepted'
         get 'supplier-account-dashboard', to: 'supplier_account#index'
-        get 'contract-summary/received-contract-offer', to: 'supplier_account#show'
-        get 'contract-summary/accepted-contract-offer', to: 'supplier_account#show'
-        get 'contract-summary/declined-offer', to: 'supplier_account#show'
-        get 'contract-summary/live-contract', to: 'supplier_account#show'
-        get 'contract-summary/not-responded', to: 'supplier_account#show'
-        get 'contract-summary/not-signed', to: 'supplier_account#show'
-        get 'contract-summary/contract-withdrawn', to: 'supplier_account#show'
+        resources :contracts, only: %i[show edit], controller: 'contracts'
       end
     end
 

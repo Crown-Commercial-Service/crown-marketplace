@@ -11,6 +11,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     it { is_expected.to have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
     it { is_expected.to have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
     it { is_expected.to have_one(:invoice_contact_detail).class_name('FacilitiesManagement::ProcurementInvoiceContactDetail') }
+    it { is_expected.to validate_content_type_of(:security_policy_document_file).allowing('application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') }
+    it { is_expected.to validate_content_type_of(:security_policy_document_file).rejecting('text/plain', 'text/xml', 'image/png') }
   end
 
   describe '#name' do
@@ -447,8 +449,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   describe '#save_eligible_suppliers_and_set_state' do
     let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
-    let(:da_value_test) { 865.2478374540002 }
+    let(:da_value_test)  { 865.2478374540002 }
     let(:da_value_test1) { 1517.20280381278 }
+    let(:da_value_test2) { 347.60116658878 }
+    let(:da_value_test3) { 1292.48276446867 }
     let(:obj) { double }
 
     before do
@@ -491,6 +495,43 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'saves lot_number' do
         procurement.save_eligible_suppliers_and_set_state
         expect(procurement.lot_number).not_to be_nil
+      end
+    end
+
+    describe '#offer_to_next_supplier' do
+      before do
+        allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test2], [:test1, da_value_test], [:test2, da_value_test3], [:test3, da_value_test1]])
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_offer_email)
+        # rubocop:enable RSpec/AnyInstance
+        procurement.save_eligible_suppliers_and_set_state
+      end
+
+      context 'when all contracts are unsent' do
+        it 'will return true and the first contract will be sent' do
+          expect(procurement.offer_to_next_supplier).to be true
+          procurement.reload
+          expect(procurement.procurement_suppliers.first.aasm_state).to eq 'sent'
+        end
+      end
+
+      context 'when some contracts are unsent' do
+        it 'will return true and the next contract will be sent' do
+          procurement.offer_to_next_supplier
+          expect(procurement.offer_to_next_supplier).to be true
+          procurement.reload
+          expect(procurement.procurement_suppliers[1].aasm_state).to eq 'sent'
+        end
+      end
+
+      context 'when no contracts are unsent' do
+        it 'will return false and no contract states will be changed' do
+          4.times { procurement.offer_to_next_supplier }
+          expect(procurement.offer_to_next_supplier).to be false
+          procurement.reload
+          closed_contracts = procurement.procurement_suppliers.map(&:aasm_state)
+          expect(closed_contracts.all?('sent')).to eq true
+        end
       end
     end
   end
