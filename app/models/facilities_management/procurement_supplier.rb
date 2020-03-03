@@ -93,7 +93,7 @@ module FacilitiesManagement
 
     def set_date_and_send_email
       self.offer_sent_date = DateTime.now.in_time_zone('London')
-      # send_offer_email
+      send_offer_email
     end
 
     def set_date_and_send_supplier_response
@@ -107,11 +107,19 @@ module FacilitiesManagement
     def send_offer_email
       template_name = 'DA_offer_sent'
       email_to = supplier.data['contact_email']
+
+      host = case ENV['RAILS_ENV']
+             when 'production'
+               'https://cmp.cmpdev.crowncommercial.gov.uk'
+             when 'development'
+               'localhost:3000'
+             end
+
       gov_notify_template_arg = {
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-expiry': format_date_time_numeric,
-        'da-offer-1-link': 'www.google.com', # revist later when supplier is updated
+        'da-offer-1-link': host + '/facilities-management/beta/supplier/contracts/' + id,
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
         'da-offer-1-reference': contract_number
       }.to_json
