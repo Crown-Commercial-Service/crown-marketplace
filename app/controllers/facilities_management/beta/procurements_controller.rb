@@ -17,7 +17,7 @@ module FacilitiesManagement
       def index
         @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
         @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
-        @sent_offers = sent_offers
+        @sent_offers = sent_offers 
         @contracts = live_contracts
         @closed_contracts = closed_contracts
       end
