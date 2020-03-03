@@ -1,0 +1,9 @@
+<hr class="govuk-section-break govuk-section-break--m"/>
+
+<% if @contract.aasm_state == 'sent' %>
+    <div class ="govuk-body govuk-!-width-three-quarters">
+        <strong>
+             <%= t('.respond_to_offer') %> 
+        </strong>
+    </div>
+<% end %>
