@@ -41,9 +41,13 @@ ARG APP_RUN_STATIC_TASK
 LABEL app_run_static_task=$APP_RUN_STATIC_TASK
 ENV APP_RUN_STATIC_TASK=$APP_RUN_STATIC_TASK
 
+ARG CLAMAV_SERVER_IP
+LABEL clam_av_server_ip=$CLAMAV_SERVER_IP
+ENV CLAMAV_SERVER_IP=$CLAMAV_SERVER_IP
+
 ##_PARAMETER_STORE_MARKER_##
 
-ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata
+ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata clamav clamav-daemon
 
 # Update and install base packages
 RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs-current-npm git
