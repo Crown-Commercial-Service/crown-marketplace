@@ -246,6 +246,7 @@ en:
               blank: Enter a pension fund name
               inclusion: Enter a pension fund name
               required: Enter a pension fund name
+              taken: Enter a unique pension fund name, duplication is not allowed
             percentage:
               blank: Enter a percentage of pensionable pay
               greater_than_or_equal_to: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
