@@ -206,7 +206,7 @@ module CcsPatterns
           return_text: 'Return to procurement dashboard',
           return_link: '#'
         }
-        
+
       }.freeze
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

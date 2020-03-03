@@ -21,8 +21,8 @@
         </h1>
         <%= render partial: 'call_off_contract_documents' %>
 
-        <%= render partial: 'whn_awaiting_response' if  @contract.aasm_state == 'sent' %>
-        <%= render partial: 'whn_awaiting_signature' if  @contract.aasm_state == 'accepted' %>
+        <%= render partial: '_awaiting_response' if  @contract.aasm_state == 'sent' %>
+        <%= render partial: '_awaiting_signature' if  @contract.aasm_state == 'accepted' %>
 
         <%= render partial: 'contract_summary_foot' %>
         <% unless @contract.closed? %>
