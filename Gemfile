@@ -107,6 +107,8 @@ gem 'date_validator'
 # for clamav
 gem 'ratonvirus'
 gem 'ratonvirus-clamby'
+# for active storage validation
+gem 'active_storage_validations'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify

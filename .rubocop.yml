@@ -139,4 +139,3 @@ Metrics/ModuleLength:
     Exclude:
         - 'spec/models/**/*'
         - 'spec/controllers/**/*'
-
