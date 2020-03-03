@@ -1,14 +1,3 @@
-<div class="govuk-!-font-size-19">
-    <table class="govuk-table govuk-!-width-three-quarters">
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell" width="45%"></th>
-                <td class="govuk-table__cell" width="55%"></td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.supplier') %></th>
-                <td class="govuk-table__cell"><%= @contract.supplier.data['supplier_name'] %></td>
-            </tr>
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header"><%= t('.contract_name') %></th>
                 <td class="govuk-table__cell"><%= @procurement.contract_name %></td>
@@ -23,6 +12,10 @@
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header"><%= t('.framework') %></th>
                 <td class="govuk-table__cell"> <%= t('.framework_details')%> </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__cell govuk-table__header"><%= t('.route_to_market') %></th>
+                <td class="govuk-table__cell"> <%= t('.direct_award')%> </td>
             </tr>
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header"><%= t('.initial_call_off_period') %></th>
