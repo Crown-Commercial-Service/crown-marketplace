@@ -22,8 +22,7 @@ RSpec.describe FMCalculator::Calculator do
       
       csv_table.each do |row|
         method_to_call = row['expectation_name']
-        puts "Test #{row['test_name']}: #{method_to_call}"
-        
+
         calculator = Object.const_get("FMCalculator::Calculator").method('new').call(
           row['contract_length_years'].to_i, row['service_ref'], row['uom_vol'].to_i, row['occupants'].to_i, row['tupe_flag'] == 'true', row['london_flag'], row['cafm_flag'], row['helpdesk_flag'], rates
         )
@@ -42,8 +41,6 @@ RSpec.describe FMCalculator::Calculator do
         rates = fixture['rates'] || @rates
         
         test_data.each do |test|
-          puts test['test_name']
-          
           calculator = Object.const_get("FMCalculator::Calculator").method('new').call(
             test['contract_length_years'].to_i, test['service_ref'], test['uom_vol'].to_i, test['occupants'].to_i, test['tupe_flag'] == 'true', test['london_flag'], test['cafm_flag'], test['helpdesk_flag'], rates
           )
@@ -71,7 +68,6 @@ RSpec.describe FMCalculator::Calculator do
           end
           
           expect(json_data.count).to eq(csv_table)
-          puts json_data
         end
       end
       
@@ -139,7 +135,6 @@ RSpec.describe FMCalculator::Calculator do
           )
           
           expect(json_data.count).to eq(csv_input.count)
-          puts json_data
         end
       end
       
