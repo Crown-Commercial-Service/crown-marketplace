@@ -7,6 +7,7 @@
         <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
             <%= t('.requirements') %> 
         </h1>
+        <%= render partial: 'procurement_requirements_head' %>
         <%= render partial: 'procurement_requirements' %>
 
         <% if  @contract.aasm_state == 'accepted' %>
