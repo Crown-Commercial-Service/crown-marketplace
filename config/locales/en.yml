@@ -69,6 +69,7 @@ en:
             password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+          user_not_found: Please check the information you have entered
         cognito/confirm_sign_up:
           attributes:
             confirmation_code:
