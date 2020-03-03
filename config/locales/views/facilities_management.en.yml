@@ -142,6 +142,8 @@ en:
             security_policy_document_file:
               antivirus_virus_detected: The selected file contains a virus
               blank: The selected file is empty
+              content_type_invalid: The selected file must be a DOC, DOCX or PDF
+              file_size_out_of_range: The selected file must be smaller than 10MB
             security_policy_document_name:
               blank: Enter a security policy document name
             security_policy_document_required:

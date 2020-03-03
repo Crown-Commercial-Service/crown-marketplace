@@ -46,6 +46,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_storage_validations (0.8.7)
+      rails (>= 5.2.0)
     activejob (5.2.3)
       activesupport (= 5.2.3)
       globalid (>= 0.3.6)
@@ -499,6 +501,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (~> 5.0)
+  active_storage_validations
   activerecord-import (~> 0.15.0)
   activerecord-postgis-adapter
   aws-sdk-cognitoidentityprovider (~> 1.23.0)

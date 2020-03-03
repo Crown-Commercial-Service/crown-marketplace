@@ -11,6 +11,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     it { is_expected.to have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
     it { is_expected.to have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
     it { is_expected.to have_one(:invoice_contact_detail).class_name('FacilitiesManagement::ProcurementInvoiceContactDetail') }
+    it { is_expected.to validate_content_type_of(:security_policy_document_file).allowing('application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') }
+    it { is_expected.to validate_content_type_of(:security_policy_document_file).rejecting('text/plain', 'text/xml', 'image/png') }
   end
 
   describe '#name' do
