@@ -12,6 +12,8 @@ module FacilitiesManagement
 
         def update; end
 
+        private
+
         def set_procurement
           @procurement = Procurement.find(params[:procurement_id])
         end
