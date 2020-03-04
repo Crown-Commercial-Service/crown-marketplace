@@ -161,6 +161,9 @@ Rails.application.routes.draw do
         get 'supplier-account-dashboard', to: 'supplier_account#index'
         resources :contracts, only: %i[show edit], controller: 'contracts'
       end
+      namespace :admin do
+        get 'supplier-rates', to: 'supplier_rates#index'
+      end
     end
 
     get '/', to: 'home#index'
