@@ -1,8 +1,8 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object], true) do |pd|%>
-    <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
+<%= govuk_page_content(@page_description, @contract) do |pd|%>
+    <%=form_for @contract.aasm_state = 'withdraw', url: facilities_management_beta_procurements_path do |f|%>
         <div class="govuk-!-width-three-quarters">
             <h1 class="govuk-heading govuk-heading-m govuk-!-margin-bottom-5">
-                <%= t('.are_you_sure_1') %> ‘<%= @contract.name %>’ (<%= @contract.contract_number %>) <%= t('.are_you_sure_2') %>
+                <%= t('.are_you_sure_1') %> ‘<%= @procurement.contract_name %>’ (<%= @contract.contract_number %>) <%= t('.are_you_sure_2') %>
             </h1>
             <div class="govuk-body govuk-!-margin-bottom-5">
                 <%= t('.once_closed') %>
