@@ -589,6 +589,12 @@ en:
             call_off_contract_documents: Call-off contract documents
             requirements: Requirements
             supplier_contact_details: Supplier contact details
+          withdrawing_offer:
+            are_you_sure_1: Are you sure you wish to close the
+            are_you_sure_2: procurement?
+            closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. 
+            once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
+            reason: Please provide a reason for closing this procurement
         contracts_helper:
           warning_message:
             accepted: Awaiting your confirmation of signed contract.
