@@ -24,7 +24,7 @@
         <%= render partial: 'facilities_management/beta/procurements/contracts/call_off_contract_documents' %>
     
         <%= render partial: 'received_contract_offer' if @contract.aasm_state == 'sent' %>
-        <%= render partial: 'accepted_contract_offer' if @contract.aasm_state == 'accpeted' %>
+        <%= render partial: 'accepted_contract_offer' if @contract.aasm_state == 'accepted' %>
     
         <%= render partial: 'contract_summary_foot' %>
 
