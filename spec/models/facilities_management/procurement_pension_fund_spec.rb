@@ -31,7 +31,7 @@ RSpec.describe FacilitiesManagement::ProcurementPensionFund, type: :model do
       end
 
       context 'when the name is not unique' do
-        let(:pension_fund_1) { create(:facilities_management_procurement_pension_fund, procurement: create(:facilities_management_procurement)) }
+        let(:pension_fund_1) { create(:facilities_management_procurement_pension_fund, name: 'apPle', procurement: create(:facilities_management_procurement)) }
         let(:pension_fund_2) { create(:facilities_management_procurement_pension_fund, procurement: pension_fund_1.procurement) }
 
         it 'expected to be valid' do
@@ -41,6 +41,11 @@ RSpec.describe FacilitiesManagement::ProcurementPensionFund, type: :model do
 
         it 'expected to not be valid' do
           pension_fund_2.name = pension_fund_1.name
+          expect(pension_fund_2.valid?(:name)).to eq false
+        end
+
+        it 'expected to not be valid for case sensitive names' do
+          pension_fund_2.name = pension_fund_1.name.upcase
           expect(pension_fund_2.valid?(:name)).to eq false
         end
       end
