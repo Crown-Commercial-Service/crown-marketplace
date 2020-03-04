@@ -1,0 +1,23 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], true) do |pd|%>
+    <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
+        <div class="govuk-!-width-three-quarters">
+            <h1 class="govuk-heading govuk-heading-m govuk-!-margin-bottom-5">
+                <%= t('.are_you_sure_1') %> ‘<%= @contract.name %>’ (<%= @contract.contract_number %>) <%= t('.are_you_sure_2') %>
+            </h1>
+            <div class="govuk-body govuk-!-margin-bottom-5">
+                <%= t('.once_closed') %>
+            </div>
+            <div id="contract-withdrawn-reason" class='govuk-!-margin-bottom-5' data-module="character-count" data-maxlength="500">
+                <h1 class="govuk-heading govuk-heading-s">
+                    <%= t('.reason') %>
+                </h1>
+                <%= govuk_text_area_input(f, @contract.reason_for_closing, true, ['rows', 10], ['maxlength', 500], [:class, 'govuk-!-margin-bottom-2']) %>
+            </div>
+            <div class="govuk-body">
+                <%= t('.closed_message') %>   
+            </div>
+            <%= govuk_button(f, pd.navigation_details.primary_text, options = { submit: true, button: :warning, class: 'govuk-!-margin-right-4'}) %>
+            <%= govuk_button(f, pd.navigation_details.secondary_text, options = { submit: true, button: :secondary }) %>
+        </div>
+    <% end %>
+<% end %>
