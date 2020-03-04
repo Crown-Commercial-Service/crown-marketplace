@@ -550,10 +550,10 @@ en:
             reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
             withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
           procurement_closed:
-            title: Your procurement has been closed
             closed_1: The
             closed_2: procurement has been closed.
             description: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+            title: Your procurement has been closed
           procurement_requirements:
             buildings_services: Buildings and services
             call_off_extensions_1: Optional call-off extension period 1
@@ -597,7 +597,7 @@ en:
           withdrawing_offer:
             are_you_sure_1: Are you sure you wish to close the
             are_you_sure_2: procurement?
-            closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. 
+            closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
             once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
             reason: Please provide a reason for closing this procurement
         contracts_helper:
