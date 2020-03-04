@@ -1,6 +1,6 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
-    <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
-        <%= govuk_grouped_field(f, t('.description'), @contract.aasm_state = 'accepted' ) do |ff, attr| %>
+<%= govuk_page_content(@page_description, @contract) do |pd|%>
+    <%=form_for @contract.aasm_state = 'sign', url: facilities_management_beta_procurements_path do |f|%>
+        <%= govuk_grouped_field(f, t('.description'), @contract.aasm_state = 'signed' ) do |ff, attr| %>
             <div class="govuk-radios">
                 <div class="govuk-radios__item">
                     <input class="govuk-radios__input" id="contract-signed-yes" name="contract-signed-status" type="radio" value="no" <%= 'checked' if @page_data[:checked].to_s == 'yes' %>/>
