@@ -81,8 +81,10 @@ module FacilitiesManagement
         def set_secondary_text
           if @contract.closed? || @contract.aasm_state == 'signed'
             'Make a copy of your requirements'
-          else
+          elsif @contract.aasm_state == 'withdraw'
             'Close this procurement'
+          else
+            'Save and continue'
           end
         end
 
