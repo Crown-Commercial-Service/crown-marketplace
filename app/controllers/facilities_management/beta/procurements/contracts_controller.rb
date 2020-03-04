@@ -48,15 +48,15 @@ module FacilitiesManagement
 
         def set_continuation_text
           case @contract.aasm_state
-          when :awaiting_contract_signature
+          when 'accepted'
             'Confirm if contract signed or not'
-          when :accepted_not_signed, :supplier_declined, :no_supplier_response
+          when 'not_signed', 'declined', 'expired'
             "View next supplier's price"
           end
         end
 
         def set_secondary_text
-          if @contract.closed? || @contract.aasm_state == :accepted_and_signed
+          if @contract.closed? || @contract.aasm_state == 'signed'
             'Make a copy of your requirements'
           else
             'Close this procurement'
@@ -66,21 +66,22 @@ module FacilitiesManagement
         def page_definitions
           @page_definitions ||= {
             default: {
-              back_text: 'Back',
-              return_text: 'Return to procurement dashboard',
-            },
-            show: {
-              back_url: facilities_management_beta_procurements_path,
               back_label: 'Back',
               back_text: 'Back',
+              back_url: facilities_management_beta_procurements_path,
+              return_text: 'Return to procurement dashboard',
+              return_url: facilities_management_beta_procurements_path,
+            },
+            show: {
               page_title: 'Contract summary',
               caption1: @procurement.contract_name,
               continuation_text: set_continuation_text,
-              return_url: facilities_management_beta_procurements_path,
               return_text: 'Return to procurement dashboard',
               secondary_text: set_secondary_text
             },
-            edit: {}
+            edit: {
+              continuation_text: 'Save and continue',
+            }
           }.freeze
         end
         # rubocop:enable Metrics/AbcSize

@@ -1,4 +1,43 @@
-<h1 class='govuk-heading-l'>
-    This is the contract summary page for <br/>
-    '<%= @contract.procurement.contract_name %>'
-</h1>
+<%= govuk_page_content(@page_description, @contract) do |pd| %>
+    <!-- This needs to be made correct for the final page -->
+    <%= form_for @contract, url: facilities_management_beta_procurements_path do |f| %>
+
+        <%= render partial: 'contract_summary_head' %>
+        
+        <%= render partial: 'contract_offer_details' %>
+        
+        <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+            <%= t('.requirements') %> 
+        </h1>
+        <div class="govuk-!-font-size-19">
+        <%= render partial: 'procurement_requirements_head' %>
+        <%= render partial: 'facilities_management/beta/procurements/contracts/procurement_requirements' %>
+        
+        <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+                <%= t('.buyer_contact_details') %>
+        </h1>
+        <%= render partial: 'buyer_contact_details' %>
+        
+        <h1 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <%= t('.call_off_contract_documents') %>
+        </h1>
+        <%= render partial: 'facilities_management/beta/procurements/contracts/call_off_contract_documents' %>
+    
+        <%= render partial: 'received_contract_offer' if @contract.aasm_state == 'sent' %>
+        <%= render partial: 'accepted_contract_offer' if @contract.aasm_state == 'accepted' %>
+    
+        <%= render partial: 'contract_summary_foot' %>
+
+        <% case @contract.aasm_state %>
+        <% when 'sent' %>
+            <div class='govuk-!-margin-top-5'>
+                <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_supplier_contract_path(@contract.id), role: 'button', class: 'govuk-link govuk-caption-m govuk-button') %> <br/>
+                <%= link_to(pd.navigation_details.return_text, @page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+            </div>
+        <% else %>
+            <div class='govuk-!-margin-top-5'>
+                <%= link_to(pd.navigation_details.secondary_text, @page_description.navigation_details.secondary_url, role: 'button', class: 'govuk-link govuk-caption-m govuk-button govuk-button--secondary') %>
+            </div>
+        <% end %>
+    <% end %>
+<% end %>

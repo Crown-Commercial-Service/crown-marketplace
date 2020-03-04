@@ -7,6 +7,7 @@
         <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
             <%= t('.requirements') %> 
         </h1>
+        <%= render partial: 'procurement_requirements_head' %>
         <%= render partial: 'procurement_requirements' %>
 
         <% if  @contract.aasm_state == 'accepted' %>
@@ -21,8 +22,8 @@
         </h1>
         <%= render partial: 'call_off_contract_documents' %>
 
-        <%= render partial: 'whn_awaiting_response' if  @contract.aasm_state == 'sent' %>
-        <%= render partial: 'whn_awaiting_signature' if  @contract.aasm_state == 'accepted' %>
+        <%= render partial: 'awaiting_response' if  @contract.aasm_state == 'sent' %>
+        <%= render partial: 'awaiting_signature' if  @contract.aasm_state == 'accepted' %>
 
         <%= render partial: 'contract_summary_foot' %>
         <% unless @contract.closed? %>
@@ -35,7 +36,11 @@
             <% when 'signed' %>
                 <%= govuk_continuation_buttons(pd, f, true, true, false) %>
             <% else %>
-                <%= govuk_continuation_buttons(pd, f, true, true, true, true) %>
+                <div class= 'govuk-!-margin-top-5'>
+                    <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'sign'), role: 'button', class: 'govuk-button govuk-!-margin-right-4') %>
+                    <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'withdraw'), role: 'button', class: 'govuk-button govuk-button--warning') %> <br />
+                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+                </div>
             <% end %>
         <% else %>
             <%= govuk_continuation_buttons(pd, f, true, true, false) %>

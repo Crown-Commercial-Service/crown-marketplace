@@ -164,7 +164,6 @@ function cog_forgot_password_reset_form(form){
                 removeInlineError(inputs[i][1], form);
 
                 if(inputs[i][1] == pass01){//run on the first/main password input
-
                     firstPassword = inputs[i][0];
 
                     if(!cRegv.test(inputs[i][0])) {
@@ -189,7 +188,7 @@ function cog_forgot_password_reset_form(form){
                     fireErrorSummary(inputs[i][1],'match');
                     fireInlineError(inputs[i][1],'match');
 
-                }else{
+                }else if(inputs[i][1] == pass01){
                     form.submit();
                 }
 
@@ -199,6 +198,7 @@ function cog_forgot_password_reset_form(form){
         var confirmationCodeValue = $("#confirmation-code").val()
         removeErrorSummary("confirmation-code");//clean up ...
         removeInlineError("confirmation-code", form);
+        removeInlineError("confirmation_code-error", form);
 
         if (confirmationCodeValue === ''){
             e.preventDefault();//stop the form.submit()
