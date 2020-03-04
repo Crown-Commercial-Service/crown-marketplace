@@ -549,6 +549,11 @@ en:
             or: or
             reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
             withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          procurement_closed:
+            title: Your procurement has been closed
+            closed_1: The
+            closed_2: procurement has been closed.
+            description: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
           procurement_requirements:
             buildings_services: Buildings and services
             call_off_extensions_1: Optional call-off extension period 1
