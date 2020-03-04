@@ -1,33 +1,33 @@
-<h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-6">
+<div class="govuk-!-width-three-quarters">
+<h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-8">
     <%= t('.what_happens_next') %>
 </h1>
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
-<div class="govuk-body govuk-!-width-three-quarters">
     <%= govuk_details('1. You sign the contract', true) do %>
         <ul class="govuk-list govuk-list--bullet">
-            <li><%= t('.list01_1') %></li>
-            <li><%= t('.list01_2') %></li>
+            <li class="govuk-!-padding-top-2"><%= t('.list01_1') %></li>
+            <li class="govuk-!-padding-top-2 govuk-!-padding-bottom-2"><%= t('.list01_2') %></li>
         </ul>
     <% end %>
     <div class="govuk-!-margin-bottom-4 govuk-!-margin-top-4">
         <%= govuk_details('2. Buyer signs the contract', true) do %>
             <ul class="govuk-list govuk-list--bullet">
-                <li><%= t('.list02_1') %></li>
-                <li><%= t('.list02_2') %></li>
+                <li class="govuk-!-padding-top-2"><%= t('.list02_1') %></li>
+                <li class="govuk-!-padding-top-2 govuk-!-padding-bottom-2"><%= t('.list02_2') %></li>
             </ul>
         <% end %>
     </div>
     <div class="govuk-!-margin-bottom-4">
         <%= govuk_details('3. Signature confirmation', true) do %>
             <ul class="govuk-list govuk-list--bullet">
-                <li><%= t('.list03_1') %></li>
+                <li class="govuk-!-padding-top-2 govuk-!-padding-bottom-2"><%= t('.list03_1') %></li>
             </ul>
         <% end %>
     </div>
     <%= govuk_details('4. Withdraw before signing', true) do %>
         <ul class="govuk-list govuk-list--bullet">
-            <li><%= t('.list04_1') %></li>
-            <li><%= t('.list04_2') %></li>
+            <li class="govuk-!-padding-top-2"><%= t('.list04_1') %></li>
+            <li class="govuk-!-padding-top-2 govuk-!-padding-bottom-2"><%= t('.list04_2') %></li>
         </ul>
     <% end %>
 </div>
