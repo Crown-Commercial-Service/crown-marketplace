@@ -55,7 +55,7 @@ module FacilitiesManagement
               back_text: 'View prototypes'
             },
             index: {
-              page_title: 'Dashboard',
+              page_title: 'Direct award dashboard',
               caption1: current_user.email
             }
           }.freeze
