@@ -4,13 +4,15 @@ module FacilitiesManagement
       class ContractsController < FacilitiesManagement::Beta::FrameworkController
         before_action :set_procurement
         before_action :set_contract
-        before_action :set_page_detail
+        before_action :set_page_detail, only: %i[show edit]
 
         def show; end
 
         def edit; end
 
-        def update; end
+        def update
+          close_procurement && return if params['close_procurement'].present?
+        end
 
         private
 
@@ -20,6 +22,10 @@ module FacilitiesManagement
 
         def set_contract
           @contract = ProcurementSupplier.find(params[:id])
+        end
+
+        def close_procurement
+          redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @procurement.procurement_suppliers.first.id)
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -80,8 +86,11 @@ module FacilitiesManagement
               secondary_text: set_secondary_text
             },
             edit: {
-              continuation_text: 'Save and continue',
-            }
+              back_url: facilities_management_beta_procurement_contract_path(@procurement),
+              continuation_text: 'Close this procurement',
+              secondary_text: 'Cancel',
+            },
+
           }.freeze
         end
         # rubocop:enable Metrics/AbcSize
