@@ -1,0 +1,17 @@
+<div class="govuk-!-width-three-quarters">
+    <h1 class="govuk-heading govuk-heading-m govuk-!-margin-bottom-5">
+        <%= t('.are_you_sure_1') %> '<%= @procurement[:contract_name] %>' (<%= @contract[:contract_number] %>) <%= t('.are_you_sure_2') %>
+    </h1>
+    <div class="govuk-body govuk-!-margin-bottom-5">
+        <%= t('.once_closed') %>
+    </div>
+    <div id="contract-withdrawn-reason" class='govuk-!-margin-bottom-5' data-module="character-count" data-maxlength="500">
+        <h1 class="govuk-heading govuk-heading-s">
+            <%= t('.reason') %>
+        </h1>
+        <%= govuk_text_area_input(f, :reason_for_closing, true, ['rows', 10], ['maxlength', 500], [:class, 'govuk-!-margin-bottom-2']) %>
+    </div>
+    <div class="govuk-body">
+        <%= t('.closed_message') %>     
+    </div>
+</div>
