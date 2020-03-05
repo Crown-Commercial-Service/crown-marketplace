@@ -63,6 +63,7 @@ module FacilitiesManagement
                                                page_details(action_name)[:secondary_text])
           )
         end
+        # rubocop:enable Metrics/AbcSize
 
         def page_details(action)
           action = 'edit' if action == 'update'
@@ -109,7 +110,6 @@ module FacilitiesManagement
             },
           }.freeze
         end
-        # rubocop:enable Metrics/AbcSize
       end
     end
   end
