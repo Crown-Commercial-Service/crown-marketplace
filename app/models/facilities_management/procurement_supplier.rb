@@ -10,6 +10,7 @@ module FacilitiesManagement
     before_validation :convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
     validates :reason_for_closing, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
+    validates :reason_for_closing, length: { maximum: 500 }, presence: { message: :buyer }, on: %i[reason_for_closing]
 
     aasm do
       state :unsent, initial: true
@@ -25,27 +26,27 @@ module FacilitiesManagement
         transitions from: :unsent, to: :sent
       end
 
-      event :accept do
+      event :set_to_accept do
         transitions from: :sent, to: :accepted
       end
 
-      event :sign do
+      event :set_to_sign do
         transitions from: :accepted, to: :signed
       end
 
-      event :not_sign do
+      event :set_to_not_sign do
         transitions from: :accepted, to: :not_signed
       end
 
-      event :withdraw do
-        transitions from: :accepted, to: :withdrawn
+      event :set_to_withdraw do
+        transitions from: %i[sent accepted], to: :withdrawn
       end
 
-      event :decline do
+      event :set_to_decline do
         transitions from: :sent, to: :declined
       end
 
-      event :expire do
+      event :set_to_expire do
         transitions from: :sent, to: :expired
       end
     end

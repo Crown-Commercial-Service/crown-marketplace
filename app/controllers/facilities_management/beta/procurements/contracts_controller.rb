@@ -25,7 +25,23 @@ module FacilitiesManagement
         end
 
         def close_procurement
-          redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @procurement.procurement_suppliers.first.id)
+          @contract.assign_attributes(contract_params)
+          if @contract.valid?(:reason_for_closing)
+            @contract.save
+            @procurement.set_state_to_closed!
+            redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+          else
+            params[:name] = 'withdraw'
+            set_page_detail
+            render :edit
+          end
+        end
+
+        def contract_params
+          params.require(:facilities_management_procurement_supplier)
+                .permit(
+                  :reason_for_closing,
+                )
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -49,6 +65,7 @@ module FacilitiesManagement
         end
 
         def page_details(action)
+          action = 'edit' if action == 'update'
           @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
         end
 
@@ -90,7 +107,6 @@ module FacilitiesManagement
               continuation_text: 'Close this procurement',
               secondary_text: 'Cancel',
             },
-
           }.freeze
         end
         # rubocop:enable Metrics/AbcSize
