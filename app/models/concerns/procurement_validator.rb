@@ -37,8 +37,6 @@ module ProcurementValidator
 
     validates :local_government_pension_scheme, inclusion: { in: [true, false] }, on: %i[local_government_pension_scheme]
 
-    validates :reason_for_closing, inclusion: { in: [true, false] }, on: %i[withdrawing_offer]
-
     #############################################
     # Validation rules for contract-dates
     # these rules need to cover
