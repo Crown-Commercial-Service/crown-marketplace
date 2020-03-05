@@ -34,7 +34,7 @@
                 </div>
                 <div id="contract-signed-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:no_is_used]%>" data-module="character-count" data-maxlength="100">
                     <%= govuk_label(ff, ff.object, @contract.aasm_state = 'not_signed', @page_data[:label_text]) %>
-                    <%= govuk_text_area_input(ff, @contract.aasm_state = 'not_signed', true, ['rows', 10], ['maxlength', 100]) %>
+                    <%= govuk_text_area_input(ff, @contract.aasm_state = 'not_signed', true, char_count=100) %>
                 </div>
     
             </div>
