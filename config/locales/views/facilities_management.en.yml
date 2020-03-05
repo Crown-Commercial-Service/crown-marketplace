@@ -257,6 +257,12 @@ en:
               not_a_number: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
               not_an_integer: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
               required: Enter a percentage of pensionable pay
+        facilities_management/procurement_supplier:
+          attributes:
+            contract_response:
+              inclusion: You must select one option to respond to the contract offer
+            reason_for_closing:
+              blank: Enter a reason for declining this contract offer
         facilities_management/service_hour_choice:
           attributes:
             end_time:
@@ -966,6 +972,11 @@ en:
             buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
           contract_summary_foot:
             respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
+          edit:
+            contract_name: 'Contract name:'
+            contract_number: 'Contract number:'
+            form_title: Do you accept the contract offer from
+            reason_for_closing: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
           procurement_requirements_head:
             buyer: Buyer
           received_contract_offer:
