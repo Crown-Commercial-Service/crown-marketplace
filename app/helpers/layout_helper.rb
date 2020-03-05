@@ -111,7 +111,7 @@ module LayoutHelper
 
   def govuk_back_button(back_button)
     link_to(back_button.text.nil? ? t('layouts.application.back') : back_button.text, back_button.url,
-            aria:  { label: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label },
+            aria: { label: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label },
             class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6')
   end
 
@@ -138,8 +138,8 @@ module LayoutHelper
   # rubocop:disable Metrics/CyclomaticComplexity,Metrics/ParameterLists
   def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
-    css_classes      = ['govuk-form-group']
-    css_classes      += ['govuk-form-group--error'] if attribute_errors && show_errors
+    css_classes = ['govuk-form-group']
+    css_classes += ['govuk-form-group--error'] if attribute_errors && show_errors
 
     options                     = { class: css_classes }
     options['aria-describedby'] = error_id(attribute) if attribute_errors
@@ -216,12 +216,12 @@ module LayoutHelper
 
   # rubocop:enable Metrics/ParameterLists
 
-  INPUT_WIDTH = { tiny:        'govuk-input--width-2',
-                  small:       'govuk-input--width-4',
-                  medium:      'govuk-input--width-10',
-                  large:       'govuk-input--width-20',
-                  one_half:    'govuk-!-width-one-half',
-                  two_thirds:  'govuk-!-width-two-thirds',
+  INPUT_WIDTH = { tiny: 'govuk-input--width-2',
+                  small: 'govuk-input--width-4',
+                  medium: 'govuk-input--width-10',
+                  large: 'govuk-input--width-20',
+                  one_half: 'govuk-!-width-one-half',
+                  two_thirds: 'govuk-!-width-two-thirds',
                   one_quarter: 'govuk-!-width-one-quarter' }.freeze
 
   def govuk_text_input(builder, attribute, text_size, *option)
