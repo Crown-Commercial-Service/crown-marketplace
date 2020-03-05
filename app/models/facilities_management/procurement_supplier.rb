@@ -26,27 +26,27 @@ module FacilitiesManagement
         transitions from: :unsent, to: :sent
       end
 
-      event :accept do
+      event :set_to_accept do
         transitions from: :sent, to: :accepted
       end
 
-      event :sign do
+      event :set_to_sign do
         transitions from: :accepted, to: :signed
       end
 
-      event :not_sign do
+      event :set_to_not_sign do
         transitions from: :accepted, to: :not_signed
       end
 
-      event :withdraw do
-        transitions from: :accepted, to: :withdrawn
+      event :set_to_withdraw do
+        transitions from: %i[sent accepted], to: :withdrawn
       end
 
-      event :decline do
+      event :set_to_decline do
         transitions from: :sent, to: :declined
       end
 
-      event :expire do
+      event :set_to_expire do
         transitions from: :sent, to: :expired
       end
     end
