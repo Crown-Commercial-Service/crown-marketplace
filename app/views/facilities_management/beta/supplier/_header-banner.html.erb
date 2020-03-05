@@ -1,9 +1,9 @@
 <%= render 'layouts/logo' %>
 <div class="govuk-header__content">
-  <%= render 'layouts/header-title', service: 'facilities_management', path: facilities_management_beta_supplier_path %>
+  <span class="govuk-header__link--service-name">Supplier account</span>
   <nav>
     <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-      <%= render 'layouts/back-to-start', back_to_start_path: facilities_management_beta_supplier_path %>
+      <li class="govuk-header__navigation-item"><%= link_to 'My dashboard', facilities_management_beta_supplier_path, class: 'govuk-header__link' %></li>
       <%= navigation_link_supplier_and_buyer if not_permitted_page %>
       <%= render 'layouts/sign-out-link', sign_out_path: facilities_management_beta_supplier_destroy_user_session_path %>
     </ul>
