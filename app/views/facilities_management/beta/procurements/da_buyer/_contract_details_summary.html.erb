@@ -120,7 +120,11 @@
           <% case @procurement.security_policy_document_required %>
           <% when true %>
             <!--<a href="<%#= asset_path() %>?format=doc" download> <%#= @procurement.security_policy_document_file.to_s.split('/').last %> </a> -->
-            <a href="#"> <%= @procurement.security_policy_document_file.blob.filename.to_s.split('/').last %> </a>
+            <% if @procurement.security_policy_document_file.attached? %>
+              <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=<%= @procurement.security_policy_document_file.filename.to_s.split('.').last[0..2] %>" download> <%= @procurement.security_policy_document_file.filename.to_s %> </a>
+            <% else %>
+              Please upload a security policy document
+            <% end %>
           <% when false %>
             Not applicable
           <% else %>
