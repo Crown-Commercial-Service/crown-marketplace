@@ -5,7 +5,7 @@ module FacilitiesManagement
         class ClosedController < FacilitiesManagement::Beta::FrameworkController
           def index
             @procurement = @current_user.procurements.find_by(id: params[:procurement_id])
-            @contract = @procurement&.procurement_suppliers&.where(id: params[:contract_id])&.first
+            @contract = @procurement&.procurement_suppliers.find_by(id: params[:contract_id])
           end
         end
       end
