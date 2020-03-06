@@ -37,6 +37,19 @@ module FacilitiesManagement
           end
         end
 
+        def sign_procurement
+          @contract.assign_attributes(contract_params)
+          if @contract.valid?
+            @contract.set_to_signed!
+            @contract.save
+            redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @procurement.procurement_suppliers.first.id)
+          else
+            params[:name] = 'withdraw'
+            set_page_detail
+            render :edit
+          end
+        end
+
         def contract_params
           params.require(:facilities_management_procurement_supplier)
                 .permit(
