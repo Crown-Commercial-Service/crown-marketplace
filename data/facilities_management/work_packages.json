@@ -1331,5 +1331,14 @@
     "metric": "",
     "work_package_code": "N",
     "has_standards": false
+  },
+  {
+    "code": "O.1",
+    "name": "Management of billable works",
+    "description": "Short description must be supplied",
+    "mandatory": true,
+    "metric": "",
+    "work_package_code": "O",
+    "has_standards": false
   }
 ]
