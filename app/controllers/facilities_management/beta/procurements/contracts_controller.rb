@@ -8,7 +8,11 @@ module FacilitiesManagement
 
         def show; end
 
-        def edit; end
+        def edit
+          if params['close_contract'].present?
+            close_procurement
+          end
+        end
 
         def update
           close_procurement && return if params['close_procurement'].present?
@@ -114,7 +118,8 @@ module FacilitiesManagement
               caption1: @procurement.contract_name,
               continuation_text: set_continuation_text,
               return_text: 'Return to procurement dashboard',
-              secondary_text: set_secondary_text
+              secondary_text: set_secondary_text,
+              secondary_name: "close_contract"
             },
             edit: {
               back_url: facilities_management_beta_procurement_contract_path(@procurement),
