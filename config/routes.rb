@@ -144,8 +144,9 @@ Rails.application.routes.draw do
         get 'results'
         get 'further_competition_spreadsheet'
         post 'da_spreadsheets'
-        resources :contracts, only: %i[show edit], controller: 'procurements/contracts' do
+        resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
+          resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
         end
       end
       resources :procurement_buildings, only: %i[show edit update]

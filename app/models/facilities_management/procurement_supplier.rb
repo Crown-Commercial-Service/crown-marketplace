@@ -10,6 +10,7 @@ module FacilitiesManagement
     before_validation :convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
     validates :reason_for_closing, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
+    validates :reason_for_closing, length: { maximum: 500 }, presence: { message: :buyer }, on: %i[reason_for_closing]
 
     aasm do
       state :unsent, initial: true

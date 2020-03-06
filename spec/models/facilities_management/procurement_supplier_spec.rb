@@ -144,6 +144,13 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           closed_contracts = procurement.procurement_suppliers.map(&:closed?)
           expect(closed_contracts.any?(false)).to be false
         end
+
+        it "will set the contract close date to today's date" do
+          procurement.procurement_suppliers.last.offer_to_supplier!
+          procurement.set_state_to_closed!
+          procurement.procurement_suppliers.last.reload
+          expect(procurement.procurement_suppliers.last.contract_closed_date.to_date).to eq Date.current
+        end
       end
     end
 
