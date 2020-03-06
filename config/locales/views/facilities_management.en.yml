@@ -941,6 +941,7 @@ en:
           subtitle: Choose one or more regions, based on building's location where you require facilities management services.
         results:
           any_changes: Any changes to the information provided may result in a different outcome.
+          available_routes_to_market: Available routes to market
           building_services_summary: Buildings and services summary
           da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
           direct_award_label_html: "<b>Direct award</b> (the most competitive direct award price is %{price})"
@@ -949,7 +950,7 @@ en:
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
           further_competition_html: "<b>Further competition</b>"
-          sub-lot: Sub-lot
+          sub-lot: Lot
           sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
