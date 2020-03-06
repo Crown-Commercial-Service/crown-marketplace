@@ -259,6 +259,7 @@ module FacilitiesManagement
     def set_close_date
       procurement_suppliers.where.not(aasm_state: 'unsent').last.update(contract_closed_date: DateTime.now.in_time_zone('London'))
     end
+
     def offer_to_next_supplier
       return false if procurement_suppliers.unsent.empty?
 
