@@ -1,0 +1,2 @@
+<%= render partial: 'accepted_offer' if @contract.aasm_state == 'accepted' %>
+<%= render partial: 'declined_offer' if @contract.aasm_state == 'declined' %>

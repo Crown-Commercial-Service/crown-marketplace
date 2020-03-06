@@ -37,8 +37,8 @@
   <% end %>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
-    <%= f.hidden_field :route_to_market %>
-    <%= govuk_grouped_field(f, 'Available routes to market', :route_to_market) do |ff, attr| %>
+    <%= govuk_grouped_field(f, t('.available_routes_to_market'), :route_to_market) do |ff, attr| %>
+      <%= f.hidden_field :route_to_market %>
       <%= govuk_start_individual_field(ff, attr, {}, false, false) do |a| %>
         <div class="govuk-radios">
           <div class="govuk-radios__item">
@@ -65,10 +65,17 @@
           </div>
         </div>
       <% end %>
-    <% end %>
+    <% end if eligible_for_direct_award?%>
+    <%= contained_content(t('.available_routes_to_market')) do %>
+      <%= f.hidden_field :route_to_market, value: 'further_competition' %>
+      <%= govuk_details t('.what_is_fc') do %>
+        <ul class="govuk-list govuk-list--bullet">
+          <%= t('.fc_list_html') %>
+        </ul>
+      <% end %>
+    <% end unless eligible_for_direct_award?%>
     <p><%= t('.any_changes') %></p>
     <%= govuk_continuation_buttons(pd, f) %>
-    <br/>
     <a href="javascript:window.print()" class="govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon">Print
       this page</a>
   <% end %>

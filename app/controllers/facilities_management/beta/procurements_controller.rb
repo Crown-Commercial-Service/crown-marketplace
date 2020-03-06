@@ -14,6 +14,7 @@ module FacilitiesManagement
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
       before_action :build_page_details, only: %i[show edit update destroy results]
+
       def index
         @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
         @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
@@ -266,12 +267,20 @@ module FacilitiesManagement
 
           redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
         else
+          remove_invalid_security_policy_document_file
           set_step_param
           @view_name = set_view_data unless @procurement.quick_search?
 
           set_da_journey_render
           render :edit
         end
+      end
+
+      def remove_invalid_security_policy_document_file
+        # This is so that activestorage destroys invalid files. Proper validations will come with Rails 6, but
+        # for now, this is the best, albeit ugliest, workaround. User will lose their original security policy document
+        # if trying to replace it with an invalid one.
+        @procurement.reload.security_policy_document_file.purge if @procurement.errors[:security_policy_document_file].any?
       end
 
       def set_da_journey_render

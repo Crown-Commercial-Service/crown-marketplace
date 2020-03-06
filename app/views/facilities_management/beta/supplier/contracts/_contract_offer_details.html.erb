@@ -16,7 +16,7 @@
     </div>
 <% end %>
 
-<div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+<div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" style='overflow-wrap: break-word' >
     <% case @contract.aasm_state %>
     <% when 'declined' %>
         <%= govuk_details('Reason for declining', true) do %>

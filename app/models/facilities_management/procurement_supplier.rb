@@ -5,14 +5,21 @@ module FacilitiesManagement
     default_scope { order(direct_award_value: :asc) }
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
 
+    attribute :contract_response
+
+    before_validation :convert_to_boolean, on: :contract_response
+    validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
+    validates :reason_for_closing, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
+    validates :reason_for_closing, length: { maximum: 500 }, presence: { message: :buyer }, on: %i[reason_for_closing]
+
     aasm do
       state :unsent, initial: true
       state :sent, before_enter: %i[assign_contract_number set_date_and_send_email]
-      state :accepted, before_enter: %i[set_date_and_send_supplier_response]
+      state :accepted, before_enter: %i[set_supplier_response_date send_accepted_email]
       state :signed
       state :not_signed
       state :withdrawn
-      state :declined
+      state :declined, before_enter: %i[set_supplier_response_date send_declined_email]
       state :expired
 
       event :offer_to_supplier do
@@ -83,6 +90,14 @@ module FacilitiesManagement
 
     private
 
+    def contract_response_false?
+      contract_response == false
+    end
+
+    def convert_to_boolean
+      self.contract_response = ActiveModel::Type::Boolean.new.cast(contract_response)
+    end
+
     def generate_contract_number
       return unless procurement.further_competition? || procurement.direct_award?
 
@@ -96,7 +111,7 @@ module FacilitiesManagement
       send_offer_email
     end
 
-    def set_date_and_send_supplier_response
+    def set_supplier_response_date
       self.supplier_response_date = DateTime.now.in_time_zone('London')
     end
 
@@ -125,6 +140,12 @@ module FacilitiesManagement
       }.to_json
 
       FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+    end
+
+    def send_accepted_email; end
+
+    def send_declined_email
+      self.contract_closed_date = DateTime.now.in_time_zone('London')
     end
   end
 end
