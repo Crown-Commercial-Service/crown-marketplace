@@ -1002,6 +1002,13 @@ en:
             buyer_contact_details: Buyer contact details
             call_off_contract_documents: Call off contract documents
             requirements: Requirements
+        sent:
+          declined_offer:
+            contract_name: 'Contract name:'
+            contract_number: 'Contract number:'
+            description: For reference, this contract offer will be be viewable only in the closed section of your dashboard.
+            link_text: Return to dashboard
+            title: You have declined this contract offer
         sessions:
           new:
             email_address: Email address
