@@ -6,6 +6,12 @@ module FacilitiesManagement
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
 
     attribute :contract_response
+    attribute :contract_start_date_dd
+    attribute :contract_start_date_mm
+    attribute :contract_start_date_yyyy
+    attribute :contract_end_date_dd
+    attribute :contract_end_date_mm
+    attribute :contract_end_date_yyyy
 
     before_validation :convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
