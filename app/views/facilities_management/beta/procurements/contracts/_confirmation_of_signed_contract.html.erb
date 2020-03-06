@@ -34,7 +34,7 @@
         </label>
     </div>
     <div id="contract-signed-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:no_is_used]%>" data-module="character-count" data-maxlength="100">
-        <%= govuk_label(f, f.object, :reason_for_closing, {reason_for_closing: t('.reason_for_closing')}) %>
+        <%#= govuk_label(f, f.object, :reason_for_closing, {reason_for_closing: t('.reason_for_closing')}) %>
         <%= display_error_label(f.object, :reason_for_closing, '', "#{f.object_name}_reason_for_closing") %>
         <%= govuk_text_area_input(f, :reason_for_closing, true, ['rows', 5], ['maxlength', 100], [:class, 'govuk-!-margin-bottom-2 govuk-!-margin-top-4']) %>
         <span id="facilities_management_procurement_supplier_character_left" class="govuk-hint govuk-character-count__message" aria-live="polite">
