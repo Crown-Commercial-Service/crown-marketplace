@@ -9,10 +9,7 @@ module FacilitiesManagement
         def show; end
 
         def edit
-          if params['close_contract'].present?
-            @procurement.set_state_to_closed!
-            redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
-          end
+          @procurement.set_state_to_closed! && redirect_to(facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)) if params['close_contract'].present?
         end
 
         def update
@@ -120,7 +117,7 @@ module FacilitiesManagement
               continuation_text: set_continuation_text,
               return_text: 'Return to procurement dashboard',
               secondary_text: set_secondary_text,
-              secondary_name: "close_contract"
+              secondary_name: 'close_contract'
             },
             edit: {
               back_url: facilities_management_beta_procurement_contract_path(@procurement),
