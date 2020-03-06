@@ -11,6 +11,11 @@ $(function () {
         let fnLengthValidator = this.validationFunctions['maxlength'];
         let fnMaxValidator = this.validationFunctions['max'];
         let fnMinValidator = this.validationFunctions['min'];
+        let fnMobilisationDateMin = function (strDD, strMM, strYYYY) {
+            let mDate = fnCreateDate(strDD,strMM,strYYYY);
+            let curDate = new Date();
+            return mDate >= curDate;
+        };
         let fnCreateDate = function ( strDD, strMM, strYYYY) {
             return new Date(strYYYY, strMM, strDD);
         };
@@ -34,7 +39,7 @@ $(function () {
             isValid = !fnRequiredValidator(jqInitialCallOffStartDate_dd); //this.testError(fnRequiredValidator, jqInitialCallOffStartDate_dd, 'required');
             isValid = isValid && !fnNumberValidator(jqInitialCallOffStartDate_dd); //this.testError(fnNumberValidator, jqInitialCallOffStartDate_dd, 'number') ;
             isValid = isValid && jqInitialCallOffStartDate_dd.val() <= 31;
-            if ( jqInitialCallOffStartDate_mm.val() == 2) {
+            if ( jqInitialCallOffStartDate_mm.val() === 2) {
                 isValid = isValid && jqInitialCallOffStartDate_dd.val() <= 29;
             }
             isValid = isValid && !fnRequiredValidator(jqInitialCallOffStartDate_mm);//this.testError(fnRequiredValidator, jqInitialCallOffStartDate_mm, 'required');
@@ -49,7 +54,7 @@ $(function () {
                 jqInitialCallOffStartDate_yy.removeClass('govuk-input--error');
                 jqInitialCallOffStartDate_mm.removeClass('govuk-input--error');
                 let callOffStartDate = fnCreateDateFromGovInputs('facilities_management_procurement_initial_call_off_start_date');
-                if (callOffStartDate != "Invalid Date") {
+                if (callOffStartDate !== "Invalid Date") {
                     this.toggleError(jqInitialCallOffStartDate_dd.closest('fieldset').closest(".govuk-form-group.initial_call_off_start_date"), false, 'required');
                     isValid = callOffStartDate >= new Date(new Date().toDateString());
                     if (!isValid) {
@@ -71,20 +76,20 @@ $(function () {
         let mobilisationChoice = formElements['facilities_management_procurement[mobilisation_period_required]'].value;
         let jqMobilisationPeriod = $('#facilities_management_procurement_mobilisation_period');
         let jqTupeIndicator = $('.tupe_indicator');
-        let tupeIsSpecified = jqTupeIndicator.val() == 'true';
+        let tupeIsSpecified = jqTupeIndicator.val() === 'true';
 
-        if (mobilisationChoice == "") {
+        if (mobilisationChoice === "") {
             isValid = false;
             this.toggleError($("#mobilisation-required-warning"), true, 'required');
         }
 
         let extensionChoice = formElements['facilities_management_procurement[extensions_required]'].value ;
-        if (extensionChoice == "") {
+        if (extensionChoice === "") {
             isValid = false;
             this.toggleError($("#extensions-required-warning"), true, 'required');
         }
 
-        if ( isValid && mobilisationChoice == "true" ) {
+        if ( isValid && mobilisationChoice === "true" ) {
             let jqMobilisationPeriodRequired = $('#facilities_management_procurement_mobilisation_period_required_true');
             let jqExtensionsRequired = $('#facilities_management_procurement_extensions_required_true');
             let fnMobilisationValidatorForTUPE = function(nMobPeriod, tupeIsSpecified) {return nMobPeriod < 4}.bind(this);
@@ -122,15 +127,22 @@ $(function () {
                 isValid = isValid && isValid && this.testError(fnMinValidator, jqMobilisationPeriod, "min");
                 isValid = isValid && this.testError(fnMaxValidator, jqMobilisationPeriod, "max");
             }
-        } else if ( isValid && tupeIsSpecified && mobilisationChoice == "false" ) {
+            if ( isValid ){
+                let jqMobDateDD = $('#mobilisation-start-date-dd');
+                let jqMobDateMM = $('#mobilisation-start-date-mm');
+                let jqMobDateYY = $('#mobilisation-start-date-yy');
+
+                isValid = isValid && this.testError(fnMobilisationDateMin(jqMobDateDD,jqMobDateMM,jqMobDateYY), jqMobilisationPeriod, "min") ;
+            }
+        } else if ( isValid && tupeIsSpecified && mobilisationChoice === "false" ) {
             isValid = false ;
             this.toggleError ( jqMobilisationPeriod, true, 'max') ;
-        } else if ( isValid && !tupeIsSpecified && mobilisationChoice == "false" ) {
+        } else if ( isValid && !tupeIsSpecified && mobilisationChoice === "false" ) {
             isValid = isValid && true ;
             jqMobilisationPeriod.val("");
         }
 
-        if (isValid  && extensionChoice == "true") {
+        if (isValid  && extensionChoice === "true") {
             const MAX = 10;
             let count = parseInt(jqInitialCallOffPeriod.val());
             let ext1 = $('#facilities_management_procurement_optional_call_off_extensions_1');
@@ -229,7 +241,7 @@ $(function () {
             $('#contract-end-date-mm').val(leadingZero(contractEndDate.getMonth() + 1));
             $('#contract-end-date-yyyy').val(leadingZero(contractEndDate.getFullYear()));
 
-            if (mobilisationPeriod && dd !== NaN) {
+            if (mobilisationPeriod && !isNaN(dd)) {
                 let dates = contractDateUtils.calcContractDates(contractStartDate, initialCallOffPeriod, mobilisationPeriod);
                 /* display mobilisation start date */
                 $('#mobilisation-start-date-dd').val(dates['Contract-Mob-Start'].substr(0, 2));
@@ -313,6 +325,9 @@ $(function () {
                             break;
                         case "max":
                             message = "Mobilisation period must be a minimum of 4 weeks when TUPE is selected";
+                            break;
+                        case "min":
+                            message = "Mobilisation start date must be today or in the future";
                             break;
                     }
                     break;
