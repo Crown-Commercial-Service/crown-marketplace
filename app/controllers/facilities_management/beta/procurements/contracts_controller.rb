@@ -10,7 +10,8 @@ module FacilitiesManagement
 
         def edit
           if params['close_contract'].present?
-            close_procurement
+            @procurement.set_state_to_closed!
+            redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
           end
         end
 
