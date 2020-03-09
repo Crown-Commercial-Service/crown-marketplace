@@ -1335,7 +1335,7 @@
   {
     "code": "O.1",
     "name": "Management of billable works",
-    "description": "Short description must be supplied",
+    "description": "Chargeable services delivered outside the agreed overall contract price for example small/large projects",
     "mandatory": true,
     "metric": "",
     "work_package_code": "O",
