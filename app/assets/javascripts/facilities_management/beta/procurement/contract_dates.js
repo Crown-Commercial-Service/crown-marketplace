@@ -83,23 +83,17 @@ $(function () {
             this.toggleError($("#mobilisation-required-warning"), true, 'required');
         }
 
-        let extensionChoice = formElements['facilities_management_procurement[extensions_required]'].value ;
-        if (extensionChoice === "") {
-            isValid = false;
-            this.toggleError($("#extensions-required-warning"), true, 'required');
-        }
-
         if ( isValid && mobilisationChoice === "true" ) {
             let jqMobilisationPeriodRequired = $('#facilities_management_procurement_mobilisation_period_required_true');
             let jqExtensionsRequired = $('#facilities_management_procurement_extensions_required_true');
             let fnMobilisationValidatorForTUPE = function(nMobPeriod, tupeIsSpecified) {return nMobPeriod < 4}.bind(this);
             let mobTextValue = jqMobilisationPeriod.val();
 
-            isValid = !(tupeIsSpecified && mobTextValue == "");
+            isValid = !(tupeIsSpecified && mobTextValue === "");
             if ( isValid ) {
                 isValid = isValid && this.testError(fnNumberValidator, jqMobilisationPeriod, 'number');
                 if ( mobTextValue.indexOf('.') >= 0 ) {
-                    if ( mobTextValue.substring(mobTextValue.indexOf('.')+1).replace('0','') != '' ) {
+                    if ( mobTextValue.substring(mobTextValue.indexOf('.')+1).replace('0','') !== '' ) {
                         isValid = isValid && false;
                         this.toggleError ( jqMobilisationPeriod, true, 'pattern');
                     } else {
@@ -130,9 +124,20 @@ $(function () {
             if ( isValid ){
                 let jqMobDateDD = $('#mobilisation-start-date-dd');
                 let jqMobDateMM = $('#mobilisation-start-date-mm');
-                let jqMobDateYY = $('#mobilisation-start-date-yy');
+                let jqMobDateYY = $('#mobilisation-start-date-yyyy');
+                jqMobDateDD.removeClass('govuk-input--error');
+                jqMobDateMM.removeClass('govuk-input--error');
+                jqMobDateYY.removeClass('govuk-input--error');
 
-                isValid = isValid && this.testError(fnMobilisationDateMin(jqMobDateDD,jqMobDateMM,jqMobDateYY), jqMobilisationPeriod, "min") ;
+                if (!fnMobilisationDateMin(jqMobDateDD,jqMobDateMM,jqMobDateYY)) {
+                    isValid = false;
+                    this.toggleError ( jqMobDateDD.closest('fieldset'), true, 'min');
+                    jqMobDateDD.addClass('govuk-input--error');
+                    jqMobDateMM.addClass('govuk-input--error');
+                    jqMobDateYY.addClass('govuk-input--error');
+                } else {
+                    this.toggleError ( jqMobilisationPeriod, false, 'min');
+                }
             }
         } else if ( isValid && tupeIsSpecified && mobilisationChoice === "false" ) {
             isValid = false ;
@@ -140,6 +145,12 @@ $(function () {
         } else if ( isValid && !tupeIsSpecified && mobilisationChoice === "false" ) {
             isValid = isValid && true ;
             jqMobilisationPeriod.val("");
+        }
+
+        let extensionChoice = formElements['facilities_management_procurement[extensions_required]'].value ;
+        if (extensionChoice === "") {
+            isValid = false;
+            this.toggleError($("#extensions-required-warning"), true, 'required');
         }
 
         if (isValid  && extensionChoice === "true") {
@@ -331,6 +342,10 @@ $(function () {
                             break;
                     }
                     break;
+                case "Mobilisation start date":
+                    message = "Mobilisation start date must be today or in the future";
+                    break;
+
                 default:
                     message = this.prevErrorMessage(prop_name, errType);
             }
