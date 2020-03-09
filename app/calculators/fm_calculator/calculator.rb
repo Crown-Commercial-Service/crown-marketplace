@@ -270,7 +270,6 @@ module FMCalculator
         results[:contract_length_years] = @contract_length_years
         results[:subsequent_length_years] = @subsequent_length_years
       end
-
       year1totalcharges + subyearstotal(year1totalcharges, mobilisation)
     end
     # rubocop:enable Metrics/AbcSize
