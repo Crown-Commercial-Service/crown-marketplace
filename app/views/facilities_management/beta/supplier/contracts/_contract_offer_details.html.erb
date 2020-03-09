@@ -7,7 +7,7 @@
         <%= govuk_details('Contract offer history', true) do %>
             <% case @contract.aasm_state%>
             <% when 'accepted', 'signed', 'not_signed', 'withdrawn' %>
-                <%= "You accepted this contract offer on #{format_date_time(@contract.supplier_response_date)}.<br/>".html_safe %>
+                <%= "You accepted this contract offer on #{format_date_time(@contract.supplier_response_date)}.<br/>".html_safe unless @contract.supplier_response_date.nil? %>
             <% when 'expired' %>
                 <%= "This contract offer was closed on #{format_date_time(@contract.contract_closed_date)}.<br/>".html_safe %>
             <% end %>
