@@ -257,6 +257,13 @@ en:
               not_a_number: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
               not_an_integer: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
               required: Enter a percentage of pensionable pay
+        facilities_management/procurement_supplier:
+          attributes:
+            contract_response:
+              inclusion: You must select one option to respond to the contract offer
+            reason_for_closing:
+              blank: Enter a reason for declining this contract offer
+              buyer: Enter a reason for closing this procurement
         facilities_management/service_hour_choice:
           attributes:
             end_time:
@@ -503,12 +510,23 @@ en:
             you_sign_1: you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
             you_sign_2: this will happen offline (outside this portal)
             you_sign_3: usually within 2 working days
+          closed:
+            index:
+              info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+              return_text: Return procurements dashboard
+              title: Your procurement has been closed
+          closing_direct_award_offer:
+            are_you_sure_1: Are you sure you wish to close the
+            are_you_sure_2: procurement?
+            closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+            once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
+            reason: Please provide a reason for closing this procurement
           confirmation_of_signed_contract:
             contract_end_date: Enter contract end date
             contract_end_date_caption: The contract end date should be the same as the end of your initial call-off period. For example, 01 11 2030.
             contract_start_date: Enter contract start date
             contract_start_date_caption: The contract start date is the 'effective date' - this is the date the final party signed the contract. For example, 01 11 2030.
-            description: Please confirm if both parties have signed and <br /> exchanged the contract
+            description: Please confirm if both parties have signed and exchanged the contract
           contract_offer_details:
             declined: The supplier declined this contract offer on
             expired: This contract offer expired on
@@ -531,6 +549,11 @@ en:
             or: or
             reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
             withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          procurement_closed:
+            closed_1: The
+            closed_2: procurement has been closed.
+            description: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+            title: Your procurement has been closed
           procurement_requirements:
             buildings_services: Buildings and services
             call_off_extensions_1: Optional call-off extension period 1
@@ -617,6 +640,22 @@ en:
             lowest_price_supplier: lowest priced supplier
             supplier_description_plural: that can offer your services under direct award, their contract prices are shown below in ascending order.
             supplier_description_singular: that can offer your services under direct award, their contract price is shown below.
+          procurement_requirements:
+            buildings_services: Buildings and services
+            contract_name: Contract name
+            contract_value: Contract value
+            date_of_first_indexation: Date of first indexation
+            direct_award: Direct award
+            framework_sublot_title: Framework, sub-lot
+            framework_sublot_value: RM3830, sub-lot 1a
+            initial_call_off_period: Initial call-off period
+            mobilisation_period: Mobilisation period
+            optional_call_off_extensions_1: Optional call-off extension period 1
+            optional_call_off_extensions_2: Optional call-off extension period 2
+            optional_call_off_extensions_3: Optional call-off extension period 3
+            optional_call_off_extensions_4: Optional call-off extension period 4
+            route_to_market: Route to Market
+            supplier: Supplier
           review_contract:
             attachment_1:
               document_name: About the Direct Award.docx
@@ -951,6 +990,11 @@ en:
             buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
           contract_summary_foot:
             respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
+          edit:
+            contract_name: 'Contract name:'
+            contract_number: 'Contract number:'
+            form_title: Do you accept the contract offer from
+            reason_for_closing: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
           procurement_requirements_head:
             buyer: Buyer
           received_contract_offer:
@@ -964,6 +1008,13 @@ en:
             buyer_contact_details: Buyer contact details
             call_off_contract_documents: Call off contract documents
             requirements: Requirements
+        sent:
+          declined_offer:
+            contract_name: 'Contract name:'
+            contract_number: 'Contract number:'
+            description: For reference, this contract offer will be be viewable only in the closed section of your dashboard.
+            link_text: Return to dashboard
+            title: You have declined this contract offer
         sessions:
           new:
             email_address: Email address

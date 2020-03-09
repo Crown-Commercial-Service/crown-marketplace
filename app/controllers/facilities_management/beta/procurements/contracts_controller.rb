@@ -4,13 +4,17 @@ module FacilitiesManagement
       class ContractsController < FacilitiesManagement::Beta::FrameworkController
         before_action :set_procurement
         before_action :set_contract
-        before_action :set_page_detail
+        before_action :set_page_detail, only: %i[show edit]
 
         def show; end
 
-        def edit; end
+        def edit
+          @procurement.set_state_to_closed! && redirect_to(facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)) if params['close_contract'].present?
+        end
 
-        def update; end
+        def update
+          close_procurement && return if params['close_procurement'].present?
+        end
 
         private
 
@@ -20,6 +24,38 @@ module FacilitiesManagement
 
         def set_contract
           @contract = ProcurementSupplier.find(params[:id])
+        end
+
+        def close_procurement
+          @contract.assign_attributes(contract_params)
+          if @contract.valid?(:reason_for_closing)
+            @contract.save
+            @procurement.set_state_to_closed!
+            redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+          else
+            params[:name] = 'withdraw'
+            set_page_detail
+            render :edit
+          end
+        end
+
+        def sign_procurement
+          @contract.assign_attributes(contract_params)
+          if @contract.valid?
+            @contract.set_to_signed!
+            redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+          else
+            params[:name] = 'withdraw'
+            set_page_detail
+            render :edit
+          end
+        end
+
+        def contract_params
+          params.require(:facilities_management_procurement_supplier)
+                .permit(
+                  :reason_for_closing,
+                )
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -41,8 +77,10 @@ module FacilitiesManagement
                                                page_details(action_name)[:secondary_text])
           )
         end
+        # rubocop:enable Metrics/AbcSize
 
         def page_details(action)
+          action = 'edit' if action == 'update'
           @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
         end
 
@@ -69,22 +107,24 @@ module FacilitiesManagement
               back_label: 'Back',
               back_text: 'Back',
               back_url: facilities_management_beta_procurements_path,
-              return_text: 'Return to procurement dashboard',
+              return_text: 'Return to procurements dashboard',
               return_url: facilities_management_beta_procurements_path,
             },
             show: {
               page_title: 'Contract summary',
               caption1: @procurement.contract_name,
               continuation_text: set_continuation_text,
-              return_text: 'Return to procurement dashboard',
-              secondary_text: set_secondary_text
+              return_text: 'Return to procurements dashboard',
+              secondary_text: set_secondary_text,
+              secondary_name: 'close_contract'
             },
             edit: {
-              continuation_text: 'Save and continue',
-            }
+              back_url: facilities_management_beta_procurement_contract_path(@procurement),
+              continuation_text: 'Close this procurement',
+              secondary_text: 'Cancel',
+            },
           }.freeze
         end
-        # rubocop:enable Metrics/AbcSize
       end
     end
   end

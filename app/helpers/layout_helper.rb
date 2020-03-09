@@ -237,9 +237,9 @@ module LayoutHelper
 
   def govuk_text_area_input(builder, attribute, char_count = false, *option)
     css_classes = ['govuk-textarea']
+    css_classes += ['govuk-textarea--error'] if builder.object.errors.key?(attribute)
     css_classes << option.to_h[:class] if option.to_h.key? :class
-    css_classes += ['govuk-input--error'] if builder.object.errors.key?(attribute)
-    css_classes += ['js-character-count'] if char_count
+    css_classes += ['js-ccs-character-count'] if char_count
 
     options = option.to_h.merge(class: css_classes)
     options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)

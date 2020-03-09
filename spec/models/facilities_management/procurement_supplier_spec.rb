@@ -66,7 +66,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
     end
   end
 
-  describe '.closed?' do
+  describe 'contracts' do
     let(:procurement) { create(:facilities_management_procurement, user: user) }
     let(:user) { create(:user) }
     let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
@@ -89,30 +89,123 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       # rubocop:enable RSpec/AnyInstance
     end
 
-    context 'when all contracts are unsent' do
-      it 'no contracts will be closed' do
-        closed_contracts = procurement.procurement_suppliers.map(&:closed?)
-        expect(closed_contracts.any?(true)).to be false
+    # rubocop:disable RSpec/NestedGroups
+    describe 'state changes' do
+      let(:contract) { procurement.procurement_suppliers[0] }
+
+      before { contract.offer_to_supplier }
+
+      describe '.accept' do
+        context 'when the supplier accepts' do
+          it 'will move the state to accepted' do
+            expect(contract.aasm_state).to eq 'sent'
+            expect(contract.accept!).to be true
+            procurement.reload
+            expect(contract.aasm_state).to eq 'accepted'
+          end
+        end
+      end
+
+      describe '.decline' do
+        context 'when the supplier declines' do
+          it 'will move the state to declined' do
+            expect(contract.aasm_state).to eq 'sent'
+            expect(contract.decline!).to be true
+            procurement.reload
+            expect(contract.aasm_state).to eq 'declined'
+          end
+        end
+      end
+    end
+    # rubocop:enable RSpec/NestedGroups
+
+    describe '.closed?' do
+      context 'when all contracts are unsent' do
+        it 'no contracts will be closed' do
+          closed_contracts = procurement.procurement_suppliers.map(&:closed?)
+          expect(closed_contracts.any?(true)).to be false
+        end
+      end
+
+      context 'when three contracts are sent' do
+        it 'will return true for the first 2 and false for the third' do
+          procurement.procurement_suppliers[0].offer_to_supplier
+          procurement.procurement_suppliers[1].offer_to_supplier
+          closed_contracts = procurement.procurement_suppliers.map(&:closed?)
+          expect(closed_contracts[0]).to be true
+          expect(closed_contracts[1]).to be true
+          expect(closed_contracts[2]).to be false
+        end
+      end
+
+      context 'when the procurement state is closed' do
+        it 'will return true for all the contracts' do
+          procurement.aasm_state = 'closed'
+          closed_contracts = procurement.procurement_suppliers.map(&:closed?)
+          expect(closed_contracts.any?(false)).to be false
+        end
+
+        it "will set the contract close date to today's date" do
+          procurement.procurement_suppliers.last.offer_to_supplier!
+          procurement.set_state_to_closed!
+          procurement.procurement_suppliers.last.reload
+          expect(procurement.procurement_suppliers.last.contract_closed_date.to_date).to eq Date.current
+        end
       end
     end
 
-    context 'when three contracts are sent' do
-      it 'will return true for the first 2 and false for the third' do
-        procurement.procurement_suppliers[0].offer_to_supplier
-        procurement.procurement_suppliers[1].offer_to_supplier
-        closed_contracts = procurement.procurement_suppliers.map(&:closed?)
-        expect(closed_contracts[0]).to be true
-        expect(closed_contracts[1]).to be true
-        expect(closed_contracts[2]).to be false
-      end
-    end
+    describe '#contract_response' do
+      let(:contract) { procurement.procurement_suppliers[0] }
 
-    context 'when the procurement state is closed' do
-      it 'will return true for all the contracts' do
-        procurement.aasm_state = 'closed'
-        closed_contracts = procurement.procurement_suppliers.map(&:closed?)
-        expect(closed_contracts.any?(false)).to be false
+      before { contract.offer_to_supplier }
+
+      context 'when contract_response is nil' do
+        it 'will not be valid' do
+          expect(contract.contract_response).to be nil
+          expect(contract.valid?(:contract_response)).to be false
+        end
       end
+
+      context 'when contract_response is true' do
+        it 'will be valid' do
+          contract.contract_response = true
+          expect(contract.contract_response).to be true
+          expect(contract.valid?(:contract_response)).to be true
+        end
+      end
+
+      # rubocop:disable RSpec/NestedGroups
+      describe '#reason_for_closing' do
+        before { contract.contract_response = false }
+
+        context 'when contract_response is false and no reason is given' do
+          it 'will not be valid' do
+            contract.contract_response = false
+            expect(contract.contract_response).to be false
+            expect(contract.valid?(:contract_response)).to be false
+          end
+        end
+
+        context 'when contract_response is false and a reason is given' do
+          it 'will be valid' do
+            contract.reason_for_closing = 'This is test string'
+            expect(contract.contract_response).to be false
+            expect(contract.reason_for_closing).to match 'This is test string'
+            expect(contract.valid?(:contract_response)).to be true
+          end
+        end
+
+        context 'when contract_response is false and a reason is given that is more than 500 characters' do
+          it 'will not be valid' do
+            closed_reason = (0...501).map { ('a'..'z').to_a[rand(26)] }.join
+            contract.reason_for_closing = closed_reason
+            expect(contract.contract_response).to be false
+            expect(contract.reason_for_closing).to match closed_reason
+            expect(contract.valid?(:contract_response)).to be false
+          end
+        end
+      end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 end
