@@ -946,7 +946,7 @@ en:
           subtitle: Choose one or more regions, based on building's location where you require facilities management services.
         results:
           any_changes: Any changes to the information provided may result in a different outcome.
-          available_routes_to_market: Available routes to market
+          available_routes_to_market: Available route to market
           building_services_summary: Buildings and services summary
           da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
           direct_award_label_html: "<b>Direct award</b> (the most competitive direct award price is %{price})"
