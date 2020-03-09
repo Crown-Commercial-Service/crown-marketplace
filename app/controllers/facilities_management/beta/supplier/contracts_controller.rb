@@ -30,7 +30,7 @@ module FacilitiesManagement
 
         def contract_params
           params.require(:facilities_management_procurement_supplier).permit(
-            :reason_for_closing,
+            :reason_for_declining,
             :contract_response
           )
         end
