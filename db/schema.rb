@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_162623) do
+ActiveRecord::Schema.define(version: 2020_03_09_111231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -146,6 +146,8 @@ ActiveRecord::Schema.define(version: 2020_03_02_162623) do
     t.datetime "contract_signed_date"
     t.datetime "contract_closed_date"
     t.text "reason_for_closing"
+    t.text "reason_for_declining"
+    t.text "reason_for_not_signing"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
   end
 
