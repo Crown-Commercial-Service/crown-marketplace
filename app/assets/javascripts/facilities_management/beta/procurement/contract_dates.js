@@ -129,14 +129,14 @@ $(function () {
                 jqMobDateMM.removeClass('govuk-input--error');
                 jqMobDateYY.removeClass('govuk-input--error');
 
-                if (!fnMobilisationDateMin(jqMobDateDD,jqMobDateMM,jqMobDateYY)) {
+                if (!fnMobilisationDateMin(jqMobDateDD.val(),jqMobDateMM.val()-1,jqMobDateYY.val())) {
                     isValid = false;
                     this.toggleError ( jqMobDateDD.closest('fieldset'), true, 'min');
                     jqMobDateDD.addClass('govuk-input--error');
                     jqMobDateMM.addClass('govuk-input--error');
                     jqMobDateYY.addClass('govuk-input--error');
                 } else {
-                    this.toggleError ( jqMobilisationPeriod, false, 'min');
+                    this.toggleError ( jqMobDateDD.closest('fieldset'), false, 'min');
                 }
             }
         } else if ( isValid && tupeIsSpecified && mobilisationChoice === "false" ) {
@@ -153,7 +153,7 @@ $(function () {
             this.toggleError($("#extensions-required-warning"), true, 'required');
         }
 
-        if (isValid  && extensionChoice === "true") {
+        if (isValid && extensionChoice === "true") {
             const MAX = 10;
             let count = parseInt(jqInitialCallOffPeriod.val());
             let ext1 = $('#facilities_management_procurement_optional_call_off_extensions_1');
@@ -165,12 +165,28 @@ $(function () {
                 let val = Number (jq.val());
                 return val + count > MAX ;
             };
+/*
             this.clearFieldErrors(ext1);
             this.clearFieldErrors(ext2);
             this.clearFieldErrors(ext3);
             this.clearFieldErrors(ext4);
+*/
 
-            isValid = this.testError(fnRequiredValidator, ext1, 'required');
+            [{jqElem: ext1, choice: !$('#ext1-container').hasClass('govuk-visually-hidden')},
+                {jqElem: ext2, choice: !$('#ext2-container').hasClass('govuk-visually-hidden')},
+                {jqElem: ext3, choice: !$('#ext3-container').hasClass('govuk-visually-hidden')},
+                {jqElem: ext4, choice: !$('#ext4-container').hasClass('govuk-visually-hidden')}].forEach(
+                    function(curVal, index, arr){
+                        this.clearFieldErrors(curVal['jqElem']);
+                        if ( curVal['choice']) {
+                            isValid = isValid &&  this.testError(fnRequiredValidator, curVal['jqElem'], 'required');
+                            isValid = isValid && this.testError(fnNumberValidator, curVal['jqElem'], 'number');
+                            isValid = isValid && this.testError(fnIncrementingCountTest, curVal['jqElem'], 'max');
+                            isValid = isValid && this.testError(fnMinValidator, curVal['jqElem'], 'min');
+                        }
+            }, this) ;
+
+            /*isValid = this.testError(fnRequiredValidator, ext1, 'required');
             isValid = isValid && this.testError(fnNumberValidator, ext1, 'number');
             isValid = isValid && this.testError(fnIncrementingCountTest, ext1, 'max');
             isValid = isValid && this.testError(fnMinValidator, ext1, 'min');
@@ -196,7 +212,7 @@ $(function () {
                 isValid = isValid && this.testError(fnIncrementingCountTest, ext4, 'max');
                 isValid = isValid && this.testError(fnMinValidator, ext4, 'min');
                 count += Number(ext4.val());
-            }
+            }*/
         }
 
         if (!isValid) {
