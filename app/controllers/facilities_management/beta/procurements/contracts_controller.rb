@@ -114,7 +114,7 @@ module FacilitiesManagement
               page_title: 'Contract summary',
               caption1: @procurement.contract_name,
               continuation_text: set_continuation_text,
-              return_text: 'Return to procurement dashboard',
+              return_text: 'Return to procurements dashboard',
               secondary_text: set_secondary_text,
               secondary_name: 'close_contract'
             },
