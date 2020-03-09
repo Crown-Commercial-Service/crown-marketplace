@@ -1,4 +1,6 @@
-<div class="govuk-heading-xl">
+<div class="govuk-caption-xl">
+    <%= @procurement.name %>
+</div><div class="govuk-heading-xl">
     <%= t('.title') %>
 </div>
 <div class="govuk-heading-l">
@@ -12,20 +14,20 @@
         </label>
     </div>
     <div id="contract-signed-yes-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-margin-bottom-2 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:yes_is_used]%>">
-        <span class="govuk-body">
-            <%= t('.contract_start_date', class: 'govuk-body ccs-font-weight-semi-bold') %>
-        </span>
-        <span>
-            <%= t('.contract_start_date_caption', class: 'govuk-hint') %>
-        </span>
-        <%= f.gov_uk_date_field :contract_start_date, legend_options: { page_heading: false, visually_hidden: false } %>
+        <div class="govuk-body ccs-font-weight-semi-bold">
+            <%= t('.contract_start_date') %>
+        </div>
+        <div class="govuk-hint">
+            <%= t('.contract_start_date_caption') %>
+        </div>
+        <%= f.gov_uk_date_field :contract_start_date, legend_options: { page_heading: false, visually_hidden: true } %>
         
-        <span>
-            <%= t('.contract_end_date', class: 'govuk-body ccs-font-weight-semi-bold') %>
-        </span>
-        <span class="govuk-hint">
-            <%= t('.contract_end_date_caption', class: 'govuk-hint') %>
-        </span>
+        <div class="govuk-body ccs-font-weight-semi-bold">
+            <%= t('.contract_end_date') %> <br />
+        </div>
+        <div class="govuk-hint">
+            <%= t('.contract_end_date_caption') %>
+        </div>
         <%= f.gov_uk_date_field :contract_end_date, legend_options: { page_heading: false, visually_hidden: true } %>
     </div>
 
