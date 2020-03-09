@@ -1,55 +1,45 @@
 <div class="govuk-body">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <% if flash[:error] %>
-        <div class="govuk-inset-text cmp-inset-text--success">
-          <p class="govuk-body govuk-body-s"><%= flash[:error] %></p>
-        </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-thirds">
-      <span class="govuk-caption-l"><%= @current_login_email %></span>
-      <span class="govuk-heading-xl"><%= t('.dashboard_header') %></span>
-      <span class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_assessed_value') %></span>
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">RM3830 administration dashboard</span>
+      <span class="govuk-heading-xl"><%= @current_login_email %></span>
+      <span class="govuk-heading-m govuk-!-margin-0">Assessed value</span>
     </div>
   </div>
   <hr class="govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-start-new-procurement-link" href="<%= facilities_management_beta_admin_average_framework_rates_path %>" class="fm-buyer-account-panel__title"><%= t('.dashboard_average_rate') %></a>
+        <a id="fm-start-new-procurement-link" class="fm-buyer-account-panel__title">Average framework rates</a>
         <p class="fm-buyer-account-panel__body">
-          <%= t('.dashboard_manage_rate') %>
+          Manage the average framework rates and variances
         </p>
       </div>
     </div>
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-procurements-link" href="<%= facilities_management_beta_admin_call_off_benchmark_rates_path %>" class="fm-buyer-account-panel__title" disabled="true"><%= t('.dashboard_calloff_rate') %></a>
+        <span id="fm-manage-procurements-link" class="fm-buyer-account-panel__title__disabled" disabled="true">Call-off benchmark rates</span>
         <p class="fm-buyer-account-panel__body">
-          <%= t('.dashboard_manage_calloff_rate') %>
+          Manage the call-off benchmark rates snd variances
         </p>
       </div>
     </div>
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.dashboard_supplier_data') %></span>
+      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1">Supplier data</span>
     </div>
   </div>
   <hr class="govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-buildings-link" href="<%= facilities_management_beta_admin_supplier_framework_data_path %>" class="fm-buyer-account-panel__title" href="?"><%= t('.dashboard_supplier_framework_data') %></a>
+        <a id="fm-manage-buildings-link" class="fm-buyer-account-panel__title" href="/facilities-management/beta/buildings-management">Supplier framework data</a>
         <p class="fm-buyer-account-panel__body">
-          <%= t('.dashboard_supplier_prices') %>
+          Manage supplier services, prices and regions
         </p>
       </div>
     </div>
   </div>
-</div>
 
+</div>
