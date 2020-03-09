@@ -32,7 +32,7 @@
     <% case @contract.aasm_state %>
     <% when 'declined' %>
         <%= govuk_details('Reason for declining', true) do %>
-            <%= "#{t('.supplier_declined_reason')} '#{@contract.reason_for_closing}'." %>
+            <%= "#{t('.supplier_declined_reason')} '#{@contract.reason_for_declining}'." %>
         <% end %>
     <% when 'withdrawn' %>
         <%= govuk_details('Reason for closing', true) do %>
