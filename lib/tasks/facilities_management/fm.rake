@@ -110,6 +110,19 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
   rescue PG::Error => e
     puts e.message
   end
+
+  def self.facilities_management_bank_holidays
+    data = File.read('data/facilities_management/bank_holidays.json').delete!("\n")
+
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      query = "DELETE FROM fm_static_data WHERE key = 'bank_holidays';"
+      db.query query
+      query = "INSERT INTO public.fm_static_data (key, value) VALUES('bank_holidays', \'" + data + "\' );"
+      db.query query
+    end
+  rescue PG::Error => e
+    puts e.message
+  end
 end
 
 namespace :db do
@@ -130,6 +143,8 @@ namespace :db do
       FM.facilities_management_services
       p 'add work_packages data to fm_static_table'
       FM.facilities_management_work_packages
+      p 'add bank_holidays data to fm_static_table'
+      FM.facilities_management_bank_holidays
     end
   end
   desc 'add FM static data to the database'
