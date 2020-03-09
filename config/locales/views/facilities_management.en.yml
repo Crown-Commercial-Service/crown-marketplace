@@ -921,7 +921,7 @@ en:
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?
-          who_are: who are able to provide the services your require in your locations
+          who_are: who are able to provide the services your require in your location(s)
         services:
           no_services_selected: No services selected
           question: Select the facilities management services that you need
