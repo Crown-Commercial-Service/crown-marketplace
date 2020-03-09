@@ -55,7 +55,7 @@ module FacilitiesManagement
       end
 
       event :withdraw do
-        transitions from: :accepted, to: :withdrawn
+        transitions from: %i[accepted sent], to: :withdrawn
       end
 
       event :decline do
