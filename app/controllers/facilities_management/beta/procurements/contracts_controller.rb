@@ -8,7 +8,9 @@ module FacilitiesManagement
 
         def show; end
 
-        def edit; end
+        def edit
+          @procurement.set_state_to_closed! && redirect_to(facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)) if params['close_contract'].present?
+        end
 
         def update
           close_procurement && return if params['close_procurement'].present?
@@ -29,6 +31,18 @@ module FacilitiesManagement
           if @contract.valid?(:reason_for_closing)
             @contract.save
             @procurement.set_state_to_closed!
+            redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+          else
+            params[:name] = 'withdraw'
+            set_page_detail
+            render :edit
+          end
+        end
+
+        def sign_procurement
+          @contract.assign_attributes(contract_params)
+          if @contract.valid?
+            @contract.set_to_signed!
             redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
           else
             params[:name] = 'withdraw'
@@ -63,6 +77,7 @@ module FacilitiesManagement
                                                page_details(action_name)[:secondary_text])
           )
         end
+        # rubocop:enable Metrics/AbcSize
 
         def page_details(action)
           action = 'edit' if action == 'update'
@@ -100,7 +115,8 @@ module FacilitiesManagement
               caption1: @procurement.contract_name,
               continuation_text: set_continuation_text,
               return_text: 'Return to procurement dashboard',
-              secondary_text: set_secondary_text
+              secondary_text: set_secondary_text,
+              secondary_name: 'close_contract'
             },
             edit: {
               back_url: facilities_management_beta_procurement_contract_path(@procurement),
@@ -109,7 +125,6 @@ module FacilitiesManagement
             },
           }.freeze
         end
-        # rubocop:enable Metrics/AbcSize
       end
     end
   end
