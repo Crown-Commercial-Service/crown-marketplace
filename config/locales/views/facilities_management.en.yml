@@ -271,6 +271,9 @@ en:
               invalid: Enter a real start time
               less_than: The start time must be before the end time of your specified hours
               not_a_date: Enter a real start time
+  dashboard:
+    index:
+      admin_link: Managing framework and supplier data
   facilities_management:
     basket:
       basket_header: selected
@@ -361,30 +364,6 @@ en:
         procurements_dashboard_button: Procurements dashboard
         start_paragraph: You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements.
         start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer a cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require.
-      passwords:
-        edit:
-          confirm_code: Confirm Code
-          confirm_new_password: Confirm new password
-          heading: Reset your password
-          heading1: A reset email has been sent.
-          lead: Reset password for
-          lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
-          new_password: New password
-          password: Your password must have
-          text_html: If you don't receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-        forgot_password_confirmation:
-          heading: A reset email has been sent.
-          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
-          text01: If you don't receive this, email
-          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-        new:
-          email: Email address
-          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
-          heading: Reset password
-          lead: Enter your email address and we'll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
-        password_reset_success:
-          heading: You have successfully changed your password
-          lead: You can now sign in to your Crown Commercial Service account
       procurement_buildings:
         building_standards:
           back_to_service_information: Back to service information
@@ -928,13 +907,6 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
-      sessions:
-        new:
-          email_address: Email address
-          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
-          forgotten_password_html: I've forgotten my password
-          password: Password
-          sign_in_header: Sign in to your account
       supplier:
         contracts:
           accepted_contract_offer:
@@ -994,11 +966,6 @@ en:
           heading: Enter your access code
           lead: 'We just sent a 6 digit access code by text to:'
           resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
-    gateway:
-      index:
-        cmp_support_aria_label: Email us for support with this service
-        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
-        heading: CCS Marketplace private beta
     home:
       beforeyoustart: Before you start
       heading: Find Facilities Management services
@@ -1039,19 +1006,6 @@ en:
         new_password: New password
         password: Your password must have
         text01: If you don't receive this, contact CCS customer services team.
-      forgot_password_confirmation:
-        heading: A reset email has been sent
-        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
-        text01: If you don't receive this, email
-        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-      new:
-        email: Email address
-        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
-        heading: Reset password
-        lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
-      password_reset_success:
-        heading: You have successfully changed your password
-        lead: You can now sign in to your Crown Commercial Service account
     registrations:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
@@ -1101,3 +1055,40 @@ en:
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
         resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
+  shared:
+    passwords:
+      edit:
+        confirm_code: Confirm Code
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        heading1: A reset email has been sent.
+        lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
+        new_password: New password
+        password: Your password must have
+        text_html: If you don't receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      forgot_password_confirmation:
+        heading: A reset email has been sent.
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
+        password: Password
+        sign_in_header: Sign in to your account
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
