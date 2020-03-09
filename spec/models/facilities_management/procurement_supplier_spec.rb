@@ -85,7 +85,8 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
       procurement.save_eligible_suppliers_and_set_state
       # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(described_class).to receive(:send_offer_email)
+      allow_any_instance_of(described_class).to receive(:send_email_to_buyer).and_return(nil)
+      allow_any_instance_of(described_class).to receive(:send_email_to_supplier).and_return(nil)
       # rubocop:enable RSpec/AnyInstance
     end
 
@@ -175,7 +176,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       end
 
       # rubocop:disable RSpec/NestedGroups
-      describe '#reason_for_closing' do
+      describe '#reason_for_declining' do
         before { contract.contract_response = false }
 
         context 'when contract_response is false and no reason is given' do
@@ -188,9 +189,9 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
         context 'when contract_response is false and a reason is given' do
           it 'will be valid' do
-            contract.reason_for_closing = 'This is test string'
+            contract.reason_for_declining = 'This is test string'
             expect(contract.contract_response).to be false
-            expect(contract.reason_for_closing).to match 'This is test string'
+            expect(contract.reason_for_declining).to match 'This is test string'
             expect(contract.valid?(:contract_response)).to be true
           end
         end
@@ -198,9 +199,9 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         context 'when contract_response is false and a reason is given that is more than 500 characters' do
           it 'will not be valid' do
             closed_reason = (0...501).map { ('a'..'z').to_a[rand(26)] }.join
-            contract.reason_for_closing = closed_reason
+            contract.reason_for_declining = closed_reason
             expect(contract.contract_response).to be false
-            expect(contract.reason_for_closing).to match closed_reason
+            expect(contract.reason_for_declining).to match closed_reason
             expect(contract.valid?(:contract_response)).to be false
           end
         end
