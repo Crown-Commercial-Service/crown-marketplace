@@ -107,14 +107,14 @@ module FacilitiesManagement
               back_label: 'Back',
               back_text: 'Back',
               back_url: facilities_management_beta_procurements_path,
-              return_text: 'Return to procurement dashboard',
+              return_text: 'Return to procurements dashboard',
               return_url: facilities_management_beta_procurements_path,
             },
             show: {
               page_title: 'Contract summary',
               caption1: @procurement.contract_name,
               continuation_text: set_continuation_text,
-              return_text: 'Return to procurement dashboard',
+              return_text: 'Return to procurements dashboard',
               secondary_text: set_secondary_text,
               secondary_name: 'close_contract'
             },
