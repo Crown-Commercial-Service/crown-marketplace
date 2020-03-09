@@ -1004,12 +1004,25 @@ en:
             call_off_contract_documents: Call off contract documents
             requirements: Requirements
         sent:
+          accepted_offer:
+            list01_1: you will sign the contract first, in the order form, and share with the buyer
+            list01_2: this would usually take place within 5 working days
+            list01_title: 1. You sign the contract
+            list02_1: the buyer will then complete the effective date (on page 4 of the order form - this is the date the contract is fully signed), sign the contract, and share it back with you
+            list02_title: 2. Buyer signs the contract
+            list03_1: the buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date
+            list03_title: 3. Signature confirmation
+            list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
+            list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
+            list04_title: 4. Withdraw before signing
+            what_happens_next: What happens next
           declined_offer:
             contract_name: 'Contract name:'
             contract_number: 'Contract number:'
             description: For reference, this contract offer will be be viewable only in the closed section of your dashboard.
-            link_text: Return to dashboard
             title: You have declined this contract offer
+          index:
+            link_text: Return to dashboard
         sessions:
           new:
             email_address: Email address
