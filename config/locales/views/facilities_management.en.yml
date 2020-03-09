@@ -262,8 +262,9 @@ en:
             contract_response:
               inclusion: You must select one option to respond to the contract offer
             reason_for_closing:
+              blank: Enter a reason for closing this procurement
+            reason_for_declining:
               blank: Enter a reason for declining this contract offer
-              buyer: Enter a reason for closing this procurement
         facilities_management/service_hour_choice:
           attributes:
             end_time:
@@ -994,7 +995,7 @@ en:
             contract_name: 'Contract name:'
             contract_number: 'Contract number:'
             form_title: Do you accept the contract offer from
-            reason_for_closing: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
+            reason_for_declining: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
           procurement_requirements_head:
             buyer: Buyer
           received_contract_offer:
