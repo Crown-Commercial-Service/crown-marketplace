@@ -345,11 +345,6 @@ en:
           submit: Save and continue
           town_or_city: Town or city
           your_details: Your details
-      gateway:
-        index:
-          cmp_support_aria_label: Email us for support with this service
-          cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
-          heading: CCS Marketplace private beta
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -995,17 +990,6 @@ en:
         services_selected: Services selected
         start_a_new_procurement_header: Start a new procurement
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
-    passwords:
-      edit:
-        confirm_code: Confirm Code
-        confirm_new_password: Confirm new password
-        heading: Reset your password
-        heading1: A reset email has been sent
-        lead: Reset password for
-        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
-        new_password: New password
-        password: Your password must have
-        text01: If you don't receive this, contact CCS customer services team.
     registrations:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
@@ -1056,6 +1040,11 @@ en:
         lead: 'We just sent a 6 digit access code by text to:'
         resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   shared:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
     passwords:
       edit:
         confirm_code: Confirm Code
@@ -1087,8 +1076,3 @@ en:
         forgotten_password_html: I've forgotten my password
         password: Password
         sign_in_header: Sign in to your account
-    gateway:
-      index:
-        cmp_support_aria_label: Email us for support with this service
-        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
-        heading: CCS Marketplace private beta
