@@ -6,7 +6,7 @@ RSpec.describe FMCalculator::Calculator do
 
   let(:calc) do
     # args  Service ref, uom_vol, occupants, tuoe involved, london_location, CAFM, helpdesk
-    described_class.new(3, 'G1', 23000, 125, true, true, true, false)
+    described_class.new(3, 'G1', 23000, 125, true, true, true, false, CCS::FM::Rate.read_benchmark_rates, CCS::FM::RateCard.latest)
   end
 
   describe 'calculate routine cleaning', type: :model do

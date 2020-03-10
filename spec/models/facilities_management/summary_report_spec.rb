@@ -757,7 +757,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # rubocop:disable RSpec/ExampleLength
   it 'can calculate prices' do
     # eligible = true if @building_type == 'STANDARD' && (@service_standard == 'A' || @service_standard.nil?) && @priced_at_framework.to_s == 'true' && Integer(@assessed_value) <= 1500000
-
     sum_uom = 0
     sum_benchmark = 0
 
@@ -774,7 +773,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     services.each do |code|
       calc_fm = FMCalculator::Calculator.new(contract_length_years, code, uom_value, occupants,
-                                             tupe_flag, london_flag, cafm_flag, helpdesk_flag)
+                                             tupe_flag, london_flag, cafm_flag, helpdesk_flag, CCS::FM::Rate.read_benchmark_rates, CCS::FM::RateCard.latest)
       sum_uom += calc_fm.sumunitofmeasure
       sum_benchmark += calc_fm.benchmarkedcostssum
     end
