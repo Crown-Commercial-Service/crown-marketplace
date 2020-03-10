@@ -111,14 +111,14 @@ en:
               inclusion: Select one answer
               not_present: Select one answer
               not_present_contract_details: You must answer the question about 'Local Government Pension Scheme'
-            mobilisation_start_date:
-              greater_than: Mobilisation start date must be today or in the future
             mobilisation_period:
               greater_than: Enter mobilisation length
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+            mobilisation_start_date:
+              greater_than: Mobilisation start date must be today or in the future
             name:
               blank: Enter the name for the search
               invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
