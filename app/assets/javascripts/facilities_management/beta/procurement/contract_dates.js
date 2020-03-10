@@ -92,8 +92,8 @@ $(function () {
             isValid = !(tupeIsSpecified && mobTextValue === "");
             if ( isValid ) {
                 isValid = isValid && this.testError(fnNumberValidator, jqMobilisationPeriod, "number");
-                if ( mobTextValue.indexOf('.') >= 0 ) {
-                    if ( mobTextValue.substring(mobTextValue.indexOf('.')+1).replace("0","") !== "" ) {
+                if ( mobTextValue.indexOf(".") >= 0 ) {
+                    if ( mobTextValue.substring(mobTextValue.indexOf(".")+1).replace("0","") !== "" ) {
                         isValid = isValid && false;
                         this.toggleError ( jqMobilisationPeriod, true, "pattern");
                     } else {
@@ -191,7 +191,7 @@ $(function () {
     };
 
     const leadingZero = function (num) {
-        return num < 10 ? '0' + num : num;
+        return num < 10 ? "0" + num : num;
     };
 
     const clearContractEndDate = function () {
