@@ -1,50 +1,58 @@
-<div class="govuk-caption-xl">
+<h1 class="govuk-caption-xl">
     <%= @procurement.name %>
-</div><div class="govuk-heading-xl">
+</h1>
+<h2 class="govuk-heading-xl">
     <%= t('.title') %>
-</div>
-<div class="govuk-heading-l">
-    <%= t('.description') %>
-</div>
+</h2>
+
 <div class="govuk-form-group <%= 'govuk-form-group--error' if @contract.errors.any? %>">
-  <%= display_error(f.object, :contract_signed) %>
-<div class="govuk-radios">
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h3 class="govuk-fieldset__heading"><%= t('.description') %></h3>
+  </legend>
+    <%= display_error(f.object, :contract_signed, false) %>
+  <div class="govuk-radios">
     <div class="govuk-radios__item">
-        <%= f.radio_button :contract_signed, true, class: 'govuk-radios__input', id: 'contract-signed-yes', name: 'contract-signed-status' %>
-        <%= f.label :contract_signed, "Yes", value: true, class: 'govuk-label govuk-radios__label'%>
+      <%= f.radio_button :contract_signed, true, value: true, class: 'govuk-radios__input', id: 'contract-signed-yes' %>
+      <%= f.label :contract_signed, "Yes", value: true, class: 'govuk-label govuk-radios__label'%>
     </div>
-    <div id="contract-signed-yes-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-margin-bottom-2 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:yes_is_used]%>">
+    <div id="contract-signed-yes-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-margin-bottom-2 govuk-!-width-two-thirds <%= 'govuk-visually-hidden' if !@contract.contract_signed || @contract.contract_signed.nil? %>">
+      <div id="govuk-form-group contract_start_date <%= 'govuk-form-group--error' if @contract.errors[:contract_start_date].any?%>"
+       data-propertyname="Contract start date">
+      
         <div class="govuk-body ccs-font-weight-semi-bold">
-            <%= t('.contract_start_date') %>
+          <%= t('.contract_start_date') %>
         </div>
-        <div class="govuk-hint">
-            <%= t('.contract_start_date_caption') %>
+        <div class="govuk-hint" name="contract_start_date">
+          <%= t('.contract_start_date_caption') %>
         </div>
+        <%= display_error_label(@contract, :contract_start_date, '', "#{f.object_name}_contract_start_date") %>
         <%= f.gov_uk_date_field :contract_start_date, legend_options: { page_heading: false, visually_hidden: true } %>
-        
-        <div class="govuk-body ccs-font-weight-semi-bold">
-            <%= t('.contract_end_date') %> <br />
-        </div>
-        <div class="govuk-hint">
-            <%= t('.contract_end_date_caption') %>
-        </div>
-        <%= f.gov_uk_date_field :contract_end_date, legend_options: { page_heading: false, visually_hidden: true } %>
+      </div>
+
+      <div class="govuk-body ccs-font-weight-semi-bold">
+        <%= t('.contract_end_date') %> <br />
+      </div>
+      <div class="govuk-hint" name="contract_end_date">
+        <%= t('.contract_end_date_caption') %>
+      </div>
+      <%= display_error_label(@contract, :contract_end_date, '', "#{f.object_name}_contract_end_date") %>
+      <%= f.gov_uk_date_field :contract_end_date, legend_options: { page_heading: false, visually_hidden: true } %>
     </div>
 
     <div class="govuk-radios__item">
-        <%= f.radio_button :contract_signed, false, class: 'govuk-radios__input', id: 'contract-signed-no', name: 'contract-signed-status' %>
-        <%= f.label :contract_signed, "No", value: false, class: 'govuk-label govuk-radios__label'%>
+      <%= f.radio_button :contract_signed, false, value: false, class: 'govuk-radios__input', id: 'contract-signed-no' %>
+      <%= f.label :contract_signed, "No", value: false, class: 'govuk-label govuk-radios__label'%>
     </div>
-    <div id="contract-signed-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless :contract_signed == false %>">
-        <div class="govuk-body">
-        <%= t('.contract_will_not_be_signed') %> <br/>
-        <%= t('.contract_will_not_be_signed_reason') %>
-        </div>
-        <%= display_error_label(f.object, :reason_for_closing, '', "#{f.object_name}_reason_for_closing") %>
-        <%= govuk_text_area_input(f, :reason_for_closing, true, ['rows', 5], ['maxlength', 100], [:class, 'govuk-!-margin-bottom-2 govuk-!-margin-top-4']) %>
-        <span id="facilities_management_procurement_supplier_character_left" class="govuk-hint govuk-character-count__message" aria-live="polite">
-            <%= t('.input_remaining') %>
-        </span>
+    <div id="contract-signed-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds <%= 'govuk-visually-hidden' if @contract.contract_signed || @contract.contract_signed.nil? %>">
+      <div class="govuk-body">
+      <%= t('.contract_will_not_be_signed') %> <br/>
+      <%= t('.contract_will_not_be_signed_reason') %>
       </div>
-      </div>
+      <%= display_error_label(f.object, :reason_for_closing, '', "#{f.object_name}_reason_for_closing") %>
+      <%= govuk_text_area_input(f, :reason_for_closing, true, ['rows', 5], ['maxlength', 100], [:class, 'govuk-!-margin-bottom-2 govuk-!-margin-top-4']) %>
+      <span id="facilities_management_procurement_supplier_character_left" class="govuk-hint govuk-character-count__message" aria-live="polite">
+          <%= t('.input_remaining') %>
+      </span>
+    </div>
+  </div>
 </div>
