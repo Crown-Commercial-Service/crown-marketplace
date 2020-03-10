@@ -11,16 +11,16 @@ $(function () {
         let fnLengthValidator = this.validationFunctions['maxlength'];
         let fnMaxValidator = this.validationFunctions['max'];
         let fnMinValidator = this.validationFunctions['min'];
-        let fnMobilisationDateMin = function (strDD, strMM, strYYYY) {
-            let mDate = fnCreateDate(strDD,strMM,strYYYY);
-            let curDate = new Date();
-            return mDate >= curDate;
-        };
         let fnCreateDate = function ( strDD, strMM, strYYYY) {
             return new Date(strYYYY, strMM, strDD);
         };
         let fnCreateDateFromGovInputs = function ( strName ) {
-            return fnCreateDate ( $("#" + strName + "_dd").val(), parseInt($("#" + strName + "_mm").val())-1 + "", $("#" + strName + "_yyyy").val()) ;
+            return fnCreateDate ( $("#" + strName + "_dd").val(), parseInt($("#" + strName + "_mm").val(),10)-1 + "", $("#" + strName + "_yyyy").val()) ;
+        };
+        let fnMobilisationDateMin = function (strDD, strMM, strYYYY) {
+            let mDate = fnCreateDate(strDD,strMM,strYYYY);
+            let curDate = new Date();
+            return mDate >= curDate;
         };
 
         let jqInitialCallOffPeriod = $('#facilities_management_procurement_initial_call_off_period');
