@@ -259,10 +259,17 @@ en:
               required: Enter a percentage of pensionable pay
         facilities_management/procurement_supplier:
           attributes:
+            contract_end_date:
+              before_start_date: The contract start date must be before the contract end date
+              blank: Enter contract end date
             contract_response:
               inclusion: You must select one option to respond to the contract offer
+            contract_signed:
+              inclusion: Select one option
+            contract_signed_date:
+              blank: Enter contract start date
             reason_for_closing:
-              blank: Enter a reason for closing this procurement
+              not_signed_reason: Enter a reason why this contract will not be signed
             reason_for_declining:
               blank: Enter a reason for declining this contract offer
         facilities_management/service_hour_choice:
@@ -513,9 +520,11 @@ en:
             contract_end_date_caption: The contract end date should be the same as the end of your initial call-off period. For example, 01 11 2030.
             contract_start_date: Enter contract start date
             contract_start_date_caption: The contract start date is the 'effective date' - this is the date the final party signed the contract. For example, 01 11 2030.
+            contract_will_not_be_signed: This contract will not be signed.
+            contract_will_not_be_signed_reason: Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.
             description: Please confirm if both parties have signed and exchanged the contract
+            input_remaining: You have 100 characters remaining
             title: Confirmation of signed contract
-            yes: Yes
           contract_offer_details:
             declined: The supplier declined this contract offer on
             expired: This contract offer expired on
