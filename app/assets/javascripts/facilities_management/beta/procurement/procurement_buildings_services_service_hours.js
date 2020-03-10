@@ -197,7 +197,9 @@ SvcHoursDataUI.prototype.applyDetails = function () {
         } else if ("sunday saturday".indexOf(key) < 0) {
             this.pasteElementDetails(key, sourceDetails, this.sections[key]);
         }
-        if (null !== sourceDetails && sourceDetails.choice === "") break;
+        if (null !== sourceDetails && sourceDetails.choice === "") {
+            break;
+        }
     }
 };
 
