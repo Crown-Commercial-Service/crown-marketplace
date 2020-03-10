@@ -16,7 +16,6 @@ module FacilitiesManagement
     attribute :contract_signed_date_dd
     attribute :contract_signed_date_mm
     attribute :contract_signed_date_yyyy
-    
 
     before_validation :convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
