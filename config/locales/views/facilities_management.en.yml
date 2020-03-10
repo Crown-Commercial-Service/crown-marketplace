@@ -290,6 +290,18 @@ en:
       removeall_text: Remove all
       selectall_text: Select all
     beta:
+      admin:
+        admin_account:
+          admin_account:
+            dashboard_assessed_value: Assessed value
+            dashboard_average_rate: Average framework rates
+            dashboard_calloff_rate: Call-off benchmark rates
+            dashboard_header: RM3830 administration dashboard
+            dashboard_manage_calloff_rate: Manage the call-off benchmark rates snd variances
+            dashboard_manage_rate: Manage the average framework rates and variances
+            dashboard_supplier_data: Supplier data
+            dashboard_supplier_framework_data: Supplier framework data
+            dashboard_supplier_prices: Manage supplier services, prices and regions
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description

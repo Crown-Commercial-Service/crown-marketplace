@@ -1,42 +1,42 @@
 <div class="govuk-body">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">RM3830 administration dashboard</span>
+      <span class="govuk-caption-l"><%= t('.dashboard_header') %></span>
       <span class="govuk-heading-xl"><%= @current_login_email %></span>
-      <span class="govuk-heading-m govuk-!-margin-0">Assessed value</span>
+      <span class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_assessed_value') %></span>
     </div>
   </div>
   <hr class="govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-start-new-procurement-link" class="fm-buyer-account-panel__title">Average framework rates</a>
+        <a id="fm-start-new-procurement-link" class="fm-buyer-account-panel__title"><%= t('.dashboard_average_rate') %></a>
         <p class="fm-buyer-account-panel__body">
-          Manage the average framework rates and variances
+          <%= t('.dashboard_manage_rate') %>
         </p>
       </div>
     </div>
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <span id="fm-manage-procurements-link" class="fm-buyer-account-panel__title__disabled" disabled="true">Call-off benchmark rates</span>
+        <span id="fm-manage-procurements-link" class="fm-buyer-account-panel__title__disabled" disabled="true"><%= t('.dashboard_calloff_rate') %></span>
         <p class="fm-buyer-account-panel__body">
-          Manage the call-off benchmark rates snd variances
+          <%= t('.dashboard_manage_calloff_rate') %>
         </p>
       </div>
     </div>
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1">Supplier data</span>
+      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.dashboard_supplier_data') %></span>
     </div>
   </div>
   <hr class="govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-buildings-link" class="fm-buyer-account-panel__title" href="/facilities-management/beta/buildings-management">Supplier framework data</a>
+        <a id="fm-manage-buildings-link" class="fm-buyer-account-panel__title" href="/facilities-management/beta/buildings-management"><%= t('.dashboard_supplier_framework_data') %></a>
         <p class="fm-buyer-account-panel__body">
-          Manage supplier services, prices and regions
+          <%= t('.dashboard_supplier_prices') %>
         </p>
       </div>
     </div>
