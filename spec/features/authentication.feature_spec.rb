@@ -132,4 +132,46 @@ RSpec.feature 'Authentication', type: :feature do
 
     expect(page).to have_text(I18n.t('shared.not_permitted.supply_teachers.title'))
   end
+
+  context 'when user if fm admin' do
+    let(:cognito_groups) do
+      OpenStruct.new(groups: [
+        OpenStruct.new(group_name: 'fm_access'),
+        OpenStruct.new(group_name: 'ccs_employee')
+      ])
+    end
+
+    scenario 'can sign into the admin tool using AWS Cognito' do
+      OmniAuth.config.test_mode = false
+      user = create(:user, roles: %i[ccs_employee fm_access])
+      visit '/facilities-management/beta/admin/gateway'
+      click_on 'Sign in with Cognito'
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: 'ValidPassword!'
+      click_button 'Sign in'
+      expect(page).not_to have_text('Not permitted')
+      expect(page).to have_text('RM3830 administration dashboard')
+    end
+  end
+
+  context 'when user if mc admin' do
+    let(:cognito_groups) do
+      OpenStruct.new(groups: [
+        OpenStruct.new(group_name: 'mc_access'),
+        OpenStruct.new(group_name: 'ccs_employee')
+      ])
+    end
+
+    scenario 'cannot sign into the admin tool using AWS Cognito' do
+      OmniAuth.config.test_mode = false
+      user = create(:user, roles: %i[ccs_employee mc_access])
+      visit '/facilities-management/beta/admin/gateway'
+      click_on 'Sign in with Cognito'
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: 'ValidPassword!'
+      click_button 'Sign in'
+      expect(page).to have_text('Sorry, you are not authorised to view this page')
+      expect(page).not_to have_text('RM3830 administration dashboard')
+    end
+  end
 end
