@@ -14,12 +14,12 @@ module FacilitiesManagement
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
 
-    acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
-
     before_validation :convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
     validates :reason_for_declining, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
     validates :reason_for_closing, length: { maximum: 500 }, presence: true, on: :reason_for_closing
+
+    acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
 
     before_validation :convert_to_boolean, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
@@ -28,21 +28,31 @@ module FacilitiesManagement
     validates :contract_end_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
     validates :contract_end_date, date: { allow_nil: false, after_or_equal_to: proc { :contract_start_date } }, if: :contract_signed_true?, on: :confirmation_of_signed_contract
 
+    # rubocop:disable Metrics/BlockLength
     aasm do
       state :unsent, initial: true
-      state :sent, before_enter: %i[assign_contract_number set_date_and_send_email]
-      state :accepted, before_enter: %i[set_supplier_response_date send_accepted_email]
+      state :sent
+      state :accepted
       state :signed
       state :not_signed
       state :withdrawn
-      state :declined, before_enter: %i[set_supplier_response_date send_declined_email]
+      state :declined
       state :expired
 
       event :offer_to_supplier do
+        before do
+          assign_contract_number
+          set_sent_date
+          send_email_to_supplier('DA_offer_sent')
+        end
         transitions from: :unsent, to: :sent
       end
 
       event :accept do
+        before do
+          set_supplier_response_date
+          send_email_to_buyer('DA_offer_accepted')
+        end
         transitions from: :sent, to: :accepted
       end
 
@@ -59,6 +69,11 @@ module FacilitiesManagement
       end
 
       event :decline do
+        before do
+          set_supplier_response_date
+          set_contract_closed_date
+          send_email_to_buyer('DA_offer_declined')
+        end
         transitions from: :sent, to: :declined
       end
 
@@ -66,6 +81,7 @@ module FacilitiesManagement
         transitions from: :sent, to: :expired
       end
     end
+    # rubocop:enable Metrics/BlockLength
 
     def self.used_direct_award_contract_numbers_for_current_year
       where('contract_number like ?', 'RM3860-DA%')
@@ -131,46 +147,64 @@ module FacilitiesManagement
       ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
     end
 
-    def set_date_and_send_email
+    def set_sent_date
       self.offer_sent_date = DateTime.now.in_time_zone('London')
-      send_offer_email
+    end
+
+    def set_contract_closed_date
+      self.contract_closed_date = DateTime.now.in_time_zone('London')
     end
 
     def set_supplier_response_date
       self.supplier_response_date = DateTime.now.in_time_zone('London')
     end
 
-    def format_date_time_numeric
-      contract_expiry_date&.strftime '%d/%m/%Y, %l:%M%P'
+    def format_date_time_numeric(date)
+      date.strftime '%d/%m/%Y, %l:%M%P'
     end
 
-    def send_offer_email
-      template_name = 'DA_offer_sent'
-      email_to = supplier.data['contact_email']
+    def host
+      case ENV['RAILS_ENV']
+      when 'production'
+        'https://cmp.cmpdev.crowncommercial.gov.uk'
+      when 'development'
+        'http://localhost:3000'
+      end
+    end
 
-      host = case ENV['RAILS_ENV']
-             when 'production'
-               'https://cmp.cmpdev.crowncommercial.gov.uk'
-             when 'development'
-               'localhost:3000'
-             end
+    # rubocop:disable Metrics/AbcSize
+    def send_email_to_buyer(email_type)
+      template_name = email_type
+      email_to = procurement.user.email
+
+      gov_notify_template_arg = {
+        'da-offer-1-supplier-1': supplier.data['supplier_name'],
+        'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
+        'da-offer-1-reference': contract_number,
+        'da-offer-1-name': procurement.contract_name,
+        'da-offer-1-decline-reason': reason_for_declining,
+        'da-offer-1-accept-date': format_date_time_numeric(supplier_response_date),
+        'da-offer-1-link': host + '/facilities-management/beta/procurements/' + procurement.id + '/contracts/' + id
+      }.to_json
+
+      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+    end
+    # rubocop:enable Metrics/AbcSize
+
+    def send_email_to_supplier(email_type)
+      template_name = email_type
+      email_to = supplier.data['contact_email']
 
       gov_notify_template_arg = {
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
-        'da-offer-1-expiry': format_date_time_numeric,
+        'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
         'da-offer-1-link': host + '/facilities-management/beta/supplier/contracts/' + id,
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
         'da-offer-1-reference': contract_number
       }.to_json
 
       FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
-    end
-
-    def send_accepted_email; end
-
-    def send_declined_email
-      self.contract_closed_date = DateTime.now.in_time_zone('London')
     end
   end
 end

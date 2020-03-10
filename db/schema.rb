@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_090048) do
+ActiveRecord::Schema.define(version: 2020_03_09_111231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -148,7 +148,6 @@ ActiveRecord::Schema.define(version: 2020_03_10_090048) do
     t.text "reason_for_closing"
     t.text "reason_for_declining"
     t.text "reason_for_not_signing"
-    t.boolean "contract_signed"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
   end
 
@@ -187,10 +186,10 @@ ActiveRecord::Schema.define(version: 2020_03_10_090048) do
     t.date "closed_contract_date"
     t.boolean "is_contract_closed", default: false
     t.string "da_journey_state"
+    t.string "payment_method"
     t.boolean "using_buyer_detail_for_invoice_details"
     t.boolean "using_buyer_detail_for_notices_detail"
     t.boolean "using_buyer_detail_for_authorised_detail"
-    t.string "payment_method"
     t.boolean "local_government_pension_scheme"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
@@ -280,14 +279,14 @@ ActiveRecord::Schema.define(version: 2020_03_10_090048) do
     t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_rates", id: false, force: :cascade do |t|
+  create_table "fm_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "standard", limit: 1
     t.boolean "direct_award"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.index ["code"], name: "index_fm_rates_on_code"
   end
 
