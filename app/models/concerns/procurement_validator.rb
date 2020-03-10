@@ -85,8 +85,6 @@ module ProcurementValidator
     # Validation for the contract_details page
     validate :validate_contract_details, on: :contract_details
 
-    validate :validate_contract_signed_confirmation, on: :confirmation_of_signed_contract
-
     private
 
     #############################################
@@ -175,13 +173,6 @@ module ProcurementValidator
       errors.add(:security_policy_document_required, :not_present_contract_details) if security_policy_document_required.nil?
       errors.add(:local_government_pension_scheme, :not_present_contract_details) if local_government_pension_scheme.nil?
       errors.any?
-    end
-
-    def validate_contract_signed_confirmation
-      errors.add(:contract_signed_date, :enter_start_date) if :contract_signed_date.nil?
-      errors.add(:contract_end_date, :enter_end_date) if :contract_end_date.nil?
-      errors.add(:contract_end_date, :before_start_date) if :contract_end_date < :contract_signed_date
-      errors.add(:reason_for_closing, :not_signed_reason) if :reason_for_closing.nil?
     end
   end
   # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
