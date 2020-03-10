@@ -260,16 +260,16 @@ en:
         facilities_management/procurement_supplier:
           attributes:
             contract_end_date:
-              before_start_date: The contract start date must be before the contract end date
+              after_or_equal_to: The contract end date must be after the contract start date
               blank: Enter contract end date
             contract_response:
               inclusion: You must select one option to respond to the contract offer
             contract_signed:
               inclusion: Select one option
-            contract_signed_date:
+            contract_start_date:
               blank: Enter contract start date
             reason_for_closing:
-              not_signed_reason: Enter a reason why this contract will not be signed
+              blank: Enter a reason why this contract will not be signed
             reason_for_declining:
               blank: Enter a reason for declining this contract offer
         facilities_management/service_hour_choice:

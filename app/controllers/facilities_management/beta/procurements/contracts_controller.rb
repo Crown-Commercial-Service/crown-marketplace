@@ -70,11 +70,11 @@ module FacilitiesManagement
           @contract.assign_attributes(contract_params)
           if @contract.valid?(:confirmation_of_signed_contract)
             # if @contract.contract_signed
-              
+
             # else
-              
+
             # end
-            #redirect_to facilities_management_beta_supplier_contract_sent_index_path(@contract.id)
+            # redirect_to facilities_management_beta_supplier_contract_sent_index_path(@contract.id)
           else
             set_page_detail
             render :edit

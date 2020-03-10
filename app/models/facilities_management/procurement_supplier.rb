@@ -14,13 +14,19 @@ module FacilitiesManagement
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
 
+    acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
+
     before_validation :convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
-    validates :reason_for_closing, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
-    validates :reason_for_closing, length: { maximum: 500 }, presence: { message: :buyer }, on: %i[reason_for_closing]
+    validates :reason_for_declining, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
+    validates :reason_for_closing, length: { maximum: 500 }, presence: true, on: :reason_for_closing
 
     before_validation :convert_to_boolean, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
+    validates :reason_for_closing, presence: true, length: 1..100, if: :contract_signed_false?, on: :confirmation_of_signed_contract
+    validates :contract_start_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
+    validates :contract_end_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
+    validates :contract_end_date, date: { allow_nil: false, after_or_equal_to: proc { :contract_start_date } }, if: :contract_signed_true?, on: :confirmation_of_signed_contract
 
     aasm do
       state :unsent, initial: true
@@ -104,9 +110,17 @@ module FacilitiesManagement
       contract_response == false
     end
 
+    def contract_signed_false?
+      contract_signed == false
+    end
+
+    def contract_signed_true?
+      contract_signed == true
+    end
+
     def convert_to_boolean
       self.contract_response = ActiveModel::Type::Boolean.new.cast(contract_response)
-      # self.contract_signed = ActiveModel::Type::Boolean.new.cast(contract_signed)
+      self.contract_signed = ActiveModel::Type::Boolean.new.cast(contract_signed)
     end
 
     def generate_contract_number
