@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module Beta
     module Admin
-      class AdminAccountController < FacilitiesManagement::Beta::FrameworkController
+      class AdminAccountController < FacilitiesManagement::Beta::Admin::FrameworkController
         before_action :redirect_if_needed
         before_action :authenticate_user!
         before_action :authorize_user
