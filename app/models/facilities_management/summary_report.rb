@@ -19,6 +19,8 @@ module FacilitiesManagement
         initialize_from_data
       end
 
+      @rates ||= CCS::FM::Rate.read_benchmark_rates
+      @rate_card ||= CCS::FM::RateCard.latest
       regions
     end
 
@@ -301,6 +303,8 @@ module FacilitiesManagement
                                                @london_flag,
                                                @cafm_flag,
                                                @helpdesk_flag,
+                                               @rates,
+                                               @rate_card,
                                                supplier_name,
                                                building_data)
 

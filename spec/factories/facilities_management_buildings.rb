@@ -6,7 +6,7 @@ FactoryBot.define do
     updated_by { Faker::Internet.unique.email }
     building_json do
       { 'id' => id,
-        'gia' => '1002',
+        'gia' => 1002,
         'name' => 'asa',
         'region' => 'Essex',
         'address' =>
@@ -26,7 +26,7 @@ FactoryBot.define do
   factory :facilities_management_building_london, parent: :facilities_management_building do
     building_json do
       { 'id' => id,
-        'gia' => '1002',
+        'gia' => 1002,
         'name' => 'asa',
         'region' => 'London',
         'address' =>

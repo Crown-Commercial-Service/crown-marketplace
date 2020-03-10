@@ -18,7 +18,7 @@ module FurtherCompetitionConcern
     # get the services including help & cafm for the,contract rate card,worksheet
     @report_results_no_cafmhelp_removed = {} if cache__calculation_values_for_spreadsheet_flag
 
-    supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
+    supplier_names = @report.selected_suppliers(@report.current_lot).map { |s| s['data']['supplier_name'] }
     supplier_names.each do |supplier_name|
       a_supplier_calculation_results = @report_results[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
       @report.calculate_services_for_buildings @selected_buildings, uvals, supplier_name, a_supplier_calculation_results, true, :fc
