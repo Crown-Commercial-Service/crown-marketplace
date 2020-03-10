@@ -36,6 +36,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                procurement_building: create(:facilities_management_procurement_building_no_services,
                                             procurement: create(:facilities_management_procurement_no_procurement_buildings)))
       end
+      # building gia = 1002
 
       context 'when service is C.1' do
         let(:code) { 'C.1' }
@@ -673,7 +674,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       context 'when service is I.1' do
-        # 1820 service hours
+        # 1820 service_hours
         let(:code) { 'I.1' }
 
         it 'returns the right assessed value' do
@@ -682,7 +683,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       context 'when service is I.2' do
-        # 1820 service hours
+        # 1820 service_hours
         let(:code) { 'I.2' }
 
         it 'returns the right assessed value' do
@@ -691,7 +692,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       context 'when service is I.3' do
-        # 1820 service hours
+        # 1820 service_hours
         let(:code) { 'I.3' }
 
         it 'returns the right assessed value' do
@@ -700,7 +701,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       context 'when service is I.4' do
-        # 1820 service hours
+        # 1820 service_hours
         let(:code) { 'I.4' }
 
         it 'returns the right assessed value' do
@@ -710,7 +711,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is J.1' do
         let(:code) { 'J.1' }
-        # 1820 service hours
+        # 1820 service_hours
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 28583.76
@@ -719,7 +720,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is J.2' do
         let(:code) { 'J.2' }
-        # 1820 service hours
+        # 1820 service_hours
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 29243.18
@@ -728,7 +729,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is J.3' do
         let(:code) { 'J.3' }
-        # 1820 service hours
+        # 1820 service_hours
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 29099.50
@@ -737,7 +738,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is J.4' do
         let(:code) { 'J.4' }
-        # 1820 service hours
+        # 1820 service_hours
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 32716.98
@@ -746,7 +747,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is J.5' do
         let(:code) { 'J.5' }
-        # 1820 service hours
+        # 1820 service_hours
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 29350.83
@@ -755,7 +756,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is J.6' do
         let(:code) { 'J.6' }
-        # 1820 service hours
+        # 1820 service_hours
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 29108.19
