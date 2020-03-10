@@ -86,14 +86,14 @@ $(function () {
         if ( isValid && mobilisationChoice === "true" ) {
             let jqMobilisationPeriodRequired = $("#facilities_management_procurement_mobilisation_period_required_true");
             let jqExtensionsRequired = $("#facilities_management_procurement_extensions_required_true");
-            let fnMobilisationValidatorForTUPE = function(nMobPeriod, _tupeIsSpecified) {return nMobPeriod < 4}.bind(this);
+            let fnMobilisationValidatorForTUPE = function(nMobPeriod, _tupeIsSpecified) {return nMobPeriod < 4;}.bind(this);
             let mobTextValue = jqMobilisationPeriod.val();
 
             isValid = !(tupeIsSpecified && mobTextValue === "");
             if ( isValid ) {
                 isValid = isValid && this.testError(fnNumberValidator, jqMobilisationPeriod, "number");
                 if ( mobTextValue.indexOf('.') >= 0 ) {
-                    if ( mobTextValue.substring(mobTextValue.indexOf('.')+1).replace('0','') !== '' ) {
+                    if ( mobTextValue.substring(mobTextValue.indexOf('.')+1).replace("0","") !== "" ) {
                         isValid = isValid && false;
                         this.toggleError ( jqMobilisationPeriod, true, "pattern");
                     } else {
@@ -237,14 +237,14 @@ $(function () {
             if (mobilisationPeriod && !isNaN(dd)) {
                 let dates = contractDateUtils.calcContractDates(contractStartDate, initialCallOffPeriod, mobilisationPeriod);
                 /* display mobilisation start date */
-                $("#mobilisation-start-date-dd").val(dates['Contract-Mob-Start'].substr(0, 2));
-                $("#mobilisation-start-date-mm").val(dates['Contract-Mob-Start'].substr(3, 2));
-                $("#mobilisation-start-date-yyyy").val(dates['Contract-Mob-Start'].substr(6, 4));
+                $("#mobilisation-start-date-dd").val(dates["Contract-Mob-Start"].substr(0, 2));
+                $("#mobilisation-start-date-mm").val(dates["Contract-Mob-Start"].substr(3, 2));
+                $("#mobilisation-start-date-yyyy").val(dates["Contract-Mob-Start"].substr(6, 4));
 
                 /* display mobilisation end date */
-                $("#mobilisation-end-date-dd").val(dates['Contract-Mob-End'].substr(0, 2));
-                $("#mobilisation-end-date-mm").val(dates['Contract-Mob-End'].substr(3, 2));
-                $("#mobilisation-end-date-yyyy").val(dates['Contract-Mob-End'].substr(6, 4));
+                $("#mobilisation-end-date-dd").val(dates["Contract-Mob-End"].substr(0, 2));
+                $("#mobilisation-end-date-mm").val(dates["Contract-Mob-End"].substr(3, 2));
+                $("#mobilisation-end-date-yyyy").val(dates["Contract-Mob-End"].substr(6, 4));
 
             } else {
                 clearMobilisationDates();
@@ -277,7 +277,7 @@ $(function () {
 
     displayContractDates();
 
-    let formObject = $(".contract-dates").closest('form');
+    let formObject = $(".contract-dates").closest("form");
     let form_helper = null;
 
     if (formObject.length > 0 ) {
