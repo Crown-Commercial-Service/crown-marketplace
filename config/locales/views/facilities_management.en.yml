@@ -515,6 +515,7 @@ en:
             contract_start_date_caption: The contract start date is the 'effective date' - this is the date the final party signed the contract. For example, 01 11 2030.
             description: Please confirm if both parties have signed and exchanged the contract
             title: Confirmation of signed contract
+            yes: Yes
           contract_offer_details:
             declined: The supplier declined this contract offer on
             expired: This contract offer expired on
