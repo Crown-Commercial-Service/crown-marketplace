@@ -14,6 +14,7 @@ module FacilitiesManagement
 
         def update
           close_procurement && return if params['close_procurement'].present?
+          update_supplier_response && return if params['sign_procurement'].present?
         end
 
         private
@@ -55,7 +56,29 @@ module FacilitiesManagement
           params.require(:facilities_management_procurement_supplier)
                 .permit(
                   :reason_for_closing,
+                  :contract_signed,
+                  :contract_start_date_dd,
+                  :contract_start_date_mm,
+                  :contract_start_date_yyyy,
+                  :contract_end_date_dd,
+                  :contract_end_date_mm,
+                  :contract_end_date_yyyy
                 )
+        end
+
+        def update_supplier_response
+          @contract.assign_attributes(contract_params)
+          if @contract.valid?(:confirmation_of_signed_contract)
+            # if @contract.contract_signed
+              
+            # else
+              
+            # end
+            #redirect_to facilities_management_beta_supplier_contract_sent_index_path(@contract.id)
+          else
+            set_page_detail
+            render :edit
+          end
         end
 
         # rubocop:disable Metrics/AbcSize

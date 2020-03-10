@@ -6,21 +6,21 @@ module FacilitiesManagement
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
 
     attribute :contract_response
+    attribute :contract_signed
     attribute :contract_start_date_dd
     attribute :contract_start_date_mm
     attribute :contract_start_date_yyyy
     attribute :contract_end_date_dd
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
-    attribute :contract_signed
-    attribute :contract_signed_date_dd
-    attribute :contract_signed_date_mm
-    attribute :contract_signed_date_yyyy
 
     before_validation :convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
     validates :reason_for_closing, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
     validates :reason_for_closing, length: { maximum: 500 }, presence: { message: :buyer }, on: %i[reason_for_closing]
+
+    before_validation :convert_to_boolean, on: :confirmation_of_signed_contract
+    validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
 
     aasm do
       state :unsent, initial: true
@@ -106,6 +106,7 @@ module FacilitiesManagement
 
     def convert_to_boolean
       self.contract_response = ActiveModel::Type::Boolean.new.cast(contract_response)
+      # self.contract_signed = ActiveModel::Type::Boolean.new.cast(contract_signed)
     end
 
     def generate_contract_number
