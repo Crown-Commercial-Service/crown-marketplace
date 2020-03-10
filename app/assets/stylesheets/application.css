@@ -7940,3 +7940,16 @@ li code, td code, p code {
     overflow: hidden;
     overflow-x: auto;
 }
+
+.govuk-align-center-table__td {
+    text-align: center !important;
+}
+.govuk-align-left-table__td {
+    text-align: left !important;
+}
+.supplier-rates-td {
+    border: none !important;
+}
+.govuk-brand-light-grey {
+    color: #cecece !important;
+}

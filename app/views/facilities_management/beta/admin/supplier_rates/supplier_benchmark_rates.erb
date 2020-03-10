@@ -1,0 +1,173 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="#">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">Call-off benchmark rates</li>
+  </ol>
+</div>
+<h1 class="govuk-heading-xl">Call-off benchmark rates</h1>
+<p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey">
+  Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
+</p>
+<p class="govuk-body govuk-body govuk-!-font-weight-bold">
+  *Use this column for normal price if Standard A isn't applicable
+</p>
+<form>
+  <% @full_services.each do |service| %>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left"><%= service['name'] %></th>
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+            <% if(service['value_type'] == 'money') %>
+              <% if(service['standard_b'].length > 0 || service['standard_c'].length > 0) %>
+                Rate (&#163;)<br/> *Standard A
+              <% else %>
+                Rate (&#163;)
+              <% end %>
+            <% else %>
+              Rate (&percnt;)
+            <% end %>
+          </th>
+          <% if(service['standard_b'].length > 0) %>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">Rate (&#163;) <br/>  Standard B </th>
+          <% end %>
+          <% if(service['standard_c'].length > 0) %>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">Rate (&#163;) <br/>  Standard C </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% service['work_package'].each do |work_pckg| %>
+         
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td"><%= work_pckg['code'] %> <%= work_pckg['name'] %></td>
+            
+            
+            <% work_pckg['rates'].each do |rate| %>
+              <% if rate.standard.blank? %>
+                  <td class="govuk-table__cell supplier-rates-td">
+                      <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= rate.benchmark %>">
+                  </td>
+              <% end %>
+
+
+              <% if rate.standard == 'A' %>
+                  <td class="govuk-table__cell  supplier-rates-td">
+                      <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= rate.benchmark %>">
+                  </td>
+              <% end %>
+              
+              <% if rate.standard == 'B' %>
+                  <td class="govuk-table__cell  supplier-rates-td">
+                      <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= rate.benchmark %>">
+                  </td>
+              <% end %>
+              
+              <% if rate.standard == 'C' %>
+                  <td class="govuk-table__cell  supplier-rates-td">
+                      <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= rate.benchmark %>">
+                  </td>
+              <% end %>              
+            
+            <% end %>
+          </tr>
+        <% end %>  
+      </tbody>
+    </table>
+  <% end %>
+
+
+
+  <h3 class="govuk-heading-xl govuk-!-font-weight-bold">Benchmark variances</h3>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">Item</th>        
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+            Rate
+          </th>
+        <tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+        <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          Management overhead (%) 
+          <br />
+          Workpackage A - contract management
+        </td>
+  
+        <td class="govuk-table__cell supplier-rates-td">
+          <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.140" ).benchmark %>">
+        </td>
+  </tr>
+  <tr class="govuk-table__row">        
+        <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          Corporate overhead (%)
+        </td>
+
+        <td class="govuk-table__cell supplier-rates-td">
+          <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.141" ).benchmark %>">
+        </td>
+  </tr>
+    <tr class="govuk-table__row">
+
+        <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          Profit (%)
+        </td>
+
+        <td class="govuk-table__cell supplier-rates-td">
+          <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.142" ).benchmark %>">
+        </td>
+
+    </tr>
+    <tr class="govuk-table__row">
+        <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          London location percentage variance (%)
+        </td>
+
+        <td class="govuk-table__cell supplier-rates-td">
+          <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.144" ).benchmark %>">
+        </td>
+    </tr>
+    <tr class="govuk-table__row">
+        <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          Cleaning consumables per building user (£)
+          <br />
+          (applicable to services: G.1 routine cleaning, and 
+          <br />
+          G.3. mobile cleaning)
+        </td>
+
+        <td class="govuk-table__cell supplier-rates-td">
+          <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.146" ).benchmark %>">
+        </td>
+    </tr>
+    <tr class="govuk-table__row">
+        <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          TUPE risk premium (%)
+        </td>
+
+        <td class="govuk-table__cell supplier-rates-td">
+          <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.148" ).benchmark %>">
+        </td>
+    </tr>
+    <tr class="govuk-table__row">
+        <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          Mobilisation
+        </td>
+
+        <td class="govuk-table__cell supplier-rates-td">
+          <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "B.1" ).benchmark %>">
+        </td>
+    </tr>
+          
+      </tbody>
+    </table>
+
+
+  <input type="submit" name="update_benchmark_rates" value="Save and return to dashboard" class="govuk-button" data-disable-with="Continue">
+  <a href="" class="govuk-link govuk-caption-m" alt="Return to admin dashboard">Return to admin dashboard</a>
+</form>

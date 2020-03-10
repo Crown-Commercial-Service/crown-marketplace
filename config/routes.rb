@@ -162,7 +162,8 @@ Rails.application.routes.draw do
         resources :contracts, only: %i[show edit], controller: 'contracts'
       end
       namespace :admin do
-        get 'supplier-rates', to: 'supplier_rates#index'
+        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
       end
     end
 
