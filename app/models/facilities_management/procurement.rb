@@ -242,7 +242,7 @@ module FacilitiesManagement
     end
 
     def sent_offers
-      procurement_suppliers.where.not(aasm_state: 'unsent').reject(&:closed?)
+      procurement_suppliers.where(aasm_state: %w[sent accepted declined expired not_signed]).reject(&:closed?)
     end
 
     def live_contracts
