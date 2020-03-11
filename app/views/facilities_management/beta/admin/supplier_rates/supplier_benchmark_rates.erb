@@ -3,15 +3,15 @@
     <li class="govuk-breadcrumbs__list-item">
       <a class="govuk-breadcrumbs__link" href="#">Home</a>
     </li>
-    <li class="govuk-breadcrumbs__list-item" aria-current="page">Call-off benchmark rates</li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.leading_text') %></li>
   </ol>
 </div>
-<h1 class="govuk-heading-xl">Call-off benchmark rates</h1>
+<h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.heading_title') %></h1>
 <p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey">
-  Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
+  <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.leading_text') %>
 </p>
 <p class="govuk-body govuk-body govuk-!-font-weight-bold">
-  *Use this column for normal price if Standard A isn't applicable
+  <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.note') %>
 </p>
 <form>
   <% @full_services.each do |service| %>
@@ -22,19 +22,19 @@
           <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
             <% if(service['value_type'] == 'money') %>
               <% if(service['standard_b'].length > 0 || service['standard_c'].length > 0) %>
-                Rate (&#163;)<br/> *Standard A
+                <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_a') %>
               <% else %>
-                Rate (&#163;)
+                <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_pound_a') %>
               <% end %>
             <% else %>
-              Rate (&percnt;)
+              <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_percentage_a') %>
             <% end %>
           </th>
           <% if(service['standard_b'].length > 0) %>
-            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">Rate (&#163;) <br/>  Standard B </th>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">Rate (&#163;) <br/>  Standard B <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_b') %> </th>
           <% end %>
           <% if(service['standard_c'].length > 0) %>
-            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">Rate (&#163;) <br/>  Standard C </th>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">Rate (&#163;) <br/>  Standard C <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_c') %> </th>
           <% end %>
         </tr>
       </thead>
@@ -80,23 +80,21 @@
 
 
 
-  <h3 class="govuk-heading-xl govuk-!-font-weight-bold">Benchmark variances</h3>
+  <h3 class="govuk-heading-xl govuk-!-font-weight-bold">Benchmark variances <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.heading_title_two') %></h3>
 
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">Item</th>        
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">Item <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.item') %></th>        
           <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
-            Rate
+            <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate') %>
           </th>
         <tr>
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
         <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          Management overhead (%) 
-          <br />
-          Workpackage A - contract management
+          <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_overhead') %>
         </td>
   
         <td class="govuk-table__cell supplier-rates-td">
@@ -105,7 +103,7 @@
   </tr>
   <tr class="govuk-table__row">        
         <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          Corporate overhead (%)
+          <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_corporate') %>
         </td>
 
         <td class="govuk-table__cell supplier-rates-td">
@@ -115,7 +113,7 @@
     <tr class="govuk-table__row">
 
         <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          Profit (%)
+          <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_profit') %>
         </td>
 
         <td class="govuk-table__cell supplier-rates-td">
@@ -125,7 +123,7 @@
     </tr>
     <tr class="govuk-table__row">
         <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          London location percentage variance (%)
+          <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_london') %>
         </td>
 
         <td class="govuk-table__cell supplier-rates-td">
@@ -134,11 +132,7 @@
     </tr>
     <tr class="govuk-table__row">
         <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          Cleaning consumables per building user (£)
-          <br />
-          (applicable to services: G.1 routine cleaning, and 
-          <br />
-          G.3. mobile cleaning)
+          <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_cleaning') %>
         </td>
 
         <td class="govuk-table__cell supplier-rates-td">
@@ -147,7 +141,7 @@
     </tr>
     <tr class="govuk-table__row">
         <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          TUPE risk premium (%)
+          <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_tupe') %>
         </td>
 
         <td class="govuk-table__cell supplier-rates-td">
@@ -156,7 +150,7 @@
     </tr>
     <tr class="govuk-table__row">
         <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          Mobilisation
+          <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_mobilisation') %>
         </td>
 
         <td class="govuk-table__cell supplier-rates-td">
@@ -168,6 +162,6 @@
     </table>
 
 
-  <input type="submit" name="update_benchmark_rates" value="Save and return to dashboard" class="govuk-button" data-disable-with="Continue">
-  <a href="" class="govuk-link govuk-caption-m" alt="Return to admin dashboard">Return to admin dashboard</a>
+  <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.update_button') %>" class="govuk-button" data-disable-with="Continue">
+  <a href="" class="govuk-link govuk-caption-m" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rtrn_link') %></a>
 </form>
